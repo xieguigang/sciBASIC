@@ -130,7 +130,7 @@ Namespace CommandLine
             Dim MaxSwitchName As Integer = (From item As KeyValuePair(Of String, String)
                                             In __lstParameter
                                             Select Len(item.Key)).Max
-            For Each sw In __lstParameter
+            For Each sw As KeyValuePair(Of String, String) In __lstParameter
                 Call sBuilder.AppendLine($"  {sw.Key}  {New String(" "c, MaxSwitchName - Len(sw.Key))}= ""{sw.Value}"";")
             Next
 

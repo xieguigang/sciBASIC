@@ -7,6 +7,37 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module Correlations
 
     ''' <summary>
+    ''' 假若所有的元素都是0-1之间的话，结果除以2可以得到相似度
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    <ExportAPI("SW", Info:="Sandelin-Wasserman similarity function")>
+    Public Function SW(x As Double(), y As Double()) As Double
+        Dim p As Double() = (From i As Integer In x.Sequence Select x(i) - y(i)).ToArray
+        Dim s As Double = (From n As Double In p Select n * n).Sum
+        s = 2 - s
+        Return s
+    End Function
+
+    <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
+    Public Function KLD(x As Double(), y As Double()) As Double
+        Dim index As Integer() = x.Sequence
+        Dim a As Double = (From i As Integer In index Select __kldPart(x(i), y(i))).Sum
+        Dim b As Double = (From i As Integer In index Select __kldPart(y(i), x(i))).Sum
+        Dim value As Double = (a + b) / 2
+        Return value
+    End Function
+
+    Private Function __kldPart(Xa As Double, Ya As Double) As Double
+        If Xa = 0R Then
+            Return 0R
+        End If
+        Dim value As Double = Xa * Math.Log(Xa / Ya)  ' 0 * n = 0
+        Return value
+    End Function
+
+    ''' <summary>
     ''' will regularize the unusual case of complete correlation
     ''' </summary>
     Const TINY As Double = 1.0E-20
@@ -44,6 +75,7 @@ Public Module Correlations
         Return pcc
     End Function
 
+    <ExportAPI("Pearson")>
     Public Function GetPearson(x As Double(), y As Double()) As Double
         Dim pcc As Double
         Dim j As Integer, n As Integer = x.Length

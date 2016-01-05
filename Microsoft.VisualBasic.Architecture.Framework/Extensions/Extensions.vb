@@ -42,6 +42,18 @@ Public Module Extensions
 Public Module Extensions
 #End If
 
+    ''' <summary>
+    ''' 性能测试工具
+    ''' </summary>
+    ''' <param name="work">需要测试性能的工作对象</param>
+    ''' <returns></returns>
+    Public Function Time(work As Action) As Long
+        Dim sw As Stopwatch = Stopwatch.StartNew
+        Call work()
+        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
+        Return sw.ElapsedMilliseconds
+    End Function
+
     Public Delegate Function WaitHandle() As Boolean
 
     ''' <summary>
