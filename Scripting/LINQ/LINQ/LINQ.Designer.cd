@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="LINQ.Framework.TypeRegistry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.25" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAIAgIAAACAgAAAEAAAAAAAAAAANAAAAAIAAAoAAAAA=</HashCode>
+      <FileName>Framewok\TypeRegistry.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LINQ.My.MySettings" Collapsed="true">
+    <Position X="24.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.LINQStatement">
+    <Position X="18.75" Y="3" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AIABJUABAAQAQAAkAAAAAAAAgAAAAKAgAAgBAAAAAAA=</HashCode>
+      <FileName>Statement\LINQStatement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.ObjectDeclaration">
+    <Position X="14" Y="3" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAQAEAgAAAAQAAAAAgAAgAAAAAAAAgAA=</HashCode>
+      <FileName>Statement\Tokens\ObjectDeclaration.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.Token">
+    <Position X="11.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Statement\Tokens\Token.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.WhereCondition">
+    <Position X="4.75" Y="3" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Statement\Tokens\WhereCondition.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.LQueryFramework" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAICAAAAAACAIAAEAUAABAAABAAAABAgAAAAA=</HashCode>
+      <FileName>Framewok\LQueryFramework.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.ObjectCollection">
+    <Position X="8.25" Y="3" Width="4" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="LINQ.Statements.Tokens.ObjectCollection.CollectionTypes">
+        <TypeIdentifier>
+          <NewMemberFileName>Statement\Tokens\ObjectCollection.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAIAAEAAIAAAAAAAAAACAAAQAgAgAAAAA=</HashCode>
+      <FileName>Statement\Tokens\ObjectCollection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.DynamicCode.AnonymousType" Collapsed="true">
+    <Position X="24.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQACAAA=</HashCode>
+      <FileName>Framewok\DynamicCode\AnonymousType.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Parser.Parser" Collapsed="true">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAgAACAAAAgAAAAAAAIAAIAACAAAAAggA=</HashCode>
+      <FileName>Parser\Parser.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Parser.Token" Collapsed="true">
+    <Position X="24.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAEAQAEAAAAAAAAAAIAARAACAAABAA=</HashCode>
+      <FileName>Parser\Token.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Parser.Tokenizer" Collapsed="true">
+    <Position X="26.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAIAAAgAAAQEABCABAQAAAAAAAAQIAAIAAACgAA=</HashCode>
+      <FileName>Parser\Tokenizer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.ReadOnlyObject">
+    <Position X="13" Y="7" Width="5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="LINQ.Statements.Tokens.ReadOnlyObject.Parser">
+        <TypeIdentifier>
+          <NewMemberFileName>Statement\Tokens\ReadOnlyObject.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAgAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Statement\Tokens\ReadOnlyObject.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.SelectConstruct">
+    <Position X="1.25" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAIAAAAAA=</HashCode>
+      <FileName>Statement\Tokens\SelectConstruct.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.DynamicCode.VBC.DynamicCompiler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAIAAACAAAIAJAAAABAAIAAQAAAADAAgAAgAAAEQ=</HashCode>
+      <FileName>Framewok\DynamicCode\vbc\DynamicCompiler.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LINQ.Framework.DynamicCode.VBC.ReadOnlyObjectCompiler">
+    <Position X="0.5" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAkAAAAACAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Framewok\DynamicCode\vbc\ReadOnlyObjectCompiler.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.DynamicCode.VBC.SelectConstructCompiler">
+    <Position X="4" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAgAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Framewok\DynamicCode\vbc\SelectConstructCompiler.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.DynamicCode.VBC.TokenCompiler">
+    <Position X="1.5" Y="8.5" Width="7.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framewok\DynamicCode\vbc\SelectConstructCompiler.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.DynamicCode.VBC.WhereConditionTestCompiler">
+    <Position X="7.5" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAEAAACAAACAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Framewok\DynamicCode\vbc\WhereConditionTestCompiler.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Statements.Tokens.Options" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Statement\Tokens\Options.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.Runtime" Collapsed="true">
+    <Position X="30" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAgAAAAAAAAAAAAAAAAQAAEAAAAA=</HashCode>
+      <FileName>Framewok\Runtime.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.ObjectModel.LINQ">
+    <Position X="12.25" Y="11.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIABAACAAAAAECgAAAAASAAAAAAAAAAAACkAAgAA=</HashCode>
+      <FileName>Framewok\ObjectModel\LINQ.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LINQ.Framework.ObjectModel.ParallelLINQ">
+    <Position X="12.5" Y="16" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framewok\ObjectModel\ParallelLINQ.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Framework.Reflection.LINQEntity" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Framewok\ReflectionAttributes.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="LINQ.Framework.ILINQCollection" Collapsed="true">
+    <Position X="24.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Framewok\ILINQ.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="LINQ.Parser.TokenType" Collapsed="true">
+    <Position X="26.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAiAAhAQAAAAAASIAAIEA=</HashCode>
+      <FileName>Parser\Enums.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LINQ.Parser.TokenPriority" Collapsed="true">
+    <Position X="24.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAIAAAAAAAAAEAAACQAAgAgAAAAABEAAAA=</HashCode>
+      <FileName>Parser\Enums.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Module Name="LINQ.My.Resources.Resources" Collapsed="true">
+    <Position X="30" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.My.MySettingsProperty" Collapsed="true">
+    <Position X="28.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Extensions" Collapsed="true">
+    <Position X="26.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAgAAAAAAAAAAAAAAAAAAAIAAAABAAAAAA=</HashCode>
+      <FileName>Extensions.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Framework.DynamicCode.DynamicInvoke" Collapsed="true">
+    <Position X="24.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Framewok\DynamicCode\DynamicInvoke.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

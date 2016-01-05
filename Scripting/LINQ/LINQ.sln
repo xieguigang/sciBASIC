@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LINQ", "LINQ\LINQ.vbproj", "{0A9B9FA6-E12D-48FD-B979-9F021A591E69}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestMain", "TestMain\TestMain.vbproj", "{BC89D746-E295-4C71-A0AB-1BBE45FF314E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestLINQEntity", "TestLINQEntity\TestLINQEntity.vbproj", "{E2CE741D-E223-4556-9B54-F879C2BE50DA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject.VB_FrameworkExtensions", "..\..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.shproj", "{B1043125-DCB7-44E3-AF8F-D39CB7F1D082}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems*{b1043125-dcb7-44e3-af8f-d39cb7f1d082}*SharedItemsImports = 13
+		..\..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems*{0a9b9fa6-e12d-48fd-b979-9f021a591e69}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A9B9FA6-E12D-48FD-B979-9F021A591E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9B9FA6-E12D-48FD-B979-9F021A591E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9B9FA6-E12D-48FD-B979-9F021A591E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9B9FA6-E12D-48FD-B979-9F021A591E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CE741D-E223-4556-9B54-F879C2BE50DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CE741D-E223-4556-9B54-F879C2BE50DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CE741D-E223-4556-9B54-F879C2BE50DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CE741D-E223-4556-9B54-F879C2BE50DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

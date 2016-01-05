@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Microsoft.VisualBasic.ComputingServices.PbsThread" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAABAAAAAASAAAAAAQgEABAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>P2P\PbsThread.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.My.MySettings" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.ServicesComponents.ClusterServices">
+    <Position X="0.5" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAGgAAEAAAAAAQAAAEAAQAAAAAACgAAAAAAAAAAAAoA=</HashCode>
+      <FileName>P2P\ServicesComponents\ClusterServices.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.ServicesComponents.ClusterServicesAPI" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAgAAACAAAA=</HashCode>
+      <FileName>P2P\ServicesComponents\ClusterServicesAPI.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.ServicesComponents.InternalServicesModule">
+    <Position X="3" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAACAAAgAAAEAAQAgAAEAAAACAAACAQgAAAAA=</HashCode>
+      <FileName>P2P\ServicesComponents\InternalServicesModule.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.ServicesComponents.Node" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>P2P\ServicesComponents\Node.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.ServicesComponents.NodeServices">
+    <Position X="4.5" Y="4.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAIAAAAAEAAQAAAAAAAAIAAAAkAAAAAAAA=</HashCode>
+      <FileName>P2P\ServicesComponents\NodeServices.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.ServicesComponents.NodeServicesAPI" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>P2P\ServicesComponents\NodeServicesAPI.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.Asymmetric.Instance" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAEQAAAAAAAAQIAAAAI=</HashCode>
+      <FileName>Asymmetric\Instance.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.Asymmetric.Master" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgABAAAAAAAAAQAAAAAAABBIAAAAAAAAAARCACAAI=</HashCode>
+      <FileName>Asymmetric\Master.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.Asymmetric.Parasitifer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAICCAASACAAAAAgIAAAgAAgAAAAAAQgAAAEI=</HashCode>
+      <FileName>Asymmetric\Parasitifer.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.Asymmetric.DDM.Instance" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAgAAAAAAACAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Asymmetric\Parasitifer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.ComputingServices.PbsProtocol" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAEAAAAAAAAAgAAQAACQAACAAAAAkEAQAAEAAgAAAEg=</HashCode>
+      <FileName>P2P\PbsProtocol.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Module Name="Microsoft.VisualBasic.ComputingServices.GridProtocol" Collapsed="true">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAkAAI=</HashCode>
+      <FileName>P2P\GridProtocol.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.ComputingServices.My.Resources.Resources" Collapsed="true">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.ComputingServices.My.MySettingsProperty" Collapsed="true">
+    <Position X="13.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.ComputingServices.Asymmetric.Protocols" Collapsed="true">
+    <Position X="15.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAEBAAAAAAAACAAAAIAAoAAAIAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Asymmetric\Protocols.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.ComputingServices.Extensions" Collapsed="true">
+    <Position X="10.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Extensions.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Ubuntu" Size="9" />
+</ClassDiagram>
