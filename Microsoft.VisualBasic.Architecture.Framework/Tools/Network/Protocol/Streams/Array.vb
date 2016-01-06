@@ -50,16 +50,22 @@
             If Values.IsNullOrEmpty Then
                 Return GetType(T).FullName
             Else
-                Return $"{GetType(T).FullName}  {"{"}{String.Join(", ", Values.ToArray(Of String)(Function(val) Scripting.ToString(val)))}{"}"}"
+                Return $"{GetType(T).FullName}  {"{"}{String.Join("," & vbTab, Values.ToArray(Of String)(Function(val) Scripting.ToString(val)))}{"}"}"
             End If
         End Function
 
+        ''' <summary>
+        ''' 由于这个模块是专门应用于服务器端的数据交换的模块，所以稳定性优先，
+        ''' 这里面的函数都是安全的数组访问方法
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         Default Public Property value(index As Integer) As T
             Get
-                Return Values(index)
+                Return Values.Get(index)
             End Get
             Set(value As T)
-                Values(index) = value
+                Call Values.Set(index, value)
             End Set
         End Property
 

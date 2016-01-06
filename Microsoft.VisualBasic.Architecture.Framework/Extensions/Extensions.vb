@@ -207,6 +207,23 @@ Public Module Extensions
         Return value
     End Function
 
+    <Extension> Public Function [Set](Of T)(ByRef array As T(), index As Integer, value As T) As T()
+        If index < 0 Then
+            Return array
+        End If
+
+        If array.Length >= index Then
+            array(index) = value
+        Else
+            Dim copy As T() = New T(index) {}
+            Call System.Array.ConstrainedCopy(array, Scan0, copy, Scan0, array.Length)
+            copy(index) = value
+            array = copy
+        End If
+
+        Return array
+    End Function
+
 #Region ""
 
     <ExportAPI("SendMessage")>
