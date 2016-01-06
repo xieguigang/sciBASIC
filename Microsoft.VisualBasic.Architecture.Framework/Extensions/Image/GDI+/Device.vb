@@ -395,11 +395,11 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     ' Returns:
     '     A copy of the System.Drawing.Drawing2D.Matrix that represents the geometric world
     '     transformation for this System.Drawing.Graphics.
-    Public Property Transform As Matrix
+    Public Property Transform As Drawing2D.Matrix
         Get
             Return Gr_Device.Transform
         End Get
-        Set(value As Matrix)
+        Set(value As Drawing2D.Matrix)
             Gr_Device.Transform = value
         End Set
     End Property
@@ -4518,7 +4518,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     ' Parameters:
     '   matrix:
     '     4x4 System.Drawing.Drawing2D.Matrix that multiplies the world transformation.
-    Public Sub MultiplyTransform(matrix As Matrix)
+    Public Sub MultiplyTransform(matrix As Drawing2D.Matrix)
 
     End Sub
     '
@@ -4533,7 +4533,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     '   order:
     '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that determines
     '     the order of the multiplication.
-    Public Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
+    Public Sub MultiplyTransform(matrix As Drawing2D.Matrix, order As MatrixOrder)
 
     End Sub
     '

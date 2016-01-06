@@ -176,6 +176,7 @@
     <Compile Include="Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
     <Compile Include="Extensions\Collection\LINQ.vb" />
+    <Compile Include="Extensions\Collection\Matrix.vb" />
     <Compile Include="Extensions\Debugger.vb" />
     <Compile Include="Extensions\Image\ColorCube.vb" />
     <Compile Include="Extensions\Image\ColorMap.vb" />

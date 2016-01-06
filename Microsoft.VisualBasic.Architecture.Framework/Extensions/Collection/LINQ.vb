@@ -22,6 +22,12 @@ Public Module LINQ
         Return out
     End Function
 
+    <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer) As T
+        Dim out As T = array(i)
+        i += 1
+        Return out
+    End Function
+
     ''' <summary>
     ''' 产生指定数目的一个递增序列(所生成序列的数值就是生成的数组的元素的个数)
     ''' </summary>

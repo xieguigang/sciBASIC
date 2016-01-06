@@ -4,6 +4,7 @@ Imports System.Data
 Imports System.Drawing
 Imports System.Linq
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -46,15 +47,18 @@ Public Class DistResult
         Return $"{Reference} => {Hypotheses} // {DistEdits}"
     End Function
 
+    Public Function IsPath(i As Integer, j As Integer) As Boolean
+        Dim LQuery = (From x In CSS Where x.X = i AndAlso x.Y = j Select 100).FirstOrDefault
+        Return LQuery > 50
+    End Function
+
     Public ReadOnly Property Distance As Double
         Get
             If DistTable.IsNullOrEmpty Then
                 Return 0
             End If
 
-            Dim XMax = CSS.ToArray(Function(c) c.X).Max
-            Dim YMax = CSS.ToArray(Function(c) c.Y).Max
-            Return DistTable(XMax)(YMax)
+            Return DistTable(Reference.Length).Value(Hypotheses.Length)
         End Get
     End Property
 
@@ -79,12 +83,31 @@ Public Class DistResult
         End Get
     End Property
 
-    Public ReadOnly Property Similarity As Double
+    'Public ReadOnly Property Similarity As Double
+    '    Get
+    '        Dim d As Double = DistTable.Last.Value.Last
+    '        Dim maxLength As Integer = Math.Max(DistTable.Length, DistTable.First.Value.Length)
+    '        Dim value As Double = 1.0 - d / maxLength
+    '        Return value
+    '    End Get
+    'End Property
+
+    ''' <summary>
+    ''' m+ scores
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MatchSimilarity As Double
         Get
-            Dim d As Double = DistTable.Last.Value.Last
-            Dim maxLength As Integer = Math.Max(DistTable.Length, DistTable.First.Value.Length)
-            Dim value As Double = 1.0 - d / maxLength
-            Return value
+            Dim ms As String() = Regex.Matches(DistEdits, "m+").ToArray
+            Dim mg = (From x In ms Select x Group x By x Into Count).ToArray
+            Dim len = DistEdits.Length
+            Dim score As Double
+
+            For Each x In mg
+                score += (x.x.Length / len) * x.Count
+            Next
+
+            Return score
         End Get
     End Property
 

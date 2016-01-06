@@ -83,7 +83,9 @@ Public Module ImageFormat
         Try
             Call res.Save(path, format.GetFormat)
         Catch ex As Exception
-            Call App.LogException(New Exception(path, ex))
+            ex = New Exception(path.ToFileURL, ex)
+            Call App.LogException(ex)
+            Call ex.PrintException
             Return False
         End Try
 

@@ -6,6 +6,7 @@ Imports System.Linq
 Imports System.Text
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
@@ -101,7 +102,7 @@ Public Module LevenshteinDistance
             .Hypotheses = sHyp,
             .Reference = sRef
         }
-        Return __computeRoute(shyp, result, i, j, distTable)
+        Return __computeRoute(sHyp, result, i, j, distTable)
     End Function
 
     <ExportAPI("ToHTML", Info:="View distance evolve route of the Levenshtein Edit Distance calculation.")>
@@ -172,63 +173,64 @@ Public Module LevenshteinDistance
                                     j As Integer,
                                     distTable As Double(,)) As DistResult
 
-        Dim css As New List(Of ComponentModel.Collection.Generic.KeyValuePairObject(Of Integer, Integer))
+        Dim css As New List(Of KeyValuePairObject(Of Integer, Integer))
         Dim evolve As List(Of Char) = New List(Of Char)
-        Dim Matches As New List(Of Char)
+        Dim edits As New List(Of Char)
 
         While True
 
-            Call css.Add({i, j})
+            Call css.Add({i - 1, j})
 
             If i = 0 AndAlso j = 0 Then
                 Dim evolveRoute As Char() = evolve.ToArray
                 Call Array.Reverse(evolveRoute)
                 Call css.Add({i, j})
 
-                result.DistTable = distTable.MatrixToVectorList.ToArray(Function(vec) New Vector With {.Value = vec})
+                result.DistTable = distTable.ToVectorList.ToArray(Function(vec) New Vector With {.Value = vec})
                 result.DistEdits = New String(evolveRoute)
                 result.CSS = css.ToArray(Function(point) New Point(point.Key, point.Value))
-                result.Matches = New String(Matches.ToArray.Reverse.ToArray)
+                result.Matches = New String(edits.ToArray.Reverse.ToArray)
 
                 Exit While
 
             ElseIf i = 0 AndAlso j > 0 Then   ' delete
                 Call evolve.Add("d"c)
-                Call css.Add({i, j})
-                Call Matches.Add("-"c)
+                Call css.Add({i - 1, j})
+                Call edits.Add("-"c)
                 j -= 1
 
             ElseIf i > 0 AndAlso j = 0 Then
                 Call evolve.Add("i"c)         ' insert
-                Call css.Add({i, j})
-                Call Matches.Add("-"c)
+                Call css.Add({i - 1, j})
+                Call edits.Add("-"c)
+
                 i -= 1
 
             Else
                 If distTable(i - 1, j - 1) <= distTable(i - 1, j) AndAlso
                     distTable(i - 1, j - 1) <= distTable(i, j - 1) Then
-                    Call css.Add({i, j})
+                    Call css.Add({i - 1, j})
                     If distTable(i - 1, j - 1) = distTable(i, j) Then
                         Call evolve.Add("m"c) ' match
-                        Call Matches.Add(hypotheses(j - 1))
+                        Call edits.Add(hypotheses(j - 1))
                     Else
                         Call evolve.Add("s"c) ' substitue
-                        Call Matches.Add("-"c)
+                        Call edits.Add("-"c)
                     End If
 
                     i -= 1
                     j -= 1
 
                 ElseIf distTable(i - 1, j) < distTable(i, j - 1) Then
-                    Call css.Add({i, j})
+                    Call css.Add({i - 1, j})
                     Call evolve.Add("i")      ' insert
-                    Call Matches.Add("-"c)
+                    Call edits.Add("-"c)
                     i -= 1
 
                 ElseIf distTable(i, j - 1) < distTable(i - 1, j) Then
-                    Call css.Add({i, j})
+                    Call css.Add({i - 1, j})
                     Call evolve.Add("d")      ' delete
-                    Call Matches.Add("-"c)
+                    Call edits.Add("-"c)
                     j -= 1
 
                 End If
