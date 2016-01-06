@@ -6,7 +6,9 @@ Imports System.Linq
 Imports System.Text
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
@@ -173,7 +175,7 @@ Public Module LevenshteinDistance
                                     j As Integer,
                                     distTable As Double(,)) As DistResult
 
-        Dim css As New List(Of KeyValuePairObject(Of Integer, Integer))
+        Dim css As New List(Of Coords)
         Dim evolve As List(Of Char) = New List(Of Char)
         Dim edits As New List(Of Char)
 
@@ -186,9 +188,9 @@ Public Module LevenshteinDistance
                 Call Array.Reverse(evolveRoute)
                 Call css.Add({i, j})
 
-                result.DistTable = distTable.ToVectorList.ToArray(Function(vec) New Vector With {.Value = vec})
+                result.DistTable = distTable.ToVectorList.ToArray(Function(vec) New Streams.Array.Double With {.Values = vec})
                 result.DistEdits = New String(evolveRoute)
-                result.CSS = css.ToArray(Function(point) New Point(point.Key, point.Value))
+                result.CSS = css.ToArray
                 result.Matches = New String(edits.ToArray.Reverse.ToArray)
 
                 Exit While

@@ -7,40 +7,21 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Scripting.MetaData
-
-Public Class Vector
-    <Xml.Serialization.XmlAttribute> Public Property Value As Double()
-
-    Default Public Property x(index As Integer) As Double
-        Get
-            Return Value(index)
-        End Get
-        Set(value As Double)
-            Me.Value(index) = value
-        End Set
-    End Property
-
-    Public Overrides Function ToString() As String
-        Return String.Join(", ", Value.ToArray(Function(n) CStr(n)))
-    End Function
-
-    Public Overloads Shared Widening Operator CType(vec As Double()) As Vector
-        Return New Vector With {.Value = vec}
-    End Operator
-End Class
 
 Public Class DistResult
 
     Public Property Reference As String
     Public Property Hypotheses As String
-    Public Property DistTable As Vector()
+    Public Property DistTable As Streams.Array.Double()
     ''' <summary>
     ''' How doest the <see cref="Hypotheses"/> evolve from <see cref="Reference"/>.(这个结果描述了subject是如何变化成为Query的)
     ''' </summary>
     ''' <returns></returns>
     Public Property DistEdits As String
-    Public Property CSS As Point()
+    Public Property CSS As Coords()
     Public Property Matches As String
 
     Public Overrides Function ToString() As String
@@ -58,7 +39,7 @@ Public Class DistResult
                 Return 0
             End If
 
-            Return DistTable(Reference.Length).Value(Hypotheses.Length)
+            Return DistTable(Reference.Length).Values(Hypotheses.Length)
         End Get
     End Property
 
@@ -137,10 +118,10 @@ Public Class DistResult
         Return obj
     End Function
 
-    Public Function TrimMatrix(l As Integer) As Vector()
+    Public Function TrimMatrix(l As Integer) As Streams.Array.Double()
         Me.DistTable = Me.DistTable.ToArray(
-            Function(row) New Vector With {
-                .Value = row.Value.ToArray(Function(n) Math.Round(n, l))
+            Function(row) New Streams.Array.Double With {
+                .Values = row.Values.ToArray(Function(n) Math.Round(n, l))
             })
         Return Me.DistTable
     End Function

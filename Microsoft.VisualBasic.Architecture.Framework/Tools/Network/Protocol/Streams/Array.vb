@@ -7,6 +7,7 @@
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class ValueArray(Of T) : Inherits RawStream
 
+        <Xml.Serialization.XmlAttribute("T")>
         Public Property Values As T()
 
         Protected ReadOnly __serialization As Func(Of T, Byte())
@@ -53,6 +54,15 @@
             End If
         End Function
 
+        Default Public Property value(index As Integer) As T
+            Get
+                Return Values(index)
+            End Get
+            Set(value As T)
+                Values(index) = value
+            End Set
+        End Property
+
     End Class
 
     Public Class [Long] : Inherits ValueArray(Of Long)
@@ -63,6 +73,11 @@
 
         Sub New(rawStream As Byte())
             Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt64, INT64, rawStream)
+        End Sub
+
+        Sub New(array As IEnumerable(Of Long))
+            Call Me.New
+            Values = array.ToArray
         End Sub
 
         Private Shared Function __toInt64(byts As Byte()) As Long
@@ -80,6 +95,11 @@
             Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt32, INT32, rawStream)
         End Sub
 
+        Sub New(array As IEnumerable(Of Integer))
+            Call Me.New
+            Values = array.ToArray
+        End Sub
+
         Private Shared Function __toInt32(byts As Byte()) As Integer
             Return BitConverter.ToInt32(byts, Scan0)
         End Function
@@ -89,6 +109,11 @@
 
         Sub New()
             Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toFloat, DblFloat, Nothing)
+        End Sub
+
+        Sub New(array As IEnumerable(Of Double))
+            Call Me.New
+            Values = array.ToArray
         End Sub
 
         Sub New(rawStream As Byte())
@@ -114,6 +139,11 @@
             Else
                 Me.Values = New Boolean() {}
             End If
+        End Sub
+
+        Sub New(array As IEnumerable(Of Boolean))
+            Call Me.New
+            Values = array.ToArray
         End Sub
 
         Private Shared Function __toBoolean(byt As Byte) As Boolean

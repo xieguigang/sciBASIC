@@ -7,7 +7,7 @@ Namespace ComponentModel
     ''' <remarks></remarks>
     Public Class Comb(Of T)
 
-        Dim ObjectCollection As List(Of T)
+        Dim lstSource As List(Of T)
         Dim p As Integer = 1
         Dim _NewLine As Boolean = True
 
@@ -19,7 +19,7 @@ Namespace ComponentModel
         ''' <remarks></remarks>
         Public ReadOnly Property EOL As Boolean
             Get
-                Return Not ObjectCollection.Count >= 2
+                Return Not lstSource.Count >= 2
             End Get
         End Property
 
@@ -37,10 +37,10 @@ Namespace ComponentModel
 
         Public ReadOnly Property CombList As KeyValuePair(Of T, T)()()
             Get
-                Dim LQuery = (From Handle As Integer In ObjectCollection.Sequence.Take(ObjectCollection.Count - 1).AsParallel
-                              Let ArrayList = (From Hwnd As Integer In ObjectCollection.Skip(Handle + 1).Sequence
+                Dim LQuery = (From Handle As Integer In lstSource.Sequence.Take(lstSource.Count - 1).AsParallel
+                              Let ArrayList = (From Hwnd As Integer In lstSource.Skip(Handle + 1).Sequence
                                                Let b = Handle + 1
-                                               Select New KeyValuePair(Of T, T)(ObjectCollection(Handle), ObjectCollection(b + Hwnd))).ToArray
+                                               Select New KeyValuePair(Of T, T)(lstSource(Handle), lstSource(b + Hwnd))).ToArray
                               Select ArrayList
                               Order By ArrayList.Length Descending).ToArray
                 Return LQuery
@@ -62,17 +62,17 @@ Namespace ComponentModel
         End Property
 
         Public Function GetObjectPair() As KeyValuePair(Of T, T)
-            If ObjectCollection.Count = 1 Then
+            If lstSource.Count = 1 Then
                 Return Nothing
             End If
 
-            If p < ObjectCollection.Count Then
-                Dim [Object] As T = ObjectCollection(p)
+            If p < lstSource.Count Then
+                Dim [Object] As T = lstSource(p)
                 _NewLine = False
                 p += 1
-                Return New KeyValuePair(Of T, T)(ObjectCollection(0), [Object])
+                Return New KeyValuePair(Of T, T)(lstSource(0), [Object])
             Else
-                ObjectCollection.RemoveAt(0)
+                lstSource.RemoveAt(0)
                 p = 1
                 Dim [ObjectPair] = GetObjectPair()
                 _NewLine = True
@@ -85,19 +85,19 @@ Namespace ComponentModel
         End Sub
 
         Public Shared Function CreateObject(Collection As Generic.IEnumerable(Of T)) As Comb(Of T)
-            Return New Comb(Of T) With {.ObjectCollection = Collection.ToList}
+            Return New Comb(Of T) With {.lstSource = Collection.ToList}
         End Function
 
         Public Overrides Function ToString() As String
-            Return String.Format("Comb(Of {0})::There is {1} object last.", GetType(T).FullName, ObjectCollection.Count)
+            Return String.Format("Comb(Of {0})::There is {1} object last.", GetType(T).FullName, lstSource.Count)
         End Function
 
         Public Shared Widening Operator CType(ObjectCollection As T()) As Comb(Of T)
-            Return New Comb(Of T) With {.ObjectCollection = ObjectCollection.ToList}
+            Return New Comb(Of T) With {.lstSource = ObjectCollection.ToList}
         End Operator
 
         Public Shared Widening Operator CType(ObjectCollection As List(Of T)) As Comb(Of T)
-            Return New Comb(Of T) With {.ObjectCollection = ObjectCollection}
+            Return New Comb(Of T) With {.lstSource = ObjectCollection}
         End Operator
 
         ''' <summary>
