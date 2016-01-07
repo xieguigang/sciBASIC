@@ -17,10 +17,12 @@ Imports System.Reflection
                   Url:="http://gcmodeller.org")>
 Public Module GDIPlusExtensions
 
+    <ExportAPI("To.Icon")>
     <Extension> Public Function GetIcon(res As Image) As Icon
         Return Drawing.Icon.FromHandle(New Bitmap(res).GetHicon)
     End Function
 
+    <ExportAPI("To.Icon")>
     <Extension> Public Function GetIcon(res As Bitmap) As Icon
         Return Drawing.Icon.FromHandle(res.GetHicon)
     End Function
@@ -32,13 +34,14 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <ExportAPI("LoadImage")>
+    <ExportAPI("LoadImage"), Extension>
     Public Function LoadImage(path As String) As Image
         Dim stream As Byte() = FileIO.FileSystem.ReadAllBytes(path)
         Dim res = Image.FromStream(stream:=New IO.MemoryStream(stream))
         Return res
     End Function
 
+    <ExportAPI("LoadImage")>
     <Extension> Public Function LoadImage(rawStream As Byte()) As Image
         Dim res = Image.FromStream(stream:=New IO.MemoryStream(rawStream))
         Return res
@@ -49,6 +52,8 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <param name="image"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("Get.RawStream")>
     <Extension> Public Function GetRawStream(image As Image) As Byte()
         Dim stream As New IO.MemoryStream
         Call image.Save(stream, Imaging.ImageFormat.Png)
@@ -114,6 +119,8 @@ Public Module GDIPlusExtensions
     ''' <param name="filled">默认的背景填充颜色为白色</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <ExportAPI("GDI+.Create")>
     <Extension> Public Function CreateGDIDevice(r As Drawing.SizeF, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
         Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
     End Function
@@ -141,6 +148,8 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("GDI+.Create")>
     <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As GDIPlusDeviceHandle
         Dim Image As Image = LoadImage(path)
         Dim GrDevice As Graphics = Graphics.FromImage(Image)
@@ -154,12 +163,15 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <param name="Image"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("GDI+.Create")>
     <Extension> Public Function GrFromImage(Image As Image) As GDIPlusDeviceHandle
         Dim Gr = Image.Size.CreateGDIDevice
         Call Gr.Gr_Device.DrawImage(Image, 0, 0, Gr.Width, Gr.Height)
         Return Gr
     End Function
 
+    <ExportAPI("Offset")>
     <Extension> Public Function OffSet(p As Point, x As Integer, y As Integer) As Point
         Return New Point(x + p.X, y + p.Y)
     End Function
@@ -175,6 +187,8 @@ Public Module GDIPlusExtensions
     ''' <param name="filled">默认的背景填充颜色为白色</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <ExportAPI("GDI+.Create")>
     <Extension> Public Function CreateGDIDevice(r As Drawing.Size, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
         Dim Bitmap As Bitmap
 
@@ -212,12 +226,16 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ImageCrop(source As Image, Location As Point, Size As Size) As Image
-        Dim CloneRect As New Rectangle(Location, Size)
-        Dim CloneBitmap As Bitmap = CType(source.Clone, Bitmap).Clone(CloneRect, source.PixelFormat)
-        Return CloneBitmap
+    ''' 
+    <ExportAPI("Image.Corp")>
+    <Extension> Public Function ImageCrop(source As Image, pos As Point, size As Size) As Image
+        Dim CloneRect As New Rectangle(pos, size)
+        Dim CloneBitmap As Bitmap = CType(source.Clone, Bitmap)
+        Dim crop As Bitmap = CloneBitmap.Clone(CloneRect, source.PixelFormat)
+        Return crop
     End Function
 
+    <ExportAPI("Image.Resize")>
     Public Function Resize(Image As Image, newSize As Size) As Image
         Dim Gr = newSize.CreateGDIDevice
 
@@ -268,6 +286,7 @@ Public Module GDIPlusExtensions
 
     Const RGB_EXPRESSION As String = "\d+,\d+,\d+"
 
+    <ExportAPI("Get.Color")>
     <Extension> Public Function ToColor(str As String) As Color
         Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
         If String.IsNullOrEmpty(s) Then
@@ -318,5 +337,79 @@ Public Module GDIPlusExtensions
         Call Gr.Gr_Device.FillRectangle(New SolidBrush(RenderColor), Rect)
 
         Return Gr.ImageResource
+    End Function
+
+    ''' <summary>
+    ''' 确定边界，然后进行剪裁
+    ''' </summary>
+    ''' <param name="res"></param>
+    ''' <param name="margin"></param>
+    ''' <returns></returns>
+    <ExportAPI("Image.CorpBlank")>
+    <Extension> Public Function CorpBlank(res As Image, Optional margin As Integer = 0, Optional blankColor As Color = Nothing) As Image
+        If blankColor.IsNullOrEmpty Then
+            blankColor = Color.White
+        End If
+
+        Dim top As Integer
+        Dim left As Integer
+        Dim bmp As New Bitmap(res)
+
+        For top = 0 To res.Height - 1
+            Dim find As Boolean = False
+
+            For left = 0 To res.Width - 1
+                Dim p = bmp.GetPixel(left, top)
+                If Not Equals(p, blankColor) Then
+                    ' 在这里确定了左右
+                    find = True
+                    Exit For
+                End If
+            Next
+
+            If find Then
+                Exit For
+            End If
+        Next
+
+        Dim right As Integer
+        Dim bottom As Integer
+
+        For bottom = res.Height - 1 To 0 Step -1
+            Dim find As Boolean = False
+
+            For right = res.Width - 1 To 0 Step -1
+                Dim p = bmp.GetPixel(left, top)
+                If Not Equals(p, blankColor) Then
+                    ' 在这里确定了左右
+                    find = True
+                    Exit For
+                End If
+            Next
+
+            If find Then
+                Exit For
+            End If
+        Next
+
+        Dim region As New Rectangle(left, top, right - left, bottom - top)
+        Return res.ImageCrop(region.Location, region.Size)
+    End Function
+
+    <Extension> Public Function Equals(a As Color, b As Color) As Boolean
+        If a.A <> b.A Then
+            Return False
+        End If
+        If a.B <> b.B Then
+            Return False
+        End If
+        If a.G <> b.G Then
+            Return False
+        End If
+        If a.R <> b.R Then
+            Return False
+        End If
+
+        Return True
     End Function
 End Module
