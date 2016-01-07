@@ -355,6 +355,8 @@ Public Module GDIPlusExtensions
         Dim left As Integer
         Dim bmp As New Bitmap(res)
 
+        ' top
+
         For top = 0 To res.Height - 1
             Dim find As Boolean = False
 
@@ -372,13 +374,16 @@ Public Module GDIPlusExtensions
             End If
         Next
 
-        Dim right As Integer
-        Dim bottom As Integer
+        Dim region As New Rectangle(0, top, res.Width, res.Height - top)
+        res = res.ImageCrop(region.Location, region.Size)
+        bmp = New Bitmap(res)
 
-        For bottom = res.Height - 1 To 0 Step -1
+        ' left
+
+        For left = 0 To res.Width - 1
             Dim find As Boolean = False
 
-            For right = res.Width - 1 To 0 Step -1
+            For top = 0 To res.Height - 1
                 Dim p = bmp.GetPixel(left, top)
                 If Not Equals(p, blankColor) Then
                     ' 在这里确定了左右
@@ -392,8 +397,65 @@ Public Module GDIPlusExtensions
             End If
         Next
 
-        Dim region As New Rectangle(left, top, right - left, bottom - top)
-        Return res.ImageCrop(region.Location, region.Size)
+        region = New Rectangle(left, 0, res.Width - left, res.Height)
+        res = res.ImageCrop(region.Location, region.Size)
+        bmp = New Bitmap(res)
+
+        Dim right As Integer
+        Dim bottom As Integer
+
+        ' bottom
+
+        For bottom = res.Height - 1 To 0 Step -1
+            Dim find As Boolean = False
+
+            For right = res.Width - 1 To 0 Step -1
+                Dim p = bmp.GetPixel(right, bottom)
+                If Not Equals(p, blankColor) Then
+                    ' 在这里确定了左右
+                    find = True
+                    Exit For
+                End If
+            Next
+
+            If find Then
+                Exit For
+            End If
+        Next
+
+        region = New Rectangle(0, 0, res.Width, bottom)
+        res = res.ImageCrop(region.Location, region.Size)
+        bmp = New Bitmap(res)
+
+        ' right
+
+        For right = res.Width - 1 To 0 Step -1
+            Dim find As Boolean = False
+
+            For bottom = res.Height - 1 To 0 Step -1
+                Dim p = bmp.GetPixel(right, bottom)
+                If Not Equals(p, blankColor) Then
+                    ' 在这里确定了左右
+                    find = True
+                    Exit For
+                End If
+            Next
+
+            If find Then
+                Exit For
+            End If
+        Next
+
+        region = New Rectangle(0, 0, right, res.Height)
+        res = res.ImageCrop(region.Location, region.Size)
+
+        If margin > 0 Then
+            Dim gr = New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
+            Call gr.Gr_Device.DrawImage(res, New Point(margin, margin))
+            res = gr.ImageResource
+        End If
+
+        Return res
     End Function
 
     <Extension> Public Function Equals(a As Color, b As Color) As Boolean
