@@ -39,27 +39,30 @@ Namespace DocumentStream
             Return html.ToString
         End Function
 
-        <Extension> Public Function ToHTMLTable(Of T As Class)(source As Generic.IEnumerable(Of T), Optional className As String = "") As String
+        <Extension> Public Function ToHTMLTable(Of T As Class)(source As Generic.IEnumerable(Of T), Optional className As String = "", Optional width As String = "") As String
             Dim Csv As DocumentStream.File = source.ToCsvDoc(False)
-            Return Csv.ToHTMLTable(className)
+            Return Csv.ToHTMLTable(className, width)
         End Function
 
         ''' <summary>
         ''' 只是生成table，而非完整的html文档
         ''' </summary>
         ''' <param name="doc"></param>
+        ''' <param name="width">100%|px</param>
         ''' <returns></returns>
         ''' 
         <ExportAPI("ToHTML.Table")>
-        <Extension> Public Function ToHTMLTable(doc As DocumentStream.File, Optional className As String = "") As String
-            Dim innerDoc As New StringBuilder(4096)
+        <Extension> Public Function ToHTMLTable(doc As DocumentStream.File, Optional className As String = "", Optional width As String = "") As String
+            Dim innerDoc As New StringBuilder("<table", 4096)
 
-            If String.IsNullOrEmpty(className) Then
-                Call innerDoc.AppendLine("<table>")
-            Else
-                Call innerDoc.AppendLine($"<table class=""{className}"" width=""100%"">")
+            If Not String.IsNullOrEmpty(className) Then
+                Call innerDoc.Append($" class=""{className}""")
+            End If
+            If Not String.IsNullOrEmpty(width) Then
+                Call innerDoc.Append($" width=""{width}""")
             End If
 
+            Call innerDoc.Append(">")
             Call innerDoc.AppendLine(doc.First.__titleRow)
             For Each row As RowObject In doc.Skip(1)
                 Call innerDoc.AppendLine(row.__contentRow)
