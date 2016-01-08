@@ -105,11 +105,18 @@ Public Module WebServices
     ''' <summary>
     ''' Create a parameter dictionary from the request parameter tokens.(请注意，字典的key默认为转换为小写的形式)
     ''' </summary>
-    ''' <param name="Tokens"></param>
+    ''' <param name="Tokens">
+    ''' 元素的个数必须要大于1，因为从url里面解析出来的元素之中第一个元素是url本身，则不再对url做字典解析
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("CreateDirectory", Info:="Create a parameter dictionary from the request parameter tokens.")>
     <Extension> Public Function GenerateDictionary(Tokens As String(),
                                                    Optional TransLower As Boolean = True) As Dictionary(Of String, String)
+        If Tokens.Length <= 1 Then
+            ' 只有url，没有附带的参数，则返回一个空的字典集合
+            Return New Dictionary(Of String, String)
+        End If
+
         Dim LQuery = (From s As String In Tokens
                       Let p As Integer = InStr(s, "="c)
                       Let Key As String = Mid(s, 1, p - 1)

@@ -50,7 +50,7 @@ Namespace Net.Mailto
             MailMessage.From = New MailAddress(Account.UserName, displayName, System.Text.Encoding.UTF8)
 
             For Each Addr In Receivers
-                MailMessage.To.Add(Addr)
+                Call MailMessage.To.Add(Addr)
             Next
 
             MailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
@@ -76,12 +76,16 @@ Namespace Net.Mailto
         ''' <summary>
         ''' Gmail
         ''' </summary>
-        ''' <param name="Account"></param>
-        ''' <param name="Password"></param>
+        ''' <param name="account"></param>
+        ''' <param name="pass"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function GmailClient(Account As String, Password As String) As EMailClient
-            Return New EMailClient(Account, Password, Port:=587, HostAddress:="smtp.gmail.com")
+        Public Shared Function GmailClient(account As String, pass As String) As EMailClient
+            Return New EMailClient(account, pass, Port:=587, HostAddress:="smtp.gmail.com")
+        End Function
+
+        Public Shared Function QQMail(account As String, pass As String) As EMailClient
+            Return New EMailClient(account, pass, Port:=587, HostAddress:="smtp.qq.com")
         End Function
 
         Public Structure MailConfigure

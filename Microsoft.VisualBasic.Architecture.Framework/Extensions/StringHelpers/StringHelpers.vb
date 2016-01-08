@@ -296,6 +296,10 @@ Public Module StringHelpers
     ''' 
     <ExportAPI("lTokens")>
     <Extension> Public Function lTokens(text As String) As String()
+        If String.IsNullOrEmpty(text) Then
+            Return New String() {}
+        End If
+
         Dim lf As Boolean = InStr(text, vbLf) > 0
         Dim cr As Boolean = InStr(text, vbCr) > 0
 
