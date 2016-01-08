@@ -166,6 +166,10 @@ Public Module WebServices
     ''' 
     <ExportAPI("PostRequest.Parsing")>
     <Extension> Public Function postRequestParser(data As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
+        If String.IsNullOrEmpty(data) Then
+            Return New Dictionary(Of String, String)
+        End If
+
         Dim sbr As New StringBuilder(data)
 
         Call sbr.Replace("+", " ")
