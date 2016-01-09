@@ -55,7 +55,7 @@ Namespace ConsoleDevice
                 {"\'", QUOT_CHAR},
                 {"\" & QUOT_CHAR, QUOT_CHAR}}
 
-        Const QUOT_CHAR As Char = Chr(34)
+        Public Const QUOT_CHAR As Char = Chr(34)
         Const FORMAT_CONTROL_EXPRESSION As String = "(%-?0?(\d+)?(\.\d+)?[bdcefggosux])|%%"
 
         Dim IORedirected As STDIO__.I_ConsoleDeviceHandle = SystemConsoleDevice.Instance
