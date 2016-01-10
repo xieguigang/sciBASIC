@@ -42,19 +42,22 @@
         ''' 将字符串数据类型转换为其他的数据类型
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property BasicTypesLoading As Dictionary(Of System.Type, Microsoft.VisualBasic.ConfigurationMappings.__StringTypeCaster) =
-            New Dictionary(Of System.Type, Microsoft.VisualBasic.ConfigurationMappings.__StringTypeCaster) From
-            {
+        Public ReadOnly Property BasicTypesLoading As Dictionary(Of System.Type, ConfigurationMappings.__StringTypeCaster) =
+            New Dictionary(Of System.Type, ConfigurationMappings.__StringTypeCaster) From {
+ _
                 {GetType(String), Function(strValue As String) strValue},
                 {GetType(Boolean), AddressOf getBoolean},
                 {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
                 {GetType(Double), AddressOf Val},
                 {GetType(Integer), Function(strValue As String) CInt(strValue)},
-                {GetType(Long), Function(strValue As String) CLng(strValue)}}
+                {GetType(Long), Function(strValue As String) CLng(strValue)},
+                {GetType(Single), Function(s) CSng(Val(s))},
+                {GetType(Char), Function(s) s.FirstOrDefault}
+        }
 
-        Public ReadOnly Property BasicTypesFlushs As Dictionary(Of Type, Microsoft.VisualBasic.ConfigurationMappings.__LDMStringTypeCastHandler) =
-            New Dictionary(Of Type, __LDMStringTypeCastHandler) From
-            {
+        Public ReadOnly Property BasicTypesFlushs As Dictionary(Of Type, ConfigurationMappings.__LDMStringTypeCastHandler) =
+            New Dictionary(Of Type, __LDMStringTypeCastHandler) From {
+ _
                 {GetType(String), AddressOf DataFramework.__toStringInternal},
                 {GetType(Boolean), AddressOf DataFramework.__toStringInternal},
                 {GetType(DateTime), AddressOf DataFramework.__toStringInternal},
@@ -68,7 +71,8 @@
                 {GetType(UShort), AddressOf DataFramework.__toStringInternal},
                 {GetType(Char), AddressOf DataFramework.__toStringInternal},
                 {GetType(Single), AddressOf DataFramework.__toStringInternal},
-                {GetType(SByte), AddressOf DataFramework.__toStringInternal}}
+                {GetType(SByte), AddressOf DataFramework.__toStringInternal}
+        }
 
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
 #End If

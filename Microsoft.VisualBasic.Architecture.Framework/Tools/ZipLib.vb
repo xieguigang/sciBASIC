@@ -267,6 +267,8 @@ Public Module GZip
                     End Select
                 Next
             End If
+
+            Call zipFile__1.Dispose()
         End Using
     End Sub
 

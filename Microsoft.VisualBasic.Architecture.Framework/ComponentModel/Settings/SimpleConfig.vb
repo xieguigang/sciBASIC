@@ -1,8 +1,11 @@
-﻿Namespace ComponentModel.Settings
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+
+Namespace ComponentModel.Settings
 
 #If NET_40 = 0 Then
 
-    <AttributeUsage(AttributeTargets.Property, allowmultiple:=False, inherited:=True)>
+    <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class SimpleConfig : Inherits Attribute
         Dim _ToLower As Boolean
 
@@ -18,16 +21,6 @@
             Return Name
         End Function
 
-        Private Shared ReadOnly SimpleDataTypes As Type() = New System.Reflection.TypeInfo() {
-            GetType(String),
-            GetType(Integer),
-            GetType(Double),
-            GetType(Single),
-            GetType(Boolean),
-            GetType(Char),
-            GetType(DateTime)
-        }
-
         ''' <summary>
         '''
         ''' </summary>
@@ -37,21 +30,23 @@
         ''' <param name="canWrite">从文件之中读取数据的时候，需要设置为真</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function TryParse(Of T As Class, TConfig As SimpleConfig)(canRead As Boolean, canWrite As Boolean) As Dictionary(Of TConfig, System.Reflection.PropertyInfo)
+        Public Shared Function TryParse(Of T As Class, TConfig As SimpleConfig)(canRead As Boolean, canWrite As Boolean) _
+            As KeyValuePair(Of TConfig, PropertyInfo)()
+
             Dim TypeInfo As System.Reflection.TypeInfo = GetType(T), ConfigType As System.Type = GetType(TConfig)
             Dim Properties = TypeInfo.GetProperties(System.Reflection.BindingFlags.Instance Or System.Reflection.BindingFlags.Public)
             Dim LQuery = (From [property] As System.Reflection.PropertyInfo
                           In Properties
                           Let attrs As Object() = [property].GetCustomAttributes(attributeType:=ConfigType, inherit:=True)
-                          Where Not attrs.IsNullOrEmpty AndAlso Array.IndexOf(SimpleDataTypes, [property].PropertyType) > -1
+                          Where Not attrs.IsNullOrEmpty AndAlso BasicTypesLoading.containskey([property].PropertyType)
                           Select New KeyValuePair(Of TConfig, System.Reflection.PropertyInfo)(DirectCast(attrs.First, TConfig), [property])).ToArray
 
             If LQuery.IsNullOrEmpty Then Return Nothing
 
-            Dim Schema As Dictionary(Of TConfig, System.Reflection.PropertyInfo) =
-                New Dictionary(Of TConfig, System.Reflection.PropertyInfo)
+            Dim Schema As List(Of KeyValuePair(Of TConfig, System.Reflection.PropertyInfo)) =
+                New List(Of KeyValuePair(Of TConfig, PropertyInfo))
 
-            For Each Line In LQuery
+            For Each Line As KeyValuePair(Of TConfig, PropertyInfo) In LQuery
                 If Line.Value.CanRead AndAlso Line.Value.CanWrite Then  '同时满足可读和可写的属性直接添加
                     GoTo INSERT
                 End If
@@ -71,10 +66,12 @@ INSERT:
                 If String.IsNullOrEmpty(Line.Key._Name) Then
                     Line.Key._Name = If(Line.Key._ToLower, Line.Value.Name.ToLower, Line.Value.Name)
                 End If
-                Call Schema.Add(Line.Key, Line.Value)
+
+                ' 这里为什么会出现重复的键名？？？
+                Call Schema.Add(New KeyValuePair(Of TConfig, PropertyInfo)(Line.Key, Line.Value))
             Next
 
-            Return Schema
+            Return Schema.ToArray
         End Function
 
         ''' <summary>

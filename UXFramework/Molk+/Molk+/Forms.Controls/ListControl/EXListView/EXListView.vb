@@ -138,7 +138,7 @@ Namespace Windows.Forms.Controls.ListControl
         End Property
 
         Private Sub txtbx_KeyPress(sender As Object, e As KeyPressEventArgs)
-            If Asc(e.KeyChar) = Keys.[Return] Then
+            If Asc(e.KeyChar) = System.Windows.Forms.Keys.[Return] Then
                 _clickedsubitem.Text = txtbx.Text
                 txtbx.Visible = False
                 _clickeditem.Tag = Nothing

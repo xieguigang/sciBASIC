@@ -15,7 +15,7 @@ Namespace Windows.Forms.Controls
         Protected MustOverride Function get_HomePage() As String
 
         Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
-            If e.KeyCode = Keys.Enter Then
+            If e.KeyCode = System.Windows.Forms.Keys.Enter Then
                 Call WebBrowser1.Navigate(TextBox1.Text)
             End If
         End Sub

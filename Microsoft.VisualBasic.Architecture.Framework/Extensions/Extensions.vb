@@ -42,6 +42,19 @@ Public Module Extensions
 Public Module Extensions
 #End If
 
+    <Extension>
+    Public Function IndexOf(Of T)(source As Queue(Of T), x As T) As Integer
+        If source.IsNullOrEmpty Then
+            Return -1
+        Else
+            Return source.ToList.IndexOf(x)
+        End If
+    End Function
+
+    <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
+        Return source.ToArray(Function(x) x.Key)
+    End Function
+
     ''' <summary>
     ''' 性能测试工具
     ''' </summary>
@@ -52,6 +65,13 @@ Public Module Extensions
         Call work()
         Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
         Return sw.ElapsedMilliseconds
+    End Function
+
+    Public Function Time(Of T)(work As Func(Of T)) As T
+        Dim sw As Stopwatch = Stopwatch.StartNew
+        Dim value As T = work()
+        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
+        Return value
     End Function
 
     Public Delegate Function WaitHandle() As Boolean
