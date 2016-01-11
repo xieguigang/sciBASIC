@@ -526,30 +526,30 @@ Public Module Extensions
     ''' 将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，这个函数之中不能够使用并行化计数，以保证元素之间的相互原有的顺序
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="parTokens">每一个子集合之中的元素的数目</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <Extension> Public Function Split(Of T)(Collection As Generic.IEnumerable(Of T), parTokens As Integer) As T()()
-        Dim ChunkList As List(Of T()) = New List(Of T())
-        Dim ChunkBuffer As T() = Collection.ToArray
-        Dim n As Integer = ChunkBuffer.Length
+    <Extension> Public Function Split(Of T)(source As Generic.IEnumerable(Of T), parTokens As Integer) As T()()
+        Dim chunkList As List(Of T()) = New List(Of T())
+        Dim chunkBuffer As T() = source.ToArray
+        Dim n As Integer = chunkBuffer.Length
 
         For i As Integer = 0 To n - 1 Step parTokens
-            Dim TempChunk As T()
+            Dim buffer As T()
 
             If n - i >= parTokens Then
-                TempChunk = New T(parTokens - 1) {}
+                buffer = New T(parTokens - 1) {}
             Else
-                TempChunk = New T(n - i - 1) {}
+                buffer = New T(n - i - 1) {}
             End If
 
-            Call Array.ConstrainedCopy(ChunkBuffer, i, TempChunk, 0, TempChunk.Length)
-            Call ChunkList.Add(TempChunk)
+            Call Array.ConstrainedCopy(chunkBuffer, i, buffer, Scan0, buffer.Length)
+            Call chunkList.Add(buffer)
         Next
 
-        Return ChunkList.ToArray
+        Return chunkList.ToArray
     End Function
 
     ''' <summary>

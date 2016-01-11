@@ -7,14 +7,43 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <ExportAPI("s.Parts")>
+    Public Function Parts(s As String, len As String) As String
+        Dim sbr As New StringBuilder
+        Call Parts(s, len, sbr)
+        Return sbr.ToString
+    End Function
+
+    Public Sub Parts(s As String, len As String, ByRef sbr As StringBuilder)
+        Do While Not String.IsNullOrEmpty(s)
+            Call sbr.Append(Mid(s, 1, len))
+            s = Mid(s, len + 1)
+            If String.IsNullOrEmpty(s) Then
+                Return
+            End If
+            Dim fs As Integer = InStr(s, " ")
+
+            If fs = 0 Then
+                Call sbr.AppendLine(s)
+                Return
+            End If
+
+            Dim Firts As String = Mid(s, 1, fs - 1)
+            s = Mid(s, fs + 1)
+            Call sbr.AppendLine(Firts)
+        Loop
+    End Sub
+
     Const REGEX_EMAIL As String = "[a-z0-9\._-]+@[a-z0-9\._-]+"
     Const REGEX_URL As String = "(ftp|http(s)?)[:]//[a-z0-9\.-_]+\.[a-z]+/*[^""]*"
 
+    <ExportAPI("Parsing.E-Mails")>
     Public Function GetEMails(s As String) As String()
         Dim values As String() = Regex.Matches(s, REGEX_EMAIL, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
         Return values
     End Function
 
+    <ExportAPI("Parsing.URLs")>
     Public Function GetURLs(s As String) As String()
         Dim values As String() = Regex.Matches(s, REGEX_URL, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
         Return values

@@ -137,31 +137,11 @@ Namespace Scripting.MetaData
             Dim sbr As StringBuilder = New StringBuilder(1024)
 
             For Each s As String In Tokens
-                Call __parts(s, absLen, sbr)
+                Call StringHelpers.Parts(s, absLen, sbr)
                 Call sbr.AppendLine(" ")
             Next
 
             Return sbr.ToString
         End Function
-
-        Private Sub __parts(s As String, len As String, ByRef sbr As StringBuilder)
-            Do While Not String.IsNullOrEmpty(s)
-                Call sbr.Append(Mid(s, 1, len))
-                s = Mid(s, len + 1)
-                If String.IsNullOrEmpty(s) Then
-                    Return
-                End If
-                Dim fs As Integer = InStr(s, " ")
-
-                If fs = 0 Then
-                    Call sbr.AppendLine(s)
-                    Return
-                End If
-
-                Dim Firts As String = Mid(s, 1, fs - 1)
-                s = Mid(s, fs + 1)
-                Call sbr.AppendLine(Firts)
-            Loop
-        End Sub
     End Class
 End Namespace
