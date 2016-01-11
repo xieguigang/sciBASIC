@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 <Extension>
 Public Module IEnumerations
@@ -33,7 +34,7 @@ Public Module IEnumerations
         Return source.GetItem(Id)
     End Function
 
-    <Extension> Public Function GetItems(Of T As ComponentModel.Collection.Generic.IDEnumerable)(source As System.Collections.Generic.IEnumerable(Of T), Id As String) As T()
+    <Extension> Public Function GetItems(Of T As ComponentModel.Collection.Generic.IDEnumerable)(source As IEnumerable(Of T), Id As String) As T()
         Dim LQuery = (From ItemObj As T In source Where String.Equals(Id, ItemObj.Identifier) Select ItemObj).ToArray
         Return LQuery
     End Function
@@ -152,8 +153,12 @@ Public Module IEnumerations
         Return Collection.ToDictionary(Function(item As T) item.Identifier)
     End Function
 
-    <Extension> Public Function GetRItem(Of T As ComponentModel.Collection.Generic.IReadOnlyId)(source As Generic.IEnumerable(Of T), uniqueId As String) As T
-        Dim LQuery = (From itemObj As T In source Where String.Equals(itemObj.Identifier, uniqueId) Select itemObj).FirstOrDefault
+    <Extension> Public Function GetItem(Of T As IReadOnlyId)(source As IEnumerable(Of T), uniqueId As String, Optional caseSensitive As Boolean = True) As T
+        Dim method As StringComparison = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
+        Dim LQuery = (From itemObj As T
+                      In source
+                      Where String.Equals(itemObj.Identifier, uniqueId, method)
+                      Select itemObj).FirstOrDefault
         Return LQuery
     End Function
 

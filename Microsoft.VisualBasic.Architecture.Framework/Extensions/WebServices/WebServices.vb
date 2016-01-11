@@ -112,9 +112,13 @@ Public Module WebServices
     <ExportAPI("CreateDirectory", Info:="Create a parameter dictionary from the request parameter tokens.")>
     <Extension> Public Function GenerateDictionary(Tokens As String(),
                                                    Optional TransLower As Boolean = True) As Dictionary(Of String, String)
-        If Tokens.Length <= 1 Then
-            ' 只有url，没有附带的参数，则返回一个空的字典集合
+        If Tokens.IsNullOrEmpty Then
             Return New Dictionary(Of String, String)
+        End If
+        If Tokens.Length = 1 Then  ' 只有url，没有附带的参数，则返回一个空的字典集合
+            If InStr(Tokens(Scan0), "=") = 0 Then
+                Return New Dictionary(Of String, String)
+            End If
         End If
 
         Dim LQuery = (From s As String In Tokens
@@ -122,7 +126,7 @@ Public Module WebServices
                       Let Key As String = Mid(s, 1, p - 1)
                       Let Value = Mid(s, p + 1)
                       Select Key, Value).ToArray
-        Return LQuery.ToDictionary(Function(obj) If(TransLower, obj.Key.ToLower, obj.Key), elementSelector:=Function(obj) obj.Value)
+        Return LQuery.ToDictionary(Function(obj) If(TransLower, obj.Key.ToLower, obj.Key), Function(obj) obj.Value)
     End Function
 
     ''' <summary>
