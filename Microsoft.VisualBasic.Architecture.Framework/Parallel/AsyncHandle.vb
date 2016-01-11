@@ -32,7 +32,10 @@
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As AsyncHandle(Of TOut)
-            Me._Handle = Task.BeginInvoke(Nothing, Nothing)
+            If IsCompleted Then
+                Me._Handle = Task.BeginInvoke(Nothing, Nothing) ' 假若没有执行完毕也调用的话，会改变handle
+            End If
+
             Return Me
         End Function
 

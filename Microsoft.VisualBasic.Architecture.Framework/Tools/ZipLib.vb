@@ -147,6 +147,15 @@ Public Module GZip
         Call AddToArchive(SaveZip, New List(Of String) From {File}, action, fileOverwrite, compression)
     End Sub
 
+    <ExportAPI("DIR.Zip")>
+    Public Sub DirectoryArchive(DIR As String, saveZip As String,
+                                Optional action As ArchiveAction = ArchiveAction.Replace,
+                                Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
+                                Optional compression As CompressionLevel = CompressionLevel.Optimal)
+        Dim files = FileIO.FileSystem.GetFiles(DIR)
+        Call AddToArchive(saveZip, files.ToList, action, fileOverwrite, compression)
+    End Sub
+
     ''' <summary>
     ''' Allows you to add files to an archive, whether the archive
     ''' already exists or not
