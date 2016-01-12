@@ -11,7 +11,7 @@ Namespace MMFProtocol.MapStream
         Dim _udtBadge As Long
         Dim _chunkBuffer(ChunkSize - 1) As Byte
         Dim _mappedStream As MMFStream
-        Dim _mmfileStream As System.IO.MemoryMappedFiles.MemoryMappedFile
+        Dim _mmfileStream As IO.MemoryMappedFiles.MemoryMappedFile
 
         ''' <summary>
         ''' 内存映射文件的数据块的预分配大小

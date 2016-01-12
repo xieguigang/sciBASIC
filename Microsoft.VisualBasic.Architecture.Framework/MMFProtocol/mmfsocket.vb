@@ -58,11 +58,18 @@ Namespace MMFProtocol
         Public Sub SendMessage(byteData As Byte())
             Me._UpdateFlag = _MMFReader.Read.udtBadge + 1
 
-            Dim bytData As Byte() = New MMFStream With {.byteData = byteData, .udtBadge = Me._UpdateFlag}.Serialize
+            Dim bytData As Byte() = New MMFStream With {
+                .byteData = byteData,
+                .udtBadge = Me._UpdateFlag
+            }.Serialize
 
             Call _MMFReader.Update(Me._UpdateFlag)
             Call _MMFWriter.WriteStream(bytData)
         End Sub
+
+        Public Function ReadData() As Byte()
+            Return _MMFReader.Read.byteData
+        End Function
 
         Public Sub SendMessage(raw As Net.Protocol.RawStream)
             Call SendMessage(raw.Serialize)
@@ -111,7 +118,7 @@ Namespace MMFProtocol
 
         Public Function Ping() As Boolean
             Call SendMessage(str:=_PING_MESSAGE)
-            Call System.Threading.Thread.Sleep(100)
+            Call Threading.Thread.Sleep(100)
 
             If PingResult = True Then
                 PingResult = False

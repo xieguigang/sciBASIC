@@ -197,6 +197,7 @@
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="Extensions\StringHelpers\Compares\LevenshteinDistance.vb" />
+    <Compile Include="MMFProtocol\Pipeline.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />
     <Compile Include="MMFProtocol\MapStream\MSWriter.vb" />
