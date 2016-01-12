@@ -1,7 +1,7 @@
 ﻿Namespace Parallel
 
     ''' <summary>
-    ''' Represents the status of an asynchronous operation.
+    ''' Represents the status of an asynchronous operation.(背景线程加载数据)
     ''' </summary>
     ''' <typeparam name="TOut"></typeparam>
     Public Class AsyncHandle(Of TOut)

@@ -307,7 +307,8 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 
     ''' <summary>
-    ''' Get the specific type of custom attribute from a property.
+    ''' Get the specific type of custom attribute from a property. 
+    ''' If the target custom attribute is not declared on the target, then this function returns nothing.
     ''' (从一个属性对象中获取特定的自定义属性对象)
     ''' </summary>
     ''' <typeparam name="T">The type of the custom attribute.(自定义属性的类型)</typeparam>

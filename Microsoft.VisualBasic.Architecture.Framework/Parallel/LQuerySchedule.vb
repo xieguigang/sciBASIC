@@ -72,7 +72,7 @@ Namespace Parallel
         End Function
 
         Public Function InvokeQuery(Of T, TOut)(data As Generic.IEnumerable(Of LQueryCacheHandle(Of T)), invoke As Func(Of T, TOut), Optional [Default] As TOut = Nothing) As TOut()
-            Dim LQuery As LQueryHandle(Of T, TOut)() = InternalStartLQuery(Of T, TOut)(data, invoke)
+            Dim LQuery As LQueryHandle(Of T, TOut)() = __startLQuery(Of T, TOut)(data, invoke)
             Dim get_LQueryResult As LQueryResult(Of TOut)() = (From query_HWND As LQueryHandle(Of T, TOut) In LQuery.AsParallel
                                                                Let p As Integer = query_HWND.p
                                                                Let query As TOut = InternalTimeoutQuery(Of T, TOut)(invoke, handle:=query_HWND.Handle, [default]:=Function() [Default], Thread_ID:=query_HWND.TID)
@@ -84,7 +84,7 @@ Namespace Parallel
         End Function
 
         Public Shared Function InvokeParallelLQuery(Of T, TOut)(data As Generic.IEnumerable(Of LQueryCacheHandle(Of T)), invoke As Func(Of T, TOut)) As TOut()
-            Dim LQuery As LQueryHandle(Of T, TOut)() = InternalStartLQuery(Of T, TOut)(data, invoke)
+            Dim LQuery As LQueryHandle(Of T, TOut)() = __startLQuery(Of T, TOut)(data, invoke)
             Dim get_LQueryResult As LQueryResult(Of TOut)() = (From query_HWND As LQueryHandle(Of T, TOut) In LQuery.AsParallel
                                                                Let p As Integer = query_HWND.p
                                                                Let query As TOut = invoke(query_HWND.Source)
@@ -96,7 +96,7 @@ Namespace Parallel
         End Function
 
         Public Function InvokeQuery(Of T, TOut)(data As Generic.IEnumerable(Of LQueryCacheHandle(Of T)), invoke As Func(Of T, TOut), Optional [Default] As Func(Of T, TOut) = Nothing) As TOut()
-            Dim LQuery As LQueryHandle(Of T, TOut)() = InternalStartLQuery(Of T, TOut)(data, invoke)
+            Dim LQuery As LQueryHandle(Of T, TOut)() = __startLQuery(Of T, TOut)(data, invoke)
             Dim get_LQueryResult As LQueryResult(Of TOut)() = (From query_HWND As LQueryHandle(Of T, TOut) In LQuery.AsParallel
                                                                Let p As Integer = query_HWND.p
                                                                Let query As TOut = InternalTimeoutQuery(Of T, TOut)(invoke, handle:=query_HWND.Handle, [default]:=Function() [Default](query_HWND.Source), Thread_ID:=query_HWND.TID)
@@ -111,25 +111,29 @@ Namespace Parallel
         ''' 当查询操作超时的时候，单条查询线程会返回<paramref name="Default">默认值</paramref>
         ''' </summary>
         ''' <typeparam name="Out">返回的值类型</typeparam>
-        ''' <param name="Collection"></param>
+        ''' <param name="source"></param>
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function InternalInvokeQuery(Of T, Out)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
-            Dim LQuery As LQueryHandle(Of T, Out)() = InternalStartLQuery(Of T, Out)(Collection, invoke)
-            Dim get_LQueryResult As LQueryResult(Of Out)() = (From query_HWND As LQueryHandle(Of T, Out) In LQuery.AsParallel
-                                                              Let p As Integer = query_HWND.p
-                                                              Let query As Out = InternalTimeoutQuery(Of T, Out)(invoke, handle:=query_HWND.Handle, [default]:=Function() [Default], Thread_ID:=query_HWND.TID)
-                                                              Let result As LQueryResult(Of Out) = New LQueryResult(Of Out) With {.p_Handle = p, .Result = query}
-                                                              Select result
-                                                              Order By result.p_Handle Ascending).ToArray  '并行化的获取查询结果并判断查询是否超时
-            Dim ChunkBuffer As Out() = (From item As LQueryResult(Of Out) In get_LQueryResult Select item.Result).ToArray '取出查询结果
+        Public Function InternalInvokeQuery(Of T, Out)(source As Generic.IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
+            Dim LQuery As LQueryHandle(Of T, Out)() = __startLQuery(Of T, Out)(source, invoke)
+            Dim getLQueryResult As LQueryResult(Of Out)() =
+                (From query_HWND As LQueryHandle(Of T, Out) In LQuery.AsParallel
+                 Let p As Integer = query_HWND.p
+                 Let query As Out = InternalTimeoutQuery(Of T, Out)(invoke, handle:=query_HWND.Handle, [default]:=Function() [Default], Thread_ID:=query_HWND.TID)
+                 Let result As LQueryResult(Of Out) = New LQueryResult(Of Out) With {.p_Handle = p, .Result = query}
+                 Select result
+                 Order By result.p_Handle Ascending).ToArray  '并行化的获取查询结果并判断查询是否超时
+
+            Dim ChunkBuffer As Out() = (From x As LQueryResult(Of Out) In getLQueryResult Select x.Result).ToArray '取出查询结果
             Return ChunkBuffer
         End Function
 
-        Public Function InvokeQuery(Of T, Out)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
-            Dim ChunkTemp = Collection.Split(Collection.Count / Me._n)
-            Dim LQuery = (From Chunk In ChunkTemp.AsParallel Select InternalInvokeQuery(Of T, Out)(Chunk, invoke, [Default])).ToArray.MatrixToVector
+        Public Function InvokeQuery(Of T, Out)(source As IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
+            Dim ChunkTemp As T()() = source.Split(source.Count / Me._n)
+            Dim LQuery As Out() = (From Chunk As T()
+                                   In ChunkTemp.AsParallel
+                                   Select InternalInvokeQuery(Of T, Out)(Chunk, invoke, [Default])).ToArray.MatrixToVector
             Return LQuery
         End Function
 
@@ -137,18 +141,24 @@ Namespace Parallel
         ''' 采取非并行化的方式启动计算线程
         ''' </summary>
         ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="Collection"></param>
+        ''' <param name="source"></param>
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Shared Function InternalStartLQuery(Of T, TOut)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
-            Dim LQuery As LQueryHandle(Of T, TOut)() = (From p As Integer In Collection.Sequence
-                                                        Let item As T = Collection(p)
-                                                        Let tid As String = item.ToString
-                                                        Let queryHandle As System.IAsyncResult = invoke.BeginInvoke(item, Nothing, Nothing)
-                                                        Select New LQueryHandle(Of T, TOut) With
-                                                        {
-                                                            .Handle = queryHandle, .Query = invoke, .TID = tid, .p = p, .Source = item}).ToArray  '使用非并行化的方法启动查询以提高查询性能
+        Private Shared Function __startLQuery(Of T, TOut)(source As Generic.IEnumerable(Of T), invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
+            Dim LQuery As LQueryHandle(Of T, TOut)() =
+                (From p As Integer In source.Sequence
+                 Let item As T = source(p)
+                 Let tid As String = item.ToString
+                 Let queryHandle As System.IAsyncResult = invoke.BeginInvoke(item, Nothing, Nothing)
+                 Let handle = New LQueryHandle(Of T, TOut) With {
+                     .Handle = queryHandle,
+                     .Query = invoke,
+                     .TID = tid,
+                     .p = p,
+                     .Source = item
+                 }
+                 Select handle).ToArray  '使用非并行化的方法启动查询以提高查询性能
             Return LQuery
         End Function
 
@@ -156,18 +166,25 @@ Namespace Parallel
         ''' 采取非并行化的方式启动计算线程
         ''' </summary>
         ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="Collection"></param>
+        ''' <param name="source"></param>
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Shared Function InternalStartLQuery(Of T, TOut)(Collection As Generic.IEnumerable(Of LQueryCacheHandle(Of T)), invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
-            Dim LQuery As LQueryHandle(Of T, TOut)() = (From cache As LQueryCacheHandle(Of T)
-                                                    In Collection
-                                                        Let tid As String = cache.ToString
-                                                        Let queryHandle As System.IAsyncResult = invoke.BeginInvoke(cache.data, Nothing, Nothing)
-                                                        Select New LQueryHandle(Of T, TOut) With
-                                                           {
-                                                               .Handle = queryHandle, .Query = invoke, .TID = tid, .p = cache.p_Handle, .Source = cache.data}).ToArray  '使用非并行化的方法启动查询以提高查询性能
+        Private Shared Function __startLQuery(Of T, TOut)(source As Generic.IEnumerable(Of LQueryCacheHandle(Of T)),
+                                                          invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
+            Dim LQuery As LQueryHandle(Of T, TOut)() =
+                (From cache As LQueryCacheHandle(Of T)
+                 In source
+                 Let tid As String = cache.ToString
+                 Let queryHandle As IAsyncResult = invoke.BeginInvoke(cache.data, Nothing, Nothing)
+                 Let handle = New LQueryHandle(Of T, TOut) With {
+                     .Handle = queryHandle,
+                     .Query = invoke,
+                     .TID = tid,
+                     .p = cache.p_Handle,
+                     .Source = cache.data
+                 }
+                 Select handle).ToArray  '使用非并行化的方法启动查询以提高查询性能
             Return LQuery
         End Function
 
@@ -202,7 +219,7 @@ Namespace Parallel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function InternalInvokeQuery_p(Of T, Out)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, Out), get_Default As Func(Of T, Out)) As Out()
-            Dim LQuery As LQueryHandle(Of T, Out)() = InternalStartLQuery(Of T, Out)(Collection, invoke)
+            Dim LQuery As LQueryHandle(Of T, Out)() = __startLQuery(Of T, Out)(Collection, invoke)
             Dim get_LQueryResult As LQueryResult(Of Out)() = (
             From queryHandle In LQuery.AsParallel
             Let p As Integer = queryHandle.p

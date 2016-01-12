@@ -16,27 +16,36 @@ Public Class LazyLoader(Of TOutput As Class, TSource)
     ''' <remarks></remarks>
     Public Property Value As TOutput
         Get
-            If _InternalData Is Nothing Then
-                Call InternalLoadData()
+            If _innerData Is Nothing Then
+                Call __loadData()
             End If
 
-            Return _InternalData
+            Return _innerData
         End Get
         Set(value As TOutput)
-            _InternalData = value
+            _innerData = value
         End Set
     End Property
 
     Const DATA_LOADED_MESSAGE As String = "[LATE_LOADER_MSG]  {0} data load done!   //{1}; ({2})   ........{3}ms."
 
     Dim _url As TSource
-    Dim _MethodInfo As DataLoadMethod
-    Dim _InternalData As TOutput
+    Dim _methodInfo As DataLoadMethod
+    Dim _innerData As TOutput
 
-    Private Sub InternalLoadData()
+    Private Sub __loadData()
         Dim sw As Stopwatch = Stopwatch.StartNew
-        _InternalData = _MethodInfo(_url)
-        Call Console.WriteLine(DATA_LOADED_MESSAGE, URL.ToString.ToFileURL, _InternalData.GetType.FullName, _MethodInfo.ToString, sw.ElapsedMilliseconds)
+        _innerData = _methodInfo(_url)
+        Call __printMSG(sw.ElapsedMilliseconds)
+    End Sub
+
+    Private Sub __printMSG(ElapsedMilliseconds As Long)
+        Dim url As String = Me.URL.ToString.ToFileURL
+        Dim method As String = _methodInfo.ToString
+        Dim msg As String =
+            String.Format(DATA_LOADED_MESSAGE, url, _innerData.GetType.FullName, method, ElapsedMilliseconds)
+
+        Call msg.__DEBUG_ECHO
     End Sub
 
     ''' <summary>
@@ -51,13 +60,13 @@ Public Class LazyLoader(Of TOutput As Class, TSource)
         End Get
         Set(value As TSource)
             _url = value
-            _InternalData = Nothing
+            _innerData = Nothing
         End Set
     End Property
 
     Sub New(url As TSource, p As DataLoadMethod)
         _url = url
-        _MethodInfo = p
+        _methodInfo = p
     End Sub
 
     Public Overrides Function ToString() As String
@@ -71,7 +80,7 @@ Public Class LazyLoader(Of TOutput As Class, TSource)
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function WriteData(WriteMethod As DataWriteMethod) As Boolean
-        Return WriteMethod(URL, _InternalData)
+        Return WriteMethod(URL, _innerData)
     End Function
 
     Public Shared Narrowing Operator CType(obj As LazyLoader(Of TOutput, TSource)) As TOutput
