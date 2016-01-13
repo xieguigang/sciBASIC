@@ -7,6 +7,8 @@ Imports Microsoft.VisualBasic.ConsoleDevice
 ''' </summary>
 Public Module VBDebugger
 
+    Public Property Mute As Boolean = False
+
     Private ReadOnly _Indent As String() = {
         "",
         New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
@@ -22,11 +24,15 @@ Public Module VBDebugger
     ''' 
     <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
         Dim str = $"{_Indent(Indent)}[DEBUG {Now.ToString}]  {MSG}"
-        Call Console.WriteLine(str)
+
+        If Not Mute Then
+            Call Console.WriteLine(str)
 #If DEBUG Then
-        Call Debug.WriteLine(str)
-        Call Trace.WriteLine(str)
+            Call Debug.WriteLine(str)
+            Call Trace.WriteLine(str)
 #End If
+        End If
+
         Return str
     End Function
 

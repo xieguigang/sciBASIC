@@ -156,9 +156,8 @@ Public Module Extensions
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
         Dim ChunkBuffer = Csv.StorageProvider.Reflection.Reflector.Load(Of T)(Path, explicit, encoding)
-        Call Console.WriteLine(
-$"[CSV.Reflector::{GetType(T).FullName}]
-Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ...................{st.ElapsedMilliseconds}ms")
+        Call $"[CSV.Reflector::{GetType(T).FullName}]
+Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ...................{st.ElapsedMilliseconds}ms".__DEBUG_ECHO
         Return ChunkBuffer
     End Function
 
