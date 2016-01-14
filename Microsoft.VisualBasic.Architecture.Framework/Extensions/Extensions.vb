@@ -2184,14 +2184,13 @@ Public Module Extensions
     ''' <param name="ThrowEx">当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadXml(Of T)(XmlFile As String,
-                                              Optional encoding As System.Text.Encoding = Nothing,
-                                              Optional ThrowEx As Boolean = True) As T
-
+    <Extension> Public Function LoadXml(Of T)(XmlFile As String, Optional encoding As Encoding = Nothing, Optional ThrowEx As Boolean = True) As T
         If encoding Is Nothing Then encoding = System.Text.Encoding.Default
 
         If (Not XmlFile.FileExists) OrElse FileIO.FileSystem.GetFileInfo(XmlFile).Length = 0 Then
-            Dim ex As New Exception($"{XmlFile} is not exists on your file system or it is ZERO length content!")
+            Dim exMsg As String =
+                $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
+            Dim ex As New Exception(exMsg)
             Call App.LogException(ex)
             If ThrowEx Then
                 Throw ex
