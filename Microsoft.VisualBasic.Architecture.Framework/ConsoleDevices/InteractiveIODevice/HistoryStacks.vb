@@ -1,7 +1,7 @@
 ﻿Namespace ConsoleDevice
 
     Public Class HistoryStacks : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
-        Implements Microsoft.VisualBasic.ComponentModel.ITextFile.I_FileSaveHandle
+        Implements ISaveHandle
 
         Dim InternalHistoryList As List(Of String)
         Dim InternalHistories As List(Of History)

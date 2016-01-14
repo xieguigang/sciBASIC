@@ -9,7 +9,7 @@ Namespace Drawing2D
     ''' 用来描述一个向量图的GDI绘图设备
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Vectogram : Implements Microsoft.VisualBasic.ComponentModel.ITextFile.I_FileSaveHandle
+    Public Class Vectogram : Implements ISaveHandle
 
         Implements System.IDisposable
         Implements Generic.IEnumerable(Of Drawing2D.VectorElements.LayoutsElement)

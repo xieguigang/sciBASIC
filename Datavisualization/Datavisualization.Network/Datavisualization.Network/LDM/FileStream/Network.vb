@@ -13,7 +13,7 @@ Namespace FileStream
     Public Class Network(Of T_Node As Node, T_Edge As NetworkNode)
 
         Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IKeyValuePairObject(Of T_Node(), T_Edge())
-        Implements Microsoft.VisualBasic.ComponentModel.ITextFile.I_FileSaveHandle
+        Implements ISaveHandle
 
         Public Property Nodes As T_Node() Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of T_Node(), T_Edge()).Identifier
         Public Property Edges As T_Edge() Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of T_Node(), T_Edge()).Value

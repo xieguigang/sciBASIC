@@ -4,7 +4,7 @@ Namespace ConsoleDevice
 
     Public Class InteractiveDevice : Inherits ConsoleDevice.I_SystemConsoleObject
         Implements System.IDisposable
-        Implements Microsoft.VisualBasic.ComponentModel.ITextFile.I_FileSaveHandle
+        Implements ISaveHandle
 
         Dim _InternalStreamBuffer As StringBuilder = New StringBuilder(2048)
         Dim _InternalCommandsHistory As ConsoleDevice.HistoryStacks

@@ -217,6 +217,7 @@
     <Compile Include="Serialization\BinaryDumping\BinaryWriter.vb" />
     <Compile Include="Text\TextIndexing.vb" />
     <Compile Include="Text\GB2312.vb" />
+    <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
     <Compile Include="Tools\Logging\LogFile\LogReader.vb" />
     <Compile Include="Tools\Logging\LogFile\LogEntry.vb" />
     <Compile Include="Tools\Logging\LogFile\MSG_TYPES.vb" />
