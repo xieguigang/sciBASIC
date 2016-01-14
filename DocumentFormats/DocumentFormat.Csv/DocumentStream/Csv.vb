@@ -18,6 +18,13 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Protected Friend _innerTable As List(Of RowObject) = New List(Of RowObject)
 
+        Public Sub New()
+        End Sub
+
+        Sub New(data As Generic.IEnumerable(Of RowObject))
+            _innerTable = data.ToList
+        End Sub
+
         ''' <summary>
         ''' Get the max width number of the rows in the table.(返回表中的元素最多的一列的列数目)
         ''' </summary>
