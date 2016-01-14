@@ -39,7 +39,9 @@ Public Class DistResult
                 Return 0
             End If
 
-            Return DistTable(Reference.Length).Values(Hypotheses.Length)
+            Dim reference As String = __getReference()
+            Dim hypotheses As String = __getSubject()
+            Return DistTable(reference.Length).Values(hypotheses.Length)
         End Get
     End Property
 
