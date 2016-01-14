@@ -121,13 +121,17 @@ Namespace Drawing2D
             Yield GetEnumerator()
         End Function
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ITextFile.I_FileSaveHandle.Save
+        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             If String.IsNullOrEmpty(Path) Then
                 Path = "./Vectogram.vcs"
             End If
 
             Dim Script As String = New Drawing2D.DrawingScript(Me).ToScript
             Return Script.SaveTo(Path, encoding)
+        End Function
+
+        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(Path, encoding.GetEncodings)
         End Function
 #End Region
     End Class
