@@ -40,7 +40,7 @@ Public Module NetworkAPI
 
     <ExportAPI("Save")>
     Public Function SaveNetwork(network As ______NETWORK__, <Parameter("DIR.Export")> Export As String) As Boolean
-        Return network.Save(Export)
+        Return network.Save(Export, Encodings.UTF8)
     End Function
 
     <ExportAPI("Write.Network")>

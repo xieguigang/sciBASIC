@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace FileStream
 
@@ -59,13 +60,17 @@ Namespace FileStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Save(Optional ExportDir As String = "",
-                             Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ComponentModel.ITextFile.I_FileSaveHandle.Save
+                             Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             If String.IsNullOrEmpty(ExportDir) Then ExportDir = My.Computer.FileSystem.CurrentDirectory
 
             Call Nodes.SaveTo(String.Format("{0}/Nodes.csv", ExportDir), False, encoding)
             Call Edges.SaveTo(String.Format("{0}/Edges.csv", ExportDir), False, encoding)
 
             Return True
+        End Function
+
+        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(Path, encoding.GetEncodings)
         End Function
     End Class
 End Namespace
