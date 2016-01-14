@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace ConsoleDevice
 
@@ -6,8 +7,8 @@ Namespace ConsoleDevice
         Implements System.IDisposable
         Implements ISaveHandle
 
-        Dim _InternalStreamBuffer As StringBuilder = New StringBuilder(2048)
-        Dim _InternalCommandsHistory As ConsoleDevice.HistoryStacks
+        Dim _innerBuffer As StringBuilder = New StringBuilder(2048)
+        Dim _cmdsHistory As ConsoleDevice.HistoryStacks
         Dim Blanks As String
 
         ''' <summary>
@@ -30,24 +31,24 @@ Namespace ConsoleDevice
             End If
 
             Try
-                _InternalCommandsHistory = HistoryFile.LoadXml(Of HistoryStacks)()
+                _cmdsHistory = HistoryFile.LoadXml(Of HistoryStacks)()
             Catch ex As Exception
-                _InternalCommandsHistory = New HistoryStacks
-                Call _InternalCommandsHistory.Save(HistoryFile)
+                _cmdsHistory = New HistoryStacks
+                Call _cmdsHistory.Save(HistoryFile)
             End Try
 
-            If _InternalCommandsHistory Is Nothing Then
-                _InternalCommandsHistory = New HistoryStacks
+            If _cmdsHistory Is Nothing Then
+                _cmdsHistory = New HistoryStacks
             End If
 
-            _InternalCommandsHistory.FilePath = HistoryFile
-            Call _InternalCommandsHistory.StartInitialize()
+            _cmdsHistory.FilePath = HistoryFile
+            Call _cmdsHistory.StartInitialize()
 
             PromptText = "#"
             Blanks = New String(" "c, Console.BufferWidth)
         End Sub
 
-        Dim _InternalCacheReadLine As String
+        Dim _cacheReadLine As String
         Dim _EmptyHistory As Boolean, _historyControl As Boolean = True
 
         Public Overrides Function ReadKey() As ConsoleKeyInfo
@@ -57,13 +58,13 @@ Namespace ConsoleDevice
 
             Select Case n.Key
                 Case ConsoleKey.UpArrow
-                    _InternalCacheReadLine = _InternalCommandsHistory.MovePrevious
+                    _cacheReadLine = _cmdsHistory.MovePrevious
                 Case ConsoleKey.DownArrow
-                    _InternalCacheReadLine = _InternalCommandsHistory.MoveNext
+                    _cacheReadLine = _cmdsHistory.MoveNext
                 Case ConsoleKey.Home
-                    _InternalCacheReadLine = _InternalCommandsHistory.MoveFirst
+                    _cacheReadLine = _cmdsHistory.MoveFirst
                 Case ConsoleKey.End
-                    _InternalCacheReadLine = _InternalCommandsHistory.MoveLast
+                    _cacheReadLine = _cmdsHistory.MoveLast
                 Case Else
                     _historyControl = False
             End Select
@@ -72,16 +73,16 @@ Namespace ConsoleDevice
                 Call Console.SetCursorPosition(Console.CursorLeft - 1, CursorTop)       '回移一格，因为控制符也会被输出的
             End If
 
-            If Not String.IsNullOrEmpty(_InternalCacheReadLine) Then
+            If Not String.IsNullOrEmpty(_cacheReadLine) Then
                 Call InternalClearLine(Console.CursorTop)
-                Call Console.Write(_InternalCacheReadLine)
+                Call Console.Write(_cacheReadLine)
                 _EmptyHistory = False
             ElseIf Not String.IsNullOrEmpty(HistoryCallerStack) Then
-                _InternalCacheReadLine = HistoryCallerStack
+                _cacheReadLine = HistoryCallerStack
                 HistoryCallerStack = ""
                 _EmptyHistory = False
             Else
-                _InternalCacheReadLine = ""
+                _cacheReadLine = ""
                 _EmptyHistory = True   '空的历史
             End If
 
@@ -98,18 +99,18 @@ Namespace ConsoleDevice
             Dim strCommand As String = "", n = Me.ReadKey()
 
             If _historyControl Then '用户浏览了历史记录
-                HistoryCallerStack = _InternalCacheReadLine
+                HistoryCallerStack = _cacheReadLine
                 Return Me.ReadLine
             Else
                 If n.Key = ConsoleKey.Enter Then '用户输入了数据
-                    strCommand = _InternalCacheReadLine
+                    strCommand = _cacheReadLine
                 Else '用户还没有完成输入
 EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLine
                 End If
             End If
 
             HistoryCallerStack = ""
-            _InternalCacheReadLine = ""
+            _cacheReadLine = ""
 
             '            If Not String.IsNullOrEmpty(_InternalCacheReadLine) Then
             '                strCommand = n.KeyChar & _InternalCacheReadLine
@@ -142,7 +143,7 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
             '                End If
             '            End If
 
-            Call _InternalCommandsHistory.PushStack(strCommand)
+            Call _cmdsHistory.PushStack(strCommand)
 
             Return strCommand
         End Function
@@ -167,7 +168,7 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    Call Me.Save()
+                    Call Me.Save(encoding:=Encodings.UTF8)
                     ' TODO: dispose managed state (managed objects).
                 End If
 
@@ -199,8 +200,12 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ComponentModel.ITextFile.I_FileSaveHandle.Save
-            Return _InternalCommandsHistory.Save(Path, encoding)
+        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+            Return _cmdsHistory.Save(Path, encoding)
+        End Function
+
+        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(Path, encoding.GetEncodings)
         End Function
     End Class
 End Namespace

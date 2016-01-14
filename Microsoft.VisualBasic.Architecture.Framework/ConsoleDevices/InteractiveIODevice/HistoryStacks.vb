@@ -1,89 +1,94 @@
-﻿Namespace ConsoleDevice
+﻿Imports Microsoft.VisualBasic.ComponentModel
+
+Namespace ConsoleDevice
 
     Public Class HistoryStacks : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
         Implements ISaveHandle
 
-        Dim InternalHistoryList As List(Of String)
-        Dim InternalHistories As List(Of History)
+        Dim _historyList As List(Of String)
+        Dim _lsthistory As List(Of History)
 
         ''' <summary>
-        ''' 指向<see cref="InternalHistoryList"></see>
+        ''' 指向<see cref="_historyList"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Dim p As Integer
 
         Public Property HistoryList As List(Of History)
             Get
-                Return InternalHistories
+                Return _lsthistory
             End Get
             Set(value As List(Of History))
-                InternalHistories = value
+                _lsthistory = value
             End Set
         End Property
 
         Dim LastHistory As History
 
         Sub New()
-            LastHistory = New History With {.Date = Now.ToString, .Histories = New List(Of String)}
+            LastHistory = New History With {
+                .Date = Now.ToString,
+                .Histories = New List(Of String)
+            }
         End Sub
 
         Public Sub StartInitialize()
-            Call InternalInitialize()
-            InternalHistoryList = (From item In InternalHistories Select item.Histories).ToArray.MatrixToList
-            p = InternalHistoryList.Count - 1
+            Call __init()
+            _historyList = (From his As History In _lsthistory Select his.Histories).MatrixToList
+            p = _historyList.Count - 1
             If p < 0 Then p = 0
         End Sub
 
         Public Sub PushStack(s As String)
-            If InternalHistoryList.IsNullOrEmpty Then
-                Call InternalInitialize()
+            If _historyList.IsNullOrEmpty Then
+                Call __init()
             End If
 
             Call LastHistory.Histories.Add(s)
-            Call InternalHistoryList.Insert(p, s)
+            Call _historyList.Insert(p, s)
         End Sub
 
-        Private Sub InternalInitialize()
-            InternalHistoryList = New List(Of String)
-            If InternalHistories.IsNullOrEmpty Then InternalHistories = New List(Of History)
-            Call InternalHistories.Add(LastHistory)
+        Private Sub __init()
+            _historyList = New List(Of String)
+            If _lsthistory.IsNullOrEmpty Then _lsthistory = New List(Of History)
+            Call _lsthistory.Add(LastHistory)
         End Sub
 
         Public Function MovePrevious() As String
             p -= 1
-            Return Internal_getHistory()
+            Return __getHistory()
         End Function
 
         Public Function MoveNext() As String
             p += 1
-            Return Internal_getHistory()
+            Return __getHistory()
         End Function
 
         Public Function MoveFirst() As String
             p = 0
-            Return Internal_getHistory()
+            Return __getHistory()
         End Function
 
         Public Function MoveLast() As String
-            p = InternalHistoryList.Count - 1
-            Return Internal_getHistory()
+            p = _historyList.Count - 1
+            Return __getHistory()
         End Function
 
-        Private Function Internal_getHistory() As String
+        Private Function __getHistory() As String
             If p < 0 Then
                 p = 0
             End If
 
-            If InternalHistoryList.IsNullOrEmpty Then
-                Call InternalInitialize()
+            If _historyList.IsNullOrEmpty Then
+                Call __init()
                 Return ""
             End If
 
-            If p > InternalHistoryList.Count - 1 Then
-                p = InternalHistoryList.Count - 1
+            If p > _historyList.Count - 1 Then
+                p = _historyList.Count - 1
             End If
 
-            Dim s As String = InternalHistoryList(p)
+            Dim s As String = _historyList(p)
             Return s
         End Function
 
@@ -97,7 +102,7 @@
         End Class
 
         Public Overrides Function ToString() As String
-            Return String.Join(";  ", InternalHistoryList.Take(3).ToArray) & "......."
+            Return String.Join(";  ", _historyList.Take(3).ToArray) & "......."
         End Function
 
         Public Overrides Function Save(Optional Path As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean
