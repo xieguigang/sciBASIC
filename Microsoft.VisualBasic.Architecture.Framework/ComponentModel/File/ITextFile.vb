@@ -11,26 +11,10 @@ Namespace ComponentModel
     ''' 
     <PackageNamespace("TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
     Public MustInherit Class ITextFile : Implements System.IDisposable
-        Implements I_FileSaveHandle
+        Implements ISaveHandle
 #If NET_40 = 0 Then
-        Implements Microsoft.VisualBasic.ComponentModel.Settings.IProfile
+        Implements Settings.IProfile
 #End If
-
-        ''' <summary>
-        ''' This is a file object which have a handle to save its data to the filesystem.(这是一个带有文件数据保存方法的文件模型)
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Interface I_FileSaveHandle
-
-            ''' <summary>
-            ''' Handle for saving the file data.(保存文件的方法)
-            ''' </summary>
-            ''' <param name="Path">The file path that will save data to.(进行文件数据保存的文件路径)</param>
-            ''' <param name="encoding">The text encoding value for the text document.(文本文档的编码格式)</param>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            Function Save(Optional Path As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean
-        End Interface
 
         Protected _FilePath As String
 
@@ -66,7 +50,7 @@ Namespace ComponentModel
         End Property
 
 #If NET_40 = 0 Then
-        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, I_FileSaveHandle.Save
+        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
 #Else
         Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements I_FileSaveHandle.Save
 #End If
@@ -168,7 +152,7 @@ Namespace ComponentModel
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    Call Save()
+                    Call Save(Encoding:=Encoding.UTF8)
                     ' TODO:  释放托管状态(托管对象)。
                 End If
 
@@ -192,11 +176,6 @@ Namespace ComponentModel
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
-        Public Interface IDocumentEditor : Inherits I_FileSaveHandle
-            Property DocumentPath As String
-            Function LoadDocument(Path As String) As Boolean
-        End Interface
 
         '''' <summary>
         '''' Read the data in the target database file.
@@ -274,5 +253,8 @@ NULL:
             Return Microsoft.VisualBasic.Tails(path, length)
         End Function
 
+        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(Path, encoding.GetEncodings)
+        End Function
     End Class
 End Namespace

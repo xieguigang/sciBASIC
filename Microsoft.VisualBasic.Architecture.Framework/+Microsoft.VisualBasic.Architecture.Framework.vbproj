@@ -158,6 +158,7 @@
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set.vb" />
     <Compile Include="ComponentModel\DataStructures\SlideWindowHandle.vb" />
+    <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
     <Compile Include="ComponentModel\LazyLoader.vb" />
     <Compile Include="ComponentModel\Settings\ConfigEngine.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Serialization.vb" />
@@ -321,7 +322,7 @@
     <Compile Include="Extensions\Security\TripleDES.vb" />
     <Compile Include="Extensions\WebServices\WebServices.vb" />
     <Compile Include="ComponentModel\Settings\Inf\INIProfile.vb" />
-    <Compile Include="ComponentModel\ITextFile.vb" />
+    <Compile Include="ComponentModel\File\ITextFile.vb" />
     <Compile Include="ComponentModel\Settings\Settings.vb" />
     <Compile Include="ComponentModel\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
