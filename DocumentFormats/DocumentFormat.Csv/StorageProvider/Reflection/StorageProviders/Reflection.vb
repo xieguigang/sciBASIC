@@ -157,7 +157,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(Collection As Generic.IEnumerable(Of Object), Optional Explicit As Boolean = True) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
+        Public Function Save(Collection As Generic.IEnumerable(Of Object), Optional Explicit As Boolean = True) As File
             Dim Type As System.Type = Collection.First.GetType
             Return __save(Collection, Type, Explicit)
         End Function
@@ -179,7 +179,7 @@ Namespace StorageProvider.Reflection
                                          Let createdRow As RowObject = RowWriter.ToRow(itmRow)
                                          Select createdRow).ToArray '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
-            Call CsvData.Add(RowWriter.GetRowNames)
+            Call CsvData.Add(RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(Collection.FirstOrDefault)))
             Call CsvData.AppendRange(LQuery)
 
             Return CsvData
