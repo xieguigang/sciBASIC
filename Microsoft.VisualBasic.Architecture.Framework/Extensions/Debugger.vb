@@ -44,8 +44,11 @@ Public Module VBDebugger
     ''' <param name="exception"></param>
     <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName As String = "") As Boolean
         Dim exMsg As String = New Exception($"[DEBUG {Now.ToString}]  @{memberName}", exception).ToString
+        Dim cl As ConsoleColor = Console.ForegroundColor
 
-        Call xConsole.WriteLine($"^r{exMsg}^!")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.WriteLine(exMsg)
+        Console.ForegroundColor = cl
 #If DEBUG Then
         Call Debug.WriteLine(exMsg)
         Call Trace.WriteLine(exMsg)
