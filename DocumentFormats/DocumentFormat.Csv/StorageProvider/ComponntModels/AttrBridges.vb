@@ -46,7 +46,7 @@ Namespace StorageProvider.ComponentModels
         End Property
 
         Sub New(MetaAttribute As Csv.StorageProvider.Reflection.MetaAttribute, BindProperty As PropertyInfo)
-            Call MyBase.New(BindProperty)
+            Call MyBase.New(BindProperty, MetaAttribute.TypeId)
             Me.MetaAttribute = MetaAttribute
         End Sub
 
