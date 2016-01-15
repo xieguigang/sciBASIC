@@ -16,6 +16,10 @@
             Me.Value = value
         End Sub
 
+        Sub New()
+            Value = Nothing
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Scripting.InputHandler.ToString(Value)
         End Function
