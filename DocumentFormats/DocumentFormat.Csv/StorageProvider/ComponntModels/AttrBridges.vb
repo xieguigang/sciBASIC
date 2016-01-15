@@ -39,6 +39,8 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
+        Public ReadOnly Property Dictionary As Type
+
         Public Overrides ReadOnly Property ProviderId As ProviderIds
             Get
                 Return ProviderIds.MetaAttribute
@@ -48,7 +50,12 @@ Namespace StorageProvider.ComponentModels
         Sub New(MetaAttribute As Csv.StorageProvider.Reflection.MetaAttribute, BindProperty As PropertyInfo)
             Call MyBase.New(BindProperty, MetaAttribute.TypeId)
             Me.MetaAttribute = MetaAttribute
+            Me.Dictionary = GetType(Dictionary(Of ,)).MakeGenericType(GetType(String), MetaAttribute.TypeId)
         End Sub
+
+        Public Function CreateDictionary() As IDictionary
+            Return DirectCast(Activator.CreateInstance(Dictionary), IDictionary)
+        End Function
 
         Public Overrides Function ToString([object] As Object) As String
             Return ""

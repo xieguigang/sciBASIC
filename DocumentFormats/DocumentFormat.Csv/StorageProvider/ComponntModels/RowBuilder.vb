@@ -49,10 +49,17 @@
             obj = __tryFill(Of T)(row, obj)
 
             If HaveMetaAttribute Then
-                Dim values = (From field As KeyValuePair(Of String, Integer) In NonIndexed
-                              Select name = field.Key, value = SchemaProvider.MetaAttributes.LoadMethod(row.DirectGet(field.Value))) _
-                                .ToDictionary(Function(field) field.name, elementSelector:=Function(field) field.value)
-                Call SchemaProvider.MetaAttributes.BindProperty.SetValue(obj, values)
+                Dim values = (From field As KeyValuePair(Of String, Integer)
+                              In NonIndexed
+                              Select name = field.Key,
+                                  value = SchemaProvider.MetaAttributes.LoadMethod(row.DirectGet(field.Value))).ToArray
+                Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
+
+                For Each x In values
+                    Call meta.Add(x.name, x.value)
+                Next
+
+                Call SchemaProvider.MetaAttributes.BindProperty.SetValue(obj, meta)
             End If
 
             Return obj
