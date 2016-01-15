@@ -232,9 +232,11 @@ Namespace DocumentStream
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property AsLine As String
+        Public ReadOnly Property AsLine(Optional delimiter As String = ",") As String
             Get
-                Return String.Join(",", _innerColumns.ToArray(Of String)(AddressOf __mask))
+                Dim array As String() = _innerColumns.ToArray(AddressOf __mask)
+                Dim line As String = String.Join(delimiter, array)
+                Return line
             End Get
         End Property
 

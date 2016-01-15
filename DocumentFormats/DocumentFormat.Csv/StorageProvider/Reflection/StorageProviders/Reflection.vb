@@ -170,9 +170,9 @@ Namespace StorageProvider.Reflection
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Private Function __save(Collection As Generic.IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As File
-            Dim CsvData As File = New Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
-            Dim Schema = Csv.StorageProvider.ComponentModels.SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
-            Dim RowWriter As New ComponentModels.RowWriter(Schema)
+            Dim CsvData As File = New File
+            Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
+            Dim RowWriter As New RowWriter(Schema)
 
             Dim LQuery As RowObject() = (From itmRow As Object In Collection.AsParallel
                                          Where Not itmRow Is Nothing
@@ -186,18 +186,18 @@ Namespace StorageProvider.Reflection
         End Function
 
         ''' <summary>
-        ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作，非并行化的以保持数据原有的顺序) 
+        ''' Save the specifc type object collection into the csv data file.
+        ''' (将目标对象数据的集合转换为Csv文件已进行数据保存操作，非并行化的以保持数据原有的顺序) 
         ''' </summary>
-        ''' <typeparam name="ItemType"></typeparam>
-        ''' <param name="Collection"></param>
-        ''' <param name="Explicit"></param>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(Of ItemType)(Collection As Generic.IEnumerable(Of ItemType), Optional Explicit As Boolean = True) _
-            As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
-
-            Dim Type As System.Type = GetType(ItemType)
-            Return __save(Collection, Type, Explicit)
+        Public Function Save(Of T)(source As IEnumerable(Of T), Optional explicit As Boolean = True) As File
+            Dim Type As Type = GetType(T)
+            Dim doc As File = __save(source, Type, explicit)
+            Return doc
         End Function
 
         ''' <summary>
