@@ -52,13 +52,16 @@ Namespace StorageProvider.ComponentModels
         Public MustOverride Overloads Function ToString([object] As Object) As String
 
         Sub New(BindProperty As PropertyInfo)
-            Me.BindProperty = BindProperty
-            Me.LoadMethod = Scripting.CasterString(BindProperty.PropertyType)
+            Call Me.New(BindProperty, BindProperty.PropertyType)
         End Sub
 
         Sub New(BindProperty As PropertyInfo, ElementType As Type)
             Me.BindProperty = BindProperty
-            Me.LoadMethod = Scripting.CasterString(ElementType)
+            If Scripting.CasterString.ContainsKey(ElementType) Then
+                Me.LoadMethod = Scripting.CasterString(ElementType)
+            Else
+                ' Meta 字典类型，则忽略掉
+            End If
         End Sub
 
         Sub New(BindProperty As PropertyInfo, LoadMethod As Func(Of String, Object))
