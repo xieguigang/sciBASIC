@@ -18,13 +18,38 @@
                           Where Not field Is Nothing
                           Select field).ToArray
             Me.MetaRow = SchemaProvider.MetaAttributes
+
+            If Me.MetaRow Is Nothing Then
+                __buildRow = AddressOf __buildRowNullMeta
+            Else
+                __buildRow = AddressOf __buildRowMeta
+            End If
         End Sub
 
         Public Function GetRowNames() As DocumentStream.RowObject
             Return New DocumentStream.RowObject(Columns.ToArray(Function(field) field.Name))
         End Function
 
-        Public Function ToRow(Of T As Class)(obj As T) As DocumentStream.RowObject
+        ReadOnly __buildRow As IRowBuilder
+
+        Public Function ToRow(obj As Object) As DocumentStream.RowObject
+            Dim row As DocumentStream.RowObject = __buildRow(obj)
+            Return row
+        End Function
+
+#Region "IRowBuilder"
+        Private Delegate Function IRowBuilder(obj As Object) As DocumentStream.RowObject
+
+        Private Function __buildRowNullMeta(obj As Object) As DocumentStream.RowObject
+            Dim row As List(Of String) = (From colum As StorageProvider
+                                          In Columns
+                                          Let value As Object = colum.BindProperty.GetValue(obj)
+                                          Let strData As String = colum.ToString(value)
+                                          Select strData).ToList
+            Return New DocumentStream.RowObject(row)
+        End Function
+
+        Private Function __buildRowMeta(obj As Object) As DocumentStream.RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
                                           Let value As Object = colum.BindProperty.GetValue(obj)
@@ -34,8 +59,12 @@
             Call row.Add(metas)
             Return New DocumentStream.RowObject(row)
         End Function
+#End Region
 
         Public Function GetMetaTitles(obj As Object) As String()
+            If MetaRow Is Nothing OrElse MetaRow.BindProperty Is Nothing Then
+                Return New String() {}
+            End If
             Dim hash As IDictionary = DirectCast(MetaRow.BindProperty.GetValue(obj), IDictionary)
             Dim keys As String() = (From x In hash.Keys Select Scripting.ToString(x)).ToArray
             Return keys
