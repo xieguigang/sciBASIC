@@ -177,6 +177,7 @@
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
+    <Compile Include="Extensions\Collection\Vector.vb" />
     <Compile Include="Extensions\Collection\LINQ.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
     <Compile Include="Extensions\Debugger.vb" />
