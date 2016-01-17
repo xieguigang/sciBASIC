@@ -11,13 +11,15 @@ Public Module LevExtensions
         hypOUT = New T(len - 1) {}
 
         For j As Integer = 0 To hyp.Length   ' 参照subject画列
-            For i As Integer = -1 To ref.Length - 1 ' 参照query画行
+            For i As Integer = 0 To ref.Length  ' 参照query画行
                 If edits.IsPath(i, j) Then
                     Dim ch As String = edits.DistEdits.Get(idx.MoveNext)
 
                     If ch = "m"c Then
                         refOUT(iiiii) = ref(i)
-                        hypOUT(iiiii) = hyp(j)
+                        hypOUT(iiiii) = hyp(j - 1)
+
+                        iiiii += 1
                     End If
                 End If
             Next
