@@ -24,6 +24,9 @@ Public Class DistResult
     Public Property CSS As Coords()
     Public Property Matches As String
 
+    Public Property Meta As Dictionary(Of String, String) =
+        New Dictionary(Of String, String)
+
     Public Overrides Function ToString() As String
         Return $"{Reference} => {Hypotheses} // {DistEdits}"
     End Function

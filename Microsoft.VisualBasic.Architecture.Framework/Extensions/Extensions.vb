@@ -352,6 +352,10 @@ Public Module Extensions
     ''' <param name="[default]"></param>
     ''' <returns></returns>
     <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue), Index As TKey, Optional [default] As TValue = Nothing) As TValue
+        If hash Is Nothing Then
+            Return [default]
+        End If
+
         If hash.ContainsKey(Index) Then
             Return hash(Index)
         Else
@@ -360,19 +364,23 @@ Public Module Extensions
     End Function
 
     <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
-        If hash.ContainsKey(Index) Then
-            Dim obj As TValue = hash(Index)
-            Dim propertyInfo = obj.GetType.GetProperty(prop)
-
-            If propertyInfo Is Nothing Then
-                Return Nothing
-            End If
-
-            Dim value As Object = propertyInfo.GetValue(obj)
-            Return DirectCast(value, TProp)
-        Else
+        If hash Is Nothing Then
             Return Nothing
         End If
+
+        If Not hash.ContainsKey(Index) Then
+            Return Nothing
+        End If
+
+        Dim obj As TValue = hash(Index)
+        Dim propertyInfo As PropertyInfo = obj.GetType.GetProperty(prop)
+
+        If propertyInfo Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim value As Object = propertyInfo.GetValue(obj)
+        Return DirectCast(value, TProp)
     End Function
 
     <Extension> Public Function AddRange(Of TKey, TValue)(ByRef hash As Dictionary(Of TKey, TValue), data As Generic.IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
