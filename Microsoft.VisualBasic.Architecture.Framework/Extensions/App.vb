@@ -422,6 +422,7 @@ Public Module App
         Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext  '  FileIO.FileSystem.GetTempFileName.Replace(".tmp", ext)
         tmp = GenerateTemp(tmp, sessionID)
         Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
+        tmp = FileIO.FileSystem.GetFileInfo(tmp).FullName.Replace("\", "/")
         Return tmp
     End Function
 
