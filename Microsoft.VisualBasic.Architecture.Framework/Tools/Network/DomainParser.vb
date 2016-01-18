@@ -15,7 +15,7 @@ Namespace Net
             url = TryParse(url)
             Dim Tokens As String() = url.Split(CChar("."))
             Domain = Tokens(0)
-            TLD = Tokens(1)
+            TLD = Tokens.Skip(1).JoinBy(".")
         End Sub
 
         Public ReadOnly Property Invalid As Boolean
@@ -62,8 +62,14 @@ Namespace Net
             Dim Tokens = url.Split(CChar("."))
             If Tokens.Length = 2 Then
                 Return url
-            ElseIf Tokens.Length = 1
+            ElseIf Tokens.Length = 1 Then
                 Return ""
+            ElseIf Tokens.Length = 3 Then
+                Dim tld2 As String = Tokens(1)
+
+                If InStr("com|org|net|edu", tld2, CompareMethod.Text) > 0 Then
+                    Return url
+                End If
             Else
                 Dim d As Integer = Tokens.Length - 2
                 Tokens = Tokens.Skip(d).ToArray
