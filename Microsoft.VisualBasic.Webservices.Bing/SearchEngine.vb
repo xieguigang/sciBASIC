@@ -18,7 +18,7 @@ Public Module SearchEngineProvider
     <ExportAPI("search")>
     Public Function Search(KeywordExpression As String, Optional getCounts As Integer = 10) As WebResult()
         Dim Url As String = String.Format(_BING_SEARCH_URL, KeywordExpression.Replace(" ", "%20"))
-        Dim PageContent As String = Regex.Replace(Url.Get_PageContent, "<strong>|</strong>", "", RegexOptions.IgnoreCase)
+        Dim PageContent As String = Regex.Replace(Url.GET, "<strong>|</strong>", "", RegexOptions.IgnoreCase)
         PageContent = Strings.Split(PageContent, "</script><div id=""b_content""><div id=""b_pole""><div class=""b_poleContent""><ul class=""b_hList"">").Last
         PageContent = Strings.Split(PageContent, "</li><li class=""b_pag""><span class=""sb_count"">").First
         Dim ListItems As String() = (From m As Match In Regex.Matches(PageContent, LIST_ITEM_REGEX) Select m.Value).ToArray

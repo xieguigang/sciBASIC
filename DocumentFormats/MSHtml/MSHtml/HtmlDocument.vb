@@ -15,7 +15,7 @@ Public Class HtmlDocument
     ''' <param name="url"></param>
     ''' <returns></returns>
     Public Function LoadDocument(url As String) As HtmlDocument
-        Dim pageContent As String = url.Get_PageContent.Replace(vbCr, "").Replace(vbLf, "") '是使用<br />标签来分行的
+        Dim pageContent As String = url.GET.Replace(vbCr, "").Replace(vbLf, "") '是使用<br />标签来分行的
         Dim List As List(Of PlantText) = New List(Of PlantText)
 
         pageContent = Regex.Replace(pageContent, "<!--.+?-->", "")
