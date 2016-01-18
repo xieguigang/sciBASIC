@@ -383,9 +383,11 @@ Public Module WebServices
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request or a html file on the local filesystem.")>
-    <Extension> Public Function Get_PageContent(url As String,
-                                               <Parameter("Request.TimeOut")> Optional RequestTimeOut As UInteger = 20,
-                                               <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")> Optional FileSystemUrl As Boolean = False) As String
+    <Extension> Public Function [GET](url As String,
+                                      <Parameter("Request.TimeOut")>
+                                      Optional RequestTimeOut As UInteger = 20,
+                                      <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
+                                      Optional FileSystemUrl As Boolean = False) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -442,7 +444,7 @@ RETRY:      Return __downloadWebpage(url)
         Dim exMessage As String = String.Format("Unable to get the http request!" & vbCrLf &
                                                 "  Url:=[{0}]" & vbCrLf &
                                                 "  EXCEPTION ===>" & vbCrLf & ex.ToString, url)
-        Call App.LogException(exMessage, NameOf(Get_PageContent) & "::HTTP_REQUEST_EXCEPTION")
+        Call App.LogException(exMessage, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
         Return ""
     End Function
 
@@ -569,7 +571,7 @@ RETRY:      Return __downloadWebpage(url)
     Public Const RegexIPAddress As String = "\d{1,3}(\.\d{1,3}){3}"
 
     Private Function __getMyIPAddress() As String
-        Dim page As String = IPAddress.Get_PageContent
+        Dim page As String = IPAddress.GET
         Dim ipResult As String = Regex.Match(page, $"IP[:] {RegexIPAddress}<br><img", RegexOptions.IgnoreCase).Value
         ipResult = Regex.Match(ipResult, RegexIPAddress).Value
         Return ipResult
