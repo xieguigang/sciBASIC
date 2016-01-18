@@ -107,6 +107,8 @@ Namespace CommandLine
                 Next
             End If
 
+            Call "".SaveTo(_TempRedirect)  ' 系统可能不会自动创建文件夹，则使用这个方法来创建，避免出现无法找到文件的问题
+
             'Process = New Process
             'Process.EnableRaisingEvents = True
             'Process.StartInfo = pInfo
@@ -121,7 +123,7 @@ Namespace CommandLine
             Bin = File
             CLIArguments = argv
 
-            Call System.Console.WriteLine("[DEBUG] ""{0}"" {1}", File, argv)
+            Call $"""{File.ToFileURL}"" {argv}".__DEBUG_ECHO
         End Sub
 
         ''' <summary>
@@ -135,7 +137,7 @@ Namespace CommandLine
             Dim ExitCode As Integer = Microsoft.VisualBasic.Interaction.Shell(tmpBAT, AppWinStyle.Hide, Wait:=True)
 
             Call Console.WriteLine(StandardOutput)
-            Call Console.WriteLine($"[DEBUG {Now.ToString}] Process exit with code {ExitCode}....")
+            Call $"Process exit with code {ExitCode}....".__DEBUG_ECHO
 
             Try
                 Call FileIO.FileSystem.DeleteFile(tmpBAT, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
