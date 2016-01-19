@@ -72,8 +72,8 @@ Namespace CommandLine
         ''' <summary>
         ''' Using this class object rather than <see cref="IORedirect"/> is more encouraged if there is no console interactive with your folked process.
         ''' </summary>
-        ''' <param name="File">The program file.</param>
-        ''' <param name="argv">The program commandline arguments.</param>
+        ''' <param name="File">The program file.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
+        ''' <param name="argv">The program commandline arguments.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
         ''' <param name="environment">Temporary environment variable</param>
         ''' <param name="FolkNew">Folk the process on a new console window if this parameter value is TRUE</param>
         ''' <param name="stdRedirect">If not want to redirect the std out to your file, just leave this value blank.</param>

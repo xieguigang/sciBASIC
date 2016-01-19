@@ -17,12 +17,14 @@ Namespace StorageProvider.Reflection
 
         <Extension> Public Function GetDataFrameworkTypeSchema(TypeInfo As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(TypeInfo, Explicit).CopyReadDataFromObject
-            Dim ColumnSchema = (From columAttr As Csv.StorageProvider.ComponentModels.Column
+            Dim ColumnSchema = (From columAttr As Column
                                 In Schema.Columns
-                                Select columAttr.Name, columAttr.BindProperty.PropertyType).ToArray
-            Dim ArrayColumnSchema = (From columnItem As Csv.StorageProvider.ComponentModels.CollectionColumn
+                                Select columAttr.Name,
+                                    columAttr.BindProperty.PropertyType).ToArray
+            Dim ArrayColumnSchema = (From columnItem As CollectionColumn
                                      In Schema.CollectionColumns
-                                     Select columnItem.Name, columnItem.BindProperty.PropertyType).ToArray
+                                     Select columnItem.Name,
+                                         columnItem.BindProperty.PropertyType).ToArray
             Dim ChunkData = ColumnSchema.Join(ArrayColumnSchema)
             Dim DictData As Dictionary(Of String, Type) =
                 ChunkData.ToDictionary(Function(item) item.Name, elementSelector:=Function(item) item.PropertyType)

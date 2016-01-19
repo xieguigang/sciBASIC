@@ -13,7 +13,8 @@ Public Module VBDebugger
         "",
         New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
         New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
-        New String(" ", 9), New String(" ", 10)}
+        New String(" ", 9), New String(" ", 10)
+    }
 
     ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.
@@ -23,7 +24,7 @@ Public Module VBDebugger
     ''' <param name="Indent"></param>
     ''' 
     <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
-        Dim str = $"{_Indent(Indent)}[DEBUG {Now.ToString}]  {MSG}"
+        Dim str = $"[DEBUG {Now.ToString}]{_Indent(Indent)} {MSG}"
 
         If Not Mute Then
             Call Console.WriteLine(str)
