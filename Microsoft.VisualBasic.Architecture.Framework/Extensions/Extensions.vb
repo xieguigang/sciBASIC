@@ -18,6 +18,7 @@ Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ComponentModel
 
 #If FRAMEWORD_CORE Then
 
@@ -1853,16 +1854,14 @@ Public Module Extensions
     ''' <summary>
     ''' 为列表中的对象添加对象句柄值
     ''' </summary>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function [AddHandle](Of THandle As Microsoft.VisualBasic.ComponentModel.IAddrHandle)(
-                        Collection As Generic.IEnumerable(Of THandle),
-                        Optional offset As Integer = 0) _
-                As Generic.IEnumerable(Of THandle)
-        For i As Integer = 0 To Collection.Count - 1
-            Collection(i).AddrHwnd = i + offset
+    <Extension> Public Function [AddHandle](Of THandle As IAddrHandle)(ByRef source As IEnumerable(Of THandle), Optional offset As Integer = 0) As IEnumerable(Of THandle)
+        Dim l As Integer = source.Count
+        For i As Integer = 0 To l - 1
+            source(i).AddrHwnd = i + offset
         Next
-        Return Collection
+        Return source
     End Function
 #End If
 

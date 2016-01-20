@@ -224,6 +224,8 @@ Public Module GDIPlusExtensions
     ''' <summary>
     ''' 图片剪裁小方块区域
     ''' </summary>
+    ''' <param name="pos">左上角的坐标位置</param>
+    ''' <param name="size">剪裁的区域的大小</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
