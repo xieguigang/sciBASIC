@@ -565,15 +565,15 @@ Public Module Extensions
     ''' Merge two type specific collection.(函数会忽略掉空的集合，函数会构建一个新的集合，原有的集合不受影响)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(Collection As Generic.IEnumerable(Of T), data As Generic.IEnumerable(Of T)) As List(Of T)
-        Dim ChunkBuffer As List(Of T) = If(Collection.IsNullOrEmpty, New List(Of T), Collection.ToList)
+    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As IEnumerable(Of T)) As List(Of T)
+        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.ToList)
         If Not data.IsNullOrEmpty Then
-            Call ChunkBuffer.AddRange(data)
+            Call srcList.AddRange(data)
         End If
-        Return ChunkBuffer
+        Return srcList
     End Function
 
     ''' <summary>

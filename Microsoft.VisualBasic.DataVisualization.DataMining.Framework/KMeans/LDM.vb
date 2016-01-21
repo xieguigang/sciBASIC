@@ -6,6 +6,7 @@ Namespace KMeans
     ''' A class containing a group of data with similar characteristics (cluster)
     ''' </summary>
     <Serializable> Public Class Cluster(Of T As EntityBase(Of Double))
+        Implements IEnumerable(Of T)
 
         ''' <summary>
         ''' The sum of all the data in the cluster
@@ -63,12 +64,23 @@ Namespace KMeans
         Public Overrides Function ToString() As String
             Return NumOfEntity & " data entities..."
         End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As T In _innerList
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 
     ''' <summary>
     ''' A collection of Cluster objects or Clusters
     ''' </summary>
     <Serializable> Public Class ClusterCollection(Of T As EntityBase(Of Double))
+        Implements IEnumerable(Of Cluster(Of T))
 
         ReadOnly _innerList As New List(Of Cluster(Of T))
 
@@ -97,6 +109,16 @@ Namespace KMeans
 
         Public Overrides Function ToString() As String
             Return NumOfCluster & " data clusters..."
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Cluster(Of T)) Implements IEnumerable(Of Cluster(Of T)).GetEnumerator
+            For Each x As Cluster(Of T) In _innerList
+                Yield x
+            Next
         End Function
     End Class
 End Namespace

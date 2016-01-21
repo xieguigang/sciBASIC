@@ -8,6 +8,7 @@ Namespace KMeans
         Public Property Name As String
         <Meta(GetType(Double))>
         Public Property Properties As Dictionary(Of String, Double)
+        Public Property Cluster As String
 
         Public Overrides Function ToString() As String
             Return Name
@@ -22,6 +23,10 @@ Namespace KMeans
 
         Public Property uid As String
 
+        Public Overrides Function ToString() As String
+            Return $"{uid}  ({Length} Properties)"
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -34,6 +39,13 @@ Namespace KMeans
                     .uid = x.Name,
                     .Properties = x.Properties.Values.ToArray})
             Return source
+        End Function
+
+        Public Function ToLDM() As EntityLDM
+            Return New EntityLDM With {
+                .Name = uid,
+                .Properties = Properties.ToArray(Function(x, i) New With {.i = i, .x = x}).ToDictionary(Function(x) CStr(x.i), Function(x) x.x)
+            }
         End Function
     End Class
 End Namespace
