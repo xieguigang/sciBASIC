@@ -123,6 +123,7 @@
     <Compile Include="Clustering.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="KMeans\LDM.vb" />
     <Compile Include="KMeans\KMean.vb" />
     <Compile Include="KMeans\KMeansAlgorithm.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb" />
@@ -146,8 +147,8 @@
     <Compile Include="Kernel\GeneticAlgorithm\Common.vb" />
     <Compile Include="Kernel\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
-    <Compile Include="Elements\Entity.vb" />
-    <Compile Include="Elements\Vector.vb" />
+    <Compile Include="ComponentModel\Entity.vb" />
+    <Compile Include="ComponentModel\Vector.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

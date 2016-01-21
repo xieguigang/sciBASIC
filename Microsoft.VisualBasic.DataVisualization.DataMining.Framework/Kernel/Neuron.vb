@@ -25,7 +25,7 @@ Namespace Kernel.Classifier
         End Property
 
         Sub New(Length As Integer, Output As System.Func(Of Generic.IEnumerable(Of Double), Generic.IEnumerable(Of Double), Double))
-            W = CommonElements.Vector.Randomize(Length).ToArray
+            W = ComponentModel.Vector.Randomize(Length).ToArray
             Me.OutputFunction = Output
         End Sub
 

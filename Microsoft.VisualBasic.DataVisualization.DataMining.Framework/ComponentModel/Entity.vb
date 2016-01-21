@@ -1,6 +1,7 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
 
-Namespace CommonElements
+Namespace ComponentModel
 
     ''' <summary>
     ''' 
@@ -8,7 +9,8 @@ Namespace CommonElements
     ''' <typeparam name="T">只允许数值类型</typeparam>
     Public MustInherit Class EntityBase(Of T)
 
-        <Xml.Serialization.XmlAttribute> Public Property Properties As T()
+        <Xml.Serialization.XmlAttribute("T")>
+        Public Property Properties As T()
 
         Public ReadOnly Property Length As Integer
             Get
@@ -26,13 +28,7 @@ Namespace CommonElements
         <Xml.Serialization.XmlAttribute> Public Property [Class] As Integer
 
         Public Overrides Function ToString() As String
-            Dim sBuilder As System.Text.StringBuilder = New StringBuilder(1024)
-            For Each p As Integer In Properties
-                Call sBuilder.AppendFormat("{0}, ", p)
-            Next
-            Call sBuilder.Remove(sBuilder.Length - 1, length:=1)
-
-            Return String.Format("<{0}> --> {1}", sBuilder.ToString, [Class])
+            Return $"<{String.Join("; ", Properties)}> --> {[Class]}"
         End Function
 
         ''' <summary>
@@ -41,9 +37,12 @@ Namespace CommonElements
         ''' <param name="row">第一个元素为分类，其余元素为属性</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function CastTo(row As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.RowObject) As Entity
+        Public Shared Function CastTo(row As DocumentStream.RowObject) As Entity
             Dim LQuery = From s As String In row.Skip(1) Select CType(Val(s), Integer) '
-            Return New Entity With {.Class = Val(row.First), .Properties = LQuery.ToArray}
+            Return New Entity With {
+                .Class = Val(row.First),
+                .Properties = LQuery.ToArray
+            }
         End Function
 
         Default Public ReadOnly Property Item(Index As Integer) As Integer
@@ -53,11 +52,15 @@ Namespace CommonElements
         End Property
 
         Public Shared Widening Operator CType(properties As Double()) As Entity
-            Return New Entity With {.Properties = (From e In properties Select CType(e, Integer)).ToArray}
+            Return New Entity With {
+                .Properties = (From x In properties Select CType(x, Integer)).ToArray
+            }
         End Operator
 
         Public Shared Widening Operator CType(properties As Integer()) As Entity
-            Return New Entity With {.Properties = properties}
+            Return New Entity With {
+                .Properties = properties
+            }
         End Operator
     End Class
 End Namespace
