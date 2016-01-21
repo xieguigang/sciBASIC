@@ -119,6 +119,8 @@ Namespace KMeans
                 End If
             End While
 
+            Dim _stop As Integer = clusterCount * rowCount
+
             While stableClustersCount <> clusters.NumOfCluster
                 stableClustersCount = 0
 
@@ -126,6 +128,12 @@ Namespace KMeans
                     KMeans.ClusterDataSet(clusters, data)
 
                 For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
+                    Dim x As Cluster(Of T) = newClusters(clusterIndex)
+
+                    If x.NumOfEntity = 0 Then
+                        Continue For ' ??? 为什么有些聚类是0？？
+                    End If
+
                     If (KMeans.EuclideanDistance(newClusters(clusterIndex).ClusterMean, clusters(clusterIndex).ClusterMean)) = 0 Then
                         stableClustersCount += 1
                     End If
@@ -133,6 +141,10 @@ Namespace KMeans
 
                 iterationCount += 1
                 clusters = newClusters
+
+                If iterationCount > _stop Then
+                    Exit While
+                End If
             End While
 
             Return clusters
@@ -168,7 +180,12 @@ Namespace KMeans
                 Dim dataPoint As T = data(row)
 
                 For cluster As Integer = 0 To clusters.NumOfCluster - 1
-                    clusterMean = clusters(cluster).ClusterMean
+                    Dim x As Cluster(Of T) = clusters(cluster)
+                    If x.NumOfEntity = 0 Then
+                        clusterMean = 0R.CopyVector(dataPoint.Length)
+                    Else
+                        clusterMean = x.ClusterMean
+                    End If
 
                     If cluster = 0 Then
                         firstClusterDistance = KMeans.EuclideanDistance(dataPoint.Properties, clusterMean)
