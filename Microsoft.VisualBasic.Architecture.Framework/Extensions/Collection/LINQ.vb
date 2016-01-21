@@ -2,8 +2,26 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-<PackageNamespace("LINQ")>
+''' <summary>
+''' Linq Helpers.(为了方便编写Linq代码而构建的一个拓展模块)
+''' </summary>
+<PackageNamespace("LINQ", Category:=APICategories.UtilityTools)>
+<Extension>
 Public Module LINQ
+
+    ''' <summary>
+    ''' 删除制定的键之后返回剩下的数据
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function RemoveLeft(Of TKey, TValue)(ByRef source As Dictionary(Of TKey, TValue), key As TKey) As Dictionary(Of TKey, TValue)
+        Call source.Remove(key)
+        Return source
+    End Function
 
     ''' <summary>
     ''' Copy <paramref name="source"/> <paramref name="n"/> times to construct a new vector.

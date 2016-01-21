@@ -44,4 +44,18 @@ Public Module TextEncodings
                 Return Encodings.UTF8
         End Select
     End Function
+
+    ''' <summary>
+    ''' 有时候有些软件对文本的编码是有要求的，则可以使用这个函数进行文本编码的转换
+    ''' 例如R程序默认是读取ASCII，而。NET的默认编码是UTF8，则可以使用这个函数将目标文本文件转换为ASCII编码的文本文件
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="from"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TransEncoding(path As String, encoding As Encodings, Optional from As System.Text.Encoding = Nothing) As Boolean
+        Dim tmp As String = If(from Is Nothing, IO.File.ReadAllText(path), IO.File.ReadAllText(path, from))
+        Return tmp.SaveTo(path, encoding.GetEncodings)
+    End Function
 End Module
