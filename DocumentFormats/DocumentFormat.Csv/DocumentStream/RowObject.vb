@@ -22,22 +22,31 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Protected Friend Const SplitRegxExpression As String = "[" & vbTab & ",](?=(?:[^""]|""[^""]*"")*$)"
 
-        Sub New(Optional Columns As Generic.IEnumerable(Of String) = Nothing)
+        Sub New(Optional Columns As IEnumerable(Of String) = Nothing)
             If Not Columns Is Nothing Then
                 Me._innerColumns = Columns.ToList
             End If
         End Sub
 
-        Sub New(raw As Generic.IEnumerable(Of Object))
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw">using <see cref="Scripting.Tostring"/> to converts the objects into a string array.</param>
+        Sub New(raw As IEnumerable(Of Object))
             Call Me.New(raw.ToArray(Function(x) Scripting.ToString(x)))
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw">A raw string line which read from the Csv text file.</param>
         Sub New(raw As String)
-
+            _innerColumns = Tokenizer(raw)
         End Sub
 
         ''' <summary>
-        ''' 不做任何处理直接获取数据
+        ''' Unsafety method, <see cref="Column"/> method is safely.
+        ''' (不做任何处理直接获取数据)
         ''' </summary>
         ''' <param name="index"></param>
         ''' <returns></returns>
@@ -271,21 +280,18 @@ Namespace DocumentStream
         End Operator
 
         ''' <summary>
-        ''' Row parsing into column tokens
+        ''' Parsing the row data from the input string line.
         ''' </summary>
-        ''' <param name="Line"></param>
+        ''' <param name="s"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Widening Operator CType(Line As String) As RowObject
-            If String.IsNullOrEmpty(Line) Then
-                Return New RowObject With {
-                    ._innerColumns = New List(Of String)
-                }
+        Public Shared Function Tokenizer(s As String) As List(Of String)
+            If String.IsNullOrEmpty(s) Then
+                Return New List(Of String)
             End If
 
-            Dim Row As String() = Regex.Split(Line, SplitRegxExpression)
+            Dim Row As String() = Regex.Split(s, SplitRegxExpression)
             For i As Integer = 0 To Row.Length - 1
-                Dim s As String = Row(i)
+                s = Row(i)
 
                 If Not String.IsNullOrEmpty(s) AndAlso s.Length > 1 Then
                     If s.First = """"c AndAlso s.Last = """"c Then
@@ -295,6 +301,18 @@ Namespace DocumentStream
 
                 Row(i) = s
             Next
+
+            Return Row.ToList
+        End Function
+
+        ''' <summary>
+        ''' Row parsing into column tokens
+        ''' </summary>
+        ''' <param name="Line"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Shared Widening Operator CType(Line As String) As RowObject
+            Dim row As List(Of String) = Tokenizer(Line)
             Return New RowObject(Row)
         End Operator
 

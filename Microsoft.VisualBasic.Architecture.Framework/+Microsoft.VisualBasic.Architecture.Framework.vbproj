@@ -236,6 +236,7 @@
     <Compile Include="Tools\Network\MIME\MIME.vb" />
     <Compile Include="Tools\Network\MIME\ContentType.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\Array.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\ArrayBase.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\String.vb" />
     <Compile Include="Tools\Network\SSL\Certificate.vb" />
     <Compile Include="Tools\Network\Protocol\IVerifySession.vb" />

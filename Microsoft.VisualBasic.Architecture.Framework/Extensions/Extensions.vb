@@ -2164,7 +2164,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(array As Generic.IEnumerable(Of String), path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(array As IEnumerable(Of String), path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         If String.IsNullOrEmpty(path) Then Return False
         If encoding Is Nothing Then encoding = System.Text.Encoding.Default
         Dim Dir = FileIO.FileSystem.GetParentPath(path)

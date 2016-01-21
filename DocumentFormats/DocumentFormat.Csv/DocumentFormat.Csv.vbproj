@@ -166,7 +166,7 @@
     <Compile Include="DocumentStream\RowObject.vb" />
     <Compile Include="DocumentStream\DataFrame.vb" />
     <Compile Include="StorageProvider\Reflection\StorageProviders\Reflection.vb" />
-    <Compile Include="DocumentStream\Csv.vb" />
+    <Compile Include="DocumentStream\File.vb" />
     <Compile Include="Excel\ExcelReader.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="My Project\Application.Designer.vb">

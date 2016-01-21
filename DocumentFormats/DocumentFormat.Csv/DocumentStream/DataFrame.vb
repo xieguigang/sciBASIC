@@ -10,11 +10,11 @@ Namespace DocumentStream
     ''' (第一行总是没有的，即本对象类型适用于第一行为列标题行的数据)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class DataFrame : Inherits DocumentFormat.Csv.DocumentStream.File
+    Public Class DataFrame : Inherits File
         Implements ISchema
         Implements System.Data.IDataReader
         Implements System.IDisposable
-        Implements System.Collections.Generic.IEnumerable(Of DynamicObjectLoader)
+        Implements IEnumerable(Of DynamicObjectLoader)
 
         ''' <summary>
         ''' <see cref="__currentLine"></see>在<see cref="_innerTable"></see>之中的位置

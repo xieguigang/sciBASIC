@@ -191,6 +191,15 @@ Namespace DocumentStream
             Return Me._FilePath.ToFileURL
         End Function
 
+        Public Function ToArray() As RowObject()
+            Return _innerTable.ToArray
+        End Function
+
+        Public Function ToArray(Of T)([ctype] As Func(Of RowObject, T)) As T()
+            Dim array As T() = _innerTable.ToArray([ctype])
+            Return array
+        End Function
+
         ''' <summary>
         ''' 对当前的csv矩阵进行转置之后返回新的文件
         ''' </summary>
