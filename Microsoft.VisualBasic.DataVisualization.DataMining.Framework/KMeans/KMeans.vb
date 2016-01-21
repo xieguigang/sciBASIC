@@ -1,11 +1,11 @@
-Imports System.Data
+﻿Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 
 Namespace KMeans
 
     ''' <summary>
-    ''' This class implement a KMeans clustering algorithm
+    ''' This class implement a KMeans clustering algorithm.(请注意，实体对象的属性必须要长度一致)
     ''' </summary>
     Public Module KMeansAlgorithm
 
