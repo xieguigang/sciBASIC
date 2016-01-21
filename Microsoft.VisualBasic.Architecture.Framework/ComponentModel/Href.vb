@@ -26,14 +26,14 @@
         ''' <summary>
         ''' 获取<see cref="Value"></see>所指向的资源文件的完整路径
         ''' </summary>
-        ''' <param name="Dir"></param>
+        ''' <param name="DIR"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetFullPath(Dir As String) As String
+        Public Function GetFullPath(DIR As String) As String
             Dim previous As String = FileIO.FileSystem.CurrentDirectory
 
-            FileIO.FileSystem.CurrentDirectory = Dir
-            Dim url As String = IO.Path.GetFullPath(Me.Value)
+            FileIO.FileSystem.CurrentDirectory = DIR
+            Dim url As String = System.IO.Path.GetFullPath(Me.Value)
             FileIO.FileSystem.CurrentDirectory = previous
             Return url
         End Function

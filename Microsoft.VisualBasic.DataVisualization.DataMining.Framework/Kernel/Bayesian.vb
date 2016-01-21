@@ -20,7 +20,11 @@ Namespace Kernel.Classifier
 
         Public Shared Function Load(Data As Generic.IEnumerable(Of CommonElements.Entity)) As Bayesian
             Dim Entities As List(Of CommonElements.Entity) = Data.ToList
-            Return New Bayesian With {.Entities = Entities, .AllClass = GetAllClass(Entities), .Width = Data.First.Width}
+            Return New Bayesian With {
+                .Entities = Entities,
+                .AllClass = GetAllClass(Entities),
+                .Width = Data.First.Length
+            }
         End Function
 
         Public Overrides Function ToString() As String

@@ -3,12 +3,26 @@
 Namespace CommonElements
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T">只允许数值类型</typeparam>
+    Public MustInherit Class EntityBase(Of T)
+
+        <Xml.Serialization.XmlAttribute> Public Property Properties As T()
+
+        Public ReadOnly Property Length As Integer
+            Get
+                Return Properties.Length
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>
     ''' {Properties} -> Class
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Entity
+    Public Class Entity : Inherits EntityBase(Of Integer)
 
-        <Xml.Serialization.XmlAttribute> Public Property Properties As Integer()
         <Xml.Serialization.XmlAttribute> Public Property [Class] As Integer
 
         Public Overrides Function ToString() As String
@@ -35,12 +49,6 @@ Namespace CommonElements
         Default Public ReadOnly Property Item(Index As Integer) As Integer
             Get
                 Return Properties(Index)
-            End Get
-        End Property
-
-        Public ReadOnly Property Width As Integer
-            Get
-                Return Properties.Count
             End Get
         End Property
 

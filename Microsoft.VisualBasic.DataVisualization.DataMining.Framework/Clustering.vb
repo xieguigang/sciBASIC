@@ -1,10 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-<[PackageNamespace]("Clustering", Publisher:="xie.guigang@gmail.com")>
-Public Module Clustering
+Namespace Clustering
 
-    Public Class Cluster
+    Public Class SimpleCluster
 
         Public Property Kernel As Double
         Public Property d As Double
@@ -43,13 +42,13 @@ Public Module Clustering
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Split() As Cluster()
+        Public Function Split() As SimpleCluster()
             Dim Chunk = (From n In Items Select n Order By n Ascending).ToArray
             Dim ChunkData = Chunk.Split(Chunk.Count / 2)
-            Return {New Cluster With {.Items = ChunkData.First, .d = d, .Kernel = ChunkData.First.Average}, New Cluster With {.Items = ChunkData.Last, .Kernel = ChunkData.Last.Average, .d = d}}
+            Return {New SimpleCluster With {.Items = ChunkData.First, .d = d, .Kernel = ChunkData.First.Average}, New SimpleCluster With {.Items = ChunkData.Last, .Kernel = ChunkData.Last.Average, .d = d}}
         End Function
 
-        Public Function Merge(value As Cluster) As Cluster
+        Public Function Merge(value As SimpleCluster) As SimpleCluster
             Me.Items = {Items, value.Items}.MatrixToVector
             Return Me
         End Function
@@ -59,109 +58,114 @@ Public Module Clustering
         End Function
     End Class
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="d">点之间的间距大小，当小于这个距离的任意两个点都会被划分为一个分类</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    ''' 
-    <ExportAPI("Clustering")>
-    Public Function Clustering(data As Generic.IEnumerable(Of Double), <Parameter("Distance")> d As Double) As Cluster()
-        Dim Ordered = (From n In data Select n Order By n Ascending).ToArray '从小到大排序
-        Dim an = data.Average
-        If an - Ordered.First <= d AndAlso Ordered.Last - an <= d Then
-            Return {New Cluster With {.Kernel = an, .Items = data.ToArray, .d = d}}
-        End If
 
-        Dim inits As Double = (data.Count / 4)
-        If inits < 1.5 Then
-            inits = data.Count / 2
-            If inits <= 2 Then
-                Dim NNN = (From n In data Select New Cluster With {.Items = {n}, .Kernel = n, .d = d}).ToArray
-                Return NNN
+    <[PackageNamespace]("Clustering", Publisher:="xie.guigang@gmail.com")>
+    Public Module Clustering
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="d">点之间的间距大小，当小于这个距离的任意两个点都会被划分为一个分类</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ''' 
+        <ExportAPI("Clustering")>
+        Public Function Clustering(data As Generic.IEnumerable(Of Double), <Parameter("Distance")> d As Double) As SimpleCluster()
+            Dim Ordered = (From n In data Select n Order By n Ascending).ToArray '从小到大排序
+            Dim an = data.Average
+            If an - Ordered.First <= d AndAlso Ordered.Last - an <= d Then
+                Return {New SimpleCluster With {.Kernel = an, .Items = data.ToArray, .d = d}}
             End If
-        End If
-        Dim ChunkData = Ordered.Split(inits)
-        Dim LQuery = (From kernel As Double() In ChunkData
-                      Select New Cluster With
+
+            Dim inits As Double = (data.Count / 4)
+            If inits < 1.5 Then
+                inits = data.Count / 2
+                If inits <= 2 Then
+                    Dim NNN = (From n In data Select New SimpleCluster With {.Items = {n}, .Kernel = n, .d = d}).ToArray
+                    Return NNN
+                End If
+            End If
+            Dim ChunkData = Ordered.Split(inits)
+            Dim LQuery = (From kernel As Double() In ChunkData
+                          Select New SimpleCluster With
                              {
                                  .Kernel = kernel.Average, .Items = kernel, .d = d}).ToList '进行初筛
-        '出现偏移的核都被合并进入偏向性的核之中，进行递归聚类
-        Dim get_Merged = Function(p As Integer) As Cluster
-                             If p < 0 OrElse p = LQuery.Count Then
-                                 Return Nothing     '核分裂
-                             Else
-                                 Return LQuery(p)
-                             End If
-                         End Function
-        Dim Offset = (From i As Integer
+            '出现偏移的核都被合并进入偏向性的核之中，进行递归聚类
+            Dim get_Merged = Function(p As Integer) As SimpleCluster
+                                 If p < 0 OrElse p = LQuery.Count Then
+                                     Return Nothing     '核分裂
+                                 Else
+                                     Return LQuery(p)
+                                 End If
+                             End Function
+            Dim Offset = (From i As Integer
                       In LQuery.Sequence
-                      Let kk = LQuery(i)
-                      Let p = kk.offset
-                      Where p <> 0
-                      Let merged_into = get_Merged(i - p)
-                      Select kernel = kk, MergedInto = merged_into).ToArray
+                          Let kk = LQuery(i)
+                          Let p = kk.offset
+                          Where p <> 0
+                          Let merged_into = get_Merged(i - p)
+                          Select kernel = kk, MergedInto = merged_into).ToArray
 
-        For Each item In Offset
-            If item.MergedInto Is Nothing Then '核分裂
-                Call LQuery.Remove(item.kernel)
-                Call LQuery.AddRange(item.kernel.Split)
+            For Each item In Offset
+                If item.MergedInto Is Nothing Then '核分裂
+                    Call LQuery.Remove(item.kernel)
+                    Call LQuery.AddRange(item.kernel.Split)
 
-                Continue For
-            End If
+                    Continue For
+                End If
 
-            Call item.MergedInto.Merge(item.kernel)
-            Call LQuery.Remove(item.kernel) '移除被合并的核
-        Next
+                Call item.MergedInto.Merge(item.kernel)
+                Call LQuery.Remove(item.kernel) '移除被合并的核
+            Next
 
-        '递归聚类
-        Dim HigherLevel = Clustering((From item In LQuery Select item.Kernel).ToArray, d)
-        LQuery = (From item In HigherLevel
-                  Let sub_kernels = (From kkk In LQuery Where Array.IndexOf(item.Items, kkk.Kernel) > -1 Select kkk).ToArray
-                  Select New Cluster With
+            '递归聚类
+            Dim HigherLevel = Clustering((From item In LQuery Select item.Kernel).ToArray, d)
+            LQuery = (From item In HigherLevel
+                      Let sub_kernels = (From kkk In LQuery Where Array.IndexOf(item.Items, kkk.Kernel) > -1 Select kkk).ToArray
+                      Select New SimpleCluster With
                          {
                              .Kernel = item.Kernel,
                              .Items = (From sk In sub_kernels Select sk.Items).ToArray.MatrixToVector, .d = item.d}).ToList
 
-        If LQuery.Count = 1 Then '在阈值d之下已经无法再聚类的，则必须要退出递归
-            Return LQuery.ToArray
-        End If
+            If LQuery.Count = 1 Then '在阈值d之下已经无法再聚类的，则必须要退出递归
+                Return LQuery.ToArray
+            End If
 
-        Dim ChunkBuffer = (From item In LQuery Select Clustering(item.Items, d)).ToArray.MatrixToVector
-        '  ChunkBuffer = InternalMergeJ(ChunkBuffer, d)
-        Return ChunkBuffer
-    End Function
+            Dim ChunkBuffer = (From item In LQuery Select Clustering(item.Items, d)).ToArray.MatrixToVector
+            '  ChunkBuffer = InternalMergeJ(ChunkBuffer, d)
+            Return ChunkBuffer
+        End Function
 
-    Public Function InternalMergeJ(data As Cluster(), d As Double) As Cluster()
-        If data.Count = 1 Then
-            Return data
-        End If
+        Public Function InternalMergeJ(data As SimpleCluster(), d As Double) As SimpleCluster()
+            If data.Count = 1 Then
+                Return data
+            End If
 
-        For i As Integer = 0 To data.Count - 2
-            Dim [next] = data(i + 1)
-            Dim item = data(i)
-            Dim LQuery = (From n In item.Items Where n - [next].Kernel <= d Select n).ToArray
+            For i As Integer = 0 To data.Count - 2
+                Dim [next] = data(i + 1)
+                Dim item = data(i)
+                Dim LQuery = (From n In item.Items Where n - [next].Kernel <= d Select n).ToArray
 
-            [next].Items = {[next].Items, LQuery}.MatrixToVector
-            [next].Kernel = [next].Items.Average
-            Dim tmpList = item.Items.ToList
-            For Each n In LQuery
-                Call tmpList.Remove(n)
+                [next].Items = {[next].Items, LQuery}.MatrixToVector
+                [next].Kernel = [next].Items.Average
+                Dim tmpList = item.Items.ToList
+                For Each n In LQuery
+                    Call tmpList.Remove(n)
+                Next
             Next
-        Next
 
-        Return data
-    End Function
+            Return data
+        End Function
 
-    <ExportAPI("Result.Print")>
-    Public Function PrintResult(data As Generic.IEnumerable(Of Cluster)) As String()
-        Dim LQuery = (From i As Integer In data.Sequence Let item = data(i) Let str As String = item.ToString Select i, str).ToArray
-        Call Console.WriteLine("There are {0} clusters from the original data." & vbCrLf, data.Count)
-        For Each s In LQuery
-            Call Console.WriteLine("[{0}]  {1}", s.i, s.str)
-        Next
-        Return (From item In LQuery Select item.str).ToArray
-    End Function
-End Module
+        <ExportAPI("Result.Print")>
+        Public Function PrintResult(data As Generic.IEnumerable(Of SimpleCluster)) As String()
+            Dim LQuery = (From i As Integer In data.Sequence Let item = data(i) Let str As String = item.ToString Select i, str).ToArray
+            Call Console.WriteLine("There are {0} clusters from the original data." & vbCrLf, data.Count)
+            For Each s In LQuery
+                Call Console.WriteLine("[{0}]  {1}", s.i, s.str)
+            Next
+            Return (From item In LQuery Select item.str).ToArray
+        End Function
+    End Module
+End Namespace

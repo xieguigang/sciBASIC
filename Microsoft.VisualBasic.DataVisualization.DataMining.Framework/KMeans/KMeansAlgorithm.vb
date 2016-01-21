@@ -1,4 +1,5 @@
 Imports System.Data
+Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.CommonElements
 
 Namespace KMeans
 
@@ -15,14 +16,10 @@ Namespace KMeans
         ''' <returns>Returns the Euclidean Distance Measure Between Points X and Points Y</returns>
         Public Function EuclideanDistance(X As Double(), Y As Double()) As Double
             Dim count As Integer = 0
-
-            Dim distance As Double = 0.0
-
             Dim sum As Double = 0.0
 
-
             If X.GetUpperBound(0) <> Y.GetUpperBound(0) Then
-                Throw New System.ArgumentException("the number of elements in X must match the number of elements in Y")
+                Throw New ArgumentException("the number of elements in X must match the number of elements in Y")
             Else
                 count = X.Length
             End If
@@ -31,8 +28,7 @@ Namespace KMeans
                 sum = sum + Math.Pow(Math.Abs(X(i) - Y(i)), 2)
             Next
 
-            distance = Math.Sqrt(sum)
-
+            Dim distance As Double = Math.Sqrt(sum)
             Return distance
         End Function
 
@@ -44,14 +40,10 @@ Namespace KMeans
         ''' <returns>Returns the Manhattan Distance Measure Between Points X and Points Y</returns>
         Public Function ManhattanDistance(X As Double(), Y As Double()) As Double
             Dim count As Integer = 0
-
-            Dim distance As Double = 0.0
-
             Dim sum As Double = 0.0
 
-
             If X.GetUpperBound(0) <> Y.GetUpperBound(0) Then
-                Throw New System.ArgumentException("the number of elements in X must match the number of elements in Y")
+                Throw New ArgumentException("the number of elements in X must match the number of elements in Y")
             Else
                 count = X.Length
             End If
@@ -60,9 +52,7 @@ Namespace KMeans
                 sum = sum + Math.Abs(X(i) - Y(i))
             Next
 
-            distance = sum
-
-            Return distance
+            Return sum
         End Function
 
         ''' <summary>
@@ -76,20 +66,13 @@ Namespace KMeans
         ''' </returns>
         Public Function ClusterMean(cluster As Double(,)) As Double()
             Dim rowCount As Integer = 0
-
             Dim fieldCount As Integer = 0
-
             Dim dataSum As Double(,)
-
             Dim centroid As Double()
 
-
             rowCount = cluster.GetUpperBound(0) + 1
-
             fieldCount = cluster.GetUpperBound(1) + 1
-
             dataSum = New Double(0, fieldCount - 1) {}
-
             centroid = New Double(fieldCount - 1) {}
 
             '((20+30)/2), ((170+160)/2), ((80+120)/2)
@@ -104,71 +87,56 @@ Namespace KMeans
             Return centroid
         End Function
 
+        Public Delegate Function InitEntity(Of T As EntityBase(Of Double))(data As Double()) As T
 
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
-        ''' <param name="data">An array containing data that will be clustered</param>
+        ''' <param name="source">An array containing data that will be clustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(clusterCount As Integer, data As Double(,)) As ClusterCollection
-            'bool stableClusterFormation = false;
-
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T), ctor As InitEntity(Of T)) As ClusterCollection(Of T)
+            Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
-
-            Dim rowCount As Integer = data.GetUpperBound(0) + 1
-
-            Dim fieldCount As Integer = data.GetUpperBound(1) + 1
-
+            Dim rowCount As Integer = data.Length + 1
+            Dim fieldCount As Integer = data(Scan0).Length + 1
             Dim stableClustersCount As Integer = 0
-
             Dim iterationCount As Integer = 0
-
             Dim dataPoint As Double()
-
-            Dim cluster As Cluster = Nothing
-
-            Dim clusters As New ClusterCollection()
-
-            Dim clusterNumbers As New System.Collections.ArrayList(clusterCount)
+            Dim cluster As Cluster(Of T) = Nothing
+            Dim clusters As New ClusterCollection(Of T)
+            Dim clusterNumbers As New ArrayList(clusterCount)
             Dim Random As Random = New Random
 
             While clusterNumbers.Count < clusterCount
-                clusterNumber = random.[Next](0, rowCount - 1)
+                clusterNumber = Random.[Next](0, rowCount - 1)
 
                 If Not clusterNumbers.Contains(clusterNumber) Then
-
-                    cluster = New Cluster()
-
+                    cluster = New Cluster(Of T)
                     clusterNumbers.Add(clusterNumber)
-
                     dataPoint = New Double(fieldCount - 1) {}
 
-
                     For field As Integer = 0 To fieldCount - 1
-                        dataPoint.SetValue((data(clusterNumber, field)), field)
+                        dataPoint.SetValue((data(clusterNumber).Properties(field)), field)
                     Next
 
-                    cluster.Add(dataPoint)
-
+                    cluster.Add(ctor(dataPoint))
                     clusters.Add(cluster)
                 End If
             End While
 
-
-            While stableClustersCount <> clusters.Count
+            While stableClustersCount <> clusters.NumOfCluster
                 stableClustersCount = 0
 
-                Dim newClusters As ClusterCollection = KMeans.ClusterDataSet(clusters, data)
+                Dim newClusters As ClusterCollection(Of T) = KMeans.ClusterDataSet(clusters, data, ctor)
 
-                For clusterIndex As Integer = 0 To clusters.Count - 1
+                For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
                     If (KMeans.EuclideanDistance(newClusters(clusterIndex).ClusterMean, clusters(clusterIndex).ClusterMean)) = 0 Then
                         stableClustersCount += 1
                     End If
                 Next
 
                 iterationCount += 1
-
                 clusters = newClusters
             End While
 
@@ -179,27 +147,25 @@ Namespace KMeans
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusters">A collection of data clusters</param>
-        ''' <param name="data">An array containing data to b eclustered</param>
+        ''' <param name="source">An array containing data to b eclustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(clusters As ClusterCollection, data As Double(,)) As ClusterCollection
-
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), source As IEnumerable(Of T), ctor As InitEntity(Of T)) As ClusterCollection(Of T)
+            Dim data As T() = source.ToArray
             Dim dataPoint As Double()
             Dim clusterMean As Double()
             Dim firstClusterDistance As Double = 0.0
             Dim secondClusterDistance As Double = 0.0
-            Dim rowCount As Integer = data.GetUpperBound(0) + 1
-            Dim fieldCount As Integer = data.GetUpperBound(1) + 1
+            Dim rowCount As Integer = data.Length + 1
+            Dim fieldCount As Integer = data(Scan0).Length + 1
             Dim position As Integer = 0
-            ' create a new collection of clusters
-            Dim newClusters As New ClusterCollection()
+            Dim newClusters As New ClusterCollection(Of T)     ' create a new collection of clusters
 
-            For count As Integer = 0 To clusters.Count - 1
-                Dim newCluster As New Cluster()
-
+            For count As Integer = 0 To clusters.NumOfCluster - 1
+                Dim newCluster As New Cluster(Of T)
                 newClusters.Add(newCluster)
             Next
 
-            If clusters.Count <= 0 Then
+            If clusters.NumOfCluster <= 0 Then
                 Throw New SystemException("Cluster Count Cannot Be Zero!")
             End If
 
@@ -208,28 +174,26 @@ Namespace KMeans
                 dataPoint = New Double(fieldCount - 1) {}
 
                 For field As Integer = 0 To fieldCount - 1
-                    dataPoint.SetValue((data(row, field)), field)
+                    dataPoint.SetValue((data(row).Properties(field)), field)
                 Next
 
-                For cluster As Integer = 0 To clusters.Count - 1
+                For cluster As Integer = 0 To clusters.NumOfCluster - 1
                     clusterMean = clusters(cluster).ClusterMean
 
                     If cluster = 0 Then
                         firstClusterDistance = KMeans.EuclideanDistance(dataPoint, clusterMean)
-
                         position = cluster
                     Else
                         secondClusterDistance = KMeans.EuclideanDistance(dataPoint, clusterMean)
 
                         If firstClusterDistance > secondClusterDistance Then
                             firstClusterDistance = secondClusterDistance
-
                             position = cluster
                         End If
                     End If
                 Next
 
-                newClusters(position).Add(dataPoint)
+                newClusters(position).Add(ctor(dataPoint))
             Next
 
             Return newClusters
@@ -241,7 +205,6 @@ Namespace KMeans
         ''' <param name="table">A System.Data.DataTable containing data to cluster</param>
         ''' <returns>A 2-dimensional array containing data to cluster</returns>
         Public Function ConvertDataTableToArray(table As DataTable) As Double(,)
-
             Dim rowCount As Integer = table.Rows.Count
             Dim fieldCount As Integer = table.Columns.Count
             Dim dataPoints As Double(,)
@@ -273,21 +236,21 @@ Namespace KMeans
     ''' <summary>
     ''' A class containing a group of data with similar characteristics (cluster)
     ''' </summary>
-    <Serializable> _
-    Public Class Cluster : Inherits System.Collections.CollectionBase
-
-        Dim _clusterSum As Double()
+    <Serializable> Public Class Cluster(Of T As EntityBase(Of Double))
 
         ''' <summary>
         ''' The sum of all the data in the cluster
         ''' </summary>
         Public ReadOnly Property ClusterSum() As Double()
-            Get
-                Return Me._clusterSum
-            End Get
-        End Property
 
         Dim _clusterMean As Double()
+        ReadOnly _innerList As New List(Of T)
+
+        Public ReadOnly Property NumOfEntity As Integer
+            Get
+                Return _innerList.Count
+            End Get
+        End Property
 
         ''' <summary>
         ''' The mean of all the data in the cluster
@@ -295,7 +258,7 @@ Namespace KMeans
         Public ReadOnly Property ClusterMean() As Double()
             Get
                 For count As Integer = 0 To Me(0).Length - 1
-                    Me._clusterMean(count) = (Me._clusterSum(count) / Me.List.Count)
+                    Me._clusterMean(count) = (Me._ClusterSum(count) / Me._innerList.Count)
                 Next
 
                 Return Me._clusterMean
@@ -306,53 +269,65 @@ Namespace KMeans
         ''' Adds a single dimension array data to the cluster
         ''' </summary>
         ''' <param name="data">A 1-dimensional array containing data that will be added to the cluster</param>
-        Public Overridable Sub Add(data As Double())
-            Me.List.Add(data)
+        Public Overridable Sub Add(data As T)
+            Me._innerList.Add(data)
 
-            If Me.List.Count = 1 Then
-                Me._clusterSum = New Double(data.Length - 1) {}
-
+            If Me._innerList.Count = 1 Then
+                Me._ClusterSum = New Double(data.Length - 1) {}
                 Me._clusterMean = New Double(data.Length - 1) {}
             End If
 
             For count As Integer = 0 To data.Length - 1
-                Me._clusterSum(count) = Me._clusterSum(count) + data(count)
+                Me._ClusterSum(count) = Me._ClusterSum(count) + data.Properties(count)
             Next
         End Sub
 
         ''' <summary>
         ''' Returns the one dimensional array data located at the index
         ''' </summary>
-        Default Public Overridable ReadOnly Property Item(Index As Integer) As Double()
+        Default Public Overridable ReadOnly Property Item(Index As Integer) As T
             Get
-                'return the Neuron at IList[Index] 
-                Return DirectCast(Me.List(Index), Double())
+                Return Me._innerList(Index)
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return NumOfEntity & " data entities..."
+        End Function
     End Class
 
     ''' <summary>
     ''' A collection of Cluster objects or Clusters
     ''' </summary>
-    <Serializable>
-    Public Class ClusterCollection : Inherits System.Collections.CollectionBase
+    <Serializable> Public Class ClusterCollection(Of T As EntityBase(Of Double))
+
+        ReadOnly _innerList As New List(Of Cluster(Of T))
+
+        Public ReadOnly Property NumOfCluster As Integer
+            Get
+                Return _innerList.Count
+            End Get
+        End Property
 
         ''' <summary>
         ''' Adds a Cluster to the collection of Clusters
         ''' </summary>
         ''' <param name="cluster">A Cluster to be added to the collection of clusters</param>
-        Public Overridable Sub Add(cluster As Cluster)
-            Me.List.Add(cluster)
+        Public Overridable Sub Add(cluster As Cluster(Of T))
+            Me._innerList.Add(cluster)
         End Sub
 
         ''' <summary>
         ''' Returns the Cluster at this index
         ''' </summary>
-        Default Public Overridable ReadOnly Property Item(Index As Integer) As Cluster
+        Default Public Overridable ReadOnly Property Item(Index As Integer) As Cluster(Of T)
             Get
-                'return the Neuron at IList[Index] 
-                Return DirectCast(Me.List(Index), Cluster)
+                Return Me._innerList(Index)
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return NumOfCluster & " data clusters..."
+        End Function
     End Class
 End Namespace
