@@ -87,25 +87,22 @@ Namespace KMeans
             Return centroid
         End Function
 
-        Public Delegate Function InitEntity(Of T As EntityBase(Of Double))(data As Double()) As T
-
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
         ''' <param name="source">An array containing data that will be clustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T), ctor As InitEntity(Of T)) As ClusterCollection(Of T)
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T)) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
-            Dim rowCount As Integer = data.Length + 1
-            Dim fieldCount As Integer = data(Scan0).Length + 1
+            Dim rowCount As Integer = data.Length
+            Dim fieldCount As Integer = data(Scan0).Length
             Dim stableClustersCount As Integer = 0
             Dim iterationCount As Integer = 0
-            Dim dataPoint As Double()
             Dim cluster As Cluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
-            Dim clusterNumbers As New ArrayList(clusterCount)
+            Dim clusterNumbers As New List(Of Integer)
             Dim Random As Random = New Random
 
             While clusterNumbers.Count < clusterCount
@@ -114,13 +111,7 @@ Namespace KMeans
                 If Not clusterNumbers.Contains(clusterNumber) Then
                     cluster = New Cluster(Of T)
                     clusterNumbers.Add(clusterNumber)
-                    dataPoint = New Double(fieldCount - 1) {}
-
-                    For field As Integer = 0 To fieldCount - 1
-                        dataPoint.SetValue((data(clusterNumber).Properties(field)), field)
-                    Next
-
-                    cluster.Add(ctor(dataPoint))
+                    cluster.Add(data(clusterNumber))
                     clusters.Add(cluster)
                 End If
             End While
@@ -128,7 +119,7 @@ Namespace KMeans
             While stableClustersCount <> clusters.NumOfCluster
                 stableClustersCount = 0
 
-                Dim newClusters As ClusterCollection(Of T) = KMeans.ClusterDataSet(clusters, data, ctor)
+                Dim newClusters As ClusterCollection(Of T) = KMeans.ClusterDataSet(clusters, data)
 
                 For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
                     If (KMeans.EuclideanDistance(newClusters(clusterIndex).ClusterMean, clusters(clusterIndex).ClusterMean)) = 0 Then
@@ -149,14 +140,13 @@ Namespace KMeans
         ''' <param name="clusters">A collection of data clusters</param>
         ''' <param name="source">An array containing data to b eclustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), source As IEnumerable(Of T), ctor As InitEntity(Of T)) As ClusterCollection(Of T)
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), source As IEnumerable(Of T)) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
-            Dim dataPoint As Double()
             Dim clusterMean As Double()
             Dim firstClusterDistance As Double = 0.0
             Dim secondClusterDistance As Double = 0.0
-            Dim rowCount As Integer = data.Length + 1
-            Dim fieldCount As Integer = data(Scan0).Length + 1
+            Dim rowCount As Integer = data.Length
+            Dim fieldCount As Integer = data(Scan0).Length
             Dim position As Integer = 0
             Dim newClusters As New ClusterCollection(Of T)     ' create a new collection of clusters
 
@@ -171,20 +161,16 @@ Namespace KMeans
 
             '((20+30)/2), ((170+160)/2), ((80+120)/2)
             For row As Integer = 0 To rowCount - 1
-                dataPoint = New Double(fieldCount - 1) {}
-
-                For field As Integer = 0 To fieldCount - 1
-                    dataPoint.SetValue((data(row).Properties(field)), field)
-                Next
+                Dim dataPoint As T = data(row)
 
                 For cluster As Integer = 0 To clusters.NumOfCluster - 1
                     clusterMean = clusters(cluster).ClusterMean
 
                     If cluster = 0 Then
-                        firstClusterDistance = KMeans.EuclideanDistance(dataPoint, clusterMean)
+                        firstClusterDistance = KMeans.EuclideanDistance(dataPoint.Properties, clusterMean)
                         position = cluster
                     Else
-                        secondClusterDistance = KMeans.EuclideanDistance(dataPoint, clusterMean)
+                        secondClusterDistance = KMeans.EuclideanDistance(dataPoint.Properties, clusterMean)
 
                         If firstClusterDistance > secondClusterDistance Then
                             firstClusterDistance = secondClusterDistance
@@ -193,7 +179,7 @@ Namespace KMeans
                     End If
                 Next
 
-                newClusters(position).Add(ctor(dataPoint))
+                newClusters(position).Add(dataPoint)
             Next
 
             Return newClusters
