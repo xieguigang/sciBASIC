@@ -123,9 +123,9 @@
     <Compile Include="Clustering.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="KMeans\Entity.vb" />
     <Compile Include="KMeans\LDM.vb" />
-    <Compile Include="KMeans\KMean.vb" />
-    <Compile Include="KMeans\KMeansAlgorithm.vb" />
+    <Compile Include="KMeans\KMeans.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\Output.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\Rule.vb" />

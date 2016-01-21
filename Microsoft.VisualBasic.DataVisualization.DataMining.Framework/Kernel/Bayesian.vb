@@ -14,12 +14,12 @@ Namespace Kernel.Classifier
         ''' 原始的数据集合
         ''' </summary>
         ''' <remarks></remarks>
-        Dim Entities As List(Of Entity)
+        Dim Entities As List(Of ComponentModel.Entity)
         Dim AllClass As Integer()
         Dim Width As Integer
 
-        Public Shared Function Load(Data As Generic.IEnumerable(Of Entity)) As Bayesian
-            Dim Entities As List(Of Entity) = Data.ToList
+        Public Shared Function Load(Data As Generic.IEnumerable(Of ComponentModel.Entity)) As Bayesian
+            Dim Entities As List(Of ComponentModel.Entity) = Data.ToList
             Return New Bayesian With {
                 .Entities = Entities,
                 .AllClass = GetAllClass(Entities),
@@ -43,7 +43,7 @@ Namespace Kernel.Classifier
             Return LQuery.Count / Entities.Count
         End Function
 
-        Private Shared Function GetAllClass(Entities As List(Of Entity)) As Integer()
+        Private Shared Function GetAllClass(Entities As List(Of ComponentModel.Entity)) As Integer()
             If Entities Is Nothing OrElse Entities.Count = 0 Then Return New Integer() {}
             Dim LQuery = From Entity As Entity In Entities.AsParallel Select Entity.Class Distinct '
             Return LQuery.ToArray
@@ -56,7 +56,7 @@ Namespace Kernel.Classifier
         ''' <param name="Y"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function P(X As Entity, Y As Integer) As Double
+        Public Function P(X As ComponentModel.Entity, Y As Integer) As Double
             Dim LQuery = From Handle As Integer In Width.Sequence
                          Select (From Entity As Entity
                                  In Entities
