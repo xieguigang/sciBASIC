@@ -25,6 +25,22 @@ Namespace DocumentStream
             _innerTable = data.ToList
         End Sub
 
+        Sub New(path As String)
+            FilePath = path
+            _innerTable = __loads(path, System.Text.Encoding.Default)
+        End Sub
+
+        Default Public Overloads Property Item(x As Integer, y As Integer) As String
+            Get
+                Dim row As RowObject = Me(x)
+                Return row(y)
+            End Get
+            Set(value As String)
+                Dim row As RowObject = Me(x)
+                row(y) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' Get the max width number of the rows in the table.(返回表中的元素最多的一列的列数目)
         ''' </summary>
@@ -517,11 +533,24 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Shared Function Load(Path As String, Optional encoding As System.Text.Encoding = Nothing) As File
             If encoding Is Nothing Then
-                encoding = System.Text.Encoding.Default
+                encoding = Encoding.Default
             End If
-            Dim Csv = CType(System.IO.File.ReadAllLines(Path, encoding:=encoding), File)
-            Csv._FilePath = Path
+            Dim buf As List(Of RowObject) = __loads(Path, encoding)
+            Dim Csv As New File With {
+                ._FilePath = Path,
+                ._innerTable = buf
+            }
             Return Csv
+        End Function
+
+        Private Shared Function __loads(path As String, encoding As System.Text.Encoding) As List(Of RowObject)
+            Dim lines As String() = IO.File.ReadAllLines(path, encoding)
+            Dim first As RowObject = CType(lines.First, RowObject)
+            Dim rows As RowObject() = (From s As String In lines.Skip(1).AsParallel Select CType(s, RowObject)).ToArray
+            Dim buf As New List(Of RowObject)
+            Call buf.Add(first)
+            Call buf.Add(rows)
+            Return buf
         End Function
 #End Region
 
@@ -553,7 +582,7 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function Distinct(File As String, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
-            Dim Csv As Csv.DocumentStream.File = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File.Load(File)
+            Dim Csv As Csv.DocumentStream.File = Load(File)
             Return Distinct(Csv, OrderBy, Asc)
         End Function
 

@@ -32,6 +32,10 @@ Namespace DocumentStream
             Call Me.New(raw.ToArray(Function(x) Scripting.ToString(x)))
         End Sub
 
+        Sub New(raw As String)
+
+        End Sub
+
         ''' <summary>
         ''' 不做任何处理直接获取数据
         ''' </summary>
