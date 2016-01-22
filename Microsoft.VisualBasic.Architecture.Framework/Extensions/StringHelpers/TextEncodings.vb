@@ -55,6 +55,10 @@ Public Module TextEncodings
     ''' <returns></returns>
     <Extension>
     Public Function TransEncoding(path As String, encoding As Encodings, Optional from As System.Text.Encoding = Nothing) As Boolean
+        If Not path.FileExists Then
+            Call "".SaveTo(path, encoding.GetEncodings)
+        End If
+
         Dim tmp As String = If(from Is Nothing, IO.File.ReadAllText(path), IO.File.ReadAllText(path, from))
         Return tmp.SaveTo(path, encoding.GetEncodings)
     End Function
