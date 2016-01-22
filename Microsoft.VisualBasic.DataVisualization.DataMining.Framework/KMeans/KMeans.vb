@@ -90,6 +90,29 @@ Namespace KMeans
             Return centroid
         End Function
 
+        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T)) As Entity()
+            Dim list As New List(Of Entity)
+            Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
+
+            For i As Integer = 0 To result.Length - 1
+                Dim cluster = result(i)
+                Dim id As String = "." & CStr(i + 1)
+
+                For Each x In cluster
+                    x.uid &= id
+                Next
+
+                If cluster.NumOfEntity = 1 Then
+                    Call list.Add(cluster.Item(Scan0))
+                ElseIf cluster.NumOfEntity = 0 Then
+                Else
+                    Call list.Add(TreeCluster(cluster.ToArray))  ' 递归聚类分解
+                End If
+            Next
+
+            Return list.ToArray
+        End Function
+
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
