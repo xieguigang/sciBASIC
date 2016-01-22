@@ -82,10 +82,9 @@
         Public Function GetMetaTitles(obj As Object) As String()
             If MetaRow Is Nothing OrElse MetaRow.BindProperty Is Nothing Then
                 Return New String() {}
+            Else
+                Return __cachedIndex
             End If
-            Dim hash As IDictionary = DirectCast(MetaRow.BindProperty.GetValue(obj), IDictionary)
-            Dim keys As String() = (From x In hash.Keys Select Scripting.ToString(x)).ToArray
-            Return keys
         End Function
 
         Private Function __meta(obj As Object) As String()
