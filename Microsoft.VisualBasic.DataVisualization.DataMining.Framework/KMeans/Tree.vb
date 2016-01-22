@@ -19,22 +19,45 @@ Namespace KMeans
             Dim list As New List(Of Entity)
             Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
 
-            For i As Integer = 0 To result.Length - 1
-                Dim cluster = result(i)
-                Dim id As String = "." & CStr(i + 1)
+            ' 检查数据
+            Dim b0 As Boolean = False, b20 As Boolean = False
 
-                For Each x In cluster
-                    x.uid &= id
-                Next
-
-                If cluster.NumOfEntity = 1 Then
-                    Call list.Add(cluster.Item(Scan0))
-                ElseIf cluster.NumOfEntity = 0 Then
-                Else
-                    Call Console.Write(".")
-                    Call list.Add(TreeCluster(cluster.ToArray))  ' 递归聚类分解
+            For Each x In result
+                If x.NumOfEntity = 0 Then
+                    b0 = True
+                End If
+                If (From n In x.ClusterMean Where n = 0R Select 1).FirstOrDefault = 0 AndAlso
+                    (From n In x.ClusterSum Where n = 0R Select 1).FirstOrDefault = 0 Then
+                    b20 = True
                 End If
             Next
+
+            If b0 AndAlso b20 Then    ' 已经无法再分了，全都是0，则放在一个cluster里面
+                Dim cluster As T() = result.MatrixToVector
+                For Each x In cluster
+                    x.uid &= "-X"
+                Next
+
+                Call list.Add(cluster)
+            Else
+                For i As Integer = 0 To result.Length - 1
+                    Dim cluster = result(i)
+                    Dim id As String = "." & CStr(i + 1)
+
+                    For Each x In cluster
+                        x.uid &= id
+                    Next
+
+                    If cluster.NumOfEntity = 1 Then
+                        Call list.Add(cluster.Item(Scan0))
+                    Else
+                        Call Console.Write(">")
+                        Call list.Add(TreeCluster(cluster.ToArray))  ' 递归聚类分解
+                    End If
+                Next
+            End If
+
+            Call Console.Write("<")
 
             Return list.ToArray
         End Function

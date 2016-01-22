@@ -133,12 +133,13 @@ Namespace KMeans
 
                 For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
                     Dim x As Cluster(Of T) = newClusters(clusterIndex)
+                    Dim y As Cluster(Of T) = clusters(clusterIndex)
 
-                    If x.NumOfEntity = 0 Then
+                    If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
-                    If (KMeans.EuclideanDistance(newClusters(clusterIndex).ClusterMean, clusters(clusterIndex).ClusterMean)) = 0 Then
+                    If (KMeans.EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then
                         stableClustersCount += 1
                     End If
                 Next
