@@ -25,10 +25,12 @@ Namespace KMeans
             For Each x In result
                 If x.NumOfEntity = 0 Then
                     b0 = True
-                End If
-                If (From n In x.ClusterMean Where n = 0R Select 1).FirstOrDefault = 0 AndAlso
-                    (From n In x.ClusterSum Where n = 0R Select 1).FirstOrDefault = 0 Then
-                    b20 = True
+                Else
+                    Dim nl As Integer = 0.75 * source.First.Properties.Count
+                    If (From c In x.ClusterMean Where c = 0R Select 1).Count >= nl AndAlso
+                        (From c In x.ClusterSum Where c = 0R Select 1).Count >= nl Then
+                        b20 = True
+                    End If
                 End If
             Next
 
@@ -50,6 +52,8 @@ Namespace KMeans
 
                     If cluster.NumOfEntity = 1 Then
                         Call list.Add(cluster.Item(Scan0))
+                    ElseIf cluster.NumOfEntity = 0 Then
+                        '  不可以取消这可分支，否则会死循环
                     Else
                         Call Console.Write(">")
                         Call list.Add(TreeCluster(cluster.ToArray))  ' 递归聚类分解
