@@ -1,12 +1,20 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataVisualization.Network
 Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace KMeans
 
+    <PackageNamespace("KMeans.Tree.NET", Category:=APICategories.ResearchTools, Publisher:="smrucc@gcmodeller.org")>
     Public Module Tree
 
-        <Extension> Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T)) As Entity()
+        <ExportAPI("Cluster.Trees")>
+        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity)) As Entity()
+            Return TreeCluster(Of Entity)(source)
+        End Function
+
+        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T)) As Entity()
             If source.Count = 2 Then
                 Dim array = source.ToArray
                 For i As Integer = 0 To array.Length - 1
@@ -75,6 +83,7 @@ Namespace KMeans
             End Function
         End Class
 
+        <ExportAPI("Cluster.Trees.Network")>
         <Extension> Public Function TreeNET(source As IEnumerable(Of EntityLDM)) As Network.FileStream.Network
             Dim array = (From x As EntityLDM In source
                          Let path As String() = x.Cluster.Split("."c)
