@@ -167,21 +167,20 @@ Namespace StorageProvider.Reflection
         ''' <summary>
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作) 
         ''' </summary>
-        ''' <param name="Collection"></param>
+        ''' <param name="source"></param>
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Private Function __save(Collection As Generic.IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As File
+        Private Function __save(source As IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As File
             Dim CsvData As File = New File
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
-            Dim RowWriter As New RowWriter(Schema)
-
-            Dim LQuery As RowObject() = (From itmRow As Object In Collection.AsParallel
+            Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
+            Dim LQuery As RowObject() = (From itmRow As Object In source.AsParallel
                                          Where Not itmRow Is Nothing
                                          Let createdRow As RowObject = RowWriter.ToRow(itmRow)
                                          Select createdRow).ToArray '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
-            Call CsvData.Add(RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(Collection.FirstOrDefault)))
+            Call CsvData.Add(RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(source.FirstOrDefault)))
             Call CsvData.AppendRange(LQuery)
 
             Return CsvData

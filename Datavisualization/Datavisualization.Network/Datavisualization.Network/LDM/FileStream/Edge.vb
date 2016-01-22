@@ -9,7 +9,8 @@ Namespace FileStream
     ''' </summary>
     ''' <remarks></remarks>
     <Xml.Serialization.XmlType("VisualizeNode")>
-    Public Class NetworkNode : Implements I_InteractionModel, INetworkEdge
+    Public Class NetworkNode : Inherits INetComponent
+        Implements I_InteractionModel, INetworkEdge
 
         Public Shared Function Contains(edge As I_InteractionModel, node As String) As Boolean
             Return String.Equals(node, edge.FromNode, StringComparison.OrdinalIgnoreCase) OrElse
@@ -126,5 +127,4 @@ Namespace FileStream
             End If
         End Function
     End Class
-
 End Namespace

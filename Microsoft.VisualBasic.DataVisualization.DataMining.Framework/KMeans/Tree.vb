@@ -37,7 +37,7 @@ Namespace KMeans
             If b0 AndAlso b20 Then    ' 已经无法再分了，全都是0，则放在一个cluster里面
                 Dim cluster As T() = result.MatrixToVector
                 For Each x In cluster
-                    x.uid &= "-X"
+                    x.uid &= ".X"
                 Next
 
                 Call list.Add(cluster)
@@ -69,6 +69,10 @@ Namespace KMeans
         Private Class __edgePath
             Public path As String()
             Public node As EntityLDM
+
+            Public Overrides Function ToString() As String
+                Return $"[{node.Cluster}] --> {node.Name}"
+            End Function
         End Class
 
         <Extension> Public Function TreeNET(source As IEnumerable(Of EntityLDM)) As Network.FileStream.Network
@@ -77,10 +81,16 @@ Namespace KMeans
                          Select New __edgePath With {
                              .node = x,
                              .path = path}).ToArray
-            Dim nodes = array.ToArray(Function(x) New FileStream.Node With {.Identifier = x.node.Name, .NodeType = "Entity"}).ToList
+            Dim nodes = array.ToArray(Function(x) New FileStream.Node With {
+                                          .Identifier = x.node.Name,
+                                          .NodeType = "Entity",
+                                          .Properties = x.node.Properties _
+                                                .ToDictionary(Function(xx) xx.Key,
+                                                              Function(xx) Math.Round(xx.Value, 4).ToString)
+                                          }).ToList
             Dim root As New FileStream.Node With {
                 .Identifier = "ROOT",
-                .NodeType = "Virtual"
+                .NodeType = "ROOT"
             }
             Call nodes.Add(root)
 
@@ -101,6 +111,15 @@ Namespace KMeans
         ''' <returns></returns>
         Private Function __buildNET(array As __edgePath(), parent As FileStream.Node, depth As Integer, ByRef nodes As List(Of FileStream.Node)) As NetworkNode()
             Dim [next] As Integer = depth + 1  ' 下一层节点的深度
+
+            If depth = array(Scan0).path.Length AndAlso
+                array(Scan0).path.Last = "X"c Then
+                Return array.ToArray(Function(x) New NetworkNode With {
+                                         .FromNode = parent.Identifier,
+                                         .ToNode = x.node.Name,
+                                         .InteractionType = "Leaf-X"})
+            End If
+
             Dim Gp = (From x In array Let cur = x.path(depth) Select cur, x Group By cur Into Group).ToArray
             Dim edges As New List(Of NetworkNode)
 

@@ -56,18 +56,18 @@ Namespace FileStream
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="ExportDir">The data directory for the data export, if the value of this directory is null then the data 
+        ''' <param name="outDIR">The data directory for the data export, if the value of this directory is null then the data 
         ''' will be exported at the current work directory.
         ''' (进行数据导出的文件夹，假若为空则会保存数据至当前的工作文件夹之中)</param>
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Save(Optional ExportDir As String = "",
+        Public Function Save(Optional outDIR As String = "",
                              Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-            If String.IsNullOrEmpty(ExportDir) Then ExportDir = My.Computer.FileSystem.CurrentDirectory
+            If String.IsNullOrEmpty(outDIR) Then outDIR = My.Computer.FileSystem.CurrentDirectory
 
-            Call Nodes.SaveTo(String.Format("{0}/Nodes.csv", ExportDir), False, encoding)
-            Call Edges.SaveTo(String.Format("{0}/Edges.csv", ExportDir), False, encoding)
+            Call Nodes.SaveTo(String.Format("{0}/Nodes.csv", outDIR), False, encoding)
+            Call Edges.SaveTo(String.Format("{0}/Edges.csv", outDIR), False, encoding)
 
             Return True
         End Function

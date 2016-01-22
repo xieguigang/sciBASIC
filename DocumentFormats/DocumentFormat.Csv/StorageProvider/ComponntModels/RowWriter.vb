@@ -49,6 +49,24 @@
             Return New DocumentStream.RowObject(row)
         End Function
 
+        Dim __cachedIndex As String()
+
+        Public Function CacheIndex(source As IEnumerable(Of Object)) As RowWriter
+            If MetaRow Is Nothing Then
+                Return Me
+            End If
+
+            Dim hashMetas = (From obj As Object In source.AsParallel
+                             Let x As Object = MetaRow.BindProperty.GetValue(obj)
+                             Where Not x Is Nothing
+                             Let hash As IDictionary = DirectCast(x, IDictionary)
+                             Select hash).ToArray
+            Dim indexs = (From x In hashMetas.AsParallel Select (From o In x.Keys Select Scripting.ToString(o))).MatrixToList
+            __cachedIndex = indexs.Distinct.ToArray
+
+            Return Me
+        End Function
+
         Private Function __buildRowMeta(obj As Object) As DocumentStream.RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
@@ -71,8 +89,25 @@
         End Function
 
         Private Function __meta(obj As Object) As String()
-            Dim hash As IDictionary = DirectCast(MetaRow.BindProperty.GetValue(obj), IDictionary)
-            Dim values As String() = (From x In hash.Values Select Scripting.ToString(x)).ToArray
+            Dim source As Object = MetaRow.BindProperty.GetValue(obj)
+
+            If source Is Nothing Then
+                Return "".CopyVector(__cachedIndex.Length)
+            End If
+
+            Dim values As String() = New String(Me.__cachedIndex.Length - 1) {}
+            Dim hash As IDictionary = DirectCast(source, IDictionary)
+
+            For i As Integer = 0 To __cachedIndex.Length - 1
+                Dim tag As String = __cachedIndex(i)
+                If hash.Contains(tag) Then
+                    Dim value As Object = hash(key:=tag)
+                    values(i) = Scripting.ToString(value)
+                Else
+                    values(i) = ""
+                End If
+            Next
+
             Return values
         End Function
 
