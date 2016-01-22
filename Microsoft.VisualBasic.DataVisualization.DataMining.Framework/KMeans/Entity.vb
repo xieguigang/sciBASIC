@@ -17,6 +17,13 @@ Namespace KMeans
         Public Shared Function Load(path As String) As Entity()
             Return Entity.Load(path)
         End Function
+
+        Public Function ToModel() As Entity
+            Return New Entity With {
+                .uid = Name,
+                .Properties = Properties.Values.ToArray
+            }
+        End Function
     End Class
 
     Public Class Entity : Inherits EntityBase(Of Double)
@@ -45,6 +52,13 @@ Namespace KMeans
             Return New EntityLDM With {
                 .Name = uid,
                 .Properties = Properties.ToArray(Function(x, i) New With {.i = i, .x = x}).ToDictionary(Function(x) CStr(x.i), Function(x) x.x)
+            }
+        End Function
+
+        Public Function ToLDM(maps As String()) As EntityLDM
+            Return New EntityLDM With {
+                .Name = uid,
+                .Properties = Properties.ToArray(Function(x, i) New With {.i = i, .x = x}).ToDictionary(Function(x) maps(x.i), Function(x) x.x)
             }
         End Function
     End Class

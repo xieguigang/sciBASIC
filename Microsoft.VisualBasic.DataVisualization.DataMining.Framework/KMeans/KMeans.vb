@@ -108,6 +108,10 @@ Namespace KMeans
             Dim clusterNumbers As New List(Of Integer)
             Dim Random As Random = New Random
 
+            If clusterCount >= rowCount Then
+                Throw New Exception($"{clusterCount} >= {rowCount}, this will caused a dead loop!")
+            End If
+
             While clusterNumbers.Count < clusterCount
                 clusterNumber = Random.[Next](0, rowCount - 1)
 
