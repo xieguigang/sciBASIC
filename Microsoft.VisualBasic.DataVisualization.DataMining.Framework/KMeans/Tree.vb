@@ -31,6 +31,7 @@ Namespace KMeans
                     Call list.Add(cluster.Item(Scan0))
                 ElseIf cluster.NumOfEntity = 0 Then
                 Else
+                    Call Console.Write(".")
                     Call list.Add(TreeCluster(cluster.ToArray))  ' 递归聚类分解
                 End If
             Next

@@ -34,6 +34,5 @@ Namespace ComponentModel
         Public Shared Widening Operator CType(pt As Integer()) As Coords
             Return New Coords(pt.FirstOrDefault, pt.LastOrDefault)
         End Operator
-
     End Class
 End Namespace

@@ -68,6 +68,17 @@ Public Module LINQ
         Return List
     End Function
 
+    <Extension, ExportAPI("Sequence")>
+    Public Function Sequence(n As Integer, offset As Integer) As Integer()
+        Dim array As Integer() = n.Sequence
+
+        For i As Integer = 0 To array.Length - 1
+            array(i) = array(i) + offset
+        Next
+
+        Return array
+    End Function
+
     ''' <summary>
     ''' 产生指定数目的一个递增序列(所生成序列的数值就是生成的数组的元素的个数)
     ''' </summary>
