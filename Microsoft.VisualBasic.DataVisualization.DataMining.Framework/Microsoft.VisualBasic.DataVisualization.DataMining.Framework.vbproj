@@ -131,6 +131,7 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\Rule.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
+    <Compile Include="KMeans\Tree.vb" />
     <Compile Include="WaveletTransform.vb" />
     <Compile Include="ShellScriptAPI.vb" />
     <Compile Include="PeriodAnalysis.vb" />
@@ -185,6 +186,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Datavisualization\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj">
+      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
+      <Name>Datavisualization.Network</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DocumentFormats\DocumentFormat.Csv\DocumentFormat.Csv.vbproj">
       <Project>{1d8910c2-ada2-4306-96dc-a61b494522ed}</Project>
       <Name>DocumentFormat.Csv</Name>

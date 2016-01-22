@@ -21,6 +21,10 @@ Module TestingMain
     Sub Main()
 
 
+        Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)
+        Dim net = source.TreeNET
+
+        Call net.Save("./test_tree/", Encodings.ASCII)
 
 
         Dim StudentA As New Student With {.Properties = New Double() {15, 32, 35.6}, .Name = "A"},

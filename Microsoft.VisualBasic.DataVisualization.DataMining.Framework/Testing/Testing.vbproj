@@ -106,6 +106,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Datavisualization\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj">
+      <Project>{076315EE-B598-40DC-9280-C71CDF9B6A48}</Project>
+      <Name>Datavisualization.Network</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DocumentFormats\DocumentFormat.Csv\DocumentFormat.Csv.vbproj">
       <Project>{1d8910c2-ada2-4306-96dc-a61b494522ed}</Project>
       <Name>DocumentFormat.Csv</Name>

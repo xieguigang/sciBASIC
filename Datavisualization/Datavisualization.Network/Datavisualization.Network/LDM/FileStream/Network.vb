@@ -2,8 +2,12 @@
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace FileStream
+
+    Public Class Network : Inherits Network(Of Node, NetworkNode)
+    End Class
 
     ''' <summary>
     ''' The network csv data information with specific type of the datamodel
@@ -12,12 +16,11 @@ Namespace FileStream
     ''' <typeparam name="T_Edge"></typeparam>
     ''' <remarks></remarks>
     Public Class Network(Of T_Node As Node, T_Edge As NetworkNode)
-
-        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IKeyValuePairObject(Of T_Node(), T_Edge())
+        Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 
-        Public Property Nodes As T_Node() Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of T_Node(), T_Edge()).Identifier
-        Public Property Edges As T_Edge() Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of T_Node(), T_Edge()).Value
+        Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Identifier
+        Public Property Edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
 
         ''' <summary>
         ''' 移除的重复的边
