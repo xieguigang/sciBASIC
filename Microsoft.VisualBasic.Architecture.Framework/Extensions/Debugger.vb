@@ -7,6 +7,21 @@ Imports Microsoft.VisualBasic.ConsoleDevice
 ''' </summary>
 Public Module VBDebugger
 
+    ''' <summary>
+    ''' 用来调试的时候显示linq的执行进度
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function Proc(len As Integer, ByRef p As Integer) As Double
+        Dim pp As Double = p.MoveNext / len
+        If pp Mod 3.0R = 0 Then
+            Call Console.WriteLine(Math.Round(100 * pp, 2).ToString & "%")
+        Else
+            Call Console.Write(".")
+        End If
+
+        Return pp
+    End Function
+
     Public Property Mute As Boolean = False
 
     Private ReadOnly _Indent As String() = {
