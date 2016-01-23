@@ -6,8 +6,21 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Namespace FileStream
 
     Public MustInherit Class INetComponent
+
+        Dim _properties As Dictionary(Of String, String)
+
         <Meta(GetType(String))>
         Public Property Properties As Dictionary(Of String, String)
+            Get
+                If _properties Is Nothing Then
+                    _properties = New Dictionary(Of String, String)
+                End If
+                Return _properties
+            End Get
+            Set(value As Dictionary(Of String, String))
+                _properties = value
+            End Set
+        End Property
     End Class
 
     ''' <summary>

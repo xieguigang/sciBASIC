@@ -404,8 +404,12 @@ Public Module Extensions
     ''' 
     <ExportAPI("CLI_PATH")>
     <Extension> Public Function CliPath(Path As String) As String
-        Path = Path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
-        Return Path.CliToken
+        If String.IsNullOrEmpty(Path) Then
+            Return ""
+        Else
+            Path = Path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
+            Return Path.CliToken
+        End If
     End Function
 
     ''' <summary>

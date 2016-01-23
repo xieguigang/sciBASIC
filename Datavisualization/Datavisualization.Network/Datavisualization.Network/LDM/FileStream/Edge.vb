@@ -44,7 +44,7 @@ Namespace FileStream
         ''' 起始节点是否是终止节点
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property SelfLoop As Boolean
+        <Ignored> Public ReadOnly Property SelfLoop As Boolean
             Get
                 Return String.Equals(FromNode, ToNode, StringComparison.OrdinalIgnoreCase)
             End Get
