@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ConsoleDevice
+Imports Microsoft.VisualBasic.ConsoleDevice.Utility
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
@@ -8,18 +9,14 @@ Imports Microsoft.VisualBasic.ConsoleDevice
 Public Module VBDebugger
 
     ''' <summary>
-    ''' 用来调试的时候显示linq的执行进度
+    ''' 当在执行大型的数据集合的时候怀疑linq里面的某一个任务进入了死循环状态，可以使用这个方法来检查是否如此
     ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="TAG"></param>
     ''' <returns></returns>
-    Public Function Proc(len As Integer, ByRef p As Integer) As Double
-        Dim pp As Double = p.MoveNext / len
-        If pp Mod 3.0R = 0 Then
-            Call Console.WriteLine(Math.Round(100 * pp, 2).ToString & "%")
-        Else
-            Call Console.Write(".")
-        End If
-
-        Return pp
+    <Extension> Public Function LinqProc(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional TAG As String = "") As EventProc
+        Return New EventProc(source.Count, TAG)
     End Function
 
     Public Property Mute As Boolean = False

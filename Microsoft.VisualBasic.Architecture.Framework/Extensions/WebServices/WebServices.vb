@@ -412,8 +412,8 @@ Public Module WebServices
         End If
 
 #If FRAMEWORD_CORE Then
-        Using Process As ConsoleDevice.Utility.ConsoleBusyIndicator =
-            New ConsoleDevice.Utility.ConsoleBusyIndicator(_start:=True)
+        Using Process As ConsoleDevice.Utility.CBusyIndicator =
+            New ConsoleDevice.Utility.CBusyIndicator(_start:=True)
 #End If
             Return __downloadWebpage(url, RequestTimeOut)
 #If FRAMEWORD_CORE Then

@@ -172,6 +172,7 @@
     <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\Program.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\SwayBar.vb" />
+    <Compile Include="ConsoleDevices\Utility\EventProc.vb" />
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
@@ -306,7 +307,7 @@
     <Compile Include="Tools\ZipLib.vb" />
     <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
-    <Compile Include="ConsoleDevices\Utility\ConsoleProcessBusyIndicator.vb" />
+    <Compile Include="ConsoleDevices\Utility\CBusyIndicator.vb" />
     <Compile Include="Text\FileOperations.vb" />
     <Compile Include="Tools\SoftwareToolkits\ToolkitAPI.vb" />
     <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">

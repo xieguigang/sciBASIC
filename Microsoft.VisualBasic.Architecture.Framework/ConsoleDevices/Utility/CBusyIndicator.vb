@@ -1,57 +1,8 @@
-﻿Namespace ConsoleDevice.Utility
+﻿Imports System.Runtime.CompilerServices
 
-    Public Class EventProcess
+Namespace ConsoleDevice.Utility
 
-        Dim current As Integer
-        Public Property Capacity As Integer
-            Get
-                Return _Capacity
-            End Get
-            Set(value As Integer)
-                _Capacity = value
-                delta = Capacity / 100
-                current = CInt(_Capacity * p)
-            End Set
-        End Property
-
-        Dim _Capacity As Integer
-        Dim delta As Integer
-        Dim TAG As String
-
-        Sub New(n As Integer, Optional TAG As String = "")
-            Me.Capacity = n
-            Me.TAG = TAG
-
-            If String.IsNullOrEmpty(Me.TAG) Then
-                Me.TAG = vbTab
-            End If
-        End Sub
-
-        Public Sub Tick()
-            If delta = 0 Then
-                Return
-            End If
-
-            current += 1
-            If current Mod delta = 0 Then
-                Call ToString.__DEBUG_ECHO
-            End If
-        End Sub
-
-        Dim p As Double
-
-        Public Overrides Function ToString() As String
-            If Capacity = 0 Then
-                Return ""
-            End If
-
-            p = current / Capacity
-
-            Return $" [{TAG}] * ...... {Mid(100 * p, 1, 5)}%"
-        End Function
-    End Class
-
-    Public Class ConsoleBusyIndicator : Implements System.IDisposable
+    Public Class CBusyIndicator : Implements System.IDisposable
 
         Dim _IndicatorStyle As Char
         Dim _OnRunningState As Boolean = False
