@@ -169,8 +169,7 @@ Public Module IEnumerations
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of T As ComponentModel.Collection.Generic.IDEnumerable)(
-                                                source As System.Collections.Generic.IEnumerable(Of T)) As Dictionary(Of String, T)
+    <Extension> Public Function ToDictionary(Of T As IDEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
         Dim Dict As Dictionary(Of String, T) = New Dictionary(Of String, T)
         Dim i As Integer = 0
         Try

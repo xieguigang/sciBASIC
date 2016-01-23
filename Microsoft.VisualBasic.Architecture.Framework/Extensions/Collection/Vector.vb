@@ -29,4 +29,10 @@ Public Module Vector
         Return buf
     End Function
 
+    <Extension> Public Function LoadDblArray(path As String) As Double()
+        Dim array As String() = IO.File.ReadAllLines(path)
+        Dim n As Double() = array.ToArray(Function(x) Val(x))
+        Return n
+    End Function
+
 End Module
