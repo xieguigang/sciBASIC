@@ -20,12 +20,12 @@ Namespace StorageProvider.ComponentModels
         Public Property Schema As Dictionary(Of String, Integer)
         Public Property LineNumber As Long
 
-        Protected Friend _innerDataFrame As DocumentFormat.Csv.DocumentStream.DataFrame
+        Protected Friend _innerDataFrame As DataFrame
 
         Public Sub New()
         End Sub
 
-        Public Sub New(DataFrame As DocumentFormat.Csv.DocumentStream.DataFrame)
+        Public Sub New(DataFrame As DataFrame)
             Schema = DataFrame.SchemaOridinal
         End Sub
 
@@ -54,6 +54,10 @@ Namespace StorageProvider.ComponentModels
             End Set
         End Property
 
+        Public Function Read(idx As IEnumerable(Of Integer)) As String()
+            Return idx.ToArray(Function(x) RowData.Column(x))
+        End Function
+
         Public Function SetAttributeValue(Name As String, Value As String) As Boolean
             If Schema.ContainsKey(Name) Then
                 Dim Order As Integer = Schema(Name)
@@ -75,8 +79,16 @@ Namespace StorageProvider.ComponentModels
             End If
         End Function
 
+        Public Function GetOrdinal(Column As IEnumerable(Of String)) As Integer()
+            Return Column.ToArray(Function(x) GetOrdinal(x))
+        End Function
+
         Public Function GetValue(Ordinal As Integer) As String
             Return RowData.Column(Ordinal)
+        End Function
+
+        Public Function GetValues(ords As Integer()) As String()
+            Return ords.ToArray(Function(n) RowData.Column(n))
         End Function
 
         Public Shared Function CreateSchema(columns As String()) As Dictionary(Of String, Integer)
