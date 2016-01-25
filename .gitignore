@@ -184,6 +184,8 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 
+.vs
+
 
 #############
 ## Python
@@ -215,3 +217,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+*.dll
+*.dll
