@@ -15,40 +15,58 @@ Namespace KMeans
         End Function
 
         Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T)) As Entity()
+            Return __treeCluster(source, Scan0, source.Count / 2)
+        End Function
+
+        Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer) As Entity()
             If source.Count = 2 Then
-                Dim array = source.ToArray
+EXIT_:          Dim array = source.ToArray
                 For i As Integer = 0 To array.Length - 1
                     Dim id As String = "." & CStr(i + 1)
                     array(i).uid &= id
                 Next
                 Return array
+            Else
+                depth += 1
+
+                If depth >= [stop] Then
+                    Dim cluster As T() = source.ToArray
+
+                    For Each x As T In cluster
+                        x.uid &= ".X"
+                    Next
+
+                    Return cluster
+                End If
             End If
 
             Dim list As New List(Of Entity)
             Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
 
             ' 检查数据
-            Dim b0 As Boolean = False, b20 As Boolean = False
+            Dim b0 As Boolean = False ', b20 As Boolean = False
 
             For Each x In result
                 If x.NumOfEntity = 0 Then
                     b0 = True
-                Else
-                    Dim nl As Integer = 0.75 * source.First.Properties.Count
-                    If (From c In x.ClusterMean Where c = 0R Select 1).Count >= nl AndAlso
-                        (From c In x.ClusterSum Where c = 0R Select 1).Count >= nl Then
-                        b20 = True
-                    End If
+                    'Else
+                    '    Dim nl As Integer = 0.75 * source.First.Properties.Count
+                    '    If (From c In x.ClusterMean Where c = 0R Select 1).Count >= nl AndAlso
+                    '        (From c In x.ClusterSum Where c = 0R Select 1).Count >= nl Then
+                    '        b20 = True
+                    '    End If
                 End If
             Next
 
-            If b0 AndAlso b20 Then    ' 已经无法再分了，全都是0，则放在一个cluster里面
-                Dim cluster As T() = result.MatrixToVector
-                For Each x In cluster
-                    x.uid &= ".X"
-                Next
+            If b0 Then    ' 已经无法再分了，全都是0，则放在一个cluster里面
+                'Dim cluster As T() = result.MatrixToVector
+                'For Each x In cluster
+                '    x.uid &= ".X"
+                'Next
 
-                Call list.Add(cluster)
+                'Call list.Add(cluster)
+                Call Console.Write(">")
+                Call list.Add(__treeCluster(result.MatrixToList, depth, [stop]))  ' 递归聚类分解
             Else
                 For i As Integer = 0 To result.Length - 1
                     Dim cluster = result(i)
@@ -64,7 +82,7 @@ Namespace KMeans
                         '  不可以取消这可分支，否则会死循环
                     Else
                         Call Console.Write(">")
-                        Call list.Add(TreeCluster(cluster.ToArray))  ' 递归聚类分解
+                        Call list.Add(__treeCluster(cluster.ToArray, depth, [stop]))  ' 递归聚类分解
                     End If
                 Next
             End If

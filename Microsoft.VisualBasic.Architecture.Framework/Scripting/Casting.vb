@@ -6,6 +6,11 @@ Namespace Scripting
 
     Public Module Casting
 
+        Private Function val(s As String) As Double
+            s = s.Replace(",", "")
+            Return Conversion.Val(s)
+        End Function
+
         Public Function CastString(obj As String) As String
             Return obj
         End Function
@@ -15,7 +20,7 @@ Namespace Scripting
         End Function
 
         Public Function CastInteger(obj As String) As Integer
-            Return CInt(Val(obj))
+            Return CInt(val(obj))
         End Function
 
         Public Function CastDouble(obj As String) As Double
