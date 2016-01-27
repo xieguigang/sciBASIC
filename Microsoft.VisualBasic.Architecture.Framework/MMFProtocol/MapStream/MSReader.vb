@@ -2,20 +2,71 @@
 
 Namespace MMFProtocol.MapStream
 
-    Public Class MSIOReader : Implements System.IDisposable
+    Public MustInherit Class IMapBase : Implements IDisposable
+
+        Public ReadOnly Property URI As String
+
+        Protected _chunkBuffer As Byte()
+        Protected _mmfileStream As IO.MemoryMappedFiles.MemoryMappedFile
+
+        Sub New(uri As String, ChunkSize As Long)
+            Me._URI = uri
+            Me._chunkBuffer = New Byte(ChunkSize - 1) {}
+        End Sub
+
+        Public Function Read() As MMFStream
+            Call _mmfileStream.CreateViewStream.Read(_chunkBuffer, Scan0, _chunkBuffer.Length)
+            Return New MMFStream(_chunkBuffer)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return URI
+        End Function
+
+#Region "IDisposable Support"
+        Protected disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            Me.disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
+    End Class
+
+    Public Class MSIOReader : Inherits IMapBase
+        Implements IDisposable
 
         ''' <summary>
         ''' 内存映射文件的更新标识符
         ''' </summary>
         ''' <remarks></remarks>
         Dim _udtBadge As Long
-        Dim _chunkBuffer As Byte()
         Dim _mappedStream As MMFStream
-        Dim _mmfileStream As IO.MemoryMappedFiles.MemoryMappedFile
 
         ReadOnly _dataArrivals As DataArrival
-
-        Public ReadOnly Property URI As String
 
         ''' <summary>
         ''' 
@@ -24,12 +75,11 @@ Namespace MMFProtocol.MapStream
         ''' <param name="callback"></param>
         ''' <param name="ChunkSize">内存映射文件的数据块的预分配大小</param>
         Sub New(uri As String, callback As DataArrival, ChunkSize As Long)
+            Call MyBase.New(uri, ChunkSize)
             _mmfileStream = IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting(uri)
-            _URI = uri
             _dataArrivals = callback
-            _chunkBuffer = New Byte(ChunkSize - 1) {}
 
-            Call Run(AddressOf __threadElapsed)
+            Call Parallel.Run(AddressOf __threadElapsed)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -39,11 +89,6 @@ Namespace MMFProtocol.MapStream
         Public Sub Update(thisUpdate As Long)
             Me._udtBadge = thisUpdate
         End Sub
-
-        Public Function Read() As MMFStream
-            Call _mmfileStream.CreateViewStream.Read(_chunkBuffer, Scan0, _chunkBuffer.Length)
-            Return New MMFStream(_chunkBuffer)
-        End Function
 
         ''' <summary>
         ''' 由于考虑到可能会传递很大的数据块，所以在这里检测数据更新的话只读取头部的8个字节的数据
@@ -74,37 +119,5 @@ Namespace MMFProtocol.MapStream
                 Me._dataArrivals(_mappedStream.byteData)
             End If
         End Sub
-
-#Region "IDisposable Support"
-        Private disposedValue As Boolean ' To detect redundant calls
-
-        ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
-            If Not disposedValue Then
-                If disposing Then
-                    ' TODO: dispose managed state (managed objects).
-                End If
-
-                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-                ' TODO: set large fields to null.
-            End If
-            disposedValue = True
-        End Sub
-
-        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
-        'Protected Overrides Sub Finalize()
-        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-        '    Dispose(False)
-        '    MyBase.Finalize()
-        'End Sub
-
-        ' This code added by Visual Basic to correctly implement the disposable pattern.
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-            Dispose(True)
-            ' TODO: uncomment the following line if Finalize() is overridden above.
-            ' GC.SuppressFinalize(Me)
-        End Sub
-#End Region
     End Class
 End Namespace
