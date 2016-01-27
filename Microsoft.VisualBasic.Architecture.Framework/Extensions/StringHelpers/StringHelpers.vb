@@ -2,10 +2,16 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ConsoleDevice
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
+
+    <ExportAPI("ZeroFill")>
+    Public Function ZeroFill(n As String, len As Integer) As String
+        Return STDIO__.I_FormatProvider.d.ZeroFill(n, len)
+    End Function
 
     <ExportAPI("s.Parts")>
     Public Function Parts(s As String, len As String) As String
