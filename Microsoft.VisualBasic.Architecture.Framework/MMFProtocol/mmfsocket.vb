@@ -33,11 +33,15 @@ Namespace MMFProtocol
 
         Public ReadOnly Property URI As String
 
-        Sub New(uri As String)
-            _MMFWriter = New MSWriter(uri)
-            _MMFReader = New MSIOReader(uri)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="uri"></param>
+        ''' <param name="chunkSize">默认的区块大小为100KB，这个对于一般的小文本传输已经足够了</param>
+        Sub New(uri As String, Optional chunkSize As Long = 100 * 1024)
+            _MMFWriter = New MSWriter(uri, chunkSize)
+            _MMFReader = New MSIOReader(uri, AddressOf __dataArrival, chunkSize)
             _URI = uri
-            _MMFReader.DataArrivalCallBack = AddressOf __dataArrival
         End Sub
 
         Public Const MMF_PROTOCOL As String = "mmf://"

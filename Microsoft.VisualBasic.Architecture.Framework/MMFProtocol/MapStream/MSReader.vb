@@ -9,23 +9,25 @@ Namespace MMFProtocol.MapStream
         ''' </summary>
         ''' <remarks></remarks>
         Dim _udtBadge As Long
-        Dim _chunkBuffer(ChunkSize - 1) As Byte
+        Dim _chunkBuffer As Byte()
         Dim _mappedStream As MMFStream
         Dim _mmfileStream As IO.MemoryMappedFiles.MemoryMappedFile
 
-        ''' <summary>
-        ''' 内存映射文件的数据块的预分配大小
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Const ChunkSize As Long = 5 * 1024
-
-        Public Property DataArrivalCallBack As DataArrival
+        ReadOnly _dataArrivals As DataArrival
 
         Public ReadOnly Property URI As String
 
-        Sub New(uri As String)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="uri"></param>
+        ''' <param name="callback"></param>
+        ''' <param name="ChunkSize">内存映射文件的数据块的预分配大小</param>
+        Sub New(uri As String, callback As DataArrival, ChunkSize As Long)
             _mmfileStream = IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting(uri)
             _URI = uri
+            _dataArrivals = callback
+            _chunkBuffer = New Byte(ChunkSize - 1) {}
 
             Call Run(AddressOf __threadElapsed)
         End Sub
@@ -39,8 +41,19 @@ Namespace MMFProtocol.MapStream
         End Sub
 
         Public Function Read() As MMFStream
-            Call _mmfileStream.CreateViewStream.Read(_chunkBuffer, Scan0, ChunkSize)
+            Call _mmfileStream.CreateViewStream.Read(_chunkBuffer, Scan0, _chunkBuffer.Length)
             Return New MMFStream(_chunkBuffer)
+        End Function
+
+        ''' <summary>
+        ''' 由于考虑到可能会传递很大的数据块，所以在这里检测数据更新的话只读取头部的8个字节的数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function ReadBadge() As Long
+            Dim buf As Byte() = New Byte(MMFStream.INT64 - 1) {}
+            Call _mmfileStream.CreateViewStream.Read(buf, Scan0, buf.Length)
+            Dim n As Long = BitConverter.ToInt64(buf, Scan0)
+            Return n
         End Function
 
         Private Sub __threadElapsed()
@@ -51,11 +64,14 @@ Namespace MMFProtocol.MapStream
         End Sub
 
         Private Sub __clientThreadElapsed()
-            Call _mmfileStream.CreateViewStream.Read(_chunkBuffer, Scan0, ChunkSize)
-            _mappedStream = New MMFStream(_chunkBuffer)
-            If _mappedStream.udtBadge > Me._udtBadge Then  '当从数据流中所读取到的更新标识符大于对象实例中的更新标识符的时候，认为数据发生了更新
+            Dim flag As Long = ReadBadge()
+
+            If flag <= Me._udtBadge Then
+                Return
+            Else ' 当从数据流中所读取到的更新标识符大于对象实例中的更新标识符的时候，认为数据发生了更新
+                Me._mappedStream = Read()
                 Me._udtBadge = _mappedStream.udtBadge
-                Call DataArrivalCallBack()(_mappedStream.byteData)
+                Me._dataArrivals(_mappedStream.byteData)
             End If
         End Sub
 

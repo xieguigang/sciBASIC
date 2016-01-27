@@ -21,15 +21,15 @@ Namespace MMFProtocol.MapStream
         ''' </summary>
         ''' <param name="uri"></param>
         ''' <remarks>对象实例会首先尝试以服务器的角色建立连接，当不成功的时候会以客户端的形式建立连接</remarks>
-        Sub New(uri As String)
+        Sub New(uri As String, chunkSize As Long)
             Try
                 _mmfileStream =
                     MemoryMappedFiles.MemoryMappedFile.CreateNew(
-                    uri, MSIOReader.ChunkSize)
+                    uri, chunkSize)
             Catch ex As Exception
                 _mmfileStream =
                     MemoryMappedFiles.MemoryMappedFile.CreateOrOpen(
-                    uri, MSIOReader.ChunkSize)
+                    uri, chunkSize)
             Finally
                 _uri = uri
             End Try
