@@ -1,23 +1,4 @@
-﻿Namespace MMFProtocol
-
-    ''' <summary>
-    ''' exec cmd /var $&lt;piplineName>, this can be using in the CLI programming for passing the variables between the program more efficient
-    ''' </summary>
-    Public Class Pipeline
-
-        ReadOnly _socket As MMFProtocol.MMFSocket
-
-        Sub New(uid As String)
-            _socket = New MMFSocket(uid)
-        End Sub
-
-        Public Function GetValue(Of T As Net.Protocol.RawStream)(var As String) As T
-            Dim readBuffer As Byte() = _socket.ReadData
-            Dim buffer As PipeBuffer =
-                PipeStream.GetValue(readBuffer, var)
-            Return Net.Protocol.RawStream.GetRawStream(Of T)(buffer.byteData)
-        End Function
-    End Class
+﻿Namespace MMFProtocol.Pipeline
 
     Public Class PipeBuffer : Inherits Net.Protocol.RawStream
 
@@ -49,29 +30,6 @@
             Call Array.ConstrainedCopy(byteData, Scan0, buffer, p.Move(byteData.Length), byteData.Length)
 
             Return buffer
-        End Function
-    End Class
-
-    Public Class PipeStream : Inherits Net.Protocol.RawStream
-
-        Public Property hashTable As Dictionary(Of String, PipeBuffer)
-
-        Sub New(raw As Byte())
-
-        End Sub
-
-        Public Overrides Function Serialize() As Byte()
-            Throw New NotImplementedException
-        End Function
-
-        Public Shared Function GetValue(raw As Byte(), name As String) As PipeBuffer
-            Dim i As Long = Scan0
-
-            Do While True
-                Dim buffer As Byte() = raw
-            Loop
-
-            Return Nothing
         End Function
     End Class
 End Namespace

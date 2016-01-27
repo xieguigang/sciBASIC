@@ -13,7 +13,7 @@ Namespace MMFProtocol.MapStream
     ''' </remarks>
     Public Class MSWriter
 
-        ReadOnly _mmfileStream As System.IO.MemoryMappedFiles.MemoryMappedFile
+        ReadOnly _mmfileStream As MemoryMappedFiles.MemoryMappedFile
         ReadOnly _uri As String
 
         ''' <summary>

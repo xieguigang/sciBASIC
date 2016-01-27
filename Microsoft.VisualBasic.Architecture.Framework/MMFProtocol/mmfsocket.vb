@@ -27,7 +27,7 @@ Namespace MMFProtocol
 
         Dim _MMFReader As MSIOReader, _MMFWriter As MSWriter
         Dim _UpdateFlag As Long
-        Dim _CallBackHandler As DataArrival
+        Dim _callBacks As DataArrival
 
         Public Property NewMessageCallBack As ReadNewMessage
 
@@ -37,6 +37,7 @@ Namespace MMFProtocol
             _MMFWriter = New MSWriter(uri)
             _MMFReader = New MSIOReader(uri)
             _URI = uri
+            _MMFReader.DataArrivalCallBack = AddressOf __dataArrival
         End Sub
 
         Public Const MMF_PROTOCOL As String = "mmf://"
@@ -45,14 +46,13 @@ Namespace MMFProtocol
         ''' 
         ''' </summary>
         ''' <param name="uri"></param>
-        ''' <param name="dataArrivalCallBack">
+        ''' <param name="dataArrivals">
         ''' Public Delegate Sub <see cref="__dataArrival"/>(byteData As <see cref="System.Byte"/>())
         ''' 会优先于事件<see cref="__dataArrival"></see>的发生</param>
         ''' <remarks></remarks>
-        Sub New(uri As String, dataArrivalCallBack As DataArrival)
+        Sub New(uri As String, dataArrivals As DataArrival)
             Call Me.New(uri)
-            _CallBackHandler = dataArrivalCallBack
-            _MMFReader.DataArrivalCallBack = dataArrivalCallBack
+            _callBacks = dataArrivals
         End Sub
 
         Public Sub SendMessage(byteData As Byte())
@@ -67,6 +67,10 @@ Namespace MMFProtocol
             Call _MMFWriter.WriteStream(bytData)
         End Sub
 
+        ''' <summary>
+        ''' 直接从映射文件之中读取数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Function ReadData() As Byte()
             Return _MMFReader.Read.byteData
         End Function
@@ -75,9 +79,20 @@ Namespace MMFProtocol
             Call SendMessage(raw.Serialize)
         End Sub
 
-        Public Sub SendMessage(str As String)
-            Call Me.SendMessage(System.Text.Encoding.Unicode.GetBytes(str))
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="s"><see cref="System.Text.Encoding.UTF8"/></param>
+        Public Sub SendMessage(s As String)
+            Dim buf As Byte() = System.Text.Encoding.UTF8.GetBytes(s)
+            Call Me.SendMessage(buf)
         End Sub
+
+        Public Function ReadString() As String
+            Dim buf As Byte() = ReadData()
+            Dim s As String = System.Text.Encoding.UTF8.GetString(buf)
+            Return s
+        End Function
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
@@ -117,7 +132,7 @@ Namespace MMFProtocol
         End Function
 
         Public Function Ping() As Boolean
-            Call SendMessage(str:=_PING_MESSAGE)
+            Call SendMessage(s:=_PING_MESSAGE)
             Call Threading.Thread.Sleep(100)
 
             If PingResult = True Then
@@ -141,8 +156,8 @@ Namespace MMFProtocol
             ElseIf String.Equals(s_MSG, _PING_RETURNS) Then
                 PingResult = True
             Else
-                If Not _CallBackHandler Is Nothing Then
-                    Call _CallBackHandler(data)
+                If Not _callBacks Is Nothing Then
+                    Call _callBacks(data)
                 End If
 
                 If Not NewMessageCallBack Is Nothing Then
