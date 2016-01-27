@@ -1154,7 +1154,7 @@ Public Module Extensions
     ''' <param name="item"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function InsertOrUpdate(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable)(
+    <Extension> Public Function InsertOrUpdate(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
                             ByRef dict As Dictionary(Of String, T), item As T) As T
 
         Dim pre As T
@@ -1173,14 +1173,14 @@ Public Module Extensions
         Return pre
     End Function
 
-    <Extension> Public Function Remove(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable)(
+    <Extension> Public Function Remove(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
                             ByRef dict As Dictionary(Of String, T), item As T) As T
 
         Call dict.Remove(item.Identifier)
         Return item
     End Function
 
-    <Extension> Public Function AddRange(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable)(
+    <Extension> Public Function AddRange(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
                             ByRef dict As Dictionary(Of String, T),
                             data As Generic.IEnumerable(Of T)) _
         As Dictionary(Of String, T)
@@ -1331,10 +1331,10 @@ Public Module Extensions
     ''' 
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection">请务必要确保集合之中的元素的<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable.Identifier"></see></param>属性是唯一的，否则会出错
+    ''' <param name="Collection">请务必要确保集合之中的元素的<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable.Identifier"></see></param>属性是唯一的，否则会出错
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToEntriesDictionary(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable)(Collection As Generic.IEnumerable(Of T)) As Dictionary(Of String, T)
+    <Extension> Public Function ToEntriesDictionary(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(Collection As Generic.IEnumerable(Of T)) As Dictionary(Of String, T)
         Dim Dictionary As Dictionary(Of String, T) = New Dictionary(Of String, T)
         For Each Item As T In Collection
             Call Dictionary.Add(Item.Identifier, Item)
@@ -1646,7 +1646,7 @@ Public Module Extensions
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable">
+    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable">
     ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="UniqueId">
     ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
     ''' </summary>
@@ -1657,7 +1657,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("Get.Item")>
-    <Extension> Public Function GetItem(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable)(
+    <Extension> Public Function GetItem(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
         Collection As Generic.IEnumerable(Of T), UniqueId As String, Optional IgnoreCase As StringComparison = StringComparison.Ordinal) As T
 
         Dim LQuery = (From item In Collection Where String.Equals(UniqueId, item.Identifier, IgnoreCase) Select item).ToArray

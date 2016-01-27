@@ -136,26 +136,26 @@ EXIT_:          Dim array = source.ToArray
         ''' <param name="depth"></param>
         ''' <param name="nodes"></param>
         ''' <returns></returns>
-        Private Function __buildNET(array As __edgePath(), parent As FileStream.Node, depth As Integer, ByRef nodes As List(Of FileStream.Node)) As NetworkNode()
+        Private Function __buildNET(array As __edgePath(), parent As FileStream.Node, depth As Integer, ByRef nodes As List(Of FileStream.Node)) As NetworkEdge()
             Dim [next] As Integer = depth + 1  ' 下一层节点的深度
 
             If depth = array(Scan0).path.Length AndAlso
                 array(Scan0).path.Last = "X"c Then
-                Return array.ToArray(Function(x) New NetworkNode With {
+                Return array.ToArray(Function(x) New NetworkEdge With {
                                          .FromNode = parent.Identifier,
                                          .ToNode = x.node.Name,
                                          .InteractionType = "Leaf-X"})
             End If
 
             Dim Gp = (From x In array Let cur = x.path(depth) Select cur, x Group By cur Into Group).ToArray
-            Dim edges As New List(Of NetworkNode)
+            Dim edges As New List(Of NetworkEdge)
 
             For Each part In Gp
                 Dim parts = part.Group.ToArray(Function(x) x.x)
 
                 If parts.Length = 1 Then ' 叶节点
                     Dim leaf = parts.First
-                    Call edges.Add(New NetworkNode With {.FromNode = parent.Identifier, .ToNode = leaf.node.Name, .InteractionType = "Leaf"})
+                    Call edges.Add(New NetworkEdge With {.FromNode = parent.Identifier, .ToNode = leaf.node.Name, .InteractionType = "Leaf"})
                 Else                    ' 继续递归
                     Dim uid As String = $"[{part.cur}]" & parts.First.path.Take(depth).JoinBy(".")
                     Dim virtual As New FileStream.Node With {
@@ -163,7 +163,7 @@ EXIT_:          Dim array = source.ToArray
                         .NodeType = "Virtual"
                     }
                     Call nodes.Add(virtual)
-                    Call edges.Add(New NetworkNode With {.FromNode = parent.Identifier, .ToNode = uid, .InteractionType = "Path"})
+                    Call edges.Add(New NetworkEdge With {.FromNode = parent.Identifier, .ToNode = uid, .InteractionType = "Path"})
                     Call edges.Add(__buildNET(parts, virtual, [next], nodes))
                 End If
             Next

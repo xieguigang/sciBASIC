@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 <Extension>
 Public Module IEnumerations
 
-    <Extension> Public Function Differ(Of T As ComponentModel.Collection.Generic.IDEnumerable, T2)(
+    <Extension> Public Function Differ(Of T As ComponentModel.Collection.Generic.sIdEnumerable, T2)(
                                           source As System.Collections.Generic.IEnumerable(Of T),
                                           ToDiffer As System.Collections.Generic.IEnumerable(Of T2),
                                           getId As Func(Of T2, String)) As String()
@@ -17,8 +17,8 @@ Public Module IEnumerations
         Return LQuery
     End Function
 
-    <Extension> Public Function Differ(Of T As ComponentModel.Collection.Generic.IDEnumerable,
-                                         T2 As ComponentModel.Collection.Generic.IDEnumerable)(
+    <Extension> Public Function Differ(Of T As ComponentModel.Collection.Generic.sIdEnumerable,
+                                         T2 As ComponentModel.Collection.Generic.sIdEnumerable)(
                                          source As System.Collections.Generic.IEnumerable(Of T),
                                          ToDiffer As System.Collections.Generic.IEnumerable(Of T2)) As String()
 
@@ -30,11 +30,11 @@ Public Module IEnumerations
     End Function
 
     <Extension>
-    Public Function GetItem(Of T As ComponentModel.Collection.Generic.IDEnumerable)(Id As String, source As System.Collections.Generic.IEnumerable(Of T)) As T
+    Public Function GetItem(Of T As ComponentModel.Collection.Generic.sIdEnumerable)(Id As String, source As System.Collections.Generic.IEnumerable(Of T)) As T
         Return source.GetItem(Id)
     End Function
 
-    <Extension> Public Function GetItems(Of T As ComponentModel.Collection.Generic.IDEnumerable)(source As IEnumerable(Of T), Id As String) As T()
+    <Extension> Public Function GetItems(Of T As ComponentModel.Collection.Generic.sIdEnumerable)(source As IEnumerable(Of T), Id As String) As T()
         Dim LQuery = (From ItemObj As T In source Where String.Equals(Id, ItemObj.Identifier) Select ItemObj).ToArray
         Return LQuery
     End Function
@@ -46,7 +46,7 @@ Public Module IEnumerations
     ''' <param name="Collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function CreateDictionary(Of T As ComponentModel.Collection.Generic.IDEnumerable)(Collection As System.Collections.Generic.IEnumerable(Of T)) As Dictionary(Of String, T)
+    <Extension> Public Function CreateDictionary(Of T As ComponentModel.Collection.Generic.sIdEnumerable)(Collection As System.Collections.Generic.IEnumerable(Of T)) As Dictionary(Of String, T)
         Dim Dictionary As Dictionary(Of String, T) = New Dictionary(Of String, T)
         For Each obj In Collection
             Call Dictionary.Add(obj.Identifier, obj)
@@ -115,7 +115,7 @@ Public Module IEnumerations
     End Function
 
     <Extension>
-    Public Function GetItems(Of T As ComponentModel.Collection.Generic.IDEnumerable)(
+    Public Function GetItems(Of T As ComponentModel.Collection.Generic.sIdEnumerable)(
                                 source As System.Collections.Generic.IEnumerable(Of T),
                                 uniqueId As String,
                                 Optional Explicit As Boolean = True) As T()
@@ -137,14 +137,14 @@ Public Module IEnumerations
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function Takes(Of T As ComponentModel.Collection.Generic.IDEnumerable) _
+    <Extension> Public Function Takes(Of T As ComponentModel.Collection.Generic.sIdEnumerable) _
                                      (lstId As System.Collections.Generic.IEnumerable(Of String), source As System.Collections.Generic.IEnumerable(Of T)) As T()
         Dim Dict As Dictionary(Of String, T) = source.ToDictionary
         Dim LQuery As T() = (From sId As String In lstId Where Dict.ContainsKey(sId) Select Dict(sId)).ToArray
         Return LQuery
     End Function
 
-    <Extension> Public Function GetItem(Of T As ComponentModel.Collection.Generic.IDEnumerable)(source As System.Collections.Generic.IEnumerable(Of T), uniqueId As String) As T
+    <Extension> Public Function GetItem(Of T As ComponentModel.Collection.Generic.sIdEnumerable)(source As System.Collections.Generic.IEnumerable(Of T), uniqueId As String) As T
         Dim LQuery = (From itemObj As T In source Where String.Equals(uniqueId, itemObj.Identifier) Select itemObj).FirstOrDefault
         Return LQuery
     End Function
@@ -169,7 +169,7 @@ Public Module IEnumerations
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of T As IDEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
+    <Extension> Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
         Dim Dict As Dictionary(Of String, T) = New Dictionary(Of String, T)
         Dim i As Integer = 0
         Try
@@ -185,7 +185,7 @@ Public Module IEnumerations
         Return Dict
     End Function
 
-    <Extension> Public Function ToDictionary(Of T As ComponentModel.Collection.Generic.IDEnumerable)(
+    <Extension> Public Function ToDictionary(Of T As ComponentModel.Collection.Generic.sIdEnumerable)(
                                                 source As Generic.IEnumerable(Of T),
                                                 distinct As Boolean) As Dictionary(Of String, T)
         If Not distinct Then Return source.ToDictionary

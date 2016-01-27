@@ -45,8 +45,8 @@
     ''' The key has 2 string value collection.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TripleKeyValuesPair : Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IdEnumerable
-        <Xml.Serialization.XmlAttribute> Public Property Key As String Implements Collection.Generic.IDEnumerable.Identifier
+    Public Class TripleKeyValuesPair : Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable
+        <Xml.Serialization.XmlAttribute> Public Property Key As String Implements Collection.Generic.sIdEnumerable.Identifier
         <Xml.Serialization.XmlAttribute> Public Property Value1 As String
         <Xml.Serialization.XmlAttribute> Public Property Value2 As String
 
@@ -88,7 +88,7 @@
     ''' </summary>
     ''' <remarks></remarks>
     Public Class KeyValuePair : Inherits ComponentModel.Collection.Generic.KeyValuePairObject(Of String, String)
-        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IdEnumerable
+        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable
         Implements IKeyValuePair
 
         Public Sub New()
@@ -120,7 +120,7 @@
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>在这里可能用不了<see cref="Xml.Serialization.XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
-        Public Overrides Property Key As String Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IdEnumerable.Identifier
+        Public Overrides Property Key As String Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable.Identifier
             Get
                 Return MyBase.Key
             End Get
@@ -204,9 +204,9 @@
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Key_strArrayValuePair : Inherits ComponentModel.Collection.Generic.KeyValuePairObject(Of String, String())
-        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IdEnumerable
+        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable
 
-        <Xml.Serialization.XmlAttribute> Public Overrides Property Key As String Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IdEnumerable.Identifier
+        <Xml.Serialization.XmlAttribute> Public Overrides Property Key As String Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable.Identifier
             Get
                 Return MyBase.Key
             End Get

@@ -9,7 +9,8 @@ Namespace Logging
     ''' Provides interaction with Windows event logs.(这个日志入口点对象的创建应该调用于安装程序的模块之中，并且以管理员权限执行)
     ''' </summary>
     ''' 
-    <InstallerType("System.Diagnostics.EventLogInstaller, System.Configuration.Install, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")> <MonitoringDescription("EventLogDesc")>
+    <InstallerType("System.Diagnostics.EventLogInstaller, System.Configuration.Install, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")>
+    <MonitoringDescription("EventLogDesc")>
     Public Class EventLog
 
         Public ReadOnly Property Product As String
@@ -53,13 +54,17 @@ Namespace Logging
         ''' <param name="EventType">An <see cref="System.Diagnostics.EventLogEntryType"/> value that indicates the event type.</param>
         ''' <param name="category">A resource identifier that corresponds to a string defined in the category resource file of the event source, or zero to specify no category for the event.</param>
         ''' <returns></returns>
-        Public Function WriteEntry(Message As String, Optional EventType As System.Diagnostics.EventLogEntryType = EventLogEntryType.Information, Optional category As Integer = 1) As Boolean
+        Public Function WriteEntry(message As String,
+                                   Optional EventType As EventLogEntryType = EventLogEntryType.Information,
+                                   Optional category As Integer = 1) As Boolean
             Try
+#If DEBUG Then
+                Call message.__DEBUG_ECHO
+#End If
                 Using evLog As New Diagnostics.EventLog(Services, ".", Product)
-                    Call evLog.WriteEvent(New EventInstance(10001 + category, category, EventType), {Message})
+                    Call evLog.WriteEvent(New EventInstance(10001 + category, category, EventType), {message})
                 End Using
             Catch ex As Exception
-
                 Return False
             End Try
 
@@ -72,10 +77,17 @@ Namespace Logging
         ''' <param name="EventType">An <see cref="System.Diagnostics.EventLogEntryType"/> value that indicates the event type.</param>
         ''' <param name="category">A resource identifier that corresponds to a string defined in the category resource file of the event source, or zero to specify no category for the event.</param>
         ''' <returns></returns>
-        Public Function WriteEntry(Message As System.Collections.Generic.IEnumerable(Of String), Optional EventType As System.Diagnostics.EventLogEntryType = EventLogEntryType.Information, Optional category As Integer = 0) As Boolean
+        Public Function WriteEntry(Message As IEnumerable(Of String),
+                                   Optional EventType As EventLogEntryType = EventLogEntryType.Information,
+                                   Optional category As Integer = 0) As Boolean
             Try
+#If DEBUG Then
+                Dim s As String = Message.JoinBy(vbCrLf)
+                Call s.__DEBUG_ECHO
+#End If
                 Using evLog As New Diagnostics.EventLog(Services, ".", Product)
-                    Call evLog.WriteEvent(New EventInstance(10001 + category * 55, category, EventType), Message.ToArray(Function(str) DirectCast(str, Object)))
+                    Dim data As Object() = Message.ToArray(Function(str) DirectCast(str, Object))
+                    Call evLog.WriteEvent(New EventInstance(10001 + category * 55, category, EventType), data)
                 End Using
             Catch ex As Exception
 

@@ -29,14 +29,14 @@ Namespace FileStream
     ''' <remarks></remarks>
     Public Class Node : Inherits INetComponent
 
-        Implements IDEnumerable
+        Implements sIdEnumerable
         Implements INode
 
         ''' <summary>
         ''' 这个节点的标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property Identifier As String Implements IDEnumerable.Identifier, INode.Identifer
+        Public Overridable Property Identifier As String Implements sIdEnumerable.Identifier, INode.Identifer
         ''' <summary>
         ''' 这个节点的类型的定义
         ''' </summary>

@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace FileStream
 
-    Public Class Network : Inherits Network(Of Node, NetworkNode)
+    Public Class Network : Inherits Network(Of Node, NetworkEdge)
     End Class
 
     ''' <summary>
@@ -15,7 +15,7 @@ Namespace FileStream
     ''' <typeparam name="T_Node"></typeparam>
     ''' <typeparam name="T_Edge"></typeparam>
     ''' <remarks></remarks>
-    Public Class Network(Of T_Node As Node, T_Edge As NetworkNode)
+    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge)
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 

@@ -30,12 +30,12 @@ Public Class Network : Implements Collections.Generic.IReadOnlyCollection(Of Nod
         End Get
     End Property
 
-    Sub New(Nodes As FileStream.NetworkNode(), Optional FrameSize As Size = Nothing)
+    Sub New(Nodes As FileStream.NetworkEdge(), Optional FrameSize As Size = Nothing)
         Me.FrameSize = If(FrameSize = Nothing, New Size(480 + Nodes.Count * 30, 320 + Nodes.Count * 24), FrameSize)
         Call CreateNetwork(NetworkModel:=Nodes)
     End Sub
 
-    Private Sub CreateNetwork(NetworkModel As FileStream.NetworkNode())
+    Private Sub CreateNetwork(NetworkModel As FileStream.NetworkEdge())
         Dim NodeNames As List(Of String) = New List(Of String)
         Call NodeNames.AddRange((From item In NetworkModel Select item.FromNode).ToArray)
         Call NodeNames.AddRange((From item In NetworkModel Select item.ToNode).ToArray)
@@ -53,7 +53,7 @@ Public Class Network : Implements Collections.Generic.IReadOnlyCollection(Of Nod
             Call ConnectionNodes.Remove(Name)
 
             Nodes(i).Neighbours = (From node In Nodes Where ConnectionNodes.IndexOf(node._DispName) > -1 Select node.Id).ToArray
-            Nodes(i).Weights = (From node In Nodes(i).Neighbours Select FileStream.NetworkNode.GetNode(Name, Nodes(node)._DispName, NetworkModel).Confidence).ToArray
+            Nodes(i).Weights = (From node In Nodes(i).Neighbours Select FileStream.NetworkEdge.GetNode(Name, Nodes(node)._DispName, NetworkModel).Confidence).ToArray
         Next
 
         Me._NodesInnerList = Nodes.ToList

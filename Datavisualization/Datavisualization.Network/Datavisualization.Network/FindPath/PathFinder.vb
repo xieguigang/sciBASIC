@@ -1,6 +1,6 @@
 ﻿#Const DEBUG = 1
 
-Public Class PathFinder(Of NetworkNode As FileStream.NetworkNode)
+Public Class PathFinder(Of NetworkNode As FileStream.NetworkEdge)
 
     Dim Network As NetworkNode()
 

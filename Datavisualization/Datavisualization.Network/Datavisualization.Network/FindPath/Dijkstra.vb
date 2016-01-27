@@ -10,7 +10,7 @@ Namespace Dijkstra
 
     Public Class Connection : Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IKeyValuePairObject(Of FileStream.Node, FileStream.Node)
 
-        Dim DataModel As FileStream.NetworkNode
+        Dim DataModel As FileStream.NetworkEdge
 
         Public Property Selected As Boolean = False
         Public Property B As FileStream.Node Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Value
@@ -23,7 +23,7 @@ Namespace Dijkstra
             _Weight = weight
         End Sub
 
-        Public Shared Function CreateObject(DataModel As FileStream.NetworkNode) As Connection
+        Public Shared Function CreateObject(DataModel As FileStream.NetworkEdge) As Connection
             Dim ndA As New FileStream.Node With {.Identifier = DataModel.FromNode}
             Dim ndB As New FileStream.Node With {.Identifier = DataModel.ToNode}
             Return New Connection(ndA, ndB, weight:=DataModel.Confidence) With {.DataModel = DataModel}
@@ -213,14 +213,14 @@ Namespace Dijkstra
         End Function
 
         <ExportAPI("Network.Imports")>
-        Public Shared Function ImportsNetwork(CsvData As FileStream.NetworkNode()) As Connection()
+        Public Shared Function ImportsNetwork(CsvData As FileStream.NetworkEdge()) As Connection()
             Dim LQuery = (From edge In CsvData Select Connection.CreateObject(edge)).ToArray
             Return LQuery
         End Function
 
         <ExportAPI("read.network")>
         Public Shared Function ReadNetwork(path As String) As Connection()
-            Dim Chunkbuffer = path.LoadCsv(Of FileStream.NetworkNode)(False).ToArray
+            Dim Chunkbuffer = path.LoadCsv(Of FileStream.NetworkEdge)(False).ToArray
             Dim LQuery = (From edge In Chunkbuffer Select Connection.CreateObject(edge)).ToArray
             Return LQuery
         End Function

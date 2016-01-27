@@ -41,10 +41,10 @@ Namespace ComponentModel.Collection.Generic
     End Interface
 
     ''' <summary>
-    ''' This type of object have a <see cref="IDEnumerable.Identifier"></see> property to unique identified itself in a collection.
+    ''' This type of object have a <see cref="sIdEnumerable.Identifier"></see> property to unique identified itself in a collection.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface IDEnumerable
+    Public Interface sIdEnumerable
 
         ''' <summary>
         ''' The unique identifer in the object collection.

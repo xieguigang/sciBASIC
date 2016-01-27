@@ -9,7 +9,7 @@ Namespace FileStream
     ''' </summary>
     ''' <remarks></remarks>
     <Xml.Serialization.XmlType("VisualizeNode")>
-    Public Class NetworkNode : Inherits INetComponent
+    Public Class NetworkEdge : Inherits INetComponent
         Implements I_InteractionModel, INetworkEdge
 
         Public Shared Function Contains(edge As I_InteractionModel, node As String) As Boolean
@@ -87,7 +87,7 @@ Namespace FileStream
                 String.Equals(ToNode, Id1))
         End Function
 
-        Public Function IsEqual(OtherNode As NetworkNode) As Boolean
+        Public Function IsEqual(OtherNode As NetworkEdge) As Boolean
             Return String.Equals(FromNode, OtherNode.FromNode) AndAlso
                 String.Equals(ToNode, OtherNode.ToNode) AndAlso
                 String.Equals(InteractionType, OtherNode.InteractionType) AndAlso
@@ -106,8 +106,8 @@ Namespace FileStream
             End If
         End Function
 
-        Public Shared Function GetNode(Node1 As String, Node2 As String, Network As NetworkNode()) As NetworkNode
-            Dim LQuery = (From Node As NetworkNode
+        Public Shared Function GetNode(Node1 As String, Node2 As String, Network As NetworkEdge()) As NetworkEdge
+            Dim LQuery = (From Node As NetworkEdge
                           In Network
                           Where String.Equals(Node1, Node.FromNode) AndAlso
                               String.Equals(Node2, Node.ToNode)
@@ -115,7 +115,7 @@ Namespace FileStream
 
             If LQuery.Length > 0 Then Return LQuery(Scan0)
 
-            LQuery = (From Node As NetworkNode
+            LQuery = (From Node As NetworkEdge
                       In Network
                       Where String.Equals(Node1, Node.ToNode) AndAlso
                               String.Equals(Node2, Node.FromNode)

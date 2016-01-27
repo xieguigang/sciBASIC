@@ -2,9 +2,9 @@
 Imports Microsoft.VisualBasic.IEnumerations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Public Structure SerialsVarialble : Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IDEnumerable
+Public Structure SerialsVarialble : Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable
 
-    Public Property Identifier As String Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IdEnumerable.Identifier
+    Public Property Identifier As String Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable.Identifier
     Dim SerialsData As Double()
 
     Public Overrides Function ToString() As String
