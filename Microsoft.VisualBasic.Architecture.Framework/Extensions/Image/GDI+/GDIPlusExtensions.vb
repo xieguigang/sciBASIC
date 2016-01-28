@@ -17,6 +17,10 @@ Imports System.Reflection
                   Url:="http://gcmodeller.org")>
 Public Module GDIPlusExtensions
 
+    <Extension> Public Function GetCenter(size As Size) As Point
+        Return New Point(size.Width / 2, size.Height / 2)
+    End Function
+
     <ExportAPI("To.Icon")>
     <Extension> Public Function GetIcon(res As Image) As Icon
         Return Drawing.Icon.FromHandle(New Bitmap(res).GetHicon)
