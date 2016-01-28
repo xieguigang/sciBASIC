@@ -122,7 +122,7 @@ Namespace Windows.Forms.Controls
                                          Return
                                      End If
 
-                                     Dim Gr = GDIPlusExtensions.GrFromImage(resImage)
+                                     Dim Gr = GDIPlusExtensions.GdiFromImage(resImage)
                                      Dim size = Gr.Gr_Device.MeasureString(Text, Font)
                                      Dim Loci As Point = New Point((Width - size.Width) / 2, (Height - size.Height) / 2) '‘文字剧中显示
 

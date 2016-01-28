@@ -10,30 +10,23 @@ Namespace Drawing2D
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Vectogram : Implements ISaveHandle
+        Implements IDisposable
+        Implements IEnumerable(Of LayoutsElement)
 
-        Implements System.IDisposable
-        Implements Generic.IEnumerable(Of Drawing2D.VectorElements.LayoutsElement)
-
-        Dim _InternalGDIDevice As Microsoft.VisualBasic.GDIPlusDeviceHandle
-        Dim _InternalDrawingElementList As List(Of Drawing2D.VectorElements.LayoutsElement) =
-            New List(Of Drawing2D.VectorElements.LayoutsElement)
+        Dim _lstElements As List(Of LayoutsElement) = New List(Of LayoutsElement)
 
         Public ReadOnly Property GDIDevice As GDIPlusDeviceHandle
-            Get
-                Return _InternalGDIDevice
-            End Get
-        End Property
 
         Public ReadOnly Property Size As Size
             Get
-                Return _InternalGDIDevice.Size
+                Return _gdiDevice.Size
             End Get
         End Property
 
 #Region "Constructors"
 
         Sub New(Size As Size)
-            _InternalGDIDevice = Size.CreateGDIDevice
+            _gdiDevice = Size.CreateGDIDevice
         End Sub
 
         Sub New(Width As Integer, Height As Integer)
@@ -45,37 +38,37 @@ Namespace Drawing2D
         End Sub
 
         Sub New(ImageResource As Image)
-            _InternalGDIDevice = ImageResource.GrFromImage
+            _gdiDevice = ImageResource.GdiFromImage
         End Sub
 #End Region
 
-        Public Function AddDrawingElement(Element As Drawing2D.VectorElements.LayoutsElement) As Integer
-            Call Me._InternalDrawingElementList.Add(Element)
-            Return Me._InternalDrawingElementList.Count
+        Public Function AddDrawingElement(Element As LayoutsElement) As Integer
+            Call Me._lstElements.Add(Element)
+            Return Me._lstElements.Count
         End Function
 
         Public Function AddTextElement(str As String, Font As Font, Color As Color, Location As Point) As Drawing2D.VectorElements.DrawingString
-            Dim strElement As DrawingString = New DrawingString(str, Color, Me._InternalGDIDevice, Location) With {.Font = Font}
-            Call Me._InternalDrawingElementList.Add(strElement)
+            Dim strElement As DrawingString = New DrawingString(str, Color, Me._gdiDevice, Location) With {.Font = Font}
+            Call Me._lstElements.Add(strElement)
             Return strElement
         End Function
 
-        Public Function AddCircle(FillColor As Color, TopLeft As Point, d As Integer) As Drawing2D.VectorElements.Circle
-            Dim Circle As New Drawing2D.VectorElements.Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._InternalGDIDevice, FillColor:=FillColor)
-            Call Me._InternalDrawingElementList.Add(Circle)
+        Public Function AddCircle(FillColor As Color, TopLeft As Point, d As Integer) As Circle
+            Dim Circle As New Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._gdiDevice, FillColor:=FillColor)
+            Call Me._lstElements.Add(Circle)
             Return Circle
         End Function
 
         Public Function ToImage() As Image
-            For Each Element As LayoutsElement In Me._InternalDrawingElementList
+            For Each Element As LayoutsElement In Me._lstElements
                 Call Element.InvokeDrawing()
             Next
 
-            Return _InternalGDIDevice.ImageResource
+            Return _gdiDevice.ImageResource
         End Function
 
         Public Overrides Function ToString() As String
-            Return _InternalGDIDevice.ToString
+            Return _gdiDevice.ToString
         End Function
 
 #Region "System Interface Implements"
@@ -112,7 +105,7 @@ Namespace Drawing2D
 #End Region
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of LayoutsElement) Implements IEnumerable(Of LayoutsElement).GetEnumerator
-            For Each DrawingElement In Me._InternalDrawingElementList
+            For Each DrawingElement In Me._lstElements
                 Yield DrawingElement
             Next
         End Function
