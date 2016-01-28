@@ -19,6 +19,7 @@ Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 #If FRAMEWORD_CORE Then
 
@@ -661,9 +662,15 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
-    Public Function RunDriver(driver As ComponentModel.DataSourceModel.IObjectModel_Driver) As Integer
+    Public Function RunDriver(driver As IObjectModel_Driver) As Integer
         Return driver.Run
     End Function
+
+    <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
+    <Extension>
+    Public Sub DriverRun(driver As IObjectModel_Driver)
+        Call Parallel.Run(AddressOf driver.Run)
+    End Sub
 #End If
 
     ''' <summary>

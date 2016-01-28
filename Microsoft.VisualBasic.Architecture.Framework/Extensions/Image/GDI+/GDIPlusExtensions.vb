@@ -74,7 +74,7 @@ Public Module GDIPlusExtensions
 
     <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
     <Extension> Public Function CreateGrayBitmap(res As Image) As Image
-        Dim Gr = DirectCast(res.Clone, Image).GrFromImage
+        Dim Gr = DirectCast(res.Clone, Image).GdiFromImage
         Call System.Windows.Forms.ControlPaint.DrawImageDisabled(Gr.Gr_Device, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
         Return Gr.ImageResource
     End Function
@@ -138,7 +138,7 @@ Public Module GDIPlusExtensions
         'ImageRes = ctrl.BackgroundImage
         'End If
 
-        Dim Device = ImageRes.GrFromImage
+        Dim Device = ImageRes.GdiFromImage
 
         If ctrl.BackgroundImage Is Nothing Then
             Call Device.Gr_Device.FillRectangle(Brushes.White, New Rectangle(New Point, ImageRes.Size))
@@ -169,7 +169,7 @@ Public Module GDIPlusExtensions
     ''' <returns></returns>
     ''' 
     <ExportAPI("GDI+.Create")>
-    <Extension> Public Function GrFromImage(Image As Image) As GDIPlusDeviceHandle
+    <Extension> Public Function GdiFromImage(Image As Image) As GDIPlusDeviceHandle
         Dim Gr = Image.Size.CreateGDIDevice
         Call Gr.Gr_Device.DrawImage(Image, 0, 0, Gr.Width, Gr.Height)
         Return Gr
@@ -322,7 +322,7 @@ Public Module GDIPlusExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function Vignette(Image As Image, y1 As Integer, y2 As Integer, Optional RenderColor As Color = Nothing) As Image
-        Dim Gr = Image.GrFromImage
+        Dim Gr = Image.GdiFromImage
         Dim Alpha As Integer = 0
         Dim delta = (Math.PI / 2) / Math.Abs(y1 - y2)
         Dim offset As Double = 0
