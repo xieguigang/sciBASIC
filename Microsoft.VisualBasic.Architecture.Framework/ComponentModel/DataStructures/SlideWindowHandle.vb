@@ -8,7 +8,7 @@ Namespace ComponentModel.DataStructures
     ''' <typeparam name="T"></typeparam>
     ''' <remarks></remarks>
     Public Structure SlideWindowHandle(Of T)
-        Implements Generic.IEnumerable(Of T), ComponentModel.IAddrHandle
+        Implements Generic.IEnumerable(Of T), ComponentModel.IAddressHandle
 
         ''' <summary>
         ''' The position of the current Windows in the Windows list.(在创建的滑窗的队列之中当前的窗口对象的位置)
@@ -16,7 +16,7 @@ Namespace ComponentModel.DataStructures
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property p As Long Implements IAddrHandle.AddrHwnd
+        Public Property p As Long Implements IAddressHandle.AddrHwnd
         ''' <summary>
         ''' The elements in this slide window.(这个划窗之中的元素的列表)
         ''' </summary>

@@ -9,7 +9,7 @@
     ''' (能够被系统所自动销毁的对象类型，并且该类型的对象必须含有一个Handle属性来指明其在本列表中的位置)
     ''' </typeparam>
     ''' <remarks></remarks>
-    Public Class HandledList(Of T As IAddrHandle) : Implements Generic.IEnumerable(Of T)
+    Public Class HandledList(Of T As IAddressHandle) : Implements Generic.IEnumerable(Of T)
 
         ''' <summary>
         ''' Object instances data physical storage position, element may be null after 

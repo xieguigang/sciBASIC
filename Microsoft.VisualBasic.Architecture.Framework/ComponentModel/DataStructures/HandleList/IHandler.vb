@@ -7,7 +7,7 @@ Namespace ComponentModel
     ''' (这个对象具有一个用于指明该对象在列表对象中的位置的对象句柄值)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface IAddrHandle : Inherits System.IDisposable
+    Public Interface IAddressHandle : Inherits System.IDisposable
 
         ''' <summary>
         ''' The ID that this object in a list instance.
