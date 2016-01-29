@@ -157,7 +157,7 @@ Namespace Helpers
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function RND(LowBound As Double, UpBound As Double) As Double
-            Call Randomize()
+            Call VBMath.Randomize()
             If UpBound = 0 Then
                 Return Internal_getRandomDouble()
             Else
@@ -171,7 +171,7 @@ Namespace Helpers
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Shared Function Internal_getRandomDouble() As Double
-            Call Randomize()
+            Call VBMath.Randomize()
             Dim n As Double = Microsoft.VisualBasic.Rnd * 100
 CHECKS:     If n > 1 Then
                 n /= 10

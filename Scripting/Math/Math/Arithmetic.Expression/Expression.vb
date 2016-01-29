@@ -110,7 +110,7 @@ Public Module Expression
         Else
             p = Microsoft.VisualBasic.Mathematical.Helpers.[Function].FUNC_NAME_MAX_LENGTH
         End If
-        Dim Tokens As String() = Mid(expression.ToString, LBLocation - p + 1, p - 1).Split("(")
+        Dim Tokens As String() = Mid(expression.ToString, LBLocation - p + 1, p - 1).Split("("c)
         Dim s As String
 
         If String.IsNullOrEmpty(Tokens.Last) Then

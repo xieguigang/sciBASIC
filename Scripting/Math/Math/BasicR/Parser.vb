@@ -22,7 +22,7 @@ Namespace BasicR
             Dim Width, Height As Integer
             If match.Success Then
                 Dim Size As String = match.Value.Replace("(", "").Replace(")", "")
-                Dim Tokens As String() = Size.Split(",")
+                Dim Tokens As String() = Size.Split(","c)
                 Width = Val(Tokens(Scan0))
                 Height = Val(Tokens(1))
             Else
@@ -32,7 +32,7 @@ Namespace BasicR
 
             Dim MAT(Height - 1, Width - 1) As Double
             Dim idx As Integer
-            Dim Data2 As Double() = (From e As String In Data.Replace("{", "").Replace("}", "").Split(",") Select Val(e)).ToArray
+            Dim Data2 As Double() = (From e As String In Data.Replace("{", "").Replace("}", "").Split(","c) Select Val(e)).ToArray
             For i As Integer = 0 To Height - 1
                 For j As Integer = 0 To Width - 1
                     MAT(i, j) = Data2(idx)

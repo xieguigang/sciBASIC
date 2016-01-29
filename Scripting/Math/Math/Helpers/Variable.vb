@@ -63,7 +63,7 @@ Namespace Helpers
         ''' <remarks></remarks>
         Public Sub AssignValue(statement As String)
             'var <- new_value_expression
-            Dim Tokens As String() = Split(statement, "<-")
+            Dim Tokens As String() = Strings.Split(statement, "<-")
             Call [Set](Tokens.First.Trim, Expression.Evaluate(Tokens.Last.Trim))
         End Sub
 
