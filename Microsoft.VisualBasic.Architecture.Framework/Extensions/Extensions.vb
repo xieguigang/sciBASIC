@@ -108,6 +108,11 @@ Public Module Extensions
         Loop
     End Sub
 
+    <Extension>
+    Public Function Switch(Of T)(b As Boolean, [true] As T, [false] As T) As T
+        Return If(b, [true], [false])
+    End Function
+
     <Extension> Public Function FlushAllLines(Of T)(data As Generic.IEnumerable(Of T),
                                                     SaveTo As String,
                                                     Optional encoding As System.Text.Encoding = Nothing) As Boolean
