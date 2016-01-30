@@ -2,25 +2,25 @@
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace FileStream
 
-    Public MustInherit Class INetComponent
-
-        Dim _properties As Dictionary(Of String, String)
+    Public MustInherit Class INetComponent : Inherits DynamicPropertyBase(Of String)
 
         <Meta(GetType(String))>
-        Public Property Properties As Dictionary(Of String, String)
+        Public Overrides Property Properties As Dictionary(Of String, String)
             Get
-                If _properties Is Nothing Then
-                    _properties = New Dictionary(Of String, String)
-                End If
-                Return _properties
+                Return MyBase.Properties
             End Get
             Set(value As Dictionary(Of String, String))
-                _properties = value
+                MyBase.Properties = value
             End Set
         End Property
+
+        Public Sub Add(key As String, value As String)
+            Call Properties.Add(key, value)
+        End Sub
     End Class
 
     ''' <summary>

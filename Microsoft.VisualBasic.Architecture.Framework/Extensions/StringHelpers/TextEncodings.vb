@@ -3,7 +3,8 @@
 Public Module TextEncodings
 
     Public Enum Encodings As Byte
-        ASCII = 0
+        [Default] = 0
+        ASCII = 10
         Unicode
         UTF7
         UTF8
@@ -19,7 +20,8 @@ Public Module TextEncodings
         {Encodings.Unicode, System.Text.Encoding.Unicode},
         {Encodings.UTF7, System.Text.Encoding.UTF7},
         {Encodings.UTF32, System.Text.Encoding.UTF32},
-        {Encodings.UTF8, System.Text.Encoding.UTF8}
+        {Encodings.UTF8, System.Text.Encoding.UTF8},
+        {Encodings.Default, System.Text.Encoding.Default}
     }
 
     <Extension> Public Function GetEncodings(value As Encodings) As System.Text.Encoding
@@ -40,6 +42,7 @@ Public Module TextEncodings
             Case NameOf(Encodings.UTF32) : Return Encodings.UTF32
             Case NameOf(Encodings.UTF7) : Return Encodings.UTF7
             Case NameOf(Encodings.UTF8) : Return Encodings.UTF8
+            Case NameOf(Encodings.Default) : Return Encodings.Default
             Case Else
                 Return Encodings.UTF8
         End Select

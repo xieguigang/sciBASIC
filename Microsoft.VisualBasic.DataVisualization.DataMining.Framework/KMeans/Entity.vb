@@ -1,16 +1,31 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 
 Namespace KMeans
 
-    Public Class EntityLDM : Implements sIdEnumerable
+    Public Class EntityLDM : Inherits DynamicPropertyBase(Of Double)
+        Implements sIdEnumerable
 
         Public Property Name As String Implements sIdEnumerable.Identifier
+
         <Meta(GetType(Double))>
-        Public Property Properties As Dictionary(Of String, Double)
+        Public Overrides Property Properties As Dictionary(Of String, Double)
+            Get
+                Return MyBase.Properties
+            End Get
+            Set(value As Dictionary(Of String, Double))
+                MyBase.Properties = value
+            End Set
+        End Property
+
         Public Property Cluster As String
+
+        Public Sub Add(key As String, n As Double)
+            Call Properties.Add(key, n)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Name

@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' Wrapper for the file operations.
@@ -8,6 +9,17 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 ''' <remarks></remarks>
 <[Namespace]("Large_Text_File")>
 Public Module FileOperations
+
+    ''' <summary>
+    ''' 将文本之中的所有行读取出来
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <ExportAPI("Read.Lines"), Extension>
+    Public Function ReadAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As String()
+        Return IO.File.ReadAllLines(path, encoding.GetEncodings)
+    End Function
 
     <ExportAPI("Partitioning")>
     Public Function TextPartition(data As Generic.IEnumerable(Of String)) As String()()
@@ -97,7 +109,7 @@ Public Module FileOperations
             _readerStream = New IO.FileStream(path, IO.FileMode.Open)
             _blockSize = blockSize
             _partitions = partitioning
-            _total = _readerStream.Length
+            _Total = _readerStream.Length
 
             If _encoding Is Nothing Then
                 _encoding = System.Text.Encoding.Default
@@ -118,7 +130,7 @@ Public Module FileOperations
 
         Public ReadOnly Property EOF As Boolean
             Get
-                Return _current >= _total
+                Return _Current >= _Total
             End Get
         End Property
 
@@ -132,13 +144,13 @@ Public Module FileOperations
 
             Dim chunkBuffer As Byte()
 
-            If _current + _blockSize > _total Then
+            If _Current + _blockSize > _Total Then
                 chunkBuffer = New Byte(_blockSize - 1) {}
             Else
-                chunkBuffer = New Byte(_total - _current - 1) {}
+                chunkBuffer = New Byte(_Total - _Current - 1) {}
             End If
 
-            Call _readerStream.Read(chunkBuffer, _current, chunkBuffer.Length)
+            Call _readerStream.Read(chunkBuffer, _Current, chunkBuffer.Length)
             Call previous.Add(chunkBuffer)
 
             Dim Text As String = _encoding.GetString(previous)
