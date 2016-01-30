@@ -1,103 +1,63 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Serialization
 
-Public Class TaskHost
-
-    Public Shared Function Shell(exe As String, args As String) As Integer
-        Return -55
-    End Function
+Namespace TaskHost
 
     ''' <summary>
-    ''' 本地服务器通过这个方法调用远程主机
+    ''' 由于是远程调用，所以运行的环境可能会很不一样，所以在设计程序的时候请尽量避免或者不要使用模块变量，以免出现难以调查的BUG
     ''' </summary>
-    ''' <param name="target"></param>
-    ''' <param name="args"></param>
-    ''' <returns></returns>
-    Public Function Invoke(target As [Delegate], ParamArray args As Object()) As Object
-        Dim params As Invoke = ComputingServices.Invoke.CreateObject(target, args)
-        Return Invoke(params) ' 测试
-    End Function
+    Public Class TaskHost
 
-    ''' <summary>
-    ''' 远程服务器上面通过这个方法执行函数调用
-    ''' </summary>
-    ''' <param name="params"></param>
-    ''' <returns></returns>
-    Public Function Invoke(params As Invoke) As Object
-        Dim func As MethodInfo = params.GetMethod
-        Dim paramsValue As Object() = ComputingServices.Invoke.GetParameters(func, params.Parameters)
-        Dim value As Object = func.Invoke(Nothing, paramsValue)
-        Return value
-    End Function
+        ''' <summary>
+        ''' 相当于Sub，调用远程的命令行程序，只会返回0或者错误代码
+        ''' </summary>
+        ''' <param name="exe"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        Public Function Shell(exe As String, args As String) As Integer
 
-    Public Function Invoke(Of T)(target As [Delegate], ParamArray args As Object()) As T
-        Dim value As Object = Invoke(target, args)
-        If value Is Nothing Then
-            Return Nothing
-        Else
-            Return DirectCast(value, T)
-        End If
-    End Function
+        End Function
 
-    Delegate Function __shell(exe As String, args As String) As Integer
+        ''' <summary>
+        ''' 本地服务器通过这个方法调用远程主机
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        Public Function Invoke(target As [Delegate], ParamArray args As Object()) As Object
+            Dim params As InvokeInfo = InvokeInfo.CreateObject(target, args)
+            Dim rtvl As Returns = Invoke(params) ' 测试
+            Dim value As Object = rtvl.GetValue(target)
+            Return value
+        End Function
 
-    Shared Sub test()
-        Dim host As New TaskHost
-        Dim ss As __shell = AddressOf TaskHost.Shell
-        Dim n = host.Invoke(Of Integer)(ss, {"1", "2"})
-    End Sub
-End Class
+        ''' <summary>
+        ''' 远程服务器上面通过这个方法执行函数调用
+        ''' </summary>
+        ''' <param name="params"></param>
+        ''' <returns></returns>
+        Public Function Invoke(params As InvokeInfo) As Returns
+            Dim func As MethodInfo = params.GetMethod
+            Dim paramsValue As Object() = InvokeInfo.GetParameters(func, params.Parameters)
+            Dim rtvl As Returns
+            Try
+                Dim value As Object = func.Invoke(Nothing, paramsValue)
+                rtvl = New Returns(value, func.ReturnType)
+            Catch ex As Exception
+                ex = New Exception(params.GetJson, ex)
+                rtvl = New Returns(ex)
+            End Try
 
-Public Class Invoke
-    Public Property Assembly As String
-    Public Property Type As String
-    Public Property Name As String
-    ''' <summary>
-    ''' json value
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Parameters As String()
+            Return rtvl
+        End Function
 
-    Public Function LoadAssembly() As Assembly
-        Dim path As String = App.HOME & "/" & Assembly
-        Dim assm As Assembly = System.Reflection.Assembly.LoadFile(path)
-        Return assm
-    End Function
-
-    Public Overloads Function [GetType]() As Type
-        Dim assm As Assembly = LoadAssembly()
-        Dim type As Type = assm.GetType(Me.Type)
-        Return type
-    End Function
-
-    Public Function GetMethod() As MethodInfo
-        Dim type As Type = [GetType]()
-        Dim func As MethodInfo = type.GetMethod(Name, BindingFlags.Public Or BindingFlags.Static)
-        Return func
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="method"></param>
-    ''' <param name="args">json</param>
-    ''' <returns></returns>
-    Public Shared Function GetParameters(method As MethodInfo, args As String()) As Object()
-        Dim params As Type() = method.GetParameters.ToArray(Function(x) x.ParameterType)
-        Dim values As Object() = args.ToArray(Function(x, idx) Serialization.LoadObject(x, params(idx)))
-        Return values
-    End Function
-
-    Public Shared Function CreateObject(func As [Delegate], args As Object()) As Invoke
-        Dim type As Type = func.Method.DeclaringType
-        Dim assm As Assembly = type.Assembly
-        Dim name As String = func.Method.Name
-        Dim callsType As Type() = func.Method.GetParameters.ToArray(Function(x) x.ParameterType)
-        Dim params As String() = args.ToArray(Function(x, idx) Serialization.JsonContract.GetJson(x, callsType(idx)))
-        Return New Invoke With {
-            .Assembly = FileIO.FileSystem.GetFileInfo(assm.Location).Name,
-            .Name = name,
-            .Parameters = params,
-            .Type = type.FullName
-        }
-    End Function
-End Class
+        Public Function Invoke(Of T)(target As [Delegate], ParamArray args As Object()) As T
+            Dim value As Object = Invoke(target, args)
+            If value Is Nothing Then
+                Return Nothing
+            Else
+                Return DirectCast(value, T)
+            End If
+        End Function
+    End Class
+End Namespace

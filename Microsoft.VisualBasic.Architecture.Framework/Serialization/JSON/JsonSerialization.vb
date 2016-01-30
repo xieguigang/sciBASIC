@@ -5,14 +5,18 @@ Imports System.Runtime.Serialization.Json
 Imports System.IO
 Imports System.Text
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Namespace Serialization
 
     ''' <summary>
     ''' 使用.NET系统环境之中自带的框架进行JSON序列化和反序列化
     ''' </summary>
+    <PackageNamespace("Json.Contract")>
     Public Module JsonContract
 
+        <ExportAPI("Get.Json")>
         Public Function GetJson(obj As Object, type As Type) As String
             Using ms As New MemoryStream()
                 Dim jsonSer As New DataContractJsonSerializer(type)
@@ -26,6 +30,7 @@ Namespace Serialization
             Return GetJson(obj, GetType(T))
         End Function
 
+        <ExportAPI("LoadObject")>
         Public Function LoadObject(json As String, type As Type) As Object
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
                 Dim ser As New DataContractJsonSerializer(type)

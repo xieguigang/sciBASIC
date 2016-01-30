@@ -114,6 +114,9 @@
     </Compile>
     <Compile Include="P2P\PbsProtocol.vb" />
     <Compile Include="P2P\PbsThread.vb" />
+    <Compile Include="Taskhost.d\Returns.vb" />
+    <Compile Include="Taskhost.d\Invoke.vb" />
+    <Compile Include="Taskhost.d\Protocols.vb" />
     <Compile Include="Taskhost.d\TaskHost.vb" />
   </ItemGroup>
   <ItemGroup>
