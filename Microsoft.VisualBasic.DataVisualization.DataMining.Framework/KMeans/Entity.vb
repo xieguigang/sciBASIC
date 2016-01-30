@@ -1,11 +1,13 @@
-﻿Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 
 Namespace KMeans
 
-    Public Class EntityLDM
-        Public Property Name As String
+    Public Class EntityLDM : Implements sIdEnumerable
+
+        Public Property Name As String Implements sIdEnumerable.Identifier
         <Meta(GetType(Double))>
         Public Property Properties As Dictionary(Of String, Double)
         Public Property Cluster As String
@@ -27,8 +29,9 @@ Namespace KMeans
     End Class
 
     Public Class Entity : Inherits EntityBase(Of Double)
+        Implements sIdEnumerable
 
-        Public Property uid As String
+        Public Property uid As String Implements sIdEnumerable.Identifier
 
         Public Overrides Function ToString() As String
             Return $"{uid}  ({Length} Properties)"
