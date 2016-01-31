@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -264,5 +265,24 @@ Public Module LINQ
                                                          [CType] As Func(Of TKey, TValue, T),
                                                          Parallel As Boolean) As T()
         Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value))
+    End Function
+
+    <Extension>
+    Public Function ToArray(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
+                                              [CType] As Func(Of T1, T2, T3, T),
+                                              Optional Parallel As Boolean = False,
+                                              Optional [Where] As Func(Of T1, T2, T3, Boolean) = Nothing) As T()
+        If Where Is Nothing Then
+            Return source.__toArrayNoWhere([CType], Parallel)
+        Else
+            Return source.ToArray(Of T)(Function(x) [CType](x.Value1, x.Value2, x.Value3), where:=Function(x) Where(x.Value1, x.Value2, x.Value3))
+        End If
+    End Function
+
+    <Extension>
+    Private Function __toArrayNoWhere(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
+                                                        [CType] As Func(Of T1, T2, T3, T),
+                                                        Parallel As Boolean) As T()
+        Return source.ToArray(Of T)(Function(x) [CType](x.Value1, x.Value2, x.Value3))
     End Function
 End Module
