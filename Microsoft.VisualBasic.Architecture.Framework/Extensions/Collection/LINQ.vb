@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
@@ -129,7 +130,7 @@ Public Module LINQ
     ''' <typeparam name="TOut"></typeparam>
     ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
     ''' <returns>An array that contains the elements from the input sequence.</returns>
-    <Extension> Public Function ToArray(Of T, TOut)(source As Generic.IEnumerable(Of T),
+    <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
                                                     [CType] As Func(Of T, TOut),
                                                     Optional Parallel As Boolean = False) As TOut()
         If source.IsNullOrEmpty Then
@@ -154,7 +155,7 @@ Public Module LINQ
     ''' <typeparam name="TOut"></typeparam>
     ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
     ''' <returns>An array that contains the elements from the input sequence.</returns>
-    <Extension> Public Function ToArray(Of T, TOut)(source As Generic.IEnumerable(Of T),
+    <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
                                                     [CType] As Func(Of T, TOut),
                                                     [where] As Func(Of T, Boolean),
                                                     Optional Parallel As Boolean = False) As TOut()
@@ -186,7 +187,7 @@ Public Module LINQ
     ''' <param name="[CType]">第二个参数是index</param>
     ''' <param name="Parallel"></param>
     ''' <returns></returns>
-    <Extension> Public Function ToArray(Of T, TOut)(source As Generic.IEnumerable(Of T),
+    <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
                                                     [CType] As Func(Of T, Integer, TOut),
                                                     Optional Parallel As Boolean = False) As TOut()
         If source.IsNullOrEmpty Then
@@ -221,5 +222,47 @@ Public Module LINQ
     Public Function ToArray(source As IEnumerable) As Object()
         Dim LQuery As Object() = (From x As Object In source Select x).ToArray
         Return LQuery
+    End Function
+
+    Public Function ToArray(Of T)(source As IEnumerable) As T()
+        Return ToArray(source).ToArray(Function(x) DirectCast(x, T))
+    End Function
+
+    <Extension>
+    Public Function ToArray(Of T, TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                                                [CType] As Func(Of TKey, TValue, T),
+                                                Optional Parallel As Boolean = False,
+                                                Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
+        If Where Is Nothing Then
+            Return source.__toArrayNoWhere([CType], Parallel)
+        Else
+            Return source.ToArray(Of T)(Function(x) [CType](x.Key, x.Value), where:=Function(x) Where(x.Key, x.Value))
+        End If
+    End Function
+
+    <Extension>
+    Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                                                          [CType] As Func(Of TKey, TValue, T),
+                                                          Parallel As Boolean) As T()
+        Return source.ToArray(Of T)(Function(x) [CType](x.Key, x.Value))
+    End Function
+
+    <Extension>
+    Public Function ToArray(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
+                                                [CType] As Func(Of TKey, TValue, T),
+                                                Optional Parallel As Boolean = False,
+                                                Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
+        If Where Is Nothing Then
+            Return source.__toArrayNoWhere([CType], Parallel)
+        Else
+            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value), where:=Function(x) Where(x.Identifier, x.Value))
+        End If
+    End Function
+
+    <Extension>
+    Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
+                                                         [CType] As Func(Of TKey, TValue, T),
+                                                         Parallel As Boolean) As T()
+        Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value))
     End Function
 End Module

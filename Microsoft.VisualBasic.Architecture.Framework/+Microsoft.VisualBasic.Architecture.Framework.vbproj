@@ -156,6 +156,7 @@
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
+    <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set.vb" />
     <Compile Include="ComponentModel\DataStructures\SlideWindowHandle.vb" />
@@ -168,6 +169,9 @@
     <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
+    <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
+    <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
+    <Compile Include="ComponentModel\ValuePair\Triple.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AbstractBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AnimatedBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
@@ -328,7 +332,7 @@
     <Compile Include="ComponentModel\Href.vb" />
     <Compile Include="ComponentModel\DataSource\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
-    <Compile Include="ComponentModel\ValuePair.vb" />
+    <Compile Include="ComponentModel\ValuePair\ValuePair.vb" />
     <Compile Include="Serialization\DumpData\DumpData.vb" />
     <Compile Include="Serialization\DumpData\DumpNode.vb" />
     <Compile Include="Extensions\Security\TripleDES.vb" />
