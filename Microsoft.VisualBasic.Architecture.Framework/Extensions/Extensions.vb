@@ -20,6 +20,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Parallel.ParallelExtension
 
 #If FRAMEWORD_CORE Then
 
@@ -1535,7 +1536,7 @@ Public Module Extensions
     ''' <summary>
     ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
     ''' <returns></returns>
     Public Function Enums(Of T)() As T()
         Dim EnumType As Type = GetType(T)
@@ -1555,28 +1556,35 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="Tag"></typeparam>
-    ''' <param name="collection"></param>
-    ''' <param name="GetKey"></param>
+    ''' <param name="source"></param>
+    ''' <param name="getKey"></param>
     ''' <returns></returns>
-    <Extension> Public Function CheckDuplicated(Of T, Tag)(collection As Generic.IEnumerable(Of T),
-                                                           GetKey As Func(Of T, Tag)) As Microsoft.VisualBasic.Parallel.GroupResult(Of T, Tag)()
+    <Extension> Public Function CheckDuplicated(Of T, Tag)(source As IEnumerable(Of T), getKey As Func(Of T, Tag)) As GroupResult(Of T, Tag)()
         Dim Groups = From obj As T
-                     In collection
-                     Select obj Group obj By objTag = GetKey(obj) Into Group '
+                     In source
+                     Select obj
+                     Group obj By objTag = getKey(obj) Into Group '
         Dim KnowDuplicates = (From obj In Groups.AsParallel
                               Where obj.Group.Count > 1
-                              Select New Microsoft.VisualBasic.Parallel.GroupResult(Of T, Tag) With {
+                              Select New GroupResult(Of T, Tag) With {
                                   .TAG = obj.objTag,
                                   .Group = obj.Group.ToArray}).ToArray
         Return KnowDuplicates
     End Function
 
-    <Extension> Public Function RemoveDuplicates(Of T, Tag)(source As Generic.IEnumerable(Of T),
-                                                            GetKey As Func(Of T, Tag)) As T()
+    ''' <summary>
+    ''' 移除重复的对象，这个函数是根据对象所生成的标签来完成的
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="Tag"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="getKey">得到对象的标签</param>
+    ''' <returns></returns>
+    <Extension> Public Function RemoveDuplicates(Of T, Tag)(source As IEnumerable(Of T), getKey As Func(Of T, Tag)) As T()
         Dim Groups = From obj As T
                      In source
                      Select obj
-                     Group obj By objTag = GetKey(obj) Into Group '
+                     Group obj By objTag = getKey(obj) Into Group '
         Dim LQuery = (From obj In Groups Select obj.Group.First).ToArray
         Return LQuery
     End Function
@@ -1586,12 +1594,12 @@ Public Module Extensions
     ''' Remove all of the null object in the target object collection
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("NullValue.Trim", Info:="Remove all of the null object in the target object collection")>
-    <Extension> Public Function TrimNull(Of T As Class)(Collection As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #Else
     ''' <summary>
     ''' Remove all of the null object in the target object collection
@@ -1602,10 +1610,10 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function TrimNull(Of T As Class)(Collection As Generic.IEnumerable(Of T)) As T()
 #End If
-        If Collection.IsNullOrEmpty Then
+        If source.IsNullOrEmpty Then
             Return New T() {}
         Else
-            Return (From item In Collection Where Not item Is Nothing Select item).ToArray
+            Return (From x In source Where Not x Is Nothing Select x).ToArray
         End If
     End Function
 
