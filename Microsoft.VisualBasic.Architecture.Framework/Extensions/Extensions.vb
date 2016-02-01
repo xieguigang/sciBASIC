@@ -2106,11 +2106,12 @@ Public Module Extensions
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(<Parameter("Text")> TextValue As String, Path As String, Optional Encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(<Parameter("Text")> TextValue As String, Path As String, Optional Encoding As Encoding = Nothing) As Boolean
         If String.IsNullOrEmpty(Path) Then Return False
         If Encoding Is Nothing Then Encoding = System.Text.Encoding.Default
         Dim Dir As String
         Try
+            Path = ProgramPathSearchTool.Long2Short(Path)
             Dir = FileIO.FileSystem.GetParentPath(Path)
         Catch ex As Exception
             Dim MSG As String = $" **** Directory string is illegal or string is too long:  [{NameOf(Path)}:={Path}] > 260".__DEBUG_ECHO
@@ -2120,8 +2121,16 @@ Public Module Extensions
         If String.IsNullOrEmpty(Dir) Then
             Dir = FileIO.FileSystem.CurrentDirectory
         End If
-        Call FileIO.FileSystem.CreateDirectory(Dir)
-        Call FileIO.FileSystem.WriteAllText(Path, TextValue, append:=False, encoding:=Encoding)
+
+        Try
+            Call FileIO.FileSystem.CreateDirectory(Dir)
+            Call FileIO.FileSystem.WriteAllText(Path, TextValue, append:=False, encoding:=Encoding)
+        Catch ex As Exception
+            ex = New Exception("[DIR]  " & Dir, ex)
+            ex = New Exception("[Path]  " & Path, ex)
+            Throw ex
+        End Try
+
         Return True
     End Function
 

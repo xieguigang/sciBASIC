@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports System.Text
+Imports System.Reflection
 
 ''' <summary>
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
@@ -74,6 +75,43 @@ Public Module ProgramPathSearchTool
         End If
 
         Return sBuilder.ToString
+    End Function
+
+    Const PathTooLongException =
+        "System.IO.PathTooLongException: The specified path, file name, or both are too long. The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters."
+
+    ''' <summary>
+    ''' 假设文件名过长发生在文件名和最后一个文件夹的路径之上
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' System.IO.PathTooLongException: The specified path, file name, or both are too long. 
+    ''' The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters.
+    ''' </remarks>
+    <Extension> Public Function Long2Short(path As String, <CallerMemberName> Optional caller As String = "") As String
+        Dim parent As String = path.ParentPath
+        Dim DIRTokens As String() = parent.Replace("\", "/").Split("/"c)
+        Dim DIRname As String = DIRTokens.Last  ' 请注意，由于path参数可能是相对路径，所以在这里DIRname和name要分开讨论
+        Dim name As String = path.Replace("\", "/").Split("/"c).Last  ' 因为相对路径最终会出现文件夹名称，但在path里面可能是使用小数点来表示的
+        If parent.Length + name.Length >= 259 Then
+            DIRname = Mid(DIRname, 1, 20) & "~"
+            Dim ext As String = name.Split("."c).Last
+            name = Mid(name, 1, 20) & "~." & ext
+            parent = String.Join("/", DIRTokens.Take(DIRTokens.Length - 1).ToArray)
+            parent &= "/" & DIRname
+            parent &= "/" & name
+
+            Dim ex As Exception = New PathTooLongException(PathTooLongException)
+            ex = New Exception(path, ex)
+            ex = New Exception("But the path was corrected as:   " & parent & "  to avoid the crashed problem.", ex)
+            Call ex.PrintException
+            Call App.LogException(ex, caller & " -> " & MethodBase.GetCurrentMethod.GetFullName)
+
+            Return parent
+        Else
+            Return FileIO.FileSystem.GetFileInfo(path).FullName
+        End If
     End Function
 
     ''' <summary>
@@ -179,16 +217,31 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 是文件夹的路径而非名称
+    ''' 这个函数是返回文件夹的路径而非名称，这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI("ParentPath")>
     <Extension> Public Function ParentPath(file As String) As String
-        Dim parentDir As String = FileIO.FileSystem.GetParentPath(file)
-        Dim parDirInfo = FileIO.FileSystem.GetDirectoryInfo(parentDir)
-        Return parDirInfo.FullName
+        Dim Parent As String = ""
+        Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
+
+        If InStr(file, "../") = 1 Then
+            Parent = FileIO.FileSystem.GetParentPath(App.CurrentWork)
+            Tokens = Tokens.Skip(1).ToArray
+            Parent &= "/"
+        ElseIf InStr(file, "./") = 1 Then
+            Parent = App.CurrentWork
+            Tokens = Tokens.Skip(1).ToArray
+            Parent &= "/"
+        Else
+
+        End If
+
+        Parent &= String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+
+        Return Parent
     End Function
 
     ''' <summary>
