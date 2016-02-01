@@ -2293,9 +2293,24 @@ Public Module Extensions
     ''' <param name="throwEx"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function SaveAsXml(Of T As Class)(obj As T, saveXml As String, Optional throwEx As Boolean = True, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveAsXml(Of T As Class)(obj As T,
+                                                         saveXml As String,
+                                                         Optional throwEx As Boolean = True,
+                                                         Optional encoding As Encoding = Nothing,
+                                                         <CallerMemberName> Optional caller As String = "") As Boolean
         Dim xmlDoc As String = obj.GetXml(throwEx)
-        Return xmlDoc.SaveTo(saveXml, encoding)
+        Try
+            Return xmlDoc.SaveTo(saveXml, encoding)
+        Catch ex As Exception
+            ex = New Exception(caller, ex)
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+                Call ex.PrintException
+                Return False
+            End If
+        End Try
     End Function
 
     ''' <summary>
