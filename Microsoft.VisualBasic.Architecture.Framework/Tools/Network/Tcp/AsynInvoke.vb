@@ -157,7 +157,7 @@ Namespace Net
                                     Optional OperationTimeOut As Integer = 30 * 1000,
                                     Optional OperationTimeoutHandler As Action = Nothing) As RequestStream
             Dim response As RequestStream = Nothing
-            Dim bResult As Boolean = Microsoft.VisualBasic.OperationTimeOut.OperationTimeOut(Of RequestStream, RequestStream)(
+            Dim bResult As Boolean = Microsoft.VisualBasic.OperationTimeOut.OperationTimeOut(
                 AddressOf SendMessage,
                 [In]:=Message,
                 Out:=response,
@@ -180,9 +180,9 @@ Namespace Net
         End Function
 
         Public Function SafelySendMessage(Message As RequestStream,
-                                    CA As SSL.Certificate,
-                                    Optional OperationTimeOut As Integer = 30 * 1000,
-                                    Optional OperationTimeoutHandler As Action = Nothing) As RequestStream
+                                          CA As SSL.Certificate,
+                                          Optional OperationTimeOut As Integer = 30 * 1000,
+                                          Optional OperationTimeoutHandler As Action = Nothing) As RequestStream
 
             Message = CA.Encrypt(Message)
             Message = SendMessage(Message, OperationTimeOut, OperationTimeoutHandler)
@@ -216,7 +216,7 @@ Namespace Net
         Public Function SendMessage(Message As String) As String
             Dim byteData As Byte() = System.Text.Encoding.UTF8.GetBytes(Message)
             byteData = SendMessage(byteData)
-            Dim response As String = New Net.Protocol.RequestStream(byteData).GetUTF8String
+            Dim response As String = New RequestStream(byteData).GetUTF8String
             Return response
         End Function 'Main 
 
@@ -228,7 +228,7 @@ Namespace Net
         End Function
 
         Public Function SendMessage(Message As RequestStream) As RequestStream
-            Dim byteData = Message.Serialize
+            Dim byteData As Byte() = Message.Serialize
             byteData = SendMessage(byteData)
             If RequestStream.IsAvaliableStream(byteData) Then
                 Return New RequestStream(byteData)
