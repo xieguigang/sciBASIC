@@ -7,7 +7,13 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
-    <Extension> Public Function ArrayElement(type As Type, strict As Boolean) As Type
+    ''' <summary>
+    ''' 得到集合类型的对象之中的元素类型
+    ''' </summary>
+    ''' <param name="type"></param>
+    ''' <param name="strict"></param>
+    ''' <returns></returns>
+    <Extension> Public Function GetArrayElement(type As Type, strict As Boolean) As Type
         If type.IsInheritsFrom(GetType(Array)) Then
             Return type.GetElementType
         End If

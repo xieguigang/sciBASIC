@@ -747,7 +747,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
         If Not obj Is Nothing Then
-            Dim TypeInfo = obj.GetType
+            Dim TypeInfo As Type = obj.GetType
             If Array.IndexOf(TypeInfo.GetInterfaces, GetType(System.IDisposable)) > -1 Then
                 Try
                     Call DirectCast(obj, System.IDisposable).Dispose()
