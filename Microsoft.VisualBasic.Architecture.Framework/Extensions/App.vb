@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Security
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -332,7 +333,7 @@ Public Module App
     ''' 
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeEmpty As CommandLine.Interpreter.__ExecuteEmptyCli) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeEmpty As __ExecuteEmptyCli) As Integer
 #If DEBUG Then
         Call args.CLICommandArgvs.__DEBUG_ECHO
 #End If

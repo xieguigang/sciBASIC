@@ -28,7 +28,7 @@ Namespace CommandLine
         ''' </summary>
         Protected _CommandInfoHash As Dictionary(Of String, EntryPoints.APIEntryPoint) =
             New Dictionary(Of String, EntryPoints.APIEntryPoint)
-        Protected _InternalRootNamespace As String
+        Protected _nsRoot As String
 
         ''' <summary>
         ''' 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针
@@ -68,18 +68,18 @@ Namespace CommandLine
         End Function
 
         Public Overrides Function ToString() As String
-            Return "Cli://" & _InternalRootNamespace
+            Return "Cli://" & _nsRoot
         End Function
 
         ''' <summary>
         ''' Execute the specific command line using this interpreter.
         ''' </summary>
-        ''' <param name="CommandLine">The user input command line string.</param>
+        ''' <param name="args">The user input command line string.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overridable Function Execute(CommandLine As CommandLine) As Integer
-            If Not CommandLine.IsNullOrEmpty Then
-                Dim i As Integer = __methodInvoke(CommandLine.Name.ToLower, {CommandLine}, CommandLine.Parameters)
+        Public Overridable Function Execute(args As CommandLine) As Integer
+            If Not args.IsNullOrEmpty Then
+                Dim i As Integer = __methodInvoke(args.Name.ToLower, {args}, args.Parameters)
 #If DEBUG Then
                 Call Pause()
 #End If
@@ -161,7 +161,7 @@ Namespace CommandLine
 
             Call sBuilder.AppendLine()
             Call sBuilder.AppendLine($"Module AssemblyName: {_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
-            Call sBuilder.AppendLine("Root namespace: " & Me._InternalRootNamespace)
+            Call sBuilder.AppendLine("Root namespace: " & Me._nsRoot)
             Call sBuilder.AppendLine(vbCrLf & vbCrLf & HelpSummary())
             Call sBuilder.AppendLine("Commands")
             Call sBuilder.AppendLine("--------------------------------------------------------------------------------")
@@ -291,7 +291,7 @@ Namespace CommandLine
             For Each CommandInfo As EntryPoints.APIEntryPoint In __getsAllCommands(Type, False)
                 Call _CommandInfoHash.Add(CommandInfo.Name.ToLower, CommandInfo)
             Next
-            Me._InternalRootNamespace = Type.Namespace
+            Me._nsRoot = Type.Namespace
         End Sub
 
         ''' <summary>

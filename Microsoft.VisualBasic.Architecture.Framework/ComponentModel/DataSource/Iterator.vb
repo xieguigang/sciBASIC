@@ -3,6 +3,9 @@ Imports System.Threading.Thread
 
 Namespace ComponentModel.DataSourceModel
 
+    ''' <summary>
+    ''' Implements for the IEnumerable(Of T), Supports a simple iteration over a non-generic collection.
+    ''' </summary>
     Public Class Iterator : Implements IEnumerator
         Implements IDisposable
 
@@ -13,6 +16,10 @@ Namespace ComponentModel.DataSourceModel
             Reset()
         End Sub
 
+        ''' <summary>
+        ''' Gets the current element in the collection.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Current As Object Implements IEnumerator.Current
         Public ReadOnly Property ReadDone As Boolean
 
@@ -21,6 +28,7 @@ Namespace ComponentModel.DataSourceModel
         Private Sub __moveNext()
             _ReadDone = False
 
+            ' Single thread safely
             For Each x As Object In _source ' 单线程安全
                 Do While _read
                     Call Sleep(1)
@@ -35,6 +43,9 @@ Namespace ComponentModel.DataSourceModel
 
         Dim _forEach As Thread
 
+        ''' <summary>
+        ''' Sets the enumerator to its initial position, which is before the first element in the collection.
+        ''' </summary>
         Public Sub Reset() Implements IEnumerator.Reset
             If Not _forEach Is Nothing Then  ' 终止这条线程然后再新建
                 Call _forEach.Abort()
@@ -44,6 +55,12 @@ Namespace ComponentModel.DataSourceModel
             _forEach.Start()
         End Sub
 
+        ''' <summary>
+        ''' Advances the enumerator to the next element of the collection.
+        ''' </summary>
+        ''' <returns>
+        ''' true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
+        ''' </returns>
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
             _read = False
             Return Not ReadDone
