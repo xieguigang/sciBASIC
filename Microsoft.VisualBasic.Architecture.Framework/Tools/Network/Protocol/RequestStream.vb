@@ -141,6 +141,14 @@
         End Sub
 
         ''' <summary>
+        ''' 其余的协议参数都是值 <see cref="HTTP_RFC.RFC_OK"/>
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As String)
+            Call Me.New(HTTP_RFC.RFC_OK, HTTP_RFC.RFC_OK, data)
+        End Sub
+
+        ''' <summary>
         ''' Deserialize (当还有剩余数据的时候会将数据进行剪裁)
         ''' </summary>
         ''' <param name="rawStream"></param>
