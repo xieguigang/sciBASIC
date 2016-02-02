@@ -227,6 +227,11 @@ Namespace Net
             Return __decryptMessageCommon(byteData, CA).GetUTF8String
         End Function
 
+        ''' <summary>
+        ''' Send a request message to the remote server.
+        ''' </summary>
+        ''' <param name="Message"></param>
+        ''' <returns></returns>
         Public Function SendMessage(Message As RequestStream) As RequestStream
             Dim byteData As Byte() = Message.Serialize
             byteData = SendMessage(byteData)
