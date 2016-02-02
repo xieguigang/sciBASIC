@@ -13,10 +13,13 @@ Namespace ComponentModel.DataSourceModel
         End Sub
 
         Public ReadOnly Property Current As Object Implements IEnumerator.Current
+        Public ReadOnly Property ReadDone As Boolean
 
         Dim _read As Boolean = False
 
         Private Sub __moveNext()
+            _ReadDone = False
+
             For Each x As Object In _source ' 单线程安全
                 Do While _read
                     Call Sleep(1)
@@ -26,6 +29,7 @@ Namespace ComponentModel.DataSourceModel
             Next
 
             _read = False
+            _ReadDone = True
         End Sub
 
         Dim _forEach As Thread
@@ -41,7 +45,7 @@ Namespace ComponentModel.DataSourceModel
 
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
             _read = False
-            Return True
+            Return Not ReadDone
         End Function
     End Class
 End Namespace

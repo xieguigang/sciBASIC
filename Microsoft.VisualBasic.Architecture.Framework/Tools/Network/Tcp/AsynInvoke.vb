@@ -73,6 +73,10 @@ Namespace Net
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)
         End Sub
 
+        Sub New(remoteDevice As IPEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
+            Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, ExceptionHandler)
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>

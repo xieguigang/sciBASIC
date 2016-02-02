@@ -122,6 +122,10 @@
             Me.ChunkBuffer = ChunkBuffer
         End Sub
 
+        Sub New(ProtocolCategory As Long, Protocol As Long)
+            Call Me.New(ProtocolCategory, Protocol, New Byte() {})
+        End Sub
+
         ''' <summary>
         ''' The default text encoding is <see cref="System.Text.Encoding.UTF8"/>
         ''' </summary>
