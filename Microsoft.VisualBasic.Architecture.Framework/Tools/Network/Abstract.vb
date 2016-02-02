@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Net.Protocol
 
 Namespace Net.Abstract
 
@@ -37,7 +38,7 @@ Namespace Net.Abstract
     ''' (运行于服务器端上面的Socket监听对象，多线程模型)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface IServicesSocket : Inherits System.IDisposable, ComponentModel.DataSourceModel.IObjectModel_Driver, IDataRequestHandler
+    Public Interface IServicesSocket : Inherits IDisposable, IObjectModel_Driver, IDataRequestHandler
 
         ''' <summary>
         ''' The server services listening on this local port.(当前的这个服务器对象实例所监听的本地端口号)
