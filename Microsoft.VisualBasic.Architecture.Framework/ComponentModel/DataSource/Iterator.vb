@@ -23,23 +23,31 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property Current As Object Implements IEnumerator.Current
         Public ReadOnly Property ReadDone As Boolean
 
-        Dim _read As Boolean = False
+        Dim receiveDone As New ManualResetEvent(False)
 
         Private Sub __moveNext()
             _ReadDone = False
 
             ' Single thread safely
             For Each x As Object In _source ' 单线程安全
-                Do While _read
-                    Call Sleep(1)
-                Loop
                 _Current = x
-                _read = True
+
+                Call receiveDone.WaitOne()
+                Call receiveDone.Reset()
             Next
 
-            _read = False
             _ReadDone = True
         End Sub
+
+        ''' <summary>
+        ''' Returns current and then automatically move to next position
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Read() As Object
+            Dim x As Object = Current
+            Call MoveNext()
+            Return x
+        End Function
 
         Dim _forEach As Thread
 
@@ -62,7 +70,7 @@ Namespace ComponentModel.DataSourceModel
         ''' true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
         ''' </returns>
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
-            _read = False
+            Call receiveDone.Set()
             Return Not ReadDone
         End Function
 
