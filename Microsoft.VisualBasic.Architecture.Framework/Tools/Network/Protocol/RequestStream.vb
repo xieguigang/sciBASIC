@@ -53,11 +53,11 @@ Namespace Net.Protocol
             End Get
         End Property
 
-        Sub New(ProtocolCategory As Long, Protocol As Long, ChunkBuffer As Byte())
+        Sub New(ProtocolCategory As Long, Protocol As Long, buffer As Byte())
             Me.ProtocolCategory = ProtocolCategory
             Me.Protocol = Protocol
-            Me.BufferLength = ChunkBuffer.Length
-            Me.ChunkBuffer = ChunkBuffer
+            Me.BufferLength = buffer.Length
+            Me.ChunkBuffer = buffer
         End Sub
 
         Sub New(ProtocolCategory As Long, Protocol As Long)
@@ -176,6 +176,25 @@ Namespace Net.Protocol
         Public Shared Function CreateProtocol(Of T)(cat As Long, protocol As Long, params As T) As RequestStream
             Dim json As String = params.GetJson
             Return New RequestStream(cat, protocol, json)
+        End Function
+
+        ''' <summary>
+        ''' 服务器端返回数据所使用的，默认使用json序列化，所有的标签为<see cref="HTTP_RFC.RFC_OK"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Function CreatePackage(Of T)(obj As T) As RequestStream
+            Return New RequestStream(HTTP_RFC.RFC_OK, HTTP_RFC.RFC_OK, obj.GetJson)
+        End Function
+
+        ''' <summary>
+        ''' 服务器端返回数据所使用的，所有的标签为<see cref="HTTP_RFC.RFC_OK"/>
+        ''' </summary>
+        ''' <param name="pack"></param>
+        ''' <returns></returns>
+        Public Shared Function CreatePackage(pack As Byte()) As RequestStream
+            Return New RequestStream(HTTP_RFC.RFC_OK, HTTP_RFC.RFC_OK, pack)
         End Function
 
         Private Shared ReadOnly ___offset As Byte() = New Byte() {RequestStream.BITWISE_FLAG}
