@@ -3,6 +3,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Reflection
 
 Imports System.Windows.Forms

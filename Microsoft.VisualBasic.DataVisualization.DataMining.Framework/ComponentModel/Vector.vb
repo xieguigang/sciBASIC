@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Extensions
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Text
 
 Namespace ComponentModel

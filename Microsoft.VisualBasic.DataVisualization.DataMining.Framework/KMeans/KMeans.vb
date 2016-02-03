@@ -1,6 +1,7 @@
 ﻿Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace KMeans
 

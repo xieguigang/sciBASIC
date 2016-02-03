@@ -1,4 +1,6 @@
-﻿Namespace Net.Protocol.Streams.Array
+﻿Imports Microsoft.VisualBasic.Linq.Extensions
+
+Namespace Net.Protocol.Streams.Array
 
     Public Class [Long] : Inherits ValueArray(Of Long)
 

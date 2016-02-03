@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ConsoleDevice
 Imports Microsoft.VisualBasic.ConsoleDevice.Utility
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.

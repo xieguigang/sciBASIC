@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MolkPlusTheme
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Interface IDataPager
 

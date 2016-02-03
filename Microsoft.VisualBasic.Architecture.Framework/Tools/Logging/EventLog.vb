@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace Logging
 

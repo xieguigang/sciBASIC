@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace SoftwareToolkits.Globalization
 

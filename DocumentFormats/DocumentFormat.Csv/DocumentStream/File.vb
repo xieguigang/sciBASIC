@@ -1,5 +1,5 @@
 ﻿Imports System.Text
-
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
 
 Namespace DocumentStream

@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 ''' <summary>
 ''' Levenshtein Edit Distance Algorithm for measure string distance

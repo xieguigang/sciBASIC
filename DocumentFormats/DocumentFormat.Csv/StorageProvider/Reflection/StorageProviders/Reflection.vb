@@ -1,5 +1,5 @@
 ﻿Imports System.Reflection
-
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels

@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace Scripting.MetaData
 

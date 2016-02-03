@@ -1,4 +1,5 @@
-﻿
+﻿Imports Microsoft.VisualBasic.Linq.Extensions
+
 Namespace Parallel
 
     ''' <summary>

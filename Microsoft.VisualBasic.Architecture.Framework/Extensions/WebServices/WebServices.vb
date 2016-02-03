@@ -5,6 +5,7 @@ Imports System.IO
 Imports System.Net
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Reflection
 
 ''' <summary>

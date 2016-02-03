@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace SecurityString
 

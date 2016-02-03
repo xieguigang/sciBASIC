@@ -9,6 +9,7 @@ Imports System.Text.RegularExpressions
 Imports System.Reflection
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 #If FRAMEWORD_CORE Then
 Imports Microsoft.VisualBasic.CommandLine.Reflection

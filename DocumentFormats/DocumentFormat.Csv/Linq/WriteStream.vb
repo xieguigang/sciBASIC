@@ -3,6 +3,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace DocumentStream.Linq
 

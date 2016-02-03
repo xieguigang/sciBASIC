@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports System.IO

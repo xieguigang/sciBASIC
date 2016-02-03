@@ -2,6 +2,7 @@
 Imports System.Collections
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace ComponentModel.DataStructures
 

@@ -1,4 +1,6 @@
-﻿Namespace StorageProvider.ComponentModels
+﻿Imports Microsoft.VisualBasic.Linq.Extensions
+
+Namespace StorageProvider.ComponentModels
 
     Public Class RowWriter
 

@@ -3,6 +3,7 @@ Imports System.Net
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 ''' <summary>
 ''' 一个标签所标记的元素以及内部文本

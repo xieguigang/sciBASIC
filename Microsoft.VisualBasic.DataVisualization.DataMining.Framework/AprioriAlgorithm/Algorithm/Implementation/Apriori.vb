@@ -5,6 +5,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.AprioriAlgorithm.Entities
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace AprioriAlgorithm
 

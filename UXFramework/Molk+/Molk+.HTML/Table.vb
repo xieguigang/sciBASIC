@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Class Table(Of T As Class) : Inherits Designer
     Implements System.Collections.Generic.IList(Of T)

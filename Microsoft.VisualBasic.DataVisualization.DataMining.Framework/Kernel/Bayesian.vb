@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.Extensions
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace Kernel.Classifier
 

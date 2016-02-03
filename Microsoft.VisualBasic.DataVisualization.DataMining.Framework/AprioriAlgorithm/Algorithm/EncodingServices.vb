@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace AprioriAlgorithm
 

@@ -1,4 +1,6 @@
-﻿Namespace StorageProvider.ComponentModels
+﻿Imports Microsoft.VisualBasic.Linq.Extensions
+
+Namespace StorageProvider.ComponentModels
 
     Public Interface ISchema
         ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer)
