@@ -147,6 +147,15 @@ Namespace Net.Protocol
         End Function
 
         ''' <summary>
+        ''' json
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
+        Public Function LoadObject(Of T)() As T
+            Return GetUTF8String.LoadObject(Of T)
+        End Function
+
+        ''' <summary>
         ''' 从原始数据流<see cref="ChunkBuffer"/>之中进行反序列化得到一个嵌套的数据串流对象
         ''' </summary>
         ''' <typeparam name="TStream"></typeparam>

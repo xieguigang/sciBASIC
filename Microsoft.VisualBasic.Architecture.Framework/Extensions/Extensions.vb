@@ -668,16 +668,25 @@ Public Module Extensions
     End Function
 
 #If FRAMEWORD_CORE Then
+    ''' <summary>
+    ''' 非线程的方式启动，当前线程会被阻塞在这里直到运行完毕
+    ''' </summary>
+    ''' <param name="driver"></param>
+    ''' <returns></returns>
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     Public Function RunDriver(driver As IObjectModel_Driver) As Integer
         Return driver.Run
     End Function
 
+    ''' <summary>
+    ''' 使用线程的方式启动
+    ''' </summary>
+    ''' <param name="driver"></param>
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     <Extension>
-    Public Sub DriverRun(driver As IObjectModel_Driver)
-        Call Parallel.Run(AddressOf driver.Run)
-    End Sub
+    Public Function DriverRun(driver As IObjectModel_Driver) As Threading.Thread
+        Return Parallel.Run(AddressOf driver.Run)
+    End Function
 #End If
 
     ''' <summary>

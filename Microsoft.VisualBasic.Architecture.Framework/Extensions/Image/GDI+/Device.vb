@@ -2159,7 +2159,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     '   T:System.ArgumentNullException:
     '     image is null.
     Public Sub DrawImageUnscaled(image As Image, rect As Rectangle)
-
+        Call Gr_Device.DrawImageUnscaled(image, rect)
     End Sub
     '
     ' Summary:
@@ -2177,7 +2177,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     '   T:System.ArgumentNullException:
     '     image is null.
     Public Sub DrawImageUnscaled(image As Image, point As Point)
-
+        Call Gr_Device.DrawImageUnscaled(image, point)
     End Sub
     '
     ' Summary:
@@ -2198,7 +2198,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     '   T:System.ArgumentNullException:
     '     image is null.
     Public Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
-
+        Call Gr_Device.DrawImageUnscaled(image, x, y)
     End Sub
     '
     ' Summary:
@@ -2224,7 +2224,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     '   T:System.ArgumentNullException:
     '     image is null.
     Public Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
-
+        Call Gr_Device.DrawImageUnscaled(image, x, y, width, height)
     End Sub
     '
     ' Summary:
@@ -2242,7 +2242,7 @@ Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
     '   T:System.ArgumentNullException:
     '     image is null.
     Public Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
-
+        Call Gr_Device.DrawImageUnscaledAndClipped(image, rect)
     End Sub
     '
     ' Summary:
