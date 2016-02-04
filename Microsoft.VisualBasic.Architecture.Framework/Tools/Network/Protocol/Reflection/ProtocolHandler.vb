@@ -26,22 +26,25 @@ Namespace Net.Protocol.Reflection
         ''' </summary>
         ''' <param name="obj">Protocol的实例</param>
         Sub New(obj As Object)
-            Dim Type As Type = obj.GetType
-            Dim ProtocolEntry As Protocol = Protocol.GetProtocolCategory(Type)
+            Dim type As Type = obj.GetType
+            Dim entry As Protocol = Protocol.GetProtocolCategory(type)
 
-            Me.DeclaringType = ProtocolEntry?.DeclaringType
-            Me.ProtocolEntry = ProtocolEntry?.EntryPoint
+            Me.DeclaringType = entry?.DeclaringType
+            Me.ProtocolEntry = entry?.EntryPoint
             ' 解析出所有符合 WrapperClassTools.Net.DataRequestHandler 接口类型的函数方法
 
-            Dim Methods = Type.GetMethods(System.Reflection.BindingFlags.Public Or
+            Dim Methods = type.GetMethods(System.Reflection.BindingFlags.Public Or
                                           System.Reflection.BindingFlags.NonPublic Or
                                           System.Reflection.BindingFlags.Instance)
             Dim LQuery = (From entryPoint In Methods.AsParallel
                           Let Protocol As Protocol = Protocol.GetEntryPoint(entryPoint)
-                          Let method = GetMethod(obj, entryPoint)
-                          Where Not (Protocol Is Nothing) AndAlso Not method Is Nothing
-                          Select Protocol, entryPoint, method).ToArray
-            Protocols = LQuery.ToDictionary(Function(element) element.Protocol.EntryPoint, elementSelector:=Function(element) element.method)
+                          Let method As DataRequestHandler = GetMethod(obj, entryPoint)
+                          Where Not (Protocol Is Nothing) AndAlso
+                              Not method Is Nothing
+                          Select Protocol, entryPoint, method)
+
+            Me.Protocols = LQuery.ToDictionary(Function(element) element.Protocol.EntryPoint,
+                                               Function(element) element.method)
         End Sub
 
         ''' <summary>
