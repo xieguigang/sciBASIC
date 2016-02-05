@@ -36,4 +36,28 @@ Public Module Vector
         Return n
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
+    ''' <returns></returns>
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Func(Of T, Boolean)) As T()()
+        Dim array As T() = source.ToArray
+        Dim list As New List(Of T())
+        Dim tmp As New List(Of T)
+
+        For i As Integer = 0 To array.Length - 1
+            Dim x As T = array(i)
+            If delimiter(x) = True Then
+                Call list.Add(tmp.ToArray)
+                Call tmp.Clear()
+            Else
+                Call tmp.Add(x)
+            End If
+        Next
+
+        Return list.ToArray
+    End Function
 End Module
