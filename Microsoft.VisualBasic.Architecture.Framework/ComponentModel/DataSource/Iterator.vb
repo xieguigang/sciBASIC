@@ -3,6 +3,20 @@ Imports System.Threading.Thread
 
 Namespace ComponentModel.DataSourceModel
 
+    Public Class Iterator(Of T) : Inherits Iterator
+        Implements IEnumerator(Of T)
+
+        Sub New(source As IEnumerable(Of T))
+            Call MyBase.New(source)
+        End Sub
+
+        Public ReadOnly Property GetCurrent As T Implements IEnumerator(Of T).Current
+            Get
+                Return DirectCast(Current, T)
+            End Get
+        End Property
+    End Class
+
     ''' <summary>
     ''' Implements for the IEnumerable(Of T), Supports a simple iteration over a non-generic collection.
     ''' </summary>
