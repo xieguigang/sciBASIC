@@ -113,9 +113,9 @@ Namespace Scripting
         End Sub
 
         ''' <summary>
-        ''' 小写的
+        ''' 键值都是小写的
         ''' </summary>
-        ReadOnly TypeNames As SortedDictionary(Of String, Type) =
+        Public ReadOnly Property TypeNames As SortedDictionary(Of String, Type) =
             New SortedDictionary(Of String, Type) From {
  _
                 {"string", GetType(String)},

@@ -22,7 +22,12 @@
         Return New CodeDom.CodeMemberField(name:=Name, type:=New CodeDom.CodeTypeReference(Type))
     End Function
 
-    Public Function Field(Name As String) As CodeDom.CodeFieldReferenceExpression
+    ''' <summary>
+    ''' Reference of Me.Field
+    ''' </summary>
+    ''' <param name="Name"></param>
+    ''' <returns></returns>
+    Public Function FieldRef(Name As String) As CodeDom.CodeFieldReferenceExpression
         Return New CodeDom.CodeFieldReferenceExpression(New CodeDom.CodeThisReferenceExpression, Name)
     End Function
 
