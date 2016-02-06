@@ -2329,15 +2329,13 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="file"></param>
     ''' <param name="encoding"></param>
-    ''' <param name="parser"></param>
+    ''' <param name="parser">default is Xml parser</param>
     ''' <param name="ThrowEx"></param>
     ''' <returns></returns>
-    <Extension> Public Function LoadTextDoc(Of T As Microsoft.VisualBasic.ComponentModel.ITextFile)(
-                                file As String,
-                                Optional encoding As System.Text.Encoding = Nothing,
-                                Optional parser As Func(Of String, System.Text.Encoding, T) = Nothing,
-                                Optional ThrowEx As Boolean = True) As T
-
+    <Extension> Public Function LoadTextDoc(Of T As ITextFile)(file As String,
+                                                               Optional encoding As Encoding = Nothing,
+                                                               Optional parser As Func(Of String, Encoding, T) = Nothing,
+                                                               Optional ThrowEx As Boolean = True) As T
         If parser Is Nothing Then
             parser = AddressOf LoadXml
         End If
