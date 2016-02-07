@@ -2278,9 +2278,9 @@ Public Module Extensions
     <Extension> Public Function GetXml(Of T As Class)(obj As T, Optional ThrowEx As Boolean = True) As String
         Dim sBuilder As StringBuilder = New StringBuilder(1024)
 
-        Using StreamWriter As System.IO.StringWriter = New System.IO.StringWriter(sb:=sBuilder)
+        Using StreamWriter As StringWriter = New StringWriter(sb:=sBuilder)
             Try
-                Call (New System.Xml.Serialization.XmlSerializer(GetType(T))).Serialize(StreamWriter, obj)
+                Call (New Xml.Serialization.XmlSerializer(GetType(T))).Serialize(StreamWriter, obj)
             Catch ex As Exception
                 Call App.LogException(ex)
 

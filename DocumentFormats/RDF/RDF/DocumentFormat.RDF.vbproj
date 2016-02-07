@@ -95,6 +95,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DCMI.vb" />
     <Compile Include="RDFEntity.vb" />
     <Compile Include="DocumentElements.vb" />
     <Compile Include="GenericXmlDocument.vb" />
