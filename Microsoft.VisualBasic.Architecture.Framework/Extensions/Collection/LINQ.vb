@@ -14,6 +14,22 @@ Namespace Linq
     Public Module Extensions
 
         ''' <summary>
+        ''' 适用于二维的集合做为linq的数据源，不像<see cref="MatrixToList"/>是进行转换，这个是返回迭代器的，推荐使用这个函数
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension> Public Iterator Function MatrixAsIterator(Of T)(source As IEnumerable(Of Generic.IEnumerable(Of T))) As IEnumerable(Of T)
+            For Each Line As IEnumerable(Of T) In source
+                If Not Line.IsNullOrEmpty Then
+                    For Each x As T In Line
+                        Yield x
+                    Next
+                End If
+            Next
+        End Function
+
+        ''' <summary>
         ''' 删除制定的键之后返回剩下的数据
         ''' </summary>
         ''' <typeparam name="TKey"></typeparam>

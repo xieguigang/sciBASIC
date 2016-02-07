@@ -1235,12 +1235,12 @@ Public Module Extensions
     ''' Empty list will be skip and ignored.(这是一个安全的方法，空集合会被自动跳过，并且这个函数总是返回一个集合不会返回空值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
-    <Extension> Public Function MatrixToList(Of T)(Collection As Generic.IEnumerable(Of Generic.IEnumerable(Of T))) As List(Of T)
+    <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of Generic.IEnumerable(Of T))) As List(Of T)
         Dim ChunkBuffer As List(Of T) = New List(Of T)
 
-        For Each Line As Generic.IEnumerable(Of T) In Collection
+        For Each Line As Generic.IEnumerable(Of T) In source
 
             If Not Line.IsNullOrEmpty Then
                 Call ChunkBuffer.AddRange(collection:=Line)
