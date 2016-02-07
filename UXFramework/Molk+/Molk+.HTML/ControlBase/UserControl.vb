@@ -21,7 +21,7 @@ Public Class UserControl
     Private Sub __hook(handler As Designer)
         _control = handler
         _eventHandler = New __eventHandler(Me)
-        Call Run(AddressOf _eventHandler.Run)
+        Call RunTask(AddressOf _eventHandler.Run)
         Call wbCtlRender.Navigate($"http://127.0.0.1:{_eventHandler.LocalPort}/")
     End Sub
 

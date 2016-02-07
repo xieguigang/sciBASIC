@@ -171,19 +171,27 @@ Namespace Serialization
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Class, allowmultiple:=True, inherited:=True)>
-    Public Class RDFNamespaceImports : Inherits Attribute
+    Public Class RDFNamespaceImports : Inherits Xml.Serialization.XmlTypeAttribute
         ''' <summary>
         ''' Type name of the target imports namespace
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Type As String
-        Public Property SchemaUrl As String
+        Public ReadOnly Property Type As String
+            Get
+                Return TypeName
+            End Get
+        End Property
+        Public ReadOnly Property SchemaUrl As String
+            Get
+                Return [Namespace]
+            End Get
+        End Property
 
         Sub New(Type As String, SchemaUrl As String)
-            Me.Type = Type
-            Me.SchemaUrl = SchemaUrl
+            MyBase.TypeName = Type
+            MyBase.Namespace = SchemaUrl
         End Sub
 
         Public Overrides Function ToString() As String

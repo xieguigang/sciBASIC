@@ -1,14 +1,14 @@
-﻿
+﻿Imports Microsoft.VisualBasic.DocumentFormat.RDF
 Imports Microsoft.VisualBasic.DocumentFormat.RDF.Serialization
 
 <RDFNamespaceImports("cd", "http://www.recshop.fake/cd#")>
-Public Class Test1
+Public Class RDFD
 
     <RDFElement("cd")> Public Property CDList As CD()
 
-    <RDFDescription(about:="http://www.recshop.fake/cd/Empire Burlesque")>
+    <RDFDescription(About:="http://www.recshop.fake/cd/Empire Burlesque")>
     <RDFType("cd")>
-    Public Class CD
+    Public Class CD : Inherits RDFEntity
         <RDFElement("artist")> Public Property Artist As String
         <RDFElement("country")> Public Property Country As String
         <RDFElement("company")> Public Property Company As String
