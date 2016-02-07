@@ -20,7 +20,7 @@ Namespace MMFProtocol.Pipeline
             _netSocket = New Net.TcpSynchronizationServicesSocket(port)
             _netSocket.Responsehandler = AddressOf _protocols.HandleRequest
 
-            Call Parallel.Run(AddressOf _netSocket.Run)
+            Call Parallel.RunTask(AddressOf _netSocket.Run)
         End Sub
 
         ''' <summary>

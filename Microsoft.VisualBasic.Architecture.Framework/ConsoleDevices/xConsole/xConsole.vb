@@ -738,7 +738,7 @@ Namespace ConsoleDevice
             End Sub
 
             Public Sub RunTask(Optional speed As Integer = 130)
-                Call Parallel.Run(Sub() Call Run(speed))
+                Call Parallel.RunTask(Sub() Call Run(speed))
             End Sub
         End Class
 

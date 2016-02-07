@@ -243,7 +243,7 @@ Public Module App
     ''' <param name="ex"></param>
     ''' <param name="Trace"></param>
     ''' <returns></returns>
-    Public Function BugsFormatter(ex As Exception, Trace As String) As String
+    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional Trace As String = "") As String
         Dim exMsg As StringBuilder = New StringBuilder()
         Call exMsg.AppendLine("TIME:  " & Now.ToString)
         Call exMsg.AppendLine("TRACE: " & Trace)

@@ -145,7 +145,7 @@ Namespace CommandLine
 
                 Return ProcessInfo.ExitCode
             Else
-                Call Parallel.Run(AddressOf ProcessInfo.WaitForExit)
+                Call Parallel.RunTask(AddressOf ProcessInfo.WaitForExit)
                 Return 0
             End If
         End Function

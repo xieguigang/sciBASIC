@@ -34,7 +34,7 @@ Namespace Parallel
                     NameOf(TempListen.Responsehandler),
                     AddressOf __getChildPortal.HandleRequest)
 
-                Call Run(AddressOf TempListen.Run)
+                Call RunTask(AddressOf TempListen.Run)
                 Call TempListen.WaitForStart()
 
                 Dim path As String =

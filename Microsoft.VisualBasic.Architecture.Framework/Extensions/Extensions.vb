@@ -685,7 +685,7 @@ Public Module Extensions
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     <Extension>
     Public Function DriverRun(driver As IObjectModel_Driver) As Threading.Thread
-        Return Parallel.Run(AddressOf driver.Run)
+        Return Parallel.RunTask(AddressOf driver.Run)
     End Function
 #End If
 

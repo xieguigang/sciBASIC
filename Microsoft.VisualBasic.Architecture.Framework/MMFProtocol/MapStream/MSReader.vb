@@ -79,7 +79,7 @@ Namespace MMFProtocol.MapStream
             _mmfileStream = IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting(uri)
             _dataArrivals = callback
 
-            Call Parallel.Run(AddressOf __threadElapsed)
+            Call Parallel.RunTask(AddressOf __threadElapsed)
         End Sub
 
         Public Overrides Function ToString() As String

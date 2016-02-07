@@ -186,7 +186,7 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
 
             End Try
 
-            Call Run(AddressOf __flushThread)
+            Call RunTask(AddressOf __flushThread)
         End Sub
 
         ''' <summary>

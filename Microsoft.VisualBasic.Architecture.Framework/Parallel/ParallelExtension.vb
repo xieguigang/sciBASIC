@@ -122,7 +122,7 @@ Namespace Parallel
         ''' </summary>
         ''' <param name="start"></param>
         ''' <returns></returns>
-        <Extension> Public Function Run(start As Threading.ThreadStart) As Threading.Thread
+        <Extension> Public Function RunTask(start As Threading.ThreadStart) As Threading.Thread
             Dim Thread As New Threading.Thread(start)
             Call Thread.Start()
             Return Thread

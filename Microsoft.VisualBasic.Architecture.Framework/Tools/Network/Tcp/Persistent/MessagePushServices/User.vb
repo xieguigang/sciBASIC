@@ -78,7 +78,7 @@ Namespace Net.Persistent.Application
             Me._pcnnSocket.RemoteServerShutdown = ForceCloseConnection
             Me._pcnnSocket.Responsehandler = AddressOf Me._requestHandler.HandleRequest
 
-            Call Run(AddressOf Me._pcnnSocket.BeginConnect)
+            Call RunTask(AddressOf Me._pcnnSocket.BeginConnect)
             Call Me._pcnnSocket.WaitForConnected()
             Call Thread.Sleep(1000)
             Call Me._pcnnSocket.WaitForHash()
@@ -107,7 +107,7 @@ Namespace Net.Persistent.Application
         ''' </summary>
         ''' <param name="ForceCloseConnection">远程主机强制关闭连接之后触发这个动作</param>
         Public Sub BeginConnect(CA As Net.SSL.Certificate, Optional ForceCloseConnection As MethodInvoker = Nothing)
-            Call Run(Sub() Call BeginConnect(ForceCloseConnection, CA))
+            Call RunTask(Sub() Call BeginConnect(ForceCloseConnection, CA))
         End Sub
 
         ''' <summary>

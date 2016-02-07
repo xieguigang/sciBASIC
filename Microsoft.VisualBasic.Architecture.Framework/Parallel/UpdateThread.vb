@@ -32,7 +32,7 @@
         Sub New(Periods As Integer, updates As System.Action)
             Me.Periods = Periods
             Me.Updates = updates
-            Call Run(AddressOf __updates)
+            Call RunTask(AddressOf __updates)
         End Sub
 
         Private Sub __updates()
@@ -49,7 +49,7 @@
                 Return
             Else
                 _Running = True
-                Call Run(AddressOf __updates)
+                Call RunTask(AddressOf __updates)
             End If
         End Sub
 
