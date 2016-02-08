@@ -13,7 +13,7 @@ Namespace FileStream
         Implements I_InteractionModel, INetworkEdge
 
         Public Shared Function Contains(edge As I_InteractionModel, node As String) As Boolean
-            Return String.Equals(node, edge.FromNode, StringComparison.OrdinalIgnoreCase) OrElse
+            Return String.Equals(node, edge.locusId, StringComparison.OrdinalIgnoreCase) OrElse
                 String.Equals(node, edge.ToNode, StringComparison.OrdinalIgnoreCase)
         End Function
 
@@ -22,7 +22,7 @@ Namespace FileStream
         Public Const REFLECTION_ID_MAPPING_CONFIDENCE As String = "confidence"
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
 
-        <Column("fromNode")> <Xml.Serialization.XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.FromNode
+        <Column("fromNode")> <Xml.Serialization.XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
         <Column("toNode")> <Xml.Serialization.XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.ToNode
         <Xml.Serialization.XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
         <Column("InteractionType")> Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
@@ -51,20 +51,20 @@ Namespace FileStream
         End Property
 
         Public Overloads Shared Function Equals(Model As I_InteractionModel, Node1 As String, Node2 As String) As Boolean
-            If String.Equals(Model.FromNode, Node1, StringComparison.OrdinalIgnoreCase) Then
+            If String.Equals(Model.locusId, Node1, StringComparison.OrdinalIgnoreCase) Then
                 Return String.Equals(Model.ToNode, Node2, StringComparison.OrdinalIgnoreCase)
             ElseIf String.Equals(Model.ToNode, Node1, StringComparison.OrdinalIgnoreCase) Then
-                Return String.Equals(Model.FromNode, Node2, StringComparison.OrdinalIgnoreCase)
+                Return String.Equals(Model.locusId, Node2, StringComparison.OrdinalIgnoreCase)
             Else
                 Return False
             End If
         End Function
 
         Public Shared Function GetConnectedNode(Node As I_InteractionModel, a As String) As String
-            If String.Equals(Node.FromNode, a) Then
+            If String.Equals(Node.locusId, a) Then
                 Return Node.ToNode
             ElseIf String.Equals(Node.ToNode, a) Then
-                Return Node.FromNode
+                Return Node.locusId
             Else
                 Return ""
             End If

@@ -14,7 +14,7 @@ Namespace Dijkstra
 
         Public Property Selected As Boolean = False
         Public Property B As FileStream.Node Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Value
-        Public Property A As FileStream.Node Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Identifier
+        Public Property A As FileStream.Node Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of FileStream.Node, FileStream.Node).locusId
         Public Property Weight As Integer
 
         Public Sub New(a As FileStream.Node, b As FileStream.Node, weight As Integer)

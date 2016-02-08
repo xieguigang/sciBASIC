@@ -65,13 +65,13 @@ Public Module IEnumerations
 
     <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional Explicit As Boolean = True) As PairItemType()
         Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Key, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.locusId, Key, Method) Select item).ToArray
         Return LQuery
     End Function
 
     <Extension> Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
         Dim Method = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Value, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.locusId, Value, Method) Select item).ToArray
         Return LQuery
     End Function
 
@@ -120,14 +120,14 @@ Public Module IEnumerations
     End Function
 
     <Extension> Public Function ToEntryDictionary(Of T As IReadOnlyId)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
-        Return source.ToDictionary(Function(item As T) item.Identifier)
+        Return source.ToDictionary(Function(item As T) item.locusId)
     End Function
 
     <Extension> Public Function GetItem(Of T As IReadOnlyId)(source As IEnumerable(Of T), uniqueId As String, Optional caseSensitive As Boolean = True) As T
         Dim method As StringComparison = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From itemObj As T
                       In source
-                      Where String.Equals(itemObj.Identifier, uniqueId, method)
+                      Where String.Equals(itemObj.locusId, uniqueId, method)
                       Select itemObj).FirstOrDefault
         Return LQuery
     End Function

@@ -4,12 +4,12 @@
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property Identifer As String
+        Property locusId As String
         Property NodeType As String
     End Interface
 
     Public Interface I_InteractionModel
-        Property FromNode As String
+        Property locusId As String
         Property ToNode As String
     End Interface
 

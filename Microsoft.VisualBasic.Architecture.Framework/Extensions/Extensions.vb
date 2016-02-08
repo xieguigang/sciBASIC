@@ -362,12 +362,16 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue), Index As TKey, Optional [default] As TValue = Nothing) As TValue
         If hash Is Nothing Then
+            Call PrintException("hash table is nothing!")
             Return [default]
         End If
 
         If hash.ContainsKey(Index) Then
             Return hash(Index)
         Else
+#If DEBUG Then
+            Call PrintException($"Index:={Scripting.ToString(Index)} is not exist in the hash table!")
+#End If
             Return [default]
         End If
     End Function

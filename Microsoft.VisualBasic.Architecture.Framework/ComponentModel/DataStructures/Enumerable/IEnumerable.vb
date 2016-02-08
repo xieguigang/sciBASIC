@@ -33,6 +33,6 @@
     End Interface
 
     Public Interface IReadOnlyId
-        ReadOnly Property Identifier As String
+        ReadOnly Property locusId As String
     End Interface
 End Namespace

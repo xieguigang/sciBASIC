@@ -71,6 +71,20 @@ Public Module VBDebugger
         Return False
     End Function
 
+    Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
+        Dim cl As ConsoleColor = Console.ForegroundColor
+        Dim exMsg As String = $"[ERROR {Now.ToString}]  @{memberName}::{msg}"
+
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.WriteLine(exMsg)
+        Console.ForegroundColor = cl
+#If DEBUG Then
+        Call Debug.WriteLine(exMsg)
+        Call Trace.WriteLine(exMsg)
+#End If
+        Return False
+    End Function
+
     ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)

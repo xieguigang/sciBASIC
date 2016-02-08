@@ -11,7 +11,7 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <Xml.Serialization.XmlAttribute("about")> Public Property Resource As String Implements sIdEnumerable.Identifier, IReadOnlyId.Identifier
+    <Xml.Serialization.XmlAttribute("about")> Public Property Resource As String Implements sIdEnumerable.Identifier, IReadOnlyId.locusId
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）

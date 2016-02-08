@@ -19,7 +19,7 @@ Namespace FileStream
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 
-        Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Identifier
+        Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).locusId
         Public Property Edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
 
         ''' <summary>

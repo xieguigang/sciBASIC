@@ -4,7 +4,7 @@ Namespace Net
 
     Public Structure DomainName : Implements ComponentModel.Collection.Generic.IKeyValuePairObject(Of String, String)
 
-        Public Property Domain As String Implements IKeyValuePairObject(Of String, String).Identifier
+        Public Property Domain As String Implements IKeyValuePairObject(Of String, String).locusId
         ''' <summary>
         ''' 顶级域名
         ''' </summary>
