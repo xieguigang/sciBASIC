@@ -29,7 +29,7 @@ Namespace Scripting.MetaData
         ''' <returns></returns>
         Public Property ISSN As String
         Public Property DOI As String
-        Public Property PMCID As Integer
+        Public Property PubMed As Integer
         Public Property Keywords As String
         ''' <summary>
         ''' 文章的摘要，可以使用&lt;p>或者&lt;br/>来进行分段
@@ -113,8 +113,8 @@ Namespace Scripting.MetaData
             If Not String.IsNullOrEmpty(DOI) Then
                 Call htmlBuilder.AppendLine($"<li>DOI: <a href=""http://doi.org/{DOI}"">{DOI}</a></li><br />")
             End If
-            If Not PMCID = 0 Then
-                Call htmlBuilder.AppendLine($"<li>PMC FullText: <a href=""http://www.ncbi.nlm.nih.gov/pubmed/{PMCID}"">{PMCID}</a></li>")
+            If Not PubMed = 0 Then
+                Call htmlBuilder.AppendLine($"<li>PMC FullText: <a href=""http://www.ncbi.nlm.nih.gov/pubmed/{PubMed}"">{PubMed}</a></li>")
             End If
             Call htmlBuilder.AppendLine("
 </i>
