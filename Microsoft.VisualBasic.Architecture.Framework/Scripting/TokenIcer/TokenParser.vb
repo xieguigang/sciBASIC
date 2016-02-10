@@ -32,8 +32,9 @@ Namespace Scripting.TokenIcer
         ''' </value>
         Public WriteOnly Property InputString() As String
             Set
+                Call ResetParser()
                 _inputString = Value
-                PrepareRegex()
+                Call PrepareRegex()
             End Set
         End Property
 

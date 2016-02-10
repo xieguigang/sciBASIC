@@ -38,6 +38,19 @@ Namespace Scripting.TokenIcer
             constRef = 24
         End Enum
 
+        ReadOnly _mathStack As New StackTokens(Of MathTokens) With {
+            .LPair = MathTokens.LPair,
+            .ParamDeli = MathTokens.ParamDeli,
+            .Pretend = MathTokens.Pretend,
+            .RPair = MathTokens.RPair
+        }
+
+        Public Function MathExpression(expr As String) As Func(Of MathTokens)
+            SyncLock MathParser
+                Return MathParser.TokenParser(expr, _mathStack)
+            End SyncLock
+        End Function
+
         Public ReadOnly Property MathParser As TokenParser(Of MathTokens)
 
         Private Function __getMathParser() As TokenParser(Of MathTokens)
