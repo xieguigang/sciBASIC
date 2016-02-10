@@ -68,7 +68,7 @@ Namespace Scripting.TokenIcer
             If UNDEFINED Then
                 Return "UNDEFINED"
             End If
-            Return $"[{TokenName}]" & vbCrLf & TokenValue
+            Return $"[{TokenName}]" & vbTab & TokenValue
         End Function
     End Class
 End Namespace

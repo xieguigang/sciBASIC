@@ -84,6 +84,33 @@ Namespace Scripting.TokenIcer
 
             Return list.ToArray
         End Function
+
+        <Extension> Public Sub PrintStack(Of Tokens)(x As Func(Of Tokens))
+            Call x.__DEBUG_ECHO
+            Call Console.WriteLine(New String("+", 120))
+            Call __printStack(x, Scan0)
+        End Sub
+
+        Private Sub __printStack(Of Tokens)(obj As Func(Of Tokens), i As Integer)
+            Dim indent As String = New String(" ", i * 3)
+
+            For Each x As InnerToken(Of Tokens) In obj.Caller
+                Call Console.WriteLine(indent & Scripting.ToString(x.obj))
+
+                If Not x.InnerStack.IsNullOrEmpty Then
+                    For Each inner In x.InnerStack
+                        Call __printStack(inner, i + 1)
+                    Next
+                End If
+            Next
+
+            If Not obj.Args.IsNullOrEmpty Then
+                For Each x As Func(Of Tokens) In obj.Args
+                    Call __printStack(x, i + 1)
+                    Call Console.WriteLine(indent & "[Delimiter]")
+                Next
+            End If
+        End Sub
     End Module
 End Namespace
 
