@@ -20,7 +20,7 @@ Namespace Scripting.TokenIcer
                 New Queue(Of Token(Of Tokens))(source)
             Dim root As Func(Of Tokens) =
                 New Func(Of Tokens) With {
-                .Caller = New List(Of Token(Of Tokens)) From {pretendDef},
+                .Caller = New List(Of InnerToken(Of Tokens)) From {New InnerToken(Of Tokens)(pretendDef)},
                 .Args = __parsing(source:=sourceQue, stackT:=stackT)
             }
             Return root
@@ -34,14 +34,21 @@ Namespace Scripting.TokenIcer
         Private Function __parsing(Of Tokens)(source As Queue(Of Token(Of Tokens)), stackT As StackTokens(Of Tokens)) As Func(Of Tokens)()
             Dim list As New List(Of Func(Of Tokens))
             Dim current As Func(Of Tokens) = New Func(Of Tokens) With {
-                .Caller = New List(Of Token(Of Tokens))
+                .Caller = New List(Of InnerToken(Of Tokens))
             }
 
             Do While Not source.IsNullOrEmpty
                 Dim x As Token(Of Tokens) = source.Dequeue
 
                 If Not stackT.Equals(x.TokenName, stackT.ParamDeli) Then
-                    Call current.Caller.Add(x)
+                    ' 例如 test3( (3+-5.66)  +  6^4.5,7!)
+                    If stackT.Equals(x.TokenName, stackT.LPair) Then ' 连续的两个左括号进行堆栈
+                        Dim stack As Func(Of Tokens)() = __parsing(source, stackT)
+                        Dim inner As New InnerToken(Of Tokens)(New Token(Of Tokens)(stackT.Pretend, "Pretend"), stack)
+                        Call current.Caller.Add(inner)
+                    Else
+                        Call current.Caller.Add(New InnerToken(Of Tokens)(x))
+                    End If
                 End If
 
                 If source.Count = 0 Then
@@ -62,7 +69,7 @@ Namespace Scripting.TokenIcer
                     Call list.Add(current)
 
                     current = New Func(Of Tokens) With {
-                        .Caller = New List(Of Token(Of Tokens))
+                        .Caller = New List(Of InnerToken(Of Tokens))
                     }
                 End If
             Loop

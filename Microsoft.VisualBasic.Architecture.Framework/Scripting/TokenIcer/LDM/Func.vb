@@ -4,7 +4,7 @@ Namespace Scripting.TokenIcer
 
     Public Class Func(Of Tokens)
 
-        Public Property Caller As List(Of Token(Of Tokens))
+        Public Property Caller As List(Of InnerToken(Of Tokens))
         Public Property Args As Func(Of Tokens)()
 
         Public ReadOnly Property IsFuncCalls As Boolean
@@ -15,12 +15,36 @@ Namespace Scripting.TokenIcer
 
         Public Overrides Function ToString() As String
             If Args.IsNullOrEmpty Then
-                Return String.Join(" ", Caller.ToArray(Function(x) x.TokenValue))
+                Return String.Join(" ", Caller.ToArray(Function(x) x.ToString))
             Else
-                Dim caller As String = String.Join(" ", Me.Caller.ToArray(Function(x) x.TokenValue))
+                Dim caller As String = String.Join(" ", Me.Caller.ToArray(Function(x) x.ToString))
                 Dim params As String() = Me.Args.ToArray(Function(x) x.ToString)
                 Dim args As String = String.Join(", ", params)
                 Return $"{caller}({args})"
+            End If
+        End Function
+    End Class
+
+    Public Class InnerToken(Of Tokens)
+        Public Property obj As Token(Of Tokens)
+        Public Property InnerStack As Func(Of Tokens)()
+
+        Sub New(x As Token(Of Tokens), stack As IEnumerable(Of Func(Of Tokens)))
+            obj = x
+            InnerStack = stack.ToArray
+        End Sub
+
+        Sub New(x As Token(Of Tokens))
+            obj = x
+        End Sub
+
+        Public Overrides Function ToString() As String
+            If InnerStack.IsNullOrEmpty Then
+                Return obj.TokenValue
+            Else
+                Dim inner As String() = InnerStack.ToArray(Function(x) x.ToString)
+                Dim s As String = String.Join(" ", inner)
+                Return $"({s})"
             End If
         End Function
     End Class
