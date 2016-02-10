@@ -2,7 +2,7 @@
 
     Function Main() As Integer
 
-        Dim sss As String = "func3(test3((3+-5.66)+6^4.5,7!)+&PI+$Test3)%55/59*1.22"
+        Dim sss As String = "func3(test3( (3+-5.66)  +  6^4.5,7!)   +   &PI+$Test3)    % 55/59*1.22"
         Dim tttt = Scripting.TokenIcer.MathExpression(sss)
 
 

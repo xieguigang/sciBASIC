@@ -51,7 +51,8 @@ Namespace Scripting.TokenIcer
             End SyncLock
         End Function
 
-        Public ReadOnly Property MathParser As TokenParser(Of MathTokens)
+        Public ReadOnly Property MathParser As TokenParser(Of MathTokens) =
+            __getMathParser()
 
         Private Function __getMathParser() As TokenParser(Of MathTokens)
             Return New TokenParser(Of MathTokens)(MathParserHash, MathTokens.UNDEFINED)
