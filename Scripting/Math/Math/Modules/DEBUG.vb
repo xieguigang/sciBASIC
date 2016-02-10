@@ -1,9 +1,14 @@
 ﻿'Imports Microsoft.VisualBasic.Mathematical.BasicR
 
-'Module DEBUG
+Module DEBUG
 
-'    Public Function Main() As Integer
-'        Dim s2 As String = "((0+69sdfss+fs*(d+f)*w+efsd+f)+sdfs*(dfsdf+w)*e+f+sdf+sd(dd+f,rt)+fsd)"
+    Public Function Main() As Integer
+        Dim s2 As String = "((0+69sdfss+fs*(d+f)*w+efsd+f)+sdfs*(dfsdf+w)*e+f+sdf+sd(dd+f,rt)+fsd)"
+        s2 = "f(-10,6)+f2(f(0,0),2)"
+        Dim expr = Scripting.TokenIcer.MathExpression(s2)
+    End Function
+End Module
+'     
 '        Dim br As String = "\([^(^)]+?\)"
 '        Dim ms = Text.RegularExpressions.Regex.Matches(s2, br)
 '        Dim FunctionCalling As String = "[0-9a-zA-Z_]+" & br

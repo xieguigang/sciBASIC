@@ -31,5 +31,25 @@ Namespace Scripting.TokenIcer
                 StackParser.Parsing(Of Tokens)(source, stackT)
             Return func
         End Function
+
+        <Extension> Public Function [As](Of Tokens, T)(x As Token(Of Tokens)) As T
+            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.TokenValue)
+            Return obj
+        End Function
+
+        <Extension> Public Function [CType](Of Tokens)(x As Token(Of Tokens), type As Type) As Object
+            Dim obj As Object = InputHandler.CTypeDynamic(x.TokenValue, type)
+            Return obj
+        End Function
+
+        <Extension> Public Function [TryCast](Of Tokens)(x As Token(Of Tokens)) As Object
+            Dim typeName As String = Scripting.ToString(x.TokenName)
+            Dim type As Type = Nothing
+            If Scripting.GetType(typeName, False).ShadowCopy(type) Is Nothing Then
+                Return x.TokenValue
+            Else
+                Return CTypeDynamic(x.TokenValue, type)
+            End If
+        End Function
     End Module
 End Namespace
