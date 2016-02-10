@@ -12,12 +12,12 @@ Namespace Scripting.TokenIcer
     ''' A PeekToken is a special pointer object that can be used to Peek() several
     ''' tokens ahead in the GetToken() queue.
     ''' </remarks>
-    Public Class PeekToken
+    Public Class PeekToken(Of Tokens)
 
-        Public Property TokenIndex() As Integer
-        Public Property TokenPeek() As Token
+        Public Property TokenIndex As Integer
+        Public Property TokenPeek As Token(Of Tokens)
 
-        Public Sub New(index As Integer, value As Token)
+        Public Sub New(index As Integer, value As Token(Of Tokens))
             TokenIndex = index
             TokenPeek = value
         End Sub
@@ -31,20 +31,43 @@ Namespace Scripting.TokenIcer
     ''' <summary>
     ''' a Token object class
     ''' </summary>
+    ''' <typeparam name="Tokens">应该是枚举类型</typeparam>
     ''' <remarks>
     ''' A Token object holds the token and token value.
     ''' </remarks>
-    Public Class Token
+    Public Class Token(Of Tokens)
 
-        Public Property TokenName() As TokenParser.Tokens
-        Public Property TokenValue() As String
+        Public Property TokenName As Tokens
+        Public Property TokenValue As String
 
-        Public Sub New(name As TokenParser.Tokens, value As String)
+        ''' <summary>
+        ''' 务必要保持0为未定义
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property UNDEFINED As Boolean
+            Get
+                If TypeOf TokenName Is [Enum] OrElse TypeOf TokenName Is Integer Then
+                    Dim o As Object = TokenName
+                    Dim i As Integer = CInt(o)
+                    If i = 0 Then
+                        Return True
+                    End If
+                End If
+
+                Return TokenName Is Nothing OrElse
+                    TokenValue Is Nothing
+            End Get
+        End Property
+
+        Public Sub New(name As Tokens, value As String)
             TokenName = name
             TokenValue = value
         End Sub
 
         Public Overrides Function ToString() As String
+            If UNDEFINED Then
+                Return "UNDEFINED"
+            End If
             Return $"[{TokenName}]" & vbCrLf & TokenValue
         End Function
     End Class

@@ -13,7 +13,7 @@ Namespace Scripting.TokenIcer
     ''' Auto Generated from
     ''' http://www.codeproject.com/Articles/220042/Easily-Create-Your-Own-Parser
     ''' </remarks>
-    Public Class TokenParser
+    Public Class TokenParser(Of Tokens)
         ' This dictionary will store our RegEx rules
         Private ReadOnly _tokens As Dictionary(Of Tokens, String)
         ' This dictionary will store our matches
@@ -22,38 +22,6 @@ Namespace Scripting.TokenIcer
         Private _inputString As String
         ' This index is used internally so the parser knows where it left off
         Private _index As Integer
-
-        ' This is our token enumeration. It holds every token defined in the grammar
-        ''' <summary>
-        ''' Tokens is an enumeration of all possible token values.
-        ''' </summary>
-        Public Enum Tokens
-            UNDEFINED = 0
-            CallFunc = 1
-            Float = 2
-            Factorial = 3
-            [Integer] = 4
-            ArrayType = 5
-            ParamDeli = 6
-            WhiteSpace = 7
-            [Let] = 8
-            Equals = 9
-            LPair = 10
-            RPair = 11
-            Asterisk = 12
-            Slash = 13
-            Plus = 14
-            Minus = 15
-            Power = 16
-            [Mod] = 17
-            Pretend = 18
-            [And] = 19
-            [Not] = 20
-            [Or] = 21
-            var = 22
-            varRef = 23
-            constRef = 24
-        End Enum
 
         ' A public setter for our input string
         ''' <summary>
@@ -73,40 +41,27 @@ Namespace Scripting.TokenIcer
         ''' <summary>
         ''' Default Constructor
         ''' </summary>
+        ''' <param name="tokens">Values is the regex expression</param>
         ''' <remarks>
         ''' The constructor initalizes memory and adds all of the tokens to the token dictionary.
         ''' </remarks>
-        Public Sub New()
-            _tokens = New Dictionary(Of Tokens, String)()
+        Public Sub New(tokens As IEnumerable(Of KeyValuePair(Of Tokens, String)))
+            Call Me.New(tokens.ToDictionary)
+        End Sub
+
+        ' Our Constructor, which simply initializes values
+        ''' <summary>
+        ''' Default Constructor
+        ''' </summary>
+        ''' <param name="tokens">Values is the regex expression</param>
+        ''' <remarks>
+        ''' The constructor initalizes memory and adds all of the tokens to the token dictionary.
+        ''' </remarks>
+        Public Sub New(tokens As Dictionary(Of Tokens, String))
+            _tokens = New Dictionary(Of Tokens, String)(tokens)
             _regExMatchCollection = New Dictionary(Of Tokens, MatchCollection)()
             _index = 0
             _inputString = String.Empty
-
-            ' These lines add each grammar rule to the dictionary
-            _tokens.Add(Tokens.CallFunc, "->\s*[a-zA-Z_][a-zA-Z0-9_]*")
-            _tokens.Add(Tokens.Float, "[0-9]+\.+[0-9]+")
-            _tokens.Add(Tokens.Factorial, "[0-9]+!")
-            _tokens.Add(Tokens.[Integer], "[0-9]+")
-            _tokens.Add(Tokens.ArrayType, "[a-zA-Z_][a-zA-Z0-9_]*\(\)")
-            _tokens.Add(Tokens.ParamDeli, ",")
-            _tokens.Add(Tokens.WhiteSpace, "[ \t]+")
-            _tokens.Add(Tokens.[Let], "[Ll][Ee][Tt]")
-            _tokens.Add(Tokens.Equals, "=")
-            _tokens.Add(Tokens.LPair, "\(")
-            _tokens.Add(Tokens.RPair, "\)")
-            _tokens.Add(Tokens.Asterisk, "\*")
-            _tokens.Add(Tokens.Slash, "\/")
-            _tokens.Add(Tokens.Plus, "\+")
-            _tokens.Add(Tokens.Minus, "\-")
-            _tokens.Add(Tokens.Power, "\^")
-            _tokens.Add(Tokens.[Mod], "%")
-            _tokens.Add(Tokens.Pretend, "Pretend")
-            _tokens.Add(Tokens.[And], "[aA][nN][dD]")
-            _tokens.Add(Tokens.[Not], "[nN][oO][tT]")
-            _tokens.Add(Tokens.[Or], "[oO][rR]")
-            _tokens.Add(Tokens.var, "[a-zA-Z_][a-zA-Z0-9_]*")
-            _tokens.Add(Tokens.varRef, "\$[a-zA-Z0-9_]*")
-            _tokens.Add(Tokens.constRef, "[&][a-zA-Z0-9_]*")
         End Sub
 
         ' This function preloads the matches based on our rules and the input string
@@ -144,7 +99,7 @@ Namespace Scripting.TokenIcer
         ''' by one so that this token doesn't attempt to get identified again by
         ''' GetToken()
         ''' </remarks>
-        Public Function GetToken() As Token
+        Public Function GetToken() As Token(Of Tokens)
             ' If we are at the end of our input string then
             ' we return null to signify the end of our input string.
             ' While parsing tokens, you will undoubtedly be in a loop.
@@ -161,7 +116,7 @@ Namespace Scripting.TokenIcer
                     ' If we find a match, update our index pointer and return a new Token object
                     If match.Index = _index Then
                         _index += match.Length
-                        Return New Token(pair.Key, match.Value)
+                        Return New Token(Of Tokens)(pair.Key, match.Value)
                     ElseIf match.Index > _index Then
                         Exit For
                     End If
@@ -171,7 +126,7 @@ Namespace Scripting.TokenIcer
             ' If execution got here, then we increment our index pointer
             ' and return an Undefined token. 
             _index += 1
-            Return New Token(Tokens.UNDEFINED, String.Empty)
+            Return New Token(Of Tokens)(Nothing, Nothing)
         End Function
 
         ' Peek() will retrieve a PeekToken object and will allow you to see the next token
@@ -179,9 +134,9 @@ Namespace Scripting.TokenIcer
         ''' <summary>
         ''' Returns the next token that GetToken() will return.
         ''' </summary>
-        ''' <seealso cref="Peek(PeekToken)" />
-        Public Function Peek() As PeekToken
-            Return Peek(New PeekToken(_index, New Token(Tokens.UNDEFINED, String.Empty)))
+        ''' <seealso cref="TokenParser(Of Tokens).Peek(PeekToken(Of Tokens))" />
+        Public Function Peek() As PeekToken(Of Tokens)
+            Return Peek(New PeekToken(Of Tokens)(_index, New Token(Of Tokens)(Nothing, Nothing)))
         End Function
 
         ' This is an overload for Peek(). By passing in the last PeekToken object
@@ -191,7 +146,7 @@ Namespace Scripting.TokenIcer
         ''' </summary>
         ''' <param name="peekToken">The PeekToken token returned from a previous Peek() call</param>
         ''' <seealso cref="Peek()" />
-        Public Function Peek(peekToken As PeekToken) As PeekToken
+        Public Function Peek(peekToken As PeekToken(Of Tokens)) As PeekToken(Of Tokens)
             Dim oldIndex As Integer = _index
 
             _index = peekToken.TokenIndex
@@ -207,12 +162,12 @@ Namespace Scripting.TokenIcer
 
                 If m.Success AndAlso m.Index = _index Then
                     _index = _index + m.Length
-                    Dim pt As New PeekToken(_index, New Token(pair.Key, m.Value))
+                    Dim pt As New PeekToken(Of Tokens)(_index, New Token(Of Tokens)(pair.Key, m.Value))
                     _index = oldIndex
                     Return pt
                 End If
             Next
-            Dim pt2 As New PeekToken(_index + 1, New Token(Tokens.UNDEFINED, String.Empty))
+            Dim pt2 As New PeekToken(Of Tokens)(_index + 1, New Token(Of Tokens)(Nothing, Nothing))
             _index = oldIndex
             Return pt2
         End Function
