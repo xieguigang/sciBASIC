@@ -28,5 +28,27 @@ Namespace Scripting.TokenIcer
         ''' </summary>
         ''' <returns></returns>
         Public Property RPair As Tokens
+        Public Property WhiteSpace As Tokens
+
+        ''' <summary>
+        ''' Tokens equals?
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Overloads Function Equals(a As Tokens, b As Tokens) As Boolean
+            Dim flag As Boolean = __equals(a, b)
+            Return flag
+        End Function
+
+        ReadOnly __equals As Func(Of Tokens, Tokens, Boolean)
+
+        ''' <summary>
+        ''' Tokens equals? 
+        ''' </summary>
+        ''' <param name="equals"></param>
+        Sub New(equals As Func(Of Tokens, Tokens, Boolean))
+            __equals = equals
+        End Sub
     End Class
 End Namespace
