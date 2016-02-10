@@ -38,11 +38,12 @@ Namespace Scripting.TokenIcer
             constRef = 24
         End Enum
 
-        ReadOnly _mathStack As New StackTokens(Of MathTokens) With {
+        ReadOnly _mathStack As New StackTokens(Of MathTokens)(Function(a, b) a = b) With {
             .LPair = MathTokens.LPair,
             .ParamDeli = MathTokens.ParamDeli,
             .Pretend = MathTokens.Pretend,
-            .RPair = MathTokens.RPair
+            .RPair = MathTokens.RPair,
+            .WhiteSpace = MathTokens.WhiteSpace
         }
 
         Public Function MathExpression(expr As String) As Func(Of MathTokens)

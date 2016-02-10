@@ -40,7 +40,7 @@ Namespace Scripting.TokenIcer
             Do While Not source.IsNullOrEmpty
                 Dim x As Token(Of Tokens) = source.Dequeue
 
-                If Not x.TokenName.Equals(stackT.ParamDeli) Then
+                If Not stackT.Equals(x.TokenName, stackT.ParamDeli) Then
                     Call current.Caller.Add(x)
                 End If
 
@@ -51,14 +51,14 @@ Namespace Scripting.TokenIcer
 
                 Dim peek As Token(Of Tokens) = source.Peek
 
-                If peek.TokenName.Equals(stackT.LPair) Then  ' 向下一层堆栈
+                If stackT.Equals(peek.TokenName, stackT.LPair) Then  ' 向下一层堆栈
                     Call source.Dequeue()
                     current.Args = __parsing(source, stackT)
-                ElseIf peek.TokenName.Equals(stackT.RPair) Then  ' 向上一层退栈
+                ElseIf stackT.Equals(peek.TokenName, stackT.RPair) Then  ' 向上一层退栈
                     Call source.Dequeue()
                     Call list.Add(current)
                     Exit Do
-                ElseIf x.TokenName.Equals(stackT.ParamDeli) Then
+                ElseIf stackT.Equals(x.TokenName, stackT.ParamDeli) Then
                     Call list.Add(current)
 
                     current = New Func(Of Tokens) With {
