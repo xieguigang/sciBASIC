@@ -2565,4 +2565,25 @@ Public Module Extensions
             Call List.Remove(obj)
         Next
     End Sub
+
+    <Extension> Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
+        If list.IsNullOrEmpty OrElse list.Count = 1 Then
+            list = New List(Of T)
+        Else
+            Dim i As Integer = list.Count - 1
+            Call list.RemoveAt(i)
+        End If
+
+        Return list
+    End Function
+
+    <Extension> Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
+        If list.IsNullOrEmpty OrElse list.Count = 1 Then
+            list = New List(Of T)
+        Else
+            Call list.RemoveAt(Scan0)
+        End If
+
+        Return list
+    End Function
 End Module

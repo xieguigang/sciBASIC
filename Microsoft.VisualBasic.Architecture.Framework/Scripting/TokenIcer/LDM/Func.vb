@@ -13,6 +13,13 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(currStack As InnerToken(Of Tokens))
+            Caller = New List(Of InnerToken(Of Tokens)) From {currStack}
+        End Sub
+
         Public Overrides Function ToString() As String
             If Args.IsNullOrEmpty Then
                 Return String.Join(" ", Caller.ToArray(Function(x) x.ToString))
@@ -36,6 +43,11 @@ Namespace Scripting.TokenIcer
 
         Sub New(x As Token(Of Tokens))
             obj = x
+        End Sub
+
+        Sub New(pretend As Tokens, funcCall As Func(Of Tokens))
+            obj = New Token(Of Tokens)(pretend, "FuncCalls")
+            InnerStack = {funcCall}
         End Sub
 
         Public Overrides Function ToString() As String

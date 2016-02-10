@@ -60,7 +60,11 @@ Namespace Scripting.TokenIcer
 
                 If stackT.Equals(peek.TokenName, stackT.LPair) Then  ' 向下一层堆栈
                     Call source.Dequeue()
-                    current.Args = __parsing(source, stackT)
+
+                    Dim currStack As New Func(Of Tokens)(current.Caller.Last)
+                    Call current.Caller.RemoveLast
+                    currStack.Args = __parsing(source, stackT)
+                    Call current.Caller.Add(New InnerToken(Of Tokens)(stackT.Pretend, currStack))
                 ElseIf stackT.Equals(peek.TokenName, stackT.RPair) Then  ' 向上一层退栈
                     Call source.Dequeue()
                     Call list.Add(current)
