@@ -55,7 +55,7 @@ Namespace Scripting.TokenIcer
                 End If
 
                 Return TokenName Is Nothing OrElse
-                    TokenValue Is Nothing
+                    String.IsNullOrEmpty(TokenValue)
             End Get
         End Property
 

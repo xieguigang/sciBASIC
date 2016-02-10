@@ -243,8 +243,11 @@
     <Compile Include="MMFProtocol\Pipeline\PipeBuffer.vb" />
     <Compile Include="MMFProtocol\Pipeline\PipeStream.vb" />
     <Compile Include="MMFProtocol\Pipeline\Pipeline.vb" />
-    <Compile Include="Scripting\TokenIcer\LDM.vb" />
+    <Compile Include="Scripting\TokenIcer\LDM\StackTokens%28Of Tokens%29.vb" />
+    <Compile Include="Scripting\TokenIcer\LDM\Func.vb" />
+    <Compile Include="Scripting\TokenIcer\LDM\LDM.vb" />
     <Compile Include="Scripting\TokenIcer\Prefix.vb" />
+    <Compile Include="Scripting\TokenIcer\StackParser.vb" />
     <Compile Include="Scripting\TokenIcer\TokenParser.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />

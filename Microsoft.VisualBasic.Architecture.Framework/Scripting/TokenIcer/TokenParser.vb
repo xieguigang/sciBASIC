@@ -37,6 +37,8 @@ Namespace Scripting.TokenIcer
             End Set
         End Property
 
+        Public ReadOnly Property UNDEFINED As Tokens
+
         ' Our Constructor, which simply initializes values
         ''' <summary>
         ''' Default Constructor
@@ -45,8 +47,8 @@ Namespace Scripting.TokenIcer
         ''' <remarks>
         ''' The constructor initalizes memory and adds all of the tokens to the token dictionary.
         ''' </remarks>
-        Public Sub New(tokens As IEnumerable(Of KeyValuePair(Of Tokens, String)))
-            Call Me.New(tokens.ToDictionary)
+        Public Sub New(tokens As IEnumerable(Of KeyValuePair(Of Tokens, String)), UNDEFINED As Tokens)
+            Call Me.New(tokens.ToDictionary, UNDEFINED)
         End Sub
 
         ' Our Constructor, which simply initializes values
@@ -57,11 +59,12 @@ Namespace Scripting.TokenIcer
         ''' <remarks>
         ''' The constructor initalizes memory and adds all of the tokens to the token dictionary.
         ''' </remarks>
-        Public Sub New(tokens As Dictionary(Of Tokens, String))
+        Public Sub New(tokens As Dictionary(Of Tokens, String), UNDEFINED As Tokens)
             _tokens = New Dictionary(Of Tokens, String)(tokens)
             _regExMatchCollection = New Dictionary(Of Tokens, MatchCollection)()
             _index = 0
             _inputString = String.Empty
+            _UNDEFINED = UNDEFINED
         End Sub
 
         ' This function preloads the matches based on our rules and the input string
@@ -126,7 +129,7 @@ Namespace Scripting.TokenIcer
             ' If execution got here, then we increment our index pointer
             ' and return an Undefined token. 
             _index += 1
-            Return New Token(Of Tokens)(Nothing, Nothing)
+            Return New Token(Of Tokens)(UNDEFINED, "")
         End Function
 
         ' Peek() will retrieve a PeekToken object and will allow you to see the next token
@@ -136,7 +139,7 @@ Namespace Scripting.TokenIcer
         ''' </summary>
         ''' <seealso cref="TokenParser(Of Tokens).Peek(PeekToken(Of Tokens))" />
         Public Function Peek() As PeekToken(Of Tokens)
-            Return Peek(New PeekToken(Of Tokens)(_index, New Token(Of Tokens)(Nothing, Nothing)))
+            Return Peek(New PeekToken(Of Tokens)(_index, New Token(Of Tokens)(UNDEFINED, "")))
         End Function
 
         ' This is an overload for Peek(). By passing in the last PeekToken object
@@ -167,7 +170,7 @@ Namespace Scripting.TokenIcer
                     Return pt
                 End If
             Next
-            Dim pt2 As New PeekToken(Of Tokens)(_index + 1, New Token(Of Tokens)(Nothing, Nothing))
+            Dim pt2 As New PeekToken(Of Tokens)(_index + 1, New Token(Of Tokens)(UNDEFINED, ""))
             _index = oldIndex
             Return pt2
         End Function

@@ -41,7 +41,7 @@ Namespace Scripting.TokenIcer
         Public ReadOnly Property MathParser As TokenParser(Of MathTokens)
 
         Private Function __getMathParser() As TokenParser(Of MathTokens)
-            Return New TokenParser(Of MathTokens)(MathParserHash)
+            Return New TokenParser(Of MathTokens)(MathParserHash, MathTokens.UNDEFINED)
         End Function
 
         ''' <summary>
