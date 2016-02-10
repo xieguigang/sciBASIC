@@ -24,7 +24,7 @@
     Public Interface sIdEnumerable
 
         ''' <summary>
-        ''' The unique identifer in the object collection.
+        ''' The unique identifer in the object collection. Unique-Id of the target implements object
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -33,6 +33,11 @@
     End Interface
 
     Public Interface IReadOnlyId
+
+        ''' <summary>
+        ''' The unique identifer in the object collection. Unique-Id of the target implements object
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property locusId As String
     End Interface
 End Namespace
