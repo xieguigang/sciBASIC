@@ -4,6 +4,19 @@ Namespace Scripting.TokenIcer
 
     Public Module ParserAPI
 
+        <Extension>
+        Public Function GetTokens(Of Tokens)(parser As TokenParser(Of Tokens), expr As String) As Token(Of Tokens)()
+            Dim lstToken As New List(Of Token(Of Tokens))
+            Dim tmp As Token(Of Tokens) = Nothing
+
+            parser.InputString = expr
+            Do While Not parser.GetToken.ShadowCopy(tmp) Is Nothing
+                Call lstToken.Add(tmp)
+            Loop
+
+            Return lstToken.ToArray
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -17,16 +30,12 @@ Namespace Scripting.TokenIcer
                                                expr As String,
                                                stackT As StackTokens(Of Tokens)) As Func(Of Tokens)
 
-            Dim lstToken As New List(Of Token(Of Tokens))
-            Dim tmp As Token(Of Tokens) = Nothing
-
-            parser.InputString = expr
-            Do While Not parser.GetToken.ShadowCopy(tmp) Is Nothing
-                Call lstToken.Add(tmp)
-            Loop
-
+            Dim lstToken As Token(Of Tokens)() = parser.GetTokens(expr)
             Dim whiteSpace As Tokens = stackT.WhiteSpace
-            Dim source = (From x In lstToken Where Not stackT.Equals(x.TokenName, whiteSpace) Select x)
+            Dim source As Token(Of Tokens)() = (From x As Token(Of Tokens)
+                                                In lstToken
+                                                Where Not stackT.Equals(x.TokenName, whiteSpace)
+                                                Select x)
             Dim func As Func(Of Tokens) =
                 StackParser.Parsing(Of Tokens)(source, stackT)
             Return func
