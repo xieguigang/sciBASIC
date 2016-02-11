@@ -3,6 +3,8 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 
 <PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
@@ -353,5 +355,31 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
             End If
         End If
         Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="args">构造函数里面的参数信息</param>
+    ''' <returns></returns>
+    Public Function CreateObject(Of T)(args As Object(), Optional throwEx As Boolean = True, <CallerMemberName> Optional caller As String = "") As T
+        Try
+            Dim obj As Object =
+                Activator.CreateInstance(GetType(T), args)
+            Return DirectCast(obj, T)
+        Catch ex As Exception
+            Dim params As String() = args.ToArray(Function(x) x.GetType.FullName & " ==> " & GetJson(x, x.GetType))
+            ex = New Exception(String.Join(vbCrLf, params), ex)
+            ex = New Exception("@" & caller, ex)
+
+            Call App.LogException(ex)
+
+            If throwEx Then
+                Throw ex
+            Else
+                Return Nothing
+            End If
+        End Try
     End Function
 End Module
