@@ -26,15 +26,16 @@ Public Module Matrix
     ''' <param name="source">The elements number in each collection should be agreed!(要求集合之中的每一列之中的数据的元素数目都相等)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToMatrix(Of T)(source As Generic.IEnumerable(Of Generic.IEnumerable(Of T))) As T(,)
+    <Extension> Public Function ToMatrix(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T(,)
         Dim width As Integer = source.First.Count
-        Dim height As Integer = source.Count
+        Dim array As IEnumerable(Of T)() = source.ToArray
+        Dim height As Integer = array.Length
         Dim MAT As T(,) = New T(height - 1, width - 1) {}
 
-        For i As Integer = 0 To source.Count - 1
-            Dim row = source(i).ToArray
+        For i As Integer = 0 To height - 1
+            Dim row As T() = array(i).ToArray
 
-            For j As Integer = 0 To row.Count - 1
+            For j As Integer = 0 To width - 1
                 MAT(i, j) = row(j)
             Next
         Next
