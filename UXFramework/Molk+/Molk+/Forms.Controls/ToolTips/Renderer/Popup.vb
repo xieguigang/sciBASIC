@@ -4,7 +4,7 @@ Imports System.Drawing.Drawing2D
 Namespace Renderer
 
     Public Class Popup
-        Public Shared ReadOnly Property PlacementBrush(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property PlacementBrush(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As SolidBrush
             Get
                 Select Case theme
@@ -16,7 +16,7 @@ Namespace Renderer
                 Return Brushes.Black
             End Get
         End Property
-        Public Shared ReadOnly Property SeparatorBrush(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SeparatorBrush(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As SolidBrush
             Get
                 Select Case theme
@@ -28,7 +28,7 @@ Namespace Renderer
                 Return Brushes.Black
             End Get
         End Property
-        Public Shared ReadOnly Property BackgroundBrush(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property BackgroundBrush(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As SolidBrush
             Get
                 Select Case theme
@@ -40,7 +40,7 @@ Namespace Renderer
                 Return Brushes.Black
             End Get
         End Property
-        Public Shared ReadOnly Property NormalTextBrush(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property NormalTextBrush(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As SolidBrush
             Get
                 Select Case theme
@@ -52,7 +52,7 @@ Namespace Renderer
                 Return Brushes.Black
             End Get
         End Property
-        Public Shared ReadOnly Property DisabledTextBrush(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property DisabledTextBrush(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As SolidBrush
             Get
                 Select Case theme
@@ -62,7 +62,7 @@ Namespace Renderer
                 Return Brushes.Black
             End Get
         End Property
-        Public Shared ReadOnly Property SeparatorPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SeparatorPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Return New Pen(Color.FromArgb(197, 197, 197))

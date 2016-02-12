@@ -91,11 +91,11 @@ Namespace Renderer
         ''' If the <c>range</c> value less than zero, then its return the rect parameter.
         ''' If rectangle width greater than its height, then maximum value of <c>range</c> is a half of rectangle height.
         ''' There are optionally rounded on its four corner.</remarks>
-        Public Shared Function roundedRectangle(ByVal rect As Rectangle,
-        Optional ByVal topLeft As Integer = 0,
-        Optional ByVal topRight As Integer = 0,
-        Optional ByVal bottomLeft As Integer = 0,
-        Optional ByVal bottomRight As Integer = 0) As GraphicsPath
+        Public Shared Function roundedRectangle( rect As Rectangle,
+        Optional  topLeft As Integer = 0,
+        Optional  topRight As Integer = 0,
+        Optional  bottomLeft As Integer = 0,
+        Optional  bottomRight As Integer = 0) As GraphicsPath
             Dim result As GraphicsPath = New GraphicsPath
             If rect.Width > 0 And rect.Height > 0 Then
                 Dim maxAllowed As Integer
@@ -157,12 +157,12 @@ Namespace Renderer
         ''' <param name="percentHeight">Percentage of rectangle's height used to create the path.</param>
         ''' <param name="customX">X location where the light starts.  Used when glowPoint value is LightingGlowPoint.Custom.</param>
         ''' <param name="customY">Y location where the light starts.  Used when glowPoint value is LightingGlowPoint.Custom.</param>
-        Public Shared Function getGlowingPath(ByVal rect As Rectangle,
-        Optional ByVal glowPoint As LightingGlowPoint = LightingGlowPoint.BottomCenter,
-        Optional ByVal percentWidth As Integer = 100,
-        Optional ByVal percentHeight As Integer = 100,
-        Optional ByVal customX As Integer = 0,
-        Optional ByVal customY As Integer = 0) As GraphicsPath
+        Public Shared Function getGlowingPath( rect As Rectangle,
+        Optional  glowPoint As LightingGlowPoint = LightingGlowPoint.BottomCenter,
+        Optional  percentWidth As Integer = 100,
+        Optional  percentHeight As Integer = 100,
+        Optional  customX As Integer = 0,
+        Optional  customY As Integer = 0) As GraphicsPath
             Dim arcRect As Rectangle
             Dim ePath As GraphicsPath = New GraphicsPath
             Select Case glowPoint
@@ -281,14 +281,14 @@ Namespace Renderer
         ''' <param name="bottomLeft">Rounded range of the rectangle's bottom left corner.</param>
         ''' <param name="bottomRight">Rounded range of the rectangle's bottom right corner.</param>
         ''' <remarks><seealso cref="ShadowPoint"/></remarks>
-        Public Shared Function getInnerShadowPath(ByVal rect As Rectangle,
-        Optional ByVal shadow As ShadowPoint = ShadowPoint.Top,
-        Optional ByVal verticalRange As Integer = 2,
-        Optional ByVal horizontalRange As Integer = 2,
-        Optional ByVal topLeft As Integer = 0,
-        Optional ByVal topRight As Integer = 0,
-        Optional ByVal bottomLeft As Integer = 0,
-        Optional ByVal bottomRight As Integer = 0) As GraphicsPath
+        Public Shared Function getInnerShadowPath( rect As Rectangle,
+        Optional  shadow As ShadowPoint = ShadowPoint.Top,
+        Optional  verticalRange As Integer = 2,
+        Optional  horizontalRange As Integer = 2,
+        Optional  topLeft As Integer = 0,
+        Optional  topRight As Integer = 0,
+        Optional  bottomLeft As Integer = 0,
+        Optional  bottomRight As Integer = 0) As GraphicsPath
             Dim result As GraphicsPath = New GraphicsPath
             If rect.Width > 0 And rect.Height > 0 Then
                 Dim maxAllowed As Integer
@@ -543,10 +543,10 @@ Namespace Renderer
         ''' <param name="direction"><see cref="TriangleDirection">TriangleDirection</see>, direction of the triangle.</param>
         ''' <param name="size">Size of the triangle.</param>
         ''' <remarks></remarks>
-        Public Shared Sub drawTriangle(ByVal g As Graphics, ByVal x As Integer, ByVal y As Integer,
-        ByVal color As Color, ByVal shadowColor As Color,
-        Optional ByVal direction As TriangleDirection = TriangleDirection.Down,
-        Optional ByVal size As Integer = 6)
+        Public Shared Sub drawTriangle( g As Graphics,  x As Integer,  y As Integer,
+         color As Color,  shadowColor As Color,
+        Optional  direction As TriangleDirection = TriangleDirection.Down,
+        Optional  size As Integer = 6)
             If size > 0 Then
                 Dim points(0 To 3) As PointF
                 Dim shadowPoints(0 To 3) As PointF
@@ -615,10 +615,10 @@ Namespace Renderer
         ''' <param name="direction"><see cref="TriangleDirection">TriangleDirection</see>, direction of the triangle.</param>
         ''' <param name="size">Size of the triangle.</param>
         ''' <remarks></remarks>
-        Public Shared Sub drawTriangle(ByVal g As Graphics, ByVal p As Point,
-        ByVal color As Color, ByVal shadowColor As Color,
-        Optional ByVal direction As TriangleDirection = TriangleDirection.Down,
-        Optional ByVal size As Integer = 6)
+        Public Shared Sub drawTriangle( g As Graphics,  p As Point,
+         color As Color,  shadowColor As Color,
+        Optional  direction As TriangleDirection = TriangleDirection.Down,
+        Optional  size As Integer = 6)
             drawTriangle(g, p.X, p.Y, color, shadowColor, direction, size)
         End Sub
         ''' <summary>
@@ -631,9 +631,9 @@ Namespace Renderer
         ''' <param name="direction"><see cref="TriangleDirection">TriangleDirection</see>, direction of the triangle.</param>
         ''' <param name="size">Size of the triangle.</param>
         ''' <remarks></remarks>
-        Public Shared Sub drawTriangle(ByVal g As Graphics, ByVal rect As Rectangle, ByVal color As Color,
-        ByVal shadowColor As Color, Optional ByVal direction As TriangleDirection = TriangleDirection.Down,
-        Optional ByVal size As Integer = 6)
+        Public Shared Sub drawTriangle( g As Graphics,  rect As Rectangle,  color As Color,
+         shadowColor As Color, Optional  direction As TriangleDirection = TriangleDirection.Down,
+        Optional  size As Integer = 6)
             Dim x As Integer = rect.X + ((rect.Width - size) / 2)
             Dim y As Integer = rect.Y + ((rect.Height - size) / 2)
             drawTriangle(g, x, y, color, shadowColor, direction, size)
@@ -647,8 +647,8 @@ Namespace Renderer
         ''' <param name="maxSize">Maximum width or height of the result.</param>
         ''' <returns>A rectangle represent resized bounding of an image.</returns>
         ''' <remarks>If image is nothing, a (0, 0, 0, 0) rectangle returned.</remarks>
-        Public Shared Function getImageRectangle(ByVal img As Image,
-        ByVal maxSize As Integer) As Rectangle
+        Public Shared Function getImageRectangle( img As Image,
+         maxSize As Integer) As Rectangle
             Dim iRect As Rectangle = New Rectangle(0, 0, 0, 0)
             If img IsNot Nothing Then
                 If img.Width <= maxSize And img.Height <= maxSize Then
@@ -679,8 +679,8 @@ Namespace Renderer
         ''' <param name="maxSize">Maximum width or height of the result.</param>
         ''' <returns>A rectangle represent resized bounding of an image.</returns>
         ''' <remarks>If image is nothing, rect parameter returned.</remarks>
-        Public Shared Function getImageRectangle(ByVal img As Image,
-        ByVal rect As Rectangle, ByVal maxSize As Integer) As Rectangle
+        Public Shared Function getImageRectangle( img As Image,
+         rect As Rectangle,  maxSize As Integer) As Rectangle
             If img IsNot Nothing Then
                 Dim iRect As Rectangle
                 If img.Width <= maxSize And img.Height <= maxSize Then
@@ -715,9 +715,9 @@ Namespace Renderer
         ''' <param name="maxHeight">Maximum height of the result.</param>
         ''' <returns>A rectangle represent resized bounding of an image.</returns>
         ''' <remarks>If image is nothing, rect parameter returned.</remarks>
-        Public Shared Function getImageRectangle(ByVal img As Image,
-        ByVal rect As Rectangle, ByVal maxWidth As Integer,
-        ByVal maxHeight As Integer) As Rectangle
+        Public Shared Function getImageRectangle( img As Image,
+         rect As Rectangle,  maxWidth As Integer,
+         maxHeight As Integer) As Rectangle
             If img IsNot Nothing Then
                 Dim iRect As Rectangle
                 If img.Width <= maxWidth And img.Height <= maxHeight Then
@@ -750,7 +750,7 @@ Namespace Renderer
         ''' <param name="max">Maximum width or height of the result.</param>
         ''' <returns>A size represent resized image size.</returns>
         ''' <remarks>If image is nothing, a (0, 0) size returned.</remarks>
-        Public Shared Function scaleImage(ByVal image As Image, ByVal max As Integer) As Size
+        Public Shared Function scaleImage( image As Image,  max As Integer) As Size
             Dim result As Size = New Size(0, 0)
             If image IsNot Nothing Then
                 If image.Width = image.Height Then
@@ -771,8 +771,8 @@ Namespace Renderer
         ''' <param name="image">Image to be drawn.</param>
         ''' <param name="rect">Rectangle where a grayscaled image to be drawn.</param>
         ''' <param name="g">Graphics object where the grayscaled image to be drawn.</param>
-        Public Shared Sub grayscaledImage(ByVal image As Image,
-        ByVal rect As Rectangle, ByVal g As Graphics)
+        Public Shared Sub grayscaledImage( image As Image,
+         rect As Rectangle,  g As Graphics)
             If image IsNot Nothing Then
                 Dim grayMatrix As System.Drawing.Imaging.ColorMatrix
                 Dim i As Integer, j As Integer
@@ -814,8 +814,8 @@ Namespace Renderer
         ''' <param name="s">Saturation value from the color.</param>
         ''' <param name="b">Brightness value from the color.</param>
         ''' <returns>A color structure represent AHSB value.</returns>
-        Public Shared Function colorFromAHSB(ByVal a As Integer, ByVal h As Single,
-        ByVal s As Single, ByVal b As Single) As Color
+        Public Shared Function colorFromAHSB( a As Integer,  h As Single,
+         s As Single,  b As Single) As Color
             ' http://130.113.54.154/~monger/hsl-rgb.html
             If h < 0.0F Or h > 360.0F Or s < 0.0F Or s > 1.0F Or b < 0.0F Or b > 1.0F Then Return Color.Black
             If s = 0.0F Then Return Color.FromArgb(a, 255 * b, 255 * b, 255 * b)
@@ -872,26 +872,26 @@ Namespace Renderer
                 Return New SolidBrush(Color.FromArgb(82, 116, 167))
             End Get
         End Property
-        Public Shared Sub drawGrip(ByVal p As Point, ByVal g As Graphics, Optional ByVal mode As GripMode = GripMode.Right)
+        Public Shared Sub drawGrip( p As Point,  g As Graphics, Optional  mode As GripMode = GripMode.Right)
             If mode = GripMode.Right Then
                 drawRightBottomGrid(g, p.X, p.Y)
             Else
                 drawLeftBottomGrid(g, p.X, p.Y)
             End If
         End Sub
-        Public Shared Sub drawGrip(ByVal x As Integer, ByVal y As Integer, ByVal g As Graphics, Optional ByVal mode As GripMode = GripMode.Right)
+        Public Shared Sub drawGrip( x As Integer,  y As Integer,  g As Graphics, Optional  mode As GripMode = GripMode.Right)
             If mode = GripMode.Right Then
                 drawRightBottomGrid(g, x, y)
             Else
                 drawLeftBottomGrid(g, x, y)
             End If
         End Sub
-        Public Shared Sub drawVGrip(ByVal rect As Rectangle, ByVal g As Graphics)
+        Public Shared Sub drawVGrip( rect As Rectangle,  g As Graphics)
             Dim aRect As Rectangle = New Rectangle(
             rect.X + ((rect.Width - 20) / 2), rect.Y + 1, 20, 7)
             drawBottomGrid(g, aRect.X, aRect.Y)
         End Sub
-        Public Shared Sub drawRightBottomGrid(ByVal g As Graphics, ByVal x As Integer, ByVal y As Integer)
+        Public Shared Sub drawRightBottomGrid( g As Graphics,  x As Integer,  y As Integer)
             Dim rectDot As Rectangle = New Rectangle(0, 0, 2, 2)
             rectDot.X = x + 5
             rectDot.Y = y + 4
@@ -912,7 +912,7 @@ Namespace Renderer
             rectDot.Y = rectDot.Y - 1
             g.FillEllipse(GripDotBrush, rectDot)
         End Sub
-        Public Shared Sub drawLeftBottomGrid(ByVal g As Graphics, ByVal x As Integer, ByVal y As Integer)
+        Public Shared Sub drawLeftBottomGrid( g As Graphics,  x As Integer,  y As Integer)
             Dim rectDot As Rectangle = New Rectangle(0, 0, 2, 2)
             rectDot.X = x + 1
             rectDot.Y = y + 4
@@ -933,7 +933,7 @@ Namespace Renderer
             rectDot.Y = rectDot.Y - 1
             g.FillEllipse(GripDotBrush, rectDot)
         End Sub
-        Public Shared Sub drawBottomGrid(ByVal g As Graphics, ByVal x As Integer, ByVal y As Integer)
+        Public Shared Sub drawBottomGrid( g As Graphics,  x As Integer,  y As Integer)
             Dim rectDot As Rectangle = New Rectangle(0, 0, 2, 2)
             Dim i As Integer
             rectDot.X = x + 3
@@ -949,7 +949,7 @@ Namespace Renderer
                 i = i + 1
             End While
         End Sub
-        Public Shared ReadOnly Property NormalTextBrush(Optional ByVal theme As ColorTheme = ColorTheme.Blue) As SolidBrush
+        Public Shared ReadOnly Property NormalTextBrush(Optional  theme As ColorTheme = ColorTheme.Blue) As SolidBrush
             Get
                 Select Case theme
                     Case ColorTheme.Blue
@@ -960,7 +960,7 @@ Namespace Renderer
                 Return Brushes.Black
             End Get
         End Property
-        Public Shared ReadOnly Property DisabledTextBrush(Optional ByVal theme As ColorTheme = ColorTheme.Blue) As SolidBrush
+        Public Shared ReadOnly Property DisabledTextBrush(Optional  theme As ColorTheme = ColorTheme.Blue) As SolidBrush
             Get
                 Select Case theme
                     Case ColorTheme.Blue, ColorTheme.BlackBlue
@@ -970,7 +970,7 @@ Namespace Renderer
                 End Select
             End Get
         End Property
-        Public Shared Function compareColor(ByVal clr1 As Color, ByVal clr2 As Color) As Boolean
+        Public Shared Function compareColor( clr1 As Color,  clr2 As Color) As Boolean
             Return clr1.A = clr2.A And clr1.R = clr2.R And clr1.G = clr2.G And clr1.B = clr2.B
         End Function
 #End Region

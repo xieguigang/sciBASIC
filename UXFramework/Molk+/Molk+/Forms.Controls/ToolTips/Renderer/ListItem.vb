@@ -13,7 +13,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <returns>ColorBlend.</returns>
-        Public Shared ReadOnly Property SelectedBlurBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedBlurBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 1) As Color
@@ -36,7 +36,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <returns>ColorBlend.</returns>
-        Public Shared ReadOnly Property SelectedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 1) As Color
@@ -59,7 +59,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <returns>ColorBlend.</returns>
-        Public Shared ReadOnly Property SelectedHLiteBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedHLiteBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 1) As Color
@@ -82,7 +82,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <returns>ColorBlend.</returns>
-        Public Shared ReadOnly Property HLitedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property HLitedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 1) As Color
@@ -105,7 +105,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <returns>ColorBlend.</returns>
-        Public Shared ReadOnly Property PressedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property PressedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 1) As Color
@@ -130,7 +130,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <returns>Pen.</returns>
-        Public Shared ReadOnly Property SelectedBlurBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedBlurBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -145,7 +145,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <returns>Pen.</returns>
-        Public Shared ReadOnly Property SelectedBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -160,7 +160,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <returns>Pen.</returns>
-        Public Shared ReadOnly Property HLitedBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property HLitedBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -175,7 +175,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <returns>Pen.</returns>
-        Public Shared ReadOnly Property SelectedHLiteBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedHLiteBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -190,7 +190,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <returns>Pen.</returns>
-        Public Shared ReadOnly Property PressedBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property PressedBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme

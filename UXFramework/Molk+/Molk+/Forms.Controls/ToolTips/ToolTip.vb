@@ -17,15 +17,15 @@ Public Class ToolTip
     ''' <summary>
     ''' Event before tooltip is displayed.  This event is raised when OwnerDraw property is set to true.
     ''' </summary>
-    Public Event Popup(ByVal sender As Object, ByVal e As PopupEventArgs)
+    Public Event Popup( sender As Object,  e As PopupEventArgs)
     ''' <summary>
     ''' Event when the tooltip surface is drawn.  This event is raised when OwnerDraw property is set to true.
     ''' </summary>
-    Public Event Draw(ByVal sender As Object, ByVal e As DrawEventArgs)
+    Public Event Draw( sender As Object,  e As DrawEventArgs)
     ''' <summary>
     ''' Event when the tooltip background is drawn.  This event is raised when OwnerDrawBackground property is set to true.
     ''' </summary>
-    Public Event DrawBackground(ByVal sender As Object, ByVal e As DrawEventArgs)
+    Public Event DrawBackground( sender As Object,  e As DrawEventArgs)
 #End Region
 #Region "Declarations"
     Private _parent As System.Windows.Forms.Control = Nothing ' Owner of this tooltip
@@ -55,7 +55,7 @@ Public Class ToolTip
     ''' <summary>
     ''' Constructor of the tooltip with an owner control specified.
     ''' </summary>
-    Public Sub New(ByVal parent As System.Windows.Forms.Control)
+    Public Sub New( parent As System.Windows.Forms.Control)
         _parent = parent
         _texts = New Hashtable
         _titles = New Hashtable
@@ -74,7 +74,7 @@ Public Class ToolTip
     ''' <summary>
     ''' Show ToolTip with specified control.
     ''' </summary>
-    Public Sub show(ByVal control As System.Windows.Forms.Control)
+    Public Sub show( control As System.Windows.Forms.Control)
         TooltipForm._showShadow = _showShadow
         _control = control
         If Not _form Is Nothing Then _form.invokeClose()
@@ -95,7 +95,7 @@ Public Class ToolTip
     ''' <summary>
     ''' Show ToolTip with specified control and location.  The ToolTip location is relative to the control.
     ''' </summary>
-    Public Sub show(ByVal control As System.Windows.Forms.Control, ByVal location As Point)
+    Public Sub show( control As System.Windows.Forms.Control,  location As Point)
         TooltipForm._showShadow = _showShadow
         _control = control
         If Not _form Is Nothing Then _form.invokeClose()
@@ -116,7 +116,7 @@ Public Class ToolTip
     ''' <summary>
     ''' Show ToolTip with specified control and rectangle area.  This area is where the tooltip must avoid to cover.
     ''' </summary>
-    Public Sub show(ByVal control As System.Windows.Forms.Control, ByVal rect As Rectangle)
+    Public Sub show( control As System.Windows.Forms.Control,  rect As Rectangle)
         TooltipForm._showShadow = _showShadow
         _control = control
         If Not _form Is Nothing Then _form.invokeClose()
@@ -146,7 +146,7 @@ Public Class ToolTip
     ' Extended property for ToolTip property.
     <EditorAttribute(GetType(System.ComponentModel.Design.MultilineStringEditor), _
         GetType(System.Drawing.Design.UITypeEditor)), DefaultValue("")> _
-    Public Function GetToolTip(ByVal obj As Object) As String
+    Public Function GetToolTip( obj As Object) As String
         Dim tText As String = CType(_texts(obj), String)
         If tText Is Nothing Then
             tText = String.Empty
@@ -155,7 +155,7 @@ Public Class ToolTip
     End Function
     <EditorAttribute(GetType(System.ComponentModel.Design.MultilineStringEditor), _
         GetType(System.Drawing.Design.UITypeEditor))> _
-    Public Sub SetToolTip(ByVal obj As Object, ByVal value As String)
+    Public Sub SetToolTip( obj As Object,  value As String)
         If value Is Nothing Then
             value = String.Empty
         End If
@@ -191,14 +191,14 @@ Public Class ToolTip
         End If
     End Sub
     <DefaultValue("")>
-    Public Function GetToolTipTitle(ByVal ctrl As System.Windows.Forms.Control) As String
+    Public Function GetToolTipTitle( ctrl As System.Windows.Forms.Control) As String
         Dim tTitle As String = CType(_titles(ctrl), String)
         If tTitle Is Nothing Then
             tTitle = String.Empty
         End If
         Return tTitle
     End Function
-    Public Sub SetToolTipTitle(ByVal obj As Object, ByVal value As String)
+    Public Sub SetToolTipTitle( obj As Object,  value As String)
         If value Is Nothing Then
             value = String.Empty
         End If
@@ -235,12 +235,12 @@ Public Class ToolTip
     End Sub
     <EditorAttribute(GetType(System.Drawing.Design.ImageEditor),
         GetType(System.Drawing.Design.UITypeEditor)), DefaultValue(GetType(Image), "Nothing")>
-    Public Function GetToolTipImage(ByVal ctrl As System.Windows.Forms.Control) As Image
+    Public Function GetToolTipImage( ctrl As System.Windows.Forms.Control) As Image
         Return CType(_images(ctrl), Image)
     End Function
     <EditorAttribute(GetType(System.Drawing.Design.ImageEditor), _
         GetType(System.Drawing.Design.UITypeEditor))> _
-    Public Sub SetToolTipImage(ByVal obj As Object, ByVal value As Image)
+    Public Sub SetToolTipImage( obj As Object,  value As Image)
         If value Is Nothing Then
             _images.Remove(obj)
         Else
@@ -272,7 +272,7 @@ Public Class ToolTip
             End If
         End If
     End Sub
-    Public Function CanExtend(ByVal extendee As Object) As Boolean Implements System.ComponentModel.IExtenderProvider.CanExtend
+    Public Function CanExtend( extendee As Object) As Boolean Implements System.ComponentModel.IExtenderProvider.CanExtend
         If TypeOf (extendee) Is System.Windows.Forms.Control Then
             If TypeOf (extendee) Is System.Windows.Forms.Form Then
                 Return False
@@ -284,7 +284,7 @@ Public Class ToolTip
         Return False
     End Function
     ' Disposing components
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overrides Sub Dispose( disposing As Boolean)
         If disposing Then
             ' Clear all resources
             _texts.Clear()
@@ -307,28 +307,28 @@ Public Class ToolTip
         Public AlphaFormat As Byte
     End Structure
     Private Declare Function UpdateLayeredWindow Lib "user32.dll" ( _
-        ByVal hWnd As IntPtr, _
-        ByVal hdcDst As IntPtr, _
+         hWnd As IntPtr, _
+         hdcDst As IntPtr, _
         ByRef pptDst As Point, _
         ByRef psize As Size, _
-        ByVal hdcSrc As IntPtr, _
+         hdcSrc As IntPtr, _
         ByRef pptSrc As Point, _
-        ByVal crKey As Integer, _
+         crKey As Integer, _
         ByRef pBlend As BLENDFUNCTION, _
-        ByVal dwFlags As Integer) As Boolean
-    Private Declare Function GetDC Lib "user32.dll" (ByVal hWnd As IntPtr) As IntPtr
-    Private Declare Function ReleaseDC Lib "user32.dll" (ByVal hWnd As IntPtr, _
-        ByVal hDC As IntPtr) As Integer
-    Private Declare Function CreateCompatibleDC Lib "gdi32.dll" (ByVal hDC As IntPtr) As IntPtr
-    Private Declare Function DeleteDC Lib "gdi32.dll" (ByVal hDC As IntPtr) As Boolean
-    Private Declare Function SelectObject Lib "gdi32.dll" (ByVal hDC As IntPtr, _
-        ByVal hObject As IntPtr) As IntPtr
-    Private Declare Function DeleteObject Lib "gdi32.dll" (ByVal hObject As IntPtr) As Boolean
-    Private Declare Function ShowWindow Lib "user32.dll" (ByVal hWnd As IntPtr, _
-        ByVal nCmdShow As Integer) As Integer
-    Private Declare Function SendMessage Lib "user32.dll" Alias "SendMessageA" (ByVal hwnd As IntPtr, _
-        ByVal wMsg As Integer, ByVal wParam As Integer, _
-        ByVal lParam As Integer) As Integer
+         dwFlags As Integer) As Boolean
+    Private Declare Function GetDC Lib "user32.dll" ( hWnd As IntPtr) As IntPtr
+    Private Declare Function ReleaseDC Lib "user32.dll" ( hWnd As IntPtr, _
+         hDC As IntPtr) As Integer
+    Private Declare Function CreateCompatibleDC Lib "gdi32.dll" ( hDC As IntPtr) As IntPtr
+    Private Declare Function DeleteDC Lib "gdi32.dll" ( hDC As IntPtr) As Boolean
+    Private Declare Function SelectObject Lib "gdi32.dll" ( hDC As IntPtr, _
+         hObject As IntPtr) As IntPtr
+    Private Declare Function DeleteObject Lib "gdi32.dll" ( hObject As IntPtr) As Boolean
+    Private Declare Function ShowWindow Lib "user32.dll" ( hWnd As IntPtr, _
+         nCmdShow As Integer) As Integer
+    Private Declare Function SendMessage Lib "user32.dll" Alias "SendMessageA" ( hwnd As IntPtr, _
+         wMsg As Integer,  wParam As Integer, _
+         lParam As Integer) As Integer
     Private Declare Sub ReleaseCapture Lib "user32.dll" ()
     Private Const WS_EX_LAYERED = &H80000
     Private Const ULW_ALPHA = &H2
@@ -364,14 +364,14 @@ Public Class ToolTip
         Dim _alpha As Integer = 100
         Private Shared mBackgroundImage As Image
         Private Declare Function SetWindowPos Lib "user32.dll" ( _
-            ByVal hWnd As IntPtr, _
-            ByVal hWndInsertAfter As IntPtr, _
-            ByVal x As Integer, _
-            ByVal y As Integer, _
-            ByVal cx As Integer, _
-            ByVal cy As Integer, _
-            ByVal flags As Integer) As Integer
-        Sub New(ByVal popup As ToolTip, ByVal size As System.Drawing.Size)
+             hWnd As IntPtr, _
+             hWndInsertAfter As IntPtr, _
+             x As Integer, _
+             y As Integer, _
+             cx As Integer, _
+             cy As Integer, _
+             flags As Integer) As Integer
+        Sub New( popup As ToolTip,  size As System.Drawing.Size)
             Dim aPadding As System.Windows.Forms.Padding
             mPopup = popup
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -436,7 +436,7 @@ Public Class ToolTip
             SetWindowPos(Me.Handle, HWND_TOPMOST, Me.Left, Me.Top, Me.Width, Me.Height, SWP_NOSIZE Or SWP_NOMOVE Or SWP_NOACTIVATE)
             If mPopup._enableAutoClose Then _tmrClose.Start()
         End Sub
-        Sub New(ByVal popup As ToolTip, ByVal size As System.Drawing.Size, ByVal location As Point)
+        Sub New( popup As ToolTip,  size As System.Drawing.Size,  location As Point)
             Dim aPadding As System.Windows.Forms.Padding
             mPopup = popup
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -501,8 +501,8 @@ Public Class ToolTip
             SetWindowPos(Me.Handle, HWND_TOPMOST, Me.Left, Me.Top, Me.Width, Me.Height, SWP_NOSIZE Or SWP_NOMOVE Or SWP_NOACTIVATE)
             If mPopup._enableAutoClose Then _tmrClose.Start()
         End Sub
-        Sub New(ByVal popup As ToolTip, ByVal size As System.Drawing.Size, _
-            ByVal rect As Rectangle)
+        Sub New( popup As ToolTip,  size As System.Drawing.Size, _
+             rect As Rectangle)
             Dim aPadding As System.Windows.Forms.Padding
             mPopup = popup
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -585,7 +585,7 @@ Public Class ToolTip
                 y = y + 1
             End While
         End Sub
-        Private Sub drawBackground(ByVal g As Graphics)
+        Private Sub drawBackground( g As Graphics)
             If Not mPopup._ownerDrawBackground Then
                 If mPopup._showShadow Then
                     Dim bgBrush As System.Drawing.Drawing2D.LinearGradientBrush
@@ -692,7 +692,7 @@ Public Class ToolTip
             mPopup.invokeDraw(g, rect)
             g.Dispose()
         End Sub
-        Private Sub setBitmap(ByVal aBmp As Bitmap)
+        Private Sub setBitmap( aBmp As Bitmap)
             Dim screenDC As IntPtr = GetDC(IntPtr.Zero)
             Dim memDC As IntPtr = CreateCompatibleDC(screenDC)
             Dim hBitmap As IntPtr = IntPtr.Zero
@@ -728,7 +728,7 @@ Public Class ToolTip
                 Return cp
             End Get
         End Property
-        Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+        Protected Overloads Overrides Sub Dispose( disposing As Boolean)
             If disposing Then
                 If _tmrClose IsNot Nothing Then
                     _tmrClose.Dispose()
@@ -761,7 +761,7 @@ Public Class ToolTip
                 mNormalPos.Y = mNormalPos.Y - (rH + mCursor.Size.Height)
             End If
         End Sub
-        Private Sub ReLocate(ByVal location As Point)
+        Private Sub ReLocate( location As Point)
             Dim rW, rH As Integer
             Dim workingArea As Rectangle = Screen.PrimaryScreen.WorkingArea
             rW = Me.Width
@@ -774,7 +774,7 @@ Public Class ToolTip
                 mNormalPos.Y = mNormalPos.Y - rH
             End If
         End Sub
-        Private Sub ReLocate(ByVal rect As Rectangle)
+        Private Sub ReLocate( rect As Rectangle)
             Dim rW, rH As Integer
             Dim workingArea As Rectangle = Screen.PrimaryScreen.WorkingArea
             Dim askedLoc As Point
@@ -790,7 +790,7 @@ Public Class ToolTip
                 mNormalPos.Y = mNormalPos.Y - (rH + rect.Height + 10)
             End If
         End Sub
-        Private Sub Showing(ByVal sender As Object, ByVal e As EventArgs)
+        Private Sub Showing( sender As Object,  e As EventArgs)
             If Not _closing Then
                 If _alpha = 100 Then
                     _timer.Stop()
@@ -851,13 +851,13 @@ Public Class ToolTip
                 End Try
             End With
         End Sub
-        Private Sub AutoClosing(ByVal sender As Object, ByVal e As EventArgs)
+        Private Sub AutoClosing( sender As Object,  e As EventArgs)
             DoClose()
         End Sub
     End Class
 #End Region
 #Region "Private Methods"
-    Private Sub invokeDraw(ByVal g As Graphics, ByVal rect As Rectangle)
+    Private Sub invokeDraw( g As Graphics,  rect As Rectangle)
         If _ownerDraw Or _ownerDrawBackground Then
             Dim e As DrawEventArgs
             e = New DrawEventArgs(g, rect)
@@ -869,18 +869,18 @@ Public Class ToolTip
             Renderer.ToolTip.drawToolTip(tTitle, tText, tImage, g, rect)
         End If
     End Sub
-    Private Sub invokeDrawBackground(ByVal g As Graphics, ByVal rect As Rectangle)
+    Private Sub invokeDrawBackground( g As Graphics,  rect As Rectangle)
         Dim e As DrawEventArgs = New DrawEventArgs(g, rect)
         RaiseEvent DrawBackground(Me, e)
     End Sub
-    Private Function hasToolTip(ByVal ctrl As System.Windows.Forms.Control) As Boolean
+    Private Function hasToolTip( ctrl As System.Windows.Forms.Control) As Boolean
         Dim tText As String = GetToolTip(ctrl)
         Dim tTitle As String = GetToolTipTitle(ctrl)
         Dim tImage As Image = GetToolTipImage(ctrl)
         Return Renderer.ToolTip.containsToolTip(tTitle, tText, tImage)
     End Function
     ' Control's MouseEnter and MouseLeave event handler
-    Private Sub ctrlMouseEnter(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub ctrlMouseEnter( sender As Object,  e As EventArgs)
         _control = DirectCast(sender, System.Windows.Forms.Control)
         Select Case _location
             Case ToolTipLocation.Auto
@@ -895,17 +895,17 @@ Public Class ToolTip
                 show(_control, clientLocation)
         End Select
     End Sub
-    Private Sub ctrlMouseLeave(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub ctrlMouseLeave( sender As Object,  e As EventArgs)
         If sender Is _control Then
             _control = Nothing
             hide()
         End If
     End Sub
-    Private Sub ctrlMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs)
+    Private Sub ctrlMouseDown( sender As Object,  e As MouseEventArgs)
         hide()
     End Sub
     ' ToolStripItem's MouseEnter and MouseLeave event handler
-    Private Sub tsiMouseEnter(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub tsiMouseEnter( sender As Object,  e As EventArgs)
         Dim anItem As ToolStripItem = DirectCast(sender, ToolStripItem)
         _control = anItem.GetCurrentParent
         Select Case _location
@@ -931,7 +931,7 @@ Public Class ToolTip
         Get
             Return _animationSpeed
         End Get
-        Set(ByVal Value As Integer)
+        Set( Value As Integer)
             _animationSpeed = Value
         End Set
     End Property
@@ -943,7 +943,7 @@ Public Class ToolTip
         Get
             Return _showShadow
         End Get
-        Set(ByVal Value As Boolean)
+        Set( Value As Boolean)
             _showShadow = Value
         End Set
     End Property
@@ -955,7 +955,7 @@ Public Class ToolTip
         Get
             Return _autoClose
         End Get
-        Set(ByVal value As Integer)
+        Set( value As Integer)
             _autoClose = value
         End Set
     End Property
@@ -967,7 +967,7 @@ Public Class ToolTip
         Get
             Return _enableAutoClose
         End Get
-        Set(ByVal value As Boolean)
+        Set( value As Boolean)
             _enableAutoClose = value
         End Set
     End Property
@@ -979,7 +979,7 @@ Public Class ToolTip
         Get
             Return _ownerDraw
         End Get
-        Set(ByVal value As Boolean)
+        Set( value As Boolean)
             _ownerDraw = value
         End Set
     End Property
@@ -993,7 +993,7 @@ Public Class ToolTip
         Get
             Return _ownerDrawBackground
         End Get
-        Set(ByVal value As Boolean)
+        Set( value As Boolean)
             _ownerDrawBackground = value
         End Set
     End Property
@@ -1005,7 +1005,7 @@ Public Class ToolTip
         Get
             Return _location
         End Get
-        Set(ByVal value As ToolTipLocation)
+        Set( value As ToolTipLocation)
             _location = value
         End Set
     End Property
@@ -1018,7 +1018,7 @@ Public Class ToolTip
         Get
             Return _customLocation
         End Get
-        Set(ByVal value As Point)
+        Set( value As Point)
             _customLocation = value
         End Set
     End Property
@@ -1034,7 +1034,7 @@ Public Class PopupEventArgs
         Get
             Return _size
         End Get
-        Set(ByVal value As System.Drawing.Size)
+        Set( value As System.Drawing.Size)
             _size = value
         End Set
     End Property
@@ -1043,7 +1043,7 @@ Public Class DrawEventArgs
     Inherits EventArgs
     Dim _g As System.Drawing.Graphics
     Dim _rect As Rectangle
-    Public Sub New(ByVal g As System.Drawing.Graphics, ByVal rect As System.Drawing.Rectangle)
+    Public Sub New( g As System.Drawing.Graphics,  rect As System.Drawing.Rectangle)
         MyBase.New()
         _g = g
         _rect = rect

@@ -44,7 +44,7 @@ Namespace Windows.Forms.Controls
             Get
                 Return [Bitmap]
             End Get
-            Set(ByVal value As System.Drawing.Image)
+            Set( value As System.Drawing.Image)
                 If value Is Nothing Then
                     Me.BorderStyle = System.Windows.Forms.BorderStyle.None
                 Else
@@ -63,7 +63,7 @@ Namespace Windows.Forms.Controls
             Get
                 Return _opacity
             End Get
-            Set(ByVal value As Integer)
+            Set( value As Integer)
                 _opacity = value
                 Me.Invalidate()
             End Set
@@ -88,11 +88,11 @@ Namespace Windows.Forms.Controls
             tmrFadeOut.Start()
         End Sub
 
-        Private Sub tmrFadeInn_Elapsed(ByVal sender As Object, ByVal e As System.Timers.ElapsedEventArgs) Handles tmrFadeInn.Elapsed
+        Private Sub tmrFadeInn_Elapsed( sender As Object,  e As System.Timers.ElapsedEventArgs) Handles tmrFadeInn.Elapsed
             If Opacity + 5 < 255 Then Opacity += 5 Else tmrFadeInn.Stop()
         End Sub
 
-        Private Sub tmrFadeOut_Elapsed(ByVal sender As Object, ByVal e As System.Timers.ElapsedEventArgs) Handles tmrFadeOut.Elapsed
+        Private Sub tmrFadeOut_Elapsed( sender As Object,  e As System.Timers.ElapsedEventArgs) Handles tmrFadeOut.Elapsed
             If Opacity - 5 > 0 Then Opacity -= 5 Else tmrFadeOut.Stop()
         End Sub
 
@@ -101,7 +101,7 @@ Namespace Windows.Forms.Controls
         ''' </summary>
         ''' <param name="pe"></param>
         ''' <remarks></remarks>
-        Protected Overrides Sub OnPaint(ByVal pe As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaint( pe As System.Windows.Forms.PaintEventArgs)
             If [Bitmap] Is Nothing Then Return
 
             Dim BitmapBack = New Bitmap(Bitmap.Width, Bitmap.Height)

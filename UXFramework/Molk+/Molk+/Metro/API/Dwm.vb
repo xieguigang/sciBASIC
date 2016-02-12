@@ -20,14 +20,14 @@ Namespace Windows.Forms.API
             Public top As Integer
 
             ' Methods
-            Public Sub New(ByVal rect As Rectangle)
+            Public Sub New( rect As Rectangle)
                 Me.left = rect.Left
                 Me.top = rect.Top
                 Me.right = rect.Right
                 Me.bottom = rect.Bottom
             End Sub
 
-            Public Sub New(ByVal left As Integer, ByVal top As Integer, ByVal right As Integer, ByVal bottom As Integer)
+            Public Sub New( left As Integer,  top As Integer,  right As Integer,  bottom As Integer)
                 Me.left = left
                 Me.top = top
                 Me.right = right
@@ -38,14 +38,14 @@ Namespace Windows.Forms.API
                 Me.left = InlineAssignHelper(Me.top, InlineAssignHelper(Me.right, InlineAssignHelper(Me.bottom, 0)))
             End Sub
 
-            Public Sub [Set](ByVal rect As Rectangle)
+            Public Sub [Set]( rect As Rectangle)
                 Me.left = rect.Left
                 Me.top = rect.Top
                 Me.right = rect.Right
                 Me.bottom = rect.Bottom
             End Sub
 
-            Public Sub [Set](ByVal left As Integer, ByVal top As Integer, ByVal right As Integer, ByVal bottom As Integer)
+            Public Sub [Set]( left As Integer,  top As Integer,  right As Integer,  bottom As Integer)
                 Me.left = left
                 Me.top = top
                 Me.right = right
@@ -74,7 +74,7 @@ Namespace Windows.Forms.API
                     Return (Me.right - Me.left)
                 End Get
             End Property
-            Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, ByVal value As T) As T
+            Private Shared Function InlineAssignHelper(Of T)(ByRef target As T,  value As T) As T
                 target = value
                 Return value
             End Function
@@ -100,52 +100,52 @@ Namespace Windows.Forms.API
 
         ' Methods
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmDefWindowProc(ByVal hwnd As IntPtr, ByVal msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr, ByRef result As IntPtr) As Integer
+        Public Shared Function DwmDefWindowProc( hwnd As IntPtr,  msg As Integer,  wParam As IntPtr,  lParam As IntPtr, ByRef result As IntPtr) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmEnableComposition(ByVal fEnable As Integer) As Integer
+        Public Shared Function DwmEnableComposition( fEnable As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmEnableMMCSS(ByVal fEnableMMCSS As Integer) As Integer
+        Public Shared Function DwmEnableMMCSS( fEnableMMCSS As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmExtendFrameIntoClientArea(ByVal hdc As IntPtr, ByRef marInset As MARGINS) As Integer
+        Public Shared Function DwmExtendFrameIntoClientArea( hdc As IntPtr, ByRef marInset As MARGINS) As Integer
         End Function
         <DllImport("dwmapi.dll")>
         Public Shared Function DwmGetColorizationColor(ByRef pcrColorization As Integer, ByRef pfOpaqueBlend As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmGetCompositionTimingInfo(ByVal hwnd As IntPtr, ByRef pTimingInfo As DWM_TIMING_INFO) As Integer
+        Public Shared Function DwmGetCompositionTimingInfo( hwnd As IntPtr, ByRef pTimingInfo As DWM_TIMING_INFO) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmGetWindowAttribute(ByVal hwnd As IntPtr, ByVal dwAttribute As Integer, ByVal pvAttribute As IntPtr, ByVal cbAttribute As Integer) As Integer
+        Public Shared Function DwmGetWindowAttribute( hwnd As IntPtr,  dwAttribute As Integer,  pvAttribute As IntPtr,  cbAttribute As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
         Public Shared Function DwmIsCompositionEnabled(ByRef pfEnabled As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmModifyPreviousDxFrameDuration(ByVal hwnd As IntPtr, ByVal cRefreshes As Integer, ByVal fRelative As Integer) As Integer
+        Public Shared Function DwmModifyPreviousDxFrameDuration( hwnd As IntPtr,  cRefreshes As Integer,  fRelative As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmQueryThumbnailSourceSize(ByVal hThumbnail As IntPtr, ByRef pSize As Size) As Integer
+        Public Shared Function DwmQueryThumbnailSourceSize( hThumbnail As IntPtr, ByRef pSize As Size) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmRegisterThumbnail(ByVal hwndDestination As IntPtr, ByVal hwndSource As IntPtr, ByRef pMinimizedSize As Size, ByRef phThumbnailId As IntPtr) As Integer
+        Public Shared Function DwmRegisterThumbnail( hwndDestination As IntPtr,  hwndSource As IntPtr, ByRef pMinimizedSize As Size, ByRef phThumbnailId As IntPtr) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmSetDxFrameDuration(ByVal hwnd As IntPtr, ByVal cRefreshes As Integer) As Integer
+        Public Shared Function DwmSetDxFrameDuration( hwnd As IntPtr,  cRefreshes As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmSetPresentParameters(ByVal hwnd As IntPtr, ByRef pPresentParams As DWM_PRESENT_PARAMETERS) As Integer
+        Public Shared Function DwmSetPresentParameters( hwnd As IntPtr, ByRef pPresentParams As DWM_PRESENT_PARAMETERS) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal dwAttribute As Integer, ByVal pvAttribute As IntPtr, ByVal cbAttribute As Integer) As Integer
+        Public Shared Function DwmSetWindowAttribute( hwnd As IntPtr,  dwAttribute As Integer,  pvAttribute As IntPtr,  cbAttribute As Integer) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmUnregisterThumbnail(ByVal hThumbnailId As IntPtr) As Integer
+        Public Shared Function DwmUnregisterThumbnail( hThumbnailId As IntPtr) As Integer
         End Function
         <DllImport("dwmapi.dll")>
-        Public Shared Function DwmUpdateThumbnailProperties(ByVal hThumbnailId As IntPtr, ByRef ptnProperties As DWM_THUMBNAIL_PROPERTIES) As Integer
+        Public Shared Function DwmUpdateThumbnailProperties( hThumbnailId As IntPtr, ByRef ptnProperties As DWM_THUMBNAIL_PROPERTIES) As Integer
         End Function
 
         ' Nested Types
@@ -238,7 +238,7 @@ Namespace Windows.Forms.API
             Public cxRightWidth As Integer
             Public cyTopHeight As Integer
             Public cyBottomHeight As Integer
-            Public Sub New(ByVal Left As Integer, ByVal Right As Integer, ByVal Top As Integer, ByVal Bottom As Integer)
+            Public Sub New( Left As Integer,  Right As Integer,  Top As Integer,  Bottom As Integer)
                 Me.cxLeftWidth = Left
                 Me.cxRightWidth = Right
                 Me.cyTopHeight = Top
@@ -289,7 +289,7 @@ Namespace Windows.Forms.API
         ''' <param name="size">The Size of the Attributes Struct</param>
         ''' <returns>If The Call Was Successful or Not</returns>
         <DllImport("UxTheme.dll")>
-        Public Shared Function SetWindowThemeAttribute(ByVal hWnd As IntPtr, ByVal wtype As WindowThemeAttributeType, ByRef attributes As WTA_OPTIONS, ByVal size As UInteger) As Integer
+        Public Shared Function SetWindowThemeAttribute( hWnd As IntPtr,  wtype As WindowThemeAttributeType, ByRef attributes As WTA_OPTIONS,  size As UInteger) As Integer
         End Function
     End Class
 End Namespace

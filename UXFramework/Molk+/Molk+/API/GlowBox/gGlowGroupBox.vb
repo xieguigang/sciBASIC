@@ -48,7 +48,7 @@ Public Class gGlowGroupBox
         Get
             Return _glowColor
         End Get
-        Set(ByVal Value As Color)
+        Set( Value As Color)
             _glowColor = Value
             Invalidate()
         End Set
@@ -68,7 +68,7 @@ Public Class gGlowGroupBox
         Get
             Return _glowOn
         End Get
-        Set(ByVal Value As Boolean)
+        Set( Value As Boolean)
             _glowOn = Value
             Invalidate()
         End Set
@@ -93,7 +93,7 @@ Public Class gGlowGroupBox
         Get
             Return _EffectType
         End Get
-        Set(ByVal Value As eEffectType)
+        Set( Value As eEffectType)
             _EffectType = Value
         End Set
     End Property
@@ -102,7 +102,7 @@ Public Class gGlowGroupBox
 
 #Region "Paint"
 
-    Protected Overrides Sub OnPaintBackground(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaintBackground( e As PaintEventArgs)
         MyBase.OnPaintBackground(e)
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
 
@@ -205,7 +205,7 @@ Public Class gGlowGroupBox
 
 #Region "Control Focus Event"
 
-    Private Sub gGlowBox_ControlAdded(ByVal sender As Object, ByVal e As ControlEventArgs) Handles Me.ControlAdded
+    Private Sub gGlowBox_ControlAdded( sender As Object,  e As ControlEventArgs) Handles Me.ControlAdded
         ' Add handlers to let the gGlowBox know when the child control gets Focus 
         AddHandler e.Control.GotFocus, AddressOf ChildGotFocus
         AddHandler e.Control.LostFocus, AddressOf ChildLostFocus

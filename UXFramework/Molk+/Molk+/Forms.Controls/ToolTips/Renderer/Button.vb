@@ -34,7 +34,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property DisabledBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property DisabledBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim aBlend As ColorBlend
@@ -67,7 +67,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property NormalBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property NormalBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -99,7 +99,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property FocusedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property FocusedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -131,7 +131,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property HLitedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property HLitedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -163,7 +163,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property HLitedLightBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property HLitedLightBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -195,7 +195,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property PressedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property PressedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -227,7 +227,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property SelectedBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -259,7 +259,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>ColorBlend.</value>
-        Public Shared ReadOnly Property SelectedHLiteBlend(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedHLiteBlend(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As ColorBlend
             Get
                 Dim colors(0 To 3) As Color
@@ -293,7 +293,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property NormalBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property NormalBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -310,7 +310,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property DisabledBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property DisabledBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -327,7 +327,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property FocusedBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property FocusedBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -342,7 +342,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property HLitedBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property HLitedBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -357,7 +357,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property SelectedBorderPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedBorderPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -372,7 +372,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property NormalSeparatorPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property NormalSeparatorPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -389,7 +389,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property HLitedSeparatorPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property HLitedSeparatorPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -404,7 +404,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property SelectedSeparatorPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property SelectedSeparatorPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -419,7 +419,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Theme used to paint.</param>
         ''' <value>Pen</value>
-        Public Shared ReadOnly Property PressedSeparatorPen(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
+        Public Shared ReadOnly Property PressedSeparatorPen(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) _
         As Pen
             Get
                 Select Case theme
@@ -436,7 +436,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property NormalGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property NormalGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -451,7 +451,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property DisabledGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property DisabledGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -466,7 +466,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property FocusedGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property FocusedGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -481,7 +481,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property HLitedGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property HLitedGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -496,7 +496,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property PressedGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property PressedGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -511,7 +511,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property SelectedGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property SelectedGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -526,7 +526,7 @@ Namespace Renderer
         ''' </summary>
         ''' <param name="theme">Them used to paint.</param>
         ''' <value>Color</value>
-        Public Shared ReadOnly Property SelectedHLiteGlow(Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
+        Public Shared ReadOnly Property SelectedHLiteGlow(Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue) As Color
             Get
                 Select Case theme
                     Case Drawing.ColorTheme.Blue
@@ -550,10 +550,10 @@ Namespace Renderer
         ''' <param name="selected">Determine whether the button is selected.</param>
         ''' <param name="hlited">Determine whether the button is highlited.</param>
         ''' <param name="focused">Determine whether the button has input focus.</param>
-        Public Shared Sub draw(ByVal g As Graphics, ByVal rect As Rectangle, Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue,
-        Optional ByVal rounded As Integer = 2, Optional ByVal enabled As Boolean = True,
-        Optional ByVal pressed As Boolean = False, Optional ByVal selected As Boolean = False,
-        Optional ByVal hlited As Boolean = False, Optional ByVal focused As Boolean = False)
+        Public Shared Sub draw( g As Graphics,  rect As Rectangle, Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue,
+        Optional  rounded As Integer = 2, Optional  enabled As Boolean = True,
+        Optional  pressed As Boolean = False, Optional  selected As Boolean = False,
+        Optional  hlited As Boolean = False, Optional  focused As Boolean = False)
             If g Is Nothing Then Return
             If rect.Width > 2 * rounded And rect.Width > 0 And rect.Height > 2 * rounded And rect.Height > 0 Then
                 Dim btnPath As GraphicsPath = Drawing.roundedRectangle(rect, rounded, rounded, rounded, rounded)
@@ -649,14 +649,14 @@ Namespace Renderer
         ''' <param name="selected">Determine whether the button is selected.</param>
         ''' <param name="hlited">Determine where the highlited state takes effect.</param>
         ''' <param name="focused">Determine whether the button has input focus.</param>
-        Public Shared Sub drawSplit(ByVal g As Graphics, ByVal rect As Rectangle,
-        ByVal split As SplitLocation, ByVal splitSize As Integer,
-        Optional ByVal theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue,
-        Optional ByVal rounded As Integer = 2, Optional ByVal enabled As Boolean = True,
-        Optional ByVal pressed As SplitEffectLocation = SplitEffectLocation.None,
-        Optional ByVal selected As Boolean = False,
-        Optional ByVal hlited As SplitEffectLocation = SplitEffectLocation.None,
-        Optional ByVal focused As Boolean = False)
+        Public Shared Sub drawSplit( g As Graphics,  rect As Rectangle,
+         split As SplitLocation,  splitSize As Integer,
+        Optional  theme As Drawing.ColorTheme = Drawing.ColorTheme.Blue,
+        Optional  rounded As Integer = 2, Optional  enabled As Boolean = True,
+        Optional  pressed As SplitEffectLocation = SplitEffectLocation.None,
+        Optional  selected As Boolean = False,
+        Optional  hlited As SplitEffectLocation = SplitEffectLocation.None,
+        Optional  focused As Boolean = False)
             If g Is Nothing Then Return
             If rounded < 0 Then rounded = 0
             Select Case split

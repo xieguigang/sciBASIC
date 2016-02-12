@@ -82,9 +82,9 @@
 '            Me.disposedValue = True
 '        End Sub
 
-'        ' TODO:  仅当上面的 Dispose(ByVal disposing As Boolean)具有释放非托管资源的代码时重写 Finalize()。
+'        ' TODO:  仅当上面的 Dispose( disposing As Boolean)具有释放非托管资源的代码时重写 Finalize()。
 '        'Protected Overrides Sub Finalize()
-'        '    ' 不要更改此代码。    请将清理代码放入上面的 Dispose(ByVal disposing As Boolean)中。
+'        '    ' 不要更改此代码。    请将清理代码放入上面的 Dispose( disposing As Boolean)中。
 '        '    Dispose(False)
 '        '    MyBase.Finalize()
 '        'End Sub

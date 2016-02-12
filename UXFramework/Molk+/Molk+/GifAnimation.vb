@@ -36,7 +36,7 @@ Public Class GifAnimation
 
     'UserControl 重写 dispose 以清理组件列表。　　　　
 
-    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overloads Overrides Sub Dispose( disposing As Boolean)
         If disposing Then
             If Not (components Is Nothing) Then
                 components.Dispose()
@@ -84,10 +84,10 @@ Public Class GifAnimation
     Private mimgGif As Image
     Private mth As Thread
 
-    Public Event Stoped(ByVal sender As Object) '停止事件
+    Public Event Stoped( sender As Object) '停止事件
 
     Public WriteOnly Property GifFile() As String
-        Set(ByVal Value As String)
+        Set( Value As String)
             If Value Is Nothing Then Exit Property
             mimgGif = LoadImage(Value)
             m_col_Gif = FormatGIF(Value)
@@ -104,7 +104,7 @@ Public Class GifAnimation
         Get
             Return Me.PictureBox1.SizeMode
         End Get
-        Set(ByVal Value As PictureBoxSizeMode)
+        Set( Value As PictureBoxSizeMode)
             Me.PictureBox1.SizeMode = Value
         End Set
     End Property
@@ -114,7 +114,7 @@ Public Class GifAnimation
             Return mimgGif
         End Get
 
-        Set(ByVal Value As Image)
+        Set( Value As Image)
             If Value Is Nothing Then Exit Property
             mimgGif = Value
             m_col_Gif = FormatGIF(Value)
@@ -147,7 +147,7 @@ Public Class GifAnimation
         RaiseEvent Stoped(Me)
     End Sub
 
-    Public Sub StartView(Optional ByVal useTimer As Boolean = True)
+    Public Sub StartView(Optional  useTimer As Boolean = True)
         If m_col_Gif Is Nothing Then Exit Sub
         If m_col_Gif.Count = 0 Then Exit Sub
         mblnStop = False
@@ -164,7 +164,7 @@ Public Class GifAnimation
     End Sub
 
     '从文获得帧信息
-    Private Function FormatGIF(ByVal GifFile As String) As Collection
+    Private Function FormatGIF( GifFile As String) As Collection
 
         '打开图片文件
         Dim fs As New FileStream(GifFile, FileMode.Open, FileAccess.Read)
@@ -178,7 +178,7 @@ Public Class GifAnimation
     End Function
 
     '从Image对象获取帧信息
-    Private Function FormatGIF(ByVal GifImage As Image) As Collection
+    Private Function FormatGIF( GifImage As Image) As Collection
         Dim col As New Collection
         '创建一个内存流
         Dim sr As New MemoryStream
@@ -191,7 +191,7 @@ Public Class GifAnimation
     End Function
 
     '从一个字节数组获得帧信息
-    Private Function FormatGIF(ByVal buff() As Byte) As Collection
+    Private Function FormatGIF( buff() As Byte) As Collection
         Dim col As New Collection
         Dim Index1 As Integer
         Dim Index2 As Integer
@@ -257,7 +257,7 @@ Public Class GifAnimation
     End Function
 
     '创建一个帧图像
-    Private Function CreateImage(ByVal gifHead() As Byte, ByVal gifBody() As Byte, Optional ByVal AddEnd As Boolean = True) As Image
+    Private Function CreateImage( gifHead() As Byte,  gifBody() As Byte, Optional  AddEnd As Boolean = True) As Image
         '创建一个内存流
         Dim sm As New MemoryStream
         Dim img As Image
@@ -275,7 +275,7 @@ Public Class GifAnimation
     End Function
 
     '显示一个帧图像
-    Private Sub SetPicToPicturbox(ByVal img As Image)
+    Private Sub SetPicToPicturbox( img As Image)
         Me.PictureBox1.Image = img
         PictureBox1.Top = 0
         PictureBox1.Left = 0
@@ -284,7 +284,7 @@ Public Class GifAnimation
         Me.Height = Me.PictureBox1.Height
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick( sender As Object,  e As System.EventArgs) Handles Timer1.Tick
         If mintCurrentPosition < m_col_Gif.Count Then
             mintCurrentPosition = mintCurrentPosition + 1
         Else
@@ -301,11 +301,11 @@ Public Class GifAnimation
         End If
     End Sub
 
-    Private Sub GifAnimation_BackColorChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.BackColorChanged
+    Private Sub GifAnimation_BackColorChanged( sender As Object,  e As System.EventArgs) Handles MyBase.BackColorChanged
         PictureBox1.BackColor = Me.BackColor
     End Sub
 
-    Private Sub GifAnimation_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Resize
+    Private Sub GifAnimation_Resize( sender As Object,  e As System.EventArgs) Handles MyBase.Resize
         PictureBox1.Top = 0
         PictureBox1.Left = 0
         If PictureBox1.SizeMode <> PictureBoxSizeMode.AutoSize Then
@@ -317,7 +317,7 @@ Public Class GifAnimation
         End If
     End Sub
 
-    Private Sub GifAnimation_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Disposed
+    Private Sub GifAnimation_Disposed( sender As Object,  e As System.EventArgs) Handles MyBase.Disposed
         Try
             Me.mblnStop = True
             If Not mth Is Nothing Then
@@ -334,7 +334,7 @@ Public Class GifAnimation
         Public Frame As Image '帧图像
         Public Invert As Integer '帧延迟
 
-        Public Sub New(ByVal img As Image, ByVal time As Integer)
+        Public Sub New( img As Image,  time As Integer)
             Frame = img
             Invert = time
         End Sub

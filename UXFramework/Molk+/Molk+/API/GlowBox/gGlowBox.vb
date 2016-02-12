@@ -50,7 +50,7 @@ Public Class gGlowBox
         Get
             Return _glowColor
         End Get
-        Set(ByVal Value As Color)
+        Set( Value As Color)
             _glowColor = Value
             Invalidate()
         End Set
@@ -70,7 +70,7 @@ Public Class gGlowBox
         Get
             Return _glowOn
         End Get
-        Set(ByVal Value As Boolean)
+        Set( Value As Boolean)
             _glowOn = Value
             Invalidate()
         End Set
@@ -79,7 +79,7 @@ Public Class gGlowBox
 
 #Region "Paint"
 
-    Protected Overrides Sub OnPaintBackground(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaintBackground( e As PaintEventArgs)
         MyBase.OnPaintBackground(e)
 
         If DesignMode = True AndAlso Controls.Count = 0 Then
@@ -126,7 +126,7 @@ Public Class gGlowBox
 
 #Region "Sizing"
 
-    Private Sub gGlowBox_Layout(ByVal sender As Object, ByVal e As LayoutEventArgs) Handles Me.Layout
+    Private Sub gGlowBox_Layout( sender As Object,  e As LayoutEventArgs) Handles Me.Layout
 
         'Resize the gGlowBox to fit in the Child Control size
         If Controls.Count > 0 Then
@@ -140,7 +140,7 @@ Public Class gGlowBox
 
     End Sub
 
-    Private Sub gGlowBox_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+    Private Sub gGlowBox_Resize( sender As Object,  e As System.EventArgs) Handles Me.Resize
 
         'This is needed to avoid resizing an Anchored gGlowBox when the parent Form is Minimized 
         If IsNothing(FindForm) OrElse FindForm.WindowState = FormWindowState.Minimized Then Exit Sub
@@ -155,7 +155,7 @@ Public Class gGlowBox
 
 #Region "Control Focus Event"
 
-    Private Sub gGlowBox_ControlAdded(ByVal sender As Object, ByVal e As ControlEventArgs) Handles Me.ControlAdded
+    Private Sub gGlowBox_ControlAdded( sender As Object,  e As ControlEventArgs) Handles Me.ControlAdded
         ' Add handlers to let the gGlowBox know when the child control gets Focus 
         AddHandler e.Control.GotFocus, AddressOf ChildGotFocus
         AddHandler e.Control.LostFocus, AddressOf ChildLostFocus

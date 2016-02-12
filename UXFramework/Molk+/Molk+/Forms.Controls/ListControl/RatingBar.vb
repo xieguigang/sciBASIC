@@ -8,7 +8,7 @@
         Get
             Return mStars
         End Get
-        Set(ByVal value As Integer)
+        Set( value As Integer)
             mStars = value
             SetupStars()
         End Set

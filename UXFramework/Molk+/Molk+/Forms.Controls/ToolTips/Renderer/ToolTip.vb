@@ -48,8 +48,8 @@ Namespace Renderer
         ''' <param name="text">Tooltip text.</param>
         ''' <param name="image">Tooltip image.</param>
         ''' <returns><seealso cref="Content"/></returns>
-        Public Shared Function getContent(ByVal title As String,
-        ByVal text As String, ByVal image As Image) As Content
+        Public Shared Function getContent( title As String,
+         text As String,  image As Image) As Content
             If title <> "" And text <> "" And image IsNot Nothing Then
                 Return Content.All
             Else
@@ -86,8 +86,8 @@ Namespace Renderer
         ''' <param name="text">Tooltip text.</param>
         ''' <param name="img">Tooltip image.</param>
         ''' <returns>Boolean.</returns>
-        Public Shared Function containsToolTip(ByVal title As String,
-        ByVal text As String, ByVal img As Image) As Boolean
+        Public Shared Function containsToolTip( title As String,
+         text As String,  img As Image) As Boolean
             Return (title <> "") Or (text <> "") Or (img IsNot Nothing)
         End Function
         ''' <summary>
@@ -97,8 +97,8 @@ Namespace Renderer
         ''' <param name="text">Tooltip text.</param>
         ''' <param name="img">Tooltip image.</param>
         ''' <returns>Size.</returns>
-        Public Shared Function measureSize(ByVal title As String,
-        ByVal text As String, ByVal img As Image) As Size
+        Public Shared Function measureSize( title As String,
+         text As String,  img As Image) As Size
             Dim result As Size
             Dim lText As Integer = 0
             Dim tSize As Size = New Size(0, 0)
@@ -163,9 +163,9 @@ Namespace Renderer
         ''' <param name="img">Tooltip image.</param>
         ''' <param name="g">Graphics object used to paint.</param>
         ''' <param name="rect">Bounding rectangle where tooltip information to be drawn.</param>
-        Public Shared Sub drawToolTip(ByVal title As String,
-        ByVal text As String, ByVal img As Image,
-        ByVal g As Graphics, ByVal rect As Rectangle)
+        Public Shared Sub drawToolTip( title As String,
+         text As String,  img As Image,
+         g As Graphics,  rect As Rectangle)
             Dim tSize As SizeF
             Dim y As Integer
             With rect

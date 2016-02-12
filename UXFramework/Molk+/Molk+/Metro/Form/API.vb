@@ -47,7 +47,7 @@ Namespace Windows.Forms
         Public Property DrawBorderFrame As Boolean = False
 #End Region
 #Region "Methods"
-        Public Shared Function LoWord(ByVal dwValue As Integer) As Integer
+        Public Shared Function LoWord( dwValue As Integer) As Integer
             Return dwValue And &HFFFF
         End Function
         ''' <summary>
@@ -55,12 +55,12 @@ Namespace Windows.Forms
         ''' </summary>
         ''' <param name="dwValue"></param>
         ''' <returns></returns>
-        Public Shared Function HiWord(ByVal dwValue As Integer) As Integer
+        Public Shared Function HiWord( dwValue As Integer) As Integer
             Return (dwValue >> 16) And &HFFFF
         End Function
 #End Region
 
-        Private Sub Form1_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
+        Private Sub Form1_Activated( sender As Object,  e As System.EventArgs) Handles Me.Activated
             If Environment.OSVersion.Platform = PlatformID.Win32NT Then
                 Call Dwm.DwmExtendFrameIntoClientArea(Me.Handle, _dwmMargins)
             End If
@@ -117,8 +117,8 @@ Namespace Windows.Forms
             End If
         End Sub
 
-        Private Function HitTestNCA(ByVal hwnd As IntPtr, ByVal wparam _
-                                      As IntPtr, ByVal lparam As IntPtr) As IntPtr
+        Private Function HitTestNCA( hwnd As IntPtr,  wparam _
+                                      As IntPtr,  lparam As IntPtr) As IntPtr
             Dim HTNOWHERE As Integer = 0
             Dim HTCLIENT As Integer = 1
             Dim HTCAPTION As Integer = 2
@@ -222,7 +222,7 @@ Namespace Windows.Forms
 
         Private _resizeDir As ResizeDirection = ResizeDirection.None
 
-        Private Sub Form1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
+        Private Sub Form1_MouseDown( sender As System.Object,  e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
             If e.Button = System.Windows.Forms.MouseButtons.Left Then
                 If Me.Width - BORDER_WIDTH > e.Location.X AndAlso e.Location.X > BORDER_WIDTH AndAlso e.Location.Y > BORDER_WIDTH Then
                     If _formMoveEnabled Then Call MoveControl(Me.Handle)
@@ -250,7 +250,7 @@ Namespace Windows.Forms
             Get
                 Return _resizeDir
             End Get
-            Set(ByVal value As ResizeDirection)
+            Set( value As ResizeDirection)
                 _resizeDir = value
 
                 'Change cursor
@@ -291,7 +291,7 @@ Namespace Windows.Forms
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         ''' <remarks></remarks>
-        Private Sub Form1_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
+        Private Sub Form1_MouseMove( sender As System.Object,  e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
             If e.Location.X < BORDER_WIDTH And e.Location.Y < BORDER_WIDTH Then
                 resizeDir = ResizeDirection.TopLeft
 
@@ -321,12 +321,12 @@ Namespace Windows.Forms
             End If
         End Sub
 
-        Private Sub MoveControl(ByVal hWnd As IntPtr)
+        Private Sub MoveControl( hWnd As IntPtr)
             ReleaseCapture()
             SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0)
         End Sub
 
-        Private Sub ResizeForm(ByVal direction As ResizeDirection)
+        Private Sub ResizeForm( direction As ResizeDirection)
             Dim dir As Integer = -1
             Select Case direction
                 Case ResizeDirection.Left
