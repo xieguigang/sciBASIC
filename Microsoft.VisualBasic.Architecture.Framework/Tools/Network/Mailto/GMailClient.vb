@@ -90,15 +90,15 @@ Namespace Net.Mailto
 
         Public Structure MailConfigure
 
-            <Xml.Serialization.XmlAttribute> Public Property Account As String
-            <Xml.Serialization.XmlAttribute> Public Property Port As Integer
-            <Xml.Serialization.XmlAttribute> Public Property HostAddress As String
+            <System.Xml.Serialization.XmlAttribute> Public Property Account As String
+            <System.Xml.Serialization.XmlAttribute> Public Property Port As Integer
+            <System.Xml.Serialization.XmlAttribute> Public Property HostAddress As String
 
             ''' <summary>
             ''' 存储至文件之前请先加密
             ''' </summary>
             ''' <remarks></remarks>
-            <Xml.Serialization.XmlText> Public Property Password As String
+            <System.Xml.Serialization.XmlText> Public Property Password As String
 
             Public Overrides Function ToString() As String
                 Return $"({Account})  -->  https://{HostAddress}:{Port}/?{Password}"

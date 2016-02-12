@@ -2,9 +2,9 @@
 
     Public Class [String] : Inherits RawStream
 
-        <Xml.Serialization.XmlAttribute> Public Property value As String
+        <System.Xml.Serialization.XmlAttribute> Public Property value As String
 
-        <Xml.Serialization.XmlAttribute> Public Property Encoding As Encodings
+        <System.Xml.Serialization.XmlAttribute> Public Property Encoding As Encodings
             Get
                 Return TextEncodings.GetEncodings(_encoding)
             End Get

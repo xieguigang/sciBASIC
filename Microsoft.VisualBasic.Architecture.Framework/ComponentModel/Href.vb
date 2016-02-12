@@ -9,7 +9,7 @@
 
 #Region "Public Property"
 
-        <Xml.Serialization.XmlAttribute("Resource.Id", Namespace:="Microsoft.VisualBasic/Href_Annotation-ResourceId")>
+        <System.Xml.Serialization.XmlAttribute("Resource.Id", Namespace:="Microsoft.VisualBasic/Href_Annotation-ResourceId")>
         Public Property ResourceId As String Implements Collection.Generic.sIdEnumerable.Identifier
         ''' <summary>
         ''' The relative path of the target resource object in the file system.(资源对象在文件系统之中的相对路径)
@@ -17,9 +17,9 @@
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlElement("href-text", namespace:="Microsoft.VisualBasic/Href_Annotation-Text-Data")>
+        <System.Xml.Serialization.XmlElement("href-text", namespace:="Microsoft.VisualBasic/Href_Annotation-Text-Data")>
         Public Property Value As String
-        <Xml.Serialization.XmlElement("Annotations", namespace:="Microsoft.VisualBasic/Href_Annotation-Text-Annotations")>
+        <System.Xml.Serialization.XmlElement("Annotations", namespace:="Microsoft.VisualBasic/Href_Annotation-Text-Annotations")>
         Public Property Annotations As String
 #End Region
 

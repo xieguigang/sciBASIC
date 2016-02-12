@@ -9,7 +9,7 @@ Namespace Net.Protocol.Streams.Array
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class ValueArray(Of T) : Inherits RawStream
 
-        <Xml.Serialization.XmlAttribute("T")>
+        <System.Xml.Serialization.XmlAttribute("T")>
         Public Overridable Property Values As T()
 
         Protected ReadOnly __serialization As Func(Of T, Byte())

@@ -94,7 +94,7 @@ Namespace ConsoleDevice
 
         Public Class History
             Public Property [Date] As String
-            <Xml.Serialization.XmlElement("History-list")> Public Property Histories As List(Of String)
+            <System.Xml.Serialization.XmlElement("History-list")> Public Property Histories As List(Of String)
 
             Public Overrides Function ToString() As String
                 Return String.Format("[{0}]  {1}......", Me.Date, String.Join(";   ", Histories.Take(3).ToArray))

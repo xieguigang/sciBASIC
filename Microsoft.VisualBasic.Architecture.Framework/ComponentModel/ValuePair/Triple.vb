@@ -9,9 +9,9 @@ Namespace ComponentModel
     Public Class TripleKeyValuesPair : Implements sIdEnumerable
         Implements ITripleKeyValuesPair(Of String, String, String)
 
-        <Xml.Serialization.XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, ITripleKeyValuesPair(Of String, String, String).locusId
-        <Xml.Serialization.XmlAttribute> Public Property Value1 As String Implements ITripleKeyValuesPair(Of String, String, String).Value2
-        <Xml.Serialization.XmlAttribute> Public Property Value2 As String Implements ITripleKeyValuesPair(Of String, String, String).Value3
+        <System.Xml.Serialization.XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, ITripleKeyValuesPair(Of String, String, String).locusId
+        <System.Xml.Serialization.XmlAttribute> Public Property Value1 As String Implements ITripleKeyValuesPair(Of String, String, String).Value2
+        <System.Xml.Serialization.XmlAttribute> Public Property Value2 As String Implements ITripleKeyValuesPair(Of String, String, String).Value3
 
         Sub New()
         End Sub

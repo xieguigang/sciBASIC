@@ -14,13 +14,13 @@ Namespace Net
 
         <Browsable(True)>
         <Description("Guid value of this portal information on the server registry.")>
-        <Xml.Serialization.XmlAttribute> Public Property uid As String
+        <System.Xml.Serialization.XmlAttribute> Public Property uid As String
         <Browsable(True)>
         <Description("IPAddress of the services instance.")>
-        <Xml.Serialization.XmlAttribute> Public Property IPAddress As String
+        <System.Xml.Serialization.XmlAttribute> Public Property IPAddress As String
         <Browsable(True)>
         <Description("Data port of the services instance.")>
-        <Xml.Serialization.XmlAttribute> Public Property Port As Integer
+        <System.Xml.Serialization.XmlAttribute> Public Property Port As Integer
 #End Region
 
         ''' <summary>

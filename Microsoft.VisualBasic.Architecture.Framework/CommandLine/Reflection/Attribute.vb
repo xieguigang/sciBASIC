@@ -32,12 +32,12 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute>
+        <System.Xml.Serialization.XmlAttribute>
         Public Property [Namespace] As String
 
         Dim _TypeAutoExtract As Boolean
 
-        <Xml.Serialization.XmlIgnore> Public Property AutoExtract As Boolean
+        <System.Xml.Serialization.XmlIgnore> Public Property AutoExtract As Boolean
             Get
                 Return _TypeAutoExtract
             End Get

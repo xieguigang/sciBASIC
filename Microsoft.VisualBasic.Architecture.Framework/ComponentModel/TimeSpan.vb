@@ -1,12 +1,12 @@
 ﻿
-<Xml.Serialization.XmlTypeAttribute("Interval", Namespace:="Microsoft.VisualBasic/Numerical_DataStruct")>
+<System.Xml.Serialization.XmlTypeAttribute("Interval", Namespace:="Microsoft.VisualBasic/Numerical_DataStruct")>
 Public Structure TimeInterval
 
-    <Xml.Serialization.XmlAttribute("dd")> Public Property Days As Integer
-    <Xml.Serialization.XmlAttribute("min")> Public Property Minutes As Integer
-    <Xml.Serialization.XmlAttribute("hr")> Public Property Hours As Integer
-    <Xml.Serialization.XmlAttribute("ss")> Public Property Seconds As Integer
-    <Xml.Serialization.XmlAttribute("ms")> Public Property Miliseconds As Integer
+    <System.Xml.Serialization.XmlAttribute("dd")> Public Property Days As Integer
+    <System.Xml.Serialization.XmlAttribute("min")> Public Property Minutes As Integer
+    <System.Xml.Serialization.XmlAttribute("hr")> Public Property Hours As Integer
+    <System.Xml.Serialization.XmlAttribute("ss")> Public Property Seconds As Integer
+    <System.Xml.Serialization.XmlAttribute("ms")> Public Property Miliseconds As Integer
 
     Sub New(TimeSpan As TimeSpan)
         Days = TimeSpan.Days

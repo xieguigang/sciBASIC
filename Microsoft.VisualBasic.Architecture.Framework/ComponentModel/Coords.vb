@@ -4,8 +4,8 @@ Namespace ComponentModel
 
     Public Class Coords
 
-        <Xml.Serialization.XmlAttribute("x")> Public Property X As Integer
-        <Xml.Serialization.XmlAttribute("y")> Public Property Y As Integer
+        <System.Xml.Serialization.XmlAttribute("x")> Public Property X As Integer
+        <System.Xml.Serialization.XmlAttribute("y")> Public Property Y As Integer
 
         Sub New()
         End Sub

@@ -32,7 +32,7 @@ Namespace ComponentModel
         ''' <remarks></remarks>
         ''' 
 #If NET_40 = 0 Then
-        <Xml.Serialization.XmlIgnore>
+        <System.Xml.Serialization.XmlIgnore>
         Public Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
         <Xml.Serialization.XmlIgnore>

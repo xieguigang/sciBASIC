@@ -5,8 +5,8 @@ Namespace ComponentModel.Settings.Inf
 
     Public Class Section
 
-        <Xml.Serialization.XmlAttribute> Public Property Name As String
-        <Xml.Serialization.XmlElement> Public Property Items As ComponentModel.KeyValuePair()
+        <System.Xml.Serialization.XmlAttribute> Public Property Name As String
+        <System.Xml.Serialization.XmlElement> Public Property Items As ComponentModel.KeyValuePair()
             Get
                 Return _innerHash.Values.ToArray
             End Get

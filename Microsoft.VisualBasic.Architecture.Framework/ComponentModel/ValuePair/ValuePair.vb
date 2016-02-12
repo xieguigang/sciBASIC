@@ -38,7 +38,7 @@ Namespace ComponentModel
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks>在这里可能用不了<see cref="Xml.Serialization.XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
+        ''' <remarks>在这里可能用不了<see cref="System.Xml.Serialization.XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
         Public Overrides Property Key As String Implements sIdEnumerable.Identifier
             Get
                 Return MyBase.Key
@@ -128,7 +128,7 @@ Namespace ComponentModel
     Public Class Key_strArrayValuePair : Inherits KeyValuePairObject(Of String, String())
         Implements sIdEnumerable
 
-        <Xml.Serialization.XmlAttribute> Public Overrides Property Key As String Implements sIdEnumerable.Identifier
+        <System.Xml.Serialization.XmlAttribute> Public Overrides Property Key As String Implements sIdEnumerable.Identifier
             Get
                 Return MyBase.Key
             End Get
@@ -136,7 +136,7 @@ Namespace ComponentModel
                 MyBase.Key = value
             End Set
         End Property
-        <Xml.Serialization.XmlElement> Public Overrides Property Value As String()
+        <System.Xml.Serialization.XmlElement> Public Overrides Property Value As String()
             Get
                 Return MyBase.Value
             End Get

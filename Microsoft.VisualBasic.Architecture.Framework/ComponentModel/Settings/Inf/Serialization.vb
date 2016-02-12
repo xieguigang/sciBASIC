@@ -6,7 +6,7 @@ Namespace ComponentModel.Settings.Inf
 
     Public Class Serialization : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
 
-        <Xml.Serialization.XmlElement> Public Property Sections As Section()
+        <System.Xml.Serialization.XmlElement> Public Property Sections As Section()
 
         Public Shared Function Load(path As String) As Serialization
             Throw New NotImplementedException
