@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.DocumentFormat.RDF.DocumentStream
 
 Namespace DocumentElements
 
@@ -20,9 +21,11 @@ Namespace DocumentElements
         Public Shared Function LoadDocument(Text As String) As RDF
             Dim sBuilder As StringBuilder = New StringBuilder(Text, 1024)
             Call sBuilder.Replace("rdf:", DocumentElements.RDF.RDF_PREFIX)
-            Dim Document As DocumentFormat.RDF.DocumentStream.GenericXmlDocument = DocumentFormat.RDF.DocumentStream.GenericXmlDocument.CreateObjectFromXmlText(sBuilder.ToString)
+            Dim Document As GenericXmlDocument = GenericXmlDocument.CreateObjectFromXmlText(sBuilder.ToString)
             Dim Description As String = Document.DocumentNodes.First.InternalText
-            Dim RDF = New RDF With {.ResourceDescription = Description.CreateObjectFromXmlSegment(Of RDFResourceDescription)()}
+            Dim RDF = New RDF With {
+                .ResourceDescription = Description.CreateObjectFromXmlFragment(Of RDFResourceDescription)()
+            }
             RDF.ResourceDescription.InternalText = Description
             Return RDF
         End Function
