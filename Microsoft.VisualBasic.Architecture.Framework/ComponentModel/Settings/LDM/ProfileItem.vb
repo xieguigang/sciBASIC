@@ -1,4 +1,4 @@
-﻿
+﻿Imports System.Xml.Serialization
 Imports System.Reflection
 
 Namespace ComponentModel.Settings
@@ -40,8 +40,8 @@ Namespace ComponentModel.Settings
         Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IKeyValuePairObject(Of String, String)
         Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable
 
-        <System.Xml.Serialization.XmlAttribute> Public Property Name As String Implements Collection.Generic.IKeyValuePairObject(Of String, String).locusId, Collection.Generic.sIdEnumerable.Identifier
-        <System.Xml.Serialization.XmlAttribute> Public Property Description As String Implements Collection.Generic.IKeyValuePairObject(Of String, String).Value
+        <XmlAttribute> Public Property Name As String Implements Collection.Generic.IKeyValuePairObject(Of String, String).locusId, Collection.Generic.sIdEnumerable.Identifier
+        <XmlAttribute> Public Property Description As String Implements Collection.Generic.IKeyValuePairObject(Of String, String).Value
 
         Friend _PropertyInfo As System.Reflection.PropertyInfo
         Friend _TargetData As Object

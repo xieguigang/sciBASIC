@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -32,10 +33,10 @@ Namespace ComponentModel
         ''' <remarks></remarks>
         ''' 
 #If NET_40 = 0 Then
-        <System.Xml.Serialization.XmlIgnore>
+        <XmlIgnore>
         Public Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
-        <Xml.Serialization.XmlIgnore>
+        <XmlIgnore>
         Public Overridable Property FilePath As String
 #End If
             Get

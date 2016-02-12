@@ -1,12 +1,13 @@
 ﻿Imports System.ComponentModel
 Imports System.Reflection
+Imports System.Xml.Serialization
 
 Namespace Scripting.MetaData
 
     ''' <summary>
     ''' This attribute provides a more details information about a namepace package module in your scripting plugins.
     ''' </summary>
-    <System.Xml.Serialization.XmlType("PackageNamespace", [Namespace]:="Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a")>
+    <XmlType("PackageNamespace", [Namespace]:="Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a")>
     Public Class PackageNamespace : Inherits CommandLine.Reflection.[Namespace]
 
         ''' <summary>

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Extensions
+Imports System.Xml.Serialization
 
 Namespace Net.Protocol.Streams.Array
 
@@ -9,7 +10,7 @@ Namespace Net.Protocol.Streams.Array
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class ValueArray(Of T) : Inherits RawStream
 
-        <System.Xml.Serialization.XmlAttribute("T")>
+        <XmlAttribute("T")>
         Public Overridable Property Values As T()
 
         Protected ReadOnly __serialization As Func(Of T, Byte())

@@ -1,5 +1,5 @@
-﻿
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
+Imports System.Xml.Serialization
 
 Namespace Net
 
@@ -14,13 +14,13 @@ Namespace Net
 
         <Browsable(True)>
         <Description("Guid value of this portal information on the server registry.")>
-        <System.Xml.Serialization.XmlAttribute> Public Property uid As String
+        <XmlAttribute> Public Property uid As String
         <Browsable(True)>
         <Description("IPAddress of the services instance.")>
-        <System.Xml.Serialization.XmlAttribute> Public Property IPAddress As String
+        <XmlAttribute> Public Property IPAddress As String
         <Browsable(True)>
         <Description("Data port of the services instance.")>
-        <System.Xml.Serialization.XmlAttribute> Public Property Port As Integer
+        <XmlAttribute> Public Property Port As Integer
 #End Region
 
         ''' <summary>

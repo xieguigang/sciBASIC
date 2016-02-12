@@ -1,12 +1,13 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
+Imports System.Xml.Serialization
 
 Namespace ComponentModel.Settings.Inf
 
     Public Class Section
 
-        <System.Xml.Serialization.XmlAttribute> Public Property Name As String
-        <System.Xml.Serialization.XmlElement> Public Property Items As ComponentModel.KeyValuePair()
+        <XmlAttribute> Public Property Name As String
+        <XmlElement> Public Property Items As ComponentModel.KeyValuePair()
             Get
                 Return _innerHash.Values.ToArray
             End Get

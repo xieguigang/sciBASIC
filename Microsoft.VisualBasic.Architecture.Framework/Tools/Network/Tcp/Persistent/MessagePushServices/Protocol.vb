@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Net.Protocol
 Imports System.Net.Sockets
 Imports System.Threading
+Imports System.Xml.Serialization
 
 Namespace Net.Persistent.Application
 
@@ -26,8 +27,8 @@ Namespace Net.Persistent.Application
         Public Const WorkSocketPortal As Integer = 66982
 
         Public Class LogonPOST
-            <System.Xml.Serialization.XmlAttribute> Public Property USER_ID As Long
-            <System.Xml.Serialization.XmlAttribute> Public Property Socket As String
+            <XmlAttribute> Public Property USER_ID As Long
+            <XmlAttribute> Public Property Socket As String
         End Class
 
         Public Function LogOnRequest(USER_ID As Long, Socket As String) As RequestStream
@@ -54,9 +55,9 @@ Namespace Net.Persistent.Application
             ''' 发送这条消息的客户端的在服务器上面的句柄，也可以看作为用户编号，尽管这个编号是经过一些映射操作最终得到的
             ''' </summary>
             ''' <returns></returns>
-            <System.Xml.Serialization.XmlAttribute> Public Property [FROM] As Long
-            <System.Xml.Serialization.XmlAttribute> Public Property USER_ID As Long
-            <System.Xml.Serialization.XmlText> Public Property Message As RequestStream
+            <XmlAttribute> Public Property [FROM] As Long
+            <XmlAttribute> Public Property USER_ID As Long
+            <XmlText> Public Property Message As RequestStream
 
             Sub New(rawStream As Byte())
                 Dim pTemp As Byte() = New Byte(INT64 - 1) {}
@@ -114,8 +115,8 @@ Namespace Net.Persistent.Application
 
         Public Class BroadcastPOST : Inherits RawStream
 
-            <System.Xml.Serialization.XmlAttribute> Public Property USER_ID As Long
-            <System.Xml.Serialization.XmlText> Public Property Message As RequestStream
+            <XmlAttribute> Public Property USER_ID As Long
+            <XmlText> Public Property Message As RequestStream
 
             Public Sub New()
             End Sub

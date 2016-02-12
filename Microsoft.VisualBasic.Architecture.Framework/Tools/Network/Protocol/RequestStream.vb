@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
+Imports System.Xml.Serialization
 
 Namespace Net.Protocol
 
@@ -15,33 +16,33 @@ Namespace Net.Protocol
         ''' This property indicates the protocol processor module for the server object.
         ''' </summary>
         ''' <returns></returns>
-        <System.Xml.Serialization.XmlAttribute("Entry")>
+        <XmlAttribute("Entry")>
         Public Property ProtocolCategory As Int64
         ''' <summary>
         ''' This property indicates which the specifics protocol processor will be used for the incoming client request.
         ''' (协议的头部)
         ''' </summary>
         ''' <returns></returns>
-        <System.Xml.Serialization.XmlAttribute("Protocol")>
+        <XmlAttribute("Protocol")>
         Public Property Protocol As Int64
         ''' <summary>
         ''' Buffer length of the protocol request raw stream data <see cref="ChunkBuffer"/>.(协议数据的长度)
         ''' </summary>
         ''' <returns></returns>
-        <System.Xml.Serialization.XmlAttribute("bufLen")>
+        <XmlAttribute("bufLen")>
         Public Property BufferLength As Int64
         ''' <summary>
         ''' The raw stream data of the details data request or the server response data.(协议的具体数据请求)
         ''' </summary>
         ''' <returns></returns>
-        <System.Xml.Serialization.XmlAttribute("rawBuf")>
+        <XmlAttribute("rawBuf")>
         Public Property ChunkBuffer As Byte()
         ''' <summary>
         ''' 使用用户的账号信息唯一标识出来的对象，在服务器端用来查找用户证书的
         ''' 由于在服务器上面这个哈希值是和解密的密匙唯一对应的，所以服务器上面大多数情况下是直接通过这个哈希值来决定授权的
         ''' </summary>
         ''' <returns></returns>
-        <System.Xml.Serialization.XmlAttribute> Public Property uid As Long
+        <XmlAttribute> Public Property uid As Long
 
         ''' <summary>
         ''' <see cref="ChunkBuffer"/>部分的数据是否完整？

@@ -1,11 +1,12 @@
 ﻿Imports System.Drawing
+Imports System.Xml.Serialization
 
 Namespace ComponentModel
 
     Public Class Coords
 
-        <System.Xml.Serialization.XmlAttribute("x")> Public Property X As Integer
-        <System.Xml.Serialization.XmlAttribute("y")> Public Property Y As Integer
+        <XmlAttribute("x")> Public Property X As Integer
+        <XmlAttribute("y")> Public Property Y As Integer
 
         Sub New()
         End Sub

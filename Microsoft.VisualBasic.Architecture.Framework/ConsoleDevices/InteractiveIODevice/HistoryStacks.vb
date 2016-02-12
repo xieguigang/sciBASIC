@@ -1,8 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
+Imports System.Xml.Serialization
 
 Namespace ConsoleDevice
 
-    Public Class HistoryStacks : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
+    Public Class HistoryStacks : Inherits ITextFile
         Implements ISaveHandle
 
         Dim _historyList As List(Of String)
@@ -94,7 +95,7 @@ Namespace ConsoleDevice
 
         Public Class History
             Public Property [Date] As String
-            <System.Xml.Serialization.XmlElement("History-list")> Public Property Histories As List(Of String)
+            <XmlElement("History-list")> Public Property Histories As List(Of String)
 
             Public Overrides Function ToString() As String
                 Return String.Format("[{0}]  {1}......", Me.Date, String.Join(";   ", Histories.Take(3).ToArray))

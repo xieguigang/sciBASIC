@@ -1,12 +1,13 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.Runtime.InteropServices
+Imports System.Xml.Serialization
 
 Namespace ComponentModel.Settings.Inf
 
     Public Class Serialization : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
 
-        <System.Xml.Serialization.XmlElement> Public Property Sections As Section()
+        <XmlElement> Public Property Sections As Section()
 
         Public Shared Function Load(path As String) As Serialization
             Throw New NotImplementedException

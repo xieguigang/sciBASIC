@@ -1,10 +1,12 @@
-﻿Namespace Net.Protocol.Streams
+﻿Imports System.Xml.Serialization
+
+Namespace Net.Protocol.Streams
 
     Public Class [String] : Inherits RawStream
 
-        <System.Xml.Serialization.XmlAttribute> Public Property value As String
+        <XmlAttribute> Public Property value As String
 
-        <System.Xml.Serialization.XmlAttribute> Public Property Encoding As Encodings
+        <XmlAttribute> Public Property Encoding As Encodings
             Get
                 Return TextEncodings.GetEncodings(_encoding)
             End Get

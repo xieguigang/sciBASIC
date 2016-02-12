@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports System.Reflection
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
@@ -32,12 +33,12 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <System.Xml.Serialization.XmlAttribute>
+        <XmlAttribute>
         Public Property [Namespace] As String
 
         Dim _TypeAutoExtract As Boolean
 
-        <System.Xml.Serialization.XmlIgnore> Public Property AutoExtract As Boolean
+        <XmlIgnore> Public Property AutoExtract As Boolean
             Get
                 Return _TypeAutoExtract
             End Get
