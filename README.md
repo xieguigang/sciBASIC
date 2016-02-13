@@ -6,4 +6,4 @@ Includes:
 1. A document library of read and write Csv document for facility the data exchanges between the GCModeller and R program.
 2. A distribution computing framework 
 3. Microsoft VisualBasic Application Framework codes
-4. 
+4. Memory pepline services between two client program
