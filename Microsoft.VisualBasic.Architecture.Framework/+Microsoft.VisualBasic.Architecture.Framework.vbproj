@@ -184,6 +184,7 @@
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
+    <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
