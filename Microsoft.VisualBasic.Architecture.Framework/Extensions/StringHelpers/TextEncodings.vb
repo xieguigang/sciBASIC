@@ -24,6 +24,11 @@ Public Module TextEncodings
         {Encodings.Default, System.Text.Encoding.Default}
     }
 
+    ''' <summary>
+    ''' Get text file save encodings instance
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
     <Extension> Public Function GetEncodings(value As Encodings) As System.Text.Encoding
         If TextEncodings.ContainsKey(value) Then
             Return TextEncodings(value)

@@ -651,6 +651,17 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
+    ''' 只有文件名称，没有拓展名
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    <ExportAPI("File.BaseName")>
+    <Extension>
+    Public Function GetJustFileName(path As String) As String
+        Return IO.Path.GetFileNameWithoutExtension(path)
+    End Function
+
+    ''' <summary>
     ''' 进行安全的复制，出现错误不会导致应用程序崩溃
     ''' </summary>
     ''' <param name="source"></param>
