@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 <PackageNamespace("ScaleMaps",
                   Category:=APICategories.UtilityTools,
@@ -28,6 +29,16 @@ Public Module ScaleMaps
         Return Dbl
     End Function
 
+    <ExportAPI("Ranks.Mapping")>
+    <Extension> Public Function GenerateMapping(Of T As sIdEnumerable)(data As IEnumerable(Of T),
+                                                                       getSample As Func(Of T, Double),
+                                                                       Optional Level As Integer = 10) As Dictionary(Of String, Integer)
+        Dim samples As Double() = data.ToArray(Function(x) getSample(x))
+        Dim levels As Integer() = samples.GenerateMapping(Level)
+        Dim hash = data.ToArray(Function(x, i) New KeyValuePair(Of String, Integer)(x.Identifier, levels(i)))
+        Return hash.ToDictionary
+    End Function
+
     ''' <summary>
     ''' 如果每一个数值之间都是相同的大小，则返回原始数据，因为最大值与最小值的差为0，无法进行映射的创建（会出现除0的错误）
     ''' </summary>
@@ -36,7 +47,7 @@ Public Module ScaleMaps
     ''' <remarks>为了要保持顺序，不能够使用并行拓展</remarks>
     ''' 
     <ExportAPI("Ranks.Mapping")>
-    <Extension> Public Function GenerateMapping(data As Generic.IEnumerable(Of Double), Optional Level As Integer = 10) As Integer()
+    <Extension> Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10) As Integer()
         Dim MinValue As Double = data.Min
         Dim MaxValue As Double = data.Max
         Dim d As Double = (MaxValue - MinValue) / Level
@@ -94,12 +105,12 @@ Public Module ScaleMaps
     ''' <remarks>为了要保持顺序，不能够使用并行拓展</remarks>
     ''' 
     <ExportAPI("Ranks.Mapping")>
-    <Extension> Public Function GenerateMapping(data As Generic.IEnumerable(Of Integer), Optional Level As Integer = 10) As Integer()
+    <Extension> Public Function GenerateMapping(data As IEnumerable(Of Integer), Optional Level As Integer = 10) As Integer()
         Return GenerateMapping((From n In data Select CDbl(n)).ToArray, Level)
     End Function
 
     <ExportAPI("Ranks.Mapping")>
-    <Extension> Public Function GenerateMapping(data As Generic.IEnumerable(Of Long), Optional Level As Integer = 10) As Integer()
+    <Extension> Public Function GenerateMapping(data As IEnumerable(Of Long), Optional Level As Integer = 10) As Integer()
         Return GenerateMapping((From n In data Select CDbl(n)).ToArray, Level)
     End Function
 
