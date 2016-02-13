@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector
@@ -217,10 +218,26 @@ Namespace StorageProvider.ComponentModels
             Return KeyValuePairs
         End Function
 
+        ''' <summary>
+        ''' 对于<see cref="DynamicPropertyBase"/>的继承对象类型，也会自动解析出来的，假若<see cref="MetaAttribute"/>没有被定义的话
+        ''' </summary>
+        ''' <param name="Properties"></param>
+        ''' <returns></returns>
         Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As MetaAttribute
             Dim MetaAttributes = (From [Property] In Properties
                                   Where [Property].Value.ProviderId = Reflection.ProviderIds.MetaAttribute
                                   Select DirectCast([Property].Value, MetaAttribute)).FirstOrDefault
+            If MetaAttributes Is Nothing Then
+                Dim type As Type = Properties.Keys.First.DeclaringType
+                If type.IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
+                    type = type.BaseType
+                    Dim metaProp = type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),
+                                                    BindingFlags.Public Or BindingFlags.Instance)
+                    type = type.GetGenericArguments.First
+                    MetaAttributes = New MetaAttribute(New Reflection.MetaAttribute(type), metaProp)
+                End If
+            End If
+
             Return MetaAttributes
         End Function
 
