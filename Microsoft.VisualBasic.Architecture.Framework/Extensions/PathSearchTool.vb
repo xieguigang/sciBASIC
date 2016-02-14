@@ -669,8 +669,8 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <ExportAPI("SafeCopyTo")>
     Public Function SafeCopyTo(source As String, copyTo As String) As Boolean
-        Dim buf As Byte() = IO.File.ReadAllBytes(source)
         Try
+            Dim buf As Byte() = File.ReadAllBytes(source)
             Call buf.FlushStream(copyTo)
         Catch ex As Exception
             Call App.LogException(New Exception($"{source.ToFileURL} ===> {copyTo.ToFileURL}", ex))

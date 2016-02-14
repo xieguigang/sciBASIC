@@ -102,7 +102,13 @@ Public Module Correlations
         Return pcc
     End Function
 
-    Public Delegate Function ___CORRELATION_METHOD(X As Double(), Y As Double()) As Double
+    ''' <summary>
+    ''' 相关性的计算分析函数
+    ''' </summary>
+    ''' <param name="X"></param>
+    ''' <param name="Y"></param>
+    ''' <returns></returns>
+    Public Delegate Function ICorrelation(X As Double(), Y As Double()) As Double
 
     ''' <summary>
     ''' This method should not be used in cases where the data set is truncated; that is, 
