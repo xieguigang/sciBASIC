@@ -70,14 +70,17 @@ Namespace ComponentModel
         End Function
 
         Public Shared Function ToDictionary(ListData As IEnumerable(Of KeyValuePair)) As Dictionary(Of String, String)
-            Dim Dictionary As Dictionary(Of String, String) = ListData.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+            Dim Dictionary As Dictionary(Of String, String) =
+                ListData.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
             Return Dictionary
         End Function
 
         Public Overrides Function Equals(obj As Object) As Boolean
             If TypeOf obj Is KeyValuePair Then
                 Dim KeyValuePair As KeyValuePair = DirectCast(obj, KeyValuePair)
-                Return String.Equals(KeyValuePair.Key, Key) AndAlso String.Equals(KeyValuePair.Value, Value)
+
+                Return String.Equals(KeyValuePair.Key, Key) AndAlso
+                    String.Equals(KeyValuePair.Value, Value)
             Else
                 Return False
             End If

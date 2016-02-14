@@ -57,7 +57,7 @@ Public Module IEnumerations
         Return Dictionary
     End Function
 
-    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional Explicit As Boolean = True) As KeyValuePair()
+    <Extension> Public Function FindByItemKey(source As IEnumerable(Of ComponentModel.KeyValuePair), Key As String, Optional Explicit As Boolean = True) As ComponentModel.KeyValuePair()
         Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery
