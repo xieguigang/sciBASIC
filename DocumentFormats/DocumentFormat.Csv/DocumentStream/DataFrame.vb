@@ -149,8 +149,8 @@ Namespace DocumentStream
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Function Load(path As String, encoding As System.Text.Encoding) As DataFrame
-            Dim File As File = DocumentFormat.Csv.DocumentStream.File.Load(path, encoding)
+        Public Overloads Shared Function Load(path As String, encoding As Encoding, Optional fast As Boolean = False) As DataFrame
+            Dim File As File = If(fast, File.FastLoad(path, True, encoding), File.Load(path, encoding))
             Return CreateObject(File)
         End Function
 

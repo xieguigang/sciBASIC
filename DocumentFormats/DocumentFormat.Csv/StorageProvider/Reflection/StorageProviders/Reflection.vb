@@ -123,16 +123,16 @@ Namespace StorageProvider.Reflection
         ''' <param name="Path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Load(Of ItemType As Class)(Path As String, Optional Explicit As Boolean = True, Optional encoding As System.Text.Encoding = Nothing) As List(Of ItemType)
+        Public Function Load(Of ItemType As Class)(Path As String, Optional Explicit As Boolean = True, Optional encoding As System.Text.Encoding = Nothing, Optional fast As Boolean = False) As List(Of ItemType)
             Call "Load data from filestream....".__DEBUG_ECHO
             If Not Path.FileExists Then '空文件
                 Call $"Csv file ""{Path.ToFileURL}"" is empty!".__DEBUG_ECHO
                 Return New List(Of ItemType)
             End If
 
-            Dim Reader As DataFrame = DocumentStream.DataFrame.Load(Path, encoding)
+            Dim reader As DataFrame = DocumentStream.DataFrame.Load(Path, encoding, fast)
             Call $"Reflector load data into type {GetType(ItemType).FullName}".__DEBUG_ECHO
-            Dim ChunkBuffer As List(Of ItemType) = Reflection.Reflector.Convert(Of ItemType)(Reader, Explicit)
+            Dim ChunkBuffer As List(Of ItemType) = Reflection.Reflector.Convert(Of ItemType)(reader, Explicit)
             Call "[Job Done!]".__DEBUG_ECHO
             Return ChunkBuffer
         End Function
