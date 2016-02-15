@@ -27,4 +27,8 @@ Public Module KeyValuePairExtensions
         Call list.Add(New KeyValuePairObject(Of TKey, TValue)(key, value))
         Return list
     End Function
+
+    <Extension> Public Function ToDictionary(Of T As IReadOnlyId)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
+        Return source.ToDictionary(Function(x) x.locusId)
+    End Function
 End Module

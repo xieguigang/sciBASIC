@@ -2049,11 +2049,28 @@ Public Module Extensions
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="Collection"></param>
+    ''' <param name="remoteDuplicates">当这个参数为False的时候，出现重复的键名会抛出错误，当为True的时候，有重复的键名存在的话，可能会丢失一部分的数据</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of TKey, TValue)(Collection As Generic.IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
-        Dim Dictionary As Dictionary(Of TKey, TValue) = Collection.ToDictionary(Function(obj) obj.Key, elementSelector:=Function(obj) obj.Value)
-        Return Dictionary
+    <Extension> Public Function ToDictionary(Of TKey, TValue)(Collection As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                                                              Optional remoteDuplicates As Boolean = False) As Dictionary(Of TKey, TValue)
+        If remoteDuplicates Then
+            Dim hash As Dictionary(Of TKey, TValue) = New Dictionary(Of TKey, TValue)
+
+            For Each x In Collection
+                If hash.ContainsKey(x.Key) Then
+                    Call Console.WriteLine("  " & "[Duplicated] " & x.Key.ToString)
+                Else
+                    Call hash.Add(x.Key, x.Value)
+                End If
+            Next
+
+            Return hash
+        Else
+            Dim Dictionary As Dictionary(Of TKey, TValue) =
+                Collection.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+            Return Dictionary
+        End If
     End Function
 
     ''' <summary>
