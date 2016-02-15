@@ -1917,7 +1917,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
-    <Extension> Public Function Sequence(Of T)(<Parameter("Data.Collection", "")> Collection As Generic.IEnumerable(Of T),
+    <Extension> Public Function Sequence(Of T)(<Parameter("Data.Collection", "")> Collection As IEnumerable(Of T),
                                                <Parameter("Index.OffSet", "")> Optional OffSet As Integer = 0) _
         As <FunctionReturns("A integer array of subscript index of the target generic collection.")> Integer()
 #Else
@@ -1942,7 +1942,28 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function LongSeq(Of T)(source As Generic.IEnumerable(Of T)) As Long()
+    <Extension> Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of SeqValue(Of T))
+        If Not source.IsNullOrEmpty Then
+            Dim idx As Integer = offset
+
+            For Each x As T In source
+                Yield New SeqValue(Of T)(idx, x)
+                idx += 1
+            Next
+        End If
+    End Function
+
+    Public Structure SeqValue(Of T)
+        Public Property Pos As Integer
+        Public Property obj As T
+
+        Sub New(i As Integer, x As T)
+            Pos = i
+            obj = x
+        End Sub
+    End Structure
+
+    <Extension> Public Function LongSeq(Of T)(source As IEnumerable(Of T)) As Long()
         If source.IsNullOrEmpty Then
             Return New Long() {}
         Else

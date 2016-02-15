@@ -505,32 +505,36 @@ Namespace DocumentStream
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function FastLoad(path As String, Optional Parallel As Boolean = True, Optional encoding As System.Text.Encoding = Nothing) As File
+        Public Shared Function FastLoad(path As String, Optional Parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
             If encoding Is Nothing Then
-                encoding = System.Text.Encoding.Default
+                encoding = Encoding.Default
             End If
 
             Dim sw = Stopwatch.StartNew
-            Dim Lines As String() = IO.File.ReadAllLines(path, encoding)
-            Dim Csv As Csv.DocumentStream.File
+            Dim lines As String() = IO.File.ReadAllLines(path, encoding)
+            Dim cData As File = New File With {
+                ._FilePath = path
+            }
 
             If Parallel Then
-                Dim Cache = (From i As Integer In Lines.Sequence Select i, str = Lines(i)).ToArray
-                Dim Rows = (From strLine In Cache.AsParallel
-                            Let InternalList As List(Of String) = Strings.Split(strLine.str, ",").ToList
-                            Select strLine.i, data = New Csv.DocumentStream.RowObject With {._innerColumns = InternalList}
-                            Order By i Ascending).ToArray
-                Csv = New File With {._FilePath = path, ._innerTable = (From item In Rows Select item.data).ToList}
+                Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
+                Dim Rows = (From line As SeqValue(Of String)
+                            In cache.AsParallel
+                            Let __innerList As List(Of String) = line.obj.Split(","c).ToList
+                            Select i = line.Pos,
+                                data = New RowObject With {._innerColumns = __innerList}
+                            Order By i Ascending)
+                cData._innerTable = (From item In Rows Select item.data).ToList
             Else
-                Dim Rows = (From strLine As String In Lines
-                            Let InternalList As List(Of String) = Strings.Split(strLine, ",").ToList
-                            Select data = New Csv.DocumentStream.RowObject With {._innerColumns = InternalList}).ToList
-                Csv = New File With {._FilePath = path, ._innerTable = Rows}
+                Dim Rows = (From strLine As String In lines
+                            Let InternalList As List(Of String) = strLine.Split(","c).ToList
+                            Select New RowObject With {._innerColumns = InternalList}).ToList
+                cData._innerTable = Rows
             End If
 
             Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".__DEBUG_ECHO
 
-            Return Csv
+            Return cData
         End Function
 
         ''' <summary>
