@@ -10,6 +10,35 @@ Namespace KMeans
     <PackageNamespace("KMeans.Tree.NET", Category:=APICategories.ResearchTools, Publisher:="smrucc@gcmodeller.org")>
     Public Module Tree
 
+        ''' <summary>
+        ''' 树形聚类
+        ''' </summary>
+        ''' <param name="resultSet"></param>
+        ''' <returns></returns>
+        ''' 
+        <ExportAPI("Cluster.Trees")>
+        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM)) As EntityLDM()
+            Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray
+            Dim ds = resultSet.ToArray(Function(x) New KMeans.Entity With {
+                                       .uid = x.Name,
+                                       .Properties = mapNames.ToArray(Function(s) x.Properties(s))
+                                       })
+            Dim tree As KMeans.Entity() = KMeans.TreeCluster(ds)
+            Dim saveResult = tree.ToArray(Function(x) x.ToLDM(mapNames))
+
+            For Each name As String In resultSet.ToArray(Function(x) x.Name)
+                For Each x In saveResult
+                    If InStr(x.Name, name) > 0 Then
+                        x.Cluster = x.Name.Replace(name & ".", "")
+                        x.Name = name
+                        Exit For
+                    End If
+                Next
+            Next
+
+            Return saveResult
+        End Function
+
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity)) As Entity()
             Return TreeCluster(Of Entity)(source)
