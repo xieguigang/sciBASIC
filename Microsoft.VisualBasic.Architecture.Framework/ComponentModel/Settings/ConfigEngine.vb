@@ -8,8 +8,8 @@ Namespace ComponentModel.Settings
     ''' 只包含有对数据映射目标对象的属性读写，并不包含有文件数据的读写操作
     ''' </summary>
     ''' 
-    Public Class ConfigEngine : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
-        Implements System.IDisposable
+    Public Class ConfigEngine : Inherits ITextFile
+        Implements IDisposable
 
         ''' <summary>
         ''' 所映射的数据源
@@ -18,7 +18,7 @@ Namespace ComponentModel.Settings
         ''' <summary>
         ''' 键名都是小写的
         ''' </summary>
-        Protected ProfileItemCollection As IReadOnlyDictionary(Of String, ProfileItem)
+        Protected ProfileItemCollection As IReadOnlyDictionary(Of String, BindMapping)
 
         ''' <summary>
         ''' List all of the available settings nodes in this profile data session.
@@ -27,7 +27,7 @@ Namespace ComponentModel.Settings
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property AllItems As ProfileItem()
+        Public ReadOnly Property AllItems As BindMapping()
             Get
                 Return ProfileItemCollection.Values.ToArray
             End Get
@@ -50,21 +50,14 @@ Namespace ComponentModel.Settings
         Protected Sub New()
         End Sub
 
-        Protected Friend Shared Function Load(Of EntityType)(Type As System.Type, TargetData As EntityType) As KeyValuePair(Of String, ProfileItem)()
+        Protected Friend Shared Function Load(Of EntityType)(Type As System.Type, TargetData As EntityType) As KeyValuePair(Of String, BindMapping)()
             Dim LQuery = From [Property] As PropertyInfo In Type.GetProperties
                          Let attributes = [Property].GetCustomAttributes(attributeType:=ProfileItemType, inherit:=False)
                          Where attributes.Length > 0
                          Let attr = DirectCast(attributes(0), ProfileItem)
-                         Select New KeyValuePair(Of ProfileItem, System.Reflection.PropertyInfo)(attr, [Property]) '
-            Dim LoadedData = LQuery.ToArray
-            Dim ItemCollection = (From Pair In LoadedData Select Pair.Key).ToArray
-            Dim LoadLQuery = (From ProfileItem As ProfileItem In (From Handle As Integer  '
-                                                                 In ItemCollection.Sequence
-                                                                  Let readItem As ProfileItem = ItemCollection(Handle)
-                                                                  Let pInfo = readItem._PropertyInfo
-                                                                  Let pItem = readItem.Initialize(LoadedData(Handle).Value, TargetData)
-                                                                  Select pItem).ToArray
-                              Select New KeyValuePair(Of String, ProfileItem)(GetName(ProfileItem, ProfileItem._PropertyInfo), ProfileItem)).ToList
+                         Select BindMapping.Initialize(attr, [Property], TargetData) '
+            Dim LoadLQuery = (From ProfileItem As BindMapping In LQuery
+                              Select New KeyValuePair(Of String, BindMapping)(GetName(ProfileItem, ProfileItem.BindProperty), ProfileItem)).ToList
 
             Dim Nodes = From [property] As PropertyInfo In Type.GetProperties
                         Let attributes = [property].GetCustomAttributes(attributeType:=ProfileItemNode, inherit:=False)
@@ -73,7 +66,7 @@ Namespace ComponentModel.Settings
             Dim lstNodes = Nodes.ToArray
 
             If lstNodes.Length > 0 Then
-                Dim List As List(Of KeyValuePair(Of String, ProfileItem)) = LoadLQuery
+                Dim List As List(Of KeyValuePair(Of String, BindMapping)) = LoadLQuery
 
                 For Each Item In lstNodes
                     If Item.Entity Is Nothing Then
@@ -95,7 +88,7 @@ Namespace ComponentModel.Settings
             Return LoadLQuery.ToArray
         End Function
 
-        Protected Shared Function GetName(ProfileItem As ProfileItem, [Property] As System.Reflection.PropertyInfo) As String
+        Protected Shared Function GetName(ProfileItem As ProfileItem, [Property] As PropertyInfo) As String
             If String.IsNullOrEmpty(ProfileItem.Name) Then
                 ProfileItem.Name = [Property].Name.ToLower
             End If
@@ -163,17 +156,19 @@ Namespace ComponentModel.Settings
         End Function
 
         <ExportAPI("Prints")>
-        Public Overridable Function Prints(data As Generic.IEnumerable(Of ProfileItem)) As String
-            Dim Keys As String() = (From nodeItem In data Select nodeItem.Name).ToArray
-            Dim MaxLength As Integer = (From str As String In Keys Select Len(str)).ToArray.Max
+        Public Shared Function Prints(data As IEnumerable(Of BindMapping)) As String
+            Dim Keys As String() = (From nodeItem As BindMapping In data Select nodeItem.Name).ToArray
+            Dim MaxLength As Integer = (From str As String In Keys Select Len(str)).Max
             Dim sBuilder As StringBuilder = New StringBuilder(New String("-"c, 120))
 
             Call sBuilder.AppendLine()
 
-            For Each Line As ProfileItem In data
-                Dim str As String = String.Format("  {0}{1}  = {2}", Line.Name, New String(" "c, MaxLength - Len(Line.Name) + 2), If(String.IsNullOrEmpty(Line.Value), "null", Line.Value))
-                If Not String.IsNullOrEmpty(Line.Description) Then
-                    str &= "     // " & Line.Description
+            For Each line As BindMapping In data
+                Dim blank As String = New String(" "c, MaxLength - Len(line.Name) + 2)
+                Dim value As String = If(String.IsNullOrEmpty(line.Value), "null", line.Value)
+                Dim str As String = String.Format("  {0}{1}  = {2}", line.Name, blank, value)
+                If Not String.IsNullOrEmpty(line.Description) Then
+                    str &= "     // " & line.Description
                 End If
                 Call sBuilder.AppendLine(str)
             Next
@@ -188,7 +183,7 @@ Namespace ComponentModel.Settings
         ''' <returns></returns>
         ''' 
         <ExportAPI("GetNode")>
-        Public Function GetSettingsNode(Name As String) As ProfileItem
+        Public Function GetSettingsNode(Name As String) As BindMapping
             Return ProfileItemCollection(Name.ToLower)
         End Function
 
@@ -199,12 +194,11 @@ Namespace ComponentModel.Settings
         <ExportAPI("Save")>
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
             Dim Xml As String = _SettingsData.GetXml
-            FilePath = getPath(FilePath)
-            Return Xml.SaveTo(FilePath, Encoding)
+            Return Xml.SaveTo(getPath(FilePath), Encoding)
         End Function
 
-        Protected Friend Shared ReadOnly Property ProfileItemType As System.Type = GetType(ProfileItem)
-        Protected Friend Shared ReadOnly Property ProfileItemNode As System.Type = GetType(ProfileNodeItem)
+        Protected Friend Shared ReadOnly Property ProfileItemType As Type = GetType(ProfileItem)
+        Protected Friend Shared ReadOnly Property ProfileItemNode As Type = GetType(ProfileNodeItem)
 
 #Region "IDisposable Support"
         ' IDisposable

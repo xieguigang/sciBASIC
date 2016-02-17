@@ -53,22 +53,24 @@ Public Module ScaleMaps
         Dim d As Double = (MaxValue - MinValue) / Level
 
         If d = 0R Then
-            Return (From n In data Select 1).ToArray  '所有的值都是一样的，则都是同等级的
+            Return (From n As Double In data Select 1).ToArray  '所有的值都是一样的，则都是同等级的
         End If
 
-        Dim ChunkBuffer As Integer() = New Integer(data.Count - 1) {}
+        Dim chunkBuf As Integer() = New Integer(data.Count - 1) {}
+        Dim i As Integer = 0
 
         Level -= 1
 
-        For i As Integer = 0 To ChunkBuffer.Count - 1
-            Dim lv As Integer = CInt((data(i) - MinValue) / d + 1)
+        For Each x As Double In data
+            Dim lv As Integer = CInt((x - MinValue) / d + 1)
             If lv > Level Then
                 lv = Level
             End If
-            ChunkBuffer(i) = lv
+            chunkBuf(i) = lv
+            i += 1
         Next
 
-        Return ChunkBuffer
+        Return chunkBuf
     End Function
 
     <ExportAPI("Ranks.Log2")>

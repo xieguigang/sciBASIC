@@ -196,6 +196,7 @@
     <Compile Include="ComponentModel\LazyLoader.vb" />
     <Compile Include="ComponentModel\Settings\ConfigEngine.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Serialization.vb" />
+    <Compile Include="ComponentModel\Settings\LDM\BindMapping.vb" />
     <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />

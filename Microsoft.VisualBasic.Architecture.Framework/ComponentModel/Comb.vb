@@ -120,9 +120,9 @@ Namespace ComponentModel
     ''' 任意多个集合之间的对象之间相互组成组合输出
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Comb
+    Public Module Comb
 
-        Public Shared Function CreateCombos(Of TA, TB)(sourceA As Generic.IEnumerable(Of TA), sourceB As Generic.IEnumerable(Of TB)) As KeyValuePair(Of TA, TB)()
+        Public Function CreateCombos(Of TA, TB)(sourceA As Generic.IEnumerable(Of TA), sourceB As Generic.IEnumerable(Of TB)) As KeyValuePair(Of TA, TB)()
             Dim List As New List(Of KeyValuePair(Of TA, TB))
 
             For Each ItemA In sourceA
@@ -134,11 +134,11 @@ Namespace ComponentModel
             Return List.ToArray
         End Function
 
-        Public Shared Function Generate(Of T)(SourceCollection As T()()) As T()()
-            Dim FirstCollection = SourceCollection.First
+        Public Function Generate(Of T)(source As T()()) As T()()
+            Dim FirstCollection = source.First
 
-            If SourceCollection.Length = 2 Then '只剩下两个的时候，会退出递归操作
-                Dim LastCollection = SourceCollection.Last
+            If source.Length = 2 Then '只剩下两个的时候，会退出递归操作
+                Dim LastCollection = source.Last
                 Dim ChunkBuffer As List(Of T()) = New List(Of T())
 
                 For Each item In FirstCollection
@@ -150,9 +150,9 @@ Namespace ComponentModel
                 Return ChunkBuffer.ToArray
             Else
                 Dim ChunkBuffer As List(Of T()) = New List(Of T())
-                Dim LastCollection = Generate(SourceCollection.Skip(1).ToArray)
+                Dim LastCollection = Generate(source.Skip(1).ToArray)
 
-                Call Console.Write(SourceCollection.Length & ",")
+                Call Console.Write(source.Length & ",")
 
                 For Each item In FirstCollection
                     For Each ItemCollection In LastCollection
@@ -165,5 +165,5 @@ Namespace ComponentModel
                 Return ChunkBuffer.ToArray
             End If
         End Function
-    End Class
+    End Module
 End Namespace

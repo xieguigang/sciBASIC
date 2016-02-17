@@ -1,5 +1,6 @@
 ﻿Imports System.Xml.Serialization
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ComponentModel.Settings
 
@@ -37,14 +38,11 @@ Namespace ComponentModel.Settings
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class ProfileItem : Inherits Attribute
-        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.IKeyValuePairObject(Of String, String)
-        Implements Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable
+        Implements IKeyValuePairObject(Of String, String)
+        Implements sIdEnumerable
 
-        <XmlAttribute> Public Property Name As String Implements Collection.Generic.IKeyValuePairObject(Of String, String).locusId, Collection.Generic.sIdEnumerable.Identifier
-        <XmlAttribute> Public Property Description As String Implements Collection.Generic.IKeyValuePairObject(Of String, String).Value
-
-        Friend _PropertyInfo As System.Reflection.PropertyInfo
-        Friend _TargetData As Object
+        <XmlAttribute> Public Property Name As String Implements IKeyValuePairObject(Of String, String).locusId, sIdEnumerable.Identifier
+        <XmlAttribute> Public Property Description As String Implements IKeyValuePairObject(Of String, String).Value
 
         ''' <summary>
         ''' 默认的数据类型是字符串类型
@@ -65,59 +63,11 @@ Namespace ComponentModel.Settings
             Description = NodeDescription
         End Sub
 
-        Friend Function Initialize(PropertyInfo As PropertyInfo, TargetData As Object) As ProfileItem ',SettingMethod As System.Action(Of String), GetMethod As System.Func(Of Object)
-            Me._TargetData = TargetData
-            Me._PropertyInfo = PropertyInfo
-            Return Me
-        End Function
-
-        Public ReadOnly Property Value As String
-            Get
-                Dim result = _PropertyInfo.GetValue(_TargetData) '_Value()
-                If result Is Nothing OrElse String.IsNullOrEmpty(CStr(result)) Then
-                    Return ""
-                Else
-                    Return result.ToString
-                End If
-            End Get
-        End Property
-
-        Public Sub [Set](value As String)
-            Dim obj As Object =
-                Scripting.CTypeDynamic(value, _PropertyInfo.PropertyType)
-            Call _PropertyInfo.SetValue(_TargetData, obj)
-        End Sub
-
-        ''' <summary>
-        ''' 打印在终端窗口上面的字符串
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property AsOutString As String
-            Get
-                Return String.Format("{0} = ""{1}""", Name, Value)
-            End Get
-        End Property
-
         Public Overrides Function ToString() As String
             If Not String.IsNullOrEmpty(Description) Then
                 Return String.Format("{0}: {1}", Name, Description)
             Else
                 Return Name
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 这个方法只是针对<see cref="ValueTypes.File"/>和<see cref="ValueTypes.Directory"/>这两种类型而言才有效的
-        ''' 对于其他的类型数据，都是返回False
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function IsFsysValid() As Boolean
-            If Type = ValueTypes.Directory Then
-                Return Value.DirectoryExists
-            ElseIf Type = ValueTypes.File
-                Return Value.FileExists
-            Else
-                Return False
             End If
         End Function
     End Class
