@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports ______NETWORK__ = Microsoft.VisualBasic.DataVisualization.Network.FileStream.Network(Of
@@ -14,27 +15,33 @@ Public Module NetworkAPI
     End Function
 
     <ExportAPI("Find.NewSession")>
-    Public Function CreatePathwayFinder(Network As Generic.IEnumerable(Of FileStream.NetworkEdge)) As PathFinder(Of FileStream.NetworkEdge)
+    Public Function CreatePathwayFinder(Network As IEnumerable(Of FileStream.NetworkEdge)) As PathFinder(Of FileStream.NetworkEdge)
         Return New PathFinder(Of FileStream.NetworkEdge)(Network.ToArray)
     End Function
 
     <ExportAPI("Find.Path.Shortest")>
     Public Function FindShortestPath(finder As PathFinder(Of FileStream.NetworkEdge), start As String, ends As String) As FileStream.NetworkEdge()
-        Dim ChunkBuffer = finder.FindShortestPath(start, ends)
+        Dim result = finder.FindShortestPath(start, ends)
         Dim List As List(Of FileStream.NetworkEdge) = New List(Of FileStream.NetworkEdge)
-        For Each Line In ChunkBuffer
+        For Each Line In result
             Call List.AddRange(Line.Value)
         Next
         Return List.ToArray
     End Function
 
+    <ExportAPI("Find.Path.Shortest")>
+    <Extension> Public Function FindShortestPath(net As IEnumerable(Of FileStream.NetworkEdge), start As String, ends As String) As FileStream.NetworkEdge()
+        Dim finder As New PathFinder(Of FileStream.NetworkEdge)(net.ToArray)
+        Return FindShortestPath(finder, start, ends)
+    End Function
+
     <ExportAPI("Get.NetworkEdges")>
-    Public Function GetNHetworkEdges(Network As ______NETWORK__) As Microsoft.VisualBasic.DataVisualization.Network.FileStream.NetworkEdge()
+    Public Function GetNHetworkEdges(Network As ______NETWORK__) As FileStream.NetworkEdge()
         Return Network.Edges
     End Function
 
     <ExportAPI("Get.NetworkNodes")>
-    Public Function GetNetworkNodes(Network As ______NETWORK__) As Microsoft.VisualBasic.DataVisualization.Network.FileStream.Node()
+    Public Function GetNetworkNodes(Network As ______NETWORK__) As FileStream.Node()
         Return Network.Nodes
     End Function
 

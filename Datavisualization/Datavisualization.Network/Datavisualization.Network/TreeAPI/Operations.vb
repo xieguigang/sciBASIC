@@ -10,6 +10,8 @@ Namespace TreeAPI
         Public Const LEAF As String = "Leaf"
         Public Const LEAF_X As String = "Leaf-X"
 
+        Public Const ROOT As String = "ROOT"
+
         <ExportAPI("Cluster.Parts")>
         Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
 

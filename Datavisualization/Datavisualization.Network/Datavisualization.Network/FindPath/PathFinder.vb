@@ -1,5 +1,9 @@
 ﻿#Const DEBUG = 1
 
+''' <summary>
+''' 这个似乎是有方向的
+''' </summary>
+''' <typeparam name="NetworkNode"></typeparam>
 Public Class PathFinder(Of NetworkNode As FileStream.NetworkEdge)
 
     Dim Network As NetworkNode()

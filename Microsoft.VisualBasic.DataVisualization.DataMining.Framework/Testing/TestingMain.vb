@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.KMeans
+Imports Microsoft.VisualBasic.DataVisualization.Network
+Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Linq
 
@@ -20,6 +22,12 @@ Module TestingMain
     End Class
 
     Sub Main()
+
+        Dim nnnnet = "E:\Microsoft.VisualBasic_Framework\Datavisualization\Datavisualization.Network\TestNET\Edges.csv".LoadCsv(Of NetworkEdge)
+        Dim finderdfff = Dijkstra.DijkstraAPI.CreatePathwayFinder(Dijkstra.DijkstraAPI.ImportsNetwork(nnnnet))
+        Dim pathssss = Dijkstra.DijkstraAPI.FindAllPath(finderdfff, "xcb_M00552", "xcb_M00024")
+
+        Dim parts = TreeAPI.ClusterParts(nnnnet)
 
 
         Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)

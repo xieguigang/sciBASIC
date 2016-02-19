@@ -89,11 +89,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FindPath\Dijkstra\LDM.vb" />
+    <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="LDM\FileStream\Edge.vb" />
     <Compile Include="LDM\FileStream\Network.vb" />
     <Compile Include="LDM\FileStream\Node.vb" />
-    <Compile Include="FindPath\Dijkstra.vb" />
+    <Compile Include="FindPath\Dijkstra\Dijkstra.vb" />
     <Compile Include="FindPath\PQDijkstra\BasicHeap.vb" />
     <Compile Include="FindPath\PQDijkstra\DijkstraFast.vb" />
     <Compile Include="FindPath\PQDijkstra\Example.vb" />
