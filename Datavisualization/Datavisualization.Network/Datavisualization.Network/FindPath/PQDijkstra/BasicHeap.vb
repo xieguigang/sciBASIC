@@ -6,8 +6,9 @@ Imports System.Text
 
 Namespace Dijkstra.PQDijkstra
 
-    Class BasicHeap
-        Private InnerList As New List(Of HeapNode)()
+    Public Class BasicHeap
+
+        Dim InnerList As New List(Of HeapNode)()
 
         Public Sub New()
         End Sub

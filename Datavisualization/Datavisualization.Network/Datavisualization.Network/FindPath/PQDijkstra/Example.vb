@@ -1,41 +1,6 @@
 Namespace Dijkstra.PQDijkstra
 
-    Public MustInherit Class PQDijkstraProvider
-
-        Dim dijkstra As DijkstraFast
-
-        ''' <summary>
-        ''' get costs. If there is no connection, then cost is maximum.(获取)
-        ''' </summary>
-        ''' <param name="start"></param>
-        ''' <param name="finish"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Protected MustOverride Function getInternodeTraversalCost(start As Integer, finish As Integer) As Single
-        ''' <summary>
-        ''' 获取与目标节点直接相邻的所有的节点的编号
-        ''' </summary>
-        ''' <param name="startingNode"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Protected MustOverride Function GetNearbyNodes(startingNode As Integer) As IEnumerable(Of Integer)
-
-        ''' <summary>
-        ''' 网络之中的节点的总数目
-        ''' </summary>
-        ''' <param name="totalNodes"></param>
-        ''' <remarks></remarks>
-        Sub New(totalNodes As Integer)
-            dijkstra = New DijkstraFast(totalNodes, New DijkstraFast.InternodeTraversalCost(AddressOf getInternodeTraversalCost), New DijkstraFast.NearbyNodesHint(AddressOf GetNearbyNodes))
-        End Sub
-
-        Public Function Compute(start As Integer, ends As Integer) As Integer()
-            Dim minPath As Integer() = dijkstra.GetMinimumPath(start, ends)
-            Return minPath
-        End Function
-    End Class
-
-    Public Class Example : Inherits PQDijkstraProvider
+    Public Class Finder : Inherits PQDijkstraProvider
 
         Private totalNodes As Integer = 100000
         Private cost As Single(,)
@@ -56,7 +21,12 @@ Namespace Dijkstra.PQDijkstra
             Next
         End Sub
 
-        ' a function to get relative position from one node to another
+        ''' <summary>
+        ''' a function to get relative position from one node to another
+        ''' </summary>
+        ''' <param name="start"></param>
+        ''' <param name="finish"></param>
+        ''' <returns></returns>
         Private Function GetRelativePosition(start As Integer, finish As Integer) As Integer
             If start - 1 = finish Then
                 Return 0
