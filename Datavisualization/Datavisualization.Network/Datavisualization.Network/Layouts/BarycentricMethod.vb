@@ -136,7 +136,7 @@ Namespace Layouts
         Public Function ForceDirectedLayout(Network As Network, Optional cutoff As Double = 100, Optional _DEBUG_EXPORT As String = "") As Network
             Dim FrameSize = Network.FrameSize
 
-            Network._NodesInnerList = (From Node In Network.Nodes
+            Network._nodesInnerList = (From Node In Network.Nodes
                                        Let randl = New Point(FrameSize.Width * RandomDouble(), FrameSize.Height * RandomDouble())
                                        Select Node.SetLocation(randl)).ToList
             Call doLayout(Network, 1)

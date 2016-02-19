@@ -216,10 +216,11 @@
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
+    <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
     <Compile Include="Extensions\Collection\KeyValuePair.vb" />
-    <Compile Include="Extensions\Collection\LoopArray.vb" />
+    <Compile Include="ComponentModel\DataStructures\LoopArray.vb" />
     <Compile Include="Extensions\Collection\Vector.vb" />
-    <Compile Include="Extensions\Collection\LINQ.vb" />
+    <Compile Include="Extensions\Collection\Linq\Linq.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
     <Compile Include="Extensions\Debugger.vb" />
     <Compile Include="Extensions\Doc\Xml.vb" />

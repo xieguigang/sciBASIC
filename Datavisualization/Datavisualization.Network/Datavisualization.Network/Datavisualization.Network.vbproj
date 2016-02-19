@@ -108,6 +108,7 @@
     <Compile Include="FindPath\PathFinder.vb" />
     <Compile Include="Layouts\Module1.vb" />
     <Compile Include="LDM\ObjectModel\Network.vb" />
+    <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
     <None Include="Layouts\Module1.vb_" />
     <Compile Include="NetworkVisualizer.vb" />

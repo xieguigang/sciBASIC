@@ -15,6 +15,12 @@ Namespace TreeAPI
         <ExportAPI("Cluster.Parts")>
         Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
             Dim ROOTs = net.GetConnections(ROOT)
+
+        End Function
+
+        Private Function __addCluster() As Dictionary(Of String, Edge())
+
+
         End Function
     End Module
 End Namespace

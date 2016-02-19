@@ -139,7 +139,7 @@ Namespace Layouts
             Dim FrameSize = Network.FrameSize
             Dim Central As Size = New Size(FrameSize.Width / 2, FrameSize.Height / 2)
 
-            Network._NodesInnerList = (From Node In Network.Nodes Select Node.InitializeRandomizeLocation(FrameSize:=Central)).ToList
+            Network._nodesInnerList = (From Node In Network.Nodes Select Node.InitializeRandomizeLocation(FrameSize:=Central)).ToList
 
             Dim MaxWeightNode = (From node In Network Select node Order By node.Neighbours.Count Descending).First
             MaxWeightNode.Location = New Point(Central.Width, Central.Height)

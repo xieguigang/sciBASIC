@@ -10,6 +10,7 @@ Imports System.Reflection
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization
 
 #If FRAMEWORD_CORE Then
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -1941,27 +1942,6 @@ Public Module Extensions
             Return List
         End If
     End Function
-
-    <Extension> Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of SeqValue(Of T))
-        If Not source.IsNullOrEmpty Then
-            Dim idx As Integer = offset
-
-            For Each x As T In source
-                Yield New SeqValue(Of T)(idx, x)
-                idx += 1
-            Next
-        End If
-    End Function
-
-    Public Structure SeqValue(Of T)
-        Public Property Pos As Integer
-        Public Property obj As T
-
-        Sub New(i As Integer, x As T)
-            Pos = i
-            obj = x
-        End Sub
-    End Structure
 
     <Extension> Public Function LongSeq(Of T)(source As IEnumerable(Of T)) As Long()
         If source.IsNullOrEmpty Then
