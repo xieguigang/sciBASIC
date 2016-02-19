@@ -190,20 +190,19 @@ Public Module ProgramPathSearchTool
         End Try
     End Function
 
-
-#If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 获取目标文件夹的名称
+    ''' 获取目标文件夹的名称或者文件的不包含拓展名的名称
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <ExportAPI("DIR.basename", Info:="Gets the name of the target directory object.")>
-    Public Function BaseName(dir As String) As String
-#Else
-    Public Function BaseName(dir As String) As String
-#End If
-        Return FileIO.FileSystem.GetDirectoryInfo(dir).Name
+    <ExportAPI("BaseName", Info:="Gets the name of the target directory/file object.")>
+    <Extension> Public Function BaseName(fsObj As String) As String
+        If fsObj.FileExists Then
+            Return IO.Path.GetFileNameWithoutExtension(fsObj)
+        Else
+            Return FileIO.FileSystem.GetDirectoryInfo(fsObj).Name
+        End If
     End Function
 
     ''' <summary>

@@ -13,6 +13,22 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        Public Function __innerTry(Of T)(source As Func(Of T), msg As String, Optional throwEx As Boolean = True) As T
+            Try
+                Return source()
+            Catch ex As Exception
+                ex = New Exception(msg)
+
+                Call App.LogException(ex, source.ToString)
+
+                If throwEx Then
+                    Throw ex
+                Else
+                    Return Nothing
+                End If
+            End Try
+        End Function
+
         ''' <summary>
         ''' 适用于二维的集合做为linq的数据源，不像<see cref="MatrixToList"/>是进行转换，这个是返回迭代器的，推荐使用这个函数
         ''' </summary>
