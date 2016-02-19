@@ -115,16 +115,12 @@ Namespace FileStream
 
             If LQuery.Length > 0 Then Return LQuery(Scan0)
 
-            LQuery = (From Node As NetworkEdge
-                      In Network
-                      Where String.Equals(Node1, Node.ToNode) AndAlso
+            Dim Found = (From Node As NetworkEdge
+                         In Network
+                         Where String.Equals(Node1, Node.ToNode) AndAlso
                               String.Equals(Node2, Node.FromNode)
-                      Select Node).ToArray
-            If LQuery.IsNullOrEmpty Then
-                Return Nothing
-            Else
-                Return LQuery.First
-            End If
+                         Select Node).FirstOrDefault
+            Return Found
         End Function
     End Class
 End Namespace

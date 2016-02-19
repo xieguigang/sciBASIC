@@ -24,8 +24,8 @@ Module TestingMain
     Sub Main()
 
         Dim nnnnet = "E:\Microsoft.VisualBasic_Framework\Datavisualization\Datavisualization.Network\TestNET\Edges.csv".LoadCsv(Of NetworkEdge)
-        Dim finderdfff = Dijkstra.DijkstraAPI.CreatePathwayFinder(Dijkstra.DijkstraAPI.ImportsNetwork(nnnnet, 1), True)
-        Dim pathssss = Dijkstra.DijkstraAPI.FindAllPath(finderdfff, "xcb_M00552", "xcb_M00024")
+        '  Dim finderdfff = Dijkstra.DijkstraAPI.CreatePathwayFinder(Dijkstra.DijkstraAPI.ImportsNetwork(nnnnet, 1), True)
+        '  Dim pathssss = Dijkstra.DijkstraAPI.FindAllPath(finderdfff, "xcb_M00552", "xcb_M00024")
 
         Dim parts = TreeAPI.ClusterParts(nnnnet)
 

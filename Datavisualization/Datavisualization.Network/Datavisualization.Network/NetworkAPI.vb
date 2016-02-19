@@ -52,7 +52,14 @@ Public Module NetworkAPI
 
     <ExportAPI("Write.Network")>
     Public Function WriteNetwork(Network As FileStream.NetworkEdge(), <Parameter("Path.Save")> SaveTo As String) As Boolean
-        Call Network.SaveTo(SaveTo, False)
-        Return True
+        Return Network.SaveTo(SaveTo, False)
+    End Function
+
+    <Extension, ExportAPI("GetConnections")>
+    Public Function GetConnections(source As IEnumerable(Of FileStream.NetworkEdge), node As String) As FileStream.NetworkEdge()
+        Dim LQuery = (From x As FileStream.NetworkEdge In source.AsParallel
+                      Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
+                      Select x).ToArray
+        Return LQuery
     End Function
 End Module

@@ -62,8 +62,7 @@ Namespace FileStream
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Save(Optional outDIR As String = "",
-                             Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Function Save(Optional outDIR As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             If String.IsNullOrEmpty(outDIR) Then outDIR = My.Computer.FileSystem.CurrentDirectory
 
             Call Nodes.SaveTo(String.Format("{0}/Nodes.csv", outDIR), False, encoding)
