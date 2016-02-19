@@ -23,19 +23,24 @@ Namespace Dijkstra
         End Function
 
         <ExportAPI("Finder.Creates")>
-        Public Function CreatePathwayFinder(net As IEnumerable(Of FileStream.NetworkEdge)) As DijkstraRouteFind
+        Public Function CreatePathwayFinder(net As IEnumerable(Of FileStream.NetworkEdge), Optional undirected As Boolean = False) As DijkstraRouteFind
             Dim source = ImportsNetwork(net)
-            Return CreatePathwayFinder(source)
+            Return CreatePathwayFinder(source, undirected)
         End Function
 
         <ExportAPI("Finder.Creates")>
-        Public Function CreatePathwayFinder(net As IEnumerable(Of Connection)) As DijkstraRouteFind
+        Public Function CreatePathwayFinder(net As IEnumerable(Of Connection), Optional undirected As Boolean = False) As DijkstraRouteFind
             Dim lstNode As List(Of FileStream.Node) = New List(Of FileStream.Node)
             For Each edge As Connection In net
                 Call lstNode.Add(edge.A)
                 Call lstNode.Add(edge.B)
             Next
-            Return New DijkstraRouteFind(net, lstNode.Distinct)
+
+            If undirected Then
+                Return DijkstraRouteFind.UndirectFinder(net, lstNode.Distinct)
+            Else
+                Return New DijkstraRouteFind(net, lstNode.Distinct)
+            End If
         End Function
 
         <ExportAPI("Find.Path.Shortest")>

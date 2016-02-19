@@ -14,17 +14,29 @@ Namespace Dijkstra
         Public ReadOnly Property Locations() As FileStream.Node()
         Public ReadOnly Property Connections() As Connection()
 
-        Sub New(Edges As IEnumerable(Of Connection), Nodes As Generic.IEnumerable(Of FileStream.Node))
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="Edges">这个是有方向的</param>
+        ''' <param name="Nodes"></param>
+        Sub New(Edges As IEnumerable(Of Connection), Nodes As IEnumerable(Of FileStream.Node))
             _Locations = Nodes.ToArray
             _Connections = Edges.ToArray
         End Sub
 
+        Public Shared Function UndirectFinder(net As IEnumerable(Of Connection), nodes As IEnumerable(Of FileStream.Node)) As DijkstraRouteFind
+            Dim source = net.ToList
+            Dim rev = (From x In source Select New Connection(x.B, x.A, x.Weight)).ToArray
+            Call source.AddRange(rev)
+            Return New DijkstraRouteFind(source, nodes)
+        End Function
+
         ''' <summary>
         ''' Calculates the shortest route to all the other locations
         ''' </summary>
-        ''' <param name="_startLocation"></param>
+        ''' <param name="startPos"></param>
         ''' <returns>List of all locations and their shortest route</returns>
-        Public Function CalculateMinCost(_startLocation As FileStream.Node) As Dictionary(Of FileStream.Node, Route)
+        Public Function CalculateMinCost(startPos As FileStream.Node) As Dictionary(Of FileStream.Node, Route)
             'Initialise a new empty route list
             Dim _shortestPaths As New Dictionary(Of FileStream.Node, Route)()
             'Initialise a new empty handled locations list
@@ -36,10 +48,10 @@ Namespace Dijkstra
             Next
 
             'The startPosition has a weight 0. 
-            _shortestPaths(_startLocation).Cost = 0
+            _shortestPaths(startPos).Cost = 0
 
             'If all locations are handled, stop the engine and return the result
-            While _handledLocations.Count <> _Locations.Count
+            While _handledLocations.Count <> _Locations.Length
                 'Order the locations
                 Dim _shortestLocations As List(Of FileStream.Node) = (From s In _shortestPaths Order By s.Value.Cost Select s.Key).ToList()
                 Dim _locationToProcess As FileStream.Node = Nothing
@@ -75,12 +87,18 @@ Namespace Dijkstra
         End Function
 
         Public Function CalculateMinCost(starts As String) As Route()
-            Dim Lquery = (From Node In _Locations.AsParallel Where String.Equals(starts, Node.Identifier, StringComparison.OrdinalIgnoreCase) Select Node).ToArray
-            If Lquery.IsNullOrEmpty Then
+            Dim LQuery = (From node As FileStream.Node
+                          In _Locations.AsParallel
+                          Where String.Equals(starts, node.Identifier, StringComparison.OrdinalIgnoreCase)
+                          Select node).FirstOrDefault
+            If LQuery Is Nothing Then
                 Return Nothing
-            Else
-                Return (From item In CalculateMinCost(Lquery.First) Where item.Value.Cost < Integer.MaxValue Select item.Value).ToArray
             End If
+
+            Dim routes As Route() = (From found In CalculateMinCost(LQuery)
+                                     Where found.Value.Cost < Integer.MaxValue
+                                     Select found.Value).ToArray
+            Return routes
         End Function
 
 #Region "IDisposable Support"
