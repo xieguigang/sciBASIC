@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.KMeans
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.Linq
 
 Module TestingMain
 
