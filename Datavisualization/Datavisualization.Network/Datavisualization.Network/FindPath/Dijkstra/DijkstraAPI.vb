@@ -12,9 +12,16 @@ Namespace Dijkstra
     Public Module DijkstraAPI
 
         <ExportAPI("Network.Imports")>
-        Public Function ImportsNetwork(net As IEnumerable(Of FileStream.NetworkEdge)) As Connection()
-            Dim LQuery = (From edge In net Select Connection.CreateObject(edge)).ToArray
-            Return LQuery
+        Public Function ImportsNetwork(net As IEnumerable(Of FileStream.NetworkEdge), Optional weight As Integer = 0) As Connection()
+            If weight <= 0 Then
+                Return (From edge As FileStream.NetworkEdge
+                        In net
+                        Select Connection.CreateObject(edge)).ToArray
+            Else
+                Return (From edge As FileStream.NetworkEdge
+                        In net
+                        Select Connection.CreateObject(edge, weight)).ToArray
+            End If
         End Function
 
         <ExportAPI("Read.Network")>

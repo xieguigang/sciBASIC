@@ -50,6 +50,13 @@ Namespace FileStream
             Return Identifier
         End Function
 
+        Sub New()
+        End Sub
+
+        Sub New(sId As String)
+            Identifier = sId
+        End Sub
+
         Public Function CopyTo(Of T As Node)() As T
             Dim NewNode As T = Activator.CreateInstance(Of T)()
             NewNode.Identifier = Identifier

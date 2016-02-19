@@ -5,7 +5,7 @@ Namespace Dijkstra
 
     Public Class Connection : Implements IKeyValuePairObject(Of FileStream.Node, FileStream.Node)
 
-        Dim DataModel As FileStream.NetworkEdge
+        Dim _source As FileStream.NetworkEdge
 
         Public Property Selected As Boolean = False
         Public Property B As FileStream.Node Implements IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Value
@@ -23,10 +23,15 @@ Namespace Dijkstra
         End Function
 
         Public Shared Function CreateObject(DataModel As FileStream.NetworkEdge) As Connection
-            Dim ndA As New FileStream.Node With {.Identifier = DataModel.FromNode}
-            Dim ndB As New FileStream.Node With {.Identifier = DataModel.ToNode}
-            Return New Connection(ndA, ndB, weight:=DataModel.Confidence) With {
-                .DataModel = DataModel
+            Return CreateObject(DataModel, DataModel.Confidence)
+        End Function
+
+        Public Shared Function CreateObject(edge As FileStream.NetworkEdge, weight As Integer) As Connection
+            Dim ndA As New FileStream.Node(edge.FromNode)
+            Dim ndB As New FileStream.Node(edge.ToNode)
+
+            Return New Connection(ndA, ndB, weight:=weight) With {
+                ._source = edge
             }
         End Function
     End Class
