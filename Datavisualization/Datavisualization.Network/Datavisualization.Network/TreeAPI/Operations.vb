@@ -35,6 +35,10 @@ Namespace TreeAPI
                     For Each x In nextNodes
                         Call netList.Remove(x)
                     Next
+
+                    If tree.DirectFind(node) Is Nothing Then
+                        Call tree.insert(node, NodeTypes.Path)
+                    End If
                 End If
 
                 If type = NodeTypes.Leaf Then

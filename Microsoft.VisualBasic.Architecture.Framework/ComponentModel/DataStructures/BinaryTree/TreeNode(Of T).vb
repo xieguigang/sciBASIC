@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataStructures.BinaryTree
 
@@ -33,6 +34,19 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Get
         End Property
 
+        Public ReadOnly Property AllChilds As List(Of TreeNode(Of T))
+            Get
+                Dim list As New List(Of TreeNode(Of T))
+
+                For Each x In Me.GetEnumerator
+                    Call list.Add(x)
+                    Call list.AddRange(x.AllChilds)
+                Next
+
+                Return list
+            End Get
+        End Property
+
         ''' <summary>
         ''' 递归的得到子节点的数目
         ''' </summary>
@@ -63,7 +77,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' 最多只有两个元素
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetEnumerator() As IEnumerator(Of TreeNode(Of T))
+        Public Iterator Function GetEnumerator() As IEnumerable(Of TreeNode(Of T))
             If Not Left Is Nothing Then
                 Yield Left
             End If
