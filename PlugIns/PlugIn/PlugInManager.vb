@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Text
 Imports System.Drawing
+Imports System.Xml.Serialization
 
 Public Class PlugInManager
 
@@ -8,7 +9,7 @@ Public Class PlugInManager
     ''' The file path for the disabled plugin assembly module.
     ''' </summary>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlElement> Public DisabledPlugIns As List(Of String)
+    <XmlElement> Public DisabledPlugIns As List(Of String)
 
     Dim XmlPath As String
     Protected Friend PlugInList As List(Of PlugInEntry) = New List(Of PlugInEntry)

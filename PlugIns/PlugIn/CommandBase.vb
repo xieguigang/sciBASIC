@@ -1,23 +1,24 @@
-﻿
+﻿Imports System.Xml.Serialization
+
 Public MustInherit Class CommandBase : Inherits Attribute
 
     ''' <summary>
     ''' The command item name that display on the menustrip control.
     ''' </summary>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlAttribute> Public Name As String
+    <XmlAttribute> Public Name As String
     ''' <summary>
     ''' Tooltip text or the description text.
     ''' </summary>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlAttribute> Public Description As String
+    <XmlAttribute> Public Description As String
     ''' <summary>
     ''' The icon resource name string.(图标资源名称，当本属性值为空的时候，对应的菜单项没有图标)
     ''' </summary>
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlAttribute> Public Property Icon As String = ""
+    <XmlAttribute> Public Property Icon As String = ""
 
     Public Overrides Function ToString() As String
         Return String.Format("({0}) {1}", Name, Description)
@@ -48,7 +49,7 @@ Public Class EntryFlag : Inherits Attribute
         IconLoader
     End Enum
 
-    <Xml.Serialization.XmlAttribute> Public Property EntryType As EntryFlag.EntryTypes
+    <XmlAttribute> Public Property EntryType As EntryFlag.EntryTypes
 
     Friend Target As Reflection.MethodInfo
     Friend GetIconInvoke As Func(Of String, Object)

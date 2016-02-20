@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
-
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Mathematical.Helpers
 
 Namespace Types
@@ -20,8 +20,8 @@ Namespace Types
         ''' <remarks></remarks>
         Protected Class MetaExpression
 
-            <Xml.Serialization.XmlAttribute> Public [Operator] As Char
-            <Xml.Serialization.XmlAttribute> Public LEFT As Double
+            <XmlAttribute> Public [Operator] As Char
+            <XmlAttribute> Public LEFT As Double
 
             Public Overrides Function ToString() As String
                 Return String.Format("{0} {1}", LEFT, [Operator])

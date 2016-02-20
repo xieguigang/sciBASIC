@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Xml.Serialization
 
 Namespace Kernel.BayesianBeliefNetwork
 
@@ -178,18 +179,18 @@ Namespace Kernel.BayesianBeliefNetwork
             Const EValue As Double = -10 ^ -10
         End Class
 
-        <Xml.Serialization.XmlRoot("Microsoft.VisualBasic.DataVisualization.DataMining.Framework.BeliefNetwork.NetworkLayout")>
+        <XmlRoot("Microsoft.VisualBasic.DataVisualization.DataMining.Framework.BeliefNetwork.NetworkLayout")>
         Public Class NetworkLayout
-            <Xml.Serialization.XmlElement> Public Property Nodes As BeliefNode()
+            <XmlElement> Public Property Nodes As BeliefNode()
 
             Public Class BeliefNode
-                <Xml.Serialization.XmlAttribute> Public Property Name As String
-                <Xml.Serialization.XmlAttribute> Public Property Range As Integer
+                <XmlAttribute> Public Property Name As String
+                <XmlAttribute> Public Property Range As Integer
                 Public Property Parents As ParentList
                 Public Property CPTable As CPTableF
 
                 Public Class ParentList
-                    <Xml.Serialization.XmlIgnore> Public ReadOnly Property Num As Integer
+                    <XmlIgnore> Public ReadOnly Property Num As Integer
                         Get
                             If ParentNodes.IsNullOrEmpty Then
                                 Return 0
@@ -199,7 +200,7 @@ Namespace Kernel.BayesianBeliefNetwork
                         End Get
                     End Property
 
-                    <Xml.Serialization.XmlElement> Public Property ParentNodes As String()
+                    <XmlElement> Public Property ParentNodes As String()
 
                     Public Overrides Function ToString() As String
                         Return String.Format("{0} parent nodes", Num)
@@ -207,10 +208,10 @@ Namespace Kernel.BayesianBeliefNetwork
                 End Class
 
                 Public Class CPTableF
-                    <Xml.Serialization.XmlElement> Public Property CPColumns As CPColumn()
+                    <XmlElement> Public Property CPColumns As CPColumn()
 
                     Public Class CPColumn
-                        <Xml.Serialization.XmlAttribute> Public Property Data As Double()
+                        <XmlAttribute> Public Property Data As Double()
 
                         Default Public ReadOnly Property Item(Idx As Integer) As Double
                             Get

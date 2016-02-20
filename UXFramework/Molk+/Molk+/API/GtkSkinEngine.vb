@@ -51,19 +51,19 @@ Namespace API.Gtk
         ''' 皮肤引擎的皮肤数据存储结构
         ''' </summary>
         ''' <remarks></remarks>
-        <Serializable> <Xml.Serialization.XmlRoot("metacity_theme")> Public Class MetaCityTheme
+        <Serializable> <XmlRoot("metacity_theme")> Public Class MetaCityTheme
 
-            <Xml.Serialization.XmlType("info")> Public Structure InfoF
-                <Xml.Serialization.XmlElement> Dim name As String
-                <Xml.Serialization.XmlElement> Dim author As String
-                <Xml.Serialization.XmlElement> Dim copyright As String
-                <Xml.Serialization.XmlElement> Dim [date] As String
-                <Xml.Serialization.XmlElement> Dim description As String
+            <XmlType("info")> Public Structure InfoF
+                <XmlElement> Dim name As String
+                <XmlElement> Dim author As String
+                <XmlElement> Dim copyright As String
+                <XmlElement> Dim [date] As String
+                <XmlElement> Dim description As String
             End Structure
 
             Public Structure KeyValuePair(Of T)
-                <Xml.Serialization.XmlAttribute> Dim name As String
-                <Xml.Serialization.XmlAttribute> Dim value As T
+                <XmlAttribute> Dim name As String
+                <XmlAttribute> Dim value As T
 
                 Public Overrides Function ToString() As String
                     Return Format(<String>[KeyValuePair name = "{0}" value = "{1}"]</String>, name, value.ToString)
@@ -71,33 +71,33 @@ Namespace API.Gtk
             End Structure
 
             Public Structure FrameGeometryF
-                <Xml.Serialization.XmlAttribute("name")> Dim Name As String
-                <Xml.Serialization.XmlAttribute("title_scale")> Dim TitleScale As String
-                <Xml.Serialization.XmlAttribute("rounded_top_left")>
+                <XmlAttribute("name")> Dim Name As String
+                <XmlAttribute("title_scale")> Dim TitleScale As String
+                <XmlAttribute("rounded_top_left")>
                 Dim RoundedTopLeft As String
-                <Xml.Serialization.XmlAttribute("rounded_top_right")>
+                <XmlAttribute("rounded_top_right")>
                 Dim RoundedTopRight As String
-                <Xml.Serialization.XmlAttribute("rounded_bottom_left")>
+                <XmlAttribute("rounded_bottom_left")>
                 Dim RoundedBottomLeft As String
-                <Xml.Serialization.XmlAttribute("rounded_bottom_right")>
+                <XmlAttribute("rounded_bottom_right")>
                 Dim RoundedBottomRight As String
 
-                <Xml.Serialization.XmlElement("distance")> Dim Distance As KeyValuePair(Of String)()
+                <XmlElement("distance")> Dim Distance As KeyValuePair(Of String)()
 
-                <Xml.Serialization.XmlType("border")>
+                <XmlType("border")>
                 Public Structure BorderF
-                    <Xml.Serialization.XmlAttribute> Dim name As String
-                    <Xml.Serialization.XmlAttribute> Dim left As Integer
-                    <Xml.Serialization.XmlAttribute> Dim right As Integer
-                    <Xml.Serialization.XmlAttribute> Dim top As Integer
-                    <Xml.Serialization.XmlAttribute> Dim bottom As Integer
+                    <XmlAttribute> Dim name As String
+                    <XmlAttribute> Dim left As Integer
+                    <XmlAttribute> Dim right As Integer
+                    <XmlAttribute> Dim top As Integer
+                    <XmlAttribute> Dim bottom As Integer
 
                     Public Overrides Function ToString() As String
                         Return Format(<String>[border name="{0}" left="{1}" right="{2}" top="{3}" bottom="{4}"]</String>, name, left, right, top, bottom)
                     End Function
                 End Structure
 
-                <Xml.Serialization.XmlElement> Dim border As BorderF()
+                <XmlElement> Dim border As BorderF()
                 Dim AspectRatio As KeyValuePair(Of String)
 
                 Public Overrides Function ToString() As String
@@ -105,33 +105,33 @@ Namespace API.Gtk
                 End Function
             End Structure
 
-            <Xml.Serialization.XmlElement> Public Property info As InfoF
-            <Xml.Serialization.XmlElement> Public Property constant As KeyValuePair(Of String)()
-            <Xml.Serialization.XmlElement("frame_geometry")> Public Property FrameGeometry As FrameGeometryF()
-            <Xml.Serialization.XmlElement("draw_ops")> Public Property DrawOps As DrawOpsF()
-            <Xml.Serialization.XmlElement("frame_style")> Public Property FrameStyle As FrameStyleF()
-            <Xml.Serialization.XmlElement("frame_style_set")> Public Property FrameStyleSet As FrameStyleSetF()
-            <Xml.Serialization.XmlElement> Public Property window As WindowF()
+            <XmlElement> Public Property info As InfoF
+            <XmlElement> Public Property constant As KeyValuePair(Of String)()
+            <XmlElement("frame_geometry")> Public Property FrameGeometry As FrameGeometryF()
+            <XmlElement("draw_ops")> Public Property DrawOps As DrawOpsF()
+            <XmlElement("frame_style")> Public Property FrameStyle As FrameStyleF()
+            <XmlElement("frame_style_set")> Public Property FrameStyleSet As FrameStyleSetF()
+            <XmlElement> Public Property window As WindowF()
 
-            <Xml.Serialization.XmlIgnore> Friend FileName As String
+            <XmlIgnore> Friend FileName As String
 
             Public Overrides Function ToString() As String
                 Return FileName
             End Function
 
             Public Structure DrawOpsF
-                <Xml.Serialization.XmlAttribute> Dim name As String
+                <XmlAttribute> Dim name As String
 
-                <Xml.Serialization.XmlElement> Dim title As TitleF()
-                <Xml.Serialization.XmlElement> Dim rectangle As RectangleF
-                <Xml.Serialization.XmlElement> Dim gradient As GradientF()
-                <Xml.Serialization.XmlElement> Dim line As LineF()
-                <Xml.Serialization.XmlElement> Dim image As ImageF
+                <XmlElement> Dim title As TitleF()
+                <XmlElement> Dim rectangle As RectangleF
+                <XmlElement> Dim gradient As GradientF()
+                <XmlElement> Dim line As LineF()
+                <XmlElement> Dim image As ImageF
 
                 Public Structure TitleF
-                    <Xml.Serialization.XmlAttribute> Dim color As String
-                    <Xml.Serialization.XmlAttribute> Dim x As String
-                    <Xml.Serialization.XmlAttribute> Dim y As String
+                    <XmlAttribute> Dim color As String
+                    <XmlAttribute> Dim x As String
+                    <XmlAttribute> Dim y As String
 
                     Public Overrides Function ToString() As String
                         Return Format(<String>[title color="{0}" x="{1}" y="{2}"]</String>, color, x, y)
@@ -139,12 +139,12 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure RectangleF
-                    <Xml.Serialization.XmlAttribute> Dim color As String
-                    <Xml.Serialization.XmlAttribute> Dim filled As String
-                    <Xml.Serialization.XmlAttribute> Dim x As String
-                    <Xml.Serialization.XmlAttribute> Dim y As String
-                    <Xml.Serialization.XmlAttribute> Dim width As String
-                    <Xml.Serialization.XmlAttribute> Dim height As String
+                    <XmlAttribute> Dim color As String
+                    <XmlAttribute> Dim filled As String
+                    <XmlAttribute> Dim x As String
+                    <XmlAttribute> Dim y As String
+                    <XmlAttribute> Dim width As String
+                    <XmlAttribute> Dim height As String
 
                     Public Overrides Function ToString() As String
                         Return Format(<String>[rectangle color="{0}" filled="{1}" x="{2}" y="{3}" width="{4}" height="{5}"]</String>, color, filled, x, y, width, height)
@@ -152,16 +152,16 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure GradientF
-                    <Xml.Serialization.XmlAttribute> Dim type As String
-                    <Xml.Serialization.XmlAttribute> Dim x As String
-                    <Xml.Serialization.XmlAttribute> Dim y As String
-                    <Xml.Serialization.XmlAttribute> Dim width As String
-                    <Xml.Serialization.XmlAttribute> Dim height As String
+                    <XmlAttribute> Dim type As String
+                    <XmlAttribute> Dim x As String
+                    <XmlAttribute> Dim y As String
+                    <XmlAttribute> Dim width As String
+                    <XmlAttribute> Dim height As String
 
-                    <Xml.Serialization.XmlElement> Dim color As ColorF()
+                    <XmlElement> Dim color As ColorF()
 
                     Public Structure ColorF
-                        <Xml.Serialization.XmlAttribute> Dim value As String
+                        <XmlAttribute> Dim value As String
 
                         Public Overrides Function ToString() As String
                             Return Format(<String>[color value="{0}"]</String>, value)
@@ -174,11 +174,11 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure LineF
-                    <Xml.Serialization.XmlAttribute("color")> Dim Color As String
-                    <Xml.Serialization.XmlAttribute("x1")> Dim X1 As String
-                    <Xml.Serialization.XmlAttribute("x2")> Dim X2 As String
-                    <Xml.Serialization.XmlAttribute("y1")> Dim Y1 As String
-                    <Xml.Serialization.XmlAttribute("y2")> Dim Y2 As String
+                    <XmlAttribute("color")> Dim Color As String
+                    <XmlAttribute("x1")> Dim X1 As String
+                    <XmlAttribute("x2")> Dim X2 As String
+                    <XmlAttribute("y1")> Dim Y1 As String
+                    <XmlAttribute("y2")> Dim Y2 As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -195,11 +195,11 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure ImageF
-                    <Xml.Serialization.XmlAttribute("filename")> Dim FileName As String
-                    <Xml.Serialization.XmlAttribute("x")> Dim x As String
-                    <Xml.Serialization.XmlAttribute("y")> Dim y As String
-                    <Xml.Serialization.XmlAttribute("width")> Dim Width As String
-                    <Xml.Serialization.XmlAttribute("height")> Dim Height As String
+                    <XmlAttribute("filename")> Dim FileName As String
+                    <XmlAttribute("x")> Dim x As String
+                    <XmlAttribute("y")> Dim y As String
+                    <XmlAttribute("width")> Dim Width As String
+                    <XmlAttribute("height")> Dim Height As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -221,17 +221,17 @@ Namespace API.Gtk
             End Structure
 
             Public Structure FrameStyleF
-                <Xml.Serialization.XmlAttribute("name")> Dim Name As String
-                <Xml.Serialization.XmlAttribute("geometry")> Dim Geometry As String
+                <XmlAttribute("name")> Dim Name As String
+                <XmlAttribute("geometry")> Dim Geometry As String
 
-                <Xml.Serialization.XmlElement("piece")> Dim Piece As PieceF()
-                <Xml.Serialization.XmlElement("button")> Dim Button As ButtonF()
-                <Xml.Serialization.XmlElement("shadow")> Dim Shadow As ShadowF
-                <Xml.Serialization.XmlElement("padding")> Dim Padding As PaddingF
+                <XmlElement("piece")> Dim Piece As PieceF()
+                <XmlElement("button")> Dim Button As ButtonF()
+                <XmlElement("shadow")> Dim Shadow As ShadowF
+                <XmlElement("padding")> Dim Padding As PaddingF
 
                 Public Structure PieceF
-                    <Xml.Serialization.XmlAttribute("position")> Dim Position As String
-                    <Xml.Serialization.XmlAttribute("draw_ops")> Dim DrawOps As String
+                    <XmlAttribute("position")> Dim Position As String
+                    <XmlAttribute("draw_ops")> Dim DrawOps As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -245,9 +245,9 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure ButtonF
-                    <Xml.Serialization.XmlAttribute("function")> Dim [Function] As String
-                    <Xml.Serialization.XmlAttribute("state")> Dim State As String
-                    <Xml.Serialization.XmlAttribute("draw_ops")> Dim DrawOps As String
+                    <XmlAttribute("function")> Dim [Function] As String
+                    <XmlAttribute("state")> Dim State As String
+                    <XmlAttribute("draw_ops")> Dim DrawOps As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -262,11 +262,11 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure ShadowF
-                    <Xml.Serialization.XmlAttribute("radius")> Dim Radius As String
-                    <Xml.Serialization.XmlAttribute("opacity")> Dim Opacity As String
-                    <Xml.Serialization.XmlAttribute("color")> Dim Color As String
-                    <Xml.Serialization.XmlAttribute("x_offset")> Dim XOffset As String
-                    <Xml.Serialization.XmlAttribute("y_offset")> Dim YOffset As String
+                    <XmlAttribute("radius")> Dim Radius As String
+                    <XmlAttribute("opacity")> Dim Opacity As String
+                    <XmlAttribute("color")> Dim Color As String
+                    <XmlAttribute("x_offset")> Dim XOffset As String
+                    <XmlAttribute("y_offset")> Dim YOffset As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -283,9 +283,9 @@ Namespace API.Gtk
                 End Structure
 
                 Public Structure PaddingF
-                    <Xml.Serialization.XmlAttribute("left")> Dim Left As String
-                    <Xml.Serialization.XmlAttribute("right")> Dim Right As String
-                    <Xml.Serialization.XmlAttribute("bottom")> Dim Bottom As String
+                    <XmlAttribute("left")> Dim Left As String
+                    <XmlAttribute("right")> Dim Right As String
+                    <XmlAttribute("bottom")> Dim Bottom As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -311,14 +311,14 @@ Namespace API.Gtk
             End Structure
 
             Public Structure FrameStyleSetF
-                <Xml.Serialization.XmlAttribute("name")> Dim Name As String
-                <Xml.Serialization.XmlElement("frame")> Dim Frame As FrameF()
+                <XmlAttribute("name")> Dim Name As String
+                <XmlElement("frame")> Dim Frame As FrameF()
 
                 Public Structure FrameF
-                    <Xml.Serialization.XmlAttribute("focus")> Dim Focus As String
-                    <Xml.Serialization.XmlAttribute("state")> Dim State As String
-                    <Xml.Serialization.XmlAttribute("resize")> Dim Resize As String
-                    <Xml.Serialization.XmlAttribute("style")> Dim Style As String
+                    <XmlAttribute("focus")> Dim Focus As String
+                    <XmlAttribute("state")> Dim State As String
+                    <XmlAttribute("resize")> Dim Resize As String
+                    <XmlAttribute("style")> Dim Style As String
 
                     Public Overrides Function ToString() As String
                         Dim sbr As StringBuilder = New StringBuilder(128)
@@ -339,8 +339,8 @@ Namespace API.Gtk
             End Structure
 
             Public Structure WindowF
-                <Xml.Serialization.XmlAttribute("type")> Dim Type As String
-                <Xml.Serialization.XmlAttribute("style_set")> Dim StyleSet As String
+                <XmlAttribute("type")> Dim Type As String
+                <XmlAttribute("style_set")> Dim StyleSet As String
 
                 Public Overrides Function ToString() As String
                     Dim sbr As StringBuilder = New StringBuilder(128)

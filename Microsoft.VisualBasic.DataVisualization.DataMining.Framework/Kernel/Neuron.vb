@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Xml.Serialization
 
 Namespace Kernel.Classifier
 
@@ -50,8 +51,8 @@ Namespace Kernel.Classifier
 
         Public Class Entity
 
-            <Xml.Serialization.XmlAttribute> Public Property Properties As Double()
-            <Xml.Serialization.XmlAttribute> Public Property Y As Double
+            <XmlAttribute> Public Property Properties As Double()
+            <XmlAttribute> Public Property Y As Double
 
             Public Overrides Function ToString() As String
                 Dim sBuilder As System.Text.StringBuilder = New StringBuilder(1024)

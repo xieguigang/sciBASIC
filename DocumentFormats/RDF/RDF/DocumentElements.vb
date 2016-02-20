@@ -1,15 +1,16 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.DocumentFormat.RDF.DocumentStream
 
 Namespace DocumentElements
 
-    <Xml.Serialization.XmlType(RDF.RDF_PREFIX & "RDF")>
+    <XmlType(RDF.RDF_PREFIX & "RDF")>
     Public Class RDF
 
         Public Const RDF_PREFIX As String = "rdf__"
 
-        <Xml.Serialization.XmlElement(RDF.RDF_PREFIX & "Description")>
+        <XmlElement(RDF.RDF_PREFIX & "Description")>
         Public Property ResourceDescription As RDFResourceDescription
 
         ''' <summary>
@@ -57,13 +58,13 @@ Namespace DocumentElements
         End Function
     End Class
 
-    <Xml.Serialization.XmlType(RDF.RDF_PREFIX & "Description")>
+    <XmlType(RDF.RDF_PREFIX & "Description")>
     Public Class RDFResourceDescription
 
-        <Xml.Serialization.XmlAttribute(RDF.RDF_PREFIX & "about")>
+        <XmlAttribute(RDF.RDF_PREFIX & "about")>
         Public Property About As String
 
-        <Xml.Serialization.XmlText> Public Property InternalText As String
+        <XmlText> Public Property InternalText As String
 
         Public Overrides Function ToString() As String
             Return InternalText

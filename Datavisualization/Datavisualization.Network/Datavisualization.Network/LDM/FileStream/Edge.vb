@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract
 
@@ -8,7 +9,7 @@ Namespace FileStream
     ''' The edge between the two nodes in the network.(节点与节点之间的相互关系)
     ''' </summary>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlType("VisualizeNode")>
+    <XmlType("VisualizeNode")>
     Public Class NetworkEdge : Inherits INetComponent
         Implements I_InteractionModel, INetworkEdge
 
@@ -22,9 +23,9 @@ Namespace FileStream
         Public Const REFLECTION_ID_MAPPING_CONFIDENCE As String = "confidence"
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
 
-        <Column("fromNode")> <Xml.Serialization.XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
-        <Column("toNode")> <Xml.Serialization.XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.ToNode
-        <Xml.Serialization.XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
+        <Column("fromNode")> <XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
+        <Column("toNode")> <XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.ToNode
+        <XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
         <Column("InteractionType")> Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
 
         ''' <summary>

@@ -1,5 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
-
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Mathematical.Helpers
 
 Namespace Types
@@ -11,27 +11,27 @@ Namespace Types
     ''' 其仅包含有有限的计算符号在其中，例如：+-*/\%^!)
     ''' </summary>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlType>
+    <XmlType>
     Public Class UnitExpression
 
         ''' <summary>
         ''' Arithmetic operator(运算符) 
         ''' </summary>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public [Operator] As Char
+        <XmlAttribute> Public [Operator] As Char
 
         ''' <summary>
         ''' The number a in the function of "Arithmetic.Evaluate".
         ''' (函数'Arithmetic.Evaluate'中的参数'a')
         ''' </summary>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public LEFT As Double
+        <XmlAttribute> Public LEFT As Double
         ''' <summary>
         ''' The number b in the function of "Arithmetic.Evaluate".
         ''' (函数'Arithmetic.Evaluate'中的参数'b')
         ''' </summary>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public RIGHT As Double
+        <XmlAttribute> Public RIGHT As Double
 
         Public Overrides Function ToString() As String
             Return String.Format("{0} {1} {2} = {3}", LEFT, [Operator], RIGHT, Evaluate)

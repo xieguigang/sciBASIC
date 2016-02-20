@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Xml.Serialization
 
 Namespace Omml
 
@@ -6,7 +7,7 @@ Namespace Omml
     ''' Omml: office microsoft word xml
     ''' </summary>
     ''' <remarks></remarks>
-    <Xml.Serialization.XmlRoot("html", namespace:="http://www.w3.org/TR/REC-html40")>
+    <XmlRoot("html", namespace:="http://www.w3.org/TR/REC-html40")>
     Public Class DocHtml
 
         Public Const WORD_XML_NAMESPACE As String = "xmlns:v=""urn:schemas-microsoft-com:vml"" xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:w=""urn:schemas-microsoft-com:office:word"" xmlns:m=""http://schemas.microsoft.com/office/2004/12/omml"""
@@ -22,16 +23,16 @@ Namespace Omml
         End Function
     End Class
 
-    <Xml.Serialization.XmlType("head")>
+    <XmlType("head")>
     Public Class Head
 
         Public Const WORD_XML_METADATA As String = ""
 
-        <Xml.Serialization.XmlElement("title")> Public Property Title As String
-        <Xml.Serialization.XmlIgnore> Public Property Xml As DocumentXmlProperty
+        <XmlElement("title")> Public Property Title As String
+        <XmlIgnore> Public Property Xml As DocumentXmlProperty
     End Class
 
-    <Xml.Serialization.XmlType("xml")>
+    <XmlType("xml")>
     Public Class DocumentXmlProperty
         Public Property DocumentProperties As DocumentFormat.Word.Omml.DocumentProperties
         Public Property OfficeDocumentSettings As OfficeDocumentSettings
@@ -124,7 +125,7 @@ Namespace Omml
         End Class
 
         Public Structure ValueAttribute
-            <Xml.Serialization.XmlAttribute> Public Property Value As String
+            <XmlAttribute> Public Property Value As String
         End Structure
     End Class
 

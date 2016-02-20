@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 
 Namespace ComponentModel
@@ -9,7 +10,7 @@ Namespace ComponentModel
     ''' <typeparam name="T">只允许数值类型</typeparam>
     Public MustInherit Class EntityBase(Of T)
 
-        <Xml.Serialization.XmlAttribute("T")>
+        <XmlAttribute("T")>
         Public Property Properties As T()
 
         Public ReadOnly Property Length As Integer
@@ -25,7 +26,7 @@ Namespace ComponentModel
     ''' <remarks></remarks>
     Public Class Entity : Inherits EntityBase(Of Integer)
 
-        <Xml.Serialization.XmlAttribute> Public Property [Class] As Integer
+        <XmlAttribute> Public Property [Class] As Integer
 
         Public Overrides Function ToString() As String
             Return $"<{String.Join("; ", Properties)}> --> {[Class]}"

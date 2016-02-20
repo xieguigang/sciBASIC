@@ -9,21 +9,21 @@
 '        ''' <value></value>
 '        ''' <returns></returns>
 '        ''' <remarks></remarks>
-'        <Xml.Serialization.XmlAttribute> Public Property Omiga As Double = 1.2
+'        <XmlAttribute> Public Property Omiga As Double = 1.2
 '        ''' <summary>
 '        ''' 最大允许迭代次数
 '        ''' </summary>
 '        ''' <value></value>
 '        ''' <returns></returns>
 '        ''' <remarks></remarks>
-'        <Xml.Serialization.XmlAttribute> Public Property Iteration As Integer = 50
+'        <XmlAttribute> Public Property Iteration As Integer = 50
 '        ''' <summary>
 '        ''' 误差容限
 '        ''' </summary>
 '        ''' <value></value>
 '        ''' <returns></returns>
 '        ''' <remarks></remarks>
-'        <Xml.Serialization.XmlAttribute> Public Property e As Double = 0.00000001
+'        <XmlAttribute> Public Property e As Double = 0.00000001
 '#End Region
 
 '        Public Function Solve(A As MATRIX, b As VECTOR) As VECTOR Implements ISolver.Solve
