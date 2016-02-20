@@ -19,8 +19,10 @@ Namespace TreeAPI
             Dim netList = net.ToList
 
             For Each node In ROOTs
+                Dim Xnext As String = node.GetConnectedNode(ROOT)
                 Call netList.Remove(node)
-                Call __buildTREE(tree, node.GetConnectedNode(ROOT), netList)
+                Call tree.Add(ROOT, New TreeNode(Of NodeTypes)(Xnext, NodeTypes.Path))
+                Call __buildTREE(tree, Xnext, netList)
             Next
         End Function
 
@@ -56,9 +58,9 @@ Namespace TreeAPI
                     Dim Xnode As New LeafX(node) With {.LeafX = nextNodes}
                     Call tree.Add(node, Xnode, True)  ' Leaf-X 只有一个，默认为左边
                 Else ' 这个是Path，则继续建树
-                    For Each nxode In nextNodes
+                    For Each nxode As FileStream.NetworkEdge In nextNodes
                         Call netList.Remove(nxode)
-                        Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType))
+                        Call tree.Add(node, New TreeNode(Of NodeTypes)(nxode.ToNode, __getTypes(nxode.InteractionType)))
                         Call __buildTREE(tree, nxode.ToNode, netList)
                     Next
                 End If

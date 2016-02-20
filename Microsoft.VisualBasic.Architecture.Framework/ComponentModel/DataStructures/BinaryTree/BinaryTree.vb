@@ -139,7 +139,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="name"></param>
         ''' <returns></returns>
         Public Function DirectFind(name As String) As TreeNode(Of T)
-            Return __visitStack(Root, name)
+            If String.Equals(name, Root.Name) Then
+                Return Root
+            Else
+                Return __visitStack(Root, name)
+            End If
         End Function
 
         Private Shared Function __visitStack(node As TreeNode(Of T), name As String) As TreeNode(Of T)
