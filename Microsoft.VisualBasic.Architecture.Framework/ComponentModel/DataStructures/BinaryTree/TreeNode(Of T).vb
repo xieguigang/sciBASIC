@@ -26,6 +26,13 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Sub New()
         End Sub
 
+        Public ReadOnly Property IsLeaf As Boolean
+            Get
+                Return Left Is Nothing AndAlso
+                    Right Is Nothing
+            End Get
+        End Property
+
         ''' <summary>
         ''' 递归的得到子节点的数目
         ''' </summary>

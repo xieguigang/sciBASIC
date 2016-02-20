@@ -17,4 +17,11 @@ Namespace TreeAPI
             Call MyBase.New(parent & "-LeafX", NodeTypes.LeafX)
         End Sub
     End Class
+
+    Public Class Leaf : Inherits TreeNode(Of NodeTypes)
+
+        Sub New(parent As String)
+            Call MyBase.New(parent & "-Leaf", NodeTypes.Leaf)
+        End Sub
+    End Class
 End Namespace

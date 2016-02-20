@@ -25,21 +25,40 @@ Namespace TreeAPI
         End Function
 
         Private Sub __buildTREE(ByRef tree As BinaryTree(Of NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
-            Dim nexts = netList.GetNextConnects(node)
-            Dim type = __getTypes(nexts.First.InteractionType)
+            Dim nexts = (From x In netList.GetNextConnects(node) Select x Group x By x.InteractionType Into Group)
 
-            If type = NodeTypes.Leaf Then
+            For Each part In nexts
+                Dim type = __getTypes(part.InteractionType)
+                Dim nextNodes = part.Group.ToArray
 
-            ElseIf type = NodeTypes.LeafX Then
-                Dim Xnode As New LeafX(node) With {.LeafX = nexts}
+                If type <> NodeTypes.Path Then
+                    For Each x In nextNodes
+                        Call netList.Remove(x)
+                    Next
+                End If
 
-            Else ' 这个是Path，则继续建树
-                For Each nxode In nexts
-                    Call netList.Remove(nxode)
-                    Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType))
-                    Call __buildTREE(tree, nxode.ToNode, netList)
-                Next
-            End If
+                If type = NodeTypes.Leaf Then
+                    Dim left As Boolean = True
+                    Dim Leaf As New Leaf(node)
+
+                    Call tree.Add(node, Leaf)
+
+                    For Each nxode In nextNodes
+                        Dim nodeChild As New TreeNode(Of NodeTypes)(nxode.ToNode, NodeTypes.Leaf)
+                        Call tree.Add(Leaf.Name, nodeChild, left)
+                        left = Not left
+                    Next
+                ElseIf type = NodeTypes.LeafX Then
+                    Dim Xnode As New LeafX(node) With {.LeafX = nextNodes}
+                    Call tree.Add(node, Xnode, True)  ' Leaf-X 只有一个，默认为左边
+                Else ' 这个是Path，则继续建树
+                    For Each nxode In nextNodes
+                        Call netList.Remove(nxode)
+                        Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType))
+                        Call __buildTREE(tree, nxode.ToNode, netList)
+                    Next
+                End If
+            Next
         End Sub
 
         Private ReadOnly __getTypes As Dictionary(Of String, NodeTypes) =
