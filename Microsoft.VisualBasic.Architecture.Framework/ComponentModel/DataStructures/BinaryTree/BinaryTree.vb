@@ -1,4 +1,4 @@
-Imports System.Collections
+﻿Imports System.Collections
 
 ' Software License Agreement (BSD License)
 '* 
@@ -50,6 +50,16 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Dim _Count As Integer = 0
 
         Public Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' 初始化有一个根节点
+        ''' </summary>
+        ''' <param name="ROOT"></param>
+        ''' <param name="obj"></param>
+        Sub New(ROOT As String, obj As T)
+            Call Me.New
+            Call Me.insert(ROOT, obj)
         End Sub
 
         ' Recursive destruction of binary search tree, called by method clear
@@ -148,7 +158,8 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 _Count += 1
                 Return node
             Catch generatedExceptionName As Exception
-                Return Nothing
+                Dim ex = New Exception(node.ToString, generatedExceptionName)
+                Return App.LogException(ex)
             End Try
         End Function
 
