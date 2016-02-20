@@ -122,14 +122,14 @@ EXIT_:          Dim array = source.ToArray
             Return list.ToArray
         End Function
 
-        Private Class __edgePath
+        Private Structure __edgePath
             Public path As String()
             Public node As EntityLDM
 
             Public Overrides Function ToString() As String
                 Return $"[{node.Cluster}] --> {node.Name}"
             End Function
-        End Class
+        End Structure
 
         <ExportAPI("Cluster.Trees.Network")>
         <Extension> Public Function TreeNET(source As IEnumerable(Of EntityLDM)) As Network.FileStream.Network
