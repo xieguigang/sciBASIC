@@ -28,29 +28,7 @@ Imports System.Collections
 '* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 '
 
-Namespace ComponentModel.DataStructures
-
-    ''' <summary>
-    ''' Define tree nodes
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Class TreeNode(Of T)
-
-        Public Property Name As String
-        Public Property Value As T
-        Public Property Left As TreeNode(Of T)
-        Public Property Right As TreeNode(Of T)
-
-        ' Constructor  to create a single node 
-        Public Sub New(name As String, d As T)
-            Me.Name = name
-            Me.Value = d
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Name & " ==> " & Value.ToString
-        End Function
-    End Class
+Namespace ComponentModel.DataStructures.BinaryTree
 
     ''' <summary>
     ''' The Binary tree itself.
@@ -70,6 +48,9 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         ''' <remarks></remarks>
         Dim _Count As Integer = 0
+
+        Public Sub New()
+        End Sub
 
         ' Recursive destruction of binary search tree, called by method clear
         ' and destroy. Can be used to kill a sub-tree of a larger tree.

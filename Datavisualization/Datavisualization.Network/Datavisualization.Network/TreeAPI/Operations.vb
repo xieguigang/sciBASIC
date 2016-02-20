@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
 
 Namespace TreeAPI
 
@@ -15,7 +16,7 @@ Namespace TreeAPI
         <ExportAPI("Cluster.Parts")>
         Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
             Dim ROOTs = net.GetConnections(ROOT)
-
+            Dim tree As New BinaryTree(Of NodeTypes)
         End Function
 
         Private Function __addCluster() As Dictionary(Of String, Edge())
