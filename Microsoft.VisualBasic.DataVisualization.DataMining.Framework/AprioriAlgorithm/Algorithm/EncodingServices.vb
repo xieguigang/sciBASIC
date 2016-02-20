@@ -10,7 +10,10 @@ Namespace AprioriAlgorithm
 
         Sub New(Codes As IEnumerable(Of String))
             Dim CodesChr = EncodingServices.GenerateCodes(Codes.Count)
-            _codesMappings = SeqIterator(CodesChr, Codes).ToDictionary(Function(obj) obj.obj, Function(obj) obj.Follow)
+            _codesMappings =
+                IteratorExtensions.SeqIterator(Of Char, String)(CodesChr, Codes) _
+                    .ToDictionary(Function(obj) obj.obj,
+                                  Function(obj) obj.Follow)
             _mappingCodes = _codesMappings.ToDictionary(Function(obj) obj.Value,
                                                         Function(obj) obj.Key)
         End Sub

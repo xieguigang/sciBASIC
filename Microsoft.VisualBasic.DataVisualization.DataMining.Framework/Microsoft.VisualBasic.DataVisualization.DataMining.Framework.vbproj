@@ -132,9 +132,10 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="KMeans\Tree.vb" />
+    <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="WaveletTransform.vb" />
     <Compile Include="ShellScriptAPI.vb" />
-    <Compile Include="PeriodAnalysis.vb" />
+    <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />

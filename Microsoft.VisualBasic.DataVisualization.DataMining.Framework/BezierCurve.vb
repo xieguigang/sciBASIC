@@ -114,7 +114,10 @@ Public Class BezierCurve
     ''' <param name="WindowSize">数据采样的窗口大小，默认大小是<paramref name="data"></paramref>的百分之1</param>
     ''' <returns></returns>
     ''' <remarks>先对数据进行采样，然后插值，最后返回插值后的平滑曲线数据以用于下一步分析</remarks>
-    Public Shared Function BezierSmoothInterpolation(data As Double(), Optional WindowSize As Integer = -1, Optional iteration As Integer = 3, Optional Parallel As Boolean = False) As Double()
+    Public Shared Function BezierSmoothInterpolation(data As Double(),
+                                                     Optional WindowSize As Integer = -1,
+                                                     Optional iteration As Integer = 3,
+                                                     Optional Parallel As Boolean = False) As Double()
         If WindowSize <= 0 Then
             WindowSize = data.Count / 100
         End If
@@ -146,7 +149,7 @@ Public Class BezierCurve
     End Function
 
     ''' <summary>
-    ''' 只取3个点进行插值计算
+    ''' 
     ''' </summary>
     ''' <param name="Elements"></param>
     ''' <param name="iteration"></param>
