@@ -98,7 +98,10 @@ Namespace TreeAPI
         Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, String())
             Dim tree As BinaryTree(Of NodeTypes) = net.BuildTree
             Dim ROOT = tree.DirectFind(Operations.ROOT)
-            Dim hash = ROOT.__addCluster(New Dictionary(Of String, String()))
+            Dim hash As Dictionary(Of String, String()) = New Dictionary(Of String, String())
+            For Each x In ROOT.GetEnumerator
+                Call x.__addCluster(hash)
+            Next
             Return hash
         End Function
 
@@ -145,11 +148,11 @@ Namespace TreeAPI
                 If TypeOf x Is Leaf OrElse TypeOf x Is LeafX Then
                     Return True
                 End If
-                For Each y In x.GetEnumerator
-                    If TypeOf y Is Leaf OrElse TypeOf x Is LeafX Then
-                        Return True
-                    End If
-                Next
+                'For Each y In x.GetEnumerator
+                '    If TypeOf y Is Leaf OrElse TypeOf x Is LeafX Then
+                '        Return True
+                '    End If
+                'Next
             Next
             Return False
         End Function

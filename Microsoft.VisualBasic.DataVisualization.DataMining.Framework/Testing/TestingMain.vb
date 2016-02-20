@@ -23,11 +23,14 @@ Module TestingMain
 
     Sub Main()
 
-        Dim nnnnet = "E:\Microsoft.VisualBasic_Framework\Datavisualization\Datavisualization.Network\TestNET\Edges.csv".LoadCsv(Of NetworkEdge)
+        Dim nnnnet = "F:\1.13.RegPrecise_network\MEME_OUT\Regulons.MEME\250.MEME_SW-TOM.OUT\SW-TOM.Hits.VirtualFootprints.Trim.PhenotypeRegulates.TreeNET\Edges.csv".LoadCsv(Of NetworkEdge)
         '  Dim finderdfff = Dijkstra.DijkstraAPI.CreatePathwayFinder(Dijkstra.DijkstraAPI.ImportsNetwork(nnnnet, 1), True)
         '  Dim pathssss = Dijkstra.DijkstraAPI.FindAllPath(finderdfff, "xcb_M00552", "xcb_M00024")
 
         Dim parts = TreeAPI.ClusterParts(nnnnet)
+
+        Dim ssssst = (From x In parts Select x.Value).MatrixAsIterator.Distinct.ToArray.Length
+        Call ssssst.__DEBUG_ECHO
 
 
         Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)
