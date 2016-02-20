@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
 
@@ -12,8 +13,9 @@ Namespace TreeAPI
         Public Const LEAF_X As String = "Leaf-X"
         Public Const ROOT As String = "ROOT"
 
-        <ExportAPI("Cluster.Parts")>
-        Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
+        <ExportAPI("Tree.Build")>
+        <Extension>
+        Public Function BuildTree(net As IEnumerable(Of FileStream.NetworkEdge)) As BinaryTree(Of NodeTypes)
             Dim ROOTs = net.GetConnections(ROOT)
             Dim tree As New BinaryTree(Of NodeTypes)(ROOT, NodeTypes.ROOT)
             Dim netList = net.ToList
@@ -24,6 +26,8 @@ Namespace TreeAPI
                 Call tree.Add(ROOT, New TreeNode(Of NodeTypes)(Xnext, NodeTypes.Path))
                 Call __buildTREE(tree, Xnext, netList)
             Next
+
+            Return tree
         End Function
 
         Private Sub __buildTREE(ByRef tree As BinaryTree(Of NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
@@ -76,12 +80,19 @@ Namespace TreeAPI
             {ROOT, NodeTypes.ROOT}
         }
 
+        <ExportAPI("GetType")>
         Public Function [GetType](name As String) As NodeTypes
             If __getTypes.ContainsKey(name) Then
                 Return __getTypes(name)
             Else
                 Return NodeTypes.ROOT
             End If
+        End Function
+
+        <ExportAPI("Cluster.Parts")>
+        Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
+            Dim tree As BinaryTree(Of NodeTypes) = net.BuildTree
+
         End Function
 
         Private Function __addCluster() As Dictionary(Of String, Edge())

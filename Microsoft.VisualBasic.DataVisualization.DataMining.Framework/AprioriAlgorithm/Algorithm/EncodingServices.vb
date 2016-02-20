@@ -1,27 +1,28 @@
 ﻿Imports System.Collections.ObjectModel
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriAlgorithm
 
     Public Class BinaryEncodingServices
 
-        Dim _InternalCodesMappings As Dictionary(Of Char, String)
-        Dim _InternalMappingCodes As Dictionary(Of String, Char)
+        Dim _codesMappings As Dictionary(Of Char, String)
+        Dim _mappingCodes As Dictionary(Of String, Char)
 
-        Sub New(Codes As Generic.IEnumerable(Of String))
-            Dim CodesChr = EncodingServices.InternalGenerateCodes(Codes.Count)
-            _InternalCodesMappings = (From Idx As Integer In Codes.Sequence Select ch = CodesChr(Idx), Token_ID = Codes(Idx)).ToArray.ToDictionary(Function(obj) obj.ch, Function(obj) obj.Token_ID)
-            _InternalMappingCodes = _InternalCodesMappings.ToDictionary(Function(obj) obj.Value, Function(obj) obj.Key)
+        Sub New(Codes As IEnumerable(Of String))
+            Dim CodesChr = EncodingServices.GenerateCodes(Codes.Count)
+            _codesMappings = SeqIterator(CodesChr, Codes).ToDictionary(Function(obj) obj.obj, Function(obj) obj.Follow)
+            _mappingCodes = _codesMappings.ToDictionary(Function(obj) obj.Value,
+                                                        Function(obj) obj.Key)
         End Sub
 
         ''' <summary>
         ''' ±àÂëÒ»¸öÊÂÎñ
         ''' </summary>
-        ''' <param name="TransactionTokens"></param>
+        ''' <param name="transaction"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function EncodingTransaction(TransactionTokens As String()) As String
-            Dim Chars = (From s As String In TransactionTokens Select _InternalMappingCodes(s)).ToArray
+        Public Function EncodingTransaction(transaction As String()) As String
+            Dim Chars = (From s As String In transaction Select _mappingCodes(s)).ToArray
             Return New String(Chars)
         End Function
 
@@ -32,7 +33,7 @@ Namespace AprioriAlgorithm
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function DecodesTransaction(Transaction As String) As String()
-            Dim LQuery = (From ch As Char In Transaction Select _InternalCodesMappings(ch)).ToArray
+            Dim LQuery = (From ch As Char In Transaction Select _codesMappings(ch)).ToArray
             Return LQuery
         End Function
     End Class
@@ -43,7 +44,7 @@ Namespace AprioriAlgorithm
     ''' <remarks></remarks>
     Public Class EncodingServices
 
-        Dim _InternalOriginalItems As String()
+        Dim _originals As String()
 
         Public ReadOnly Property CodeMappings As ReadOnlyDictionary(Of Char, KeyValuePair(Of String, Integer))
 
@@ -53,13 +54,21 @@ Namespace AprioriAlgorithm
         ''' <param name="Items">Value²¿·ÖÎªËùÓÐ¿ÉÄÜµÄÈ¡Öµ£¬Çë×¢Òâ£¬ValueÖ®ÖÐ²»ÄÜ¹»ÓÐÖØ¸´Öµ</param>
         ''' <remarks></remarks>
         Sub New(Items As String(), Levels As Integer())
-            _InternalOriginalItems = Items.ToArray
-            Dim ItemLevels = (From itemName As String In _InternalOriginalItems Select (From n In Levels.Distinct Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).ToArray.MatrixToVector 'Õ¹¿ª´¦Àí
-            Dim Codes = InternalGenerateCodes(ItemLevels.Count) '±àÂë
-            _CodeMappings = New ReadOnlyDictionary(Of Char, KeyValuePair(Of String, Integer))((From i As Integer In ItemLevels.Sequence Select ch = Codes(i), dat = ItemLevels(i)).ToArray.ToDictionary(Function(obj) obj.ch, Function(obj) obj.dat))
+            _originals = Items.ToArray
+            Dim ItemLevels = (From itemName As String In _originals
+                              Select (From n As Integer
+                                      In Levels.Distinct
+                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).MatrixToVector
+            Dim Codes = GenerateCodes(ItemLevels.Length)
+            _CodeMappings = New ReadOnlyDictionary(Of Char, KeyValuePair(Of String, Integer))(
+                (From i As Integer
+                 In ItemLevels.Sequence
+                 Select ch = Codes(i),
+                     dat = ItemLevels(i)).ToDictionary(Function(obj) obj.ch,
+                                                       Function(obj) obj.dat))
         End Sub
 
-        Public Shared Function InternalGenerateCodes(Length As Integer) As Char()
+        Public Shared Function GenerateCodes(Length As Integer) As Char()
             Dim ChunkBuffer = (From i As Integer In (Length + 200).Sequence.AsParallel Select ChrW(15000 + i) Distinct).ToArray
             Return ChunkBuffer
         End Function
@@ -77,32 +86,33 @@ Namespace AprioriAlgorithm
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="data">Õâ¸öµÄË³ÐòÓëÊýÄ¿±ØÐëÒªÓë<see cref="_CodeMappings"></see>»òÕß<see cref="_InternalOriginalItems"></see>ÏàÒ»ÖÂ</param>
+        ''' <param name="data">Õâ¸öµÄË³ÐòÓëÊýÄ¿±ØÐëÒªÓë<see cref="_CodeMappings"></see>»òÕß<see cref="_originals"></see>ÏàÒ»ÖÂ</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function TransactionEncoding(data As Generic.IEnumerable(Of Transaction)) As String()
-            Dim LQuery = (From item In data.AsParallel Select __TransactionEncoding(item)).ToArray
+            Dim LQuery = (From item In data.AsParallel Select __transactionEncoding(item)).ToArray
             Return LQuery
         End Function
 
-        Private Function __TransactionEncoding(data As Transaction) As String
+        Private Function __transactionEncoding(data As Transaction) As String
             Dim Encodes = (From idx As Integer In data.Values.Sequence
                            Let Token As Integer = data.Values(idx)
-                           Let ID As String = Me._InternalOriginalItems(idx)
+                           Let ID As String = Me._originals(idx)
                            Select (From item In Me._CodeMappings
-                                   Where InternalEquals(ID, Token, item.Value)
-                                   Select item.Key).ToArray.First).ToArray
+                                   Where __equals(ID, Token, item.Value)
+                                   Select item.Key).FirstOrDefault).ToArray
             Return New String(value:=Encodes)
         End Function
 
-        Private Function InternalEquals(ak As String, av As Integer, b As KeyValuePair(Of String, Integer)) As Boolean
+        Private Function __equals(ak As String, av As Integer, b As KeyValuePair(Of String, Integer)) As Boolean
             Return av = b.Value AndAlso String.Equals(ak, b.Key)
         End Function
 
         Public Structure Transaction
+
             Public Property TransactionName As String
             ''' <summary>
-            ''' Õâ¸öµÄË³ÐòÓëÊýÄ¿±ØÐëÒªÓë<see cref="_CodeMappings"></see>»òÕß<see cref="_InternalOriginalItems"></see>ÏàÒ»ÖÂ
+            ''' Õâ¸öµÄË³ÐòÓëÊýÄ¿±ØÐëÒªÓë<see cref="_CodeMappings"></see>»òÕß<see cref="_originals"></see>ÏàÒ»ÖÂ
             ''' </summary>
             ''' <value></value>
             ''' <returns></returns>

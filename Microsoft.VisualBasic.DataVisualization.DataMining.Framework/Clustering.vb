@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Clustering
 
@@ -87,10 +88,12 @@ Namespace Clustering
                 End If
             End If
             Dim ChunkData = Ordered.Split(inits)
-            Dim LQuery = (From kernel As Double() In ChunkData
-                          Select New SimpleCluster With
-                             {
-                                 .Kernel = kernel.Average, .Items = kernel, .d = d}).ToList '进行初筛
+            Dim LQuery = (From kernel As Double()
+                          In ChunkData
+                          Select New SimpleCluster With {
+                              .Kernel = kernel.Average,
+                              .Items = kernel,
+                              .d = d}).ToList '进行初筛
             '出现偏移的核都被合并进入偏向性的核之中，进行递归聚类
             Dim get_Merged = Function(p As Integer) As SimpleCluster
                                  If p < 0 OrElse p = LQuery.Count Then
@@ -99,13 +102,13 @@ Namespace Clustering
                                      Return LQuery(p)
                                  End If
                              End Function
-            Dim Offset = (From i As Integer
-                      In LQuery.Sequence
-                          Let kk = LQuery(i)
+            Dim Offset = (From i In LQuery.SeqIterator
+                          Let kk = i.obj
                           Let p = kk.offset
                           Where p <> 0
-                          Let merged_into = get_Merged(i - p)
-                          Select kernel = kk, MergedInto = merged_into).ToArray
+                          Let merged_into = get_Merged(i.Pos - p)
+                          Select kernel = kk,
+                              MergedInto = merged_into).ToArray
 
             For Each item In Offset
                 If item.MergedInto Is Nothing Then '核分裂

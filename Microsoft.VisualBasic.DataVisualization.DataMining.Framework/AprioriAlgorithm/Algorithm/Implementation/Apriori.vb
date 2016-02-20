@@ -123,11 +123,13 @@ Namespace AprioriAlgorithm
         Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of String)) As Dictionary(Of String, Double)
             Dim LQuery = (From i As Integer In (frequentItems.Count).Sequence.AsParallel
                           Let firstItem As String = SorterSortTokens(frequentItems(i).Name)
-                          Select InternalGetCandidate(frequentItems, i, firstItem, transactions)).ToArray.MatrixToList
-            Return LQuery.ToDictionary(Function(obj) obj.Key, elementSelector:=Function(obj) obj.Value)
+                          Select GetCandidate(frequentItems, i, firstItem, transactions)).MatrixAsIterator _
+                                .ToDictionary(Function(obj) obj.Key,
+                                              Function(obj) obj.Value)
+            Return LQuery
         End Function
 
-        Public Function InternalGetCandidate(frequentItems As IList(Of TransactionTokensItem), i As Integer, firstItem As String, transactions As IEnumerable(Of String)) As KeyValuePair(Of String, Double)()
+        Public Function GetCandidate(frequentItems As IList(Of TransactionTokensItem), i As Integer, firstItem As String, transactions As IEnumerable(Of String)) As KeyValuePair(Of String, Double)()
             Dim candidates As New Dictionary(Of String, Double)()
 
             For j As Integer = i + 1 To frequentItems.Count - 1
