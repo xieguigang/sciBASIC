@@ -55,10 +55,32 @@ Public Module NetworkAPI
         Return Network.SaveTo(SaveTo, False)
     End Function
 
+    ''' <summary>
+    ''' 这个查找函数是忽略掉了方向了的
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="node"></param>
+    ''' <returns></returns>
     <Extension, ExportAPI("GetConnections")>
     Public Function GetConnections(source As IEnumerable(Of FileStream.NetworkEdge), node As String) As FileStream.NetworkEdge()
         Dim LQuery = (From x As FileStream.NetworkEdge In source.AsParallel
                       Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
+                      Select x).ToArray
+        Return LQuery
+    End Function
+
+    ''' <summary>
+    ''' 查找To关系的节点边
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="from"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("Get.Connects.Next")>
+    <Extension>
+    Public Function GetNextConnects(source As IEnumerable(Of FileStream.NetworkEdge), from As String) As FileStream.NetworkEdge()
+        Dim LQuery = (From x As FileStream.NetworkEdge In source.AsParallel
+                      Where String.Equals(from, x.FromNode, StringComparison.OrdinalIgnoreCase)
                       Select x).ToArray
         Return LQuery
     End Function

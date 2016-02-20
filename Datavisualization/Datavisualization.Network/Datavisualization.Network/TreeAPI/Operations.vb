@@ -16,10 +16,39 @@ Namespace TreeAPI
         Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
             Dim ROOTs = net.GetConnections(ROOT)
             Dim tree As New BinaryTree(Of NodeTypes)(ROOT, NodeTypes.ROOT)
+            Dim netList = net.ToList
 
             For Each node In ROOTs
+                Call netList.Remove(node)
+                Call __buildTREE(tree, node.GetConnectedNode(ROOT), netList)
+            Next
+        End Function
+
+        Private Sub __buildTREE(ByRef tree As BinaryTree(Of NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
+            Dim nexts = netList.GetNextConnects(node)
+
+            For Each nxode In nexts
+                Call netList.Remove(nxode)
+                Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType))
 
             Next
+        End Sub
+
+        Private ReadOnly __getTypes As Dictionary(Of String, NodeTypes) =
+            New Dictionary(Of String, NodeTypes) From {
+ _
+            {PATH, NodeTypes.Path},
+            {LEAF, NodeTypes.Leaf},
+            {LEAF_X, NodeTypes.LeafX},
+            {ROOT, NodeTypes.ROOT}
+        }
+
+        Public Function [GetType](name As String) As NodeTypes
+            If __getTypes.ContainsKey(name) Then
+                Return __getTypes(name)
+            Else
+                Return NodeTypes.ROOT
+            End If
         End Function
 
         Private Function __addCluster() As Dictionary(Of String, Edge())

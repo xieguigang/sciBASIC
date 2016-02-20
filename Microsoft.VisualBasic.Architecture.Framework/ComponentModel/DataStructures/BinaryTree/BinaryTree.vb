@@ -118,26 +118,65 @@ Namespace ComponentModel.DataStructures.BinaryTree
             ' Return null to indicate failure to find name
         End Function
 
-
-        ' Recursively locates an empty slot in the binary tree and inserts the node
-        Private Sub add(node As TreeNode(Of T), ByRef tree As TreeNode(Of T))
+        ''' <summary>
+        ''' Recursively locates an empty slot in the binary tree and inserts the node
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <param name="tree"></param>
+        ''' <param name="[overrides]">
+        ''' 0不复写，函数自动处理
+        ''' &lt;0  LEFT
+        ''' >0 RIGHT
+        ''' </param>
+        Private Sub add(node As TreeNode(Of T), ByRef tree As TreeNode(Of T), [overrides] As Integer)
             If tree Is Nothing Then
                 tree = node
             Else
                 ' If we find a node with the same name then it's 
                 ' a duplicate and we can't continue
-                Dim comparison As Integer = [String].Compare(node.Name, tree.Name)
-                If comparison = 0 Then
-                    Throw New Exception()
+                Dim comparison As Integer
+
+                If [overrides] = 0 Then
+                    comparison = String.Compare(node.Name, tree.Name)
+                    If comparison = 0 Then
+                        Throw New Exception("Duplicated node was found!")
+                    End If
+                Else
+                    comparison = [overrides]
                 End If
 
                 If comparison < 0 Then
-                    add(node, tree.Left)
+                    add(node, tree.Left, comparison)
                 Else
-                    add(node, tree.Right)
+                    add(node, tree.Right, comparison)
                 End If
             End If
         End Sub
+
+        ''' <summary>
+        ''' Add a symbol to the tree if it's a new one. Returns reference to the new
+        ''' node if a new node inserted, else returns null to indicate node already present.
+        ''' </summary>
+        ''' <param name="name">Name of node to add to tree</param>
+        ''' <param name="d">Value of node</param>
+        ''' <returns> Returns reference to the new node is the node was inserted.
+        ''' If a duplicate node (same name was located then returns null</returns>
+        Public Function insert(name As String, d As T, left As Boolean) As TreeNode(Of T)
+            Dim node As New TreeNode(Of T)(name, d)
+
+            Try
+                If Root Is Nothing Then
+                    Root = node
+                Else
+                    add(node, Root, If(left, -1, 1))
+                End If
+                _Count += 1
+                Return node
+            Catch generatedExceptionName As Exception
+                Dim ex = New Exception(node.ToString, generatedExceptionName)
+                Return App.LogException(ex)
+            End Try
+        End Function
 
         ''' <summary>
         ''' Add a symbol to the tree if it's a new one. Returns reference to the new
@@ -153,7 +192,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 If Root Is Nothing Then
                     Root = node
                 Else
-                    add(node, Root)
+                    add(node, Root, 0)
                 End If
                 _Count += 1
                 Return node
