@@ -110,6 +110,7 @@
     <Compile Include="LDM\ObjectModel\Network.vb" />
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
+    <None Include="Designer.cd" />
     <None Include="Layouts\Module1.vb_" />
     <Compile Include="NetworkVisualizer.vb" />
     <Compile Include="LDM\ObjectModel\Node.vb" />

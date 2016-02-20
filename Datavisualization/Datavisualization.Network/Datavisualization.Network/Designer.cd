@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.DijkstraRouteFind" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAIAAAAAAAAACAAAAAAAAiAACAA=</HashCode>
+      <FileName>FindPath\Dijkstra\Dijkstra.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.Connection" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAEAAAAAAAAACAAAgAAAAAAIAEAAAI=</HashCode>
+      <FileName>FindPath\Dijkstra\LDM.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.Route" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAEAAAAAAAhAUAAAAhBQEAAACQAAACAAAACBQIAA=</HashCode>
+      <FileName>FindPath\Dijkstra\LDM.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.PathFinder(Of NetworkNode)" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAJAEAQAAQA=</HashCode>
+      <FileName>FindPath\PathFinder.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Edge" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAEgAAAAABAAAAAAAAAgAAAAAASQAA=</HashCode>
+      <FileName>LDM\ObjectModel\Edge.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Network" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUIggEAAAAAAABBQAAACBAQAAAgCAAAADAACAAFQIBA=</HashCode>
+      <FileName>LDM\ObjectModel\Network.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Node" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAIAAAAAACEAAIQgQAYACAAgAAgAEAAgAAFAAA=</HashCode>
+      <FileName>LDM\ObjectModel\Node.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.BasicHeap" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAACAAAAAAEAAAAAACAA=</HashCode>
+      <FileName>FindPath\PQDijkstra\BasicHeap.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.DijkstraFast" Collapsed="true">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAgAAAgAAAAAgAACAAACAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>FindPath\PQDijkstra\DijkstraFast.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.Finder">
+    <Position X="5.5" Y="16.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAFAAQAEAAAAAAAAAFAAA=</HashCode>
+      <FileName>FindPath\PQDijkstra\Example.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.PQDijkstraProvider">
+    <Position X="5.5" Y="13.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAEAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FindPath\PQDijkstra\PQDijkstraProvider.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.BinaryPriorityQueue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAAKEAAABAAAAECQRQAGAAAgFAEAgAABQKRA=</HashCode>
+      <FileName>FindPath\PQDijkstra\PriorityQueue.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.FileStream.NetworkEdge">
+    <Position X="8.75" Y="7" Width="5.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAQCgACAEgQAAAAAEEJAABAAAAAQFAAAQAAA=</HashCode>
+      <FileName>LDM\FileStream\Edge.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.FileStream.Network">
+    <Position X="2.25" Y="13.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\FileStream\Network.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.FileStream.Network(Of T_Node, T_Edge)">
+    <Position X="0.5" Y="10.5" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAggIAAAAAAAAAAACAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\FileStream\Network.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.FileStream.INetComponent">
+    <Position X="8.25" Y="4.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>LDM\FileStream\Node.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.FileStream.Node">
+    <Position X="4.75" Y="7" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAABABAAAEAAAAAAAAAAAAAAAAAAAAQAAAIAA=</HashCode>
+      <FileName>LDM\FileStream\Node.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.My.MySettings" Collapsed="true">
+    <Position X="19" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.TreeAPI.TreeNode">
+    <Position X="1.25" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TreeAPI\TREE.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.TreeAPI.LeafX">
+    <Position X="0.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TreeAPI\TREE.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DataVisualization.Network.TreeAPI.Leaf">
+    <Position X="3.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TreeAPI\TREE.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.HeapNode" Collapsed="true">
+    <Position X="15.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAABAAA=</HashCode>
+      <FileName>FindPath\PQDijkstra\HeapNode.vb</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.PQDijkstra.IPriorityQueue" Collapsed="true">
+    <Position X="17.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAEAAAAAAAAAAAAAACAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>FindPath\PQDijkstra\PriorityQueue.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract.INode" Collapsed="true">
+    <Position X="15.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Abstract.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract.I_InteractionModel">
+    <Position X="12.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Abstract.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract.INetworkEdge">
+    <Position X="12.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Abstract.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Microsoft.VisualBasic.DataVisualization.Network.TreeAPI.NodeTypes" Collapsed="true">
+    <Position X="15.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAIAAAAAAAAiAAAAAAA=</HashCode>
+      <FileName>TreeAPI\TREE.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.Dijkstra.DijkstraAPI" Collapsed="true">
+    <Position X="17.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAAAAAAAAAAAAAAEAQAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>FindPath\Dijkstra\DijkstraAPI.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.Module1" Collapsed="true">
+    <Position X="15.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layouts\Module1.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.NetworkAPI" Collapsed="true">
+    <Position X="19" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAAAAABAAAAAAAAAAACAAAAACAAAAAAABIIAAAQA=</HashCode>
+      <FileName>NetworkAPI.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.NetworkVisualizer" Collapsed="true">
+    <Position X="20.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAQAAAAAA=</HashCode>
+      <FileName>NetworkVisualizer.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.Layouts.BarycentricMethod" Collapsed="true">
+    <Position X="15.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layouts\BarycentricMethod.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.Layouts.LayoutCreator" Collapsed="true">
+    <Position X="20.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAMAAAAAAAAEAAAABAAAAAAAAAAAAABIAAACA=</HashCode>
+      <FileName>Layouts\LayoutCreator.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract.ExtensionsAPI" Collapsed="true">
+    <Position X="19" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Abstract.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.My.Resources.Resources" Collapsed="true">
+    <Position X="17.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.My.MySettingsProperty" Collapsed="true">
+    <Position X="17.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DataVisualization.Network.TreeAPI.Operations" Collapsed="true">
+    <Position X="15.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAABAAAAAABAAAxAAAgAEgAAAAAAA=</HashCode>
+      <FileName>TreeAPI\Operations.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
