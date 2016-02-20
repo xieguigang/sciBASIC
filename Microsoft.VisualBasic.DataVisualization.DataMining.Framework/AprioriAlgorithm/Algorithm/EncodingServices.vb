@@ -107,22 +107,22 @@ Namespace AprioriAlgorithm
         Private Function __equals(ak As String, av As Integer, b As KeyValuePair(Of String, Integer)) As Boolean
             Return av = b.Value AndAlso String.Equals(ak, b.Key)
         End Function
-
-        Public Structure Transaction
-
-            Public Property TransactionName As String
-            ''' <summary>
-            ''' Õâ¸öµÄË³ÐòÓëÊýÄ¿±ØÐëÒªÓë<see cref="_CodeMappings"></see>»òÕß<see cref="_originals"></see>ÏàÒ»ÖÂ
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            Public Property Values As Integer()
-
-            Sub New(ID As String, LevelValues As Integer())
-                TransactionName = ID
-                Values = LevelValues
-            End Sub
-        End Structure
     End Class
+
+    Public Structure Transaction
+
+        Public Property TransactionName As String
+        ''' <summary>
+        ''' Õâ¸öµÄË³ÐòÓëÊýÄ¿±ØÐëÒªÓë<see cref="EncodingServices.CodeMappings"></see>»òÕß<see cref="EncodingServices._originals"></see>ÏàÒ»ÖÂ
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Property Values As Integer()
+
+        Sub New(ID As String, LevelValues As Integer())
+            TransactionName = ID
+            Values = LevelValues
+        End Sub
+    End Structure
 End Namespace

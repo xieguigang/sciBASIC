@@ -45,6 +45,20 @@ Namespace Linq
             Next
         End Function
 
+        <Extension>
+        Public Iterator Function JoinAsIterator(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
+            If Not a Is Nothing Then
+                For Each x As T In a
+                    Yield x
+                Next
+            End If
+            If Not b Is Nothing Then
+                For Each x As T In b
+                    Yield x
+                Next
+            End If
+        End Function
+
         ''' <summary>
         ''' 删除制定的键之后返回剩下的数据
         ''' </summary>
