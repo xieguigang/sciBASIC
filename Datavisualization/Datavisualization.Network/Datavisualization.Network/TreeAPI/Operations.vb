@@ -89,13 +89,20 @@ Namespace TreeAPI
             End If
         End Function
 
+        ''' <summary>
+        ''' {最开始的节点，实体列表}
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <returns></returns>
         <ExportAPI("Cluster.Parts")>
-        Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, Edge())
+        Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, String())
             Dim tree As BinaryTree(Of NodeTypes) = net.BuildTree
-
+            Dim ROOT = tree.DirectFind(Operations.ROOT)
+            Dim hash = ROOT.__addCluster(New Dictionary(Of String, String()))
+            Return hash
         End Function
 
-        Private Function __addCluster() As Dictionary(Of String, Edge())
+        <Extension> Private Function __addCluster(node As TreeNode(Of NodeTypes), hash As Dictionary(Of String, String())) As Dictionary(Of String, String())
 
 
         End Function
