@@ -6,19 +6,21 @@ Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.AprioriAlgo
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports System.Threading
 
 Namespace AprioriAlgorithm
 
     ''' <summary>
-    ''' 关联分析程序（当某一种事务的样本较少的时候，将无法分析出关联性）
+    ''' 
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
     <PackageNamespace("Tools.DataMining.Apriori",
                       Publisher:="Omar Gameel Salem",
                       Url:="http://www.codeproject.com/Articles/70371/Apriori-Algorithm",
-                      Description:="In data mining, Apriori is a classic algorithm for learning association rules. Apriori is designed to operate on databases containing transactions (for example, collections of items bought by customers, or details of a website frequentation).
-
+                      Description:="In data mining, Apriori is a classic algorithm for learning association rules. 
+                      Apriori is designed to operate on databases containing transactions 
+                      (for example, collections of items bought by customers, or details of a website frequentation).
 <p>Other algorithms are designed for finding association rules in data having no transactions (Winepi and Minepi), or having no timestamps (DNA sequencing).",
                       Cites:="")>
     Public Module Apriori
@@ -57,14 +59,13 @@ Namespace AprioriAlgorithm
             Call Console.WriteLine("maximal item rules...")
             Dim maximalItemSets As IList(Of String) = GetMaximalItemSets(closedItemSets)
 
-            Dim OutputResult As Output = New Output() With
-                                         {
-                                             .StrongRules = strongRules,
-                                             .MaximalItemSets = maximalItemSets,
-                                             .ClosedItemSets = closedItemSets,
-                                             .FrequentItems = allFrequentItems
-                                         }
-            Return OutputResult
+            Dim out As Output = New Output() With {
+                .StrongRules = strongRules,
+                .MaximalItemSets = maximalItemSets,
+                .ClosedItemSets = closedItemSets,
+                .FrequentItems = allFrequentItems
+            }
+            Return out
         End Function
 
 #End Region
@@ -85,12 +86,16 @@ Namespace AprioriAlgorithm
             Return New String(tokenArray)
         End Function
 
-        Public Function GetL1FrequentItems(minSupport As Double, items As IEnumerable(Of String), transactions As IEnumerable(Of String)) As List(Of TransactionTokensItem)
+        Public Function GetL1FrequentItems(minSupport As Double,
+                                           items As IEnumerable(Of String),
+                                           transactions As IEnumerable(Of String)) As List(Of TransactionTokensItem)
             Dim transactionsCount As Double = transactions.Count()
             Dim frequentItemsL1 As List(Of TransactionTokensItem) = (From item As String In items.AsParallel
                                                                      Let support As Double = GetSupport(item, transactions)
                                                                      Where support / transactionsCount >= minSupport
-                                                                     Select New TransactionTokensItem() With {.Name = item, .Support = support}).ToList
+                                                                     Select New TransactionTokensItem() With {
+                                                                         .Name = item,
+                                                                         .Support = support}).ToList
             Call frequentItemsL1.Sort()
             Return frequentItemsL1
         End Function
@@ -121,7 +126,7 @@ Namespace AprioriAlgorithm
 
         <ExportAPI("Candidates.Generate")>
         Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of String)) As Dictionary(Of String, Double)
-            Dim LQuery = (From i As Integer In (frequentItems.Count).Sequence.AsParallel
+            Dim LQuery = (From i As Integer In (frequentItems.Count).SeqIterator.AsParallel
                           Let firstItem As String = SorterSortTokens(frequentItems(i).Name)
                           Select GetCandidate(frequentItems, i, firstItem, transactions)).MatrixAsIterator _
                                 .ToDictionary(Function(obj) obj.Key,
@@ -129,7 +134,10 @@ Namespace AprioriAlgorithm
             Return LQuery
         End Function
 
-        Public Function GetCandidate(frequentItems As IList(Of TransactionTokensItem), i As Integer, firstItem As String, transactions As IEnumerable(Of String)) As KeyValuePair(Of String, Double)()
+        Public Function GetCandidate(frequentItems As IList(Of TransactionTokensItem),
+                                     i As Integer,
+                                     firstItem As String,
+                                     transactions As IEnumerable(Of String)) As KeyValuePair(Of String, Double)()
             Dim candidates As New Dictionary(Of String, Double)()
 
             For j As Integer = i + 1 To frequentItems.Count - 1
@@ -166,7 +174,10 @@ Namespace AprioriAlgorithm
                                          <Parameter("NumberOfTransactions")> transactionsCount As Double) As List(Of TransactionTokensItem)
             Dim frequentItems As List(Of TransactionTokensItem) = (From item As KeyValuePair(Of String, Double) In candidates.AsParallel
                                                                    Where item.Value / transactionsCount >= minSupport
-                                                                   Select New TransactionTokensItem() With {.Name = item.Key, .Support = item.Value}).ToList
+                                                                   Select New TransactionTokensItem() With {
+                                                                       .Name = item.Key,
+                                                                       .Support = item.Value
+                                                                       }).ToList
             Return frequentItems
         End Function
 
@@ -175,7 +186,8 @@ Namespace AprioriAlgorithm
             Dim i As Integer = 0
 
             For Each item In allFrequentItems
-                Dim parents As Dictionary(Of String, Double) = GetItemParents(item.Key, System.Threading.Interlocked.Increment(i), allFrequentItems)
+                Dim parents As Dictionary(Of String, Double) =
+                    GetItemParents(item.Key, Interlocked.Increment(i), allFrequentItems)
 
                 If CheckIsClosed(item.Key, parents, allFrequentItems) Then
                     Call closedItemSets.Add(item.Key, parents)
@@ -228,7 +240,9 @@ Namespace AprioriAlgorithm
 
         Public Function GenerateRules(allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As HashSet(Of Rule)
             Dim rulesList = New HashSet(Of Rule)()
-            Dim LQuery = (From Token In allFrequentItems.AsParallel Where Token.Key.Length > 1 Select ___generateRules(Token)).ToArray.MatrixToList
+            Dim LQuery = (From Token In allFrequentItems.AsParallel
+                          Where Token.Key.Length > 1
+                          Select ___generateRules(Token)).ToArray.MatrixToList
 
             For Each Rule In LQuery
                 If Not rulesList.Contains(Rule) Then

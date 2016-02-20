@@ -118,6 +118,18 @@ Namespace Linq
             Return List
         End Function
 
+        <Extension>
+        Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
+            If n < 0 Then
+                Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
+                Throw New Exception(ex)
+            End If
+
+            For i As Integer = 0 To n - 1
+                Yield (i + offset)
+            Next
+        End Function
+
         <Extension, ExportAPI("Sequence")>
         Public Function Sequence(n As Integer, offset As Integer) As Integer()
             Dim array As Integer() = n.Sequence
