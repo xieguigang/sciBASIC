@@ -26,6 +26,26 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 递归的得到子节点的数目
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As Integer
+            Get
+                Dim n As Integer
+
+                If Not Left Is Nothing Then
+                    n += 1
+                    n += Left.Count
+                End If
+
+                If Not Right Is Nothing Then
+                    n += 1
+                    n += Right.Count
+                End If
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return Name & " ==> " & Value.ToString
         End Function

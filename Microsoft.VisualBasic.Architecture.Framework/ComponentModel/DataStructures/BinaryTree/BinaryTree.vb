@@ -52,6 +52,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Public Sub New()
         End Sub
 
+        Sub New(root As TreeNode(Of T))
+            Me.Root = root
+            Me._Count = root.Count
+        End Sub
+
         ''' <summary>
         ''' 初始化有一个根节点
         ''' </summary>

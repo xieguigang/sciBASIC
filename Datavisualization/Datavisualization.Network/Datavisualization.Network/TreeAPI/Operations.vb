@@ -26,11 +26,17 @@ Namespace TreeAPI
 
         Private Sub __buildTREE(ByRef tree As BinaryTree(Of NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
             Dim nexts = netList.GetNextConnects(node)
+            Dim left As Boolean = True
+
+            If nexts.IsNullOrEmpty Then
+                Console.Write("")
+            End If
 
             For Each nxode In nexts
                 Call netList.Remove(nxode)
-                Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType))
-
+                Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType), left)
+                Call __buildTREE(tree, nxode.ToNode, netList)
+                left = Not left
             Next
         End Sub
 
