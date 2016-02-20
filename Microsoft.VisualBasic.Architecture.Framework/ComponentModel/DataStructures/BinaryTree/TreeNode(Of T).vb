@@ -43,11 +43,26 @@ Namespace ComponentModel.DataStructures.BinaryTree
                     n += 1
                     n += Right.Count
                 End If
+
+                Return n
             End Get
         End Property
 
         Public Overrides Function ToString() As String
             Return Name & " ==> " & Value.ToString
+        End Function
+
+        ''' <summary>
+        ''' 最多只有两个元素
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetEnumerator() As IEnumerator(Of TreeNode(Of T))
+            If Not Left Is Nothing Then
+                Yield Left
+            End If
+            If Not Right Is Nothing Then
+                Yield Right
+            End If
         End Function
     End Class
 End Namespace
