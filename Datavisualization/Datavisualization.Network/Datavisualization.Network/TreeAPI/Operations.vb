@@ -26,18 +26,20 @@ Namespace TreeAPI
 
         Private Sub __buildTREE(ByRef tree As BinaryTree(Of NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
             Dim nexts = netList.GetNextConnects(node)
-            Dim left As Boolean = True
+            Dim type = __getTypes(nexts.First.InteractionType)
 
-            If nexts.IsNullOrEmpty Then
-                Console.Write("")
+            If type = NodeTypes.Leaf Then
+
+            ElseIf type = NodeTypes.LeafX Then
+                Dim Xnode As New LeafX(node) With {.LeafX = nexts}
+
+            Else ' 这个是Path，则继续建树
+                For Each nxode In nexts
+                    Call netList.Remove(nxode)
+                    Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType))
+                    Call __buildTREE(tree, nxode.ToNode, netList)
+                Next
             End If
-
-            For Each nxode In nexts
-                Call netList.Remove(nxode)
-                Call tree.insert(nxode.FromNode, __getTypes(nxode.InteractionType), left)
-                Call __buildTREE(tree, nxode.ToNode, netList)
-                left = Not left
-            Next
         End Sub
 
         Private ReadOnly __getTypes As Dictionary(Of String, NodeTypes) =

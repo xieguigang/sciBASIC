@@ -9,12 +9,12 @@ Namespace TreeAPI
         ROOT
     End Enum
 
-    Public Class TreeNode : Inherits TreeNode(Of NodeTypes)
-
-    End Class
-
     Public Class LeafX : Inherits TreeNode(Of NodeTypes)
 
-        Public Property LeafX As FileStream.Node()
+        Public Property LeafX As FileStream.NetworkEdge()
+
+        Sub New(parent As String)
+            Call MyBase.New(parent & "-LeafX", NodeTypes.LeafX)
+        End Sub
     End Class
 End Namespace

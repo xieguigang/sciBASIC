@@ -88,6 +88,21 @@ Namespace ComponentModel.DataStructures.BinaryTree
         End Sub
 
         ''' <summary>
+        ''' Manual add tree node
+        ''' </summary>
+        ''' <param name="parent"></param>
+        ''' <param name="node"></param>
+        ''' <param name="left"></param>
+        Public Sub Add(parent As String, node As TreeNode(Of T), left As Boolean)
+            Dim parentNode = FindSymbol(parent)
+            If left Then
+                parentNode.Left = node
+            Else
+                parentNode.Right = node
+            End If
+        End Sub
+
+        ''' <summary>
         ''' Returns the number of nodes in the tree
         ''' </summary>
         ''' <returns>Number of nodes in the tree</returns>
