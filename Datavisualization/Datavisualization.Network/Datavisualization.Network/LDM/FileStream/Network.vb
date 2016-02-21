@@ -20,7 +20,38 @@ Namespace FileStream
         Implements ISaveHandle
 
         Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).locusId
+            Get
+                If __nodes Is Nothing Then
+                    __nodes = New List(Of T_Node)
+                End If
+                Return __nodes.ToArray
+            End Get
+            Set(value As T_Node())
+                If value Is Nothing Then
+                    __nodes = New List(Of T_Node)
+                Else
+                    __nodes = value.ToList
+                End If
+            End Set
+        End Property
         Public Property Edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
+            Get
+                If __edges Is Nothing Then
+                    __edges = New List(Of T_Edge)
+                End If
+                Return __edges.ToArray
+            End Get
+            Set(value As T_Edge())
+                If value Is Nothing Then
+                    __edges = New List(Of T_Edge)
+                Else
+                    __edges = value.ToList
+                End If
+            End Set
+        End Property
+
+        Dim __nodes As List(Of T_Node)
+        Dim __edges As List(Of T_Edge)
 
         ''' <summary>
         ''' 移除的重复的边
@@ -38,7 +69,7 @@ Namespace FileStream
                           Group By id Into Group).ToArray
             Edges = (From gpEdge
                      In LQuery
-                     Select gpEdge.Group.ToArray.First.edge).ToArray
+                     Select gpEdge.Group.First.edge).ToArray
         End Sub
 
         ''' <summary>
@@ -74,5 +105,51 @@ Namespace FileStream
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(Path, encoding.GetEncodings)
         End Function
+
+        Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As T_Node) As Network(Of T_Node, T_Edge)
+            Call net.__nodes.Add(x)
+            Return net
+        End Operator
+
+        Public Shared Operator -(net As Network(Of T_Node, T_Edge), x As T_Node) As Network(Of T_Node, T_Edge)
+            Call net.__nodes.Remove(x)
+            Return net
+        End Operator
+
+        Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As T_Edge) As Network(Of T_Node, T_Edge)
+            Call net.__edges.Add(x)
+            Return net
+        End Operator
+
+        Public Shared Operator -(net As Network(Of T_Node, T_Edge), x As T_Edge) As Network(Of T_Node, T_Edge)
+            Call net.__edges.Remove(x)
+            Return net
+        End Operator
+
+        Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As IEnumerable(Of T_Node)) As Network(Of T_Node, T_Edge)
+            Call net.__nodes.AddRange(x.ToArray)
+            Return net
+        End Operator
+
+        Public Shared Operator -(net As Network(Of T_Node, T_Edge), lst As IEnumerable(Of T_Node)) As Network(Of T_Node, T_Edge)
+            For Each x In lst
+                Call net.__nodes.Remove(x)
+            Next
+
+            Return net
+        End Operator
+
+        Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As IEnumerable(Of T_Edge)) As Network(Of T_Node, T_Edge)
+            Call net.__edges.AddRange(x.ToArray)
+            Return net
+        End Operator
+
+        Public Shared Operator -(net As Network(Of T_Node, T_Edge), lst As IEnumerable(Of T_Edge)) As Network(Of T_Node, T_Edge)
+            For Each x In lst
+                Call net.__edges.Remove(x)
+            Next
+
+            Return net
+        End Operator
     End Class
 End Namespace

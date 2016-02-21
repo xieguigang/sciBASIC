@@ -28,6 +28,11 @@ Namespace FileStream
         <XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
         <Column("InteractionType")> Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
 
+        Public Iterator Function Nodes() As IEnumerable(Of String)
+            Yield FromNode
+            Yield ToNode
+        End Function
+
         ''' <summary>
         ''' 返回没有方向性的统一标识符
         ''' </summary>
@@ -123,5 +128,15 @@ Namespace FileStream
                          Select Node).FirstOrDefault
             Return Found
         End Function
+
+        Public Shared Operator +(list As List(Of NetworkEdge), x As NetworkEdge) As List(Of NetworkEdge)
+            Call list.Add(x)
+            Return list
+        End Operator
+
+        Public Shared Operator -(list As List(Of NetworkEdge), x As NetworkEdge) As List(Of NetworkEdge)
+            Call list.Remove(x)
+            Return list
+        End Operator
     End Class
 End Namespace
