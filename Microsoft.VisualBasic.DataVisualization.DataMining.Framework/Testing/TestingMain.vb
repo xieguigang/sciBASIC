@@ -26,7 +26,9 @@ Module TestingMain
 
         Dim v As New List(Of Value(Of String))
 
-
+        v += New Value(Of String)("1234")
+        v += New Value(Of String)("369")
+        v -= v(0)
 
         Dim nnnnet =
             "F:\1.13.RegPrecise_network\MEME_OUT\Regulons.MEME\250.MEME_SW-TOM.OUT\SW-TOM.Hits.VirtualFootprints.Trim.PhenotypeRegulates.TreeNET\Edges.csv".LoadCsv(Of NetworkEdge)
@@ -84,7 +86,7 @@ Module TestingMain
         nnn = (-1).Sequence
 
         Dim Data0 = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
-        Dim MAT = Microsoft.VisualBasic.DataVisualization.DataMining.Framework.SerialsVarialble.Load(Data0)
+        Dim MAT = Microsoft.VisualBasic.DataVisualization.DataMining.Framework.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
 
         Dim datad = Microsoft.VisualBasic.DataVisualization.DataMining.Framework.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
 
