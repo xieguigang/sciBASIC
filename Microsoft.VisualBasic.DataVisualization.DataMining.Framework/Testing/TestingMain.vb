@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework
+﻿Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.KMeans
 Imports Microsoft.VisualBasic.DataVisualization.Network
@@ -22,6 +23,10 @@ Module TestingMain
     End Class
 
     Sub Main()
+
+        Dim v As New List(Of Value(Of String))
+
+
 
         Dim nnnnet =
             "F:\1.13.RegPrecise_network\MEME_OUT\Regulons.MEME\250.MEME_SW-TOM.OUT\SW-TOM.Hits.VirtualFootprints.Trim.PhenotypeRegulates.TreeNET\Edges.csv".LoadCsv(Of NetworkEdge)

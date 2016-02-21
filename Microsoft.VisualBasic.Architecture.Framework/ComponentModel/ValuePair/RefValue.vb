@@ -23,6 +23,16 @@
         Public Overrides Function ToString() As String
             Return Scripting.InputHandler.ToString(Value)
         End Function
+
+        Public Overloads Shared Operator +(list As List(Of Value(Of T)), x As Value(Of T)) As List(Of Value(Of T))
+            Call list.Add(x)
+            Return list
+        End Operator
+
+        Public Overloads Shared Operator -(list As List(Of Value(Of T)), x As Value(Of T)) As List(Of Value(Of T))
+            Call list.Remove(x)
+            Return list
+        End Operator
     End Class
 
     ''' <summary>
