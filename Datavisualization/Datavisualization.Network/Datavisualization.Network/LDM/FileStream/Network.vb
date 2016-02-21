@@ -50,6 +50,11 @@ Namespace FileStream
             End Set
         End Property
 
+        Sub New()
+            __nodes = New List(Of T_Node)
+            __edges = New List(Of T_Edge)
+        End Sub
+
         Dim __nodes As List(Of T_Node)
         Dim __edges As List(Of T_Edge)
 
