@@ -342,6 +342,11 @@ Namespace DocumentStream
             Call file.AppendRange(source)
             Return file
         End Operator
+
+        Public Shared Operator +(file As File, row As IEnumerable(Of String)) As File
+            Call file.Add(New RowObject(row))
+            Return file
+        End Operator
 #End Region
 
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
