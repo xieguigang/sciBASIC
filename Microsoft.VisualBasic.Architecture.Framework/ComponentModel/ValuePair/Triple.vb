@@ -41,6 +41,16 @@ Namespace ComponentModel
         Public Overrides Function ToString() As String
             Return String.Format("{0} -> [{1}];  [{2}]", Value3, Value1, Value2)
         End Function
+
+        Public Overloads Shared Operator +(list As List(Of TripleKeyValuesPair(Of T)), x As TripleKeyValuesPair(Of T)) As List(Of TripleKeyValuesPair(Of T))
+            Call list.Add(x)
+            Return list
+        End Operator
+
+        Public Overloads Shared Operator -(list As List(Of TripleKeyValuesPair(Of T)), x As TripleKeyValuesPair(Of T)) As List(Of TripleKeyValuesPair(Of T))
+            Call list.Remove(x)
+            Return list
+        End Operator
     End Class
 
     Public Interface ITripleKeyValuesPair(Of T1, T2, T3)
@@ -68,5 +78,15 @@ Namespace ComponentModel
         Public Overrides Function ToString() As String
             Return String.Format("{0} -> [{1}];  [{2}]", Value3, Value1, Value2)
         End Function
+
+        Public Shared Operator +(list As List(Of TripleKeyValuesPair(Of T1, T2, T3)), x As TripleKeyValuesPair(Of T1, T2, T3)) As List(Of TripleKeyValuesPair(Of T1, T2, T3))
+            Call list.Add(x)
+            Return list
+        End Operator
+
+        Public Shared Operator -(list As List(Of TripleKeyValuesPair(Of T1, T2, T3)), x As TripleKeyValuesPair(Of T1, T2, T3)) As List(Of TripleKeyValuesPair(Of T1, T2, T3))
+            Call list.Remove(x)
+            Return list
+        End Operator
     End Class
 End Namespace
