@@ -9,7 +9,7 @@ Namespace DocumentStream
     ''' </summary>
     ''' <remarks></remarks>
     Public Class RowObject : Implements Generic.IEnumerable(Of String)
-        Implements Generic.IList(Of System.String)
+        Implements IList(Of System.String)
 
         ''' <summary>
         ''' 本行对象中的所有的单元格的数据集合
@@ -215,7 +215,7 @@ Namespace DocumentStream
             End If
         End Function
 
-        Public Function AddRange(values As Generic.IEnumerable(Of String)) As Integer
+        Public Function AddRange(values As IEnumerable(Of String)) As Integer
             Call _innerColumns.AddRange(values)
             Return _innerColumns.Count
         End Function
@@ -228,13 +228,12 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Function LocateKeyWord(KeyWord As String, Optional CaseSensitive As Boolean = True) As Integer
             Dim cpMethod As CompareMethod = If(CaseSensitive, CompareMethod.Binary, CompareMethod.Text)
-            Dim LQuery As String() = (From str As String
-                                          In _innerColumns.AsParallel
-                                      Where InStr(str, KeyWord, cpMethod) > 0
-                                      Select str).ToArray
-
-            If LQuery.Length > 0 Then
-                Return _innerColumns.IndexOf(LQuery(Scan0))
+            Dim LQuery As String = (From str As String
+                                    In _innerColumns.AsParallel
+                                    Where InStr(str, KeyWord, cpMethod) > 0
+                                    Select str).FirstOrDefault
+            If Not String.IsNullOrEmpty(LQuery) Then
+                Return _innerColumns.IndexOf(LQuery)
             Else
                 Return -1
             End If
@@ -322,32 +321,39 @@ Namespace DocumentStream
         End Function
 
         Public Shared Widening Operator CType(Tokens As String()) As RowObject
-            Return New RowObject With {._innerColumns = Tokens.ToList}
+            Return New RowObject With {
+                ._innerColumns = Tokens.ToList
+            }
         End Operator
 
         Public Shared Widening Operator CType(Tokens As List(Of String)) As RowObject
-            Return New RowObject With {._innerColumns = Tokens}
+            Return New RowObject With {
+                ._innerColumns = Tokens
+            }
         End Operator
 
-        Public Shared Function CreateObject(DataTokens As Generic.IEnumerable(Of String)) As Csv.DocumentStream.RowObject
-            Return New RowObject With {._innerColumns = DataTokens.ToList}
+        Public Shared Function CreateObject(DataTokens As IEnumerable(Of String)) As RowObject
+            Return New RowObject With {
+                ._innerColumns = DataTokens.ToList
+            }
         End Function
 
         ''' <summary>
         ''' 去除行集合中的重复的数据行
         ''' </summary>
-        ''' <param name="RowCollection"></param>
+        ''' <param name="rowList"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Distinct(RowCollection As Generic.IEnumerable(Of RowObject)) As RowObject()
-            Dim LQuery = From rowLine As String
-                            In (From row In RowCollection
-                                Let rowLine As String = CType(row, String)
-                                Select rowLine
-                                Distinct
-                                Order By rowLine Ascending).ToArray
-                         Select CType(rowLine, RowObject) '
-            Return LQuery.ToArray
+        Public Shared Function Distinct(rowList As IEnumerable(Of RowObject)) As RowObject()
+            Dim source = (From row In rowList
+                          Let rowLine As String = CType(row, String)
+                          Select rowLine
+                          Distinct
+                          Order By rowLine Ascending)
+            Dim LQuery = (From rowLine As String
+                          In source
+                          Select CType(rowLine, RowObject)).ToArray
+            Return LQuery
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
@@ -441,6 +447,18 @@ Namespace DocumentStream
         Public Sub RemoveAt(index As Integer) Implements IList(Of String).RemoveAt
             Call _innerColumns.RemoveAt(index)
         End Sub
+#End Region
+
+#Region "List Operations"
+        Public Overloads Shared Operator +(dataframe As File, x As RowObject) As File
+            Call dataframe.Add(x)
+            Return dataframe
+        End Operator
+
+        Public Overloads Shared Operator -(dataframe As File, x As RowObject) As File
+            Call dataframe.Remove(x)
+            Return dataframe
+        End Operator
 #End Region
     End Class
 End Namespace

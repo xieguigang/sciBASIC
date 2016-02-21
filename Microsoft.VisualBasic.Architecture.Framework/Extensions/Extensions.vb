@@ -1283,7 +1283,7 @@ Public Module Extensions
     ''' <param name="MAT">为了方便理解和使用，矩阵使用数组的数组来表示的</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixTranspose(Of T)(MAT As Generic.IEnumerable(Of T())) As T()()
+    <Extension> Public Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T())) As T()()
         Dim LQuery As T()() = (From i As Integer
                                In MAT.First.Sequence
                                Select (From Line As T() In MAT Select Line(i)).ToArray).ToArray
@@ -1297,7 +1297,7 @@ Public Module Extensions
     ''' <param name="MAT"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixTransposeIgnoredDimensionAgreement(Of T)(MAT As Generic.IEnumerable(Of T())) As T()()
+    <Extension> Public Function MatrixTransposeIgnoredDimensionAgreement(Of T)(MAT As IEnumerable(Of T())) As T()()
         Dim LQuery = (From i As Integer
                       In (From n As T()
                           In MAT
@@ -1330,9 +1330,7 @@ Public Module Extensions
         Return 0
     End Function
 
-    <Extension> Public Function TryInvoke(Of T, TOut)(value As T,
-                                                      proc As Func(Of T, TOut),
-                                                      Optional [default] As TOut = Nothing) As TOut
+    <Extension> Public Function TryInvoke(Of T, TOut)(value As T, proc As Func(Of T, TOut), Optional [default] As TOut = Nothing) As TOut
         Try
             Return proc(value)
         Catch ex As Exception
@@ -1340,24 +1338,6 @@ Public Module Extensions
             Return [default]
         End Try
     End Function
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection">请务必要确保集合之中的元素的<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable.Identifier"></see></param>属性是唯一的，否则会出错
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function ToEntriesDictionary(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(Collection As Generic.IEnumerable(Of T)) As Dictionary(Of String, T)
-        Dim Dictionary As Dictionary(Of String, T) = New Dictionary(Of String, T)
-        For Each Item As T In Collection
-            Call Dictionary.Add(Item.Identifier, Item)
-        Next
-
-        Return Dictionary
-    End Function
-#End If
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
@@ -1372,7 +1352,10 @@ Public Module Extensions
 #Else
     <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
 #End If
-        Return Double.IsNaN(n) OrElse Double.IsInfinity(n) OrElse Double.IsNegativeInfinity(n) OrElse Double.IsPositiveInfinity(n)
+        Return Double.IsNaN(n) OrElse
+            Double.IsInfinity(n) OrElse
+            Double.IsNegativeInfinity(n) OrElse
+            Double.IsPositiveInfinity(n)
     End Function
 
 #If FRAMEWORD_CORE Then

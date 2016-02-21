@@ -115,12 +115,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="node"></param>
         Public Sub Add(parent As String, node As TreeNode(Of T))
             Dim parentNode = DirectFind(parent)
-
-            If parentNode.Left Is Nothing Then
-                parentNode.Left = node
-            Else
-                parentNode.Right = node
-            End If
+            parentNode += node
         End Sub
 
         ''' <summary>

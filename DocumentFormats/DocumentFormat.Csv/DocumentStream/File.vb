@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace DocumentStream
 
@@ -9,9 +10,9 @@ Namespace DocumentStream
     ''' A comma character seperate table file that can be read and write in the EXCEL.(一个能够被Excel程序所读取的表格文件)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class File : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
-        Implements Generic.IEnumerable(Of RowObject)
-        Implements Generic.IList(Of RowObject)
+    Public Class File : Inherits ITextFile
+        Implements IEnumerable(Of RowObject)
+        Implements IList(Of RowObject)
 
         ''' <summary>
         ''' First line in the table is the column name definition line.
@@ -22,13 +23,13 @@ Namespace DocumentStream
         Public Sub New()
         End Sub
 
-        Sub New(data As Generic.IEnumerable(Of RowObject))
+        Sub New(data As IEnumerable(Of RowObject))
             _innerTable = data.ToList
         End Sub
 
         Sub New(path As String)
             FilePath = path
-            _innerTable = __loads(path, System.Text.Encoding.Default)
+            _innerTable = __loads(path, Encoding.Default)
         End Sub
 
         Default Public Overloads Property Item(x As Integer, y As Integer) As String
@@ -138,7 +139,7 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Function Get_DataRow(line As Integer) As RowObject
             If line > _innerTable.Count - 1 Then
-                Return New DocumentFormat.Csv.DocumentStream.RowObject
+                Return New RowObject
             Else
                 Return _innerTable(line)
             End If
@@ -164,7 +165,7 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function FindAtColumn(KeyWord As String, Column As Integer) As RowObject()
-            Dim LQuery = From row As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.RowObject In _innerTable.AsParallel
+            Dim LQuery = From row As RowObject In _innerTable.AsParallel
                          Let strCell As String = row.Column(Column)
                          Where InStr(strCell, KeyWord, CompareMethod.Text) > 0 OrElse String.Equals(strCell, KeyWord, StringComparison.OrdinalIgnoreCase)
                          Select row  '
@@ -205,10 +206,13 @@ Namespace DocumentStream
         ''' 对当前的csv矩阵进行转置之后返回新的文件
         ''' </summary>
         ''' <returns></returns>
-        Public Function Transpose() As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
+        Public Function Transpose() As File
             Dim ChunkBuffer As String()() = Me.Columns.MatrixTranspose
-            Dim LQuery = (From i As Integer In ChunkBuffer.First.Sequence Select CType((From Line In ChunkBuffer Select Line(i)).ToArray, Csv.DocumentStream.RowObject)).ToList
-            Return New Csv.DocumentStream.File With {._innerTable = LQuery, ._FilePath = _FilePath}
+            Dim LQuery = (From i As Integer In ChunkBuffer.First.Sequence Select CType((From Line In ChunkBuffer Select Line(i)).ToArray, RowObject)).ToList
+            Return New File With {
+                ._innerTable = LQuery,
+                ._FilePath = _FilePath
+            }
         End Function
 
         ''' <summary>
@@ -301,9 +305,12 @@ Namespace DocumentStream
         Public Function TokenCounts(ColumnIndex As Integer,
                                     Optional FirstLineTitle As Boolean = True,
                                     Optional IgnoreBlanks As Boolean = True,
-                                    Optional IgnoreCase As Boolean = False) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
+                                    Optional IgnoreCase As Boolean = False) As File
 
-            Dim Values As String() = (From row In If(FirstLineTitle, _innerTable.Skip(1), _innerTable).AsParallel Select row.Column(ColumnIndex)).ToArray ' 选择出该特定的列对象之中的数据
+            Dim source = If(FirstLineTitle, _innerTable.Skip(1), _innerTable)
+            Dim Values As String() = (From row As RowObject
+                                      In source.AsParallel
+                                      Select row.Column(ColumnIndex)).ToArray ' 选择出该特定的列对象之中的数据
             Dim GroupInit = (From str As String In Values Select str, lower = Strings.LCase(str)).ToArray
 
             If IgnoreBlanks Then
@@ -321,13 +328,21 @@ Namespace DocumentStream
                                Group item By item.str Into Group).ToArray(Function(obj) New KeyValuePair(Of String, Integer)(obj.str, obj.Group.Count))
             End If
 
-            Dim CsvFile As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File = New File
-            Call CsvFile.Add(New String() {If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
-            Call CsvFile.AppendRange((From TokenItem
-                                          In TokensGroup.AsParallel
-                                      Select New RowObject(New String() {TokenItem.Key, CStr(TokenItem.Value)})).ToArray)
+            Dim CsvFile As File = New File
+            CsvFile += New RowObject({If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
+            CsvFile += (From token As KeyValuePair(Of String, Integer)
+                        In TokensGroup.AsParallel
+                        Select New RowObject(New String() {token.Key, CStr(token.Value)})).ToArray
             Return CsvFile
         End Function
+
+#Region "List Operations"
+
+        Public Shared Operator +(file As File, source As IEnumerable(Of RowObject)) As File
+            Call file.AppendRange(source)
+            Return file
+        End Operator
+#End Region
 
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
             Return Save(FilePath, False, Encoding)
@@ -353,7 +368,7 @@ Namespace DocumentStream
                 Throw New NullReferenceException("path reference to a null location!")
             End If
             If encoding Is Nothing Then
-                encoding = System.Text.Encoding.UTF8
+                encoding = Encoding.UTF8
             End If
 
             If LazySaved Then
@@ -380,7 +395,7 @@ Namespace DocumentStream
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Protected Overridable Function __createTableVector() As Csv.DocumentStream.RowObject()
+        Protected Overridable Function __createTableVector() As RowObject()
             Return Me._innerTable.ToArray
         End Function
 
@@ -391,7 +406,7 @@ Namespace DocumentStream
         ''' <param name="File"></param>
         ''' <param name="encoding"></param>
         ''' <remarks></remarks>
-        Protected Function __lazySaved(FilePath As String, File As DocumentFormat.Csv.DocumentStream.File, encoding As System.Text.Encoding) As Boolean
+        Protected Function __lazySaved(FilePath As String, File As File, encoding As System.Text.Encoding) As Boolean
             Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(FilePath))
             Call Console.WriteLine("Open csv file handle, and writing chunk buffer into file...")
             Call Console.WriteLine("Object counts is ""{0}""", Me._innerTable.Count)
@@ -433,7 +448,7 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Widening Operator CType(Path As String) As File
-            Return DocumentFormat.Csv.DocumentStream.File.Load(Path)
+            Return File.Load(Path)
         End Operator
 
         Public Overloads Shared Widening Operator CType(Lines As String()) As File
@@ -643,7 +658,7 @@ Namespace DocumentStream
                         Select Line Distinct '
             End If
 
-            Return New Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File With {
+            Return New File With {
                 ._innerTable = (From Line As String In Query.ToArray Select CType(Line, RowObject)).ToList,
                 ._FilePath = Csv._FilePath
             }
@@ -676,15 +691,15 @@ Namespace DocumentStream
         ''' <param name="CsvFile"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function IsNullOrEmpty(CsvFile As Generic.IEnumerable(Of RowObject)) As Boolean
+        Public Shared Function IsNullOrEmpty(CsvFile As IEnumerable(Of RowObject)) As Boolean
             Return CsvFile Is Nothing OrElse CsvFile.Count = 0
         End Function
 
-        Public Shared Operator <=(CsvData As Csv.DocumentStream.File, TypeInfo As System.Type) As Object()
-            Return Csv.StorageProvider.Reflection.Reflector.LoadDataToObject(DocumentFormat.Csv.Extensions.DataFrame(CsvData), TypeInfo, False)
+        Public Shared Operator <=(CsvData As File, TypeInfo As System.Type) As Object()
+            Return Csv.StorageProvider.Reflection.Reflector.LoadDataToObject(Extensions.DataFrame(CsvData), TypeInfo, False)
         End Operator
 
-        Public Shared Operator >=(CsvData As DocumentFormat.Csv.DocumentStream.File, TypeInfo As System.Type) As Object()
+        Public Shared Operator >=(CsvData As File, TypeInfo As System.Type) As Object()
             Return CsvData <= TypeInfo
         End Operator
 

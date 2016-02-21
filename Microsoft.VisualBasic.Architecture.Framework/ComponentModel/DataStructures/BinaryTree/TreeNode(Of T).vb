@@ -85,5 +85,32 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Yield Right
             End If
         End Function
+
+        Public Shared Operator +(parent As TreeNode(Of T), child As TreeNode(Of T)) As TreeNode(Of T)
+            If parent.Left Is Nothing Then
+                parent.Left = child
+            End If
+            If parent.Right Is Nothing Then
+                parent.Right = child
+            End If
+
+            Throw New Exception("TreeNode is full, can not append any more!")
+        End Operator
+
+        Public Shared Operator -(parent As TreeNode(Of T), child As TreeNode(Of T)) As TreeNode(Of T)
+            If Not parent.Left Is Nothing Then
+                If parent.Left.Equals(child) Then
+                    parent.Left = Nothing
+                    Return parent
+                End If
+            End If
+            If Not parent.Right Is Nothing Then
+                If parent.Right.Equals(child) Then
+                    parent.Right = Nothing
+                    Return parent
+                End If
+            End If
+            Return parent
+        End Operator
     End Class
 End Namespace
