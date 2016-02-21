@@ -22,15 +22,15 @@ Namespace FileStream
         Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).locusId
             Get
                 If __nodes Is Nothing Then
-                    __nodes = New List(Of T_Node)
+                    __nodes = New Dictionary(Of String, T_Node)
                 End If
-                Return __nodes.ToArray
+                Return __nodes.Values.ToArray
             End Get
             Set(value As T_Node())
                 If value Is Nothing Then
-                    __nodes = New List(Of T_Node)
+                    __nodes = New Dictionary(Of String, T_Node)
                 Else
-                    __nodes = value.ToList
+                    __nodes = value.ToDictionary
                 End If
             End Set
         End Property
@@ -51,11 +51,11 @@ Namespace FileStream
         End Property
 
         Sub New()
-            __nodes = New List(Of T_Node)
+            __nodes = New Dictionary(Of String, T_Node)
             __edges = New List(Of T_Edge)
         End Sub
 
-        Dim __nodes As List(Of T_Node)
+        Dim __nodes As Dictionary(Of String, T_Node)
         Dim __edges As List(Of T_Edge)
 
         ''' <summary>
@@ -156,5 +156,43 @@ Namespace FileStream
 
             Return net
         End Operator
+
+        ''' <summary>
+        ''' Network contains node?
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
+        Public Shared Operator ^(net As Network(Of T_Node, T_Edge), node As String) As Boolean
+            Return net.__nodes.ContainsKey(node)
+        End Operator
+
+        ''' <summary>
+        ''' Network contains node?
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
+        Public Shared Operator ^(net As Network(Of T_Node, T_Edge), node As T_Node) As Boolean
+            Return net ^ node.Identifier
+        End Operator
+
+        ''' <summary>
+        ''' GET node
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
+        Public Shared Operator &(net As Network(Of T_Node, T_Edge), node As String) As T_Node
+            If net.__nodes.ContainsKey(node) Then
+                Return net.__nodes(node)
+            Else
+                Return Nothing
+            End If
+        End Operator
+
+        Public Function GetNode(name As String) As T_Node
+            Return Me & name
+        End Function
     End Class
 End Namespace

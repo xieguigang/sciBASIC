@@ -140,11 +140,11 @@ Public Module IEnumerations
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
-        Dim Dict As Dictionary(Of String, T) = New Dictionary(Of String, T)
+        Dim hash As Dictionary(Of String, T) = New Dictionary(Of String, T)
         Dim i As Integer = 0
         Try
             For Each item As T In source
-                Call Dict.Add(item.Identifier, item)
+                Call hash.Add(item.Identifier, item)
                 i += 1
             Next
         Catch ex As Exception
@@ -152,7 +152,7 @@ Public Module IEnumerations
             Throw ex
         End Try
 
-        Return Dict
+        Return hash
     End Function
 
     <Extension> Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of String, T)

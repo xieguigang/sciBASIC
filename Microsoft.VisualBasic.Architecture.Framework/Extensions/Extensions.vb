@@ -48,6 +48,19 @@ Public Module Extensions
 Public Module Extensions
 #End If
 
+    <Extension> Public Function Add(Of T As sIdEnumerable)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
+        If hash Is Nothing Then
+            hash = New Dictionary(Of String, T)
+        End If
+        If hash.ContainsKey(obj.Identifier) Then
+            Throw New Exception($"[{obj.Identifier}] was duplicated in the dictionary!")
+        Else
+            Call hash.Add(obj.Identifier, obj)
+        End If
+
+        Return hash
+    End Function
+
     <Extension>
     Public Function IndexOf(Of T)(source As Queue(Of T), x As T) As Integer
         If source.IsNullOrEmpty Then
