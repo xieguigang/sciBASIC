@@ -391,7 +391,7 @@ Namespace DocumentStream
             Return True
         End Function
 
-        Public Function AppendItem(columnValue As String) As Csv.DocumentStream.RowObject
+        Public Function AppendItem(columnValue As String) As RowObject
             Call Add(columnValue)
             Return Me
         End Function
@@ -458,6 +458,16 @@ Namespace DocumentStream
         Public Overloads Shared Operator -(dataframe As File, x As RowObject) As File
             Call dataframe.Remove(x)
             Return dataframe
+        End Operator
+
+        Public Shared Operator +(row As RowObject, col As String) As RowObject
+            Call row._innerColumns.Add(col)
+            Return row
+        End Operator
+
+        Public Shared Operator +(row As RowObject, col As IEnumerable(Of String)) As RowObject
+            Call row._innerColumns.AddRange(col.ToArray)
+            Return row
         End Operator
 #End Region
     End Class
