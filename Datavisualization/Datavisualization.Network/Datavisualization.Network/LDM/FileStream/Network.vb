@@ -131,6 +131,12 @@ Namespace FileStream
             Return net
         End Operator
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="x">由于会调用ToArray，所以这里建议使用Iterator</param>
+        ''' <returns></returns>
         Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As IEnumerable(Of T_Node)) As Network(Of T_Node, T_Edge)
             Call net.__nodes.AddRange(x.ToArray)
             Return net
@@ -144,6 +150,12 @@ Namespace FileStream
             Return net
         End Operator
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="x">由于会调用ToArray，所以这里建议使用Iterator</param>
+        ''' <returns></returns>
         Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As IEnumerable(Of T_Edge)) As Network(Of T_Node, T_Edge)
             Call net.__edges.AddRange(x.ToArray)
             Return net

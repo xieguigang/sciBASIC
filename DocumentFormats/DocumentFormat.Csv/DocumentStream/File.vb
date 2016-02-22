@@ -734,6 +734,10 @@ Namespace DocumentStream
             Call _innerTable.CopyTo(array, arrayIndex)
         End Sub
 
+        ''' <summary>
+        ''' Row Counts
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RowNumbers As Integer Implements ICollection(Of RowObject).Count
             Get
                 Return _innerTable.Count
