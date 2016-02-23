@@ -3,8 +3,8 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
 Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Net.Persistent.Application
 

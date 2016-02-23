@@ -2,6 +2,7 @@
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.MMFProtocol.MapStream
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Text
 
 Namespace MMFProtocol
@@ -79,7 +80,7 @@ Namespace MMFProtocol
             Return _MMFReader.Read.byteData
         End Function
 
-        Public Sub SendMessage(raw As Net.Protocol.RawStream)
+        Public Sub SendMessage(raw As RawStream)
             Call SendMessage(raw.Serialize)
         End Sub
 

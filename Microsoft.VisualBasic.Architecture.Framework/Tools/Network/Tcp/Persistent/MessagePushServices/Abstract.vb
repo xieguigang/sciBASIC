@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol
+﻿Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net.Persistent
 

@@ -1,6 +1,6 @@
 ﻿Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net.Persistent.Socket
 

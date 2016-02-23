@@ -871,9 +871,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(ChunkBuffer As Generic.IEnumerable(Of Byte),
-                                            <Parameter("Path.Save")> SavePath As String) As Boolean
-
+    <Extension> Public Function FlushStream(ChunkBuffer As IEnumerable(Of Byte), <Parameter("Path.Save")> SavePath As String) As Boolean
         Dim ParentDir As String = If(String.IsNullOrEmpty(SavePath),
             FileIO.FileSystem.CurrentDirectory,
             FileIO.FileSystem.GetParentPath(SavePath))
@@ -884,7 +882,7 @@ Public Module Extensions
         Return True
     End Function
 
-    <Extension> Public Function FlushStream(stream As Net.Protocol.ISerializable, SavePath As String) As Boolean
+    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, SavePath As String) As Boolean
         Dim rawStream As Byte() = stream.Serialize
         If rawStream Is Nothing Then
             rawStream = New Byte() {}
