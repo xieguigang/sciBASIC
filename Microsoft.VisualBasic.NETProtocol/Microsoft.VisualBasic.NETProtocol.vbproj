@@ -72,6 +72,7 @@
     <Compile Include="Protocols\PushServices.vb" />
     <Compile Include="Protocols\InvokeAPI.vb" />
     <Compile Include="Protocols\UserAPI.vb" />
+    <Compile Include="User\UserProtocols.vb" />
     <Compile Include="User\User.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

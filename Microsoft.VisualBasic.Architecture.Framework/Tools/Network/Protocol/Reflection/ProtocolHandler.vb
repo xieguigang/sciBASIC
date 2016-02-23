@@ -69,6 +69,10 @@ Namespace Net.Protocols.Reflection
             End Try
         End Function
 
+        Public Function HandlePush(uid As Long, request As RequestStream) As RequestStream
+            Return HandleRequest(uid, request, Nothing)
+        End Function
+
         ''' <summary>
         ''' Handle the data request from the client for socket events: <see cref="Net.TcpSynchronizationServicesSocket.Responsehandler"/> or <see cref="Net.SSL.SSLSynchronizationServicesSocket.Responsehandler"/>
         ''' </summary>

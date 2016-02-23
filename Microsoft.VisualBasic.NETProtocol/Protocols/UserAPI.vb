@@ -13,7 +13,7 @@ Namespace Protocols
         End Enum
 
         Public ReadOnly Property ProtocolEntry As Long =
-        New Protocol(GetType(Protocols)).EntryPoint
+            New Protocol(GetType(Protocols)).EntryPoint
 
         ''' <summary>
         ''' 在服务器端调用得到用户的唯一标识符
@@ -26,5 +26,8 @@ Namespace Protocols
             Return SecurityString.ToLong(sId)
         End Function
 
+        Public Function InitUser(remote As IPEndPoint, uid As String) As InitPOSTBack
+
+        End Function
     End Module
 End Namespace

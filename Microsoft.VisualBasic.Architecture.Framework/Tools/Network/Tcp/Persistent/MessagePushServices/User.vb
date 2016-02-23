@@ -31,10 +31,10 @@ Namespace Net.Persistent.Application
         ''' <param name="DataRequestHandle">使用这个函数来获取外部发送过来的用户消息</param>
         ''' <param name="ExceptionHandler"></param>
         Sub New(HostName As String,
-            RemotePort As Integer,
-            ID As Long,
-            DataRequestHandle As PushMessage,
-            Optional ExceptionHandler As ExceptionHandler = Nothing)
+                RemotePort As Integer,
+                ID As Long,
+                DataRequestHandle As PushMessage,
+                Optional ExceptionHandler As ExceptionHandler = Nothing)
 
             Me.remoteHost = HostName
             Me.USER_ID = ID
@@ -44,7 +44,11 @@ Namespace Net.Persistent.Application
         End Sub
 
         Sub New(services As System.Net.IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
-            Call Me.New(New Net.IPEndPoint(services).IPAddress, services.Port, ID, DataRequestHandle, ExceptionHandler)
+            Call Me.New(New IPEndPoint(services), ID, DataRequestHandle, ExceptionHandler)
+        End Sub
+
+        Sub New(services As IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
+            Call Me.New(services.IPAddress, services.Port, ID, DataRequestHandle, ExceptionHandler)
         End Sub
 
         Sub New(post As UserId, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
