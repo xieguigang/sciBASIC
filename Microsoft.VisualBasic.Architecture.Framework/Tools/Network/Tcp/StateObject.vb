@@ -2,7 +2,7 @@
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Text
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net
 
@@ -37,8 +37,8 @@ Namespace Net
             Return workSocket.RemoteEndPoint.ToString & " <=====> " & workSocket.LocalEndPoint.ToString
         End Function
 
-        Public Function GetRequest() As Net.Protocol.RequestStream
-            Return New Net.Protocol.RequestStream(ChunkBuffer.ToArray)
+        Public Function GetRequest() As RequestStream
+            Return New RequestStream(ChunkBuffer.ToArray)
         End Function
 
 #Region "IDisposable Support"

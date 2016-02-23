@@ -3,14 +3,14 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net.SSL
 
     Public Class SSLSynchronizationServicesSocket
-        Implements System.IDisposable
-        Implements ComponentModel.DataSourceModel.IObjectModel_Driver
-        Implements Net.Abstract.IServicesSocket
+        Implements IDisposable
+        Implements IObjectModel_Driver
+        Implements IServicesSocket
         Implements SSL.SSLProtocols.ISSLServices
 
         Dim _ServicesSocket As Net.TcpSynchronizationServicesSocket

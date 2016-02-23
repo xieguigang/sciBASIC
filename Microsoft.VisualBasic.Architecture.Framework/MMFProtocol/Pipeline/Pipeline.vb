@@ -1,5 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+﻿Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace MMFProtocol.Pipeline
 
@@ -29,7 +29,7 @@ Namespace MMFProtocol.Pipeline
         ''' <typeparam name="T"></typeparam>
         ''' <param name="var"></param>
         ''' <returns></returns>
-        Public Function GetValue(Of T As Net.Protocol.RawStream)(var As String) As T
+        Public Function GetValue(Of T As RawStream)(var As String) As T
             If Not _sockets.ContainsKey(var) Then
                 Return Nothing
             End If

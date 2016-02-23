@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Persistent.Application.MessagePushServer
 Imports Microsoft.VisualBasic.Net.Persistent.Socket
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.SSL
 
 Namespace Net.Persistent.Application

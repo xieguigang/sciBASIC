@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Parallel
+﻿Imports System.IO.MemoryMappedFiles
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace MMFProtocol.MapStream
 
@@ -7,7 +8,7 @@ Namespace MMFProtocol.MapStream
         Public ReadOnly Property URI As String
 
         Protected _chunkBuffer As Byte()
-        Protected _mmfileStream As IO.MemoryMappedFiles.MemoryMappedFile
+        Protected _mmfileStream As MemoryMappedFile
 
         Sub New(uri As String, ChunkSize As Long)
             Me._URI = uri
@@ -76,7 +77,7 @@ Namespace MMFProtocol.MapStream
         ''' <param name="ChunkSize">内存映射文件的数据块的预分配大小</param>
         Sub New(uri As String, callback As DataArrival, ChunkSize As Long)
             Call MyBase.New(uri, ChunkSize)
-            _mmfileStream = IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting(uri)
+            _mmfileStream = MemoryMappedFile.OpenExisting(uri)
             _dataArrivals = callback
 
             Call Parallel.RunTask(AddressOf __threadElapsed)

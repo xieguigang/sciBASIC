@@ -1,9 +1,11 @@
-﻿Namespace MMFProtocol.Pipeline
+﻿Imports Microsoft.VisualBasic.Net.Protocols
+
+Namespace MMFProtocol.Pipeline
 
     ''' <summary>
     ''' 
     ''' </summary>
-    Public Class PipeStream : Inherits Net.Protocol.RawStream
+    Public Class PipeStream : Inherits RawStream
 
         Public Property hashTable As Dictionary(Of String, PipeBuffer)
 

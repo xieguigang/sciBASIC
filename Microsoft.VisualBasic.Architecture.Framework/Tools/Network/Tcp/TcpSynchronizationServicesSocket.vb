@@ -6,8 +6,8 @@ Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Net
 
@@ -266,7 +266,7 @@ Namespace Net
         ''' </summary>
         ''' <param name="handler"></param>
         ''' <param name="requestData"></param>
-        Private Sub HandleRequest(handler As Socket, requestData As Net.Protocol.RequestStream)
+        Private Sub HandleRequest(handler As Socket, requestData As RequestStream)
             ' All the data has been read from the
             ' client. Display it on the console.
             ' Echo the data back to the client.
@@ -301,7 +301,7 @@ Namespace Net
 
             ' Convert the string data to byte data using ASCII encoding.
             Dim byteData As Byte() = Encoding.UTF8.GetBytes(data)
-            byteData = New Net.Protocol.RequestStream(0, 0, byteData).Serialize
+            byteData = New RequestStream(0, 0, byteData).Serialize
             ' Begin sending the data to the remote device.
             Call handler.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), handler)
         End Sub 'Send

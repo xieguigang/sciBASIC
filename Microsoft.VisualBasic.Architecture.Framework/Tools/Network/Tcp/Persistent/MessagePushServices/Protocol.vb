@@ -1,7 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol
-Imports System.Net.Sockets
+﻿Imports System.Net.Sockets
 Imports System.Threading
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net.Persistent.Application
 
@@ -18,7 +19,7 @@ Namespace Net.Persistent.Application
         End Enum
 
         Public ReadOnly Property ProtocolEntry As Long =
-            New Net.Protocol.Reflection.Protocol(GetType(Protocols)).EntryPoint
+            New Protocol(GetType(Protocols)).EntryPoint
 
         Public Function SendServerHash(hash As Integer) As RequestStream
             Return New RequestStream(ProtocolEntry, Protocols.ServerHash, CStr(hash))
@@ -78,7 +79,7 @@ Namespace Net.Persistent.Application
 
             Public Overrides Function Serialize() As Byte()
                 Dim RequestStream As Byte() = Message.Serialize
-                Dim ChunkBuffer As Byte() = New Byte(Protocol.RequestStream.INT64 + Protocol.RequestStream.INT64 + RequestStream.Length - 1) {}
+                Dim ChunkBuffer As Byte() = New Byte(INT64 + INT64 + RequestStream.Length - 1) {}
                 Dim p As Integer = 0
                 Call Array.ConstrainedCopy(BitConverter.GetBytes(FROM), Scan0, ChunkBuffer, p.Move(INT64), INT64)
                 Call Array.ConstrainedCopy(BitConverter.GetBytes(USER_ID), Scan0, ChunkBuffer, p.Move(INT64), INT64)

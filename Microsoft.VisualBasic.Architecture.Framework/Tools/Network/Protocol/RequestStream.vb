@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
 Imports System.Xml.Serialization
 
-Namespace Net.Protocol
+Namespace Net.Protocols
 
     ''' <summary>
     ''' Socket user client => Socket server data request &amp;

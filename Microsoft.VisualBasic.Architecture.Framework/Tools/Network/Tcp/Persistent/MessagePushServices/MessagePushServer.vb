@@ -3,8 +3,8 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Persistent.Socket
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace Net.Persistent.Application
@@ -12,13 +12,13 @@ Namespace Net.Persistent.Application
     ''' <summary>
     ''' 长连接模式的消息推送服务器
     ''' </summary>
-    <Net.Protocol.Reflection.Protocol(GetType(ServicesProtocol.Protocols))>
+    <Protocol(GetType(ServicesProtocol.Protocols))>
     Public Class MessagePushServer : Inherits Socket.ServicesSocket
         Implements Generic.IEnumerable(Of KeyValuePair(Of Long, WorkSocket))
         Implements Microsoft.VisualBasic.ComponentModel.DataSourceModel.IObjectModel_Driver
         Implements Net.Abstract.IDataRequestHandler
 
-        Public ReadOnly Property ProtocolHandler As Net.Protocol.Reflection.ProtocolHandler
+        Public ReadOnly Property ProtocolHandler As ProtocolHandler
 
         Dim _socketList As New Dictionary(Of Long, WorkSocket)
         ''' <summary>
@@ -227,7 +227,7 @@ Namespace Net.Persistent.Application
         ''' <param name="request"></param>
         ''' <param name="remote"></param>
         ''' <returns></returns>
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.SendMessage)>
+        <Protocol(ServicesProtocol.Protocols.SendMessage)>
         Private Function __usrInvokeSend(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim [From] As Long, USER_ID As Long
 #If DEBUG Then
@@ -240,7 +240,7 @@ Namespace Net.Persistent.Application
             End If
         End Function
 
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.Logon)>
+        <Protocol(ServicesProtocol.Protocols.Logon)>
         Private Function __Logon(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim USER_ID As Long, remoteEp As String = ""
 
@@ -271,7 +271,7 @@ Namespace Net.Persistent.Application
             Return NetResponse.RFC_OK
         End Function
 
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.Broadcast)>
+        <Protocol(ServicesProtocol.Protocols.Broadcast)>
         Private Function __broadcastMessage(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             For Each cnn In Me.Connections
                 Call cnn.SendMessage(request)
@@ -279,17 +279,17 @@ Namespace Net.Persistent.Application
             Return NetResponse.RFC_OK
         End Function
 
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.GetMyIPAddress)>
+        <Protocol(ServicesProtocol.Protocols.GetMyIPAddress)>
         Private Function __getMyIPAddress(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Return New RequestStream(0, HTTP_RFC.RFC_OK, remote.ToString.Split(":"c)(Scan0))
         End Function
 
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.ConfigConnection)>
+        <Protocol(ServicesProtocol.Protocols.ConfigConnection)>
         Private Function __isGetSocketPortal(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Return New RequestStream(0, HTTP_RFC.RFC_OK, CStr(_LocalPort))
         End Function
 
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.IsUserOnline)>
+        <Protocol(ServicesProtocol.Protocols.IsUserOnline)>
         Private Function __isUserOnlineQuery(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim USER_ID As Long = Scripting.CTypeDynamic(Of Long)(request.GetUTF8String)
             Dim result As String = CStr(Me._socketList.ContainsKey(USER_ID))

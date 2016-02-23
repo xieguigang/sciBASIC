@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
 
-Namespace Net.Protocol
+Namespace Net.Protocols
 
     ''' <summary>
     ''' 支持序列化的对象，则这个对象可以被应用于<see cref="RequestStream"/>数据载体的网络传输操作过程

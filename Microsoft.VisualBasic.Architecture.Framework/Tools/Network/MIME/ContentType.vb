@@ -1,6 +1,6 @@
 ﻿Imports System.Data.Linq.Mapping
 
-Namespace Net.Protocol.ContentTypes
+Namespace Net.Protocols.ContentTypes
 
     ''' <summary>
     ''' MIME types / Internet Media Types

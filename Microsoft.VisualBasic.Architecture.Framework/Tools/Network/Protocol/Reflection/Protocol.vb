@@ -1,4 +1,4 @@
-﻿Namespace Net.Protocol.Reflection
+﻿Namespace Net.Protocols.Reflection
 
     ''' <summary>
     ''' This attribute indicates the entry point of the protocol processor definition location and the details of the protocol processor. 

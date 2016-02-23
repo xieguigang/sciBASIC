@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace Net.Protocol.ContentTypes
+Namespace Net.Protocols.ContentTypes
 
     ''' <summary>
     ''' MIME stands for "Multipurpose Internet Mail Extensions. It's a way of identifying files on the Internet according to their nature and format. 

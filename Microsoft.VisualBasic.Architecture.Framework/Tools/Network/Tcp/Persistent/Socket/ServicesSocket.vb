@@ -69,11 +69,11 @@ Namespace Net.Persistent.Socket
         ''' <remarks></remarks>
         Sub New(Optional LocalPort As Integer = 11000, Optional exHandler As ExceptionHandler = Nothing)
             Me._LocalPort = LocalPort
-            Me.__exceptionHandle = If(exHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, exHandler)
+            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
         End Sub
 
         Sub New(Optional exHandler As ExceptionHandler = Nothing)
-            Me.__exceptionHandle = If(exHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, exHandler)
+            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
         End Sub
 
         ''' <summary>
@@ -135,10 +135,10 @@ Namespace Net.Persistent.Socket
         ''' <param name="localEndPoint"></param>
         Private Sub __initSocket(localEndPoint As System.Net.IPEndPoint)
             ' Create a TCP/IP socket.
-            _socketListener =
-                New System.Net.Sockets.Socket(AddressFamily.InterNetwork,
-                                              SocketType.Stream,
-                                              ProtocolType.Tcp)
+            _socketListener = New Sockets.Socket(
+                AddressFamily.InterNetwork,
+                SocketType.Stream,
+                ProtocolType.Tcp)
 
             Call _socketListener.Bind(localEndPoint)
             Call _socketListener.ReceiveBufferSize.InvokeSet(4096)
@@ -159,11 +159,11 @@ Namespace Net.Persistent.Socket
         ''' </summary>
         ''' <param name="ar"></param>
         Public Sub AcceptCallback(ar As IAsyncResult)
-            Dim listener As System.Net.Sockets.Socket =
-                DirectCast(ar.AsyncState, System.Net.Sockets.Socket)
+            Dim listener As Sockets.Socket =
+                DirectCast(ar.AsyncState, Sockets.Socket)
 
             ' End the operation.
-            Dim handler As System.Net.Sockets.Socket
+            Dim handler As Sockets.Socket
 
             Try
                 handler = listener.EndAccept(ar)
@@ -180,8 +180,10 @@ Namespace Net.Persistent.Socket
         ''' Create the state object for the async receive.
         ''' </summary>
         ''' <param name="handler"></param>
-        Private Sub __initSocketThread(handler As System.Net.Sockets.Socket)
-            Dim state As StateObject = New StateObject With {.workSocket = handler}
+        Private Sub __initSocketThread(handler As Sockets.Socket)
+            Dim state As StateObject = New StateObject With {
+                .workSocket = handler
+            }
             Dim socket As New WorkSocket(state) With {
                 .ExceptionHandle = __exceptionHandle,
                 .ForceCloseHandle = AddressOf Me.ForceCloseHandle

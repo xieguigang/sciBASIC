@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace MMFProtocol.MapStream
 
@@ -45,7 +46,7 @@ Namespace MMFProtocol.MapStream
         End Function
     End Class
 
-    <Serializable> Public Class MMFStream : Inherits Net.Protocol.RawStream
+    <Serializable> Public Class MMFStream : Inherits RawStream
 
         ''' <summary>
         ''' Stamp; Update Badge

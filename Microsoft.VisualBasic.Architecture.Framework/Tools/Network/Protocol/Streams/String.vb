@@ -1,6 +1,6 @@
 ﻿Imports System.Xml.Serialization
 
-Namespace Net.Protocol.Streams
+Namespace Net.Protocols.Streams
 
     Public Class [String] : Inherits RawStream
 

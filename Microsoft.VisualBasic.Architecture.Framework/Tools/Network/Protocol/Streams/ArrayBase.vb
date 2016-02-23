@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Xml.Serialization
 
-Namespace Net.Protocol.Streams.Array
+Namespace Net.Protocols.Streams.Array
 
     ''' <summary>
     ''' 对于<see cref="System.Int64"/>, <see cref="System.int32"/>, <see cref="System.Double"/>, <see cref="System.DateTime"/>

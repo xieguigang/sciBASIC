@@ -1,10 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Net.Abstract
 
     ''' <summary>
-    ''' Object for handles the request <see cref="Net.Protocol.Reflection.Protocol"/>.
+    ''' Object for handles the request <see cref="Protocol"/>.
     ''' </summary>
     Public MustInherit Class IProtocolHandler
 

@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace MMFProtocol.Pipeline
 

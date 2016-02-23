@@ -1,10 +1,12 @@
-﻿Namespace Net.Protocol.Reflection
+﻿Imports System.Reflection
+
+Namespace Net.Protocols.Reflection
 
     Friend Class __protocolInvoker
 
-        ReadOnly obj As Object, Method As System.Reflection.MethodInfo
+        ReadOnly obj As Object, Method As MethodInfo
 
-        Sub New(obj As Object, Method As System.Reflection.MethodInfo)
+        Sub New(obj As Object, Method As MethodInfo)
             Me.obj = obj
             Me.Method = Method
         End Sub

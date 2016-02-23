@@ -3,8 +3,8 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
 Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Net.Persistent.Application
 
@@ -12,14 +12,14 @@ Namespace Net.Persistent.Application
     ''' 服务器也相当于一个USER，只不过服务器的UID为0，即最高级的用户
     ''' </summary>
     ''' 
-    <Protocol.Reflection.Protocol(GetType(ServicesProtocol.Protocols))>
+    <Protocol(GetType(ServicesProtocol.Protocols))>
     Public Class USER : Implements System.IDisposable
 
         Public ReadOnly Property USER_ID As Long
 
         Friend remotePort As Integer, remoteHost As String
         Dim __exceptionHandler As ExceptionHandler
-        Dim _requestHandler As Protocol.Reflection.ProtocolHandler
+        Dim _requestHandler As ProtocolHandler
 
         ''' <summary>
         ''' 
@@ -117,13 +117,13 @@ Namespace Net.Persistent.Application
         ''' <param name="request"></param>
         ''' <param name="remote">由于数据都是通过中心服务器转发的，所以这个已经没有存在的意义了，但是为了和短连接的socket的数据处理接口保持兼容，所以还保留这个参数</param>
         ''' <returns></returns>
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.SendMessage)>
+        <Protocol(ServicesProtocol.Protocols.SendMessage)>
         Private Function __sendMessageToMe(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim post As New ServicesProtocol.SendMessagePost(request.ChunkBuffer)
             Return Me.__dataRequestHandle(post.FROM, post.Message)
         End Function
 
-        <Protocol.Reflection.Protocol(ServicesProtocol.Protocols.Broadcast)>
+        <Protocol(ServicesProtocol.Protocols.Broadcast)>
         Private Function __receiveBroadcastMessage(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Return Me.__dataRequestHandle(CA, request)
         End Function

@@ -3,7 +3,7 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
 Imports System.Text
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports System.Reflection
 

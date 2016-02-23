@@ -1,6 +1,8 @@
-﻿Namespace MMFProtocol.Pipeline
+﻿Imports Microsoft.VisualBasic.Net.Protocols
 
-    Public Class PipeBuffer : Inherits Net.Protocol.RawStream
+Namespace MMFProtocol.Pipeline
+
+    Public Class PipeBuffer : Inherits RawStream
 
         Public Property Name As String
         Public Property byteData As Byte()

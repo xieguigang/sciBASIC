@@ -1,7 +1,7 @@
 ﻿Imports System.Net
 Imports Microsoft.VisualBasic.Net.Abstract
 
-Namespace Net.Protocol.Reflection
+Namespace Net.Protocols.Reflection
 
     ''' <summary>
     ''' 能够处理多种协议数据

@@ -1,7 +1,7 @@
 ﻿Imports System.Net
 Imports Microsoft.VisualBasic.Net.Abstract
 
-Namespace Net.Protocol.Reflection
+Namespace Net.Protocols.Reflection
 
     ''' <summary>
     ''' 这个模块只处理<see cref="Net.Abstract.DataRequestHandler"/>类型的接口
@@ -99,7 +99,7 @@ Namespace Net.Protocol.Reflection
         Private Shared Function GetMethod(obj As Object, entryPoint As System.Reflection.MethodInfo) As Net.Abstract.DataRequestHandler
             Dim parameters As System.Reflection.ParameterInfo() = entryPoint.GetParameters
 
-            If Not entryPoint.ReturnType.Equals(GetType(Net.Protocol.RequestStream)) Then
+            If Not entryPoint.ReturnType.Equals(GetType(RequestStream)) Then
                 Return Nothing
             End If
 
@@ -121,7 +121,7 @@ Namespace Net.Protocol.Reflection
 
             If parameters.Length = 2 Then
                 If (Not parameters.First.ParameterType.Equals(GetType(Long)) OrElse
-                Not parameters.Last.ParameterType.Equals(GetType(Net.Protocol.RequestStream))) Then
+                Not parameters.Last.ParameterType.Equals(GetType(RequestStream))) Then
                     Return Nothing
                 End If
 
@@ -130,7 +130,7 @@ Namespace Net.Protocol.Reflection
 
             If parameters.Length = 3 Then
                 If (Not parameters.First.ParameterType.Equals(GetType(Long)) OrElse
-                Not parameters(1).ParameterType.Equals(GetType(Net.Protocol.RequestStream)) OrElse
+                Not parameters(1).ParameterType.Equals(GetType(RequestStream)) OrElse
                 Not parameters.Last.ParameterType.Equals(GetType(System.Net.IPEndPoint))) Then
                     Return Nothing
                 End If

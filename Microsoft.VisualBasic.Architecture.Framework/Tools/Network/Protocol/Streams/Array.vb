@@ -1,15 +1,15 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace Net.Protocol.Streams.Array
+Namespace Net.Protocols.Streams.Array
 
     Public Class [Long] : Inherits ValueArray(Of Long)
 
         Sub New()
-            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt64, INT64, Nothing)
+            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt64, Int64, Nothing)
         End Sub
 
         Sub New(rawStream As Byte())
-            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt64, INT64, rawStream)
+            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt64, Int64, rawStream)
         End Sub
 
         Sub New(array As IEnumerable(Of Long))
@@ -25,11 +25,11 @@ Namespace Net.Protocol.Streams.Array
     Public Class [Integer] : Inherits ValueArray(Of Integer)
 
         Sub New()
-            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt32, INT32, Nothing)
+            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt32, Int32, Nothing)
         End Sub
 
         Sub New(rawStream As Byte())
-            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt32, INT32, rawStream)
+            Call MyBase.New(AddressOf BitConverter.GetBytes, AddressOf __toInt32, Int32, rawStream)
         End Sub
 
         Sub New(array As IEnumerable(Of Integer))
