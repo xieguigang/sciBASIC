@@ -6,6 +6,7 @@ Namespace Protocols
     Module UserAPI
 
         Public Enum Protocols
+            InitUser
             ''' <summary>
             ''' 获取得到推送的消息
             ''' </summary>
@@ -27,7 +28,11 @@ Namespace Protocols
         End Function
 
         Public Function InitUser(remote As IPEndPoint, uid As String) As InitPOSTBack
-
+            Dim req = RequestStream.CreateProtocol(ProtocolEntry, Protocols.InitUser, uid)
+            Dim rep = New AsynInvoke(remote).SendMessage(req)
+            Dim args = rep.LoadObject(AddressOf Serialization.LoadObject(Of InitPOSTBack))
+            args.Portal.IPAddress = remote.IPAddress ' 服务器端偷懒了
+            Return args
         End Function
     End Module
 End Namespace

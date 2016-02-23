@@ -39,7 +39,7 @@ Namespace Net.Persistent.Application
         End Sub
 
         ''' <summary>
-        ''' 从这个端口号进行登录
+        ''' 从这个端口号进行登录（协同长连接的socket正常工作的socket的端口号，可以看作为UserAPI）
         ''' </summary>
         ''' <returns></returns>
         Public Overrides ReadOnly Property LocalPort As Integer

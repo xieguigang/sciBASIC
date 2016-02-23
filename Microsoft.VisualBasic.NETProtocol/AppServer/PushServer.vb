@@ -14,6 +14,7 @@ Public Class PushServer : Implements IDisposable
 
     ReadOnly __invokeAPI As TcpSynchronizationServicesSocket
     ReadOnly __userAPI As TcpSynchronizationServicesSocket
+    ReadOnly __msgs As PushAPI.UserMsgPool = New PushAPI.UserMsgPool
 
     ''' <summary>
     ''' 

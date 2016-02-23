@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Net.NETProtocol.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Parallel
 
@@ -7,12 +8,19 @@ Public Class User : Implements IDisposable
 
     ReadOnly __updateThread As Persistent.Application.USER
 
+    Public Event PushMessage(msg As RequestStream)
+
+    Public ReadOnly Property Id As String
+    Public ReadOnly Property UserInvoke As IPEndPoint
+
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="remote">User API的接口</param>
     Sub New(remote As IPEndPoint, uid As String)
         __updateThread = __register(UserAPI.InitUser(remote, uid), Me)
+        _Id = uid
+        _UserInvoke = remote
     End Sub
 
     ''' <summary>
@@ -27,6 +35,32 @@ Public Class User : Implements IDisposable
 
         Return user
     End Function
+
+    ''' <summary>
+    ''' 得到服务器端发送过来的更新推送的消息头
+    ''' </summary>
+    ''' <param name="uid"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <Protocol(UserProtocols.Protocols.PushInit)>
+    Private Function __pushUpdate(uid As Long, args As RequestStream) As RequestStream
+        Call RunTask(AddressOf __downloadMsg)
+        Return NetResponse.RFC_OK
+    End Function
+
+    ''' <summary>
+    ''' 可能会存在多条数据
+    ''' </summary>
+    Private Sub __downloadMsg()
+        Dim req As RequestStream = RequestStream.CreateProtocol(
+            UserAPI.ProtocolEntry,
+            UserAPI.Protocols.GetData,
+            New UserId With {
+                .sId = Id,
+                .uid = __updateThread.USER_ID})
+        Dim rep = New AsynInvoke(UserInvoke).SendMessage(req)
+
+    End Sub
 
     Private Sub __close()
         ' DO NOTHING

@@ -28,6 +28,8 @@ Namespace PushAPI
         ''' <param name="request">user_id</param>
         ''' <param name="remote"></param>
         ''' <returns></returns>
+        ''' 
+        <Protocol(Protocols.UserAPI.Protocols.InitUser)>
         Private Function __userInitPOST(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim sId As String = request.GetUTF8String
             Dim uid As Long = Protocols.UserAPI.Uid(sId)
@@ -38,7 +40,8 @@ Namespace PushAPI
             End If
 
             Dim post As New Protocols.InitPOSTBack With {
-                .uid = uid
+                .uid = uid,
+                .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
             }
             Return RequestStream.CreatePackage(post)
         End Function
