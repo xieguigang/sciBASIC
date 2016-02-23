@@ -38,6 +38,15 @@ Public Class PushServer : Implements IDisposable
         Call __invokeAPI.Run() ' 需要使用这一个代码来保持线程的阻塞
     End Sub
 
+    Public Function GetMsg(uid As Long) As RequestStream
+        Dim msg = __msgs.Pop(uid)
+        If msg Is Nothing Then
+            Return NullMsg()
+        Else
+            Return msg
+        End If
+    End Function
+
     Public Function SendMessage(uid As Long, msg As RequestStream) As Boolean
         Try
             Call UserSocket.SendMessage(-1L, uid, msg)

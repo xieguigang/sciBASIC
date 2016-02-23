@@ -45,5 +45,24 @@ Namespace PushAPI
             }
             Return RequestStream.CreatePackage(post)
         End Function
+
+        Public Function IsValid(id As Protocols.UserId) As Boolean
+            If Not UserHash.ContainsKey(id.sId) Then
+                Return False
+            Else
+                Return UserHash(id.sId) = id.uid
+            End If
+        End Function
+
+
+        <Protocol(Protocols.UserAPI.Protocols.GetData)>
+        Private Function __getData(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim id = request.LoadObject(Of Protocols.UserId)(AddressOf Serialization.LoadObject)
+            If Not IsValid(id) Then
+                Return NetResponse.RFC_FORBIDDEN
+            End If
+            Dim msg As RequestStream = Me.PushServer.GetMsg(id.uid)
+            Return msg
+        End Function
     End Class
 End Namespace

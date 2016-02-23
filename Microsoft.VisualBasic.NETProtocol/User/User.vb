@@ -58,8 +58,13 @@ Public Class User : Implements IDisposable
             New UserId With {
                 .sId = Id,
                 .uid = __updateThread.USER_ID})
-        Dim rep = New AsynInvoke(UserInvoke).SendMessage(req)
+        Dim invoke As New AsynInvoke(UserInvoke)
+        Dim rep As RequestStream = invoke.SendMessage(req)
 
+        Do While Not rep.IsNull ' 读取服务器上面的数据缓存，直到没有数据为止
+            RaiseEvent PushMessage(rep)
+            rep = invoke.SendMessage(req)
+        Loop
     End Sub
 
     Private Sub __close()
