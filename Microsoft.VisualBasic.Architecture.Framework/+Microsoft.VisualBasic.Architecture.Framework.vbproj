@@ -304,6 +304,8 @@
     <Compile Include="Tools\Network\SSL\Protocol.vb" />
     <Compile Include="Tools\Network\SSL\SSLSynchronizationServicesSocket.vb" />
     <Compile Include="Tools\Network\Protocol\RequestStream.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\UserId.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
     <Compile Include="Tools\Network\wGetTools.vb" />
     <Compile Include="Tools\Network\Tcp\StateObject.vb" />
     <Compile Include="Tools\Network\Tcp\IPEndPoint.vb" />
@@ -313,7 +315,7 @@
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\Socket\WorkSocket.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\Protocol.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\Protocol.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\User.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\Socket\TcpClient.vb" />

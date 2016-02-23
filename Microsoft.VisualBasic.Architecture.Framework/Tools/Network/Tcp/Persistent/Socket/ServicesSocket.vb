@@ -4,6 +4,7 @@ Imports System.Net.Sockets
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Net.Abstract
+Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 
 Namespace Net.Persistent.Socket
 
@@ -194,7 +195,7 @@ Namespace Net.Persistent.Socket
                 Call AcceptCallbackHandleInvoke()(socket)
                 Call _Connections.Add(socket.GetHashCode, socket)
                 Call Thread.Sleep(500)
-                Call socket.SendMessage(Net.Persistent.Application.ServicesProtocol.SendServerHash(socket.GetHashCode))
+                Call socket.SendMessage(ServicesProtocol.SendServerHash(socket.GetHashCode))
 
             Catch ex As Exception   ' 远程强制关闭主机连接，则放弃这一条数据请求的线程
                 Call ForceCloseHandle(socket)

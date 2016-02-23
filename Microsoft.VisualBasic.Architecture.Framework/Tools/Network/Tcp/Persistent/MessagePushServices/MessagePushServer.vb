@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Net.Persistent.Socket
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 
 Namespace Net.Persistent.Application
 
@@ -205,7 +206,7 @@ Namespace Net.Persistent.Application
 #End If
             If SSLMode Then
                 Dim CA As SSL.Certificate = _sslLayer.PrivateKeys(USER_ID)
-                Dim post As New ServicesProtocol.SendMessagePost(Message.ChunkBuffer)
+                Dim post As New SendMessagePost(Message.ChunkBuffer)
                 post.Message = CA.Encrypt(post.Message)
                 post.FROM = From
                 Message = New RequestStream(ServicesProtocol.ProtocolEntry,

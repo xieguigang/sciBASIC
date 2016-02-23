@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.Net.Persistent.Application
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 
 Namespace Net.Persistent.Socket
 

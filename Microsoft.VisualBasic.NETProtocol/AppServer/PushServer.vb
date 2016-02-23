@@ -9,7 +9,7 @@ Public Class PushServer : Implements IDisposable
     ''' Push update notification to user client
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UserSocket As Persistent.Socket.ServicesSocket
+    Public ReadOnly Property UserSocket As Persistent.Application.MessagePushServer
 
     ReadOnly __invokeAPI As TcpSynchronizationServicesSocket
     ReadOnly __userAPI As TcpSynchronizationServicesSocket

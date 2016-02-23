@@ -5,6 +5,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 
 Namespace Net.Persistent.Application
 
@@ -47,7 +48,7 @@ Namespace Net.Persistent.Application
         End Sub
 
         Dim __dataRequestHandle As PushMessage
-        Dim _pcnnSocket As Net.Persistent.Socket.PersistentClient
+        Dim _pcnnSocket As Socket.PersistentClient
 
         Public Sub SetDisconnectHandle(handle As MethodInvoker)
             Try
@@ -119,7 +120,7 @@ Namespace Net.Persistent.Application
         ''' <returns></returns>
         <Protocol(ServicesProtocol.Protocols.SendMessage)>
         Private Function __sendMessageToMe(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim post As New ServicesProtocol.SendMessagePost(request.ChunkBuffer)
+            Dim post As New SendMessagePost(request.ChunkBuffer)
             Return Me.__dataRequestHandle(post.FROM, post.Message)
         End Function
 
