@@ -60,12 +60,18 @@ Namespace Net
                 Optional exHandler As ExceptionHandler = Nothing)
 
             Me._LocalPort = LocalPort
-            Me.__exceptionHandle = If(exHandler Is Nothing, Sub(ex As Exception) Call Console.WriteLine(ex.ToString), exHandler)
+            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
         End Sub
 
-        Sub New(DataArrivalEventHandler As Net.Abstract.DataRequestHandler, LocalPort As Integer, Optional exHandler As ExceptionHandler = Nothing)
+        ''' <summary>
+        ''' 短连接socket服务端
+        ''' </summary>
+        ''' <param name="DataArrivalEventHandler"></param>
+        ''' <param name="LocalPort"></param>
+        ''' <param name="exHandler"></param>
+        Sub New(DataArrivalEventHandler As DataRequestHandler, LocalPort As Integer, Optional exHandler As ExceptionHandler = Nothing)
             Me.Responsehandler = DataArrivalEventHandler
-            Me.__exceptionHandle = If(exHandler Is Nothing, Sub(ex As Exception) Call Console.WriteLine(ex.ToString), exHandler)
+            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
             Me._LocalPort = LocalPort
         End Sub
 
@@ -135,7 +141,7 @@ Namespace Net
                     vbCrLf &
                     vbCrLf &
                     ex.ToString
-                Call Me.__exceptionHandle(New Exception(exMessage))
+                Call Me.__exceptionHandle(New Exception(exMessage, ex))
                 Throw
             Finally
 #If DEBUG Then

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Parallel
+﻿Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Parallel
 
 ''' <summary>
 ''' 保持长连接，向用户客户端发送更新消息的服务器
@@ -21,7 +22,7 @@ Public Class PushServer : Implements IDisposable
     ''' <param name="invoke">服务器模块工作端口</param>
     ''' <param name="userAPI">用户端口</param>
     Sub New(services As Integer, invoke As Integer, userAPI As Integer)
-        UserSocket = New Persistent.Socket.ServicesSocket(services)
+        UserSocket = New Persistent.Application.MessagePushServer(services)
         __invokeAPI = New TcpSynchronizationServicesSocket(invoke) With {
             .Responsehandler = AddressOf New PushAPI.InvokeAPI(Me).Handler
         }
@@ -35,6 +36,17 @@ Public Class PushServer : Implements IDisposable
         Call RunTask(AddressOf __userAPI.Run)
         Call __invokeAPI.Run() ' 需要使用这一个代码来保持线程的阻塞
     End Sub
+
+    Public Function SendMessage(uid As Long, msg As RequestStream) As Boolean
+        Try
+            Call UserSocket.SendMessage(-1L, uid, msg)
+        Catch ex As Exception
+            Call App.LogException(ex)
+            Return False
+        End Try
+
+        Return True
+    End Function
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls

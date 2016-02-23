@@ -14,10 +14,9 @@ Namespace Net.Persistent.Application
     ''' 长连接模式的消息推送服务器
     ''' </summary>
     <Protocol(GetType(ServicesProtocol.Protocols))>
-    Public Class MessagePushServer : Inherits Socket.ServicesSocket
-        Implements Generic.IEnumerable(Of KeyValuePair(Of Long, WorkSocket))
-        Implements Microsoft.VisualBasic.ComponentModel.DataSourceModel.IObjectModel_Driver
-        Implements Net.Abstract.IDataRequestHandler
+    Public Class MessagePushServer : Inherits ServicesSocket
+        Implements IEnumerable(Of KeyValuePair(Of Long, WorkSocket))
+        Implements IObjectModel_Driver, IDataRequestHandler
 
         Public ReadOnly Property ProtocolHandler As ProtocolHandler
 
@@ -25,7 +24,7 @@ Namespace Net.Persistent.Application
         ''' <summary>
         ''' 客户端对这个服务器的端口号是自动配置的，只需要向客户端返回<see cref="_LocalPort"/>端口就可以了
         ''' </summary>
-        Dim _workSocket As Net.TcpSynchronizationServicesSocket
+        Dim _workSocket As TcpSynchronizationServicesSocket
         Dim _offlineMessageSendHandler As OffLineMessageSendHandler
         ''' <summary>
         ''' 使用证书来加密发出去的消息
@@ -57,7 +56,7 @@ Namespace Net.Persistent.Application
             End Get
             Set(value As DataRequestHandler)
                 _responsehandler = value
-                Me._workSocket.Responsehandler = AddressOf _requestHandlerInterface
+                Me._workSocket.Responsehandler = AddressOf __requestHandlerInterface
             End Set
         End Property
 
@@ -66,9 +65,9 @@ Namespace Net.Persistent.Application
         ''' </summary>
         ''' <param name="remote"></param>
         ''' <returns></returns>
-        Private Function _requestHandlerInterface(CA As Long,
-                                                  requestData As RequestStream,
-                                                  remote As System.Net.IPEndPoint) As RequestStream
+        Private Function __requestHandlerInterface(CA As Long,
+                                                   requestData As RequestStream,
+                                                   remote As System.Net.IPEndPoint) As RequestStream
             requestData = _responsehandler(CA, requestData, remote)
             Return requestData
         End Function
@@ -87,7 +86,7 @@ Namespace Net.Persistent.Application
 
             Me._ProtocolHandler = New ProtocolHandler(Me)
             Me.AcceptCallbackHandleInvoke = AddressOf AcceptClient
-            Me._workSocket = New Net.TcpSynchronizationServicesSocket(AddressOf _ProtocolHandler.HandleRequest, LocalPort, Me.__exceptionHandle)
+            Me._workSocket = New TcpSynchronizationServicesSocket(AddressOf _ProtocolHandler.HandleRequest, LocalPort, Me.__exceptionHandle)
             Me._offlineMessageSendHandler = If(OffLineMessageSendHandler Is Nothing,
                 Sub([from], USER_ID, MESSAGE) Call Console.WriteLine($" >>> [DEBUG {Now.ToString},  {from} => {USER_ID}]  {MESSAGE}"),
                 OffLineMessageSendHandler)
@@ -307,7 +306,10 @@ Namespace Net.Persistent.Application
                           Let LowCnn = (From cnn In Me.Connections.AsParallel
                                         Where Guid.Equals(CStr(cnn.GetHashCode))
                                         Select cnn).FirstOrDefault
-                          Where Not LowCnn Is Nothing AndAlso (From cnn In Me._socketList Where Guid.Equals(CStr(cnn.Value.GetHashCode)) Select cnn).ToArray.IsNullOrEmpty  '哈希值不存在的
+                          Where Not LowCnn Is Nothing AndAlso
+                              (From cnn In Me._socketList
+                               Where Guid.Equals(CStr(cnn.Value.GetHashCode))
+                               Select cnn).ToArray.IsNullOrEmpty  '哈希值不存在的
                           Select LowCnn).ToArray  '对于上一次刷新的列表之中的连接而言，假若在这么长的一段时间间隔之中还是处于空闲状态，则服务器会将这些连接断开连接
             For Each cnn In LQuery
                 Call Me.ForceCloseHandle(cnn)
