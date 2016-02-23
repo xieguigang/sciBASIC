@@ -22,8 +22,12 @@ Public Class PushServer : Implements IDisposable
     ''' <param name="userAPI">用户端口</param>
     Sub New(services As Integer, invoke As Integer, userAPI As Integer)
         UserSocket = New Persistent.Socket.ServicesSocket(services)
-        __invokeAPI = New TcpSynchronizationServicesSocket(invoke)
-        __userAPI = New TcpSynchronizationServicesSocket(userAPI)
+        __invokeAPI = New TcpSynchronizationServicesSocket(invoke) With {
+            .Responsehandler = AddressOf New PushAPI.InvokeAPI(Me).Handler
+        }
+        __userAPI = New TcpSynchronizationServicesSocket(userAPI) With {
+            .Responsehandler = AddressOf New PushAPI.UserAPI(Me).Handler
+        }
     End Sub
 
     Sub Run()
