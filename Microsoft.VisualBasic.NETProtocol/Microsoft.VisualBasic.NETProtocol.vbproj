@@ -64,6 +64,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppServer\PushAPI\APIBase.vb" />
+    <Compile Include="AppServer\PushAPI\UserAPI.vb" />
+    <Compile Include="AppServer\PushAPI\InvokeAPI.vb" />
     <Compile Include="AppServer\PushServer.vb" />
     <Compile Include="Protocols\PushServices.vb" />
     <Compile Include="Protocols\InvokeAPI.vb" />
