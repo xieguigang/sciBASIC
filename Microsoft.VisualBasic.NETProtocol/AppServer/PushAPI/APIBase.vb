@@ -1,11 +1,14 @@
 ﻿Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace PushAPI
 
     Public MustInherit Class APIBase
 
         Public ReadOnly Property PushServer As PushServer
+
+        Protected __protocols As ProtocolHandler
 
         Sub New(push As PushServer)
             PushServer = push

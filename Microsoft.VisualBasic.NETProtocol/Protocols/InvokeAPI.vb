@@ -1,20 +1,23 @@
 ﻿Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
-Module InvokeAPI
+Namespace Protocols
 
-    Public Enum Protocols
-        ''' <summary>
-        ''' Push data to user
-        ''' </summary>
-        PushToUser
-    End Enum
+    Module InvokeAPI
 
-    Public ReadOnly Property ProtocolEntry As Long =
-        New Protocol(GetType(Protocols)).EntryPoint
+        Public Enum Protocols
+            ''' <summary>
+            ''' Push data to user
+            ''' </summary>
+            PushToUser
+        End Enum
 
-    Public Function PushData(data As Byte()) As RequestStream
+        Public ReadOnly Property ProtocolEntry As Long =
+            New Protocol(GetType(Protocols)).EntryPoint
 
-    End Function
+        Public Function PushData(data As Byte()) As RequestStream
 
-End Module
+        End Function
+
+    End Module
+End Namespace
