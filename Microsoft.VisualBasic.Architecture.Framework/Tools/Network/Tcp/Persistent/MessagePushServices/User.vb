@@ -47,6 +47,10 @@ Namespace Net.Persistent.Application
             Call Me.New(New Net.IPEndPoint(services).IPAddress, services.Port, ID, DataRequestHandle, ExceptionHandler)
         End Sub
 
+        Sub New(post As UserId, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
+            Call Me.New(post.Remote.IPAddress, post.Remote.Port, post.uid, DataRequestHandle, ExceptionHandler)
+        End Sub
+
         Dim __dataRequestHandle As PushMessage
         Dim _pcnnSocket As Socket.PersistentClient
 
