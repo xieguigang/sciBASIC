@@ -1,8 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Security
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
@@ -352,7 +354,7 @@ Public Module App
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
-        Return App.__completeCLI(New CommandLine.Interpreter(Interpreter) With {
+        Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteEmptyCli = executeEmpty
         }.Execute(args))
     End Function
@@ -367,7 +369,7 @@ Public Module App
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
-        Return App.__completeCLI(New CommandLine.Interpreter(Interpreter) With {
+        Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteFile = executeFile
         }.Execute(args))
     End Function
@@ -379,11 +381,9 @@ Public Module App
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     <Extension> Public Function RunCLI(Interpreter As Type, args As String,
-                                       executeFile As CommandLine.Interpreter.__ExecuteFile,
-                                       executeEmpty As CommandLine.Interpreter.__ExecuteEmptyCli) As Integer
-        Return Interpreter.RunCLI(Microsoft.VisualBasic.CommandLine.TryParse(args),
-                                  executeFile,
-                                  executeEmpty)
+                                       executeFile As Interpreter.__ExecuteFile,
+                                       executeEmpty As Interpreter.__ExecuteEmptyCli) As Integer
+        Return Interpreter.RunCLI(TryParse(args), executeFile, executeEmpty)
     End Function
 
     ''' <summary>
@@ -393,12 +393,12 @@ Public Module App
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine,
-                                       executeFile As CommandLine.Interpreter.__ExecuteFile,
-                                       executeEmpty As CommandLine.Interpreter.__ExecuteEmptyCli) As Integer
+                                       executeFile As Interpreter.__ExecuteFile,
+                                       executeEmpty As Interpreter.__ExecuteEmptyCli) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
-        Return App.__completeCLI(New CommandLine.Interpreter(Interpreter) With {
+        Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteFile = executeFile,
             .ExecuteEmptyCli = executeEmpty
         }.Execute(args))
@@ -473,10 +473,33 @@ Public Module App
     ''' </summary>
     ''' <param name="CLI"></param>
     ''' <returns></returns>
-    Public Function SelfFolk(CLI As String) As Microsoft.VisualBasic.CommandLine.IORedirectFile
-        Dim process As CommandLine.IORedirectFile =
-            New CommandLine.IORedirectFile(App.ExecutablePath, CLI)
+    Public Function SelfFolk(CLI As String) As IORedirectFile
+        Dim process As IORedirectFile = New IORedirectFile(App.ExecutablePath, CLI)
         Return process
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="CLI"></param>
+    ''' <param name="parallel">小于等于零表示非并行化，单线程任务</param>
+    ''' <returns>返回任务的执行的总时长</returns>
+    Public Function SelfFolks(CLI As IEnumerable(Of String), Optional parallel As Integer = 0) As Long
+        Dim sw As Stopwatch = Stopwatch.StartNew
+
+        If parallel <= 0 Then
+            For Each args As String In CLI
+                Call App.SelfFolk(args).Run()
+            Next
+        Else
+            Dim Tasks = (From args As String In CLI
+                         Let io As IORedirectFile = App.SelfFolk(args)
+                         Let task As Func(Of Integer) = AddressOf io.Run
+                         Select task).ToArray
+            Call ServicesFolk.BatchTask(Of Integer)(Tasks, parallel)
+        End If
+
+        Return sw.ElapsedMilliseconds
     End Function
 
 #Region "Auto Garbage Cleaner"

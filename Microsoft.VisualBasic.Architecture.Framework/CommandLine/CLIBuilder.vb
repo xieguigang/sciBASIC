@@ -94,6 +94,22 @@ Namespace CommandLine
             Return sBuilder.ToString.TrimEnd
         End Function
 
+        Public Function SimpleBuilder(name As String, args As IEnumerable(Of KeyValuePair(Of String, String))) As String
+            Dim sbr As StringBuilder = New StringBuilder(name)
+
+            For Each x In args
+                If String.IsNullOrEmpty(x.Value) Then
+                    Continue For
+                End If
+
+                Call sbr.Append(" ")
+                Call sbr.Append(x.Key & " ")
+                Call sbr.Append(x.Value.CliToken)
+            Next
+
+            Return sbr.ToString
+        End Function
+
 #Region ""
 
         Private ReadOnly __getMethods As IReadOnlyDictionary(Of [Optional].Types, __getCLIToken) =

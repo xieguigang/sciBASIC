@@ -122,7 +122,7 @@ Namespace Parallel
         ''' <param name="getExe"></param>
         ''' <param name="numThreads">-1表示使用系统自动配置的参数，一次性提交所有的计算任务可能会是计算效率变得很低，所以需要使用这个参数来控制计算的线程数量</param>
         ''' <param name="TimeInterval">默认的任务提交时间间隔是一秒钟提交一个新的计算任务</param>
-        Public Sub BatchTask(Of T)(source As Generic.IEnumerable(Of T),
+        Public Sub BatchTask(Of T)(source As IEnumerable(Of T),
                                    getCLI As Func(Of T, String),
                                    getExe As Func(Of String),
                                    Optional numThreads As Integer = -1,
@@ -148,7 +148,7 @@ Namespace Parallel
             Dim resultList As New List(Of T)
 
             If numThreads <= 0 Then
-                numThreads = Parallel.LQuerySchedule.CPU_NUMBER * 2
+                numThreads = LQuerySchedule.CPU_NUMBER * 2
             End If
 
             Do While p <= actions.Length - 1
