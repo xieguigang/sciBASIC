@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel.DataSourceModel
+﻿Imports System.Reflection
+
+Namespace ComponentModel.DataSourceModel
 
     Public Interface IObjectModel_Driver
         Function Run() As Integer
@@ -43,7 +45,7 @@
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property BasicTypesLoading As Dictionary(Of System.Type, ConfigurationMappings.__StringTypeCaster) =
-            New Dictionary(Of System.Type, ConfigurationMappings.__StringTypeCaster) From {
+            New Dictionary(Of Type, ConfigurationMappings.__StringTypeCaster) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
                 {GetType(Boolean), AddressOf getBoolean},
@@ -103,7 +105,7 @@
         ''' <param name="DataCollection"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function CreateObject(Of T)(DataCollection As Generic.IEnumerable(Of T)) As DataTable
+        Public Function CreateObject(Of T)(DataCollection As IEnumerable(Of T)) As DataTable
             Dim Columns = InitlaizeSchema(GetType(T))
             Dim DataTable As DataTable = New DataTable
             For Each column In Columns
@@ -130,14 +132,14 @@
             Dim rtvlData As T() = New T(DataTable.Rows.Count - 1) {}
             Dim i As Integer = 0
 
-            Dim Schema As List(Of KeyValuePair(Of Integer, System.Reflection.PropertyInfo)) =
-                New List(Of KeyValuePair(Of Integer, System.Reflection.PropertyInfo))
+            Dim Schema As List(Of KeyValuePair(Of Integer, PropertyInfo)) =
+                New List(Of KeyValuePair(Of Integer, PropertyInfo))
             For Each column As DataColumn In DataTable.Columns
                 Dim LQuery = (From schemaColumn In Columns
                               Where String.Equals(schemaColumn.Key.Name, column.ColumnName)
                               Select schemaColumn.Value).FirstOrDefault
                 If Not LQuery Is Nothing Then
-                    Call Schema.Add(New KeyValuePair(Of Integer, System.Reflection.PropertyInfo)(column.Ordinal, LQuery))
+                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery))
                 End If
             Next
 
@@ -157,15 +159,16 @@
             Return rtvlData
         End Function
 
-        Private Function InitlaizeSchema(type As Type) As Dictionary(Of DataFrameColumnAttribute, System.Reflection.PropertyInfo)
+        Private Function InitlaizeSchema(type As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
             Dim DataColumnType As Type = GetType(DataFrameColumnAttribute)
             Dim Properties = type.GetProperties
-            Dim Columns = (
-                From [property] As System.Reflection.PropertyInfo In Properties
-                Let attrs As Object() = [property].GetCustomAttributes(DataColumnType, True)
-                Where Not attrs.IsNullOrEmpty
-                Select ColumnMapping = DirectCast(attrs.First, DataFrameColumnAttribute), [property]
-                Order By ColumnMapping.Index Ascending).ToList
+            Dim Columns = (From [property] As PropertyInfo
+                           In Properties
+                           Let attrs As Object() = [property].GetCustomAttributes(DataColumnType, True)
+                           Where Not attrs.IsNullOrEmpty
+                           Select ColumnMapping =
+                               DirectCast(attrs.First, DataFrameColumnAttribute), [property]
+                           Order By ColumnMapping.Index Ascending).ToList
 
             For i As Integer = 0 To Columns.Count - 1
                 Dim column = Columns(i)
@@ -184,7 +187,8 @@
                 Call Columns.Add(item) '将未建立索引的对象放置到列表的最末尾
             Next
 
-            Return Columns.ToDictionary(Function(obj) obj.ColumnMapping, elementSelector:=Function(obj) obj.property)
+            Return Columns.ToDictionary(Function(obj) obj.ColumnMapping,
+                                        Function(obj) obj.property)
         End Function
     End Module
 End Namespace

@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel.DataSourceModel
+﻿Imports System.Reflection
+
+Namespace ComponentModel.DataSourceModel
 
     ''' <summary>
     ''' Represents a column of certain data frames. The mapping between to schema is also can be represent by this attribute. 
@@ -88,7 +90,7 @@
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(Of T As Class)() As Dictionary(Of DataFrameColumnAttribute, System.Reflection.PropertyInfo)
+        Public Shared Function LoadMapping(Of T As Class)() As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
             Return LoadMapping(GetType(T))
         End Function
 
@@ -96,22 +98,27 @@
         ''' Load the mapping property, if the custom attribute <see cref="DataFrameColumnAttribute"></see> 
         ''' have no name value, then the property name will be used as the mapping name.
         ''' </summary>
-        ''' <param name="TypeInfo">The type should be a class type or its properties should have the 
+        ''' <param name="typeInfo">The type should be a class type or its properties should have the 
         ''' mapping option which was created by the custom attribute <see cref="DataFrameColumnAttribute"></see>
         ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(TypeInfo As System.Type) As Dictionary(Of DataFrameColumnAttribute, System.Reflection.PropertyInfo)
-            Dim Properties = (From pInfo As System.Reflection.PropertyInfo
-                              In TypeInfo.GetProperties()
+        Public Shared Function LoadMapping(typeInfo As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+            Dim Properties = (From pInfo As PropertyInfo
+                              In typeInfo.GetProperties()
                               Let attrs As Object() = pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
                               Where Not attrs.IsNullOrEmpty
-                              Select pInfo, Mapping = DirectCast(attrs.First, DataFrameColumnAttribute)).ToArray
+                              Select pInfo,
+                                  mapping = DirectCast(attrs.First, DataFrameColumnAttribute)).ToArray
             Dim LQuery = (From pInfo In Properties
-                          Let Mapping = If(String.IsNullOrEmpty(pInfo.Mapping.Name), pInfo.Mapping.SetNameValue(pInfo.pInfo.Name), pInfo.Mapping)
-                          Select Mapping, pInfo.pInfo).ToArray  ' 补全名称属性
-            Dim DictData = LQuery.ToDictionary(Function(obj) obj.Mapping, elementSelector:=Function(obj) obj.pInfo)
-            Return DictData
+                          Let Mapping = If(String.IsNullOrEmpty(pInfo.mapping.Name),
+                              pInfo.mapping.SetNameValue(pInfo.pInfo.Name),
+                              pInfo.mapping)
+                          Select Mapping,
+                              pInfo.pInfo) _
+                                .ToDictionary(Function(x) x.Mapping,
+                                              Function(x) x.pInfo)  ' 补全名称属性
+            Return LQuery
         End Function
     End Class
 
