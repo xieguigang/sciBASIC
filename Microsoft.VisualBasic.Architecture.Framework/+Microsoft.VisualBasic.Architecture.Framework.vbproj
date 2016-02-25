@@ -235,6 +235,9 @@
     <Compile Include="Extensions\Math\Correlations.vb" />
     <Compile Include="Extensions\Math\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
     <Compile Include="Extensions\Reflection\Reflection.vb" />
     <Compile Include="Extensions\StringHelpers\Compares\LevLDM.vb" />
     <Compile Include="Extensions\StringHelpers\Compares\LevExtensions.vb" />
@@ -470,6 +473,7 @@
   <ItemGroup>
     <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
