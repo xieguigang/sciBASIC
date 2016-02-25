@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports System.Runtime.InteropServices.Marshal
 Imports System.Windows.Forms
 Imports System.Drawing
 Imports Microsoft.VisualBasic.MolkPlusTheme.Windows.Forms.API
@@ -89,7 +90,7 @@ Namespace Windows.Forms
 
             If m.Msg = WM_NCCALCSIZE AndAlso CInt(m.WParam) = 1 Then
                 Dim nccsp As NCCALCSIZE_PARAMS =
-              DirectCast(Marshal.PtrToStructure(m.LParam,
+              DirectCast(PtrToStructure(m.LParam,
               GetType(NCCALCSIZE_PARAMS)), NCCALCSIZE_PARAMS)
 
                 ' Adjust (shrink) the client rectangle to accommodate the border:
@@ -107,7 +108,7 @@ Namespace Windows.Forms
                     _marginOk = True
                 End If
 
-                Marshal.StructureToPtr(nccsp, m.LParam, False)
+                StructureToPtr(nccsp, m.LParam, False)
 
                 m.Result = IntPtr.Zero
             ElseIf m.Msg = WM_NCHITTEST AndAlso CInt(m.Result) = 0 Then
