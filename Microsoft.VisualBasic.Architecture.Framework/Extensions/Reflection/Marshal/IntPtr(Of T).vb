@@ -26,8 +26,15 @@ Namespace Marshal
             End Get
         End Property
 
+        ''' <summary>
+        ''' 相对于当前的指针的位置而言的
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <returns></returns>
         Default Public Property Value(p As Integer) As T
             Get
+                p += _current
+
                 If p < 0 OrElse p >= __innerRaw.Length Then
                     Return Nothing
                 Else
@@ -35,6 +42,8 @@ Namespace Marshal
                 End If
             End Get
             Set(value As T)
+                p += _current
+
                 If p < 0 OrElse p >= __innerRaw.Length Then
                     Throw New MemberAccessException(p & " reference to invalid memory region!")
                 Else
