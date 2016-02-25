@@ -6,6 +6,7 @@ Imports System.Collections
 Imports System.Windows.Forms
 Imports System.Drawing.Imaging
 Imports System.Runtime.InteropServices
+Imports System.Runtime.InteropServices.Marshal
 Imports System.IO
 
 Public Class TiffWriter : Implements Generic.IEnumerable(Of Image)
@@ -278,7 +279,7 @@ Public Class TiffWriter : Implements Generic.IEnumerable(Of Image)
         ' Copy image data to binary array
         Dim imageSize As Integer = sourceData.Stride * sourceData.Height
         Dim sourceBuffer As Byte() = New Byte(imageSize - 1) {}
-        Marshal.Copy(sourceData.Scan0, sourceBuffer, 0, imageSize)
+        Copy(sourceData.Scan0, sourceBuffer, 0, imageSize)
 
         ' Unlock source bitmap
         source.UnlockBits(sourceData)
@@ -332,7 +333,7 @@ Public Class TiffWriter : Implements Generic.IEnumerable(Of Image)
         Next
 
         ' Copy binary image data to destination bitmap
-        Marshal.Copy(destinationBuffer, 0, destinationData.Scan0, imageSize)
+        Copy(destinationBuffer, 0, destinationData.Scan0, imageSize)
 
         ' Unlock destination bitmap
         destination.UnlockBits(destinationData)

@@ -1,6 +1,7 @@
 Imports System.Collections.Generic
 Imports System.Collections
 Imports System.Runtime.InteropServices
+Imports System.Runtime.InteropServices.Marshal
 Imports System.Net
 Imports System.Net.NetworkInformation
 
@@ -96,7 +97,7 @@ Namespace Net
             ' We use a try-finally block to ensure release.
             Dim rawTable As IntPtr = IntPtr.Zero
             Try
-                rawTable = Marshal.AllocCoTaskMem(spaceForNetTable)
+                rawTable = AllocCoTaskMem(spaceForNetTable)
                 ' Get the actual data
                 Dim errorCode As Integer = GetIpNetTable(rawTable, spaceForNetTable, False)
                 If errorCode <> 0 Then
@@ -104,12 +105,12 @@ Namespace Net
                     Throw New Exception(String.Format("Unable to retrieve network table. Error code {0}", errorCode))
                 End If
                 ' Get the rows count
-                Dim rowsCount As Integer = Marshal.ReadInt32(rawTable)
-                Dim currentBuffer As New IntPtr(rawTable.ToInt64() + Marshal.SizeOf(GetType(Int32)))
+                Dim rowsCount As Integer = ReadInt32(rawTable)
+                Dim currentBuffer As New IntPtr(rawTable.ToInt64() + SizeOf(GetType(Int32)))
                 ' Convert the raw table to individual entries
                 Dim rows As MIB_IPNETROW() = New MIB_IPNETROW(rowsCount - 1) {}
                 For index As Integer = 0 To rowsCount - 1
-                    rows(index) = CType(Marshal.PtrToStructure(New IntPtr(currentBuffer.ToInt64() + (index * Marshal.SizeOf(GetType(MIB_IPNETROW)))), GetType(MIB_IPNETROW)), MIB_IPNETROW)
+                    rows(index) = CType(PtrToStructure(New IntPtr(currentBuffer.ToInt64() + (index * SizeOf(GetType(MIB_IPNETROW)))), GetType(MIB_IPNETROW)), MIB_IPNETROW)
                 Next
                 ' Define the dummy entries list (we can discard these)
                 Dim virtualMAC As New PhysicalAddress(New Byte() {0, 0, 0, 0, 0, 0})
@@ -127,7 +128,7 @@ Namespace Net
                 Next
             Finally
                 ' Release the memory.
-                Marshal.FreeCoTaskMem(rawTable)
+                FreeCoTaskMem(rawTable)
             End Try
             Return all
         End Function

@@ -2,6 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports System.Runtime.InteropServices
+Imports System.Runtime.InteropServices.Marshal
 Imports System.Text
 #End Region
 
@@ -175,7 +176,7 @@ Namespace SoftwareToolkits
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
-                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersionEx(osVersionInfo) Then
                     Dim majorVersion As Integer = osVersion.Version.Major
@@ -569,7 +570,7 @@ Namespace SoftwareToolkits
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
-                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersionEx(osVersionInfo) Then
                     Dim majorVersion As Integer = osVersion.Version.Major
@@ -879,7 +880,7 @@ Namespace SoftwareToolkits
                 Dim servicePack__1 As String = [String].Empty
                 Dim osVersionInfo As New OSVERSIONINFOEX()
 
-                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersionEx(osVersionInfo) Then
                     servicePack__1 = osVersionInfo.szCSDVersion
@@ -968,7 +969,7 @@ Namespace SoftwareToolkits
                 Dim fnPtr As IntPtr = GetProcAddress(handle, "IsWow64Process")
 
                 If fnPtr <> IntPtr.Zero Then
-                    Return DirectCast(Marshal.GetDelegateForFunctionPointer(CType(fnPtr, IntPtr), GetType(IsWow64ProcessDelegate)), IsWow64ProcessDelegate)
+                    Return DirectCast(GetDelegateForFunctionPointer(CType(fnPtr, IntPtr), GetType(IsWow64ProcessDelegate)), IsWow64ProcessDelegate)
                 End If
             End If
 

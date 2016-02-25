@@ -37,4 +37,15 @@ Public Module MarshalExtensions
                 Throw New MemberAccessException(GetType(T).FullName & " is not a valid memory region!")
         End Select
     End Function
+
+    ''' <summary>
+    ''' 方便进行数组操作的一个函数
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="raw"></param>
+    ''' <param name="p"></param>
+    ''' <returns></returns>
+    <Extension> Public Function MarshalAs(Of T)(ByRef raw As T(), Optional p As System.IntPtr = Nothing) As IntPtr(Of T)
+        Return New IntPtr(Of T)(raw, p)
+    End Function
 End Module

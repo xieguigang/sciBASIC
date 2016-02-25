@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
+Imports System.Runtime.InteropServices.Marshal
 Imports System.IO
 
 ''' <summary>
@@ -170,7 +171,7 @@ Public Module Win32File
         End If
         Dim sh As SafeFileHandle = CreateFileW(filepath, uaccess, ushare, IntPtr.Zero, umode, FILE_ATTRIBUTE_NORMAL, _
             IntPtr.Zero)
-        Dim iError As Integer = Marshal.GetLastWin32Error()
+        Dim iError As Integer = GetLastWin32Error()
         If (iError > 0 AndAlso Not (mode = FileMode.Append AndAlso iError = ERROR_ALREADY_EXISTS)) OrElse sh.IsInvalid Then
             Throw New Exception("Error opening file Win32 Error:" & iError)
         Else
@@ -206,7 +207,7 @@ Public Module Win32File
         End If
         Dim sh As SafeFileHandle = CreateFileW(filepath, uaccess, ushare, IntPtr.Zero, umode, FILE_ATTRIBUTE_NORMAL, _
             IntPtr.Zero)
-        Dim iError As Integer = Marshal.GetLastWin32Error()
+        Dim iError As Integer = GetLastWin32Error()
         If (iError > 0 AndAlso Not (mode = FileMode.Append AndAlso iError <> ERROR_ALREADY_EXISTS)) OrElse sh.IsInvalid Then
             Throw New Exception("Error opening file Win32 Error:" & iError)
         Else
@@ -240,7 +241,7 @@ Public Module Win32File
         End If
         Dim sh As SafeFileHandle = CreateFileW(filepath, uaccess, ushare, IntPtr.Zero, umode, FILE_ATTRIBUTE_NORMAL, _
             IntPtr.Zero)
-        Dim iError As Integer = Marshal.GetLastWin32Error()
+        Dim iError As Integer = GetLastWin32Error()
         If (iError > 0 AndAlso Not (mode = FileMode.Append AndAlso iError <> ERROR_ALREADY_EXISTS)) OrElse sh.IsInvalid Then
             Throw New Exception("Error opening file Win32 Error:" & iError)
         Else
