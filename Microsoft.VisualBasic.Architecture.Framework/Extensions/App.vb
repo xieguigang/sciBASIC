@@ -111,6 +111,8 @@ Public Module App
     ''' 当前距离应用程序启动所逝去的时间
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("Elapsed.Milliseconds")>
     Public Function ElapsedMilliseconds() As Long
         Dim nowLng As Long = Now.ToBinary
         Dim d As Long = nowLng - StartTime
@@ -184,6 +186,8 @@ Public Module App
     ''' <param name="ex"></param>
     ''' <param name="Trace">调用函数的位置，这个参数一般为空，编译器会自动生成Trace位点参数</param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("LogException")>
     Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace As String = "") As Object
         Call App.TraceBugs(ex, Trace)
         Return Nothing
@@ -193,6 +197,8 @@ Public Module App
     ''' 函数返回的是日志文件的文件路径
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional Trace As String = "") As String
         Dim Entry As String = App.__getTEMPhash
         Entry = $"{Now.Year}-{Now.Month}-{Now.Day}, {Format(Now.Hour, "00")}-{Format(Now.Minute, "00")}-{Format(Now.Second, "00")}_{Entry}"
@@ -234,6 +240,8 @@ Public Module App
     ''' <param name="Trace"></param>
     ''' <param name="FileName"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("LogException")>
     Public Function LogException(ex As Exception, Trace As String, FileName As String) As Object
         Call BugsFormatter(ex, Trace).SaveTo(FileName)
         Return Nothing
@@ -245,6 +253,8 @@ Public Module App
     ''' <param name="ex"></param>
     ''' <param name="Trace"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("Bugs.Formatter")>
     Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional Trace As String = "") As String
         Dim exMsg As StringBuilder = New StringBuilder()
         Call exMsg.AppendLine("TIME:  " & Now.ToString)
@@ -350,6 +360,8 @@ Public Module App
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
+    ''' 
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeEmpty As CommandLine.Interpreter.__ExecuteEmptyCli) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
@@ -365,6 +377,8 @@ Public Module App
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
+    ''' 
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeFile As CommandLine.Interpreter.__ExecuteFile) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
@@ -380,6 +394,8 @@ Public Module App
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
+    ''' 
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As String,
                                        executeFile As Interpreter.__ExecuteFile,
                                        executeEmpty As Interpreter.__ExecuteEmptyCli) As Integer
@@ -392,6 +408,8 @@ Public Module App
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
+    ''' 
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine,
                                        executeFile As Interpreter.__ExecuteFile,
                                        executeEmpty As Interpreter.__ExecuteEmptyCli) As Integer
@@ -422,6 +440,8 @@ Public Module App
     ''' path of that file.
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("GetTempFile")>
     Public Function GetTempFile() As String
         Dim Temp As String = FileIO.FileSystem.GetTempFileName
         Return GenerateTemp(Temp, "")
@@ -433,6 +453,8 @@ Public Module App
     ''' <param name="ext"></param>
     ''' <param name="sessionID"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("GetTempFile.AppSys")>
     Public Function GetAppSysTempFile(Optional ext As String = ".tmp", Optional sessionID As String = "") As String
         Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext  '  FileIO.FileSystem.GetTempFileName.Replace(".tmp", ext)
         tmp = GenerateTemp(tmp, sessionID)
@@ -446,6 +468,8 @@ Public Module App
     ''' </summary>
     ''' <param name="sysTemp">临时文件路径</param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("CreateTempFile")>
     Public Function GenerateTemp(sysTemp As String, SessionID As String) As String
         Dim Dir As String = FileIO.FileSystem.GetParentPath(sysTemp)
         Dim Name As String = FileIO.FileSystem.GetFileInfo(sysTemp).Name
@@ -457,6 +481,8 @@ Public Module App
     ''' 获取位于共享文件夹<see cref="App.ProductSharedDir"/>里面的临时文件
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("Shared.TempFile")>
     Public Function GetProductSharedTemp() As String
         'Dim Temp As String = FileIO.FileSystem.GetTempFileName
         Dim Name As String = App.__getTEMPhash  'FileIO.FileSystem.GetFileInfo(Temp).Name
@@ -473,6 +499,8 @@ Public Module App
     ''' </summary>
     ''' <param name="CLI"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("Folk.Self")>
     Public Function SelfFolk(CLI As String) As IORedirectFile
         Dim process As IORedirectFile = New IORedirectFile(App.ExecutablePath, CLI)
         Return process
@@ -484,6 +512,8 @@ Public Module App
     ''' <param name="CLI"></param>
     ''' <param name="parallel">小于等于零表示非并行化，单线程任务</param>
     ''' <returns>返回任务的执行的总时长</returns>
+    ''' 
+    <ExportAPI("Folk.Self")>
     Public Function SelfFolks(CLI As IEnumerable(Of String), Optional parallel As Integer = 0) As Long
         Dim sw As Stopwatch = Stopwatch.StartNew
 
