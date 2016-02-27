@@ -275,6 +275,11 @@
     <Compile Include="Scripting\MetaData\Parameter.vb" />
     <Compile Include="Scripting\MetaData\Namespace.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryWriter.vb" />
+    <Compile Include="Text\StringSimilarity\BipartiteMatcher.vb" />
+    <Compile Include="Text\StringSimilarity\Abstract.vb" />
+    <Compile Include="Text\StringSimilarity\Leven.vb" />
+    <Compile Include="Text\StringSimilarity\MatchString.vb" />
+    <Compile Include="Text\StringSimilarity\Tokeniser.vb" />
     <Compile Include="Text\TextIndexing.vb" />
     <Compile Include="Text\GB2312.vb" />
     <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
@@ -284,7 +289,7 @@
     <Compile Include="CommandLine\CliResCommon.vb" />
     <Compile Include="Parallel\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
-    <Compile Include="Text\MatchsMaker.vb" />
+    <Compile Include="Text\StringSimilarity\MatchsMaker.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="Extensions\Image\GrayBitmap.vb" />
     <Compile Include="Tools\Logging\EventLog.vb" />
@@ -376,7 +381,6 @@
     </Compile>
     <Compile Include="Text\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
-    <Compile Include="Text\MatchString.vb" />
     <Compile Include="Extensions\PathSearchTool.vb" />
     <Compile Include="ComponentModel\Href.vb" />
     <Compile Include="ComponentModel\DataSource\DataSource.vb" />
