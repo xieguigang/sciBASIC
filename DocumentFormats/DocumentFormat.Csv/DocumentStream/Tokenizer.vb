@@ -40,6 +40,8 @@ Namespace DocumentStream
         End Function
 
         Public Function CharsParser(s As String) As List(Of String)
+            Return RegexTokenizer(s)
+
             Dim tokens As New List(Of String)
             Dim temp As New List(Of Char)
             Dim stack As Boolean = False ' 解析器是否是处于由双引号所产生的栈之中？
@@ -51,8 +53,8 @@ Namespace DocumentStream
                         Call tokens.Add(New String(temp.ToArray))
                         Call temp.Clear()
                     Else  '  是以双引号开始的
-                        If tokens.Last = """"c Then ' 但是逗号的前一个符号是双引号，则是结束的标识
-                            Call tokens.RemoveLast
+                        If temp.Last = """"c Then ' 但是逗号的前一个符号是双引号，则是结束的标识
+                            Call temp.RemoveLast
                             stack = False
                             Call tokens.Add(New String(temp.ToArray))
                             Call temp.Clear()
