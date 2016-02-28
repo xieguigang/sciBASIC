@@ -17,12 +17,6 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Protected Friend _innerColumns As List(Of String) = New List(Of String)
 
-        ''' <summary>
-        ''' A regex expression string that use for split the line text.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Protected Friend Const SplitRegxExpression As String = "[" & vbTab & ",](?=(?:[^""]|""[^""]*"")*$)"
-
         Sub New(Optional Columns As IEnumerable(Of String) = Nothing)
             If Not Columns Is Nothing Then
                 Me._innerColumns = Columns.ToList
@@ -42,7 +36,7 @@ Namespace DocumentStream
         ''' </summary>
         ''' <param name="raw">A raw string line which read from the Csv text file.</param>
         Sub New(raw As String)
-            _innerColumns = Tokenizer(raw)
+            _innerColumns = Tokenizer.CharsParser(raw)
         End Sub
 
         ''' <summary>
@@ -280,39 +274,13 @@ Namespace DocumentStream
         End Operator
 
         ''' <summary>
-        ''' Parsing the row data from the input string line.
-        ''' </summary>
-        ''' <param name="s"></param>
-        ''' <returns></returns>
-        Public Shared Function Tokenizer(s As String) As List(Of String)
-            If String.IsNullOrEmpty(s) Then
-                Return New List(Of String)
-            End If
-
-            Dim Row As String() = Regex.Split(s, SplitRegxExpression)
-            For i As Integer = 0 To Row.Length - 1
-                s = Row(i)
-
-                If Not String.IsNullOrEmpty(s) AndAlso s.Length > 1 Then
-                    If s.First = """"c AndAlso s.Last = """"c Then
-                        s = Mid(s, 2, s.Length - 2)
-                    End If
-                End If
-
-                Row(i) = s
-            Next
-
-            Return Row.ToList
-        End Function
-
-        ''' <summary>
         ''' Row parsing into column tokens
         ''' </summary>
         ''' <param name="Line"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Widening Operator CType(Line As String) As RowObject
-            Dim row As List(Of String) = Tokenizer(Line)
+            Dim row As List(Of String) = Tokenizer.CharsParser(Line)
             Return New RowObject(Row)
         End Operator
 
