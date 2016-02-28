@@ -253,6 +253,7 @@
     <Compile Include="MMFProtocol\Pipeline\PipeBuffer.vb" />
     <Compile Include="MMFProtocol\Pipeline\PipeStream.vb" />
     <Compile Include="MMFProtocol\Pipeline\Pipeline.vb" />
+    <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\TokenIcer\ParserAPI.vb" />
     <Compile Include="Scripting\TokenIcer\LDM\StackTokens%28Of Tokens%29.vb" />
     <Compile Include="Scripting\TokenIcer\LDM\Func.vb" />

@@ -19,6 +19,11 @@ Namespace Scripting
             Return If(String.IsNullOrEmpty(obj), NIL, obj.First)
         End Function
 
+        ''' <summary>
+        ''' 出错会返回默认是0
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CastInteger(obj As String) As Integer
             Return CInt(val(obj))
         End Function
