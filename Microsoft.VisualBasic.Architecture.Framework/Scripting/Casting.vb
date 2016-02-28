@@ -7,6 +7,9 @@ Namespace Scripting
     Public Module Casting
 
         Private Function val(s As String) As Double
+            If String.IsNullOrEmpty(s) Then
+                Return 0R
+            End If
             s = s.Replace(",", "")
             Return Conversion.Val(s)
         End Function
