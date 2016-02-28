@@ -3,8 +3,10 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 
 Module TestMain
 
+    ReadOnly sss As String = <cc>ssssss,"ss,sssss","ssss""sss","sss  """" sss",""""""""""""</cc>
+
     Sub Main()
-        Dim ssss As String = "ssssss,""ss,sssss"",""ssss""""sss"",sss   sss"
+        Dim ssss As String = sss
         Dim ttttt = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(ssss)
 
 
