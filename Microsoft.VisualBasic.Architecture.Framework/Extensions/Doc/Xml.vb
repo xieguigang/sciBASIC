@@ -23,6 +23,30 @@ Public Module XmlDoc
                                               Optional encoding As Encoding = Nothing,
                                               Optional ThrowEx As Boolean = True,
                                               Optional preprocess As Func(Of String, String) = Nothing) As T
+        Dim type As Type = GetType(T)
+        Dim obj As Object = XmlFile.LoadXml(type, encoding, ThrowEx, preprocess)
+        If obj Is Nothing Then
+            Return Nothing  ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
+        Else
+            Return DirectCast(obj, T)
+        End If
+    End Function
+
+
+    ''' <summary>
+    ''' 从文件之中加载XML之中的数据至一个对象类型之中
+    ''' </summary>
+    ''' <param name="XmlFile">XML文件的文件路径</param>
+    ''' <param name="ThrowEx">当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值</param>
+    ''' <param name="preprocess">Xml文件的预处理操作</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' 
+    <ExportAPI("LoadXml")>
+    <Extension> Public Function LoadXml(XmlFile As String, type As Type,
+                                        Optional encoding As Encoding = Nothing,
+                                        Optional ThrowEx As Boolean = True,
+                                        Optional preprocess As Func(Of String, String) = Nothing) As Object
         If encoding Is Nothing Then encoding = Encoding.Default
 
         If (Not XmlFile.FileExists) OrElse FileIO.FileSystem.GetFileInfo(XmlFile).Length = 0 Then
@@ -45,10 +69,10 @@ Public Module XmlDoc
 
         Using Stream As New StringReader(s:=XmlDoc)
             Try
-                Dim Type = GetType(T)
-                Dim Data = New XmlSerializer(Type).Deserialize(Stream)
-                Return DirectCast(Data, T)
+                Dim obj = New XmlSerializer(type).Deserialize(Stream)
+                Return obj
             Catch ex As Exception
+                ex = New Exception(type.FullName, ex)
                 ex = New Exception(XmlFile.ToFileURL, ex)
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 If ThrowEx Then
