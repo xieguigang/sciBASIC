@@ -40,7 +40,38 @@ Namespace DocumentStream
         End Function
 
         Public Function CharsParser(s As String) As List(Of String)
+            Dim tokens As New List(Of String)
+            Dim temp As New List(Of Char)
+            Dim stack As Boolean = False ' 解析器是否是处于由双引号所产生的栈之中？
+            Dim preToken As Boolean = False
 
+            For Each c As Char In s
+                If c = ","c Then
+                    If Not stack Then
+                        Call tokens.Add(New String(temp.ToArray))
+                        Call temp.Clear()
+                    Else  '  是以双引号开始的
+                        If tokens.Last = """"c Then ' 但是逗号的前一个符号是双引号，则是结束的标识
+                            Call tokens.RemoveLast
+                            stack = False
+                            Call tokens.Add(New String(temp.ToArray))
+                            Call temp.Clear()
+                        Else
+                            Call temp.Add(c)
+                        End If
+                    End If
+                ElseIf c = """"c Then  ' 必须要在逗号分隔符之前才起作用
+                    If temp.Count = 0 Then  ' 这个双引号是在最开始的位置
+                        stack = True
+                    Else
+                        Call temp.Add(c)
+                    End If
+                Else
+                    Call temp.Add(c)
+                End If
+            Next
+
+            Return tokens
         End Function
     End Module
 End Namespace

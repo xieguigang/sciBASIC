@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Module TestMain
 
     Sub Main()
+        Dim ssss As String = "ssssss,""ss,sssss"",""ssss""""sss"",sss   sss"
+        Dim ttttt = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(ssss)
+
 
         Dim typeschema = Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.SchemaProvider.CreateObject(Of SchemaParsingTest)(False)
         Dim data = {New SchemaParsingTest, New SchemaParsingTest}
