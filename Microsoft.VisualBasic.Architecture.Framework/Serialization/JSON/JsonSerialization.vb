@@ -47,5 +47,10 @@ Namespace Serialization
             Dim obj As T = DirectCast(value, T)
             Return obj
         End Function
+
+        Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing) As T
+            Dim json As String = IO.File.ReadAllText(file, If(encoding Is Nothing, Encoding.Default, encoding))
+            Return json.LoadObject(Of T)
+        End Function
     End Module
 End Namespace
