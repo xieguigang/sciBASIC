@@ -37,7 +37,16 @@ Namespace Scripting.TokenIcer
     ''' </remarks>
     Public Class Token(Of Tokens)
 
+        ''' <summary>
+        ''' Token type
+        ''' </summary>
+        ''' <returns></returns>
         Public Property TokenName As Tokens
+
+        ''' <summary>
+        ''' The text that makes up the token.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property TokenValue As String
 
         ''' <summary>
@@ -62,6 +71,10 @@ Namespace Scripting.TokenIcer
         Public Sub New(name As Tokens, value As String)
             TokenName = name
             TokenValue = value
+        End Sub
+
+        Sub New(name As Tokens)
+            TokenName = name
         End Sub
 
         Public Overrides Function ToString() As String
