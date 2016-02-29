@@ -5,6 +5,13 @@ Namespace Scripting.MetaData
 
     Public Module MetaAPI
 
+        ''' <summary>
+        ''' <see cref="PackageNamespace"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property TypeInfo As Type =
+            GetType(PackageNamespace)
+
         <Extension> Public Function GetCLIMod(assm As Assembly) As Type
             Dim types As Type() = assm.GetTypes
             Dim LQuery = (From type As Type In types
@@ -27,6 +34,16 @@ Namespace Scripting.MetaData
                 Call App.LogException(ex)
                 Return Nothing
             End Try
+        End Function
+
+        ''' <summary>
+        ''' 获取定义在类型定义上面的命名空间的标记信息
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Function GetEntry(type As Type) As PackageNamespace
+            Dim attrs = type.GetCustomAttributes(Of PackageNamespace)(inherit:=True)
+            Return attrs.FirstOrDefault
         End Function
     End Module
 End Namespace

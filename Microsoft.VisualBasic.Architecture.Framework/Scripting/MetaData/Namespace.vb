@@ -31,13 +31,6 @@ Namespace Scripting.MetaData
         Public Property Category As APICategories = APICategories.SoftwareTools
 
         ''' <summary>
-        ''' <see cref="PackageNamespace"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public Overloads Shared ReadOnly Property TypeInfo As Type =
-            GetType(PackageNamespace)
-
-        ''' <summary>
         ''' This attribute provides a more details information about a namepace package module in your scripting plugins.
         ''' </summary>
         ''' <param name="ns"></param>
@@ -59,11 +52,6 @@ Namespace Scripting.MetaData
         ''' </summary>
         Protected Sub New()
         End Sub
-
-        Public Shared Function GetEntry(type As Type) As PackageNamespace
-            Dim attrs = type.GetCustomAttributes(Of PackageNamespace)(inherit:=True)
-            Return attrs.FirstOrDefault
-        End Function
     End Class
 
     Public Enum APICategories As Integer
