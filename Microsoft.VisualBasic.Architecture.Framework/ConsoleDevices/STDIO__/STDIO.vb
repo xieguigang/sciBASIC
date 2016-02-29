@@ -97,8 +97,8 @@ Namespace ConsoleDevice
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Format(s As String, ParamArray args As String()) As String
-            Dim FormatControlProvider As Regex = New Regex(FORMAT_CONTROL_EXPRESSION)
-            Dim Matches As MatchCollection = FormatControlProvider.Matches(s)
+            Dim formatProvider As Regex = New Regex(FORMAT_CONTROL_EXPRESSION)
+            Dim matches As String() = formatProvider.Matches(s).ToArray
             Dim p As Integer = 1, p2 As Integer
             Dim sBuilder As StringBuilder = New StringBuilder(value:=s, capacity:=128)
             Dim arg As String, l As Integer
@@ -108,15 +108,18 @@ Namespace ConsoleDevice
                 Call sBuilder.Replace(escToken.Key, escToken.Value)
             Next
 
-            If Matches.Count = 0 Then   'if no formater control character was found, then return the whole originally string directly. 
+            If matches.Length = 0 Then   'if no formater control character was found, then return the whole originally string directly. 
                 Return sBuilder.ToString
             End If 'Else formatting the target input string. 
-            For i As Integer = 0 To Matches.Count - 1  'Formatting control string replacement.
-                Call sBuilder.Replace(Matches.Item(i).Value, "<Format idx='%'/>".Replace("%", CStr(i)))
+            For i As Integer = 0 To matches.Length - 1  'Formatting control string replacement.
+                Dim pos As Integer = InStr(sBuilder.ToString, matches(i))
+                sBuilder.Remove(pos - 1, matches(i).Length)
+                sBuilder.Insert(pos - 1, "<Format idx='%'/>".Replace("%", CStr(i)))
             Next
 
             TMP = sBuilder.ToString
-            For i As Integer = 0 To Matches.Count - 1
+
+            For i As Integer = 0 To matches.Length - 1
                 arg = "<Format idx='%'/>".Replace("%", i)
                 l = Len(arg)
                 p2 = p
@@ -130,8 +133,8 @@ Namespace ConsoleDevice
             Next
 
             p = 0
-            For i As Integer = 0 To Matches.Count - 1
-                arg = Matches.Item(i).Value
+            For i As Integer = 0 To matches.Length - 1
+                arg = matches(i)
                 sBuilder.Replace("<Format idx='%'/>".Replace("%", CStr(i)), IFormater(arg.Last).ActionFormat(arg, args(p)))
                 If arg.Last <> "%"c Then
                     p += 1
