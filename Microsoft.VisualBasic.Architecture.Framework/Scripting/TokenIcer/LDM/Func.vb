@@ -20,6 +20,14 @@ Namespace Scripting.TokenIcer
             Caller = New List(Of InnerToken(Of Tokens)) From {currStack}
         End Sub
 
+        ''' <summary>
+        ''' 将表达式的栈空间展开
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function ToArray() As Token(Of Tokens)()
+
+        End Function
+
         Public Overrides Function ToString() As String
             If Args.IsNullOrEmpty Then
                 Return String.Join(" ", Caller.ToArray(Function(x) x.ToString))
