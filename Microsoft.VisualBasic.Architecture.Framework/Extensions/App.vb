@@ -99,7 +99,7 @@ Public Module App
     ''' (同一產品程序集所共享的數據文件夾)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductSharedDir As String = $"{ProductProgramData}/.shared"
+    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
 
     ''' <summary>
     ''' 应用程序的启动的时间
@@ -478,7 +478,7 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 获取位于共享文件夹<see cref="App.ProductSharedDir"/>里面的临时文件
+    ''' 获取位于共享文件夹<see cref="App.ProductSharedDIR"/>里面的临时文件
     ''' </summary>
     ''' <returns></returns>
     ''' 
@@ -491,7 +491,7 @@ Public Module App
         Return Temp
     End Function
 
-    Public ReadOnly Property ProductSharedTemp As String = App.ProductSharedDir & "/tmp/"
+    Public ReadOnly Property ProductSharedTemp As String = App.ProductSharedDIR & "/tmp/"
 
     ''' <summary>
     ''' Self call this program itself for batch parallel task calculation.
