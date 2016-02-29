@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.CodeDOMExtension
-Imports Microsoft.VisualBasic.CodeDOMExpressions
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.CodeDOM_VBC
 
 Namespace Parallel
 
