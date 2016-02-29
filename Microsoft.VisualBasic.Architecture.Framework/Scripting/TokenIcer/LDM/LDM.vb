@@ -74,6 +74,12 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Public ReadOnly Property Text As String
+            Get
+                Return TokenValue
+            End Get
+        End Property
+
         Public Sub New(name As Tokens, value As String)
             TokenName = name
             TokenValue = value
@@ -88,6 +94,10 @@ Namespace Scripting.TokenIcer
                 Return "UNDEFINED"
             End If
             Return $"[{TokenName}]" & vbTab & TokenValue
+        End Function
+
+        Public Function GetValue() As Object
+            Return Me.TryCast
         End Function
     End Class
 End Namespace
