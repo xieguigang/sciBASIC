@@ -68,6 +68,12 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Public ReadOnly Property Type As Tokens
+            Get
+                Return TokenName
+            End Get
+        End Property
+
         Public Sub New(name As Tokens, value As String)
             TokenName = name
             TokenValue = value
