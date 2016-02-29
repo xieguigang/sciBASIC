@@ -1,7 +1,9 @@
 ﻿Imports System.CodeDom
 Imports System.CodeDom.Compiler
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace CodeDOM_VBC
 
@@ -16,22 +18,21 @@ Namespace CodeDOM_VBC
             Return $"/target:winexe /win32icon:""{iconPath}"""
         End Function
 
-        <Extension> Public Function ImportsNamespace(refList As String()) As CodeDom.CodeNamespaceImport()
-            Dim nsArray As CodeDom.CodeNamespaceImport() = New CodeDom.CodeNamespaceImport() {
-                New CodeDom.CodeNamespaceImport("Microsoft.VisualBasic"),
-                New CodeDom.CodeNamespaceImport("System"),
-                New CodeDom.CodeNamespaceImport("System.Collections"),
-                New CodeDom.CodeNamespaceImport("System.Collections.Generic"),
-                New CodeDom.CodeNamespaceImport("System.Data"),
-                New CodeDom.CodeNamespaceImport("System.Diagnostics"),
-                New CodeDom.CodeNamespaceImport("System.Linq"),
-                New CodeDom.CodeNamespaceImport("System.Xml.Linq"),
-                New CodeDom.CodeNamespaceImport("System.Text.RegularExpressions")}
-            Return nsArray
-        End Function
-
-        Public Function [GetType]() As CodeTypeReference
-            Throw New NotImplementedException()
+        <Extension> Public Function ImportsNamespace(refList As IEnumerable(Of String)) As CodeDom.CodeNamespaceImport()
+            Dim nsArray As List(Of CodeNamespaceImport) =
+                New List(Of CodeNamespaceImport) From {
+                    New CodeDom.CodeNamespaceImport("Microsoft.VisualBasic"),
+                    New CodeDom.CodeNamespaceImport("System"),
+                    New CodeDom.CodeNamespaceImport("System.Collections"),
+                    New CodeDom.CodeNamespaceImport("System.Collections.Generic"),
+                    New CodeDom.CodeNamespaceImport("System.Data"),
+                    New CodeDom.CodeNamespaceImport("System.Diagnostics"),
+                    New CodeDom.CodeNamespaceImport("System.Linq"),
+                    New CodeDom.CodeNamespaceImport("System.Xml.Linq"),
+                    New CodeDom.CodeNamespaceImport("System.Text.RegularExpressions")
+            }
+            Call nsArray.Add(refList.ToArray(Function(ns) New CodeNamespaceImport(ns)))
+            Return nsArray.ToArray
         End Function
 
         ''' <summary>
@@ -68,7 +69,7 @@ Namespace CodeDOM_VBC
         ''' <param name="CodeStyle">VisualBasic, C#</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Compile(ObjectModel As CodeDom.CodeNamespace,
+        <Extension> Public Function Compile(ObjectModel As CodeNamespace,
                                             Reference As String(),
                                             DotNETReferenceAssembliesDir As String,
                                             Optional CodeStyle As String = "VisualBasic") As System.Reflection.Assembly
@@ -146,6 +147,18 @@ Namespace CodeDOM_VBC
                 Return Options
             End Get
         End Property
+
+        Public Function CompileExe(assm As CodeCompileUnit, ref As String(), SDK As String, Optional codeStyle As String = "VisualBasic") As Assembly
+            Return Compile(assm, ref, SDK, ExecutableProfile, codeStyle)
+        End Function
+
+        <Extension>
+        Public Function CompileDll(assm As CodeCompileUnit,
+                                   ref As IEnumerable(Of String),
+                                   SDK As String,
+                                   Optional codeStyle As String = "VisualBasic") As Assembly
+            Return Compile(assm, ref.ToArray, SDK, DllProfile, codeStyle)
+        End Function
 
         ''' <summary>
         ''' Compile the codedom object model into a binary assembly module file.(将CodeDOM对象模型编译为二进制应用程序文件)

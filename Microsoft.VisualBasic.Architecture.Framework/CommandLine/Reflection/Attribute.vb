@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace CommandLine.Reflection
 
@@ -18,6 +19,7 @@ Namespace CommandLine.Reflection
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
     Public Class [Namespace] : Inherits Attribute
+        Implements sIdEnumerable
 
         ''' <summary>
         ''' A brief description text about the function of this namespace.(关于本模块之中的描述性的摘要文本)
@@ -34,7 +36,7 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks></remarks>
         <XmlAttribute>
-        Public Property [Namespace] As String
+        Public Property [Namespace] As String Implements sIdEnumerable.Identifier
 
         Dim _TypeAutoExtract As Boolean
 
@@ -91,7 +93,7 @@ Namespace CommandLine.Reflection
     ''' Optional commandline arguments.(本属性标记一个命令行字符串之中的可选参数)
     ''' </summary>
     ''' <remarks></remarks>
-    <AttributeUsage(AttributeTargets.Property, allowmultiple:=False, inherited:=True)>
+    <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class [Optional] : Inherits Attribute
 
         ''' <summary>
