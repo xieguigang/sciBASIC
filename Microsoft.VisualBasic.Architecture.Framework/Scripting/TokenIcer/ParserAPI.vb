@@ -51,6 +51,12 @@ Namespace Scripting.TokenIcer
             Return obj
         End Function
 
+        ''' <summary>
+        ''' Try cast the token value to a .NET object based on the token type name.
+        ''' </summary>
+        ''' <typeparam name="Tokens"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         <Extension> Public Function [TryCast](Of Tokens)(x As Token(Of Tokens)) As Object
             Dim typeName As String = Scripting.ToString(x.TokenName)
             Dim type As Type = Nothing
