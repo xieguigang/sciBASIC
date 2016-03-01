@@ -43,7 +43,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Indicates that there are no more characters in the string and tokenizer is finished.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ReadDone As Boolean
+        Public ReadOnly Property ReadDone As Boolean = False
 
         Dim receiveDone As New ManualResetEvent(False)
 
