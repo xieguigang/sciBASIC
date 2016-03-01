@@ -2,6 +2,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic
 
 ''' <summary>
 ''' Module provides the csv data imports operation of the csv document creates from a text file.(模块提供了从文本文档之中导入数据的方法)

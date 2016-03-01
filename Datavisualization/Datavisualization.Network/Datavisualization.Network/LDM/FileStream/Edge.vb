@@ -18,6 +18,11 @@ Namespace FileStream
                 String.Equals(node, edge.ToNode, StringComparison.OrdinalIgnoreCase)
         End Function
 
+        Public Function Contains(Interactor As String) As Boolean
+            Return String.Equals(Interactor, FromNode, StringComparison.OrdinalIgnoreCase) OrElse
+                String.Equals(Interactor, ToNode, StringComparison.OrdinalIgnoreCase)
+        End Function
+
         Public Const REFLECTION_ID_MAPPING_FROM_NODE As String = "fromNode"
         Public Const REFLECTION_ID_MAPPING_TO_NODE As String = "toNode"
         Public Const REFLECTION_ID_MAPPING_CONFIDENCE As String = "confidence"

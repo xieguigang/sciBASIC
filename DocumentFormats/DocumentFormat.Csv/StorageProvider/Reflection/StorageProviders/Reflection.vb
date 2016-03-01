@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic
 
 Namespace StorageProvider.Reflection
 

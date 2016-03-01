@@ -218,6 +218,7 @@
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
+    <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
     <Compile Include="Extensions\Collection\KeyValuePair.vb" />
     <Compile Include="ComponentModel\DataStructures\LoopArray.vb" />

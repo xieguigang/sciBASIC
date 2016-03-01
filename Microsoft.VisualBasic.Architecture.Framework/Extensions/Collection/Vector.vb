@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Public Module Vector
+Public Module VectorExtensions
 
     ''' <summary>
     ''' 

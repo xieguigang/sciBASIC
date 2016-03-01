@@ -51,8 +51,8 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
             Get
-                Dim Query = From row In _innerTable.AsParallel Select row.Count '
-                Return Query.ToArray.Max
+                Dim LQuery = From row In _innerTable.AsParallel Select row.NumbersOfColumn '
+                Return LQuery.Max
             End Get
         End Property
 

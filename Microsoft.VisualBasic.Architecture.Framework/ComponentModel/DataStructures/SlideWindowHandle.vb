@@ -90,7 +90,7 @@ Namespace ComponentModel.DataStructures
         ''' <param name="extTails">引用类型不建议打开这个参数</param>
         ''' <remarks></remarks>
         <Extension> Public Function CreateSlideWindows(Of T)(
-                                    data As Generic.IEnumerable(Of T),
+                                    data As IEnumerable(Of T),
                                     slideWindowSize As Integer,
                                     Optional offset As Integer = 1,
                                     Optional extTails As Boolean = False) As SlideWindowHandle(Of T)()

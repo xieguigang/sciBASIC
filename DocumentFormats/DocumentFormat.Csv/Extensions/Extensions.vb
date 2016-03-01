@@ -14,6 +14,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.

@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic
 
 Public Class FormFoundTools
 

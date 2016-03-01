@@ -31,7 +31,7 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     ''' Initializes a new instance of the System.Collections.Generic.List`1 class that
     ''' is empty and has the default initial capacity.
     ''' </summary>
-    Sub New()
+    Public Sub New()
         Call MyBase.New
     End Sub
 

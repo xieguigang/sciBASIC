@@ -515,22 +515,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Create a collection of slide Windows data for the target collection object.(创建一个滑窗集合)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="data"></param>
-    ''' <param name="slideWindowSize"></param>
-    ''' <param name="offset"></param>
-    ''' <param name="extTails">是否将尾巴补上？否则序列会烧掉<paramref name="slideWindowSize"/>大小的空缺，默认不用补全</param>
-    ''' <returns></returns>
-    <Extension> Public Function CreateSlideWindows(Of T)(data As Generic.IEnumerable(Of T),
-                                                         slideWindowSize As Integer,
-                                                         Optional offset As Integer = 1,
-                                                         Optional extTails As Boolean = False) As SlideWindowHandle(Of T)()
-        Return SlideWindow.CreateSlideWindows(Of T)(data, slideWindowSize, offset, extTails)
-    End Function
-
-    ''' <summary>
     ''' Chr(0): NULL char
     ''' </summary>
     ''' <remarks></remarks>

@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic
 
 Namespace DocumentStream
 
