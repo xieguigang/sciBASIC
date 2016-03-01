@@ -48,10 +48,10 @@ Namespace ComponentModel.DataSourceModel
 
             ' Single thread safely
             For Each x As Object In _source ' 单线程安全
-                _Current = x
-
                 Call receiveDone.WaitOne()
                 Call receiveDone.Reset()
+
+                _Current = x
             Next
 
             _ReadDone = True
