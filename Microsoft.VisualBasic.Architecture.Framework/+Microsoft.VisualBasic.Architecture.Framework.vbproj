@@ -183,6 +183,7 @@
     <Compile Include="CommandLine\CLITools.vb" />
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
+    <Compile Include="ComponentModel\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
     <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
