@@ -296,6 +296,7 @@
     <Compile Include="Extensions\Image\GrayBitmap.vb" />
     <Compile Include="Tools\Logging\EventLog.vb" />
     <Compile Include="Tools\NETDebugger.vb" />
+    <Compile Include="Tools\Network\Mailto\MailConfigure.vb" />
     <Compile Include="Tools\Network\Mailto\MailContents.vb" />
     <Compile Include="Tools\Network\Abstract.vb" />
     <Compile Include="Tools\Network\MIME\MIME.vb" />

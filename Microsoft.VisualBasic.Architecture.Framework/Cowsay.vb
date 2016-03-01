@@ -35,11 +35,11 @@ Public Module CowsayTricks
     ''' <returns></returns>
     ''' 
     <ExportAPI("Cowsay", Info:="Show cowsay with a specific input message on your console screen. you can using /dead to change its face.")>
-    Public Function Cowsay(msg As String, Optional Dead As Boolean = False) As String
-        If Dead Then
-            msg = Msgbox(msg) & DeadCow
+    Public Function Cowsay(msg As String, Optional isDead As Boolean = False) As String
+        If isDead Then
+            msg = __msgbox(msg) & DeadCow
         Else
-            msg = Msgbox(msg) & NormalCow
+            msg = __msgbox(msg) & NormalCow
         End If
 
         Call Console.WriteLine(msg)
@@ -47,7 +47,7 @@ Public Module CowsayTricks
         Return msg
     End Function
 
-    Private Function Msgbox(msg As String) As String
+    Private Function __msgbox(msg As String) As String
         Dim l = Len(msg)
         Dim offset As String = New String(" ", 8)
         Dim sBuilder As StringBuilder = New StringBuilder(vbCrLf, 1024)

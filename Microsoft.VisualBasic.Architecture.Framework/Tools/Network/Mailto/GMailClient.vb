@@ -2,6 +2,7 @@
 Imports System.Net.Mime
 Imports System.Xml.Serialization
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Net.Mailto
 
@@ -35,7 +36,10 @@ Namespace Net.Mailto
         ''' <param name="emailUser">收件人地址</param>
         ''' <remarks></remarks>
         Public Function SendMessagesTo(emailTitle As String, emailNote As String, emailUser As String) As Boolean
-            Dim Mail As MailContents = New MailContents With {.Subject = emailTitle, .Body = emailNote}
+            Dim Mail As MailContents = New MailContents With {
+                .Subject = emailTitle,
+                .Body = emailNote
+            }
             Return SendEMail(Mail, Account.UserName, emailUser)
         End Function
 
@@ -46,26 +50,31 @@ Namespace Net.Mailto
             SmtpClient.Host = SmtpServerHostAddress
             SmtpClient.EnableSsl = True
 
-            Dim MailMessage As MailMessage = MailContents
+            Dim msg As MailMessage = MailContents
 
-            MailMessage.From = New MailAddress(Account.UserName, displayName, System.Text.Encoding.UTF8)
+            msg.From = New MailAddress(Account.UserName, displayName, System.Text.Encoding.UTF8)
 
-            For Each Addr In Receivers
-                Call MailMessage.To.Add(Addr)
+            For Each addr As String In Receivers
+                Call msg.To.Add(addr)
             Next
 
-            MailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+            msg.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
 
-            Return __sendMail(SmtpClient, MailMessage)
+            Return __sendMail(SmtpClient, msg)
         End Function
-
 
         Private Function __sendMail(SmtpClient As SmtpClient, MailMessage As MailMessage) As Boolean
             Try
                 Call SmtpClient.Send(MailMessage)
             Catch ex As Exception
+                ex = New Exception(SmtpClient.GetJson, ex)
+                ex = New Exception(MailMessage.GetJson, ex)
+
                 _ErrMessage = ex.ToString
+
                 Call ex.PrintException
+                Call App.LogException(ex)
+
                 Return False
             End Try
 
@@ -88,72 +97,5 @@ Namespace Net.Mailto
         Public Shared Function QQMail(account As String, pass As String) As EMailClient
             Return New EMailClient(account, pass, Port:=587, HostAddress:="smtp.qq.com")
         End Function
-
-        Public Structure MailConfigure
-
-            <XmlAttribute> Public Property Account As String
-            <XmlAttribute> Public Property Port As Integer
-            <XmlAttribute> Public Property HostAddress As String
-
-            ''' <summary>
-            ''' 存储至文件之前请先加密
-            ''' </summary>
-            ''' <remarks></remarks>
-            <XmlText> Public Property Password As String
-
-            Public Overrides Function ToString() As String
-                Return $"({Account})  -->  https://{HostAddress}:{Port}/?{Password}"
-            End Function
-
-            Public Shared ReadOnly Property GMail(account As String, password As String) As MailConfigure
-                Get
-                    Return New MailConfigure With
-                           {
-                               .Account = account,
-                               .HostAddress = "smtp.gmail.com",
-                               .Port = 587,
-                               .Password = password
-                           }
-                End Get
-            End Property
-
-            Public Shared ReadOnly Property QQMail(Account As String, Password As String) As MailConfigure
-                Get
-                    Return New MailConfigure With {
-                        .Account = Account,
-                        .Password = Password,
-                        .Port = 465,
-                        .HostAddress = "smtp.qq.com"}
-                End Get
-            End Property
-
-            Public Shared ReadOnly Property LiveMail(Account As String, Password As String) As MailConfigure
-                Get
-                    Return New MailConfigure With {
-                        .Account = Account,
-                        .Password = Password,
-                        .Port = 25,
-                        .HostAddress = "smtp.live.com"}
-                End Get
-            End Property
-
-            Public Function GenerateUri(Encryption As Func(Of String, String)) As String
-                Return String.Format("mailto://{0}:{1}/mail?account={2}%password={3}", HostAddress, Port, Encryption(Account), Encryption(Password))
-            End Function
-
-            Public Shared Function CreateFromUri(uri As String, Decryption As Func(Of String, String)) As MailConfigure
-                Dim Addr As String = Regex.Match(uri, "[^/]+?:\d+").Value
-                Dim p As Integer = InStr(uri, "/mail?", CompareMethod.Text)
-                uri = Mid(uri, p + 6)
-                Dim Tokens As String() = uri.Split("%"c)
-                Dim Parameters = (From str As String
-                                  In Tokens
-                                  Let Key As String = str.Split("="c).First
-                                  Let value As String = Mid(str, Len(Key) + 2)
-                                  Select Key, value).ToArray.ToDictionary(Function(obj) obj.Key.ToLower, elementSelector:=Function(obj) obj.value)
-                Tokens = Addr.Split(":"c)
-                Return New MailConfigure With {.HostAddress = Tokens(0), .Port = CInt(Val(Tokens(1))), .Account = Decryption(Parameters("account")), .Password = Decryption(Parameters("password"))}
-            End Function
-        End Structure
     End Class
 End Namespace

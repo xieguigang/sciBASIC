@@ -1,19 +1,14 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
 
-Public Class SingleInstanceFormEntry(Of Form As System.Windows.Forms.Form)
+Public Class SingleInstanceFormEntry(Of TForm As System.Windows.Forms.Form)
 
-    Dim _InternalEntry As Control
-    Dim _InternalInstance As Form
-    Dim _GetPosition As Func(Of Control, System.Windows.Forms.Form, Point)
-    Dim _InternalParentForm As System.Windows.Forms.Form
+    Dim _clickEntry As Control
+    Dim __getPosition As Func(Of Control, System.Windows.Forms.Form, Point)
+    Dim _parentForm As System.Windows.Forms.Form
     Dim _ShowModel As Boolean
 
-    Public ReadOnly Property FormInstance As Form
-        Get
-            Return _InternalInstance
-        End Get
-    End Property
+    Public ReadOnly Property Form As TForm
 
     Public Property Arguments As Object()
 
@@ -22,15 +17,15 @@ Public Class SingleInstanceFormEntry(Of Form As System.Windows.Forms.Form)
            Optional GetPosition As Func(Of Control, System.Windows.Forms.Form, Point) = Nothing,
            Optional ShowModelForm As Boolean = True)
 
-        _InternalEntry = ControlEntry
-        _GetPosition = GetPosition
-        _InternalParentForm = ParentForm
+        _clickEntry = ControlEntry
+        __getPosition = GetPosition
+        _parentForm = ParentForm
         _ShowModel = ShowModelForm
 
-        AddHandler _InternalEntry.Click, AddressOf InternalInvokeEntry
+        AddHandler _clickEntry.Click, AddressOf __invokeEntry
 
-        If GetPosition Is Nothing AndAlso Not _InternalParentForm Is Nothing Then
-            _GetPosition = AddressOf InternalGetDefaultPosition
+        If GetPosition Is Nothing AndAlso Not _parentForm Is Nothing Then
+            __getPosition = AddressOf __getDefaultPos
         End If
     End Sub
 
@@ -43,7 +38,7 @@ Public Class SingleInstanceFormEntry(Of Form As System.Windows.Forms.Form)
     End Sub
 
     Public Sub [AddHandler](Handle As Action(Of Object, EventArgs))
-        AddHandler _InternalEntry.Click, New EventHandler(Sub(obj, args) Call Handle(obj, args))
+        AddHandler _clickEntry.Click, New EventHandler(Sub(obj, args) Call Handle(obj, args))
     End Sub
 
     ''' <summary>
@@ -53,41 +48,41 @@ Public Class SingleInstanceFormEntry(Of Form As System.Windows.Forms.Form)
     ''' <param name="Form"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Shared Function InternalGetDefaultPosition(Control As UserControl, Form As System.Windows.Forms.Form) As Point
+    Private Shared Function __getDefaultPos(Control As UserControl, Form As Form) As Point
         Dim Pt As Point = Form.PointToScreen(Control.Location)
         Pt = New Point(CInt(Pt.X + Control.Width / 2), CInt(Pt.Y + Control.Height / 2))
         Return Pt
     End Function
 
     Public Sub Invoke(ParamArray InvokeSets As KeyValuePair(Of String, Object)())
-        _InvokeSets = InvokeSets
-        Call InternalInvokeEntry(Nothing, Nothing)
+        __invokeSets = InvokeSets
+        Call __invokeEntry(Nothing, Nothing)
     End Sub
 
-    Dim _InvokeSets As KeyValuePair(Of String, Object)()
+    Dim __invokeSets As KeyValuePair(Of String, Object)()
 
-    Private Sub InternalInvokeEntry(sender As Object, EVtargs As EventArgs)
-        If _InternalInstance Is Nothing Then
+    Private Sub __invokeEntry(sender As Object, EVtargs As EventArgs)
+        If Not Form Is Nothing Then Return
 
-            _InternalInstance = DirectCast(Activator.CreateInstance(GetType(Form), Arguments), Form)
-            If Not _GetPosition Is Nothing Then
-                Dim pt As Point = _GetPosition(_InternalEntry, _InternalInstance)
-                _InternalInstance.Location = pt
-            End If
+        _Form = DirectCast(Activator.CreateInstance(GetType(TForm), Arguments), TForm)
 
-            If Not _InvokeSets.IsNullOrEmpty Then
-                For Each Entry In _InvokeSets
-                    _InternalInstance.InvokeSet(Of Object)(Entry.Key, Entry.Value)
-                Next
-            End If
+        If Not __getPosition Is Nothing Then
+            Dim pt As Point = __getPosition(_clickEntry, Form)
+            Form.Location = pt
+        End If
 
-            If _ShowModel Then
-                _InternalInstance.ShowDialog()
-                _InternalInstance.Free()
-            Else
-                _InternalInstance.Show()
-                AddHandler _InternalInstance.FormClosed, Sub() Call _InternalInstance.Free()
-            End If
+        If Not __invokeSets.IsNullOrEmpty Then
+            For Each Entry In __invokeSets
+                Call Form.InvokeSet(Of Object)(Entry.Key, Entry.Value)
+            Next
+        End If
+
+        If _ShowModel Then
+            Call Form.ShowDialog()
+            Call Form.Free()
+        Else
+            Call Form.Show()
+            AddHandler Form.FormClosed, Sub() Call Form.Free()
         End If
     End Sub
 End Class
