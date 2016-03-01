@@ -45,10 +45,20 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         Public ReadOnly Property ReadDone As Boolean = False
 
+        ''' <summary>
+        ''' Exposes an enumerator, which supports a simple iteration over a non-generic collection.To
+        ''' browse the .NET Framework source code for this type, see the Reference Source.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetEnumerator() As IEnumerable
+            Return _source
+        End Function
+
         Dim receiveDone As New ManualResetEvent(False)
 
         Private Sub __moveNext()
             _ReadDone = False
+            _started = True
 
             ' Single thread safely
             For Each x As Object In _source ' 单线程安全
@@ -58,6 +68,7 @@ Namespace ComponentModel.DataSourceModel
                 _Current = x
             Next
 
+            _started = False
             _ReadDone = True
         End Sub
 
@@ -72,6 +83,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Dim _forEach As Thread
+        Dim _started As Boolean = False
 
         ''' <summary>
         ''' Sets the enumerator to its initial position, which is before the first element in the collection.
@@ -81,8 +93,14 @@ Namespace ComponentModel.DataSourceModel
                 Call _forEach.Abort()
             End If
 
+            _started = False
+            _ReadDone = False
             _forEach = New Thread(AddressOf __moveNext)
             _forEach.Start()
+
+            Do While _started = False
+                Call Thread.Sleep(1)
+            Loop
         End Sub
 
         ''' <summary>
@@ -93,6 +111,8 @@ Namespace ComponentModel.DataSourceModel
         ''' </returns>
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
             Call receiveDone.Set()
+            Call Thread.Sleep(1)
+
             If ReadDone Then
                 Return False
             Else
