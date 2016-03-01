@@ -39,6 +39,10 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Current As Object Implements IEnumerator.Current
+        ''' <summary>
+        ''' Indicates that there are no more characters in the string and tokenizer is finished.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReadDone As Boolean
 
         Dim receiveDone As New ManualResetEvent(False)
@@ -89,7 +93,11 @@ Namespace ComponentModel.DataSourceModel
         ''' </returns>
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
             Call receiveDone.Set()
-            Return Not ReadDone
+            If ReadDone Then
+                Return False
+            Else
+                Return Not ReadDone
+            End If
         End Function
 
 #Region "IDisposable Support"
