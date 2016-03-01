@@ -6,6 +6,13 @@ Namespace CodeDOM_VBC
 
     Public Module VBC
 
+        ''' <summary>
+        ''' Construct of the vbc.exe compiler parameters.
+        ''' </summary>
+        ''' <param name="ref"></param>
+        ''' <param name="SDK"></param>
+        ''' <param name="dll"></param>
+        ''' <returns></returns>
         Public Function CreateParameters(ref As IEnumerable(Of String), SDK As String, Optional dll As Boolean = True) As CompilerParameters
             Dim args As CompilerParameters = If(dll, DllProfile, ExecutableProfile)
             Dim libs As New List(Of String)
