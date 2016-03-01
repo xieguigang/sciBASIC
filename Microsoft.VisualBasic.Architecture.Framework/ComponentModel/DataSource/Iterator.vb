@@ -17,7 +17,7 @@ Namespace ComponentModel.DataSourceModel
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"[{GetType(T).FullName}] {Scripting.ToString(Current)}"
+            Return Scripting.ToString(Current)
         End Function
     End Class
 
