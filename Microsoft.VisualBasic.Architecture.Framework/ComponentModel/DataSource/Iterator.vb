@@ -93,6 +93,7 @@ Namespace ComponentModel.DataSourceModel
                 Call _forEach.Abort()
             End If
 
+            _Current = Nothing
             _started = False
             _ReadDone = False
             _forEach = New Thread(AddressOf __moveNext)
@@ -110,6 +111,11 @@ Namespace ComponentModel.DataSourceModel
         ''' true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
         ''' </returns>
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+            If ReadDone Then  ' 在移动之前已经读取完毕了
+                _Current = Nothing
+                Return False
+            End If
+
             Call receiveDone.Set()
             Call Thread.Sleep(1)
 
