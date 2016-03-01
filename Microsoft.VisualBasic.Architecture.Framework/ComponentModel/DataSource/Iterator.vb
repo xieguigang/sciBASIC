@@ -15,6 +15,10 @@ Namespace ComponentModel.DataSourceModel
                 Return DirectCast(Current, T)
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"[{GetType(T).FullName}] {Scripting.ToString(Current)}"
+        End Function
     End Class
 
     ''' <summary>
