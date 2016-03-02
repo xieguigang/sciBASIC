@@ -105,6 +105,9 @@ Namespace StorageProvider.ComponentModels
             End Sub
 
             Public Function LoadData(cellData As String) As Object
+                If String.IsNullOrEmpty(cellData) Then
+                    Return Nothing
+                End If
                 Dim Tokens As String() = Strings.Split(cellData, Delimiter)
                 Dim array = Tokens.ToArray(Function(s) Cast(s))
                 Return Scripting.InputHandler.DirectCast(array, Element)

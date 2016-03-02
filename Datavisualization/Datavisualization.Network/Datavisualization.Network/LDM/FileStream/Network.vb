@@ -7,6 +7,22 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Namespace FileStream
 
     Public Class Network : Inherits Network(Of Node, NetworkEdge)
+        Sub New()
+        End Sub
+
+        Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of NetworkEdge))
+            Call MyBase.New()
+
+            Me.Nodes = nodes.ToArray
+            Me.Edges = edges.ToArray
+        End Sub
+
+        Sub New(edges As IEnumerable(Of NetworkEdge), nodes As IEnumerable(Of Node))
+            Call MyBase.New()
+
+            Me.Nodes = nodes.ToArray
+            Me.Edges = edges.ToArray
+        End Sub
     End Class
 
     ''' <summary>
