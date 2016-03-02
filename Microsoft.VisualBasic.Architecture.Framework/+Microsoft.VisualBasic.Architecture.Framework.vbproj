@@ -243,6 +243,7 @@
     <Compile Include="Extensions\Reflection\Reflection.vb" />
     <Compile Include="Extensions\StringHelpers\Compares\LevLDM.vb" />
     <Compile Include="Extensions\StringHelpers\Compares\LevExtensions.vb" />
+    <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Extensions\StringHelpers\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
     <Compile Include="Extensions\WebServices\Base64Codec.vb" />
