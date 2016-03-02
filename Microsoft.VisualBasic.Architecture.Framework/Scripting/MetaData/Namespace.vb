@@ -40,6 +40,21 @@ Namespace Scripting.MetaData
         End Sub
 
         ''' <summary>
+        ''' 拷贝自身
+        ''' </summary>
+        ''' <param name="base"></param>
+        Sub New(base As PackageNamespace)
+            Me.AutoExtract = base.AutoExtract
+            Me.Category = base.Category
+            Me.Cites = base.Cites
+            Me.Description = base.Description
+            Me.Namespace = base.Namespace
+            Me.Publisher = base.Publisher
+            Me.Revision = base.Revision
+            Me.Url = base.Url
+        End Sub
+
+        ''' <summary>
         ''' This attribute provides a more details information about a namepace package module in your scripting plugins.
         ''' </summary>
         ''' <param name="[Namespace]"></param>
