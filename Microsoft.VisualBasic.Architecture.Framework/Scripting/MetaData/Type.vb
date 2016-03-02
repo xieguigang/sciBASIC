@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports System.Xml.Serialization
 
 Namespace Scripting.MetaData
 
@@ -11,12 +12,22 @@ Namespace Scripting.MetaData
         ''' 模块文件
         ''' </summary>
         ''' <returns></returns>
-        Public Property assm As String
+        <XmlAttribute> Public Property assm As String
         ''' <summary>
         ''' <see cref="Type.FullName"/>.(类型源)
         ''' </summary>
         ''' <returns></returns>
-        Public Property FullIdentity As String
+        <XmlAttribute> Public Property FullIdentity As String
+
+        ''' <summary>
+        ''' 是否是已知的类型？
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property SystemKnownType As Boolean
+            Get
+                Return Not Scripting.GetType(FullIdentity) Is Nothing
+            End Get
+        End Property
 
         Sub New()
         End Sub
@@ -44,9 +55,18 @@ Namespace Scripting.MetaData
         ''' Get mapping type information.
         ''' </summary>
         ''' <returns></returns>
-        Public Overloads Function [GetType]() As Type
+        Public Overloads Function [GetType](Optional knownFirst As Boolean = False) As Type
+            Dim type As Type
+
+            If knownFirst Then
+                type = Scripting.GetType(FullIdentity)
+                If Not type Is Nothing Then
+                    Return type
+                End If
+            End If
+
             Dim assm As Assembly = LoadAssembly()
-            Dim type As Type = assm.GetType(Me.FullIdentity)
+            type = assm.GetType(Me.FullIdentity)
             Return type
         End Function
 
