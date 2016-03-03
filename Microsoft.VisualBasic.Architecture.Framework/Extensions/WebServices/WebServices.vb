@@ -171,18 +171,14 @@ Public Module WebServices
     'email=xie.guigang%40live.com&AppName=mipaimai+webapi--&Url=mipaimai.com%2F%2B%2B&Description=a+b+c+d+e+f+g+h%25%26&Publisher=siyu.com&submit=submit
 
     ''' <summary>
-    ''' 假若你的数据之中包含有SHA256的加密数据，则非常不推荐使用这个函数进行解析。因为请注意，这个函数会替换掉一些转义字符的，所以会造成一些非常隐蔽的BUG
+    ''' 进行URL的转意操作，请注意，参数值里面的&amp;符号还没有进行转意，所以在使用前还需要对%26替换回&amp;符号
     ''' </summary>
-    ''' <param name="data">转义的时候大小写无关</param>
+    ''' <param name="url"></param>
     ''' <returns></returns>
-    ''' 
-    <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function postRequestParser(data As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
-        If String.IsNullOrEmpty(data) Then
-            Return New Dictionary(Of String, String)
-        End If
-
-        Dim sbr As New StringBuilder(data)
+    <ExportAPI("URL.Escapes")>
+    <Extension>
+    Public Function URLEscapes(url As String) As String
+        Dim sbr As New StringBuilder(url)
 
         Call sbr.Replace("+", " ")
         Call sbr.Replace("%7E", "~")
@@ -233,7 +229,22 @@ Public Module WebServices
         Call sbr.Replace("%3e", ">")
         Call sbr.Replace("%3f", "?")
 
-        Dim Tokens As String() = sbr.ToString.Split("&"c)
+        Return sbr.ToString
+    End Function
+
+    ''' <summary>
+    ''' 假若你的数据之中包含有SHA256的加密数据，则非常不推荐使用这个函数进行解析。因为请注意，这个函数会替换掉一些转义字符的，所以会造成一些非常隐蔽的BUG
+    ''' </summary>
+    ''' <param name="data">转义的时候大小写无关</param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("PostRequest.Parsing")>
+    <Extension> Public Function postRequestParser(data As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
+        If String.IsNullOrEmpty(data) Then
+            Return New Dictionary(Of String, String)
+        End If
+
+        Dim Tokens As String() = data.URLEscapes.Split("&"c)
         Tokens = (From s As String In Tokens Select s.Replace("%26", "&")).ToArray
 
         Dim hash = GenerateDictionary(Tokens, TransLower)
