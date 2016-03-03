@@ -8,10 +8,9 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     Public Class ParameterInfoCollection
+        Implements IEnumerable(Of KeyValuePair(Of String, ParameterInfo))
 
-        Implements System.Collections.Generic.IEnumerable(Of KeyValuePair(Of String, Reflection.ParameterInfo))
-
-        Dim _ParametersDict As Dictionary(Of String, Reflection.ParameterInfo) =
+        Dim _paramsHash As Dictionary(Of String, ParameterInfo) =
             New Dictionary(Of String, ParameterInfo)
 
         ''' <summary>
@@ -22,7 +21,7 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer
             Get
-                Return _ParametersDict.Count
+                Return _paramsHash.Count
             End Get
         End Property
 
@@ -35,7 +34,7 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Default Public ReadOnly Property Parameter(Name As String) As String
             Get
-                Return _ParametersDict(Name).ToString
+                Return _paramsHash(Name).ToString
             End Get
         End Property
 
@@ -47,8 +46,8 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public ReadOnly Property GetExample() As String
             Get
-                Dim RequiredSwitchs = (From switch In Me._ParametersDict.Values Where switch.Optional = False Select switch).ToArray
-                Dim OptionalSwitchs = (From switch In Me._ParametersDict.Values Where switch.Optional Select switch).ToArray
+                Dim RequiredSwitchs = (From switch In Me._paramsHash.Values Where switch.Optional = False Select switch).ToArray
+                Dim OptionalSwitchs = (From switch In Me._paramsHash.Values Where switch.Optional Select switch).ToArray
                 Dim sBuilder As StringBuilder = New StringBuilder(1024)
                 For Each Switch As ParameterInfo In RequiredSwitchs
                     Call sBuilder.AppendFormat("{0} {1} ", Switch.Name, Switch.Example)
@@ -63,8 +62,8 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property GetUsage() As String
             Get
-                Dim requiredParameters = (From parameter In Me._ParametersDict.Values Where parameter.Optional = False Select parameter).ToArray
-                Dim optionalParameters = (From parameter In Me._ParametersDict.Values Where parameter.Optional Select parameter).ToArray
+                Dim requiredParameters = (From parameter In Me._paramsHash.Values Where parameter.Optional = False Select parameter).ToArray
+                Dim optionalParameters = (From parameter In Me._paramsHash.Values Where parameter.Optional Select parameter).ToArray
                 Dim sBuilder As StringBuilder = New StringBuilder(1024)
                 For Each Switch As ParameterInfo In requiredParameters
                     Call sBuilder.AppendFormat("{0} {1} ", Switch.Name, Switch.Usage)
@@ -79,15 +78,15 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property EmptyUsage As Boolean
             Get
-                Dim LQuery = From switch In _ParametersDict.Values Where String.IsNullOrEmpty(switch.Usage) Select 1 '
-                Return LQuery.Sum = _ParametersDict.Count
+                Dim LQuery = From switch In _paramsHash.Values Where String.IsNullOrEmpty(switch.Usage) Select 1 '
+                Return LQuery.Sum = _paramsHash.Count
             End Get
         End Property
 
         Public ReadOnly Property EmptyExample As Boolean
             Get
-                Dim LQuery = From switch In _ParametersDict.Values Where String.IsNullOrEmpty(switch.Example) Select 1 '
-                Return LQuery.Sum = _ParametersDict.Count
+                Dim LQuery = From switch In _paramsHash.Values Where String.IsNullOrEmpty(switch.Example) Select 1 '
+                Return LQuery.Sum = _paramsHash.Count
             End Get
         End Property
 
@@ -98,7 +97,7 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public Overrides Function ToString() As String
             Dim sBuilder As StringBuilder = New StringBuilder(1024)
-            For Each parameter As Reflection.ParameterInfo In _ParametersDict.Values
+            For Each parameter As Reflection.ParameterInfo In _paramsHash.Values
                 Call sBuilder.AppendLine(parameter.ToString)
             Next
             Return sBuilder.ToString
@@ -113,13 +112,13 @@ Namespace CommandLine.Reflection
                          Order By parameter.Optional Ascending '
 
             For Each param As ParameterInfo In LQuery.ToArray
-                Call _ParametersDict.Add(param.Name, param)
+                Call _paramsHash.Add(param.Name, param)
             Next
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, ParameterInfo)) _
             Implements IEnumerable(Of KeyValuePair(Of String, ParameterInfo)).GetEnumerator
-            For Each obj In Me._ParametersDict
+            For Each obj In Me._paramsHash
                 Yield obj
             Next
         End Function

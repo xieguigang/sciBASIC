@@ -109,7 +109,7 @@ Namespace CommandLine.Reflection
 </table>"
         End Function
 
-        Public Shared ReadOnly Property TypeInfo As System.Type = GetType(ExportAPIAttribute)
+        Public Shared ReadOnly Property TypeINFO As System.Type = GetType(ExportAPIAttribute)
 
         Public Interface ICommandEntryPoint
             ''' <summary>
