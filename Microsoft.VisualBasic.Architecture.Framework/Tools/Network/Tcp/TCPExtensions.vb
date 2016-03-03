@@ -17,10 +17,20 @@ Namespace Net
         ''' <param name="operationTimeOut">ms</param>
         ''' <returns></returns>
         Public Function Ping(ep As System.Net.IPEndPoint, Optional operationTimeOut As Integer = 3 * 1000) As Double
+            Return New AsynInvoke(ep).Ping(operationTimeOut)
+        End Function
+
+        ''' <summary>
+        ''' -1 ping failure
+        ''' </summary>
+        ''' <param name="invoke"></param>
+        ''' <param name="timeout"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Ping(invoke As AsynInvoke, Optional timeout As Integer = 3 * 1000) As Double
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
-            Dim socket As New AsynInvoke(ep)
-            Dim response As RequestStream = socket.SendMessage(request, OperationTimeOut:=operationTimeOut)
+            Dim response As RequestStream = invoke.SendMessage(request, OperationTimeOut:=timeout)
 
             If HTTP_RFC.RFC_REQUEST_TIMEOUT = response.Protocol Then
                 Return -1
@@ -82,7 +92,7 @@ Namespace Net
             Dim MAX_PORT As Integer = 65535    '系统tcp/udp端口数最大是65535
 
             If BEGIN_PORT <= 0 Then
-                BEGIN_PORT = RandomDouble() * (MAX_PORT / 2)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
+                BEGIN_PORT = RandomDouble() * (MAX_PORT - 1)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
             End If
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1
