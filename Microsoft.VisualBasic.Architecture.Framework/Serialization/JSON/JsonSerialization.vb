@@ -30,8 +30,18 @@ Namespace Serialization
             Return GetJson(obj, GetType(T))
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="json">null -> Nothing</param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <ExportAPI("LoadObject")>
         Public Function LoadObject(json As String, type As Type) As Object
+            If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
+                Return Nothing
+            End If
+
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
                 Dim ser As New DataContractJsonSerializer(type)
                 Dim obj As Object = ser.ReadObject(MS)

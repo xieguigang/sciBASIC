@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
@@ -100,6 +101,20 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
+
+    ''' <summary>
+    ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件
+    ''' </summary>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    Public Function GetProductSharedDIR(type As Type) As String
+        Dim assm As Assembly = type.Assembly
+        Dim productName As String = SoftwareToolkits.ApplicationDetails.GetProductName(assm)
+        If String.IsNullOrEmpty(productName) Then
+            productName = IO.Path.GetFileNameWithoutExtension(assm.Location)
+        End If
+        Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{productName}"
+    End Function
 
     ''' <summary>
     ''' 应用程序的启动的时间

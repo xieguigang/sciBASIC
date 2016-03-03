@@ -9,6 +9,24 @@ Imports Microsoft.VisualBasic.Serialization
 <PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    <ExportAPI("GET.Assembly.Details")>
+    <Extension>
+    Public Function GetAssemblyDetails(path As String) As SoftwareToolkits.ApplicationDetails
+        Return New SoftwareToolkits.ApplicationDetails(Assembly.LoadFile(path))
+    End Function
+
+    <ExportAPI("GET.Assembly.Details")>
+    <Extension>
+    Public Function GetAssemblyDetails(def As Type) As SoftwareToolkits.ApplicationDetails
+        Return New SoftwareToolkits.ApplicationDetails(def.Assembly)
+    End Function
+
+    <ExportAPI("GET.Assembly.Details")>
+    <Extension>
+    Public Function GetAssemblyDetails(assm As Assembly) As SoftwareToolkits.ApplicationDetails
+        Return New SoftwareToolkits.ApplicationDetails(assm)
+    End Function
+
     ''' <summary>
     ''' 得到集合类型的对象之中的元素类型
     ''' </summary>
