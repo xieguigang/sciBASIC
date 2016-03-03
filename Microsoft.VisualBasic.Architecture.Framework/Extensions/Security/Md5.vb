@@ -54,6 +54,7 @@ Namespace SecurityString
         End Function
 
         <ExportAPI("Md5")>
+        <Extension>
         Public Function GetMd5Hash(input As String) As String
             Return New __md5HashProvider().GetMd5Hash(input)
         End Function
