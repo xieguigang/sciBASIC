@@ -72,12 +72,18 @@ Namespace Net
         End Function
 
         ''' <summary>
-        ''' Get the first available TCP port on this local machine.(获取第一个可用的端口号)
+        ''' Get the first available TCP port on this local machine.
+        ''' (获取第一个可用的端口号，请注意，在高并发状态下可能会出现端口被占用的情况，
+        ''' 所以这时候建议将<paramref name="BEGIN_PORT"/>设置为-1，则本函数将会尝试使用随机数来分配可用端口，从而避免一些系统崩溃的情况产生)
         ''' </summary>
         ''' <param name="BEGIN_PORT">Check the local port available from this port value.(从这个端口开始检测)</param>
         ''' <returns></returns>
         Public Function GetFirstAvailablePort(Optional BEGIN_PORT As Integer = 100) As Integer
             Dim MAX_PORT As Integer = 65535    '系统tcp/udp端口数最大是65535
+
+            If BEGIN_PORT <= 0 Then
+                BEGIN_PORT = RandomDouble() * (MAX_PORT / 2)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
+            End If
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1
                 If PortIsAvailable(port:=i) Then
