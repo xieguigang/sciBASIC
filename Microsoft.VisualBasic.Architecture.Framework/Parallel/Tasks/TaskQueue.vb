@@ -2,6 +2,10 @@
 
 Namespace Parallel
 
+    Public Interface ITaskHandle(Of T)
+        Function Run() As T
+    End Interface
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -29,6 +33,30 @@ Namespace Parallel
             Return task.Value
         End Function
 
+        Public Function Join(handle As ITaskHandle(Of T)) As T
+            Return Join(AddressOf handle.Run)
+        End Function
+
+        Public Sub Enqueue(handle As ITaskHandle(Of T), Optional callback As Action(Of T) = Nothing)
+            Call Enqueue(AddressOf handle.Run, callback)
+        End Sub
+
+        ''' <summary>
+        ''' 这个函数只会讲任务添加到队列之中，而不会阻塞线程
+        ''' </summary>
+        ''' <param name="handle"></param>
+        Public Sub Enqueue(handle As Func(Of T), Optional callback As Action(Of T) = Nothing)
+            Dim task As New __task With {
+                .handle = handle,
+                .callback = callback
+            }
+            Call __tasks.Enqueue(task)
+
+            If Not callback Is Nothing Then
+                Call RunTask(AddressOf task.TriggerCallback)
+            End If
+        End Sub
+
         Private Sub __taskQueueEXEC()
             Do While Not disposedValue
                 If Not __tasks.Count = 0 Then
@@ -43,6 +71,7 @@ Namespace Parallel
 
         Private Class __task
 
+            Public callback As Action(Of T)
             Public handle As Func(Of T)
             Public receiveDone As New ManualResetEvent(False)
 
@@ -50,6 +79,12 @@ Namespace Parallel
 
             Sub Run()
                 _Value = handle()
+            End Sub
+
+            Sub TriggerCallback()
+                Call receiveDone.WaitOne()
+                Call receiveDone.Reset()
+                Call callback(Value)
             End Sub
         End Class
 
