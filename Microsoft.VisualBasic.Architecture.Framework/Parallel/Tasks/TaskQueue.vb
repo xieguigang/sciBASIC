@@ -1,0 +1,92 @@
+﻿Imports System.Threading
+
+Namespace Parallel
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Class TaskQueue(Of T) : Implements IDisposable
+
+        ReadOnly __tasks As New Queue(Of __task)
+
+        Sub New()
+            Call RunTask(AddressOf __taskQueueEXEC)
+        End Sub
+
+        ''' <summary>
+        ''' 函数会被插入一个队列之中，之后线程会被阻塞在这里直到函数执行完毕，这个主要是用来控制服务器上面的任务并发的
+        ''' </summary>
+        ''' <param name="handle"></param>
+        ''' <returns>假若本对象已经开始Dispose了，则为完成的任务都会返回Nothing</returns>
+        Public Function Join(handle As Func(Of T)) As T
+            Dim task As New __task With {
+                .handle = handle
+            }
+            Call __tasks.Enqueue(task)
+            Call task.receiveDone.WaitOne()
+            Call task.receiveDone.Reset()
+
+            Return task.Value
+        End Function
+
+        Private Sub __taskQueueEXEC()
+            Do While Not disposedValue
+                If Not __tasks.Count = 0 Then
+                    Dim task As __task = __tasks.Dequeue
+                    Call task.Run()
+                    Call task.receiveDone.Set()
+                Else
+                    Call Thread.Sleep(1)
+                End If
+            Loop
+        End Sub
+
+        Private Class __task
+
+            Public handle As Func(Of T)
+            Public receiveDone As New ManualResetEvent(False)
+
+            Public ReadOnly Property Value As T
+
+            Sub Run()
+                _Value = handle()
+            End Sub
+        End Class
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    For Each x As __task In __tasks
+                        ' 释放所有的线程阻塞
+                        Call x.receiveDone.Set()
+                    Next
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            Me.disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
+    End Class
+End Namespace

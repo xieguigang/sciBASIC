@@ -237,6 +237,7 @@
     <Compile Include="Extensions\Math\Correlations.vb" />
     <Compile Include="Extensions\Math\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
+    <Compile Include="Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
@@ -270,11 +271,11 @@
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />
     <Compile Include="MMFProtocol\MapStream\MSWriter.vb" />
     <Compile Include="MMFProtocol\MapStream\MSReader.vb" />
-    <Compile Include="Parallel\AsyncHandle.vb" />
-    <Compile Include="Parallel\ServicesFolk.vb" />
-    <Compile Include="Parallel\UpdateThread.vb" />
-    <Compile Include="Parallel\ParallelLoading.vb" />
-    <Compile Include="Parallel\ParallelExtension.vb" />
+    <Compile Include="Parallel\Tasks\AsyncHandle.vb" />
+    <Compile Include="Parallel\Threads\ServicesFolk.vb" />
+    <Compile Include="Parallel\Tasks\UpdateThread.vb" />
+    <Compile Include="Parallel\Threads\ParallelLoading.vb" />
+    <Compile Include="Parallel\Threads\ParallelExtension.vb" />
     <Compile Include="Scripting\Casting.vb" />
     <Compile Include="Scripting\InputHandler.vb" />
     <Compile Include="Scripting\MetaData\Cite.vb" />
@@ -293,7 +294,7 @@
     <Compile Include="Tools\Logging\LogFile\LogEntry.vb" />
     <Compile Include="Tools\Logging\LogFile\MSG_TYPES.vb" />
     <Compile Include="CommandLine\CliResCommon.vb" />
-    <Compile Include="Parallel\Task.vb" />
+    <Compile Include="Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="Text\StringSimilarity\MatchsMaker.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
@@ -368,7 +369,7 @@
     <Compile Include="Extensions\StatisticsMathExtensions\EnumerableStatsStandardDeviationP.vb" />
     <Compile Include="Extensions\StatisticsMathExtensions\EnumerableStatsVariance.vb" />
     <Compile Include="Extensions\StatisticsMathExtensions\EnumerableStatsVarianceP.vb" />
-    <Compile Include="Parallel\LQuerySchedule.vb" />
+    <Compile Include="Parallel\Threads\LQuerySchedule.vb" />
     <Compile Include="CommandLine\Interpreters\ActivityInst.vb" />
     <Compile Include="Serialization\DynamicsConfiguration.vb" />
     <Compile Include="Serialization\ConfigurationMappings.vb" />

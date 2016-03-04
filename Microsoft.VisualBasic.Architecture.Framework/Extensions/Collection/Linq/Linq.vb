@@ -286,14 +286,14 @@ Namespace Linq
         End Function
 
         Public Function ToArray(Of T)(source As IEnumerable) As T()
-            Return ToArray(source).ToArray(Function(x) DirectCast(x, T))
+            Return ToArray(source).ToArray(Function(x) If(x Is Nothing, Nothing, DirectCast(x, T)))
         End Function
 
         <Extension>
         Public Function ToArray(Of T, TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
-                                                [CType] As Func(Of TKey, TValue, T),
-                                                Optional Parallel As Boolean = False,
-                                                Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
+                                                    [CType] As Func(Of TKey, TValue, T),
+                                                    Optional Parallel As Boolean = False,
+                                                    Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
