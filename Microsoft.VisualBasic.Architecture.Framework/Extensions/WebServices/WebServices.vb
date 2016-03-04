@@ -228,6 +228,7 @@ Public Module WebServices
         Call sbr.Replace("%3c", "<")
         Call sbr.Replace("%3e", ">")
         Call sbr.Replace("%3f", "?")
+        Call sbr.Replace("%20", " ")
 
         Return sbr.ToString
     End Function

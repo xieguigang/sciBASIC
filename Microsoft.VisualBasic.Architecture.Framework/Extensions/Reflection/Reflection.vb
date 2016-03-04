@@ -33,7 +33,7 @@ Public Module EmitReflection
     ''' <param name="type"></param>
     ''' <param name="strict"></param>
     ''' <returns></returns>
-    <Extension> Public Function GetArrayElement(type As Type, strict As Boolean) As Type
+    <Extension> Public Function GetTypeElement(type As Type, strict As Boolean) As Type
         If type.IsInheritsFrom(GetType(Array)) Then
             Return type.GetElementType
         End If
