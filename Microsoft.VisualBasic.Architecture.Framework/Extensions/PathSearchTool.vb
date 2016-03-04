@@ -6,6 +6,7 @@ Imports System.IO
 Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.Reflection
+Imports System.Collections.ObjectModel
 
 ''' <summary>
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
@@ -422,7 +423,7 @@ Public Module ProgramPathSearchTool
         Dim Files = FileIO.FileSystem.GetFiles(Dir, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
         Dim BinDir As String = String.Format("{0}/bin/", Dir)
         Dim ProgramDir As String = String.Format("{0}/Program", Dir)
-        Dim ChunkList As List(Of String) = New System.Collections.Generic.List(Of String)
+        Dim ChunkList As List(Of String) = New List(Of String)
 
         If FileIO.FileSystem.DirectoryExists(BinDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(BinDir, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule))
         If FileIO.FileSystem.DirectoryExists(ProgramDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ProgramDir, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule))
@@ -449,7 +450,7 @@ Public Module ProgramPathSearchTool
         Dim BinDir As String = String.Format("{0}/bin/", Dir)
         Dim ProgramDir As String = String.Format("{0}/Program", Dir)
         Dim ScriptsDir As String = String.Format("{0}/scripts", Dir)
-        Dim ChunkList As List(Of String) = New System.Collections.Generic.List(Of String)
+        Dim ChunkList As List(Of String) = New List(Of String)
 
         If FileIO.FileSystem.DirectoryExists(BinDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(BinDir, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
         If FileIO.FileSystem.DirectoryExists(ProgramDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ProgramDir, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
@@ -476,15 +477,15 @@ Public Module ProgramPathSearchTool
         Dim Drives As ObjectModel.ReadOnlyCollection(Of DriveInfo) =
             If(String.IsNullOrEmpty(SpecificDrive),
                FileIO.FileSystem.Drives,
-               New Collections.ObjectModel.ReadOnlyCollection(Of IO.DriveInfo)(
+               New ReadOnlyCollection(Of IO.DriveInfo)(
                    {FileIO.FileSystem.GetDriveInfo(SpecificDrive)}))
-        Dim ChunkList As List(Of String) = New System.Collections.Generic.List(Of String)
+        Dim DIRs As List(Of String) = New List(Of String)
 
         For Each Drive As DriveInfo In Drives
-            Call ChunkList.AddRange(SearchDrive(Drive, Keyword))
+            Call DIRs.AddRange(SearchDrive(Drive, Keyword))
         Next
 
-        Return ChunkList.ToArray
+        Return DIRs.ToArray
     End Function
 
     Private Function SearchDrive(Drive As IO.DriveInfo, Keyword As String) As String()
@@ -493,7 +494,7 @@ Public Module ProgramPathSearchTool
         End If
 
         Dim DriveRoot = FileIO.FileSystem.GetDirectories(Drive.RootDirectory.FullName, FileIO.SearchOption.SearchTopLevelOnly, Keyword)
-        Dim ChunkList As List(Of String) = New System.Collections.Generic.List(Of String)
+        Dim ChunkList As List(Of String) = New List(Of String)
 
         Dim ProgramFiles As String = String.Format("{0}/Program Files", Drive.RootDirectory.FullName)
         If FileIO.FileSystem.DirectoryExists(ProgramFiles) Then
@@ -519,7 +520,7 @@ Public Module ProgramPathSearchTool
     ''' <remarks></remarks>
     Private Function BranchRule(ProgramFiles As String, Keyword As String) As String()
         Dim ProgramFiles_Directories = FileIO.FileSystem.GetDirectories(ProgramFiles, FileIO.SearchOption.SearchTopLevelOnly, Keyword)
-        Dim ChunkList As List(Of String) = New System.Collections.Generic.List(Of String)
+        Dim ChunkList As List(Of String) = New List(Of String)
 
         For Each Dir As String In ProgramFiles_Directories
             Call ChunkList.AddRange(FileIO.FileSystem.GetDirectories(Dir, FileIO.SearchOption.SearchTopLevelOnly))

@@ -195,12 +195,12 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+    ''' Adds the elements of the specified collection to the end of the List`1.
     ''' (会自动跳过空集合，这个方法是安全的)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
-    ''' <param name="value">The collection whose elements should be added to the end of the System.Collections.Generic.List`1.</param>
+    ''' <param name="value">The collection whose elements should be added to the end of the List`1.</param>
     <Extension> Public Sub Add(Of T)(ByRef list As List(Of T), ParamArray value As T())
         If value.IsNullOrEmpty Then
             Return

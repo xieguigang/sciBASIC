@@ -8,7 +8,7 @@
 Public Class List(Of T) : Inherits Generic.List(Of T)
 
     ''' <summary>
-    ''' Initializes a new instance of the System.Collections.Generic.List`1 class that
+    ''' Initializes a new instance of the List`1 class that
     ''' contains elements copied from the specified collection and has sufficient capacity
     ''' to accommodate the number of elements copied.
     ''' </summary>
@@ -18,7 +18,7 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Sub
 
     ''' <summary>
-    ''' Initializes a new instance of the System.Collections.Generic.List`1 class that
+    ''' Initializes a new instance of the List`1 class that
     ''' contains elements copied from the specified collection and has sufficient capacity
     ''' to accommodate the number of elements copied.
     ''' </summary>
@@ -28,7 +28,7 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Sub
 
     ''' <summary>
-    ''' Initializes a new instance of the System.Collections.Generic.List`1 class that
+    ''' Initializes a new instance of the List`1 class that
     ''' is empty and has the default initial capacity.
     ''' </summary>
     Public Sub New()
@@ -36,7 +36,7 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Sub
 
     ''' <summary>
-    ''' Initializes a new instance of the System.Collections.Generic.List`1 class that
+    ''' Initializes a new instance of the List`1 class that
     ''' is empty and has the specified initial capacity.
     ''' </summary>
     ''' <param name="capacity">The number of elements that the new list can initially store.</param>
@@ -45,9 +45,9 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Sub
 
     '''' <summary>
-    '''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+    '''' Adds the elements of the specified collection to the end of the List`1.
     '''' </summary>
-    '''' <param name="vals">The collection whose elements should be added to the end of the System.Collections.Generic.List`1.
+    '''' <param name="vals">The collection whose elements should be added to the end of the List`1.
     '''' The collection itself cannot be null, but it can contain elements that are null,
     '''' if type T is a reference type.</param>
     'Public Overloads Sub Add(ParamArray vals As T())
@@ -57,10 +57,10 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     'End Sub
 
     ''' <summary>
-    ''' Adds an object to the end of the System.Collections.Generic.List`1.
+    ''' Adds an object to the end of the List`1.
     ''' </summary>
     ''' <param name="list"></param>
-    ''' <param name="x">The object to be added to the end of the System.Collections.Generic.List`1. The
+    ''' <param name="x">The object to be added to the end of the List`1. The
     ''' value can be null for reference types.</param>
     ''' <returns></returns>
     Public Shared Operator +(list As List(Of T), x As T) As List(Of T)
@@ -69,10 +69,10 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Operator
 
     ''' <summary>
-    ''' Removes the first occurrence of a specific object from the System.Collections.Generic.List`1.
+    ''' Removes the first occurrence of a specific object from the List`1.
     ''' </summary>
     ''' <param name="list"></param>
-    ''' <param name="x">The object to remove from the System.Collections.Generic.List`1. The value can
+    ''' <param name="x">The object to remove from the List`1. The value can
     ''' be null for reference types.</param>
     ''' <returns></returns>
     Public Shared Operator -(list As List(Of T), x As T) As List(Of T)

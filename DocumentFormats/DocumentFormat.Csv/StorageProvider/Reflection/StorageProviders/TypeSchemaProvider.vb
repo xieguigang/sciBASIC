@@ -135,7 +135,7 @@ Namespace StorageProvider.Reflection
             Return True
         End Function
 
-        Const List As String = "System.Collections.Generic.List`1"
+        Const List As String = "List`1"
 
         Public Function GetsElementType(Type As System.Type) As Type
             Dim Entries As Type() = Type.GetInterfaces

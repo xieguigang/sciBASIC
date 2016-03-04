@@ -12,7 +12,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' Adds an object to the end of the System.Collections.Generic.List`1.
+    ''' Adds an object to the end of the List`1.
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>

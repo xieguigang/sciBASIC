@@ -61,7 +61,7 @@ Namespace SoftwareToolkits
             End Function
         End Class
 
-        Dim _UpdateList As List(Of UpdateInformation) = New System.Collections.Generic.List(Of UpdateInformation)
+        Dim _UpdateList As List(Of UpdateInformation) = New List(Of UpdateInformation)
         Dim _Company As String
 
         Public Property SoftwareName As String

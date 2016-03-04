@@ -173,10 +173,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\Microsoft.VisualBasic.Architecture.Framework.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>Microsoft.VisualBasic.Architecture.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Molk+\Molk+.vbproj">
       <Project>{585d1fe8-5ac2-4bff-a0c4-98245962fa9f}</Project>
       <Name>Molk+</Name>
