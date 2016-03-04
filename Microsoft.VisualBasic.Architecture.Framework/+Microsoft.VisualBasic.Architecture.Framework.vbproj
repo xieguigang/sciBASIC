@@ -227,6 +227,8 @@
     <Compile Include="Extensions\Collection\Linq\Linq.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
     <Compile Include="Extensions\Debugger.vb" />
+    <Compile Include="Extensions\Doc\PartitionedStream.vb" />
+    <Compile Include="Extensions\Doc\Text.vb" />
     <Compile Include="Extensions\Doc\Xml.vb" />
     <Compile Include="Extensions\Image\ColorCube.vb" />
     <Compile Include="Extensions\Image\ColorMap.vb" />
@@ -380,7 +382,7 @@
     <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
     <Compile Include="ConsoleDevices\Utility\CBusyIndicator.vb" />
-    <Compile Include="Text\FileOperations.vb" />
+    <Compile Include="Extensions\Doc\LargeTextFile.vb" />
     <Compile Include="Tools\SoftwareToolkits\ToolkitAPI.vb" />
     <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">
       <DependentUpon>UpdatesEditor.vb</DependentUpon>

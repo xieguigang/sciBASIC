@@ -5,7 +5,7 @@ Imports System.Xml.Serialization
 
 Namespace ComponentModel.Settings.Inf
 
-    Public Class Serialization : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
+    Public Class Serialization : Inherits ITextFile
 
         <XmlElement> Public Property Sections As Section()
 
