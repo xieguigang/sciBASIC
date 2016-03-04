@@ -156,7 +156,7 @@ Namespace Net
                 New KeyValuePair(Of String, String)(hash, ca.PrivateKey),
                 New KeyValuePair(Of String, String)(uid, ca.uid)
             }
-            Dim oauth As String = WebServices.BuildArgvs(array)
+            Dim oauth As String = WebServiceUtils.BuildArgvs(array)
             Return oauth
         End Function
 
@@ -164,7 +164,7 @@ Namespace Net
 #If DEBUG Then
             Call $"{MethodBase.GetCurrentMethod.GetFullName} ==> {args}".__DEBUG_ECHO
 #End If
-            Dim dict = WebServices.requestParser(args, False)
+            Dim dict = WebServiceUtils.requestParser(args, False)
 #If DEBUG Then
             Call String.Join("; ", dict.ToArray(Function(obj) obj.ToString)).__DEBUG_ECHO
 #End If

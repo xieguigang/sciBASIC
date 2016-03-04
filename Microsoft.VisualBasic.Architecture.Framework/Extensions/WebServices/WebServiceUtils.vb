@@ -7,16 +7,17 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Reflection
+Imports System.Web
 
 ''' <summary>
 ''' The extension module for web services works.
 ''' </summary>
 ''' 
-<PackageNamespace("WebServices",
+<PackageNamespace("Utils.WebServices",
                   Description:="The extension module for web services programming in your scripting.",
                   Category:=APICategories.UtilityTools,
                   Publisher:="<a href=""mailto://xie.guigang@gmail.com"">xie.guigang@gmail.com</a>")>
-Public Module WebServices
+Public Module WebServiceUtils
 
     ''' <summary>
     ''' Build the request parameters for the HTTP POST
@@ -148,7 +149,7 @@ Public Module WebServices
     ''' <param name="hash"></param>
     ''' <param name="Escaping">是否进行对value部分的字符串数据进行转义</param>
     ''' <returns></returns>
-    <Extension> Public Function BuildArgvs(hash As Generic.IEnumerable(Of KeyValuePair(Of String, String)),
+    <Extension> Public Function BuildArgvs(hash As IEnumerable(Of KeyValuePair(Of String, String)),
                                            Optional Escaping As Boolean = False) As String
         If Escaping Then
 
@@ -168,69 +169,62 @@ Public Module WebServices
         End If
     End Function
 
-    'email=xie.guigang%40live.com&AppName=mipaimai+webapi--&Url=mipaimai.com%2F%2B%2B&Description=a+b+c+d+e+f+g+h%25%26&Publisher=siyu.com&submit=submit
+    <Extension> <ExportAPI("URL.Decode")>
+    Public Function UrlDecode(s As String, Optional encoding As Encoding = Nothing) As String
+        If encoding IsNot Nothing Then
+            Return HttpUtility.UrlDecode(s, encoding)
+        Else
+            Return HttpUtility.UrlDecode(s)
+        End If
+    End Function
+
+    <ExportAPI("URL.Decode")>
+    Public Sub UrlDecode(s As String, ByRef output As TextWriter)
+        If s IsNot Nothing Then
+            output.Write(UrlDecode(s))
+        End If
+    End Sub
+
+    <ExportAPI("URL.Encode")>
+    <Extension>
+    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing) As String
+        If encoding IsNot Nothing Then
+            Return HttpUtility.UrlEncode(s, encoding)
+        Else
+            Return HttpUtility.UrlEncode(s)
+        End If
+    End Function
+
+    <ExportAPI("URL.Encode")>
+    Public Sub UrlEncode(s As String, ByRef output As TextWriter)
+        If s IsNot Nothing Then
+            output.Write(UrlEncode(s))
+        End If
+    End Sub
 
     ''' <summary>
-    ''' 进行URL的转意操作，请注意，参数值里面的&amp;符号还没有进行转意，所以在使用前还需要对%26替换回&amp;符号
+    ''' 编码整个URL
     ''' </summary>
-    ''' <param name="url"></param>
+    ''' <param name="s"></param>
     ''' <returns></returns>
-    <ExportAPI("URL.Escapes")>
+    ''' 
+    <ExportAPI("URL.PathEncode")>
     <Extension>
-    Public Function URLEscapes(url As String) As String
-        Dim sbr As New StringBuilder(url)
+    Public Function UrlPathEncode(s As String) As String
+        If s Is Nothing Then
+            Return Nothing
+        End If
 
-        Call sbr.Replace("+", " ")
-        Call sbr.Replace("%7E", "~")
-        Call sbr.Replace("%21", "!")
-        Call sbr.Replace("%40", "@")
-        Call sbr.Replace("%23", "#")
-        Call sbr.Replace("%24", "$")
-        Call sbr.Replace("%5E", "^")
-        Call sbr.Replace("%28", "(")
-        Call sbr.Replace("%29", ")")
-        Call sbr.Replace("%2B", "+")
-        Call sbr.Replace("%60", "`")
-        Call sbr.Replace("%3D", "=")
-        Call sbr.Replace("%5B", "[")
-        Call sbr.Replace("%5D", "]")
-        Call sbr.Replace("%5C", "\")
-        Call sbr.Replace("%3B", ";")
-        Call sbr.Replace("%27", "'")
-        Call sbr.Replace("%2C", ",")
-        Call sbr.Replace("%2F", "/")
-        Call sbr.Replace("%7B", "{")
-        Call sbr.Replace("%7D", "}")
-        Call sbr.Replace("%7C", "|")
-        Call sbr.Replace("%3A", ":")
-        Call sbr.Replace("%22", """")
-        Call sbr.Replace("%3C", "<")
-        Call sbr.Replace("%3E", ">")
-        Call sbr.Replace("%3F", "?")
-        Call sbr.Replace("%25", "%")
+        Dim idx As Integer = s.IndexOf("?"c)
+        Dim s2 As String = Nothing
+        If idx <> -1 Then
+            s2 = s.Substring(0, idx)
+            s2 = HttpUtility.UrlEncode(s2) & s.Substring(idx)
+        Else
+            s2 = HttpUtility.UrlEncode(s)
+        End If
 
-        ' 小写
-
-        Call sbr.Replace("%7e", "~")
-        Call sbr.Replace("%5e", "^")
-        Call sbr.Replace("%2b", "+")
-        Call sbr.Replace("%3d", "=")
-        Call sbr.Replace("%5b", "[")
-        Call sbr.Replace("%5d", "]")
-        Call sbr.Replace("%5c", "\")
-        Call sbr.Replace("%3b", ";")
-        Call sbr.Replace("%2c", ",")
-        Call sbr.Replace("%2f", "/")
-        Call sbr.Replace("%7b", "{")
-        Call sbr.Replace("%7d", "}")
-        Call sbr.Replace("%7c", "|")
-        Call sbr.Replace("%3a", ":")
-        Call sbr.Replace("%3c", "<")
-        Call sbr.Replace("%3e", ">")
-        Call sbr.Replace("%3f", "?")
-        Call sbr.Replace("%20", " ")
-
-        Return sbr.ToString
+        Return s2
     End Function
 
     ''' <summary>
@@ -245,9 +239,7 @@ Public Module WebServices
             Return New Dictionary(Of String, String)
         End If
 
-        Dim Tokens As String() = data.URLEscapes.Split("&"c)
-        Tokens = (From s As String In Tokens Select s.Replace("%26", "&")).ToArray
-
+        Dim Tokens As String() = data.UrlDecode.Split("&"c)
         Dim hash = GenerateDictionary(Tokens, TransLower)
         Return hash
     End Function
@@ -255,7 +247,7 @@ Public Module WebServices
     ''' <summary>
     ''' Download stream data from the http response.
     ''' </summary>
-    ''' <param name="stream">Create from <see cref="WebServices.GetRequestRaw(String)"/></param>
+    ''' <param name="stream">Create from <see cref="WebServiceUtils.GetRequestRaw(String)"/></param>
     ''' <returns></returns>
     <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
     <Extension> Public Function CopyStream(stream As Stream) As Byte()
