@@ -6,7 +6,7 @@ Namespace StorageProvider.ComponentModels
 
     Public Class Column : Inherits StorageProvider
 
-        Public Property ColumnDefine As Csv.StorageProvider.Reflection.ColumnAttribute
+        Public Property ColumnDefine As ColumnAttribute
 
         Public Overrides ReadOnly Property Name As String
             Get
@@ -20,7 +20,7 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
-        Sub New(p As Csv.StorageProvider.Reflection.ColumnAttribute, BindProperty As PropertyInfo)
+        Sub New(p As ColumnAttribute, BindProperty As PropertyInfo)
             Call MyBase.New(BindProperty)
             ColumnDefine = p
         End Sub

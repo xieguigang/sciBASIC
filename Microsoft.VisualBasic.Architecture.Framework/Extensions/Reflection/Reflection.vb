@@ -342,15 +342,22 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function GetAttribute(Of T As Attribute)([Property] As MemberInfo) As T
-        Dim Attributes As Object() = [Property].GetCustomAttributes(GetType(T), True)
+        Dim attrType As Type = GetType(T)
+        Dim attrs As Object() = [Property].GetCustomAttributes(attrType, True)
 
-        If Not Attributes Is Nothing AndAlso Attributes.Length = 1 Then
-            Dim CustomAttr As T = CType(Attributes(0), T)
+        If Not attrs Is Nothing AndAlso attrs.Length = 1 Then
+            Dim CustomAttr As T = CType(attrs(Scan0), T)
 
             If Not CustomAttr Is Nothing Then
                 Return CustomAttr
             End If
+        Else
+            attrs = [Property].GetCustomAttributes(attrType, False)
+            If Not attrs.IsNullOrEmpty Then
+                Return DirectCast(attrs(Scan0), T)
+            End If
         End If
+
         Return Nothing
     End Function
 
