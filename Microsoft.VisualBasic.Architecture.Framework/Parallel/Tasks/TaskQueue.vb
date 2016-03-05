@@ -57,12 +57,16 @@ Namespace Parallel
             End If
         End Sub
 
+        Public ReadOnly Property RunningTask As Boolean
+
         Private Sub __taskQueueEXEC()
             Do While Not disposedValue
                 If Not __tasks.Count = 0 Then
                     Dim task As __task = __tasks.Dequeue
+                    _RunningTask = True
                     Call task.Run()
                     Call task.receiveDone.Set()
+                    _RunningTask = False
                 Else
                     Call Thread.Sleep(1)
                 End If
@@ -78,7 +82,12 @@ Namespace Parallel
             Public ReadOnly Property Value As T
 
             Sub Run()
-                _Value = handle()
+                Try
+                    _Value = handle()
+                Catch ex As Exception
+                    Call App.LogException(ex)
+                    Call ex.PrintException
+                End Try
             End Sub
 
             Sub TriggerCallback()
