@@ -227,6 +227,7 @@
     <Compile Include="Extensions\Collection\Linq\Linq.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
     <Compile Include="Extensions\Debugger.vb" />
+    <Compile Include="Extensions\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
     <Compile Include="Extensions\Doc\Xml.vb" />
