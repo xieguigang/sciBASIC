@@ -706,6 +706,12 @@
   <ItemGroup>
     <None Include="Resources\515151-speech-bubble-512.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\..\..\..\Reference SharedLib\HTTPServer\HTTPServer.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
