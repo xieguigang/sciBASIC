@@ -15,6 +15,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.
@@ -113,13 +114,13 @@ Public Module Extensions
     ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据) 
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="CsvData"></param>
+    ''' <param name="dataSet"></param>
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(CsvData As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File, Optional explicit As Boolean = True) As T()
-        Dim DataCollection As T() = Csv.StorageProvider.Reflection.Reflector.Convert(Of T)(DocumentFormat.Csv.DocumentStream.DataFrame.CreateObject(CsvData), explicit).ToArray
-        Return DataCollection
+    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As DocumentStream.File, Optional explicit As Boolean = False) As T()
+        Dim source As T() = Reflector.Convert(Of T)(DocumentStream.DataFrame.CreateObject(dataSet), explicit).ToArray
+        Return source
     End Function
 
     ''' <summary>
