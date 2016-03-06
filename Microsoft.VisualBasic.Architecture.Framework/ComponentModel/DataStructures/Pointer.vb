@@ -41,6 +41,14 @@
             Return New Pointer(n.__index + x.__index)
         End Operator
 
+        Public Shared Operator <(x As Pointer, n As Integer) As Boolean
+            Return x.__index < n
+        End Operator
+
+        Public Shared Operator >(x As Pointer, n As Integer) As Boolean
+            Return x.__index > n
+        End Operator
+
         ''' <summary>
         ''' 自增1，然后返回之前的数值
         ''' </summary>

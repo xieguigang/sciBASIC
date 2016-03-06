@@ -89,9 +89,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Public Shared Operator +(parent As TreeNode(Of T), child As TreeNode(Of T)) As TreeNode(Of T)
             If parent.Left Is Nothing Then
                 parent.Left = child
+                Return parent
             End If
             If parent.Right Is Nothing Then
                 parent.Right = child
+                Return parent
             End If
 
             Throw New Exception("TreeNode is full, can not append any more!")
