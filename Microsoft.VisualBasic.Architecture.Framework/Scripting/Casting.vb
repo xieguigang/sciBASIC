@@ -9,6 +9,8 @@ Namespace Scripting
         Private Function val(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
+            ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) Then
+                Return Double.NaN
             End If
             s = s.Replace(",", "")
             Return Conversion.Val(s)

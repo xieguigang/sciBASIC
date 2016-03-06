@@ -5,7 +5,7 @@
     ''' </summary>
     Public Class Pointer
 
-        Dim __index As Integer
+        Protected __index As Integer
 
         Sub New(n As Integer)
             __index = n
@@ -61,6 +61,25 @@
             Dim p As Integer = x.__index
             x.__index -= 1
             Return p
+        End Operator
+    End Class
+
+    Public Class Pointer(Of T) : Inherits Pointer
+
+        Public Overloads Shared Operator +(array As T(), i As Pointer(Of T)) As T
+            Return array(+i)
+        End Operator
+
+        Public Overloads Shared Operator -(array As T(), i As Pointer(Of T)) As T
+            Return array(-i)
+        End Operator
+
+        Public Overloads Shared Operator +(list As List(Of T), i As Pointer(Of T)) As T
+            Return list(+i)
+        End Operator
+
+        Public Overloads Shared Operator -(list As List(Of T), i As Pointer(Of T)) As T
+            Return list(-i)
         End Operator
     End Class
 End Namespace
