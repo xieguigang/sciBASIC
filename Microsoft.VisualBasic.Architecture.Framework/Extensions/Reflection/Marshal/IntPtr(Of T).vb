@@ -9,48 +9,15 @@ Namespace Marshal
     ''' 内存指针
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class IntPtr(Of T) : Implements IDisposable
+    ''' <remarks>只不过这个对象是封装了写内存操作的</remarks>
+    Public Class IntPtr(Of T) : Inherits Pointer(Of T)
+        Implements IDisposable
 
         ''' <summary>
         ''' 第一个位置
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Scan0 As System.IntPtr
-
-        Protected __innerRaw As T()
-        Dim _current As Integer
-
-        Public ReadOnly Property Current As T
-            Get
-                Return Value(_current)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' 相对于当前的指针的位置而言的
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <returns></returns>
-        Default Public Property Value(p As Integer) As T
-            Get
-                p += _current
-
-                If p < 0 OrElse p >= __innerRaw.Length Then
-                    Return Nothing
-                Else
-                    Return __innerRaw(p)
-                End If
-            End Get
-            Set(value As T)
-                p += _current
-
-                If p < 0 OrElse p >= __innerRaw.Length Then
-                    Throw New MemberAccessException(p & " reference to invalid memory region!")
-                Else
-                    __innerRaw(p) = value
-                End If
-            End Set
-        End Property
 
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
             Scan0 = p
@@ -64,7 +31,7 @@ Namespace Marshal
         ''' <param name="raw"></param>
         ''' <param name="p"></param>
         Sub New(ByRef raw As T(), Optional p As System.IntPtr = Nothing)
-            __innerRaw = raw
+            Call MyBase.New(raw)
             Scan0 = p
         End Sub
 
@@ -86,16 +53,16 @@ Namespace Marshal
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"* {GetType(T).Name} + {_current} --> {Current}  // {Scan0.ToString}"
+            Return $"* {GetType(T).Name} + {__index} --> {Current}  // {Scan0.ToString}"
         End Function
 
-        Public Shared Operator +(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
-            ptr._current += d
+        Public Overloads Shared Operator +(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
+            ptr.__index += d
             Return ptr
         End Operator
 
-        Public Shared Operator -(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
-            ptr._current -= d
+        Public Overloads Shared Operator -(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
+            ptr.__index -= d
             Return ptr
         End Operator
 

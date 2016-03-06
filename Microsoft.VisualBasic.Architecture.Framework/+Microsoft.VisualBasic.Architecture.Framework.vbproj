@@ -243,6 +243,7 @@
     <Compile Include="Extensions\Math\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
