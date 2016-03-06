@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿Imports System.Web.Script.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataStructures.BinaryTree
@@ -27,14 +28,14 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Sub New()
         End Sub
 
-        Public ReadOnly Property IsLeaf As Boolean
+        <ScriptIgnore> Public ReadOnly Property IsLeaf As Boolean
             Get
                 Return Left Is Nothing AndAlso
                     Right Is Nothing
             End Get
         End Property
 
-        Public ReadOnly Property AllChilds As List(Of TreeNode(Of T))
+        <ScriptIgnore> Public ReadOnly Property AllChilds As List(Of TreeNode(Of T))
             Get
                 Dim list As New List(Of TreeNode(Of T))
 
@@ -51,7 +52,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' 递归的得到子节点的数目
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Count As Integer
+        <ScriptIgnore> Public ReadOnly Property Count As Integer
             Get
                 Dim n As Integer
 

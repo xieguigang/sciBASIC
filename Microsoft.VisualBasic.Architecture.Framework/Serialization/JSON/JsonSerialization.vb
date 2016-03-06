@@ -5,6 +5,7 @@ Imports System.Runtime.Serialization.Json
 Imports System.IO
 Imports System.Text
 Imports System.Runtime.CompilerServices
+Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
@@ -16,6 +17,12 @@ Namespace Serialization
     <PackageNamespace("Json.Contract")>
     Public Module JsonContract
 
+        ''' <summary>
+        ''' 使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <ExportAPI("Get.Json")>
         Public Function GetJson(obj As Object, type As Type) As String
             Using ms As New MemoryStream()
@@ -26,6 +33,12 @@ Namespace Serialization
             End Using
         End Function
 
+        ''' <summary>
+        ''' 使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <Extension> Public Function GetJson(Of T)(obj As T) As String
             Return GetJson(obj, GetType(T))
         End Function
