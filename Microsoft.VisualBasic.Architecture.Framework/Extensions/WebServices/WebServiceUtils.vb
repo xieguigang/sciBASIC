@@ -372,10 +372,12 @@ Public Module WebServiceUtils
 
         If p = 0 Or q = 0 Then
             Return s_Data
+        ElseIf p >= q Then
+            Return ""
+        Else
+            s_Data = Mid(s_Data, p, q - p)
+            Return s_Data
         End If
-
-        s_Data = Mid(s_Data, p, q - p)
-        Return s_Data
     End Function
 
 #If FRAMEWORD_CORE Then
