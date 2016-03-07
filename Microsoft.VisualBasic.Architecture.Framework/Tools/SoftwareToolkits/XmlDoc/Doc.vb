@@ -7,6 +7,11 @@ Namespace SoftwareToolkits.XmlDoc
     ''' </summary>
     <XmlType("doc")> Public Class Doc
         Public Property assembly As assembly
+        Public Property members As member()
+
+        Public Overrides Function ToString() As String
+            Return assembly.name
+        End Function
     End Class
 
     Public Class assembly : Implements IMember
