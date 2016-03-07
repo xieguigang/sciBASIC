@@ -16,6 +16,15 @@ Imports System.Collections.ObjectModel
 <[Namespace]("Program.Path.Search", Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 
+    <Extension>
+    Public Iterator Function EnumerateFiles(DIR As String, keyword As String) As IEnumerable(Of String)
+        Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
+
+        For Each file As String In files
+            Yield file
+        Next
+    End Function
+
     ''' <summary>
     ''' Gets the URL type file path.(获取URL类型的文件路径)
     ''' </summary>

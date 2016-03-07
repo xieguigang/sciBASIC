@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic
 
 Namespace Kernel.BayesianBeliefNetwork
 
@@ -255,7 +256,7 @@ Namespace Kernel.BayesianBeliefNetwork
             End Operator
 
             Public Shared Function TestData() As NetworkLayout
-                Dim NodeList As Generic.List(Of BeliefNode) = New Generic.List(Of BeliefNode)
+                Dim NodeList As List(Of BeliefNode) = New List(Of BeliefNode)
                 Call NodeList.Add(New BeliefNode With
                                   {
                                       .Name = "Cloudy",
