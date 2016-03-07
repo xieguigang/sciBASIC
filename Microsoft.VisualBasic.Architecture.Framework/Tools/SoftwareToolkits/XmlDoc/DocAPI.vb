@@ -9,6 +9,16 @@ Namespace SoftwareToolkits.XmlDoc
     <PackageNamespace("Assembly.Doc.API")>
     Public Module DocAPI
 
+        Public ReadOnly Property Types As Dictionary(Of Char, memberTypes) =
+            New Dictionary(Of Char, memberTypes) From {
+ _
+            {"T"c, memberTypes.Type},
+            {"F"c, memberTypes.Filed},
+            {"M"c, memberTypes.Method},
+            {"P"c, memberTypes.Property},
+            {"E"c, memberTypes.Event}
+        }
+
         <ExportAPI("Load")>
         Public Function Load(path As String) As Doc
             Try
