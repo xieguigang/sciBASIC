@@ -1,4 +1,5 @@
-﻿
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+
 ''' <summary>
 ''' Represents a strongly typed list of objects that can be accessed by index. Provides
 ''' methods to search, sort, and manipulate lists.To browse the .NET Framework source
@@ -6,6 +7,8 @@
 ''' </summary>
 ''' <typeparam name="T">The type of elements in the list.</typeparam>
 Public Class List(Of T) : Inherits Generic.List(Of T)
+
+    Dim __index As Pointer
 
     ''' <summary>
     ''' Initializes a new instance of the List`1 class that
@@ -44,17 +47,14 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Call MyBase.New(capacity)
     End Sub
 
-    '''' <summary>
-    '''' Adds the elements of the specified collection to the end of the List`1.
-    '''' </summary>
-    '''' <param name="vals">The collection whose elements should be added to the end of the List`1.
-    '''' The collection itself cannot be null, but it can contain elements that are null,
-    '''' if type T is a reference type.</param>
-    'Public Overloads Sub Add(ParamArray vals As T())
-    '    If Not vals Is Nothing Then
-    '        Call MyBase.AddRange(vals)
-    '    End If
-    'End Sub
+    ''' <summary>
+    ''' Move Next
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    Public Overloads Shared Operator +(list As List(Of T)) As T
+        Return list(+list.__index)
+    End Operator
 
     ''' <summary>
     ''' Adds an object to the end of the List`1.
@@ -64,8 +64,28 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     ''' value can be null for reference types.</param>
     ''' <returns></returns>
     Public Shared Operator +(list As List(Of T), x As T) As List(Of T)
-        Call list.Add(x)
-        Return list
+        If list Is Nothing Then
+            Return New List(Of T) From {x}
+        Else
+            Call list.Add(x)
+            Return list
+        End If
+    End Operator
+
+    ''' <summary>
+    ''' Adds an object to the end of the List`1.
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <param name="x">The object to be added to the end of the List`1. The
+    ''' value can be null for reference types.</param>
+    ''' <returns></returns>
+    Public Shared Operator +(x As T, list As List(Of T)) As List(Of T)
+        If list Is Nothing Then
+            Return New List(Of T) From {x}
+        Else
+            Call list.Insert(Scan0, x)
+            Return list
+        End If
     End Operator
 
     ''' <summary>
@@ -83,6 +103,12 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     Public Shared Operator +(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)
         Call list.AddRange(vals.ToArray)
         Return list
+    End Operator
+
+    Public Shared Operator +(vals As IEnumerable(Of T), list As List(Of T)) As List(Of T)
+        Dim all As List(Of T) = vals.ToList
+        Call all.AddRange(list)
+        Return all
     End Operator
 
     Public Shared Operator -(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)

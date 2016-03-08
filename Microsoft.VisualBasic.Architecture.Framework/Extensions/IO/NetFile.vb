@@ -5,6 +5,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("IO.NetFile")>
 Public Module NetFile
 
+    ''' <summary>
+    ''' 将网络文件映射为本地文件，这个可以同时兼容http或者本地文件路径
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <returns></returns>
     <ExportAPI("MapNetFile")>
     <Extension>
     Public Function MapNetFile(url As String) As String
@@ -37,7 +42,7 @@ Public Module NetFile
             InStr(url, "https://", CompareMethod.Text) > 0 Then
 
             url = Strings.Split(url, "//").Last
-            url = App.AppSystemTemp & "/" & url
+            url = App.AppSystemTemp & "/" & url.NormalizePathString
 
             Dim folders As String =
                 FileIO.FileSystem.GetParentPath(url)

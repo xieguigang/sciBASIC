@@ -532,7 +532,7 @@ Namespace DocumentStream
             End If
 
             Dim sw = Stopwatch.StartNew
-            Dim lines As String() = IO.File.ReadAllLines(path, encoding)
+            Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
             Dim cData As File = New File With {
                 ._FilePath = path
             }
@@ -578,13 +578,12 @@ Namespace DocumentStream
         End Function
 
         Private Shared Function __loads(path As String, encoding As System.Text.Encoding) As List(Of RowObject)
-            Dim lines As String() = IO.File.ReadAllLines(path, encoding)
+            Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
             Dim first As RowObject = CType(lines.First, RowObject)
-            Dim rows As RowObject() = (From s As String In lines.Skip(1).AsParallel Select CType(s, RowObject)).ToArray
-            Dim buf As New List(Of RowObject)
-            Call buf.Add(first)
-            Call buf.Add(rows)
-            Return buf
+            Dim rows As List(Of RowObject) = (From s As String
+                                              In lines.Skip(1).AsParallel
+                                              Select CType(s, RowObject)).ToList
+            Return first + rows
         End Function
 #End Region
 
