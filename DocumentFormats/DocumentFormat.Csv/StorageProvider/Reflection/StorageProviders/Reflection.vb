@@ -121,17 +121,20 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <typeparam name="ItemType"></typeparam>
         ''' <param name="Explicit">当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有<see cref="Csv.StorageProvider.Reflection.ColumnAttribute"></see>自定义属性</param>
-        ''' <param name="Path"></param>
+        ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Load(Of ItemType As Class)(Path As String, Optional Explicit As Boolean = True, Optional encoding As System.Text.Encoding = Nothing, Optional fast As Boolean = False) As List(Of ItemType)
+        Public Function Load(Of ItemType As Class)(path As String,
+                                                   Optional Explicit As Boolean = True,
+                                                   Optional encoding As System.Text.Encoding = Nothing,
+                                                   Optional fast As Boolean = False) As List(Of ItemType)
             Call "Load data from filestream....".__DEBUG_ECHO
-            If Not Path.FileExists Then '空文件
-                Call $"Csv file ""{Path.ToFileURL}"" is empty!".__DEBUG_ECHO
+            If Not path.FileExists Then '空文件
+                Call $"Csv file ""{path.ToFileURL}"" is empty!".__DEBUG_ECHO
                 Return New List(Of ItemType)
             End If
 
-            Dim reader As DataFrame = DocumentStream.DataFrame.Load(Path, encoding, fast)
+            Dim reader As DataFrame = DocumentStream.DataFrame.Load(path, encoding, fast)
             Call $"Reflector load data into type {GetType(ItemType).FullName}".__DEBUG_ECHO
             Dim ChunkBuffer As List(Of ItemType) = Reflection.Reflector.Convert(Of ItemType)(reader, Explicit)
             Call "[Job Done!]".__DEBUG_ECHO
@@ -160,7 +163,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(Collection As Generic.IEnumerable(Of Object), Optional Explicit As Boolean = True) As File
+        Public Function Save(Collection As Generic.IEnumerable(Of Object), Optional Explicit As Boolean = True) As DocumentStream.File
             Dim Type As System.Type = Collection.First.GetType
             Return __save(Collection, Type, Explicit)
         End Function
@@ -172,8 +175,8 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Private Function __save(source As IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As File
-            Dim CsvData As File = New File
+        Private Function __save(source As IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As DocumentStream.File
+            Dim CsvData As DocumentStream.File = New DocumentStream.File
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
             Dim LQuery As DocumentStream.RowObject() = (From itmRow As Object In source.AsParallel
@@ -196,9 +199,9 @@ Namespace StorageProvider.Reflection
         ''' <param name="explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(Of T)(source As IEnumerable(Of T), Optional explicit As Boolean = True) As File
+        Public Function Save(Of T)(source As IEnumerable(Of T), Optional explicit As Boolean = True) As DocumentStream.File
             Dim Type As Type = GetType(T)
-            Dim doc As File = __save(source, Type, explicit)
+            Dim doc As DocumentStream.File = __save(source, Type, explicit)
             Return doc
         End Function
 
@@ -218,10 +221,10 @@ Namespace StorageProvider.Reflection
             Dim TitleRow As DocumentStream.RowObject = Csv.First
             Dim __pCache As Integer() = TitleRow.Sequence
             Dim ChunkBuffer = (From rowL As DocumentStream.RowObject In Csv.Skip(1).AsParallel
-                               Select Enumerable.ToDictionary(Of String, String)((From p As Integer
+                               Select (From p As Integer
                                        In __pCache
                                        Select key = TitleRow(CInt(p)),
-                                           value = rowL(CInt(p))),Function(x As Object) x.key, elementSelector:=Function(x) x.value)).ToList
+                                           value = rowL(CInt(p))).ToDictionary(Function(x) x.key, Function(x) x.value)).ToList
             Return ChunkBuffer
         End Function
 

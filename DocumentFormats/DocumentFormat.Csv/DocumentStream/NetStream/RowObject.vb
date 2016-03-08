@@ -17,12 +17,25 @@ Namespace DocumentStream.NetStream
             MyBase.Values = source.ToArray
         End Sub
 
-        Sub New(raw As Byte(), encoding As Encodings)
-
+        Sub New(source As IEnumerable(Of String), getbyts As Func(Of String, Byte()), toString As Func(Of Byte(), String))
+            Call MyBase.New(getbyts, toString)
+            MyBase.Values = source.ToArray
         End Sub
 
-        Public Overrides Function Serialize() As Byte()
+        Sub New(raw As Byte(), encoding As EncodingHelper)
+            Call MyBase.New(raw,
+                            AddressOf encoding.GetBytes,
+                            AddressOf encoding.ToString)
+        End Sub
 
+        Public Shared Function CreateObject(raw As Byte(), encoding As Encodings) As RowObject
+            Dim helper As New EncodingHelper(encoding)
+            Return New RowObject(raw, helper)
+        End Function
+
+        Public Shared Function Load(raw As Byte(), encoding As Encodings) As DocumentStream.RowObject
+            Dim source = CreateObject(raw, encoding)
+            Return New DocumentStream.RowObject(source.Values)
         End Function
     End Class
 End Namespace

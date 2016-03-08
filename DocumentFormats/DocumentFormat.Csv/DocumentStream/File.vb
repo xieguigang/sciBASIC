@@ -577,6 +577,12 @@ Namespace DocumentStream
             Return Csv
         End Function
 
+        ''' <summary>
+        ''' 同时兼容本地文件和网络文件的
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Private Shared Function __loads(path As String, encoding As System.Text.Encoding) As List(Of RowObject)
             Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
             Dim first As RowObject = CType(lines.First, RowObject)
