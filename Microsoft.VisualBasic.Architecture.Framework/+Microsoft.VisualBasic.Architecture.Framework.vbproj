@@ -229,7 +229,7 @@
     <Compile Include="Extensions\Collection\Linq\Linq.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
     <Compile Include="Extensions\Debugger.vb" />
-    <Compile Include="Extensions\IO.vb" />
+    <Compile Include="Extensions\IO\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
     <Compile Include="Extensions\Doc\Xml.vb" />
@@ -240,6 +240,7 @@
     <Compile Include="Extensions\Image\Wmf.vb" />
     <Compile Include="Extensions\Image\TiffWriter.vb" />
     <Compile Include="Extensions\Image\ImageFormat.vb" />
+    <Compile Include="Extensions\IO\NetFile.vb" />
     <Compile Include="Extensions\Math\Correlations.vb" />
     <Compile Include="Extensions\Math\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
@@ -400,7 +401,7 @@
     </Compile>
     <Compile Include="Text\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
-    <Compile Include="Extensions\PathSearchTool.vb" />
+    <Compile Include="Extensions\IO\PathSearchTool.vb" />
     <Compile Include="ComponentModel\Href.vb" />
     <Compile Include="ComponentModel\DataSource\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
