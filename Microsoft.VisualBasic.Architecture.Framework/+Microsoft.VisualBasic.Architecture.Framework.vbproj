@@ -78,7 +78,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>gpl3.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -247,6 +248,9 @@
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
+    <Compile Include="Text\EncodingHelper.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\VarArray.vb" />
     <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
@@ -462,7 +466,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="gpl3.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

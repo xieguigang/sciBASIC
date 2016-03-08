@@ -17,7 +17,7 @@ Namespace StorageProvider.ComponentModels
         Implements IReadOnlyDictionary(Of String, String)
 #End If
 
-        Public Property RowData As RowObject
+        Public Property RowData As DocumentStream.RowObject
         Public Property Schema As Dictionary(Of String, Integer)
         Public Property LineNumber As Long
 
@@ -30,7 +30,7 @@ Namespace StorageProvider.ComponentModels
             Schema = DataFrame.SchemaOridinal
         End Sub
 
-        Sub New(row As RowObject, schema As Dictionary(Of String, Integer))
+        Sub New(row As DocumentStream.RowObject, schema As Dictionary(Of String, Integer))
             Me.RowData = row
             Me.Schema = schema
         End Sub

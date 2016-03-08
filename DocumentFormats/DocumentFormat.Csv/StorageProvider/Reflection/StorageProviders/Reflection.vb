@@ -176,9 +176,9 @@ Namespace StorageProvider.Reflection
             Dim CsvData As File = New File
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
-            Dim LQuery As RowObject() = (From itmRow As Object In source.AsParallel
+            Dim LQuery As DocumentStream.RowObject() = (From itmRow As Object In source.AsParallel
                                          Where Not itmRow Is Nothing
-                                         Let createdRow As RowObject = RowWriter.ToRow(itmRow)
+                                         Let createdRow As DocumentStream.RowObject = RowWriter.ToRow(itmRow)
                                          Select createdRow).ToArray '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
             Call CsvData.Add(RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(source.FirstOrDefault)))
@@ -215,13 +215,13 @@ Namespace StorageProvider.Reflection
                         Optional Explicit As Boolean = True) As List(Of Dictionary(Of String, String))
 
             Dim Csv As Csv.DocumentStream.File = Save(Collection, Explicit)
-            Dim TitleRow As RowObject = Csv.First
+            Dim TitleRow As DocumentStream.RowObject = Csv.First
             Dim __pCache As Integer() = TitleRow.Sequence
-            Dim ChunkBuffer = (From rowL As RowObject In Csv.Skip(1).AsParallel
-                               Select (From p As Integer
+            Dim ChunkBuffer = (From rowL As DocumentStream.RowObject In Csv.Skip(1).AsParallel
+                               Select Enumerable.ToDictionary(Of String, String)((From p As Integer
                                        In __pCache
-                                       Select key = TitleRow(p),
-                                           value = rowL(p)).ToDictionary(Function(x) x.key, elementSelector:=Function(x) x.value)).ToList
+                                       Select key = TitleRow(CInt(p)),
+                                           value = rowL(CInt(p))),Function(x As Object) x.key, elementSelector:=Function(x) x.value)).ToList
             Return ChunkBuffer
         End Function
 

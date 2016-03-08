@@ -11,6 +11,9 @@
             __index = n
         End Sub
 
+        ''' <summary>
+        ''' 构造一个初始值为零的整形数指针对象
+        ''' </summary>
         Sub New()
             Call Me.New(Scan0)
         End Sub
@@ -47,6 +50,18 @@
 
         Public Shared Operator >(x As Pointer, n As Integer) As Boolean
             Return x.__index > n
+        End Operator
+
+        ''' <summary>
+        ''' 移动n，然后返回之前的数值
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Operator <<(x As Pointer, n As Integer) As Integer
+            Dim value As Integer = x.__index
+            x.__index += n
+            Return value
         End Operator
 
         ''' <summary>

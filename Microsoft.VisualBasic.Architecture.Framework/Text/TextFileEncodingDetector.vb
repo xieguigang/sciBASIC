@@ -11,8 +11,8 @@ Namespace Text
     Module TextFileEncodingDetector
 
         Public ReadOnly Property TextCodings As Dictionary(Of String, System.Text.Encoding) =
-        New Dictionary(Of String, Encoding) From
-        {
+            New Dictionary(Of String, Encoding) From {
+ _
             {"ascii", System.Text.Encoding.ASCII},
             {"unicode", System.Text.Encoding.Unicode},
             {"utf8", System.Text.Encoding.UTF8}

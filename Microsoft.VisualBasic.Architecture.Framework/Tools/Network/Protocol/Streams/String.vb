@@ -2,6 +2,9 @@
 
 Namespace Net.Protocols.Streams
 
+    ''' <summary>
+    ''' 字符串序列流
+    ''' </summary>
     Public Class [String] : Inherits RawStream
 
         <XmlAttribute> Public Property value As String

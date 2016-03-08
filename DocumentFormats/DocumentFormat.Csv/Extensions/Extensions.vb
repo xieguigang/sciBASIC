@@ -30,7 +30,7 @@ Public Module Extensions
     <Extension>
     Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
         Dim doc As DocumentStream.File = StorageProvider.Reflection.Reflector.Save(source, False)
-        Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
+        Dim lines As DocumentStream.RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
         Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.GetEncodings)

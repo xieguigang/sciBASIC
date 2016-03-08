@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DocumentStream\HTMLWriter.vb" />
+    <Compile Include="DocumentStream\NetStream\RowObject.vb" />
     <Compile Include="DocumentStream\Tokenizer.vb" />
     <Compile Include="Linq\WriteStream.vb" />
     <Compile Include="Linq\DataStream.vb" />
