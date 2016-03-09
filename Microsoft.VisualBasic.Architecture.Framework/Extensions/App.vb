@@ -50,7 +50,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExecutablePath As String =
-        Application.ExecutablePath   'FileIO.FileSystem.GetFileInfo(Process.GetCurrentProcess.StartInfo.FileName).FullName
+        FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    '(Process.GetCurrentProcess.StartInfo.FileName).FullName
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.

@@ -119,6 +119,10 @@ Namespace CommandLine.Reflection
         Dim _type As Types
 
         Public Overrides ReadOnly Property Name As String
+            Get
+                Return MyBase.Name
+            End Get
+        End Property
 
         Public Property Type As Types
             Get
@@ -160,6 +164,10 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overrides ReadOnly Property Name As String
+            Get
+                Return MyBase.Name
+            End Get
+        End Property
 
         Dim _Description As String
 

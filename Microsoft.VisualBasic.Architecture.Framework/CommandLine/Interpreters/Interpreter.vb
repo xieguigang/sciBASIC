@@ -121,6 +121,10 @@ Namespace CommandLine
                     Return Help(help_argvs.First)
                 End If
 
+            ElseIf String.Equals(commandName, "~") Then  ' 打印出应用程序的位置，linux里面的HOME
+                Call Console.WriteLine(App.ExecutablePath)
+                Return 0
+
             ElseIf String.Equals(commandName, "man") Then
                 Dim sdk As String = SDKdocs()
                 Dim DocPath As String = $"{_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location}.txt"
