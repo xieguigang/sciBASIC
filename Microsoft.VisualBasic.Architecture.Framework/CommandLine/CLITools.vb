@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -334,8 +335,14 @@ Namespace CommandLine
             }
         End Function
 
+        ''' <summary>
+        ''' 修建命令行参数名称的前置符号
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <ExportAPI("Trim.Prefix.BoolFlag")>
-        Public Function TrimBooleanSwitchPrefix(obj As String) As String
+        <Extension>
+        Public Function TrimParamPrefix(obj As String) As String
             If obj.StartsWith("--") Then
                 Return Mid(obj, 3)
             ElseIf obj.StartsWith("-") OrElse obj.StartsWith("\") OrElse obj.StartsWith("/") Then

@@ -172,10 +172,16 @@ Namespace CommandLine
             End Get
         End Property
 
+        ''' <summary>
+        ''' 大小写不敏感，并且会自动处理命令的前置符号，例如--, /这两种
+        ''' </summary>
+        ''' <param name="parameterName"></param>
+        ''' <returns></returns>
         Public Function ContainsParameter(parameterName As String) As Boolean
+            Dim namer As String = parameterName.TrimParamPrefix
             Dim LQuery = (From para As KeyValuePair(Of String, String)
                           In Me.__lstParameter
-                          Where String.Equals(parameterName, para.Key, StringComparison.OrdinalIgnoreCase)
+                          Where String.Equals(namer, para.Key, StringComparison.OrdinalIgnoreCase)
                           Select 1).FirstOrDefault
             Return LQuery > 0
         End Function
@@ -483,7 +489,7 @@ Namespace CommandLine
             If Not Me.BoolFlags.IsNullOrEmpty Then
                 Call List.AddRange((From bs As String
                                     In Me.BoolFlags
-                                    Select New KeyValuePair(Of String, String)(TrimBooleanSwitchPrefix(bs), True)).ToArray)
+                                    Select New KeyValuePair(Of String, String)(TrimParamPrefix(bs), True)).ToArray)
             End If
 
             Return List.ToArray

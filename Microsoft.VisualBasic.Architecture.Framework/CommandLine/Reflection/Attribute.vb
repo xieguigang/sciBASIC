@@ -6,13 +6,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace CommandLine.Reflection
 
-    Public Class RunDllEntryPoint : Inherits [Namespace]
-
-        Sub New(Name As String)
-            Call MyBase.New(Name, "")
-        End Sub
-    End Class
-
     ''' <summary>
     ''' (<see cref="Microsoft.VisualBasic.CommandLine.Interpreter">CommandLine interpreter</see> executation Entry and the ShellScript software packages namespace.)这是一个命令行解释器所使用的执行入口点的集合
     ''' </summary>
@@ -94,7 +87,7 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
-    Public Class [Optional] : Inherits Attribute
+    Public Class [Optional] : Inherits CLIToken
 
         ''' <summary>
         ''' The data type enumeration of the target optional parameter switch.
@@ -123,16 +116,10 @@ Namespace CommandLine.Reflection
             File
         End Enum
 
-        Dim _name As String, _type As Types
+        Dim _type As Types
 
-        Public Property Name As String
-            Get
-                Return _name
-            End Get
-            Protected Set(value As String)
-                _name = value
-            End Set
-        End Property
+        Public Overrides ReadOnly Property Name As String
+
         Public Property Type As Types
             Get
                 Return _type
@@ -150,7 +137,7 @@ Namespace CommandLine.Reflection
         ''' <param name="Type">The data type of the target command line parameter switch, default type is string type.</param>
         ''' <remarks></remarks>
         Public Sub New(Name As String, Optional Type As Types = Types.String)
-            Me.Name = Name
+            Call MyBase.New(Name)
             Me.Type = Type
         End Sub
 
@@ -164,7 +151,7 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
-    Public Class ParameterInfo : Inherits Attribute
+    Public Class ParameterInfo : Inherits CLIToken
 
         ''' <summary>
         ''' The name of this command line parameter switch.(该命令开关的名称)
@@ -172,7 +159,7 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Name As String
+        Public Overrides ReadOnly Property Name As String
 
         Dim _Description As String
 
@@ -229,7 +216,7 @@ Namespace CommandLine.Reflection
         ''' <param name="Optional">Is this parameter switch is an optional value.(本开关是否为可选的参数)</param>
         ''' <remarks></remarks>
         Sub New(Name As String, Optional [Optional] As Boolean = False)
-            _Name = Name
+            Call MyBase.New(Name)
             _Optional = [Optional]
         End Sub
 
