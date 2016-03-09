@@ -1,5 +1,4 @@
-﻿'Imports Microsoft.VisualBasic.Mathematical.BasicR
-
+﻿Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Module DEBUG
@@ -7,7 +6,7 @@ Module DEBUG
     Public Function Main() As Integer
         Dim s2 As String = "((0+69sdfss+fs*(d+f)*w+efsd+f)+sdfs*(dfsdf+w)*e+f+sdf+sd(dd+f,rt)+fsd)"
         s2 = "f(-10,6)+f2(f(0,0),2)"
-        Dim expr = Scripting.TokenIcer.MathExpression(s2)
+        Dim expr = TokenIcer.MathExpression(s2)
         Call expr.PrintStack
     End Function
 End Module
