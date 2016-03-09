@@ -257,25 +257,30 @@ Public Module ProgramPathSearchTool
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="Dir"></param>
-    ''' <param name="Keyword"></param>
-    ''' <param name="Ext">元素的排布是有顺序的</param>
+    ''' <param name="DIR"></param>
+    ''' <param name="keyword"></param>
+    ''' <param name="ext">元素的排布是有顺序的</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Get.File.Path")>
-    <Extension> Public Function GetFile(Dir As String,
-                                       <Parameter("Using.Keyword")> Keyword As String,
-                                       <Parameter("List.Ext")> ParamArray Ext As String()) As <FunctionReturns("A list of file path which match with the keyword and the file extension name.")> String()
+    <Extension> Public Function GetFile(DIR As String,
+                                       <Parameter("Using.Keyword")> keyword As String,
+                                       <Parameter("List.Ext")> ParamArray ext As String()) As <FunctionReturns("A list of file path which match with the keyword and the file extension name.")> String()
 
-        Dim Files As String() = FileIO.FileSystem.GetFiles(Dir, FileIO.SearchOption.SearchTopLevelOnly, Ext).ToArray
-        Dim Match = (From Path As String
-                     In Files.AsParallel
-                     Let NameID = IO.Path.GetFileNameWithoutExtension(Path)
-                     Where InStr(NameID, Keyword, CompareMethod.Text) > 0
-                     Let ExtValue = Path.Split("."c).Last
-                     Select Path, ExtValue).ToArray
-        Dim LQuery = (From ExtType As String In Ext Select (From path In Match Where InStr(ExtType, path.ExtValue, CompareMethod.Text) > 0 Select path.Path).ToArray).ToArray.MatrixToVector.Distinct.ToArray
+        Dim Files As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ext)
+        Dim matches = (From Path As String
+                       In Files.AsParallel
+                       Let NameID = IO.Path.GetFileNameWithoutExtension(Path)
+                       Where InStr(NameID, keyword, CompareMethod.Text) > 0
+                       Let ExtValue = Path.Split("."c).Last
+                       Select Path,
+                           ExtValue)
+        Dim LQuery = (From ExtType As String
+                      In ext
+                      Select (From path In matches
+                              Where InStr(ExtType, path.ExtValue, CompareMethod.Text) > 0
+                              Select path.Path).ToArray).MatrixAsIterator.Distinct.ToArray
         Return LQuery
     End Function
 

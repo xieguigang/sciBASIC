@@ -50,6 +50,7 @@ Namespace Serialization
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("LoadObject")>
+        <Extension>
         Public Function LoadObject(json As String, type As Type) As Object
             If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
                 Return Nothing
