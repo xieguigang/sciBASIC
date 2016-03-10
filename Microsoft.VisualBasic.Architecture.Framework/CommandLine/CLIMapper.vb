@@ -10,7 +10,7 @@ Namespace CommandLine
     Public Module CLIMapper
 
         <Extension>
-        Public Function Maps(Of T As Class)(args As CommandLine) As T
+        Public Function Maps(Of T As Class)(args As CommandLine, Optional strict As Boolean = False) As T
             Dim type As Type = GetType(T)
             Dim obj As Object = Activator.CreateInstance(type)
             Dim props = (From prop As PropertyInfo
@@ -22,7 +22,7 @@ Namespace CommandLine
             For Each prop As PropertyInfo In props
                 Dim name As String = prop.GetName
 
-                If Not args.ContainsParameter(name) Then
+                If Not args.ContainsParameter(name, Not strict) Then
                     Continue For
                 End If
 

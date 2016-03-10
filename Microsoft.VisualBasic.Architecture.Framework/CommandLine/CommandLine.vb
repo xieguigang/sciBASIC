@@ -173,14 +173,14 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' 大小写不敏感，并且会自动处理命令的前置符号，例如--, /这两种
+        ''' 大小写不敏感，
         ''' </summary>
         ''' <param name="parameterName"></param>
         ''' <returns></returns>
-        Public Function ContainsParameter(parameterName As String) As Boolean
-            Dim namer As String = parameterName.TrimParamPrefix
+        Public Function ContainsParameter(parameterName As String, trim As Boolean) As Boolean
+            Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
             Dim LQuery = (From para As KeyValuePair(Of String, String)
-                          In Me.__lstParameter
+                          In Me.__lstParameter  '  名称都是没有处理过的
                           Where String.Equals(namer, para.Key, StringComparison.OrdinalIgnoreCase)
                           Select 1).FirstOrDefault
             Return LQuery > 0
@@ -340,7 +340,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function IsNull(parameter As String) As Boolean
-            Return Not Me.ContainsParameter(parameter)
+            Return Not Me.ContainsParameter(parameter, False)
         End Function
 
         ''' <summary>
@@ -368,7 +368,7 @@ Namespace CommandLine
         ''' <param name="[default]">The default value for returns when the parameter is not exists in the user input.</param>
         ''' <returns></returns>
         Public Function GetValue(Of T)(name As String, [default] As T) As T
-            If Not Me.ContainsParameter(name) Then
+            If Not Me.ContainsParameter(name, False) Then
                 If GetType(T).Equals(GetType(Boolean)) Then
                     If HavebFlag(name) Then
                         Return DirectCast(DirectCast(GetBoolean(name), Object), T)
