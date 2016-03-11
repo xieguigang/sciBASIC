@@ -5,11 +5,15 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Namespace PushAPI
 
     ''' <summary>
-    ''' 对User client开放的协议接口
+    ''' 对User client开放的协议接口，也就是用户的客户端是通过这个模块来发送消息或者读取自己的消息
     ''' </summary>
     <Protocol(GetType(Protocols.UserAPI.Protocols))>
     Public Class UserAPI : Inherits APIBase
 
+        ''' <summary>
+        ''' 用户编号转换为程序之中的唯一标识符
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property UserHash As New Dictionary(Of String, Long)
 
         Sub New(push As PushServer)
@@ -46,6 +50,11 @@ Namespace PushAPI
             Return RequestStream.CreatePackage(post)
         End Function
 
+        ''' <summary>
+        ''' 判断这个用户编号是否可用有效？
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
         Public Function IsValid(id As Protocols.UserId) As Boolean
             If Not UserHash.ContainsKey(id.sId) Then
                 Return False
@@ -54,7 +63,13 @@ Namespace PushAPI
             End If
         End Function
 
-
+        ''' <summary>
+        ''' 用户客户端尝试得到消息数据
+        ''' </summary>
+        ''' <param name="CA"></param>
+        ''' <param name="request"></param>
+        ''' <param name="remote"></param>
+        ''' <returns></returns>
         <Protocol(Protocols.UserAPI.Protocols.GetData)>
         Private Function __getData(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim id = request.LoadObject(Of Protocols.UserId)(AddressOf Serialization.LoadObject)

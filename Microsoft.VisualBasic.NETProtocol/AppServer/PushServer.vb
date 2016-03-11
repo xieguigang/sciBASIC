@@ -12,8 +12,17 @@ Public Class PushServer : Implements IDisposable
     ''' <returns></returns>
     Public ReadOnly Property UserSocket As Persistent.Application.MessagePushServer
 
+    ''' <summary>
+    ''' 其他的服务器模块对消息推送模块进行操作更新的通道
+    ''' </summary>
     ReadOnly __invokeAPI As TcpSynchronizationServicesSocket
+    ''' <summary>
+    ''' 客户端进行数据读取的通道
+    ''' </summary>
     ReadOnly __userAPI As TcpSynchronizationServicesSocket
+    ''' <summary>
+    ''' 用户数据缓存池
+    ''' </summary>
     ReadOnly __msgs As PushAPI.UserMsgPool = New PushAPI.UserMsgPool
 
     ''' <summary>

@@ -219,6 +219,15 @@ Namespace FileStream
             End If
         End Operator
 
+        Public Shared Operator <=(net As Network(Of T_Node, T_Edge), nodes As IEnumerable(Of String)) As T_Node()
+            Dim LQuery = (From sId As String In nodes Select net.__nodes(sId)).ToArray
+            Return LQuery
+        End Operator
+
+        Public Shared Operator >=(net As Network(Of T_Node, T_Edge), nodes As IEnumerable(Of String)) As T_Node()
+            Return net <= nodes
+        End Operator
+
         Public Function GetNode(name As String) As T_Node
             Return Me & name
         End Function
