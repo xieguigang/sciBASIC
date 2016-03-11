@@ -27,7 +27,7 @@ Namespace SecurityString
                 strPassphrase = password
             End If
 
-            Dim md5 = GetMd5Hash(strPassphrase)
+            Dim md5 = SecurityString.GetMd5Hash(strPassphrase)
             md5 = md5 & md5 & md5 & md5
             Dim bytes = _uni.GetBytes(md5)
             If bytes.Length < 24 Then

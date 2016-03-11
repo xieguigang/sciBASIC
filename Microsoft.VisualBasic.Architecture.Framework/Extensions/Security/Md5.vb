@@ -9,44 +9,6 @@ Namespace SecurityString
     <PackageNamespace("Md5Hash", Publisher:="Microsoft Corp.", Description:="Represents the abstract class from which all implementations of the System.Security.Cryptography.MD5 hash algorithm inherit.")>
     Public Module MD5Hash
 
-        ''' <summary>
-        ''' 并行化的需求
-        ''' </summary>
-        ''' <remarks></remarks>
-        Private Class __md5HashProvider
-
-            ReadOnly md5Hash As Security.Cryptography.MD5 =
-                Security.Cryptography.MD5.Create()
-
-            Public Function GetMd5Hash(input As String) As String
-                If String.IsNullOrEmpty(input) Then
-                    Return ""
-                End If
-
-                Dim data As Byte() = Encoding.UTF8.GetBytes(input)  ' Convert the input string to a byte array and compute the hash. 
-                Return GetMd5Hash(input:=data)
-            End Function
-
-            Public Function GetMd5Hash(input As Byte()) As String
-                If input.IsNullOrEmpty Then
-                    Return ""
-                End If
-
-                Dim data As Byte() = md5Hash.ComputeHash(input)    ' Convert the input string to a byte array and compute the hash. 
-                ' Create a new Stringbuilder to collect the bytes 
-                ' and create a string. 
-                Dim sBuilder As New StringBuilder()
-
-                ' Loop through each byte of the hashed data  
-                ' and format each one as a hexadecimal string. 
-                For i As Integer = 0 To data.Length - 1
-                    sBuilder.Append(data(i).ToString("x2"))
-                Next i
-
-                Return sBuilder.ToString() ' Return the hexadecimal string. 
-            End Function
-        End Class
-
         <ExportAPI("Uid")>
         Public Function NewUid() As String
             Dim input As String = Guid.NewGuid.ToString & Now.ToString
@@ -56,7 +18,7 @@ Namespace SecurityString
         <ExportAPI("Md5")>
         <Extension>
         Public Function GetMd5Hash(input As String) As String
-            Return New __md5HashProvider().GetMd5Hash(input)
+            Return New Md5HashProvider().GetMd5Hash(input)
         End Function
 
         ''' <summary>
@@ -121,7 +83,13 @@ Namespace SecurityString
 
         <ExportAPI("Md5")>
         Public Function GetMd5Hash(input As Byte()) As String
-            Return New __md5HashProvider().GetMd5Hash(input)
+            Return New Md5HashProvider().GetMd5Hash(input)
+        End Function
+
+        <Extension>
+        Public Function GetMd5Hash(Of T)(x As T) As String
+            Dim raw As String = x.ToString & x.GetHashCode
+            Return raw.GetMd5Hash
         End Function
 
         ''' <summary>
