@@ -1,10 +1,24 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Namespace Scripting
 
     Public Module Casting
+
+        ''' <summary>
+        ''' DirectCast(obj, T)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        <Extension> Public Function [As](Of T)(obj) As T
+            If obj Is Nothing Then
+                Return Nothing
+            End If
+            Return DirectCast(obj, T)
+        End Function
 
         Private Function val(s As String) As Double
             If String.IsNullOrEmpty(s) Then
@@ -34,11 +48,11 @@ Namespace Scripting
         End Function
 
         Public Function CastDouble(obj As String) As Double
-            Return Val(obj)
+            Return val(obj)
         End Function
 
         Public Function CastLong(obj As String) As Long
-            Return CLng(Val(obj))
+            Return CLng(val(obj))
         End Function
 
         Public Function CastBoolean(obj As String) As Boolean

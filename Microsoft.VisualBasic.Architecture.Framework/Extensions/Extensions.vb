@@ -284,19 +284,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' DirectCast(obj, T)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="obj"></param>
-    ''' <returns></returns>
-    <Extension> Public Function [As](Of T)(obj) As T
-        If obj Is Nothing Then
-            Return Nothing
-        End If
-        Return DirectCast(obj, T)
-    End Function
-
-    ''' <summary>
     ''' 基类集合与继承类的集合约束
     ''' </summary>
     ''' <typeparam name="T">继承类向基类进行约束</typeparam>

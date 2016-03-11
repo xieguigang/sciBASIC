@@ -6,6 +6,7 @@ Imports System.Net
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting
 Imports System.Reflection
 Imports System.Web
 

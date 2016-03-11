@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Scripting
 
 #If NET_40 = 0 Then
 
