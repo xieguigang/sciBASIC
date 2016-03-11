@@ -41,6 +41,9 @@ Public Class PushServer : Implements IDisposable
         }
     End Sub
 
+    ''' <summary>
+    ''' 线程会在这里被阻塞
+    ''' </summary>
     Sub Run()
         Call RunTask(AddressOf UserSocket.Run)
         Call RunTask(AddressOf __userAPI.Run)
