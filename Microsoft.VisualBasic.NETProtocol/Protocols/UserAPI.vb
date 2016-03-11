@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Protocols
 
+    ''' <summary>
+    ''' 用户客户端所调用的协议
+    ''' </summary>
     Module UserAPI
 
         Public Enum Protocols

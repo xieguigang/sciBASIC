@@ -8,6 +8,10 @@ Public Class User : Implements IDisposable
 
     ReadOnly __updateThread As Persistent.Application.USER
 
+    ''' <summary>
+    ''' Public Event PushMessage(msg As <see cref="RequestStream"/>)
+    ''' </summary>
+    ''' <param name="msg"></param>
     Public Event PushMessage(msg As RequestStream)
 
     Public ReadOnly Property Id As String

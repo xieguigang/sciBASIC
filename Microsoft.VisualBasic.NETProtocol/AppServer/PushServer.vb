@@ -50,6 +50,19 @@ Public Class PushServer : Implements IDisposable
         Call __invokeAPI.Run() ' 需要使用这一个代码来保持线程的阻塞
     End Sub
 
+    ''' <summary>
+    ''' 其他的服务器模块通过API发送数据包来推送服务器上，通过这个方法写入数据缓存，然后发送消息更新
+    ''' </summary>
+    ''' <param name="req"></param>
+    Public Sub PushUpdate(req As RequestStream)
+
+    End Sub
+
+    ''' <summary>
+    ''' 得到某一个用户的消息
+    ''' </summary>
+    ''' <param name="uid"></param>
+    ''' <returns></returns>
     Public Function GetMsg(uid As Long) As RequestStream
         Dim msg = __msgs.Pop(uid)
         If msg Is Nothing Then
@@ -59,6 +72,12 @@ Public Class PushServer : Implements IDisposable
         End If
     End Function
 
+    ''' <summary>
+    ''' 向用户socket发送消息
+    ''' </summary>
+    ''' <param name="uid"></param>
+    ''' <param name="msg"></param>
+    ''' <returns></returns>
     Public Function SendMessage(uid As Long, msg As RequestStream) As Boolean
         Try
             Call UserSocket.SendMessage(-1L, uid, msg)

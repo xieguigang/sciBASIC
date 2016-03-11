@@ -15,6 +15,11 @@ Namespace PushAPI
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property UserHash As New Dictionary(Of String, Long)
+        ''' <summary>
+        ''' 反向查找<see cref="UserHash"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property HashUser As New Dictionary(Of Long, String)
 
         Sub New(push As PushServer)
             Call MyBase.New(push)
@@ -41,6 +46,7 @@ Namespace PushAPI
             If UserHash.ContainsKey(sId) Then
             Else
                 Call UserHash.Add(sId, uid)
+                Call HashUser.Add(uid, sId)
             End If
 
             Dim post As New Protocols.InitPOSTBack With {
