@@ -517,7 +517,8 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，这个函数之中不能够使用并行化计数，以保证元素之间的相互原有的顺序
+    ''' Data partitioning function.
+    ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，这个函数之中不能够使用并行化计数，以保证元素之间的相互原有的顺序)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -525,10 +526,14 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <Extension> Public Function Split(Of T)(source As Generic.IEnumerable(Of T), parTokens As Integer) As T()()
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer) As T()()
         Dim chunkList As List(Of T()) = New List(Of T())
         Dim chunkBuffer As T() = source.ToArray
         Dim n As Integer = chunkBuffer.Length
+
+        If n >= 50000 Then
+            Call $"Start large data set(size:={n}) partitioning...".__DEBUG_ECHO
+        End If
 
         For i As Integer = 0 To n - 1 Step parTokens
             Dim buffer As T()
@@ -542,6 +547,10 @@ Public Module Extensions
             Call Array.ConstrainedCopy(chunkBuffer, i, buffer, Scan0, buffer.Length)
             Call chunkList.Add(buffer)
         Next
+
+        If n >= 50000 Then
+            Call $"Large data set data partitioning(partitions:={chunkList.Count}) jobs done!".__DEBUG_ECHO
+        End If
 
         Return chunkList.ToArray
     End Function
