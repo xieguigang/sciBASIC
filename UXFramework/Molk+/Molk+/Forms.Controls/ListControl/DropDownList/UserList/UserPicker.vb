@@ -6,6 +6,7 @@ Imports System.Linq
 Imports System.Text
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.MolkPlusTheme.Unity3.Controls
+Imports Microsoft.VisualBasic.Scripting
 
 Partial Public Class UserPicker
     Inherits DropDownControl

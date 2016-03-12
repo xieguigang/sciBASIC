@@ -1239,7 +1239,7 @@ Public Module Extensions
                       In (From n As T()
                           In MAT
                           Select n.Length
-                          Order By Length Ascending).ToArray.First.Sequence
+                          Order By Length Ascending).First.Sequence
                       Select (From Line In MAT Select Line(i)).ToArray).ToArray
         Return LQuery
     End Function

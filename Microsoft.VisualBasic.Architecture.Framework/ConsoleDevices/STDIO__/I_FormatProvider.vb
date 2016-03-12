@@ -413,7 +413,7 @@ Namespace ConsoleDevice.STDIO__
                 If value.Length > 1 Then
                     Return ChrW(Val(value))     '是数字，则将其转化为字符后输出
                 Else                            '假若输入的字符串参数为一个字符串的话，则只输出其第一个字符
-                    Return value.ToArray.First
+                    Return value.First
                 End If
             End Function
         End Class
