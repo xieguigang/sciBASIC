@@ -97,7 +97,7 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Function AsLinq(Of T As Class)() As Generic.IEnumerable(Of T)
+        Public Function AsLinq(Of T As Class)() As IEnumerable(Of T)
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
 
@@ -105,7 +105,7 @@ Namespace DocumentStream.Linq
 
             Dim LQuery As IEnumerable(Of T) = From line As String In _innerBuffer
                                               Let row As RowObject = RowObject.TryParse(line)
-                                              Let obj = Activator.CreateInstance(Of T)
+                                              Let obj As T = Activator.CreateInstance(Of T)
                                               Select RowBuilder.FillData(row, obj)
             Return LQuery
         End Function

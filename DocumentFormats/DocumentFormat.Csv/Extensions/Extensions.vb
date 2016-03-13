@@ -46,7 +46,7 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function AsQuery(Of T As Class)(path As String) As Generic.IEnumerable(Of T)
+    <Extension> Public Function AsLinq(Of T As Class)(path As String) As IEnumerable(Of T)
         Return DataStream.OpenHandle(path).AsLinq(Of T)
     End Function
 
@@ -167,7 +167,7 @@ Public Module Extensions
     <Extension> Public Function LoadCsv(Of T As Class)(Path As String, Optional explicit As Boolean = False, Optional encoding As Encoding = Nothing, Optional fast As Boolean = False) As List(Of T)
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
-        Dim ChunkBuffer = Csv.StorageProvider.Reflection.Reflector.Load(Of T)(Path, explicit, encoding, fast)
+        Dim ChunkBuffer = Reflector.Load(Of T)(Path, explicit, encoding, fast)
         Call $"[CSV.Reflector::{GetType(T).FullName}]
 Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ...................{st.ElapsedMilliseconds}ms".__DEBUG_ECHO
         Return ChunkBuffer
