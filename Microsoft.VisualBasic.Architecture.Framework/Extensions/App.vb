@@ -204,7 +204,14 @@ Public Module App
     ''' 
     <ExportAPI("LogException")>
     Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace As String = "") As Object
-        Call App.TraceBugs(ex, Trace)
+        Try
+            Call App.TraceBugs(ex, Trace)
+        Catch ex2 As Exception
+            ' 错误日志文件的存放位置不可用或者被占用了不可写，则可能会出错，
+            ' 在这里将原来的错误打印在终端上面就行了， 扔弃掉这个错误日志
+            Call ex.PrintException
+        End Try
+
         Return Nothing
     End Function
 
