@@ -168,8 +168,10 @@ Public Module Extensions
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
         Dim ChunkBuffer = Reflector.Load(Of T)(Path, explicit, encoding, fast)
+        Dim ms As Long = st.ElapsedMilliseconds
+        Dim fs As String = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
         Call $"[CSV.Reflector::{GetType(T).FullName}]
-Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ...................{st.ElapsedMilliseconds}ms".__DEBUG_ECHO
+Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO
         Return ChunkBuffer
     End Function
 
