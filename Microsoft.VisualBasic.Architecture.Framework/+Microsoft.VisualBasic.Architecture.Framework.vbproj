@@ -190,6 +190,7 @@
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
     <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
@@ -197,7 +198,7 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
-    <Compile Include="ComponentModel\DataStructures\Set.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
     <Compile Include="ComponentModel\DataStructures\SlideWindowHandle.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
     <Compile Include="ComponentModel\IO\ReadStream.vb" />

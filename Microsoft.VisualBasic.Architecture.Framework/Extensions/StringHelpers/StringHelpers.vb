@@ -9,6 +9,13 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    Public ReadOnly Property StrictCompares As StringComparison = StringComparison.Ordinal
+    ''' <summary>
+    ''' 忽略大小写为非严格的比较
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property NonStrictCompares As StringComparison = StringComparison.OrdinalIgnoreCase
+
     <ExportAPI("ZeroFill")>
     Public Function ZeroFill(n As String, len As Integer) As String
         Return STDIO__.I_FormatProvider.d.ZeroFill(n, len)

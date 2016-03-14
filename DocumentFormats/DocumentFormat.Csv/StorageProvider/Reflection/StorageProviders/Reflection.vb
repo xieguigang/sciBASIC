@@ -127,14 +127,20 @@ Namespace StorageProvider.Reflection
         Public Function Load(Of ItemType As Class)(path As String,
                                                    Optional Explicit As Boolean = True,
                                                    Optional encoding As System.Text.Encoding = Nothing,
-                                                   Optional fast As Boolean = False) As List(Of ItemType)
+                                                   Optional fast As Boolean = False,
+                                                   Optional maps As Dictionary(Of String, String) = Nothing) As List(Of ItemType)
             Call "Load data from filestream....".__DEBUG_ECHO
             If Not path.FileExists Then '空文件
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".__DEBUG_ECHO
                 Return New List(Of ItemType)
             End If
 
-            Dim reader As DataFrame = DocumentStream.DataFrame.Load(path, encoding, fast)
+            Dim reader As DataFrame = DocumentStream.DataFrame.Load(path, encoding, fast)  ' read csv data
+
+            If Not maps Is Nothing Then
+                Call reader.ChangeMapping(maps)  ' 改变列的名称映射以方便进行反序列化数据加载
+            End If
+
             Call $"Reflector load data into type {GetType(ItemType).FullName}".__DEBUG_ECHO
             Dim ChunkBuffer As List(Of ItemType) = Reflection.Reflector.Convert(Of ItemType)(reader, Explicit)
             Call "[Job Done!]".__DEBUG_ECHO

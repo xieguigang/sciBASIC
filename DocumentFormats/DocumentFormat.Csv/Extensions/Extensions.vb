@@ -164,10 +164,14 @@ Public Module Extensions
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadCsv(Of T As Class)(Path As String, Optional explicit As Boolean = False, Optional encoding As Encoding = Nothing, Optional fast As Boolean = False) As List(Of T)
+    <Extension> Public Function LoadCsv(Of T As Class)(Path As String,
+                                                       Optional explicit As Boolean = False,
+                                                       Optional encoding As Encoding = Nothing,
+                                                       Optional fast As Boolean = False,
+                                                       Optional maps As Dictionary(Of String, String) = Nothing) As List(Of T)
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
-        Dim ChunkBuffer = Reflector.Load(Of T)(Path, explicit, encoding, fast)
+        Dim ChunkBuffer = Reflector.Load(Of T)(Path, explicit, encoding, fast, maps)
         Dim ms As Long = st.ElapsedMilliseconds
         Dim fs As String = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
         Call $"[CSV.Reflector::{GetType(T).FullName}]
