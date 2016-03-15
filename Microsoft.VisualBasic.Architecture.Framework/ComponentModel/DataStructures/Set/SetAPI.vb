@@ -6,7 +6,7 @@ Public Module SetAPI
     Public Delegate Function GetUid(Of T)(x As T) As String
 
     '''<summary>
-    ''' Performs an intersection of two sets.(求交集)
+    ''' Performs an intersection of two sets.(求交集，这个函数总是会挑选出<paramref name="s1"/>集合之中的元素的)
     ''' </summary>
     ''' <param name="s1">Any set.</param>
     ''' <param name="s2">Any set.</param>
@@ -15,23 +15,21 @@ Public Module SetAPI
     ''' 
     <Extension>
     Public Function Intersection(Of T)(s1 As IEnumerable(Of T), s2 As IEnumerable(Of T), __uid As GetUid(Of T)) As T()
-        Dim tag As String = NameOf(s1)
-        Dim LQuery = (From [set] As IEnumerable(Of T)
-                      In {s1, s2}  '  由于需要交换标签，所以在这里不能使用并行化
-                      Let uids = (From x As T
-                                  In [set].AsParallel
-                                  Select uid = __uid(x),
-                                      st = tag,
-                                      x).ToArray
-                      Select uids,
-                          st2 = NameOf(s2).ShadowCopy(tag)).ToArray(Function(x) x.uids).MatrixAsIterator
-        Dim Groups = (From x In LQuery Select x Group x By x.uid Into Group)  ' 按照uid字符串进行分组
+        Dim tag As String = NameOf(s1) '  由于需要交换标签，所以在这里不能使用并行化
+        Dim uids = (From x As T In s1.AsParallel Select uid = __uid(x), st = tag, x).ToList
+        tag = NameOf(s2)
+        uids += (From x As T In s2.AsParallel Select uid = __uid(x), st = tag, x).ToArray
+        Dim Groups = (From x In uids Select x Group x By x.uid Into Group)  ' 按照uid字符串进行分组
         Dim GetIntersects = (From Group In Groups.AsParallel
                              Let source = Group.Group.ToArray  ' 对每一个分组数据，根据标签的数量来了解是否为交集的一部分，当为交集元素的时候，标签的数量是两个，即同时存在于两个集合之众
                              Let tags As String() = source.ToArray(Function(x) x.st).Distinct.ToArray
                              Where tags.Length > 1
-                             Select source.ToArray(Function(x) x.x)).MatrixAsIterator
-        Dim result As T() = GetIntersects.ToArray
+                             Select source).ToArray
+        tag = NameOf(s1)  ' 总是挑选出s1的数据
+        Dim result As T() = (From x In GetIntersects.AsParallel
+                             Select (From o In x
+                                     Where String.Equals(tag, o.st)
+                                     Select o).ToArray(Function(o) o.x)).MatrixToVector
         Return result
     End Function
 

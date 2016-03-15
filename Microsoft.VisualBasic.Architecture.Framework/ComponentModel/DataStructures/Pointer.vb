@@ -89,6 +89,13 @@
 
     Public Class Pointer(Of T) : Inherits Pointer
 
+        ''' <summary>
+        ''' Returns current line in the array and then pointer moves to next.
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
+
         Public Overloads Shared Operator +(array As T(), i As Pointer(Of T)) As T
             Return array(+i)
         End Operator

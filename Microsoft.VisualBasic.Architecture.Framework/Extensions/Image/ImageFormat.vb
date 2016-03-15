@@ -81,6 +81,8 @@ Public Module ImageFormat
     ''' <returns></returns>
     <Extension> Public Function SaveAs(res As Image, path As String, format As ImageFormats) As Boolean
         Try
+            Dim parent As String = FileIO.FileSystem.GetParentPath(path)
+            Call FileIO.FileSystem.CreateDirectory(parent)
             Call res.Save(path, format.GetFormat)
         Catch ex As Exception
             ex = New Exception(path.ToFileURL, ex)
