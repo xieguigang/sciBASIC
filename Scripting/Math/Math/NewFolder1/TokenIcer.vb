@@ -35,7 +35,7 @@ Module TokenIcer
         {")"c, Mathematical.Tokens.CloseStack}
     }
 
-    Public Function TryParse(s As String) As Token(Of Tokens)()
+    Public Function TryParse(s As String) As List(Of Token(Of Tokens))
         Dim str As CharEnumerator = s.GetEnumerator
         Dim tokens As New List(Of Token(Of Tokens))
         Dim ch As Char
@@ -44,7 +44,7 @@ Module TokenIcer
         Dim exitb As Boolean = False
 
         If Not str.MoveNext() Then  ' Empty expression
-            Return New Token(Of Tokens)() {}
+            Return New List(Of Token(Of Tokens))
         End If
 
         Do While True
@@ -112,6 +112,10 @@ Module TokenIcer
 End Module
 
 Public Enum Tokens
+
+    ''' <summary>
+    ''' Function Name, constant, variable
+    ''' </summary>
     UNDEFINE
     ''' <summary>
     ''' +-*/!^%

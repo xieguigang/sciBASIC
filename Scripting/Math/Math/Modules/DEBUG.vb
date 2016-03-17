@@ -6,7 +6,7 @@ Module DEBUG
     Public Function Main() As Integer
         Dim s As String = "(1+2+3)%(-563.999*6/44)"
         Dim list = TokenIcer.TryParse(s)
-
+        Dim val = list.Solve
 
         Dim s2 As String = "((0+69sdfss+fs*(d+f)*w+efsd+f)+sdfs*(dfsdf+w)*e+f+sdf+sd(dd+f,rt)+fsd)"
         s2 = "f(-10,6)+f2(f(0,0),2)"

@@ -38,6 +38,12 @@ Namespace Marshal
             End Set
         End Property
 
+        Public ReadOnly Property EndRead As Boolean
+            Get
+                Return __index = __innerRaw.Length
+            End Get
+        End Property
+
         Sub New(array As T())
             __innerRaw = array
         End Sub
@@ -71,6 +77,11 @@ Namespace Marshal
             Return ptr
         End Operator
 
+        ''' <summary>
+        ''' Pointer move to next and then returns the previous value
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator +(ptr As Pointer(Of T)) As T
             Dim i As Integer = ptr.__index
             ptr.__index += 1

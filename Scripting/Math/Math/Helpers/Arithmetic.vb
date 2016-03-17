@@ -6,21 +6,23 @@ Namespace Helpers
     ''' (基本的四则运算符号的定义)  
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Arithmetic
+    Public Module Arithmetic
 
         ''' <summary>
         ''' +-*/\%^!
         ''' </summary>
         ''' <remarks></remarks>
-        Public Shared ReadOnly Arithmetic As System.Func(Of Double, Double, Double)() = {
+        Public ReadOnly Property Arithmetic As Func(Of Double, Double, Double)() = {
+ _
             Function(a As Double, b As Double) a + b,
             Function(a As Double, b As Double) a - b,
             Function(a As Double, b As Double) a * b,
             Function(a As Double, b As Double) a / b,
             Function(a As Double, b As Double) a \ b,
             Function(a As Double, b As Double) a Mod b,
-            Function(a As Double, b As Double) System.Math.Pow(a, b),
-            AddressOf Factorial}
+            AddressOf Math.Pow,
+            AddressOf Factorial
+        }
 
         ''' <summary>
         ''' A string constant that enumerate all of the arithmetic operators.
@@ -45,9 +47,9 @@ Namespace Helpers
         ''' <param name="o">Arithmetic operator(运算符)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Evaluate(a As Double, b As Double, o As Char) As Double
-            Dim idx As Integer = InStr(OPERATORS, o) - 1
-            Return Arithmetic(idx)(a, b)
+        Public Function Evaluate(a As Double, b As Double, o As Char) As Double
+            Dim idx As Integer = OPERATORS.IndexOf(o)
+            Return _Arithmetic(idx)(a, b)
         End Function
 
         ''' <summary>
@@ -65,7 +67,7 @@ Namespace Helpers
         ''' (函数返回参数'a'的阶乘计算值，假若'a'是一个负数的话，则会返回1)
         ''' </returns>
         ''' <remarks></remarks>
-        Public Shared Function Factorial(a As Double, b As Double) As Double
+        Public Function Factorial(a As Double, b As Double) As Double
             If a <= 0 Then
                 Return 1
             Else
@@ -78,5 +80,5 @@ Namespace Helpers
                 Return n
             End If
         End Function
-    End Class
+    End Module
 End Namespace
