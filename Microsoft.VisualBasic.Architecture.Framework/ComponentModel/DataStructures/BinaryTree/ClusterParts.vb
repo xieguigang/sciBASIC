@@ -16,25 +16,33 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <returns></returns>
         <ExportAPI("Cluster.Parts")>
         <Extension>
-        Public Function ClusterParts(Of T)(tree As BinaryTree(Of T)) As Dictionary(Of String, String())
-            Dim ROOT = tree.DirectFind(BinaryTree.ClusterParts.ROOT)
+        Public Function ClusterParts(Of T)(tree As BinaryTree(Of T),
+                                           isLeaf As IsType(Of T),
+                                           isLeafX As IsType(Of T),
+                                           GetEntities As GetEntities(Of T)) As Dictionary(Of String, String())
+
+            Dim ROOT As TreeNode(Of T) = tree.DirectFind(BinaryTree.ClusterParts.ROOT)
             Dim hash As Dictionary(Of String, String()) = New Dictionary(Of String, String())
             For Each x In ROOT.GetEnumerator
-                Call x.__addCluster(hash)
+                Call x.__addCluster(hash, isLeaf, isLeafX, GetEntities)
             Next
             Return hash
         End Function
 
-        <Extension> Private Function __addCluster(Of T)(node As TreeNode(Of T), ByRef hash As Dictionary(Of String, String())) As Dictionary(Of String, String())
+        <Extension> Private Function __addCluster(Of T)(node As TreeNode(Of T),
+                                                        ByRef hash As Dictionary(Of String, String()),
+                                                        isLeaf As IsType(Of T),
+                                                        isLeafX As IsType(Of T),
+                                                        GetEntities As GetEntities(Of T)) As Dictionary(Of String, String())
             Dim list As New List(Of String)
 
             For Each x In node.GetEnumerator
-                If x.__hashLeaf Then
+                If x.__hashLeaf(isLeaf, isLeafX) Then
                     Dim leafs As New List(Of String)
-                    Call x.__continuteCluster(hash, leafs)
+                    Call x.__continuteCluster(hash, leafs, isLeaf, isLeafX, GetEntities)
                     Call list.AddRange(leafs)
                 Else
-                    Call x.__addCluster(hash)
+                    Call x.__addCluster(hash, isLeaf, isLeafX, GetEntities)
                 End If
             Next
 
@@ -45,15 +53,23 @@ Namespace ComponentModel.DataStructures.BinaryTree
             Return hash
         End Function
 
-        <Extension> Private Sub __continuteCluster(Of T)(node As TreeNode(Of T), ByRef hash As Dictionary(Of String, String()), ByRef list As List(Of String))
-            For Each x In node.GetEnumerator
-                If TypeOf x Is Leaf OrElse TypeOf x Is LeafX Then
-                    Dim leafs As String() = DirectCast(x, TreeNode).GetEntities
+        Public Delegate Function IsType(Of T)(node As TreeNode(Of T)) As Boolean
+        Public Delegate Function GetEntities(Of T)(node As TreeNode(Of T)) As String()
+
+        <Extension> Private Sub __continuteCluster(Of T)(node As TreeNode(Of T),
+                                                         ByRef hash As Dictionary(Of String, String()),
+                                                         ByRef list As List(Of String),
+                                                         isLeaf As IsType(Of T),
+                                                         isLeafX As IsType(Of T),
+                                                         GetEntities As GetEntities(Of T))
+            For Each x As TreeNode(Of T) In node.GetEnumerator
+                If isLeaf(x) OrElse isLeafX(x) Then
+                    Dim leafs As String() = GetEntities(x)
                     Call list.AddRange(leafs)
-                ElseIf x.__hashLeaf Then
-                    Call x.__continuteCluster(hash, list)
+                ElseIf x.__hashLeaf(isLeaf, isLeafX) Then
+                    Call x.__continuteCluster(hash, list, isLeaf, isLeafX, GetEntities)
                 Else
-                    Call x.__addCluster(hash)
+                    Call x.__addCluster(hash, isLeaf, isLeafX, GetEntities)
                 End If
             Next
         End Sub
@@ -63,9 +79,9 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' </summary>
         ''' <param name="node"></param>
         ''' <returns></returns>
-        <Extension> Private Function __hashLeaf(Of T)(node As TreeNode(Of T)) As Boolean
+        <Extension> Private Function __hashLeaf(Of T)(node As TreeNode(Of T), isLeaf As IsType(Of T), isLeafX As IsType(Of T)) As Boolean
             For Each x In node.GetEnumerator
-                If TypeOf x Is Leaf OrElse TypeOf x Is LeafX Then
+                If isLeaf(x) OrElse isLeafX(x) Then
                     Return True
                 End If
                 'For Each y In x.GetEnumerator

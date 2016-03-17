@@ -92,7 +92,20 @@ Namespace TreeAPI
         <ExportAPI("Cluster.Parts")>
         Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, String())
             Dim tree As BinaryTree(Of NodeTypes) = net.BuildTree
-            Return tree.ClusterParts
+            Return tree.ClusterParts(AddressOf __isLeaf, AddressOf __isLeafX, AddressOf __getEntities)
+        End Function
+
+        Private Function __isLeaf(Of T)(x As TreeNode(Of T)) As Boolean
+            Return x.GetType.Equals(GetType(Leaf))
+        End Function
+
+        Private Function __isLeafX(Of T)(x As TreeNode(Of T)) As Boolean
+            Return x.GetType.Equals(GetType(LeafX))
+        End Function
+
+        Private Function __getEntities(Of T)(x As TreeNode(Of T)) As String()
+            Dim node As Object = x
+            Return DirectCast(node, TreeNode).GetEntities
         End Function
     End Module
 End Namespace
