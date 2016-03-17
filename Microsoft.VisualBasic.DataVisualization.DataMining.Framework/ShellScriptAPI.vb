@@ -1,10 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
-<[Namespace]("Tools.DataMining")> Public Module ShellScriptAPI
+<[PackageNamespace]("Tools.DataMining")>
+Public Module ShellScriptAPI
 
-    <ExportAPI("Write.Csv.Rule")> Public Function SaveAprioRule(data As Generic.IEnumerable(Of AprioriAlgorithm.Entities.Rule), saveto As String) As Boolean
-        Return data.SaveTo(saveto, False)
+    <ExportAPI("Write.Csv.Rule")> Public Function SaveAprioRule(data As IEnumerable(Of AprioriAlgorithm.Entities.Rule), saveTo As String) As Boolean
+        Return data.SaveTo(saveTo, False)
     End Function
-
 End Module

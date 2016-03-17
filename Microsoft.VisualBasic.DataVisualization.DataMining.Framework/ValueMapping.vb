@@ -15,7 +15,7 @@
         Dim Max = (From n In data Where n >= Avg Select n).ToArray
         Dim Mdn As Integer
 
-        If Min.Count > Max.Count Then
+        If Min.Length > Max.Length Then
             Mdn = Min.Average
         Else
             Mdn = Max.Average
@@ -23,5 +23,4 @@
 
         Return Mdn
     End Function
-
 End Module

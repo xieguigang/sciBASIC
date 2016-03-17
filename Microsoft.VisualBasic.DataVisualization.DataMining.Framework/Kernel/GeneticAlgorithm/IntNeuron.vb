@@ -1,4 +1,5 @@
 Namespace Kernel.GeneticAlgorithm
+
     ''' <summary>
     ''' When doing math operations, we may want to sum, multiply or divide an input value 
     ''' (or a value already calculated on top of it) by a numeric "constant". Such constant

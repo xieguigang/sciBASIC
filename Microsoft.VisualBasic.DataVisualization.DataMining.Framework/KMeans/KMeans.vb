@@ -217,7 +217,7 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="table">A System.Data.DataTable containing data to cluster</param>
         ''' <returns>A 2-dimensional array containing data to cluster</returns>
-        Public Function ConvertDataTableToArray(table As DataTable) As Double(,)
+        <Extension> Public Function ToFloatMatrix(table As DataTable) As Double(,)
             Dim rowCount As Integer = table.Rows.Count
             Dim fieldCount As Integer = table.Columns.Count
             Dim dataPoints As Double(,)
@@ -233,9 +233,11 @@ Namespace KMeans
                     Try
                         fieldValue = Double.Parse(row(fieldPosition).ToString())
                     Catch ex As System.Exception
-                        Debug.WriteLine(ex.ToString())
+                        Dim msg As String = $"Invalid row at {rowPosition.ToString()} and field {fieldPosition.ToString()}"
+                        ex = New InvalidCastException(msg, ex)
+                        ex.PrintException
 
-                        Throw New InvalidCastException("Invalid row at " & rowPosition.ToString() & " and field " & fieldPosition.ToString(), ex)
+                        Throw ex
                     End Try
 
                     dataPoints(rowPosition, fieldPosition) = fieldValue
