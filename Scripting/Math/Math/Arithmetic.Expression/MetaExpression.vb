@@ -34,6 +34,11 @@ Namespace Types
         Sub New()
         End Sub
 
+        Sub New(n As Double, o As Char)
+            LEFT = n
+            [Operator] = o
+        End Sub
+
         Sub New(n As Double)
             LEFT = n
         End Sub

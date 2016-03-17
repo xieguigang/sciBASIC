@@ -26,6 +26,13 @@ Public Module ExpressionParser
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="var">Constant or variable name.</param>
+    ''' <returns></returns>
+    Public Delegate Function GetValue(var As String) As Double
+
+    ''' <summary>
     ''' 这个解析器还需要考虑Stack的问题
     ''' </summary>
     ''' <param name="tokens"></param>
@@ -62,10 +69,14 @@ Public Module ExpressionParser
                         Exit Do
                     Else
                         o = (+tokens).Text.First
-                        meta.Operator = o
                     End If
+                ElseIf IsCloseStack(o) Then
+                    meta.Operator = "+"c
+                    Call sep.Add(meta)
+                    Exit Do ' 退出递归栈
                 End If
 
+                meta.Operator = o
                 Call sep.Add(meta)
             End If
         Loop

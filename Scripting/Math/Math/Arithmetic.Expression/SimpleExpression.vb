@@ -84,24 +84,25 @@ Namespace Types
         End Function
 
         Private Shared Sub Calculator(OperatorList As String, ByRef metaList As List(Of MetaExpression))
-            Dim LQuery As IEnumerable(Of MetaExpression) =
-                From e As MetaExpression In metaList
-                Where InStr(OperatorList, e.Operator) > 0
-                Select e 'Defines a LINQ query use for select the meta element that contains target operator.
-            Dim Counts As Integer = LQuery.Count
-            Dim M, NextElement As MetaExpression
+            Dim ct As Integer = (From mep As MetaExpression
+                                 In metaList
+                                 Where InStr(OperatorList, mep.Operator) > 0
+                                 Select mep).Count  'Defines a LINQ query use for select the meta element that contains target operator..Count
+            Dim M, mNext As MetaExpression
+            Dim x As Double
 
             For index As Integer = 0 To metaList.Count - 1  'Scan the expression object and do the calculation at the mean time
-                If Counts = 0 OrElse metaList.Count = 1 Then
+                If ct = 0 OrElse metaList.Count = 1 Then
                     Return      'No more calculation could be done since there is only one number in the expression, break at this situation.
                 ElseIf OperatorList.IndexOf(metaList(index).Operator) <> -1 Then 'We find a meta expression element that contains target operator, then we do calculation on this element and the element next to it.  
                     M = metaList(index)  'Get current element and the element that next to him
-                    NextElement = metaList(index + 1)
-                    NextElement.LEFT = Arithmetic.Evaluate(M.LEFT, NextElement.LEFT, M.Operator)  'Do some calculation of type target operator 
+                    mNext = metaList(index + 1)
+                    x = Arithmetic.Evaluate(M.LEFT, mNext.LEFT, M.Operator)  'Do some calculation of type target operator 
                     metaList.RemoveAt(index) 'When the current element is calculated, it is no use anymore, we remove it
+                    metaList(index) = New MetaExpression(x, mNext.Operator)
                     index -= 1  'Keep the reading position order
 
-                    Counts -= 1  'If the target operator is position at the front side of the expression, using this flag will make the for loop exit when all of the target operator is calculated to improve the performance as no needs to scan all of the expression at this situation. 
+                    ct -= 1  'If the target operator is position at the front side of the expression, using this flag will make the for loop exit when all of the target operator is calculated to improve the performance as no needs to scan all of the expression at this situation. 
                 End If
             Next
         End Sub

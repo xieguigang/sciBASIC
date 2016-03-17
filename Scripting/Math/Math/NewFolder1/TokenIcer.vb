@@ -3,6 +3,15 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Module TokenIcer
 
+    Public Function IsCloseStack(c As Char) As Boolean
+        If Not Tokens.ContainsKey(c) Then
+            Return False
+        End If
+
+        Return Tokens(c) = Mathematical.Tokens.CloseBracket OrElse
+            Tokens(c) = Mathematical.Tokens.CloseStack
+    End Function
+
     Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =
         New Dictionary(Of Char, Tokens) From {
  _

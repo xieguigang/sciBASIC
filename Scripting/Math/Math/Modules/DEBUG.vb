@@ -7,6 +7,11 @@ Module DEBUG
         Dim s As String = "(1+2+3)%(-563.999*6/44)"
         Dim list = TokenIcer.TryParse(s)
 
+
+        s = "(1+2)*3!"
+        s = ExpressionParser.TryParse(s).Evaluate
+
+
         s = "1+2+3!+4+5-6/2.5"
         Dim eee = SimpleParser.TryParse(s)
         Dim v = eee.Evaluate
