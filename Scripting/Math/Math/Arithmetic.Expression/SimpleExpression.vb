@@ -15,20 +15,6 @@ Namespace Types
     Public Class SimpleExpression
 
         ''' <summary>
-        ''' 在<see cref="SimpleExpression.Calculator"></see>之中由于移位操作的需要，需要使用类对象可以修改属性的特性来进行正常的计算，所以请不要修改为Structure类型
-        ''' </summary>
-        ''' <remarks></remarks>
-        Protected Class MetaExpression
-
-            <XmlAttribute> Public [Operator] As Char
-            <XmlAttribute> Public LEFT As Double
-
-            Public Overrides Function ToString() As String
-                Return String.Format("{0} {1}", LEFT, [Operator])
-            End Function
-        End Class
-
-        ''' <summary>
         ''' A simple expression can be view as a list collection of meta expression.
         ''' (可以将一个简单表达式看作为一个元表达式的集合)
         ''' </summary>
@@ -76,33 +62,35 @@ Namespace Types
         ''' </returns>
         ''' <remarks></remarks>
         Public Function Evaluate() As Double
+            Dim metaList As List(Of MetaExpression) = New List(Of MetaExpression)(Me.MetaList)
+
             If MetaList.Count = 1 Then 'When the list object only contains one element, that means this class object only stands for a number, return this number directly. 
                 Return MetaList.First.LEFT
             Else
-                Calculator("^")
-                Calculator("*/\%")
-                Calculator("+-")
+                Calculator("^", metaList)
+                Calculator("*/\%", metaList)
+                Calculator("+-", metaList)
 
                 Return MetaList.First.LEFT
             End If
         End Function
 
-        Private Sub Calculator(OperatorList As String)
+        Private Shared Sub Calculator(OperatorList As String, ByRef metaList As List(Of MetaExpression))
             Dim LQuery As IEnumerable(Of MetaExpression) =
-                From e As MetaExpression In MetaList
+                From e As MetaExpression In metaList
                 Where InStr(OperatorList, e.Operator) > 0
                 Select e 'Defines a LINQ query use for select the meta element that contains target operator.
             Dim Counts As Integer = LQuery.Count
             Dim M, NextElement As MetaExpression
 
-            For index As Integer = 0 To MetaList.Count - 1  'Scan the expression object and do the calculation at the mean time
-                If Counts = 0 OrElse MetaList.Count = 1 Then
+            For index As Integer = 0 To metaList.Count - 1  'Scan the expression object and do the calculation at the mean time
+                If Counts = 0 OrElse metaList.Count = 1 Then
                     Return      'No more calculation could be done since there is only one number in the expression, break at this situation.
-                ElseIf OperatorList.IndexOf(MetaList(index).Operator) <> -1 Then 'We find a meta expression element that contains target operator, then we do calculation on this element and the element next to it.  
-                    M = MetaList(index)  'Get current element and the element that next to him
-                    NextElement = MetaList(index + 1)
+                ElseIf OperatorList.IndexOf(metaList(index).Operator) <> -1 Then 'We find a meta expression element that contains target operator, then we do calculation on this element and the element next to it.  
+                    M = metaList(index)  'Get current element and the element that next to him
+                    NextElement = metaList(index + 1)
                     NextElement.LEFT = Arithmetic.Evaluate(M.LEFT, NextElement.LEFT, M.Operator)  'Do some calculation of type target operator 
-                    MetaList.RemoveAt(index) 'When the current element is calculated, it is no use anymore, we remove it
+                    metaList.RemoveAt(index) 'When the current element is calculated, it is no use anymore, we remove it
                     index -= 1  'Keep the reading position order
 
                     Counts -= 1  'If the target operator is position at the front side of the expression, using this flag will make the for loop exit when all of the target operator is calculated to improve the performance as no needs to scan all of the expression at this situation. 
