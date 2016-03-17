@@ -32,12 +32,16 @@ Public Module ExpressionParser
     ''' <returns></returns>
     Public Delegate Function GetValue(var As String) As Double
 
+    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
+        Return tokens.TryParse(AddressOf New Helpers.Constants().GET)
+    End Function
+
     ''' <summary>
     ''' 这个解析器还需要考虑Stack的问题
     ''' </summary>
     ''' <param name="tokens"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
+    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue) As SimpleExpression
         Dim sep As New SimpleExpression
         Dim e As Token(Of Tokens)
         Dim meta As MetaExpression = Nothing
@@ -53,6 +57,9 @@ Public Module ExpressionParser
                     Return sep ' 退出递归栈
                 Case Mathematical.Tokens.Number
                     meta = New MetaExpression(Val(e.Text))
+                Case Mathematical.Tokens.UNDEFINE
+                    Dim x As String = e.Text
+                    meta = New MetaExpression(Function() getValue(x))
             End Select
 
             If tokens.EndRead Then

@@ -23,6 +23,10 @@ Namespace Helpers
             End Get
         End Property
 
+        Public Function [GET](x As String) As Double
+            Return Val(Me(x.ToLower))
+        End Function
+
         ''' <summary>
         ''' Add a user constant to the dictionary.
         ''' (向字典之中添加用户自定义常数)
