@@ -8,7 +8,7 @@ Module DEBUG
         Dim list = TokenIcer.TryParse(s)
 
 
-        s = "(1+2)*3!"
+        s = "(1+2^2)*3!"
         s = ExpressionParser.TryParse(s).Evaluate
 
 

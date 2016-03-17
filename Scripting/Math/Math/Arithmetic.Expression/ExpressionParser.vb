@@ -62,13 +62,16 @@ Public Module ExpressionParser
                 o = (+tokens).Text.First
 
                 If o = "!"c Then
-                    meta = New MetaExpression(Function() Factorial(meta.LEFT, 0))
+                    Dim stackMeta = New MetaExpression(Function() Factorial(meta.LEFT, 0))
 
                     If tokens.EndRead Then
-                        Call sep.Add(meta)
+                        Call sep.Add(stackMeta)
                         Exit Do
                     Else
                         o = (+tokens).Text.First
+                        stackMeta.Operator = o
+                        Call sep.Add(stackMeta)
+                        Continue Do
                     End If
                 ElseIf IsCloseStack(o) Then
                     meta.Operator = "+"c
