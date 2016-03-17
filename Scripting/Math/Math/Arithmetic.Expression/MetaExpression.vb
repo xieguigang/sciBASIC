@@ -9,6 +9,11 @@ Namespace Types
     Public Class MetaExpression
 
         <XmlAttribute> Public Property [Operator] As Char
+
+        ''' <summary>
+        ''' 自动根据类型来计算出结果
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property LEFT As Double
             Get
                 If __left Is Nothing Then

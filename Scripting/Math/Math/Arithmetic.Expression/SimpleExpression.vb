@@ -43,6 +43,10 @@ Namespace Types
             }
         End Sub
 
+        Public Sub Add(meta As MetaExpression)
+            MetaList += meta
+        End Sub
+
         ''' <summary>
         ''' Debugging displaying in VS IDE
         ''' </summary>
@@ -62,16 +66,20 @@ Namespace Types
         ''' </returns>
         ''' <remarks></remarks>
         Public Function Evaluate() As Double
+            If Me.MetaList.Count = 0 Then
+                Return 0R
+            End If
+
             Dim metaList As List(Of MetaExpression) = New List(Of MetaExpression)(Me.MetaList)
 
-            If MetaList.Count = 1 Then 'When the list object only contains one element, that means this class object only stands for a number, return this number directly. 
-                Return MetaList.First.LEFT
+            If metaList.Count = 1 Then 'When the list object only contains one element, that means this class object only stands for a number, return this number directly. 
+                Return metaList.First.LEFT
             Else
                 Calculator("^", metaList)
                 Calculator("*/\%", metaList)
                 Calculator("+-", metaList)
 
-                Return MetaList.First.LEFT
+                Return metaList.First.LEFT
             End If
         End Function
 

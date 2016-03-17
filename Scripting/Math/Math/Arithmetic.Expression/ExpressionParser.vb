@@ -1,14 +1,13 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Marshal
 Imports Microsoft.VisualBasic.Mathematical.Types
-Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
 
 ''' <summary>
-''' Parser for simple expression
+''' Parser for complex expressions
 ''' </summary>
-Public Module SimpleParser
+Public Module ExpressionParser
 
     Public Function TryParse(s As String) As SimpleExpression
         Dim tokens = TokenIcer.TryParse(s.ClearOverlapOperator) 'Get all of the number that appears in this expression including factoral operator.
@@ -26,54 +25,51 @@ Public Module SimpleParser
         End If
     End Function
 
-    <Extension>
-    Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
-        Dim sep As New SimpleExpression 'New object to return for this function
-        Dim s As Token(Of Tokens)
-        Dim n As Double
+    ''' <summary>
+    ''' 这个解析器还需要考虑Stack的问题
+    ''' </summary>
+    ''' <param name="tokens"></param>
+    ''' <returns></returns>
+    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
+        Dim sep As New SimpleExpression
+        Dim e As Token(Of Tokens)
+        Dim meta As MetaExpression = Nothing
         Dim o As Char
 
         Do While Not tokens.EndRead
-            s = +tokens
+            e = +tokens
+
+            Select Case e.Type
+                Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
+                    meta = New MetaExpression(TryParse(tokens))
+                Case Mathematical.Tokens.CloseStack, Mathematical.Tokens.CloseBracket
+                    Return sep ' 退出递归栈
+                Case Mathematical.Tokens.Number
+                    meta = New MetaExpression(Val(e.Text))
+            End Select
 
             If tokens.EndRead Then
-                Call sep.Add(Val(s.Text), "+c")
+                meta.Operator = "+"c
+                Call sep.Add(meta)
             Else
                 o = (+tokens).Text.First
-                n = Val(s.Text)
 
                 If o = "!"c Then
-                    n = Factorial(n, 0)
+                    meta = New MetaExpression(Function() Factorial(meta.LEFT, 0))
+
                     If tokens.EndRead Then
-                        Call sep.Add(n, "+"c)
+                        Call sep.Add(meta)
                         Exit Do
                     Else
                         o = (+tokens).Text.First
+                        meta.Operator = o
                     End If
                 End If
 
-                Call sep.Add(n, o)
+                Call sep.Add(meta)
             End If
         Loop
 
         Return sep
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function ClearOverlapOperator(ByRef s As String) As String
-        Dim sBuilder As StringBuilder = New StringBuilder(value:="0+" & s)
-
-        's = "0+" & sbr.ToString '0a=a; 0-a=-a; 0+a=a
-
-        Call sBuilder.Replace("++", "+")
-        Call sBuilder.Replace("--", "+")
-        Call sBuilder.Replace("+-", "-")
-
-        Return sBuilder.ToString
     End Function
 End Module
