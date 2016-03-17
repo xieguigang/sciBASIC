@@ -49,7 +49,7 @@ Public Module Expression
             ElseIf Expression2.Chars(p) = ")"c Then 'The expression string between two paired bracket is a mostly simple expression.
                 LBLocation = LBStack.Pop
                 se = Mid(Expression2.ToString, LBLocation + 1, p - LBLocation)
-                r = se
+                r = SimpleParser.TryParse(se)
                 LBLocation += 1
 
                 If LBLocation < Expression2.Length AndAlso OPERATORS.IndexOf(Expression2.Chars(LBLocation)) = -1 Then  'The previous character not is a operator, then it maybe a function name. 
@@ -62,7 +62,7 @@ Public Module Expression
             ElseIf Expression2.Chars(p) = ","c Then 'Meet a parameter seperator of a function, that means we should calculate this parameter as a simple expression as the bracket calculation has been done before. 
                 LBLocation = LBStack.Peek 'We get a function paramenter 'a', it maybe a simple expression, do some calculation for this parameter. 
                 se = Mid(Expression2.ToString, LBLocation + 1, p - LBLocation)
-                a = CType(se, Types.SimpleExpression)
+                a = SimpleParser.TryParse(se).Evaluate
                 LBStack.Push(item:=p + 1)  'Push the position of seperator character ',' to the stack
                 p += 1
                 'Calculate the function parameter 'b'
@@ -89,7 +89,7 @@ Public Module Expression
         Loop
 
         'No more bracket pairs or any function in the expression, it only left a simple expression, evaluate this simple expression and return the result.  
-        Return CType(Expression2.ToString, Microsoft.VisualBasic.Mathematical.Types.SimpleExpression)
+        Return SimpleParser.TryParse(Expression2.ToString).Evaluate
     End Function
 
     ''' <summary>

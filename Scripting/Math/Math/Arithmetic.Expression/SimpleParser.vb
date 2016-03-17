@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Marshal
 Imports Microsoft.VisualBasic.Mathematical.Types
+Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Module SimpleParser
@@ -24,7 +25,7 @@ Public Module SimpleParser
 
     <Extension>
     Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
-        Dim NewExpression As New SimpleExpression 'New object to return for this function
+        Dim sep As New SimpleExpression 'New object to return for this function
         Dim s As Token(Of Tokens)
         Dim n As Double
         Dim o As Char
@@ -33,26 +34,26 @@ Public Module SimpleParser
             s = +tokens
 
             If tokens.EndRead Then
-                Call NewExpression.Add(Val(s.Text), "+c")
+                Call sep.Add(Val(s.Text), "+c")
             Else
                 o = (+tokens).Text.First
                 n = Val(s.Text)
 
                 If o = "!"c Then
-                    n = Helpers.Arithmetic.Factorial(n, 0)
+                    n = Factorial(n, 0)
                     If tokens.EndRead Then
-                        Call NewExpression.Add(n, "+"c)
+                        Call sep.Add(n, "+"c)
                         Exit Do
                     Else
                         o = (+tokens).Text.First
                     End If
                 End If
 
-                Call NewExpression.Add(n, o)
+                Call sep.Add(n, o)
             End If
         Loop
 
-        Return NewExpression
+        Return sep
     End Function
 
     ''' <summary>

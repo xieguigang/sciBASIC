@@ -5,7 +5,7 @@
 
 #If DEBUG Then
         Dim sExpression As String = "1-2-3+4+5+6+7+8+9+55%6*3^2"
-        Dim e As Microsoft.VisualBasic.Mathematical.Types.SimpleExpression = sExpression
+        Dim e As Microsoft.VisualBasic.Mathematical.Types.SimpleExpression = SimpleParser.TryParse(sExpression)
 
         Console.WriteLine("> {0} = {1}", sExpression, e.Evaluate)
 #End If
