@@ -35,6 +35,28 @@ Namespace Types
         ''' <remarks></remarks>
         Dim MetaList As New List(Of MetaExpression)
 
+        Public ReadOnly Property LastOperator As Char
+            Get
+                Return MetaList.Last.Operator
+            End Get
+        End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(n As Double)
+            MetaList += New MetaExpression With {
+                .LEFT = n, .Operator = "+"
+            }
+        End Sub
+
+        Public Sub Add(n As Double, o As Char)
+            MetaList += New MetaExpression With {
+                .LEFT = n,
+                .Operator = o
+            }
+        End Sub
+
         ''' <summary>
         ''' Debugging displaying in VS IDE
         ''' </summary>
@@ -66,7 +88,7 @@ Namespace Types
         End Function
 
         Private Sub Calculator(OperatorList As String)
-            Dim LQuery As Generic.IEnumerable(Of MetaExpression) =
+            Dim LQuery As IEnumerable(Of MetaExpression) =
                 From e As MetaExpression In MetaList
                 Where InStr(OperatorList, e.Operator) > 0
                 Select e 'Defines a LINQ query use for select the meta element that contains target operator.
@@ -99,15 +121,7 @@ Namespace Types
         ''' </returns>
         ''' <remarks></remarks>
         Public Shared Narrowing Operator CType(e As SimpleExpression) As Double
-            If e.MetaList.Count = 1 Then 'When the list object only contains one element, that means this class object only stands for a number, return this number directly. 
-                Return e.MetaList.First.LEFT
-            Else
-                e.Calculator("^")
-                e.Calculator("*/\%")
-                e.Calculator("+-")
-
-                Return e.MetaList.First.LEFT
-            End If
+            Return e.Evaluate()
         End Operator
 
         Public Shared Function Evaluate(expression As String) As Double
@@ -182,26 +196,6 @@ Namespace Types
         Public Shared Widening Operator CType(expression As StringBuilder) As SimpleExpression
             Return CType(expression.ToString, SimpleExpression)
         End Operator
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="s"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Friend Shared Function ClearOverlapOperator(ByRef s As String) As String
-            Dim sBuilder As StringBuilder = New StringBuilder(value:="0+" & s)
-
-            's = "0+" & sbr.ToString '0a=a; 0-a=-a; 0+a=a
-
-            sBuilder.Replace("++", "+")
-            sBuilder.Replace("--", "+")
-            sBuilder.Replace("+-", "-")
-
-            s = sBuilder.ToString
-
-            Return s
-        End Function
 
         ''' <summary>
         ''' Convert a string expression to double type value.
