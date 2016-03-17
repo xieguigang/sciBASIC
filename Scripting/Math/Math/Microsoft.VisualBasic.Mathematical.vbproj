@@ -129,6 +129,7 @@
     <Compile Include="Helpers\Logical.vb" />
     <Compile Include="Helpers\Variable.vb" />
     <Compile Include="Common.vb" />
+    <Compile Include="TokenIcer.vb" />
     <Compile Include="ScriptEngine.vb" />
     <Compile Include="Helpers\Arithmetic.vb" />
     <Compile Include="Arithmetic.Expression\SimpleExpression.vb" />
