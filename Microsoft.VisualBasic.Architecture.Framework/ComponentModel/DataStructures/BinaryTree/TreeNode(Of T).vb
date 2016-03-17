@@ -71,7 +71,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
         End Property
 
         Public Overrides Function ToString() As String
-            Return Name & " ==> " & Value.ToString
+            If Value Is Nothing Then
+                Return Name
+            Else
+                Return Name & " ==> " & Value.ToString
+            End If
         End Function
 
         ''' <summary>
