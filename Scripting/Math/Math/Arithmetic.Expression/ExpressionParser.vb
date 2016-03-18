@@ -36,7 +36,7 @@ Public Module ExpressionParser
     <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
         Dim test As New Helpers.Function()
         test.Add("f", Function(args) args(0) + args(1) + args(2))
-        Return tokens.TryParse(AddressOf New Helpers.Constants().GET, AddressOf test.Evaluate)
+        Return tokens.TryParse(AddressOf New Helpers.Constants().GET, AddressOf test.Evaluate, False)
     End Function
 
     ''' <summary>
@@ -44,7 +44,7 @@ Public Module ExpressionParser
     ''' </summary>
     ''' <param name="tokens"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue, evaluate As IFuncEvaluate) As SimpleExpression
+    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue, evaluate As IFuncEvaluate, funcStack As Boolean) As SimpleExpression
         Dim sep As New SimpleExpression
         Dim e As Token(Of Tokens)
         Dim meta As MetaExpression = Nothing
@@ -58,13 +58,13 @@ Public Module ExpressionParser
             Select Case e.Type
                 Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
                     If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
-                        meta = New MetaExpression(TryParse(tokens, getValue, evaluate))
+                        meta = New MetaExpression(TryParse(tokens, getValue, evaluate, False))
                     Else
                         func = New Func(pre.Text, evaluate)  ' Get function name, and then removes the last of the expression
                         o = sep.RemoveLast().Operator
 
                         Do While True
-                            Dim exp = TryParse(tokens, getValue, evaluate)
+                            Dim exp = TryParse(tokens, getValue, evaluate, True)
                             If exp.IsNullOrEmpty Then
                                 Exit Do
                             Else
@@ -129,7 +129,9 @@ Public Module ExpressionParser
                 ElseIf IsCloseStack(o) Then
                     meta.Operator = "+"c
                     Call sep.Add(meta)
-                    e = (-tokens)
+                    If funcStack Then
+                        e = (-tokens)
+                    End If
                     Exit Do ' 退出递归栈
                 ElseIf IsOpenStack(o) Then
                     e = -tokens  ' 指针回退一步
