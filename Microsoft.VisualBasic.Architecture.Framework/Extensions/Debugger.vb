@@ -57,32 +57,37 @@ Public Module VBDebugger
     ''' <typeparam name="ex"></typeparam>
     ''' <param name="exception"></param>
     <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = New Exception($"[DEBUG {Now.ToString}]  @{memberName}", exception).ToString
-        Dim cl As ConsoleColor = Console.ForegroundColor
-
-        Console.ForegroundColor = ConsoleColor.Red
-        Console.WriteLine(exMsg)
-        Console.ForegroundColor = cl
-#If DEBUG Then
-        Call Debug.WriteLine(exMsg)
-        Call Trace.WriteLine(exMsg)
-#End If
-
-        Return False
+        Dim exMsg As String = New Exception(memberName, exception).ToString
+        Return PrintException(exMsg, memberName)
     End Function
 
     Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim cl As ConsoleColor = Console.ForegroundColor
         Dim exMsg As String = $"[ERROR {Now.ToString}]  @{memberName}::{msg}"
-
-        Console.ForegroundColor = ConsoleColor.Red
-        Console.WriteLine(exMsg)
-        Console.ForegroundColor = cl
-#If DEBUG Then
-        Call Debug.WriteLine(exMsg)
-        Call Trace.WriteLine(exMsg)
-#End If
+        Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red)
         Return False
+    End Function
+
+    Public Sub WriteLine(msg As String, color As ConsoleColor)
+        Dim cl As ConsoleColor = Console.ForegroundColor
+
+        Console.ForegroundColor = color
+        Console.WriteLine(msg)
+        Console.ForegroundColor = cl
+
+#If DEBUG Then
+        Call Debug.WriteLine(msg)
+        Call Trace.WriteLine(msg)
+#End If
+    End Sub
+
+    Public Function Warning(msg As String) As String
+        Dim str = $"[WARN {Now.ToString}] {msg}"
+
+        If Not Mute Then
+            Call WriteLine(str, ConsoleColor.Yellow)
+        End If
+
+        Return str
     End Function
 
     ''' <summary>

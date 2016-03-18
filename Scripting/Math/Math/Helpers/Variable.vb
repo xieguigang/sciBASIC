@@ -17,7 +17,7 @@ Namespace Helpers
                 If _ObjHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
                     Return _ObjHash(Name)
                 Else
-
+                    Call Warning($"Variable '{Name}' is not exists in the memory, returns ZERO by default!")
                     Return 0
                 End If
             End Get
