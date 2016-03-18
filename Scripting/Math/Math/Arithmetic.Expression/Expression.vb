@@ -12,6 +12,10 @@ Public Class Expression
     Public ReadOnly Property Variables As Helpers.Variable = New Variable
     Public ReadOnly Property Functions As Helpers.Function = New [Function]
 
+    ''' <summary>
+    ''' The default expression evaluation engine.
+    ''' </summary>
+    ''' <returns></returns>
     Public Shared ReadOnly Property DefaultEngine As New Expression
 
     Public Shared Function Evaluate(expr As String) As Double
