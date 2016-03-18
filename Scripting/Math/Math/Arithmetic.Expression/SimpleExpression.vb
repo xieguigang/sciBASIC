@@ -12,7 +12,7 @@ Namespace Types
     ''' 其仅包含有有限的计算符号在其中，例如：+-*/\%^!)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class SimpleExpression
+    Public Class SimpleExpression : Implements IEnumerable(Of MetaExpression)
 
         ''' <summary>
         ''' A simple expression can be view as a list collection of meta expression.
@@ -107,8 +107,24 @@ Namespace Types
             Next
         End Sub
 
+        Public Function RemoveLast() As MetaExpression
+            Dim last As MetaExpression = MetaList.Last
+            Call MetaList.RemoveLast
+            Return last
+        End Function
+
         Public Shared Function Evaluate(s As String) As Double
             Return SimpleParser.TryParse(s).Evaluate
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of MetaExpression) Implements IEnumerable(Of MetaExpression).GetEnumerator
+            For Each x As MetaExpression In MetaList
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

@@ -48,6 +48,7 @@ Public Module ExpressionParser
         Dim meta As MetaExpression = Nothing
         Dim o As Char
         Dim pre As Token(Of Tokens) = Nothing
+        Dim func As Func = Nothing
 
         Do While Not tokens.EndRead
             e = +tokens
@@ -55,9 +56,25 @@ Public Module ExpressionParser
             Select Case e.Type
                 Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
                     If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
-                        meta = New MetaExpression(TryParse(tokens))
+                        meta = New MetaExpression(TryParse(tokens, getValue))
                     Else
+                        func = New Func(pre.Text, Nothing)  ' Get function name, and then removes the last of the expression
+                        o = sep.RemoveLast().Operator
 
+                        Do While True
+                            Dim exp = TryParse(tokens, getValue)
+                            If exp.IsNullOrEmpty Then
+                                Exit Do
+                            Else
+                                func.Params.Add(exp)
+                            End If
+                        Loop
+
+                        meta = New MetaExpression(AddressOf func.Evaluate)
+                        meta.Operator = o
+                        Call sep.Add(meta)
+
+                        Continue Do
                     End If
                 Case Mathematical.Tokens.CloseStack, Mathematical.Tokens.CloseBracket, Mathematical.Tokens.Delimiter
                     Return sep ' 退出递归栈

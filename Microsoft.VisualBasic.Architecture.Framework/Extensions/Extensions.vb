@@ -2211,6 +2211,12 @@ Public Module Extensions
         Next
     End Sub
 
+    ''' <summary>
+    ''' Removes the last element in the List object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension> Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
         If list.IsNullOrEmpty OrElse list.Count = 1 Then
             list = New List(Of T)
