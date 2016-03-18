@@ -41,7 +41,12 @@ Module TokenIcer
         {"}"c, Mathematical.Tokens.CloseBracket},
  _
         {"("c, Mathematical.Tokens.OpenStack},  ' Stacks 
-        {")"c, Mathematical.Tokens.CloseStack}
+        {")"c, Mathematical.Tokens.CloseStack},
+ _
+        {" "c, Mathematical.Tokens.WhiteSpace},    ' White Space
+        {CChar(vbTab), Mathematical.Tokens.WhiteSpace},
+ _
+        {","c, Mathematical.Tokens.Delimiter}
     }
 
     Public Function TryParse(s As String) As List(Of Token(Of Tokens))
@@ -67,6 +72,8 @@ Module TokenIcer
                     Case Mathematical.Tokens.Number
                         exitb = str.__parseDouble(token)
                         tokens += New Token(Of Tokens)(type, New String(token))
+                    Case Mathematical.Tokens.WhiteSpace ' Ignore white space
+                        exitb = str.MoveNext
                     Case Else
                         tokens += New Token(Of Tokens)(type, CStr(ch))
                         exitb = str.MoveNext()
@@ -112,7 +119,16 @@ Module TokenIcer
             If Not Tokens.ContainsKey(str.Current) Then
                 Call token.Add(str.Current)
             Else
-                Return True
+                ' If next is operator or white space then exit parser
+                Select Case Tokens(str.Current)
+                    Case Mathematical.Tokens.WhiteSpace, Mathematical.Tokens.Operator
+                        Return True
+                    Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack,  ' Probably is a function calls
+                         Mathematical.Tokens.CloseBracket, Mathematical.Tokens.CloseStack
+                        Return True
+                    Case Else
+                        Call token.Add(str.Current)
+                End Select
             End If
         Loop
 
@@ -154,4 +170,8 @@ Public Enum Tokens
     ''' )
     ''' </summary>
     CloseStack
+    ''' <summary>
+    ''' Space or Tab
+    ''' </summary>
+    WhiteSpace
 End Enum
