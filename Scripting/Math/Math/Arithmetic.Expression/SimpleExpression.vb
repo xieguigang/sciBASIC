@@ -27,6 +27,23 @@ Namespace Types
             End Get
         End Property
 
+        Public ReadOnly Property IsNullOrEmpty As Boolean
+            Get
+                If MetaList.Count = 0 Then
+                    Return True
+                Else
+                    If MetaList.Count = 1 Then
+                        Dim first As MetaExpression = MetaList.First
+                        Return first.IsNumber AndAlso
+                            first.LEFT = 0R AndAlso
+                            first.Operator = "+"c
+                    Else
+                        Return False
+                    End If
+                End If
+            End Get
+        End Property
+
         Sub New()
         End Sub
 

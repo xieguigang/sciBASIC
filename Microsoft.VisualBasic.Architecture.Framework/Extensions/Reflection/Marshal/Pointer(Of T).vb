@@ -8,14 +8,14 @@ Namespace Marshal
 
         Public ReadOnly Property Current As T
             Get
-                Return Value(__index)
+                Return Value(Scan0)  ' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
             End Get
         End Property
 
         ''' <summary>
         ''' 相对于当前的指针的位置而言的
         ''' </summary>
-        ''' <param name="p"></param>
+        ''' <param name="p">相对于当前的位置的offset偏移量</param>
         ''' <returns></returns>
         Default Public Property Value(p As Integer) As T
             Get
@@ -59,8 +59,48 @@ Namespace Marshal
             Return $"* {GetType(T).Name} + {__index} --> {Current}  // {Scan0.ToString}"
         End Function
 
+        ''' <summary>
+        ''' 前移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Shared Operator <=(p As Pointer(Of T), offset As Integer) As T
+            Return p(-offset)
+        End Operator
+
+        ''' <summary>
+        ''' 后移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Shared Operator >=(p As Pointer(Of T), offset As Integer) As T
+            Return p(offset)
+        End Operator
+
         Public Overloads Shared Narrowing Operator CType(p As Pointer(Of T)) As T
             Return p.Current
+        End Operator
+
+        ''' <summary>
+        ''' 前移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(p As Pointer(Of T), offset As Integer) As T
+            Return p(-offset)
+        End Operator
+
+        ''' <summary>
+        ''' 后移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Shared Operator >(p As Pointer(Of T), offset As Integer) As T
+            Return p(offset)
         End Operator
 
         Public Overloads Shared Widening Operator CType(raw As T()) As Pointer(Of T)

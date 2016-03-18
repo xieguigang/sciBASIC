@@ -28,6 +28,18 @@ Namespace Types
             End Set
         End Property
 
+        Public ReadOnly Property IsNumber As Boolean
+            Get
+                Return __left Is Nothing
+            End Get
+        End Property
+
+        Public ReadOnly Property IsExpression As Boolean
+            Get
+                Return Not __left Is Nothing
+            End Get
+        End Property
+
         Dim _left As Double
         Dim __left As Func(Of Double)
 

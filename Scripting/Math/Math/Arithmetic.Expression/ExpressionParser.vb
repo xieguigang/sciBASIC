@@ -105,11 +105,20 @@ Public Module ExpressionParser
                     pre = e ' probably is a function name
                 Case Mathematical.Tokens.Operator
                     If String.Equals(e.Text, "-") Then
-                        ' 是一个负数
-                        meta = New MetaExpression(0)
-                        meta.Operator = "-"c
-                        Call sep.Add(meta)
-                        Continue Do
+
+                        If Not sep.IsNullOrEmpty Then
+                            If tokens.Current.Type = Mathematical.Tokens.Number Then
+                                meta = New MetaExpression(-1 * Val((+tokens).Text))
+                            Else
+                                Throw New SyntaxErrorException
+                            End If
+                        Else
+                            ' 是一个负数
+                            meta = New MetaExpression(0)
+                            meta.Operator = "-"c
+                            Call sep.Add(meta)
+                            Continue Do
+                        End If
                     End If
             End Select
 
