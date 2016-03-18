@@ -112,6 +112,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arithmetic.Expression\Func.vb" />
     <Compile Include="Arithmetic.Expression\MetaExpression.vb" />
     <Compile Include="Arithmetic.Expression\ExpressionParser.vb" />
     <Compile Include="Arithmetic.Expression\SimpleParser.vb" />

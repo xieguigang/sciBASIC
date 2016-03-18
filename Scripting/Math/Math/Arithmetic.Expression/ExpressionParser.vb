@@ -149,27 +149,3 @@ Public Module ExpressionParser
         Return sep
     End Function
 End Module
-
-Public Delegate Function IFuncEvaluate(name As String, args As Double()) As Double
-
-Public Class Func
-
-    Public ReadOnly Property Name As String
-    Public ReadOnly Property Params As New List(Of SimpleExpression)
-
-    ReadOnly __calls As IFuncEvaluate
-
-    Sub New(Name As String, evaluate As IFuncEvaluate)
-        Me.Name = Name
-        Me.__calls = evaluate
-    End Sub
-
-    Public Overrides Function ToString() As String
-        Dim args As String() = Params.ToArray(Function(x) x.ToString)
-        Return $"{Name}({args.JoinBy(", ")})"
-    End Function
-
-    Public Function Evaluate() As Double
-        Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))
-    End Function
-End Class
