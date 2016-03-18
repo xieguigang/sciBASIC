@@ -18,8 +18,8 @@ Module TokenIcer
         End If
 
         Return Tokens(c) = Mathematical.Tokens.CloseBracket OrElse
-            Tokens(c) = Mathematical.Tokens.CloseStack OrElse
-            Tokens(c) = Mathematical.Tokens.Delimiter
+            Tokens(c) = Mathematical.Tokens.CloseStack
+
     End Function
 
     Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =

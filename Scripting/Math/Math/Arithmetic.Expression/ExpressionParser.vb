@@ -34,7 +34,9 @@ Public Module ExpressionParser
     Public Delegate Function GetValue(var As String) As Double
 
     <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
-        Return tokens.TryParse(AddressOf New Helpers.Constants().GET, AddressOf New Helpers.Function().Evaluate)
+        Dim test As New Helpers.Function()
+        test.Add("f", Function(args) args(0) + args(1) + args(2))
+        Return tokens.TryParse(AddressOf New Helpers.Constants().GET, AddressOf test.Evaluate)
     End Function
 
     ''' <summary>
@@ -73,6 +75,7 @@ Public Module ExpressionParser
                         meta = New MetaExpression(AddressOf func.Evaluate)
                         o = If(tokens.EndRead, "+"c, (+tokens).Text.First)
                         meta.Operator = o
+                        pre = Nothing
                         Call sep.Add(meta)
 
                         Continue Do
@@ -105,16 +108,28 @@ Public Module ExpressionParser
                             e = -tokens
                             stackMeta.Operator = "+"c
                             Call sep.Add(stackMeta)
+                            e = (-tokens)
                             Return sep
+                        ElseIf o = ","c Then
+                            meta.Operator = "+"c
+                            Call sep.Add(meta)
+                            ' e = (-tokens)
+                            Exit Do ' 退出递归栈
                         Else
                             stackMeta.Operator = o
                             Call sep.Add(stackMeta)
                             Continue Do
                         End If
                     End If
+                ElseIf o = ","c Then
+                    meta.Operator = "+"c
+                    Call sep.Add(meta)
+                    ' e = (-tokens)
+                    Exit Do ' 退出递归栈
                 ElseIf IsCloseStack(o) Then
                     meta.Operator = "+"c
                     Call sep.Add(meta)
+                    e = (-tokens)
                     Exit Do ' 退出递归栈
                 ElseIf IsOpenStack(o) Then
                     e = -tokens  ' 指针回退一步
@@ -142,6 +157,11 @@ Public Class Func
         Me.Name = Name
         Me.__calls = evaluate
     End Sub
+
+    Public Overrides Function ToString() As String
+        Dim args As String() = Params.ToArray(Function(x) x.ToString)
+        Return $"{Name}({args.JoinBy(", ")})"
+    End Function
 
     Public Function Evaluate() As Double
         Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))

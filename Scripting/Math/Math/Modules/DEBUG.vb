@@ -8,7 +8,7 @@ Module DEBUG
         Dim list = TokenIcer.TryParse(s)
 
 
-        s = "f(3+6,59*E,5!)+(1+2^2)*3!+PI/PI"
+        s = "f(3+6,59,12)+(1+2^2)*3!+PI/PI"
         s = ExpressionParser.TryParse(s).Evaluate
 
 

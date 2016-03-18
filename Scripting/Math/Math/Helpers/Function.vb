@@ -73,6 +73,10 @@ Namespace Helpers
             Return _ObjHash(name.ToLower)(args)
         End Function
 
+        Public Overloads Sub Add(name As String, handle As Func(Of Double(), Double))
+            Call MyBase.Add(name, handle, True)
+        End Sub
+
         ''' <summary>
         ''' Function name 'ieeeremainder' is the max length of the function name
         ''' </summary>
