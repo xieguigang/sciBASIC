@@ -103,6 +103,14 @@ Public Module ExpressionParser
                     Dim x As String = e.Text
                     meta = New MetaExpression(Function() getValue(x))
                     pre = e ' probably is a function name
+                Case Mathematical.Tokens.Operator
+                    If String.Equals(e.Text, "-") Then
+                        ' 是一个负数
+                        meta = New MetaExpression(0)
+                        meta.Operator = "-"c
+                        Call sep.Add(meta)
+                        Continue Do
+                    End If
             End Select
 
             If tokens.EndRead Then
