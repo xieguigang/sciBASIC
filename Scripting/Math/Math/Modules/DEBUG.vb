@@ -9,6 +9,7 @@ Module DEBUG
 
 
         s = "f(3+6,59,12)+(1+2^2)*3!+PI/PI"
+        s = "3!*9"
         s = ExpressionParser.TryParse(s).Evaluate
 
 

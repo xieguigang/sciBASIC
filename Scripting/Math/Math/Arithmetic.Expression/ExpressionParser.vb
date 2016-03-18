@@ -61,12 +61,13 @@ Public Module ExpressionParser
     <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue, evaluate As IFuncEvaluate, funcStack As Boolean) As SimpleExpression
         Dim sep As New SimpleExpression
         Dim e As Token(Of Tokens)
-        Dim meta As MetaExpression = Nothing
         Dim o As Char
         Dim pre As Token(Of Tokens) = Nothing
         Dim func As Func = Nothing
 
         Do While Not tokens.EndRead
+            Dim meta As MetaExpression = Nothing
+
             e = +tokens
 
             Select Case e.Type
@@ -143,7 +144,7 @@ Public Module ExpressionParser
                 ElseIf IsCloseStack(o) Then
                     meta.Operator = "+"c
                     Call sep.Add(meta)
-                    If funcStack Then
+                    If funcStack AndAlso Not tokens.EndRead Then
                         e = (-tokens)
                     End If
                     Exit Do ' 退出递归栈
