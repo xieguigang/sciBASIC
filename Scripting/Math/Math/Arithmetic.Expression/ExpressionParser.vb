@@ -71,6 +71,7 @@ Public Module ExpressionParser
                         Loop
 
                         meta = New MetaExpression(AddressOf func.Evaluate)
+                        o = If(tokens.EndRead, "+"c, (+tokens).Text.First)
                         meta.Operator = o
                         Call sep.Add(meta)
 
@@ -90,7 +91,7 @@ Public Module ExpressionParser
                 meta.Operator = "+"c
                 Call sep.Add(meta)
             Else
-                o = (+tokens).Text.First
+                o = (+tokens).Text.First  ' tokens++ 移动指针到下一个元素
 
                 If o = "!"c Then
                     Dim stackMeta = New MetaExpression(Function() Factorial(meta.LEFT, 0))
@@ -100,14 +101,23 @@ Public Module ExpressionParser
                         Exit Do
                     Else
                         o = (+tokens).Text.First
-                        stackMeta.Operator = o
-                        Call sep.Add(stackMeta)
-                        Continue Do
+                        If o = ")"c Then
+                            e = -tokens
+                            stackMeta.Operator = "+"c
+                            Call sep.Add(stackMeta)
+                            Return sep
+                        Else
+                            stackMeta.Operator = o
+                            Call sep.Add(stackMeta)
+                            Continue Do
+                        End If
                     End If
                 ElseIf IsCloseStack(o) Then
                     meta.Operator = "+"c
                     Call sep.Add(meta)
                     Exit Do ' 退出递归栈
+                ElseIf IsOpenStack(o) Then
+                    e = -tokens  ' 指针回退一步
                 End If
 
                 meta.Operator = o

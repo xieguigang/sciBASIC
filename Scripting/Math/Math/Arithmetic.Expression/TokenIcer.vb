@@ -3,13 +3,23 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Module TokenIcer
 
+    Public Function IsOpenStack(c As Char) As Boolean
+        If Not Tokens.ContainsKey(c) Then
+            Return False
+        End If
+
+        Return Tokens(c) = Mathematical.Tokens.OpenStack OrElse
+            Tokens(c) = Mathematical.Tokens.OpenBracket
+    End Function
+
     Public Function IsCloseStack(c As Char) As Boolean
         If Not Tokens.ContainsKey(c) Then
             Return False
         End If
 
         Return Tokens(c) = Mathematical.Tokens.CloseBracket OrElse
-            Tokens(c) = Mathematical.Tokens.CloseStack
+            Tokens(c) = Mathematical.Tokens.CloseStack OrElse
+            Tokens(c) = Mathematical.Tokens.Delimiter
     End Function
 
     Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =
@@ -124,7 +134,8 @@ Module TokenIcer
                     Case Mathematical.Tokens.WhiteSpace, Mathematical.Tokens.Operator
                         Return True
                     Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack,  ' Probably is a function calls
-                         Mathematical.Tokens.CloseBracket, Mathematical.Tokens.CloseStack
+                         Mathematical.Tokens.CloseBracket, Mathematical.Tokens.CloseStack,
+                         Mathematical.Tokens.Delimiter
                         Return True
                     Case Else
                         Call token.Add(str.Current)
