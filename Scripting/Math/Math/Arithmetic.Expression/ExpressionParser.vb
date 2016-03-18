@@ -17,6 +17,27 @@ Public Module ExpressionParser
     ''' <param name="s"></param>
     ''' <returns></returns>
     Public Function TryParse(s As String) As SimpleExpression
+        Return TryParse(s, DefaultEngine)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="var">Constant or variable name.</param>
+    ''' <returns></returns>
+    Public Delegate Function GetValue(var As String) As Double
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="tokens"></param>
+    ''' <param name="engine">The expression engine.</param>
+    ''' <returns></returns>
+    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), engine As Expression) As SimpleExpression
+        Return tokens.TryParse(AddressOf engine.GetValue, AddressOf engine.Functions.Evaluate, False)
+    End Function
+
+    Public Function TryParse(s As String, Engine As Expression) As SimpleExpression
         Dim tokens = TokenIcer.TryParse(s.ClearOverlapOperator) 'Get all of the number that appears in this expression including factoral operator.
 
         If tokens.Count = 1 Then
@@ -28,19 +49,8 @@ Public Module ExpressionParser
                 Throw New SyntaxErrorException(s)
             End If
         Else
-            Return New Pointer(Of Token(Of Tokens))(tokens).TryParse
+            Return New Pointer(Of Token(Of Tokens))(tokens).TryParse(Engine)
         End If
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="var">Constant or variable name.</param>
-    ''' <returns></returns>
-    Public Delegate Function GetValue(var As String) As Double
-
-    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
-        Return tokens.TryParse(AddressOf DefaultEngine.GetValue, AddressOf DefaultEngine.Functions.Evaluate, False)
     End Function
 
     ''' <summary>

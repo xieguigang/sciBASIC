@@ -33,7 +33,7 @@ Public Class Expression
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function Evaluation(expr As String) As Double
-        Dim sep As SimpleExpression = ExpressionParser.TryParse(expr)
+        Dim sep As SimpleExpression = ExpressionParser.TryParse(expr, Me)
         Return sep.Evaluate
     End Function
 
@@ -44,7 +44,7 @@ Public Class Expression
     ''' <returns></returns>
     Public Function GetValue(x As String) As Double
         Dim isConst As Boolean = False
-        Dim n = Constant.[GET](x, isConst)
+        Dim n As Double = Constant.[GET](x, isConst)
 
         If isConst Then
             Return n

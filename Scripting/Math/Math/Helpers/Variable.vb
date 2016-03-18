@@ -17,6 +17,7 @@ Namespace Helpers
                 If _ObjHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
                     Return _ObjHash(Name)
                 Else
+
                     Return 0
                 End If
             End Get
