@@ -9,14 +9,14 @@ Namespace Helpers
         Public Const RIGHT_OPERATOR_TOKENS As String = "+-*/\^)!,"
 
         Sub New()
-            Call _InnerObjectDictionary.Add("e", Math.E)
-            Call _InnerObjectDictionary.Add("pi", Math.PI)
+            Call _ObjHash.Add("e", Math.E)
+            Call _ObjHash.Add("pi", Math.PI)
         End Sub
 
         Default Public ReadOnly Property Constant(Name As String) As String
             Get
-                If _InnerObjectDictionary.ContainsKey(Name) Then
-                    Return _InnerObjectDictionary(Name)
+                If _ObjHash.ContainsKey(Name) Then
+                    Return _ObjHash(Name)
                 Else
                     Return "0"
                 End If
@@ -37,10 +37,10 @@ Namespace Helpers
         ''' const [name] [value]
         ''' </remarks>
         Public Overloads Sub Add(Name As String, value As String)
-            If _InnerObjectDictionary.ContainsKey(Name.ToLower) Then
+            If _ObjHash.ContainsKey(Name.ToLower) Then
                 Console.WriteLine("Constant not set as the const ""{0}"" is already set in this engine.", Name)
             Else
-                Call _InnerObjectDictionary.Add(Name.ToLower, Expression.Evaluate(value))
+                Call _ObjHash.Add(Name.ToLower, Expression.Evaluate(value))
             End If
         End Sub
 

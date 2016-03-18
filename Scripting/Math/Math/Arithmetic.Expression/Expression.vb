@@ -36,7 +36,7 @@ Public Module Expression
         Dim Expression2 As StringBuilder = New StringBuilder(value:=expression)
         Dim a, b As Double 'Parameter a, b of a function 
         Dim p As Integer, CalcFunction As System.Action(Of String, Double, Double, Integer) = Sub(Func As String, pa As Double, pb As Double, d As Integer)
-                                                                                                  pa = Functions.DictData(Func)(pa, pb)
+                                                                                                  '  pa = Functions.DictData(Func)(pa, pb)
                                                                                                   LBLocation -= Len(Func) + d
                                                                                                   se = Mid(Expression2.ToString, LBLocation, p - LBLocation + 2)
                                                                                                   Expression2.Replace(se, pa)

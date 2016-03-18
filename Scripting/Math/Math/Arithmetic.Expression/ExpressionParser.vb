@@ -34,7 +34,7 @@ Public Module ExpressionParser
     Public Delegate Function GetValue(var As String) As Double
 
     <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
-        Return tokens.TryParse(AddressOf New Helpers.Constants().GET)
+        Return tokens.TryParse(AddressOf New Helpers.Constants().GET, AddressOf New Helpers.Function().Evaluate)
     End Function
 
     ''' <summary>
@@ -42,7 +42,7 @@ Public Module ExpressionParser
     ''' </summary>
     ''' <param name="tokens"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue) As SimpleExpression
+    <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue, evaluate As IFuncEvaluate) As SimpleExpression
         Dim sep As New SimpleExpression
         Dim e As Token(Of Tokens)
         Dim meta As MetaExpression = Nothing
@@ -56,13 +56,13 @@ Public Module ExpressionParser
             Select Case e.Type
                 Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
                     If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
-                        meta = New MetaExpression(TryParse(tokens, getValue))
+                        meta = New MetaExpression(TryParse(tokens, getValue, evaluate))
                     Else
-                        func = New Func(pre.Text, Nothing)  ' Get function name, and then removes the last of the expression
+                        func = New Func(pre.Text, evaluate)  ' Get function name, and then removes the last of the expression
                         o = sep.RemoveLast().Operator
 
                         Do While True
-                            Dim exp = TryParse(tokens, getValue)
+                            Dim exp = TryParse(tokens, getValue, evaluate)
                             If exp.IsNullOrEmpty Then
                                 Exit Do
                             Else

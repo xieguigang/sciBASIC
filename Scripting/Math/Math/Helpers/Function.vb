@@ -7,48 +7,50 @@ Namespace Helpers
     ''' (数学函数计算引擎) 
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class [Function] : Inherits MemoryCollection(Of System.Func(Of Double, Double, Double))
+    Public Class [Function] : Inherits MemoryCollection(Of Func(Of Double(), Double))
 
         ''' <summary>
         ''' The mathematics calculation delegates collection with its specific name.
         ''' (具有特定名称的数学计算委托方法的集合) 
         ''' </summary>
         ''' <remarks></remarks>
-        Protected Shared ReadOnly SystemPrefixFunctions As Dictionary(Of String, System.Func(Of Double, Double, Double)) =
-            New Dictionary(Of String, System.Func(Of Double, Double, Double)) From {
-                {"abs", Function(a As Double, b As Double) Math.Abs(a)},
-                {"acos", Function(a As Double, b As Double) Math.Acos(a)},
-                {"asin", Function(a As Double, b As Double) Math.Asin(a)},
-                {"atan", Function(a As Double, b As Double) Math.Atan(a)},
-                {"atan2", Function(a As Double, b As Double) Math.Atan2(a, b)},
-                {"bigmul", Function(a As Double, b As Double) Math.BigMul(a, b)},
-                {"ceiling", Function(a As Double, b As Double) Math.Ceiling(a)},
-                {"cos", Function(a As Double, b As Double) Math.Cos(a)},
-                {"cosh", Function(a As Double, b As Double) Math.Cosh(a)},
-                {"exp", Function(a As Double, b As Double) Math.Exp(a)},
-                {"floor", Function(a As Double, b As Double) Math.Floor(a)},
-                {"ieeeremainder", Function(a As Double, b As Double) Math.IEEERemainder(a, b)},
-                {"log", Function(a As Double, b As Double) Math.Log(a)},
-                {"log10", Function(a As Double, b As Double) Math.Log10(a)},
-                {"max", Function(a As Double, b As Double) Math.Max(a, b)},
-                {"min", Function(a As Double, b As Double) Math.Min(a, b)},
-                {"pow", Function(a As Double, b As Double) Math.Pow(a, b)},
-                {"round", Function(a As Double, b As Double) Math.Round(a)},
-                {"sign", Function(a As Double, b As Double) Math.Sign(a)},
-                {"sin", Function(a As Double, b As Double) Math.Sin(a)},
-                {"sinh", Function(a As Double, b As Double) Math.Sinh(a)},
-                {"sqrt", Function(a As Double, b As Double) Math.Sqrt(a)},
-                {"tan", Function(a As Double, b As Double) Math.Tan(a)},
-                {"tanh", Function(a As Double, b As Double) Math.Tanh(a)},
-                {"truncate", Function(a As Double, b As Double) Math.Truncate(a)},
-                {"rnd", AddressOf Microsoft.VisualBasic.Mathematical.Helpers.Function.RND},
-                {"int", Function(a As Double, b As Double) CType(a, Integer)},
-                {String.Empty, Function(a As Double, b As Double) a}}  'If no function name, then return the paramenter a directly. 
+        Protected Shared ReadOnly SystemPrefixFunctions As Dictionary(Of String, Func(Of Double(), Double)) =
+            New Dictionary(Of String, Func(Of Double(), Double)) From {
+ _
+                {"abs", Function(args) Math.Abs(args(Scan0))},
+                {"acos", Function(args) Math.Acos(args(Scan0))},
+                {"asin", Function(args) Math.Asin(args(Scan0))},
+                {"atan", Function(args) Math.Atan(args(Scan0))},
+                {"atan2", Function(args) Math.Atan2(args(Scan0), args(1))},
+                {"bigmul", Function(args) Math.BigMul(args(Scan0), args(1))},
+                {"ceiling", Function(args) Math.Ceiling(args(Scan0))},
+                {"cos", Function(args) Math.Cos(args(Scan0))},
+                {"cosh", Function(args) Math.Cosh(args(Scan0))},
+                {"exp", Function(args) Math.Exp(args(Scan0))},
+                {"floor", Function(args) Math.Floor(args(Scan0))},
+                {"ieeeremainder", Function(args) Math.IEEERemainder(args(Scan0), args(1))},
+                {"log", Function(args) Math.Log(args(Scan0))},
+                {"log10", Function(args) Math.Log10(args(Scan0))},
+                {"max", Function(args) Math.Max(args(Scan0), args(1))},
+                {"min", Function(args) Math.Min(args(Scan0), args(1))},
+                {"pow", Function(args) Math.Pow(args(Scan0), args(1))},
+                {"round", Function(args) Math.Round(args(Scan0))},
+                {"sign", Function(args) Math.Sign(args(Scan0))},
+                {"sin", Function(args) Math.Sin(args(Scan0))},
+                {"sinh", Function(args) Math.Sinh(args(Scan0))},
+                {"sqrt", Function(args) Math.Sqrt(args(Scan0))},
+                {"tan", Function(args) Math.Tan(args(Scan0))},
+                {"tanh", Function(args) Math.Tanh(args(Scan0))},
+                {"truncate", Function(args) Math.Truncate(args(Scan0))},
+                {"rnd", Function(args) RND(args(Scan0), args(1))},
+                {"int", Function(args) CType(args(Scan0), Integer)},
+                {String.Empty, Function(args) args(Scan0)} ' If no function name, then return the paramenter a directly. 
+        }
 
         REM (经过以函数名长度降序排序的在VisualBasic中可用的函数名称的字符串集合) 
         Public ReadOnly Property FunctionList As String()
             Get
-                Return _ObjectCacheList.ToArray
+                Return MyBase.Objects
             End Get
         End Property
 
@@ -56,12 +58,20 @@ Namespace Helpers
 
         Sub New()
             For Each item In SystemPrefixFunctions
-                Call _InnerObjectDictionary.Add(item.Key, item.Value)
+                Call MyBase.Add(item.Key, item.Value, False)
             Next
-            Call MyBase._ObjectCacheList.AddRange((From s As String In SystemPrefixFunctions.Keys
-                                                   Select s
-                                                   Order By Len(s) Descending).ToArray)  'A string list of available function name in visualbasic, it was sort by the length of the each function name.
+            Call __buildCache()   ' A string list of available function name in visualbasic, it was sort by the length of the each function name.
         End Sub
+
+        ''' <summary>
+        ''' 大小写不敏感
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        Public Function Evaluate(name As String, args As Double()) As Double
+            Return _ObjHash(name.ToLower)(args)
+        End Function
 
         ''' <summary>
         ''' Function name 'ieeeremainder' is the max length of the function name
@@ -98,7 +108,7 @@ Namespace Helpers
                              Return Microsoft.VisualBasic.Mathematical.Expression.Evaluate(sBuilder.ToString)
                          End Function
 
-            Call Add(Name.ToLower, [Function])
+            '   Call Add(Name.ToLower, [Function])
         End Sub
 
         ''' <summary>

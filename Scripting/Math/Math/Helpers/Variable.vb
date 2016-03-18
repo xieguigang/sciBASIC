@@ -19,7 +19,7 @@ Namespace Helpers
             Get
                 Name = Name.ToLower
 
-                If _InnerObjectDictionary.ContainsKey(Name) Then
+                If _ObjHash.ContainsKey(Name) Then
                     Return Variables(Name)
                 Else
                     Return 0
@@ -31,7 +31,7 @@ Namespace Helpers
         End Property
 
         Sub New()
-            Call _InnerObjectDictionary.Add("$", "0")
+            Call _ObjHash.Add("$", "0")
         End Sub
 
         ''' <summary>
@@ -43,7 +43,7 @@ Namespace Helpers
         ''' const [name] [value]
         ''' </remarks>
         Public Sub [Set](Name As String, value As String)
-            Call Add(Name, value:=Expression.Evaluate(value))
+            Call Add(Name, value:=Expression.Evaluate(value), cache:=True)
         End Sub
 
         ''' <summary>
