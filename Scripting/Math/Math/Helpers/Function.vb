@@ -58,7 +58,7 @@ Namespace Helpers
 
         Sub New()
             For Each item In SystemPrefixFunctions
-                Call MyBase.Add(item.Key, item.Value, False)
+                Call MyBase.Add(item.Key, item.Value, False, False)
             Next
             Call __buildCache()   ' A string list of available function name in visualbasic, it was sort by the length of the each function name.
         End Sub
@@ -74,21 +74,8 @@ Namespace Helpers
         End Function
 
         Public Overloads Sub Add(name As String, handle As Func(Of Double(), Double))
-            Call MyBase.Add(name, handle, True)
+            Call MyBase.Add(name, handle, True, False)
         End Sub
-
-        ''' <summary>
-        ''' Function name 'ieeeremainder' is the max length of the function name
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Const FUNC_NAME_MAX_LENGTH As Integer = 13
-
-        ''' <summary>
-        ''' The paramenter of a,b of the user function
-        ''' </summary>
-        ''' <remarks></remarks>
-        Const X As String = "{EDD16007-1CB8-4B3D-AE48-6FFB966A9C3B}"
-        Const Y As String = "{408E5229-98E1-4D19-A92B-372176749B54}"
 
         ''' <summary>
         ''' Add a user function from the user input from the console or a text file.
@@ -99,20 +86,7 @@ Namespace Helpers
         ''' function [function name] expression
         ''' </remarks>
         Public Overloads Sub Add(Name As String, Expression As String)
-            Dim [Function] As System.Func(Of Double, Double, Double) 'The function delegate
 
-            Expression = Expression.Replace(Constant.DictData, _constants.Objects)
-            Expression = Replace(Expression)
-            [Function] = Function(DblX As Double, DblY As Double) As Double
-                             Dim sBuilder As StringBuilder = New StringBuilder(Expression)
-
-                             sBuilder.Replace(X, DblX)
-                             sBuilder.Replace(Y, DblY)
-
-                             Return Microsoft.VisualBasic.Mathematical.Expression.Evaluate(sBuilder.ToString)
-                         End Function
-
-            '   Call Add(Name.ToLower, [Function])
         End Sub
 
         ''' <summary>
@@ -123,41 +97,8 @@ Namespace Helpers
         ''' <param name="statement">[function name] expression</param>
         ''' <remarks>function [function name] expression</remarks>
         Friend Overloads Sub Add(statement As String)
-            Dim Name As String = statement.Split.First
-            'The expression may be contains space character, and it maybe split into sevral peaces.
+            Dim Name As String = statement.Split.First     'The expression may be contains space character, and it maybe split into sevral peaces.
             Call Add(Name, Mid(statement, Len(Name) + 2))
-        End Sub
-
-        Private Function Replace(expression As String) As String
-            Call Replace2("x", X, expression)
-            Call Replace2("y", Y, expression)
-
-            Return expression
-        End Function
-
-        Private Sub Replace2(param As String, value As String, ByRef expression As String)
-            Dim p As Integer = InStr(expression, param)
-            Dim s As String 'Constant token
-            Dim Left, Right As Char 'Left, right operator
-            Dim sBuilder As StringBuilder = New StringBuilder(expression)
-
-            Do While p
-                Right = expression(p)
-                Left = expression(p - 2)
-
-                'if this tokens is surrounded by two operators then it is a paramenter name, not part 
-                'of the function name or other user define constant name.
-                If InStr(Constants.LEFT_OPERATOR_TOKENS, Left) AndAlso InStr(Constants.RIGHT_OPERATOR_TOKENS, Right) Then
-                    s = Mid(expression, p - 1, 3)
-
-                    Call sBuilder.Replace(s, Left & value & Right)
-                    expression = sBuilder.ToString
-
-                    p = InStr(p + Len(value), expression, param)
-                Else
-                    p = InStr(p + 1, expression, param)
-                End If
-            Loop
         End Sub
 
         ''' <summary>

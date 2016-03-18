@@ -131,7 +131,6 @@
     <Compile Include="Helpers\MemoryCollection.vb" />
     <Compile Include="Helpers\Logical.vb" />
     <Compile Include="Helpers\Variable.vb" />
-    <Compile Include="Common.vb" />
     <Compile Include="Arithmetic.Expression\TokenIcer.vb" />
     <Compile Include="ScriptEngine.vb" />
     <Compile Include="Helpers\Arithmetic.vb" />

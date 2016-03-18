@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Marshal
 Imports Microsoft.VisualBasic.Mathematical.Types
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
+Imports Microsoft.VisualBasic.Mathematical.Expression
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -10,6 +11,11 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module ExpressionParser
 
+    ''' <summary>
+    ''' Using defaul engine
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <returns></returns>
     Public Function TryParse(s As String) As SimpleExpression
         Dim tokens = TokenIcer.TryParse(s.ClearOverlapOperator) 'Get all of the number that appears in this expression including factoral operator.
 
@@ -34,9 +40,7 @@ Public Module ExpressionParser
     Public Delegate Function GetValue(var As String) As Double
 
     <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
-        Dim test As New Helpers.Function()
-        test.Add("f", Function(args) args(0) + args(1) + args(2))
-        Return tokens.TryParse(AddressOf New Helpers.Constants().GET, AddressOf test.Evaluate, False)
+        Return tokens.TryParse(AddressOf DefaultEngine.GetValue, AddressOf DefaultEngine.Functions.Evaluate, False)
     End Function
 
     ''' <summary>

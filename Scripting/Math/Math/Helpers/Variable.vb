@@ -2,10 +2,7 @@
 
 Namespace Helpers
 
-    Public Class Variable : Inherits MemoryCollection(Of String)
-
-        Public Const LEFT_OPERATOR_TOKENS As String = "+-*/\^("
-        Public Const RIGHT_OPERATOR_TOKENS As String = "+-*/\^)!"
+    Public Class Variable : Inherits MemoryCollection(Of Double)
 
         ''' <summary>
         ''' Add a variable to the dictionary, if the variable is exists then will update its value.
@@ -15,23 +12,21 @@ Namespace Helpers
         ''' <remarks>
         ''' const [name] [value]
         ''' </remarks>
-        Default Public Property Variable(Name As String) As String
+        Default Public Property Variable(Name As String) As Double
             Get
-                Name = Name.ToLower
-
-                If _ObjHash.ContainsKey(Name) Then
-                    Return Variables(Name)
+                If _ObjHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
+                    Return _ObjHash(Name)
                 Else
                     Return 0
                 End If
             End Get
-            Set(value As String)
+            Set(value As Double)
                 Call [Set](Name, value)
             End Set
         End Property
 
         Sub New()
-            Call _ObjHash.Add("$", "0")
+            Call MyBase.Add("$", "0", True, False)
         End Sub
 
         ''' <summary>
@@ -43,7 +38,7 @@ Namespace Helpers
         ''' const [name] [value]
         ''' </remarks>
         Public Sub [Set](Name As String, value As String)
-            Call Add(Name, value:=Expression.Evaluate(value), cache:=True)
+
         End Sub
 
         ''' <summary>
@@ -59,18 +54,15 @@ Namespace Helpers
         ''' <summary>
         ''' Assign the new value for a variable
         ''' </summary>
-        ''' <param name="statement"></param>
+        ''' <param name="statement">var &lt;- new_value_expression</param>
         ''' <remarks></remarks>
-        Public Sub AssignValue(statement As String)
-            'var <- new_value_expression
+        Public Function AssignValue(statement As String) As Double
             Dim Tokens As String() = Strings.Split(statement, "<-")
-            Call [Set](Tokens.First.Trim, Expression.Evaluate(Tokens.Last.Trim))
-        End Sub
+            Return AssignValue(Tokens(Scan0), Tokens(1))
+        End Function
 
-        Public Function AssignValue(var As String, statement As String) As Object
-            Dim value = Expression.Evaluate(statement)
-            Call [Set](var, value)
-            Return value
+        Public Function AssignValue(var As String, statement As String) As Double
+
         End Function
     End Class
 End Namespace

@@ -30,8 +30,11 @@
     ''' <param name="Name"></param>
     ''' <param name="value"></param>
     ''' <returns></returns>
-    Protected Function Add(Name As String, value As T, cache As Boolean) As Integer
-        If _ObjHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
+    Protected Function Add(Name As String, value As T, cache As Boolean, sensitive As Boolean) As Integer
+        If Not sensitive Then
+            Name = Name.ToLower
+        End If
+        If _ObjHash.ContainsKey(Name) Then
             Call _ObjHash.Remove(Name)
         End If
 

@@ -3,44 +3,44 @@ Imports System.Text
 
 Namespace Helpers
 
-    Public Class Constants : Inherits MemoryCollection(Of String)
-
-        Public Const LEFT_OPERATOR_TOKENS As String = "+-*/\^(,"
-        Public Const RIGHT_OPERATOR_TOKENS As String = "+-*/\^)!,"
+    Public Class Constants : Inherits MemoryCollection(Of Double)
 
         Sub New()
-            Call _ObjHash.Add("e", Math.E)
-            Call _ObjHash.Add("pi", Math.PI)
+            Call MyBase.Add(NameOf(Math.E), Math.E, False, True)
+            Call MyBase.Add(NameOf(Math.PI), Math.PI, False, True)
+            Call __buildCache()
         End Sub
 
-        Default Public ReadOnly Property Constant(Name As String) As String
-            Get
-                If _ObjHash.ContainsKey(Name) Then
-                    Return _ObjHash(Name)
-                Else
-                    Return "0"
-                End If
-            End Get
-        End Property
-
-        Public Function [GET](x As String) As Double
-            Return Val(Me(x.ToLower))
+        ''' <summary>
+        ''' 常量是区分大小写的
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function [GET](x As String, ByRef success As Boolean) As Double
+            If _ObjHash.ContainsKey(x) Then
+                success = True
+                Return _ObjHash(x)
+            Else
+                success = False
+                Return -1
+            End If
         End Function
 
         ''' <summary>
         ''' Add a user constant to the dictionary.
         ''' (向字典之中添加用户自定义常数)
         ''' </summary>
-        ''' <param name="Name"></param>
+        ''' <param name="Name">常数名称是大小写敏感的，变量的大小写却不敏感</param>
         ''' <param name="value"></param>
         ''' <remarks>
         ''' const [name] [value]
         ''' </remarks>
-        Public Overloads Sub Add(Name As String, value As String)
-            If _ObjHash.ContainsKey(Name.ToLower) Then
-                Console.WriteLine("Constant not set as the const ""{0}"" is already set in this engine.", Name)
+        Public Overloads Sub Add(Name As String, value As Double)
+            If _ObjHash.ContainsKey(Name) Then
+                Dim msg As String = $"Constant not set as the const ""{Name}"" is already set in this engine."
+                Throw New Exception(msg)
             Else
-                Call _ObjHash.Add(Name.ToLower, Expression.Evaluate(value))
+                Call MyBase.Add(Name, value, True, True)
             End If
         End Sub
 
