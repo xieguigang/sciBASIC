@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Marshal
 Imports Microsoft.VisualBasic.Mathematical.Types
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Parser for complex expressions
@@ -46,20 +47,26 @@ Public Module ExpressionParser
         Dim e As Token(Of Tokens)
         Dim meta As MetaExpression = Nothing
         Dim o As Char
+        Dim pre As Token(Of Tokens) = Nothing
 
         Do While Not tokens.EndRead
             e = +tokens
 
             Select Case e.Type
                 Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
-                    meta = New MetaExpression(TryParse(tokens))
-                Case Mathematical.Tokens.CloseStack, Mathematical.Tokens.CloseBracket
+                    If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
+                        meta = New MetaExpression(TryParse(tokens))
+                    Else
+
+                    End If
+                Case Mathematical.Tokens.CloseStack, Mathematical.Tokens.CloseBracket, Mathematical.Tokens.Delimiter
                     Return sep ' 退出递归栈
                 Case Mathematical.Tokens.Number
                     meta = New MetaExpression(Val(e.Text))
                 Case Mathematical.Tokens.UNDEFINE
                     Dim x As String = e.Text
                     meta = New MetaExpression(Function() getValue(x))
+                    pre = e ' probably is a function name
             End Select
 
             If tokens.EndRead Then
@@ -94,3 +101,22 @@ Public Module ExpressionParser
         Return sep
     End Function
 End Module
+
+Public Delegate Function IFuncEvaluate(name As String, args As Double()) As Double
+
+Public Class Func
+
+    Public ReadOnly Property Name As String
+    Public ReadOnly Property Params As New List(Of SimpleExpression)
+
+    ReadOnly __calls As IFuncEvaluate
+
+    Sub New(Name As String, evaluate As IFuncEvaluate)
+        Me.Name = Name
+        Me.__calls = evaluate
+    End Sub
+
+    Public Function Evaluate() As Double
+        Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))
+    End Function
+End Class
