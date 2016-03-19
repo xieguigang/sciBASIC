@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Module DEBUG
 
     Public Function Main() As Integer
-        Dim ls As String = "a and b"
+        Dim ls As String = "a and not andb"
         Dim rr = Logical.TokenIcer.TryParse(ls)
 
 

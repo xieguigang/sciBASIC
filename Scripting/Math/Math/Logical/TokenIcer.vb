@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Logical
 
@@ -48,7 +49,7 @@ Namespace Logical
 
         <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
-                If OPERATORS.IndexOf(str.Current) = -1 OrElse COMPARERS.IndexOf(str.Current) = -1 Then
+                If OPERATORS.IndexOf(str.Current) = -1 AndAlso  COMPARERS.IndexOf(str.Current) = -1 Then
                     Call token.Add(str.Current)
                 Else
                     Return True
@@ -58,9 +59,10 @@ Namespace Logical
             Return False
         End Function
 
-        <Extension> Private Function __parseOperator(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+        <Extension> Private Function __parseOperator(str As CharEnumerator, ByRef last As Char, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
                 If OPERATORS.IndexOf(str.Current) = -1 Then
+                    last = str.Current
                     Return True
                 Else
                     Call token.Add(str.Current)
@@ -70,9 +72,10 @@ Namespace Logical
             Return False
         End Function
 
-        <Extension> Private Function __parseComparer(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+        <Extension> Private Function __parseComparer(str As CharEnumerator, ByRef last As Char, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
                 If COMPARERS.IndexOf(str.Current) = -1 Then
+                    last = str.Current
                     Return True
                 Else
                     Call token.Add(str.Current)
@@ -100,11 +103,11 @@ Namespace Logical
                 token += ch
 
                 If OPERATORS.IndexOf(ch) > -1 Then
-                    Call __parseOperator(str, token)
+                    Call __parseOperator(str, ch, token)
                     type = Logical.Tokens.Operator
 
                 ElseIf COMPARERS.IndexOf(ch) > -1 Then
-                    Call __parseComparer(str, token)
+                    Call __parseComparer(str, ch, token)
                     type = Logical.Tokens.Comparer
 
                 Else
@@ -115,10 +118,11 @@ Namespace Logical
 
                 If type <> Logical.Tokens.UNDEFINE Then
                     Dim st As String = New String(token).ToLower
-                    If TokenIcer.Tokens.ContainsKey(st) Then
+                    If ch.IsWhiteSpace AndAlso TokenIcer.Tokens.ContainsKey(st) Then
                         type = TokenIcer.Tokens(st)
                         tokens += New Token(Of Tokens)(type, st)
                     Else
+                        If Not ch.IsWhiteSpace Then token += ch
                         exitb = str.__parseUNDEFINE(token)
                         type = Logical.Tokens.UNDEFINE
                         tokens += New Token(Of Tokens)(type, New String(token))
@@ -132,7 +136,22 @@ Namespace Logical
                 End If
             Loop
 
-            Return tokens
+            Return tokens.Removes(AddressOf IsWhiteSpace)
+        End Function
+
+        <Extension> Public Function IsWhiteSpace(x As Token(Of Tokens)) As Boolean
+            Return x.Type = Logical.Tokens.WhiteSpace OrElse
+                (x.Type = Logical.Tokens.UNDEFINE AndAlso String.IsNullOrWhiteSpace(x.Text))
+        End Function
+
+        <Extension> Public Function IsWhiteSpace(ch As Char) As Boolean
+            Dim s As String = CStr(ch)
+
+            If Not Tokens.ContainsKey(s) Then
+                Return False
+            Else
+                Return Tokens(s) = Logical.Tokens.WhiteSpace
+            End If
         End Function
     End Module
 End Namespace

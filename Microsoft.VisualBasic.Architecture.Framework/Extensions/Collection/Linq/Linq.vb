@@ -13,6 +13,37 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="match">符合这个条件的所有的元素都将会被移除</param>
+        ''' <returns></returns>
+        <Extension> Public Function Removes(Of T)(source As IEnumerable(Of T), match As Func(Of T, Boolean), Optional parallel As Boolean = False) As T()
+            Dim LQuery As T()
+            If parallel Then
+                LQuery = (From x In source.AsParallel Where Not match(x) Select x).ToArray
+            Else
+                LQuery = (From x In source Where Not match(x) Select x).ToArray
+            End If
+            Return LQuery
+        End Function
+
+        <Extension> Public Function Removes(Of T)(lst As List(Of T), match As Func(Of T, Boolean)) As List(Of T)
+            If lst.IsNullOrEmpty Then
+                Return New List(Of T)
+            Else
+                For Each x In lst.ToArray
+                    If match(x) Then
+                        Call lst.Remove(x)
+                    End If
+                Next
+
+                Return lst
+            End If
+        End Function
+
         Public Function __innerTry(Of T)(source As Func(Of T), msg As String, Optional throwEx As Boolean = True) As T
             Try
                 Return source()
