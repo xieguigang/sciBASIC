@@ -31,15 +31,15 @@ Namespace Logical
             {"xor", Logical.Tokens.Operator},
             {"nor", Logical.Tokens.Operator},
             {"nand", Logical.Tokens.Operator},
-            {"<<", Logical.Tokens.Operator},
-            {"<", Logical.Tokens.Operator},
-            {"<=", Logical.Tokens.Operator},
-            {">", Logical.Tokens.Operator},
-            {"=>", Logical.Tokens.Operator},
-            {">>", Logical.Tokens.Operator},
-            {"~=", Logical.Tokens.Operator},
-            {"=", Logical.Tokens.Operator},
-            {"<>", Logical.Tokens.Operator},
+            {"<<", Logical.Tokens.Comparer},
+            {"<", Logical.Tokens.Comparer},
+            {"<=", Logical.Tokens.Comparer},
+            {">", Logical.Tokens.Comparer},
+            {"=>", Logical.Tokens.Comparer},
+            {">>", Logical.Tokens.Comparer},
+            {"~=", Logical.Tokens.Comparer},
+            {"=", Logical.Tokens.Comparer},
+            {"<>", Logical.Tokens.Comparer},
             {vbTab, Logical.Tokens.WhiteSpace},
             {" ", Logical.Tokens.WhiteSpace}
         }
@@ -85,7 +85,6 @@ Namespace Logical
             Return False
         End Function
 
-
         Public Function TryParse(s As String) As List(Of Token(Of Tokens))
             Dim str As CharEnumerator = s.GetEnumerator
             Dim tokens As New List(Of Token(Of Tokens))
@@ -101,7 +100,7 @@ Namespace Logical
             Do While True
                 ch = str.Current
                 token += ch
-
+CONTINUTES:
                 If OPERATORS.IndexOf(ch) > -1 Then
                     Call __parseOperator(str, ch, token)
                     type = Logical.Tokens.Operator
@@ -118,11 +117,22 @@ Namespace Logical
 
                 If type <> Logical.Tokens.UNDEFINE Then
                     Dim st As String = New String(token).ToLower
-                    If ch.IsWhiteSpace AndAlso TokenIcer.Tokens.ContainsKey(st) Then
+
+                    If TokenIcer.Tokens.ContainsKey(st) Then
                         type = TokenIcer.Tokens(st)
-                        tokens += New Token(Of Tokens)(type, st)
+
+                        If ch.IsWhiteSpace AndAlso type = Logical.Tokens.Operator Then
+                            tokens += New Token(Of Tokens)(type, st)
+                        ElseIf type = Logical.Tokens.Comparer Then
+                            tokens += New Token(Of Tokens)(type, st)
+                            Call token.Clear()
+                            token += ch
+                            GoTo CONTINUTES
+                        Else
+                            GoTo UNDEFINE
+                        End If
                     Else
-                        If Not ch.IsWhiteSpace Then token += ch
+UNDEFINE:               If Not ch.IsWhiteSpace Then token += ch
                         exitb = str.__parseUNDEFINE(token)
                         type = Logical.Tokens.UNDEFINE
                         tokens += New Token(Of Tokens)(type, New String(token))
@@ -137,6 +147,11 @@ Namespace Logical
             Loop
 
             Return tokens.Removes(AddressOf IsWhiteSpace)
+        End Function
+
+        <Extension> Public Function Split(source As IEnumerable(Of Token(Of Tokens))) As List(Of MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)))
+            Dim lst As New List(Of MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)))
+            Return lst
         End Function
 
         <Extension> Public Function IsWhiteSpace(x As Token(Of Tokens)) As Boolean

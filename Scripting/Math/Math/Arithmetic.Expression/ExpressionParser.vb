@@ -66,14 +66,14 @@ Public Module ExpressionParser
         Dim func As Func = Nothing
 
         Do While Not tokens.EndRead
-            Dim meta As MetaExpression = Nothing
+            Dim meta As Types.MetaExpression = Nothing
 
             e = +tokens
 
             Select Case e.Type
                 Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
                     If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
-                        meta = New MetaExpression(TryParse(tokens, getValue, evaluate, False))
+                        meta = New Types.MetaExpression(TryParse(tokens, getValue, evaluate, False))
                     Else
                         func = New Func(pre.Text, evaluate)  ' Get function name, and then removes the last of the expression
                         o = sep.RemoveLast().Operator
@@ -87,7 +87,7 @@ Public Module ExpressionParser
                             End If
                         Loop
 
-                        meta = New MetaExpression(AddressOf func.Evaluate)
+                        meta = New Types.MetaExpression(AddressOf func.Evaluate)
                         o = If(tokens.EndRead, "+"c, (+tokens).Text.First)
                         meta.Operator = o
                         pre = Nothing
@@ -98,23 +98,23 @@ Public Module ExpressionParser
                 Case Mathematical.Tokens.CloseStack, Mathematical.Tokens.CloseBracket, Mathematical.Tokens.Delimiter
                     Return sep ' 退出递归栈
                 Case Mathematical.Tokens.Number
-                    meta = New MetaExpression(Val(e.Text))
+                    meta = New Types.MetaExpression(Val(e.Text))
                 Case Mathematical.Tokens.UNDEFINE
                     Dim x As String = e.Text
-                    meta = New MetaExpression(Function() getValue(x))
+                    meta = New Types.MetaExpression(Function() getValue(x))
                     pre = e ' probably is a function name
                 Case Mathematical.Tokens.Operator
                     If String.Equals(e.Text, "-") Then
 
                         If Not sep.IsNullOrEmpty Then
                             If tokens.Current.Type = Mathematical.Tokens.Number Then
-                                meta = New MetaExpression(-1 * Val((+tokens).Text))
+                                meta = New Types.MetaExpression(-1 * Val((+tokens).Text))
                             Else
                                 Throw New SyntaxErrorException
                             End If
                         Else
                             ' 是一个负数
-                            meta = New MetaExpression(0)
+                            meta = New Types.MetaExpression(0)
                             meta.Operator = "-"c
                             Call sep.Add(meta)
                             Continue Do
@@ -129,7 +129,7 @@ Public Module ExpressionParser
                 o = (+tokens).Text.First  ' tokens++ 移动指针到下一个元素
 
                 If o = "!"c Then
-                    Dim stackMeta = New MetaExpression(Function() Factorial(meta.LEFT, 0))
+                    Dim stackMeta = New Types.MetaExpression(Function() Factorial(meta.LEFT, 0))
 
                     If tokens.EndRead Then
                         Call sep.Add(stackMeta)
