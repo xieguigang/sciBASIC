@@ -13,4 +13,11 @@ Public Class MetaExpression(Of T, O)
     ''' </summary>
     ''' <returns></returns>
     Public Overridable Property LEFT As T
+
+    Sub New()
+    End Sub
+
+    Sub New(x As T)
+        LEFT = x
+    End Sub
 End Class

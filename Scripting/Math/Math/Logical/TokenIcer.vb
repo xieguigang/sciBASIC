@@ -151,6 +151,24 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then token += ch
 
         <Extension> Public Function Split(source As IEnumerable(Of Token(Of Tokens))) As List(Of MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)))
             Dim lst As New List(Of MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)))
+            Dim left As New List(Of Token(Of Tokens))
+
+            For Each x As Token(Of Tokens) In source
+                If x.Type <> Logical.Tokens.UNDEFINE Then
+                    lst += New MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)) With {
+                        .LEFT = left,
+                        .Operator = x
+                    }
+                    Call left.Clear()
+                Else
+                    left += x
+                End If
+            Next
+
+            If left.Count > 0 Then
+                lst += New MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens))(left)
+            End If
+
             Return lst
         End Function
 
