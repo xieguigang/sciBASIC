@@ -18,7 +18,6 @@
 
     Public ReadOnly Property Scripts As New Hashtable
 
-
     Public Function Shell(statement As String) As String
         Dim Token As String = statement.Split.First.ToLower
 
@@ -37,4 +36,12 @@
             Return Result
         End If
     End Function
+
+    Public Sub SetVariable(Name As String, expr As String)
+        Call Expression.Variables.Set(Name, expr)
+    End Sub
+
+    Public Sub AddConstant(Name As String, expr As String)
+        Call Expression.Constant.Add(Name, expr)
+    End Sub
 End Module

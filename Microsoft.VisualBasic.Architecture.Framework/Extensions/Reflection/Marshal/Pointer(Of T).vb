@@ -65,7 +65,7 @@ Namespace Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Public Shared Operator <=(p As Pointer(Of T), offset As Integer) As T
+        Public Overloads Shared Operator <=(p As Pointer(Of T), offset As Integer) As T
             Return p(-offset)
         End Operator
 
@@ -75,7 +75,7 @@ Namespace Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Public Shared Operator >=(p As Pointer(Of T), offset As Integer) As T
+        Public Overloads Shared Operator >=(p As Pointer(Of T), offset As Integer) As T
             Return p(offset)
         End Operator
 
@@ -89,7 +89,7 @@ Namespace Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Public Shared Operator <(p As Pointer(Of T), offset As Integer) As T
+        Public Overloads Shared Operator <(p As Pointer(Of T), offset As Integer) As T
             Return p(-offset)
         End Operator
 
@@ -99,7 +99,7 @@ Namespace Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Public Shared Operator >(p As Pointer(Of T), offset As Integer) As T
+        Public Overloads Shared Operator >(p As Pointer(Of T), offset As Integer) As T
             Return p(offset)
         End Operator
 
