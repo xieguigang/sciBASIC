@@ -28,7 +28,6 @@ Namespace FileStream
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Node : Inherits INetComponent
-
         Implements sIdEnumerable
         Implements INode
 

@@ -32,6 +32,33 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Call MyBase.Add(item.Identifier, item)
     End Sub
 
+    Public Sub AddRange(source As IEnumerable(Of V))
+        For Each x As V In source
+            Call MyBase.Add(x.Identifier, x)
+        Next
+    End Sub
+
+    Public Sub InsertOrUpdate(x As V)
+        If Me.ContainsKey(x.Identifier) Then
+            Me(x.Identifier) = x
+        Else
+            Call MyBase.Add(x.Identifier, x)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 假若目标元素不存在于本字典之中，则会返回False
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Overloads Function Remove(x As V) As Boolean
+        If Me.ContainsKey(x.Identifier) Then
+            Return Me.Remove(x.Identifier)
+        Else
+            Return False
+        End If
+    End Function
+
     ''' <summary>
     ''' Adds an element with the specified key and value into the System.Collections.Generic.SortedDictionary`2.
     ''' </summary>

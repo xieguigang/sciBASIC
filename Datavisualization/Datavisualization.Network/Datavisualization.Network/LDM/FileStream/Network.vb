@@ -38,13 +38,13 @@ Namespace FileStream
         Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).locusId
             Get
                 If __nodes Is Nothing Then
-                    __nodes = New Dictionary(Of String, T_Node)
+                    __nodes = New Dictionary(Of T_Node)
                 End If
                 Return __nodes.Values.ToArray
             End Get
             Set(value As T_Node())
                 If value Is Nothing Then
-                    __nodes = New Dictionary(Of String, T_Node)
+                    __nodes = New Dictionary(Of T_Node)
                 Else
                     __nodes = value.ToDictionary
                 End If
@@ -67,11 +67,11 @@ Namespace FileStream
         End Property
 
         Sub New()
-            __nodes = New Dictionary(Of String, T_Node)
+            __nodes = New Dictionary(Of T_Node)
             __edges = New List(Of T_Edge)
         End Sub
 
-        Dim __nodes As Dictionary(Of String, T_Node)
+        Dim __nodes As Dictionary(Of T_Node)
         Dim __edges As List(Of T_Edge)
 
         ''' <summary>

@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Math")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("LANS Engineering Workstation")> 
-<Assembly: AssemblyProduct("Math")> 
-<Assembly: AssemblyCopyright("Copyright © LANS Engineering Workstation 2013")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("Math script")>
+<Assembly: AssemblyDescription("Math script engine")>
+<Assembly: AssemblyCompany("SMRUCC Inc.")>
+<Assembly: AssemblyProduct("Math")>
+<Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2013. All rights reserved.")>
+<Assembly: AssemblyTrademark("VisualBasic")>
 
 <Assembly: ComVisible(False)>
 
