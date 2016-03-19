@@ -101,11 +101,23 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Return list
     End Operator
 
+    ''' <summary>
+    ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <param name="vals"></param>
+    ''' <returns></returns>
     Public Shared Operator +(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)
         Call list.AddRange(vals.ToArray)
         Return list
     End Operator
 
+    ''' <summary>
+    ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+    ''' </summary>
+    ''' <param name="vals"></param>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     Public Shared Operator +(vals As IEnumerable(Of T), list As List(Of T)) As List(Of T)
         Dim all As List(Of T) = vals.ToList
         Call all.AddRange(list)
