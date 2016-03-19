@@ -8,35 +8,44 @@ Namespace ComponentModel.Collection.Generic
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <remarks></remarks>
-    Public Class HashDictionary(Of T) : Implements System.IDisposable, System.Collections.Generic.IDictionary(Of String, T)
+    Public Class HashDictionary(Of T) : Implements IDisposable, IDictionary(Of String, T)
 
-        Protected _InternalHashDictionary As Dictionary(Of String, T)
-        Protected _InternalKeysHash As Dictionary(Of String, String)
+        Protected ReadOnly _hashBuffer As Dictionary(Of String, T)
+        Protected ReadOnly _keysHash As Dictionary(Of String, String)
 
-        Sub New(DataChunk As System.Collections.Generic.IDictionary(Of String, T))
-            _InternalHashDictionary = New System.Collections.Generic.Dictionary(Of String, T)
-            _InternalKeysHash = New System.Collections.Generic.Dictionary(Of String, String)
+        Sub New(data As IDictionary(Of String, T))
+            Call Me.New
 
-            If Not DataChunk.IsNullOrEmpty Then
-                For Each ItemObject In DataChunk
+            If Not data.IsNullOrEmpty Then
+                For Each ItemObject In data
                     Call Add(ItemObject)
                 Next
             End If
         End Sub
 
+        ''' <summary>
+        ''' Initializes a new instance of the System.Collections.Generic.Dictionary`2 class
+        ''' that is empty, has the default initial capacity, and uses the default equality
+        ''' comparer for the key type.
+        ''' </summary>
+        Sub New()
+            _hashBuffer = New Dictionary(Of String, T)
+            _keysHash = New Dictionary(Of String, String)
+        End Sub
+
 #Region "Implements System.IDisposable, Generic.IDictionary(Of String, T)"
 
-        Public Sub Add(item As System.Collections.Generic.KeyValuePair(Of String, T)) Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).Add
+        Public Sub Add(item As KeyValuePair(Of String, T)) Implements ICollection(Of KeyValuePair(Of String, T)).Add
             Dim Key As String = item.Key
             Me(Key) = item.Value
         End Sub
 
-        Public Sub Clear() Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).Clear
-            Call _InternalKeysHash.Clear()
-            Call _InternalHashDictionary.Clear()
+        Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, T)).Clear
+            Call _keysHash.Clear()
+            Call _hashBuffer.Clear()
         End Sub
 
-        Public Function Contains(item As System.Collections.Generic.KeyValuePair(Of String, T)) As Boolean Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).Contains
+        Public Function Contains(item As KeyValuePair(Of String, T)) As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).Contains
             Dim value = Me(item.Key)
             If item.Value Is Nothing AndAlso value Is Nothing Then
                 Return True
@@ -49,25 +58,25 @@ Namespace ComponentModel.Collection.Generic
             Return False
         End Function
 
-        Public ReadOnly Property Count As Integer Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).Count
+        Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count
             Get
-                Return _InternalKeysHash.Count
+                Return _keysHash.Count
             End Get
         End Property
 
-        Public ReadOnly Property IsReadOnly As Boolean Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).IsReadOnly
+        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).IsReadOnly
             Get
                 Return False
             End Get
         End Property
 
-        Public Function Remove(item As System.Collections.Generic.KeyValuePair(Of String, T)) As Boolean Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).Remove
+        Public Function Remove(item As KeyValuePair(Of String, T)) As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).Remove
             Dim Key As String = item.Key.ToLower
-            Call _InternalHashDictionary.Remove(Key)
-            Return _InternalKeysHash.Remove(Key)
+            Call _hashBuffer.Remove(Key)
+            Return _keysHash.Remove(Key)
         End Function
 
-        Public Sub Add(key As String, value As T) Implements System.Collections.Generic.IDictionary(Of String, T).Add
+        Public Sub Add(key As String, value As T) Implements IDictionary(Of String, T).Add
             Call Add(New KeyValuePair(Of String, T)(key, value))
         End Sub
 
@@ -77,8 +86,8 @@ Namespace ComponentModel.Collection.Generic
         ''' <param name="key">大小写不敏感</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function ContainsKey(key As String) As Boolean Implements System.Collections.Generic.IDictionary(Of String, T).ContainsKey
-            Return _InternalKeysHash.ContainsKey(key.ToLower)
+        Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, T).ContainsKey
+            Return _keysHash.ContainsKey(key.ToLower)
         End Function
 
         ''' <summary>
@@ -88,43 +97,43 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Default Public Property Item(key As String) As T Implements System.Collections.Generic.IDictionary(Of String, T).Item
+        Default Public Property Item(key As String) As T Implements IDictionary(Of String, T).Item
             Get
                 key = key.ToLower
-                If _InternalKeysHash.ContainsKey(key) Then
-                    Return _InternalHashDictionary(key)
+                If _keysHash.ContainsKey(key) Then
+                    Return _hashBuffer(key)
                 Else
                     Return Nothing
                 End If
             End Get
             Set(value As T)
-                Dim QueryKey = key.ToLower
+                Dim query As String = key.ToLower
 
-                If _InternalKeysHash.ContainsKey(QueryKey) Then
-                    _InternalHashDictionary(QueryKey) = value
+                If _keysHash.ContainsKey(query) Then
+                    _hashBuffer(query) = value
                 Else
-                    Call _InternalHashDictionary.Add(QueryKey, value)
-                    Call _InternalKeysHash.Add(QueryKey, key)
+                    Call _hashBuffer.Add(query, value)
+                    Call _keysHash.Add(query, key)
                 End If
             End Set
         End Property
 
-        Public Sub CopyTo(array() As System.Collections.Generic.KeyValuePair(Of String, T), arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of String, T)).CopyTo
-            Dim LQuery = (From item In _InternalKeysHash Select New KeyValuePair(Of String, T)(item.Value, _InternalHashDictionary(item.Key))).ToArray
+        Public Sub CopyTo(array() As KeyValuePair(Of String, T), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, T)).CopyTo
+            Dim LQuery = (From item In _keysHash Select New KeyValuePair(Of String, T)(item.Value, _hashBuffer(item.Key))).ToArray
             Call System.Array.ConstrainedCopy(LQuery, 0, array, arrayIndex, array.Length - arrayIndex)
         End Sub
 
-        Public ReadOnly Property Keys As System.Collections.Generic.ICollection(Of String) Implements System.Collections.Generic.IDictionary(Of String, T).Keys
+        Public ReadOnly Property Keys As ICollection(Of String) Implements IDictionary(Of String, T).Keys
             Get
-                Return _InternalKeysHash.Values
+                Return _keysHash.Values
             End Get
         End Property
 
-        Public Function Remove(key As String) As Boolean Implements System.Collections.Generic.IDictionary(Of String, T).Remove
+        Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, T).Remove
             key = key.ToLower
-            If Me._InternalKeysHash.ContainsKey(key) Then
-                Call _InternalKeysHash.Remove(key)
-                Call _InternalHashDictionary.Remove(key)
+            If Me._keysHash.ContainsKey(key) Then
+                Call _keysHash.Remove(key)
+                Call _hashBuffer.Remove(key)
 
                 Return True
             Else
@@ -132,24 +141,24 @@ Namespace ComponentModel.Collection.Generic
             End If
         End Function
 
-        Public Function TryGetValue(key As String, ByRef value As T) As Boolean Implements System.Collections.Generic.IDictionary(Of String, T).TryGetValue
+        Public Function TryGetValue(key As String, ByRef value As T) As Boolean Implements IDictionary(Of String, T).TryGetValue
             value = Me(key)
-            Return _InternalKeysHash.ContainsKey(key.ToLower)
+            Return _keysHash.ContainsKey(key.ToLower)
         End Function
 
-        Public ReadOnly Property Values As System.Collections.Generic.ICollection(Of T) Implements System.Collections.Generic.IDictionary(Of String, T).Values
+        Public ReadOnly Property Values As ICollection(Of T) Implements IDictionary(Of String, T).Values
             Get
-                Return _InternalHashDictionary.Values
+                Return _hashBuffer.Values
             End Get
         End Property
 
-        Public Iterator Function GetEnumerator1() As System.Collections.Generic.IEnumerator(Of System.Collections.Generic.KeyValuePair(Of String, T)) Implements System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, T)).GetEnumerator
-            For Each ItemObject In Me._InternalHashDictionary
-                Yield New KeyValuePair(Of String, T)(Me._InternalKeysHash(ItemObject.Key), ItemObject.Value)
+        Public Iterator Function GetEnumerator1() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
+            For Each ItemObject In Me._hashBuffer
+                Yield New KeyValuePair(Of String, T)(Me._keysHash(ItemObject.Key), ItemObject.Value)
             Next
         End Function
 
-        Public Iterator Function GetEnumerator() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator1()
         End Function
 

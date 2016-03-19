@@ -3,6 +3,30 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' Creates a System.Collections.Generic.Dictionary`2 from an System.Collections.Generic.IEnumerable`1
+    ''' according to a specified key selector function.
+    ''' </summary>
+    ''' <typeparam name="T">Unique identifier provider</typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of T)
+        Dim hash As Dictionary(Of T) = New Dictionary(Of T)
+        Dim i As Integer = 0
+        Try
+            For Each item As T In source
+                Call hash.Add(item.Identifier, item)
+                i += 1
+            Next
+        Catch ex As Exception
+            ex = New Exception(source(i).Identifier, ex)
+            Throw ex
+        End Try
+
+        Return hash
+    End Function
+
     <Extension> Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePair(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePair(Of TKey, TValue))
         If list Is Nothing Then
             list = New List(Of KeyValuePair(Of TKey, TValue))
@@ -26,9 +50,5 @@ Public Module KeyValuePairExtensions
         End If
         Call list.Add(New KeyValuePairObject(Of TKey, TValue)(key, value))
         Return list
-    End Function
-
-    <Extension> Public Function ToDictionary(Of T As IReadOnlyId)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
-        Return source.ToDictionary(Function(x) x.locusId)
     End Function
 End Module

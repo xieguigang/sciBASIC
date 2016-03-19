@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+﻿Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
 ''' <summary>
 ''' Represents a strongly typed list of objects that can be accessed by index. Provides

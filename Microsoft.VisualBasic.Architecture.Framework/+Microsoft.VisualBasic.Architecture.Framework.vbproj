@@ -192,7 +192,8 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
-    <Compile Include="ComponentModel\List%28Of T%29.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
     <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />

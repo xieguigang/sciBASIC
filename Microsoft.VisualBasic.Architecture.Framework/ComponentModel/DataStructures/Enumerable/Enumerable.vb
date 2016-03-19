@@ -57,7 +57,7 @@ Public Module IEnumerations
         Return Dictionary
     End Function
 
-    <Extension> Public Function FindByItemKey(source As IEnumerable(Of ComponentModel.KeyValuePair), Key As String, Optional Explicit As Boolean = True) As ComponentModel.KeyValuePair()
+    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional Explicit As Boolean = True) As ComponentModel.KeyValuePair()
         Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery
@@ -76,8 +76,8 @@ Public Module IEnumerations
     End Function
 
     ''' <summary>
-    ''' use the overload method <see cref="ComponentModel.Collection.Generic.pairitem(Of TItem1, TItem2).Equals"></see> of the type 
-    ''' <see cref="ComponentModel.Collection.Generic.PairItem(Of TItem1, TItem2)"></see>
+    ''' use the overload method <see cref="pairitem(Of TItem1, TItem2).Equals"></see> of the type 
+    ''' <see cref="PairItem(Of TItem1, TItem2)"></see>
     ''' </summary>
     ''' <typeparam name="TItem1"></typeparam>
     ''' <typeparam name="TItem2"></typeparam>
@@ -109,7 +109,7 @@ Public Module IEnumerations
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function Takes(Of T As sIdEnumerable)(lstId As IEnumerable(Of String), source As IEnumerable(Of T)) As T()
-        Dim Dict As Dictionary(Of String, T) = source.ToDictionary
+        Dim Dict As Dictionary(Of T) = source.ToDictionary
         Dim LQuery As T() = (From sId As String In lstId Where Dict.ContainsKey(sId) Select Dict(sId)).ToArray
         Return LQuery
     End Function
@@ -132,41 +132,18 @@ Public Module IEnumerations
         Return LQuery
     End Function
 
-    ''' <summary>
-    ''' Converts the source collection into a dictionary object.(将目标集合对象转换为一个字典对象)
-    ''' </summary>
-    ''' <typeparam name="T">Unique identifier provider</typeparam>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
-        Dim hash As Dictionary(Of String, T) = New Dictionary(Of String, T)
-        Dim i As Integer = 0
-        Try
-            For Each item As T In source
-                Call hash.Add(item.Identifier, item)
-                i += 1
-            Next
-        Catch ex As Exception
-            ex = New Exception(source(i).Identifier, ex)
-            Throw ex
-        End Try
-
-        Return hash
-    End Function
-
-    <Extension> Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of String, T)
+    <Extension> Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of T)
         If Not distinct Then Return source.ToDictionary
 
-        Dim Dict As Dictionary(Of String, T) = New Dictionary(Of String, T)
+        Dim Thash As Dictionary(Of T) = New Dictionary(Of T)
         For Each item As T In source
-            If Not Dict.ContainsKey(item.Identifier) Then
-                Call Dict.Add(item.Identifier, item)
+            If Not Thash.ContainsKey(item.Identifier) Then
+                Call Thash.Add(item.Identifier, item)
             Else
                 Call Console.WriteLine(item.Identifier & " is dulplicated......")
             End If
         Next
 
-        Return Dict
+        Return Thash
     End Function
 End Module
