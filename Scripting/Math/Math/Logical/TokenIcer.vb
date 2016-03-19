@@ -44,7 +44,7 @@ Namespace Logical
             {" ", Logical.Tokens.WhiteSpace}
         }
 
-        Const OPERATORS As String = "AndOrNotXorNorNand"
+        Const OPERATORS As String = "AndOrNotxXorNorNand"
         Const COMPARERS As String = "<<=>>~"
 
         <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
