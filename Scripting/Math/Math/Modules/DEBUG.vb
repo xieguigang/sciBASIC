@@ -4,6 +4,10 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Module DEBUG
 
     Public Function Main() As Integer
+        Dim ls As String = "a and b"
+        Dim rr = Logical.TokenIcer.TryParse(ls)
+
+
         Dim s As String = "(1+2+3)%(-563.999*6/44)"
         Dim list = TokenIcer.TryParse(s)
 

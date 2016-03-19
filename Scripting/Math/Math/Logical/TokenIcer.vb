@@ -47,15 +47,39 @@ Namespace Logical
         Const COMPARERS As String = "<<=>>~"
 
         <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+            Do While str.MoveNext
+                If OPERATORS.IndexOf(str.Current) = -1 OrElse COMPARERS.IndexOf(str.Current) = -1 Then
+                    Call token.Add(str.Current)
+                Else
+                    Return True
+                End If
+            Loop
 
+            Return False
         End Function
 
         <Extension> Private Function __parseOperator(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+            Do While str.MoveNext
+                If OPERATORS.IndexOf(str.Current) = -1 Then
+                    Return True
+                Else
+                    Call token.Add(str.Current)
+                End If
+            Loop
 
+            Return False
         End Function
 
         <Extension> Private Function __parseComparer(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+            Do While str.MoveNext
+                If COMPARERS.IndexOf(str.Current) = -1 Then
+                    Return True
+                Else
+                    Call token.Add(str.Current)
+                End If
+            Loop
 
+            Return False
         End Function
 
 
@@ -77,14 +101,28 @@ Namespace Logical
 
                 If OPERATORS.IndexOf(ch) > -1 Then
                     Call __parseOperator(str, token)
+                    type = Logical.Tokens.Operator
 
                 ElseIf COMPARERS.IndexOf(ch) > -1 Then
                     Call __parseComparer(str, token)
+                    type = Logical.Tokens.Comparer
 
                 Else
                     exitb = str.__parseUNDEFINE(token)
-                    type = Mathematical.Tokens.UNDEFINE
+                    type = Logical.Tokens.UNDEFINE
                     tokens += New Token(Of Tokens)(type, New String(token))
+                End If
+
+                If type <> Logical.Tokens.UNDEFINE Then
+                    Dim st As String = New String(token).ToLower
+                    If TokenIcer.Tokens.ContainsKey(st) Then
+                        type = TokenIcer.Tokens(st)
+                        tokens += New Token(Of Tokens)(type, st)
+                    Else
+                        exitb = str.__parseUNDEFINE(token)
+                        type = Logical.Tokens.UNDEFINE
+                        tokens += New Token(Of Tokens)(type, New String(token))
+                    End If
                 End If
 
                 If Not exitb Then
