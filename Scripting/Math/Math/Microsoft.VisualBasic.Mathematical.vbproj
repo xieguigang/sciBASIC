@@ -113,7 +113,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arithmetic.Expression\FuncParser.vb" />
     <Compile Include="Arithmetic.Expression\Func.vb" />
+    <Compile Include="Arithmetic.Expression\FuncCaller.vb" />
     <Compile Include="Arithmetic.Expression\MetaExpression.vb" />
     <Compile Include="Arithmetic.Expression\ExpressionParser.vb" />
     <Compile Include="Arithmetic.Expression\SimpleParser.vb" />
@@ -141,7 +143,6 @@
     <Compile Include="Arithmetic.Expression\SimpleExpression.vb" />
     <Compile Include="Helpers\Constants.vb" />
     <Compile Include="Helpers\Function.vb" />
-    <Compile Include="Modules\DEBUG.vb" />
     <Compile Include="Arithmetic.Expression\UnitExpression.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

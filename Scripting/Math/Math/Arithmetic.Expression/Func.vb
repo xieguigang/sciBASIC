@@ -1,34 +1,22 @@
-﻿Imports Microsoft.VisualBasic.Mathematical.Types
-Imports Microsoft.VisualBasic.Linq
-
-Public Delegate Function IFuncEvaluate(name As String, args As Double()) As Double
-
+﻿
 ''' <summary>
-''' Function object model.
+''' User define function.(用户自定义函数)
 ''' </summary>
 Public Class Func
 
-    Public ReadOnly Property Name As String
-    Public ReadOnly Property Params As New List(Of SimpleExpression)
-
-    ReadOnly __calls As IFuncEvaluate
-
     ''' <summary>
-    ''' 
+    ''' 函数名
     ''' </summary>
-    ''' <param name="Name">The function name</param>
-    ''' <param name="evaluate">Engine handle</param>
-    Sub New(Name As String, evaluate As IFuncEvaluate)
-        Me.Name = Name
-        Me.__calls = evaluate
-    End Sub
-
-    Public Overrides Function ToString() As String
-        Dim args As String() = Params.ToArray(Function(x) x.ToString)
-        Return $"{Name}({args.JoinBy(", ")})"
-    End Function
-
-    Public Function Evaluate() As Double
-        Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))
-    End Function
+    ''' <returns></returns>
+    Public Property Name As String
+    ''' <summary>
+    ''' 参数列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Args As String()
+    ''' <summary>
+    ''' 函数表达式
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Expression As String
 End Class

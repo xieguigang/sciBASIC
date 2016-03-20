@@ -1,15 +1,20 @@
-﻿Imports Microsoft.VisualBasic.Scripting
+﻿Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Module DEBUG
 
     Public Function Main() As Integer
+        Dim f As String = "f(x,y,z,aa) x+y+z+2*aa"
+
+
+
         Dim ls As String = "a and not andb xor 99>2"
         Dim rr = Logical.TokenIcer.TryParse(ls)
         Dim sr = Logical.TokenIcer.Split(rr)
 
         Dim s As String = "(1+2+3)%(-563.999*6/44)"
-        Dim list = TokenIcer.TryParse(s)
+        '   Dim list = Mathematical.Helpers.TokenIcer.TryParse(s)
 
 
         s = "f(3+6,59,12)+(1+2^2)*3!+PI/PI"

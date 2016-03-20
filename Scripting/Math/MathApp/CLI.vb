@@ -12,7 +12,7 @@ Module CLI
         Dim expr As String = args.CLICommandArgvs
         Dim sep As SimpleExpression = ExpressionParser.TryParse(expr)
         Dim n As Double = sep.Evaluate
-        Call Console.WriteLine("{0}= {1}", vbTab, n)
+        Call Console.WriteLine(n)
         Return n
     End Function
 End Module

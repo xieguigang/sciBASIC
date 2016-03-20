@@ -63,7 +63,7 @@ Public Module ExpressionParser
         Dim e As Token(Of Tokens)
         Dim o As Char
         Dim pre As Token(Of Tokens) = Nothing
-        Dim func As Func = Nothing
+        Dim func As FuncCaller = Nothing
 
         Do While Not tokens.EndRead
             Dim meta As Types.MetaExpression = Nothing
@@ -75,7 +75,7 @@ Public Module ExpressionParser
                     If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
                         meta = New Types.MetaExpression(TryParse(tokens, getValue, evaluate, False))
                     Else
-                        func = New Func(pre.Text, evaluate)  ' Get function name, and then removes the last of the expression
+                        func = New FuncCaller(pre.Text, evaluate)  ' Get function name, and then removes the last of the expression
                         o = sep.RemoveLast().Operator
 
                         Do While True
