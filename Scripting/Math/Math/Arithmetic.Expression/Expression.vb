@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Mathematical.Types
 ''' <remarks></remarks>
 Public Class Expression
 
-    Public ReadOnly Property Constant As New Helpers.Constants
+    Public ReadOnly Property Constant As Helpers.Constants
     Public ReadOnly Property Variables As Variable
     Public ReadOnly Property Functions As [Function]
 
@@ -21,8 +21,14 @@ Public Class Expression
     Public Sub New()
         Variables = New Variable(Me)
         Functions = New [Function](Me)
+        Constant = New Helpers.Constants(Me)
     End Sub
 
+    ''' <summary>
+    ''' This shared method using the default expression engine for the evaluation.
+    ''' </summary>
+    ''' <param name="expr"></param>
+    ''' <returns></returns>
     Public Shared Function Evaluate(expr As String) As Double
         Return DefaultEngine.Evaluation(expr)
     End Function
@@ -63,6 +69,7 @@ Public Class Expression
     End Sub
 
     Public Sub AddConstant(Name As String, expr As String)
-        Call Constant.Add(Name, expr)
+        Dim val As Double = Me.Evaluation(expr)
+        Call Constant.Add(Name, val)
     End Sub
 End Class

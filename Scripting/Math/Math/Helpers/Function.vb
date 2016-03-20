@@ -54,8 +54,6 @@ Namespace Helpers
             End Get
         End Property
 
-        ReadOnly _constants As Constants = New Constants
-
         Sub New(engine As Expression)
             Call MyBase.New(engine)
 
