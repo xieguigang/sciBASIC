@@ -193,6 +193,8 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
+    <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
+    <Compile Include="ComponentModel\Ranges\IntRange.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
@@ -510,7 +512,9 @@
   <ItemGroup>
     <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ComponentModel\Ranges\Copyright.txt" />
+  </ItemGroup>
   <Import Project="..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
