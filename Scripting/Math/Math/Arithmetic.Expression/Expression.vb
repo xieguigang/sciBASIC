@@ -8,15 +8,20 @@ Imports Microsoft.VisualBasic.Mathematical.Types
 ''' <remarks></remarks>
 Public Class Expression
 
-    Public ReadOnly Property Constant As Helpers.Constants = New Helpers.Constants
-    Public ReadOnly Property Variables As Helpers.Variable = New Variable
-    Public ReadOnly Property Functions As Helpers.Function = New [Function]
+    Public ReadOnly Property Constant As New Helpers.Constants
+    Public ReadOnly Property Variables As Variable
+    Public ReadOnly Property Functions As [Function]
 
     ''' <summary>
     ''' The default expression evaluation engine.
     ''' </summary>
     ''' <returns></returns>
     Public Shared ReadOnly Property DefaultEngine As New Expression
+
+    Public Sub New()
+        Variables = New Variable(Me)
+        Functions = New [Function](Me)
+    End Sub
 
     Public Shared Function Evaluate(expr As String) As Double
         Return DefaultEngine.Evaluation(expr)

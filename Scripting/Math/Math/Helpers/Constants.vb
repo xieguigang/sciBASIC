@@ -6,6 +6,7 @@ Namespace Helpers
     Public Class Constants : Inherits MemoryCollection(Of Double)
 
         Sub New()
+            Call MyBase.New(Nothing)
             Call MyBase.Add(NameOf(Math.E), Math.E, False, True)
             Call MyBase.Add(NameOf(Math.PI), Math.PI, False, True)
             Call MyBase.Add(NameOf(Scan0), Scan0, False, True)
@@ -18,9 +19,9 @@ Namespace Helpers
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function [GET](x As String, ByRef success As Boolean) As Double
-            If _ObjHash.ContainsKey(x) Then
+            If _objHash.ContainsKey(x) Then
                 success = True
-                Return _ObjHash(x)
+                Return _objHash(x)
             Else
                 success = False
                 Return -1
@@ -37,7 +38,7 @@ Namespace Helpers
         ''' const [name] [value]
         ''' </remarks>
         Public Overloads Sub Add(Name As String, value As Double)
-            If _ObjHash.ContainsKey(Name) Then
+            If _objHash.ContainsKey(Name) Then
                 Dim msg As String = $"Constant not set as the const ""{Name}"" is already set in this engine."
                 Throw New Exception(msg)
             Else

@@ -8,6 +8,10 @@ Namespace Types
     ''' <remarks></remarks>
     Public Class MetaExpression
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property [Operator] As Char
 
         ''' <summary>

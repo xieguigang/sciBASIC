@@ -14,8 +14,8 @@ Namespace Helpers
         ''' </remarks>
         Default Public Property Variable(Name As String) As Double
             Get
-                If _ObjHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
-                    Return _ObjHash(Name)
+                If _objHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
+                    Return _objHash(Name)
                 Else
                     Call Warning($"Variable '{Name}' is not exists in the memory, returns ZERO by default!")
                     Return 0
@@ -26,12 +26,13 @@ Namespace Helpers
             End Set
         End Property
 
-        Sub New()
+        Sub New(engine As Expression)
+            Call MyBase.New(engine)
             Call MyBase.Add("$", "0", True, False)
         End Sub
 
         Public Function ContainsValue(x As String) As Boolean
-            Return _ObjHash.ContainsKey(x.ToLower)
+            Return _objHash.ContainsKey(x.ToLower)
         End Function
 
         ''' <summary>

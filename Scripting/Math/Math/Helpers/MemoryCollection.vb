@@ -1,9 +1,13 @@
-﻿Public MustInherit Class MemoryCollection(Of T)
-    Implements IEnumerable(Of KeyValuePair(Of String, T))
+﻿Public MustInherit Class MemoryCollection(Of T) : Implements IEnumerable(Of KeyValuePair(Of String, T))
 
-    Protected ReadOnly _ObjHash As Dictionary(Of String, T) = New Dictionary(Of String, T)
+    Protected ReadOnly _objHash As Dictionary(Of String, T) = New Dictionary(Of String, T)
+    Protected ReadOnly __engine As Expression
 
     Dim __caches As String()
+
+    Public Sub New(engine As Expression)
+        __engine = engine
+    End Sub
 
     Public ReadOnly Property Objects As String()
         Get
@@ -13,13 +17,13 @@
 
     Public ReadOnly Property DictData As Dictionary(Of String, T)
         Get
-            Return _ObjHash
+            Return _objHash
         End Get
     End Property
 
     Protected Sub __buildCache()
         __caches = (From strName As String
-                    In _ObjHash.Keys
+                    In _objHash.Keys
                     Select strName
                     Order By Len(strName) Descending).ToArray
     End Sub
@@ -34,11 +38,11 @@
         If Not sensitive Then
             Name = Name.ToLower
         End If
-        If _ObjHash.ContainsKey(Name) Then
-            Call _ObjHash.Remove(Name)
+        If _objHash.ContainsKey(Name) Then
+            Call _objHash.Remove(Name)
         End If
 
-        Call _ObjHash.Add(Name, value)
+        Call _objHash.Add(Name, value)
         If cache Then
             Call __buildCache()
         End If
@@ -47,7 +51,7 @@
     End Function
 
     Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
-        For Each item In _ObjHash
+        For Each item In _objHash
             Yield item
         Next
     End Function

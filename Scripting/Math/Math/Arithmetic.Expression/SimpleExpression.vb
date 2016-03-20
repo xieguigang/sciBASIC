@@ -21,6 +21,10 @@ Namespace Types
         ''' <remarks></remarks>
         Dim MetaList As New List(Of MetaExpression)
 
+        ''' <summary>
+        ''' The last operator of this expression.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LastOperator As Char
             Get
                 Return MetaList.Last.Operator
@@ -130,6 +134,11 @@ Namespace Types
             Return last
         End Function
 
+        ''' <summary>
+        ''' Using the default math script expression engine.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
         Public Shared Function Evaluate(s As String) As Double
             Return SimpleParser.TryParse(s).Evaluate
         End Function

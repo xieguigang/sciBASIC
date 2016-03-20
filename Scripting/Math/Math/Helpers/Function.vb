@@ -56,7 +56,9 @@ Namespace Helpers
 
         ReadOnly _constants As Constants = New Constants
 
-        Sub New()
+        Sub New(engine As Expression)
+            Call MyBase.New(engine)
+
             For Each item In SystemPrefixFunctions
                 Call MyBase.Add(item.Key, item.Value, False, False)
             Next
@@ -70,7 +72,7 @@ Namespace Helpers
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Function Evaluate(name As String, args As Double()) As Double
-            Return _ObjHash(name.ToLower)(args)
+            Return _objHash(name.ToLower)(args)
         End Function
 
         Public Overloads Sub Add(name As String, handle As Func(Of Double(), Double))
@@ -78,27 +80,16 @@ Namespace Helpers
         End Sub
 
         ''' <summary>
-        ''' Add a user function from the user input from the console or a text file.
-        ''' </summary>
-        ''' <param name="Name">The name of the user function.</param>
-        ''' <param name="Expression">The expression of the user function.</param>
-        ''' <remarks>
-        ''' function [function name] expression
-        ''' </remarks>
-        Public Overloads Sub Add(Name As String, Expression As String)
-
-        End Sub
-
-        ''' <summary>
         ''' Parsing the use function definition from the user input value on the console 
         ''' and then add it to the function dictionary.
         ''' (从终端上面输入的用户函数的申明语句中解析出表达式，然后将其加入到用户字典中)
         ''' </summary>
-        ''' <param name="statement">[function name] expression</param>
+        ''' <param name="statement">[function name](args) expression</param>
         ''' <remarks>function [function name] expression</remarks>
-        Friend Overloads Sub Add(statement As String)
-            Dim Name As String = statement.Split.First     'The expression may be contains space character, and it maybe split into sevral peaces.
-            Call Add(Name, Mid(statement, Len(Name) + 2))
+        Public Overloads Sub Add(statement As String)
+            Dim model As Func = FuncParser.TryParse(statement)
+            Dim handle As Func(Of Double(), Double) = model.GetExpression(__engine)
+            Call Add(model.Name.ToLower, handle)
         End Sub
 
         ''' <summary>
@@ -112,28 +103,12 @@ Namespace Helpers
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function RND(LowBound As Double, UpBound As Double) As Double
-            Call VBMath.Randomize()
-            If UpBound = 0 Then
-                Return Internal_getRandomDouble()
+            Dim rand As New Random(1000)
+            If UpBound = 0R OrElse UpBound < LowBound Then
+                Return rand.NextDouble
             Else
-                Return Internal_getRandomDouble() * (UpBound - LowBound) + LowBound
+                Return LowBound + rand.NextDouble * (UpBound - LowBound)
             End If
-        End Function
-
-        ''' <summary>
-        ''' Gets a random number in the region of [0,1]. (获取一个[0,1]区间之中的随机数)
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Shared Function Internal_getRandomDouble() As Double
-            Call VBMath.Randomize()
-            Dim n As Double = Microsoft.VisualBasic.Rnd * 100
-CHECKS:     If n > 1 Then
-                n /= 10
-                GoTo CHECKS
-            End If
-
-            Return n
         End Function
     End Class
 End Namespace
