@@ -5,9 +5,11 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Module DEBUG
 
     Public Function Main() As Integer
-        Dim f As String = "f(x,y,z,aa) x+y+z+2*aa"
+        Dim f As String = "f(x,y,z,aa) x+y+z!+2*aa"
         Dim func = Mathematical.FuncParser.TryParse(f)
 
+        Call Mathematical.Expression.DefaultEngine.Functions.Add(f)
+        Call Mathematical.Expression.Evaluate("f(1,2,3,3)").__DEBUG_ECHO
 
         Dim ls As String = "a and not andb xor 99>2"
         Dim rr = Logical.TokenIcer.TryParse(ls)
