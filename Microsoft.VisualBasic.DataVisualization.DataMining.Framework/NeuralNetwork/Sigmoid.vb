@@ -1,5 +1,6 @@
 
 Namespace NeuralNetwork
+
     Public NotInheritable Class Sigmoid
         Private Sub New()
         End Sub

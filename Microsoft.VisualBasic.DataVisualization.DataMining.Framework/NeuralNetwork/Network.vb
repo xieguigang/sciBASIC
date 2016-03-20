@@ -2,63 +2,21 @@ Imports System.Collections.Generic
 Imports System.Linq
 
 Namespace NeuralNetwork
+
     Public Class Network
+
 #Region "-- Properties --"
         Public Property LearnRate() As Double
-            Get
-                Return m_LearnRate
-            End Get
-            Set
-                m_LearnRate = Value
-            End Set
-        End Property
-        Private m_LearnRate As Double
         Public Property Momentum() As Double
-            Get
-                Return m_Momentum
-            End Get
-            Set
-                m_Momentum = Value
-            End Set
-        End Property
-        Private m_Momentum As Double
         Public Property InputLayer() As List(Of Neuron)
-            Get
-                Return m_InputLayer
-            End Get
-            Set
-                m_InputLayer = Value
-            End Set
-        End Property
-        Private m_InputLayer As List(Of Neuron)
         Public Property HiddenLayer() As List(Of Neuron)
-            Get
-                Return m_HiddenLayer
-            End Get
-            Set
-                m_HiddenLayer = Value
-            End Set
-        End Property
-        Private m_HiddenLayer As List(Of Neuron)
         Public Property OutputLayer() As List(Of Neuron)
-            Get
-                Return m_OutputLayer
-            End Get
-            Set
-                m_OutputLayer = Value
-            End Set
-        End Property
-        Private m_OutputLayer As List(Of Neuron)
-#End Region
-
-#Region "-- Globals --"
-        Private Shared ReadOnly Random As New Random()
 #End Region
 
 #Region "-- Constructor --"
-        Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer, Optional learnRate__1 As System.Nullable(Of Double) = Nothing, Optional momentum__2 As System.Nullable(Of Double) = Nothing)
-            LearnRate = If(learnRate__1, 0.4)
-            Momentum = If(momentum__2, 0.9)
+        Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer, Optional learnRate__1 As Double = Nothing, Optional momentum__2 As Double = Nothing)
+            LearnRate = If(learnRate__1 = 0R, 0.4, learnRate__1)
+            Momentum = If(momentum__2 = 0R, 0.9, momentum__2)
             InputLayer = New List(Of Neuron)()
             HiddenLayer = New List(Of Neuron)()
             OutputLayer = New List(Of Neuron)()
@@ -92,7 +50,7 @@ Namespace NeuralNetwork
             Dim numEpochs = 0
 
             While [error] > minimumError AndAlso numEpochs < Integer.MaxValue
-                Dim errors = New List(Of Double)()
+                Dim errors As New List(Of Double)()
                 For Each dataSet As NeuralNetwork.DataSet In dataSets
                     ForwardPropagate(dataSet.Values)
                     BackPropagate(dataSet.Targets)
@@ -135,16 +93,6 @@ Namespace NeuralNetwork
                 i += 1
             Next
             Return sum
-        End Function
-#End Region
-
-#Region "-- Helpers --"
-        Public Shared Function GetRandom() As Double
-            Return 2 * Random.NextDouble() - 1
-        End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
         End Function
 #End Region
     End Class
