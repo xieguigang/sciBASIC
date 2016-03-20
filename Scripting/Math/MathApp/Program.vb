@@ -3,7 +3,7 @@
 Module Program
 
     Public Function Main() As Integer
-        Return GetType(CLI).RunCLI(App.CommandLine, AddressOf __calc)
+        Return GetType(CLI).RunCLI(App.CommandLine, AddressOf __calc, AddressOf CLI.CalcImplicit)
     End Function
 
     Private Function __calc() As Integer
