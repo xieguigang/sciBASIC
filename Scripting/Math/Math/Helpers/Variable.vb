@@ -30,6 +30,10 @@ Namespace Helpers
             Call MyBase.Add("$", "0", True, False)
         End Sub
 
+        Public Function ContainsValue(x As String) As Boolean
+            Return _ObjHash.ContainsKey(x.ToLower)
+        End Function
+
         ''' <summary>
         ''' Add a variable to the dictionary, if the variable is exists then will update its value.
         ''' (向字典之中添加一个变量，假若该变量存在，则更新他的值)
