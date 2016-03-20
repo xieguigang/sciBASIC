@@ -38,6 +38,14 @@ Public Module ExpressionParser
     End Function
 
     Public Function TryParse(s As String, Engine As Expression) As SimpleExpression
+        Return s.TryParse(AddressOf Engine.GetValue, AddressOf Engine.Functions.Evaluate)
+    End Function
+
+    ''' <summary>
+    ''' 这个解析器还需要考虑Stack的问题
+    ''' </summary>
+    ''' <returns></returns>
+    <Extension> Public Function TryParse(s As String, getValue As GetValue, evaluate As IFuncEvaluate) As SimpleExpression
         Dim tokens = TokenIcer.TryParse(s.ClearOverlapOperator) 'Get all of the number that appears in this expression including factoral operator.
 
         If tokens.Count = 1 Then
@@ -49,7 +57,7 @@ Public Module ExpressionParser
                 Throw New SyntaxErrorException(s)
             End If
         Else
-            Return New Pointer(Of Token(Of Tokens))(tokens).TryParse(Engine)
+            Return New Pointer(Of Token(Of Tokens))(tokens).TryParse(getValue, evaluate, False)
         End If
     End Function
 
