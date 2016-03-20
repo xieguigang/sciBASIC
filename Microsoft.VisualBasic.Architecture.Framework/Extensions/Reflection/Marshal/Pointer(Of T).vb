@@ -52,6 +52,10 @@ Namespace Marshal
             __innerRaw = array.ToArray
         End Sub
 
+        Sub New(source As IEnumerable(Of T))
+            __innerRaw = source.ToArray
+        End Sub
+
         Sub New()
         End Sub
 

@@ -1,10 +1,39 @@
-﻿Imports Microsoft.VisualBasic.Mathematical
+﻿Imports Microsoft.VisualBasic.Marshal
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Module DEBUG
 
+    Public Class [Integer] : Inherits Microsoft.VisualBasic.Language.ClassObject
+        Dim n As Integer
+
+        Sub New(x As Integer)
+            n = x
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return n
+        End Function
+    End Class
+
+    Public Iterator Function xxx() As IEnumerable(Of [Integer])
+        Yield New [Integer](1)
+        Yield New [Integer](2)
+        Yield New [Integer](3)
+    End Function
+
     Public Function Main() As Integer
+
+        Dim xxxxxxx As Pointer(Of [Integer]) = New Pointer(Of [Integer])(xxx)
+        Dim copy As [Integer] = Nothing
+
+        Do While Not (copy = xxxxxxx.Current) Is Nothing
+            Call copy.__DEBUG_ECHO
+        Loop
+
+
+
         Dim f As String = "f(x,y,z,aa) x+y+z!+2*aa"
         Dim func = Mathematical.FuncParser.TryParse(f)
 

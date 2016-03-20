@@ -1,4 +1,6 @@
-﻿Namespace Language
+﻿Imports System.Runtime.InteropServices
+
+Namespace Language
 
     Public Class ClassObject
 
@@ -23,7 +25,7 @@
         End Operator
 
         Protected Sub Copy(ByRef x As ClassObject)
-
+            x = Me
         End Sub
 
         ''' <summary>
@@ -32,7 +34,7 @@
         ''' <param name="source"></param>
         ''' <param name="target"></param>
         ''' <returns></returns>
-        Public Shared Operator =(target As ClassObject, source As ClassObject) As ClassObject
+        Public Shared Operator =(<Out> target As ClassObject, source As ClassObject) As ClassObject
             If source Is Nothing Then
                 target = Nothing
             Else
