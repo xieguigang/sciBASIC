@@ -5,12 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E3367B88-5D0C-495A-8273-331656D4B5AA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <StartupObject>Microsoft.VisualBasic.Mathematical.DEBUG</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
     <RootNamespace>Microsoft.VisualBasic.Mathematical</RootNamespace>
-    <AssemblyName>Math</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Mathematical</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -37,7 +38,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Math.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -49,7 +50,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\..\GCModeller\GCModeller\</OutputPath>
-    <DocumentationFile>Math.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -74,7 +75,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\GCModeller\bin-Debug\</OutputPath>
-    <DocumentationFile>Math.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -83,7 +84,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Math.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -142,7 +143,6 @@
     <Compile Include="Helpers\Function.vb" />
     <Compile Include="Modules\DEBUG.vb" />
     <Compile Include="Arithmetic.Expression\UnitExpression.vb" />
-    <Compile Include="Modules\Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

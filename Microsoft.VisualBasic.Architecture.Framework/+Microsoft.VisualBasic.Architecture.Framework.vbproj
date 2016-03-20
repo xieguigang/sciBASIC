@@ -187,6 +187,7 @@
     <Compile Include="CommandLine\CLI\IORedirectFile.vb" />
     <Compile Include="CommandLine\CLITools.vb" />
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
+    <Compile Include="CommandLine\Interpreters\Abstract.vb" />
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />

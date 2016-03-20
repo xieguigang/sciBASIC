@@ -32,19 +32,6 @@ Namespace CommandLine
         Protected _nsRoot As String
 
         ''' <summary>
-        ''' 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <param name="args"></param>
-        ''' <returns></returns>
-        Public Delegate Function __ExecuteFile(path As String, args As CommandLine) As Integer
-        ''' <summary>
-        ''' 假若所传入的命令行是空的，就会执行这个函数指针
-        ''' </summary>
-        ''' <returns></returns>
-        Public Delegate Function __ExecuteEmptyCli() As Integer
-
-        ''' <summary>
         ''' Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer, 
         ''' (<seealso cref="__executefile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
         ''' 这个函数指针一般是用作于执行脚本程序的
@@ -53,10 +40,11 @@ Namespace CommandLine
         Public Property ExecuteFile As __ExecuteFile
         ''' <summary>
         ''' Public Delegate Function __ExecuteEmptyCli() As Integer,
-        ''' (<seealso cref="__ExecuteEmptyCli"/>: 假若所传入的命令行是空的，就会执行这个函数指针)
+        ''' (<seealso cref="__ExecuteEmptyCLI"/>: 假若所传入的命令行是空的，就会执行这个函数指针)
         ''' </summary>
         ''' <returns></returns>
-        Public Property ExecuteEmptyCli As __ExecuteEmptyCli
+        Public Property ExecuteEmptyCli As __ExecuteEmptyCLI
+        Public Property ExecuteNotFound As __ExecuteNotFound
 
         ''' <summary>
         ''' Gets the dictionary data which contains all of the available command information in this assembly module.
@@ -136,6 +124,9 @@ Namespace CommandLine
             Else
                 If commandName.FileExists AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
                     Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
+                ElseIf Not ExecuteNotFound Is Nothing Then
+                    Return ExecuteNotFound()(DirectCast(argvs(Scan0), CommandLine))
+
                 Else
                     Dim lst As String() = Me.ListPossible(commandName)
 
@@ -374,7 +365,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function CreateInstance(Of T As Class)() As Microsoft.VisualBasic.CommandLine.Interpreter
-            Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type:=GetType(Type))
+            Return New Interpreter(Type:=GetType(Type))
         End Function
 
 #If NET_40 = 0 Then
@@ -389,19 +380,19 @@ Namespace CommandLine
         ''' 
         <ExportAPI("rundll")>
         Public Shared Function CreateInstance(assmPath As String) As Microsoft.VisualBasic.CommandLine.Interpreter
-            Dim AssemblyType As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(assmPath)
-            Dim EntryType As System.Type = GetType(Microsoft.VisualBasic.CommandLine.Reflection.[Namespace])
-            Dim LQuery = From [Module] As System.Reflection.TypeInfo
-                         In AssemblyType.DefinedTypes
-                         Let attributes As Object() = [Module].GetCustomAttributes(EntryType, inherit:=False)
-                         Where Not attributes Is Nothing AndAlso attributes.Length = 1
-                         Select [Module] '
+            Dim assembly As Assembly = Assembly.LoadFrom(assmPath)
+            Dim dllMain As Type = GetType(RunDllEntryPoint)
+            Dim LQuery = (From [mod] As Type
+                          In assembly.DefinedTypes
+                          Let attributes As Object() = [mod].GetCustomAttributes(dllMain, inherit:=False)
+                          Where Not attributes Is Nothing AndAlso attributes.Length = 1
+                          Select [mod])
+            Dim main As Type = LQuery.FirstOrDefault
 
-            If LQuery.Count > 0 Then
-                Dim Type As System.Type = LQuery.First.GetType
-                Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type)
-            Else  '没有找到执行入口点
-                Return Nothing
+            If main Is Nothing Then
+                Return Nothing  ' 没有找到执行入口点
+            Else
+                Return New Interpreter(main)
             End If
         End Function
 #End If
