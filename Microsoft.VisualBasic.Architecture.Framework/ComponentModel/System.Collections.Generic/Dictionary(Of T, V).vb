@@ -69,4 +69,12 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Call hash.Add(item)
         Return hash
     End Operator
+
+    Public Shared Operator ^(hash As Dictionary(Of V), uid As String) As V
+        If hash.ContainsKey(uid) Then
+            Return hash(uid)
+        Else
+            Return Nothing
+        End If
+    End Operator
 End Class
