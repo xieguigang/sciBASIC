@@ -364,21 +364,7 @@ Public Module WebServiceUtils
     ''' 
     <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
     <Extension> Public Function GetValue(s_Data As String) As String
-        If Len(s_Data) < 2 Then
-            Return ""
-        End If
-
-        Dim p = InStr(s_Data, ">") + 1
-        Dim q = InStrRev(s_Data, "<")
-
-        If p = 0 Or q = 0 Then
-            Return s_Data
-        ElseIf p >= q Then
-            Return ""
-        Else
-            s_Data = Mid(s_Data, p, q - p)
-            Return s_Data
-        End If
+        Return s_Data.GetStackValue(">", "<")
     End Function
 
 #If FRAMEWORD_CORE Then

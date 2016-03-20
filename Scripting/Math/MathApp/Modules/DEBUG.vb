@@ -6,7 +6,7 @@ Module DEBUG
 
     Public Function Main() As Integer
         Dim f As String = "f(x,y,z,aa) x+y+z+2*aa"
-
+        Dim func = Mathematical.FuncParser.TryParse(f)
 
 
         Dim ls As String = "a and not andb xor 99>2"

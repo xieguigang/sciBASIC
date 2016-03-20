@@ -100,6 +100,26 @@ Public Module StringHelpers
         End If
     End Function
 
+    <ExportAPI("Get.Stackvalue")>
+    <Extension>
+    Public Function GetStackValue(s_Data As String, left As String, right As String) As String
+        If Len(s_Data) < 2 Then
+            Return ""
+        End If
+
+        Dim p As Integer = InStr(s_Data, left) + 1
+        Dim q As Integer = InStrRev(s_Data, right)
+
+        If p = 0 Or q = 0 Then
+            Return s_Data
+        ElseIf p >= q Then
+            Return ""
+        Else
+            s_Data = Mid(s_Data, p, q - p)
+            Return s_Data
+        End If
+    End Function
+
     <ExportAPI("FormatZero")>
     <Extension> Public Function FormatZero(n As Integer, Optional fill As String = "00") As String
         Dim s = n.ToString

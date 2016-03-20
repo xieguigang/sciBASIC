@@ -19,4 +19,9 @@ Public Class Func
     ''' </summary>
     ''' <returns></returns>
     Public Property Expression As String
+
+    Public Overrides Function ToString() As String
+        Dim args As String = Me.Args.JoinBy(", ")
+        Return $"{Name}({args}) {Expression}"
+    End Function
 End Class
