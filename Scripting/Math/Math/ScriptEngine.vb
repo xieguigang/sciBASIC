@@ -13,6 +13,7 @@
         New Dictionary(Of String, System.Action(Of String)) From {
             {"const", AddressOf Expression.Constant.Add},
             {"function", AddressOf Expression.Functions.Add},
+            {"func", AddressOf Expression.Functions.Add},
             {"var", AddressOf Expression.Variables.Set},
             {".quit", Sub(NULL As String) NULL = Nothing}}
 
