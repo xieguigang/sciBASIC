@@ -43,8 +43,14 @@ Namespace Helpers
         ''' <remarks>
         ''' const [name] [value]
         ''' </remarks>
-        Public Sub [Set](Name As String, value As String)
+        Public Function [Set](Name As String, val As String) As Double
+            Dim value As Double = __engine.Evaluation(val)
+            Call [Set](Name, value)
+            Return value
+        End Function
 
+        Public Sub [Set](Name As String, val As Double)
+            Call MyBase.Add(Name, val, True, False)
         End Sub
 
         ''' <summary>
@@ -64,11 +70,7 @@ Namespace Helpers
         ''' <remarks></remarks>
         Public Function AssignValue(statement As String) As Double
             Dim Tokens As String() = Strings.Split(statement, "<-")
-            Return AssignValue(Tokens(Scan0), Tokens(1))
-        End Function
-
-        Public Function AssignValue(var As String, statement As String) As Double
-
+            Return [Set](Tokens(Scan0), Tokens(1))
         End Function
     End Class
 End Namespace
