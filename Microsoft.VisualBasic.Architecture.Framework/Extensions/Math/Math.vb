@@ -6,6 +6,137 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module VBMathExtensions
 
     ''' <summary>
+    ''' Calculates power of 2.
+    ''' </summary>
+    ''' 
+    ''' <param name="power">Power to raise in.</param>
+    ''' 
+    ''' <returns>Returns specified power of 2 in the case if power is in the range of
+    ''' [0, 30]. Otherwise returns 0.</returns>
+    ''' 
+    Public Function Pow2(power As Integer) As Integer
+        Return If(((power >= 0) AndAlso (power <= 30)), (1 << power), 0)
+    End Function
+
+    ''' <summary>
+    ''' Get base of binary logarithm.
+    ''' </summary>
+    ''' 
+    ''' <param name="x">Source integer number.</param>
+    ''' 
+    ''' <returns>Power of the number (base of binary logarithm).</returns>
+    ''' 
+    Public Function Log2(x As Integer) As Integer
+        If x <= 65536 Then
+            If x <= 256 Then
+                If x <= 16 Then
+                    If x <= 4 Then
+                        If x <= 2 Then
+                            If x <= 1 Then
+                                Return 0
+                            End If
+                            Return 1
+                        End If
+                        Return 2
+                    End If
+                    If x <= 8 Then
+                        Return 3
+                    End If
+                    Return 4
+                End If
+                If x <= 64 Then
+                    If x <= 32 Then
+                        Return 5
+                    End If
+                    Return 6
+                End If
+                If x <= 128 Then
+                    Return 7
+                End If
+                Return 8
+            End If
+            If x <= 4096 Then
+                If x <= 1024 Then
+                    If x <= 512 Then
+                        Return 9
+                    End If
+                    Return 10
+                End If
+                If x <= 2048 Then
+                    Return 11
+                End If
+                Return 12
+            End If
+            If x <= 16384 Then
+                If x <= 8192 Then
+                    Return 13
+                End If
+                Return 14
+            End If
+            If x <= 32768 Then
+                Return 15
+            End If
+            Return 16
+        End If
+
+        If x <= 16777216 Then
+            If x <= 1048576 Then
+                If x <= 262144 Then
+                    If x <= 131072 Then
+                        Return 17
+                    End If
+                    Return 18
+                End If
+                If x <= 524288 Then
+                    Return 19
+                End If
+                Return 20
+            End If
+            If x <= 4194304 Then
+                If x <= 2097152 Then
+                    Return 21
+                End If
+                Return 22
+            End If
+            If x <= 8388608 Then
+                Return 23
+            End If
+            Return 24
+        End If
+        If x <= 268435456 Then
+            If x <= 67108864 Then
+                If x <= 33554432 Then
+                    Return 25
+                End If
+                Return 26
+            End If
+            If x <= 134217728 Then
+                Return 27
+            End If
+            Return 28
+        End If
+        If x <= 1073741824 Then
+            If x <= 536870912 Then
+                Return 29
+            End If
+            Return 30
+        End If
+        Return 31
+    End Function
+
+    ''' <summary>
+    ''' Checks if the specified integer is power of 2.
+    ''' </summary>
+    ''' 
+    ''' <param name="x">Integer number to check.</param>
+    ''' 
+    ''' <returns>Returns <b>true</b> if the specified number is power of 2.
+    ''' Otherwise returns <b>false</b>.</returns>
+    Public Function IsPowerOf2(x As Integer) As Boolean
+        Return If((x > 0), ((x And (x - 1)) = 0), False)
+    End Function
+
+    ''' <summary>
     ''' Logical true values are regarded as one, false values as zero. For historical reasons, NULL is accepted and treated as if it were integer(0).
     ''' </summary>
     ''' <param name="bc"></param>
