@@ -142,7 +142,7 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
-    <Compile Include="NeuralNetwork\Sigmoid.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
