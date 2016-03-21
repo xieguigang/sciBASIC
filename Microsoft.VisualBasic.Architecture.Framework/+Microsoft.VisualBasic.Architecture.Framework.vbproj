@@ -57,7 +57,7 @@
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -194,6 +194,7 @@
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
+    <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
     <Compile Include="ComponentModel\Ranges\IntRange.vb" />
