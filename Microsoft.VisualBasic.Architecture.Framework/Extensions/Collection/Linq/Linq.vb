@@ -14,6 +14,29 @@ Namespace Linq
     Public Module Extensions
 
         ''' <summary>
+        ''' Gets the max element its index in the collection
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension> Public Function MaxInd(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
+            Dim i As Integer = 0
+            Dim m As T
+            Dim mi As Integer
+
+            For Each x As T In source
+                If x.CompareTo(m) > 0 Then
+                    m = x
+                    mi = i
+                End If
+
+                i += 1
+            Next
+
+            Return mi
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <typeparam name="T"></typeparam>

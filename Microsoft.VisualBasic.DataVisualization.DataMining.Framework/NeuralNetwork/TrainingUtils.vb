@@ -18,8 +18,18 @@
             NeuronNetwork = net
         End Sub
 
+        Public Sub RemoveLast()
+            If Not _dataSets.Count = 0 Then
+                Call _dataSets.RemoveLast
+            End If
+        End Sub
+
         Public Sub Add(input As Double(), output As Double())
             Call _dataSets.Add(New DataSet(input, output))
+        End Sub
+
+        Public Sub Add(x As DataSet)
+            Call _dataSets.Add(x)
         End Sub
 
         Public Sub Train()
@@ -43,6 +53,10 @@
             If train Then
                 Call Me.Train()
             End If
+        End Sub
+
+        Public Sub Corrects(dataset As DataSet, expectedResults As Double(), Optional train As Boolean = True)
+            Call Corrects(dataset.Values, dataset.Targets, expectedResults, train)
         End Sub
     End Class
 End Namespace

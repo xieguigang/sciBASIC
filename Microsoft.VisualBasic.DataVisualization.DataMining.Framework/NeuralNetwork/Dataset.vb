@@ -32,10 +32,13 @@ Namespace NeuralNetwork
             Values = values__1
             Targets = targets__2
         End Sub
+
+        Sub New()
+        End Sub
 #End Region
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return Values.Join(Targets).GetJson
         End Function
     End Class
 End Namespace
