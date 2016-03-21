@@ -12,7 +12,7 @@ Namespace Language
         ''' String source for operator <see cref="ClassObject.Operator &(ClassObject, String)"/>
         ''' </summary>
         ''' <returns>Default is using <see cref="ToString"/> method as provider</returns>
-        Protected Overridable Function __toString() As String
+        Protected Friend Overridable Function __toString() As String
             Return ToString()
         End Function
 

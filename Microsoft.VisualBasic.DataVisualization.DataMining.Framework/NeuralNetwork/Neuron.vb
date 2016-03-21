@@ -1,13 +1,15 @@
 Imports System.Collections.Generic
 Imports System.Linq
+Imports System.Web.Script.Serialization
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace NeuralNetwork
 
     Public Class Neuron
 
 #Region "-- Properties --"
-        Public Property InputSynapses() As List(Of Synapse)
-        Public Property OutputSynapses() As List(Of Synapse)
+        <ScriptIgnore> Public Property InputSynapses() As List(Of Synapse)
+        <ScriptIgnore> Public Property OutputSynapses() As List(Of Synapse)
         Public Property Bias() As Double
         Public Property BiasDelta() As Double
         Public Property Gradient() As Double
@@ -16,7 +18,7 @@ Namespace NeuralNetwork
         ''' The active function
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IFunc As IFuncs.IActivationFunction
+        <ScriptIgnore> Public ReadOnly Property IFunc As IFuncs.IActivationFunction
 #End Region
 
 #Region "-- Constructors --"
