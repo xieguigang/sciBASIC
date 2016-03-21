@@ -14,7 +14,7 @@ Public Module SVD
     ''' <summary>
     ''' Singular Value Decomposition
     ''' </summary>
-    ''' <param name="a"></param>
+    ''' <param name="a">Number of rows in A must be greater or equal to number of columns</param>
     ''' <param name="w"></param>
     ''' <param name="v"></param>
     Public Sub SVDecomposition(a As Double(,), ByRef w As Double(), ByRef v As Double(,))
