@@ -14,7 +14,20 @@ Namespace NeuralNetwork
 #End Region
 
 #Region "-- Constructor --"
-        Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer, Optional learnRate__1 As Double = Nothing, Optional momentum__2 As Double = Nothing)
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="inputSize">>=2</param>
+        ''' <param name="hiddenSize">>=2</param>
+        ''' <param name="outputSize">>=1</param>
+        ''' <param name="learnRate__1"></param>
+        ''' <param name="momentum__2"></param>
+        Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer,
+                       Optional learnRate__1 As Double = Nothing,
+                       Optional momentum__2 As Double = Nothing,
+                       Optional active As IFuncs.IActivationFunction = Nothing)
+
             LearnRate = If(learnRate__1 = 0R, 0.4, learnRate__1)
             Momentum = If(momentum__2 = 0R, 0.9, momentum__2)
             InputLayer = New List(Of Neuron)()
@@ -22,15 +35,15 @@ Namespace NeuralNetwork
             OutputLayer = New List(Of Neuron)()
 
             For i As Integer = 0 To inputSize - 1
-                InputLayer.Add(New Neuron())
+                Call InputLayer.Add(New Neuron(active))
             Next
 
             For i As Integer = 0 To hiddenSize - 1
-                HiddenLayer.Add(New Neuron(InputLayer))
+                Call HiddenLayer.Add(New Neuron(InputLayer, active))
             Next
 
             For i As Integer = 0 To outputSize - 1
-                OutputLayer.Add(New Neuron(HiddenLayer))
+                Call OutputLayer.Add(New Neuron(HiddenLayer, active))
             Next
         End Sub
 #End Region
@@ -80,6 +93,11 @@ Namespace NeuralNetwork
             OutputLayer.ForEach(Sub(a) a.UpdateWeights(LearnRate, Momentum))
         End Sub
 
+        ''' <summary>
+        ''' Compute result output for the neuron network <paramref name="inputs"/>
+        ''' </summary>
+        ''' <param name="inputs"></param>
+        ''' <returns></returns>
         Public Function Compute(ParamArray inputs As Double()) As Double()
             ForwardPropagate(inputs)
             Return OutputLayer.[Select](Function(a) a.Value).ToArray()
@@ -96,11 +114,4 @@ Namespace NeuralNetwork
         End Function
 #End Region
     End Class
-
-#Region "-- Enum --"
-    Public Enum TrainingType
-        Epoch
-        MinimumError
-    End Enum
-#End Region
 End Namespace

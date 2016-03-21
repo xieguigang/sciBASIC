@@ -134,6 +134,7 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="KMeans\Tree.vb" />
+    <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />
     <Compile Include="NeuralNetwork\Helpers.vb" />
     <Compile Include="NeuralNetwork\Network.vb" />
