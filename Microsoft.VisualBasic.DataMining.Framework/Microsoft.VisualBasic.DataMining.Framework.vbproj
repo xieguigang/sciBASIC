@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.DataVisualization.DataMining.Framework</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.DataVisualization.DataMining.Framework</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.Framework</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.Framework</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -35,7 +35,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.DataMining.Framework.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -46,7 +46,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\..\GCModeller\GCModeller\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.DataMining.Framework.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -68,7 +68,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.DataMining.Framework.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -77,7 +77,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\GCModeller\GCModeller-x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.DataMining.Framework.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -89,7 +89,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.DataMining.Framework.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -98,7 +98,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.DataMining.Framework.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -169,6 +169,8 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
+    <Compile Include="QLearning\QLearning.vb" />
+    <Compile Include="QLearning\QTable.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="SVD.vb" />
     <Compile Include="WaveletTransform.vb" />

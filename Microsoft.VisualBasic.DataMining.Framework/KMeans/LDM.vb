@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.ComponentModel
+﻿Imports Microsoft.VisualBasic.DataMining.Framework.ComponentModel
 
 Namespace KMeans
 

@@ -132,7 +132,7 @@ EXIT_:          Dim array = source.ToArray
         End Structure
 
         <ExportAPI("Cluster.Trees.Network")>
-        <Extension> Public Function TreeNET(source As IEnumerable(Of EntityLDM)) As Network.FileStream.Network
+        <Extension> Public Function TreeNET(source As IEnumerable(Of EntityLDM)) As FileStream.Network
             Dim array = (From x As EntityLDM In source
                          Let path As String() = x.Cluster.Split("."c)
                          Select New __edgePath With {

@@ -244,6 +244,12 @@ Public Module VBMathExtensions
         Return EuclideanDistance(a.ToArray, b.ToArray)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="a">Point A</param>
+    ''' <param name="b">Point B</param>
+    ''' <returns></returns>
     <ExportAPI("Euclidean", Info:="Euclidean Distance")>
     <Extension> Public Function EuclideanDistance(a As Double(), b As Double()) As Double
         If a.Length <> b.Length Then

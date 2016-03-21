@@ -36,7 +36,7 @@ Namespace NeuralNetwork
         Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional func As IFuncs.IActivationFunction = Nothing)
             Me.New(func)
             For Each inputNeuron As Neuron In inputNeurons
-                Dim synapse = New Synapse(inputNeuron, Me)
+                Dim synapse As New Synapse(inputNeuron, Me)
                 inputNeuron.OutputSynapses.Add(synapse)
                 InputSynapses.Add(synapse)
             Next

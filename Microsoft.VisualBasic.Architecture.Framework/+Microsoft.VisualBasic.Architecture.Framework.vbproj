@@ -255,6 +255,7 @@
     <Compile Include="Extensions\Image\ImageFormat.vb" />
     <Compile Include="Extensions\IO\NetFile.vb" />
     <Compile Include="Extensions\Math\Correlations.vb" />
+    <Compile Include="Extensions\Math\Ranks.vb" />
     <Compile Include="Extensions\Math\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />

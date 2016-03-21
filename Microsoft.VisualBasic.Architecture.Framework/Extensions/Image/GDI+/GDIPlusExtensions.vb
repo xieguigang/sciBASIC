@@ -17,6 +17,10 @@ Imports System.Reflection
                   Url:="http://gcmodeller.org")>
 Public Module GDIPlusExtensions
 
+    Public Function Distance(a As Point, b As Point) As Double
+        Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
+    End Function
+
     <Extension> Public Function GetCenter(size As Size) As Point
         Return New Point(size.Width / 2, size.Height / 2)
     End Function

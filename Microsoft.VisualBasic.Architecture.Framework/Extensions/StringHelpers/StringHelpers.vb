@@ -9,6 +9,11 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <Extension> Public Function Reverse(sb As StringBuilder) As StringBuilder
+        sb = New StringBuilder(sb.ToString.Reverse.ToArray)
+        Return sb
+    End Function
+
     Public ReadOnly Property StrictCompares As StringComparison = StringComparison.Ordinal
     ''' <summary>
     ''' 忽略大小写为非严格的比较

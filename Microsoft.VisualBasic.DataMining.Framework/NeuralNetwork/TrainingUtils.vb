@@ -10,6 +10,12 @@
 
         ReadOnly _dataSets As New List(Of DataSet)
 
+        Public ReadOnly Property XP As Integer
+            Get
+                Return _dataSets.Count
+            End Get
+        End Property
+
         Public Sub Encouraging()
             Call Train()
         End Sub
@@ -30,6 +36,9 @@
 
         Public Sub Add(x As DataSet)
             Call _dataSets.Add(x)
+#If DEBUG Then
+            Call _dataSets.Count.__DEBUG_ECHO
+#End If
         End Sub
 
         Public Sub Train()

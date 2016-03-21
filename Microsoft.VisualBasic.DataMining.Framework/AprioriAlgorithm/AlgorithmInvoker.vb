@@ -3,7 +3,7 @@ Imports System.Linq
 Imports System.Collections.ObjectModel
 Imports System.Windows.Input
 Imports System.ComponentModel.DataAnnotations
-Imports Microsoft.VisualBasic.DataVisualization.DataMining.Framework.AprioriAlgorithm.Entities
+Imports Microsoft.VisualBasic.DataMining.Framework.AprioriAlgorithm.Entities
 Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriAlgorithm

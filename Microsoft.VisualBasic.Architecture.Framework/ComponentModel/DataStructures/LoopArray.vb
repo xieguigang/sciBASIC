@@ -9,6 +9,10 @@
             __innerArray = source.ToArray
         End Sub
 
+        ''' <summary>
+        ''' Gets the next elements in the array, is move to end, then the index will moves to the array begining position.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function [GET]() As T
             If __p < __innerArray.Length - 1 Then
                 __p += 1
