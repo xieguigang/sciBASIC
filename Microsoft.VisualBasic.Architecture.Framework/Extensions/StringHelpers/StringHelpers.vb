@@ -9,9 +9,19 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
-    <Extension> Public Function Reverse(sb As StringBuilder) As StringBuilder
-        sb = New StringBuilder(sb.ToString.Reverse.ToArray)
+    ''' <summary>
+    ''' Returns a reversed version of String s.
+    ''' </summary>
+    ''' <param name="sb"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Reverse(ByRef sb As StringBuilder) As StringBuilder
+        Dim s As String = New String(sb.ToString.Reverse.ToArray)
+        sb = New StringBuilder(s)
         Return sb
+    End Function
+
+    Public Function Reverse(s As String) As String
+        Return New String(s.Reverse.ToArray)
     End Function
 
     Public ReadOnly Property StrictCompares As StringComparison = StringComparison.Ordinal
