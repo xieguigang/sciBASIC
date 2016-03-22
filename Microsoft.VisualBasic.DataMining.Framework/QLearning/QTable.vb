@@ -91,6 +91,7 @@ Namespace QLearning
         ''' For this example, the getNextAction function uses an e-greedy
         ''' approach, having exploration happen if the exploration chance
         ''' is rolled.
+        ''' ( **** 请注意，这个函数所返回的值为最佳选择的Index编号，所以可能还需要进行一些转换 **** )
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> the action to be taken by the calling program </returns>
@@ -138,8 +139,9 @@ Namespace QLearning
         ''' as often as the others (most unknown).
         ''' </summary>
         ''' <returns> index of action to take </returns>
-        Private Function __explore() As Integer
-            Return (New Random(Me.__randomGenerator.Next(ActionRange * 100 * _prevAction))).Next(ActionRange)
+        ''' <remarks>在这里得到可能的下一步的动作的在动作列表里面编号值， Index</remarks>
+        Protected Function __explore() As Integer
+            Return (New Random(Me.__randomGenerator.Next(ActionRange + 100 * _prevAction))).Next(ActionRange)
         End Function
 
         ''' <summary>

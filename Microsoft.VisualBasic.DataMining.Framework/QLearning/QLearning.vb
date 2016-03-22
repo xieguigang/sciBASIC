@@ -15,8 +15,11 @@ Namespace QLearning
 
         Protected ReadOnly _stat As QState(Of T)
 
-        Sub New(state As QState(Of T))
+        Public ReadOnly Property Q As QTable(Of T)
+
+        Sub New(state As QState(Of T), provider As Func(Of Integer, QTable(Of T)))
             _stat = state
+            Q = provider(ActionRange)
         End Sub
 
         Protected MustOverride Sub __init()
@@ -32,9 +35,8 @@ Namespace QLearning
         ''' <summary>
         ''' Takes a action for the agent.
         ''' </summary>
-        ''' <param name="Q"></param>
         ''' <param name="i">Iteration counts.</param>
-        Protected MustOverride Sub __run(Q As QTable(Of T), i As Integer)
+        Protected MustOverride Sub __run(i As Integer)
         ''' <summary>
         ''' If the <see cref="GoalReached"/> then reset and continute learning.
         ''' </summary>
@@ -52,21 +54,19 @@ Namespace QLearning
         ''' <returns></returns>
         Public Property GoalPenalty As Integer = -100
 
-        Public Sub RunLearningLoop(n As Integer, provider As Func(Of Integer, QTable(Of T)))
-            Dim q As QTable(Of T) = provider(ActionRange)
-
+        Public Sub RunLearningLoop(n As Integer)
             For count As Integer = 0 To n
                 Call __reset(count)
 
                 Do While Not GoalReached   ' CHECK IF WON, THEN RESET
-                    Call __run(q, count)
+                    Call __run(count)
 
                     If Not GoalReached Then
-                        Call q.UpdateQvalue(GoalPenalty, _stat.Current)  ' 目标还没有达成，则罚分
+                        Call Q.UpdateQvalue(GoalPenalty, _stat.Current)  ' 目标还没有达成，则罚分
                     End If
                 Loop
 
-                Call q.UpdateQvalue(GoalRewards, _stat.Current)  ' REWARDS AND ADJUSTMENT OF WEIGHTS SHOULD TAKE PLACE HERE
+                Call Q.UpdateQvalue(GoalRewards, _stat.Current)  ' REWARDS AND ADJUSTMENT OF WEIGHTS SHOULD TAKE PLACE HERE
             Next
         End Sub
     End Class

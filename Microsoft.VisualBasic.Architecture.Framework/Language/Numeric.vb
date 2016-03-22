@@ -54,5 +54,61 @@ Namespace Language
         <Extension> Public Function GreaterThanOrEquals(Of T As IComparable)(a As T, b As T) As Boolean
             Return a.GreaterThan(b) OrElse Equals(a, b)
         End Function
+
+        <Extension> Public Function NextInteger(rnd As Random, max As Integer) As Int
+            Return New Int(rnd.Next(max))
+        End Function
     End Module
+
+    Public Structure Int : Implements IComparable
+
+        Dim value As Integer
+
+        Sub New(x As Integer)
+            value = x
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return value
+        End Function
+
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+            Dim type As Type = obj.GetType
+
+            If type.Equals(GetType(Integer)) Then
+                Return value.CompareTo(DirectCast(obj, Integer))
+            ElseIf type.Equals(GetType(Int)) Then
+                Return value.CompareTo(DirectCast(obj, Int).value)
+            Else
+                Throw New Exception($"Miss-match of type:  {GetType(Int).FullName} --> {type.FullName}")
+            End If
+        End Function
+
+        ''' <summary>
+        ''' n &lt; value &lt;= n2
+        ''' 假若n 大于value，则返回最大值，上面的表达式肯定不成立
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(n As Integer, x As Int) As Int
+            If n >= x.value Then
+                Return New Int(Integer.MaxValue)
+            Else
+                Return x
+            End If
+        End Operator
+
+        Public Shared Operator <=(x As Int, n As Integer) As Boolean
+            Return x.value <= n
+        End Operator
+
+        Public Shared Operator >=(x As Int, n As Integer) As Boolean
+            Return x.value >= n
+        End Operator
+
+        Public Shared Operator >(n As Integer, x As Int) As Int
+            Return x
+        End Operator
+    End Structure
 End Namespace

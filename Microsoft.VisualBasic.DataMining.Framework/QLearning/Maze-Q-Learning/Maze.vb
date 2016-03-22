@@ -37,7 +37,7 @@ Public Class Maze : Inherits QLearning(Of Char())
     End Property
 
     Sub New()
-        Call MyBase.New(New Map)
+        Call MyBase.New(New Map, Function(n) New QTable(n))
     End Sub
 
     Public Overridable Sub resetMaze()
@@ -91,7 +91,7 @@ Public Class Maze : Inherits QLearning(Of Char())
 
     Dim sb As StreamWriter
 
-    Protected Overrides Sub __run(Q As QTable(Of Char()), i As Integer)
+    Protected Overrides Sub __run(i As Integer)
         ' PRINT MAP
         PrintMap()
 
