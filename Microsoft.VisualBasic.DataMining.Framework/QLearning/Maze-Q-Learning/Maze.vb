@@ -38,11 +38,8 @@ Public Class Maze : Inherits QLearning(Of Char())
         Call MyBase.New(New Map)
     End Sub
 
-    ' --- variables
-    Protected ReadOnly startingmap() As Char = {"@"c, " "c, "#"c, " "c, "#"c, "G"c, " "c, " "c, " "c}
-
     Public Overridable Sub resetMaze()
-        Call _stat.SetState(DirectCast(startingmap.Clone, Char()))
+        Call _stat.SetState({"@"c, " "c, "#"c, " "c, "#"c, "G"c, " "c, " "c, " "c}) 'startingmap
     End Sub
 
     Public Overridable Function isValidMove(action As Integer) As Boolean
