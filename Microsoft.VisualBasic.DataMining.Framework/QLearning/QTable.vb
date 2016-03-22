@@ -13,12 +13,12 @@ Namespace QLearning
     '''     
     ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications) 
     ''' </summary>
-    Public Class QTable
+    Public MustInherit Class QTable(Of T As ICloneable)
 
         ''' <summary>
         ''' for creating random numbers
         ''' </summary>
-        ReadOnly __randomGenerator As Random
+        Protected ReadOnly __randomGenerator As Random
 
         ''' <summary>
         ''' the table variable stores the Q-table, where the state is saved
@@ -70,7 +70,7 @@ Namespace QLearning
         ''' LATE, the state of the world when the action resulting in the reward
         ''' was made must be stored.
         ''' </summary>
-        Dim _prevState() As Char
+        Protected _prevState As T
         ''' <summary>
         ''' Since in Q-learning the updates to the Q values are made ONE STEP
         ''' LATE, the index of the action which resulted in the reward must be
@@ -94,8 +94,8 @@ Namespace QLearning
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> the action to be taken by the calling program </returns>
-        Public Overridable Function NextAction(map() As Char) As Integer
-            _prevState = CType(map.Clone(), Char())
+        Public Overridable Function NextAction(map As T) As Integer
+            _prevState = CType(map.Clone(), T)
 
             If __randomGenerator.NextDouble() < ExplorationChance Then
                 _prevAction = __explore()
@@ -116,7 +116,7 @@ Namespace QLearning
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> the action with the highest Q value </returns>
-        Private Function __getBestAction(map() As Char) As Integer
+        Private Function __getBestAction(map As T) As Integer
             Dim rewards() As Single = Me.__getActionsQValues(map)
             Dim maxRewards As Single = Single.NegativeInfinity
             Dim indexMaxRewards As Integer = 0
@@ -153,7 +153,7 @@ Namespace QLearning
         ''' <param name="reward"> at the current map state </param>
         ''' <param name="map"> current map state (for finding the best action of the
         ''' current map state) </param>
-        Public Overridable Sub UpdateQvalue(reward As Integer, map() As Char)
+        Public Overridable Sub UpdateQvalue(reward As Integer, map As T)
             Dim preVal() As Single = Me.__getActionsQValues(Me._prevState)
             preVal(Me._prevAction) += Me.LearningRate * (reward + Me.GammaValue * Me.__getActionsQValues(map)(Me.__getBestAction(map)) - preVal(Me._prevAction))
         End Sub
@@ -163,16 +163,8 @@ Namespace QLearning
         ''' HashMap </summary>
         ''' <param name="map"> </param>
         ''' <returns> String used as a key for the HashMap </returns>
-        Private Function __getMapString(map() As Char) As String
-            Dim result As String = ""
-            For x As Integer = 0 To map.Length - 1
-                result &= "" & AscW(map(x))
-                If x > 0 AndAlso x Mod 3 = 0 Then
-                    result += vbLf
-                End If
-            Next x
-            Return result
-        End Function
+        Protected MustOverride Function __getMapString(map As T) As String
+
         ''' <summary>
         ''' The getActionsQValues function returns an array of Q values for
         ''' all the actions available at any state. Note that if the current
@@ -182,7 +174,7 @@ Namespace QLearning
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> an array of Q values for all the actions available at any state </returns>
-        Private Function __getActionsQValues(map() As Char) As Single()
+        Private Function __getActionsQValues(map As T) As Single()
             Dim actions() As Single = GetValues(map)
             If actions Is Nothing Then
                 Dim initialActions(ActionRange - 1) As Single
@@ -194,31 +186,13 @@ Namespace QLearning
             End If
             Return actions
         End Function
-        ''' <summary>
-        ''' printQtable is included for debugging purposes and uses the
-        ''' action labels used in the maze class (even though the Qtable
-        ''' is written so that it can more generic).
-        ''' </summary>
-        Public Sub PrintQTable()
-            Dim [iterator] As IEnumerator = Table.Keys.GetEnumerator()
-            Do While [iterator].MoveNext
-                Dim key() As Char = CType([iterator].Current, Char())
-                Dim qvalues() As Single = GetValues(key)
-
-                Console.Write(AscW(key(0)) & "" & AscW(key(1)) & "" & AscW(key(2)))
-                Console.WriteLine("  UP   RIGHT  DOWN  LEFT")
-                Console.Write(AscW(key(3)) & "" & AscW(key(4)) & "" & AscW(key(5)))
-                Console.WriteLine(": " & qvalues(0) & "   " & qvalues(1) & "   " & qvalues(2) & "   " & qvalues(3))
-                Console.WriteLine(AscW(key(6)) & "" & AscW(key(7)) & "" & AscW(key(8)))
-            Loop
-        End Sub
 
         ''' <summary>
         ''' Helper function to find the Q-values of a given map state.
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> the Q-values stored of the Qtable entry of the map state, otherwise null if it is not found </returns>
-        Public Overridable Function GetValues(map() As Char) As Single()
+        Public Overridable Function GetValues(map As T) As Single()
             Dim mapKey As String = __getMapString(map)
             If Table.ContainsKey(mapKey) Then
                 Return Table(mapKey)

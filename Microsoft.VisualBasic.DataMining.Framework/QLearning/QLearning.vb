@@ -13,9 +13,10 @@ Namespace QLearning
     ''' </summary>
     Public MustInherit Class QLearning(Of T As ICloneable)
 
-        Protected _stat As QState(Of T)
+        Protected ReadOnly _stat As QState(Of T)
 
-        Sub New()
+        Sub New(state As QState(Of T))
+            _stat = state
             Call __init()
         End Sub
 
@@ -34,7 +35,7 @@ Namespace QLearning
         ''' </summary>
         ''' <param name="Q"></param>
         ''' <param name="i">Iteration counts.</param>
-        Protected MustOverride Sub __run(Q As QTable, i As Integer)
+        Protected MustOverride Sub __run(Q As QTable(Of T), i As Integer)
         ''' <summary>
         ''' If the <see cref="GoalReached"/> then reset and continute learning.
         ''' </summary>
@@ -51,8 +52,8 @@ Namespace QLearning
         ''' <returns></returns>
         Public Property GoalPenalty As Integer = -100
 
-        Public Sub RunLearningLoop(n As Integer)
-            Dim q As New QTable(ActionRange)
+        Public Sub RunLearningLoop(n As Integer, provider As Func(Of Integer, QTable(Of T)))
+            Dim q As QTable(Of T) = provider(ActionRange)
 
             For count As Integer = 0 To n
 

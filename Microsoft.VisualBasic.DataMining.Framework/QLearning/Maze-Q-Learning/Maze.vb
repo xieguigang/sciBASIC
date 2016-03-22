@@ -34,6 +34,10 @@ Public Class Maze : Inherits QLearning(Of Char())
         End Get
     End Property
 
+    Sub New()
+        Call MyBase.New(New Map)
+    End Sub
+
     ' --- variables
     Protected ReadOnly startingmap() As Char = {"@"c, " "c, "#"c, " "c, "#"c, "G"c, " "c, " "c, " "c}
 
@@ -41,14 +45,9 @@ Public Class Maze : Inherits QLearning(Of Char())
         Call _stat.SetState(DirectCast(startingmap.Clone, Char()))
     End Sub
 
-    Public Overridable Function isValidMove(action As Integer, map() As Char) As Boolean
-        Dim nextMap() As Char = getNextState(action, map)
-        Return (nextMap = map)
-    End Function
-
     Public Overridable Function isValidMove(action As Integer) As Boolean
-        Dim nextMap() As Char = __getNextState(action)
-        Return (nextMap = Map)
+        Dim nextMap() As Char = _stat.GetNextState(action)
+        Return (nextMap = _stat.Current)
     End Function
 
     Public Overridable Sub PrintMap()
@@ -84,10 +83,10 @@ Public Class Maze : Inherits QLearning(Of Char())
     End Function
 
     Private Sub __goToNextState(action As Integer)
-        _map = __getNextState(action)
+        Call _stat.SetState(_stat.GetNextState(action))
     End Sub
 
-    Protected Overrides Sub __run(Q As QTable, i As Integer)
+    Protected Overrides Sub __run(Q As QTable(Of Char()), i As Integer)
         ' PRINT MAP
         PrintMap()
 
