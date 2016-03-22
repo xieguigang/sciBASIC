@@ -8,7 +8,9 @@ Namespace ComponentModel.Collection.Generic
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <remarks></remarks>
-    Public Class HashDictionary(Of T) : Implements IDisposable, IDictionary(Of String, T)
+    Public Class HashDictionary(Of T) : Implements IDisposable
+        Implements IDictionary(Of String, T)
+        Implements IReadOnlyDictionary(Of String, T)
 
         Protected ReadOnly _hashBuffer As Dictionary(Of String, T)
         Protected ReadOnly _keysHash As Dictionary(Of String, String)
@@ -58,7 +60,7 @@ Namespace ComponentModel.Collection.Generic
             Return False
         End Function
 
-        Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count
+        Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count, IReadOnlyCollection(Of KeyValuePair(Of String, T)).Count
             Get
                 Return _keysHash.Count
             End Get
@@ -86,7 +88,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <param name="key">大小写不敏感</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, T).ContainsKey
+        Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, T).ContainsKey, IReadOnlyDictionary(Of String, T).ContainsKey
             Return _keysHash.ContainsKey(key.ToLower)
         End Function
 
@@ -97,7 +99,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Default Public Property Item(key As String) As T Implements IDictionary(Of String, T).Item
+        Default Public Property Item(key As String) As T Implements IDictionary(Of String, T).Item, IReadOnlyDictionary(Of String, T).Item
             Get
                 key = key.ToLower
                 If _keysHash.ContainsKey(key) Then
@@ -129,6 +131,12 @@ Namespace ComponentModel.Collection.Generic
             End Get
         End Property
 
+        Private ReadOnly Property __keys As IEnumerable(Of String) Implements IReadOnlyDictionary(Of String, T).Keys
+            Get
+                Return Keys
+            End Get
+        End Property
+
         Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, T).Remove
             key = key.ToLower
             If Me._keysHash.ContainsKey(key) Then
@@ -141,7 +149,7 @@ Namespace ComponentModel.Collection.Generic
             End If
         End Function
 
-        Public Function TryGetValue(key As String, ByRef value As T) As Boolean Implements IDictionary(Of String, T).TryGetValue
+        Public Function TryGetValue(key As String, ByRef value As T) As Boolean Implements IDictionary(Of String, T).TryGetValue, IReadOnlyDictionary(Of String, T).TryGetValue
             value = Me(key)
             Return _keysHash.ContainsKey(key.ToLower)
         End Function
@@ -149,6 +157,12 @@ Namespace ComponentModel.Collection.Generic
         Public ReadOnly Property Values As ICollection(Of T) Implements IDictionary(Of String, T).Values
             Get
                 Return _hashBuffer.Values
+            End Get
+        End Property
+
+        Private ReadOnly Property __values As IEnumerable(Of T) Implements IReadOnlyDictionary(Of String, T).Values
+            Get
+                Return Values
             End Get
         End Property
 
@@ -170,6 +184,7 @@ Namespace ComponentModel.Collection.Generic
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
+                    Call Me.Clear()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
@@ -192,7 +207,6 @@ Namespace ComponentModel.Collection.Generic
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
 #End Region
     End Class
 End Namespace
