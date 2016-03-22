@@ -14,6 +14,7 @@ Namespace QLearning
     ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications) 
     ''' </summary>
     Public MustInherit Class QTable(Of T As ICloneable)
+        Implements IQTable
 
         ''' <summary>
         ''' for creating random numbers
@@ -25,14 +26,14 @@ Namespace QLearning
         ''' directly as the actual map. Each map state has an array of Q values
         ''' for all the actions available for that state.
         ''' </summary>
-        Public ReadOnly Property Table As Dictionary(Of Action)
+        Public ReadOnly Property Table As Dictionary(Of Action) Implements IQTable.Table
 
         ''' <summary>
         ''' the actionRange variable determines the number of actions available
         ''' at any map state, and therefore the number of Q values in each entry
         ''' of the Q-table.
         ''' </summary>
-        Public ReadOnly Property ActionRange As Integer
+        Public ReadOnly Property ActionRange As Integer Implements IQTable.ActionRange
 
 #Region "E-GREEDY Q-LEARNING SPECIFIC VARIABLES"
 
@@ -44,7 +45,7 @@ Namespace QLearning
         ''' because it is customary that the exploration chance changes as the
         ''' training goes on.
         ''' </summary>
-        Public Property ExplorationChance As Single = 0.05F
+        Public Property ExplorationChance As Single = 0.05F Implements IQTable.ExplorationChance
         ''' <summary>
         ''' the discount factor is saved as the gammaValue variable. The
         ''' discount factor determines the importance of future rewards.
@@ -52,7 +53,7 @@ Namespace QLearning
         ''' rewards, while with a gammaValue near 1 (but below 1) the AI will
         ''' try to maximize the long-term reward even if it is many moves away.
         ''' </summary>
-        Public Property GammaValue As Single = 0.9F
+        Public Property GammaValue As Single = 0.9F Implements IQTable.GammaValue
         ''' <summary>
         ''' the learningRate determines how new information affects accumulated
         ''' information from previous instances. If the learningRate is 1, then
@@ -61,7 +62,7 @@ Namespace QLearning
         ''' customary that the learningRate changes as the
         ''' training goes on.
         ''' </summary>
-        Public Property LearningRate As Single = 0.15F
+        Public Property LearningRate As Single = 0.15F Implements IQTable.LearningRate
 #End Region
 
         'PREVIOUS STATE AND ACTION VARIABLES
@@ -82,9 +83,22 @@ Namespace QLearning
         ''' Q table constructor, initiates variables. </summary>
         ''' <param name="actionRange"> number of actions available at any map state </param>
         Public Sub New(actionRange As Integer)
-            __randomGenerator = New Random()
+            Me.New()
             Me.ActionRange = actionRange
             Me.Table = New Dictionary(Of Action)
+        End Sub
+
+        Sub New(model As QModel)
+            Me.New()
+            Me.ActionRange = model.ActionRange
+            Me.ExplorationChance = model.ExplorationChance
+            Me.GammaValue = model.GammaValue
+            Me.LearningRate = model.LearningRate
+            Me.Table = model.Actions.ToDictionary
+        End Sub
+
+        Private Sub New()
+            __randomGenerator = New Random()
         End Sub
 
         ''' <summary>
