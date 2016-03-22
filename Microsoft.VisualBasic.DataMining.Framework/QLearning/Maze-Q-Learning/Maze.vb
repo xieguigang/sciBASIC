@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.DataMining.Framework
+﻿Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.DataMining.Framework
 Imports Microsoft.VisualBasic.DataMining.Framework.QLearning
 
 Public Class Maze : Inherits QLearning(Of Char())
@@ -25,8 +27,8 @@ Public Class Maze : Inherits QLearning(Of Char())
         Get
             Dim map As Char() = _stat.Current
             Dim goalIndex As Integer = -1
-            For i As Integer = 0 To Map.Length - 1
-                If Map(i) = "G"c Then
+            For i As Integer = 0 To map.Length - 1
+                If map(i) = "G"c Then
                     goalIndex = i
                 End If
             Next i
@@ -48,22 +50,26 @@ Public Class Maze : Inherits QLearning(Of Char())
     End Function
 
     Public Overridable Sub PrintMap()
-        Call PrintMap(_stat.Current)
+        Call sb.WriteLine(PrintMap(_stat.Current))
     End Sub
 
-    Public Shared Sub PrintMap(map() As Char)
+    Public Shared Function PrintMap(map() As Char) As String
+        Dim sb As StringBuilder = New StringBuilder
+
         For i As Integer = 0 To map.Length - 1
             If i Mod 3 = 0 Then
-                Console.WriteLine("+-+-+-+")
+                sb.AppendLine("+-+-+-+")
             End If
-            Console.Write("|" & map(i))
+            sb.Append("|" & map(i))
             If i Mod 3 = 2 Then
-                Console.WriteLine("|")
+                sb.AppendLine("|")
             End If
         Next i
-        Console.WriteLine("+-+-+-+")
-        Console.WriteLine()
-    End Sub
+        sb.AppendLine("+-+-+-+")
+        sb.AppendLine()
+
+        Return sb.ToString
+    End Function
 
     Public Overridable Function __getMoveName(action As Integer) As String
         Dim result As String = "ERROR"
@@ -83,6 +89,8 @@ Public Class Maze : Inherits QLearning(Of Char())
         Call _stat.SetState(_stat.GetNextState(action))
     End Sub
 
+    Dim sb As StreamWriter
+
     Protected Overrides Sub __run(Q As QTable(Of Char()), i As Integer)
         ' PRINT MAP
         PrintMap()
@@ -95,8 +103,14 @@ Public Class Maze : Inherits QLearning(Of Char())
 
     Dim moveCounter As Integer = 0
 
-    Protected Overrides Sub __reset()
-        Console.WriteLine("GOAL REACHED IN " & moveCounter & " MOVES!")
+    Protected Overrides Sub __reset(i As Integer)
+        If Not sb Is Nothing Then
+            Call sb.Flush()
+            Call sb.Close()
+        End If
+
+        sb = New StreamWriter(New FileStream(App.AppSystemTemp & $"/maze_{i}.txt", FileMode.OpenOrCreate))
+        sb.WriteLine("GOAL REACHED IN " & moveCounter & " MOVES!")
         resetMaze()
         moveCounter = 0
     End Sub

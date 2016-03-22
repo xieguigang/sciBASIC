@@ -17,7 +17,6 @@ Namespace QLearning
 
         Sub New(state As QState(Of T))
             _stat = state
-            Call __init()
         End Sub
 
         Protected MustOverride Sub __init()
@@ -39,7 +38,8 @@ Namespace QLearning
         ''' <summary>
         ''' If the <see cref="GoalReached"/> then reset and continute learning.
         ''' </summary>
-        Protected MustOverride Sub __reset()
+        ''' <param name="i">机器学习的当前的迭代次数</param>
+        Protected MustOverride Sub __reset(i As Integer)
 
         ''' <summary>
         ''' 目标达成所得到的奖励
@@ -56,6 +56,7 @@ Namespace QLearning
             Dim q As QTable(Of T) = provider(ActionRange)
 
             For count As Integer = 0 To n
+                Call __reset(count)
 
                 Do While Not GoalReached   ' CHECK IF WON, THEN RESET
                     Call __run(q, count)
@@ -65,7 +66,6 @@ Namespace QLearning
                     End If
                 Loop
 
-                Call __reset()
                 Call q.UpdateQvalue(GoalRewards, _stat.Current)  ' REWARDS AND ADJUSTMENT OF WEIGHTS SHOULD TAKE PLACE HERE
             Next
         End Sub

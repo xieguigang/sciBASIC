@@ -194,6 +194,10 @@ Public Module App
         End Get
     End Property
 
+    Sub New()
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+    End Sub
+
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at location: %<see cref="App.LocalData"/>%/.logs/err/.
     ''' (简单日志记录，函数返回空值)
