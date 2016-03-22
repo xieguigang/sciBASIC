@@ -9,16 +9,11 @@ Imports System.Collections
 ''' 
 ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications) 
 ''' </summary>
-Public Class QLearning
+Public MustInherit Class QLearning
+
     ' --- variables
     Protected ReadOnly startingmap() As Char = {"@"c, " "c, "#"c, " "c, "#"c, "G"c, " "c, " "c, " "c}
     Protected _map() As Char
-
-    ' --- movement constants
-    Public Const UP As Integer = 0
-    Public Const RIGHT As Integer = 1
-    Public Const DOWN As Integer = 2
-    Public Const LEFT As Integer = 3
 
     Public Sub New()
         resetMaze()
@@ -34,11 +29,11 @@ Public Class QLearning
         _map = CType(startingmap.Clone(), Char())
     End Sub
 
-    Public Overridable ReadOnly Property ActionRange As Integer
-        Get
-            Return 4
-        End Get
-    End Property
+    ''' <summary>
+    ''' The size of the <see cref="QTable"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public MustOverride ReadOnly Property ActionRange As Integer
 
     ''' <summary>
     ''' Returns the map state which results from an initial map state after an
@@ -105,17 +100,7 @@ Public Class QLearning
         End Get
     End Property
 
-    Public Overridable ReadOnly Property GoalReached As Boolean
-        Get
-            Dim goalIndex As Integer = -1
-            For i As Integer = 0 To Map.Length - 1
-                If Map(i) = "G"c Then
-                    goalIndex = i
-                End If
-            Next i
-            Return (goalIndex = -1)
-        End Get
-    End Property
+    Public MustOverride ReadOnly Property GoalReached As Boolean
 
     Public Overridable Function isGoalReached(map() As Char) As Boolean
         Dim goalIndex As Integer = -1
@@ -146,45 +131,19 @@ Public Class QLearning
         Return x + 3 * y
     End Function
 
-    Public Overridable Sub PrintMap()
-        Call PrintMap(Map)
-    End Sub
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="Q"></param>
+    ''' <param name="i">Iteration counts.</param>
+    Protected MustOverride Sub __run(Q As QTable, i As Integer)
 
-    Public Shared Sub PrintMap(map() As Char)
-        For i As Integer = 0 To map.Length - 1
-            If i Mod 3 = 0 Then
-                Console.WriteLine("+-+-+-+")
-            End If
-            Console.Write("|" & AscW(map(i)))
-            If i Mod 3 = 2 Then
-                Console.WriteLine("|")
-            End If
-        Next i
-        Console.WriteLine("+-+-+-+")
-    End Sub
-
-    Public Overridable Function __getMoveName(action As Integer) As String
-        Dim result As String = "ERROR"
-        If action = UP Then
-            result = "UP"
-        ElseIf action = RIGHT Then
-            result = "RIGHT"
-        ElseIf action = DOWN Then
-            result = "DOWN"
-        ElseIf action = LEFT Then
-            result = "LEFT"
-        End If
-        Return result
-    End Function
-
-    Public Overridable Sub runLearningLoop()
+    Public Sub RunLearningLoop(n As Integer)
         Dim q As New QTable(ActionRange)
         Dim moveCounter As Integer = 0
 
-        Dim count As Integer = 0
-        Do While count < 100
-            ' PRINT MAP
-            PrintMap()
+        For count As Integer = 0 To n
+
             ' CHECK IF WON, THEN RESET
             If GoalReached Then
                 Console.WriteLine("GOAL REACHED IN " & moveCounter & " MOVES!")
@@ -208,22 +167,6 @@ Public Class QLearning
                 q.UpdateQvalue(-100, Map)
             End If
 
-
-            ' COMMENT THE SLEEP FUNCTION IF YOU NEED FAST TRAINING WITHOUT
-            ' NEEDING TO ACTUALLY SEE IT PROGRESS
-            'Thread.sleep(1000);
-        Loop
-    End Sub
-
-
-    ''' <summary>
-    ''' Q-learning maze-solving testing method </summary>
-    Public Shared Sub Main(s() As String)
-        Dim app As New QLearning()
-        Try
-            app.runLearningLoop()
-        Catch e As Exception
-            Console.WriteLine("Thread.sleep interrupted!")
-        End Try
+        Next
     End Sub
 End Class

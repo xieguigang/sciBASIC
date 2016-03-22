@@ -13,6 +13,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datavisualization.Network",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{AF43BE16-2B66-4DE6-92A9-AD520503972F}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Maze-Q-Learning", "QLearning\Maze-Q-Learning\Maze-Q-Learning.vbproj", "{04F3D095-69B9-4547-8088-82A499DB67C0}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems*{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}*SharedItemsImports = 4
@@ -74,6 +76,18 @@ Global
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.Release|x64.Build.0 = Release|x64
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.Release|x86.ActiveCfg = Release|Any CPU
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.Release|x86.Build.0 = Release|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Debug|x64.ActiveCfg = Debug|x64
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Debug|x64.Build.0 = Debug|x64
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Debug|x86.Build.0 = Debug|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Release|x64.ActiveCfg = Release|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Release|x64.Build.0 = Release|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{04F3D095-69B9-4547-8088-82A499DB67C0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
