@@ -27,6 +27,17 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
                   Publisher:="xie.guigang@gmail.com")>
 Public Module Extensions
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path">Csv file path</param>
+    ''' <returns></returns>
+    Public Function GetLocusMapName(path As String) As String
+        Dim first As String = path.ReadFirstLine
+        Dim tokens = DocumentStream.CharsParser(first)
+        Return tokens.FirstOrDefault
+    End Function
+
     <Extension>
     Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
         Dim doc As DocumentStream.File = StorageProvider.Reflection.Reflector.Save(source, False)

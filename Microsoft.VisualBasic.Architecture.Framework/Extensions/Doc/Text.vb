@@ -1,10 +1,23 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
+
+    ''' <summary>
+    ''' Read the first line of the text in the file.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    <Extension> Public Function ReadFirstLine(path As String) As String
+        Using reader As StreamReader = New StreamReader(New FileStream(path, FileMode.Open))
+            Dim first As String = reader.ReadLine
+            Return first
+        End Using
+    End Function
 
     ''' <summary>
     '''
