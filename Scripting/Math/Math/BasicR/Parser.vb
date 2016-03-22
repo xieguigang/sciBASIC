@@ -1,9 +1,8 @@
-﻿
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
 
 Namespace BasicR
 
-    Friend NotInheritable Class Parser
+    Public Module Parser
 
         Const MATRIX_WIDTH As String = "width:=\d+"
         Const MATRIX_HEIGHT As String = "height:=\d+"
@@ -16,7 +15,7 @@ Namespace BasicR
         ''' <param name="expression"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Matrix(expression As String) As MATRIX
+        Public Function Matrix(expression As String) As MATRIX
             Dim Data As String = Regex.Match(expression, MATRIX_DATA).Value
             Dim match As Match = Regex.Match(expression, MATRIX_SIZE)
             Dim Width, Height As Integer
@@ -40,7 +39,11 @@ Namespace BasicR
                 Next
             Next
 
-            Return New MATRIX With {.Ele = MAT, .Dim1 = Width, .Dim2 = Height}
+            Return New MATRIX With {
+                .Ele = MAT,
+                .Dim1 = Width,
+                .Dim2 = Height
+            }
         End Function
-    End Class
+    End Module
 End Namespace

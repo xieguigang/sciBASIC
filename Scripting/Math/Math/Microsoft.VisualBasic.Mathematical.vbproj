@@ -124,9 +124,9 @@
     <Compile Include="BasicR\Helpers\Constants.vb" />
     <Compile Include="BasicR\Helpers\Function.vb" />
     <Compile Include="BasicR\Helpers\Variable.vb" />
-    <Compile Include="BasicR\MATRIX.vb" />
+    <Compile Include="BasicR\Matrix\MATRIX.vb" />
     <Compile Include="BasicR\Parser.vb" />
-    <Compile Include="BasicR\Solvers\Functions.vb" />
+    <Compile Include="BasicR\Matrix\Functions.vb" />
     <Compile Include="BasicR\Solvers\SOR.vb" />
     <Compile Include="BasicR\Solvers\GaussianElimination.vb" />
     <Compile Include="BasicR\Solvers\ISolver.vb" />

@@ -1,137 +1,222 @@
-﻿Imports System.Text
-Imports int = System.Int32
 
 Namespace BasicR
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' Matlab里常用的矩阵运算函数  
+    ''' %假设矩阵为A
+    ''' det(A)求矩阵行列式
+    ''' eig(A)求矩阵特征值或特征向量
+    ''' inv(A)矩阵A求逆
+    ''' pinv(A)矩阵A求伪逆
+    ''' rank(A)求矩阵A的秩
+    ''' svd(A)求矩阵A的奇异值或进行奇异值分解
+    ''' gsvd(A)求矩阵A的广义奇异值
+    ''' trace(A)求矩阵A的迹
+    ''' schur(A)对矩阵A进行Schur分解
+    ''' hess(A)求矩阵A的Hessenburg标准型
+    ''' cond(A)求矩阵A的范数
+    ''' chol(A)对矩阵A进行Cholesky分解
+    ''' lu(A)对矩阵A进行lu分解
+    ''' qr(A)对矩阵A进行QR分解
+    ''' poly(A)求矩阵A的特征多项式
+    ''' </remarks>
     Public Class MATRIX
 
+        Public Dim1 As Integer, Dim2 As Integer
+        Public Ele As Double(,)
+
         ''' <summary>
-        ''' 数组维数
+        ''' 获取矩阵行数
         ''' </summary>
+        ''' <returns>函数将返回矩阵的行数</returns>
         ''' <remarks></remarks>
-        Dim dim1, dim2 As Integer
-        ''' <summary>
-        ''' 用二维数组构造数学意义下的矩阵
-        ''' 矩阵元素保存于对象ele中
-        ''' </summary>
-        ''' <remarks></remarks>
-        Dim Ele As Double(,)
+        Public ReadOnly Property GetSize() As Integer
+            Get
+                Return Ele.Length \ Ele.GetLength(0)
+            End Get
+        End Property
+
+        Public ReadOnly Property Length As Integer
+            Get
+                Return Ele.Length
+            End Get
+        End Property
 
         Public Sub New(m As Integer, n As Integer)
-            dim1 = m
-            dim2 = n
-            Ele = New Double(m, n)
+            Dim1 = m : Dim2 = n
+
+            '用二维数组构造数学意义下的矩阵
+            '矩阵元素保存于对象ele中
+            Ele = New Double(m, n) {}
         End Sub
 
-        Public Shared Operator +(a1 As MATRIX, a2 As MATRIX) As MATRIX
-            Dim m As int = a1.dim1, n As int = a1.dim2
+        Protected Friend Sub New()
+        End Sub
 
-            Dim a3 As MATRIX = New MATRIX(m, n)
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) + a2(i, j)
-                Next
-            Next
-            Return a3
+        Public Shared Widening Operator CType(Array As Double(,)) As MATRIX
+            Return New MATRIX With {.Ele = Array, .Dim1 = Array.Length, .Dim2 = Array.GetLength(0)}
         End Operator
 
-        Public Shared Operator -(a1 As MATRIX, a2 As MATRIX) As MATRIX
-            Dim m As Integer = a1.dim2, n As Integer = a1.dim2
-
-            Dim a3 As MATRIX = New MATRIX(m, n)
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) - a2(i, j)
-                Next
-            Next
-            Return a3
+        Public Shared Widening Operator CType(n As Double) As MATRIX
+            Dim MAT As MATRIX = New MATRIX(0, 0)
+            MAT(0, 0) = n
+            Return MAT
         End Operator
-
 
         ''' <summary>
-        '''     //-------两个矩阵乘法算符重载
-        '''   //------矩阵元素分别相乘，相当于MATLAB中的   .*
-        '''   // 要求两个矩阵维数相同，矩阵类不进行个数判断
+        ''' 调整矩阵的大小，并保留原有的数据
         ''' </summary>
+        ''' <param name="m"></param>
+        ''' <param name="n"></param>
+        ''' <remarks></remarks>
+        Public Sub Resize(m As Integer, n As Integer)
+            Me.Dim1 = m
+            Me.Dim2 = n
+            ReDim Preserve Ele(m - 1, n - 1)
+        End Sub
+
+        ''' <summary>
+        ''' 获取仅包含有一个元素的矩阵对象
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Shared Function Number() As MATRIX
+            Return New MATRIX(0, 0)
+        End Function
+
+        ''' <summary>
+        ''' 两个矩阵加法算符重载，矩阵元素分别相加
+        ''' </summary>
+        ''' <param name="a1"></param>
+        ''' <param name="a2"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Shared Operator +(a1 As MATRIX, a2 As MATRIX) As MATRIX
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
+
+            Dim a3 As New MATRIX(m, n)
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a3.Ele(i, j) = a1.Ele(i, j) + a2.Ele(i, j)
+                Next
+            Next
+
+            Return a3
+        End Operator
+
+        ''' <summary>
+        ''' 两个矩阵减法算符重载，矩阵元素分别相减
+        ''' </summary>
+        ''' <param name="a1"></param>
+        ''' <param name="a2"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Shared Operator -(a1 As MATRIX, a2 As MATRIX) As MATRIX
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
+
+            Dim a3 As New MATRIX(m, n)
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a3.Ele(i, j) = a1.Ele(i, j) - a2.Ele(i, j)
+                Next
+            Next
+
+            Return a3
+        End Operator
+
+        ''' <summary>
+        ''' 两个矩阵乘法算符重载，矩阵元素分别相乘，相当于MATLAB中的   .*，要求两个矩阵维数相同，矩阵类不进行个数判断
+        ''' </summary>
+        ''' <param name="a1"></param>
+        ''' <param name="a2"></param>
+        ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator *(a1 As MATRIX, a2 As MATRIX) As MATRIX
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim m = a1.dim1, n = a1.dim2
-
-            Dim a3 As MATRIX = New MATRIX(m, n)
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) * a2(i, j)
+            Dim a3 As New MATRIX(m, n)
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a3.Ele(i, j) = a1.Ele(i, j) * a2.Ele(i, j)
                 Next
             Next
+
             Return a3
         End Operator
 
         ''' <summary>
-        ''' 
-        '''    //-------两个矩阵除法算符重载
-        '''    //------矩阵元素分别相除，相当于MATLAB中的   ./
-        '''    // 要求两个矩阵维数相同，矩阵类不进行个数判断
+        ''' 两个矩阵除法算符重载，矩阵元素分别相除，相当于MATLAB中的   ./，要求两个矩阵维数相同，矩阵类不进行个数判断
         ''' </summary>
         ''' <param name="a1"></param>
         ''' <param name="a2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator /(a1 As MATRIX, a2 As MATRIX) As MATRIX
-            Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a3 As MATRIX = New MATRIX(m, n)
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) / a2(i, j)
+            Dim a3 As New MATRIX(m, n)
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a3.Ele(i, j) = a1.Ele(i, j) / a2.Ele(i, j)
                 Next
             Next
+
             Return a3
         End Operator
 
         ''' <summary>
-        ''' 
-        '''   //矩阵加实数算符重载
-        ''' //各分量分别加实数
+        ''' 矩阵加实数算符重载，各分量分别加实数
         ''' </summary>
         ''' <param name="a1"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator +(a1 As MATRIX, x As Double) As MATRIX
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim m = a1.dim1, n = a1.dim2
+            Dim a2 As New MATRIX(m, n)
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
-
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) + x
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) + x
                 Next
             Next
 
-            Return a2
 
+            Return a2
         End Operator
 
 
-
         ''' <summary>
-        '''     //矩阵减实数算符重载
-        '''   //各分量分别减实数
+        ''' 矩阵减实数算符重载，各分量分别减实数
         ''' </summary>
         ''' <param name="a1"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator -(a1 As MATRIX, x As Double) As MATRIX
-            Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
+            Dim a2 As New MATRIX(m, n)
 
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) - x
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) - x
                 Next
             Next
 
@@ -139,19 +224,22 @@ Namespace BasicR
         End Operator
 
         ''' <summary>
-        ''' 
-        ''' //矩阵乘以实数算符重载
-        '''  //各分量分别乘以实数
+        ''' 矩阵乘以实数算符重载，各分量分别乘以实数
         ''' </summary>
+        ''' <param name="a1"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator *(a1 As MATRIX, x As Double) As MATRIX
-   Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
+            Dim a2 As New MATRIX(m, n)
 
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) * x
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) * x
                 Next
             Next
 
@@ -159,22 +247,22 @@ Namespace BasicR
         End Operator
 
         ''' <summary>
-        ''' 
-        ''' //矩阵除以实数算符重载
-        '''  //各分量分别除以实数
+        ''' 矩阵除以实数算符重载，各分量分别除以实数
         ''' </summary>
         ''' <param name="a1"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator /(a1 As MATRIX, x As Double) As MATRIX
-            Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
+            Dim a2 As New MATRIX(m, n)
 
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) / x
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) / x
                 Next
             Next
 
@@ -184,99 +272,110 @@ Namespace BasicR
 
 
         ''' <summary>
-        '''     //实数加矩阵算符重载
-        ''' //各分量分别加实数
+        ''' 实数加矩阵算符重载，各分量分别加实数
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="a1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator +(x As Double, a1 As MATRIX) As MATRIX
-            Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
+            Dim a2 As New MATRIX(m, n)
 
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = a1(i, j) + x
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) + x
                 Next
             Next
+
 
             Return a2
         End Operator
 
+
+
         ''' <summary>
-        '''     //实数减矩阵算符重载
-        '''   //各分量分别减实数 
+        ''' 实数减矩阵算符重载，各分量分别减实数
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="a1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator -(x As Double, a1 As MATRIX) As MATRIX
-            Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
+            Dim a2 As New MATRIX(m, n)
 
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = x - a1(i, j)
-                    'a3(i, j) = a1(i, j) - x
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) - x
                 Next
             Next
 
             Return a2
         End Operator
 
+
         ''' <summary>
-        '''   //实数乘矩阵算符重载
-        '''    //各分量分别乘以实数
-        ''' 
+        ''' 实数乘矩阵算符重载，各分量分别乘以实数
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="a1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator *(x As Double, a1 As MATRIX) As MATRIX
-            Dim m = a1.dim1, n = a1.dim2
+            Dim m As Integer, n As Integer
+            m = a1.Dim1
+            n = a1.Dim2
 
-            Dim a2 As MATRIX = New MATRIX(m, n)
+            Dim a2 As New MATRIX(m, n)
 
-            For i As int = 0 To m
-                For j As Integer = 0 To n
-                    a3(i, j) = x * a1(i, j)
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    a2.Ele(i, j) = a1.Ele(i, j) * x
                 Next
             Next
 
             Return a2
         End Operator
 
-
-
         ''' <summary>
-        '''   //数学上的矩阵相乘
+        ''' 数学上的矩阵相乘
         ''' </summary>
-        ''' <param name="MAT"></param>
-        ''' <param name="MAT"></param>
+        ''' <param name="a1"></param>
+        ''' <param name="a2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-    public  Shared  operator |(MAT a1, MAT a2) As MATRIX 
-            Dim m, n, p, q As int
+        Public Shared Operator Or(a1 As MATRIX, a2 As MATRIX) As MATRIX
+            Dim m As Integer, n As Integer, p As Integer, q As Integer
 
-            m = a1.dim1
-            n = a1.dim2
+            m = a1.Dim1
+            n = a1.Dim2
 
-            p = a2.dim1
-            q = a2.dim2
+            p = a2.Dim1
+            q = a2.Dim2
 
-            If n <> p Then System.Console.WriteLine("Inner matrix dimensions must agree！")'      //如果矩阵维数不匹配给出告警信息
+            If n <> p Then
+                System.Console.WriteLine("Inner matrix dimensions must agree！")
+            End If
+            '如果矩阵维数不匹配给出告警信息
 
-            Dim a3 As MATRIX = New MATrix(m, q)
+            '新矩阵，用于存放结果
+            Dim a3 As New MATRIX(m, q)
 
-            For i As Integer = 0 To m
-                For j As int = 0 To q
-                    For k As int = 0 To n
-                        a3(i, j) = a3(i, j) + a1(i, k) * a2(k, j)
+            Dim i As Integer, j As Integer
+
+
+            For i = 0 To m - 1
+                For j = 0 To q - 1
+                    a3.Ele(i, j) = 0.0
+                    For k As Integer = 0 To n - 1
+                        a3.Ele(i, j) = a3.Ele(i, j) + a1.Ele(i, k) * a2.Ele(k, j)
                     Next
                 Next
             Next
@@ -286,50 +385,89 @@ Namespace BasicR
 
 
         ''' <summary>
-        ''' 
-        '''  //矩阵乘以向量(线性变换）
-        ''' //即 b=Ax
+        ''' 矩阵乘以向量(线性变换），即 b=Ax
         ''' </summary>
         ''' <param name="A"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(A As MATRIX, x As Vector) As Vector
+        Public Shared Operator Or(A As MATRIX, x As VEC) As VEC
+            Dim m As Integer, n As Integer, p As Integer
+            m = A.Dim1
+            n = A.Dim2
 
-            Dim m, n, p As int
-            m = A.dim1
-            n = A.dim2
+            p = x.[Dim]
 
-            p = x.dim
+            If n <> p Then
+                System.Console.WriteLine("Inner matrix dimensions must agree！")
+            End If
+            '如果矩阵维数不匹配，给出告警信息
 
-            If n <> p Then System.Console.WriteLine("Inner matrix dimensions must agree！") '    //如果矩阵维数不匹配，给出告警信息
+            Dim b As New VEC(m)
 
-            Dim b As Vector = New Vector(m)
+            For i As Integer = 0 To m - 1
+                b.Ele(i) = 0.0
 
-            For i As int = 0 To m
-                For k As int = 0 To n
-                    b(i) = b(i) + A(i, k) * x(k)
+                For k As Integer = 0 To n - 1
+                    b.Ele(i) = b.Ele(i) + A.Ele(i, k) * x.Ele(k)
                 Next
+            Next
 
-                Return b
+            Return b
         End Operator
 
         ''' <summary>
-        ''' 矩阵转置
+        ''' 矩阵转置操作
         ''' </summary>
         ''' <param name="A"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function T(A As MATRIX) As MATRIX
-            Dim m As int = A.dim1, n As int = A.dim2
+        Public Shared Function Transpose(A As MATRIX) As MATRIX
+            Dim m As Integer, n As Integer
+            m = A.Dim1
+            n = A.Dim2
 
-            Dim TA As MATRIX = New MATRIX(n, m)
-            For i As int = 0 To n
-                For j As int = 0 To m
-                    TA(i, j) = A(j, i)
+            Dim TA As New MATRIX(n, m)
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To m - 1
+                    TA.Ele(i, j) = A.Ele(j, i)
                 Next
             Next
+
             Return TA
         End Function
+
+        ''' <summary>
+        ''' 获取当前的矩阵对象的转置矩阵
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Transpose() As MATRIX
+            Dim m As Integer, n As Integer
+            m = Dim1
+            n = Dim2
+
+            Dim TA As New MATRIX(n, m)
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To m - 1
+                    TA.Ele(i, j) = Ele(j, i)
+                Next
+            Next
+
+            Return TA
+        End Function
+
+        Public Shared Narrowing Operator CType(MAT As MATRIX) As Double(,)
+            Return MAT.Ele
+        End Operator
+
+        Default Public Property Item(index1 As Integer, index2 As Integer) As Double
+            Get
+                Return Ele(index1, index2)
+            End Get
+            Set(value As Double)
+                Ele(index1, index2) = value
+            End Set
+        End Property
     End Class
 End Namespace
