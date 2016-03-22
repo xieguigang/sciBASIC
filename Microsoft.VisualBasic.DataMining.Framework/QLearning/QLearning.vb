@@ -47,7 +47,7 @@ Namespace QLearning
         ''' 目标达成所得到的奖励
         ''' </summary>
         ''' <returns></returns>
-        Public Property GoalRewards As Integer = 1
+        Public Property GoalRewards As Integer = 10
         ''' <summary>
         ''' 目标没有达成的罚分
         ''' </summary>

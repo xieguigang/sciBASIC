@@ -228,7 +228,14 @@ Namespace StorageProvider.ComponentModels
                                   Where [Property].Value.ProviderId = Reflection.ProviderIds.MetaAttribute
                                   Select DirectCast([Property].Value, MetaAttribute)).FirstOrDefault
             If MetaAttributes Is Nothing Then
-                Dim type As Type = Properties.Keys.First.DeclaringType
+                Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
+
+                If prop Is Nothing Then
+                    Dim msg As String = "Explicit option is set TRUE, but could not found Meta attribute for the dynamics property!"
+                    Throw New Exception(msg)
+                End If
+
+                Dim type As Type = prop.DeclaringType
                 If type.IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
                     type = type.BaseType
                     Dim metaProp = type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),

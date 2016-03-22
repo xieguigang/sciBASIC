@@ -1,11 +1,17 @@
-﻿Namespace ComponentModel.DataSourceModel
+﻿Imports Microsoft.VisualBasic.Language
+
+Namespace ComponentModel.DataSourceModel
 
     Public Interface IDynamicMeta(Of T)
 
         Property Properties As Dictionary(Of String, T)
     End Interface
 
-    Public MustInherit Class DynamicPropertyBase(Of T)
+    ''' <summary>
+    ''' Has a dictionary as a dynamics property.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public MustInherit Class DynamicPropertyBase(Of T) : Inherits ClassObject
         Implements IDynamicMeta(Of T)
 
         Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties

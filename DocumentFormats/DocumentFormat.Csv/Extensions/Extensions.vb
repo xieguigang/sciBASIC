@@ -200,7 +200,7 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' Save the object collection data dump into a csv file.(将一个对象数组之中的对象保存至一个Csv文件之中，请注意，这个方法仅仅会保存简单的基本数据类型的属性值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="path"></param>
     ''' <param name="explicit">If true then all of the simple data type property its value will be save to the data file, 
     ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ColumnAttribute"></see>
@@ -208,25 +208,32 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function SaveTo(Of T As Class)(Collection As Generic.IEnumerable(Of T),
+    <Extension> Public Function SaveTo(Of T As Class)(source As IEnumerable(Of T),
                                                       path As String,
                                                       Optional explicit As Boolean = False,
-                                                      Optional encoding As System.Text.Encoding = Nothing) As Boolean
+                                                      Optional encoding As Encoding = Nothing) As Boolean
 
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
-        Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", Collection.Count)
+        Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
 
-        If Collection.Count > 20000 Then
-            Call Csv.StorageProvider.Reflection.Reflector.Save(Collection, explicit).Save(path, LazySaved:=True, encoding:=encoding)
+        If source.Count > 20000 Then
+            Call Reflector.Save(source, explicit).Save(path, LazySaved:=True, encoding:=encoding)
         Else
-            Call Csv.StorageProvider.Reflection.Reflector.Save(Collection, explicit).Save(path, LazySaved:=False, encoding:=encoding)
+            Call Reflector.Save(source, explicit).Save(path, LazySaved:=False, encoding:=encoding)
         End If
 
         Call Console.WriteLine("CSV saved!")
 
         Return True
+    End Function
+
+    <Extension> Public Function SaveTo(Of T As Class)(source As IEnumerable(Of T),
+                                                      path As String,
+                                                      encoding As Encodings,
+                                                      Optional explicit As Boolean = False) As Boolean
+        Return source.SaveTo(path, explicit, encoding.GetEncodings)
     End Function
 
     ''' <summary>

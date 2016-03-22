@@ -186,9 +186,9 @@ Namespace StorageProvider.Reflection
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
             Dim LQuery As DocumentStream.RowObject() = (From itmRow As Object In source.AsParallel
-                                         Where Not itmRow Is Nothing
-                                         Let createdRow As DocumentStream.RowObject = RowWriter.ToRow(itmRow)
-                                         Select createdRow).ToArray '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
+                                                        Where Not itmRow Is Nothing
+                                                        Let createdRow As DocumentStream.RowObject = RowWriter.ToRow(itmRow)
+                                                        Select createdRow).ToArray '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
             Call CsvData.Add(RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(source.FirstOrDefault)))
             Call CsvData.AppendRange(LQuery)
