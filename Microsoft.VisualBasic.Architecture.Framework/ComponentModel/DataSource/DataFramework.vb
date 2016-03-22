@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Serialization.ConfigurationMappings
 
 Namespace ComponentModel.DataSourceModel
 
@@ -44,8 +45,8 @@ Namespace ComponentModel.DataSourceModel
         ''' 将字符串数据类型转换为其他的数据类型
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property BasicTypesLoading As Dictionary(Of System.Type, ConfigurationMappings.__StringTypeCaster) =
-            New Dictionary(Of Type, ConfigurationMappings.__StringTypeCaster) From {
+        Public ReadOnly Property BasicTypesLoading As Dictionary(Of System.Type, __StringTypeCaster) =
+            New Dictionary(Of Type, __StringTypeCaster) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
                 {GetType(Boolean), AddressOf getBoolean},
@@ -57,7 +58,7 @@ Namespace ComponentModel.DataSourceModel
                 {GetType(Char), Function(s) s.FirstOrDefault}
         }
 
-        Public ReadOnly Property BasicTypesFlushs As Dictionary(Of Type, ConfigurationMappings.__LDMStringTypeCastHandler) =
+        Public ReadOnly Property BasicTypesFlushs As Dictionary(Of Type, __LDMStringTypeCastHandler) =
             New Dictionary(Of Type, __LDMStringTypeCastHandler) From {
  _
                 {GetType(String), AddressOf DataFramework.__toStringInternal},
