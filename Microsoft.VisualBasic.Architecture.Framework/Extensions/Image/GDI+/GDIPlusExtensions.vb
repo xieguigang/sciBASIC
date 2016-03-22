@@ -174,9 +174,11 @@ Public Module GDIPlusExtensions
     ''' 
     <ExportAPI("GDI+.Create")>
     <Extension> Public Function GdiFromImage(Image As Image) As GDIPlusDeviceHandle
-        Dim Gr = Image.Size.CreateGDIDevice
-        Call Gr.Gr_Device.DrawImage(Image, 0, 0, Gr.Width, Gr.Height)
-        Return Gr
+        SyncLock Image
+            Dim Gr As GDIPlusDeviceHandle = Image.Size.CreateGDIDevice
+            Call Gr.Gr_Device.DrawImage(Image, 0, 0, Gr.Width, Gr.Height)
+            Return Gr
+        End SyncLock
     End Function
 
     <ExportAPI("Offset")>
@@ -239,18 +241,21 @@ Public Module GDIPlusExtensions
     ''' 
     <ExportAPI("Image.Corp")>
     <Extension> Public Function ImageCrop(source As Image, pos As Point, size As Size) As Image
-        Dim CloneRect As New Rectangle(pos, size)
-        Dim CloneBitmap As Bitmap = CType(source.Clone, Bitmap)
-        Dim crop As Bitmap = CloneBitmap.Clone(CloneRect, source.PixelFormat)
-        Return crop
+        SyncLock source
+            Dim CloneRect As New Rectangle(pos, size)
+            Dim CloneBitmap As Bitmap = CType(source.Clone, Bitmap)
+            Dim crop As Bitmap = CloneBitmap.Clone(CloneRect, source.PixelFormat)
+            Return crop
+        End SyncLock
     End Function
 
     <ExportAPI("Image.Resize")>
     Public Function Resize(Image As Image, newSize As Size) As Image
-        Dim Gr = newSize.CreateGDIDevice
-
-        Call Gr.Gr_Device.DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
-        Return Gr.ImageResource
+        SyncLock Image
+            Dim Gr As GDIPlusDeviceHandle = newSize.CreateGDIDevice
+            Call Gr.Gr_Device.DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
+            Return Gr.ImageResource
+        End SyncLock
     End Function
 
     ''' <summary>
@@ -265,23 +270,25 @@ Public Module GDIPlusExtensions
             Return Nothing
         End If
 
-        Dim Bitmap As Bitmap = New Bitmap(OutSize, OutSize)
+        SyncLock resAvatar
+            Dim Bitmap As Bitmap = New Bitmap(OutSize, OutSize)
 
-        resAvatar = DirectCast(resAvatar.Clone, Image)
+            resAvatar = DirectCast(resAvatar.Clone, Image)
 
-        Using Gr = Graphics.FromImage(Bitmap)
+            Using Gr = Graphics.FromImage(Bitmap)
 
-            Gr.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            Gr.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-            Gr.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-            Gr.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
+                Gr.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+                Gr.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+                Gr.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+                Gr.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
 
-            resAvatar = Resize(resAvatar, Bitmap.Size)
+                resAvatar = Resize(resAvatar, Bitmap.Size)
 
-            Dim rH As Drawing.Brush = New Drawing.TextureBrush(resAvatar)
-            Call Gr.FillPie(rH, New Rectangle(0, 0, OutSize, OutSize), 0, 360)
-            Return Bitmap
-        End Using
+                Dim rH As Drawing.Brush = New Drawing.TextureBrush(resAvatar)
+                Call Gr.FillPie(rH, New Rectangle(0, 0, OutSize, OutSize), 0, 360)
+                Return Bitmap
+            End Using
+        End SyncLock
     End Function
 
     <Extension> Public Function Clone(res As Bitmap) As Bitmap
