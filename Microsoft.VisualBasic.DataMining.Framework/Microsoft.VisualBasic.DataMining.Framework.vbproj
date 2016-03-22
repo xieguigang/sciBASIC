@@ -169,6 +169,7 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
+    <Compile Include="QLearning\Action.vb" />
     <Compile Include="QLearning\QState.vb" />
     <Compile Include="QLearning\QLearning.vb" />
     <Compile Include="QLearning\QTable.vb" />

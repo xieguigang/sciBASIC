@@ -1,4 +1,4 @@
-Imports Microsoft.VisualBasic
+﻿Imports Microsoft.VisualBasic
 Imports System
 Imports System.Collections
 Imports System.Collections.Generic
@@ -25,7 +25,7 @@ Namespace QLearning
         ''' directly as the actual map. Each map state has an array of Q values
         ''' for all the actions available for that state.
         ''' </summary>
-        Public ReadOnly Property Table As Dictionary(Of String, Single())
+        Public ReadOnly Property Table As Dictionary(Of Action)
 
         ''' <summary>
         ''' the actionRange variable determines the number of actions available
@@ -84,7 +84,7 @@ Namespace QLearning
         Public Sub New(actionRange As Integer)
             __randomGenerator = New Random()
             Me.ActionRange = actionRange
-            Me.Table = New Dictionary(Of String, Single())()
+            Me.Table = New Dictionary(Of Action)
         End Sub
 
         ''' <summary>
@@ -139,7 +139,7 @@ Namespace QLearning
         ''' </summary>
         ''' <returns> index of action to take </returns>
         Private Function __explore() As Integer
-            Return (New Random()).Next(4)
+            Return (New Random(Me.__randomGenerator.Next(ActionRange * 100 * _prevAction))).Next(ActionRange)
         End Function
 
         ''' <summary>
@@ -176,12 +176,15 @@ Namespace QLearning
         ''' <returns> an array of Q values for all the actions available at any state </returns>
         Private Function __getActionsQValues(map As T) As Single()
             Dim actions() As Single = GetValues(map)
-            If actions Is Nothing Then
+            If actions Is Nothing Then ' 还不存在这个动作，则添加新的动作
                 Dim initialActions(ActionRange - 1) As Single
                 For i As Integer = 0 To ActionRange - 1
                     initialActions(i) = 0.0F
                 Next i
-                Table(__getMapString(map)) = initialActions
+                _Table += New Action With {
+                    .Action = __getMapString(map),
+                    .Qvalues = initialActions
+                }
                 Return initialActions
             End If
             Return actions
@@ -195,7 +198,7 @@ Namespace QLearning
         Public Overridable Function GetValues(map As T) As Single()
             Dim mapKey As String = __getMapString(map)
             If Table.ContainsKey(mapKey) Then
-                Return Table(mapKey)
+                Return Table(mapKey).Qvalues
             End If
             Return Nothing
         End Function
