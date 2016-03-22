@@ -160,12 +160,14 @@ Namespace StorageProvider.Reflection
             Return GetType(System.Void)
         End Function
 
-        Public Function GetMetaAttribute(Type As System.Type) As Type
-            If Not Type.Equals(GetType(Dictionary(Of ,))) Then
+        Public Function GetMetaAttribute(type As System.Type) As Type
+            Dim gType As Type = type.GetGenericTypeDefinition
+
+            If Not gType.Equals(GetType(Dictionary(Of ,))) Then
                 Return Nothing
             End If
 
-            Dim TypeDef As Type() = Type.GetGenericArguments
+            Dim TypeDef As Type() = type.GetGenericArguments
 
             '第一个参数类型只能是字符串，后面的参数类型只能是简单类型
             If Not TypeDef.First.Equals(GetType(String)) Then

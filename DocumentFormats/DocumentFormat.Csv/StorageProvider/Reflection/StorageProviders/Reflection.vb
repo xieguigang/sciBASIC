@@ -182,18 +182,17 @@ Namespace StorageProvider.Reflection
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Private Function __save(source As IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As DocumentStream.File
-            Dim CsvData As DocumentStream.File = New DocumentStream.File
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
-            Dim LQuery As DocumentStream.RowObject() = (From itmRow As Object In source.AsParallel
-                                                        Where Not itmRow Is Nothing
-                                                        Let createdRow As DocumentStream.RowObject = RowWriter.ToRow(itmRow)
-                                                        Select createdRow).ToArray '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
+            Dim LQuery As List(Of RowObject) = (From itmRow As Object In source.AsParallel
+                                                Where Not itmRow Is Nothing
+                                                Let createdRow As RowObject = RowWriter.ToRow(itmRow)
+                                                Select createdRow).ToList  '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
-            Call CsvData.Add(RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(source.FirstOrDefault)))
-            Call CsvData.AppendRange(LQuery)
+            Dim title As RowObject = RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(source.FirstOrDefault))
+            Dim dataFrame As New File(title + LQuery)
 
-            Return CsvData
+            Return dataFrame
         End Function
 
         ''' <summary>
