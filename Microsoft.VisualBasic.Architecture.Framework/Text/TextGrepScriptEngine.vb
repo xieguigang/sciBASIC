@@ -2,9 +2,19 @@
 Imports Microsoft.VisualBasic.CommandLine
 Imports System.Text.RegularExpressions
 
-Imports TextGrepMethodTokenHandle = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Text.TextGrepScriptEngine.TextGrepMethodToken)
+Imports TextGrepMethodTokenHandle = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Text.TextGrepMethodToken)
 
 Namespace Text
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="source">文本源</param>
+    ''' <param name="paras">脚本命令的参数</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Delegate Function TextGrepMethodToken(source As String, paras As String()) As String
+    Public Delegate Function TextGrepMethod(source As String) As String
 
     ''' <summary>
     ''' A script object for grep the gene id in the blast output query and subject title.(用于解析基因名称的脚本类，这个对象是在项目的初始阶段，为了方便命令行操作而设置的)
@@ -12,25 +22,16 @@ Namespace Text
     ''' <remarks></remarks>
     Public NotInheritable Class TextGrepScriptEngine
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="source">文本源</param>
-        ''' <param name="paras">脚本命令的参数</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Delegate Function TextGrepMethodToken(source As String, paras As String()) As String
-        Public Delegate Function TextGrepMethod(source As String) As String
-
-        Private Shared ReadOnly InternalMethodsHashTable As SortedDictionary(Of String, TextGrepMethodToken) =
-        New SortedDictionary(Of String, TextGrepMethodToken) From
-        {
+        Public Shared ReadOnly Property MethodsHash As IReadOnlyDictionary(Of String, TextGrepMethodToken) =
+            New SortedDictionary(Of String, TextGrepMethodToken) From {
+ _
             {"tokens", AddressOf TextGrepScriptEngine.Tokens},
             {"match", AddressOf TextGrepScriptEngine.Match},
             {"-", AddressOf TextGrepScriptEngine.NoOperation},
             {"replace", AddressOf TextGrepScriptEngine.Replace},
             {"mid", AddressOf TextGrepScriptEngine.MidString},
-            {"reverse", AddressOf TextGrepScriptEngine.Reverse}}
+            {"reverse", AddressOf TextGrepScriptEngine.Reverse}
+        }
 
         ''' <summary>
         ''' Source,Script,ReturnValue
@@ -44,14 +45,14 @@ Namespace Text
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("compile", info:="", usage:="script_tokens1;script_tokens2;....", example:="")>
+        <ExportAPI("compile", Info:="", Usage:="script_tokens1;script_tokens2;....", Example:="")>
         Public Shared Function Compile(scriptText As String) As TextGrepScriptEngine
-            Dim Script As String() = Microsoft.VisualBasic.CommandLine.TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
+            Dim Script As String() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
             Dim OperationLQueryBuilder = (From sToken As String In Script
-                                          Let tokens As String() = Microsoft.VisualBasic.CommandLine.TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
+                                          Let tokens As String() = TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
                                           Let EntryPoint As String = sToken.Split.First.ToLower
-                                          Where InternalMethodsHashTable.ContainsKey(EntryPoint)
-                                          Select New TextGrepMethodTokenHandle(tokens, InternalMethodsHashTable(EntryPoint))).ToArray
+                                          Where MethodsHash.ContainsKey(EntryPoint)
+                                          Select New TextGrepMethodTokenHandle(tokens, MethodsHash(EntryPoint))).ToArray
             If Script.Length > OperationLQueryBuilder.Length Then
                 Return Nothing         ' 有非法的命令短语，则为了保护数据的一致性，这个含有错误的语法的脚本是不能够用于操作的，则函数返回空指针
             Else
@@ -66,7 +67,7 @@ Namespace Text
         ''' 字符串剪裁操作的函数指针
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Method As Text.TextGrepScriptEngine.TextGrepMethod
+        Public ReadOnly Property Method As TextGrepMethod
             Get
                 Return AddressOf Me.Grep
             End Get
@@ -80,14 +81,14 @@ Namespace Text
         ''' <remarks></remarks>
         Public Function Grep(Source As String) As String
 
-            Dim InternalParser As System.Func(Of String, TextGrepMethodTokenHandle, Integer) =
+            Dim InternalParser As Func(Of String, TextGrepMethodTokenHandle, Integer) =
             Function(sourceText As String, method As TextGrepMethodTokenHandle) As Integer
                 Source = method.Value()(sourceText, method.Key) '迭代解析
                 Return Len(Source)
             End Function
 
             Dim OperationInvokeLQuery As Integer() = (From operation As TextGrepMethodTokenHandle
-                                                  In _Operations
+                                                      In _Operations
                                                       Select InternalParser(Source, operation)).ToArray  '这里是迭代计算，所以请不要使用并行拓展
             Return Source
         End Function
@@ -99,7 +100,7 @@ Namespace Text
         Protected Friend Sub New()
         End Sub
 
-        <ExportAPI("-", info:="DO_NOTHING")>
+        <ExportAPI("-", Info:="DO_NOTHING")>
         Private Shared Function NoOperation(source As String, script As String()) As String
             Return source
         End Function
@@ -117,7 +118,7 @@ Namespace Text
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("Tokens", Info:="", Usage:="tokens p_str pointer", Example:="")>
-    <ParameterInfo("pointer", False,
+        <ParameterInfo("pointer", False,
         Description:="pointer must be a zero base integer number which is smaller than the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last element and ""first"" to get the first element in the tokens array.")>
         Private Shared Function Tokens(source As String, script As String()) As String
             Dim Delimiter As String = script(1)
@@ -136,7 +137,7 @@ Namespace Text
             End If
         End Function
 
-        <ExportAPI("match", info:="", usage:="match pattern", example:="")>
+        <ExportAPI("match", Info:="", Usage:="match pattern", Example:="")>
         Private Shared Function Match(source As String, script As String()) As String
             Dim Pattern As String = script.Last
             Return Regex.Match(source, Pattern).Value
@@ -149,7 +150,7 @@ Namespace Text
         ''' <param name="ScriptTokens">向量之中的第一个元素为命令的名字，第二个元素为Mid函数的Start参数，第三个元素为Mid函数的Length参数，可以被忽略掉</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("mid", info:="Substring a token from the input text source.")>
+        <ExportAPI("mid", Info:="Substring a token from the input text source.")>
         Private Shared Function MidString(Source As String, ScriptTokens As String()) As String
             Dim Start As Integer = CInt(Val(ScriptTokens(1)))
 
@@ -161,7 +162,7 @@ Namespace Text
             End If
         End Function
 
-        <ExportAPI("replace", usage:="replace <regx_text> <replace_value>")>
+        <ExportAPI("replace", Usage:="replace <regx_text> <replace_value>")>
         Private Shared Function Replace(source As String, script As String()) As String
             Dim Regx As Regex = New Regex(script(1))
             Dim Matchs = Regx.Matches(source)
