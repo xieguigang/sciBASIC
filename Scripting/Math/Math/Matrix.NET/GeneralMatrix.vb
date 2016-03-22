@@ -1,30 +1,5 @@
 Imports System.Runtime.Serialization
 
-#Region "Internal Maths utility"
-Friend Class Maths
-	''' <summary>
-	'''  sqrt(a^2 + b^2) without under/overflow.
-	''' </summary>
-	''' <param name="a"></param>
-	''' <param name="b"></param>
-	''' <returns></returns>
-
-	Public Shared Function Hypot(a As Double, b As Double) As Double
-		Dim r As Double
-		If Math.Abs(a) > Math.Abs(b) Then
-			r = b / a
-			r = Math.Abs(a) * Math.Sqrt(1 + r * r)
-		ElseIf b <> 0 Then
-			r = a / b
-			r = Math.Abs(b) * Math.Sqrt(1 + r * r)
-		Else
-			r = 0.0
-		End If
-		Return r
-	End Function
-End Class
-#End Region
-
 ''' <summary>.NET GeneralMatrix class.
 ''' 
 ''' The .NET GeneralMatrix Class provides the fundamental operations of numerical
@@ -596,8 +571,8 @@ Public Class GeneralMatrix
 		Dim f As Double = 0
 		For i As Integer = 0 To m - 1
 			For j As Integer = 0 To n - 1
-				f = Maths.Hypot(f, A(i)(j))
-			Next
+                f = Hypot(f, A(i)(j))
+            Next
 		Next
 		Return f
 	End Function

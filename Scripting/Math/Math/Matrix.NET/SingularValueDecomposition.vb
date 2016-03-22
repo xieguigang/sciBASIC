@@ -1,6 +1,5 @@
 Imports System.Runtime.Serialization
 
-
 ''' <summary>Singular Value Decomposition.
 ''' <P>
 ''' For an m-by-n matrix A with m >= n, the singular value decomposition is
@@ -14,16 +13,17 @@ Imports System.Runtime.Serialization
 ''' never fail.  The matrix condition number and the effective numerical
 ''' rank can be computed from this decomposition.</P>
 ''' </summary>
-<Serializable> _
+<Serializable>
 Public Class SingularValueDecomposition
-	Implements System.Runtime.Serialization.ISerializable
-	#Region "Class variables"
+    Implements ISerializable
 
-	''' <summary>Arrays for internal storage of U and V.
-	''' @serial internal storage of U.
-	''' @serial internal storage of V.
-	''' </summary>
-	Private U As Double()(), V As Double()()
+#Region "Class variables"
+
+    ''' <summary>Arrays for internal storage of U and V.
+    ''' @serial internal storage of U.
+    ''' @serial internal storage of V.
+    ''' </summary>
+    Private U As Double()(), V As Double()()
 
 	''' <summary>Array for internal storage of singular values.
 	''' @serial internal storage of singular values.
@@ -79,7 +79,7 @@ Public Class SingularValueDecomposition
                 ' Compute 2-norm of k-th column without under/overflow.
                 m_s(k) = 0
                 For i As Integer = k To m - 1
-                    m_s(k) = Maths.Hypot(m_s(k), A(i)(k))
+                    m_s(k) = Hypot(m_s(k), A(i)(k))
                 Next
                 If m_s(k) <> 0.0 Then
                     If A(k)(k) < 0.0 Then
@@ -128,7 +128,7 @@ Public Class SingularValueDecomposition
                 ' Compute 2-norm without under/overflow.
                 e(k) = 0
                 For i As Integer = k + 1 To n - 1
-                    e(k) = Maths.Hypot(e(k), e(i))
+                    e(k) = Hypot(e(k), e(i))
                 Next
                 If e(k) <> 0.0 Then
                     If e(k + 1) < 0.0 Then
@@ -310,7 +310,7 @@ Public Class SingularValueDecomposition
                         Dim f As Double = e(p - 2)
                         e(p - 2) = 0.0
                         For j As Integer = p - 2 To k Step -1
-                            Dim t As Double = Maths.Hypot(m_s(j), f)
+                            Dim t As Double = Hypot(m_s(j), f)
                             Dim cs As Double = m_s(j) / t
                             Dim sn As Double = f / t
                             m_s(j) = t
@@ -337,7 +337,7 @@ Public Class SingularValueDecomposition
                         Dim f As Double = e(k - 1)
                         e(k - 1) = 0.0
                         For j As Integer = k To p - 1
-                            Dim t As Double = Maths.Hypot(m_s(j), f)
+                            Dim t As Double = Hypot(m_s(j), f)
                             Dim cs As Double = m_s(j) / t
                             Dim sn As Double = f / t
                             m_s(j) = t
@@ -383,7 +383,7 @@ Public Class SingularValueDecomposition
                         ' Chase zeros.
 
                         For j As Integer = k To p - 2
-                            Dim t As Double = Maths.Hypot(f, g)
+                            Dim t As Double = Hypot(f, g)
                             Dim cs As Double = f / t
                             Dim sn As Double = g / t
                             If j <> k Then
@@ -400,7 +400,7 @@ Public Class SingularValueDecomposition
                                     V(i)(j) = t
                                 Next
                             End If
-                            t = Maths.Hypot(f, g)
+                            t = Hypot(f, g)
                             cs = f / t
                             sn = g / t
                             m_s(j) = t

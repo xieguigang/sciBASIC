@@ -14,13 +14,14 @@ Imports System.Runtime.Serialization
 
 <Serializable> _
 Public Class LUDecomposition
-	Implements System.Runtime.Serialization.ISerializable
-	#Region "Class variables"
+    Implements ISerializable
 
-	''' <summary>Array for internal storage of decomposition.
-	''' @serial internal array storage.
-	''' </summary>
-	Private LU As Double()()
+#Region "Class variables"
+
+    ''' <summary>Array for internal storage of decomposition.
+    ''' @serial internal array storage.
+    ''' </summary>
+    Private LU As Double()()
 
 	''' <summary>Row and column dimensions, and pivot sign.
 	''' @serial column dimension.

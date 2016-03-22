@@ -209,7 +209,7 @@ Imports System.Runtime.Serialization
 
                     Dim g As Double = m_d(l)
                     Dim p As Double = (m_d(l + 1) - g) / (2.0 * e(l))
-                    Dim r As Double = Maths.Hypot(p, 1.0)
+                    Dim r As Double = Hypot(p, 1.0)
                     If p < 0 Then
                         r = -r
                     End If
@@ -237,7 +237,7 @@ Imports System.Runtime.Serialization
                         s2 = s
                         g = c * e(i)
                         h = c * p
-                        r = Maths.Hypot(p, e(i))
+                        r = Hypot(p, e(i))
                         e(i + 1) = s * r
                         s = e(i) / r
                         c = p / r
@@ -549,7 +549,8 @@ Imports System.Runtime.Serialization
                         H(i)(i) -= x
                     Next
                     s = System.Math.Abs(H(n)(n - 1)) + System.Math.Abs(H(n - 1)(n - 2))
-                    x = InlineAssignHelper(y, 0.75 * s)
+                    y = 0.75 * s
+                    x = y
                     w = (-0.4375) * s * s
                 End If
 
@@ -568,7 +569,9 @@ Imports System.Runtime.Serialization
                             H(i)(i) -= s
                         Next
                         exshift += s
-                        x = InlineAssignHelper(y, InlineAssignHelper(w, 0.964))
+                        w = 0.964
+                        y = w
+                        x = y
                     End If
                 End If
 
@@ -956,8 +959,4 @@ Imports System.Runtime.Serialization
     ' A method called when serializing this class.
     Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
     End Sub
-    Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-        target = value
-        Return value
-    End Function
 End Class

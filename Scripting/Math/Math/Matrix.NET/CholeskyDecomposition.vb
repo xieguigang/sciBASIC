@@ -9,25 +9,25 @@ Imports System.Runtime.Serialization
 ''' be queried by the isSPD() method.
 ''' </summary>
 
-<Serializable> _
+<Serializable>
 Public Class CholeskyDecomposition
-	Implements System.Runtime.Serialization.ISerializable
-	#Region "Class variables"
+    Implements System.Runtime.Serialization.ISerializable
+#Region "Class variables"
 
-	''' <summary>Array for internal storage of decomposition.
-	''' @serial internal array storage.
-	''' </summary>
-	Private L As Double()()
+    ''' <summary>Array for internal storage of decomposition.
+    ''' @serial internal array storage.
+    ''' </summary>
+    Private L As Double()()
 
-	''' <summary>Row and column dimension (square matrix).
-	''' @serial matrix dimension.
-	''' </summary>
-	Private n As Integer
+    ''' <summary>Row and column dimension (square matrix).
+    ''' @serial matrix dimension.
+    ''' </summary>
+    Private n As Integer
 
-	''' <summary>Symmetric and positive definite flag.
-	''' @serial is symmetric and positive definite flag.
-	''' </summary>
-	Private isspd As Boolean
+    ''' <summary>Symmetric and positive definite flag.
+    ''' @serial is symmetric and positive definite flag.
+    ''' </summary>
+    Private isspd As Boolean
 
 #End Region
 
@@ -57,7 +57,8 @@ Public Class CholeskyDecomposition
                 For i As Integer = 0 To k - 1
                     s += Lrowk(i) * Lrowj(i)
                 Next
-                Lrowj(k) = InlineAssignHelper(s, (A(j)(k) - s) / L(k)(k))
+                s = (A(j)(k) - s) / L(k)(k)
+                Lrowj(k) = s
                 d = d + s * s
                 isspd = isspd And (A(k)(j) = A(j)(k))
             Next
@@ -77,76 +78,72 @@ Public Class CholeskyDecomposition
     ''' <returns>     true if A is symmetric and positive definite.
     ''' </returns>
     Public Overridable ReadOnly Property SPD() As Boolean
-		Get
-			Return isspd
-		End Get
-	End Property
-	#End Region
+        Get
+            Return isspd
+        End Get
+    End Property
+#End Region
 
-	#Region "Public Methods"
+#Region "Public Methods"
 
-	''' <summary>Return triangular factor.</summary>
-	''' <returns>     L
-	''' </returns>
+    ''' <summary>Return triangular factor.</summary>
+    ''' <returns>     L
+    ''' </returns>
 
-	Public Overridable Function GetL() As GeneralMatrix
-		Return New GeneralMatrix(L, n, n)
-	End Function
+    Public Overridable Function GetL() As GeneralMatrix
+        Return New GeneralMatrix(L, n, n)
+    End Function
 
-	''' <summary>Solve A*X = B</summary>
-	''' <param name="B">  A Matrix with as many rows as A and any number of columns.
-	''' </param>
-	''' <returns>     X so that L*L'*X = B
-	''' </returns>
-	''' <exception cref="System.ArgumentException">  Matrix row dimensions must agree.
-	''' </exception>
-	''' <exception cref="System.SystemException"> Matrix is not symmetric positive definite.
-	''' </exception>
+    ''' <summary>Solve A*X = B</summary>
+    ''' <param name="B">  A Matrix with as many rows as A and any number of columns.
+    ''' </param>
+    ''' <returns>     X so that L*L'*X = B
+    ''' </returns>
+    ''' <exception cref="System.ArgumentException">  Matrix row dimensions must agree.
+    ''' </exception>
+    ''' <exception cref="System.SystemException"> Matrix is not symmetric positive definite.
+    ''' </exception>
 
-	Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
-		If B.RowDimension <> n Then
-			Throw New System.ArgumentException("Matrix row dimensions must agree.")
-		End If
-		If Not isspd Then
-			Throw New System.SystemException("Matrix is not symmetric positive definite.")
-		End If
+    Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
+        If B.RowDimension <> n Then
+            Throw New System.ArgumentException("Matrix row dimensions must agree.")
+        End If
+        If Not isspd Then
+            Throw New System.SystemException("Matrix is not symmetric positive definite.")
+        End If
 
-		' Copy right hand side.
-		Dim X As Double()() = B.ArrayCopy
-		Dim nx As Integer = B.ColumnDimension
+        ' Copy right hand side.
+        Dim X As Double()() = B.ArrayCopy
+        Dim nx As Integer = B.ColumnDimension
 
-		' Solve L*Y = B;
-		For k As Integer = 0 To n - 1
-			For i As Integer = k + 1 To n - 1
-				For j As Integer = 0 To nx - 1
-					X(i)(j) -= X(k)(j) * L(i)(k)
-				Next
-			Next
-			For j As Integer = 0 To nx - 1
-				X(k)(j) /= L(k)(k)
-			Next
-		Next
+        ' Solve L*Y = B;
+        For k As Integer = 0 To n - 1
+            For i As Integer = k + 1 To n - 1
+                For j As Integer = 0 To nx - 1
+                    X(i)(j) -= X(k)(j) * L(i)(k)
+                Next
+            Next
+            For j As Integer = 0 To nx - 1
+                X(k)(j) /= L(k)(k)
+            Next
+        Next
 
-		' Solve L'*X = Y;
-		For k As Integer = n - 1 To 0 Step -1
-			For j As Integer = 0 To nx - 1
-				X(k)(j) /= L(k)(k)
-			Next
-			For i As Integer = 0 To k - 1
-				For j As Integer = 0 To nx - 1
-					X(i)(j) -= X(k)(j) * L(k)(i)
-				Next
-			Next
-		Next
-		Return New GeneralMatrix(X, n, nx)
-	End Function
-	#End Region
+        ' Solve L'*X = Y;
+        For k As Integer = n - 1 To 0 Step -1
+            For j As Integer = 0 To nx - 1
+                X(k)(j) /= L(k)(k)
+            Next
+            For i As Integer = 0 To k - 1
+                For j As Integer = 0 To nx - 1
+                    X(i)(j) -= X(k)(j) * L(k)(i)
+                Next
+            Next
+        Next
+        Return New GeneralMatrix(X, n, nx)
+    End Function
+#End Region
 
-	' A method called when serializing this class.
-	Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-	End Sub
-	Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-		target = value
-		Return value
-	End Function
+    ' A method called when serializing this class.
+    Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
+    End Sub
 End Class

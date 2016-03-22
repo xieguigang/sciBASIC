@@ -6,6 +6,27 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module VBMathExtensions
 
     ''' <summary>
+    '''  sqrt(a^2 + b^2) without under/overflow.
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+
+    Public Function Hypot(a As Double, b As Double) As Double
+        Dim r As Double
+        If Math.Abs(a) > Math.Abs(b) Then
+            r = b / a
+            r = Math.Abs(a) * Math.Sqrt(1 + r * r)
+        ElseIf b <> 0 Then
+            r = a / b
+            r = Math.Abs(b) * Math.Sqrt(1 + r * r)
+        Else
+            r = 0.0
+        End If
+        Return r
+    End Function
+
+    ''' <summary>
     ''' Calculates power of 2.
     ''' </summary>
     ''' 

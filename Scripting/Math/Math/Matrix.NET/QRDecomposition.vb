@@ -55,7 +55,7 @@ Public Class QRDecomposition
             ' Compute 2-norm of k-th column without under/overflow.
             Dim nrm As Double = 0
             For i As Integer = k To m - 1
-                nrm = Maths.Hypot(nrm, QR(i)(k))
+                nrm =Hypot(nrm, QR(i)(k))
             Next
 
             If nrm <> 0.0 Then
