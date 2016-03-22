@@ -264,6 +264,7 @@
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
+    <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
     <Compile Include="Text\EncodingHelper.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\VarArray.vb" />
@@ -400,8 +401,8 @@
     <Compile Include="Extensions\StatisticsMathExtensions\EnumerableStatsVarianceP.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule.vb" />
     <Compile Include="CommandLine\Interpreters\ActivityInst.vb" />
-    <Compile Include="Serialization\DynamicsConfiguration.vb" />
-    <Compile Include="Serialization\ConfigurationMappings.vb" />
+    <Compile Include="Serialization\ConfigMappings\DynamicsConfiguration.vb" />
+    <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
     <Compile Include="Text\TextGrepScriptEngine.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Member.vb" />
@@ -518,6 +519,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serialization\SchemaProvider\" />
   </ItemGroup>
   <Import Project="..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
