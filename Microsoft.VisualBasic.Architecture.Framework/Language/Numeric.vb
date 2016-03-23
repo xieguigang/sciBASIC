@@ -111,4 +111,56 @@ Namespace Language
             Return x
         End Operator
     End Structure
+
+    Public Structure Float : Implements IComparable
+
+        Dim value As Double
+
+        Sub New(x As Double)
+            value = x
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return value
+        End Function
+
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+            Dim type As Type = obj.GetType
+
+            If type.Equals(GetType(Double)) Then
+                Return value.CompareTo(DirectCast(obj, Double))
+            ElseIf type.Equals(GetType(Float)) Then
+                Return value.CompareTo(DirectCast(obj, Float).value)
+            Else
+                Throw New Exception($"Miss-match of type:  {GetType(Float).FullName} --> {type.FullName}")
+            End If
+        End Function
+
+        ''' <summary>
+        ''' n &lt; value &lt;= n2
+        ''' 假若n 大于value，则返回最大值，上面的表达式肯定不成立
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(n As Double, x As Float) As Float
+            If n >= x.value Then
+                Return New Float(Double.MaxValue)
+            Else
+                Return x
+            End If
+        End Operator
+
+        Public Shared Operator <=(x As Float, n As Double) As Boolean
+            Return x.value <= n
+        End Operator
+
+        Public Shared Operator >=(x As Float, n As Double) As Boolean
+            Return x.value >= n
+        End Operator
+
+        Public Shared Operator >(n As Double, x As Float) As Float
+            Return x
+        End Operator
+    End Structure
 End Namespace
