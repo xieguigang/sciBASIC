@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports System.Text
 
 Namespace FileStream
 
@@ -31,7 +32,7 @@ Namespace FileStream
     ''' <typeparam name="T_Node"></typeparam>
     ''' <typeparam name="T_Edge"></typeparam>
     ''' <remarks></remarks>
-    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge)
+    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge) : Inherits Language.File
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 
@@ -106,25 +107,21 @@ Namespace FileStream
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
-        ''' <param name="outDIR">The data directory for the data export, if the value of this directory is null then the data 
+        ''' <param name="outDIR">The data directory for the data export, if the value of this directory is null then the data
         ''' will be exported at the current work directory.
         ''' (进行数据导出的文件夹，假若为空则会保存数据至当前的工作文件夹之中)</param>
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Save(Optional outDIR As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Overrides Function Save(Optional outDIR As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             If String.IsNullOrEmpty(outDIR) Then outDIR = My.Computer.FileSystem.CurrentDirectory
 
             Call Nodes.SaveTo(String.Format("{0}/Nodes.csv", outDIR), False, encoding)
             Call Edges.SaveTo(String.Format("{0}/Edges.csv", outDIR), False, encoding)
 
             Return True
-        End Function
-
-        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.GetEncodings)
         End Function
 
         Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As T_Node) As Network(Of T_Node, T_Edge)
@@ -148,7 +145,7 @@ Namespace FileStream
         End Operator
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="net"></param>
         ''' <param name="x">由于会调用ToArray，所以这里建议使用Iterator</param>
@@ -167,7 +164,7 @@ Namespace FileStream
         End Operator
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="net"></param>
         ''' <param name="x">由于会调用ToArray，所以这里建议使用Iterator</param>
