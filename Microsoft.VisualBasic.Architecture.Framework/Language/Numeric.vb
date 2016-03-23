@@ -112,7 +112,8 @@ Namespace Language
         End Operator
     End Structure
 
-    Public Structure Float : Implements IComparable
+    Public Structure Float
+        Implements IComparable
 
         Dim value As Double
 
