@@ -22,7 +22,7 @@ Imports System.Collections.Generic
 Imports System.Collections.ObjectModel
 Imports System.Text
 
-Namespace FuzzyLogic
+Namespace Logical.FuzzyLogic
 
     ''' <summary>
     ''' Represents a collection of rules.

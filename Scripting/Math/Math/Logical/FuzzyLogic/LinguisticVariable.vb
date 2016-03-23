@@ -23,7 +23,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
-Namespace FuzzyLogic
+Namespace Logical.FuzzyLogic
 
     ''' <summary>
     ''' Represents a linguistic variable.

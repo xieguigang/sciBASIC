@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace FuzzyLogic.Models
+Namespace Logical.FuzzyLogic.Models
 
     Public Class Value : Inherits ClassObject
         Implements sIdEnumerable

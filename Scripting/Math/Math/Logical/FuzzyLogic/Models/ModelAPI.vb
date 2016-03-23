@@ -2,7 +2,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 
-Namespace FuzzyLogic.Models
+Namespace Logical.FuzzyLogic.Models
 
     Public Class FuzzyModel : Inherits ITextFile
 

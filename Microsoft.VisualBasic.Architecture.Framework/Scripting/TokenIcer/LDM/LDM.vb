@@ -80,6 +80,17 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        ''' <summary>
+        ''' Returns a Boolean value indicating whether an expression can be evaluated as
+        ''' a number.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsNumeric As Boolean
+            Get
+                Return Information.IsNumeric(Text)
+            End Get
+        End Property
+
         Public Sub New(name As Tokens, value As String)
             TokenName = name
             TokenValue = value

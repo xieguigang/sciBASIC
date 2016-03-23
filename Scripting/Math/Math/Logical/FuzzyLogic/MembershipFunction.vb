@@ -22,7 +22,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 
-Namespace FuzzyLogic
+Namespace Logical.FuzzyLogic
 
     ''' <summary>
     ''' Represents a membership function.

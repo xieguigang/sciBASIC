@@ -21,8 +21,9 @@
 Imports System.Collections.Generic
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace FuzzyLogic
+Namespace Logical.FuzzyLogic
 
     ''' <summary>
     ''' Represents a rule.
@@ -32,6 +33,7 @@ Namespace FuzzyLogic
 #Region "Private Properties"
 
         Dim m_text As String = [String].Empty
+        Dim m_tokens As Token(Of Tokens)()
 
 #End Region
 
@@ -110,6 +112,7 @@ Namespace FuzzyLogic
             End Get
             Set(value As String)
                 m_text = Validate(value)
+                m_tokens = TokenIcer.TryParse(Me.Conditions)
             End Set
         End Property
 

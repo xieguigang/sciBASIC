@@ -24,7 +24,7 @@ Imports System.Xml
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 
-Namespace FuzzyLogic
+Namespace Logical.FuzzyLogic
 
     ''' <summary>
     ''' Represents the inferential engine.
