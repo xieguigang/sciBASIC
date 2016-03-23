@@ -15,29 +15,33 @@ DotFuzzy implements fuzzification, rules validation/evaluation and defuzzificati
 
 Usage
 -----
-    LinguisticVariable water = new LinguisticVariable("Water"); 
-    water.MembershipFunctionCollection.Add(new MembershipFunction("Cold", 0, 0, 20, 40)); 
-    water.MembershipFunctionCollection.Add(new MembershipFunction("Tepid", 30, 50, 50, 70)); 
-    water.MembershipFunctionCollection.Add(new MembershipFunction("Hot", 50, 80, 100, 100));
+        Dim water As New LinguisticVariable("Water")
+        water.MembershipFunctionCollection.Add(New MembershipFunction("Cold", 0, 0, 20, 40))
+        water.MembershipFunctionCollection.Add(New MembershipFunction("Tepid", 30, 50, 50, 70))
+        water.MembershipFunctionCollection.Add(New MembershipFunction("Hot", 50, 80, 100, 100))
 
-    LinguisticVariable power = new LinguisticVariable("Power"); 
-    power.MembershipFunctionCollection.Add(new MembershipFunction("Low", 0, 25, 25, 50)); 
-    power.MembershipFunctionCollection.Add(new MembershipFunction("High", 25, 50, 50, 75));
+        Dim power As LinguisticVariable = New LinguisticVariable("Power")
+        power.MembershipFunctionCollection.Add(New MembershipFunction("Low", 0, 25, 25, 50))
+        power.MembershipFunctionCollection.Add(New MembershipFunction("High", 25, 50, 50, 75))
 
-    FuzzyEngine fuzzyEngine = new FuzzyEngine(); 
-    fuzzyEngine.LinguisticVariableCollection.Add(water); 
-    fuzzyEngine.LinguisticVariableCollection.Add(power); 
-    fuzzyEngine.Consequent = "Power"; 
-    fuzzyEngine.FuzzyRuleCollection.Add(new FuzzyRule("IF (Water IS Cold) OR (Water IS Tepid) THEN Power IS High")); 
-    fuzzyEngine.FuzzyRuleCollection.Add(new FuzzyRule("IF (Water IS Hot) THEN Power IS Low"));
+        Dim FuzzyEngine As New FuzzyEngine()
+        FuzzyEngine.LinguisticVariableCollection.Add(water)
+        FuzzyEngine.LinguisticVariableCollection.Add(power)
+        FuzzyEngine.Consequent = "Power"
+        FuzzyEngine.FuzzyRuleCollection.Add(New FuzzyRule("IF (Water IS Cold) OR (Water IS Tepid) THEN Power IS High"))
+        FuzzyEngine.FuzzyRuleCollection.Add(New FuzzyRule("IF (Water IS Hot) THEN Power IS Low"))
 
-    water.InputValue = 60;
+        water.InputValue = 60
 
-    try 
-    { 
-        MessageBox.Show(fuzzyEngine.Defuzzify().ToString()); 
-    } 
-    catch (Exception e) 
-    { 
-        MessageBox.Show(e.Message); 
-    }
+        Dim xml As String = "fuzzyModel.xml"
+
+        Call FuzzyEngine.Save(xml, Encodings.UTF8)
+
+        FuzzyEngine = Nothing
+        FuzzyEngine = Models.FuzzyModel.FromXml(xml)
+
+        Try
+            MsgBox(FuzzyEngine.Defuzzify().ToString())
+        Catch ex As Exception
+            Call ex.PrintException
+        End Try
