@@ -173,7 +173,7 @@ Namespace DocumentStream
         End Function
 
         ''' <summary>
-        ''' Get and set the string content in a specific table cell.(设置或者获取某一个指定的单元格中的字符串内容) 
+        ''' Get and set the string content in a specific table cell.(设置或者获取某一个指定的单元格中的字符串内容)
         ''' </summary>
         ''' <param name="X"></param>
         ''' <param name="Y"></param>
@@ -357,9 +357,9 @@ Namespace DocumentStream
         ''' Save this csv document into a specific file location <paramref name="path"/>.
         ''' </summary>
         ''' <param name="Path"></param>
-        ''' <param name="LazySaved">Optional, this is for the consideration of performance and memory consumption. 
-        ''' When a data file is very large, then you may encounter a out of memory exception on a 32 bit platform, 
-        ''' then you should set this parameter to True to avoid this problem. Defualt is False for have a better 
+        ''' <param name="LazySaved">Optional, this is for the consideration of performance and memory consumption.
+        ''' When a data file is very large, then you may encounter a out of memory exception on a 32 bit platform,
+        ''' then you should set this parameter to True to avoid this problem. Defualt is False for have a better
         ''' performance.
         ''' (当估计到文件的数据量很大的时候，请使用本参数，以避免内存溢出致使应用程序崩溃，默认为False，不开启缓存)
         ''' </param>
@@ -483,7 +483,7 @@ Namespace DocumentStream
         'End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
@@ -518,7 +518,7 @@ Namespace DocumentStream
         End Operator
 
         ''' <summary>
-        ''' If you are sure about your csv data document have no character such like " or, in a cell, then you can try using this fast load method to load your csv data. 
+        ''' If you are sure about your csv data document have no character such like " or, in a cell, then you can try using this fast load method to load your csv data.
         ''' if not, please using the <see cref="load"></see> method to avoid of the data damages.
         ''' (假若你确信你的数据文件之中仅含有数字之类的数据，则可以尝试使用本方法进行快速加载，假若文件之中每一个单元格还含有引起歧义的例如双引号或者逗号，则请不要使用本方法进行加载)
         ''' </summary>

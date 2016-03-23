@@ -157,6 +157,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentStream\EntityObject.vb" />
     <Compile Include="DocumentStream\HTMLWriter.vb" />
     <Compile Include="DocumentStream\NetStream\File.vb" />
     <Compile Include="DocumentStream\NetStream\StreamHelper.vb" />
