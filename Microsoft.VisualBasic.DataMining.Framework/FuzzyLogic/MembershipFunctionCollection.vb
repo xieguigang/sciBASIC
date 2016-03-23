@@ -28,7 +28,12 @@ Namespace FuzzyLogic
     ''' Represents a collection of membership functions.
     ''' </summary>
     Public Class MembershipFunctionCollection
-        Inherits Collection(Of MembershipFunction)
+        Inherits List(Of MembershipFunction)
+
+        Sub New()
+            Call MyBase.New
+        End Sub
+
 #Region "Public Methods"
 
         ''' <summary>
@@ -36,7 +41,7 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <param name="membershipFunctionName">Membership function name.</param>
         ''' <returns>The membership function, if founded.</returns>
-        Public Function Find(membershipFunctionName As String) As MembershipFunction
+        Public Overloads Function Find(membershipFunctionName As String) As MembershipFunction
             Dim membershipFunction As MembershipFunction = Nothing
 
             For Each [function] As MembershipFunction In Me

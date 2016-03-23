@@ -27,13 +27,6 @@ Namespace FuzzyLogic
     ''' Represents a linguistic variable.
     ''' </summary>
     Public Class LinguisticVariable
-#Region "Private Properties"
-
-        Private m_name As String = [String].Empty
-        Private m_membershipFunctionCollection As New MembershipFunctionCollection()
-        Private m_inputValue As Double = 0
-
-#End Region
 
 #Region "Constructors"
 
@@ -63,38 +56,16 @@ Namespace FuzzyLogic
         ''' The name that identificates the linguistic variable.
         ''' </summary>
         Public Property Name() As String
-            Get
-                Return m_name
-            End Get
-            Set
-                m_name = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' A membership functions collection for the lingusitic variable.
         ''' </summary>
         Public Property MembershipFunctionCollection() As MembershipFunctionCollection
-            Get
-                Return m_membershipFunctionCollection
-            End Get
-            Set
-                m_membershipFunctionCollection = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The input value for the linguistic variable.
         ''' </summary>
         Public Property InputValue() As Double
-            Get
-                Return m_inputValue
-            End Get
-            Set
-                m_inputValue = value
-            End Set
-        End Property
-
 #End Region
 
 #Region "Public Methods"
@@ -105,7 +76,7 @@ Namespace FuzzyLogic
         ''' <param name="membershipFunctionName">The membership function for which fuzzify the variable.</param>
         ''' <returns>The degree of membership.</returns>
         Public Function Fuzzify(membershipFunctionName As String) As Double
-            Dim membershipFunction As MembershipFunction = Me.m_membershipFunctionCollection.Find(membershipFunctionName)
+            Dim membershipFunction As MembershipFunction = Me._MembershipFunctionCollection.Find(membershipFunctionName)
 
             If (membershipFunction.X0 <= Me.InputValue) AndAlso (Me.InputValue < membershipFunction.X1) Then
                 Return (Me.InputValue - membershipFunction.X0) / (membershipFunction.X1 - membershipFunction.X0)
@@ -123,11 +94,11 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <returns>The minimum value of the linguistic variable.</returns>
         Public Function MinValue() As Double
-            Dim minValue__1 As Double = Me.m_membershipFunctionCollection(0).X0
+            Dim minValue__1 As Double = Me._MembershipFunctionCollection(0).X0
 
-            For i As Integer = 1 To Me.m_membershipFunctionCollection.Count - 1
-                If Me.m_membershipFunctionCollection(i).X0 < minValue__1 Then
-                    minValue__1 = Me.m_membershipFunctionCollection(i).X0
+            For i As Integer = 1 To Me._MembershipFunctionCollection.Count - 1
+                If Me._MembershipFunctionCollection(i).X0 < minValue__1 Then
+                    minValue__1 = Me._MembershipFunctionCollection(i).X0
                 End If
             Next
 
@@ -139,11 +110,11 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <returns>The maximum value of the linguistic variable.</returns>
         Public Function MaxValue() As Double
-            Dim maxValue__1 As Double = Me.m_membershipFunctionCollection(0).X3
+            Dim maxValue__1 As Double = Me._MembershipFunctionCollection(0).X3
 
-            For i As Integer = 1 To Me.m_membershipFunctionCollection.Count - 1
-                If Me.m_membershipFunctionCollection(i).X3 > maxValue__1 Then
-                    maxValue__1 = Me.m_membershipFunctionCollection(i).X3
+            For i As Integer = 1 To Me._MembershipFunctionCollection.Count - 1
+                If Me._MembershipFunctionCollection(i).X3 > maxValue__1 Then
+                    maxValue__1 = Me._MembershipFunctionCollection(i).X3
                 End If
             Next
 

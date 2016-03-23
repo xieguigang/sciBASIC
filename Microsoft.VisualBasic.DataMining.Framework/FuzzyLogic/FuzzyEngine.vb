@@ -28,19 +28,11 @@ Namespace FuzzyLogic
     ''' Represents the inferential engine.
     ''' </summary>
     Public Class FuzzyEngine
-#Region "Private Properties"
-
-        Private m_linguisticVariableCollection As New LinguisticVariableCollection()
-        Private m_consequent As String = [String].Empty
-        Private m_fuzzyRuleCollection As New FuzzyRuleCollection()
-        Private m_filePath As String = [String].Empty
-
-#End Region
 
 #Region "Private Methods"
 
         Private Function GetConsequent() As LinguisticVariable
-            Return Me.m_linguisticVariableCollection.Find(Me.m_consequent)
+            Return Me._LinguisticVariableCollection.Find(Me._Consequent)
         End Function
 
         Private Function Parse(text As String) As Double
@@ -49,7 +41,7 @@ Namespace FuzzyLogic
 
             If Not text.StartsWith("(") Then
                 Dim tokens As String() = text.Split()
-                Return Me.m_linguisticVariableCollection.Find(tokens(0)).Fuzzify(tokens(2))
+                Return Me._LinguisticVariableCollection.Find(tokens(0)).Fuzzify(tokens(2))
             End If
 
             For i As Integer = 0 To text.Length - 1
@@ -117,7 +109,7 @@ Namespace FuzzyLogic
         End Function
 
         Private Sub ReadVariable(xmlNode As XmlNode)
-            Dim linguisticVariable As LinguisticVariable = Me.m_linguisticVariableCollection.Find(xmlNode.Attributes("NAME").InnerText)
+            Dim linguisticVariable As LinguisticVariable = Me._LinguisticVariableCollection.Find(xmlNode.Attributes("NAME").InnerText)
 
             For Each termNode As XmlNode In xmlNode.ChildNodes
                 Dim points As String() = termNode.Attributes("POINTS").InnerText.Split()
@@ -133,50 +125,21 @@ Namespace FuzzyLogic
         ''' A collection of linguistic variables.
         ''' </summary>
         Public Property LinguisticVariableCollection() As LinguisticVariableCollection
-            Get
-                Return m_linguisticVariableCollection
-            End Get
-            Set
-                m_linguisticVariableCollection = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The consequent variable name.
         ''' </summary>
         Public Property Consequent() As String
-            Get
-                Return m_consequent
-            End Get
-            Set
-                m_consequent = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' A collection of rules.
         ''' </summary>
         Public Property FuzzyRuleCollection() As FuzzyRuleCollection
-            Get
-                Return m_fuzzyRuleCollection
-            End Get
-            Set
-                m_fuzzyRuleCollection = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The path of the FCL-like XML file in which save the project.
         ''' </summary>
         Public Property FilePath() As String
-            Get
-                Return m_filePath
-            End Get
-            Set
-                m_filePath = value
-            End Set
-        End Property
-
 #End Region
 
 #Region "Public Methods"
@@ -194,7 +157,7 @@ Namespace FuzzyLogic
                 membershipFunction.Value = 0
             Next
 
-            For Each fuzzyRule As FuzzyRule In Me.m_fuzzyRuleCollection
+            For Each fuzzyRule As FuzzyRule In Me._FuzzyRuleCollection
                 fuzzyRule.Value = Parse(fuzzyRule.Conditions())
 
                 Dim tokens As String() = fuzzyRule.Text.Split()
@@ -226,18 +189,18 @@ Namespace FuzzyLogic
         ''' Saves the project into a FCL-like XML file.
         ''' </summary>
         Public Sub Save()
-            If Me.m_filePath = [String].Empty Then
+            If Me._FilePath = [String].Empty Then
                 Throw New Exception("FilePath not set")
             End If
 
             Dim i As Integer = 0
-            Dim xmlTextWriter As New XmlTextWriter(Me.m_filePath, Encoding.UTF8)
+            Dim xmlTextWriter As New XmlTextWriter(Me._FilePath, Encoding.UTF8)
             xmlTextWriter.Formatting = Formatting.Indented
             xmlTextWriter.WriteStartDocument(True)
             xmlTextWriter.WriteStartElement("FUNCTION_BLOCK")
 
-            For Each linguisticVariable As LinguisticVariable In Me.m_linguisticVariableCollection
-                If linguisticVariable.Name = Me.m_consequent Then
+            For Each linguisticVariable As LinguisticVariable In Me._LinguisticVariableCollection
+                If linguisticVariable.Name = Me._Consequent Then
                     xmlTextWriter.WriteStartElement("VAR_OUTPUT")
                 Else
                     xmlTextWriter.WriteStartElement("VAR_INPUT")
@@ -249,8 +212,8 @@ Namespace FuzzyLogic
                 xmlTextWriter.WriteEndElement()
             Next
 
-            For Each linguisticVariable As LinguisticVariable In Me.m_linguisticVariableCollection
-                If linguisticVariable.Name = Me.m_consequent Then
+            For Each linguisticVariable As LinguisticVariable In Me._LinguisticVariableCollection
+                If linguisticVariable.Name = Me._Consequent Then
                     xmlTextWriter.WriteStartElement("DEFUZZIFY")
                     xmlTextWriter.WriteAttributeString("METHOD", "CoG")
                     xmlTextWriter.WriteAttributeString("ACCU", "MAX")
@@ -274,7 +237,7 @@ Namespace FuzzyLogic
             xmlTextWriter.WriteAttributeString("AND", "MIN")
             xmlTextWriter.WriteAttributeString("OR", "MAX")
 
-            For Each fuzzyRule As FuzzyRule In Me.m_fuzzyRuleCollection
+            For Each fuzzyRule As FuzzyRule In Me._FuzzyRuleCollection
                 i += 1
                 xmlTextWriter.WriteStartElement("RULE")
                 xmlTextWriter.WriteAttributeString("NUMBER", i.ToString())
@@ -302,19 +265,19 @@ Namespace FuzzyLogic
         ''' Loads a project from a FCL-like XML file.
         ''' </summary>
         Public Sub Load()
-            If Me.m_filePath = [String].Empty Then
+            If Me._FilePath = [String].Empty Then
                 Throw New Exception("FilePath not set")
             End If
 
             Dim xmlDocument As New XmlDocument()
-            xmlDocument.Load(Me.m_filePath)
+            xmlDocument.Load(Me._FilePath)
 
             For Each xmlNode As XmlNode In xmlDocument.GetElementsByTagName("VAR_INPUT")
                 Me.LinguisticVariableCollection.Add(New LinguisticVariable(xmlNode.Attributes("NAME").InnerText))
             Next
 
-            Me.m_consequent = xmlDocument.GetElementsByTagName("VAR_OUTPUT")(0).Attributes("NAME").InnerText
-            Me.LinguisticVariableCollection.Add(New LinguisticVariable(Me.m_consequent))
+            Me._Consequent = xmlDocument.GetElementsByTagName("VAR_OUTPUT")(0).Attributes("NAME").InnerText
+            Me.LinguisticVariableCollection.Add(New LinguisticVariable(Me._Consequent))
 
             For Each xmlNode As XmlNode In xmlDocument.GetElementsByTagName("FUZZIFY")
                 ReadVariable(xmlNode)
@@ -323,7 +286,7 @@ Namespace FuzzyLogic
             ReadVariable(xmlDocument.GetElementsByTagName("DEFUZZIFY")(0))
 
             For Each xmlNode As XmlNode In xmlDocument.GetElementsByTagName("RULE")
-                Me.m_fuzzyRuleCollection.Add(New FuzzyRule(xmlNode.Attributes("TEXT").InnerText))
+                Me._FuzzyRuleCollection.Add(New FuzzyRule(xmlNode.Attributes("TEXT").InnerText))
             Next
         End Sub
 

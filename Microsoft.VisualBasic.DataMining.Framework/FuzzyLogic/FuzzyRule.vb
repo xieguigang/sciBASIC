@@ -27,10 +27,10 @@ Namespace FuzzyLogic
     ''' Represents a rule.
     ''' </summary>
     Public Class FuzzyRule
+
 #Region "Private Properties"
 
-        Private m_text As String = [String].Empty
-        Private m_value As Double = 0
+        Dim m_text As String = [String].Empty
 
 #End Region
 
@@ -107,8 +107,8 @@ Namespace FuzzyLogic
             Get
                 Return m_text
             End Get
-            Set
-                m_text = Validate(m_value)
+            Set(value As String)
+                m_text = Validate(value)
             End Set
         End Property
 
@@ -116,14 +116,6 @@ Namespace FuzzyLogic
         ''' The value of the rule after the evaluation process.
         ''' </summary>
         Public Property Value() As Double
-            Get
-                Return m_value
-            End Get
-            Set
-                Me.m_value = m_value
-            End Set
-        End Property
-
 #End Region
 
 #Region "Public Methods"

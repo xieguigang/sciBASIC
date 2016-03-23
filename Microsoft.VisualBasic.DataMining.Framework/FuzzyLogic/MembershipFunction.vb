@@ -27,16 +27,6 @@ Namespace FuzzyLogic
     ''' Represents a membership function.
     ''' </summary>
     Public Class MembershipFunction
-#Region "Private Properties"
-
-        Private m_name As String = [String].Empty
-        Private m_x0 As Double = 0
-        Private m_x1 As Double = 0
-        Private m_x2 As Double = 0
-        Private m_x3 As Double = 0
-        Private m_value As Double = 0
-
-#End Region
 
 #Region "Constructors"
 
@@ -72,73 +62,31 @@ Namespace FuzzyLogic
         ''' The name that identificates the membership function.
         ''' </summary>
         Public Property Name() As String
-            Get
-                Return m_name
-            End Get
-            Set
-                m_name = m_value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The value of the (x0, 0) point.
         ''' </summary>
         Public Property X0() As Double
-            Get
-                Return m_x0
-            End Get
-            Set
-                m_x0 = m_value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The value of the (x1, 1) point.
         ''' </summary>
         Public Property X1() As Double
-            Get
-                Return m_x1
-            End Get
-            Set
-                m_x1 = m_value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The value of the (x2, 1) point.
         ''' </summary>
         Public Property X2() As Double
-            Get
-                Return m_x2
-            End Get
-            Set
-                m_x2 = m_value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The value of the (x3, 0) point.
         ''' </summary>
         Public Property X3() As Double
-            Get
-                Return m_x3
-            End Get
-            Set
-                m_x3 = m_value
-            End Set
-        End Property
 
         ''' <summary>
         ''' The value of membership function after evaluation process.
         ''' </summary>
         Public Property Value() As Double
-            Get
-                Return m_value
-            End Get
-            Set
-                Me.m_value = m_value
-            End Set
-        End Property
 
 #End Region
 
@@ -149,11 +97,11 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <returns>The value of centroid.</returns>
         Public Function Centorid() As Double
-            Dim a As Double = Me.m_x2 - Me.m_x1
-            Dim b As Double = Me.m_x3 - Me.m_x0
-            Dim c As Double = Me.m_x1 - Me.m_x0
+            Dim a As Double = Me._X2 - Me._X1
+            Dim b As Double = Me._X3 - Me._X0
+            Dim c As Double = Me._X1 - Me._X0
 
-            Return ((2 * a * c) + (a * a) + (c * b) + (a * b) + (b * b)) / (3 * (a + b)) + Me.m_x0
+            Return ((2 * a * c) + (a * a) + (c * b) + (a * b) + (b * b)) / (3 * (a + b)) + Me._X0
         End Function
 
         ''' <summary>
@@ -161,10 +109,10 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <returns>The value of area.</returns>
         Public Function Area() As Double
-            Dim a As Double = Me.Centorid() - Me.m_x0
-            Dim b As Double = Me.m_x3 - Me.m_x0
+            Dim a As Double = Me.Centorid() - Me._X0
+            Dim b As Double = Me._X3 - Me._X0
 
-            Return (Me.m_value * (b + (b - (a * Me.m_value)))) / 2
+            Return (Me._Value * (b + (b - (a * Me._Value)))) / 2
         End Function
 
 #End Region
