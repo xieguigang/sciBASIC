@@ -145,15 +145,6 @@
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="FourierTransform.vb" />
-    <Compile Include="FuzzyLogic\FuzzyEngine.vb" />
-    <Compile Include="FuzzyLogic\FuzzyRule.vb" />
-    <Compile Include="FuzzyLogic\FuzzyRuleCollection.vb" />
-    <Compile Include="FuzzyLogic\LinguisticVariable.vb" />
-    <Compile Include="FuzzyLogic\LinguisticVariableCollection.vb" />
-    <Compile Include="FuzzyLogic\MembershipFunction.vb" />
-    <Compile Include="FuzzyLogic\MembershipFunctionCollection.vb" />
-    <Compile Include="FuzzyLogic\Model\ModelAPI.vb" />
-    <Compile Include="FuzzyLogic\Model\LDM.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\Entity.vb" />
@@ -229,7 +220,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FuzzyLogic\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

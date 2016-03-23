@@ -137,6 +137,15 @@
     <Compile Include="Helpers\Logical.vb" />
     <Compile Include="Helpers\Variable.vb" />
     <Compile Include="Arithmetic.Expression\TokenIcer.vb" />
+    <Compile Include="Logical\FuzzyLogic\FuzzyEngine.vb" />
+    <Compile Include="Logical\FuzzyLogic\FuzzyRule.vb" />
+    <Compile Include="Logical\FuzzyLogic\FuzzyRuleCollection.vb" />
+    <Compile Include="Logical\FuzzyLogic\LinguisticVariable.vb" />
+    <Compile Include="Logical\FuzzyLogic\LinguisticVariableCollection.vb" />
+    <Compile Include="Logical\FuzzyLogic\MembershipFunction.vb" />
+    <Compile Include="Logical\FuzzyLogic\MembershipFunctionCollection.vb" />
+    <Compile Include="Logical\FuzzyLogic\Models\LDM.vb" />
+    <Compile Include="Logical\FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Logical\TokenIcer.vb" />
     <Compile Include="Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Matrix.NET\EigenvalueDecomposition.vb" />
@@ -179,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Expression_Evaluate.sequencediagram" />
+    <None Include="Logical\FuzzyLogic\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
