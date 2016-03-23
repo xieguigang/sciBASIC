@@ -52,6 +52,10 @@ Namespace FuzzyLogic
             End If
 
             For i As Integer = 0 To text.Length - 1
+                If i >= text.Length Then
+                    Exit For
+                End If
+
                 Select Case text(i)
                     Case "("c
                         counter += 1
