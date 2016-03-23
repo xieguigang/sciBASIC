@@ -8,7 +8,6 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.DataMining.Framework.FuzzyLogic
 
 Module TestingMain
 
@@ -33,34 +32,7 @@ Module TestingMain
         '    Console.WriteLine("Thread.sleep interrupted!")
         'End Try
 
-        Dim water As New LinguisticVariable("Water")
-        water.MembershipFunctionCollection.Add(New MembershipFunction("Cold", 0, 0, 20, 40))
-        water.MembershipFunctionCollection.Add(New MembershipFunction("Tepid", 30, 50, 50, 70))
-        water.MembershipFunctionCollection.Add(New MembershipFunction("Hot", 50, 80, 100, 100))
 
-        Dim power As LinguisticVariable = New LinguisticVariable("Power")
-        power.MembershipFunctionCollection.Add(New MembershipFunction("Low", 0, 25, 25, 50))
-        power.MembershipFunctionCollection.Add(New MembershipFunction("High", 25, 50, 50, 75))
-
-        Dim FuzzyEngine As New FuzzyEngine()
-        FuzzyEngine.LinguisticVariableCollection.Add(water)
-        FuzzyEngine.LinguisticVariableCollection.Add(power)
-        FuzzyEngine.Consequent = "Power"
-        FuzzyEngine.FuzzyRuleCollection.Add(New FuzzyRule("IF (Water IS Cold) OR (Water IS Tepid) THEN Power IS High"))
-        FuzzyEngine.FuzzyRuleCollection.Add(New FuzzyRule("IF (Water IS Hot) THEN Power IS Low"))
-
-        water.InputValue = 60
-
-        Call FuzzyEngine.Save("x:\fff.xml", Encodings.UTF8)
-
-        FuzzyEngine = Nothing
-        FuzzyEngine = Models.FuzzyModel.FromXml("x:\fff.xml")
-
-        Try
-            MsgBox(FuzzyEngine.Defuzzify().ToString())
-        Catch ex As Exception
-            Call ex.PrintException
-        End Try
 
 
         Dim v As New List(Of Value(Of String))
