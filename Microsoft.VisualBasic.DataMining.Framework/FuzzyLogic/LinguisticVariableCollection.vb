@@ -28,7 +28,7 @@ Namespace FuzzyLogic
     ''' Represents a collection of rules.
     ''' </summary>
     Public Class LinguisticVariableCollection
-        Inherits List(Of LinguisticVariable)
+        Inherits Dictionary(Of LinguisticVariable)
 
         Sub New()
             Call MyBase.New
@@ -42,19 +42,10 @@ Namespace FuzzyLogic
         ''' <param name="linguisticVariableName">Linguistic variable name.</param>
         ''' <returns>The linguistic variable, if founded.</returns>
         Public Overloads Function Find(linguisticVariableName As String) As LinguisticVariable
-            Dim linguisticVariable As LinguisticVariable = Nothing
-
-            For Each variable As LinguisticVariable In Me
-                If variable.Name = linguisticVariableName Then
-                    linguisticVariable = variable
-                    Exit For
-                End If
-            Next
-
-            If linguisticVariable Is Nothing Then
-                Throw New Exception("LinguisticVariable not found: " & linguisticVariableName)
+            If Me.ContainsKey(linguisticVariableName) Then
+                Return Me(linguisticVariableName)
             Else
-                Return linguisticVariable
+                Throw New Exception("LinguisticVariable not found: " & linguisticVariableName)
             End If
         End Function
 

@@ -20,6 +20,7 @@
 
 Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
 Namespace FuzzyLogic
@@ -28,6 +29,7 @@ Namespace FuzzyLogic
     ''' Represents a linguistic variable.
     ''' </summary>
     Public Class LinguisticVariable : Inherits ClassObject
+        Implements sIdEnumerable
 
 #Region "Constructors"
 
@@ -58,7 +60,7 @@ Namespace FuzzyLogic
         ''' <summary>
         ''' The name that identificates the linguistic variable.
         ''' </summary>
-        Public Property Name() As String
+        Public Property Name() As String Implements sIdEnumerable.Identifier
 
         ''' <summary>
         ''' A membership functions collection for the lingusitic variable.

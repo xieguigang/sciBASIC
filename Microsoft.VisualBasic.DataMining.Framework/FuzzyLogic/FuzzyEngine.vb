@@ -21,6 +21,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 Imports System.Xml
+Imports Microsoft.VisualBasic.Linq
 
 Namespace FuzzyLogic
 
@@ -139,11 +140,6 @@ Namespace FuzzyLogic
         ''' A collection of rules.
         ''' </summary>
         Public Property FuzzyRuleCollection() As FuzzyRuleCollection
-
-        ''' <summary>
-        ''' The path of the FCL-like XML file in which save the project.
-        ''' </summary>
-        Public Property FilePath() As String
 #End Region
 
 #Region "Public Methods"
@@ -185,36 +181,13 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <param name="path">Path of the destination document.</param>
         Public Sub Save(path As String)
-            Me.FilePath = path
-            Me.Save()
-        End Sub
+            Dim model As New Models.FuzzyModel
 
-        ''' <summary>
-        ''' Saves the project into a FCL-like XML file.
-        ''' </summary>
-        Public Sub Save()
-            If Me._FilePath = [String].Empty Then
-                Throw New Exception("FilePath not set")
-            End If
-
-            Dim i As Integer = 0
-            Dim xmlTextWriter As New XmlTextWriter(Me._FilePath, Encoding.UTF8)
-            xmlTextWriter.Formatting = Formatting.Indented
-            xmlTextWriter.WriteStartDocument(True)
-            xmlTextWriter.WriteStartElement("FUNCTION_BLOCK")
-
-            For Each linguisticVariable As LinguisticVariable In Me._LinguisticVariableCollection
-                If linguisticVariable.Name = Me._Consequent Then
-                    xmlTextWriter.WriteStartElement("VAR_OUTPUT")
-                Else
-                    xmlTextWriter.WriteStartElement("VAR_INPUT")
-                End If
-
-                xmlTextWriter.WriteAttributeString("NAME", linguisticVariable.Name)
-                xmlTextWriter.WriteAttributeString("TYPE", "REAL")
-                xmlTextWriter.WriteAttributeString("RANGE", linguisticVariable.MinValue().ToString() & " " & linguisticVariable.MaxValue().ToString())
-                xmlTextWriter.WriteEndElement()
-            Next
+            model.Output = New Models.Value(Me.LinguisticVariableCollection.Find(Consequent))
+            model.Input = (From x In Me.LinguisticVariableCollection
+                           Where Not String.Equals(x.Key, Consequent, StringComparison.Ordinal)
+                           Select x).ToArray(Function(x) New Models.Value(x))
+            model.Defuzzify = New Models.Defuzzify(Me.LinguisticVariableCollection.Find(Consequent))
 
             For Each linguisticVariable As LinguisticVariable In Me._LinguisticVariableCollection
                 If linguisticVariable.Name = Me._Consequent Then
@@ -261,18 +234,6 @@ Namespace FuzzyLogic
         ''' </summary>
         ''' <param name="path">Path of the source file.</param>
         Public Sub Load(path As String)
-            Me.FilePath = path
-            Me.Load()
-        End Sub
-
-        ''' <summary>
-        ''' Loads a project from a FCL-like XML file.
-        ''' </summary>
-        Public Sub Load()
-            If Me._FilePath = [String].Empty Then
-                Throw New Exception("FilePath not set")
-            End If
-
             Dim xmlDocument As New XmlDocument()
             xmlDocument.Load(Me._FilePath)
 

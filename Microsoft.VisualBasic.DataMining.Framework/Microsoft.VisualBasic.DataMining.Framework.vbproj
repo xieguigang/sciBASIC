@@ -152,6 +152,8 @@
     <Compile Include="FuzzyLogic\LinguisticVariableCollection.vb" />
     <Compile Include="FuzzyLogic\MembershipFunction.vb" />
     <Compile Include="FuzzyLogic\MembershipFunctionCollection.vb" />
+    <Compile Include="FuzzyLogic\Model\ModelAPI.vb" />
+    <Compile Include="FuzzyLogic\Model\LDM.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\Entity.vb" />
