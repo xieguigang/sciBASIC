@@ -70,6 +70,12 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Return hash
     End Operator
 
+    ''' <summary>
+    ''' Find a variable in the hash table
+    ''' </summary>
+    ''' <param name="hash"></param>
+    ''' <param name="uid"></param>
+    ''' <returns></returns>
     Public Shared Operator ^(hash As Dictionary(Of V), uid As String) As V
         If hash.ContainsKey(uid) Then
             Return hash(uid)

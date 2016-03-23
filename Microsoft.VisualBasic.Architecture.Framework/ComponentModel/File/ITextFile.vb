@@ -11,7 +11,8 @@ Namespace ComponentModel
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    Public MustInherit Class ITextFile : Implements IDisposable
+    Public MustInherit Class ITextFile : Inherits Language.ClassObject
+        Implements IDisposable
         Implements ISaveHandle
 #If NET_40 = 0 Then
         Implements Settings.IProfile

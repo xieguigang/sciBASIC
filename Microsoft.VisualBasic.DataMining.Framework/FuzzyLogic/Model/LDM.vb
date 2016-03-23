@@ -49,7 +49,7 @@ Namespace FuzzyLogic.Models
 
         Sub New(x As LinguisticVariable)
             Identifier = x.Name
-            Terms = x.MembershipFunctionCollection.ToArray(Function(m) New MembershipFunction(m))
+            Terms = x.MembershipFunctionCollection.ToArray(Function(m) New Term(m))
         End Sub
     End Class
 
@@ -75,6 +75,15 @@ Namespace FuzzyLogic.Models
 
         <XmlAttribute> Public Property Identifier As String Implements sIdEnumerable.Identifier
         <XmlAttribute> Public Property Expression As String
+
+        Sub New()
+
+        End Sub
+
+        Sub New(i As Integer, rule As FuzzyRule)
+            Identifier = i
+            Expression = rule.Text
+        End Sub
     End Class
 
     Public Class RuleBlock : Inherits ClassObject
@@ -82,5 +91,15 @@ Namespace FuzzyLogic.Models
         <XmlAttribute> Public Property [AND] As String
         <XmlAttribute> Public Property [OR] As String
         <XmlElement> Public Property Rules As Rule()
+
+        Sub New()
+
+        End Sub
+
+        Sub New(rules As IEnumerable(Of FuzzyRule))
+            Me.[AND] = "MIN"
+            Me.[OR] = "MAX"
+            Me.Rules = rules.ToArray(Function(x, i) New Rule(i, x))
+        End Sub
     End Class
 End Namespace

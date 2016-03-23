@@ -21,6 +21,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 Imports System.Xml
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 
 Namespace FuzzyLogic
@@ -28,7 +29,7 @@ Namespace FuzzyLogic
     ''' <summary>
     ''' Represents the inferential engine.
     ''' </summary>
-    Public Class FuzzyEngine
+    Public Class FuzzyEngine : Implements ISaveHandle
 
         Sub New()
             Me.LinguisticVariableCollection = New LinguisticVariableCollection
@@ -113,15 +114,6 @@ Namespace FuzzyLogic
             Return value
         End Function
 
-        Private Sub ReadVariable(xmlNode As XmlNode)
-            Dim linguisticVariable As LinguisticVariable = Me._LinguisticVariableCollection.Find(xmlNode.Attributes("NAME").InnerText)
-
-            For Each termNode As XmlNode In xmlNode.ChildNodes
-                Dim points As String() = termNode.Attributes("POINTS").InnerText.Split()
-                linguisticVariable.MembershipFunctionCollection.Add(New MembershipFunction(termNode.Attributes("NAME").InnerText, Convert.ToDouble(points(0)), Convert.ToDouble(points(1)), Convert.ToDouble(points(2)), Convert.ToDouble(points(3))))
-            Next
-        End Sub
-
 #End Region
 
 #Region "Public Properties"
@@ -140,6 +132,14 @@ Namespace FuzzyLogic
         ''' A collection of rules.
         ''' </summary>
         Public Property FuzzyRuleCollection() As FuzzyRuleCollection
+
+        Public Sub Add(x As LinguisticVariable)
+            Call LinguisticVariableCollection.Add(x)
+        End Sub
+
+        Public Sub Add(x As FuzzyRule)
+            Call FuzzyRuleCollection.Add(x)
+        End Sub
 #End Region
 
 #Region "Public Methods"
@@ -179,81 +179,30 @@ Namespace FuzzyLogic
         ''' <summary>
         ''' Sets the FilePath property and saves the project into a FCL-like XML file.
         ''' </summary>
-        ''' <param name="path">Path of the destination document.</param>
-        Public Sub Save(path As String)
-            Dim model As New Models.FuzzyModel
+        Public Function ToModel() As Models.FuzzyModel
+            Dim conseq = Me.LinguisticVariableCollection.Find(Consequent)
+            Dim trace = (From x In Me.LinguisticVariableCollection
+                         Where Not String.Equals(x.Key, Consequent, StringComparison.Ordinal)
+                         Select x.Value).ToArray
 
-            model.Output = New Models.Value(Me.LinguisticVariableCollection.Find(Consequent))
-            model.Input = (From x In Me.LinguisticVariableCollection
-                           Where Not String.Equals(x.Key, Consequent, StringComparison.Ordinal)
-                           Select x).ToArray(Function(x) New Models.Value(x))
-            model.Defuzzify = New Models.Defuzzify(Me.LinguisticVariableCollection.Find(Consequent))
+            Dim model As New Models.FuzzyModel With {
+                .Output = New Models.Value(conseq),
+                .Input = trace.ToArray(Function(x) New Models.Value(x)),
+                .Defuzzify = New Models.Defuzzify(conseq),
+                .Fuzzify = trace.ToArray(Function(x) New Models.Fuzzify(x)),
+                .Rules = New Models.RuleBlock(FuzzyRuleCollection)
+            }
 
-            For Each linguisticVariable As LinguisticVariable In Me._LinguisticVariableCollection
-                If linguisticVariable.Name = Me._Consequent Then
-                    xmlTextWriter.WriteStartElement("DEFUZZIFY")
-                    xmlTextWriter.WriteAttributeString("METHOD", "CoG")
-                    xmlTextWriter.WriteAttributeString("ACCU", "MAX")
-                Else
-                    xmlTextWriter.WriteStartElement("FUZZIFY")
-                End If
+            Return model
+        End Function
 
-                xmlTextWriter.WriteAttributeString("NAME", linguisticVariable.Name)
+        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+            Return ToModel.SaveAsXml(Path, True, encoding)
+        End Function
 
-                For Each membershipFunction As MembershipFunction In linguisticVariable.MembershipFunctionCollection
-                    xmlTextWriter.WriteStartElement("TERM")
-                    xmlTextWriter.WriteAttributeString("NAME", membershipFunction.Name)
-                    xmlTextWriter.WriteAttributeString("POINTS", membershipFunction.X0 & " " & membershipFunction.X1 & " " & membershipFunction.X2 & " " & membershipFunction.X3)
-                    xmlTextWriter.WriteEndElement()
-                Next
-
-                xmlTextWriter.WriteEndElement()
-            Next
-
-            xmlTextWriter.WriteStartElement("RULEBLOCK")
-            xmlTextWriter.WriteAttributeString("AND", "MIN")
-            xmlTextWriter.WriteAttributeString("OR", "MAX")
-
-            For Each fuzzyRule As FuzzyRule In Me._FuzzyRuleCollection
-                i += 1
-                xmlTextWriter.WriteStartElement("RULE")
-                xmlTextWriter.WriteAttributeString("NUMBER", i.ToString())
-                xmlTextWriter.WriteAttributeString("TEXT", fuzzyRule.Text)
-                xmlTextWriter.WriteEndElement()
-            Next
-
-            xmlTextWriter.WriteEndElement()
-
-            xmlTextWriter.WriteEndElement()
-            xmlTextWriter.WriteEndDocument()
-            xmlTextWriter.Close()
-        End Sub
-
-        ''' <summary>
-        ''' Sets the FilePath property and loads a project from a FCL-like XML file.
-        ''' </summary>
-        ''' <param name="path">Path of the source file.</param>
-        Public Sub Load(path As String)
-            Dim xmlDocument As New XmlDocument()
-            xmlDocument.Load(Me._FilePath)
-
-            For Each xmlNode As XmlNode In xmlDocument.GetElementsByTagName("VAR_INPUT")
-                Me.LinguisticVariableCollection.Add(New LinguisticVariable(xmlNode.Attributes("NAME").InnerText))
-            Next
-
-            Me._Consequent = xmlDocument.GetElementsByTagName("VAR_OUTPUT")(0).Attributes("NAME").InnerText
-            Me.LinguisticVariableCollection.Add(New LinguisticVariable(Me._Consequent))
-
-            For Each xmlNode As XmlNode In xmlDocument.GetElementsByTagName("FUZZIFY")
-                ReadVariable(xmlNode)
-            Next
-
-            ReadVariable(xmlDocument.GetElementsByTagName("DEFUZZIFY")(0))
-
-            For Each xmlNode As XmlNode In xmlDocument.GetElementsByTagName("RULE")
-                Me._FuzzyRuleCollection.Add(New FuzzyRule(xmlNode.Attributes("TEXT").InnerText))
-            Next
-        End Sub
+        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(Path, encoding.GetEncodings)
+        End Function
 
 #End Region
     End Class

@@ -51,7 +51,10 @@ Module TestingMain
 
         water.InputValue = 60
 
-        Call FuzzyEngine.Save("x:\fff.xml")
+        Call FuzzyEngine.Save("x:\fff.xml", Encodings.UTF8)
+
+        FuzzyEngine = Nothing
+        FuzzyEngine = Models.FuzzyModel.FromXml("x:\fff.xml")
 
         Try
             MsgBox(FuzzyEngine.Defuzzify().ToString())
