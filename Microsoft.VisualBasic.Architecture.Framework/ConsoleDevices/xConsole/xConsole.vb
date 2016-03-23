@@ -962,11 +962,11 @@ Namespace ConsoleDevice
                                     Case "version"
                                         data("ver") = New Version(reader.Value)
 
-                                        Exit Select
+                                        
                                     Case "url"
                                         data("url") = reader.Value
 
-                                        Exit Select
+                                        
                                 End Select
                             End If
                         End If

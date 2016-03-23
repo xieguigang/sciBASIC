@@ -20,13 +20,14 @@
 
 Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace FuzzyLogic
 
     ''' <summary>
     ''' Represents a rule.
     ''' </summary>
-    Public Class FuzzyRule
+    Public Class FuzzyRule : Inherits ClassObject
 
 #Region "Private Properties"
 

@@ -20,13 +20,14 @@
 
 Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace FuzzyLogic
 
     ''' <summary>
     ''' Represents a membership function.
     ''' </summary>
-    Public Class MembershipFunction
+    Public Class MembershipFunction : Inherits ClassObject
 
 #Region "Constructors"
 

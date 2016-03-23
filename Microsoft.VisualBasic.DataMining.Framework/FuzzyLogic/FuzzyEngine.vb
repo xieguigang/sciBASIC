@@ -29,6 +29,11 @@ Namespace FuzzyLogic
     ''' </summary>
     Public Class FuzzyEngine
 
+        Sub New()
+            Me.LinguisticVariableCollection = New LinguisticVariableCollection
+            Me.FuzzyRuleCollection = New FuzzyRuleCollection
+        End Sub
+
 #Region "Private Methods"
 
         Private Function GetConsequent() As LinguisticVariable
@@ -51,7 +56,6 @@ Namespace FuzzyLogic
                         If counter = 1 Then
                             firstMatch = i
                         End If
-                        Exit Select
 
                     Case ")"c
                         counter -= 1
@@ -62,10 +66,10 @@ Namespace FuzzyLogic
                             text = text.Replace(substringBrackets, Parse(substring).ToString())
                             i = i - (length - 1)
                         End If
-                        Exit Select
+
                     Case Else
 
-                        Exit Select
+
                 End Select
             Next
 
@@ -86,17 +90,17 @@ Namespace FuzzyLogic
                         If tokenValue < value Then
                             value = tokenValue
                         End If
-                        Exit Select
+
 
                     Case "OR"
                         If tokenValue > value Then
                             value = tokenValue
                         End If
-                        Exit Select
+
                     Case Else
 
                         value = tokenValue
-                        Exit Select
+
                 End Select
 
                 If (i + 1) < tokens.Length Then

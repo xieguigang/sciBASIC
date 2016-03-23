@@ -20,13 +20,14 @@
 
 Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace FuzzyLogic
 
     ''' <summary>
     ''' Represents a linguistic variable.
     ''' </summary>
-    Public Class LinguisticVariable
+    Public Class LinguisticVariable : Inherits ClassObject
 
 #Region "Constructors"
 
@@ -34,10 +35,12 @@ Namespace FuzzyLogic
         ''' Default constructor.
         ''' </summary>
         Public Sub New()
+            MembershipFunctionCollection = New MembershipFunctionCollection
         End Sub
 
         ''' <param name="name">The name that identificates the linguistic variable.</param>
         Public Sub New(name As String)
+            Call Me.New
             Me.Name = name
         End Sub
 
