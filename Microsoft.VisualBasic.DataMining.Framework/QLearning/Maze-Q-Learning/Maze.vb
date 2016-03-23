@@ -112,6 +112,7 @@ Public Class Maze : Inherits QLearning(Of Char())
             Call sb.Close()
         End If
 
+        Call dump.Save(App.HOME & "/results/QTable.Csv")
         sb = New StreamWriter(New FileStream(App.HOME & $"/results/maze_{i}.txt", FileMode.OpenOrCreate))
         sb.WriteLine("GOAL REACHED IN " & moveCounter & " MOVES!")
         resetMaze()

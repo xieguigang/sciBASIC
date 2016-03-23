@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace StorageProvider.Reflection
 
@@ -80,7 +81,7 @@ Namespace StorageProvider.Reflection
             Dim _getName As String = If(String.IsNullOrEmpty([alias]), [Property].Name, [alias])
 
             If Scripting.CanbeCast([Property].PropertyType) Then
-                Dim column As New Csv.StorageProvider.Reflection.ColumnAttribute(_getName)  '属性值的类型是简单类型，则其标记的类型只能是普通列
+                Dim column As New ColumnAttribute(_getName)  '属性值的类型是简单类型，则其标记的类型只能是普通列
                 Return New ComponentModels.Column(column, [Property])
             End If
 
@@ -89,11 +90,11 @@ Namespace StorageProvider.Reflection
 
             If Not GetMetaAttribute([Property].PropertyType).ShadowCopy(valueType) Is Nothing Then
                 Return New ComponentModels.MetaAttribute(New Reflection.MetaAttribute(valueType), [Property])
-            ElseIf Not GetsElementType([Property].PropertyType).ShadowCopy(ElementType).Equals(GetType(System.Void))
+            ElseIf Not GetsElementType([Property].PropertyType).ShadowCopy(ElementType).Equals(GetType(System.Void)) Then
                 Return ComponentModels.CollectionColumn.CreateObject(New Reflection.CollectionAttribute(_getName), [Property], ElementType)
-            ElseIf IsKeyValuePair([Property])
+            ElseIf IsKeyValuePair([Property]) Then
                 Return ComponentModels.KeyValuePair.CreateObject(_getName, [Property])
-            ElseIf IsEnum([Property])
+            ElseIf IsEnum([Property]) Then
                 Return ComponentModels.Enum.CreateObject(_getName, [Property])
             End If
 
@@ -116,7 +117,7 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <param name="Property"></param>
         ''' <returns></returns>
-        Public Function IsKeyValuePair([Property] As System.Reflection.PropertyInfo) As Boolean
+        Public Function IsKeyValuePair([Property] As PropertyInfo) As Boolean
             Dim Type As System.Type = [Property].PropertyType
             Dim TypeFullName As String = $"{Type.Namespace }.{Type.Name }"
 
@@ -160,7 +161,15 @@ Namespace StorageProvider.Reflection
             Return GetType(System.Void)
         End Function
 
-        Public Function GetMetaAttribute(type As System.Type) As Type
+        Public Function GetMetaAttribute(type As Type) As Type
+            If Not type.IsGenericType Then
+                If type.BaseType.Equals(GetType(Object)) Then
+                    Return Nothing
+                Else
+                    Return GetMetaAttribute(type.BaseType)
+                End If
+            End If
+
             Dim gType As Type = type.GetGenericTypeDefinition
 
             If Not gType.Equals(GetType(Dictionary(Of ,))) Then
