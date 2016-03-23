@@ -1,5 +1,6 @@
 # VisualBasic_AppFramework
 Low Level App framework that i used for the programming in GCModeller
+This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the syntax and the code function. Makes the VisualBasic programming style more modernization by using this framework.
 
 Includes:
 
