@@ -141,4 +141,18 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     Public Shared Narrowing Operator CType(list As List(Of T)) As T()
         Return list.ToArray
     End Operator
+
+    ''' <summary>
+    ''' Dump this collection data to the file system.
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    Public Shared Operator >(source As List(Of T), path As String) As Boolean
+        Return CollectionIO.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
+    End Operator
+
+    Public Shared Operator <(source As List(Of T), path As String) As Boolean
+        Throw New NotImplementedException
+    End Operator
 End Class

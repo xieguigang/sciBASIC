@@ -41,7 +41,7 @@ Public Module XmlDoc
     ''' <param name="preprocess">Xml文件的预处理操作</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("LoadXml")>
     <Extension> Public Function LoadXml(XmlFile As String, type As Type,
                                         Optional encoding As Encoding = Nothing,
@@ -92,15 +92,19 @@ Public Module XmlDoc
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function GetXml(Of T As Class)(obj As T, Optional ThrowEx As Boolean = True) As String
+        Return GetXml(obj, GetType(T), ThrowEx)
+    End Function
+
+    Public Function GetXml(obj As Object, type As Type, Optional throwEx As Boolean = True) As String
         Dim sBuilder As StringBuilder = New StringBuilder(1024)
 
         Using StreamWriter As StringWriter = New StringWriter(sb:=sBuilder)
             Try
-                Call (New XmlSerializer(GetType(T))).Serialize(StreamWriter, obj)
+                Call (New XmlSerializer(type)).Serialize(StreamWriter, obj)
             Catch ex As Exception
                 Call App.LogException(ex)
 
-                If ThrowEx Then
+                If throwEx Then
                     Throw ex
                 Else
                     Return Nothing
@@ -155,7 +159,7 @@ Public Module XmlDoc
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
-    ''' <param name="ThrowEx">Should this program throw the exception when the xml deserialization error happens? 
+    ''' <param name="ThrowEx">Should this program throw the exception when the xml deserialization error happens?
     ''' if False then this function will returns a null value instead of throw exception.
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>

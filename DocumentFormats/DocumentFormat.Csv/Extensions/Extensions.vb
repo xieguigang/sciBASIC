@@ -21,14 +21,19 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 ''' The shortcuts operation for the common csv document operations.
 ''' </summary>
 ''' <remarks></remarks>
-''' 
+'''
 <PackageNamespace("IO_Device.Csv.Extensions",
                   Description:="The shortcuts operation for the common csv document operations.",
                   Publisher:="xie.guigang@gmail.com")>
 Public Module Extensions
 
+    Sub New()
+        Call CollectionIO.SetHandle(AddressOf ISaveCsv)
+        Call VBDebugger.Warning($"Collection IO extension default IO handle has been changes to {CollectionIO.DefaultHandle.ToString}...")
+    End Sub
+
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="path">Csv file path</param>
     ''' <returns></returns>
@@ -67,8 +72,8 @@ Public Module Extensions
     ''' <param name="DataSource"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
-    <ExportAPI("DataFrame", Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
+    '''
+    <ExportAPI(NameOf(DataFrame), Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
     <Extension> Public Function DataFrame(DataSource As System.Data.Common.DbDataReader) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.DataFrame
         Dim File As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File = New Csv.DocumentStream.File
         Dim Fields As Integer() = DataSource.FieldCount.Sequence
@@ -115,14 +120,14 @@ Public Module Extensions
     ''' <param name="CsvData"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
-    <ExportAPI("DataFrame", Info:="Create a dynamics data frame object from a csv document object.")>
+    '''
+    <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
     <Extension> Public Function DataFrame(CsvData As Csv.DocumentStream.File) As Csv.DocumentStream.DataFrame
         Return Csv.DocumentStream.DataFrame.CreateObject(CsvData)
     End Function
 
     ''' <summary>
-    ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据) 
+    ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dataSet"></param>
@@ -135,7 +140,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="ImportsFile">The file path of the text doucment which will be imports as a csv document.</param>
@@ -150,7 +155,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Convert the string collection as the type specific collection, please make sure the first element 
+    ''' Convert the string collection as the type specific collection, please make sure the first element
     ''' in this collection is stands for the title row.
     ''' (将字符串数组转换为数据源对象，注意：请确保第一行为标题行)
     ''' </summary>
@@ -196,13 +201,26 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
         Return CType(LQuery, Csv.DocumentStream.File).AsDataSource(Of T)(explicit)
     End Function
 
+    Public Function ISaveCsv(source As IEnumerable, path As String, encoding As Encoding) As Boolean
+        Dim o As Object = (From x In source Select x).FirstOrDefault
+        Dim type As Type = o.GetType
+
+        path = FileIO.FileSystem.GetFileInfo(path).FullName
+
+        Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", type.FullName, path)
+        Call Reflector.__save(source, type, False).Save(path, LazySaved:=False, encoding:=encoding)
+        Call Console.WriteLine("CSV saved!")
+
+        Return True
+    End Function
+
     ''' <summary>
     ''' Save the object collection data dump into a csv file.(将一个对象数组之中的对象保存至一个Csv文件之中，请注意，这个方法仅仅会保存简单的基本数据类型的属性值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="path"></param>
-    ''' <param name="explicit">If true then all of the simple data type property its value will be save to the data file, 
+    ''' <param name="explicit">If true then all of the simple data type property its value will be save to the data file,
     ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ColumnAttribute"></see>
     ''' </param>
     ''' <param name="encoding"></param>
@@ -255,7 +273,7 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' <param name="path"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
     <Extension> Public Function SaveTo(data As Generic.IEnumerable(Of Double), path As String) As Boolean
         Dim Row As List(Of String) = (From n In data Select s = n.ToString).ToList
@@ -264,12 +282,12 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     End Function
 
     ''' <summary>
-    ''' Load the data from the csv document as a double data type vector. 
+    ''' Load the data from the csv document as a double data type vector.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("DblVector.LoadCsv", Info:="Load the data from the csv document as a double data type vector. ")>
     <Extension> Public Function LoadDblVector(path As String) As Double()
         Dim Csv = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File.Load(path)

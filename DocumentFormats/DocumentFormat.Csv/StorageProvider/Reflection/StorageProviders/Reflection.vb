@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic
 Namespace StorageProvider.Reflection
 
     ''' <summary>
-    ''' The dynamics reflection operations on Csv data source services. 
+    ''' The dynamics reflection operations on Csv data source services.
     ''' </summary>
     ''' <remarks></remarks>
     Public Module Reflector
@@ -163,7 +163,7 @@ Namespace StorageProvider.Reflection
         '                                        Call bindProperty.SetValue(FilledObject, strValues, Nothing)}}
 
         ''' <summary>
-        ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作) 
+        ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
         ''' <param name="Collection"></param>
         ''' <param name="Explicit"></param>
@@ -175,13 +175,14 @@ Namespace StorageProvider.Reflection
         End Function
 
         ''' <summary>
-        ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作) 
+        ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
-        ''' <param name="source"></param>
+        ''' <param name="___source"></param>
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Private Function __save(source As IEnumerable(Of Object), typeDef As Type, Explicit As Boolean) As DocumentStream.File
+        Public Function __save(___source As IEnumerable, typeDef As Type, Explicit As Boolean) As DocumentStream.File
+            Dim source As Object() = (From x In ___source Select x).ToArray
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
             Dim LQuery As List(Of RowObject) = (From itmRow As Object In source.AsParallel
@@ -197,7 +198,7 @@ Namespace StorageProvider.Reflection
 
         ''' <summary>
         ''' Save the specifc type object collection into the csv data file.
-        ''' (将目标对象数据的集合转换为Csv文件已进行数据保存操作，非并行化的以保持数据原有的顺序) 
+        ''' (将目标对象数据的集合转换为Csv文件已进行数据保存操作，非并行化的以保持数据原有的顺序)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
@@ -211,7 +212,7 @@ Namespace StorageProvider.Reflection
         End Function
 
         ''' <summary>
-        ''' 将数据集合导出为键值对，以方便其他操作 
+        ''' 将数据集合导出为键值对，以方便其他操作
         ''' </summary>
         ''' <typeparam name="ItemType"></typeparam>
         ''' <param name="Collection"></param>
