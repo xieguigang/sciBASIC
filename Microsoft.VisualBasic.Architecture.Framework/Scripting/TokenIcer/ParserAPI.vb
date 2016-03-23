@@ -35,7 +35,7 @@ Namespace Scripting.TokenIcer
             Dim source As Token(Of Tokens)() = (From x As Token(Of Tokens)
                                                 In lstToken
                                                 Where Not stackT.Equals(x.TokenName, whiteSpace)
-                                                Select x)
+                                                Select x).ToArray
             Dim func As Func(Of Tokens) =
                 StackParser.Parsing(Of Tokens)(source, stackT)
             Return func

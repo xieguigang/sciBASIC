@@ -18,6 +18,8 @@ Namespace Logical
         ''' Space or VbTab
         ''' </summary>
         WhiteSpace
+        OpenStack
+        CloseStack
     End Enum
 
     Public Module TokenIcer
@@ -41,15 +43,25 @@ Namespace Logical
             {"=", Logical.Tokens.Comparer},
             {"<>", Logical.Tokens.Comparer},
             {vbTab, Logical.Tokens.WhiteSpace},
-            {" ", Logical.Tokens.WhiteSpace}
+            {" ", Logical.Tokens.WhiteSpace},
+            {"(", Logical.Tokens.OpenStack},
+            {")", Logical.Tokens.CloseStack},
+            {"[", Logical.Tokens.OpenStack},
+            {"]", Logical.Tokens.CloseStack},
+            {"{", Logical.Tokens.OpenStack},
+            {"}", Logical.Tokens.CloseStack}
         }
 
         Const OPERATORS As String = "AndOrNotxXorNorNand"
         Const COMPARERS As String = "<<=>>~"
+        Const STACKS As String = "()[]{}"
 
         <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
-                If OPERATORS.IndexOf(str.Current) = -1 AndAlso  COMPARERS.IndexOf(str.Current) = -1 Then
+                If OPERATORS.IndexOf(str.Current) = -1 AndAlso
+                    COMPARERS.IndexOf(str.Current) = -1 AndAlso
+                    STACKS.IndexOf(str.Current) = -1 Then
+
                     Call token.Add(str.Current)
                 Else
                     Return True
@@ -99,6 +111,23 @@ Namespace Logical
 
             Do While True
                 ch = str.Current
+
+                If STACKS.IndexOf(ch) > -1 Then
+                    Dim st As String = CStr(ch)
+                    tokens += New Token(Of Tokens)(TokenIcer.Tokens(st), st)
+                    If Not str.MoveNext Then
+                        Exit Do
+                    Else
+                        Continue Do
+                    End If
+                ElseIf ch.IsWhiteSpace Then
+                    If Not str.MoveNext Then
+                        Exit Do
+                    Else
+                        Continue Do
+                    End If
+                End If
+
                 token += ch
 CONTINUTES:
                 If OPERATORS.IndexOf(ch) > -1 Then

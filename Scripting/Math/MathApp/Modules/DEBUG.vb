@@ -59,22 +59,13 @@ Module DEBUG
 
 
 
-        Dim xxxxxxx As Pointer(Of [Integer]) = New Pointer(Of [Integer])(xxx)
-        Dim copy As [Integer] = Nothing
-
-        Do While Not (copy = xxxxxxx.Current) Is Nothing
-            Call copy.__DEBUG_ECHO
-        Loop
-
-
-
         Dim f As String = "f(x,y,z,aa) x+y+z!+2*aa"
         Dim func = Mathematical.FuncParser.TryParse(f)
 
         Call Mathematical.Expression.DefaultEngine.Functions.Add(f)
         Call Mathematical.Expression.Evaluate("f(1,2,3,3)").__DEBUG_ECHO
 
-        Dim ls As String = "a and not andb xor 99>2"
+        Dim ls As String = "a and not (andb xor 99>2)"
         Dim rr = Logical.TokenIcer.TryParse(ls)
         Dim sr = Logical.TokenIcer.Split(rr)
 
