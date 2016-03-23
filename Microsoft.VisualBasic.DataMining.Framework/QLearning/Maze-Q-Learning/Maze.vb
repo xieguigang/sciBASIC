@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.Framework
 Imports Microsoft.VisualBasic.DataMining.Framework.QLearning
+Imports Microsoft.VisualBasic.DataMining.Framework.QLearning.DataModel
 
 Public Class Maze : Inherits QLearning(Of Char())
 
@@ -103,19 +104,27 @@ Public Class Maze : Inherits QLearning(Of Char())
 
     Dim moveCounter As Integer = 0
 
+    Dim dump As New QTableDump
+
     Protected Overrides Sub __reset(i As Integer)
         If Not sb Is Nothing Then
             Call sb.Flush()
             Call sb.Close()
         End If
 
-        sb = New StreamWriter(New FileStream(App.AppSystemTemp & $"/maze_{i}.txt", FileMode.OpenOrCreate))
+        sb = New StreamWriter(New FileStream(App.HOME & $"/results/maze_{i}.txt", FileMode.OpenOrCreate))
         sb.WriteLine("GOAL REACHED IN " & moveCounter & " MOVES!")
         resetMaze()
         moveCounter = 0
+
+        Call dump.Dump(Q, i)
     End Sub
 
     Protected Overrides Sub __init()
         resetMaze()
+    End Sub
+
+    Protected Overrides Sub __finishLearn()
+        Call dump.Save(App.HOME & "/QTable.Csv")
     End Sub
 End Class

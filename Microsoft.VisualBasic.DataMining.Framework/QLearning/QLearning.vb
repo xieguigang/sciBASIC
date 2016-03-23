@@ -68,6 +68,15 @@ Namespace QLearning
 
                 Call Q.UpdateQvalue(GoalRewards, _stat.Current)  ' REWARDS AND ADJUSTMENT OF WEIGHTS SHOULD TAKE PLACE HERE
             Next
+
+            Call __finishLearn()
+        End Sub
+
+        ''' <summary>
+        ''' You can save you q table by overrides at here.
+        ''' </summary>
+        Protected Overridable Sub __finishLearn()
+
         End Sub
     End Class
 End Namespace
