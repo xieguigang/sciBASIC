@@ -152,12 +152,14 @@ Public Module Win32File
     End Function
 #End Region
 
+    Const ushare As UInteger = 0
+
     Public Function Open(filepath As String, mode As FileMode) As FileStream
         'opened in the specified mode and path, with read/write access and not shared
         Dim fs As FileStream = Nothing
         Dim umode As UInteger = GetMode(mode)
         Dim uaccess As UInteger = GENERIC_READ Or GENERIC_WRITE
-        Dim ushare As UInteger = 0
+
         'not shared
         If mode = FileMode.Append Then
             uaccess = FILE_APPEND_DATA
@@ -169,7 +171,7 @@ Public Module Win32File
         Else
             filepath = "\\?\" & filepath
         End If
-        Dim sh As SafeFileHandle = CreateFileW(filepath, uaccess, ushare, IntPtr.Zero, umode, FILE_ATTRIBUTE_NORMAL, _
+        Dim sh As SafeFileHandle = CreateFileW(filepath, uaccess, ushare, IntPtr.Zero, umode, FILE_ATTRIBUTE_NORMAL,
             IntPtr.Zero)
         Dim iError As Integer = GetLastWin32Error()
         If (iError > 0 AndAlso Not (mode = FileMode.Append AndAlso iError = ERROR_ALREADY_EXISTS)) OrElse sh.IsInvalid Then
@@ -193,7 +195,7 @@ Public Module Win32File
         Dim fs As FileStream = Nothing
         Dim umode As UInteger = GetMode(mode)
         Dim uaccess As UInteger = GetAccess(access)
-        Dim ushare As UInteger = 0
+
         'not shared
         If mode = FileMode.Append Then
             uaccess = FILE_APPEND_DATA

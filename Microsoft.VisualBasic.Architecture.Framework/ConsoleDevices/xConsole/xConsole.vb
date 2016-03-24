@@ -2,7 +2,7 @@
 ' *	xConsole Source Code v 0.3.1
 ' *	Created by TheTrigger { overpowered.it } { thetriggersoft[at]]gmail[dot]com }
 ' *		23/05/2014
-' 
+'
 
 Imports System.Collections.Generic
 Imports System.Drawing
@@ -464,6 +464,9 @@ Namespace ConsoleDevice
             Return Console.ForegroundColor
         End Function
 
+        Const c As String = vbCr & vbLf & ".,:;!?"
+        'string pattern = @"[\\]{0,1}(?:[\^|\*|°]{1})(?:[0-9a-fA-F]{3}|[0-9]{1,2}|[a-zA-Z!\.]{1})";
+        Const pattern As String = "[\\]{0,1}(?:[\^|\*]{1})(?:[0-9A-F]{3}|[0-9]{1,2}|[a-zA-Z!\.]{1})"
 
         ''' <summary>
         ''' The Parser
@@ -477,10 +480,6 @@ Namespace ConsoleDevice
             ' temp var for restore previous color
             Dim Fore As ConsoleColor = Console.ForegroundColor
             Dim Back As ConsoleColor = Console.BackgroundColor
-
-            'string pattern = @"[\\]{0,1}(?:[\^|\*|°]{1})(?:[0-9a-fA-F]{3}|[0-9]{1,2}|[a-zA-Z!\.]{1})";
-            Dim pattern As String = "[\\]{0,1}(?:[\^|\*]{1})(?:[0-9A-F]{3}|[0-9]{1,2}|[a-zA-Z!\.]{1})"
-
             Dim matches As MatchCollection = Regex.Matches(input, pattern)
             Dim substrings As String() = Regex.Split(input, pattern)
 
@@ -492,7 +491,6 @@ Namespace ConsoleDevice
                     For j As Integer = 0 To [sub].Length - 1
                         Console.Write([sub](j))
 
-                        Dim c As String = vbCr & vbLf & ".,:;!?"
                         If c.Contains([sub](j)) AndAlso (j < [sub].Length - 1 AndAlso [sub](j + 1) <> [sub](j)) Then
                             Thread.Sleep(CoolWriteSettings.CWRDDelay)
                         Else
@@ -962,11 +960,11 @@ Namespace ConsoleDevice
                                     Case "version"
                                         data("ver") = New Version(reader.Value)
 
-                                        
+
                                     Case "url"
                                         data("url") = reader.Value
 
-                                        
+
                                 End Select
                             End If
                         End If

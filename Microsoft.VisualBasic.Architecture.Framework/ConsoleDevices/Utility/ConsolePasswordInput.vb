@@ -46,13 +46,13 @@ Namespace ConsoleDevice.Utility
 
     ''' <summary>
     ''' ' Struct uChar is meant to support the Windows Console API's uChar union.
-    ''' ' Unions do not exist in the pure .NET world. We have to use the regular 
+    ''' ' Unions do not exist in the pure .NET world. We have to use the regular
     ''' ' C# struct and the StructLayout and FieldOffset Attributes to preserve
     ''' ' the memory layout of the unmanaged union.
-    ''' ' 
-    ''' ' We specify the "LayoutKind.Explicit" value for the StructLayout attribute 
+    ''' '
+    ''' ' We specify the "LayoutKind.Explicit" value for the StructLayout attribute
     ''' ' to specify that every field of the struct uChar is marked with a byte offset.
-    ''' ' 
+    ''' '
     ''' ' This byte offset is specified by the FieldOffsetAttribute and it indicates
     ''' ' the number of bytes between the beginning of the struct in memory and the
     ''' ' beginning of the field.
@@ -63,24 +63,24 @@ Namespace ConsoleDevice.Utility
     ''' '
     ''' </summary>
     ''' <remarks></remarks>
-    <StructLayout(LayoutKind.Explicit)> _
+    <StructLayout(LayoutKind.Explicit)>
     Friend Structure uCharUnion
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend UnicodeChar As UShort
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend AsciiChar As Byte
     End Structure
 
     ''' <summary>
-    ''' ' The struct KEY_EVENT_RECORD is used to report keyboard input events 
+    ''' ' The struct KEY_EVENT_RECORD is used to report keyboard input events
     ''' ' in a console INPUT_RECORD structure.
     ''' '
     ''' ' Internally, it uses the structure uChar which is treated as a union
     ''' ' in the unmanaged world.
-    ''' ' 
+    ''' '
     ''' </summary>
     ''' <remarks></remarks>
-    <StructLayout(LayoutKind.Sequential, Pack:=8)> _
+    <StructLayout(LayoutKind.Sequential, Pack:=8)>
     Friend Structure KEY_EVENT_RECORD
         Friend bKeyDown As Integer
         Friend wRepeatCount As UShort
@@ -117,21 +117,21 @@ Namespace ConsoleDevice.Utility
 
     ' The EventUnion struct is also treated as a union in the unmanaged world.
     ' We therefore use the StructLayoutAttribute and the FieldOffsetAttribute.
-    <StructLayout(LayoutKind.Explicit)> _
+    <StructLayout(LayoutKind.Explicit)>
     Friend Structure EventUnion
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend KeyEvent As KEY_EVENT_RECORD
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend MouseEvent As MOUSE_EVENT_RECORD
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend WindowBufferSizeEvent As WINDOW_BUFFER_SIZE_RECORD
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend MenuEvent As MENU_EVENT_RECORD
-        <FieldOffset(0)> _
+        <FieldOffset(0)>
         Friend FocusEvent As FOCUS_EVENT_RECORD
     End Structure
 
-    ' The INPUT_RECORD structure is used within our application 
+    ' The INPUT_RECORD structure is used within our application
     ' to capture console input data.
     Friend Structure INPUT_RECORD
         Friend EventType As UShort
@@ -150,73 +150,73 @@ Namespace ConsoleDevice.Utility
 
         ' ReadConsoleInput() is used to read data from a console input buffer and then remove it from the buffer.
         ' We will be relying heavily on this function.
-        <DllImport("Kernel32.DLL", EntryPoint:="ReadConsoleInputW", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="ReadConsoleInputW", CallingConvention:=CallingConvention.StdCall)>
         Private Shared Function ReadConsoleInput(hConsoleInput As IntPtr, <Out> lpBuffer As INPUT_RECORD(), nLength As UInteger, ByRef lpNumberOfEventsRead As UInteger) As Boolean
         End Function
 
-        ' The GetStdHandle() function retrieves a handle for the standard input, standard output, or standard 
+        ' The GetStdHandle() function retrieves a handle for the standard input, standard output, or standard
         ' error device, depending on its input parameter.
-        ' Handles returned by GetStdHandle() can be used by applications that need to read from or write 
+        ' Handles returned by GetStdHandle() can be used by applications that need to read from or write
         ' to the console. We will be using the handle returned by GetStdHandle() to call the various
         ' Console APIs.
         ' Note that although handles are integers by default, we will be using the managed type IntPtr
         ' to represent the unmanaged world's HANDLE types. This is the recommended practice as expounded
         ' in the documentation.
-        <DllImport("Kernel32.DLL", EntryPoint:="GetStdHandle", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="GetStdHandle", CallingConvention:=CallingConvention.StdCall)>
         Public Shared Function GetStdHandle(nStdHandle As Integer) As IntPtr
         End Function
 
-        ' The GetConsoleMode() function retrieves the current input mode of a console's input buffer 
-        ' or the current output mode of a console screen buffer. 
-        ' A console consists of an input buffer and one or more screen buffers. The mode of a console 
-        ' buffer determines how the console behaves during input or output (I/O) operations. 
-        ' One set of flag constants is used with input handles, and another set is used with screen buffer 
-        ' (output) handles. 
-        ' Setting the output modes of one screen buffer does not affect the output modes of other 
-        ' screen buffers. 
-        ' We shall be retrieving the mode of our console during password input in order to temporarily 
-        ' modify the console mode. Later, after retrieving the required password, we will need to restore 
+        ' The GetConsoleMode() function retrieves the current input mode of a console's input buffer
+        ' or the current output mode of a console screen buffer.
+        ' A console consists of an input buffer and one or more screen buffers. The mode of a console
+        ' buffer determines how the console behaves during input or output (I/O) operations.
+        ' One set of flag constants is used with input handles, and another set is used with screen buffer
+        ' (output) handles.
+        ' Setting the output modes of one screen buffer does not affect the output modes of other
+        ' screen buffers.
+        ' We shall be retrieving the mode of our console during password input in order to temporarily
+        ' modify the console mode. Later, after retrieving the required password, we will need to restore
         ' the original console mode.
-        <DllImport("Kernel32.DLL", EntryPoint:="GetConsoleMode", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="GetConsoleMode", CallingConvention:=CallingConvention.StdCall)>
         Public Shared Function GetConsoleMode(hConsoleHandle As IntPtr, ByRef Mode As Integer) As Boolean
         End Function
 
-        ' The SetConsoleMode() function sets the input mode of a console's input buffer or the output mode 
+        ' The SetConsoleMode() function sets the input mode of a console's input buffer or the output mode
         ' of a console screen buffer.
         ' We will be calling this API before the end of our password processing function to restore the
         ' previous console mode.
-        <DllImport("Kernel32.DLL", EntryPoint:="SetConsoleMode", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="SetConsoleMode", CallingConvention:=CallingConvention.StdCall)>
         Public Shared Function SetConsoleMode(hConsoleHandle As IntPtr, Mode As Integer) As Boolean
         End Function
 
         ' GetLastError() is a useful Win32 API to determine the cause of a problem when something went wrong.
-        <DllImport("Kernel32.DLL", EntryPoint:="GetLastError", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="GetLastError", CallingConvention:=CallingConvention.StdCall)>
         Public Shared Function GetLastError() As UInteger
         End Function
 
-        ' The WriteConsole() function writes a character string to a console screen buffer beginning 
+        ' The WriteConsole() function writes a character string to a console screen buffer beginning
         ' at the current cursor location.
         ' We will be using this API to write '*'s to the screen in place of a password character.
         ' handle to screen buffer
         ' write buffer
         ' number of characters to write
         ' number of characters written
-        <DllImport("Kernel32.DLL", EntryPoint:="WriteConsoleW", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="WriteConsoleW", CallingConvention:=CallingConvention.StdCall)>
         Public Shared Function WriteConsole(hConsoleOutput As IntPtr, lpBuffer As String, nNumberOfCharsToWrite As UInteger, ByRef lpNumberOfCharsWritten As UInteger, lpReserved As IntPtr) As Boolean
             ' reserved
         End Function
 
         ' Not used in this application but declared here for possible future use.
-        <DllImport("Kernel32.DLL", EntryPoint:="FlushConsoleInputBuffer", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="FlushConsoleInputBuffer", CallingConvention:=CallingConvention.StdCall)>
         Public Shared Function FlushConsoleInputBuffer(hConsoleInput As IntPtr) As Boolean
         End Function
 
         ' Not used in this application but declared here for possible future use.
         ' handle to screen buffer
-        ' characters 
+        ' characters
         ' number of characters to write
         ' first cell coordinates
-        <DllImport("Kernel32.DLL", EntryPoint:="WriteConsoleOutputCharacterW", CallingConvention:=CallingConvention.StdCall)> _
+        <DllImport("Kernel32.DLL", EntryPoint:="WriteConsoleOutputCharacterW", CallingConvention:=CallingConvention.StdCall)>
         Private Shared Function WriteConsoleOutputCharacter(hConsoleOutput As IntPtr, lpCharacter As String, nLength As UInteger, dwWriteCoord As COORD, ByRef lpNumberOfCharsWritten As UInteger) As Boolean
             ' number of cells written
         End Function
@@ -224,7 +224,7 @@ Namespace ConsoleDevice.Utility
         ' Declare a delegate to encapsulate a console event handler function.
         ' All event handler functions must return a boolean value indicating whether
         ' the password processing function should continue to read in another console
-        ' input record (via ReadConsoleInput() API). 
+        ' input record (via ReadConsoleInput() API).
         ' Returning a true indicates continue.
         ' Returning a false indicates don't continue.
         Friend Delegate Function ConsoleInputEvent(input_record As INPUT_RECORD, ByRef strBuildup As String) As Boolean
@@ -241,12 +241,14 @@ Namespace ConsoleDevice.Utility
         ' Used to indicate the maximum number of characters for a password. 20 is the default.
         Protected iMaxNumberOfCharacters As Integer
 
-        ' Event handler to handle a keyboard event. 
+        Const strOutput As String = "*"
+
+        ' Event handler to handle a keyboard event.
         ' We use this function to accumulate characters typed into the console and build
         ' up the password this way.
         ' All event handler functions must return a boolean value indicating whether
         ' the password processing function should continue to read in another console
-        ' input record (via ReadConsoleInput() API). 
+        ' input record (via ReadConsoleInput() API).
         ' Returning a true indicates continue.
         ' Returning a false indicates don't continue.
         Private Function KeyEventProc(input_record As INPUT_RECORD, ByRef strBuildup As String) As Boolean
@@ -260,7 +262,7 @@ Namespace ConsoleDevice.Utility
                 Dim ch As Char = ChrW(ker.uchar.UnicodeChar)
                 ' Get the current character pressed.
                 Dim dwNumberOfCharsWritten As UInteger = 0
-                Dim strOutput As String = "*"
+
                 ' The character string that will be displayed on the console screen.
                 ' If we have received a Carriage Return character, we exit.
                 If ch = CChar(ControlChars.Cr) Then
@@ -286,7 +288,7 @@ Namespace ConsoleDevice.Utility
 
                         If System.Threading.Interlocked.Increment(iCounter) < iMaxNumberOfCharacters Then
                             ' Adding 1 to iCounter still makes iCounter less than MaxNumberOfCharacters.
-                            ' This means that the total number of characters collected so far (this is 
+                            ' This means that the total number of characters collected so far (this is
                             ' equal to iCounter, by the way) is less than MaxNumberOfCharacters.
                             ' We can carry on.
                             Return True
@@ -306,11 +308,11 @@ Namespace ConsoleDevice.Utility
 
         ' All event handler functions must return a boolean value indicating whether
         ' the password processing function should continue to read in another console
-        ' input record (via ReadConsoleInput() API). 
+        ' input record (via ReadConsoleInput() API).
         ' Returning a true indicates continue.
         ' Returning a false indicates don't continue.
         Private Function MouseEventProc(input_record As INPUT_RECORD, ByRef strBuildup As String) As Boolean
-            ' Since our Mouse Event Handler does not intend to do anything, 
+            ' Since our Mouse Event Handler does not intend to do anything,
             ' we simply return a true to indicate to the password processing
             ' function to readin another console input record.
             Return True
@@ -318,11 +320,11 @@ Namespace ConsoleDevice.Utility
 
         ' All event handler functions must return a boolean value indicating whether
         ' the password processing function should continue to read in another console
-        ' input record (via ReadConsoleInput() API). 
+        ' input record (via ReadConsoleInput() API).
         ' Returning a true indicates continue.
         ' Returning a false indicates don't continue.
         Private Function WindowBufferSizeEventProc(input_record As INPUT_RECORD, ByRef strBuildup As String) As Boolean
-            ' Since our Window Buffer Size Event Handler does not intend to do anything, 
+            ' Since our Window Buffer Size Event Handler does not intend to do anything,
             ' we simply return a true to indicate to the password processing
             ' function to readin another console input record.
             Return True
@@ -330,11 +332,11 @@ Namespace ConsoleDevice.Utility
 
         ' All event handler functions must return a boolean value indicating whether
         ' the password processing function should continue to read in another console
-        ' input record (via ReadConsoleInput() API). 
+        ' input record (via ReadConsoleInput() API).
         ' Returning a true indicates continue.
         ' Returning a false indicates don't continue.
         Private Function MenuEventProc(input_record As INPUT_RECORD, ByRef strBuildup As String) As Boolean
-            ' Since our Menu Event Handler does not intend to do anything, 
+            ' Since our Menu Event Handler does not intend to do anything,
             ' we simply return a true to indicate to the password processing
             ' function to readin another console input record.
             Return True
@@ -342,11 +344,11 @@ Namespace ConsoleDevice.Utility
 
         ' All event handler functions must return a boolean value indicating whether
         ' the password processing function should continue to read in another console
-        ' input record (via ReadConsoleInput() API). 
+        ' input record (via ReadConsoleInput() API).
         ' Returning a true indicates continue.
         ' Returning a false indicates don't continue.
         Private Function FocusEventProc(input_record As INPUT_RECORD, ByRef strBuildup As String) As Boolean
-            ' Since our Focus Event Handler does not intend to do anything, 
+            ' Since our Focus Event Handler does not intend to do anything,
             ' we simply return a true to indicate to the password processing
             ' function to readin another console input record.
             Return True
@@ -359,7 +361,7 @@ Namespace ConsoleDevice.Utility
             ' Note well that we must cast Constant.* event numbers to ushort's.
             ' This is because Constants.*_EVENT have been declared as of type int.
             ' We could have, of course, declare Constants.*_EVENT to be of type ushort
-            ' but I deliberately declared them as ints to show the importance of 
+            ' but I deliberately declared them as ints to show the importance of
             ' types in C#.
             Call htCodeLookup.Add(DirectCast(CUShort(Constants.KEY_EVENT), Object), New ConsoleInputEvent(AddressOf KeyEventProc))
             Call htCodeLookup.Add(DirectCast(CUShort(Constants.MOUSE_EVENT), Object), New ConsoleInputEvent(AddressOf MouseEventProc))
@@ -369,7 +371,7 @@ Namespace ConsoleDevice.Utility
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="refPasswordToBuild"></param>
         ''' <param name="iMaxNumberOfCharactersSet">The password max length limits.</param>
@@ -405,18 +407,18 @@ Namespace ConsoleDevice.Utility
             End If
 
             ' Set the current console mode to enable window input and mouse input.
-            ' This is not necessary for our password processing application. 
+            ' This is not necessary for our password processing application.
             ' This is set only for demonstration purposes.
             '
-            ' By setting ENABLE_WINDOW_INPUT into the console mode, user interactions 
-            ' that change the size of the console screen buffer are reported in the 
-            ' console's input buffer. Information about this event can be read from 
+            ' By setting ENABLE_WINDOW_INPUT into the console mode, user interactions
+            ' that change the size of the console screen buffer are reported in the
+            ' console's input buffer. Information about this event can be read from
             ' the input buffer by our application using the ReadConsoleInput function.
             '
-            ' By setting ENABLE_MOUSE_INPUT into the console mode, if the mouse pointer 
-            ' is within the borders of the console window and the window has the 
-            ' keyboard focus, mouse events generated by mouse movement and button presses 
-            ' are placed in the input buffer. Information about this event can be read from 
+            ' By setting ENABLE_MOUSE_INPUT into the console mode, if the mouse pointer
+            ' is within the borders of the console window and the window has the
+            ' keyboard focus, mouse events generated by mouse movement and button presses
+            ' are placed in the input buffer. Information about this event can be read from
             ' the input buffer by our application using the ReadConsoleInput function.
             dwMode = Constants.ENABLE_WINDOW_INPUT Or Constants.ENABLE_MOUSE_INPUT
             If SetConsoleMode(hStdin, dwMode) = False Then
@@ -436,17 +438,17 @@ Namespace ConsoleDevice.Utility
 
             ' Main loop to collect characters typed into the console.
             While bContinueLoop = True
-                ' input buffer handle 
-                ' buffer to read into 
-                ' size of read buffer 
-                ' number of records read 
+                ' input buffer handle
+                ' buffer to read into
+                ' size of read buffer
+                ' number of records read
                 If ReadConsoleInput(hStdin, irInBuf, 128, cNumRead) = True Then
-                    ' Dispatch the events to the appropriate handler. 
+                    ' Dispatch the events to the appropriate handler.
                     For i As UInteger = 0 To CType(cNumRead - 1, UInteger)
                         ' Lookup the hashtable for the appropriate handler function... courtesy of Derek Kiong !
                         Dim cie_handler As ConsoleInputEvent = DirectCast(htCodeLookup(DirectCast(irInBuf(CInt(i)).EventType, Object)), ConsoleInputEvent)
 
-                        ' Note well that htCodeLookup may not have the handler for the current event, 
+                        ' Note well that htCodeLookup may not have the handler for the current event,
                         ' so check first for a null value in cie_handler.
                         If cie_handler IsNot Nothing Then
                             ' Invoke the handler.

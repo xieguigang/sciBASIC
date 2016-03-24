@@ -81,6 +81,8 @@ Namespace Net
             Throw New Exception(String.Format("The target connection to {0}:{1} can not be made!", server, port))
         End Function
 
+        Const MAX_PORT As Integer = 65535    '系统tcp/udp端口数最大是65535
+
         ''' <summary>
         ''' Get the first available TCP port on this local machine.
         ''' (获取第一个可用的端口号，请注意，在高并发状态下可能会出现端口被占用的情况，
@@ -89,8 +91,6 @@ Namespace Net
         ''' <param name="BEGIN_PORT">Check the local port available from this port value.(从这个端口开始检测)</param>
         ''' <returns></returns>
         Public Function GetFirstAvailablePort(Optional BEGIN_PORT As Integer = 100) As Integer
-            Dim MAX_PORT As Integer = 65535    '系统tcp/udp端口数最大是65535
-
             If BEGIN_PORT <= 0 Then
                 BEGIN_PORT = RandomDouble() * (MAX_PORT - 1)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
             End If

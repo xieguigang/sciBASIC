@@ -22,5 +22,9 @@ Namespace Language
         Public Shared Operator >=(cls As [Class](Of T), path As String) As List(Of T)
             Throw New NotSupportedException
         End Operator
+
+        Public Shared Operator <<(cls As [Class](Of T), path As Integer) As List(Of T)
+            Return cls <= FileHandles.__getHandle(path)
+        End Operator
     End Class
 End Namespace

@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Language
 
 Module TestingMain
 
@@ -31,7 +32,7 @@ Module TestingMain
         'Catch e As Exception
         '    Console.WriteLine("Thread.sleep interrupted!")
         'End Try
-
+        Dim ddd As List(Of Double) = [TypeOf](Of Double)() << OpenHandle("./123.txt")
 
 
 

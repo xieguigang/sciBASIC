@@ -28,5 +28,9 @@
             {"is", Function(a, b) CInt(a) = CInt(b)} ' true = true, false = false
         }
 
+        Public Function ExpressionParser(s As String)
+
+        End Function
+
     End Module
 End Namespace

@@ -27,8 +27,7 @@ Namespace CommandLine
                 End If
 
                 If prop.PropertyType.Equals(GetType(Boolean)) Then
-                    Dim b As Boolean = True  ' 由于是逻辑值，所以只要存在就是真
-                    Call prop.SetValue(obj, b)
+                    Call prop.SetValue(obj, True)  ' 由于是逻辑值，所以只要存在就是真，不存在就是False
                 Else
                     Dim cast As Func(Of String, Object) = Scripting.CasterString(prop.PropertyType)
                     Dim s As String = args(name)

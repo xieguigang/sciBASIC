@@ -41,11 +41,10 @@ Namespace Text.Similarity
             MyInit()
         End Sub
 
+        Const beforeConversion As String = "嗬饴淠崃樯枞晔胨焯钗锵蛞粼鲋缜採"
+        Const afterConversion As String = "aAaAaAaAeEeEeEeEiIiIiIoOoOoOuUuUuUcC'n"
 
         Private Function StripAccents(input As String) As String
-            Dim beforeConversion As String = "嗬饴淠崃樯枞晔胨焯钗锵蛞粼鲋缜採"
-            Dim afterConversion As String = "aAaAaAaAeEeEeEeEiIiIiIoOoOoOuUuUuUcC'n"
-
             Dim sb As New System.Text.StringBuilder(input)
 
             For i As Integer = 0 To beforeConversion.Length - 1

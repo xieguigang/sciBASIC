@@ -5,22 +5,22 @@
     ' The repository pattern (in VB.Net)
 
     ' Background
-    ' The repository pattern Is a method To introduce a shearing layer between your business objects And 
-    ' the data access/persistence technology you are Using And this especially useful In unit testing As 
+    ' The repository pattern Is a method To introduce a shearing layer between your business objects And
+    ' the data access/persistence technology you are Using And this especially useful In unit testing As
     ' the alternative(mocking an entire data access library) can be quite heart breaking.
 
     ' Motivation
     ' The repository pattern introduces the following advantages over the traditional three-tier architecture over an ORM:
 
-    ' 1. The classes persisted by an ORM (Entity framework Or the Like) need To have a good deal Of information about how they are stored. 
+    ' 1. The classes persisted by an ORM (Entity framework Or the Like) need To have a good deal Of information about how they are stored.
     '    This Is Not ideal because When you make a change To the underlying storage you would need To change the business objects As well.
-    ' 2. Not all persistence Is in the form of a relational database - the repository can be backed by a blended storage made of files, 
+    ' 2. Not all persistence Is in the form of a relational database - the repository can be backed by a blended storage made of files,
     '    database tables And NoSQL records As well.
-    ' 3. Some fields exist only In order To allow navigation To a record Or To identify child records - these fields should Not 
+    ' 3. Some fields exist only In order To allow navigation To a record Or To identify child records - these fields should Not
     '    be passed up into the business layer If they have no business meaning.
 
     ''' <summary>
-    ''' Interface defining any item we can store in a repository and can identify by 
+    ''' Interface defining any item we can store in a repository and can identify by
     ''' an unique key
     ''' </summary>
     ''' <remarks>
@@ -70,7 +70,7 @@
     ''' The type of the key
     ''' </typeparam>
     ''' <remarks>
-    ''' In this architecture there is a seperate read and write interface but often this 
+    ''' In this architecture there is a seperate read and write interface but often this
     ''' pattern has just the one interface for both functions
     ''' </remarks>
     Public Interface IRepositoryRead(Of TKey, TEntity As IKeyedEntity(Of TKey))
@@ -81,7 +81,7 @@
         ''' <param name="key">
         ''' The unique identifier of the entity we are looking for
         ''' </param>
-        Function Exists(ByVal key As TKey) As Boolean
+        Function Exists(key As TKey) As Boolean
 
         ''' <summary>
         ''' Get the entity uniquely identified by the given key
@@ -89,7 +89,7 @@
         ''' <param name="key">
         ''' The unique identifier to use to get the entity
         ''' </param>
-        Function GetByKey(ByVal key As TKey) As TEntity
+        Function GetByKey(key As TKey) As TEntity
 
         ''' <summary>
         ''' Get a set of entities from the repository that match the where clause
@@ -97,7 +97,7 @@
         ''' <param name="clause">
         ''' A function to apply to filter the results from the repository
         ''' </param>
-        Function GetWhere(ByVal clause As Func(Of TEntity, Boolean)) As IReadOnlyDictionary(Of TKey, TEntity)
+        Function GetWhere(clause As Func(Of TEntity, Boolean)) As IReadOnlyDictionary(Of TKey, TEntity)
 
         ''' <summary>
         ''' Get all of this type of thing from the repository
@@ -119,7 +119,7 @@
     ''' The type of the key to uniquely identify the entity
     ''' </typeparam>
     ''' <remarks>
-    ''' In this architecture there is a seperate read and write interface but often this 
+    ''' In this architecture there is a seperate read and write interface but often this
     ''' pattern has just the one interface for both functions
     ''' </remarks>
     Public Interface IRepositoryWrite(Of TKey, TEntity As IKeyedEntity(Of TKey))
@@ -130,10 +130,10 @@
         ''' <param name="key">
         ''' The unique identifier of the record to delete
         ''' </param>
-        Sub Delete(ByVal key As TKey)
+        Sub Delete(key As TKey)
 
         ''' <summary>
-        ''' Add or update the entity 
+        ''' Add or update the entity
         ''' </summary>
         ''' <param name="entity">
         ''' The record to add or update on the repository
@@ -141,7 +141,7 @@
         ''' <param name="key" >
         ''' The key that uniquely identifies the record to add or update
         ''' </param>
-        Sub AddOrUpdate(ByVal entity As TEntity, ByVal key As TKey)
+        Sub AddOrUpdate(entity As TEntity, key As TKey)
 
         ''' <summary>
         ''' Adds an entity that we know to be new and returns its assigned key
@@ -156,7 +156,7 @@
         ''' This is useful if the unique identifier is not an intrinsic property of
         ''' the entity - for example if it is a memory address or a GUID
         ''' </remarks>
-        Function AddNew(ByVal entity As TEntity) As TKey
+        Function AddNew(entity As TEntity) As TKey
 
     End Interface
 
@@ -184,20 +184,20 @@
     ''' An exception that occured when reading from the repository backing store
     ''' </summary>
     ''' <remarks>
-    ''' The inner exception is from whatever 
+    ''' The inner exception is from whatever
     ''' </remarks>
     Public Class RepositoryReadException
         Inherits Exception
 
         Public ReadOnly Property Fatal As Boolean
 
-        Public Sub New(ByVal message As String, ByVal innerExcption As Exception, ByVal fatalInit As Boolean)
+        Public Sub New(message As String, innerExcption As Exception, fatalInit As Boolean)
             MyBase.New(message, innerExcption)
             Fatal = fatalInit
         End Sub
 
 
-        Public Sub New(ByVal message As String, ByVal fatalInit As Boolean)
+        Public Sub New(message As String, fatalInit As Boolean)
             MyBase.New(message)
             Fatal = fatalInit
         End Sub

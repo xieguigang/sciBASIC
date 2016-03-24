@@ -89,7 +89,7 @@ Namespace SoftwareToolkits
                 '}
                 'catch
                 '{
-                '     Ignore        
+                '     Ignore
                 '}
 
                 'return pbits;
@@ -152,7 +152,7 @@ Namespace SoftwareToolkits
                             pbits = ProcessorArchitecture.Unknown
 
                     End Select
-                    ' Ignore        
+                    ' Ignore
                 Catch
                 End Try
 

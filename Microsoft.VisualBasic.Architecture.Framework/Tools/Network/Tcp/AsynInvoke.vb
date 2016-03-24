@@ -139,10 +139,10 @@ Namespace Net
         Public Function SendMessage(Message As String,
                                     Optional OperationTimeOut As Integer = 30 * 1000,
                                     Optional OperationTimeoutHandler As Action = Nothing) As String
-            Dim response = ""
             Dim request As New RequestStream(0, 0, Message)
-            Return SendMessage(request, OperationTimeOut, OperationTimeoutHandler).GetUTF8String
-        End Function 'Main 
+            Dim response = SendMessage(request, OperationTimeOut, OperationTimeoutHandler).GetUTF8String
+            Return response
+        End Function 'Main
 
         ''' <summary>
         ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="NetResponse.RFC_REQUEST_TIMEOUT"></see>，

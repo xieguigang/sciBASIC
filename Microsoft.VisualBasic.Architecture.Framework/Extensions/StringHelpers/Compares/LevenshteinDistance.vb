@@ -11,6 +11,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
 ''' <summary>
 ''' Levenshtein Edit Distance Algorithm for measure string distance
@@ -18,7 +19,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 ''' <remarks>
 ''' http://www.codeproject.com/Tips/697588/Levenshtein-Edit-Distance-Algorithm
 ''' </remarks>
-''' 
+'''
 <PackageNamespace("Distance.Levenshtein",
                   Description:="Implement the Levenshtein Edit Distance algorithm and result data visualization.",
                   Publisher:="furkanavcu",
@@ -31,7 +32,7 @@ Vladimir I",
 Public Module LevenshteinDistance
 
     ''' <summary>
-    ''' Creates distance table for data visualization 
+    ''' Creates distance table for data visualization
     ''' </summary>
     ''' <param name="reference"></param>
     ''' <param name="hypotheses"></param>
@@ -71,9 +72,9 @@ Public Module LevenshteinDistance
             For j As Integer = 1 To hypotheses.Length
 
                 If equals(reference(i - 1), hypotheses(j - 1)) Then
-                    '  if the letters are same 
+                    '  if the letters are same
                     distTable(i, j) = distTable(i - 1, j - 1)
-                Else ' if not add 1 to its neighborhoods and assign minumun of its neighborhoods 
+                Else ' if not add 1 to its neighborhoods and assign minumun of its neighborhoods
                     Dim n As Double = Math.Min(distTable(i - 1, j - 1) + 1, distTable(i - 1, j) + cost)
                     distTable(i, j) = Math.Min(n, distTable(i, j - 1) + cost)
                 End If
@@ -134,13 +135,14 @@ Public Module LevenshteinDistance
         Return __computeRoute(hypotheses, result, i, j, distTable)
     End Function
 
+    Const a As Integer = Asc("a"c)
+
     Public Function Similarity(Of T)(query As T(), subject As T(), Optional penalty As Double = 0.75) As Double
         If query.IsNullOrEmpty OrElse subject.IsNullOrEmpty Then
             Return 0
         End If
 
-        Dim distinct = (New ComponentModel.DataStructures.Set(query) + New ComponentModel.DataStructures.Set(subject)).ToArray.ToArray(Function(x) DirectCast(x, T))
-        Dim a As Integer = Asc("a"c)
+        Dim distinct = (New [Set](query) + New [Set](subject)).ToArray.ToArray(Function(x) DirectCast(x, T))
         Dim dict = (From index As Integer
                     In distinct.Sequence.Offset(a)
                     Select ch = ChrW(index),
@@ -249,7 +251,7 @@ Public Module LevenshteinDistance
     End Function
 
     ''' <summary>
-    ''' The edit distance between two strings is defined as the minimum number of 
+    ''' The edit distance between two strings is defined as the minimum number of
     ''' edit operations required to transform one string into another.
     ''' </summary>
     ''' <param name="reference"></param>
