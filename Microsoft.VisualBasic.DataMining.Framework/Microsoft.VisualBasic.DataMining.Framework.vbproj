@@ -144,6 +144,7 @@
     <Compile Include="BezierCurve.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
+    <Compile Include="DynamicProgramming\LCS_Length.vb" />
     <Compile Include="FourierTransform.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />

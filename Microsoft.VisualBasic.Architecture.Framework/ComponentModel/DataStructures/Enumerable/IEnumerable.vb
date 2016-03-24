@@ -1,6 +1,6 @@
 ﻿Namespace ComponentModel.Collection.Generic
 
-    Public Interface PairItem(Of TItem1, TItem2)
+    Public Interface IPairItem(Of TItem1, TItem2)
         Property Key1 As TItem1
         Property Key2 As TItem2
 
@@ -10,7 +10,7 @@
         ''' <param name="pairItem"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Function Equals(pairItem As PairItem(Of TItem1, TItem2)) As Boolean
+        Function Equals(pairItem As IPairItem(Of TItem1, TItem2)) As Boolean
     End Interface
 
     Public Interface IHandle

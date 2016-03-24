@@ -76,8 +76,8 @@ Public Module IEnumerations
     End Function
 
     ''' <summary>
-    ''' use the overload method <see cref="pairitem(Of TItem1, TItem2).Equals"></see> of the type 
-    ''' <see cref="PairItem(Of TItem1, TItem2)"></see>
+    ''' use the overload method <see cref="IPairItem(Of TItem1, TItem2).Equals"></see> of the type 
+    ''' <see cref="IPairItem(Of TItem1, TItem2)"></see>
     ''' </summary>
     ''' <typeparam name="TItem1"></typeparam>
     ''' <typeparam name="TItem2"></typeparam>
@@ -86,7 +86,7 @@ Public Module IEnumerations
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function GetItem(Of TItem1, TItem2, pairItem As PairItem(Of TItem1, TItem2))(entry As pairItem, source As IEnumerable(Of pairItem)) As pairItem()
+    Public Function GetItem(Of TItem1, TItem2, pairItem As IPairItem(Of TItem1, TItem2))(entry As pairItem, source As IEnumerable(Of pairItem)) As pairItem()
         Dim LQuery As pairItem() = (From obj As pairItem In source Where entry.Equals(obj) Select obj).ToArray
         Return LQuery
     End Function
