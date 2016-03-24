@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Language.FileHandles
 
 ''' <summary>
 ''' Represents a strongly typed list of objects that can be accessed by index. Provides
@@ -150,6 +151,10 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     ''' <returns></returns>
     Public Shared Operator >(source As List(Of T), path As String) As Boolean
         Return CollectionIO.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
+    End Operator
+
+    Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
+        Return source > __getHandle(path)
     End Operator
 
     Public Shared Operator <(source As List(Of T), path As String) As Boolean

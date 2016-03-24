@@ -66,6 +66,7 @@ Module DEBUG
         Call Mathematical.Expression.Evaluate("f(1,2,3,3)").__DEBUG_ECHO
 
         Dim ls As String = "a and not (andb xor 99>2)"
+        ls = "IF (Water IS Cold) OR (Water IS Tepid) THEN Power IS High"
         Dim rr = Logical.TokenIcer.TryParse(ls)
         Dim sr = Logical.TokenIcer.Split(rr)
 
@@ -90,7 +91,7 @@ Module DEBUG
         Call expr.PrintStack
     End Function
 End Module
-'     
+'
 '        Dim br As String = "\([^(^)]+?\)"
 '        Dim ms = Text.RegularExpressions.Regex.Matches(s2, br)
 '        Dim FunctionCalling As String = "[0-9a-zA-Z_]+" & br

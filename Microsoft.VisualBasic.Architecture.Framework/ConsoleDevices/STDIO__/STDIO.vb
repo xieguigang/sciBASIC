@@ -6,12 +6,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Namespace ConsoleDevice
 
     ''' <summary>
-    ''' A standard input/output compatibility package that makes VisualBasic console 
+    ''' A standard input/output compatibility package that makes VisualBasic console
     ''' program easily running on the Linux server or mac osx operating system.
     ''' (一个用于让VisualBasic应用程序更加容易的运行于Linux服务器或者MAC系统之上的标准输入输出流的系统兼容包)
     ''' </summary>
     ''' <remarks></remarks>
-    ''' 
     <PackageNamespace("STDIO", Description:="A standard input/output compatibility package that makes VisualBasic console program easily running on the Linux server or mac osx operating system.",
                       Publisher:="xie.guigang@live.com",
                       Revision:=569,
@@ -19,7 +18,7 @@ Namespace ConsoleDevice
     Public Module STDIO
 
         ''' <summary>
-        ''' A dictionary list of the method of format a string provider class object. 
+        ''' A dictionary list of the method of format a string provider class object.
         ''' (标准输入输出对象的格式化方法所提供的对象的字典)
         ''' </summary>
         ''' <remarks></remarks>
@@ -108,9 +107,9 @@ Namespace ConsoleDevice
                 Call sBuilder.Replace(escToken.Key, escToken.Value)
             Next
 
-            If matches.Length = 0 Then   'if no formater control character was found, then return the whole originally string directly. 
+            If matches.Length = 0 Then   'if no formater control character was found, then return the whole originally string directly.
                 Return sBuilder.ToString
-            End If 'Else formatting the target input string. 
+            End If 'Else formatting the target input string.
             For i As Integer = 0 To matches.Length - 1  'Formatting control string replacement.
                 Dim pos As Integer = InStr(sBuilder.ToString, matches(i))
                 sBuilder.Remove(pos - 1, matches(i).Length)
@@ -162,7 +161,7 @@ Namespace ConsoleDevice
         ''' <param name="s">A string to print on the console window.(输出到终端窗口之上的字符串)</param>
         ''' <param name="args">Formation parameters.(格式化参数)</param>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("printf", Info:="Output the string to the console using a specific formation.")>
         Public Sub Printf(s As String, ParamArray args As String())
             s = Format(s, args)
@@ -205,16 +204,16 @@ Namespace ConsoleDevice
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="prompt"></param>
         ''' <param name="style">
-        ''' Value just allow: 
-        ''' <see cref="MsgBoxStyle.AbortRetryIgnore"/>, 
-        ''' <see cref="MsgBoxStyle.OkCancel"/>, 
-        ''' <see cref="MsgBoxStyle.OkOnly"/>, 
-        ''' <see cref="MsgBoxStyle.RetryCancel"/>, 
-        ''' <see cref="MsgBoxStyle.YesNo"/>, 
+        ''' Value just allow:
+        ''' <see cref="MsgBoxStyle.AbortRetryIgnore"/>,
+        ''' <see cref="MsgBoxStyle.OkCancel"/>,
+        ''' <see cref="MsgBoxStyle.OkOnly"/>,
+        ''' <see cref="MsgBoxStyle.RetryCancel"/>,
+        ''' <see cref="MsgBoxStyle.YesNo"/>,
         ''' <see cref="MsgBoxStyle.YesNoCancel"/></param>
         ''' <returns></returns>
         Public Function MsgBox(prompt As String, Optional style As MsgBoxStyle = MsgBoxStyle.YesNo) As MsgBoxResult
@@ -225,20 +224,20 @@ Namespace ConsoleDevice
             If style.HasFlag(MsgBoxStyle.AbortRetryIgnore) Then
                 Call Console.Write("Abort/Retry/Ignore?(a/r/i) [R]")
                 [default] = "R"
-            ElseIf style.HasFlag(MsgBoxStyle.OkCancel)
+            ElseIf style.HasFlag(MsgBoxStyle.OkCancel) Then
                 Call Console.Write("Ok/Cancel?(o/c) [O]")
                 [default] = "O"
-            ElseIf style.HasFlag(MsgBoxStyle.OkOnly)
+            ElseIf style.HasFlag(MsgBoxStyle.OkOnly) Then
                 Call Console.WriteLine("Press any key to continute...")
                 Call Console.ReadKey()
                 Return MsgBoxResult.Ok
-            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel)
+            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel) Then
                 Call Console.Write("Retry/Cancel?(r/c) [R]")
                 [default] = "R"
-            ElseIf style.HasFlag(MsgBoxStyle.YesNo)
+            ElseIf style.HasFlag(MsgBoxStyle.YesNo) Then
                 Call Console.Write("Yes/No?(y/n) [Y]")
                 [default] = "Y"
-            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel)
+            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel) Then
                 Call Console.Write("Yes/No/Cancel?(y/n/c) [Y]")
                 [default] = "Y"
             End If
@@ -255,45 +254,49 @@ Namespace ConsoleDevice
             If style.HasFlag(MsgBoxStyle.AbortRetryIgnore) Then
                 If __testEquals(input, "A"c) Then
                     Return MsgBoxResult.Abort
-                ElseIf __testEquals(input, "R"c)
+                ElseIf __testEquals(input, "R"c) Then
                     Return MsgBoxResult.Retry
-                ElseIf __testEquals(input, "I"c)
+                ElseIf __testEquals(input, "I"c) Then
                     Return MsgBoxResult.Ignore
                 Else
                     Return MsgBoxResult.Retry
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.OkCancel)
+            ElseIf style.HasFlag(MsgBoxStyle.OkCancel) Then
+
                 If __testEquals(input, "O"c) Then
                     Return MsgBoxResult.Ok
-                ElseIf __testEquals(input, "C"c)
+                ElseIf __testEquals(input, "C"c) Then
                     Return MsgBoxResult.Cancel
                 Else
                     Return MsgBoxResult.Ok
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.OkOnly)
+            ElseIf style.HasFlag(MsgBoxStyle.OkOnly) Then
                 Return MsgBoxResult.Ok
-            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel)
+            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel) Then
+
                 If __testEquals(input, "R"c) Then
                     Return MsgBoxResult.Retry
-                ElseIf __testEquals(input, "C"c)
+                ElseIf __testEquals(input, "C"c) Then
                     Return MsgBoxResult.Cancel
                 Else
                     Return MsgBoxResult.Retry
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.YesNo)
+            ElseIf style.HasFlag(MsgBoxStyle.YesNo) Then
+
                 If __testEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
-                ElseIf __testEquals(input, "N"c)
+                ElseIf __testEquals(input, "N"c) Then
                     Return MsgBoxResult.No
                 Else
                     Return MsgBoxResult.Yes
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel)
+            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+
                 If __testEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
-                ElseIf __testEquals(input, "N"c)
+                ElseIf __testEquals(input, "N"c) Then
                     Return MsgBoxResult.No
-                ElseIf __testEquals(input, "C"c)
+                ElseIf __testEquals(input, "C"c) Then
                     Return MsgBoxResult.Cancel
                 Else
                     Return MsgBoxResult.Yes
@@ -304,7 +307,7 @@ Namespace ConsoleDevice
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="input"></param>
         ''' <param name="compare">大写的</param>

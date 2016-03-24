@@ -46,7 +46,7 @@ Public Module IOExtensions
     ''' <param name="SavePath">The saved file path of the target binary data chunk.(目标二进制数据包所要进行保存的文件名路径)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("FlushStream")>
     <Extension> Public Function FlushStream(ChunkBuffer As IEnumerable(Of Byte), <Parameter("Path.Save")> SavePath As String) As Boolean
         Dim ParentDir As String = If(String.IsNullOrEmpty(SavePath),
