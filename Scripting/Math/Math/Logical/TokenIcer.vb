@@ -33,6 +33,7 @@ Namespace Logical
             {"xor", Logical.Tokens.Operator},
             {"nor", Logical.Tokens.Operator},
             {"nand", Logical.Tokens.Operator},
+            {"is", Logical.Tokens.Operator},
             {"<<", Logical.Tokens.Comparer},
             {"<", Logical.Tokens.Comparer},
             {"<=", Logical.Tokens.Comparer},
@@ -52,14 +53,16 @@ Namespace Logical
             {"}", Logical.Tokens.CloseStack}
         }
 
-        Const OPERATORS As String = "AndOrNotxXorNorNand"
+        Const OPERATORS As String = "AndOrNotTxXorRNorNandDISis"
         Const COMPARERS As String = "<<=>>~"
         Const STACKS As String = "()[]{}"
 
         <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
-                If OPERATORS.IndexOf(str.Current) = -1 AndAlso
-                    COMPARERS.IndexOf(str.Current) = -1 AndAlso
+                If str.Current.IsWhiteSpace Then
+                    Return True
+                End If
+                If COMPARERS.IndexOf(str.Current) = -1 AndAlso
                     STACKS.IndexOf(str.Current) = -1 Then
 
                     Call token.Add(str.Current)
@@ -161,8 +164,14 @@ CONTINUTES:
                             GoTo UNDEFINE
                         End If
                     Else
-UNDEFINE:               If Not ch.IsWhiteSpace Then token += ch
-                        exitb = str.__parseUNDEFINE(token)
+UNDEFINE:               If Not ch.IsWhiteSpace Then
+                            token += ch  ' 不是空格，则继续解析
+                            exitb = str.__parseUNDEFINE(token)
+                        Else
+                            '是一个空格，会被用来作为分隔符，到此为止了
+                            exitb = True
+                        End If
+
                         type = Logical.Tokens.UNDEFINE
                         tokens += New Token(Of Tokens)(type, New String(token))
                     End If

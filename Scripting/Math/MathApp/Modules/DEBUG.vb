@@ -66,7 +66,7 @@ Module DEBUG
         Call Mathematical.Expression.Evaluate("f(1,2,3,3)").__DEBUG_ECHO
 
         Dim ls As String = "a and not (andb xor 99>2)"
-        ls = "IF (Water IS Cold) OR (Water IS Tepid) THEN Power IS High"
+        ls = "(Water IS Cold) OR (Water IS Tepid)"
         Dim rr = Logical.TokenIcer.TryParse(ls)
         Dim sr = Logical.TokenIcer.Split(rr)
 

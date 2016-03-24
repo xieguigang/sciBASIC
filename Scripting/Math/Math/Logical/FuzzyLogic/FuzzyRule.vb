@@ -20,6 +20,7 @@
 
 Imports System.Collections.Generic
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
@@ -33,7 +34,8 @@ Namespace Logical.FuzzyLogic
 #Region "Private Properties"
 
         Dim m_text As String = [String].Empty
-        Dim m_tokens As Token(Of Tokens)()
+        Dim m_conditions As Token(Of Tokens)()
+        Dim m_conclusion As Token(Of Tokens)()
 
 #End Region
 
@@ -112,7 +114,8 @@ Namespace Logical.FuzzyLogic
             End Get
             Set(value As String)
                 m_text = Validate(value)
-                m_tokens = TokenIcer.TryParse(Me.Conditions)
+                m_conditions = TokenIcer.TryParse(Me.Conditions)
+                m_conclusion = TokenIcer.TryParse(Regex.Split(value, " THEN ", RegexOptions.IgnoreCase).Last)
             End Set
         End Property
 

@@ -3,7 +3,7 @@ Namespace Helpers
 
     ''' <summary>
     ''' The basics arithmetic operators' definition.
-    ''' (基本的四则运算符号的定义)  
+    ''' (基本的四则运算符号的定义)
     ''' </summary>
     ''' <remarks></remarks>
     Public Module Arithmetic
@@ -14,19 +14,19 @@ Namespace Helpers
         ''' <remarks></remarks>
         Public ReadOnly Property Arithmetic As Func(Of Double, Double, Double)() = {
  _
-            Function(a As Double, b As Double) a + b,
-            Function(a As Double, b As Double) a - b,
-            Function(a As Double, b As Double) a * b,
-            Function(a As Double, b As Double) a / b,
-            Function(a As Double, b As Double) a \ b,
-            Function(a As Double, b As Double) a Mod b,
+            Function(a, b) a + b,
+            Function(a, b) a - b,
+            Function(a, b) a * b,
+            Function(a, b) a / b,
+            Function(a, b) a \ b,
+            Function(a, b) a Mod b,
             AddressOf Math.Pow,
             AddressOf Factorial
         }
 
         ''' <summary>
         ''' A string constant that enumerate all of the arithmetic operators.
-        ''' (一个枚举所有的基本运算符的字符串常数) 
+        ''' (一个枚举所有的基本运算符的字符串常数)
         ''' </summary>
         ''' <remarks></remarks>
         Public Const OPERATORS As String = "+-*/\%^!"
@@ -40,7 +40,7 @@ Namespace Helpers
 
         ''' <summary>
         ''' Do a basically arithmetic calculation.
-        ''' (进行一次简单的四则运算) 
+        ''' (进行一次简单的四则运算)
         ''' </summary>
         ''' <param name="a"></param>
         ''' <param name="b"></param>
@@ -53,16 +53,16 @@ Namespace Helpers
         End Function
 
         ''' <summary>
-        ''' Calculate the factorial value of a number, as this function is the part of the arithmetic operation 
-        ''' delegate type of 'System.Func(Of Double, Double, Double)', so it must keep the form of two double 
+        ''' Calculate the factorial value of a number, as this function is the part of the arithmetic operation
+        ''' delegate type of 'System.Func(Of Double, Double, Double)', so it must keep the form of two double
         ''' parameter, well, the parameter 'b As Double' is useless.
         ''' (计算某一个数的阶乘值，由于这个函数是四则运算操作委托'System.Func(Of Double, Double, Double)'中的一部分，
-        ''' 故而本函数保持着两个双精度浮点型数的函数参数的输入形式，也就是说本函数的第二个参数'b'是没有任何用途的)  
+        ''' 故而本函数保持着两个双精度浮点型数的函数参数的输入形式，也就是说本函数的第二个参数'b'是没有任何用途的)
         ''' </summary>
         ''' <param name="a">The number that will be calculated(将要被计算的数字)</param>
         ''' <param name="b">Useless parameter 'b'(无用的参数'b')</param>
         ''' <returns>
-        ''' Return the factorial value of the number 'a', if 'a' is a negative number then this function 
+        ''' Return the factorial value of the number 'a', if 'a' is a negative number then this function
         ''' return value 1.
         ''' (函数返回参数'a'的阶乘计算值，假若'a'是一个负数的话，则会返回1)
         ''' </returns>
