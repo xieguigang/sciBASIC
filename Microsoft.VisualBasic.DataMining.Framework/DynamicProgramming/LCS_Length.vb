@@ -2,6 +2,9 @@ Imports System
 
 Namespace DynamicProgramming
 
+    ''' <summary>
+    ''' Longest Common Subsequence
+    ''' </summary>
     Public Module LCS_Length
 
         Public Function MaxLengthSubString(a As String, b As String) As String

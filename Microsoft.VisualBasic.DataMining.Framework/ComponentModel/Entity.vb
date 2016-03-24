@@ -1,14 +1,15 @@
 ﻿Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
-    Public MustInherit Class EntityBase(Of T)
+    Public MustInherit Class EntityBase(Of T) : Inherits ClassObject
 
         <XmlAttribute("T")>
         Public Property Properties As T()
@@ -33,7 +34,7 @@ Namespace ComponentModel
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="row">第一个元素为分类，其余元素为属性</param>
         ''' <returns></returns>
