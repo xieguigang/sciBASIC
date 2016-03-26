@@ -20,19 +20,19 @@ Namespace Net
 #Region "Internal Fields"
 
         ''' <summary>
-        ''' The port number for the remote device.  
+        ''' The port number for the remote device.
         ''' </summary>
         ''' <remarks></remarks>
         Dim port As Integer
 
         ''' <summary>
-        ''' The response from the remote device.   
+        ''' The response from the remote device.
         ''' </summary>
         ''' <remarks></remarks>
         Dim response As Byte()
 
         ''' <summary>
-        ''' ' ManualResetEvent instances signal completion.  
+        ''' ' ManualResetEvent instances signal completion.
         ''' </summary>
         ''' <remarks></remarks>
         Dim connectDone As ManualResetEvent
@@ -78,7 +78,7 @@ Namespace Net
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="Client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
         ''' <param name="ExceptionHandler"></param>
@@ -91,7 +91,7 @@ Namespace Net
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="remotePort"></param>
         ''' <param name="ExceptionHandler">Public Delegate Sub ExceptionHandler(ex As Exception)</param>
@@ -166,7 +166,7 @@ Namespace Net
             If bResult Then
                 If Not OperationTimeoutHandler Is Nothing Then Call OperationTimeoutHandler() '操作超时了
 
-                If Not connectDone Is Nothing Then Call connectDone.Set()  ' ManualResetEvent instances signal completion.  
+                If Not connectDone Is Nothing Then Call connectDone.Set()  ' ManualResetEvent instances signal completion.
                 If Not sendDone Is Nothing Then Call sendDone.Set()
                 If Not receiveDone Is Nothing Then Call receiveDone.Set() '中断服务器的连接
 
@@ -218,7 +218,7 @@ Namespace Net
             byteData = SendMessage(byteData)
             Dim response As String = New RequestStream(byteData).GetUTF8String
             Return response
-        End Function 'Main 
+        End Function 'Main
 
         Public Function SendMessage(Message As String, CA As SSL.Certificate) As String
             Dim request = New RequestStream(0, 0, Message)
@@ -283,31 +283,31 @@ Namespace Net
                 Message = New RequestStream(0, 0, Message).Serialize
             End If
 
-            connectDone = New ManualResetEvent(False) ' ManualResetEvent instances signal completion.  
+            connectDone = New ManualResetEvent(False) ' ManualResetEvent instances signal completion.
             sendDone = New ManualResetEvent(False)
             receiveDone = New ManualResetEvent(False)
             response = Nothing
 
-            ' Establish the remote endpoint for the socket.  
-            ' For this example use local machine.   
-            ' Create a TCP/IP socket.  
+            ' Establish the remote endpoint for the socket.
+            ' For this example use local machine.
+            ' Create a TCP/IP socket.
             Dim client As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
             Call client.Bind(New System.Net.IPEndPoint(System.Net.IPAddress.Any, 0))
-            ' Connect to the remote endpoint. 
+            ' Connect to the remote endpoint.
             Call client.BeginConnect(remoteEP, New AsyncCallback(AddressOf ConnectCallback), client)
-            ' Wait for connect.    
+            ' Wait for connect.
             Call connectDone.WaitOne()
-            ' Send test data to the remote device.  
+            ' Send test data to the remote device.
             Call __send(client, Message)
             Call sendDone.WaitOne()
 
-            ' Receive the response from the remote device.    
+            ' Receive the response from the remote device.
             Call Receive(client)
             Call receiveDone.WaitOne()
 
             On Error Resume Next
 
-            ' Release the socket. 
+            ' Release the socket.
             Call client.Shutdown(SocketShutdown.Both)
             Call client.Close()
 
@@ -316,45 +316,45 @@ Namespace Net
 
         Private Sub ConnectCallback(ar As IAsyncResult)
 
-            ' Retrieve the socket from the state object.    
+            ' Retrieve the socket from the state object.
             Dim client As Socket = DirectCast(ar.AsyncState, Socket)
 
-            ' Complete the connection.  
+            ' Complete the connection.
             Try
                 client.EndConnect(ar)
-                ' Signal that the connection has been made.    
+                ' Signal that the connection has been made.
                 connectDone.Set()
             Catch ex As Exception
                 Call __exceptionHandler(ex)
             End Try
-        End Sub 'ConnectCallback  
+        End Sub 'ConnectCallback
 
         ''' <summary>
         ''' An exception of type '<see cref="System.Net.Sockets.SocketException"/>' occurred in System.dll but was not handled in user code
-        ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and 
+        ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and
         ''' (when sending on a datagram socket using a sendto call) no address was supplied
         ''' </summary>
         ''' <param name="client"></param>
         Private Sub Receive(client As Socket)
 
-            ' Create the state object.     
+            ' Create the state object.
             Dim state As New StateObject
             state.workSocket = client
-            ' Begin receiving the data from the remote device. 
+            ' Begin receiving the data from the remote device.
             Try
                 Call client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
             Catch ex As Exception
                 Call Me.__exceptionHandler(ex)
             End Try
-        End Sub 'Receive 
+        End Sub 'Receive
 
         Private Sub ReceiveCallback(ar As IAsyncResult)
 
-            ' Retrieve the state object and the client socket     
-            ' from the asynchronous state object.   
+            ' Retrieve the state object and the client socket
+            ' from the asynchronous state object.
             Dim state As StateObject = DirectCast(ar.AsyncState, StateObject)
             Dim client As Socket = state.workSocket
-            ' Read data from the remote device.     
+            ' Read data from the remote device.
 
             Dim bytesRead As Integer
 
@@ -367,27 +367,27 @@ Namespace Net
 
             If bytesRead > 0 Then
 
-                ' There might be more data, so store the data received so far.     
+                ' There might be more data, so store the data received so far.
                 state.ChunkBuffer.AddRange(state.readBuffer.Takes(bytesRead))
-                ' Get the rest of the data.    
+                ' Get the rest of the data.
                 client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
             Else
-                ' All the data has arrived; put it in response.   
+                ' All the data has arrived; put it in response.
                 If state.ChunkBuffer.Count > 1 Then
 
                     response = state.ChunkBuffer.ToArray
                 Else
 EX_EXIT:            response = Nothing
                 End If
-                ' Signal that all bytes have been received.  
+                ' Signal that all bytes have been received.
                 Call receiveDone.Set()
             End If
-        End Sub 'ReceiveCallback     
+        End Sub 'ReceiveCallback
 
         ''' <summary>
         ''' ????
         ''' An exception of type 'System.Net.Sockets.SocketException' occurred in System.dll but was not handled in user code
-        ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and 
+        ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and
         ''' (when sending on a datagram socket using a sendto call) no address was supplied
         ''' </summary>
         ''' <param name="client"></param>
@@ -395,22 +395,22 @@ EX_EXIT:            response = Nothing
         ''' <remarks></remarks>
         Private Sub __send(client As Socket, byteData As Byte())
 
-            ' Begin sending the data to the remote device.    
+            ' Begin sending the data to the remote device.
             Try
                 Call client.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), client)
             Catch ex As Exception
                 Call Me.__exceptionHandler(ex)
             End Try
-        End Sub 'Send    
+        End Sub 'Send
 
         Private Sub SendCallback(ar As IAsyncResult)
 
-            ' Retrieve the socket from the state object.     
+            ' Retrieve the socket from the state object.
             Dim client As Socket = DirectCast(ar.AsyncState, Socket)
-            ' Complete sending the data to the remote device.   
+            ' Complete sending the data to the remote device.
             Dim bytesSent As Integer = client.EndSend(ar)
             'Console.WriteLine("Sent {0} bytes to server.", bytesSent)
-            ' Signal that all bytes have been sent.    
+            ' Signal that all bytes have been sent.
             sendDone.Set()
         End Sub 'SendCallback
 
@@ -422,7 +422,7 @@ EX_EXIT:            response = Nothing
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call connectDone.Set()  ' ManualResetEvent instances signal completion.  
+                    Call connectDone.Set()  ' ManualResetEvent instances signal completion.
                     Call sendDone.Set()
                     Call receiveDone.Set() '中断服务器的连接
                 End If
@@ -448,6 +448,6 @@ EX_EXIT:            response = Nothing
         End Sub
 #End Region
 
-    End Class 'AsynchronousClient 
+    End Class 'AsynchronousClient
 End Namespace
 

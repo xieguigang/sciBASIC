@@ -41,13 +41,6 @@ Namespace Net
 
         Public Const PING_REQUEST As String = "PING/TTL-78973"
 
-        Public Function IPEndPoint(str As String) As System.Net.IPEndPoint
-            Dim Tokens As String() = str.Split(":"c)
-            Dim IPAddress As String = Tokens.First
-            Dim Port As Integer = CInt(Val(Tokens(1)))
-            Return New System.Net.IPEndPoint(System.Net.IPAddress.Parse(IPAddress), Port)
-        End Function
-
         ''' <summary>
         ''' 假若不能成功的建立起连接的话，则会抛出错误
         ''' </summary>

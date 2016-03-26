@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.FileHandles
 
 ''' <summary>
@@ -154,7 +155,8 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Operator
 
     Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
-        Return source > __getHandle(path)
+        Dim file As FileHandle = __getHandle(path)
+        Return source > file.FileName
     End Operator
 
     Public Shared Operator <(source As List(Of T), path As String) As Boolean

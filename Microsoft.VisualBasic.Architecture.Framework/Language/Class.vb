@@ -24,7 +24,8 @@ Namespace Language
         End Operator
 
         Public Shared Operator <<(cls As [Class](Of T), path As Integer) As List(Of T)
-            Return cls <= FileHandles.__getHandle(path)
+            Dim file As FileHandle = FileHandles.__getHandle(path)
+            Return cls <= file.FileName
         End Operator
     End Class
 End Namespace

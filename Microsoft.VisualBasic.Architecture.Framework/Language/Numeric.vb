@@ -121,7 +121,8 @@ Namespace Language
         End Operator
 
         Public Shared Operator >(source As IEnumerable, handle As Int) As Boolean
-            Return CollectionIO.DefaultHandle()(source, FileHandles.__getHandle(handle.value), Encoding.UTF8)
+            Dim file As FileHandle = FileHandles.__getHandle(handle.value)
+            Return CollectionIO.DefaultHandle()(source, file.FileName, file.encoding)
         End Operator
 
         Public Shared Operator <(source As IEnumerable, handle As Int) As Boolean
