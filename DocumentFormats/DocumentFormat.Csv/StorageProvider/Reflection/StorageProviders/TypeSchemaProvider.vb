@@ -72,7 +72,7 @@ Namespace StorageProvider.Reflection
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="[Property]"></param>
         ''' <param name="[alias]"></param>
@@ -163,7 +163,7 @@ Namespace StorageProvider.Reflection
 
         Public Function GetMetaAttribute(type As Type) As Type
             If Not type.IsGenericType Then
-                If type.BaseType.Equals(GetType(Object)) Then
+                If (type.Equals(GetType(Object))) OrElse type.BaseType.Equals(GetType(Object)) Then
                     Return Nothing
                 Else
                     Return GetMetaAttribute(type.BaseType)
