@@ -3,6 +3,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine
 
@@ -12,7 +13,7 @@ Namespace CommandLine
     ''' <example>&lt;EXE> &lt;CLI_Name> ["Parameter" "Value"]</example>)
     ''' </summary>
     ''' <remarks></remarks>
-    ''' 
+    '''
     Public Class CommandLine : Implements Generic.ICollection(Of KeyValuePair(Of String, String))
 
         Friend __lstParameter As List(Of KeyValuePair(Of String, String)) = New List(Of KeyValuePair(Of String, String))
@@ -138,7 +139,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Checking for the missing required parameter, this function will returns the missing parameter 
+        ''' Checking for the missing required parameter, this function will returns the missing parameter
         ''' in the current cli command line object using a specific parameter name list.
         ''' (检查<paramref name="list"></paramref>之中的所有参数是否存在，函数会返回不存在的参数名)
         ''' </summary>
@@ -198,7 +199,7 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Gets the value Of the specified column As a Boolean.
-        ''' (这个函数也同时包含有开关参数的，开关参数默认为逻辑值类型，当包含有开关参数的时候，其逻辑值为True，反之函数会检查参数列表，参数不存在则为空值字符串，则也为False)  
+        ''' (这个函数也同时包含有开关参数的，开关参数默认为逻辑值类型，当包含有开关参数的时候，其逻辑值为True，反之函数会检查参数列表，参数不存在则为空值字符串，则也为False)
         ''' </summary>
         ''' <param name="parameter">可以包含有开关参数</param>
         ''' <returns></returns>
@@ -210,7 +211,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the 8-bit unsigned Integer value Of the specified column.  
+        ''' Gets the 8-bit unsigned Integer value Of the specified column.
         ''' </summary>
         ''' <param name="parameter"></param>
         ''' <returns></returns>
@@ -219,7 +220,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Reads a stream Of bytes from the specified column offset into the buffer As an array, starting at the given buffer offset.  
+        ''' Reads a stream Of bytes from the specified column offset into the buffer As an array, starting at the given buffer offset.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
@@ -227,7 +228,7 @@ Namespace CommandLine
             Return (From s As String In Tokens Select CByte(Val(s))).ToArray
         End Function
         ''' <summary>
-        ''' Gets the character value Of the specified column.  
+        ''' Gets the character value Of the specified column.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetChar(parameter As String) As Char
@@ -240,7 +241,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Reads a stream Of characters from the specified column offset into the buffer As an array, starting at the given buffer offset.  
+        ''' Reads a stream Of characters from the specified column offset into the buffer As an array, starting at the given buffer offset.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetChars(parameter As String) As Char()
@@ -248,7 +249,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the Date And time data value Of the specified field.  
+        ''' Gets the Date And time data value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetDateTime(parameter As String) As DateTime
@@ -256,7 +257,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the fixed-position numeric value Of the specified field.  
+        ''' Gets the fixed-position numeric value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetDecimal(parameter As String) As Decimal
@@ -264,7 +265,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the Double-precision floating point number Of the specified field.  
+        ''' Gets the Double-precision floating point number Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetDouble(parameter As String) As Double
@@ -272,7 +273,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the Single-precision floating point number Of the specified field.  
+        ''' Gets the Single-precision floating point number Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetFloat(parameter As String) As Single
@@ -280,14 +281,14 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Returns the GUID value Of the specified field.  
+        ''' Returns the GUID value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetGuid(parameter As String) As Guid
             Return Guid.Parse(Me(parameter))
         End Function
         ''' <summary>
-        ''' Gets the 16-bit signed Integer value Of the specified field.  
+        ''' Gets the 16-bit signed Integer value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetInt16(parameter As String) As Int16
@@ -295,7 +296,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the 32-bit signed Integer value Of the specified field.  
+        ''' Gets the 32-bit signed Integer value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetInt32(parameter As String) As Int32
@@ -303,7 +304,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the 64-bit signed Integer value Of the specified field.  
+        ''' Gets the 64-bit signed Integer value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetInt64(parameter As String) As Int64
@@ -311,7 +312,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Return the index Of the named field. If the name is not exists in the parameter list, then a -1 value will be return. 
+        ''' Return the index Of the named field. If the name is not exists in the parameter list, then a -1 value will be return.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetOrdinal(parameter As String) As Integer
@@ -328,7 +329,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the String value Of the specified field.  
+        ''' Gets the String value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetString(parameter As String) As String
@@ -336,7 +337,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Return whether the specified field Is Set To null.  
+        ''' Return whether the specified field Is Set To null.
         ''' </summary>
         ''' <returns></returns>
         Public Function IsNull(parameter As String) As Boolean
@@ -344,7 +345,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="parameter">Command parameter name in the command line inputs.</param>
@@ -381,6 +382,14 @@ Namespace CommandLine
             Dim str As String = Me(name)
             Dim value As Object = Scripting.InputHandler.CTypeDynamic(str, GetType(T))
             Return DirectCast(value, T)
+        End Function
+
+        Public Function OpenHandle(name As String, Optional [default] As String = "") As Int
+            Dim file As String = Me(name)
+            If String.IsNullOrEmpty(file) Then
+                file = [default]
+            End If
+            Return New Int(FileHandles.OpenHandle(file))
         End Function
 #End Region
 

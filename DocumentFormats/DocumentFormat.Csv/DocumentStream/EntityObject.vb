@@ -15,4 +15,17 @@ Namespace DocumentStream
             Next
         End Function
     End Class
+
+    Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
+        Implements sIdEnumerable
+
+        Public Property Identifier As String Implements sIdEnumerable.Identifier
+
+        Public Shared Iterator Function LoadDataSet(path As String, uidMap As String) As IEnumerable(Of DataSet)
+            Dim map As New Dictionary(Of String, String) From {{uidMap, NameOf(DataSet.Identifier)}}
+            For Each x As DataSet In path.LoadCsv(Of DataSet)(explicit:=False, maps:=map)
+                Yield x
+            Next
+        End Function
+    End Class
 End Namespace

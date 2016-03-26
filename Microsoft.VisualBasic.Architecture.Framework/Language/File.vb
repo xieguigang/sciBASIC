@@ -48,6 +48,10 @@ Namespace Language
         Dim __handle As Value(Of Integer) = New Value(Of Integer)(Integer.MinValue)
 
         Public Function OpenHandle(file As String) As Integer
+            If String.IsNullOrEmpty(file) Then
+                Throw New NullReferenceException("File handle null pointer!")
+            End If
+
             SyncLock ___opendHandles
                 SyncLock __handle
                     __handle.Value += 1

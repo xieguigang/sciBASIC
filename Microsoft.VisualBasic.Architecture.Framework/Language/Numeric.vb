@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Namespace Language
 
@@ -117,6 +118,14 @@ Namespace Language
 
         Public Shared Narrowing Operator CType(n As Int) As Integer
             Return n.value
+        End Operator
+
+        Public Shared Operator >(source As IEnumerable, handle As Int) As Boolean
+            Return CollectionIO.DefaultHandle()(source, FileHandles.__getHandle(handle.value), Encoding.UTF8)
+        End Operator
+
+        Public Shared Operator <(source As IEnumerable, handle As Int) As Boolean
+            Throw New NotSupportedException
         End Operator
     End Structure
 
