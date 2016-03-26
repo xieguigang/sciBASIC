@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ConsoleDevice.STDIO__
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace CommandLine
 
@@ -141,8 +142,7 @@ Namespace CommandLine
 
             Try
                 Call FileIO.FileSystem.DeleteFile(tmpBAT, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
-            Catch ex As Exception
-
+            Finally
             End Try
 
             Return ExitCode
@@ -200,7 +200,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="procExitCallback"></param>
         Public Sub Start(Optional procExitCallback As Action = Nothing)
-            Call New Parallel.Task(Of Action)(procExitCallback, AddressOf __processExitHandle).Start()
+            Call New Tasks.Task(Of Action)(procExitCallback, AddressOf __processExitHandle).Start()
         End Sub
 
         Private Sub __processExitHandle(ProcessExitCallback As Action)
