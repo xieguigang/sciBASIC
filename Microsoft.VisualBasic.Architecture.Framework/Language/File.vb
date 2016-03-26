@@ -27,7 +27,11 @@ Namespace Language
 
     Public Module FileHandles
 
-        Friend ReadOnly ___opendHandles As Dictionary(Of Integer, String)
+        ReadOnly ___opendHandles As Dictionary(Of Integer, String)
+
+        Sub New()
+            ___opendHandles = New Dictionary(Of Integer, String)
+        End Sub
 
         Friend Function __getHandle(path As Integer) As String
             If Not FileHandles.___opendHandles.ContainsKey(path) Then
@@ -63,5 +67,8 @@ Namespace Language
             End SyncLock
         End Function
 
+        Public Function OpenTemp() As Integer
+            Return OpenHandle(App.GetAppSysTempFile(App.Process.Id))
+        End Function
     End Module
 End Namespace
