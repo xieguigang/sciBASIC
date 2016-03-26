@@ -1,11 +1,12 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.CodeDOM_VBC
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Parallel
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     Public Module ParallelLoading
 
@@ -178,7 +179,7 @@ Namespace Parallel
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="assembly"></param>
         ''' <param name="removeSystem">是否移除系统引用</param>
@@ -236,7 +237,7 @@ Namespace Parallel
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="url">+特殊符号存在于这个字符串之中的话，函数会出错</param>
         ''' <param name="i"></param>

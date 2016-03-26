@@ -310,7 +310,7 @@ END_INVOKE:     Dim rtvl As Out = invoke.EndInvoke(handle)
         ''' <returns></returns>
         Public Shared Function LQuery(Of T, TOut)(Input As Generic.IEnumerable(Of T), Handle As Func(Of T, TOut)) As TOut()
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Start schedule task pool for {GetType(T).FullName }   ---->  {GetType(TOut).FullName }")
-            Dim HandleHash = (From HandleData As T In Input Select OutAr = New Parallel.Task(Of T, TOut)(HandleData, Handle).Start).ToArray
+            Dim HandleHash = (From HandleData As T In Input Select OutAr = New Tasks.Task(Of T, TOut)(HandleData, Handle).Start).ToArray
             Call Console.WriteLine($"[DEBUG {Now.ToString }] Start task pool job completed!, waiting for data processing....")
             Dim Out = (From HandleHashAr In HandleHash Select HandleHashAr.GetValue).ToArray
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Task job done!")

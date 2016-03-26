@@ -1,6 +1,6 @@
 ﻿Imports System.Threading
 
-Namespace Parallel
+Namespace Parallel.Tasks
 
     Public Interface ITaskHandle(Of T)
         Function Run() As T

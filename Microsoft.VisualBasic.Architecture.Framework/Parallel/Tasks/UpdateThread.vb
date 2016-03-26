@@ -1,4 +1,4 @@
-﻿Namespace Parallel
+﻿Namespace Parallel.Tasks
 
     ''' <summary>
     ''' Running a specific <see cref="System.Action"/> in the background periodically.
@@ -13,7 +13,7 @@
         Public Property Periods As Integer
         Public ReadOnly Property Updates As System.Action
         ''' <summary>
-        ''' If this exception handler is null, then when the unhandled exception occurring, 
+        ''' If this exception handler is null, then when the unhandled exception occurring,
         ''' this thread object will throw the exception and then stop working.
         ''' </summary>
         ''' <returns></returns>

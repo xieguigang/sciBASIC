@@ -13,12 +13,23 @@ Imports System.Web
 ''' <summary>
 ''' The extension module for web services works.
 ''' </summary>
-''' 
+'''
 <PackageNamespace("Utils.WebServices",
                   Description:="The extension module for web services programming in your scripting.",
                   Category:=APICategories.UtilityTools,
                   Publisher:="<a href=""mailto://xie.guigang@gmail.com"">xie.guigang@gmail.com</a>")>
 Public Module WebServiceUtils
+
+    Public ReadOnly Property Protocols As String() = {"http://", "https://", "ftp://", "sftp://"}
+
+    ''' <summary>
+    ''' 判断这个uri字符串是否是一个网络位置
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <returns></returns>
+    <Extension> Public Function isURL(url As String) As Boolean
+        Return url.InStrAny(Protocols) > -1
+    End Function
 
     ''' <summary>
     ''' Build the request parameters for the HTTP POST
@@ -50,12 +61,12 @@ Public Module WebServiceUtils
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="s_Data">A string that contains the url string pattern like: href="url_text"</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Html.Href")>
     <Extension> Public Function Get_href(<Parameter("A string that contains the url string pattern like: href=""url_text""")> s_Data As String) As String
         Dim url As String = Regex.Match(s_Data, "href="".+?""", RegexOptions.IgnoreCase).Value
@@ -71,7 +82,7 @@ Public Module WebServiceUtils
     Public Const IMAGE_SOURCE As String = "<img.+?src=.+?>"
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="str"></param>
     ''' <returns></returns>
@@ -137,7 +148,7 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="argvs"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Request.Parser")>
     <Extension> Public Function requestParser(argvs As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
         Dim Tokens As String() = argvs.Split("&"c)
@@ -145,7 +156,7 @@ Public Module WebServiceUtils
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="hash"></param>
     ''' <param name="Escaping">是否进行对value部分的字符串数据进行转义</param>
@@ -208,7 +219,7 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("URL.PathEncode")>
     <Extension>
     Public Function UrlPathEncode(s As String) As String
@@ -233,7 +244,7 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="data">转义的时候大小写无关</param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("PostRequest.Parsing")>
     <Extension> Public Function postRequestParser(data As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
         If String.IsNullOrEmpty(data) Then
@@ -361,7 +372,7 @@ Public Module WebServiceUtils
     ''' <param name="s_Data"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
     <Extension> Public Function GetValue(s_Data As String) As String
         Return s_Data.GetStackValue(">", "<")
@@ -375,7 +386,7 @@ Public Module WebServiceUtils
     ''' <param name="RequestTimeOut">发生错误的时候的重试的次数</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
@@ -390,7 +401,7 @@ Public Module WebServiceUtils
     ''' <param name="RequestTimeOut">发生错误的时候的重试的次数</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <Extension> Public Function Get_PageContent(url As String, Optional RequestTimeOut As UInteger = 20, Optional FileSystemUrl As Boolean = False) As String
 #End If
         Call $"Request data from: {If(FileSystemUrl, url.ToFileURL, url)}".__DEBUG_ECHO
@@ -520,7 +531,7 @@ RETRY:      Return __downloadWebpage(url)
     ''' <param name="url"></param>
     ''' <param name="savePath"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("GET.Download", Info:="Download file from http request and save to a specific location.")>
     <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
         Try

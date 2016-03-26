@@ -1,4 +1,4 @@
-﻿Namespace Parallel
+﻿Namespace Parallel.Tasks
 
     ''' <summary>
     ''' Represents the status of an asynchronous operation.(背景线程加载数据)

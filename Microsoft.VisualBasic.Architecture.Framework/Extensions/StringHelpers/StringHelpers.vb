@@ -84,7 +84,7 @@ Public Module StringHelpers
     ''' <param name="str"></param>
     ''' <param name="ch"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Count", Info:="Counting the specific char in the input string value.")>
     <Extension> Public Function Count(str As String, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
@@ -102,7 +102,7 @@ Public Module StringHelpers
     ''' <param name="wrapper"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Wrapper.Trim")>
     <Extension> Public Function GetString(s As String, Optional wrapper As Char = """"c) As String
         If String.IsNullOrEmpty(s) OrElse Len(s) = 1 Then
@@ -153,7 +153,7 @@ Public Module StringHelpers
     ''' <param name="Chunkbuffer"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Intersection")>
     <Extension> Public Function Intersection(Chunkbuffer As Generic.IEnumerable(Of Generic.IEnumerable(Of String))) As String()
         Chunkbuffer = (From line In Chunkbuffer Select (From strValue As String In line Select strValue Distinct Order By strValue Ascending).ToArray).ToArray
@@ -178,7 +178,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Intersection")>
     Public Function Intersection(ParamArray values As String()()) As String()
         Return values.Intersection
@@ -224,7 +224,7 @@ Public Module StringHelpers
     ''' <param name="Collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
     <Extension> Public Function CountStringTokens(Collection As Generic.IEnumerable(Of String), Optional IgnoreCase As Boolean = False) As KeyValuePair(Of String, Integer)()
 #Else
@@ -262,7 +262,7 @@ Public Module StringHelpers
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
     <Extension> Public Function StringSplit(Source As String, RegexDelimiter As String, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
         Dim splitArray As String() = System.Text.RegularExpressions.Regex.Split(Source, RegexDelimiter)
@@ -284,7 +284,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' String compares using <see cref="system.String.Equals"/>, if the target value could not be located, then -1 will be return from this function.  
+    ''' String compares using <see cref="system.String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
     ''' </summary>
     ''' <param name="collection"></param>
     ''' <param name="Text"></param>
@@ -306,8 +306,8 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Search the string by keyword in a string collection. Unlike search function <see cref="StringHelpers.Located(IEnumerable(Of String), String, Boolean)"/> 
-    ''' using function <see cref="String.Equals"/> function to search string, this function using <see cref="Strings.InStr(String, String, CompareMethod)"/> 
+    ''' Search the string by keyword in a string collection. Unlike search function <see cref="StringHelpers.Located(IEnumerable(Of String), String, Boolean)"/>
+    ''' using function <see cref="String.Equals"/> function to search string, this function using <see cref="Strings.InStr(String, String, CompareMethod)"/>
     ''' to search the keyword.
     ''' </summary>
     ''' <param name="collection"></param>
@@ -348,12 +348,12 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 查找到任意一个既返回位置，大小写不敏感
+    ''' 查找到任意一个既返回位置，大小写不敏感，假若查找不到，则返回-1值，判断是否查找成功，可以使用 &lt;0 来完成，
+    ''' 因为是通过InStr来完成的，所以查找成功的时候，最小的值是1，即字符串序列的第一个位置，也是元素0位置
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="find"></param>
     ''' <returns></returns>
-    ''' 
     <ExportAPI("InStr.Any")>
     <Extension> Public Function InStrAny(source As String, ParamArray find As String()) As Integer
         For Each Token As String In find
@@ -363,7 +363,7 @@ Public Module StringHelpers
             End If
         Next
 
-        Return 0
+        Return -1
     End Function
 
     ''' <summary>
@@ -371,7 +371,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("lTokens")>
     <Extension> Public Function lTokens(text As String) As String()
         If String.IsNullOrEmpty(text) Then

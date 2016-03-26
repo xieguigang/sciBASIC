@@ -268,6 +268,7 @@
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Numeric.vb" />
     <Compile Include="MMFProtocol\WorkFlow.vb" />
+    <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
     <Compile Include="Text\EncodingHelper.vb" />

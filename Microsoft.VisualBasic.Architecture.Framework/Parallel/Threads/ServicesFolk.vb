@@ -1,6 +1,7 @@
 ﻿
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Parallel
 
@@ -17,10 +18,7 @@ Namespace Parallel
         ''' <param name="assm"></param>
         ''' <param name="CLI">命令行参数字符串，可以在这里加入一些其他的自定义数据</param>
         ''' <returns>函数返回子服务的交互端口</returns>
-        Public Function Folk(assm As String,
-                             ByRef CLI As String,
-                             Optional ByRef folked As System.Diagnostics.Process = Nothing) As Integer
-
+        Public Function Folk(assm As String, ByRef CLI As String, Optional ByRef folked As Process = Nothing) As Integer
             Dim Portal As Integer
 
             '开通一个临时的端口用来和子服务交互

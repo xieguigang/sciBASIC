@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Language
 
@@ -21,19 +22,40 @@ Namespace Language
         End Operator
 
         Public Shared Operator >>(file As File, path As Integer) As Boolean
-            Return file.Save(__getHandle(path), Encodings.UTF8)
+            Dim handle As FileHandle = __getHandle(path)
+            Return file.Save(handle.FileName, handle.encoding)
         End Operator
     End Class
 
+    Public Structure FileHandle
+        Dim FileName As String
+        Dim handle As Integer
+        Dim encoding As Encoding
+
+        ''' <summary>
+        ''' Determined that is this filename is a network location.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsHTTP As Boolean
+            Get
+                Return FileName.isURL
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Structure
+
     Public Module FileHandles
 
-        ReadOnly ___opendHandles As Dictionary(Of Integer, String)
+        ReadOnly ___opendHandles As Dictionary(Of Integer, FileHandle)
 
         Sub New()
-            ___opendHandles = New Dictionary(Of Integer, String)
+            ___opendHandles = New Dictionary(Of Integer, FileHandle)
         End Sub
 
-        Friend Function __getHandle(path As Integer) As String
+        Friend Function __getHandle(path As Integer) As FileHandle
             If Not FileHandles.___opendHandles.ContainsKey(path) Then
                 Throw New ObjectNotFoundException($"Path {path} pointer to a null file handle!")
             Else
@@ -51,7 +73,7 @@ Namespace Language
 
         Dim __handle As Value(Of Integer) = New Value(Of Integer)(Integer.MinValue)
 
-        Public Function OpenHandle(file As String) As Integer
+        Public Function OpenHandle(file As String, Optional encoding As Encodings = Encodings.UTF8) As Integer
             If String.IsNullOrEmpty(file) Then
                 Throw New NullReferenceException("File handle null pointer!")
             End If
@@ -59,7 +81,14 @@ Namespace Language
             SyncLock ___opendHandles
                 SyncLock __handle
                     __handle.Value += 1
-                    Call ___opendHandles.Add(__handle.Value, file)
+
+                    Dim handle As New FileHandle With {
+                        .encoding = encoding.GetEncodings,
+                        .FileName = file,
+                        .handle = __handle.Value
+                    }
+
+                    Call ___opendHandles.Add(__handle.Value, handle)
                     Call FileIO.FileSystem.CreateDirectory(file.ParentPath)
 
                     Return __handle.Value

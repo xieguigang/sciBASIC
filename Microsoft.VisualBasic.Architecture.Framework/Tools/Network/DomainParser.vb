@@ -93,6 +93,5 @@ Namespace Net
 
             Return url
         End Function
-
     End Module
 End Namespace

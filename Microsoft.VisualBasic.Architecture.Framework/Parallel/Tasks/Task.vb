@@ -1,6 +1,6 @@
 ﻿Imports System.Reflection
 
-Namespace Parallel
+Namespace Parallel.Tasks
 
     Public Delegate Function BackgroundTask(Of T)() As T
 
