@@ -283,6 +283,19 @@ Public Module StringHelpers
         Return splitArray
     End Function
 
+    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String) As IEnumerable(Of String())
+        Dim list As New List(Of String)
+
+        For Each line As String In source
+            If String.Equals(delimiter, line, StringComparison.Ordinal) Then
+                Yield list.ToArray
+                Call list.Clear()
+            Else
+                Call list.Add(line)
+            End If
+        Next
+    End Function
+
     ''' <summary>
     ''' String compares using <see cref="system.String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
     ''' </summary>
