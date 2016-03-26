@@ -14,7 +14,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Property locusId As TKey
+        Property EnvirState As TKey
         ''' <summary>
         ''' Gets the value in the key/value pair.
         ''' </summary>
@@ -48,7 +48,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overridable Property Key As TKey Implements IKeyValuePairObject(Of TKey, TValue).locusId
+        Public Overridable Property Key As TKey Implements IKeyValuePairObject(Of TKey, TValue).EnvirState
         ''' <summary>
         ''' Gets the value in the key/value pair.
         ''' </summary>

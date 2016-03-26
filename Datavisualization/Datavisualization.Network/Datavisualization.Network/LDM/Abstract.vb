@@ -4,7 +4,7 @@
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property locusId As String
+        Property EnvirState As String
         Property NodeType As String
     End Interface
 

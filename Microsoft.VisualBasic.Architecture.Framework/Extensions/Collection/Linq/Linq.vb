@@ -370,7 +370,7 @@ Namespace Linq
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.locusId, x.Value), where:=Function(x) Where(x.locusId, x.Value))
+                Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value), where:=Function(x) Where(x.EnvirState, x.Value))
             End If
         End Function
 
@@ -378,7 +378,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
                                                          [CType] As Func(Of TKey, TValue, T),
                                                          Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.locusId, x.Value))
+            Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value))
         End Function
 
         <Extension>
@@ -389,7 +389,7 @@ Namespace Linq
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.locusId, x.Value2, x.Value3), where:=Function(x) Where(x.locusId, x.Value2, x.Value3))
+                Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value2, x.Value3), where:=Function(x) Where(x.EnvirState, x.Value2, x.Value3))
             End If
         End Function
 
@@ -397,7 +397,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
                                                         [CType] As Func(Of T1, T2, T3, T),
                                                         Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.locusId, x.Value2, x.Value3))
+            Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value2, x.Value3))
         End Function
     End Module
 End Namespace

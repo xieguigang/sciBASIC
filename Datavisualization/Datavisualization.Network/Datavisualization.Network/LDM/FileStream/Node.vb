@@ -35,7 +35,7 @@ Namespace FileStream
         ''' 这个节点的标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property Identifier As String Implements sIdEnumerable.Identifier, INode.locusId
+        Public Overridable Property Identifier As String Implements sIdEnumerable.Identifier, INode.EnvirState
         ''' <summary>
         ''' 这个节点的类型的定义
         ''' </summary>

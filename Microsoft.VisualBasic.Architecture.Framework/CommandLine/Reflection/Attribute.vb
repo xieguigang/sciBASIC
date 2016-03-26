@@ -65,9 +65,9 @@ Namespace CommandLine.Reflection
 
         Public Overrides Function ToString() As String
             If String.IsNullOrEmpty(Description) Then
-                Return String.Format("Namespace {0}", _Namespace)
+                Return String.Format("Namespace {0}", [Namespace])
             Else
-                Return String.Format("Namespace {0} ({1})", _Namespace, Description)
+                Return String.Format("Namespace {0} ({1})", [Namespace], Description)
             End If
         End Function
 

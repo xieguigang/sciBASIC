@@ -11,8 +11,8 @@ Namespace QLearning
     ''' which maps states, actions and their Q values. This class has elaborate
     ''' documentation, and should be the focus of the students' body of work
     ''' for the purposes of this tutorial.
-    '''     
-    ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications) 
+    '''
+    ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications)
     ''' </summary>
     Public MustInherit Class QTable(Of T As ICloneable)
         Implements IQTable
@@ -83,7 +83,7 @@ Namespace QLearning
         ''' <summary>
         ''' Q table constructor, initiates variables. </summary>
         ''' <param name="actionRange"> number of actions available at any map state </param>
-        Public Sub New(actionRange As Integer)
+        Sub New(actionRange As Integer)
             Me.New()
             Me.ActionRange = actionRange
             Me.Table = New Dictionary(Of Action)
@@ -198,8 +198,8 @@ Namespace QLearning
                 For i As Integer = 0 To ActionRange - 1
                     initialActions(i) = 0.0F
                 Next i
-                _Table += New Action With {
-                    .Action = __getMapString(map),
+                _Table += New Action With {  ' If the current environment state is not in the program's memory, then store it, this is the so called learn
+                    .EnvirState = __getMapString(map),
                     .Qvalues = initialActions
                 }
                 Return initialActions
