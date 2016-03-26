@@ -35,7 +35,7 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
-    ''' 
+    '''
     <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
         Dim str = $"[DEBUG {Now.ToString}]{_Indent(Indent)} {MSG}"
 
@@ -80,8 +80,8 @@ Public Module VBDebugger
 #End If
     End Sub
 
-    Public Function Warning(msg As String) As String
-        Dim str = $"[WARN {Now.ToString}] {msg}"
+    Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
+        Dim str = $"[WARN@{calls} {Now.ToString}] {msg}"
 
         If Not Mute Then
             Call WriteLine(str, ConsoleColor.Yellow)
@@ -90,13 +90,32 @@ Public Module VBDebugger
         Return str
     End Function
 
+    Public Sub Assertion(test As Boolean, fails As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
+        If Not test = True Then
+            If level = Logging.MSG_TYPES.DEBUG Then
+                Call fails.__DEBUG_ECHO(memberName:=calls)
+            ElseIf level = Logging.MSG_TYPES.ERR Then
+                Call WriteLine(fails, ConsoleColor.Red)
+            ElseIf level = Logging.MSG_TYPES.WRN Then
+                Call Warning(fails, calls)
+            Else
+                Call Console.WriteLine($"@{calls}::" & fails)
+            End If
+        End If
+    End Sub
+
+    <Extension>
+    Public Sub Assertion(test As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
+        Call VBDebugger.Assertion(Not (String.IsNullOrEmpty(test) OrElse String.IsNullOrWhiteSpace(test)), test, level, calls)
+    End Sub
+
     ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
-    ''' 
+    '''
     <Extension> Public Function __DEBUG_ECHO(MSG As System.Text.StringBuilder, Optional Indent As Integer = 0) As String
         Return MSG.ToString.__DEBUG_ECHO(Indent)
     End Function
