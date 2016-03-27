@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Dynamic
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 ' http://www.codeproject.com/Articles/1087921/An-Almost-Extension-Property
@@ -53,4 +55,45 @@ Public Class ExtendedProps : Inherits Dynamic.DynamicObject
             __hash = value
         End Set
     End Property
+
+    Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
+        Return DynamicHash.Properties.Keys
+    End Function
+
+    Dim __nameCache As StringBuilder = New StringBuilder
+
+    Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
+        Dim name As String = binder.Name
+
+        If __nameCache.Length > 0 Then
+            Call __nameCache.Append("." & name)
+            name = __nameCache.ToString
+        End If
+
+        If DynamicHash.Properties.ContainsKey(name) Then
+            Call __nameCache.Clear()
+            Return DynamicHash.Properties.TryGetValue(name, result)
+        Else
+            result = Me
+            Return True
+        End If
+    End Function
+
+    Public Overrides Function TrySetMember(binder As SetMemberBinder, value As Object) As Boolean
+        Dim name As String = binder.Name
+
+        If __nameCache.Length > 0 Then
+            Call __nameCache.Append("." & name)
+            name = __nameCache.ToString
+        End If
+
+        If DynamicHash.Properties.ContainsKey(name) Then
+            __nameCache.Clear()
+            DynamicHash.Properties(name) = value
+        Else
+
+        End If
+
+        Return True
+    End Function
 End Class

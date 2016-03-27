@@ -11,7 +11,7 @@ Namespace ComponentModel.DataSourceModel
     ''' Has a dictionary as a dynamics property.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public MustInherit Class DynamicPropertyBase(Of T) : Inherits ClassObject
+    Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
 
         Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties
