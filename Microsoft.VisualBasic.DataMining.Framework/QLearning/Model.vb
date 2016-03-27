@@ -16,7 +16,7 @@ Namespace QLearning.DataModel
     End Interface
 
     ''' <summary>
-    ''' Data model of the <see cref="QTable(Of T)"/>
+    ''' Data model of the <see cref="QTable(Of T)"/>, you can using this object to stores the trained QL_AI into a file.
     ''' </summary>
     Public Class QModel : Inherits ClassObject
 
