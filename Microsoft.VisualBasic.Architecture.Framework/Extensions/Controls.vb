@@ -38,5 +38,19 @@ End Module
 ''' <summary>
 ''' An Almost Extension Property
 ''' </summary>
-Public Class ExtendedProps : Inherits DynamicPropertyBase(Of Object)
+Public Class ExtendedProps : Inherits Dynamic.DynamicObject
+
+    Dim __hash As [Property](Of Object)
+
+    Public Property DynamicHash As [Property](Of Object)
+        Get
+            If __hash Is Nothing Then
+                __hash = New [Property](Of Object)
+            End If
+            Return __hash
+        End Get
+        Set(value As [Property](Of Object))
+            __hash = value
+        End Set
+    End Property
 End Class

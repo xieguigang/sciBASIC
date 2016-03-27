@@ -4,6 +4,8 @@ Namespace Language
 
     Public Class ClassObject
 
+        Public Property Extension As ExtendedProps
+
         Public Overrides Function ToString() As String
             Return Serialization.GetJson(Me, [GetType])
         End Function
