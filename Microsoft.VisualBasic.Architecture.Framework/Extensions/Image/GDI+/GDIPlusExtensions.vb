@@ -6,11 +6,12 @@ Imports System
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports System.Reflection
+Imports System.IO
 
 ''' <summary>
 ''' GDI+
 ''' </summary>
-''' 
+'''
 <PackageNamespace("GDI+", Description:="GDI+ GDIPlus Extensions Module to provide some useful interface.",
                   Publisher:="xie.guigang@gmail.com",
                   Revision:=58,
@@ -60,7 +61,7 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <param name="image"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Get.RawStream")>
     <Extension> Public Function GetRawStream(image As Image) As Byte()
         Dim stream As New IO.MemoryStream
@@ -127,7 +128,7 @@ Public Module GDIPlusExtensions
     ''' <param name="filled">默认的背景填充颜色为白色</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("GDI+.Create")>
     <Extension> Public Function CreateGDIDevice(r As Drawing.SizeF, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
         Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
@@ -156,7 +157,7 @@ Public Module GDIPlusExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("GDI+.Create")>
     <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As GDIPlusDeviceHandle
         Dim Image As Image = LoadImage(path)
@@ -169,14 +170,19 @@ Public Module GDIPlusExtensions
     ''' <summary>
     ''' 无需处理图像数据，这个函数已经自动克隆了该对象，不会影响到原来的对象
     ''' </summary>
-    ''' <param name="Image"></param>
+    ''' <param name="res"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("GDI+.Create")>
-    <Extension> Public Function GdiFromImage(Image As Image) As GDIPlusDeviceHandle
-        SyncLock Image
-            Dim Gr As GDIPlusDeviceHandle = Image.Size.CreateGDIDevice
-            Call Gr.Gr_Device.DrawImage(Image, 0, 0, Gr.Width, Gr.Height)
+    <Extension> Public Function GdiFromImage(res As Image) As GDIPlusDeviceHandle
+        SyncLock res
+            Dim ms As New MemoryStream
+            Call res.Save(ms, Imaging.ImageFormat.Png)
+            Dim raw As Byte() = ms.ToArray
+            ms = New MemoryStream(raw)
+            res = Image.FromStream(ms)
+            Dim Gr As GDIPlusDeviceHandle = res.Size.CreateGDIDevice
+            Call Gr.Gr_Device.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
             Return Gr
         End SyncLock
     End Function
@@ -197,7 +203,7 @@ Public Module GDIPlusExtensions
     ''' <param name="filled">默认的背景填充颜色为白色</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("GDI+.Create")>
     <Extension> Public Function CreateGDIDevice(r As Drawing.Size, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
         Dim Bitmap As Bitmap
@@ -238,7 +244,7 @@ Public Module GDIPlusExtensions
     ''' <param name="size">剪裁的区域的大小</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Image.Corp")>
     <Extension> Public Function ImageCrop(source As Image, pos As Point, size As Size) As Image
         SyncLock source
