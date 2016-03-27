@@ -41,7 +41,7 @@ Namespace ComponentModel.Settings
         Implements IKeyValuePairObject(Of String, String)
         Implements sIdEnumerable
 
-        <XmlAttribute> Public Property Name As String Implements IKeyValuePairObject(Of String, String).EnvirState, sIdEnumerable.Identifier
+        <XmlAttribute> Public Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, sIdEnumerable.Identifier
         <XmlAttribute> Public Property Description As String Implements IKeyValuePairObject(Of String, String).Value
 
         ''' <summary>

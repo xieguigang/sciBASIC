@@ -37,7 +37,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
@@ -156,7 +156,7 @@ Namespace Linq
         ''' <param name="n">大于或者等于0的一个数，当小于0的时候会出错</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Sequence")>
         <Extension> Public Function Sequence(n As Integer) As Integer()
 
@@ -201,7 +201,7 @@ Namespace Linq
         ''' <param name="n"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Sequence")>
         <Extension> Public Function Sequence(n As Long) As Long()
             Dim List As Long() = New Long(n - 1) {}
@@ -217,7 +217,7 @@ Namespace Linq
         ''' <param name="n"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Sequence")>
         <Extension> Public Function Sequence(n As UInteger) As Integer()
             Dim List(n - 1) As Integer
@@ -294,7 +294,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="TOut"></typeparam>
@@ -370,7 +370,10 @@ Namespace Linq
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value), where:=Function(x) Where(x.EnvirState, x.Value))
+                Return source.ToArray(Of T)(
+                    Function(x As IKeyValuePairObject(Of TKey, TValue)) [CType](x.Identifier, x.Value),
+                    where:=Function(x) Where(x.Identifier, x.Value),
+                    Parallel:=Parallel)
             End If
         End Function
 
@@ -378,7 +381,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
                                                          [CType] As Func(Of TKey, TValue, T),
                                                          Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value))
+            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value), Parallel:=Parallel)
         End Function
 
         <Extension>
@@ -389,7 +392,7 @@ Namespace Linq
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value2, x.Value3), where:=Function(x) Where(x.EnvirState, x.Value2, x.Value3))
+                Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Value3), where:=Function(x) Where(x.Identifier, x.Value2, x.Value3))
             End If
         End Function
 
@@ -397,7 +400,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
                                                         [CType] As Func(Of T1, T2, T3, T),
                                                         Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.EnvirState, x.Value2, x.Value3))
+            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Value3))
         End Function
     End Module
 End Namespace

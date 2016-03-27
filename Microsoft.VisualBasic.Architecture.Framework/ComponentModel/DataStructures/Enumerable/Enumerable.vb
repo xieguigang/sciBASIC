@@ -65,18 +65,18 @@ Public Module IEnumerations
 
     <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional Explicit As Boolean = True) As PairItemType()
         Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.EnvirState, Key, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Key, Method) Select item).ToArray
         Return LQuery
     End Function
 
     <Extension> Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
         Dim Method = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.EnvirState, Value, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Value, Method) Select item).ToArray
         Return LQuery
     End Function
 
     ''' <summary>
-    ''' use the overload method <see cref="IPairItem(Of TItem1, TItem2).Equals"></see> of the type 
+    ''' use the overload method <see cref="IPairItem(Of TItem1, TItem2).Equals"></see> of the type
     ''' <see cref="IPairItem(Of TItem1, TItem2)"></see>
     ''' </summary>
     ''' <typeparam name="TItem1"></typeparam>

@@ -10,7 +10,7 @@ Namespace ComponentModel
     Public Class TripleKeyValuesPair : Implements sIdEnumerable
         Implements ITripleKeyValuesPair(Of String, String, String)
 
-        <XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, ITripleKeyValuesPair(Of String, String, String).EnvirState
+        <XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, ITripleKeyValuesPair(Of String, String, String).Identifier
         <XmlAttribute> Public Property Value1 As String Implements ITripleKeyValuesPair(Of String, String, String).Value2
         <XmlAttribute> Public Property Value2 As String Implements ITripleKeyValuesPair(Of String, String, String).Value3
 
@@ -55,7 +55,7 @@ Namespace ComponentModel
 
     Public Interface ITripleKeyValuesPair(Of T1, T2, T3)
         Property Value3 As T3
-        Property EnvirState As T1
+        Property Identifier As T1
         Property Value2 As T2
     End Interface
 
@@ -63,7 +63,7 @@ Namespace ComponentModel
         Implements ITripleKeyValuesPair(Of T1, T2, T3)
 
         Public Property Value3 As T3 Implements ITripleKeyValuesPair(Of T1, T2, T3).Value3
-        Public Property Value1 As T1 Implements ITripleKeyValuesPair(Of T1, T2, T3).EnvirState
+        Public Property Value1 As T1 Implements ITripleKeyValuesPair(Of T1, T2, T3).Identifier
         Public Property Value2 As T2 Implements ITripleKeyValuesPair(Of T1, T2, T3).Value2
 
         Sub New()

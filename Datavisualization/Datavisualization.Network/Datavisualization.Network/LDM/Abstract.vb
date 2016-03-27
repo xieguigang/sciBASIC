@@ -4,7 +4,7 @@
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property EnvirState As String
+        Property Identifier As String
         Property NodeType As String
     End Interface
 
