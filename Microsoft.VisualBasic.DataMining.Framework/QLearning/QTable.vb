@@ -12,7 +12,7 @@ Namespace QLearning
     ''' documentation, and should be the focus of the students' body of work
     ''' for the purposes of this tutorial.
     '''
-    ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications)
+    ''' @author A.Liapis (Original author), A. Hartzen (2013 modifications); xie.guigang@gcmodeller.org (2016 modifications)
     ''' </summary>
     Public MustInherit Class QTable(Of T As ICloneable)
         Implements IQTable
@@ -138,12 +138,15 @@ Namespace QLearning
             Dim indexMaxRewards As Integer = 0
 
             For i As Integer = 0 To rewards.Length - 1
+                ' Gets the max element value its index in the Qvalues
+
                 If maxRewards < rewards(i) Then
                     maxRewards = rewards(i)
                     indexMaxRewards = i
                 End If
             Next i
 
+            ' decode this index value as the action controls
             Return indexMaxRewards
         End Function
 
