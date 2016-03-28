@@ -33,7 +33,7 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' Initializes a new instance of the <see cref="IntRange"/> class
         ''' </summary>
-        ''' 
+        '''
         ''' <param name="min">Minimum value of the range</param>
         ''' <param name="max">Maximum value of the range</param>
         Public Sub New(min As Integer, max As Integer)
@@ -41,15 +41,18 @@ Namespace ComponentModel.Ranges
             Me.Max = max
         End Sub
 
+        Sub New()
+        End Sub
+
         ''' <summary>
         ''' Check if the specified value is inside this range
         ''' </summary>
-        ''' 
+        '''
         ''' <param name="x">Value to check</param>
-        ''' 
+        '''
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
-        ''' 
+        '''
         Public Function IsInside(x As Integer) As Boolean
             Return ((x >= Min) AndAlso (x <= Min))
         End Function
@@ -57,25 +60,25 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' Check if the specified range is inside this range
         ''' </summary>
-        ''' 
+        '''
         ''' <param name="range">Range to check</param>
-        ''' 
+        '''
         ''' <returns><b>True</b> if the specified range is inside this range or
         ''' <b>false</b> otherwise.</returns>
-        ''' 
+        '''
         Public Function IsInside(range As IntRange) As Boolean
-            Return ((IsInside(range.min)) AndAlso (IsInside(range.max)))
+            Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
         End Function
 
         ''' <summary>
         ''' Check if the specified range overlaps with this range
         ''' </summary>
-        ''' 
+        '''
         ''' <param name="range">Range to check for overlapping</param>
-        ''' 
+        '''
         ''' <returns><b>True</b> if the specified range overlaps with this range or
         ''' <b>false</b> otherwise.</returns>
-        ''' 
+        '''
         Public Function IsOverlapping(range As IntRange) As Boolean
             Return ((IsInside(range.min)) OrElse (IsInside(range.max)))
         End Function
