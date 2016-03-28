@@ -43,7 +43,6 @@ Public Module VBDebugger
             Call Console.WriteLine(str)
 #If DEBUG Then
             Call Debug.WriteLine(str)
-            Call Trace.WriteLine(str)
 #End If
         End If
 
@@ -76,7 +75,6 @@ Public Module VBDebugger
 
 #If DEBUG Then
         Call Debug.WriteLine(msg)
-        Call Trace.WriteLine(msg)
 #End If
     End Sub
 

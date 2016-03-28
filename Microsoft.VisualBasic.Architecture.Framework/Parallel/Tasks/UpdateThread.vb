@@ -27,18 +27,20 @@
         ''' <summary>
         ''' Running a specific action in the background periodically. The time unit of the parameter <paramref name="Periods"/> is ms or Ticks.
         ''' </summary>
-        ''' <param name="Periods">ms</param>
+        ''' <param name="Periods">ms for update thread sleeps</param>
         ''' <param name="updates"></param>
         Sub New(Periods As Integer, updates As System.Action)
             Me.Periods = Periods
             Me.Updates = updates
-            Call RunTask(AddressOf __updates)
+            Me.Running = False
         End Sub
 
         Private Sub __updates()
+            Call $"Start running {Me.ToString}....".__DEBUG_ECHO
             Do While Running
                 Call __invoke()
             Loop
+            Call $"{Me.ToString} thread exit...".__DEBUG_ECHO
         End Sub
 
         ''' <summary>
