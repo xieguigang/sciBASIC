@@ -31,7 +31,7 @@ Namespace Net
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="IPAddress">IPAddress string using for create object using method <see cref="System.Net.IPAddress.Parse(String)"/></param>
         ''' <param name="Port"><see cref="System.Net.IPEndPoint.Port"/></param>
@@ -41,7 +41,7 @@ Namespace Net
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="str">IPAddress:Port</param>
         ''' <remarks></remarks>
@@ -73,7 +73,7 @@ Namespace Net
         ''' </summary>
         ''' <returns></returns>
         Public Function GetIPEndPoint() As System.Net.IPEndPoint
-            Return New System.Net.IPEndPoint(System.Net.IPAddress.Parse(IPAddress), Port)
+            Return New System.Net.IPEndPoint(System.Net.IPAddress.Parse(ipString:=IPAddress), Port)
         End Function
 
         Public Function GetValue() As String

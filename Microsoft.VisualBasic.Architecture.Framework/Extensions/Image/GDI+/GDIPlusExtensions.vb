@@ -174,17 +174,30 @@ Public Module GDIPlusExtensions
     ''' <returns></returns>
     '''
     <ExportAPI("GDI+.Create")>
-    <Extension> Public Function GdiFromImage(res As Image) As GDIPlusDeviceHandle
-        SyncLock res
-            Dim ms As New MemoryStream
-            Call res.Save(ms, Imaging.ImageFormat.Png)
-            Dim raw As Byte() = ms.ToArray
-            ms = New MemoryStream(raw)
-            res = Image.FromStream(ms)
-            Dim Gr As GDIPlusDeviceHandle = res.Size.CreateGDIDevice
-            Call Gr.Gr_Device.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
-            Return Gr
-        End SyncLock
+    <Extension> Public Function GdiFromImage(res As Image, <CallerMemberName> Optional caller As String = "") As GDIPlusDeviceHandle
+        Try
+            ' res = New Bitmap(DirectCast(res.Clone, Image))
+        Catch ex As Exception
+            ex = New Exception(res.Size.ToString, ex)
+            ex = New Exception(caller, ex)
+            Throw ex
+        End Try
+        Dim Gr As GDIPlusDeviceHandle = res.Size.CreateGDIDevice
+        Call Gr.Gr_Device.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
+        Return Gr
+    End Function
+
+    <Extension> Public Function BackgroundGraphics(ctrl As Control) As GDIPlusDeviceHandle
+        If Not ctrl.BackgroundImage Is Nothing Then
+            Try
+                Return ctrl.BackgroundImage.GdiFromImage
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
+            End Try
+        Else
+            Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
+        End If
     End Function
 
     <ExportAPI("Offset")>
@@ -205,7 +218,7 @@ Public Module GDIPlusExtensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("GDI+.Create")>
-    <Extension> Public Function CreateGDIDevice(r As Drawing.Size, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
+    <Extension> Public Function CreateGDIDevice(r As Drawing.Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace As String = "") As GDIPlusDeviceHandle
         Dim Bitmap As Bitmap
 
         'Call Console.WriteLine($"[DEBUG {Now.ToString}] device area ==> {r.ToString}.")
@@ -218,6 +231,7 @@ Public Module GDIPlusExtensions
             Bitmap = New Bitmap(r.Width, r.Height)
         Catch ex As Exception
             ex = New Exception(r.ToString, ex)
+            ex = New Exception(trace, ex)
             Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             Throw ex
         End Try
