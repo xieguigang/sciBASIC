@@ -28,8 +28,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Public Module Extensions
 
     Sub New()
-        Call CollectionIO.SetHandle(AddressOf ISaveCsv)
-        Call VBDebugger.Warning($"Collection IO extension default IO handle has been changes to {CollectionIO.DefaultHandle.ToString}...")
+        Call InitHandle()
     End Sub
 
     ''' <summary>
@@ -199,19 +198,6 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
         Dim Expression As String = String.Format(DocumentFormat.Csv.DataImports.SplitRegxExpression, ",")
         Dim LQuery = (From line As String In DataChunk Select RowParsing(line, Expression)).ToArray
         Return CType(LQuery, Csv.DocumentStream.File).AsDataSource(Of T)(explicit)
-    End Function
-
-    Public Function ISaveCsv(source As IEnumerable, path As String, encoding As Encoding) As Boolean
-        Dim o As Object = (From x In source Select x).FirstOrDefault
-        Dim type As Type = o.GetType
-
-        path = FileIO.FileSystem.GetFileInfo(path).FullName
-
-        Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", type.FullName, path)
-        Call Reflector.__save(source, type, False).Save(path, LazySaved:=False, encoding:=encoding)
-        Call Console.WriteLine("CSV saved!")
-
-        Return True
     End Function
 
     ''' <summary>
