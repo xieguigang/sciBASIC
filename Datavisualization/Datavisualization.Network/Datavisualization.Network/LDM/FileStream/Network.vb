@@ -208,7 +208,7 @@ Namespace FileStream
         ''' <param name="net"></param>
         ''' <param name="node"></param>
         ''' <returns></returns>
-        Public Shared Operator &(net As Network(Of T_Node, T_Edge), node As String) As T_Node
+        Public Overloads Shared Operator &(net As Network(Of T_Node, T_Edge), node As String) As T_Node
             If net.__nodes.ContainsKey(node) Then
                 Return net.__nodes(node)
             Else

@@ -50,6 +50,8 @@ Namespace ComponentModel
             End Set
         End Property
 
+        <XmlIgnore> <ScriptIgnore> Public Overrides Property Extension As ExtendedProps
+
 #If NET_40 = 0 Then
         Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
 #Else

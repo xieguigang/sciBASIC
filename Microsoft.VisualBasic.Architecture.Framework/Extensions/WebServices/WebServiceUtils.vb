@@ -61,7 +61,7 @@ Public Module WebServiceUtils
     End Function
 
     ''' <summary>
-    '''
+    ''' Gets the link text in the html fragement text.
     ''' </summary>
     ''' <param name="s_Data">A string that contains the url string pattern like: href="url_text"</param>
     ''' <returns></returns>
@@ -480,7 +480,7 @@ RETRY:      Return __downloadWebpage(url)
             End If
 
             Call $"[{Title}  {url}] -->  Package Size:= {Len(pageContent)}bytes; Response time:= {Timer.ElapsedMilliseconds}ms".__DEBUG_ECHO
-            Call pageContent.SaveTo($"{App.LocalDataTemp}/{url.NormalizePathString}.tmp")
+            Call pageContent.SaveTo($"{App.AppSystemTemp}/{url.NormalizePathString}.tmp")
 
             Return pageContent
         End Using

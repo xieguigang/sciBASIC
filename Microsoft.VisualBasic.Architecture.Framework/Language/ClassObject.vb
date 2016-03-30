@@ -1,10 +1,12 @@
 ﻿Imports System.Runtime.InteropServices
+Imports System.Web.Script.Serialization
+Imports System.Xml.Serialization
 
 Namespace Language
 
     Public Class ClassObject
 
-        Public Property Extension As ExtendedProps
+        <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
 
         Public Overrides Function ToString() As String
             Return Serialization.GetJson(Me, [GetType])

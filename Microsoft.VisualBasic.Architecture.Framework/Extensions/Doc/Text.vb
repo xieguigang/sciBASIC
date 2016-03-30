@@ -26,7 +26,7 @@ Public Module TextDoc
     ''' <param name="Encoding">Default value is UTF8</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Read.TXT")>
     <Extension>
     Public Function ReadAllText(FilePath As String, Optional Encoding As Encoding = Nothing) As String
@@ -43,18 +43,22 @@ Public Module TextDoc
     ''' <param name="Encoding">Default value is UTF8</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Read.Lines")>
     <Extension>
     Public Function ReadAllLines(FilePath As String, Optional Encoding As Encoding = Nothing) As String()
         If Encoding Is Nothing Then
             Encoding = System.Text.Encoding.UTF8
         End If
-        Return IO.File.ReadAllLines(FilePath, encoding:=Encoding)
+        If FilePath.FileExists Then
+            Return IO.File.ReadAllLines(FilePath, encoding:=Encoding)
+        Else
+            Return New String() {}
+        End If
     End Function
 
     ''' <summary>
-    ''' Write the text file data into a file which was specific by the <paramref name="Path"></paramref> value, 
+    ''' Write the text file data into a file which was specific by the <paramref name="Path"></paramref> value,
     ''' this function not append the new data onto the target file.
     ''' (将目标文本字符串写入到一个指定路径的文件之中，但是不会在文件末尾追加新的数据)
     ''' </summary>
@@ -63,7 +67,7 @@ Public Module TextDoc
     ''' <param name="Encoding"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(<Parameter("Text")> TextValue As String, Path As String, Optional Encoding As Encoding = Nothing) As Boolean
         If String.IsNullOrEmpty(Path) Then Return False
@@ -106,7 +110,7 @@ Public Module TextDoc
     ''' <param name="WaitForRelease">当其他的进程对目标文件产生占用的时候，函数是否等待其他进程的退出释放文件句柄之后在进行数据的写入</param>
     ''' <param name="Encoding"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(TextValue As String, Path As String, WaitForRelease As Boolean, Optional Encoding As Encoding = Nothing) As Boolean
         If Path.FileOpened Then
@@ -130,7 +134,7 @@ Public Module TextDoc
     ''' <returns>是返回True，不是返回False</returns>
     ''' <param name="ChunkLength">文件检查的长度，假若在这个长度内都没有超过null的阈值数，则认为该文件为文本文件，默认区域长度为4KB</param>
     ''' <remarks>2012年12月5日</remarks>
-    ''' 
+    '''
     <ExportAPI("IsTextFile")>
     <Extension> Public Function IsTextFile(FilePath As String, Optional ChunkLength As Integer = 4 * 1024) As Boolean
         Dim file As IO.FileStream = New System.IO.FileStream(FilePath, IO.FileMode.Open, IO.FileAccess.Read)
@@ -154,7 +158,7 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(array As IEnumerable(Of String), path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         If String.IsNullOrEmpty(path) Then Return False

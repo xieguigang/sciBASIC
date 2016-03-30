@@ -1,6 +1,8 @@
 ﻿Imports System.Dynamic
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Web.Script.Serialization
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 ' http://www.codeproject.com/Articles/1087921/An-Almost-Extension-Property
@@ -44,7 +46,7 @@ Public Class ExtendedProps : Inherits Dynamic.DynamicObject
 
     Dim __hash As [Property](Of Object)
 
-    Public Property DynamicHash As [Property](Of Object)
+    <XmlIgnore> <ScriptIgnore> Public Property DynamicHash As [Property](Of Object)
         Get
             If __hash Is Nothing Then
                 __hash = New [Property](Of Object)
