@@ -338,11 +338,23 @@ Namespace DocumentStream
 
 #Region "List Operations"
 
+        ''' <summary>
+        ''' Add a row collection
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         Public Shared Operator +(file As File, source As IEnumerable(Of RowObject)) As File
             Call file.AppendRange(source)
             Return file
         End Operator
 
+        ''' <summary>
+        ''' Add a row
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="row"></param>
+        ''' <returns></returns>
         Public Shared Operator +(file As File, row As IEnumerable(Of String)) As File
             Call file.Add(New RowObject(row))
             Return file
@@ -711,6 +723,14 @@ Namespace DocumentStream
 
         Public Shared Operator >=(CsvData As File, TypeInfo As System.Type) As Object()
             Return CsvData <= TypeInfo
+        End Operator
+
+        Public Shared Operator >(File As File, path As String) As Boolean
+            Return File.Save(path, Encoding.ASCII)
+        End Operator
+
+        Public Shared Operator <(file As File, path As String) As Boolean
+            Throw New NotSupportedException
         End Operator
 
 #Region "Implements of Generic.IList(Of DocumentFormat.Csv.DocumentStream.File.Row) interface"
