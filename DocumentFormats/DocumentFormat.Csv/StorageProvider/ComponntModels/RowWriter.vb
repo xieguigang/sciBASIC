@@ -73,11 +73,11 @@ Namespace StorageProvider.ComponentModels
         Private Function __buildRowMeta(obj As Object) As DocumentStream.RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
-                                          Let value As Object = colum.BindProperty.GetValue(obj)
+                                          Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
                                           Let strData As String = colum.ToString(value)
                                           Select strData).ToList
             Dim metas As String() = __meta(obj)
-            Call row.Add(metas)
+            Call row.AddRange(metas)
             Return New DocumentStream.RowObject(row)
         End Function
 #End Region
