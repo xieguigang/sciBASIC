@@ -9,6 +9,33 @@ Imports Microsoft.VisualBasic.Serialization
 <PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="type"></param>
+    ''' <param name="[nameOf]"></param>
+    ''' <returns></returns>
+    <Extension> Public Function API(type As Type, [nameOf] As String, Optional strict As Boolean = False) As String
+        Dim methods = type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
+        Dim mBase As MethodInfo = (From m As MethodInfo In methods
+                                   Where String.Equals([nameOf], m.Name)
+                                   Select m).FirstOrDefault
+        If mBase Is Nothing Then
+NULL:       If Not strict Then
+                Return [nameOf]
+            Else
+                Return ""
+            End If
+        Else
+            Dim APIExport As ExportAPIAttribute = mBase.GetCustomAttribute(Of ExportAPIAttribute)
+            If APIExport Is Nothing Then
+                GoTo NULL
+            Else
+                Return APIExport.Name
+            End If
+        End If
+    End Function
+
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
     Public Function GetAssemblyDetails(path As String) As SoftwareToolkits.ApplicationDetails
@@ -53,11 +80,11 @@ Public Module EmitReflection
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="Product">.NET EXE/DLL assembly path</param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Get.Version")>
     Public Function GetVersion(Product As String) As Version
         Dim assm As System.Reflection.Assembly = System.Reflection.Assembly.LoadFile(Product)
@@ -76,11 +103,11 @@ Public Module EmitReflection
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="assm">.NET EXE/DLL assembly</param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Get.Version")>
     <Extension> Public Function GetVersion(assm As System.Reflection.Assembly) As Version
         Dim attrs As IEnumerable(Of System.Reflection.CustomAttributeData) = assm.CustomAttributes
@@ -144,7 +171,7 @@ Public Module EmitReflection
     ''' <param name="a">继承类型继承自基本类型，具备有基本类型的所有特性</param>
     ''' <param name="b">基本类型</param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Is.InheritsFrom")>
     <Extension> Public Function IsInheritsFrom(a As Type, b As Type) As Boolean
         Dim baseType As Type = a.BaseType
@@ -161,7 +188,7 @@ Public Module EmitReflection
     End Function
 
     ''' <summary>
-    ''' 如果有<see cref="system.ComponentModel.DescriptionAttribute"/>标记，则会返回该标记的字符串数据，假若没有则只会返回类型的名称  
+    ''' 如果有<see cref="system.ComponentModel.DescriptionAttribute"/>标记，则会返回该标记的字符串数据，假若没有则只会返回类型的名称
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
@@ -174,7 +201,7 @@ Public Module EmitReflection
     ''' 如果有<see cref="system.ComponentModel.DescriptionAttribute"/>标记，则会返回该标记的字符串数据，假若没有则只会返回类型的名称
     ''' </summary>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Get.Description")>
     <Extension> Public Function Description(typeRef As Type) As String
         Dim CustomAttrs As Object() = typeRef.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
@@ -207,7 +234,7 @@ Public Module EmitReflection
     ''' <param name="obj"></param>
     ''' <param name="Name"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("GetValue")>
     <Extension> Public Function GetValue(Type As Type, obj As Object, Name As String) As Object
         Try
@@ -249,7 +276,7 @@ Public Module EmitReflection
     ''' <param name="Type">The type specific collection data type.(特定类型的集合对象类型，当然也可以是泛型类型)</param>
     ''' <returns>If the target data type is not a collection data type then the original data type will be returns and the function displays a warning message.</returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Collection2GenericIEnumerable", Info:="Try convert the type specific collection data type into a generic enumerable collection data type.")>
     <Extension> Public Function Collection2GenericIEnumerable(
                                                         Type As Type,
@@ -285,7 +312,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <param name="obj"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Delegate.GET_Invoke", Info:="Get the method reflection entry point for a anonymous lambda expression.")>
     Public Function GetDelegateInvokeEntryPoint(obj As Object) As System.Reflection.MethodInfo
         Dim TypeInfo As System.Type = obj.GetType
@@ -301,7 +328,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' </summary>
     ''' <param name="__nsType"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Get.APINamespace")>
     <Extension> Public Function NamespaceEntry(__nsType As Type) As Microsoft.VisualBasic.CommandLine.Reflection.Namespace
         Dim attr As Object() = Nothing
@@ -333,7 +360,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 
     ''' <summary>
-    ''' Get the specific type of custom attribute from a property. 
+    ''' Get the specific type of custom attribute from a property.
     ''' If the target custom attribute is not declared on the target, then this function returns nothing.
     ''' (从一个属性对象中获取特定的自定义属性对象)
     ''' </summary>
@@ -383,7 +410,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="args">构造函数里面的参数信息</param>
