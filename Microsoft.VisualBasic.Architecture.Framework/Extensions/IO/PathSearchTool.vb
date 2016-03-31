@@ -12,7 +12,7 @@ Imports System.Collections.ObjectModel
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
 ''' </summary>
 ''' <remarks></remarks>
-''' 
+'''
 <[Namespace]("Program.Path.Search", Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 
@@ -31,7 +31,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="Path"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Path2Url", Info:="Gets the URL type file path.")>
     <Extension> Public Function ToFileURL(Path As String) As String
         If String.IsNullOrEmpty(Path) Then
@@ -66,7 +66,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="OnlyASCII">当本参数为真的时候，仅26个字母，0-9数字和下划线_以及小数点可以被保留下来</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("NormalizePathString")>
     <Extension> Public Function NormalizePathString(str As String, Optional OnlyASCII As Boolean = True) As String
         Return NormalizePathString(str, "_", OnlyASCII)
@@ -97,7 +97,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="path"></param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' System.IO.PathTooLongException: The specified path, file name, or both are too long. 
+    ''' System.IO.PathTooLongException: The specified path, file name, or both are too long.
     ''' The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters.
     ''' </remarks>
     <Extension> Public Function Long2Short(path As String, <CallerMemberName> Optional caller As String = "") As String
@@ -168,7 +168,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 判断文件夹是否存在
+    ''' Determine that the target directory is exists on the file system or not?(判断文件夹是否存在)
     ''' </summary>
     ''' <param name="DIR"></param>
     ''' <returns></returns>
@@ -180,11 +180,10 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 检测文件是否已经被其他程序打开使用之中
+    ''' Check if the file is opened by other code?(检测文件是否已经被其他程序打开使用之中)
     ''' </summary>
     ''' <param name="FileName">目标文件</param>
     ''' <returns></returns>
-    ''' 
     <ExportAPI("File.IsOpened", Info:="Detect while the target file is opened by someone process.")>
     <Extension> Public Function FileOpened(FileName As String) As Boolean
         Try
@@ -201,12 +200,13 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 获取目标文件夹的名称或者文件的不包含拓展名的名称
+    ''' Gets the name of the target file or directory, if the target is a file, then the name without the extension name.
+    ''' (获取目标文件夹的名称或者文件的不包含拓展名的名称)
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
-    <ExportAPI("BaseName", Info:="Gets the name of the target directory/file object.")>
+    '''
+    <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
     <Extension> Public Function BaseName(fsObj As String) As String
         If fsObj.FileExists Then
             Return IO.Path.GetFileNameWithoutExtension(fsObj)
@@ -216,7 +216,8 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 获取目标文件的父文件夹的文件夹名称，是名称而非路径
+    ''' Gets the name of the file's parent directory, returns value is a name, not path.
+    ''' (获取目标文件的父文件夹的文件夹名称，是名称而非路径)
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
@@ -232,7 +233,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="file"></param>
     ''' <returns></returns>
     ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
-    <ExportAPI("ParentPath")>
+    <ExportAPI(NameOf(ParentPath))>
     <Extension> Public Function ParentPath(file As String) As String
         Dim Parent As String = ""
         Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
@@ -255,18 +256,19 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="DIR"></param>
     ''' <param name="keyword"></param>
     ''' <param name="ext">元素的排布是有顺序的</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Get.File.Path")>
     <Extension> Public Function GetFile(DIR As String,
                                        <Parameter("Using.Keyword")> keyword As String,
-                                       <Parameter("List.Ext")> ParamArray ext As String()) As <FunctionReturns("A list of file path which match with the keyword and the file extension name.")> String()
+                                       <Parameter("List.Ext")> ParamArray ext As String()) _
+                                    As <FunctionReturns("A list of file path which match with the keyword and the file extension name.")> String()
 
         Dim Files As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ext)
         Dim matches = (From Path As String
@@ -309,8 +311,9 @@ Public Module ProgramPathSearchTool
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
-    <ExportAPI("Load.ResourceEntry", Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
+    '''
+    <ExportAPI("Load.ResourceEntry",
+               Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
     <Extension>
     Public Function LoadSourceEntryList(<Parameter("Dir.Source", "The source directory which will be searchs for file.")> source As String,
                                         <Parameter("List.Ext", "The list of the file extension.")> ext As String(),
@@ -325,11 +328,11 @@ Public Module ProgramPathSearchTool
                       Select ID = IO.Path.GetFileNameWithoutExtension(path), path
                       Group By ID Into Group).ToArray
         ext = (From value As String In ext Select value.Split(CChar(".")).Last.ToLower).ToArray
-        Dim Dict As Dictionary(Of String, String) = LQuery.ToDictionary(keySelector:=Function(Entry) Entry.ID,
-                                                                        elementSelector:=Function(Entry) (From path In Entry.Group.ToArray
-                                                                                                          Let extValue As String = path.path.Split("."c).Last.ToLower
-                                                                                                          Where Array.IndexOf(ext, extValue) > -1
-                                                                                                          Select path.path).FirstOrDefault)
+        Dim Dict As Dictionary(Of String, String) = LQuery.ToDictionary(Function(Entry) Entry.ID,
+                                                                        Function(Entry) (From path In Entry.Group.ToArray
+                                                                                         Let extValue As String = path.path.Split("."c).Last.ToLower
+                                                                                         Where Array.IndexOf(ext, extValue) > -1
+                                                                                         Select path.path).FirstOrDefault)
         Dict = (From Entry
                 In Dict
                 Where Not String.IsNullOrEmpty(Entry.Value)
@@ -369,7 +372,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="Ext"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Load.ResourceEntry")>
     <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> Source As String, ParamArray Ext As String()) As KeyValuePair(Of String, String)()
         Dim LQuery = (From path As String
@@ -424,51 +427,53 @@ Public Module ProgramPathSearchTool
     ''' <summary>
     ''' Invoke the search session for the program file using a specific keyword string value.(使用某个关键词来搜索目标应用程序)
     ''' </summary>
-    ''' <param name="Dir"></param>
+    ''' <param name="DIR"></param>
     ''' <param name="Keyword"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("File.Search.Program", Info:="Invoke the search session for the program file using a specific keyword string value.")>
-    Public Function SearchProgram(Dir As String, Keyword As String) As String()
-
+    Public Function SearchProgram(DIR As String, Keyword As String) As String()
         Dim ExeNameRule As String = String.Format("*{0}*.exe", Keyword)
         Dim DllNameRule As String = String.Format("*{0}*.dll", Keyword)
 
-        Dim Files = FileIO.FileSystem.GetFiles(Dir, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
-        Dim BinDir As String = String.Format("{0}/bin/", Dir)
-        Dim ProgramDir As String = String.Format("{0}/Program", Dir)
-        Dim ChunkList As List(Of String) = New List(Of String)
+        Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
+        Dim binDIR As String = String.Format("{0}/bin/", DIR)
+        Dim ProgramDIR As String = String.Format("{0}/Program", DIR)
+        Dim buffer As List(Of String) = New List(Of String)
 
-        If FileIO.FileSystem.DirectoryExists(BinDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(BinDir, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule))
-        If FileIO.FileSystem.DirectoryExists(ProgramDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ProgramDir, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule))
+        If FileIO.FileSystem.DirectoryExists(binDIR) Then
+            buffer += FileIO.FileSystem.GetFiles(binDIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
+        End If
+        If FileIO.FileSystem.DirectoryExists(ProgramDIR) Then
+            buffer += FileIO.FileSystem.GetFiles(ProgramDIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
+        End If
 
-        Call ChunkList.AddRange(Files)
+        buffer += Files
 
-        Return ChunkList.ToArray
+        Return buffer.ToArray
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
-    ''' <param name="Dir"></param>
+    ''' <param name="DIR"></param>
     ''' <param name="Keyword"></param>
     ''' <param name="withExtension">脚本文件的文件拓展名</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
-    Public Function SearchScriptFile(Dir As String, Keyword As String, Optional withExtension As String = "") As String()
+    Public Function SearchScriptFile(DIR As String, Keyword As String, Optional withExtension As String = "") As String()
         Dim ScriptFileNameRule As String = String.Format("*{0}*{1}", Keyword, withExtension)
-
-        Dim Files = FileIO.FileSystem.GetFiles(Dir, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule)
-        Dim BinDir As String = String.Format("{0}/bin/", Dir)
-        Dim ProgramDir As String = String.Format("{0}/Program", Dir)
-        Dim ScriptsDir As String = String.Format("{0}/scripts", Dir)
+        Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule)
+        Dim binDIR As String = String.Format("{0}/bin/", DIR)
+        Dim ProgramDIR As String = String.Format("{0}/Program", DIR)
+        Dim ScriptsDIR As String = String.Format("{0}/scripts", DIR)
         Dim ChunkList As List(Of String) = New List(Of String)
 
-        If FileIO.FileSystem.DirectoryExists(BinDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(BinDir, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
-        If FileIO.FileSystem.DirectoryExists(ProgramDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ProgramDir, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
-        If FileIO.FileSystem.DirectoryExists(ScriptsDir) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ScriptsDir, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
+        If FileIO.FileSystem.DirectoryExists(binDIR) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(binDIR, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
+        If FileIO.FileSystem.DirectoryExists(ProgramDIR) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ProgramDIR, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
+        If FileIO.FileSystem.DirectoryExists(ScriptsDIR) Then Call ChunkList.AddRange(FileIO.FileSystem.GetFiles(ScriptsDIR, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule))
 
         Call ChunkList.AddRange(Files)
 
@@ -480,12 +485,12 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="SpecificDrive">所制定进行搜索的驱动器，假若希望搜索整个硬盘，请留空字符串</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Dir.Search.Program_Directory", Info:="Search for the directories which its name was matched the keyword pattern.")>
     Public Function SearchDirectory(Keyword As String, SpecificDrive As String) As String()
         Dim Drives As ObjectModel.ReadOnlyCollection(Of DriveInfo) =
@@ -563,8 +568,9 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    ''' 
-    <ExportAPI("RelativePath", Info:="Get the specific file system object its relative path to the application base directory.")>
+    '''
+    <ExportAPI(NameOf(RelativePath),
+               Info:="Get the specific file system object its relative path to the application base directory.")>
     Public Function RelativePath(path As String) As String
         Return RelativePath(App.HOME, path)
     End Function
@@ -576,9 +582,12 @@ Public Module ProgramPathSearchTool
     ''' <param name="pcFrom">生成相对路径的参考文件夹</param>
     ''' <param name="pcTo">所需要生成相对路径的目标文件系统对象的绝对路径或者相对路径</param>
     ''' <returns></returns>
-    ''' 
-    <ExportAPI("RelativePath", Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
-    Public Function RelativePath(pcFrom As String, pcTo As String) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
+    '''
+    <ExportAPI(NameOf(RelativePath),
+               Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
+    Public Function RelativePath(pcFrom As String, pcTo As String) _
+        As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
+
         Dim lcRelativePath As String = Nothing
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
@@ -635,7 +644,7 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("File.FullPath", Info:="Gets the full path of the file.")>
     <Extension> Public Function GetFullPath(file As String) As String
         Return FileIO.FileSystem.GetFileInfo(file).FullName.Replace("\", "/")
@@ -646,7 +655,7 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="dir"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Dir.FullPath", Info:="Gets the full path of the directory.")>
     <Extension> Public Function GetDirectoryFullPath(dir As String) As String
         Return FileIO.FileSystem.GetDirectoryInfo(dir).FullName.Replace("\", "/")
