@@ -11,16 +11,16 @@ Namespace StorageProvider.Reflection
         ''' 返回的字典对象之中的Value部分是自定义属性
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetProperties(TypeInfo As System.Type, Explicit As Boolean) As Dictionary(Of PropertyInfo, ComponentModels.StorageProvider)
-            Dim IgnoredEntry As Type = GetType(Reflection.Ignored)
-            Dim Properties As PropertyInfo() = TypeInfo.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+        Public Function GetProperties(type As Type, Explicit As Boolean) As Dictionary(Of PropertyInfo, ComponentModels.StorageProvider)
+            Dim ignored As Type = GetType(Reflection.Ignored)
+            Dim Properties As PropertyInfo() = type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
             Properties = (From [Property] As System.Reflection.PropertyInfo
                           In Properties
-                          Let isIgnored As Boolean = Not [Property].GetCustomAttributes(attributeType:=IgnoredEntry, inherit:=True).IsNullOrEmpty '当忽略的标志不为空的时候，说明这个属性是被忽略掉的
-                          Where Not isIgnored '从这里筛选掉需要被忽略掉的属性
+                          Let isIgnored As Boolean = Not [Property].GetCustomAttributes(attributeType:=ignored, inherit:=True).IsNullOrEmpty '当忽略的标志不为空的时候，说明这个属性是被忽略掉的
+                          Where Not isIgnored AndAlso [Property].GetIndexParameters.IsNullOrEmpty  '从这里筛选掉需要被忽略掉的属性以及有参数的属性
                           Select [Property]).ToArray
             Dim hash As Dictionary(Of PropertyInfo, ComponentModels.StorageProvider) =
-                (From [Property] As System.Reflection.PropertyInfo
+                (From [Property] As PropertyInfo
                  In Properties
                  Let IAC = GetInterfaces([Property], Explicit)
                  Where Not IAC Is Nothing
