@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DataVisualization.Network
 Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace KMeans
 
@@ -17,13 +18,13 @@ Namespace KMeans
         ''' <returns></returns>
         '''
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM)) As EntityLDM()
+        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False) As EntityLDM()
             Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray
             Dim ds = resultSet.ToArray(Function(x) New KMeans.Entity With {
                                        .uid = x.Name,
                                        .Properties = mapNames.ToArray(Function(s) x.Properties(s))
                                        })
-            Dim tree As KMeans.Entity() = KMeans.TreeCluster(ds)
+            Dim tree As KMeans.Entity() = KMeans.TreeCluster(ds, parallel)
             Dim saveResult = tree.ToArray(Function(x) x.ToLDM(mapNames))
 
             For Each name As String In resultSet.ToArray(Function(x) x.Name)
@@ -40,12 +41,46 @@ Namespace KMeans
         End Function
 
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity)) As Entity()
-            Return TreeCluster(Of Entity)(source)
+        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False) As Entity()
+            Return TreeCluster(Of Entity)(source, parallel)
         End Function
 
-        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T)) As Entity()
-            Return __treeCluster(source, Scan0, source.Count / 2)
+        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False) As Entity()
+            If parallel Then
+                Return __firstCluster(source, [stop]:=source.Count / 2)
+            Else
+                Return __treeCluster(source, Scan0, source.Count / 2)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 两条线程并行化进行二叉树聚类
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="[stop]"></param>
+        ''' <returns></returns>
+        Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer) As Entity()
+            Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
+            ' 假设在刚开始不会出现为零的情况
+            Dim cluster1 As AsyncHandle(Of Entity()) =
+                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), 1, [stop])).Run    ' cluster1
+            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), 2, [stop]) ' cluster2
+            list += cluster1.GetValue
+
+            Return list.ToArray
+        End Function
+
+        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.Cluster(Of T), id As String, [stop] As Integer) As Entity()
+            For Each x In cluster
+                x.uid &= id
+            Next
+
+            If cluster.NumOfEntity <= 1 Then
+                Return cluster.ToArray
+            Else
+                Return __treeCluster(cluster.ToArray, Scan0, [stop])  ' 递归聚类分解
+            End If
         End Function
 
         Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer) As Entity()
