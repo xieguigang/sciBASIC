@@ -28,7 +28,7 @@ Namespace Text.Similarity
         ''' <param name="string2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Equals")>
         Public Function Equals(string1 As String, string2 As String, Optional exactly As Boolean = False, Optional cut As Double = 0.8) As Boolean
             If exactly Then
@@ -77,7 +77,7 @@ Namespace Text.Similarity
         ''' <param name="List"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("Select")>
         Public Function StringSelection(query As String, List As IEnumerable(Of String), Optional exactly As Boolean = False, Optional cut As Double = 0.8) As String
             Dim directMatches As String = (From str As String
@@ -95,12 +95,12 @@ Namespace Text.Similarity
             Dim levEquals As Equals(Of Char) = GetCharEquals(exactly)
 
             For i As Integer = 0 To result.Length - 1
-                Dim str As String = List(i).ToUpper
+                Dim str As String = List(i).ToUpper  ' 都转换为大写方便查询
                 Dim Score As Double = 0
 
                 Call __matched(query, str, Score, levEquals)
 
-                result(i) = New Score(List(i), Score)
+                result(i) = New Score(List(i), Score)  ' 但是返回的结果是原始的字符串
             Next
 
             Dim LQuery = (From ScoreValue As Score
@@ -109,7 +109,7 @@ Namespace Text.Similarity
                               ScoreValue.Value >= cut
                           Select strData = ScoreValue.Key,
                               scoreValue = ScoreValue.Value
-                          Order By scoreValue Descending).ToArray
+                          Order By scoreValue Descending).ToArray  ' 返回来的是得分最高的字符串
 
             If LQuery.IsNullOrEmpty Then
                 Return ""
