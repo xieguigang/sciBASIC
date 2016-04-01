@@ -52,9 +52,17 @@ Namespace Text.Similarity
 
         Private Function __matched(query As String, subject As String, ByRef cut As Double, charEqual As Equals(Of Char)) As Boolean
             Dim edits = LevenshteinDistance.ComputeDistance(query.ToArray, subject.ToArray, charEqual, Function(x) x)
-            Dim matched As Boolean = edits.MatchSimilarity >= cut
-            cut = edits.MatchSimilarity
-            Return matched
+            If edits Is Nothing Then
+                edits = LevenshteinDistance.ComputeDistance(subject.ToArray, query.ToArray, charEqual, Function(x) x)
+            End If
+            If edits Is Nothing Then
+                cut = -100
+                Return False
+            Else
+                Dim matched As Boolean = edits.MatchSimilarity >= cut
+                cut = edits.MatchSimilarity
+                Return matched
+            End If
         End Function
 
         <ExportAPI("CharEquals")>

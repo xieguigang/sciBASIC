@@ -67,6 +67,10 @@ Public Module VBDebugger
     End Function
 
     Public Sub WriteLine(msg As String, color As ConsoleColor)
+        If Mute Then
+            Return
+        End If
+
         Dim cl As ConsoleColor = Console.ForegroundColor
 
         Console.ForegroundColor = color
