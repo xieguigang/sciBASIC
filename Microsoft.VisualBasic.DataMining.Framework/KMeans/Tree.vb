@@ -15,7 +15,7 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="resultSet"></param>
         ''' <returns></returns>
-        ''' 
+        '''
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM)) As EntityLDM()
             Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray
