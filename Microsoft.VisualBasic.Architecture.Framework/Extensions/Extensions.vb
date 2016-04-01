@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.Text.Similarity
 ''' <summary>
 ''' Common extension methods library for convenient the programming job.
 ''' </summary>
-''' <remarks></remarks>  
+''' <remarks></remarks>
 Public Module Extensions
 #End If
 
@@ -315,7 +315,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
@@ -327,7 +327,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="IList">仅仅是起到类型复制的作用</param>
@@ -398,7 +398,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="Path"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("CLI_PATH")>
     <Extension> Public Function CliPath(Path As String) As String
         If String.IsNullOrEmpty(Path) Then
@@ -448,19 +448,22 @@ Public Module Extensions
     Const A As Integer = Asc("A")
     Const Z As Integer = Asc("Z")
 
+#Disable Warning
+
     ''' <summary>
     ''' You can using this method to create a empty list for the specific type of anonymous type object.
     ''' (使用这个方法获取得到匿名类型的列表数据集合对象)
     ''' </summary>
     ''' <typeparam name="TAnonymousType"></typeparam>
-    ''' <param name="typedef">The temp object which was created anonymous.(匿名对象的集合)</param>
+    ''' <param name="typedef">The temp object which was created anonymous.
+    ''' (匿名对象的集合，这个是用来复制匿名类型的，虽然没有引用这个参数，但是却可以直接通过拓展来得到匿名类型生成列表对象)
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function GetAnonymousTypeList(Of TAnonymousType As Class)(typedef As Generic.IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
-        Dim List = typedef.ToList
-        Call List.Clear()
-        Return List
+    <Extension> Public Function GetAnonymousTypeList(Of TAnonymousType As Class)(typedef As IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
+        Return New List(Of TAnonymousType)
     End Function
+#Enable Warning
 
 #If FRAMEWORD_CORE Then
 
@@ -490,7 +493,7 @@ Public Module Extensions
     Public Const NIL As Char = Chr(0)
 
     ''' <summary>
-    ''' Format the datetime value in the format of yy/mm/dd hh:min 
+    ''' Format the datetime value in the format of yy/mm/dd hh:min
     ''' </summary>
     ''' <param name="dat"></param>
     ''' <returns></returns>
@@ -525,7 +528,7 @@ Public Module Extensions
     ''' <param name="parTokens">每一个子集合之中的元素的数目</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer) As T()()
         Dim chunkList As List(Of T()) = New List(Of T())
         Dim chunkBuffer As T() = source.ToArray
@@ -571,7 +574,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串 
+    ''' <see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串
     ''' </summary>
     ''' <param name="Tokens"></param>
     ''' <param name="delimiter"></param>
@@ -584,7 +587,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串 
+    ''' <see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串
     ''' </summary>
     ''' <param name="values"></param>
     ''' <param name="delimiter"></param>
@@ -626,7 +629,7 @@ Public Module Extensions
     ''' <param name="Process"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Invoke", Info:="Invoke a folked system process object to execute a parallel task.")>
     <Extension> Public Function Invoke(Process As Process) As Integer
         Call Process.Start()
@@ -640,7 +643,7 @@ Public Module Extensions
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Rand", Info:="Returns a random floating-point number between 0.0 and 1.0.")>
     Public Function RandomDouble() As Double
         Dim rand As New Random(SecurityString.MD5Hash.ToLong(SecurityString.MD5Hash.GetMd5Hash(Now.ToString)) / Integer.MaxValue)
@@ -672,9 +675,9 @@ Public Module Extensions
 #End If
 
     ''' <summary>
-    ''' Gets the element counts in the target data collection, if the collection object is nothing or empty 
+    ''' Gets the element counts in the target data collection, if the collection object is nothing or empty
     ''' then this function will returns ZERO, others returns Collection.Count.(返回一个数据集合之中的元素的数目，
-    ''' 假若这个集合是空值或者空的，则返回0，其他情况则返回Count拓展函数的结果) 
+    ''' 假若这个集合是空值或者空的，则返回0，其他情况则返回Count拓展函数的结果)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="Collection"></param>
@@ -758,7 +761,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="Prompted"></param>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Pause", Info:="Pause the console program.")>
     Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
         Call Console.WriteLine(Prompted)
@@ -773,7 +776,7 @@ Public Module Extensions
     ''' <param name="s"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Double.Match")>
     <Extension> Public Function ParseDouble(s As String) As Double
         Return Val(s.Match(_DOUBLE))
@@ -800,7 +803,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
-    ''' 
+    '''
     <ExportAPI("Date.Parse")>
     <Extension> Public Function ParseDateTime(s As String) As Date
         If String.IsNullOrEmpty(s) Then
@@ -864,7 +867,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Value assignment to the target variable.(将<paramref name="value"/>参数里面的值赋值给<paramref name="var"/>参数然后返回<paramref name="value"/>) 
+    ''' Value assignment to the target variable.(将<paramref name="value"/>参数里面的值赋值给<paramref name="var"/>参数然后返回<paramref name="value"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="var"></param>
@@ -1082,7 +1085,7 @@ Public Module Extensions
     ''' Rabbish collection to free the junk memory.(垃圾回收)
     ''' </summary>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("FlushMemory", Info:="Rabbish collection To free the junk memory.")>
     Public Sub FlushMemory()
         Call GC.Collect()
@@ -1410,7 +1413,7 @@ Public Module Extensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("StdError")>
     <Extension> Public Function StdError(data As Generic.IEnumerable(Of Double)) As Double
         Dim Average As Double = data.Average
@@ -1427,7 +1430,7 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data 
+    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
     ''' then function will return the string value from the ToString() function.
     ''' </summary>
     ''' <param name="value"></param>
@@ -1438,7 +1441,7 @@ Public Module Extensions
     <Extension> Public Function Description(value As [Enum]) As String
 #Else
     ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data 
+    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
     ''' then function will return the string value from the ToString() function.
     ''' </summary>
     ''' <param name="e"></param>
@@ -1528,7 +1531,7 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("NullValue.Trim", Info:="Remove all of the null object in the target object collection")>
     <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #Else
@@ -1556,7 +1559,7 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Elements.Randomize")>
     <Extension> Public Function Randomize(Of T)(source As Generic.IEnumerable(Of T)) As T()
 #Else
@@ -1736,7 +1739,7 @@ Public Module Extensions
     ''' <param name="strArray2"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Union")>
     <Extension> Public Function Union(strArray1 As String(), strArray2 As String()) As String()
         Dim LQuery = (From strItem As String In strArray1 Where Array.IndexOf(strArray2, strItem) > -1 Select strItem).ToArray
@@ -1789,7 +1792,7 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' Replace the <see cref="vbCrLf"/> with the specific string. 
+    ''' Replace the <see cref="vbCrLf"/> with the specific string.
     ''' </summary>
     ''' <param name="strText"></param>
     ''' <param name="VbCRLF_Replace"></param>
@@ -1845,7 +1848,7 @@ Public Module Extensions
     ''' <param name="Collection">目标集合对象</param>
     ''' <returns>A integer array of subscript index of the target generic collection.</returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
     <Extension> Public Function Sequence(Of T)(<Parameter("Data.Collection", "")> Collection As IEnumerable(Of T),
                                                <Parameter("Index.OffSet", "")> Optional OffSet As Integer = 0) _
@@ -1858,7 +1861,7 @@ Public Module Extensions
     ''' <param name="Collection">目标集合对象</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <Extension> Public Function Sequence(Of T)(Collection As Generic.IEnumerable(Of T), Optional offset As Integer = 0) As Integer()
 #End If
         If Collection Is Nothing OrElse Collection.Count = 0 Then
@@ -1890,7 +1893,7 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="Collection"></param>
@@ -1899,7 +1902,7 @@ Public Module Extensions
     ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("takes")>
     <Extension> Public Function Takes(Of T)(Collection As Generic.IEnumerable(Of T),
                                             IndexCollection As Integer(),
@@ -1907,7 +1910,7 @@ Public Module Extensions
                                             Optional reversedSelect As Boolean = False) As T()
 #Else
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="Collection"></param>
@@ -1916,7 +1919,7 @@ Public Module Extensions
     ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <Extension> Public Function Takes(Of T)(Collection As Generic.IEnumerable(Of T), IndexCollection As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
 #End If
         If reversedSelect Then
@@ -2145,7 +2148,7 @@ Public Module Extensions
     ''' <param name="CommandLine"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("Shell")>
     <Extension> Public Function Shell(CommandLine As String) As Microsoft.VisualBasic.CommandLine.IORedirect
         Return CType(CommandLine, Microsoft.VisualBasic.CommandLine.IORedirect)
@@ -2158,7 +2161,7 @@ Public Module Extensions
     ''' <param name="Elements"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <ExportAPI("PI")>
     <Extension> Public Function π(Elements As Generic.IEnumerable(Of Double)) As Double
         If Elements.IsNullOrEmpty Then
@@ -2200,7 +2203,7 @@ Public Module Extensions
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>
-    ''' </summary> 
+    ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="List"></param>
     ''' <param name="collection"></param>

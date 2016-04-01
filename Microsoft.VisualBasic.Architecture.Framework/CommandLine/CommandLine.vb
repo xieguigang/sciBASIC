@@ -503,5 +503,28 @@ Namespace CommandLine
 
             Return List.ToArray
         End Function
+
+        Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
+            Return args(name)
+        End Operator
+
+        ''' <summary>
+        ''' Try get parameter value.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+
+        Public Overloads Shared Operator -(args As CommandLine, name As String) As String
+            Return args(name)
+        End Operator
+
+        Public Overloads Shared Operator -(args As CommandLine, name As IEnumerable(Of String)) As String
+            Return args.GetValue(name.First, name.Last)
+        End Operator
+
+        Public Shared Operator >=(args As CommandLine, name As String) As String
+            Throw New NotSupportedException
+        End Operator
     End Class
 End Namespace
