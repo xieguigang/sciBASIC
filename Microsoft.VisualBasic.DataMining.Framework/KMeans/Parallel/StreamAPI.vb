@@ -2,10 +2,21 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace KMeans.Parallel
 
     Public Module StreamAPI
+
+        <Extension>
+        Public Function GetRaw(source As IEnumerable(Of Entity)) As Byte()
+            Return BufferAPI.CreateBuffer(source, AddressOf GetRaw)
+        End Function
+
+        <Extension>
+        Public Iterator Function GetObjects(raw As Byte()) As IEnumerable(Of Entity)
+            Yield BufferAPI.GetBuffer(raw, AddressOf GetObject)
+        End Function
 
         <Extension> Public Function GetRaw(x As Entity) As Byte()
             Dim name As Byte() = Encoding.Unicode.GetBytes(x.uid)
