@@ -508,6 +508,22 @@ Namespace CommandLine
             Return args(name)
         End Operator
 
+        Public Shared Operator <=(opt As String, args As CommandLine) As CommandLine
+            Return TryParse(args(opt))
+        End Operator
+
+        Public Shared Operator ^(args As CommandLine, [default] As String) As String
+            If args Is Nothing OrElse String.IsNullOrEmpty(args.CLICommandArgvs) Then
+                Return [default]
+            Else
+                Return args.CLICommandArgvs
+            End If
+        End Operator
+
+        Public Shared Operator >=(opt As String, args As CommandLine) As CommandLine
+            Throw New NotSupportedException
+        End Operator
+
         ''' <summary>
         ''' Try get parameter value.
         ''' </summary>
@@ -519,8 +535,30 @@ Namespace CommandLine
             Return args(name)
         End Operator
 
+        ''' <summary>
+        ''' Try get parameter value.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+
+        Public Overloads Shared Operator -(args As CommandLine, null As CommandLine) As CommandLine
+            Return args
+        End Operator
+
         Public Overloads Shared Operator -(args As CommandLine, name As IEnumerable(Of String)) As String
             Return args.GetValue(name.First, name.Last)
+        End Operator
+
+        Public Shared Operator -(args As CommandLine) As CommandLine
+            Return args
+        End Operator
+
+        Public Shared Operator >(args As CommandLine, name As String) As String
+            Return args(name)
+        End Operator
+
+        Public Shared Operator <(args As CommandLine, name As String) As String
+            Return args(name)
         End Operator
 
         Public Shared Operator >=(args As CommandLine, name As String) As String
