@@ -50,7 +50,7 @@ Module CLI
     <ExportAPI("/bTree", Usage:="/bTree /cluster <tree.cluster.csv> [/out <outDIR>]")>
     Public Function bTree(args As CommandLine.CommandLine) As Integer
         Dim inFile As String = args - "/cluster"
-        Dim out As String = "/out" <= args ^ $"{inFile.TrimFileExt}-bTree/"
+        Dim out As String = ("/out" <= args) ^ $"{inFile.TrimFileExt}-bTree/"
         Dim clusters As IEnumerable(Of EntityLDM) = inFile.LoadCsv(Of EntityLDM)
         Dim tree = clusters.TreeNET
         Return tree > out
