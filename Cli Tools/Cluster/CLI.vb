@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.DataMining.Framework.KMeans
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
 
 Module CLI
 
@@ -31,5 +32,27 @@ Module CLI
         Next
 
         Return result > out
+    End Function
+
+    <ExportAPI("/bTree.Cluster",
+               Usage:="/bTree.Cluster /MAT <entity_matrix.csv> [/map <Name> /parallel /out <out.cluster.csv>]")>
+    Public Function bTreeCluster(args As CommandLine.CommandLine) As Integer
+        Dim inFile As String = args - "/MAT"
+        Dim parallel As Boolean = args.GetBoolean("/parallel")
+        Dim out As String = "/out" <= args ^ $"{inFile.TrimFileExt}.{NameOf(bTreeCluster)}.csv"
+        Dim map As String = "/map" <= args ^ "Name"
+        Dim maps As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{map, NameOf(EntityLDM.Name)}}
+        Dim dataSet As IEnumerable(Of EntityLDM) = inFile.LoadCsv(Of EntityLDM)(maps:=maps)
+        dataSet = dataSet.TreeCluster
+        Return dataSet.SaveTo(out)
+    End Function
+
+    <ExportAPI("/bTree", Usage:="/bTree /cluster <tree.cluster.csv> [/out <outDIR>]")>
+    Public Function bTree(args As CommandLine.CommandLine) As Integer
+        Dim inFile As String = args - "/cluster"
+        Dim out As String = "/out" <= args ^ $"{inFile.TrimFileExt}-bTree/"
+        Dim clusters As IEnumerable(Of EntityLDM) = inFile.LoadCsv(Of EntityLDM)
+        Dim tree = clusters.TreeNET
+        Return tree > out
     End Function
 End Module
