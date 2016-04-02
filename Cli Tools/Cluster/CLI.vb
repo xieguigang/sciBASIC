@@ -52,7 +52,7 @@ Module CLI
         Dim inFile As String = args - "/cluster"
         Dim out As String = ("/out" <= args) ^ $"{inFile.TrimFileExt}-bTree/"
         Dim clusters As IEnumerable(Of EntityLDM) = inFile.LoadCsv(Of EntityLDM)
-        Dim tree = clusters.TreeNET
+        Dim tree = clusters.bTreeNET
         Return tree > out
     End Function
 End Module

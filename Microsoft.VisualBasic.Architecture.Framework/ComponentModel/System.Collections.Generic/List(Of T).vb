@@ -145,6 +145,20 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Operator
 
     ''' <summary>
+    ''' Find a item in the list
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <param name="find"></param>
+    ''' <returns></returns>
+    Public Shared Operator ^(list As List(Of T), find As Func(Of T, Boolean)) As T
+        Dim LQuery = (From x As T
+                      In list.AsParallel
+                      Where True = find(x)
+                      Select x).FirstOrDefault
+        Return LQuery
+    End Operator
+
+    ''' <summary>
     ''' Dump this collection data to the file system.
     ''' </summary>
     ''' <param name="source"></param>

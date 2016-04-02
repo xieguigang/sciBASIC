@@ -46,6 +46,10 @@ Namespace ComponentModel.DataSourceModel
         End Function
     End Class
 
+    ''' <summary>
+    ''' Dictionary for [<see cref="String"/>, <typeparamref name="T"/>]
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class [Property](Of T) : Inherits DynamicPropertyBase(Of T)
     End Class
 End Namespace

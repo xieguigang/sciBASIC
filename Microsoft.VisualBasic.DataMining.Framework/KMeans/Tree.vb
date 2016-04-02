@@ -166,8 +166,14 @@ EXIT_:          Dim array = source.ToArray
             End Function
         End Structure
 
-        <ExportAPI("Cluster.Trees.Network")>
-        <Extension> Public Function TreeNET(source As IEnumerable(Of EntityLDM)) As FileStream.Network
+        ''' <summary>
+        ''' Create network model for visualize the binary tree clustering result.
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <ExportAPI("Cluster.Trees.Network",
+                   Info:="Create network model for visualize the binary tree clustering result.")>
+        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM)) As FileStream.Network
             Dim array = (From x As EntityLDM In source
                          Let path As String() = x.Cluster.Split("."c)
                          Select New __edgePath With {
@@ -180,13 +186,12 @@ EXIT_:          Dim array = source.ToArray
                                                 .ToDictionary(Function(xx) xx.Key,
                                                               Function(xx) Math.Round(xx.Value, 4).ToString)
                                           }).ToList
-            Dim root As New FileStream.Node With {
+            nodes += New FileStream.Node With {
                 .Identifier = "ROOT",
                 .NodeType = "ROOT"
             }
-            Call nodes.Add(root)
 
-            Dim edges = __buildNET(array, root, Scan0, nodes)
+            Dim edges = __buildNET(array, nodes ^ Function(x) String.Equals(x.nodetype, "ROOT"), Scan0, nodes)
 
             Return New FileStream.Network With {
                 .Edges = edges,
