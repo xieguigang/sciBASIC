@@ -51,21 +51,23 @@ Public Module Matrix
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToVectorList(Of T)(MAT As T(,)) As List(Of T())
-        Dim ChunkList As List(Of T()) = New List(Of T())
+        Return MAT.RowIterator.ToList
+    End Function
+
+    <Extension>
+    Public Iterator Function RowIterator(Of T)(MAT As T(,)) As IEnumerable(Of T())
         Dim width As Integer = MAT.GetLength(1)
         Dim height As Integer = MAT.GetLength(0)
+        Dim Temp As T()
 
         For i As Integer = 0 To height - 1
-            Dim Temp As T() = New T(width - 1) {}
+            Temp = New T(width - 1) {}
 
             For j As Integer = 0 To width - 1
                 Temp(j) = MAT(i, j)
             Next
 
-            Call ChunkList.Add(Temp)
+            Yield Temp
         Next
-
-        Return ChunkList
     End Function
-
 End Module
