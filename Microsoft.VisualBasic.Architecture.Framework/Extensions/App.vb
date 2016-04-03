@@ -20,6 +20,16 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module App
 
     ''' <summary>
+    ''' Gets a path name pointing to the Desktop directory.
+    ''' </summary>
+    ''' <returns>The path to the Desktop directory.</returns>
+    Public ReadOnly Property Desktop As String
+        Get
+            Return My.Computer.FileSystem.SpecialDirectories.Desktop
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
     ''' </summary>
     Public ReadOnly Property PID As Integer = System.Diagnostics.Process.GetCurrentProcess.Id
