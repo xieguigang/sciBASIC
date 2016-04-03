@@ -103,31 +103,6 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 由于可能会产生数据污染，所以并不推荐使用这个函数来写文件
-    ''' </summary>
-    ''' <param name="TextValue"></param>
-    ''' <param name="Path"></param>
-    ''' <param name="WaitForRelease">当其他的进程对目标文件产生占用的时候，函数是否等待其他进程的退出释放文件句柄之后在进行数据的写入</param>
-    ''' <param name="Encoding"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(TextValue As String, Path As String, WaitForRelease As Boolean, Optional Encoding As Encoding = Nothing) As Boolean
-        If Path.FileOpened Then
-            If WaitForRelease Then
-                '假若文件被占用，则等待句柄的释放
-                Do While Path.FileOpened
-                    Call Threading.Thread.Sleep(10)
-                Loop
-            Else  '假若不等待句柄的释放的话，则直接返回失败
-                Return False
-            End If
-        End If
-
-        Return TextValue.SaveTo(Path, Encoding)
-    End Function
-
-    ''' <summary>
     ''' 判断是否是文本文件
     ''' </summary>
     ''' <param name="FilePath">文件全路径名称</param>

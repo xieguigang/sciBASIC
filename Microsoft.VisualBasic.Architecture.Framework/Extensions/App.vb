@@ -473,6 +473,23 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeFile As __ExecuteFile) As Integer
+#If DEBUG Then
+        Call args.__DEBUG_ECHO
+#End If
+        Return App.__completeCLI(New Interpreter(Interpreter) With {
+            .ExecuteFile = executeFile
+        }.Execute(args))
+    End Function
+
+    ''' <summary>
+    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
+    ''' </summary>
+    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <returns>Returns the function execute result to the operating system.</returns>
+    '''
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As String,
                                        executeFile As __ExecuteFile,
                                        executeEmpty As __ExecuteEmptyCLI) As Integer
