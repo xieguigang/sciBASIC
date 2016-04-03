@@ -47,6 +47,25 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     End Sub
 
     ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="name">不区分大小写的</param>
+    ''' <returns></returns>
+    Public Function Find(name As String) As V
+        If MyBase.ContainsKey(name) Then
+            Return Me(name)
+        Else
+            If Me.ContainsKey(name.ToLower.ShadowCopy(name)) Then
+                Return Me(name)
+            ElseIf Me.ContainsKey(name.ToUpper.ShadowCopy(name)) Then
+                Return Me(name)
+            Else
+                Return Nothing
+            End If
+        End If
+    End Function
+
+    ''' <summary>
     ''' 假若目标元素不存在于本字典之中，则会返回False
     ''' </summary>
     ''' <param name="x"></param>
