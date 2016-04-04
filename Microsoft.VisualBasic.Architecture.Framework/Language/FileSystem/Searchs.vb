@@ -105,7 +105,7 @@ Namespace Language
             If l Then
                 Return res
             Else
-                Return (From path As String In res Select path.Replace("\", "/").Split("/"c).Last)
+                Return (From path As String In res Select path.Replace("\", "/").Split("/"c).Last).ToArray
             End If
         End Operator
 

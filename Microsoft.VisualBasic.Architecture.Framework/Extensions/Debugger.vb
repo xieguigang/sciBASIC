@@ -133,4 +133,20 @@ Public Module VBDebugger
     <Extension> Public Function Echo(Of T)(array As Generic.IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "") As String
         Return String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
     End Function
+
+    ''' <summary>
+    ''' Alias for <see cref="Console.Write"/>
+    ''' </summary>
+    ''' <param name="s"></param>
+    <Extension> Public Sub Echo(s As String)
+        Call Console.Write(s)
+    End Sub
+
+    ''' <summary>
+    ''' Alias for <see cref="Console.Write"/>
+    ''' </summary>
+    ''' <param name="c"></param>
+    <Extension> Public Sub Echo(c As Char)
+        Call Console.Write(c)
+    End Sub
 End Module
