@@ -515,6 +515,12 @@ Namespace CommandLine
             Return Language.OpenHandle(path)
         End Operator
 
+        ''' <summary>
+        ''' Gets the CLI parameter value.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
             Return args(name)
         End Operator

@@ -28,7 +28,11 @@ Public Module VBDebugger
             Return __mute
         End Get
         Set(value As Boolean)
-
+            If __level = DebuggerLevels.Off Then  ' off的时候，不会输出任何信息
+                __mute = True
+            Else
+                __mute = value
+            End If
         End Set
     End Property
 

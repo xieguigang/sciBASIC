@@ -9,7 +9,7 @@ Public Enum DebuggerLevels
     ''' </summary>
     Off
     ''' <summary>
-    ''' 输出所有类型的信息
+    ''' 强制覆盖掉<see cref="[On]"/>的设置，输出所有类型的信息
     ''' </summary>
     All
     ''' <summary>

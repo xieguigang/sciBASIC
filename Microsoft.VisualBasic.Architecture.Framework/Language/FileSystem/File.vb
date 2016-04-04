@@ -1,4 +1,6 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
 
@@ -119,6 +121,40 @@ Namespace Language
 
         Public Function OpenTemp() As Integer
             Return OpenHandle(App.GetAppSysTempFile(App.Process.Id))
+        End Function
+
+        ''' <summary>
+        ''' Is this file opened
+        ''' </summary>
+        ''' <param name="filename"></param>
+        ''' <returns></returns>
+        <Extension> Public Function FileOpened(filename As String) As Boolean
+            If Not filename.FileExists Then
+                Return False
+            Else
+                Try
+                    Using file As New IO.FileStream(filename, IO.FileMode.OpenOrCreate)
+                    End Using
+
+                    Return False
+                Catch ex As Exception
+                    Return True
+                Finally
+                End Try
+            End If
+        End Function
+
+        Public Function Wait(file As String, Optional timeout As Integer = 1000 * 100) As Boolean
+            Dim sw As Stopwatch = Stopwatch.StartNew
+
+            Do While file.FileOpened
+                Call Thread.Sleep(1)
+                If sw.ElapsedMilliseconds >= timeout Then
+                    Return False
+                End If
+            Loop
+
+            Return True
         End Function
     End Module
 End Namespace
