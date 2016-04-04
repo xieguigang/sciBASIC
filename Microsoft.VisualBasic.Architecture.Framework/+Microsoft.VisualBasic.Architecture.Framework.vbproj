@@ -265,7 +265,8 @@
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Language\Class.vb" />
-    <Compile Include="Language\File.vb" />
+    <Compile Include="Language\FileSystem\Searchs.vb" />
+    <Compile Include="Language\FileSystem\File.vb" />
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Numeric.vb" />
     <Compile Include="MMFProtocol\WorkFlow.vb" />

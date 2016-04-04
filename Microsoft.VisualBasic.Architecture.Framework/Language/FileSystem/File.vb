@@ -27,6 +27,9 @@ Namespace Language
         End Operator
     End Class
 
+    ''' <summary>
+    ''' 文件系统对象的句柄
+    ''' </summary>
     Public Structure FileHandle
         Dim FileName As String
         Dim handle As Integer
@@ -39,6 +42,18 @@ Namespace Language
         Public ReadOnly Property IsHTTP As Boolean
             Get
                 Return FileName.isURL
+            End Get
+        End Property
+
+        Public ReadOnly Property IsFile As Boolean
+            Get
+                Return FileName.FileExists
+            End Get
+        End Property
+
+        Public ReadOnly Property IsDirectory As Boolean
+            Get
+                Return FileName.DirectoryExists
             End Get
         End Property
 
@@ -73,6 +88,12 @@ Namespace Language
 
         Dim __handle As Value(Of Integer) = New Value(Of Integer)(Integer.MinValue)
 
+        ''' <summary>
+        ''' Open a file system handle
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function OpenHandle(file As String, Optional encoding As Encodings = Encodings.UTF8) As Integer
             If String.IsNullOrEmpty(file) Then
                 Throw New NullReferenceException("File handle null pointer!")

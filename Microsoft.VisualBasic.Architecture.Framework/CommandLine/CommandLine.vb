@@ -504,6 +504,17 @@ Namespace CommandLine
             Return List.ToArray
         End Function
 
+        ''' <summary>
+        ''' Open a handle for a file system object.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <param name="fs"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(args As CommandLine, fs As String) As Integer
+            Dim path As String = args(fs)
+            Return Language.OpenHandle(path)
+        End Operator
+
         Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
             Return args(name)
         End Operator
