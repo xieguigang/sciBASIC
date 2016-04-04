@@ -7,6 +7,16 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
 
+    <Extension>
+    Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
+        Dim fs As New FileStream(path, FileMode.Open)
+        Dim reader As New StreamReader(fs)
+
+        Do While Not reader.EndOfStream
+            Yield reader.ReadLine
+        Loop
+    End Function
+
     ''' <summary>
     ''' Read the first line of the text in the file.
     ''' </summary>
