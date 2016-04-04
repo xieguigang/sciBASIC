@@ -26,8 +26,24 @@ Module DebuggerArgs
 
         Dim opt As String = args <= "--echo"
 
-        If String.IsNullOrEmpty(opt) Then
-
+        If String.IsNullOrEmpty(opt) Then ' 默认的on参数
+            VBDebugger.__level = DebuggerLevels.On
+        Else
+            Select Case opt.ToLower
+                Case "on"
+                    VBDebugger.__level = DebuggerLevels.On
+                Case "off"
+                    VBDebugger.__level = DebuggerLevels.Off
+                Case "all"
+                    VBDebugger.__level = DebuggerLevels.All
+                Case "warn", "warning"
+                    VBDebugger.__level = DebuggerLevels.Warning
+                Case "err", "error"
+                    VBDebugger.__level = DebuggerLevels.Error
+                Case Else
+                    VBDebugger.__level = DebuggerLevels.On
+                    Call Console.WriteLine($"[INFO] The debugger argument value --echo:={opt} is invalid, using default settings.")
+            End Select
         End If
     End Sub
 End Module

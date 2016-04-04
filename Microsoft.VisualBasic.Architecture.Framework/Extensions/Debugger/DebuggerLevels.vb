@@ -1,7 +1,7 @@
 ﻿
 Public Enum DebuggerLevels
     ''' <summary>
-    ''' 是否输出调试信息有程序代码来控制
+    ''' 是否输出调试信息有程序代码来控制，这个是默认的参数
     ''' </summary>
     [On]
     ''' <summary>

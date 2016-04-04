@@ -21,7 +21,7 @@ Public Module VBDebugger
     End Function
 
     Dim __mute As Boolean = False
-    Dim __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
+    Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
 
     Public Property Mute As Boolean
         Get
