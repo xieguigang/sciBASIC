@@ -9,7 +9,11 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ls As New Search
-        Public ReadOnly Property l As New SearchOpt
+        ''' <summary>
+        ''' Long name(DIR+fiename), if not only file name.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property l As New SearchOpt(SearchOpt.Options.LongName)
         ''' <summary>
         ''' 递归的搜索
         ''' </summary>
@@ -29,12 +33,22 @@ Namespace Language
 
         Dim __opts As New Dictionary(Of SearchOpt.Options, SearchOpt)
 
+        Public Overrides Function ToString() As String
+            Return __opts.GetJson
+        End Function
+
         Public Function Clone() As Object Implements ICloneable.Clone
             Return New Search With {
                 .__opts = New Dictionary(Of SearchOpt.Options, SearchOpt)(__opts)
             }
         End Function
 
+        ''' <summary>
+        ''' Add a search options
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="l"></param>
+        ''' <returns></returns>
         Public Shared Operator -(ls As Search, l As SearchOpt) As Search
             Select Case l.opt
                 Case SearchOpt.Options.Ext, SearchOpt.Options.Recursive
@@ -67,9 +81,36 @@ Namespace Language
             End Get
         End Property
 
+        ''' <summary>
+        ''' Search the files in the specific directory
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="DIR"></param>
+        ''' <returns></returns>
         Public Shared Operator <<(ls As Search, DIR As Integer) As IEnumerable(Of String)
             Dim url As String = __getHandle(DIR).FileName
-            Return FileIO.FileSystem.GetFiles(url, ls.SearchType, ls.wildcards)
+            Return ls < url
+        End Operator
+
+        ''' <summary>
+        ''' Search the files in the specific directory
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="DIR"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(ls As Search, DIR As String) As IEnumerable(Of String)
+            Dim l As Boolean = ls.__opts.ContainsKey(SearchOpt.Options.LongName)
+            Dim res As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, ls.SearchType, ls.wildcards)
+
+            If l Then
+                Return res
+            Else
+                Return (From path As String In res Select path.Replace("\", "/").Split("/"c).Last)
+            End If
+        End Operator
+
+        Public Shared Operator >(ls As Search, DIR As String) As IEnumerable(Of String)
+            Throw New NotSupportedException
         End Operator
     End Class
 
@@ -94,6 +135,7 @@ Namespace Language
         Public Enum Options
             None
             Ext
+            LongName
             ''' <summary>
             ''' 递归搜索所有的文件夹
             ''' </summary>
