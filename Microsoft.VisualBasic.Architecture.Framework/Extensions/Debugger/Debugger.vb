@@ -53,7 +53,7 @@ Public Module VBDebugger
     <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
         Dim str = $"[DEBUG {Now.ToString}]{_Indent(Indent)} {MSG}"
 
-        If Not Mute Then
+        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Call Console.WriteLine(str)
 #If DEBUG Then
             Call Debug.WriteLine(str)
@@ -109,13 +109,21 @@ Public Module VBDebugger
     Public Sub Assertion(test As Boolean, fails As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
         If Not test = True Then
             If level = Logging.MSG_TYPES.DEBUG Then
-                Call fails.__DEBUG_ECHO(memberName:=calls)
+                If __level < DebuggerLevels.Warning Then
+                    Call fails.__DEBUG_ECHO(memberName:=calls)
+                End If
             ElseIf level = Logging.MSG_TYPES.ERR Then
-                Call WriteLine(fails, ConsoleColor.Red)
+                If __level <> DebuggerLevels.Off Then
+                    Call WriteLine(fails, ConsoleColor.Red)
+                End If
             ElseIf level = Logging.MSG_TYPES.WRN Then
-                Call Warning(fails, calls)
+                If __level <> DebuggerLevels.Error Then
+                    Call Warning(fails, calls)
+                End If
             Else
-                Call Console.WriteLine($"@{calls}::" & fails)
+                If __level < DebuggerLevels.Warning Then
+                    Call Console.WriteLine($"@{calls}::" & fails)
+                End If
             End If
         End If
     End Sub

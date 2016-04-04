@@ -250,7 +250,11 @@ Public Module ProgramPathSearchTool
 
         End If
 
-        Parent &= String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+        If file.Last = "/"c Then ' 是一个文件夹
+            Parent &= String.Join("/", Tokens.Take(Tokens.Length - 2).ToArray)
+        Else
+            Parent &= String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+        End If
 
         Return Parent
     End Function

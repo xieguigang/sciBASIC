@@ -4,10 +4,14 @@ Imports Microsoft.VisualBasic.Language
 
 Module DebuggerArgs
 
+    ''' <summary>
+    ''' Logging command shell history.
+    ''' </summary>
+    ''' <param name="args"></param>
     Private Sub __logShell(args As CommandLine.CommandLine)
         Dim CLI As String = App.ExecutablePath & " " & args.CLICommandArgvs
-        Dim log As String = $"{Now.ToString & vbTab}  {CLI}"
-        Dim logFile As String = App.LogErrDIR.ParentPath & "/.shell.log"
+        Dim log As String = $"[{Now.ToString & "]" & vbTab}  {CLI}"
+        Dim logFile As String = App.LogErrDIR.ParentPath & "/.shells.log"
 
         If FileHandles.Wait(file:=logFile) Then
             Call FileIO.FileSystem.CreateDirectory(logFile.ParentPath)
@@ -22,6 +26,8 @@ Module DebuggerArgs
     <Extension> Public Sub InitDebuggerEnvir(args As CommandLine.CommandLine, <CallerMemberName> Optional caller As String = Nothing)
         If Not String.Equals(caller, "Main") Then
             Return  ' 这个调用不是从Main出发的，则不设置环境了，因为这个环境可能在其他的代码上面设置过了
+        Else
+            Call __logShell(args)
         End If
 
         Dim opt As String = args <= "--echo"

@@ -522,7 +522,11 @@ Namespace CommandLine
         ''' <param name="name"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
-            Return args(name)
+            If args Is Nothing Then
+                Return Nothing
+            Else
+                Return args(name)
+            End If
         End Operator
 
         Public Shared Operator <=(opt As String, args As CommandLine) As CommandLine
