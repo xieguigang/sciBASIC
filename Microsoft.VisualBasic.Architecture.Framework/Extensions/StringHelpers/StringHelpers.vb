@@ -10,6 +10,14 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module StringHelpers
 
     ''' <summary>
+    ''' Call s.Remove(s.Length - 1, 1)
+    ''' </summary>
+    ''' <param name="s"></param>
+    <Extension> Public Sub RemoveLast(s As StringBuilder)
+        Call s.Remove(s.Length - 1, 1)
+    End Sub
+
+    ''' <summary>
     ''' Returns a reversed version of String s.
     ''' </summary>
     ''' <param name="sb"></param>

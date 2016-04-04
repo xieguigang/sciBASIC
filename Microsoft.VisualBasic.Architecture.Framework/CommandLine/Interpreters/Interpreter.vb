@@ -86,7 +86,14 @@ Namespace CommandLine
         ''' <returns></returns>
         Private Function __executeEmpty() As Integer
             If Not ExecuteEmptyCli Is Nothing Then
-                Return _ExecuteEmptyCli()
+                Try
+                    Return _ExecuteEmptyCli()
+                Catch ex As Exception
+                    Call App.LogException(ex)
+                    Call ex.PrintException
+                End Try
+
+                Return -100
             Else
                 Return -1
             End If
@@ -125,10 +132,27 @@ Namespace CommandLine
 
             Else
                 If commandName.FileExists AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
-                    Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
-                ElseIf Not ExecuteNotFound Is Nothing Then
-                    Return ExecuteNotFound()(DirectCast(argvs(Scan0), CommandLine))
+                    Try
+                        Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
+                    Catch ex As Exception
+                        ex = New Exception("Execute file failure!", ex)
+                        ex = New Exception(argvs(Scan0).ToString, ex)
+                        Call App.LogException(ex)
+                        Call ex.PrintException
+                    End Try
 
+                    Return -120
+                ElseIf Not ExecuteNotFound Is Nothing Then
+                    Try
+                        Return ExecuteNotFound()(DirectCast(argvs(Scan0), CommandLine))
+                    Catch ex As Exception
+                        ex = New Exception("Execute not found failure!", ex)
+                        ex = New Exception(argvs(Scan0).ToString, ex)
+                        Call App.LogException(ex)
+                        Call ex.PrintException
+                    End Try
+
+                    Return -1000
                 Else
                     Dim lst As String() = Me.ListPossible(commandName)
 
