@@ -5,7 +5,7 @@ Namespace Language
     Public Module FileSystemAPI
 
         ''' <summary>
-        ''' ls -l -ext("*.xml") &lt;= DIR
+        ''' ls -l -ext("*.xml") &lt;= DIR,  The filesystem search proxy
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ls As New Search
@@ -37,7 +37,7 @@ Namespace Language
 
         Public Shared Operator -(ls As Search, l As SearchOpt) As Search
             Select Case l.opt
-                Case SearchOpt.Options.Ext
+                Case SearchOpt.Options.Ext, SearchOpt.Options.Recursive
                     Dim clone As Search = DirectCast(ls.Clone, Search)
                     Call clone.__opts.Add(l.opt, l)
                     Return clone
