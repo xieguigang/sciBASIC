@@ -244,7 +244,9 @@
     <Compile Include="Extensions\Collection\Vector.vb" />
     <Compile Include="Extensions\Collection\Linq\Linq.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
-    <Compile Include="Extensions\Debugger.vb" />
+    <Compile Include="Extensions\Debugger\DebuggerLevels.vb" />
+    <Compile Include="Extensions\Debugger\Debugger.vb" />
+    <Compile Include="Extensions\Debugger\DebuggerArgs.vb" />
     <Compile Include="Extensions\IO\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
@@ -339,7 +341,7 @@
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="Extensions\Image\GrayBitmap.vb" />
     <Compile Include="Tools\Logging\EventLog.vb" />
-    <Compile Include="Tools\NETDebugger.vb" />
+    <Compile Include="Extensions\Debugger\NETDebugger.vb" />
     <Compile Include="Tools\Network\Mailto\MailConfigure.vb" />
     <Compile Include="Tools\Network\Mailto\MailContents.vb" />
     <Compile Include="Tools\Network\Abstract.vb" />

@@ -239,7 +239,7 @@ Public Module App
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional Trace As String = "") As String
         Dim Entry As String = App.__getTEMPhash
         Entry = $"{Now.Year}-{Now.Month}-{Now.Day}, {Format(Now.Hour, "00")}-{Format(Now.Minute, "00")}-{Format(Now.Second, "00")}_{Entry}"
-        Dim log As String = $"{App.LogErrDir}/{Entry}.log"
+        Dim log As String = $"{App.LogErrDIR}/{Entry}.log"
         Call App.LogException(ex, Trace, log)
         Return log
     End Function
@@ -267,7 +267,7 @@ Public Module App
     ''' 存放自动存储的错误日志的文件夹
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LogErrDir As String = App.LocalData & $"/.logs/err/"
+    Public ReadOnly Property LogErrDIR As String = App.LocalData & $"/.logs/err/"
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at a user defined location parameter: <paramref name="FileName"/>.
@@ -351,11 +351,14 @@ Public Module App
     '''
     <ExportAPI("RunCLI", Info:="Running the string as cli command line and the specific type define as a interpreter.")>
     <Extension>
-    Public Function RunCLI(Interpreter As Type, args As String) As Integer
+    Public Function RunCLI(Interpreter As Type, args As String, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
-        Return App.__completeCLI(New CommandLine.Interpreter(Interpreter).Execute(args))
+        Dim CLI As CommandLine.CommandLine = TryParse(args)
+        Call CLI.InitDebuggerEnvir(caller)
+
+        Return App.__completeCLI(New Interpreter(Interpreter).Execute(args))
     End Function
 
     ''' <summary>
@@ -367,11 +370,13 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.CLICommandArgvs.__DEBUG_ECHO
 #End If
-        Return App.__completeCLI(New CommandLine.Interpreter(Interpreter).Execute(args))
+        Call args.InitDebuggerEnvir(caller)
+
+        Return App.__completeCLI(New Interpreter(Interpreter).Execute(args))
     End Function
 
     ''' <summary>
@@ -383,27 +388,12 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeEmpty As __ExecuteEmptyCLI) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.CLICommandArgvs.__DEBUG_ECHO
 #End If
-        Return App.__completeCLI(New CommandLine.Interpreter(Interpreter) With {
-            .ExecuteEmptyCli = executeEmpty
-        }.Execute(args))
-    End Function
+        Call args.InitDebuggerEnvir(caller)
 
-    ''' <summary>
-    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
-    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
-    ''' </summary>
-    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
-    ''' <returns>Returns the function execute result to the operating system.</returns>
-    '''
-    <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeEmpty As __ExecuteEmptyCLI) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
         Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteEmptyCli = executeEmpty
         }.Execute(args))
@@ -417,10 +407,36 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeEmpty As __ExecuteEmptyCLI, executeNotFound As __ExecuteNotFound) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
+        Dim CLI As CommandLine.CommandLine = TryParse(args)
+        Call CLI.InitDebuggerEnvir(caller)
+
+        Return App.__completeCLI(New Interpreter(Interpreter) With {
+            .ExecuteEmptyCli = executeEmpty
+        }.Execute(args))
+    End Function
+
+    ''' <summary>
+    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
+    ''' </summary>
+    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <returns>Returns the function execute result to the operating system.</returns>
+    '''
+    <ExportAPI("RunCLI")>
+    <Extension> Public Function RunCLI(Interpreter As Type, args As String,
+                                       executeEmpty As __ExecuteEmptyCLI,
+                                       executeNotFound As __ExecuteNotFound,
+                                       <CallerMemberName> Optional caller As String = Nothing) As Integer
+#If DEBUG Then
+        Call args.__DEBUG_ECHO
+#End If
+        Dim CLI As CommandLine.CommandLine = TryParse(args)
+        Call CLI.InitDebuggerEnvir(caller)
+
         Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteEmptyCli = executeEmpty,
             .ExecuteNotFound = executeNotFound
@@ -438,10 +454,12 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type,
                                        args As CommandLine.CommandLine,
                                        executeEmpty As __ExecuteEmptyCLI,
-                                       executeNotFound As __ExecuteNotFound) As Integer
+                                       executeNotFound As __ExecuteNotFound, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
+        Call args.InitDebuggerEnvir(caller)
+
         Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteEmptyCli = executeEmpty,
             .ExecuteNotFound = executeNotFound
@@ -456,10 +474,13 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeFile As __ExecuteFile) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeFile As __ExecuteFile, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
+        Dim CLI As CommandLine.CommandLine = TryParse(args)
+        Call CLI.InitDebuggerEnvir(caller)
+
         Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteFile = executeFile
         }.Execute(args))
@@ -473,10 +494,12 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeFile As __ExecuteFile) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeFile As __ExecuteFile, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
+        Call args.InitDebuggerEnvir(caller)
+
         Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteFile = executeFile
         }.Execute(args))
@@ -492,8 +515,8 @@ Public Module App
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As String,
                                        executeFile As __ExecuteFile,
-                                       executeEmpty As __ExecuteEmptyCLI) As Integer
-        Return Interpreter.RunCLI(TryParse(args), executeFile, executeEmpty)
+                                       executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
+        Return Interpreter.RunCLI(TryParse(args), executeFile, executeEmpty, caller)
     End Function
 
     ''' <summary>
@@ -506,10 +529,12 @@ Public Module App
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine,
                                        executeFile As __ExecuteFile,
-                                       executeEmpty As __ExecuteEmptyCLI) As Integer
+                                       executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
+        Call args.InitDebuggerEnvir(caller)
+
         Return App.__completeCLI(New Interpreter(Interpreter) With {
             .ExecuteFile = executeFile,
             .ExecuteEmptyCli = executeEmpty
@@ -636,6 +661,11 @@ Public Module App
 
     Dim _CLIAutoClean As Boolean = False
 
+    ''' <summary>
+    ''' 自动停止GC当前程序的线程
+    ''' </summary>
+    ''' <param name="state"></param>
+    ''' <returns></returns>
     Private Function __completeCLI(state As Integer) As Integer
         If _CLIAutoClean Then
             Call StopGC()

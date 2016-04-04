@@ -7,6 +7,8 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Reflection
 
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+Imports System.Runtime.CompilerServices
 
 #Const NET_45 = 0
 
@@ -17,7 +19,7 @@ Namespace CommandLine
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
     ''' <remarks></remarks>
-    ''' 
+    '''
     <[Namespace]("Interpreter")>
     Public Class Interpreter
 
@@ -32,7 +34,7 @@ Namespace CommandLine
         Protected _nsRoot As String
 
         ''' <summary>
-        ''' Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer, 
+        ''' Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer,
         ''' (<seealso cref="__executefile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
         ''' 这个函数指针一般是用作于执行脚本程序的
         ''' </summary>
@@ -48,7 +50,7 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Gets the dictionary data which contains all of the available command information in this assembly module.
-        ''' (获取从本模块之中获取得到的所有的命令行信息) 
+        ''' (获取从本模块之中获取得到的所有的命令行信息)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -208,7 +210,7 @@ Namespace CommandLine
         ''' <summary>
         ''' Gets the help information of a specific command using its name property value.(获取某一个命令的帮助信息)
         ''' </summary>
-        ''' <param name="CommandName">If the paramteer command name value is a empty string then this function 
+        ''' <param name="CommandName">If the paramteer command name value is a empty string then this function
         ''' will list all of the commands' help information.(假若本参数为空则函数会列出所有的命令的帮助信息)</param>
         ''' <returns>Error code, ZERO for no error</returns>
         ''' <remarks></remarks>
@@ -276,18 +278,21 @@ Namespace CommandLine
             End Get
         End Property
 
+        Public ReadOnly Property Stack As String
+
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
-        ''' <param name="Type">A module or a class which contains some shared method for the command entry.
+        ''' <param name="type">A module or a class which contains some shared method for the command entry.
         ''' (包含有若干使用<see cref="Reflection.ExportAPIAttribute"></see>进行标记的命令行执行入口点的Module或者Class对象类型，
         ''' 可以使用 Object.GetType/GetType 关键词操作来获取所需要的类型信息)</param>
         ''' <remarks></remarks>
-        Sub New(Type As System.Type)
-            For Each CommandInfo As EntryPoints.APIEntryPoint In __getsAllCommands(Type, False)
-                Call _CommandInfoHash.Add(CommandInfo.Name.ToLower, CommandInfo)
+        Sub New(type As Type, <CallerMemberName> Optional caller As String = Nothing)
+            For Each cInfo As APIEntryPoint In __getsAllCommands(type, False)
+                Call _CommandInfoHash.Add(cInfo.Name.ToLower, cInfo)
             Next
-            Me._nsRoot = Type.Namespace
+            Me._nsRoot = type.Namespace
+            Me._Stack = caller
         End Sub
 
         ''' <summary>
@@ -296,7 +301,7 @@ Namespace CommandLine
         ''' <param name="Type"></param>
         ''' <param name="[Throw]"></param>
         ''' <returns></returns>
-        Protected Overridable Function __getsAllCommands(Type As System.Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+        Protected Overridable Function __getsAllCommands(Type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
             Return GetAllCommands(Type, [Throw])
         End Function
 
@@ -306,7 +311,7 @@ Namespace CommandLine
         ''' <param name="Type"></param>
         ''' <param name="[Throw]"></param>
         ''' <returns></returns>
-        Public Shared Function GetAllCommands(Type As System.Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+        Public Shared Function GetAllCommands(Type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
             If Type Is Nothing Then
                 Return New List(Of EntryPoints.APIEntryPoint)
             End If
@@ -352,7 +357,7 @@ Namespace CommandLine
         ''' <param name="Type"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("CreateObject")>
         Public Shared Function CreateInstance(Type As System.Type) As Microsoft.VisualBasic.CommandLine.Interpreter
             Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type)
@@ -365,7 +370,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function CreateInstance(Of T As Class)() As Microsoft.VisualBasic.CommandLine.Interpreter
-            Return New Interpreter(Type:=GetType(Type))
+            Return New Interpreter(type:=GetType(Type))
         End Function
 
 #If NET_40 = 0 Then
@@ -377,7 +382,7 @@ Namespace CommandLine
         ''' <param name="assmPath">DLL/EXE file path.(标准的.NET程序集文件的文件路径)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        '''
         <ExportAPI("rundll")>
         Public Shared Function CreateInstance(assmPath As String) As Microsoft.VisualBasic.CommandLine.Interpreter
             Dim assembly As Assembly = Assembly.LoadFrom(assmPath)
@@ -445,7 +450,7 @@ Namespace CommandLine
         End Sub
 
         ''' <summary>
-        ''' Clear the hash table of the cli command line interpreter command entry points.(清除本CLI解释器之中的所有的命令行执行入口点的哈希数据信息) 
+        ''' Clear the hash table of the cli command line interpreter command entry points.(清除本CLI解释器之中的所有的命令行执行入口点的哈希数据信息)
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Clear
@@ -497,7 +502,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="key">调用前需要转换为小写字母的形式</param>
         ''' <returns></returns>

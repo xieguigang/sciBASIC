@@ -1,0 +1,23 @@
+﻿
+Public Enum DebuggerLevels
+    ''' <summary>
+    ''' 是否输出调试信息有程序代码来控制
+    ''' </summary>
+    [On]
+    ''' <summary>
+    ''' 不会输出任务调试信息
+    ''' </summary>
+    Off
+    ''' <summary>
+    ''' 输出所有类型的信息
+    ''' </summary>
+    All
+    ''' <summary>
+    ''' 只会输出警告或者错误类型的信息
+    ''' </summary>
+    Warning
+    ''' <summary>
+    ''' 只会输出错误类型的信息
+    ''' </summary>
+    [Error]
+End Enum

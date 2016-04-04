@@ -20,9 +20,19 @@ Public Module VBDebugger
         Return New EventProc(source.Count, TAG)
     End Function
 
-    Public Property Mute As Boolean = False
+    Dim __mute As Boolean = False
+    Dim __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
 
-    Private ReadOnly _Indent As String() = {
+    Public Property Mute As Boolean
+        Get
+            Return __mute
+        End Get
+        Set(value As Boolean)
+
+        End Set
+    End Property
+
+    ReadOnly _Indent As String() = {
         "",
         New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
         New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
