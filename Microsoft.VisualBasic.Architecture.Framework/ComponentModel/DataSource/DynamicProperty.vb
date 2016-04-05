@@ -62,20 +62,32 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public Class [Property](Of T) : Inherits DynamicPropertyBase(Of T)
 
-        <ScriptIgnore> Public Property source As Value(Of T)()
+        <ScriptIgnore> Public Property source As NamedValue(Of T)()
             Get
-                Return Properties.ToArray(Function(x) New Value(Of T) With {.Name = x.Key, .x = x.Value})
+                Return Properties.ToArray(Function(x) New NamedValue(Of T) With {.Name = x.Key, .x = x.Value})
             End Get
-            Set(value As Value(Of T)())
+            Set(value As NamedValue(Of T)())
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.x)
             End Set
         End Property
     End Class
 
-    Public Structure Value(Of T) : Implements sIdEnumerable
+    ''' <summary>
+    ''' The value object have a name string.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Structure NamedValue(Of T) : Implements sIdEnumerable
 
+        ''' <summary>
+        ''' Identifier
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute>
         Public Property Name As String Implements sIdEnumerable.Identifier
+        ''' <summary>
+        ''' Object value
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement> Public Property x As T
 
         Public Overrides Function ToString() As String
