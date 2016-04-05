@@ -408,14 +408,14 @@ Public Module StringHelpers
 
         If lf AndAlso cr Then
             __text = __text.Replace(vbCr, "")
-            Return Text.Splitter.Split(__text, vbLf, True, Integer.MaxValue, CompareMethod.Binary)
+            Return Text.Splitter.Split(__text, vbLf, True)
         End If
 
         If lf Then
-            Return Text.Splitter.Split(__text, vbLf, True, Integer.MaxValue, CompareMethod.Binary)
+            Return Text.Splitter.Split(__text, vbLf, True)
         End If
 
-        Return Text.Splitter.Split(__text, vbCr, True, Integer.MaxValue, CompareMethod.Binary)
+        Return Text.Splitter.Split(__text, vbCr, True)
     End Function
 
     ''' <summary>

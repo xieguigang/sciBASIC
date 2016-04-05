@@ -50,14 +50,13 @@ Namespace Language
         ''' <param name="l"></param>
         ''' <returns></returns>
         Public Shared Operator -(ls As Search, l As SearchOpt) As Search
-            Select Case l.opt
-                Case SearchOpt.Options.Ext, SearchOpt.Options.Recursive
-                    Dim clone As Search = DirectCast(ls.Clone, Search)
-                    Call clone.__opts.Add(l.opt, l)
-                    Return clone
-                Case Else
-                    Return ls
-            End Select
+            If l.opt <> SearchOpt.Options.None Then
+                Dim clone As Search = DirectCast(ls.Clone, Search)
+                Call clone.__opts.Add(l.opt, l)
+                Return clone
+            Else
+                Return ls
+            End If
         End Operator
 
         Public ReadOnly Property SearchType As FileIO.SearchOption
