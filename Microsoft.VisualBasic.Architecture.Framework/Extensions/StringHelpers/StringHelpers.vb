@@ -390,32 +390,32 @@ Public Module StringHelpers
     ''' <summary>
     ''' 函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，所以可以使用这个函数来进行统一的分行操作
     ''' </summary>
-    ''' <param name="text"></param>
+    ''' <param name="__text"></param>
     ''' <returns></returns>
     '''
     <ExportAPI("lTokens")>
-    <Extension> Public Function lTokens(text As String) As String()
-        If String.IsNullOrEmpty(text) Then
+    <Extension> Public Function lTokens(__text As String) As String()
+        If String.IsNullOrEmpty(__text) Then
             Return New String() {}
         End If
 
-        Dim lf As Boolean = InStr(text, vbLf) > 0
-        Dim cr As Boolean = InStr(text, vbCr) > 0
+        Dim lf As Boolean = InStr(__text, vbLf) > 0
+        Dim cr As Boolean = InStr(__text, vbCr) > 0
 
         If Not (cr OrElse lf) Then  ' 没有分行符，则只有一行
-            Return New String() {text}
+            Return New String() {__text}
         End If
 
         If lf AndAlso cr Then
-            text = text.Replace(vbCr, "")
-            Return Strings.Split(text, vbLf)
+            __text = __text.Replace(vbCr, "")
+            Return Text.Splitter.Split(__text, vbLf, True, Integer.MaxValue, CompareMethod.Binary)
         End If
 
         If lf Then
-            Return Strings.Split(text, vbLf)
+            Return Text.Splitter.Split(__text, vbLf, True, Integer.MaxValue, CompareMethod.Binary)
         End If
 
-        Return Strings.Split(text, vbCr)
+        Return Text.Splitter.Split(__text, vbCr, True, Integer.MaxValue, CompareMethod.Binary)
     End Function
 
     ''' <summary>
