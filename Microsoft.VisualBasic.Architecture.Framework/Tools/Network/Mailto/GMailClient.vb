@@ -29,7 +29,7 @@ Namespace Net.Mailto
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="emailTitle">标题</param>
         ''' <param name="emailNote">内容</param>

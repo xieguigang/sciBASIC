@@ -277,6 +277,7 @@
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="Serialization\BinaryDumping\Buffer.vb" />
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
+    <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
     <Compile Include="Text\EncodingHelper.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
