@@ -15,13 +15,13 @@ Namespace DocumentStream.Linq
 
         ReadOnly handle As String
         ReadOnly _fileIO As System.IO.StreamWriter
-        ReadOnly RowWriter As ComponentModels.RowWriter
+        ReadOnly RowWriter As RowWriter
 
         Sub New(path As String, Optional Explicit As Boolean = False)
             Dim typeDef As Type = GetType(T)
-            Dim Schema = Csv.StorageProvider.ComponentModels.SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
+            Dim Schema = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
 
-            RowWriter = New ComponentModels.RowWriter(Schema)
+            RowWriter = New RowWriter(Schema)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
             _fileIO = New IO.StreamWriter(path:=handle)
 

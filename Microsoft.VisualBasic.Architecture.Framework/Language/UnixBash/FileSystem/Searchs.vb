@@ -98,6 +98,16 @@ Namespace Language.UnixBash
         ''' <param name="DIR"></param>
         ''' <returns></returns>
         Public Shared Operator <(ls As Search, DIR As String) As IEnumerable(Of String)
+            Return ls <= DIR
+        End Operator
+
+        ''' <summary>
+        ''' Search the files in the specific directory
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="DIR"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator <=(ls As Search, DIR As String) As IEnumerable(Of String)
             Dim l As Boolean = ls.__opts.ContainsKey(SearchOpt.Options.LongName)
             Dim res As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, ls.SearchType, ls.wildcards)
 
@@ -109,6 +119,10 @@ Namespace Language.UnixBash
         End Operator
 
         Public Shared Operator >(ls As Search, DIR As String) As IEnumerable(Of String)
+            Throw New NotSupportedException
+        End Operator
+
+        Public Shared Operator >=(ls As Search, DIR As String) As IEnumerable(Of String)
             Throw New NotSupportedException
         End Operator
     End Class
