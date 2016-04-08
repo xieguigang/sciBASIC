@@ -282,7 +282,7 @@ Namespace DocumentStream
         ''' Reset the reading position in the data frame object.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Reset()
+        Public Overrides Sub Reset()
             __currentPointer = -1
         End Sub
 
@@ -378,7 +378,7 @@ Namespace DocumentStream
             Dim value As String = GetValue(i)
             If IsNumeric(value) Then
                 Return "System.Double"
-            ElseIf InStr(value, ", ") > 0 OrElse InStr(value, "; ") > 0
+            ElseIf InStr(value, ", ") > 0 OrElse InStr(value, "; ") > 0 Then
                 Return "System.String()"
             Else
                 Return "System.String"

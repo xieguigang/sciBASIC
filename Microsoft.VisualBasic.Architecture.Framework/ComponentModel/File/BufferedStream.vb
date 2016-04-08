@@ -84,7 +84,7 @@ Namespace ComponentModel
         ''' <summary>
         ''' Reset the stream buffer reader to its initial state.
         ''' </summary>
-        Public Sub Reset()
+        Public Overridable Sub Reset()
             _EndRead = False
             lefts = New Byte(-1) {}
             If Not __innerStream Is Nothing Then

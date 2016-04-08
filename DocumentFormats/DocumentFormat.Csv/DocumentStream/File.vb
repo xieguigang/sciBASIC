@@ -32,6 +32,11 @@ Namespace DocumentStream
             _innerTable = __loads(path, Encoding.Default)
         End Sub
 
+        Sub New(source As IEnumerable(Of RowObject), path As String)
+            Call Me.New(source)
+            FilePath = path
+        End Sub
+
         Default Public Overloads Property Item(x As Integer, y As Integer) As String
             Get
                 Dim row As RowObject = Me(x)

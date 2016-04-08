@@ -54,9 +54,9 @@ Namespace Logging
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property FileName As String
+        Public Shadows ReadOnly Property FileName As String
             Get
-                Return IO.Path.GetFileNameWithoutExtension(path:=FilePath)
+                Return MyBase.FileName.BaseName
             End Get
         End Property
 

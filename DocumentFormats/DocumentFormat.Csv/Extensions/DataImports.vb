@@ -36,8 +36,7 @@ Public Module DataImports
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim Csv = ImportsData(Lines, delimiter)
-        Csv.FilePath = txtPath
+        Dim Csv As DocumentStream.File = New DocumentStream.File(ImportsData(Lines, delimiter), txtPath)
         Return Csv
     End Function
 
@@ -55,8 +54,7 @@ Public Module DataImports
                                 Optional delimiter As String = ",") As DocumentStream.File
         Dim Expression As String = String.Format(SplitRegxExpression, delimiter)
         Dim LQuery = (From line As String In s_Data Select RowParsing(line, Expression)).ToArray
-        Dim Csv = CType(LQuery, DocumentStream.File)
-        Return Csv
+        Return New DocumentStream.File(LQuery)
     End Function
 
     ''' <summary>
@@ -97,8 +95,7 @@ Public Module DataImports
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
         Dim LQuery As Csv.DocumentStream.RowObject() = (From line As String In Lines Select RowParsing(line, length:=length)).ToArray
-        Dim Csv = CType(LQuery, DocumentStream.File)
-        Csv.FilePath = txtPath
+        Dim Csv As New DocumentStream.File(LQuery, txtPath)
         Return Csv
     End Function
 
