@@ -47,9 +47,7 @@ Namespace ComponentModel
             __emptys = New Queue(Of Integer)(capacity)
             delta = capacity
 
-            For i As Integer = 0 To capacity - 1
-                Call __emptys.Enqueue(i)
-            Next
+            Call Me.__allocate()
         End Sub
 
         Sub New(source As IEnumerable(Of T), Optional capacity As Integer = 2048)
@@ -116,6 +114,8 @@ Namespace ComponentModel
             For i As Integer = 0 To delta - 1
                 Call __emptys.Enqueue(top + i)
             Next
+
+            __innerList += New T(__emptys.Count - 1) {}
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator

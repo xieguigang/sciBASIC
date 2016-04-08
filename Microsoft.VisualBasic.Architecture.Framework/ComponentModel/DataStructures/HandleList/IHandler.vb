@@ -1,5 +1,6 @@
 ﻿
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel
 
@@ -24,7 +25,7 @@ Namespace ComponentModel
     Public Interface IHashHandle : Inherits IAddressHandle, sIdEnumerable
     End Interface
 
-    Public Class IHashValue(Of T As sIdEnumerable)
+    Public Class IHashValue(Of T As sIdEnumerable) : Inherits ClassObject
         Implements IHashHandle
 
         Public Property obj As T
