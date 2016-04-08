@@ -141,6 +141,8 @@ Namespace DocumentStream.Linq
                     Yield x
                 Next
             Loop
+
+            Call Reset()
         End Function
 
         Public Shared Function OpenHandle(file As String, Optional encoding As System.Text.Encoding = Nothing) As DataStream
