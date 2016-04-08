@@ -1,11 +1,13 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports System.Web.Script.Serialization
+Imports System.Xml.Serialization
 
 Namespace ComponentModel
 
     Public Class BufferedStream
 
-        Public ReadOnly Property FileName As String
+        <XmlIgnore> <ScriptIgnore> Public ReadOnly Property FileName As String
 
         Protected __innerBuffer As String()
         Protected __innerStream As FileStream
