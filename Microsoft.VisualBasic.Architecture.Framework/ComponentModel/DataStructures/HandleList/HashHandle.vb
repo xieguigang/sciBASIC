@@ -55,6 +55,14 @@ Namespace ComponentModel
             Call Me.Add(source)
         End Sub
 
+        Public Function HasElement(x As String) As Boolean
+            Return __innerHash.ContainsKey(x)
+        End Function
+
+        Public Function IsNull(x As Integer) As Boolean
+            Return __emptys.Contains(x)
+        End Function
+
         Public Function [Next](x As T) As T
             Return [Next](x.Identifier)
         End Function
