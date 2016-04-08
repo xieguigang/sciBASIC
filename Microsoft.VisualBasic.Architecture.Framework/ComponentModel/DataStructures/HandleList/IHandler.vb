@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+
 Namespace ComponentModel
 
     ''' <summary>
@@ -18,4 +20,27 @@ Namespace ComponentModel
         ''' <remarks></remarks>
         Property AddrHwnd As Long
     End Interface
+
+    Public Interface IHashHandle : Inherits IAddressHandle, sIdEnumerable
+    End Interface
+
+    Public Class IHashValue(Of T As sIdEnumerable)
+        Implements IHashHandle
+
+        Public Property obj As T
+
+        Public Property AddrHwnd As Long Implements IAddressHandle.AddrHwnd
+
+        Public Property Identifier As String Implements sIdEnumerable.Identifier
+            Get
+                Return obj.Identifier
+            End Get
+            Set(value As String)
+                obj.Identifier = value
+            End Set
+        End Property
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+        End Sub
+    End Class
 End Namespace
