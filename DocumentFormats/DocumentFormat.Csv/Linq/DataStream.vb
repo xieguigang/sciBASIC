@@ -29,8 +29,8 @@ Namespace DocumentStream.Linq
             _title = New RowObject
         End Sub
 
-        Sub New(file As String, Optional encoding As Encoding = Nothing)
-            Call MyBase.New(file, encoding, 1024 * 1024 * 64)
+        Sub New(file As String, Optional encoding As Encoding = Nothing, Optional bufSize As Integer = 64 * 1024 * 1024)
+            Call MyBase.New(file, encoding, bufSize)
 
             Dim first As String = file.ReadFirstLine
 

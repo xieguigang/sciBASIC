@@ -92,22 +92,26 @@ Namespace ComponentModel
             End If
         End Sub
 
+        Dim l As Integer
+
         Public Overridable Function BufferProvider() As String()
             If EndRead Then
                 Return Nothing
             Else
                 If __innerBuffer Is Nothing Then
-                    Dim buffer As Byte() = New Byte() {}
+                    Dim buffer As Byte()
 
                     If __innerStream.Length - __innerStream.Position >= __bufferSize Then
-                        buffer = New Byte(lefts.Length + __bufferSize - 1) {}
+                        l = lefts.Length + __bufferSize
                         _EndRead = False
                     Else
-                        buffer = New Byte(lefts.Length + __innerStream.Length - __innerStream.Position - 1) {}
+                        l = __innerStream.Length - __innerStream.Position
                         _EndRead = True
                     End If
 
-                    Call __innerStream.Read(buffer, lefts.Length, buffer.Length)
+                    buffer = New Byte(lefts.Length + l - 1) {}
+                    Call __innerStream.Read(buffer, lefts.Length, l)
+                    Call Array.ConstrainedCopy(lefts, Scan0, buffer, Scan0, lefts.Length)
 
                     Dim s As String = __encoding.GetString(buffer)
                     Dim sbuf As String() = s.lTokens

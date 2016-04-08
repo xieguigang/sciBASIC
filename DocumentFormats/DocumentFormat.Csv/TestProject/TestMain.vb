@@ -1,11 +1,27 @@
-﻿Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.Serialization
 
 Module TestMain
 
     ReadOnly sss As String = <cc>ssssss,"ss,sssss","ssss""sss","sss  """" sss",""""""""""""</cc>
 
     Sub Main()
+        Dim firstddd As String = "F:\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Csv\TestProject\parser_TEST.csv".ReadAllLines()(2)
+        Dim row = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(firstddd)
+
+        Dim stream As New DocumentFormat.Csv.DocumentStream.Linq.DataStream("G:\3.29\CP000050\CP000050-SiteMASTScan-Motif_PWM-RegPrecise-Pfam-A.Pfam-String_vs_xcb.PfamA.Pfam-String-virtualFootprints.Csv")
+
+        Call stream.ForEachBlock(Of [Property](Of String))(Sub(array)
+                                                               For Each x In array
+                                                                   Call x.source.GetJson.__DEBUG_ECHO
+                                                               Next
+                                                           End Sub)
+
+
         Dim ssss As String = sss
         Dim ttttt = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(ssss)
 
@@ -39,9 +55,9 @@ Module TestMain
         DataCollection = Nothing
         DataCollection = CsvPath.LoadCsv(Of ExampleExperimentData)(explicit:=False).ToArray
 
-        Dim File = Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector.Save(Of ExampleExperimentData)(DataCollection, Explicit:=False)
-        For Each row In File
-            Call Console.WriteLine(row.ToString)
+        Dim File = Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector.Save(Of ExampleExperimentData)(DataCollection, explicit:=False)
+        For Each rowD As RowObject In File
+            Call Console.WriteLine(rowD.ToString)
         Next
 
         Console.WriteLine("Press any key to continute...")

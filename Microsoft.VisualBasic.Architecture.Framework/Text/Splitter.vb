@@ -10,11 +10,11 @@ Namespace Text
         ''' <summary>
         ''' Holds the string to split
         ''' </summary>
-        Dim m_Expression As String
+        Dim m_Expression As Char()
         ''' <summary>
         ''' Delimiter to split the expression with
         ''' </summary>
-        Dim m_Delimiter As String
+        Dim m_Delimiter As Char()
 
         ''' <summary>
         ''' Constrctor for The Splitter
@@ -60,8 +60,8 @@ Namespace Text
 
         Private Function __split(Expression As String, Delimiter As String, SingleSeparator As Boolean, Count As Integer, Compare As CompareMethod) As String()
             'Update Private Members
-            m_Expression = Expression
-            m_Delimiter = Delimiter
+            m_Expression = Expression.ToCharArray
+            m_Delimiter = Delimiter.ToCharArray
 
             'Array to hold Splitted Tokens
             Dim Tokens As New List(Of String)

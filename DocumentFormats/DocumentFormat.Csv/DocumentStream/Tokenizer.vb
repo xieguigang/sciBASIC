@@ -45,20 +45,24 @@ Namespace DocumentStream
             Dim temp As New List(Of Char)
             Dim stack As Boolean = False ' 解析器是否是处于由双引号所产生的栈之中？
             Dim preToken As Boolean = False
+            Dim deliExit As Boolean = False
 
             For Each c As Char In s.Replace("""""", """")
                 If c = ","c Then
                     If Not stack Then
                         Call tokens.Add(New String(temp.ToArray))
                         Call temp.Clear()
+                        deliExit = True
                     Else  '  是以双引号开始的
                         If temp.Last = """"c Then ' 但是逗号的前一个符号是双引号，则是结束的标识
                             Call temp.RemoveLast
                             stack = False
                             Call tokens.Add(New String(temp.ToArray))
                             Call temp.Clear()
+                            deliExit = True
                         Else
                             Call temp.Add(c)
+                            deliExit = False
                         End If
                     End If
                 ElseIf c = """"c Then  ' 必须要在逗号分隔符之前才起作用
@@ -71,13 +75,19 @@ Namespace DocumentStream
                     Else
                         Call temp.Add(c)
                     End If
+                    deliExit = False
                 Else
                     Call temp.Add(c)
+                    deliExit = False
                 End If
             Next
 
             If temp.Count > 0 Then
                 Call tokens.Add(New String(temp.ToArray))
+            Else
+                If deliExit Then
+                    Call tokens.Add("")
+                End If
             End If
 
             Return tokens
