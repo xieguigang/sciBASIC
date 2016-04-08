@@ -1178,17 +1178,17 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
-    <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of Generic.IEnumerable(Of T))) As List(Of T)
-        Dim ChunkBuffer As List(Of T) = New List(Of T)
+    <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
+        Dim list As List(Of T) = New List(Of T)
 
-        For Each Line As Generic.IEnumerable(Of T) In source
+        For Each Line As IEnumerable(Of T) In source
 
             If Not Line.IsNullOrEmpty Then
-                Call ChunkBuffer.AddRange(collection:=Line)
+                Call list.AddRange(collection:=Line)
             End If
         Next
 
-        Return ChunkBuffer
+        Return list
     End Function
 
     ''' <summary>

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel
 
@@ -35,12 +36,50 @@ Namespace ComponentModel
         End Operator
     End Class
 
+    Public Structure LinkNode(Of T As IHashHandle)
+
+        Private list As HashHandle(Of T)
+        Private node As T
+
+        Friend Sub New(x As String, source As HashHandle(Of T))
+            list = source
+            node = source(x)
+        End Sub
+
+        Friend Sub New(x As T, source As HashHandle(Of T))
+            list = source
+            node = x
+        End Sub
+
+        Public ReadOnly Property [Next] As LinkNode(Of T)
+            Get
+                Return New LinkNode(Of T)(list.Next(node.Identifier), list)
+            End Get
+        End Property
+
+        Public ReadOnly Property Previous As LinkNode(Of T)
+            Get
+                Return New LinkNode(Of T)(list.Previous(node.Identifier), list)
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return node.GetJson
+        End Function
+    End Structure
+
     Public Class HashHandle(Of T As IHashHandle) : Implements IEnumerable(Of T)
 
         Protected __innerHash As New Dictionary(Of T)
         Protected __innerList As List(Of T)
         Dim __emptys As Queue(Of Integer)
         Dim delta As Integer
+
+        Default Public ReadOnly Property Item(id As String) As T
+            Get
+                Return __innerHash(id)
+            End Get
+        End Property
 
         Sub New(Optional capacity As Integer = 2048)
             __innerList = New List(Of T)(capacity)
@@ -91,12 +130,13 @@ Namespace ComponentModel
             Return __innerList(x - 1)
         End Function
 
-        Public Function Current(x As String) As T
-            Return __innerHash(x)
+        Public Function Current(x As String) As LinkNode(Of T)
+            Return New LinkNode(Of T)(x, Me)
         End Function
 
-        Public Function Current(i As Integer) As T
-            Return __innerList(i)
+        Public Function Current(i As Integer) As LinkNode(Of T)
+            Dim name As String = __innerList(i).Identifier
+            Return New LinkNode(Of T)(name, Me)
         End Function
 
         Public Sub Add(x As T)
