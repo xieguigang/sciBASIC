@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace CommandLine
 
@@ -512,7 +513,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Overloads Shared Operator +(args As CommandLine, fs As String) As Integer
             Dim path As String = args(fs)
-            Return Language.OpenHandle(path)
+            Return Language.UnixBash.OpenHandle(path)
         End Operator
 
         ''' <summary>

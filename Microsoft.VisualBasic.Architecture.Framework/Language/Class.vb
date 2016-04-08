@@ -1,7 +1,12 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace Language
 
+    ''' <summary>
+    ''' <see cref="System.Type"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class [Class](Of T) : Inherits ClassObject
 
         Public ReadOnly Property Type As Type

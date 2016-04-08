@@ -44,7 +44,7 @@ Public Module Correlations
     Const TINY As Double = 1.0E-20
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="x"></param>
     ''' <param name="y"></param>
@@ -111,9 +111,9 @@ Public Module Correlations
     Public Delegate Function ICorrelation(X As Double(), Y As Double()) As Double
 
     ''' <summary>
-    ''' This method should not be used in cases where the data set is truncated; that is, 
-    ''' when the Spearman correlation coefficient is desired for the top X records 
-    ''' (whether by pre-change rank or post-change rank, or both), the user should use the 
+    ''' This method should not be used in cases where the data set is truncated; that is,
+    ''' when the Spearman correlation coefficient is desired for the top X records
+    ''' (whether by pre-change rank or post-change rank, or both), the user should use the
     ''' Pearson correlation coefficient formula given above.
     ''' (斯皮尔曼相关性)
     ''' </summary>
@@ -124,7 +124,7 @@ Public Module Correlations
     ''' https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
     ''' checked!
     ''' </remarks>
-    ''' 
+    '''
     <ExportAPI("Spearman",
                Info:="This method should not be used in cases where the data set is truncated; that is, when the Spearman correlation coefficient is desired for the top X records (whether by pre-change rank or post-change rank, or both), the user should use the Pearson correlation coefficient formula given above.")>
     Public Function Spearman(X As Double(), Y As Double()) As Double

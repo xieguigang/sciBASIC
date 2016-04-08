@@ -1,7 +1,8 @@
 ﻿Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.FileHandles
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language.UnixBash.FileHandles
 
 ''' <summary>
 ''' Represents a strongly typed list of objects that can be accessed by index. Provides

@@ -4,7 +4,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
 
-Namespace Language
+Namespace Language.UnixBash
 
     Public MustInherit Class File : Inherits ClassObject
         Implements ISaveHandle

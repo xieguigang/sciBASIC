@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
 
-Namespace Language
+Namespace Language.UnixBash
 
     Public Module FileSystemAPI
 

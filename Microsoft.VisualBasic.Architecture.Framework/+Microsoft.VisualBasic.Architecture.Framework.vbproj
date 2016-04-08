@@ -267,11 +267,11 @@
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Language\Class.vb" />
-    <Compile Include="Language\FileSystem\Searchs.vb" />
-    <Compile Include="Language\FileSystem\File.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\File.vb" />
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Numeric.vb" />
-    <Compile Include="Language\Text\Grep.vb" />
+    <Compile Include="Language\UnixBash\Text\Grep.vb" />
     <Compile Include="MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
