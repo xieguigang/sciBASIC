@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -7,9 +8,9 @@ Namespace DocumentStream.Linq
 
     Public Delegate Function GetOrdinal(Column As String) As Integer
 
-    Public Class DataStream : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
+    Public Class DataStream : Inherits ITextFile
         Implements ISchema
-        Implements System.IDisposable
+        Implements IDisposable
 
         ReadOnly _schema As Dictionary(Of String, Integer)
         ReadOnly _title As RowObject
@@ -27,7 +28,7 @@ Namespace DocumentStream.Linq
             _title = New RowObject
         End Sub
 
-        Sub New(file As String, Optional encoding As System.Text.Encoding = Nothing)
+        Sub New(file As String, Optional encoding As Encoding = Nothing)
             Dim lines As String() = IO.File.ReadAllLines(file, getEncoding(encoding))
             _title = RowObject.TryParse(lines(Scan0))
             _schema = _title.ToArray(

@@ -197,6 +197,7 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
+    <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
     <Compile Include="ComponentModel\Ranges\IntRange.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />

@@ -1,6 +1,20 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Public Module TextEncodings
+
+    ''' <summary>
+    ''' Default value or user specific?
+    ''' </summary>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Assertion(encoding As Encoding) As Encoding
+        If encoding Is Nothing Then
+            Return System.Text.Encoding.Default
+        Else
+            Return encoding
+        End If
+    End Function
 
     Public Enum Encodings As Byte
         [Default] = 0
