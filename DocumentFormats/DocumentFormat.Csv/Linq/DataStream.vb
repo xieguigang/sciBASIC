@@ -18,8 +18,6 @@ Namespace DocumentStream.Linq
         ReadOnly _schema As Dictionary(Of String, Integer)
         ReadOnly _title As RowObject
 
-        Dim p As Integer
-
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
             Get
                 Return _schema
@@ -85,11 +83,20 @@ Namespace DocumentStream.Linq
 
             Call RowBuilder.Indexof(Me)
 
-            Do While Not _innerBuffer.Read(p, out:=line) Is Nothing
-                Dim row As RowObject = RowObject.TryParse(line)
-                Dim obj As T = Activator.CreateInstance(Of T)
-                obj = RowBuilder.FillData(Of T)(row, obj)
-                Call invoke(obj)
+            Do While True
+                Dim buffer As String() = BufferProvider()
+                Dim p As Integer = 0
+
+                Do While Not buffer.Read(p, out:=line) Is Nothing
+                    Dim row As RowObject = RowObject.TryParse(line)
+                    Dim obj As T = Activator.CreateInstance(Of T)
+                    obj = RowBuilder.FillData(Of T)(row, obj)
+                    Call invoke(obj)
+                Loop
+
+                If EndRead Then
+                    Exit Do
+                End If
             Loop
         End Sub
 
