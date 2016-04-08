@@ -75,7 +75,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 性能测试工具
+    ''' 性能测试工具，函数之中会自动输出整个任务所经历的处理时长
     ''' </summary>
     ''' <param name="work">需要测试性能的工作对象</param>
     ''' <returns></returns>

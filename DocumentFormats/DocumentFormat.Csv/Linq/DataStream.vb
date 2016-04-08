@@ -66,7 +66,7 @@ Namespace DocumentStream.Linq
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Processing large dataset in block partitions.(以分块任务的形式来处理一个非常大的数据集)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="invoke"></param>
@@ -86,11 +86,33 @@ Namespace DocumentStream.Linq
                 Dim values = (From row As RowObject In LQuery.AsParallel
                               Let obj As T = Activator.CreateInstance(Of T)
                               Select RowBuilder.FillData(row, obj)).ToArray
-                Call invoke(values)
+                Call "Start processing block...".__DEBUG_ECHO
+                Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
                 Call $"{100 * i / chunks.Length}% ({i}/{chunks.Length})...".__DEBUG_ECHO
                 Call i.MoveNext
             Next
         End Sub
+
+        ''' <summary>
+        ''' 为了减少Lambda表达式所带来的性能损失而构建的一个任务运行帮助对象
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        Private Structure __taskHelper(Of T)
+            Sub New(source As T(), invoke As Action(Of T()))
+                Me.__source = source
+                Me.__task = invoke
+            End Sub
+
+            Dim __task As Action(Of T())
+            Dim __source As T()
+
+            ''' <summary>
+            ''' 运行当前的这个任务
+            ''' </summary>
+            Public Sub RunTask()
+                Call __task(__source)
+            End Sub
+        End Structure
 
         ''' <summary>
         ''' Csv to LINQ
