@@ -5,6 +5,15 @@ Namespace ComponentModel
 
     Public Class DefaultHashHandle(Of T As sIdEnumerable) : Inherits HashHandle(Of IHashValue(Of T))
 
+        Sub New(Optional capacity As Integer = 2048)
+            Call MyBase.New(capacity)
+        End Sub
+
+        Sub New(source As IEnumerable(Of T), Optional capacity As Integer = 2048)
+            Call Me.New(capacity)
+            Call Me.Add(source)
+        End Sub
+
         Public Overloads Sub Add(x As T)
             Call MyBase.Add(New IHashValue(Of T) With {.obj = x})
         End Sub
@@ -28,8 +37,8 @@ Namespace ComponentModel
 
     Public Class HashHandle(Of T As IHashHandle) : Implements IEnumerable(Of T)
 
-        Dim __innerHash As New Dictionary(Of T)
-        Dim __innerList As List(Of T)
+        Protected __innerHash As New Dictionary(Of T)
+        Protected __innerList As List(Of T)
         Dim __emptys As Queue(Of Integer)
         Dim delta As Integer
 
@@ -42,6 +51,47 @@ Namespace ComponentModel
                 Call __emptys.Enqueue(i)
             Next
         End Sub
+
+        Sub New(source As IEnumerable(Of T), Optional capacity As Integer = 2048)
+            Call Me.New(capacity)
+            Call Me.Add(source)
+        End Sub
+
+        Public Function [Next](x As T) As T
+            Return [Next](x.Identifier)
+        End Function
+
+        Public Function [Next](x As String) As T
+            Dim pos As Integer = __innerHash(x).AddrHwnd
+            Dim n As T = __innerList(pos + 1)
+            Return n
+        End Function
+
+        Public Function [Next](i As Integer) As T
+            Return __innerList(i + 1)
+        End Function
+
+        Public Function Previous(x As T) As T
+            Dim pos As Integer = __innerHash(x.Identifier).AddrHwnd
+            Return __innerList(pos - 1)
+        End Function
+
+        Public Function Previous(x As String) As T
+            Dim pos As Integer = __innerHash(x).AddrHwnd
+            Return __innerList(pos - 1)
+        End Function
+
+        Public Function Previous(x As Integer) As T
+            Return __innerList(x - 1)
+        End Function
+
+        Public Function Current(x As String) As T
+            Return __innerHash(x)
+        End Function
+
+        Public Function Current(i As Integer) As T
+            Return __innerList(i)
+        End Function
 
         Public Sub Add(x As T)
             If __emptys.Count = 0 Then
