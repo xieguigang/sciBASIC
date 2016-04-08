@@ -111,6 +111,9 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     ''' <param name="vals"></param>
     ''' <returns></returns>
     Public Shared Operator +(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)
+        If vals Is Nothing Then
+            Return list
+        End If
         Call list.AddRange(vals.ToArray)
         Return list
     End Operator
