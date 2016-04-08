@@ -33,6 +33,11 @@ Namespace ConsoleDevice
             }
         End Sub
 
+        Sub New(path As String)
+            Call Me.New
+            FilePath = path
+        End Sub
+
         Public Sub StartInitialize()
             Call __init()
             _historyList = (From his As History In _lsthistory Select his.Histories).MatrixToList

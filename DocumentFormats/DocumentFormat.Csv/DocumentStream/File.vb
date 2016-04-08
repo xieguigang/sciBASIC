@@ -190,7 +190,7 @@ Namespace DocumentStream
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me._FilePath.ToFileURL
+            Return Me.FilePath.ToFileURL
         End Function
 
         Public Function ToArray() As RowObject()
@@ -211,7 +211,7 @@ Namespace DocumentStream
             Dim LQuery = (From i As Integer In ChunkBuffer.First.Sequence Select CType((From Line In ChunkBuffer Select Line(i)).ToArray, RowObject)).ToList
             Return New File With {
                 ._innerTable = LQuery,
-                ._FilePath = _FilePath
+                .FilePath = FilePath
             }
         End Function
 
@@ -546,7 +546,7 @@ Namespace DocumentStream
             Dim sw = Stopwatch.StartNew
             Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
             Dim cData As File = New File With {
-                ._FilePath = path
+                .FilePath = path
             }
 
             If Parallel Then
@@ -583,7 +583,7 @@ Namespace DocumentStream
             End If
             Dim buf As List(Of RowObject) = __loads(Path, encoding)
             Dim Csv As New File With {
-                ._FilePath = Path,
+                .FilePath = Path,
                 ._innerTable = buf
             }
             Return Csv
@@ -682,7 +682,7 @@ Namespace DocumentStream
 
             Return New File With {
                 ._innerTable = (From Line As String In Query.ToArray Select CType(Line, RowObject)).ToList,
-                ._FilePath = Csv._FilePath
+                .FilePath = Csv.FilePath
             }
         End Function
 

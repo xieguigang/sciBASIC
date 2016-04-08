@@ -33,15 +33,14 @@ Namespace ConsoleDevice
             Try
                 _cmdsHistory = HistoryFile.LoadXml(Of HistoryStacks)()
             Catch ex As Exception
-                _cmdsHistory = New HistoryStacks
+                _cmdsHistory = New HistoryStacks()
                 Call _cmdsHistory.Save(HistoryFile)
             End Try
 
             If _cmdsHistory Is Nothing Then
-                _cmdsHistory = New HistoryStacks
+                _cmdsHistory = New HistoryStacks(HistoryFile)
             End If
 
-            _cmdsHistory.FilePath = HistoryFile
             Call _cmdsHistory.StartInitialize()
 
             PromptText = "#"

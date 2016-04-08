@@ -8,7 +8,7 @@ Namespace DocumentStream.Linq
 
     Public Delegate Function GetOrdinal(Column As String) As Integer
 
-    Public Class DataStream : Inherits ITextFile
+    Public Class DataStream : Inherits BufferedStream
         Implements ISchema
         Implements IDisposable
 
@@ -29,16 +29,18 @@ Namespace DocumentStream.Linq
         End Sub
 
         Sub New(file As String, Optional encoding As Encoding = Nothing)
-            Dim lines As String() = IO.File.ReadAllLines(file, getEncoding(encoding))
-            _title = RowObject.TryParse(lines(Scan0))
+            Call MyBase.New(file, encoding, 1024 * 1024 * 64)
+
+            Dim first As String = file.ReadFirstLine
+
+            _title = RowObject.TryParse(first)
             _schema = _title.ToArray(
                 Function(colName, idx) New With {
                     .colName = colName,
                     .ordinal = idx}) _
                     .ToDictionary(Function(x) x.colName.ToLower,
                                   Function(x) x.ordinal)
-            Me.FilePath = file
-            Me._innerBuffer = lines.Skip(1).ToArray
+            Me.FileName = file
 
             Call $"{file.ToFileURL} handle opened...".__DEBUG_ECHO
         End Sub
@@ -120,32 +122,62 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Function AsLinq(Of T As Class)() As IEnumerable(Of T)
+        Public Iterator Function AsLinq(Of T As Class)() As IEnumerable(Of T)
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
 
             Call RowBuilder.Indexof(Me)
 
-            Dim LQuery As IEnumerable(Of T) = From line As String In _innerBuffer
-                                              Let row As RowObject = RowObject.TryParse(line)
-                                              Let obj As T = Activator.CreateInstance(Of T)
-                                              Select RowBuilder.FillData(row, obj)
-            Return LQuery
+            Do While Not EndRead
+                Dim LQuery As IEnumerable(Of T) = From line As String
+                                                  In BufferProvider()
+                                                  Let row As RowObject = RowObject.TryParse(line)
+                                                  Let obj As T = Activator.CreateInstance(Of T)
+                                                  Select RowBuilder.FillData(row, obj)
+                For Each x As T In LQuery
+                    Yield x
+                Next
+            Loop
         End Function
 
         Public Shared Function OpenHandle(file As String, Optional encoding As System.Text.Encoding = Nothing) As DataStream
             Return New DataStream(file, encoding)
         End Function
 
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Throw New NotImplementedException()
-        End Function
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
 
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            If disposing Then
-                _innerBuffer = Nothing
-                Call FlushMemory()
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    __innerBuffer = Nothing
+                    __innerStream = Nothing
+
+                    Call FlushMemory()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
             End If
+            Me.disposedValue = True
         End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

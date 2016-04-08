@@ -105,7 +105,7 @@ Namespace ComponentModel
                     Return sbuf
                 Else
                     _EndRead = True
-                    Return __innerBuffer
+                    Return DirectCast(__innerBuffer.Clone, String())
                 End If
             End If
         End Function

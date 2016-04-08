@@ -26,7 +26,7 @@ Namespace ComponentModel
         '''
 #If NET_40 = 0 Then
         <XmlIgnore> <ScriptIgnore>
-        Protected Overridable Property FilePath As String Implements Settings.IProfile.FilePath
+        Protected Friend Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
         <XmlIgnore>
         Public Overridable Property FilePath As String

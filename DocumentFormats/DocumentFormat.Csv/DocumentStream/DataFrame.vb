@@ -191,7 +191,7 @@ Namespace DocumentStream
             Try
                 Return __createObject(CsvDf)
             Catch ex As Exception
-                Call $"Error during read file from handle {CsvDf.FilePath.ToFileURL}".__DEBUG_ECHO
+                Call $"Error during read file from handle {CsvDf.FileName.ToFileURL}".__DEBUG_ECHO
                 Call ex.PrintException
                 Throw
             End Try
@@ -200,7 +200,7 @@ Namespace DocumentStream
         Private Shared Function __createObject(CsvDf As Csv.DocumentStream.File) As DataFrame
             Dim df As DataFrame = New DataFrame With {
                   ._innerTable = CsvDf._innerTable.Skip(1).ToList,
-                  ._FilePath = CsvDf.FilePath
+                  .FilePath = CsvDf.FileName
             }
             df.__columnList = __getColumnList(CsvDf._innerTable)
             df._SchemaOridinal = __createSchemaOridinal(df)
@@ -293,19 +293,19 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Sub CopyFrom(CsvDocument As Csv.DocumentStream.File)
             _innerTable = CsvDocument._innerTable.Skip(1).ToList
-            _FilePath = CsvDocument.FilePath
+            FilePath = CsvDocument.FileName
             __columnList = CsvDocument._innerTable.First.ToList
         End Sub
 
         Public Overrides Function ToString() As String
-            Return _FilePath.ToFileURL & "  // " & _innerTable(__currentPointer).ToString
+            Return FilePath.ToFileURL & "  // " & _innerTable(__currentPointer).ToString
         End Function
 
         Public Sub ShowDialog(Optional Title As String = "")
             Dim Dialog = New CsvChartDevice
 
             If String.IsNullOrEmpty(Title) Then
-                Dialog.Text = _FilePath
+                Dialog.Text = FilePath
             Else
                 Dialog.Text = Title
                 Dialog._chart.Titles.Add(Title)
@@ -332,7 +332,9 @@ Namespace DocumentStream
 
             Return New DataFrame With {
                 .__columnList = ColumnList.ToList,
-                ._FilePath = _FilePath, ._innerTable = NewTable}
+                .FilePath = FileName,
+                ._innerTable = NewTable
+            }
         End Function
 
         Public Iterator Function GetEnumerator2() As IEnumerator(Of DynamicObjectLoader) Implements IEnumerable(Of DynamicObjectLoader).GetEnumerator
