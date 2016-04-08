@@ -2,13 +2,26 @@
 Imports System.Text
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel
 
     Public Class BufferedStream
 
-        <XmlIgnore> <ScriptIgnore> Public ReadOnly Property FileName As String
+        ''' <summary>
+        ''' The File location of this text file.
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlIgnore> <ScriptIgnore> Public Property FileName As String
+            Get
+                Return __fileName
+            End Get
+            Protected Set(value As String)
+                __fileName = value
+            End Set
+        End Property
 
+        Protected __fileName As String
         Protected __innerBuffer As String()
         Protected __innerStream As FileStream
 
@@ -16,6 +29,12 @@ Namespace ComponentModel
 
         Protected __bufferSize As Integer
         Protected __encoding As Encoding
+
+        Public Overrides Function ToString() As String
+            Dim encodes As String = __encoding.ToString
+            Dim x As New With {encodes, EndRead, .lefts = Me.lefts.Length, __bufferSize, FileName}
+            Return x.GetJson
+        End Function
 
         ''' <summary>
         ''' 
@@ -46,6 +65,9 @@ Namespace ComponentModel
         Sub New(stream As FileStream, Optional readSize As Integer = BufferedStream.maxBufferSize)
             __innerStream = stream
             __bufferSize = readSize
+        End Sub
+
+        Sub New()
         End Sub
 
         ''' <summary>

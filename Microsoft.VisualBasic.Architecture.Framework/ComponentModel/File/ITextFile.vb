@@ -10,20 +10,12 @@ Namespace ComponentModel
     ''' Object model of the text file doucment.(文本文件的对象模型，这个文本文件对象在Disposed的时候会自动保存其中的数据)
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class ITextFile : Inherits Language.ClassObject
+    Public MustInherit Class ITextFile : Inherits BufferedStream
         Implements IDisposable
         Implements ISaveHandle
 #If NET_40 = 0 Then
         Implements Settings.IProfile
 #End If
-
-        Protected _FilePath As String
-
-        ''' <summary>
-        ''' The source file.(源文件)
-        ''' </summary>
-        ''' <remarks></remarks>
-        Protected Friend _innerBuffer As String()
 
         ''' <summary>
         ''' The storage filepath of this text file.
@@ -34,23 +26,21 @@ Namespace ComponentModel
         '''
 #If NET_40 = 0 Then
         <XmlIgnore> <ScriptIgnore>
-        Public Overridable Property FilePath As String Implements Settings.IProfile.FilePath
+        Protected Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
         <XmlIgnore>
         Public Overridable Property FilePath As String
 #End If
             Get
-                If String.IsNullOrEmpty(_FilePath) Then
+                If String.IsNullOrEmpty(FileName) Then
                     Return ""
                 End If
-                Return FileIO.FileSystem.GetFileInfo(_FilePath).FullName.Replace("\", "/")
+                Return FileIO.FileSystem.GetFileInfo(FileName).FullName.Replace("\", "/")
             End Get
             Set(value As String)
-                _FilePath = value
+                FileName = value
             End Set
         End Property
-
-        <XmlIgnore> <ScriptIgnore> Public Overrides Property Extension As ExtendedProps
 
 #If NET_40 = 0 Then
         Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
@@ -60,6 +50,7 @@ Namespace ComponentModel
 
         Public Overrides Function ToString() As String
             Dim Path As String = FilePath
+
             If String.IsNullOrEmpty(Path) Then
                 Return MyBase.ToString
             Else
@@ -68,8 +59,11 @@ Namespace ComponentModel
         End Function
 
         Protected Friend Sub CopyTo(Of T As ITextFile)(ByRef TextFile As T)
-            TextFile._innerBuffer = Me._innerBuffer
-            TextFile._FilePath = Me._FilePath
+            TextFile.__bufferSize = Me.__bufferSize
+            TextFile.__encoding = Me.__encoding
+            TextFile.__fileName = Me.FileName
+            TextFile.__innerBuffer = Me.__innerBuffer
+            TextFile.__innerStream = Me.__innerStream
         End Sub
 
         ''' <summary>
@@ -108,14 +102,6 @@ Namespace ComponentModel
             End If
         End Function
 
-        Public Shared Narrowing Operator CType(file As ITextFile) As String
-            Return String.Join(vbLf, file._innerBuffer)
-        End Operator
-
-        Public Shared Widening Operator CType(file As ITextFile) As String()
-            Return file._innerBuffer
-        End Operator
-
 #Region "IDisposable Support"
         Protected disposedValue As Boolean ' 检测冗余的调用
 
@@ -150,8 +136,8 @@ Namespace ComponentModel
 
         Public Shared Function CreateObject(Of T As ITextFile)(innerData As String(), path As String) As T
             Dim File As T = Activator.CreateInstance(Of T)
-            File._FilePath = path
-            File._innerBuffer = innerData
+            File.FilePath = path
+            File.__innerBuffer = innerData
 
             Return File
         End Function
