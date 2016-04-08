@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' Buffered large text dataset reader
+    ''' </summary>
     Public Class BufferedStream
 
         ''' <summary>
@@ -78,6 +81,17 @@ Namespace ComponentModel
 
         Dim lefts As Byte() = New Byte(-1) {}
 
+        ''' <summary>
+        ''' Reset the stream buffer reader to its initial state.
+        ''' </summary>
+        Public Sub Resets()
+            _EndRead = False
+            lefts = New Byte(-1) {}
+            If Not __innerStream Is Nothing Then
+                __innerStream.Position = Scan0
+            End If
+        End Sub
+
         Public Function BufferProvider() As String()
             If EndRead Then
                 Return Nothing
@@ -97,10 +111,12 @@ Namespace ComponentModel
 
                     Dim s As String = __encoding.GetString(buffer)
                     Dim sbuf As String() = s.lTokens
-                    Dim last As String = sbuf.Last
 
-                    lefts = __encoding.GetBytes(last)
-                    sbuf = sbuf.Take(sbuf.Length - 1).ToArray
+                    If Not EndRead Then
+                        Dim last As String = sbuf.Last
+                        lefts = __encoding.GetBytes(last)
+                        sbuf = sbuf.Take(sbuf.Length - 1).ToArray
+                    End If
 
                     Return sbuf
                 Else

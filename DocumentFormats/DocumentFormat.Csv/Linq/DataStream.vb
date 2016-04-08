@@ -8,6 +8,9 @@ Namespace DocumentStream.Linq
 
     Public Delegate Function GetOrdinal(Column As String) As Integer
 
+    ''' <summary>
+    ''' Buffered large text dataset Table reader
+    ''' </summary>
     Public Class DataStream : Inherits BufferedStream
         Implements ISchema
         Implements IDisposable
