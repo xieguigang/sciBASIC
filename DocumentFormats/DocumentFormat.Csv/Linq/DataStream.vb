@@ -56,6 +56,28 @@ Namespace DocumentStream.Linq
             End If
         End Function
 
+        Dim __firstBlock As Boolean = True
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个函数主要是为了处理第一行数据
+        ''' 因为在构造函数部分已经读取了第一行来解析schema，所以在这里需要对第一个数据块做一些额外的处理
+        ''' </remarks>
+        Public Overrides Function BufferProvider() As String()
+            Dim buffer As String() = MyBase.BufferProvider()
+
+            If __firstBlock Then
+                __firstBlock = False
+                buffer = buffer.Skip(1).ToArray
+            Else         '  不是第一个数据块，则不需要额外处理，直接返回
+            End If
+
+            Return buffer
+        End Function
+
         Public Sub ForEach(Of T As Class)(invoke As Action(Of T))
             Dim line As String = ""
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
@@ -145,7 +167,7 @@ Namespace DocumentStream.Linq
             Call Reset()
         End Function
 
-        Public Shared Function OpenHandle(file As String, Optional encoding As System.Text.Encoding = Nothing) As DataStream
+        Public Shared Function OpenHandle(file As String, Optional encoding As Encoding = Nothing) As DataStream
             Return New DataStream(file, encoding)
         End Function
 

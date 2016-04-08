@@ -23,7 +23,7 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path As String) As String
-        Using reader As StreamReader = New StreamReader(New FileStream(path, FileMode.Open))
+        Using reader As StreamReader = New StreamReader(New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             Dim first As String = reader.ReadLine
             Return first
         End Using

@@ -58,7 +58,7 @@ Namespace ComponentModel
             Dim file As FileInfo = FileIO.FileSystem.GetFileInfo(path)
 
             If file.Length > maxBufferSize Then
-                __innerStream = IO.File.Open(path, FileMode.Open)
+                __innerStream = IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read)
                 __bufferSize = maxBufferSize
             Else
                 __innerBuffer = IO.File.ReadAllLines(path, encoding)
@@ -92,7 +92,7 @@ Namespace ComponentModel
             End If
         End Sub
 
-        Public Function BufferProvider() As String()
+        Public Overridable Function BufferProvider() As String()
             If EndRead Then
                 Return Nothing
             Else
