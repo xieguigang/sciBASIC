@@ -96,6 +96,8 @@ Namespace DocumentStream.Linq
 
                 If EndRead Then
                     Exit Do
+                Else
+                    Call Console.WriteLine("Process next block....")
                 End If
             Loop
         End Sub
@@ -109,23 +111,33 @@ Namespace DocumentStream.Linq
         Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5)
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
-            Dim chunks As String()() = _innerBuffer.Split(blockSize)
 
             Call RowBuilder.Indexof(Me)
-            Call $"{chunks.Length} data partitions, {NameOf(blockSize)}:={blockSize}..".__DEBUG_ECHO
 
-            Dim i As Integer = 0
+            Do While True
+                Dim chunks As String()() = BufferProvider().Split(blockSize)
 
-            For Each block As String() In chunks
-                Dim LQuery = (From line As String In block.AsParallel Select RowObject.TryParse(line)).ToArray
-                Dim values = (From row As RowObject In LQuery.AsParallel
-                              Let obj As T = Activator.CreateInstance(Of T)
-                              Select RowBuilder.FillData(row, obj)).ToArray
-                Call "Start processing block...".__DEBUG_ECHO
-                Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
-                Call $"{100 * i / chunks.Length}% ({i}/{chunks.Length})...".__DEBUG_ECHO
-                Call i.MoveNext
-            Next
+                Call $"{chunks.Length} data partitions, {NameOf(blockSize)}:={blockSize}..".__DEBUG_ECHO
+
+                Dim i As Integer = 0
+
+                For Each block As String() In chunks
+                    Dim LQuery = (From line As String In block.AsParallel Select RowObject.TryParse(line)).ToArray
+                    Dim values = (From row As RowObject In LQuery.AsParallel
+                                  Let obj As T = Activator.CreateInstance(Of T)
+                                  Select RowBuilder.FillData(row, obj)).ToArray
+                    Call "Start processing block...".__DEBUG_ECHO
+                    Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
+                    Call $"{100 * i / chunks.Length}% ({i}/{chunks.Length})...".__DEBUG_ECHO
+                    Call i.MoveNext
+                Next
+
+                If EndRead Then
+                    Exit Do
+                Else
+                    Call Console.WriteLine("Process next block....")
+                End If
+            Loop
         End Sub
 
         ''' <summary>

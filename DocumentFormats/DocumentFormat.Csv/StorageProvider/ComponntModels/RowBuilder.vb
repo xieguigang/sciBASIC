@@ -34,6 +34,10 @@ Namespace StorageProvider.ComponentModels
             HaveMetaAttribute = Not SchemaProvider.MetaAttributes Is Nothing
         End Sub
 
+        ''' <summary>
+        ''' 从外部源之中获取本数据集的Schema的信息
+        ''' </summary>
+        ''' <param name="schema"></param>
         Public Sub Indexof(schema As ISchema)
             Dim LQuery = (From field As StorageProvider In Columns
                           Let ordinal As Integer = schema.GetOrdinal(field.Name)
