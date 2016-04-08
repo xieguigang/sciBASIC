@@ -8,9 +8,12 @@ Namespace ComponentModel
         Public ReadOnly Property FileName As String
 
         Protected __innerBuffer As String()
-        Protected __innerStream As StreamReader
+        Protected __innerStream As FileStream
 
         Const maxBufferSize As Integer = 512 * 1024 * 1024
+
+        Protected __bufferSize As Integer
+        Protected __encoding As Encoding
 
         ''' <summary>
         ''' 
@@ -18,15 +21,29 @@ Namespace ComponentModel
         ''' <param name="path"></param>
         ''' <param name="encoding"><see cref="System.Text.Encoding.Default"/>, if null</param>
         Sub New(path As String, Optional encoding As Encoding = Nothing, Optional maxBufferSize As Integer = BufferedStream.maxBufferSize)
-            FileName = path
-            encoding = encoding.Assertion
+            If Not path.FileExists Then
+                Throw New FileNotFoundException("Buffer file is not found!", path.GetFullPath)
+            ElseIf maxBufferSize > BufferedStream.maxBufferSize Then
+                Throw New InternalBufferOverflowException($"String reader buffer(size={maxBufferSize} bytes) is too large!")
+            Else
+                FileName = path
+                encoding = encoding.Assertion
+                __encoding = encoding
+            End If
 
             Dim file As FileInfo = FileIO.FileSystem.GetFileInfo(path)
+
             If file.Length > maxBufferSize Then
-                __innerStream = New StreamReader(path, encoding)
+                __innerStream = IO.File.Open(path, FileMode.Open)
+                __bufferSize = maxBufferSize
             Else
                 __innerBuffer = IO.File.ReadAllLines(path, encoding)
             End If
+        End Sub
+
+        Sub New(stream As FileStream, Optional readSize As Integer = BufferedStream.maxBufferSize)
+            __innerStream = stream
+            __bufferSize = readSize
         End Sub
 
         ''' <summary>
@@ -35,12 +52,33 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public ReadOnly Property EndRead As Boolean = False
 
+        Dim lefts As Byte() = New Byte(-1) {}
+
         Public Function BufferProvider() As String()
             If EndRead Then
                 Return Nothing
             Else
                 If __innerBuffer Is Nothing Then
+                    Dim buffer As Byte() = New Byte() {}
 
+                    If __innerStream.Length - __innerStream.Position >= __bufferSize Then
+                        buffer = New Byte(lefts.Length + __bufferSize - 1) {}
+                        _EndRead = False
+                    Else
+                        buffer = New Byte(lefts.Length + __innerStream.Length - __innerStream.Position - 1) {}
+                        _EndRead = True
+                    End If
+
+                    Call __innerStream.Read(buffer, lefts.Length, buffer.Length)
+
+                    Dim s As String = __encoding.GetString(buffer)
+                    Dim sbuf As String() = s.lTokens
+                    Dim last As String = sbuf.Last
+
+                    lefts = __encoding.GetBytes(last)
+                    sbuf = sbuf.Take(sbuf.Length - 1).ToArray
+
+                    Return sbuf
                 Else
                     _EndRead = True
                     Return __innerBuffer
