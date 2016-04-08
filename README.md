@@ -5,8 +5,9 @@ This framework project includes a lot of utility tools for the enterprises syste
 Includes:
 
 1. A document library of read and write Csv document for facility the data exchanges between the GCModeller and R program.
-2. A distribution computing framework 
+2. A distribution computing framework available at repository: https://github.com/xieguigang/Microsoft.VisualBasic.Parallel
 3. Microsoft VisualBasic Application Framework codes
 4. Memory pepline services between two client program
+5. VisualBasic language Feature:  Unix bash command supports in under development which parts of the API is available at namespace Microsoft.VisualBasic.Language  
 
 <!---->
