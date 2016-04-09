@@ -36,10 +36,15 @@ Namespace ComponentModel
         End Operator
     End Class
 
-    Public Structure LinkNode(Of T As IHashHandle)
+    Public Class LinkNode(Of T As IHashHandle)
 
         Private list As HashHandle(Of T)
-        Private node As T
+
+        ''' <summary>
+        ''' Current node in the chain list
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property node As T
 
         Friend Sub New(x As String, source As HashHandle(Of T))
             list = source
@@ -51,12 +56,20 @@ Namespace ComponentModel
             node = x
         End Sub
 
+        ''' <summary>
+        ''' The next element in the chain after this element
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property [Next] As LinkNode(Of T)
             Get
                 Return New LinkNode(Of T)(list.Next(node.Identifier), list)
             End Get
         End Property
 
+        ''' <summary>
+        ''' The previous element in the chain before this element
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Previous As LinkNode(Of T)
             Get
                 Return New LinkNode(Of T)(list.Previous(node.Identifier), list)
@@ -66,7 +79,7 @@ Namespace ComponentModel
         Public Overrides Function ToString() As String
             Return node.GetJson
         End Function
-    End Structure
+    End Class
 
     Public Class HashHandle(Of T As IHashHandle) : Implements IEnumerable(Of T)
 
@@ -139,6 +152,20 @@ Namespace ComponentModel
             Return New LinkNode(Of T)(name, Me)
         End Function
 
+        Public Sub Remove(x As String)
+            Dim n As T = Current(x).node
+            __innerList(n.AddrHwnd) = Nothing
+            __innerHash.Remove(n.Identifier)
+            __emptys.Enqueue(n.AddrHwnd)
+        End Sub
+
+        Public Sub Remove(i As Integer)
+            Dim n As T = __innerList(i)
+            __innerList(n.AddrHwnd) = Nothing
+            __innerHash.Remove(n.Identifier)
+            __emptys.Enqueue(n.AddrHwnd)
+        End Sub
+
         Public Sub Add(x As T)
             If __emptys.Count = 0 Then
                 Call __allocate()
@@ -156,6 +183,9 @@ Namespace ComponentModel
             Next
         End Sub
 
+        ''' <summary>
+        ''' Allocate memory
+        ''' </summary>
         Private Sub __allocate()
             Dim top As Integer = __innerList.Count
 
