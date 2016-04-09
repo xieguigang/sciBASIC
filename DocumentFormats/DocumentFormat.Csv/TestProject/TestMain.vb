@@ -15,6 +15,22 @@ Module TestMain
 
         Dim ddddddddd = CharsParser(<s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>)
 
+        Dim ssssssssss As String = <s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>
+
+        Dim rp As New List(Of Long)
+        Dim cp As New List(Of Long)
+
+        VBDebugger.Mute = True
+
+        For i As Integer = 0 To 30000
+            rp += Time(Sub() RegexTokenizer(ssssssssss))
+            cp += Time(Sub() CharsParser(ssssssssss))
+        Next
+
+        VBDebugger.Mute = False
+
+        Call $"regex={rp.Average}ms,    chars={cp.Average}ms".__DEBUG_ECHO
+
         Dim firstddd As String = "F:\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Csv\TestProject\parser_TEST.csv".ReadAllLines()(2)
         Dim row = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(firstddd)
 

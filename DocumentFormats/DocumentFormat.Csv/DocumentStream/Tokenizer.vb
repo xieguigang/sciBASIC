@@ -15,7 +15,7 @@ Namespace DocumentStream
         Const SplitRegxExpression As String = "[" & vbTab & ",](?=(?:[^""]|""[^""]*"")*$)"
 
         ''' <summary>
-        ''' Parsing the row data from the input string line.
+        ''' Parsing the row data from the input string line.(通过正则表达式来解析域)
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
@@ -40,6 +40,11 @@ Namespace DocumentStream
             Return Row.ToList
         End Function
 
+        ''' <summary>
+        ''' 通过Chars枚举来解析域
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
         Public Function CharsParser(s As String) As List(Of String)
             Dim tokens As New List(Of String)
             Dim temp As New List(Of Char)
@@ -84,7 +89,7 @@ Namespace DocumentStream
 
             If temp.Count > 0 Then
                 If temp.Last = """"c Then
-                    Call temp.RemoveLast
+                    Call temp.RemoveLast  ' BUGS fixed for test data:   "Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"
                 End If
                 Call tokens.Add(New String(temp.ToArray))
             Else
