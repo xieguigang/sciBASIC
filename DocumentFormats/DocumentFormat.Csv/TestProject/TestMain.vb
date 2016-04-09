@@ -10,6 +10,11 @@ Module TestMain
     ReadOnly sss As String = <cc>ssssss,"ss,sssss","ssss""sss","sss  """" sss",""""""""""""</cc>
 
     Sub Main()
+
+
+
+        Dim ddddddddd = CharsParser(<s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>)
+
         Dim firstddd As String = "F:\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Csv\TestProject\parser_TEST.csv".ReadAllLines()(2)
         Dim row = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(firstddd)
 

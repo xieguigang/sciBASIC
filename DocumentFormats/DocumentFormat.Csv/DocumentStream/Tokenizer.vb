@@ -83,6 +83,9 @@ Namespace DocumentStream
             Next
 
             If temp.Count > 0 Then
+                If temp.Last = """"c Then
+                    Call temp.RemoveLast
+                End If
                 Call tokens.Add(New String(temp.ToArray))
             Else
                 If deliExit Then
