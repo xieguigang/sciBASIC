@@ -19,13 +19,14 @@ Namespace KMeans
         '''
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False) As EntityLDM()
-            Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray
-            Dim ds = resultSet.ToArray(Function(x) New KMeans.Entity With {
-                                       .uid = x.Name,
-                                       .Properties = mapNames.ToArray(Function(s) x.Properties(s))
-                                       })
-            Dim tree As KMeans.Entity() = KMeans.TreeCluster(ds, parallel)
-            Dim saveResult = tree.ToArray(Function(x) x.ToLDM(mapNames))
+            Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray   ' 得到所有属性的名称
+            Dim ds As Entity() = resultSet.ToArray(
+                Function(x) New KMeans.Entity With {
+                    .uid = x.Name,
+                    .Properties = mapNames.ToArray(Function(s) x.Properties(s))
+                })  ' 在这里生成计算模型
+            Dim tree As KMeans.Entity() = KMeans.TreeCluster(ds, parallel)   ' 二叉树聚类操作
+            Dim saveResult As EntityLDM() = tree.ToArray(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In resultSet.ToArray(Function(x) x.Name)
                 For Each x In saveResult
@@ -73,7 +74,7 @@ Namespace KMeans
 
         Private Function __rootCluster(Of T As Entity)(cluster As KMeans.Cluster(Of T), id As String, [stop] As Integer) As Entity()
             For Each x In cluster
-                x.uid &= id
+                x.uid &= ("." & id)
             Next
 
             If cluster.NumOfEntity <= 1 Then
