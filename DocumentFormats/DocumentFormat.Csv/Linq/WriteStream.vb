@@ -8,7 +8,9 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Namespace DocumentStream.Linq
 
     ''' <summary>
-    ''' 文件写入流，这个一般是在遇到非常大的文件流的时候才需要使用
+    ''' The stream writer for the data set, you can handling the ultra large dataset 
+    ''' serialize into a csv document by using this writer stream object.
+    ''' (文件写入流，这个一般是在遇到非常大的文件流的时候才需要使用)
     ''' </summary>
     Public Class WriteStream(Of T As Class)
         Implements System.IDisposable
@@ -17,6 +19,11 @@ Namespace DocumentStream.Linq
         ReadOnly _fileIO As System.IO.StreamWriter
         ReadOnly RowWriter As RowWriter
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="Explicit">Schema parsing of the object strictly?</param>
         Sub New(path As String, Optional Explicit As Boolean = False)
             Dim typeDef As Type = GetType(T)
             Dim Schema = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
@@ -35,7 +42,8 @@ Namespace DocumentStream.Linq
         End Function
 
         ''' <summary>
-        ''' 将对象的数据源写入Csv文件之中
+        ''' Serialize the object data source into the csv document.
+        ''' (将对象的数据源写入Csv文件之中）
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
@@ -68,6 +76,12 @@ Namespace DocumentStream.Linq
             Return True
         End Function
 
+        ''' <summary>
+        ''' 这个是配合<see cref="DataStream.ForEachBlock(Of T)(Action(Of T()), Integer)"/>方法使用的
+        ''' </summary>
+        ''' <typeparam name="Tsrc"></typeparam>
+        ''' <param name="_ctype"></param>
+        ''' <returns></returns>
         Public Function ToArray(Of Tsrc)(_ctype As Func(Of Tsrc, T())) As Action(Of Tsrc)
             Return AddressOf New __ctypeTransform(Of Tsrc) With {
                 .__IO = Me,
@@ -75,6 +89,12 @@ Namespace DocumentStream.Linq
             }.WriteArray
         End Function
 
+        ''' <summary>
+        ''' 这个是配合<see cref="DataStream.ForEach(Of T)(Action(Of T))"/>方法使用的
+        ''' </summary>
+        ''' <typeparam name="Tsrc"></typeparam>
+        ''' <param name="_ctype"></param>
+        ''' <returns></returns>
         Public Function [Ctype](Of Tsrc)(_ctype As Func(Of Tsrc, T)) As Action(Of Tsrc)
             Return AddressOf New __ctypeTransform(Of Tsrc) With {
                 .__IO = Me,
@@ -109,6 +129,7 @@ Namespace DocumentStream.Linq
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
+                    Call _fileIO.Flush()
                     Call _fileIO.Close()
                     Call _fileIO.Dispose()    ' TODO: dispose managed state (managed objects).
                 End If
