@@ -5,11 +5,88 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace KMeans
 
+    Public Class Partition : Implements sIdEnumerable
+
+        Public Property Tag As String Implements sIdEnumerable.Identifier
+        Public ReadOnly Property NumOfEntity As Integer
+            Get
+                If uids Is Nothing Then
+                    Return 0
+                Else
+                    Return uids.Length
+                End If
+            End Get
+        End Property
+
+        Public Property uids As String()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+
     <PackageNamespace("KMeans.Tree.NET", Category:=APICategories.ResearchTools, Publisher:="smrucc@gcmodeller.org")>
     Public Module Tree
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="cluster"></param>
+        ''' <param name="depth">将会以最短的聚类作为数据分区的深度</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1) As List(Of Partition)
+            Dim list As New List(Of EntityLDM)(cluster)
+
+            If depth <= 0 Then
+                depth = (From x In list Select l = x.Cluster Order By l.Length Ascending).First.Split("."c).Length
+            End If
+
+            Dim clusters As New List(Of String)({""})
+
+            For i As Integer = 0 To depth - 1
+                Dim temp As New List(Of String)
+
+                For Each x As String In clusters
+                    temp += x & ".1"
+                    temp += x & ".2"
+                Next
+
+                clusters = temp
+            Next
+
+            For i As Integer = 0 To clusters.Count - 1   ' 去掉最开始的小数点
+                clusters(i) = Mid(clusters(i), 2)
+            Next
+
+            Dim partitions As New List(Of Partition)
+
+            For Each tag As String In clusters
+                Dim LQuery As EntityLDM() = (From x As EntityLDM
+                                             In list.AsParallel
+                                             Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
+                                             Select x).ToArray
+                list -= LQuery
+                partitions += New Partition With {
+                    .Tag = tag,
+                    .uids = LQuery.ToArray(Function(x) x.Name)
+                }
+            Next
+
+            If Not list.IsNullOrEmpty Then
+                partitions += New Partition With {
+                    .Tag = "Unclass",
+                    .uids = list.ToArray(Function(x) x.Name)
+                }
+            End If
+
+            Return partitions
+        End Function
 
         ''' <summary>
         ''' 树形聚类

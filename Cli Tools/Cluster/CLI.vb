@@ -55,4 +55,14 @@ Module CLI
         Dim tree = clusters.bTreeNET
         Return tree > out
     End Function
+
+    <ExportAPI("/bTree.Partitioning",
+               Usage:="/bTree.Partitioning /cluster <clusters.csv> [/depth <-1> /out <partions.csv>]")>
+    Public Function bTreePartitioning(args As CommandLine.CommandLine) As Integer
+        Dim inFile As String = args - "/cluster"
+        Dim depth As Integer = args.GetValue("/depth", -1)
+        Dim out As String = args.GetValue("/out", inFile.TrimFileExt & $".{depth}.csv")
+        Dim result As List(Of Partition) = inFile.LoadCsv(Of EntityLDM).Partitioning(depth)
+        Return result > out
+    End Function
 End Module
