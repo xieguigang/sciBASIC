@@ -277,6 +277,8 @@
     <Compile Include="MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
+    <Compile Include="Parallel\Threads\Groups\DataGroup.vb" />
+    <Compile Include="Parallel\Threads\Groups\GroupAPI.vb" />
     <Compile Include="Serialization\BinaryDumping\Buffer.vb" />
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
     <Compile Include="Serialization\Controls\Contrls.vb" />
