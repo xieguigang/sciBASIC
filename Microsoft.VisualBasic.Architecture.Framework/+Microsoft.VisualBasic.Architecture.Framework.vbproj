@@ -389,6 +389,7 @@
     <Compile Include="Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb" />
     <Compile Include="Tools\OSVersionInfo.vb" />
     <Compile Include="Tools\SingleInstanceFormEntry.vb" />
+    <Compile Include="Tools\SoftwareToolkits\Resources.vb" />
     <Compile Include="Tools\SoftwareToolkits\LanguageHelper\StringResources.vb" />
     <Compile Include="Tools\SoftwareToolkits\Ngen\Ngen.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
