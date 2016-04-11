@@ -207,6 +207,7 @@ Public Module App
 
     Sub New()
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
     End Sub
 
     ''' <summary>
