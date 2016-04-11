@@ -24,34 +24,7 @@ Module CLI
             End If
         End If
 
-        Dim entities As EntityLDM() = nums.ToArray(
-            Function(n, i) New EntityLDM With {
-                .Name = i & ":" & n,
-                .Properties = New Dictionary(Of String, Double) From {{"val", n}}
-            })
-
-        Return __kmeansCommon(entities, args.GetInt32("/n")) > out
-    End Function
-
-    Private Function __kmeansCommon(source As IEnumerable(Of EntityLDM), n As Integer) As List(Of EntityLDM)
-        Dim maps As String() = source.First.Properties.Keys.ToArray
-        Dim clusters As ClusterCollection(Of Entity) = n.ClusterDataSet(source.ToArray(Function(x) x.ToModel))
-        Dim result As New List(Of EntityLDM)
-
-        n = 1
-
-        For Each cluster As Cluster(Of Entity) In clusters
-            Dim values As EntityLDM() = cluster.ToArray(Function(x) x.ToLDM(maps))
-
-            For Each x In values
-                x.Cluster = n
-            Next
-
-            result += values
-            n += 1
-        Next
-
-        Return result
+        Return nums.ValueGroups(args.GetInt32("/n")) > out
     End Function
 
     <ExportAPI("/kmeans",
@@ -63,7 +36,7 @@ Module CLI
         Dim out As String = args.GetValue("/out", inFile.TrimFileExt & ".Cluster.Csv")
         Dim ds As IEnumerable(Of EntityLDM) = EntityLDM.Load(inFile, args.GetValue("/map", "Name"))
 
-        Return __kmeansCommon(ds, n) > out
+        Return Kmeans(ds, n) > out
     End Function
 
     <ExportAPI("/bTree.Cluster",

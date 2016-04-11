@@ -148,6 +148,7 @@
     <Compile Include="FourierTransform.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
     <Compile Include="KMeans\Entity.vb" />
