@@ -1,7 +1,9 @@
-﻿Imports System.Reflection
+﻿Imports System.ComponentModel.Composition
+Imports System.Reflection
 
 Namespace SoftwareToolkits
 
+    <Export(GetType(Global.System.Resources.ResourceManager))>
     Public Class Resources
 
         Public ReadOnly Property FileName As String
@@ -29,7 +31,40 @@ Namespace SoftwareToolkits
         End Sub
 
         Private Sub __resParser()
-            Dim assm As Assembly = Assembly.LoadFile(FileName)
+            Call __load(Assembly.LoadFile(FileName))
         End Sub
+
+        Private Sub __load(assm As Assembly)
+
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="my">null</param>
+        ''' <param name="assm"></param>
+        Private Sub New(my As Type, assm As Assembly)
+            Call __load(assm)
+        End Sub
+
+        ''' <summary>
+        ''' 从自身的程序集之中加载数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function LoadMy() As Resources
+            Return New Resources(Nothing, Assembly.GetExecutingAssembly)
+        End Function
+
+        ''' <summary>
+        ''' Returns the cached ResourceManager instance used by this class.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <Export(GetType(Global.System.Resources.ResourceManager))>
+        Public Shared ReadOnly Property MyResource As Global.System.Resources.ResourceManager
+            Get
+                Return My.Resources.ResourceManager
+            End Get
+        End Property
     End Class
 End Namespace
