@@ -23,10 +23,15 @@ Module CLI
         Return App.Exit(0)
     End Function
 
-    <ExportAPI("Find", Usage:="Find /regex /filtering --key <expression> [--dir <dir> --ext <ext_list>]")>
+    <ExportAPI("Find",
+               Info:="Find target file by search text content in the files.",
+               Usage:="Find /regex /filtering --key <expression> [--dir <dir> --ext <ext_list>]")>
+    <ParameterInfo("--ext", True, Description:="No format limitations.")>
+    <ParameterInfo("--dir", True,
+                   Description:="The directory which the files searches for, if this parameter is not presented, then the current work directory will be used.")>
     Public Function Found(argvs As CommandLine.CommandLine) As Integer
         Dim Key As String = argvs("--key")
-        Dim DIR As String = argvs("--dir")
+        Dim DIR As String = argvs.GetValue("--dir", App.CurrentWork)
         Dim Ext As String = argvs("--ext")
         Dim Regex As Boolean = argvs.GetBoolean("/regex")
         Dim FilteringExt As Boolean = argvs.GetBoolean("/filtering")
@@ -36,12 +41,8 @@ Module CLI
             Return -10
         End If
 
-        If String.IsNullOrEmpty(DIR) Then
-            DIR = FileIO.FileSystem.CurrentDirectory
-        End If
-
         Dim Result = Found(Keyword:=Key,
-                           Dir:=DIR,
+                           DIR:=DIR,
                            FilteringExt:=FilteringExt,
                            _extList:=Ext,
                            _usingRegex:=Regex,
@@ -73,13 +74,13 @@ Module CLI
     ''' 
     ''' </summary>
     ''' <param name="Keyword"></param>
-    ''' <param name="Dir"></param>
+    ''' <param name="DIR"></param>
     ''' <param name="_extList">a.ext;b.ext;c.ext</param>
     ''' <param name="_usingRegex"></param>
     ''' <param name="FilteringExt"></param>
     ''' <returns></returns>
     Public Function Found(Keyword As String,
-                          Dir As String,
+                          DIR As String,
                           _extList As String,
                           _usingRegex As Boolean,
                           FilteringExt As Boolean,
@@ -91,7 +92,7 @@ Module CLI
 
         Call Process("Scanning for files...", 1)
 
-        Dim Files = FileIO.FileSystem.GetFiles(Dir, FileIO.SearchOption.SearchAllSubDirectories).ToArray
+        Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchAllSubDirectories).ToArray
         Dim ExtList As String()
         Dim FileNumbers As Long = Files.Count
 

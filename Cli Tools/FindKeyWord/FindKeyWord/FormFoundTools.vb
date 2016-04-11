@@ -21,7 +21,7 @@ Public Class FormFoundTools
             ToolStripProgressBar1.Value = 0
 
             Dim Result = CLI.Found(Keyword:=tbKeyword.Text,
-                                   Dir:=DirOpen.SelectedPath,
+                                   DIR:=DirOpen.SelectedPath,
                                    FilteringExt:=cbFilteringExt.Checked,
                                    _extList:=tbExtList.Text,
                                    _usingRegex:=cbRegex.Checked,
@@ -111,7 +111,7 @@ Public Class FormFoundTools
             Call Settings.Save(Global.FindKeyWord.Settings.DefaultFile)
         End If
 
-        Settings.FilePath = Global.FindKeyWord.Settings.DefaultFile
+        Call Settings.SetPath(Global.FindKeyWord.Settings.DefaultFile)
 
         For Each editor In Settings.Editors
             Call Me.ContextMenuStrip1.Items.Add($"使用 {editor.Key} 打开", Nothing, AddressOf OpenEditor)
@@ -150,7 +150,7 @@ Public Class Settings : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
 
     Public Property DefaultEditor As String = "notepad"
 
-    Public Shared ReadOnly Property DefaultFile As String = ExecutablePath & ".cfg"
+    Public Shared ReadOnly Property DefaultFile As String = App.ExecutablePath.TrimFileExt & ".cfg"
 
     Public Property History As List(Of String)
 
@@ -159,6 +159,10 @@ Public Class Settings : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
     ''' </summary>
     ''' <returns></returns>
     Public Property Editors As List(Of Microsoft.VisualBasic.ComponentModel.TripleKeyValuesPair)
+
+    Sub SetPath(path As String)
+        FilePath = path
+    End Sub
 
     Public Function Open(editor As String, file As String) As Boolean
         Dim LQuery = (From item In Editors Where String.Equals(editor, item.Key) Select item).FirstOrDefault
