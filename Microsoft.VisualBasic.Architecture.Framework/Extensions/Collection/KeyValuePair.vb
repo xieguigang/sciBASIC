@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Public Module KeyValuePairExtensions
 
     ''' <summary>
-    ''' Creates a System.Collections.Generic.Dictionary`2 from an System.Collections.Generic.IEnumerable`1
+    ''' Creates a <see cref="System.Collections.Generic.Dictionary"/>`2 from an <see cref="System.Collections.Generic.IEnumerable"/>`1
     ''' according to a specified key selector function.
     ''' </summary>
     ''' <typeparam name="T">Unique identifier provider</typeparam>
@@ -20,7 +20,7 @@ Public Module KeyValuePairExtensions
                 i += 1
             Next
         Catch ex As Exception
-            ex = New Exception(source(i).Identifier, ex)
+            ex = New Exception("Identifier -> [ " & source(i).Identifier & " ]", ex)
             Throw ex
         End Try
 
