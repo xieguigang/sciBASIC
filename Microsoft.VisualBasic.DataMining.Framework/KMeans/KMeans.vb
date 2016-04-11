@@ -129,8 +129,7 @@ Namespace KMeans
             While stableClustersCount <> clusters.NumOfCluster
                 stableClustersCount = 0
 
-                Dim newClusters As ClusterCollection(Of T) =
-                    KMeans.ClusterDataSet(clusters, data)
+                Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data)
 
                 For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
                     Dim x As Cluster(Of T) = newClusters(clusterIndex)
@@ -140,7 +139,7 @@ Namespace KMeans
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
-                    If (KMeans.EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then
+                    If (EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then
                         stableClustersCount += 1
                     End If
                 Next
@@ -194,10 +193,10 @@ Namespace KMeans
                     End If
 
                     If cluster = 0 Then
-                        firstClusterDistance = KMeans.EuclideanDistance(dataPoint.Properties, clusterMean)
+                        firstClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
                         position = cluster
                     Else
-                        secondClusterDistance = KMeans.EuclideanDistance(dataPoint.Properties, clusterMean)
+                        secondClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
 
                         If firstClusterDistance > secondClusterDistance Then
                             firstClusterDistance = secondClusterDistance

@@ -102,7 +102,7 @@ Namespace KMeans
                     .uid = x.Name,
                     .Properties = mapNames.ToArray(Function(s) x.Properties(s))
                 })  ' 在这里生成计算模型
-            Dim tree As KMeans.Entity() = KMeans.TreeCluster(ds, parallel)   ' 二叉树聚类操作
+            Dim tree As KMeans.Entity() = TreeCluster(ds, parallel)   ' 二叉树聚类操作
             Dim saveResult As EntityLDM() = tree.ToArray(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In resultSet.ToArray(Function(x) x.Name)
