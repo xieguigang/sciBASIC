@@ -6,16 +6,36 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 
 Module CLI
 
-    <ExportAPI("/kmeans",
-               Info:="Performance a kmeans clustering operation.",
-               Usage:="/kmeans /MAT <entity_matrix.Csv> /n <num_of_cluster> [/map <Name> /out <cluster.csv>]")>
-    Public Function ClusterDataSet(args As CommandLine.CommandLine) As Integer
-        Dim inFile As String = args("/MAT")
-        Dim n As Integer = args.GetInt32("/n")
-        Dim out As String = args.GetValue("/out", inFile.TrimFileExt & ".Cluster.Csv")
-        Dim ds As IEnumerable(Of EntityLDM) = EntityLDM.Load(inFile, args.GetValue("/map", "Name"))
-        Dim maps As String() = ds.First.Properties.Keys.ToArray
-        Dim clusters As ClusterCollection(Of Entity) = n.ClusterDataSet(ds.ToArray(Function(x) x.ToModel))
+    <ExportAPI("/n.cluster", Usage:="/n.cluster /in <txt/values> /n <num_of_cluster> [/out <out.csv>]")>
+    Public Function ClusterNumbers(args As CommandLine.CommandLine) As Integer
+        Dim [in] As String = args("/in")
+        Dim out As String = args("/out")
+        Dim nums As Double()
+
+        If [in].FileExists Then
+            nums = [in].ReadAllLines.ToArray(Function(s) Val(s))
+            If String.IsNullOrEmpty(out) Then
+                out = [in].TrimFileExt & ".cluster.csv"
+            End If
+        Else
+            nums = [in].Split(","c).ToArray(Function(s) Val(s.Trim))
+            If String.IsNullOrEmpty(out) Then
+                out = App.CurrentWork & "/ClusterNumber.Csv"
+            End If
+        End If
+
+        Dim entities As EntityLDM() = nums.ToArray(
+            Function(n, i) New EntityLDM With {
+                .Name = i & ":" & n,
+                .Properties = New Dictionary(Of String, Double) From {{"val", n}}
+            })
+
+        Return __kmeansCommon(entities, args.GetInt32("/n")) > out
+    End Function
+
+    Private Function __kmeansCommon(source As IEnumerable(Of EntityLDM), n As Integer) As List(Of EntityLDM)
+        Dim maps As String() = source.First.Properties.Keys.ToArray
+        Dim clusters As ClusterCollection(Of Entity) = n.ClusterDataSet(source.ToArray(Function(x) x.ToModel))
         Dim result As New List(Of EntityLDM)
 
         n = 1
@@ -31,7 +51,19 @@ Module CLI
             n += 1
         Next
 
-        Return result > out
+        Return result
+    End Function
+
+    <ExportAPI("/kmeans",
+               Info:="Performance a kmeans clustering operation.",
+               Usage:="/kmeans /MAT <entity_matrix.Csv> /n <num_of_cluster> [/map <Name> /out <cluster.csv>]")>
+    Public Function ClusterDataSet(args As CommandLine.CommandLine) As Integer
+        Dim inFile As String = args("/MAT")
+        Dim n As Integer = args.GetInt32("/n")
+        Dim out As String = args.GetValue("/out", inFile.TrimFileExt & ".Cluster.Csv")
+        Dim ds As IEnumerable(Of EntityLDM) = EntityLDM.Load(inFile, args.GetValue("/map", "Name"))
+
+        Return __kmeansCommon(ds, n) > out
     End Function
 
     <ExportAPI("/bTree.Cluster",
