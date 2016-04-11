@@ -61,12 +61,41 @@
 
         Public Overrides Property TAG As Itag Implements IGrouping(Of Itag, T).Key
         Public Property Group As T()
+            Get
+                Return __list.ToArray
+            End Get
+            Set(value As T())
+                Call __list.Clear()
+
+                If Not value.IsNullOrEmpty Then
+                    Call __list.AddRange(value)
+                End If
+            End Set
+        End Property
+
+        ReadOnly __list As New List(Of T)
 
         Public ReadOnly Property Count As Integer
             Get
                 Return Group.Length
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(tag As Itag, data As IEnumerable(Of T))
+            Me.TAG = tag
+            Me.Group = data.ToArray
+        End Sub
+
+        Public Sub Add(x As T)
+            __list.Add(x)
+        End Sub
+
+        Public Sub Add(source As IEnumerable(Of T))
+            __list.AddRange(source)
+        End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For i As Integer = 0 To Group.Length - 1
