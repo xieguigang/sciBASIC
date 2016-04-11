@@ -7,6 +7,7 @@ Namespace SoftwareToolkits
     Public Class Resources
 
         Public ReadOnly Property FileName As String
+        Public ReadOnly Property Resources As Global.System.Resources.ResourceManager
 
         Sub New()
             Call Me.New(Assembly.GetExecutingAssembly)
@@ -35,7 +36,26 @@ Namespace SoftwareToolkits
         End Sub
 
         Private Sub __load(assm As Assembly)
-
+            Dim __resEXPORT As Type = GetType(ExportAttribute)
+            Dim typeDef As Type = (From type As Type
+                                   In assm.GetTypes
+                                   Let exp As ExportAttribute = type.GetCustomAttribute(__resEXPORT)
+                                   Where Not exp Is Nothing AndAlso
+                                       exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
+                                   Select type).FirstOrDefault
+            If Not typeDef Is Nothing Then
+                Dim myRes As PropertyInfo = (From prop As PropertyInfo
+                                             In typeDef.GetProperties(BindingFlags.Public Or BindingFlags.Static)
+                                             Let exp As ExportAttribute = prop.GetCustomAttribute(__resEXPORT)
+                                             Where prop.CanRead AndAlso
+                                                 Not exp Is Nothing AndAlso
+                                                 exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
+                                             Select prop).FirstOrDefault
+                If Not myRes Is Nothing Then
+                    Dim value As Object = myRes.GetValue(Nothing, Nothing)
+                    _Resources = DirectCast(value, Global.System.Resources.ResourceManager)
+                End If
+            End If
         End Sub
 
         ''' <summary>
