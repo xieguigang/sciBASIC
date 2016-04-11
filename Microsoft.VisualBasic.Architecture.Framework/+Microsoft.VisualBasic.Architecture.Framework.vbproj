@@ -268,6 +268,7 @@
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
+    <Compile Include="Tools\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
     <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
     <Compile Include="Language\UnixBash\FileSystem\File.vb" />
