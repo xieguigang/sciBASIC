@@ -1,5 +1,8 @@
 ﻿Imports System.ComponentModel.Composition
+Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 
 Namespace SoftwareToolkits
 
@@ -8,6 +11,217 @@ Namespace SoftwareToolkits
 
         Public ReadOnly Property FileName As String
         Public ReadOnly Property Resources As Global.System.Resources.ResourceManager
+
+        '
+        ' Summary:
+        '     Returns the value of the specified non-string resource.
+        '
+        ' Parameters:
+        '   name:
+        '     The name of the resource to get.
+        '
+        ' Returns:
+        '     The value of the resource localized for the caller's current culture settings.
+        '     If an appropriate resource set exists but name cannot be found, the method returns
+        '     null.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     The name parameter is null.
+        '
+        '   T:System.Resources.MissingManifestResourceException:
+        '     No usable set of localized resources has been found, and there are no default
+        '     culture resources. For information about how to handle this exception, see the
+        '     "Handling MissingManifestResourceException and MissingSatelliteAssemblyException
+        '     Exceptions" section in the System.Resources.ResourceManager class topic.
+        '
+        '   T:System.Resources.MissingSatelliteAssemblyException:
+        '     The default culture's resources reside in a satellite assembly that could not
+        '     be found. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        Public Overridable Function GetObject(name As String) As Object
+            Return Resources.GetObject(name)
+        End Function
+        '
+        ' Summary:
+        '     Gets the value of the specified non-string resource localized for the specified
+        '     culture.
+        '
+        ' Parameters:
+        '   name:
+        '     The name of the resource to get.
+        '
+        '   culture:
+        '     The culture for which the resource is localized. If the resource is not localized
+        '     for this culture, the resource manager uses fallback rules to locate an appropriate
+        '     resource.If this value is null, the System.Globalization.CultureInfo object is
+        '     obtained by using the System.Globalization.CultureInfo.CurrentUICulture property.
+        '
+        ' Returns:
+        '     The value of the resource, localized for the specified culture. If an appropriate
+        '     resource set exists but name cannot be found, the method returns null.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     The name parameter is null.
+        '
+        '   T:System.Resources.MissingManifestResourceException:
+        '     No usable set of resources have been found, and there are no default culture
+        '     resources. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        '
+        '   T:System.Resources.MissingSatelliteAssemblyException:
+        '     The default culture's resources reside in a satellite assembly that could not
+        '     be found. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        Public Overridable Function GetObject(name As String, culture As CultureInfo) As Object
+            Return Resources.GetObject(name, culture)
+        End Function
+
+        '
+        ' Summary:
+        '     Returns an unmanaged memory stream object from the specified resource.
+        '
+        ' Parameters:
+        '   name:
+        '     The name of a resource.
+        '
+        ' Returns:
+        '     An unmanaged memory stream object that represents a resource .
+        '
+        ' Exceptions:
+        '   T:System.InvalidOperationException:
+        '     The value of the specified resource is not a System.IO.MemoryStream object.
+        '
+        '   T:System.ArgumentNullException:
+        '     name is null.
+        '
+        '   T:System.Resources.MissingManifestResourceException:
+        '     No usable set of resources is found, and there are no default resources. For
+        '     information about how to handle this exception, see the "Handling MissingManifestResourceException
+        '     and MissingSatelliteAssemblyException Exceptions" section in the System.Resources.ResourceManager
+        '     class topic.
+        '
+        '   T:System.Resources.MissingSatelliteAssemblyException:
+        '     The default culture's resources reside in a satellite assembly that could not
+        '     be found. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        <ComVisible(False)>
+        Public Function GetStream(name As String) As UnmanagedMemoryStream
+            Return Resources.GetStream(name)
+        End Function
+        '
+        ' Summary:
+        '     Returns an unmanaged memory stream object from the specified resource, using
+        '     the specified culture.
+        '
+        ' Parameters:
+        '   name:
+        '     The name of a resource.
+        '
+        '   culture:
+        '     An object that specifies the culture to use for the resource lookup. If culture
+        '     is null, the culture for the current thread is used.
+        '
+        ' Returns:
+        '     An unmanaged memory stream object that represents a resource.
+        '
+        ' Exceptions:
+        '   T:System.InvalidOperationException:
+        '     The value of the specified resource is not a System.IO.MemoryStream object.
+        '
+        '   T:System.ArgumentNullException:
+        '     name is null.
+        '
+        '   T:System.Resources.MissingManifestResourceException:
+        '     No usable set of resources is found, and there are no default resources. For
+        '     information about how to handle this exception, see the "Handling MissingManifestResourceException
+        '     and MissingSatelliteAssemblyException Exceptions" section in the System.Resources.ResourceManager
+        '     class topic.
+        '
+        '   T:System.Resources.MissingSatelliteAssemblyException:
+        '     The default culture's resources reside in a satellite assembly that could not
+        '     be found. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        <ComVisible(False)>
+        Public Function GetStream(name As String, culture As CultureInfo) As UnmanagedMemoryStream
+            Return Resources.GetStream(name, culture)
+        End Function
+        '
+        ' Summary:
+        '     Returns the value of the specified string resource.
+        '
+        ' Parameters:
+        '   name:
+        '     The name of the resource to retrieve.
+        '
+        ' Returns:
+        '     The value of the resource localized for the caller's current UI culture, or null
+        '     if name cannot be found in a resource set.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     The name parameter is null.
+        '
+        '   T:System.InvalidOperationException:
+        '     The value of the specified resource is not a string.
+        '
+        '   T:System.Resources.MissingManifestResourceException:
+        '     No usable set of resources has been found, and there are no resources for the
+        '     default culture. For information about how to handle this exception, see the
+        '     "Handling MissingManifestResourceException and MissingSatelliteAssemblyException
+        '     Exceptions" section in the System.Resources.ResourceManager class topic.
+        '
+        '   T:System.Resources.MissingSatelliteAssemblyException:
+        '     The default culture's resources reside in a satellite assembly that could not
+        '     be found. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        Public Overridable Function GetString(name As String) As String
+            Return Resources.GetString(name)
+        End Function
+
+        '
+        ' Summary:
+        '     Returns the value of the string resource localized for the specified culture.
+        '
+        ' Parameters:
+        '   name:
+        '     The name of the resource to retrieve.
+        '
+        '   culture:
+        '     An object that represents the culture for which the resource is localized.
+        '
+        ' Returns:
+        '     The value of the resource localized for the specified culture, or null if name
+        '     cannot be found in a resource set.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     The name parameter is null.
+        '
+        '   T:System.InvalidOperationException:
+        '     The value of the specified resource is not a string.
+        '
+        '   T:System.Resources.MissingManifestResourceException:
+        '     No usable set of resources has been found, and there are no resources for a default
+        '     culture. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        '
+        '   T:System.Resources.MissingSatelliteAssemblyException:
+        '     The default culture's resources reside in a satellite assembly that could not
+        '     be found. For information about how to handle this exception, see the "Handling
+        '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
+        '     section in the System.Resources.ResourceManager class topic.
+        Public Overridable Function GetString(name As String, culture As CultureInfo) As String
+            Return Resources.GetString(name, culture)
+        End Function
 
         Sub New()
             Call Me.New(Assembly.GetExecutingAssembly)
