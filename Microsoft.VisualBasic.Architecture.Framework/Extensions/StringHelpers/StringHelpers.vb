@@ -9,6 +9,14 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <Extension> Public Function IsBlank(s As String) As Boolean
+        If s Is Nothing OrElse String.IsNullOrEmpty(s) OrElse String.IsNullOrWhiteSpace(s) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     ''' <summary>
     ''' Call s.Remove(s.Length - 1, 1)
     ''' </summary>
