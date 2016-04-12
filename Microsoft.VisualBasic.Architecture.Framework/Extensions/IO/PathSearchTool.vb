@@ -17,7 +17,7 @@ Imports System.Collections.ObjectModel
 Public Module ProgramPathSearchTool
 
     <Extension>
-    Public Iterator Function EnumerateFiles(DIR As String, keyword As String) As IEnumerable(Of String)
+    Public Iterator Function EnumerateFiles(DIR As String, ParamArray keyword As String()) As IEnumerable(Of String)
         Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
 
         For Each file As String In files

@@ -771,7 +771,8 @@ Public Module Extensions
     Const _DOUBLE As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
 
     ''' <summary>
-    ''' 使用正则表达式解析目标字符串对象之中的一个实数
+    ''' Parsing a real number from the expression text by using the regex expression <see cref="_DOUBLE"/>.
+    ''' (使用正则表达式解析目标字符串对象之中的一个实数)
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
@@ -782,6 +783,12 @@ Public Module Extensions
         Return Val(s.Match(_DOUBLE))
     End Function
 
+    ''' <summary>
+    ''' All of the number value in the target array offset a integer value.
+    ''' </summary>
+    ''' <param name="array"></param>
+    ''' <param name="intOffset"></param>
+    ''' <returns></returns>
     <ExportAPI("OffSet")>
     <Extension> Public Function Offset(ByRef array As Integer(), intOffset As Integer) As Integer()
         For i As Integer = 0 To array.Length - 1
@@ -790,6 +797,12 @@ Public Module Extensions
         Return array
     End Function
 
+    ''' <summary>
+    ''' All of the number value in the target array offset a integer value.
+    ''' </summary>
+    ''' <param name="array"></param>
+    ''' <param name="intOffset"></param>
+    ''' <returns></returns>
     <ExportAPI("OffSet")>
     <Extension> Public Function Offset(ByRef array As Long(), intOffset As Integer) As Long()
         For i As Integer = 0 To array.Length - 1
@@ -799,7 +812,8 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 空字符串会返回空的日期
+    ''' Parsing the dat value from the expression text, if any exception happend, a null date value will returned.
+    ''' (空字符串会返回空的日期)
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
@@ -811,21 +825,6 @@ Public Module Extensions
         Else
             Return DateTime.Parse(s)
         End If
-    End Function
-
-    ''' <summary>
-    ''' 当所被读取的文本文件的大小超过了<see cref="System.Text.StringBuilder"></see>的上限的时候，就需要使用本方法进行读取操作了。<paramref name="Path">目标文件</paramref>必须是已经存在的文件
-    ''' </summary>
-    ''' <param name="Path">目标文件必须是已经存在的文件</param>
-    ''' <param name="Encoding"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function ReadUltraLargeTextFile(Path As String, Encoding As System.Text.Encoding) As String
-        Using FileStream As FileStream = New FileStream(Path, FileMode.Open)
-            Dim ChunkBuffer As Byte() = New Byte(FileStream.Length - 1) {}
-            Call FileStream.Read(ChunkBuffer, 0, ChunkBuffer.Count)
-            Return Encoding.GetString(ChunkBuffer)
-        End Using
     End Function
 
 #Region ""
@@ -1113,7 +1112,10 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 向字典对象之中更新或者插入新的数据，假若目标字典对象之中已经存在了一个数据的话，则会将原有的数据覆盖，并返回原来的数据
+    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="sIdEnumerable.Identifier"/> 
+    ''' is not exists in the dictionary, then will be insert, else the old value will be replaced with the parameter 
+    ''' value <paramref name="item"/>.
+    ''' (向字典对象之中更新或者插入新的数据，假若目标字典对象之中已经存在了一个数据的话，则会将原有的数据覆盖，并返回原来的数据)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dict"></param>
@@ -1137,26 +1139,32 @@ Public Module Extensions
         Return pre
     End Function
 
-    <Extension> Public Function Remove(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
-                            ByRef dict As Dictionary(Of String, T), item As T) As T
-
+    ''' <summary>
+    ''' Remove target object from dictionary.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="dict"></param>
+    ''' <param name="item"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Remove(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), item As T) As T
         Call dict.Remove(item.Identifier)
         Return item
     End Function
 
-    <Extension> Public Function AddRange(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
-                            ByRef dict As Dictionary(Of String, T),
-                            data As Generic.IEnumerable(Of T)) _
-        As Dictionary(Of String, T)
-
-        For Each item In data
-            Call InsertOrUpdate(dict, item)
+    <Extension> Public Function AddRange(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), data As IEnumerable(Of T)) As Dictionary(Of String, T)
+        For Each x As T In data
+            Call InsertOrUpdate(dict, x)
         Next
 
         Return dict
     End Function
 #End If
 
+    ''' <summary>
+    ''' The <see cref="StringBuilder"/> object its content is nothing?
+    ''' </summary>
+    ''' <param name="sBuilder"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(sBuilder As StringBuilder) As Boolean
         Return sBuilder Is Nothing OrElse sBuilder.Length = 0
     End Function
@@ -1165,11 +1173,11 @@ Public Module Extensions
     ''' Merge the target array collection into one collection.(将目标数组的集合合并为一个数组)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixToVector(Of T)(Collection As Generic.IEnumerable(Of Generic.IEnumerable(Of T))) As T()
-        Return MatrixToList(Collection).ToArray
+    <Extension> Public Function MatrixToVector(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T()
+        Return MatrixToList(source).ToArray
     End Function
 
     ''' <summary>
@@ -1192,22 +1200,23 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Merge the target array collection into one collection.(将目标数组的集合合并为一个数组，这个方法是提供给超大的集合的，即元素的数目非常的多的，即超过了<see cref="Integer"></see>的上限值)
+    ''' Merge the target array collection into one collection.
+    ''' (将目标数组的集合合并为一个数组，这个方法是提供给超大的集合的，即元素的数目非常的多的，即超过了<see cref="Integer"></see>的上限值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixToUltraLargeVector(Of T)(Collection As Generic.IEnumerable(Of T())) As LinkedList(Of T)
-        Dim ChunkBuffer As LinkedList(Of T) = New LinkedList(Of T)
+    <Extension> Public Function MatrixToUltraLargeVector(Of T)(source As IEnumerable(Of T())) As LinkedList(Of T)
+        Dim lnkList As LinkedList(Of T) = New LinkedList(Of T)
 
-        For Each Line As T() In Collection
+        For Each Line As T() In source
             For Each item As T In Line
-                Call ChunkBuffer.AddLast(item)
+                Call lnkList.AddLast(item)
             Next
         Next
 
-        Return ChunkBuffer
+        Return lnkList
     End Function
 
     ''' <summary>
@@ -1217,7 +1226,7 @@ Public Module Extensions
     ''' <param name="list"></param>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    <Extension> Public Function AddRange(Of T)(list As LinkedList(Of T), data As Generic.IEnumerable(Of T)) As LinkedList(Of T)
+    <Extension> Public Function AddRange(Of T)(list As LinkedList(Of T), data As IEnumerable(Of T)) As LinkedList(Of T)
         For Each item As T In data
             Call list.AddLast(item)
         Next
@@ -1256,13 +1265,20 @@ Public Module Extensions
         Return LQuery
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="DIR">The source directory.</param>
+    ''' <param name="moveTo"></param>
+    ''' <param name="Split"></param>
+    ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Mv.Split")>
-    Public Function SplitMV(dir As String, <Parameter("Dir.MoveTo")> moveTo As String, Split As Integer) As Integer
+    Public Function SplitMV(DIR As String, <Parameter("DIR.MoveTo")> moveTo As String, Split As Integer) As Integer
 #Else
     Public Function SplitMV(dir As String, moveto As String, split As Integer) As Integer
 #End If
-        Dim Files As String() = FileIO.FileSystem.GetFiles(dir, FileIO.SearchOption.SearchTopLevelOnly).ToArray
+        Dim Files As String() = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly).ToArray
         Dim n As Integer
         Dim m As Integer = 1
 
@@ -1290,7 +1306,9 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 判断目标实数是否为一个无穷数或者非计算的数字，产生的原因主要来自于除0运算结果或者达到了<see cref="Double"></see>的上限或者下限
+    ''' The target parameter <paramref name="n"/> value is NaN or not a real number or not?
+    ''' (判断目标实数是否为一个无穷数或者非计算的数字，产生的原因主要来自于除0运算结果或者达到了
+    ''' <see cref="Double"></see>的上限或者下限)
     ''' </summary>
     ''' <param name="n"></param>
     ''' <returns></returns>
@@ -1308,6 +1326,7 @@ Public Module Extensions
     End Function
 
 #If FRAMEWORD_CORE Then
+
     ''' <summary>
     ''' Fuzzy match two string, this is useful for the text query or searching.
     ''' </summary>
@@ -1315,9 +1334,20 @@ Public Module Extensions
     ''' <param name="Subject"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("FuzzyMatch", Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(Query As String, Subject As String) As Boolean
-        Return FuzzyMatchString.Equals(Query, Subject)
+    <ExportAPI("FuzzyMatch",
+               Info:="Fuzzy match two string, this is useful for the text query or searching.")>
+    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True) As Boolean
+        If tokenbased Then
+            Dim edits As DistResult = StatementMatches.MatchFuzzy(Query, Subject)
+
+            If edits Is Nothing Then
+                Return False
+            Else
+                Return edits.MatchSimilarity >= 0.8
+            End If
+        Else
+            Return FuzzyMatchString.Equals(Query, Subject)
+        End If
     End Function
 #End If
 
@@ -1345,7 +1375,8 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.(请注意，空值字符串为False)
+    ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
+    ''' (请注意，空值字符串为False)
     ''' </summary>
     ''' <param name="str"></param>
     ''' <returns></returns>
@@ -1394,16 +1425,23 @@ Public Module Extensions
                 [Date].Hour * 100 + [Date].Minute * 10 + [Date].Second
     End Function
 
+    ''' <summary>
+    ''' 这个是一个安全的方法，假若下标越界或者目标数据源为空的话，则会返回空值
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="index"></param>
+    ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Get.Item")>
-    <Extension> Public Function GetItem(Of T)(Collection As Generic.IEnumerable(Of T), index As Integer) As T
+    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #Else
     <Extension> Public Function GetItem(Of T)(Collection As Generic.IEnumerable(Of T), index As Integer) As T
 #End If
-        If Collection.IsNullOrEmpty OrElse index >= Collection.Count Then
+        If source.IsNullOrEmpty OrElse index >= source.Count Then
             Return Nothing
         Else
-            Return Collection(index)
+            Return source(index)
         End If
     End Function
 
@@ -1524,8 +1562,10 @@ Public Module Extensions
     End Function
 
 #If FRAMEWORD_CORE Then
+
     ''' <summary>
-    ''' Remove all of the null object in the target object collection
+    ''' Remove all of the null object in the target object collection.
+    ''' (这个是一个安全的方法，假若目标集合是空值，则函数会返回一个空的集合)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -1553,7 +1593,8 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Return a collection with randomize element position in <paramref name="source">the original collection</paramref>.(从原有序序列中获取一个随机元素的序列)
+    ''' Return a collection with randomize element position in <paramref name="source">the original collection</paramref>.
+    ''' (从原有序序列中获取一个随机元素的序列)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -1600,26 +1641,22 @@ Public Module Extensions
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable">
+    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="sIdEnumerable">
     ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="UniqueId">
     ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="UniqueId"></param>
     ''' <param name="IgnoreCase"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("Get.Item")>
-    <Extension> Public Function GetItem(Of T As Microsoft.VisualBasic.ComponentModel.Collection.Generic.sIdEnumerable)(
-        Collection As Generic.IEnumerable(Of T), UniqueId As String, Optional IgnoreCase As StringComparison = StringComparison.Ordinal) As T
-
-        Dim LQuery = (From item In Collection Where String.Equals(UniqueId, item.Identifier, IgnoreCase) Select item).ToArray
-        If Not LQuery.IsNullOrEmpty Then
-            Return LQuery.First
-        Else
-            Return Nothing
-        End If
+    <Extension> Public Function GetItem(Of T As sIdEnumerable)(source As IEnumerable(Of T),
+                                                               UniqueId As String,
+                                                               Optional IgnoreCase As StringComparison = StringComparison.Ordinal) As T
+        Dim find As T = (From x As T In source Where String.Equals(UniqueId, x.Identifier, IgnoreCase) Select x).FirstOrDefault
+        Return find
     End Function
 #End If
 

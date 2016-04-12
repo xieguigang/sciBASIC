@@ -5,6 +5,13 @@
     ''' </summary>
     Public Module StatementMatches
 
+        ''' <summary>
+        ''' 基于字符的比较
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <param name="strict"></param>
+        ''' <returns></returns>
         Public Function Match(s1 As String, s2 As String, Optional strict As Boolean = False) As DistResult
             Dim t1 As String() = s1.Split
             Dim t2 As String() = s2.Split
@@ -12,6 +19,14 @@
             Return LevenshteinDistance.ComputeDistance(t1, t2, equals, Function(s) s.FirstOrDefault)
         End Function
 
+        ''' <summary>
+        ''' 基于单词的比较
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <param name="strict"></param>
+        ''' <param name="cut"></param>
+        ''' <returns></returns>
         Public Function MatchFuzzy(s1 As String, s2 As String, Optional strict As Boolean = False, Optional cut As Double = 0.8) As DistResult
             Dim t1 As String() = s1.Split
             Dim t2 As String() = s2.Split
