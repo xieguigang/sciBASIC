@@ -364,9 +364,11 @@ Public Module ProgramPathSearchTool
                       In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
                       Select ID = IO.Path.GetFileNameWithoutExtension(path),
                           path
-                      Group By ID Into Group).ToArray
-        Dim Dict = LQuery.ToDictionary(keySelector:=Function(item) item.ID, elementSelector:=Function(item) item.Group.First.path)
-        Return Dict
+                      Group By ID Into Group)
+        Dim dict As Dictionary(Of String, String) =
+            LQuery.ToDictionary(Function(item) item.ID,
+                                Function(item) item.Group.First.path)
+        Return dict
     End Function
 
     ''' <summary>
@@ -387,12 +389,12 @@ Public Module ProgramPathSearchTool
 
     <ExportAPI("Load.ResourceEntry", Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
     <Extension>
-    Public Function LoadSourceEntryList(source As Generic.IEnumerable(Of String)) As Dictionary(Of String, String)
+    Public Function LoadSourceEntryList(source As IEnumerable(Of String)) As Dictionary(Of String, String)
         Dim LQuery = (From path As String
                       In source
                       Select ID = IO.Path.GetFileNameWithoutExtension(path), path
-                      Group By ID Into Group).ToArray
-        Dim PathDict As Dictionary(Of String, String) = LQuery.ToDictionary(keySelector:=Function(item) item.ID, elementSelector:=Function(item) item.Group.First.path)
+                      Group By ID Into Group)
+        Dim PathDict As Dictionary(Of String, String) = LQuery.ToDictionary(Function(item) item.ID, Function(item) item.Group.First.path)
         Return PathDict
     End Function
 
