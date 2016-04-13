@@ -65,6 +65,15 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         End If
     End Function
 
+    Public Function SafeGetValue(name As String, Optional ByRef [default] As V = Nothing) As V
+        Dim x As V = Nothing
+        If TryGetValue(name, x) Then
+            Return x
+        Else
+            Return [default]
+        End If
+    End Function
+
     ''' <summary>
     ''' 假若目标元素不存在于本字典之中，则会返回False
     ''' </summary>
