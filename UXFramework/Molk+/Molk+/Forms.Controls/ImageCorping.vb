@@ -120,7 +120,7 @@ Public Class ImageCorping
     End Sub
 
     Public Shared Function Corping(source As Image, Rect As Rectangle) As Image
-        Dim bit As Bitmap = New Bitmap(Clone(source), source.Width, source.Height)
+        Dim bit As Bitmap = New Bitmap(GDIPlusExtensions.Clone(res:=source), source.Width, source.Height)
         Dim cropBitmap As Bitmap = New Bitmap(Rect.Width, Rect.Height)
         Dim Gr As Graphics = Graphics.FromImage(cropBitmap)
 
