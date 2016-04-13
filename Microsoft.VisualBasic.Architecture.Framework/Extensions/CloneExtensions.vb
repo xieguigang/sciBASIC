@@ -10,7 +10,7 @@ Public Module CloneExtensions
         Return New List(Of T)(list)
     End Function
 
-    <Extension> Public Function Copy(Of T)(array As T()) As T()
+    <Extension> Public Function CloneCopy(Of T)(array As T()) As T()
         Return DirectCast(array.Clone, T())
     End Function
 
