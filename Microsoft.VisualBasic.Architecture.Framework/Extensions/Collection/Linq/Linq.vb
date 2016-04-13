@@ -334,6 +334,14 @@ Namespace Linq
             End If
         End Function
 
+        <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
+            If source.IsNullOrEmpty Then
+                Return [default]
+            Else
+                Return source.First
+            End If
+        End Function
+
         Public Function ToArray(source As IEnumerable) As Object()
             Dim LQuery As Object() = (From x As Object In source Select x).ToArray
             Return LQuery

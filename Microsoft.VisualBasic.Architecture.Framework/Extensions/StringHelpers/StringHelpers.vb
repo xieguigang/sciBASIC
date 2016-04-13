@@ -299,6 +299,12 @@ Public Module StringHelpers
         Return splitArray
     End Function
 
+    ''' <summary>
+    ''' String collection tokens by a certain delimiter string element.
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="delimiter"></param>
+    ''' <returns></returns>
     <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String) As IEnumerable(Of String())
         Dim list As New List(Of String)
 
