@@ -134,6 +134,28 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
+    ''' If test is false(means this assertion test failure), then throw exception.
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <param name="msg"></param>
+    Public Sub Assertion(test As Boolean, msg As String, <CallerMemberName> Optional calls As String = "")
+        If False = test Then
+            Throw VisualBasicAppException.Creates(msg, calls)
+        End If
+    End Sub
+
+    Public Class VisualBasicAppException : Inherits Exception
+
+        Sub New(ex As Exception, calls As String)
+            MyBase.New("@" & calls, ex)
+        End Sub
+
+        Public Shared Function Creates(msg As String, calls As String) As VisualBasicAppException
+            Return New VisualBasicAppException(New Exception(msg), calls)
+        End Function
+    End Class
+
+    ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
