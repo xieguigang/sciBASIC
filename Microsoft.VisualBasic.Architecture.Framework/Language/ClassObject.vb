@@ -4,10 +4,21 @@ Imports System.Xml.Serialization
 
 Namespace Language
 
+    ''' <summary>
+    ''' The base class object in VisualBasic
+    ''' </summary>
     Public Class ClassObject
 
+        ''' <summary>
+        ''' The extension property
+        ''' </summary>
+        ''' <returns></returns>
         <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
 
+        ''' <summary>
+        ''' Default is display the json value of the object class
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Serialization.GetJson(Me, [GetType])
         End Function
@@ -20,10 +31,22 @@ Namespace Language
             Return ToString()
         End Function
 
+        ''' <summary>
+        ''' Contact this class object with other string value
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
         Public Shared Operator &(x As ClassObject, s As String) As String
             Return x.__toString & s
         End Operator
 
+        ''' <summary>
+        ''' Contact this class object with other string value
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         Public Shared Operator &(s As String, x As ClassObject) As String
             Return s & x.__toString
         End Operator
