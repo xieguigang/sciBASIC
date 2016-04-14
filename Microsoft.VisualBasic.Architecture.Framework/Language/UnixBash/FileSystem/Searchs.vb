@@ -20,8 +20,13 @@ Namespace Language.UnixBash
         ''' <returns></returns>
         Public ReadOnly Property r As New SearchOpt(SearchOpt.Options.Recursive)
 
-        Public Function ext(n As String) As SearchOpt
-            Return New SearchOpt(SearchOpt.Options.Ext, n)
+        Public Function ext(ParamArray wildcards As String()) As SearchOpt
+            Dim opt As New SearchOpt(SearchOpt.Options.Ext, wildcards.First)
+            For Each s As String In wildcards.Skip(1)
+                Call opt.wildcards.Add(s)
+            Next
+
+            Return opt
         End Function
 
         Public Function DIRHandle(res As String) As Integer
@@ -75,7 +80,7 @@ Namespace Language.UnixBash
                 If Not __opts.ContainsKey(SearchOpt.Options.Ext) Then
                     Return Nothing
                 Else
-                    Return __opts(SearchOpt.Options.Ext).value.Split("|"c)
+                    Return __opts(SearchOpt.Options.Ext).wildcards.ToArray
                 End If
             End Get
         End Property
@@ -131,10 +136,12 @@ Namespace Language.UnixBash
 
         Dim opt As Options
         Dim value As String
+        Dim wildcards As List(Of String)
 
         Sub New(opt As Options, s As String)
             Me.opt = opt
             Me.value = s
+            Me.wildcards = New List(Of String)
         End Sub
 
         Sub New(opt As Options)
