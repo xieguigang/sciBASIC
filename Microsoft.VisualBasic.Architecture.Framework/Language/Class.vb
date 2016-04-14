@@ -67,6 +67,14 @@ Namespace Language
             Return source.ToArray
         End Operator
 
+        Public Shared Operator <=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()
+            Return source.MatrixToVector
+        End Operator
+
+        Public Shared Operator >=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()
+            Throw New NotImplementedException
+        End Operator
+
         Public Shared Operator >=(cls As [Class](Of T), source As IEnumerable(Of T)) As T()
             Throw New NotSupportedException
         End Operator

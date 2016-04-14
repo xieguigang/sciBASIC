@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Language.UnixBash
 
@@ -19,10 +20,11 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property r As New SearchOpt(SearchOpt.Options.Recursive)
+        Public ReadOnly Property DIR As New SearchOpt(SearchOpt.Options.Directory)
 
         Public Function ext(ParamArray wildcards As String()) As SearchOpt
-            Dim opt As New SearchOpt(SearchOpt.Options.Ext, wildcards.First)
-            For Each s As String In wildcards.Skip(1)
+            Dim opt As New SearchOpt(SearchOpt.Options.Ext)
+            For Each s As String In wildcards
                 Call opt.wildcards.Add(s)
             Next
 
@@ -114,12 +116,23 @@ Namespace Language.UnixBash
         ''' <returns></returns>
         Public Overloads Shared Operator <=(ls As Search, DIR As String) As IEnumerable(Of String)
             Dim l As Boolean = ls.__opts.ContainsKey(SearchOpt.Options.LongName)
-            Dim res As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, ls.SearchType, ls.wildcards)
 
-            If l Then
-                Return res
+            If ls.__opts.ContainsKey(SearchOpt.Options.Directory) Then
+                Dim res As IEnumerable(Of String) = FileIO.FileSystem.GetDirectories(DIR, ls.SearchType, ls.wildcards)
+
+                If l Then
+                    Return res
+                Else
+                    Return res.ToArray(Function(s) s.BaseName)
+                End If
             Else
-                Return (From path As String In res Select path.Replace("\", "/").Split("/"c).Last).ToArray
+                Dim res As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, ls.SearchType, ls.wildcards)
+
+                If l Then
+                    Return res
+                Else
+                    Return (From path As String In res Select path.Replace("\", "/").Split("/"c).Last).ToArray
+                End If
             End If
         End Operator
 
@@ -156,6 +169,10 @@ Namespace Language.UnixBash
             None
             Ext
             LongName
+            ''' <summary>
+            ''' List directories, not files listing.
+            ''' </summary>
+            Directory
             ''' <summary>
             ''' 递归搜索所有的文件夹
             ''' </summary>
