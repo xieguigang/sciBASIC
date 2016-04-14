@@ -1591,6 +1591,20 @@ Public Module Extensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Remove all of the null object in the target object collection
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension> Public Function TrimNull(source As IEnumerable(Of String)) As String()
+        If source.IsNullOrEmpty Then
+            Return New String() {}
+        Else
+            Return (From x In source Where Not x.IsBlank Select x).ToArray
+        End If
+    End Function
+
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Return a collection with randomize element position in <paramref name="source">the original collection</paramref>.

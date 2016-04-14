@@ -8,6 +8,7 @@
 Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of String, V)
 
     Sub New()
+        Call MyBase.New
     End Sub
 
     ''' <summary>
@@ -22,6 +23,14 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     ''' </param>
     Sub New(source As Dictionary(Of String, V))
         Call MyBase.New(source)
+    End Sub
+
+    Sub New(source As IEnumerable(Of V))
+        Call Me.New
+
+        For Each x As V In source
+            Call Add(x)
+        Next
     End Sub
 
     ''' <summary>
@@ -110,5 +119,10 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Else
             Return Nothing
         End If
+    End Operator
+
+    Public Shared Operator -(hash As Dictionary(Of V), id As String) As Dictionary(Of V)
+        Call hash.Remove(id)
+        Return hash
     End Operator
 End Class
