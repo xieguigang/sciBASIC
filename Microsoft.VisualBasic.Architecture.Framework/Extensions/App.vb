@@ -308,7 +308,7 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 生成简单的日志板块的内容
+    ''' Generates the formatted error log file content.(生成简单的日志板块的内容)
     ''' </summary>
     ''' <param name="ex"></param>
     ''' <param name="Trace"></param>

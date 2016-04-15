@@ -133,6 +133,13 @@ Namespace CommandLine.Reflection.EntryPoints
             Return __directInvoke(callParameters, Me.InvokeOnObject, [Throw])
         End Function
 
+        ''' <summary>
+        ''' 记录错误信息的最上层的堆栈
+        ''' </summary>
+        ''' <param name="callParameters"></param>
+        ''' <param name="target"></param>
+        ''' <param name="[Throw]"></param>
+        ''' <returns></returns>
         Private Function __directInvoke(callParameters As Object(), target As Object, [Throw] As Boolean) As Object
             Dim rtvl As Object
 
@@ -143,6 +150,7 @@ Namespace CommandLine.Reflection.EntryPoints
                     String.Join(vbCrLf, callParameters.ToArray(Function(obj) Scripting.ToString(obj)))
                 ex = New Exception(paramTrace, ex)
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
+                Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
 
                 If [Throw] Then
                     Throw ex

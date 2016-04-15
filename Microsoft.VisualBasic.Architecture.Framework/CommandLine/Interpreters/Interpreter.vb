@@ -126,6 +126,7 @@ Namespace CommandLine
                 Dim sdk As String = SDKdocs()
                 Dim DocPath As String = $"{_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location}.txt"
 
+                Call Console.WriteLine(DebuggerArgs.DebuggerHelps)
                 Call Console.WriteLine(sdk)
                 Call FileIO.FileSystem.WriteAllText(DocPath, sdk, append:=False)
                 Return 0
@@ -188,7 +189,7 @@ Namespace CommandLine
             Call sBuilder.AppendLine("Commands")
             Call sBuilder.AppendLine("--------------------------------------------------------------------------------")
 
-            For Each CmdlEntry As Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints.APIEntryPoint In _CommandInfoHash.Values
+            For Each CmdlEntry As APIEntryPoint In _CommandInfoHash.Values
                 sBuilder.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
                 Index += 1
             Next
@@ -275,7 +276,7 @@ Namespace CommandLine
             Dim sBuilder As StringBuilder = New StringBuilder(1024)
             Dim NameMaxLen As Integer = (From commandInfo As EntryPoints.APIEntryPoint
                                          In _CommandInfoHash.Values
-                                         Select Len(commandInfo.Name)).ToArray.Max
+                                         Select Len(commandInfo.Name)).Max
 
             Call sBuilder.AppendLine("All of the command that available in this program has been list below:")
             Call sBuilder.AppendLine()

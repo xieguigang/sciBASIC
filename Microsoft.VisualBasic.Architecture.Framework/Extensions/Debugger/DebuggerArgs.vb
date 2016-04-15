@@ -2,7 +2,26 @@
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Language.UnixBash
 
+''' <summary>
+''' 调试器设置参数模块
+''' </summary>
 Module DebuggerArgs
+
+    ''' <summary>
+    ''' 错误日志的文件存储位置，默认是在AppData里面
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ErrLogs As Func(Of String) = Nothing
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="log">日志文本</param>
+    Public Sub SaveErrorLog(log As String)
+        If Not ErrLogs Is Nothing Then
+            Call log.SaveTo(_ErrLogs())
+        End If
+    End Sub
 
     ''' <summary>
     ''' Logging command shell history.
@@ -19,10 +38,27 @@ Module DebuggerArgs
         End If
     End Sub
 
+    Public Const DebuggerHelps As String =
+        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error --err <filename.log>
+
+    [--echo] The debugger echo options, it have 5 values:
+             on     App will output all of the debugger echo message, but the VBDebugger.Mute option is enabled, disable echo options can be control by the program code;
+             off    App will not output any debugger echo message, the VBDebugger.Mute option is disabled;
+             all    App will output all of the debugger echo message, the VBDebugger.Mute option is disabled;
+             warn   App will only output warning level and error level message;
+             error  App will just only output error level message.
+
+    [--err]  The error logs save copy:
+             If there is an unhandled exception in your App, this will cause your program crashed, then the exception will be save to error log, 
+             and by default the error log is saved in the AppData, then if this option is enabled, the error log will saved a copy to the 
+             specific location at the mean time. 
+
+"
+
     ''' <summary>
     ''' Initialize the global environment variables in this App process.
     ''' </summary>
-    ''' <param name="args">--echo on/off/all/warn/error</param>
+    ''' <param name="args">--echo on/off/all/warn/error --err &lt;path.log></param>
     <Extension> Public Sub InitDebuggerEnvir(args As CommandLine.CommandLine, <CallerMemberName> Optional caller As String = Nothing)
         If Not String.Equals(caller, "Main") Then
             Return  ' 这个调用不是从Main出发的，则不设置环境了，因为这个环境可能在其他的代码上面设置过了
@@ -31,6 +67,13 @@ Module DebuggerArgs
         End If
 
         Dim opt As String = args <= "--echo"
+        Dim log As String = args <= "--err"
+
+        If Not String.IsNullOrEmpty(log) Then
+            _ErrLogs = Function() log
+        Else
+
+        End If
 
         If String.IsNullOrEmpty(opt) Then ' 默认的on参数
             VBDebugger.__level = DebuggerLevels.On
