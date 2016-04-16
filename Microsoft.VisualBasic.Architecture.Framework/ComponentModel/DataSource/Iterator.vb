@@ -3,6 +3,10 @@ Imports System.Threading.Thread
 
 Namespace ComponentModel.DataSourceModel
 
+    ''' <summary>
+    ''' 在<see cref="Iterator"/>的基础之上所构建出来的一个泛型化的迭代器对象.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Iterator(Of T) : Inherits Iterator
         Implements IEnumerator(Of T)
 
@@ -22,7 +26,8 @@ Namespace ComponentModel.DataSourceModel
     End Class
 
     ''' <summary>
-    ''' Implements for the IEnumerable(Of T), Supports a simple iteration over a non-generic collection.
+    ''' Implements for the <see cref="IEnumerable(Of T)"/>, Supports a simple iteration over a non-generic collection.
+    ''' (这个迭代器对象主要是用在远程数据源之中的，对于本地的数据源而言，使用这个迭代器的效率太低了，但是对于远程数据源而言，由于存在网络延迟，所以这个迭代器的效率影响将可以被忽略不计)
     ''' </summary>
     Public Class Iterator : Implements IEnumerator
         Implements IDisposable

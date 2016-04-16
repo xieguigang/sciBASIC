@@ -38,6 +38,9 @@ Module DebuggerArgs
         End If
     End Sub
 
+    ''' <summary>
+    ''' Some optional VisualBasic debugger parameter help information.(VisualBasic调试器的一些额外的开关参数的帮助信息)
+    ''' </summary>
     Public Const DebuggerHelps As String =
         "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error --err <filename.log>
 

@@ -1,8 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization
 
-Public Structure HashValue
-    Implements sIdEnumerable
+Public Structure HashValue : Implements sIdEnumerable
 
     Public Property Identifier As String Implements sIdEnumerable.Identifier
     Public Property value As String

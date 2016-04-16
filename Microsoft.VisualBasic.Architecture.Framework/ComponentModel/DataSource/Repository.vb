@@ -1,4 +1,4 @@
-﻿Namespace ComponentModel.DataSourceModel
+﻿Namespace ComponentModel.DataSourceModel.Repository
 
     ' http://www.codeproject.com/Reference/731015/The-repository-pattern-in-VB-Net
 
