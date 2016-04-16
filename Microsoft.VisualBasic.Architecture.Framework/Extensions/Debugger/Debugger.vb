@@ -104,6 +104,12 @@ Public Module VBDebugger
 #End If
     End Sub
 
+    ''' <summary>
+    ''' Display the wraning level(YELLOW color) message on the console.
+    ''' </summary>
+    ''' <param name="msg"></param>
+    ''' <param name="calls"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
         Dim str = $"[WARN@{calls} {Now.ToString}] {msg}"
