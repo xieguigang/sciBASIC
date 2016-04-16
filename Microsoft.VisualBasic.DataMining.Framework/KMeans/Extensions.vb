@@ -5,6 +5,13 @@ Namespace KMeans
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' Grouping the numeric values by using the kmeans cluserting operations.
+        ''' (对一组数字进行聚类操作，其实在这里就是将这组数值生成Entity数据对象，然后将数值本身作为自动生成的Entity对象的一个唯一属性)
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <param name="nd"></param>
+        ''' <returns></returns>
         <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd As Integer) As List(Of EntityLDM)
             Dim entities As EntityLDM() = array.ToArray(
                 Function(x, i) New EntityLDM With {
@@ -14,6 +21,12 @@ Namespace KMeans
             Return entities.Kmeans(nd)
         End Function
 
+        ''' <summary>
+        ''' Performance the clustering operation on the entity data model.
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <Extension> Public Function Kmeans(source As IEnumerable(Of EntityLDM), n As Integer) As List(Of EntityLDM)
             Dim maps As String() = source.First.Properties.Keys.ToArray
             Dim clusters As ClusterCollection(Of Entity) = n.ClusterDataSet(source.ToArray(Function(x) x.ToModel))

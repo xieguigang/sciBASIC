@@ -2,6 +2,9 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
+''' <summary>
+''' Cowsay tricks for showing your message more friendly.
+''' </summary>
 <PackageNamespace("Cowsay",
                   Description:="Cowsay tricks for showing your message more friendly.",
                   Revision:=21,
@@ -10,6 +13,10 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
                   Category:=APICategories.UtilityTools)>
 Public Module CowsayTricks
 
+    ''' <summary>
+    ''' Normal cow
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property NormalCow As String =
 <COW>          |
           |    ^__^
@@ -19,6 +26,10 @@ Public Module CowsayTricks
                    ||     ||
 </COW>
 
+    ''' <summary>
+    ''' The cow in dead face
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property DeadCow As String =
 <COW>          |
           |    ^__^
@@ -29,12 +40,13 @@ Public Module CowsayTricks
 </COW>
 
     ''' <summary>
-    ''' 
+    ''' Show cowsay with a specific input message on your console screen. you can using /dead to change its face.
     ''' </summary>
     ''' <param name="msg"></param>
     ''' <returns></returns>
     ''' 
-    <ExportAPI("Cowsay", Info:="Show cowsay with a specific input message on your console screen. you can using /dead to change its face.")>
+    <ExportAPI("Cowsay",
+               Info:="Show cowsay with a specific input message on your console screen. you can using /dead to change its face.")>
     Public Function Cowsay(msg As String, Optional isDead As Boolean = False) As String
         If isDead Then
             msg = __msgbox(msg) & DeadCow
@@ -47,6 +59,11 @@ Public Module CowsayTricks
         Return msg
     End Function
 
+    ''' <summary>
+    ''' Creates the message box to display the message for the cow on the console.
+    ''' </summary>
+    ''' <param name="msg"></param>
+    ''' <returns></returns>
     Private Function __msgbox(msg As String) As String
         Dim l = Len(msg)
         Dim offset As String = New String(" ", 8)

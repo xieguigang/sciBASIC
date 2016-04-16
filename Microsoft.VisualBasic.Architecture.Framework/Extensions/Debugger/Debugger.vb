@@ -23,6 +23,12 @@ Public Module VBDebugger
     Dim __mute As Boolean = False
     Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
 
+    ''' <summary>
+    ''' Disable the debugger information outputs on the console if this <see cref="Mute"/> property is set to True, 
+    ''' and enable the output if this property is set to False. 
+    ''' NOTE: this debugger option property can be overrides by the debugger parameter from the CLI parameter named '--echo'
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Mute As Boolean
         Get
             Return __mute
@@ -74,12 +80,14 @@ Public Module VBDebugger
         Return PrintException(exMsg, memberName)
     End Function
 
+    <Extension>
     Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
         Dim exMsg As String = $"[ERROR {Now.ToString}]  @{memberName}::{msg}"
         Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red)
         Return False
     End Function
 
+    <Extension>
     Public Sub WriteLine(msg As String, color As ConsoleColor)
         If Mute Then
             Return
@@ -96,6 +104,7 @@ Public Module VBDebugger
 #End If
     End Sub
 
+    <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
         Dim str = $"[WARN@{calls} {Now.ToString}] {msg}"
 
@@ -106,6 +115,14 @@ Public Module VBDebugger
         Return str
     End Function
 
+    ''' <summary>
+    ''' If <paramref name="test"/> boolean value is False, then the assertion test failure. If the test is failure the specific message will be output on the console.
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <param name="fails"></param>
+    ''' <param name="level"></param>
+    ''' <param name="calls"></param>
+    <Extension>
     Public Sub Assertion(test As Boolean, fails As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
         If Not test = True Then
             If level = Logging.MSG_TYPES.DEBUG Then
@@ -128,13 +145,19 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' If the <paramref name="test"/> message is not null or empty string, then the console will output the message.
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <param name="level"></param>
+    ''' <param name="calls"></param>
     <Extension>
     Public Sub Assertion(test As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
-        Call VBDebugger.Assertion(Not (String.IsNullOrEmpty(test) OrElse String.IsNullOrWhiteSpace(test)), test, level, calls)
+        Call VBDebugger.Assertion((String.IsNullOrEmpty(test) OrElse String.IsNullOrWhiteSpace(test)), test, level, calls)
     End Sub
 
     ''' <summary>
-    ''' If test is false(means this assertion test failure), then throw exception.
+    ''' If <paramref name="test"/> is false(means this assertion test failure), then throw exception.
     ''' </summary>
     ''' <param name="test"></param>
     ''' <param name="msg"></param>
@@ -162,7 +185,7 @@ Public Module VBDebugger
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
     '''
-    <Extension> Public Function __DEBUG_ECHO(MSG As System.Text.StringBuilder, Optional Indent As Integer = 0) As String
+    <Extension> Public Function __DEBUG_ECHO(MSG As StringBuilder, Optional Indent As Integer = 0) As String
         Return MSG.ToString.__DEBUG_ECHO(Indent)
     End Function
 

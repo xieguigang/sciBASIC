@@ -3,10 +3,18 @@ Imports Microsoft.VisualBasic.DataMining.Framework.KMeans
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 
 Module CLI
 
-    <ExportAPI("/n.cluster", Usage:="/n.cluster /in <txt/values> /n <num_of_cluster> [/out <out.csv>]")>
+    ''' <summary>
+    ''' 对一组数字进行聚类操作，其实在这里就是将这组数值生成Entity数据对象，然后将数值本身作为自动生成的Entity对象的一个唯一属性
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/n.cluster",
+               Info:="Cluserting the numbers.",
+               Usage:="/n.cluster /in <txt/values> /n <num_of_cluster> [/out <out.csv>]")>
     Public Function ClusterNumbers(args As CommandLine.CommandLine) As Integer
         Dim [in] As String = args("/in")
         Dim out As String = args("/out")
@@ -40,6 +48,7 @@ Module CLI
     End Function
 
     <ExportAPI("/bTree.Cluster",
+               Info:="Performance a binary tree clustering operations on the input data set.",
                Usage:="/bTree.Cluster /MAT <entity_matrix.csv> [/map <Name> /parallel /out <out.cluster.csv>]")>
     Public Function bTreeCluster(args As CommandLine.CommandLine) As Integer
         Dim inFile As String = args - "/MAT"
@@ -52,17 +61,33 @@ Module CLI
         Return dataSet.SaveTo(out)
     End Function
 
-    <ExportAPI("/bTree", Usage:="/bTree /cluster <tree.cluster.csv> [/out <outDIR>]")>
+    ''' <summary>
+    ''' Converts the bTree clustering result into the cytoscape network model file.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/bTree",
+               Info:="Converts the bTree clustering result into the cytoscape network model file.",
+               Usage:="/bTree /cluster <tree.cluster.csv> [/out <outDIR>]")>
     Public Function bTree(args As CommandLine.CommandLine) As Integer
         Dim inFile As String = args - "/cluster"
         Dim out As String = ("/out" <= args) ^ $"{inFile.TrimFileExt}-bTree/"
         Dim clusters As IEnumerable(Of EntityLDM) = inFile.LoadCsv(Of EntityLDM)
-        Dim tree = clusters.bTreeNET
+        Dim tree As Network = clusters.bTreeNET
         Return tree > out
     End Function
 
+    ''' <summary>
+    ''' Partitioning the binary tree cluster by using the clustering path.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/bTree.Partitioning",
+               Info:="Partitioning the binary tree cluster by using the clustering path.",
                Usage:="/bTree.Partitioning /cluster <clusters.csv> [/depth <-1> /out <partions.csv>]")>
+    <ParameterInfo("/depth", True,
+                   Description:="The maximum depth of the clustering path using for the partitioning operations. 
+Default or value zero or negative is using the shortest path in the cluster entity.")>
     Public Function bTreePartitioning(args As CommandLine.CommandLine) As Integer
         Dim inFile As String = args - "/cluster"
         Dim depth As Integer = args.GetValue("/depth", -1)
