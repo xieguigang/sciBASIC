@@ -8,7 +8,7 @@ Namespace ComponentModel.DataSourceModel
     End Interface
 
     ''' <summary>
-    ''' 在目标对象中必须要具有一个属性有自定义属性<see cref="DataSourceModel.DataFrameColumnAttribute"></see>
+    ''' 在目标对象中必须要具有一个属性有自定义属性<see cref="DataFrameColumnAttribute"></see>
     ''' </summary>
     ''' <remarks></remarks>
     Public Module DataFramework

@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.CompilerServices
+
 Namespace ComponentModel
 
     ''' <summary>
@@ -134,36 +136,30 @@ Namespace ComponentModel
             Return List.ToArray
         End Function
 
-        Public Function Generate(Of T)(source As T()()) As T()()
-            Dim FirstCollection = source.First
+        <Extension> Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
+            Dim first As T() = source.First
 
             If source.Length = 2 Then '只剩下两个的时候，会退出递归操作
-                Dim LastCollection = source.Last
-                Dim ChunkBuffer As List(Of T()) = New List(Of T())
+                Dim last As T() = source.Last
 
-                For Each item In FirstCollection
-                    For Each _item In LastCollection
-                        Call ChunkBuffer.Add(New T() {item, _item})
+                For Each x As T In first
+                    For Each _item As T In last
+                        Yield {x, _item}
                     Next
                 Next
-
-                Return ChunkBuffer.ToArray
             Else
                 Dim ChunkBuffer As List(Of T()) = New List(Of T())
-                Dim LastCollection = Generate(source.Skip(1).ToArray)
 
-                Call Console.Write(source.Length & ",")
-
-                For Each item In FirstCollection
-                    For Each ItemCollection In LastCollection
-                        Dim TempChunk = New List(Of T) From {item}
-                        Call TempChunk.AddRange(ItemCollection)
-                        Call ChunkBuffer.Add(TempChunk.ToArray)
+                For Each x As T In first
+                    For Each subArray As T() In source.Skip(1).ToArray.Iteration   ' 递归组合迭代
+                        Yield New List(Of T)(x) + subArray
                     Next
                 Next
-
-                Return ChunkBuffer.ToArray
             End If
+        End Function
+
+        Public Function Generate(Of T)(source As T()()) As T()()
+            Return source.Iteration.ToArray
         End Function
     End Module
 End Namespace

@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Drawing2D
 
@@ -31,10 +32,8 @@ Namespace Drawing2D
         Public Const DEVICE_WIDTH As String = "Vectogram.Device.Width"
         Public Const DEVICE_HEIGHT As String = "Vectogram.Device.Height"
 
-        <Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFrameColumn(DEVICE_WIDTH)>
-        Dim Width As Integer = 1024
-        <Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFrameColumn(DEVICE_HEIGHT)>
-        Dim Height As Integer = 768
+        <DataFrameColumn(DEVICE_WIDTH)> Dim Width As Integer = 1024
+        <DataFrameColumn(DEVICE_HEIGHT)> Dim Height As Integer = 768
 
         <ExportAPI("Device.Open")>
         Public Function CreateDevice(Optional size As Size = Nothing) As Vectogram
