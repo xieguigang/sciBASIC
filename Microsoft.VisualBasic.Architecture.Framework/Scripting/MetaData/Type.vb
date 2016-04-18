@@ -4,12 +4,12 @@ Imports System.Xml.Serialization
 Namespace Scripting.MetaData
 
     ''' <summary>
-    ''' 类型信息
+    ''' The type reference information.(类型信息)
     ''' </summary>
     Public Class TypeInfo
 
         ''' <summary>
-        ''' 模块文件
+        ''' The assembly file which contains this type definition.(模块文件)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property assm As String
@@ -20,7 +20,7 @@ Namespace Scripting.MetaData
         <XmlAttribute> Public Property FullIdentity As String
 
         ''' <summary>
-        ''' 是否是已知的类型？
+        ''' Is this type object is a known system type?(是否是已知的类型？)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property SystemKnownType As Boolean
@@ -32,6 +32,10 @@ Namespace Scripting.MetaData
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates type reference from the definition.
+        ''' </summary>
+        ''' <param name="info"></param>
         Sub New(info As Type)
             Call __infoParser(info, assm, FullIdentity)
         End Sub
@@ -45,8 +49,13 @@ Namespace Scripting.MetaData
             Return $"{assm}!{FullIdentity}"
         End Function
 
-        Public Function LoadAssembly() As Assembly
-            Dim path As String = App.HOME & "/" & Me.assm
+        ''' <summary>
+        ''' Loads the assembly file which contains this type. If the <param name="DIR"></param> is not a valid directory location, 
+        ''' then using the location <see cref="App.HOME"/> as default.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function LoadAssembly(Optional DIR As String = Nothing) As Assembly
+            Dim path As String = If(Not DIR.DirectoryExists, App.HOME, DIR) & "/" & Me.assm
             Dim assm As Assembly = Assembly.LoadFile(path)
             Return assm
         End Function

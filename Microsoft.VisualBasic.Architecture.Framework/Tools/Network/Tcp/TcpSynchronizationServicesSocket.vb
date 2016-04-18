@@ -17,15 +17,15 @@ Namespace Net
     ''' </summary>
     ''' <remarks></remarks>
     Public Class TcpSynchronizationServicesSocket
-        Implements System.IDisposable
-        Implements ComponentModel.DataSourceModel.IObjectModel_Driver
-        Implements Net.Abstract.IServicesSocket
+        Implements IDisposable
+        Implements IObjectModel_Driver
+        Implements IServicesSocket
 
 #Region "INTERNAL FIELDS"
 
-        Dim _ThreadEndAccept As Boolean = True
+        Dim _threadEndAccept As Boolean = True
         Dim __exceptionHandle As ExceptionHandler
-        Dim _ServicesSocket As Socket
+        Dim _servicesSocket As Socket
 
 #End Region
 
@@ -126,15 +126,15 @@ Namespace Net
             _LocalPort = localEndPoint.Port
 
             ' Create a TCP/IP socket.
-            _ServicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+            _servicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
             '_InternalSocketListener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
             ' Bind the socket to the local endpoint and listen for incoming connections.
 
             Try
-                Call _ServicesSocket.Bind(localEndPoint)
-                Call _ServicesSocket.ReceiveBufferSize.InvokeSet(4096000)
-                Call _ServicesSocket.SendBufferSize.InvokeSet(4096000)
-                Call _ServicesSocket.Listen(backlog:=1000)
+                Call _servicesSocket.Bind(localEndPoint)
+                Call _servicesSocket.ReceiveBufferSize.InvokeSet(4096000)
+                Call _servicesSocket.SendBufferSize.InvokeSet(4096000)
+                Call _servicesSocket.Listen(backlog:=1000)
             Catch ex As Exception
                 Dim exMessage As String =
                     "Exception on try initialize the socket connection local_EndPoint=" & localEndPoint.ToString &
@@ -163,17 +163,17 @@ Namespace Net
             '    End If
             'End If
 #End Region
-            _ThreadEndAccept = True
+            _threadEndAccept = True
             _Running = True
 
             While Not Me.disposedValue
 
-                If _ThreadEndAccept Then
-                    _ThreadEndAccept = False
+                If _threadEndAccept Then
+                    _threadEndAccept = False
 
                     Dim Callback As AsyncCallback = New AsyncCallback(AddressOf AcceptCallback)
                     Try
-                        Call _ServicesSocket.BeginAccept(Callback, _ServicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
+                        Call _servicesSocket.BeginAccept(Callback, _servicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
                     Catch ex As Exception
                         Exit While
                     End Try
@@ -181,6 +181,7 @@ Namespace Net
 
                 Call Thread.Sleep(1)
             End While
+
             _Running = False
 
             Return 0
@@ -205,7 +206,7 @@ Namespace Net
             Try
                 handler = listener.EndAccept(ar)
             Catch ex As Exception
-                _ThreadEndAccept = True
+                _threadEndAccept = True
                 Return
             End Try
 
@@ -219,7 +220,7 @@ Namespace Net
                 Call ForceCloseHandle(handler.RemoteEndPoint)
             End Try
 
-            _ThreadEndAccept = True
+            _threadEndAccept = True
 
         End Sub 'AcceptCallback
 
@@ -355,8 +356,8 @@ Namespace Net
             If Not Me.disposedValue Then
                 If disposing Then
 
-                    Call _ServicesSocket.Dispose()
-                    Call _ServicesSocket.Free()
+                    Call _servicesSocket.Dispose()
+                    Call _servicesSocket.Free()
                     ' TODO: dispose managed state (managed objects).
                 End If
 

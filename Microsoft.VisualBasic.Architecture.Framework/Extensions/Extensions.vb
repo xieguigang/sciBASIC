@@ -664,9 +664,11 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 使用线程的方式启动
+    ''' Run the driver in a new thread, NOTE: from this extension function calls, then run thread is already be started, 
+    ''' so that no needs of calling the method <see cref="Threading.Thread.Start()"/> again.
+    ''' (使用线程的方式启动，在函数调用之后，线程是已经启动了的，所以不需要再次调用<see cref="Threading.Thread.Start()"/>方法了)
     ''' </summary>
-    ''' <param name="driver"></param>
+    ''' <param name="driver">The object which is implements the interface <see cref="IObjectModel_Driver"/></param>
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     <Extension>
     Public Function DriverRun(driver As IObjectModel_Driver) As Threading.Thread
