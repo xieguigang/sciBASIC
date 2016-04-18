@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language.UnixBash.FileHandles
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Represents a strongly typed list of objects that can be accessed by index. Provides
@@ -115,6 +116,20 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
             Return list
         End If
         Call list.AddRange(vals.ToArray)
+        Return list
+    End Operator
+
+    ''' <summary>
+    ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <param name="vals"></param>
+    ''' <returns></returns>
+    Public Shared Operator +(list As List(Of T), vals As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
+        If vals Is Nothing Then
+            Return list
+        End If
+        Call list.AddRange(vals.MatrixAsIterator)
         Return list
     End Operator
 

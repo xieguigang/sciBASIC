@@ -20,11 +20,16 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property r As New SearchOpt(SearchOpt.Options.Recursive)
-        Public ReadOnly Property DIR As New SearchOpt(SearchOpt.Options.Directory)
+        Public ReadOnly Property lsDIR As New SearchOpt(SearchOpt.Options.Directory)
 
-        Public Function ext(ParamArray wildcards As String()) As SearchOpt
+        ''' <summary>
+        ''' 可以使用这个来限定文件或者文件夹对象的搜索范围
+        ''' </summary>
+        ''' <param name="__wildcards">可以为文件拓展或者对文件名的通配符的表达式</param>
+        ''' <returns></returns>
+        Public Function wildcards(ParamArray __wildcards As String()) As SearchOpt
             Dim opt As New SearchOpt(SearchOpt.Options.Ext)
-            For Each s As String In wildcards
+            For Each s As String In __wildcards
                 Call opt.wildcards.Add(s)
             Next
 

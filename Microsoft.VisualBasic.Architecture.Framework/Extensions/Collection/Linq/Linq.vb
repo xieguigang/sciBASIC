@@ -84,12 +84,13 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 适用于二维的集合做为linq的数据源，不像<see cref="MatrixToList"/>是进行转换，这个是返回迭代器的，推荐使用这个函数
+        ''' Iterates all of the elements in a two dimension collection as the data source for the linq expression or ForEach statement.
+        ''' (适用于二维的集合做为linq的数据源，不像<see cref="MatrixToList"/>是进行转换，这个是返回迭代器的，推荐使用这个函数)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function MatrixAsIterator(Of T)(source As IEnumerable(Of Generic.IEnumerable(Of T))) As IEnumerable(Of T)
+        <Extension> Public Iterator Function MatrixAsIterator(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             For Each Line As IEnumerable(Of T) In source
                 If Not Line.IsNullOrEmpty Then
                     For Each x As T In Line
