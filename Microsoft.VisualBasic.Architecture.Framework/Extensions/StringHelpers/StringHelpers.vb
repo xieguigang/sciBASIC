@@ -6,9 +6,17 @@ Imports Microsoft.VisualBasic.ConsoleDevice
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 
+''' <summary>
+''' The extensions module for facilities the string operations.
+''' </summary>
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' <paramref name="s"/> Is Nothing, <see cref="String.IsNullOrEmpty"/>, <see cref="String.IsNullOrWhiteSpace"/>
+    ''' </summary>
+    ''' <param name="s">The input test string</param>
+    ''' <returns></returns>
     <Extension> Public Function IsBlank(s As String) As Boolean
         If s Is Nothing OrElse String.IsNullOrEmpty(s) OrElse String.IsNullOrWhiteSpace(s) Then
             Return True
@@ -18,7 +26,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Call s.Remove(s.Length - 1, 1)
+    ''' Call <see cref="StringBuilder.Remove"/>(<see cref="StringBuilder.Length"/> - 1, 1) for removes the last character in the string sequence.
     ''' </summary>
     ''' <param name="s"></param>
     <Extension> Public Sub RemoveLast(s As StringBuilder)
@@ -36,22 +44,39 @@ Public Module StringHelpers
         Return sb
     End Function
 
+    ''' <summary>
+    ''' Returns a reversed version of String s.
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <returns></returns>
     Public Function Reverse(s As String) As String
         Return New String(s.Reverse.ToArray)
     End Function
 
     Public ReadOnly Property StrictCompares As StringComparison = StringComparison.Ordinal
     ''' <summary>
-    ''' 忽略大小写为非严格的比较
+    ''' String compares with ignored chars' case.(忽略大小写为非严格的比较)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property NonStrictCompares As StringComparison = StringComparison.OrdinalIgnoreCase
 
+    ''' <summary>
+    ''' Fill the number string with specific length of ZERO sequence to generates the fixed width string.
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <param name="len"></param>
+    ''' <returns></returns>
     <ExportAPI("ZeroFill")>
     Public Function ZeroFill(n As String, len As Integer) As String
         Return STDIO__.I_FormatProvider.d.ZeroFill(n, len)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="len"></param>
+    ''' <returns></returns>
     <ExportAPI("s.Parts")>
     Public Function Parts(s As String, len As String) As String
         Dim sbr As New StringBuilder
@@ -79,7 +104,13 @@ Public Module StringHelpers
         Loop
     End Sub
 
+    ''' <summary>
+    ''' Regex expression for parsing E-Mail URL
+    ''' </summary>
     Const REGEX_EMAIL As String = "[a-z0-9\._-]+@[a-z0-9\._-]+"
+    ''' <summary>
+    ''' Regex exprression for parsing the http/ftp URL
+    ''' </summary>
     Const REGEX_URL As String = "(ftp|http(s)?)[:]//[a-z0-9\.-_]+\.[a-z]+/*[^""]*"
 
     <ExportAPI("Parsing.E-Mails")>
@@ -95,7 +126,8 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 计数在字符串之中所出现的指定的字符的出现的次数
+    ''' Counts the specific char that appeared in the input string.
+    ''' (计数在字符串之中所出现的指定的字符的出现的次数)
     ''' </summary>
     ''' <param name="str"></param>
     ''' <param name="ch"></param>
@@ -171,7 +203,7 @@ Public Module StringHelpers
     ''' <remarks></remarks>
     '''
     <ExportAPI("Intersection")>
-    <Extension> Public Function Intersection(Chunkbuffer As Generic.IEnumerable(Of Generic.IEnumerable(Of String))) As String()
+    <Extension> Public Function Intersection(Chunkbuffer As IEnumerable(Of IEnumerable(Of String))) As String()
         Chunkbuffer = (From line In Chunkbuffer Select (From strValue As String In line Select strValue Distinct Order By strValue Ascending).ToArray).ToArray
         Dim Union As List(Of String) = New List(Of String)
         For Each Line As String() In Chunkbuffer
@@ -202,7 +234,7 @@ Public Module StringHelpers
 
     <ExportAPI("Matched?")>
     <Extension> Public Function Matches(str As String, regex As String) As Boolean
-        Return System.Text.RegularExpressions.Regex.Match(str, regex).Success
+        Return RegularExpressions.Regex.Match(str, regex).Success
     End Function
 
     ''' <summary>
@@ -215,15 +247,13 @@ Public Module StringHelpers
     <ExportAPI("Regex", Info:="Searches the specified input string for the first occurrence of the specified regular expression.")>
     <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input As String,
                                       <Parameter("Pattern", "The regular expression pattern to match.")> pattern As String,
-                                      Optional options As System.Text.RegularExpressions.RegexOptions = RegularExpressions.RegexOptions.Multiline) As String
-        Return System.Text.RegularExpressions.Regex.Match(input, pattern, options).Value
+                                      Optional options As RegexOptions = RegexOptions.Multiline) As String
+        Return Regex.Match(input, pattern, options).Value
     End Function
 
     <ExportAPI("Match")>
-    <Extension> Public Function Match(input As System.Text.RegularExpressions.Match,
-                                      pattern As String,
-                                      Optional options As System.Text.RegularExpressions.RegexOptions = RegularExpressions.RegexOptions.Multiline) As String
-        Return System.Text.RegularExpressions.Regex.Match(input.Value, pattern, options).Value
+    <Extension> Public Function Match(input As Match, pattern As String, Optional options As RegexOptions = RegexOptions.Multiline) As String
+        Return Regex.Match(input.Value, pattern, options).Value
     End Function
 
     <Extension>
@@ -281,7 +311,7 @@ Public Module StringHelpers
     '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
     <Extension> Public Function StringSplit(Source As String, RegexDelimiter As String, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
-        Dim splitArray As String() = System.Text.RegularExpressions.Regex.Split(Source, RegexDelimiter)
+        Dim splitArray As String() = Regex.Split(Source, RegexDelimiter)
 
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then Return splitArray
 
@@ -289,7 +319,7 @@ Public Module StringHelpers
 
             If splitArray(i - 1).Length > 0 Then
                 If i < splitArray.Length Then
-                    Call System.Array.Resize(splitArray, i)
+                    Call Array.Resize(splitArray, i)
                 End If
 
                 Exit For
@@ -326,7 +356,7 @@ Public Module StringHelpers
     ''' <param name="caseSensitive"></param>
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
-    <Extension> Public Function Located(collection As Generic.IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
+    <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
         Dim Method = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim Len As Integer = collection.Count - 1
         Dim array = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
@@ -402,7 +432,10 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，所以可以使用这个函数来进行统一的分行操作
+    ''' Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>.
+    ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
+    ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
+    ''' 所以可以使用这个函数来进行统一的分行操作)
     ''' </summary>
     ''' <param name="__text"></param>
     ''' <returns></returns>
