@@ -11,12 +11,17 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module XmlDoc
 
     ''' <summary>
-    ''' 从文件之中加载XML之中的数据至一个对象类型之中
+    ''' Load class object from the exists Xml document.(从文件之中加载XML之中的数据至一个对象类型之中)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="XmlFile">XML文件的文件路径</param>
-    ''' <param name="ThrowEx">当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值</param>
-    ''' <param name="preprocess">Xml文件的预处理操作</param>
+    ''' <param name="XmlFile">The path of the xml document.(XML文件的文件路径)</param>
+    ''' <param name="ThrowEx">
+    ''' If the deserialization operation have throw a exception, then this function should process this error automatically or just throw it?
+    ''' (当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值)
+    ''' </param>
+    ''' <param name="preprocess">
+    ''' The preprocessing on the xml document text, you can doing the text replacement or some trim operation from here.(Xml文件的预处理操作)
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function LoadXml(Of T)(XmlFile As String,
