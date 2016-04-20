@@ -35,8 +35,16 @@ Namespace Language
 
         Public ReadOnly Property Type As Type
 
+        ReadOnly __enumsHandler As Func(Of IEnumerable(Of T), T())
+
         Sub New()
             _Type = GetType(T)
+            __enumsHandler = AddressOf Enumerable.ToArray
+        End Sub
+
+        Sub New(array As Func(Of IEnumerable(Of T), T()))
+            _Type = GetType(T)
+            __enumsHandler = array
         End Sub
 
         Public Overrides Function ToString() As String
@@ -64,7 +72,7 @@ Namespace Language
         ''' <param name="source"></param>
         ''' <returns></returns>
         Public Shared Operator <=(cls As [Class](Of T), source As IEnumerable(Of T)) As T()
-            Return source.ToArray
+            Return cls.__enumsHandler(source)
         End Operator
 
         Public Shared Operator <=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()
