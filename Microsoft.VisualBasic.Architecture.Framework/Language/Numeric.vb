@@ -37,22 +37,81 @@ Namespace Language
     ''' </remarks>
     Public Module Numeric
 
+        ''' <summary>
+        ''' The max element its index in the source collection.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function MaxIndex(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
+            Dim i As Integer
+            Dim max As T = source.First
+            Dim maxInd As Integer = 0
+
+            For Each x As T In source.Skip(1)
+                If x.CompareTo(max) > 0 Then
+                    max = x
+                    maxInd = i
+                End If
+
+                i += 1
+            Next
+
+            Return maxInd
+        End Function
+
+        ''' <summary>
+        ''' =
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Function Equals(Of T As IComparable)(a As T, b As T) As Boolean
             Return a.CompareTo(b) = 0
         End Function
 
+        ''' <summary>
+        ''' &lt;
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension> Public Function LessThan(Of T As IComparable)(a As T, b As T) As Boolean
             Return a.CompareTo(b) < 0
         End Function
 
+        ''' <summary>
+        ''' >
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension> Public Function GreaterThan(Of T As IComparable)(a As T, b As T) As Boolean
             Return a.CompareTo(b) > 0
         End Function
 
+        ''' <summary>
+        ''' &lt;=
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension> Public Function LessThanOrEquals(Of T As IComparable)(a As T, b As T) As Boolean
             Return a.LessThan(b) OrElse Equals(a, b)
         End Function
 
+        ''' <summary>
+        ''' =>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension> Public Function GreaterThanOrEquals(Of T As IComparable)(a As T, b As T) As Boolean
             Return a.GreaterThan(b) OrElse Equals(a, b)
         End Function
