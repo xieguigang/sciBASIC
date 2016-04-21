@@ -70,6 +70,22 @@ Namespace Language
         Public Shared Operator >=(cls As ExecHelper(Of T), linq As IEnumerable(Of T)) As T()
             Throw New NotSupportedException
         End Operator
+
+        ''' <summary>
+        ''' Creates an array from a <see cref="System.Collections.Generic.IEnumerable(Of T)"/>.
+        ''' </summary>
+        ''' <param name="cls"></param>
+        ''' <param name="linq">
+        ''' An <see cref="System.Collections.Generic.IEnumerable(Of T)"/> to create an array from.
+        ''' </param>
+        ''' <returns>An array that contains the elements from the input sequence.</returns>
+        Public Shared Operator <=(cls As ExecHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As T()
+            Return linq.MatrixToVector
+        End Operator
+
+        Public Shared Operator >=(cls As ExecHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As T()
+            Throw New NotSupportedException
+        End Operator
     End Structure
 
     Public Structure FirstOrDefaultHelper(Of T)
