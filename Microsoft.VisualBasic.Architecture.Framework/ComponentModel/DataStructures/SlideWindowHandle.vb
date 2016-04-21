@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataStructures
 
@@ -9,7 +9,7 @@ Namespace ComponentModel.DataStructures
     ''' <typeparam name="T"></typeparam>
     ''' <remarks></remarks>
     Public Structure SlideWindowHandle(Of T)
-        Implements Generic.IEnumerable(Of T), ComponentModel.IAddressHandle
+        Implements IEnumerable(Of T), IAddressHandle
 
         ''' <summary>
         ''' The position of the current Windows in the Windows list.(在创建的滑窗的队列之中当前的窗口对象的位置)
@@ -17,7 +17,7 @@ Namespace ComponentModel.DataStructures
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property p As Long Implements IAddressHandle.AddrHwnd
+        Public Property p As Integer Implements IAddressHandle.Address
         ''' <summary>
         ''' The elements in this slide window.(这个划窗之中的元素的列表)
         ''' </summary>

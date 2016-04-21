@@ -37,11 +37,11 @@ Namespace Linq
         Public Property obj As T1
         Public Property Follow As T2
 
-        Private Property AddrHwnd As Long Implements IAddressHandle.AddrHwnd
+        Private Property Address As Integer Implements IAddressHandle.Address
             Get
                 Return CLng(Pos)
             End Get
-            Set(value As Long)
+            Set(value As Integer)
                 Pos = CInt(value)
             End Set
         End Property
@@ -65,12 +65,12 @@ Namespace Linq
         Public Property Pos As Integer
         Public Property obj As T
 
-        Private Property AddrHwnd As Long Implements IAddressHandle.AddrHwnd
+        Private Property Address As Integer Implements IAddressHandle.Address
             Get
                 Return CLng(Pos)
             End Get
-            Set(value As Long)
-                Pos = CInt(value)
+            Set
+                Pos = CInt(Value)
             End Set
         End Property
 

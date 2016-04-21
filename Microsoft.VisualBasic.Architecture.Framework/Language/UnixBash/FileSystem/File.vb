@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Language.UnixBash
 
+    ''' <summary>
+    ''' Asbtract file IO model
+    ''' </summary>
     Public MustInherit Class File : Inherits ClassObject
         Implements ISaveHandle
 

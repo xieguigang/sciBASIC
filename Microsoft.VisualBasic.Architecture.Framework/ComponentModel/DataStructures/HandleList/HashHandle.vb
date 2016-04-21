@@ -120,7 +120,7 @@ Namespace ComponentModel
         End Function
 
         Public Function [Next](x As String) As T
-            Dim pos As Integer = __innerHash(x).AddrHwnd
+            Dim pos As Integer = __innerHash(x).Address
             Dim n As T = __innerList(pos + 1)
             Return n
         End Function
@@ -130,12 +130,12 @@ Namespace ComponentModel
         End Function
 
         Public Function Previous(x As T) As T
-            Dim pos As Integer = __innerHash(x.Identifier).AddrHwnd
+            Dim pos As Integer = __innerHash(x.Identifier).Address
             Return __innerList(pos - 1)
         End Function
 
         Public Function Previous(x As String) As T
-            Dim pos As Integer = __innerHash(x).AddrHwnd
+            Dim pos As Integer = __innerHash(x).Address
             Return __innerList(pos - 1)
         End Function
 
@@ -154,16 +154,16 @@ Namespace ComponentModel
 
         Public Sub Remove(x As String)
             Dim n As T = Current(x).node
-            __innerList(n.AddrHwnd) = Nothing
+            __innerList(n.Address) = Nothing
             __innerHash.Remove(n.Identifier)
-            __emptys.Enqueue(n.AddrHwnd)
+            __emptys.Enqueue(n.Address)
         End Sub
 
         Public Sub Remove(i As Integer)
             Dim n As T = __innerList(i)
-            __innerList(n.AddrHwnd) = Nothing
+            __innerList(n.Address) = Nothing
             __innerHash.Remove(n.Identifier)
-            __emptys.Enqueue(n.AddrHwnd)
+            __emptys.Enqueue(n.Address)
         End Sub
 
         Public Sub Add(x As T)
@@ -172,7 +172,7 @@ Namespace ComponentModel
             End If
 
             Dim i As Integer = __emptys.Dequeue
-            x.AddrHwnd = i
+            x.Address = i
             __innerList(i) = x
             __innerHash(x.Identifier) = x
         End Sub

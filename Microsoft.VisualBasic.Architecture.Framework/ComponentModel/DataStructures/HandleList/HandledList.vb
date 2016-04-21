@@ -103,7 +103,7 @@
                 _ListData(Handle) = e
             End If
 
-            e.AddrHwnd = Handle
+            e.Address = Handle
             Call _HandleList.Add(Handle)
 
             Return Handle
@@ -158,7 +158,7 @@
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Exists(e As T) As Boolean
-            Dim LQuery As Generic.IEnumerable(Of Integer) = From Handle As Long In _HandleList Where Handle = e.AddrHwnd Select 1 'Only one object in the query result if the specific item is exists, when the item 'e' is not exists then the count is ZERO.
+            Dim LQuery As Generic.IEnumerable(Of Integer) = From Handle As Long In _HandleList Where Handle = e.Address Select 1 'Only one object in the query result if the specific item is exists, when the item 'e' is not exists then the count is ZERO.
             Return LQuery.Count > 0
         End Function
 
@@ -172,7 +172,7 @@
         Public Function Remove(e As T) As Long
             Dim ListData As Generic.IEnumerable(Of T) = From hdl As Long In _HandleList Select _ListData(hdl)  'Select the object exists in the listdata logically. 
             Dim LINQuery As Generic.IEnumerable(Of T) = From obj As T In ListData Where obj.GetHashCode = e.GetHashCode Select obj 'Query of the equal object finding.
-            Dim Handle As Long = LINQuery.First.AddrHwnd
+            Dim Handle As Long = LINQuery.First.Address
 
             Call RemoveAt(Handle:=Handle)
             Return Handle

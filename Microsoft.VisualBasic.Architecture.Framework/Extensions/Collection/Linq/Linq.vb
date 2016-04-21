@@ -402,7 +402,7 @@ Namespace Linq
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Value3), where:=Function(x) Where(x.Identifier, x.Value2, x.Value3))
+                Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Address), where:=Function(x) Where(x.Identifier, x.Value2, x.Address))
             End If
         End Function
 
@@ -410,7 +410,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
                                                         [CType] As Func(Of T1, T2, T3, T),
                                                         Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Value3))
+            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Address))
         End Function
     End Module
 End Namespace

@@ -10,7 +10,7 @@ Namespace Language
     Public Class ClassObject
 
         ''' <summary>
-        ''' The extension property
+        ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
         ''' </summary>
         ''' <returns></returns>
         <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
@@ -54,24 +54,5 @@ Namespace Language
         Protected Sub Copy(ByRef x As ClassObject)
             x = Me
         End Sub
-
-        ''' <summary>
-        ''' Example as: Do While Not (target = stream.read(source)) Is Nothing
-        ''' </summary>
-        ''' <param name="source"></param>
-        ''' <param name="target"></param>
-        ''' <returns></returns>
-        Public Shared Operator =(<Out> target As ClassObject, source As ClassObject) As ClassObject
-            If source Is Nothing Then
-                target = Nothing
-            Else
-                Call source.Copy(target)
-            End If
-            Return target
-        End Operator
-
-        Public Shared Operator <>(source As ClassObject, target As ClassObject) As ClassObject
-            Throw New NotSupportedException
-        End Operator
     End Class
 End Namespace

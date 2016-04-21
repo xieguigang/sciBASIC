@@ -10,7 +10,7 @@ Namespace ComponentModel
     ''' (这个对象具有一个用于指明该对象在列表对象中的位置的对象句柄值)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface IAddressHandle : Inherits System.IDisposable
+    Public Interface IAddressHandle : Inherits IDisposable
 
         ''' <summary>
         ''' The ID that this object in a list instance.
@@ -19,7 +19,7 @@ Namespace ComponentModel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Property AddrHwnd As Long
+        Property Address As Integer
     End Interface
 
     Public Interface IHashHandle : Inherits IAddressHandle, sIdEnumerable
@@ -30,7 +30,7 @@ Namespace ComponentModel
 
         Public Property obj As T
 
-        Public Property AddrHwnd As Long Implements IAddressHandle.AddrHwnd
+        Public Property Address As Integer Implements IAddressHandle.Address
 
         Public Property Identifier As String Implements sIdEnumerable.Identifier
             Get

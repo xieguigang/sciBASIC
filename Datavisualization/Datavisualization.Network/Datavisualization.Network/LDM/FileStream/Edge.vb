@@ -15,7 +15,7 @@ Namespace FileStream
 
         Public Shared Function Contains(edge As I_InteractionModel, node As String) As Boolean
             Return String.Equals(node, edge.locusId, StringComparison.OrdinalIgnoreCase) OrElse
-                String.Equals(node, edge.ToNode, StringComparison.OrdinalIgnoreCase)
+                String.Equals(node, edge.Address, StringComparison.OrdinalIgnoreCase)
         End Function
 
         Public Function Contains(Interactor As String) As Boolean
@@ -29,7 +29,7 @@ Namespace FileStream
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
 
         <Column("fromNode")> <XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
-        <Column("toNode")> <XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.ToNode
+        <Column("toNode")> <XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.Address
         <XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
         <Column("InteractionType")> Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
 
@@ -63,8 +63,8 @@ Namespace FileStream
 
         Public Overloads Shared Function Equals(Model As I_InteractionModel, Node1 As String, Node2 As String) As Boolean
             If String.Equals(Model.locusId, Node1, StringComparison.OrdinalIgnoreCase) Then
-                Return String.Equals(Model.ToNode, Node2, StringComparison.OrdinalIgnoreCase)
-            ElseIf String.Equals(Model.ToNode, Node1, StringComparison.OrdinalIgnoreCase) Then
+                Return String.Equals(Model.Address, Node2, StringComparison.OrdinalIgnoreCase)
+            ElseIf String.Equals(Model.Address, Node1, StringComparison.OrdinalIgnoreCase) Then
                 Return String.Equals(Model.locusId, Node2, StringComparison.OrdinalIgnoreCase)
             Else
                 Return False
@@ -73,8 +73,8 @@ Namespace FileStream
 
         Public Shared Function GetConnectedNode(Node As I_InteractionModel, a As String) As String
             If String.Equals(Node.locusId, a) Then
-                Return Node.ToNode
-            ElseIf String.Equals(Node.ToNode, a) Then
+                Return Node.Address
+            ElseIf String.Equals(Node.Address, a) Then
                 Return Node.locusId
             Else
                 Return ""

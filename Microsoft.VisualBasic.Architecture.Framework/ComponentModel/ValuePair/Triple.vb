@@ -12,7 +12,7 @@ Namespace ComponentModel
 
         <XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, ITripleKeyValuesPair(Of String, String, String).Identifier
         <XmlAttribute> Public Property Value1 As String Implements ITripleKeyValuesPair(Of String, String, String).Value2
-        <XmlAttribute> Public Property Value2 As String Implements ITripleKeyValuesPair(Of String, String, String).Value3
+        <XmlAttribute> Public Property Value2 As String Implements ITripleKeyValuesPair(Of String, String, String).Address
 
         Sub New()
         End Sub
@@ -54,7 +54,7 @@ Namespace ComponentModel
     End Class
 
     Public Interface ITripleKeyValuesPair(Of T1, T2, T3)
-        Property Value3 As T3
+        Property Address As T3
         Property Identifier As T1
         Property Value2 As T2
     End Interface
@@ -62,7 +62,7 @@ Namespace ComponentModel
     Public Class TripleKeyValuesPair(Of T1, T2, T3)
         Implements ITripleKeyValuesPair(Of T1, T2, T3)
 
-        Public Property Value3 As T3 Implements ITripleKeyValuesPair(Of T1, T2, T3).Value3
+        Public Property Value3 As T3 Implements ITripleKeyValuesPair(Of T1, T2, T3).Address
         Public Property Value1 As T1 Implements ITripleKeyValuesPair(Of T1, T2, T3).Identifier
         Public Property Value2 As T2 Implements ITripleKeyValuesPair(Of T1, T2, T3).Value2
 

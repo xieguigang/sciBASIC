@@ -10,7 +10,7 @@
 
     Public Interface I_InteractionModel
         Property locusId As String
-        Property ToNode As String
+        Property Address As String
     End Interface
 
     Public Interface INetworkEdge : Inherits I_InteractionModel
