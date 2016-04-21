@@ -13,12 +13,19 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module StringHelpers
 
     ''' <summary>
+    ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
+    ''' </summary>
+    Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
+
+    ''' <summary>
     ''' <paramref name="s"/> Is Nothing, <see cref="String.IsNullOrEmpty"/>, <see cref="String.IsNullOrWhiteSpace"/>
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
     <Extension> Public Function IsBlank(s As String) As Boolean
-        If s Is Nothing OrElse String.IsNullOrEmpty(s) OrElse String.IsNullOrWhiteSpace(s) Then
+        If s Is Nothing OrElse
+            String.IsNullOrEmpty(s) OrElse
+            String.IsNullOrWhiteSpace(s) Then
             Return True
         Else
             Return False
