@@ -2,6 +2,9 @@
 
 Namespace Language
 
+    ''' <summary>
+    ''' Language syntax extension for the Linq expression in VisualBasic language
+    ''' </summary>
     Public Module LinqAPI
 
         ''' <summary>
