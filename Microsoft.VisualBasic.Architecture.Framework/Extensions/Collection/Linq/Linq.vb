@@ -15,19 +15,6 @@ Namespace Linq
     Public Module Extensions
 
         ''' <summary>
-        ''' Execute a linq expression
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <returns></returns>
-        Public Function Exec(Of T)() As [Class](Of T)
-            Return New [Class](Of T)
-        End Function
-
-        Public Function DefaultFirst(Of T)(Optional [default] As T = Nothing) As [Class](Of T)
-            Return New [Class](Of T)(Function(a) {a.DefaultFirst([default])})
-        End Function
-
-        ''' <summary>
         ''' Gets the max element its index in the collection
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
