@@ -94,4 +94,29 @@ Namespace Linq
         Public Sub Dispose() Implements IDisposable.Dispose
         End Sub
     End Structure
+
+    ''' <summary>
+    ''' Exposes the enumerator, which supports a simple iteration over a collection of
+    ''' a specified type.To browse the .NET Framework source code for this type, see
+    ''' the Reference Source.
+    ''' </summary>
+    ''' <typeparam name="T">The type of objects to enumerate.This type parameter is covariant. That is, you
+    ''' can use either the type you specified or any type that is more derived. For more
+    ''' information about covariance and contravariance, see Covariance and Contravariance
+    ''' in Generics.</typeparam>
+    Public Interface IIterator(Of T)
+
+        ''' <summary>
+        ''' Returns an enumerator that iterates through the collection.
+        ''' </summary>
+        ''' <returns>An enumerator that can be used to iterate through the collection.</returns>
+        Function GetEnumerator() As IEnumerator(Of T)
+
+        ''' <summary>
+        ''' Returns an enumerator that iterates through a collection.
+        ''' </summary>
+        ''' <returns>An System.Collections.IEnumerator object that can be used to iterate through
+        ''' the collection.</returns>
+        Function IGetEnumerator() As IEnumerator
+    End Interface
 End Namespace
