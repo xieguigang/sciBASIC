@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.Ranges
 
