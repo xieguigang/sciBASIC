@@ -50,6 +50,36 @@ Namespace Language
         Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of T)) As List(Of T)
             Throw New NotSupportedException
         End Operator
+
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="List"/>`1 class that
+        ''' contains elements copied from the specified collection and has sufficient capacity
+        ''' to accommodate the number of elements copied.
+        ''' </summary>
+        ''' <param name="linq">The collection whose elements are copied to the new list.</param>
+        ''' <returns></returns>
+        Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
+            Return linq.MatrixToList
+        End Operator
+
+        Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
+            Throw New NotSupportedException
+        End Operator
+
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="List"/>`1 class that
+        ''' contains elements copied from the specified collection and has sufficient capacity
+        ''' to accommodate the number of elements copied.
+        ''' </summary>
+        ''' <param name="linq">The collection whose elements are copied to the new list.</param>
+        ''' <returns></returns>
+        Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of IEnumerable(Of T)))) As List(Of T)
+            Return linq.MatrixAsIterator.MatrixToList
+        End Operator
+
+        Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of IEnumerable(Of T)))) As List(Of T)
+            Throw New NotSupportedException
+        End Operator
     End Structure
 
     ''' <summary>
