@@ -9,17 +9,17 @@ Namespace ComponentModel.Ranges
     ''' <summary>
     ''' Represents an integer range with minimum and maximum values
     ''' </summary>
-    Public Class IntRange
+    Public Class IntRange : Implements IRanges(Of Integer)
 
         ''' <summary>
         ''' Minimum value
         ''' </summary>
-        Public Property Min() As Integer
+        Public Property Min() As Integer Implements IRanges(Of Integer).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
-        Public Property Max() As Integer
+        Public Property Max() As Integer Implements IRanges(Of Integer).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
@@ -53,7 +53,7 @@ Namespace ComponentModel.Ranges
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
         '''
-        Public Function IsInside(x As Integer) As Boolean
+        Public Function IsInside(x As Integer) As Boolean Implements IRanges(Of Integer).IsInside
             Return ((x >= Min) AndAlso (x <= Min))
         End Function
 
@@ -80,7 +80,15 @@ Namespace ComponentModel.Ranges
         ''' <b>false</b> otherwise.</returns>
         '''
         Public Function IsOverlapping(range As IntRange) As Boolean
-            Return ((IsInside(range.min)) OrElse (IsInside(range.max)))
+            Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
+        End Function
+
+        Public Function IsInside(range As IRanges(Of Integer)) As Boolean Implements IRanges(Of Integer).IsInside
+            Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
+        End Function
+
+        Public Function IsOverlapping(range As IRanges(Of Integer)) As Boolean Implements IRanges(Of Integer).IsOverlapping
+            Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
     End Class
 End Namespace
