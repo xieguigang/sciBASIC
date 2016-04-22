@@ -254,6 +254,7 @@
     <Compile Include="Extensions\Debugger\DebuggerLevels.vb" />
     <Compile Include="Extensions\Debugger\Debugger.vb" />
     <Compile Include="Extensions\Debugger\DebuggerArgs.vb" />
+    <Compile Include="Extensions\Image\GDI+\FontFace.vb" />
     <Compile Include="Extensions\IO\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />

@@ -85,13 +85,6 @@ Public Module GDIPlusExtensions
     End Function
 
     ''' <summary>
-    ''' 微软雅黑字体的名称
-    ''' </summary>
-    Public Const FONT_FAMILY_MICROSOFT_YAHEI As String = "Microsoft YaHei"
-    Public Const FONT_FAMILY_UBUNTU As String = "Ubuntu"
-    Public Const FONT_FAMILY_SEGOE_UI As String = "Segoe UI"
-
-    ''' <summary>
     ''' Adding a frame box to the target image source.(为图像添加边框)
     ''' </summary>
     ''' <param name="Handle"></param>
