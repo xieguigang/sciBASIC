@@ -50,12 +50,12 @@ Namespace Language
             Dim maxInd As Integer = 0
 
             For Each x As T In source.Skip(1)
+                i += 1
+
                 If x.CompareTo(max) > 0 Then
                     max = x
                     maxInd = i
                 End If
-
-                i += 1
             Next
 
             Return maxInd

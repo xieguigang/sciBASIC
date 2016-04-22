@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Language
 
@@ -32,7 +33,74 @@ Namespace Language
         Public Function Exec(Of T, V)(source As IEnumerable(Of T)) As ToArrayHelper(Of T, V)
             Return New ToArrayHelper(Of T, V)(source)
         End Function
+
+        Public Function BuildHash(Of T, V, [In])(keys As Func(Of [In], T), values As Func(Of [In], V)) As BuildHashHelper(Of T, V, [In])
+            Return New BuildHashHelper(Of T, V, [In])(keys, values)
+        End Function
+
+        Public Function BuildHash(Of T, [In])(keys As Func(Of [In], T)) As BuildHashHelper(Of T, [In], [In])
+            Return New BuildHashHelper(Of T, [In], [In])(keys, Function(x) x)
+        End Function
+
+        Public Function BuildHash(Of T As sIdEnumerable)() As BuildHashHelper(Of String, T, T)
+            Return New BuildHashHelper(Of String, T, T)(Function(x) x.Identifier, Function(x) x)
+        End Function
     End Module
+
+    ' Summary:
+    '     Creates a System.Collections.Generic.Dictionary`2 from an System.Collections.Generic.IEnumerable`1
+    '     according to specified key selector and element selector functions.
+    '
+    ' Parameters:
+    '   source:
+    '     An System.Collections.Generic.IEnumerable`1 to create a System.Collections.Generic.Dictionary`2
+    '     from.
+    '
+    '   keySelector:
+    '     A function to extract a key from each element.
+    '
+    '   elementSelector:
+    '     A transform function to produce a result element value from each element.
+    '
+    ' Type parameters:
+    '   TSource:
+    '     The type of the elements of source.
+    '
+    '   TKey:
+    '     The type of the key returned by keySelector.
+    '
+    '   TElement:
+    '     The type of the value returned by elementSelector.
+    '
+    ' Returns:
+    '     A System.Collections.Generic.Dictionary`2 that contains values of type TElement
+    '     selected from the input sequence.
+    '
+    ' Exceptions:
+    '   T:System.ArgumentNullException:
+    '     source or keySelector or elementSelector is null.-or-keySelector produces a key
+    '     that is null.
+    '
+    '   T:System.ArgumentException:
+    '     keySelector produces duplicate keys for two elements.
+    Public Structure BuildHashHelper(Of T, V, [In])
+
+        ReadOnly __keys As Func(Of [In], T)
+        ReadOnly __values As Func(Of [In], V)
+
+        Sub New(k As Func(Of [In], T), v As Func(Of [In], V))
+            __keys = k
+            __values = v
+        End Sub
+
+        Public Shared Operator <=(cls As BuildHashHelper(Of T, V, [In]), linq As IEnumerable(Of [In])) As Dictionary(Of T, V)
+            Return linq.ToDictionary(cls.__keys, cls.__values)
+        End Operator
+
+        Public Shared Operator >=(cls As BuildHashHelper(Of T, V, [In]), linq As IEnumerable(Of [In])) As Dictionary(Of T, V)
+            Throw New NotSupportedException
+        End Operator
+    End Structure
 
     Public Structure ListHelper(Of T)
 
