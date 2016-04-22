@@ -17,6 +17,15 @@ Imports System.Collections.ObjectModel
 Public Module ProgramPathSearchTool
 
     <Extension>
+    Public Function PathCombine(path As String, addTag As String) As String
+        If path.DirectoryExists Then
+            Return path.ParentPath & "/" & path.BaseName & addTag
+        Else
+            Return path.TrimFileExt & addTag
+        End If
+    End Function
+
+    <Extension>
     Public Iterator Function EnumerateFiles(DIR As String, ParamArray keyword As String()) As IEnumerable(Of String)
         Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
 
