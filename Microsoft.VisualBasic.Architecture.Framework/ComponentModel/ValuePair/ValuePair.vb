@@ -1,7 +1,24 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel
+
+    Public Structure TagValue(Of T)
+        Implements IKeyValuePairObject(Of String, T)
+
+        Public Property tag As String Implements IKeyValuePairObject(Of String, T).Identifier
+        Public Property Value As T Implements IKeyValuePairObject(Of String, T).Value
+
+        Sub New(tag As String, x As T)
+            Me.tag = tag
+            Me.Value = x
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{tag}] --> {Value.GetJson}"
+        End Function
+    End Structure
 
     ''' <summary>
     ''' An object for the text file format xml data storage.(用于存储与XML文件之中的字符串键值对对象)
