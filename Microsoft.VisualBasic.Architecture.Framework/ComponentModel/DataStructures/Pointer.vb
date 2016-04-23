@@ -64,6 +64,12 @@
             Return x.__index > n
         End Operator
 
+        Public Shared Operator -(x As Pointer, n As Integer) As Integer
+            Dim p As Integer = x.__index
+            x.__index -= n
+            Return p
+        End Operator
+
         ''' <summary>
         ''' 移动n，然后返回之前的数值
         ''' </summary>
