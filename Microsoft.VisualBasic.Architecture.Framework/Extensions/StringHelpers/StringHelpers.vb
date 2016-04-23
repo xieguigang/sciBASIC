@@ -13,6 +13,26 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module StringHelpers
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="pos">The text length of each field property value.</param>
+    ''' <returns></returns>
+    <Extension> Public Function FieldParser(s As String, pos As Integer()) As String()
+        Dim list As New List(Of String)
+        Dim offset As Integer
+
+        For Each len As Integer In pos.Take(pos.Length - 1)
+            list += s.Substring(offset, len)  ' 起始的位置是根据域的长度逐步叠加的
+            offset += len
+        Next
+
+        list += s.Substring(offset)
+
+        Return list.ToArray
+    End Function
+
+    ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
     ''' </summary>
     Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline

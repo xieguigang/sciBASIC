@@ -1,14 +1,25 @@
 ﻿Namespace ComponentModel.DataStructures
 
     ''' <summary>
-    ''' <see cref="Int32"/>类型，一般用来进行数组操作的
+    ''' Type of <see cref="Int32"/> pointer class to the <see cref="Array"/> class.
+    ''' (<see cref="Int32"/>类型，一般用来进行数组操作的)
     ''' </summary>
     Public Class Pointer
 
         Protected __index As Integer
+        ReadOnly __step As Integer
 
+        ''' <summary>
+        ''' Construct a pointer class and then assign a initial <see cref="Int32"/> value.(构造一个指针对象，并且赋值其初始值)
+        ''' </summary>
+        ''' <param name="n">The initial value.</param>
         Sub New(n As Integer)
             __index = n
+        End Sub
+
+        Private Sub New(n As Integer, [step] As Integer)
+            __index = n
+            __step = [step]
         End Sub
 
         ''' <summary>
@@ -84,6 +95,20 @@
             Dim p As Integer = x.__index
             x.__index -= 1
             Return p
+        End Operator
+
+        ''' <summary>
+        ''' Setup the offsets
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="steps"></param>
+        ''' <returns></returns>
+        Public Shared Operator <=(x As Pointer, steps As Integer) As Pointer
+            Return New Pointer(x.__index, steps)
+        End Operator
+
+        Public Shared Operator >=(x As Pointer, steps As Integer) As Pointer
+            Throw New NotSupportedException
         End Operator
     End Class
 

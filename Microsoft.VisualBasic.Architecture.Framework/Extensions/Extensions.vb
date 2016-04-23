@@ -781,7 +781,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("Double.Match")>
-    <Extension> Public Function ParseDouble(s As String) As Double
+    <Extension> Public Function RegexParseDouble(s As String) As Double
         Return Val(s.Match(_DOUBLE))
     End Function
 

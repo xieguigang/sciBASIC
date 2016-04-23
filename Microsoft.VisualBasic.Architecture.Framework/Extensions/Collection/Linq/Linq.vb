@@ -146,6 +146,14 @@ Namespace Linq
             Return out
         End Function
 
+        ''' <summary>
+        ''' Read source at element position <paramref name="i"/> and returns its value, 
+        ''' and then this function makes position <paramref name="i"/> offset +1
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="array"></param>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer) As T
             Dim out As T = array(i)
             i += 1
