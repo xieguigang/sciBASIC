@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports System.Threading
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Parallel.Tasks
 
@@ -16,6 +17,11 @@ Namespace Parallel.Tasks
         End Sub
 
         Dim __running As Boolean = False
+        Dim __cts As New CancellationTokenSource
+
+        Public Sub Cancel()
+            Call __cts.Cancel()
+        End Sub
 
         Public Sub Start()
             If __running Then
@@ -24,12 +30,16 @@ Namespace Parallel.Tasks
                 __running = True
             End If
 
-            Call New Threading.Thread(Sub()
-                                          Call Me._Task()
-                                          Call Me._Callback()
-                                          __running = False
-                                      End Sub).Start()
+            Call RunTask(Async Sub() Await __run(__cts))
         End Sub
+
+#Disable Warning
+        Private Async Function __run(cts As CancellationTokenSource) As Threading.Tasks.Task
+#Enable Warning
+            Call Me._Task()
+            Call Me._Callback()
+            __running = False
+        End Function
 
         Public Overrides Function ToString() As String
             Return New With {
