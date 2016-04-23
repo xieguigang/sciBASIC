@@ -15,6 +15,7 @@
         ''' <param name="n">The initial value.</param>
         Sub New(n As Integer)
             __index = n
+            __step = 1
         End Sub
 
         Private Sub New(n As Integer, [step] As Integer)
@@ -82,7 +83,7 @@
         ''' <returns></returns>
         Public Overloads Shared Operator +(x As Pointer) As Integer
             Dim p As Integer = x.__index
-            x.__index += 1
+            x.__index += x.__step
             Return p
         End Operator
 
@@ -93,7 +94,7 @@
         ''' <returns></returns>
         Public Overloads Shared Operator -(x As Pointer) As Integer
             Dim p As Integer = x.__index
-            x.__index -= 1
+            x.__index -= x.__step
             Return p
         End Operator
 
