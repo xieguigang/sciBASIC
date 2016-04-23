@@ -92,7 +92,7 @@ Public Class PNButton : Inherits Microsoft.VisualBasic.MolkPlusTheme.Visualise.E
                          PressColor:=Color.FromArgb(213, 233, 254),
                          NormalColor:=Color.White,
                         TextColor:=Color.Black,
-                         Font:=New Font(FONT_FAMILY_MICROSOFT_YAHEI, 9))
+                         Font:=New Font(FontFace.MicrosoftYaHei, 9))
     End Sub
 
 End Class

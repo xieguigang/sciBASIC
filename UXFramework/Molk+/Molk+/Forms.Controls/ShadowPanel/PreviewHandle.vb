@@ -152,7 +152,7 @@
 
     Private Function InternalCreateMessageBubbleUI() As Image
         Dim res As Image = DirectCast(My.Resources._515151_speech_bubble_512.Clone, Bitmap)
-        Dim DrawingFont As New Font(FONT_FAMILY_MICROSOFT_YAHEI, 108, FontStyle.Bold)
+        Dim DrawingFont As New Font(FontFace.MicrosoftYaHei, 108, FontStyle.Bold)
 
         Using Gr As Graphics = Graphics.FromImage(res)
             Dim Size = Gr.MeasureString(Value, DrawingFont)

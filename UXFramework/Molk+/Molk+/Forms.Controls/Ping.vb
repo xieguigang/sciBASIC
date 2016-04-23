@@ -134,7 +134,7 @@ Public Class Ping
         Next
 
         Dim Text As String = Ping & "ms"
-        Dim Font As Font = New Font(FONT_FAMILY_MICROSOFT_YAHEI, 9)
+        Dim Font As Font = New Font(FontFace.MicrosoftYaHei, 9)
         Dim Size = Gr.Gr_Device.MeasureString(Text, Font)
 
         Call Gr.Gr_Device.DrawString(Text, Font, Brushes.Black, New Point(RECT.Last.Right + 3, 0.5 * (Height - RECT.Last.Y - Size.Height) + RECT.Last.Y))

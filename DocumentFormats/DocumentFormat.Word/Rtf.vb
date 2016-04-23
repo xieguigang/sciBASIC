@@ -21,7 +21,7 @@ Namespace RichTextFormatDocument
         End Property
 
         Sub New()
-            GlobalFormat = New Font(10, False, FONT_FAMILY_MICROSOFT_YAHEI, False, False, Drawing.Color.Black)
+            GlobalFormat = New Font(10, False, FontFace.MicrosoftYaHei, False, False, Drawing.Color.Black)
         End Sub
 
         Sub New(GlobalFormat As Font)

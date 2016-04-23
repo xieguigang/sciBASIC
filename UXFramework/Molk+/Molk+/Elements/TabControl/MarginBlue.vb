@@ -6,7 +6,7 @@ Namespace Visualise.Elements
 
         Sub New()
             Me.LabelHeight = 32
-            Me.Font = New Font(FONT_FAMILY_MICROSOFT_YAHEI, 12)
+            Me.Font = New Font(FontFace.MicrosoftYaHei, 12)
             Me.BorderColor = New Pen(New SolidBrush(color:=Color.FromArgb(222, 222, 222)))
 
             Dim Gr = New Size(10000, 3).CreateGDIDevice(Color.FromArgb(2, 111, 194))

@@ -48,8 +48,8 @@
         ''' <returns></returns>
         Public Property ControlboxButtonSize As Size
 
-        Public Property TitleFont As Font = New Font(FONT_FAMILY_MICROSOFT_YAHEI, 16)
-        Public Property SubCaptionFont As Font = New Font(FONT_FAMILY_MICROSOFT_YAHEI, 10)
+        Public Property TitleFont As Font = New Font(FontFace.MicrosoftYaHei, 16)
+        Public Property SubCaptionFont As Font = New Font(FontFace.MicrosoftYaHei, 10)
 
         Public Property ShowText As Boolean = True
         Public Property ShowIcon As Boolean = True
