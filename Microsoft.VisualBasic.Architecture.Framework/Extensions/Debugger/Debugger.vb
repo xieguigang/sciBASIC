@@ -212,7 +212,9 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="s"></param>
     <Extension> Public Sub Echo(s As String)
-        Call Console.Write(s)
+        If Not Mute Then
+            Call Console.Write(s)
+        End If
     End Sub
 
     ''' <summary>
@@ -220,6 +222,8 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="c"></param>
     <Extension> Public Sub Echo(c As Char)
-        Call Console.Write(c)
+        If Not Mute Then
+            Call Console.Write(c)
+        End If
     End Sub
 End Module
