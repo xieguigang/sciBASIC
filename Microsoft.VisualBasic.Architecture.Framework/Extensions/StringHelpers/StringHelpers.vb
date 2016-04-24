@@ -360,7 +360,9 @@ Public Module StringHelpers
     ''' String collection tokens by a certain delimiter string element.
     ''' </summary>
     ''' <param name="source"></param>
-    ''' <param name="delimiter"></param>
+    ''' <param name="delimiter">
+    ''' Using String.Equals function to determined this delimiter 
+    ''' </param>
     ''' <returns></returns>
     <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String) As IEnumerable(Of String())
         Dim list As New List(Of String)
