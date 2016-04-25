@@ -20,6 +20,7 @@ Namespace Marshal
         Public ReadOnly Property Scan0 As System.IntPtr
 
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
+            __writeMemory = unsafeWrite
             Scan0 = p
             __innerRaw = New T(chunkSize - 1) {}
             Call unsafeCopys(Scan0, __innerRaw, 0, __innerRaw.Length)

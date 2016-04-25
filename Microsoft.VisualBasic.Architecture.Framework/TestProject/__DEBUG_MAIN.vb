@@ -3,10 +3,16 @@ Imports Microsoft.VisualBasic.MemoryDump
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Scripting
+Imports System.Drawing
 
 Module __DEBUG_MAIN
 
     Sub Main()
+
+
+        Dim bitmap As Image = Image.FromFile("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+        bitmap = bitmap.GetBinaryBitmap
+        Call bitmap.Save("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\lena.binary.jpg")
 
         Dim shell As New ExternalCall("C:\Perl64\bin\perl.exe")
 

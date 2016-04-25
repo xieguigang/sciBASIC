@@ -39,8 +39,10 @@ Public Module hcBitmap
 
         Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
 
+            Dim counter As Integer
+
             ' Set every third value to 255. A 24bpp bitmap will binarization.  
-            For counter As Integer = 0 To rgbValues.Length - 1 Step 3
+            Do While counter < rgbValues.Length - 1
                 ' Get the red channel
                 iR = rgbValues.Raw(counter + 2)
                 ' Get the green channel
@@ -59,7 +61,9 @@ Public Module hcBitmap
                     rgbValues.Raw(counter + 1) = 0
                     rgbValues.Raw(counter + 0) = 0
                 End If
-            Next
+
+                counter += 3
+            Loop
         End Using
 
         ' Unlock the bits.
