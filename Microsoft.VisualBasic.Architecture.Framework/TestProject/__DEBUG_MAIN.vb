@@ -1,8 +1,17 @@
-﻿Imports Microsoft.VisualBasic.MemoryDump
+﻿Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MemoryDump
+Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Scripting
 
 Module __DEBUG_MAIN
 
     Sub Main()
+
+        Dim shell As New ExternalCall("C:\Perl64\bin\perl.exe")
+
+        Dim val = shell.Shell("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\test.pl")
+
 
         Dim list = Microsoft.VisualBasic.Parallel.ParallelLoading.Load(Of ParallelLoadingTest)({"a"})
 
@@ -17,9 +26,9 @@ Module __DEBUG_MAIN
 
 
 
-        Dim dn = New Microsoft.VisualBasic.WrapperClassTools.Net.DomainName("http://anotherdomain.org/home")
-        dn = New WrapperClassTools.Net.DomainParser.DomainName("www.subdomain.anothersubdomain.maindomain.com/something/")
-        dn = New WrapperClassTools.Net.DomainParser.DomainName("http://sub.domain.com/somefolder/index.html")
+        Dim dn = New DomainName("http://anotherdomain.org/home")
+        dn = New DomainName("www.subdomain.anothersubdomain.maindomain.com/something/")
+        dn = New DomainName("http://sub.domain.com/somefolder/index.html")
 
         Dim task = New CommandLine.IORedirectFile("E:\GCModeller\GCModeller\.cache\SHOAL.EXE\TmoD\meme.exe", "E:\sigma\sigma\150.fasta -dna -evt 10", {New KeyValuePair(Of String, String)("MEME_DIRECTORY", "E:\GCModeller\GCModeller\.cache\SHOAL.EXE\TmoD")})
         Call task.Run()
@@ -27,18 +36,18 @@ Module __DEBUG_MAIN
         Call System.Console.WriteLine(task.StandardOutput)
 
         Try
-            Call New Microsoft.VisualBasic.WrapperClassTools.Net.TcpSynchronizationServicesSocket(Function(s As String, ad As Net.IPEndPoint) As String
-                                                                                                      ' MsgBox(ad.ToString & "  ----> " & s)
-                                                                                                      Return Len(s)
-                                                                                                  End Function, 1234).Run()
+            '   Call New TcpSynchronizationServicesSocket(Function(s As String, ad As Net.IPEndPoint) As String
+            ' MsgBox(ad.ToString & "  ----> " & s)
+            '  Return Len(s)
+            '    End Function, 1234).Run()
         Catch ex As Exception
 
-            Call New Threading.Thread(Sub() MsgBox(ex.ToString & "  =====>  " & Microsoft.VisualBasic.WrapperClassTools.Net.AsynchronousClient.LocalClient(1234).SendMessage(ex.ToString))).Start()
-            Call New Threading.Thread(Sub() MsgBox("2nd    =========>     " & Microsoft.VisualBasic.WrapperClassTools.Net.AsynchronousClient.LocalClient(1234).SendMessage("sdjkfghdskjgvbjkfdzbgvkdf"))).Start()
+            '   Call New Threading.Thread(Sub() MsgBox(ex.ToString & "  =====>  " & AsynInvoke.LocalClient(1234).SendMessage(ex.ToString))).Start()
+            '      Call New Threading.Thread(Sub() MsgBox("2nd    =========>     " & Microsoft.VisualBasic.WrapperClassTools.Net.AsynchronousClient.LocalClient(1234).SendMessage("sdjkfghdskjgvbjkfdzbgvkdf"))).Start()
 
         End Try
 
-     
+
         System.Console.ReadLine()
 
 

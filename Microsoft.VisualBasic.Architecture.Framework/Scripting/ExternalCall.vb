@@ -24,6 +24,13 @@ Namespace Scripting
             Return Shell(path:=tmp, args:=args)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        ''' <remarks>Perl脚本测试通过！</remarks>
         Public Function Shell(path As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
             Dim param As String =
                 If(args Is Nothing,

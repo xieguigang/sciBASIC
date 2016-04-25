@@ -10,7 +10,8 @@ Namespace CommandLine
 
     ''' <summary>
     ''' A communication fundation class type for the commandline program interop.
-    ''' (一个简单的用于从当前进程派生子进程的Wrapper对象，假若需要folk出来的子进程对象不需要终端交互功能，则更加推荐使用<see cref="IORedirectFile"/>对象来进行调用)
+    ''' (一个简单的用于从当前进程派生子进程的Wrapper对象，假若需要folk出来的子进程对象
+    ''' 不需要终端交互功能，则更加推荐使用<see cref="IORedirectFile"/>对象来进行调用)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class IORedirect : Implements I_ConsoleDeviceHandle
@@ -72,7 +73,8 @@ Namespace CommandLine
         Public Delegate Function ProcessAyHandle(WaitForExit As Boolean, PushingData As String(), _DISP_DEBUG_INFO As Boolean) As Integer
 
         ''' <summary>
-        ''' A function pointer for process the events when the target invoked child process was terminated and exit.(当目标进程退出的时候所调用的过程)
+        ''' A function pointer for process the events when the target invoked child process was terminated and exit.
+        ''' (当目标进程退出的时候所调用的过程)
         ''' </summary>
         ''' <param name="exitCode">The exit code for the target sub invoke process.进程的退出代码</param>
         ''' <param name="exitTime">The exit time for the target sub invoke process.(进程的退出时间)</param>
@@ -93,8 +95,13 @@ Namespace CommandLine
         ''' then this function will returns the -100 value as error code and print the warning 
         ''' information on the system console.(启动目标进程)
         ''' </summary>
-        ''' <param name="WaitForExit">Indicate that the program code wait for the target process exit or not?(参数指示应用程序代码是否等待目标进程的结束)</param>
-        ''' <returns>当发生错误的时候会返回错误代码，当当前的进程任然处于运行的状态的时候，程序会返回-100错误代码并在终端之上打印出警告信息</returns>
+        ''' <param name="WaitForExit">
+        ''' Indicate that the program code wait for the target process exit or not?
+        ''' (参数指示应用程序代码是否等待目标进程的结束)
+        ''' </param>
+        ''' <returns>
+        ''' 当发生错误的时候会返回错误代码，当当前的进程任然处于运行的状态的时候，程序会返回-100错误代码并在终端之上打印出警告信息
+        ''' </returns>
         ''' <remarks></remarks>
         Public Function Start(Optional WaitForExit As Boolean = False,
                               Optional PushingData As String() = Nothing,
