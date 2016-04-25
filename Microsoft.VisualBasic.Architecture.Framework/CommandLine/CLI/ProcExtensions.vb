@@ -2,18 +2,21 @@
 
 Namespace CommandLine
 
+    ''' <summary>
+    ''' How to found the process by CLI
+    ''' </summary>
     Public Module ProcExtensions
 
-        Public Function GetProc(pid As Integer) As System.Diagnostics.Process
+        Public Function GetProc(pid As Integer) As Process
             Return System.Diagnostics.Process.GetProcessById(pid)
         End Function
 
         ''' <summary>
-        ''' 按照命令行参数来获取进程实例
+        ''' Get process by command line parameter.(按照命令行参数来获取进程实例)
         ''' </summary>
         ''' <param name="CLI"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetProc(CLI As String) As System.Diagnostics.Process
+        <Extension> Public Function GetProc(CLI As String) As Process
             Dim CLICompared As CommandLine = CLI
             Dim lstProc As Process() = System.Diagnostics.Process.GetProcesses
             Dim LQuery = (From proc As Process In lstProc
@@ -28,10 +31,12 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="IO"></param>
         ''' <returns></returns>
-        Public Function FindProc(IO As IIORedirectAbstract) As System.Diagnostics.Process
+        Public Function FindProc(IO As IIORedirectAbstract) As Process
             Dim proc As System.Diagnostics.Process = IO.CLIArguments.GetProc
             If proc Is Nothing Then '空值说明进程还没有启动或者已经终止了，所以查找将不会查找到进程的信息
-                Call $"Unable to found associated process {IO.ToString}, it maybe haven't been started or already terminated.".__DEBUG_ECHO
+                Dim msg As String =
+                    $"Unable to found associated process {IO.ToString}, it maybe haven't been started or already terminated."
+                Call VBDebugger.Warning(msg)
             End If
 
             Return proc

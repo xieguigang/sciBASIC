@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports System.Reflection
 Imports System.Threading
+Imports Microsoft.VisualBasic.ConsoleDevice.STDIO__
 
 Namespace CommandLine
 
@@ -12,17 +13,17 @@ Namespace CommandLine
     ''' (一个简单的用于从当前进程派生子进程的Wrapper对象，假若需要folk出来的子进程对象不需要终端交互功能，则更加推荐使用<see cref="IORedirectFile"/>对象来进行调用)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class IORedirect : Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle
-        Implements System.IDisposable, Microsoft.VisualBasic.CommandLine.IIORedirectAbstract
+    Public Class IORedirect : Implements I_ConsoleDeviceHandle
+        Implements IDisposable, IIORedirectAbstract
 
         ''' <summary>
         ''' 当前的这个进程实例是否处于运行的状态
         ''' </summary>
         ''' <remarks></remarks>
         Dim _processStateRunning As Boolean
-        Dim _consoleDevice As System.IO.StreamReader
-        Dim _inputDevice As System.IO.StreamWriter
-        Dim _errorLogsDevice As System.IO.StreamReader
+        Dim _consoleDevice As IO.StreamReader
+        Dim _inputDevice As IO.StreamWriter
+        Dim _errorLogsDevice As IO.StreamReader
         Dim _DispInvokedSTDOUT As Boolean
 
         ''' <summary>
@@ -41,7 +42,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ProcessInfo As System.Diagnostics.Process
+        Public ReadOnly Property ProcessInfo As Process
 
         ''' <summary>
         ''' Gets the standard output for the target invoke process.
@@ -98,7 +99,7 @@ Namespace CommandLine
             If _DISP_DEBUG_INFO Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(ProcessInfo.StartInfo.FileName).FullName.Replace("\", "/")
                 Dim argvs As String = If(String.IsNullOrEmpty(ProcessInfo.StartInfo.Arguments), "", " " & ProcessInfo.StartInfo.Arguments)
-                Call System.Console.WriteLine("      ---> system(""file:///{0}""{1})", Exe, argvs)
+                Call Console.WriteLine("      ---> system(""file:///{0}""{1})", Exe, argvs)
             End If
 
             Try
@@ -140,7 +141,7 @@ Namespace CommandLine
 
             If WaitForExit Then
                 Call ProcessInfo.WaitForExit()
-                Call Threading.Thread.Sleep(100)
+                Call Thread.Sleep(100)
                 Call OperationTimeOut.OperationTimeOut(AddressOf __tryGetSTDOUT, 2)  '将剩余的标准输出之中的数据完全的打印出来
 
                 Return ProcessInfo.ExitCode
@@ -164,7 +165,7 @@ Namespace CommandLine
                          _DISP_DEBUG_INFO:=_DISP_DEBUG_INFO)
         End Function
 
-        Public Sub WriteLine(s As String) Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(s As String) Implements I_ConsoleDeviceHandle.WriteLine
             Call _inputDevice.WriteLine(s)
             Call _inputDevice.Flush()
         End Sub
@@ -193,7 +194,7 @@ Namespace CommandLine
             End If
 
             Call __STDOUT_BUFFER.Append(readBuffer)
-            If _DispInvokedSTDOUT Then Call System.Console.WriteLine(readBuffer)
+            If _DispInvokedSTDOUT Then Call Console.WriteLine(readBuffer)
 
             RaiseEvent DataArrival(readBuffer)
 
@@ -223,16 +224,17 @@ Namespace CommandLine
         ''' <summary>
         ''' 在进行隐士转换的时候，假若可执行文件的文件路径之中含有空格，则这个时候应该要特别的小心
         ''' </summary>
-        ''' <param name="CommandLine"></param>
+        ''' <param name="CLI"></param>
         ''' <returns></returns>
-        Public Shared Widening Operator CType(CommandLine As String) As IORedirect
-            Call CommandLine.__DEBUG_ECHO
-
-            Dim Tokens = Regex.Split(CommandLine, Global.Microsoft.VisualBasic.CommandLine.SPLIT_REGX_EXPRESSION)
+        Public Shared Widening Operator CType(CLI As String) As IORedirect
+#If DEBUG Then
+            Call CLI.__DEBUG_ECHO
+#End If
+            Dim Tokens As String() = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
             Dim EXE As String = Tokens.First
-            Dim argvs As String = Mid$(CommandLine, Len(EXE) + 1)
+            Dim args As String = Mid$(CLI, Len(EXE) + 1)
 
-            Return New IORedirect(EXE, argvs)
+            Return New IORedirect(EXE, args)
         End Operator
 
         ReadOnly _IORedirect As Boolean
@@ -254,7 +256,7 @@ Namespace CommandLine
                        Optional disp_STDOUT As Boolean = True,
                        Optional _disp_debug As Boolean = False)
 
-            Dim pInfo As System.Diagnostics.ProcessStartInfo = New ProcessStartInfo(Exe.GetString(""""c), args)
+            Dim pInfo As ProcessStartInfo = New ProcessStartInfo(Exe.GetString(""""c), args)
 
             _IORedirect = IORedirect
             pInfo.UseShellExecute = False
@@ -280,22 +282,22 @@ Namespace CommandLine
             _processStateRunning = False
 
             If _disp_debug Then Call $"""{Exe}"" {args}".__DEBUG_ECHO
-            If _disp_debug Then Call System.Console.WriteLine(If(disp_STDOUT, "disp_STDOUT  -> Yes!", "disp_STDOUT   -> NO!"))
+            If _disp_debug Then Call Console.WriteLine(If(disp_STDOUT, "disp_STDOUT  -> Yes!", "disp_STDOUT   -> NO!"))
         End Sub
 
         Public Shared Function Shell(CommandLine As String) As IORedirect
             Return CType(CommandLine, IORedirect)
         End Function
 
-        Public Function Read() As Integer Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.Read
+        Public Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
             Return _consoleDevice.Read
         End Function
 
-        Public Function ReadLine() As String Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.ReadLine
+        Public Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
             Return _consoleDevice.ReadLine
         End Function
 
-        Public Sub WriteLine(s As String, ParamArray args() As String) Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(s As String, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
             Call Me._inputDevice.WriteLine(String.Format(s, args))
             Call Me._inputDevice.Flush()
         End Sub
@@ -340,6 +342,5 @@ Namespace CommandLine
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
             Return Start(WaitForExit:=True)
         End Function
-
     End Class
 End Namespace
