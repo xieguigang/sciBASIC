@@ -19,6 +19,17 @@ Namespace Marshal
         ''' <returns></returns>
         Public ReadOnly Property Scan0 As System.IntPtr
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="chunkSize"></param>
+        ''' <param name="unsafeCopys">
+        ''' Public Sub UnsafeCopys(Of <typeparamref name="T"/>)(source As <see cref="System.IntPtr"/>, destination As <typeparamref name="T"/>(), startIndex As <see cref="Integer"/>, length As <see cref="Integer"/>)
+        ''' </param>
+        ''' <param name="unsafeWrite">
+        ''' Public Sub UnsafeWrite(Of <typeparamref name="T"/>)(destination As <typeparamref name="T"/>(), startIndex As <see cref="Integer"/>, source As <see cref="System.IntPtr"/>, length As <see cref="Integer"/>)
+        ''' </param>
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
             __writeMemory = unsafeWrite
             Scan0 = p

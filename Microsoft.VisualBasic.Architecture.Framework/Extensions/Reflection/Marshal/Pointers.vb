@@ -37,8 +37,16 @@ Namespace Marshal
         End Sub
     End Class
 
+    ''' <summary>
+    ''' Represents a pointer to an 8-bit unsigned integer array.
+    ''' </summary>
     Public Class [Byte] : Inherits IntPtr(Of Byte)
 
+        ''' <summary>
+        ''' Represents a pointer to an 8-bit unsigned integer array.
+        ''' </summary>
+        ''' <param name="p">The start address location of the array in the memory</param>
+        ''' <param name="chunkSize">array length</param>
         Sub New(p As System.IntPtr, chunkSize As Integer)
             Call MyBase.New(p, chunkSize, AddressOf Copy, AddressOf Copy)
         End Sub
