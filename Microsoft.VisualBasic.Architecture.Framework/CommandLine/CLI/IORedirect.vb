@@ -80,6 +80,15 @@ Namespace CommandLine
         Public Delegate Sub ProcessExitCallBack(exitCode As Integer, exitTime As String)
 
         ''' <summary>
+        ''' Gets a <see cref="String"/> used to read the error output of the application.
+        ''' </summary>
+        ''' <returns>A <see cref="String"/> text value that read from the std_error of <see cref="System.IO.StreamReader"/> 
+        ''' that can be used to read the standard error stream of the application.</returns>
+        Public Function GetError() As String
+            Return _errorLogsDevice.ReadToEnd
+        End Function
+
+        ''' <summary>
         ''' Start the target process. If the target invoked process is currently on the running state, 
         ''' then this function will returns the -100 value as error code and print the warning 
         ''' information on the system console.(启动目标进程)
@@ -92,7 +101,8 @@ Namespace CommandLine
                               Optional _DISP_DEBUG_INFO As Boolean = False) As Integer
 
             If _processStateRunning Then
-                Call $"[WARN] Target process ""{ProcessInfo.StartInfo.FileName.ToFileURL}"" is currently in the running state, Operation abort!".__DEBUG_ECHO
+                Dim msg As String = $"Target process ""{ProcessInfo.StartInfo.FileName.ToFileURL}"" is currently in the running state, Operation abort!"
+                Call VBDebugger.Warning(msg)
                 Return -100
             End If
 
@@ -335,6 +345,11 @@ Namespace CommandLine
         End Sub
 #End Region
 
+        ''' <summary>
+        ''' Gets the value that the associated process specified when it terminated.
+        ''' </summary>
+        ''' <param name="WaitForExit"></param>
+        ''' <returns>The code that the associated process specified when it terminated.</returns>
         Public Function Start(Optional WaitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
             Return Start(WaitForExit, Nothing, True)
         End Function

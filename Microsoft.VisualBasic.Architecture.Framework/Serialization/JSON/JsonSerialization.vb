@@ -34,7 +34,9 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' 使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性
+        ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
+        ''' can be used for block the property which is will not serialize to the text.
+        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>

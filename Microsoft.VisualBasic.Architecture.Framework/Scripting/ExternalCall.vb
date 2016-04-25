@@ -1,4 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting
 
@@ -15,14 +18,20 @@ Namespace Scripting
             __ext = ext
         End Sub
 
-        Public Function Run(script As String) As ShellValue
+        Public Function Run(script As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
             Dim tmp As String = App.GetAppSysTempFile(__ext)
             Call script.SaveTo(tmp, Encodings.ASCII.GetEncodings)
-            Return Shell(path:=tmp)
+            Return Shell(path:=tmp, args:=args)
         End Function
 
-        Public Function Shell(path As String) As ShellValue
-
+        Public Function Shell(path As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
+            Dim param As String =
+                If(args Is Nothing,
+                   "",
+                   String.Join(" ", args.AllKeys.ToArray(Function(s) $"{s} {args.Get(s).CliToken}")))
+            Dim IO As New IORedirect(__host, path & " " & param)
+            Dim code As Integer = IO.Start(WaitForExit:=True)
+            Return New ShellValue(IO, code)
         End Function
 
         Public Overrides Function ToString() As String
@@ -34,6 +43,16 @@ Namespace Scripting
         Public STD_OUT As String
         Public STD_ERR As String
         Public state As Integer
+
+        Sub New(io As IORedirect, exitCode As Integer)
+            state = exitCode
+            STD_OUT = io.StandardOutput
+            STD_ERR = io.GetError
+        End Sub
+
+        Public Function GetObject(Of T)(parser As Func(Of String, T)) As T
+            Return parser(STD_OUT)
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
