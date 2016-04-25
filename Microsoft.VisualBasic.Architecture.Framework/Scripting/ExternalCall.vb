@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting
 
+    ''' <summary>
+    ''' Shell object for the external script running.
+    ''' </summary>
     Public Class ExternalCall
 
         ''' <summary>
@@ -13,11 +16,22 @@ Namespace Scripting
         ReadOnly __host As String
         ReadOnly __ext As String
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="host">The program its file name to run the script</param>
+        ''' <param name="ext">File extension name of this type of script</param>
         Sub New(host As String, Optional ext As String = ".txt")
             __host = FileIO.FileSystem.GetFileInfo(host).FullName
             __ext = ext
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="script">The script content</param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
         Public Function Run(script As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
             Dim tmp As String = App.GetAppSysTempFile(__ext)
             Call script.SaveTo(tmp, Encodings.ASCII.GetEncodings)
@@ -27,7 +41,7 @@ Namespace Scripting
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="path"></param>
+        ''' <param name="path">The script file path</param>
         ''' <param name="args"></param>
         ''' <returns></returns>
         ''' <remarks>Perl脚本测试通过！</remarks>
@@ -46,9 +60,21 @@ Namespace Scripting
         End Function
     End Class
 
+    ''' <summary>
+    ''' Script shell result.
+    ''' </summary>
     Public Structure ShellValue
+        ''' <summary>
+        ''' Standard output on the console
+        ''' </summary>
         Public STD_OUT As String
+        ''' <summary>
+        ''' Standard error
+        ''' </summary>
         Public STD_ERR As String
+        ''' <summary>
+        ''' Process exit code
+        ''' </summary>
         Public state As Integer
 
         Sub New(io As IORedirect, exitCode As Integer)
@@ -57,6 +83,12 @@ Namespace Scripting
             STD_ERR = io.GetError
         End Sub
 
+        ''' <summary>
+        ''' Parsing object from the standard output
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="parser">Object parser</param>
+        ''' <returns></returns>
         Public Function GetObject(Of T)(parser As Func(Of String, T)) As T
             Return parser(STD_OUT)
         End Function
