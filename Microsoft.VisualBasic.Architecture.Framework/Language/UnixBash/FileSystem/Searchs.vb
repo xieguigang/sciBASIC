@@ -20,6 +20,10 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property r As New SearchOpt(SearchOpt.Options.Recursive)
+        ''' <summary>
+        ''' Searching the directory, if this parameter is not presents, then returns search file.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property lsDIR As New SearchOpt(SearchOpt.Options.Directory)
 
         ''' <summary>

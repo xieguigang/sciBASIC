@@ -47,7 +47,7 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Public Function Flush(source As Generic.IEnumerable(Of T)) As Boolean
+        Public Function Flush(source As IEnumerable(Of T)) As Boolean
             If source.IsNullOrEmpty Then
                 Return True  ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
             End If
@@ -59,7 +59,6 @@ Namespace DocumentStream.Linq
 
             Dim block As String = LQuery.JoinBy(vbCrLf)
             Call _fileIO.WriteLine(block)
-            Call _fileIO.Flush()
 
             Return True
         End Function
@@ -71,10 +70,13 @@ Namespace DocumentStream.Linq
 
             Dim line As String = RowWriter.ToRow(obj).AsLine
             Call _fileIO.WriteLine(line)
-            Call _fileIO.Flush()
 
             Return True
         End Function
+
+        Public Sub Flush()
+            Call _fileIO.Flush()
+        End Sub
 
         ''' <summary>
         ''' 这个是配合<see cref="DataStream.ForEachBlock(Of T)(Action(Of T()), Integer)"/>方法使用的
