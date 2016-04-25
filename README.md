@@ -10,4 +10,8 @@ Includes:
 4. Memory pepline services between two client program
 5. VisualBasic language Feature:  Unix bash command supports in under development which parts of the API is available at namespace Microsoft.VisualBasic.Language  
 
-<!---->
+Image fast binarization using VisualBasic extension API: 
+https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/hcBitmap.vb
+
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg)
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/lena.binary.jpg)
