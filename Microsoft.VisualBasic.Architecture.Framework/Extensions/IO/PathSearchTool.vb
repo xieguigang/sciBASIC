@@ -161,6 +161,15 @@ Public Module ProgramPathSearchTool
         Return False
     End Function
 
+    <Extension>
+    Public Function FileLength(path As String) As Integer
+        If Not path.FileExists Then
+            Return -1
+        Else
+            Return FileIO.FileSystem.GetFileInfo(path).Length
+        End If
+    End Function
+
     ''' <summary>
     ''' Check if the target file object is exists on your file system or not.(这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
     ''' </summary>
@@ -222,6 +231,10 @@ Public Module ProgramPathSearchTool
         Else
             Return FileIO.FileSystem.GetDirectoryInfo(fsObj).Name
         End If
+    End Function
+
+    <Extension> Public Function GetBaseName(path As String) As String
+        Return IO.Path.GetFileNameWithoutExtension(path)
     End Function
 
     ''' <summary>

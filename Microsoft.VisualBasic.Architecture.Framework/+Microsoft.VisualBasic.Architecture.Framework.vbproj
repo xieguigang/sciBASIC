@@ -239,10 +239,16 @@
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
+    <Compile Include="WebResult.vb" />
+    <Compile Include="Win32API.vb" />
+    <Compile Include="Win32File.vb" />
     <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
+    <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
+    <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
+    <Compile Include="Extensions\CodeDOM\VBC.vb" />
     <Compile Include="Extensions\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
@@ -550,11 +556,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
+    <None Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Serialization\SchemaProvider\" />
   </ItemGroup>
-  <Import Project="..\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
