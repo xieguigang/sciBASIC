@@ -92,25 +92,26 @@ Namespace StorageProvider.Reflection
         ''' <param name="explicit"></param>
         ''' <returns></returns>
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
-        Public Function Convert(Of ItemType As Class)(DataFrame As Csv.DocumentStream.DataFrame, Optional explicit As Boolean = True) As List(Of ItemType)
-            Dim Type As System.Type = GetType(ItemType)
-            Dim Schema = SchemaProvider.CreateObject(Of ItemType)(explicit).CopyWriteDataToObject
-            Dim RowBuilder As New RowBuilder(Schema)
+        Public Function Convert(Of ItemType As Class)(DataFrame As DataFrame, Optional explicit As Boolean = True) As List(Of ItemType)
+            Dim type As Type = GetType(ItemType)
+            Dim schema As SchemaProvider =
+                SchemaProvider.CreateObject(Of ItemType)(explicit).CopyWriteDataToObject
+            Dim rowBuilder As New RowBuilder(schema)
             Dim CreateObjects = (From LineNumber As Integer
-                                 In DataFrame._innerTable.Count.Sequence.AsParallel
+                                 In DataFrame._innerTable.Sequence.AsParallel
                                  Select LineNumber,
                                      FilledObject = Activator.CreateInstance(Of ItemType))
-            Dim ChunkSource = (From line In CreateObjects
-                               Select LineNumber = line.LineNumber,
-                                   row = DataFrame._innerTable(line.LineNumber),
-                                   line.FilledObject).ToArray
+            Dim buf = (From line In CreateObjects
+                       Select LineNumber = line.LineNumber,
+                           row = DataFrame._innerTable(line.LineNumber),
+                           line.FilledObject).ToArray
 
-            Call RowBuilder.Indexof(DataFrame)
+            Call rowBuilder.Indexof(DataFrame)
 
-            Dim LQuery = (From item In ChunkSource.AsParallel
+            Dim LQuery = (From item In buf.AsParallel
                           Select item.LineNumber,
                               item.row,
-                              Data = RowBuilder.FillData(Of ItemType)(item.row, item.FilledObject)
+                              Data = rowBuilder.FillData(Of ItemType)(item.row, item.FilledObject)
                           Order By LineNumber Ascending)
             Dim Table = (From row In LQuery Select row.Data).ToList
             Return Table '顺序需要一一对应
