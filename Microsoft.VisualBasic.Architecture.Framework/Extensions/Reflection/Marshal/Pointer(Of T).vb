@@ -12,6 +12,12 @@ Namespace Marshal
             End Get
         End Property
 
+        Public ReadOnly Property Length As Integer
+            Get
+                Return __innerRaw.Length
+            End Get
+        End Property
+
         ''' <summary>
         ''' 相对于当前的指针的位置而言的
         ''' </summary>
@@ -38,13 +44,19 @@ Namespace Marshal
             End Set
         End Property
 
+        Public ReadOnly Property Raw As T()
+            Get
+                Return __innerRaw
+            End Get
+        End Property
+
         Public ReadOnly Property EndRead As Boolean
             Get
                 Return __index = __innerRaw.Length
             End Get
         End Property
 
-        Sub New(array As T())
+        Sub New(ByRef array As T())
             __innerRaw = array
         End Sub
 

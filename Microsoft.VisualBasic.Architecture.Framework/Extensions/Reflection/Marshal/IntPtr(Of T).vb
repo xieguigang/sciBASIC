@@ -35,6 +35,9 @@ Namespace Marshal
             Scan0 = p
         End Sub
 
+        ''' <summary>
+        ''' Public Delegate Sub UnsafeWrite(Of T)(destination As T(), startIndex As Integer, source As System.IntPtr, length As Integer)
+        ''' </summary>
         Dim __writeMemory As UnsafeWrite(Of T)
 
         Private Sub __unsafeWrite(p As System.IntPtr)
