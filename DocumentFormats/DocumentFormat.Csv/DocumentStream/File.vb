@@ -3,6 +3,8 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 
 Namespace DocumentStream
 
@@ -102,7 +104,11 @@ Namespace DocumentStream
 
         Public ReadOnly Property EstimatedFileSize As Double
             Get
-                Dim LQuery = (From row In Me.AsParallel Select (From col As String In row Select CDbl(Len(col))).ToArray.Sum).ToArray.Sum
+                Dim LQuery = (From row As RowObject
+                              In Me.AsParallel
+                              Select (From col As String
+                                      In row
+                                      Select CDbl(Len(col))).Sum).Sum
                 Return LQuery * 8
             End Get
         End Property
@@ -111,27 +117,27 @@ Namespace DocumentStream
             Call _innerTable.Add(Row)
         End Sub
 
-        Public Sub AppendLine(DataCollectionAsRow As Generic.IEnumerable(Of String))
-            Call _innerTable.Add(CType(DataCollectionAsRow.ToList, RowObject))
+        Public Sub AppendLine(row As IEnumerable(Of String))
+            Call _innerTable.Add(New RowObject(row))
         End Sub
 
         Public Sub AppendLine()
             Call _innerTable.Add(New String() {" "})
         End Sub
 
-        Public Sub Append(Csv As File)
-            Call _innerTable.AddRange(Csv._innerTable)
+        Public Sub Append(dataframe As File)
+            Call _innerTable.AddRange(dataframe._innerTable)
         End Sub
 
         ''' <summary>
         ''' Add a data row collection into this Csv file object instance and then return the total row number after the add operation.
         ''' (向CSV文件之中批量添加行记录，之后返回当前所打开的文件在添加纪录之后的总行数)
         ''' </summary>
-        ''' <param name="RowCollection"></param>
+        ''' <param name="source"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function AppendRange(RowCollection As Generic.IEnumerable(Of RowObject)) As Long
-            Call _innerTable.AddRange(RowCollection)
+        Public Function AppendRange(source As IEnumerable(Of RowObject)) As Long
+            Call _innerTable.AddRange(source)
             Return _innerTable.Count
         End Function
 
@@ -142,7 +148,7 @@ Namespace DocumentStream
         ''' <param name="line"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Get_DataRow(line As Integer) As RowObject
+        Public Function GetByLine(line As Integer) As RowObject
             If line > _innerTable.Count - 1 Then
                 Return New RowObject
             Else
@@ -151,14 +157,17 @@ Namespace DocumentStream
         End Function
 
         ''' <summary>
-        ''' 返回包含有目标关键词的行
+        ''' 使用迭代器返回包含有目标关键词的行
         ''' </summary>
         ''' <param name="KeyWord"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Find(KeyWord As String) As RowObject()
-            Dim Query = From row In _innerTable Where row.LocateKeyWord(KeyWord) > -1 Select row '
-            Return Query.ToArray
+        Public Iterator Function FindAll(KeyWord As String) As IEnumerable(Of RowObject)
+            For Each row As RowObject In _innerTable
+                If row.LocateKeyWord(KeyWord) > -1 Then
+                    Yield row
+                End If
+            Next
         End Function
 
         ''' <summary>
@@ -170,11 +179,12 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function FindAtColumn(KeyWord As String, Column As Integer) As RowObject()
-            Dim LQuery = From row As RowObject In _innerTable.AsParallel
-                         Let strCell As String = row.Column(Column)
-                         Where InStr(strCell, KeyWord, CompareMethod.Text) > 0 OrElse String.Equals(strCell, KeyWord, StringComparison.OrdinalIgnoreCase)
-                         Select row  '
-            Return LQuery.ToArray
+            Return LinqAPI.Exec(Of RowObject) <= From row As RowObject
+                                                 In _innerTable.AsParallel
+                                                 Let strCell As String = row.Column(Column)
+                                                 Where InStr(strCell, KeyWord, CompareMethod.Text) > 0 OrElse
+                                                     String.Equals(strCell, KeyWord, StringComparison.OrdinalIgnoreCase)
+                                                 Select row
         End Function
 
         ''' <summary>
@@ -195,7 +205,7 @@ Namespace DocumentStream
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me.FilePath.ToFileURL
+            Return FilePath.ToFileURL
         End Function
 
         Public Function ToArray() As RowObject()
@@ -212,22 +222,30 @@ Namespace DocumentStream
         ''' </summary>
         ''' <returns></returns>
         Public Function Transpose() As File
-            Dim ChunkBuffer As String()() = Me.Columns.MatrixTranspose
-            Dim LQuery = (From i As Integer In ChunkBuffer.First.Sequence Select CType((From Line In ChunkBuffer Select Line(i)).ToArray, RowObject)).ToList
+            Dim buf As String()() = Me.Columns.MatrixTranspose
+
             Return New File With {
-                ._innerTable = LQuery,
-                .FilePath = FilePath
+                .FilePath = FilePath,
+                ._innerTable =
+                    LinqAPI.MakeList(Of RowObject) <=
+                        From i As Integer
+                        In buf.First.Sequence
+                        Select New RowObject(From line As String() In buf Select line(i))
             }
         End Function
 
         ''' <summary>
         ''' Delete all of the row that meet the delete condition.(将所有满足条件的行进行删除)
         ''' </summary>
-        ''' <param name="Condition"></param>
+        ''' <param name="condition"></param>
         ''' <remarks></remarks>
-        Public Function Remove(Condition As Func(Of RowObject, Boolean)) As RowObject()
-            Dim LQuery = (From row In Me._innerTable Where True = Condition(row) Select row).ToArray
-            Call Me.RemoveRange(LQuery)
+        Public Function Remove(condition As Func(Of RowObject, Boolean)) As RowObject()
+            Dim LQuery As RowObject() =
+                LinqAPI.Exec(Of RowObject) <= From row As RowObject
+                                              In Me._innerTable
+                                              Where True = condition(row)
+                                              Select row
+            Call RemoveRange(LQuery)
             Return LQuery
         End Function
 
@@ -249,11 +267,11 @@ Namespace DocumentStream
         ''' <summary>
         ''' Remove the item in a specific row collection.
         ''' </summary>
-        ''' <param name="RowCollection"></param>
+        ''' <param name="source"></param>
         ''' <remarks></remarks>
-        Public Sub RemoveRange(RowCollection As Generic.IEnumerable(Of RowObject))
-            For i As Integer = 0 To RowCollection.Count - 1
-                Call _innerTable.Remove(RowCollection(i))
+        Public Sub RemoveRange(source As IEnumerable(Of RowObject))
+            For Each row As RowObject In source
+                Call _innerTable.Remove(row)
             Next
         End Sub
 
@@ -272,7 +290,7 @@ Namespace DocumentStream
         End Function
 
         Public Function GetAllStringTokens() As String()
-            Return (From row In Me._innerTable Select row.ToArray).ToArray.MatrixToVector
+            Return (From row In Me._innerTable Select row.ToArray).MatrixToVector
         End Function
 
         ''' <summary>
@@ -295,8 +313,10 @@ Namespace DocumentStream
         ''' <param name="column"></param>
         ''' <remarks></remarks>
         Public Function InsertEmptyColumnBefore(column As Integer) As Integer
-            Dim Query = From row In _innerTable.AsParallel Select row.InsertAt("", column) '
-            Return Query.ToArray.Count
+            Dim LQuery = From row As RowObject
+                         In _innerTable.AsParallel
+                         Select row.InsertAt("", column) '
+            Return LQuery.ToArray.Count
         End Function
 
         ''' <summary>
@@ -383,33 +403,8 @@ Namespace DocumentStream
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
         Public Overridable Overloads Function Save(Optional Path As String = "",
                                                    Optional LazySaved As Boolean = False,
-                                                   Optional encoding As System.Text.Encoding = Nothing) As Boolean
-            Path = getPath(Path)
-
-            If String.IsNullOrEmpty(Path) Then
-                Throw New NullReferenceException("path reference to a null location!")
-            End If
-            If encoding Is Nothing Then
-                encoding = Encoding.UTF8
-            End If
-
-            If LazySaved Then
-                Return __lazySaved(Path, Me, encoding)
-            End If
-
-            Dim stopwatch = System.Diagnostics.Stopwatch.StartNew
-            Dim FileText As String = Me.Generate
-            Dim ParentDir As String = FileIO.FileSystem.GetParentPath(Path)
-
-            If String.IsNullOrEmpty(ParentDir) Then
-                ParentDir = FileIO.FileSystem.CurrentDirectory
-            End If
-
-            Call Console.WriteLine("Generate csv file document using time {0} ms.", stopwatch.ElapsedMilliseconds)
-            Call FileIO.FileSystem.CreateDirectory(ParentDir)
-            Call FileIO.FileSystem.WriteAllText(Path, text:=FileText, append:=False, encoding:=encoding)
-
-            Return True
+                                                   Optional encoding As Encoding = Nothing) As Boolean
+            Return StreamIO.SaveDataFrame(Me, getPath(Path), LazySaved, encoding)
         End Function
 
         ''' <summary>
@@ -417,48 +412,8 @@ Namespace DocumentStream
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Protected Overridable Function __createTableVector() As RowObject()
+        Protected Friend Overridable Function __createTableVector() As RowObject()
             Return Me._innerTable.ToArray
-        End Function
-
-        ''' <summary>
-        ''' 在保存大文件时为了防止在保存的过程中出现内存溢出所使用的一种保存方法
-        ''' </summary>
-        ''' <param name="FilePath"></param>
-        ''' <param name="File"></param>
-        ''' <param name="encoding"></param>
-        ''' <remarks></remarks>
-        Protected Function __lazySaved(FilePath As String, File As File, encoding As System.Text.Encoding) As Boolean
-            Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(FilePath))
-            Call Console.WriteLine("Open csv file handle, and writing chunk buffer into file...")
-            Call Console.WriteLine("Object counts is ""{0}""", Me._innerTable.Count)
-
-            If FileIO.FileSystem.FileExists(FilePath) Then
-                Call FileIO.FileSystem.DeleteFile(FilePath)
-            End If
-
-            Try
-                Dim rowBuffer As RowObject() = Me.__createTableVector
-                Return __lazyInner(FilePath, rowBuffer, encoding)
-            Catch ex As Exception
-                Call App.LogException(New Exception(FilePath.ToFileURL, ex))
-
-                Return False
-            End Try
-        End Function
-
-        Private Shared Function __lazyInner(filepath As String, rowBuffer As RowObject(), encoding As System.Text.Encoding) As Boolean
-            Dim stopWatch = System.Diagnostics.Stopwatch.StartNew
-            Dim chunks As RowObject()() = rowBuffer.Split(10240)
-
-            For Each block As RowObject() In chunks
-                Dim sBlock As String = (From row In block.AsParallel Select row.AsLine).ToArray.JoinBy(vbCrLf)
-                Call FileIO.FileSystem.WriteAllText(filepath, sBlock, append:=True, encoding:=encoding)
-            Next
-
-            Call $"Write csv data file cost time {stopWatch.ElapsedMilliseconds} ms.".__DEBUG_ECHO
-
-            Return True
         End Function
 
 #Region "CSV file data loading methods"
@@ -477,7 +432,7 @@ Namespace DocumentStream
             'Dim LoadMethod As LoadMethod =
             '    [If](Of LoadMethod)(Lines.Length > 1024, AddressOf __PBS_LOAD, AddressOf __LINQ_LOAD)
             Dim sw As Stopwatch = Stopwatch.StartNew
-            Dim CSV As Csv.DocumentStream.File = __LINQ_LOAD(data:=Lines)
+            Dim CSV As File = __LINQ_LOAD(data:=Lines)
 
             Call $"Csv load {Lines.Length} lines data in {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO ' //{LoadMethod.ToString}".__DEBUG_ECHO
 
@@ -486,19 +441,6 @@ Namespace DocumentStream
 
         Private Delegate Function LoadMethod(data As String()) As File
 
-        'Private Shared Function __PBS_LOAD(data As String()) As File
-        '    Using PBS As Microsoft.VisualBasic.Parallel.LQuerySchedule =
-        '        New Microsoft.VisualBasic.Parallel.LQuerySchedule(10 * 60, 6 * Microsoft.VisualBasic.Parallel.LQuerySchedule.CPU_NUMBER)
-
-        '        Dim Handle As Func(Of String, Csv.DocumentStream.RowObject) =
-        '            Function(strLine As String) CType(strLine, RowObject)
-        '        Dim ChunkBuffer = PBS.InvokeQuery_UltraLargeSize(Of String, Csv.DocumentStream.RowObject)(data, invoke:=Handle)
-        '        Dim CsvData As Csv.DocumentStream.File = New File With {._innerTable = ChunkBuffer.ToList}
-
-        '        Return CsvData
-        '    End Using
-        'End Function
-
         ''' <summary>
         '''
         ''' </summary>
@@ -506,14 +448,6 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks>为了提高数据的加载效率，先使用LINQ预加载数据，之后使用Parallel LINQ进行数据的解析操作</remarks>
         Private Shared Function __LINQ_LOAD(data As String()) As File
-            'Dim GenerateChunk = (From i As Integer In data.Sequence Select handle = i, line = data(i)).ToArray  '在PARARREL LINQ之中请尽量不要使用LET语句来获取共享变量的值，因为系统底层排除死锁的开销比较大
-            'Dim LQuery = (From handle In GenerateChunk.AsParallel
-            '              Let row As Csv.DocumentStream.RowObject = CType(handle.line, RowObject)
-            '              Select handle.handle, row
-            '              Order By handle Ascending).ToList
-            'Dim CsvData As Csv.DocumentStream.File = New File With {._innerTable = (From item In LQuery Select item.row).ToList}
-
-            'Return CsvData
             Dim LQuery = (From line As String In data.AsParallel
                           Let row As RowObject = CType(line, RowObject)
                           Select row).ToList
@@ -600,7 +534,7 @@ Namespace DocumentStream
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function __loads(path As String, encoding As System.Text.Encoding) As List(Of RowObject)
+        Private Shared Function __loads(path As String, encoding As Encoding) As List(Of RowObject)
             Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
             Dim first As RowObject = CType(lines.First, RowObject)
             Dim rows As List(Of RowObject) = (From s As String
@@ -648,7 +582,7 @@ Namespace DocumentStream
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Normalization(path As String, replaceAs As String) As Csv.DocumentStream.File
+        Public Shared Function Normalization(path As String, replaceAs As String) As File
             Dim Text As String = FileIO.FileSystem.ReadAllText(path)
             Dim Data As String() = Strings.Split(Text, vbCrLf)
             Data = (From strLine As String In Data Select strLine.Replace(vbLf, replaceAs)).ToArray
@@ -691,15 +625,15 @@ Namespace DocumentStream
             }
         End Function
 
-        Public Shared Function RemoveSubRow(Csv As File) As File
-            Dim Query = From row In Csv.AsParallel Select row Order By row.NotNullColumns.Count Descending '
-            Csv._innerTable = Query.ToList
-            For i As Integer = 0 To Csv.Count - 1
-                Dim MRow = Csv(i)
-                Dim RQuery = From row In Csv.Skip(i + 1).AsParallel Where MRow.Contains(row) Select row '
-                Call Csv.RemoveRange(RQuery.ToArray)
+        Public Shared Function RemoveSubRow(df As File) As File
+            Dim Query = From row In df.AsParallel Select row Order By row.NotNullColumns.Count Descending '
+            df._innerTable = Query.ToList
+            For i As Integer = 0 To df.Count - 1
+                Dim MRow = df(i)
+                Dim RQuery = From row In df.Skip(i + 1).AsParallel Where MRow.Contains(row) Select row '
+                Call df.RemoveRange(RQuery.ToArray)
             Next
-            Return Csv
+            Return df
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of RowObject) Implements IEnumerable(Of RowObject).GetEnumerator
@@ -715,19 +649,19 @@ Namespace DocumentStream
         ''' <summary>
         ''' 判断目标数据文件是否为空
         ''' </summary>
-        ''' <param name="CsvFile"></param>
+        ''' <param name="df"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function IsNullOrEmpty(CsvFile As IEnumerable(Of RowObject)) As Boolean
-            Return CsvFile Is Nothing OrElse CsvFile.Count = 0
+        Public Shared Function IsNullOrEmpty(df As IEnumerable(Of RowObject)) As Boolean
+            Return df Is Nothing OrElse df.Count = 0
         End Function
 
-        Public Shared Operator <=(CsvData As File, TypeInfo As System.Type) As Object()
-            Return Csv.StorageProvider.Reflection.Reflector.LoadDataToObject(Extensions.DataFrame(CsvData), TypeInfo, False)
+        Public Shared Operator <=(df As File, type As Type) As Object()
+            Return Reflector.LoadDataToObject(Extensions.DataFrame(df), type, False)
         End Operator
 
-        Public Shared Operator >=(CsvData As File, TypeInfo As System.Type) As Object()
-            Return CsvData <= TypeInfo
+        Public Shared Operator >=(df As File, TypeInfo As System.Type) As Object()
+            Return df <= TypeInfo
         End Operator
 
         Public Shared Operator >(File As File, path As String) As Boolean

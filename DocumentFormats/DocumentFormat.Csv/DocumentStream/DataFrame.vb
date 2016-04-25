@@ -208,24 +208,24 @@ Namespace DocumentStream
             Return df
         End Function
 
-        Protected Overrides Function __createTableVector() As RowObject()
-            Dim readBuffer = {CType(Me.__columnList, Csv.DocumentStream.RowObject)}.ToList
+        Protected Friend Overrides Function __createTableVector() As RowObject()
+            Dim readBuffer = {CType(Me.__columnList, RowObject)}.ToList
             Call readBuffer.AddRange(_innerTable)
             Return readBuffer.ToArray
         End Function
 
         Public Overrides Function Generate() As String
-            Dim CsvBuilder As StringBuilder = New StringBuilder(1024)
+            Dim sb As StringBuilder = New StringBuilder(1024)
             Dim head As String =
-                New Csv.DocumentStream.RowObject(__columnList).AsLine
+                New RowObject(__columnList).AsLine
 
-            Call CsvBuilder.AppendLine(head)
+            Call sb.AppendLine(head)
 
-            For Each Line As Csv.DocumentStream.RowObject In _innerTable
-                Call CsvBuilder.AppendLine(Line.AsLine)
+            For Each row As RowObject In _innerTable
+                Call sb.AppendLine(row.AsLine)
             Next
 
-            Return CsvBuilder.ToString
+            Return sb.ToString
         End Function
 
         ''' <summary>
@@ -246,9 +246,9 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
         Public Function GetOrdinalSchema(ColumnList As String()) As Integer()
-            Dim LQuery As Integer() = (From strColumn As String
+            Dim LQuery As Integer() = (From column As String
                                        In ColumnList
-                                       Select Me.__columnList.IndexOf(strColumn)).ToArray
+                                       Select Me.__columnList.IndexOf(column)).ToArray
             Return LQuery
         End Function
 
@@ -289,12 +289,12 @@ Namespace DocumentStream
         ''' <summary>
         ''' 这个方法会清除当前对象之中的原有数据
         ''' </summary>
-        ''' <param name="CsvDocument"></param>
+        ''' <param name="source"></param>
         ''' <remarks></remarks>
-        Public Sub CopyFrom(CsvDocument As Csv.DocumentStream.File)
-            _innerTable = CsvDocument._innerTable.Skip(1).ToList
-            FilePath = CsvDocument.FileName
-            __columnList = CsvDocument._innerTable.First.ToList
+        Public Sub CopyFrom(source As File)
+            _innerTable = source._innerTable.Skip(1).ToList
+            FilePath = source.FileName
+            __columnList = source._innerTable.First.ToList
         End Sub
 
         Public Overrides Function ToString() As String

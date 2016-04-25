@@ -579,7 +579,7 @@ Public Module Extensions
     ''' <param name="Tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(Tokens As Generic.IEnumerable(Of String), delimiter As String) As String
+    <Extension> Public Function JoinBy(Tokens As IEnumerable(Of String), delimiter As String) As String
         If Tokens Is Nothing Then
             Return ""
         End If
