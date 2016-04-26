@@ -33,6 +33,10 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Next
     End Sub
 
+    Public Function GetValueList() As List(Of V)
+        Return Values.ToList
+    End Function
+
     ''' <summary>
     ''' Adds an element with the specified key and value into the System.Collections.Generic.SortedDictionary`2.
     ''' </summary>
