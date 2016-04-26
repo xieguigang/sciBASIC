@@ -56,6 +56,12 @@ Namespace Marshal
             End Get
         End Property
 
+        Public ReadOnly Property EndRead As Boolean
+            Get
+                Return __index >= __innerRaw.Length
+            End Get
+        End Property
+
         Sub New(ByRef array As T())
             __innerRaw = array
         End Sub
