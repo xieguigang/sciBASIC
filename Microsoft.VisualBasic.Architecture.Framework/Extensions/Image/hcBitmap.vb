@@ -74,6 +74,28 @@ Public Module hcBitmap
         ' Unlock the bits.
         Call curBitmap.UnlockBits(bmpData)
     End Sub
+
+    <Extension>
+    Public Function ByteLength(rect As Rectangle) As Integer
+        Dim width As Integer = rect.Width * 3
+        Return width * rect.Height
+    End Function
+
+    <Extension>
+    Public Iterator Function Colors(buffer As Byte()) As IEnumerable(Of Color)
+        Dim byts As Byte() = New Byte(2) {}
+        Dim iR As Byte
+        Dim iG As Byte
+        Dim iB As Byte
+
+        For i As Integer = 0 To buffer.Length - 1
+            iR = buffer(i + 2)
+            iG = buffer(i + 1)
+            iB = buffer(i + 0)
+
+            Yield Color.FromArgb(CInt(iR), CInt(iG), CInt(iB))
+        Next
+    End Function
 End Module
 
 ''' <summary>
@@ -81,6 +103,7 @@ End Module
 ''' </summary>
 Public Class hBitmap : Inherits Marshal.Byte
     Implements IDisposable
+    Implements IEnumerable(Of Color)
 
     ReadOnly __source As Bitmap
     ReadOnly __handle As BitmapData
@@ -170,4 +193,14 @@ Public Class hBitmap : Inherits Marshal.Byte
         Call Write()
         Call __source.UnlockBits(__handle)
     End Sub
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of Color) Implements IEnumerable(Of Color).GetEnumerator
+        For Each x As Color In __innerRaw.Colors
+            Yield x
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
+    End Function
 End Class

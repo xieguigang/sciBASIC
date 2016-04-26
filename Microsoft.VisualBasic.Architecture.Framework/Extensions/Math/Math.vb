@@ -6,6 +6,16 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module VBMathExtensions
 
     ''' <summary>
+    ''' return the maximum of a, b and c </summary>
+    ''' <param name="a"> </param>
+    ''' <param name="b"> </param>
+    ''' <param name="c">
+    ''' @return </param>
+    Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
+        Return Math.Max(a, Math.Max(b, c))
+    End Function
+
+    ''' <summary>
     '''  sqrt(a^2 + b^2) without under/overflow.
     ''' </summary>
     ''' <param name="a"></param>
