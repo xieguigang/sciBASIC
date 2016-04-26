@@ -1,5 +1,9 @@
 # VisualBasic_AppFramework
-Low Level App framework that i used for the programming in GCModeller
+
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/20160426133200.jpg)
+
+This project is the low Level App framework and runtime environment that i used for the programming in GCModeller.
+
 This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the syntax and the code function. Makes the VisualBasic programming style more modernization by using this framework.
 
 Includes:
@@ -13,5 +17,4 @@ Includes:
 Image fast binarization using VisualBasic extension API: 
 https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/hcBitmap.vb
 
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg)
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/lena.binary.jpg)
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg)![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/lena.binary.jpg)
