@@ -4,11 +4,16 @@ Imports System.Runtime.CompilerServices
 Public Module hcBitmap
 
     <Extension>
-    Public Function GetBinaryBitmap(res As Image) As Bitmap
+    Public Function GetBinaryBitmap(res As Image, Optional style As BinarizationStyles = BinarizationStyles.Binary) As Bitmap
         Dim bmp As New Bitmap(DirectCast(res.Clone, Image))
-        bmp.Binarization
+        bmp.Binarization(style)
         Return bmp
     End Function
+
+    Public Enum BinarizationStyles
+        SparseGray = 3
+        Binary = 4
+    End Enum
 
     ''' <summary>
     ''' 
@@ -23,7 +28,7 @@ Public Module hcBitmap
     ''' lock handle In place-Get/Set value/unlock handle. It Is the most inefficient way To manipulate bitmaps In .NET. 
     ''' The author should read about <see cref="Bitmap.LockBits"/> first.
     ''' </remarks>
-    <Extension> Public Sub Binarization(ByRef curBitmap As Bitmap)
+    <Extension> Public Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)
         Dim iR As Integer = 0 ' Red
         Dim iG As Integer = 0 ' Green
         Dim iB As Integer = 0 ' Blue
@@ -38,31 +43,30 @@ Public Module hcBitmap
         Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
 
         Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
-
-            Dim counter As Integer
+            Dim byts As Marshal.Byte = rgbValues
 
             ' Set every third value to 255. A 24bpp bitmap will binarization.  
-            Do While counter < rgbValues.Length - 1
+            Do While Not rgbValues.NullEnd(3)
                 ' Get the red channel
-                iR = rgbValues.Raw(counter + 2)
+                iR = rgbValues(2)
                 ' Get the green channel
-                iG = rgbValues.Raw(counter + 1)
+                iG = rgbValues(1)
                 ' Get the blue channel
-                iB = rgbValues.Raw(counter + 0)
+                iB = rgbValues(0)
                 ' If the gray value more than threshold and then set a white pixel.
-                If (iR + iG + iB) \ 3 > 100 Then
+                If (iR + iG + iB) / 3 > 100 Then
                     ' White pixel
-                    rgbValues.Raw(counter + 2) = 255
-                    rgbValues.Raw(counter + 1) = 255
-                    rgbValues.Raw(counter + 0) = 255
+                    byts(2) = 255
+                    byts(1) = 255
+                    byts(0) = 255
                 Else
                     ' Black pixel
-                    rgbValues.Raw(counter + 2) = 0
-                    rgbValues.Raw(counter + 1) = 0
-                    rgbValues.Raw(counter + 0) = 0
+                    byts(2) = 0
+                    byts(1) = 0
+                    byts(0) = 0
                 End If
 
-                counter += 3
+                byts += style
             Loop
         End Using
 

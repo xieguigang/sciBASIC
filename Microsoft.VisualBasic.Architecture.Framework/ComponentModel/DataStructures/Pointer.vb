@@ -6,6 +6,9 @@
     ''' </summary>
     Public Class Pointer
 
+        ''' <summary>
+        ''' Current read position
+        ''' </summary>
         Protected __index As Integer
         ReadOnly __step As Integer
 

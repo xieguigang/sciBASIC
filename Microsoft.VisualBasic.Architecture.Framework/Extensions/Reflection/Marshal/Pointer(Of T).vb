@@ -50,9 +50,9 @@ Namespace Marshal
             End Get
         End Property
 
-        Public ReadOnly Property EndRead As Boolean
+        Public ReadOnly Property NullEnd(Optional offset As Integer = 0) As Boolean
             Get
-                Return __index = __innerRaw.Length
+                Return __index >= (__innerRaw.Length - 1 - offset)
             End Get
         End Property
 
