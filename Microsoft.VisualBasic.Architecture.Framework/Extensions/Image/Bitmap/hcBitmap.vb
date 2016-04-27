@@ -90,7 +90,7 @@ Namespace Imaging
             Dim iG As Byte
             Dim iB As Byte
 
-            For i As Integer = 0 To buffer.Length - 1
+            For i As Integer = 0 To buffer.Length - 1 Step 3
                 iR = buffer(i + 2)
                 iG = buffer(i + 1)
                 iB = buffer(i + 0)

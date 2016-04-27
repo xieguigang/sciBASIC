@@ -86,7 +86,7 @@ Public Class GSW(Of T)
 #End Region
 
     ''' <summary>
-    ''' 
+    ''' Public Function <see cref="ISimilarity(Of T)"/>(x As <typeparamref name="T"/>, y As <typeparamref name="T"/>) As <see cref="Integer"/>
     ''' </summary>
     ''' <param name="query"></param>
     ''' <param name="subject"></param>
