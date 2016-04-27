@@ -521,7 +521,8 @@ Public Module Extensions
 
     ''' <summary>
     ''' Data partitioning function.
-    ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，这个函数之中不能够使用并行化计数，以保证元素之间的相互原有的顺序)
+    ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，
+    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -530,9 +531,14 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer) As T()()
-        Dim chunkList As List(Of T()) = New List(Of T())
-        Dim chunkBuffer As T() = source.ToArray
-        Dim n As Integer = chunkBuffer.Length
+        Return source.SplitIterator(parTokens).ToArray
+    End Function
+
+    <Extension>
+    Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
+        Dim buf As T() = source.ToArray
+        Dim n As Integer = buf.Length
+        Dim count As Integer
 
         If n >= 50000 Then
             Call $"Start large data set(size:={n}) partitioning...".__DEBUG_ECHO
@@ -547,15 +553,15 @@ Public Module Extensions
                 buffer = New T(n - i - 1) {}
             End If
 
-            Call Array.ConstrainedCopy(chunkBuffer, i, buffer, Scan0, buffer.Length)
-            Call chunkList.Add(buffer)
+            Array.ConstrainedCopy(buf, i, buffer, Scan0, buffer.Length)
+            Yield buffer
+
+            count += 1
         Next
 
         If n >= 50000 Then
-            Call $"Large data set data partitioning(partitions:={chunkList.Count}) jobs done!".__DEBUG_ECHO
+            Call $"Large data set data partitioning(partitions:={count}) jobs done!".__DEBUG_ECHO
         End If
-
-        Return chunkList.ToArray
     End Function
 
     ''' <summary>

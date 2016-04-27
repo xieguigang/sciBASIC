@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace DocumentStream
 
@@ -72,7 +73,13 @@ Namespace DocumentStream
                              IO.FileAccess.ReadWrite)
 
             Using writer As New StreamWriter(handle, encoding)
-                For Each block As RowObject() In chunks
+                Dim first As RowObject() = chunks(Scan0)
+
+                ' 第一行会因为并行化而出现在下几行的BUG，所以在这里分开对待
+                Call writer.WriteLine(first.First.AsLine)
+                Call writer.WriteLine(String.Join(vbCrLf, first.Skip(1).ToArray(Function(x) x.AsLine)))
+
+                For Each block As RowObject() In chunks.Skip(1)
                     Dim sBlock As String = (From row As RowObject
                                             In block.AsParallel
                                             Select row.AsLine).JoinBy(vbCrLf)
