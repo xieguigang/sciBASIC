@@ -384,20 +384,21 @@ Public Module StringHelpers
     ''' using function <see cref="String.Equals"/> function to search string, this function using <see cref="Strings.InStr(String, String, CompareMethod)"/>
     ''' to search the keyword.
     ''' </summary>
-    ''' <param name="collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="keyword"></param>
     ''' <param name="caseSensitive"></param>
-    ''' <returns></returns>
+    ''' <returns>返回第一个找到关键词的行数，没有找到则返回-1</returns>
     <ExportAPI("Lookup", Info:="Search the string by keyword in a string collection.")>
     <Extension>
-    Public Function Lookup(collection As Generic.IEnumerable(Of String), keyword As String, Optional caseSensitive As Boolean = True) As Integer
-        Dim Method = If(caseSensitive, CompareMethod.Binary, CompareMethod.Text)
-        Dim Len As Integer = collection.Count - 1
-        Dim array = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
+    Public Function Lookup(source As IEnumerable(Of String), keyword As String, Optional caseSensitive As Boolean = True) As Integer
+        Dim method As CompareMethod = If(caseSensitive, CompareMethod.Binary, CompareMethod.Text)
+        Dim i As Integer
 
-        For i As Integer = 0 To Len
-            If InStr(array(i), keyword, Method) > 0 Then
+        For Each line As String In source
+            If InStr(line, keyword, method) > 0 Then
                 Return i
+            Else
+                i += 1
             End If
         Next
 

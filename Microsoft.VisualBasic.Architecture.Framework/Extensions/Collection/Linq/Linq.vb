@@ -14,6 +14,15 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        <Extension>
+        Public Iterator Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+            If Not source Is Nothing Then
+                For Each x As T In source
+                    Yield x
+                Next
+            End If
+        End Function
+
         ''' <summary>
         ''' Gets the max element its index in the collection
         ''' </summary>
