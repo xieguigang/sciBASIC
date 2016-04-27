@@ -10,6 +10,45 @@ Namespace Text
     Public Module FormattedParser
 
         ''' <summary>
+        ''' String collection tokens by a certain delimiter string element.
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="isFlag">
+        ''' 
+        ''' </param>
+        ''' <returns></returns>
+        <Extension> Public Iterator Function FlagSplit(source As IEnumerable(Of String), isFlag As Func(Of String, Boolean)) As IEnumerable(Of String())
+            Dim list As New List(Of String)
+
+            ' >> .........
+            ' ............
+            ' ............
+            ' >> .........
+            ' >> .........
+
+            ' 例如上面的一段文本，使用 >> 符号作为段落的分隔符，
+            ' 则本函数会将上面的文本分为三行:
+            ' >> .........
+            ' ............
+            ' ............
+            ' 和
+            ' >> .........
+            ' 和
+            ' >> .........
+
+            For Each line As String In source
+                If isFlag(line) Then
+                    If list.Count > 0 Then
+                        Yield list.ToArray
+                        Call list.Clear()
+                    End If
+                End If
+
+                Call list.Add(line)
+            Next
+        End Function
+
+        ''' <summary>
         ''' Example as: ------- ------ -----    ------- ------ -----   ---- --  --------   ----------- 
         ''' </summary>
         ''' <param name="s"></param>
