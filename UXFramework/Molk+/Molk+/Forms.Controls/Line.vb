@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.Imaging
 
 Public Class Line
     Private Sub Line_Load(sender As Object, e As EventArgs) Handles MyBase.Load

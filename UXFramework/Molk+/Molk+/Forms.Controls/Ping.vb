@@ -1,4 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Net
 
 Public Class Ping
 
@@ -11,7 +13,7 @@ Public Class Ping
         End Set
     End Property
 
-    Dim _IPAddress As String = Microsoft.VisualBasic.Net.AsynInvoke.LocalIPAddress
+    Dim _IPAddress As String = AsynInvoke.LocalIPAddress
 
     ''' <summary>
     ''' Ping操作的目标机器的IP地址
@@ -70,7 +72,7 @@ Public Class Ping
             Return
         End If
 
-        Dim Ping As Double = Microsoft.VisualBasic.Net.PingUtility.Ping(IP:=IPAddress)
+        Dim Ping As Double = PingUtility.Ping(IP:=IPAddress)
         Dim Level As Integer
 
         If Ping < 50 Then

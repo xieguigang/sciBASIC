@@ -1,4 +1,6 @@
-﻿Public Class ProcessingBar
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Public Class ProcessingBar
 
     ''' <summary>
     ''' 0 - 100

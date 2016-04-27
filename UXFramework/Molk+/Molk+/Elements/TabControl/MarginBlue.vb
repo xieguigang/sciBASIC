@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MolkPlusTheme.Windows.Forms.Controls.TabControl.TabPage
+﻿Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MolkPlusTheme.Windows.Forms.Controls.TabControl.TabPage
 
 Namespace Visualise.Elements
 

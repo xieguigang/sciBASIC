@@ -2,6 +2,7 @@ Imports System.ComponentModel
 Imports System.Text
 Imports System.Windows.Forms
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Unity3.Controls
     Partial Public Class DropDownControl : Inherits UserControl

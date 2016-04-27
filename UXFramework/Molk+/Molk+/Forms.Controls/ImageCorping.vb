@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Imaging
 
 Public Class ImageCorping
 
@@ -51,7 +52,7 @@ Public Class ImageCorping
             Dim p = drWidth / res.Width
             drHeight = p * res.Height
 
-        ElseIf res.Width < res.Height
+        ElseIf res.Width < res.Height Then
             drHeight = Limits.Height
             Dim p = drHeight / res.Height
             drWidth = p * res.Width

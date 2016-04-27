@@ -1,4 +1,6 @@
-﻿Friend Class BusyIndicator
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Friend Class BusyIndicator
 
     Dim a As Double
     Dim d As Double = 2 * Math.PI / 1000

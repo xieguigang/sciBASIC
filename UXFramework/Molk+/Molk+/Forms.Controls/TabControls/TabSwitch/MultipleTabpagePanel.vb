@@ -1,4 +1,6 @@
-﻿Namespace Windows.Forms.Controls.TabControl.TabPage
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Namespace Windows.Forms.Controls.TabControl.TabPage
 
     ''' <summary>
     ''' 多标签页

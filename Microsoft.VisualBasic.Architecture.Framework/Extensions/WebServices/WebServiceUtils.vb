@@ -20,10 +20,15 @@ Imports System.Web
                   Publisher:="<a href=""mailto://xie.guigang@gmail.com"">xie.guigang@gmail.com</a>")>
 Public Module WebServiceUtils
 
+    ''' <summary>
+    ''' Web protocols enumeration
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Protocols As String() = {"http://", "https://", "ftp://", "sftp://"}
 
     ''' <summary>
-    ''' 判断这个uri字符串是否是一个网络位置
+    ''' Determine that is this uri string is a network location?
+    ''' (判断这个uri字符串是否是一个网络位置)
     ''' </summary>
     ''' <param name="url"></param>
     ''' <returns></returns>
@@ -36,7 +41,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="dict"></param>
     ''' <returns></returns>
-    <ExportAPI("Build.Reqparm", Info:="Build the request parameters for the HTTP POST")>
+    <ExportAPI("Build.Reqparm",
+               Info:="Build the request parameters for the HTTP POST")>
     <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As Specialized.NameValueCollection
         Dim reqparm As New Specialized.NameValueCollection
         For Each Value As KeyValuePair(Of String, String) In dict
@@ -52,7 +58,7 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <ExportAPI("Build.Reqparm", Info:="Build the request parameters for the HTTP POST")>
     <Extension>
-    Public Function BuildReqparm(data As Generic.IEnumerable(Of KeyValuePair(Of String, String))) As Specialized.NameValueCollection
+    Public Function BuildReqparm(data As IEnumerable(Of KeyValuePair(Of String, String))) As Specialized.NameValueCollection
         Dim reqparm As New Specialized.NameValueCollection
         For Each Value As KeyValuePair(Of String, String) In data
             Call reqparm.Add(Value.Key, Value.Value)
@@ -63,13 +69,13 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' Gets the link text in the html fragement text.
     ''' </summary>
-    ''' <param name="s_Data">A string that contains the url string pattern like: href="url_text"</param>
+    ''' <param name="html">A string that contains the url string pattern like: href="url_text"</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Html.Href")>
-    <Extension> Public Function Get_href(<Parameter("A string that contains the url string pattern like: href=""url_text""")> s_Data As String) As String
-        Dim url As String = Regex.Match(s_Data, "href="".+?""", RegexOptions.IgnoreCase).Value
+    <Extension> Public Function Get_href(<Parameter("A string that contains the url string pattern like: href=""url_text""")> html As String) As String
+        Dim url As String = Regex.Match(html, "href="".+?""", RegexOptions.IgnoreCase).Value
         If String.IsNullOrEmpty(url) Then
             Return ""
         Else
@@ -82,7 +88,7 @@ Public Module WebServiceUtils
     Public Const IMAGE_SOURCE As String = "<img.+?src=.+?>"
 
     ''' <summary>
-    '''
+    ''' Parsing image source url from the img html tag.
     ''' </summary>
     ''' <param name="str"></param>
     ''' <returns></returns>
@@ -95,6 +101,11 @@ Public Module WebServiceUtils
 
     Const HTML_TAG As String = "</?.+?(\s+.+?="".+?"")*>"
 
+    ''' <summary>
+    ''' Removes the html tags from the text string.
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
     <ExportAPI("Html.Tag.Trim")>
     <Extension> Public Function TrimHTMLTag(str As String) As String
         If String.IsNullOrEmpty(str) Then
@@ -107,6 +118,11 @@ Public Module WebServiceUtils
 
     Const PortOccupied As String = "Only one usage of each socket address (protocol/network address/port) Is normally permitted"
 
+    ''' <summary>
+    ''' Only one usage of each socket address (protocol/network address/port) Is normally permitted
+    ''' </summary>
+    ''' <param name="ex"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsSocketPortOccupied(ex As Exception) As Boolean
         If TypeOf ex Is System.Net.Sockets.SocketException AndAlso
             InStr(ex.ToString, PortOccupied, CompareMethod.Text) Then
@@ -117,30 +133,31 @@ Public Module WebServiceUtils
     End Function
 
     ''' <summary>
-    ''' Create a parameter dictionary from the request parameter tokens.(请注意，字典的key默认为转换为小写的形式)
+    ''' Create a parameter dictionary from the request parameter tokens.
+    ''' (请注意，字典的key默认为转换为小写的形式)
     ''' </summary>
-    ''' <param name="Tokens">
+    ''' <param name="tokens">
     ''' 元素的个数必须要大于1，因为从url里面解析出来的元素之中第一个元素是url本身，则不再对url做字典解析
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("CreateDirectory", Info:="Create a parameter dictionary from the request parameter tokens.")>
-    <Extension> Public Function GenerateDictionary(Tokens As String(),
-                                                   Optional TransLower As Boolean = True) As Dictionary(Of String, String)
-        If Tokens.IsNullOrEmpty Then
+    <Extension>
+    Public Function GenerateDictionary(tokens As String(), Optional lowercase As Boolean = True) As Dictionary(Of String, String)
+        If tokens.IsNullOrEmpty Then
             Return New Dictionary(Of String, String)
         End If
-        If Tokens.Length = 1 Then  ' 只有url，没有附带的参数，则返回一个空的字典集合
-            If InStr(Tokens(Scan0), "=") = 0 Then
+        If tokens.Length = 1 Then  ' 只有url，没有附带的参数，则返回一个空的字典集合
+            If InStr(tokens(Scan0), "=") = 0 Then
                 Return New Dictionary(Of String, String)
             End If
         End If
 
-        Dim LQuery = (From s As String In Tokens
+        Dim LQuery = (From s As String In tokens
                       Let p As Integer = InStr(s, "="c)
                       Let Key As String = Mid(s, 1, p - 1)
                       Let Value = Mid(s, p + 1)
                       Select Key, Value).ToArray
-        Return LQuery.ToDictionary(Function(obj) If(TransLower, obj.Key.ToLower, obj.Key), Function(obj) obj.Value)
+        Return LQuery.ToDictionary(Function(obj) If(lowercase, obj.Key.ToLower, obj.Key), Function(obj) obj.Value)
     End Function
 
     ''' <summary>
@@ -159,11 +176,11 @@ Public Module WebServiceUtils
     '''
     ''' </summary>
     ''' <param name="hash"></param>
-    ''' <param name="Escaping">是否进行对value部分的字符串数据进行转义</param>
+    ''' <param name="escaping">是否进行对value部分的字符串数据进行转义</param>
     ''' <returns></returns>
     <Extension> Public Function BuildArgvs(hash As IEnumerable(Of KeyValuePair(Of String, String)),
-                                           Optional Escaping As Boolean = False) As String
-        If Escaping Then
+                                           Optional escaping As Boolean = False) As String
+        If escaping Then
 
         End If
 
@@ -307,16 +324,16 @@ Public Module WebServiceUtils
 
     <ExportAPI("GET.Raw", Info:="GET http request")>
     <Extension> Public Function GetRequestRaw(url As String) As Stream
-        Dim request As System.Net.HttpWebRequest
-        request = WebRequest.Create(url).As(Of System.Net.HttpWebRequest)
+        Dim request As HttpWebRequest
+        request = WebRequest.Create(url).As(Of HttpWebRequest)
         request.Method = "GET"
-        Dim response = request.GetResponse.As(Of System.Net.HttpWebResponse)
+        Dim response = request.GetResponse.As(Of HttpWebResponse)
         Dim s As Stream = response.GetResponseStream()
         Return s
     End Function
 
     <ExportAPI("POST", Info:="POST http request")>
-    Public Function PostRequest(url As String, Optional params As Generic.IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
+    Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
         Return url.PostRequest(params.BuildReqparm)
     End Function
 
@@ -333,7 +350,7 @@ Public Module WebServiceUtils
 
     <ExportAPI("POST", Info:="POST http request")>
     <Extension> Public Function PostRequest(url As String, params As Specialized.NameValueCollection) As String
-        Using request As New System.Net.WebClient
+        Using request As New WebClient
             Call $"[POST] {url}....".__DEBUG_ECHO
             Dim response As Byte() = request.UploadValues(url, "POST", params)
             Dim strData As String = System.Text.Encoding.UTF8.GetString(response)
@@ -369,13 +386,13 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' 获取两个尖括号之间的内容
     ''' </summary>
-    ''' <param name="s_Data"></param>
+    ''' <param name="html"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
-    <Extension> Public Function GetValue(s_Data As String) As String
-        Return s_Data.GetStackValue(">", "<")
+    <Extension> Public Function GetValue(html As String) As String
+        Return html.GetStackValue(">", "<")
     End Function
 
 #If FRAMEWORD_CORE Then
@@ -488,15 +505,16 @@ RETRY:      Return __downloadWebpage(url)
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
+    ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="save">local file</paramref>.
     ''' </summary>
     ''' <param name="strUrl"></param>
-    ''' <param name="SavedPath"></param>
+    ''' <param name="save">The file path of the file saved</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("wget", Info:="Download data from the specific URL location.")>
     <Extension> Public Function DownloadFile(<Parameter("url")> strUrl As String,
-                                             <Parameter("Path.Save", "The saved location of the downloaded file data.")> SavedPath As String) As Boolean
+                                             <Parameter("Path.Save", "The saved location of the downloaded file data.")>
+                                             save As String) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -509,7 +527,7 @@ RETRY:      Return __downloadWebpage(url)
 #End If
         Try
             Using dwl As New System.Net.WebClient()
-                Call dwl.DownloadFile(strUrl, SavedPath)
+                Call dwl.DownloadFile(strUrl, save)
             End Using
             Return True
         Catch ex As Exception
@@ -517,8 +535,8 @@ RETRY:      Return __downloadWebpage(url)
             Call App.LogException(ex, trace)
             Return False
         Finally
-            If SavedPath.FileExists Then
-                Call $"[{FileIO.FileSystem.GetFileInfo(SavedPath).Length} Bytes]".__DEBUG_ECHO
+            If save.FileExists Then
+                Call $"[{FileIO.FileSystem.GetFileInfo(save).Length} Bytes]".__DEBUG_ECHO
             Else
                 Call $"Download failure!".__DEBUG_ECHO
             End If
@@ -581,5 +599,4 @@ RETRY:      Return __downloadWebpage(url)
         ipResult = Regex.Match(ipResult, RegexIPAddress).Value
         Return ipResult
     End Function
-
 End Module

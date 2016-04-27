@@ -1,4 +1,6 @@
-﻿Namespace Visualise.Elements
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Namespace Visualise.Elements
 
     Public Class ImageResource
 

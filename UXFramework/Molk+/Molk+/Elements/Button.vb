@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging
+
 Namespace Visualise.Elements
 
     Public Class ButtonResource
