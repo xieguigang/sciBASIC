@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D.VectorElements
 
@@ -20,7 +21,7 @@ Namespace Drawing2D.VectorElements
             End Set
         End Property
 
-        Friend Sub New(str As String, Color As Color, GDI As Microsoft.VisualBasic.GDIPlusDeviceHandle, Optional InitLocation As Point = Nothing)
+        Friend Sub New(str As String, Color As Color, GDI As GDIPlusDeviceHandle, Optional InitLocation As Point = Nothing)
             Call MyBase.New(GDI, InitLocation)
             _InternalText = str
             _TextBrush = New SolidBrush(Color)

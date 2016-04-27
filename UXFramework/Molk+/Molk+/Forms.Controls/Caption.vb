@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Windows.Forms.Controls
 

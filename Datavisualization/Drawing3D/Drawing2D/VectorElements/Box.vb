@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D.VectorElements
 
@@ -13,7 +14,7 @@ Namespace Drawing2D.VectorElements
 
         End Sub
 
-        Public Overrides ReadOnly Property Size As System.Drawing.Size
+        Public Overrides ReadOnly Property Size As Size
             Get
 
             End Get

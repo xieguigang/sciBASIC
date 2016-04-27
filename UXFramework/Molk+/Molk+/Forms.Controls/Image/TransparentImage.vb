@@ -1,4 +1,5 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging
 ''' <summary>
 ''' 当显示不规则图形的时候，使用本控件提供窗体透明的效果，即本控件可以显出不规则区域的底图
 ''' </summary>

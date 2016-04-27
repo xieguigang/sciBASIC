@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D.VectorElements
 
@@ -15,7 +16,7 @@ Namespace Drawing2D.VectorElements
             End Get
         End Property
 
-        Protected _GDIDevice As Microsoft.VisualBasic.GDIPlusDeviceHandle
+        Protected _GDIDevice As GDIPlusDeviceHandle
 
         ''' <summary>
         ''' 默认是允许自动组织布局的
@@ -25,7 +26,7 @@ Namespace Drawing2D.VectorElements
         ''' <remarks></remarks>
         Public Property EnableAutoLayout As Boolean = True
 
-        Sub New(GDI As Microsoft.VisualBasic.GDIPlusDeviceHandle, InitLoci As Point)
+        Sub New(GDI As GDIPlusDeviceHandle, InitLoci As Point)
             _GDIDevice = GDI
             Location = InitLoci
         End Sub

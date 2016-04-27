@@ -1,4 +1,6 @@
-﻿Public Class PagerNavigator
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Public Class PagerNavigator
 
     Dim _DataPager As IDataPager
 

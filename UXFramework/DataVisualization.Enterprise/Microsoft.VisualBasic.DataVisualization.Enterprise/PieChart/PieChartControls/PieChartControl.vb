@@ -8,6 +8,7 @@ Imports System.Drawing.Design
 Imports System.ComponentModel.Design
 Imports System.Drawing.Imaging
 Imports System.Drawing.Printing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Windows.Forms.Nexus
 
@@ -542,7 +543,7 @@ Namespace Windows.Forms.Nexus
         ''' <param name="fileName">The path to the file where the image will be saved.</param>
         ''' <param name="format">The format to save the image in.</param>
         ''' <param name="sizeInPixels">The size of the image, in pixels.</param>
-        Public Sub SaveAs(fileName As String, format As ImageFormat.ImageFormats, sizeInPixels As Size)
+        Public Sub SaveAs(fileName As String, format As ImageFormats, sizeInPixels As Size)
             SaveAs(fileName, format, sizeInPixels, Padding.Empty)
         End Sub
 
@@ -553,7 +554,7 @@ Namespace Windows.Forms.Nexus
         ''' <param name="format">The format to save the image in.</param>
         ''' <param name="sizeInPixels">The size of the image, in pixels.</param>
         ''' <param name="padding">The padding which defines the border of the image.</param>
-        Public Sub SaveAs(fileName As String, format As ImageFormat.ImageFormats, sizeInPixels As Size, padding As Padding)
+        Public Sub SaveAs(fileName As String, format As ImageFormats, sizeInPixels As Size, padding As Padding)
             Dim metrics As List(Of DrawingMetrics2) = ConstructDrawingMetrics(New Rectangle(Point.Empty, sizeInPixels), padding)
             Using bitmap As New Bitmap(sizeInPixels.Width, sizeInPixels.Height)
                 Using g As Graphics = Graphics.FromImage(bitmap)

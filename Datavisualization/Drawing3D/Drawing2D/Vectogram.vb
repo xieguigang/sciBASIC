@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Drawing.Drawing2D.VectorElements
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D
 
@@ -19,14 +20,14 @@ Namespace Drawing2D
 
         Public ReadOnly Property Size As Size
             Get
-                Return _gdiDevice.Size
+                Return _GDIDevice.Size
             End Get
         End Property
 
 #Region "Constructors"
 
         Sub New(Size As Size)
-            _gdiDevice = Size.CreateGDIDevice
+            _GDIDevice = Size.CreateGDIDevice
         End Sub
 
         Sub New(Width As Integer, Height As Integer)
@@ -38,7 +39,7 @@ Namespace Drawing2D
         End Sub
 
         Sub New(ImageResource As Image)
-            _gdiDevice = ImageResource.GdiFromImage
+            _GDIDevice = ImageResource.GdiFromImage
         End Sub
 #End Region
 
@@ -48,13 +49,13 @@ Namespace Drawing2D
         End Function
 
         Public Function AddTextElement(str As String, Font As Font, Color As Color, Location As Point) As Drawing2D.VectorElements.DrawingString
-            Dim strElement As DrawingString = New DrawingString(str, Color, Me._gdiDevice, Location) With {.Font = Font}
+            Dim strElement As DrawingString = New DrawingString(str, Color, Me._GDIDevice, Location) With {.Font = Font}
             Call Me._lstElements.Add(strElement)
             Return strElement
         End Function
 
         Public Function AddCircle(FillColor As Color, TopLeft As Point, d As Integer) As Circle
-            Dim Circle As New Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._gdiDevice, FillColor:=FillColor)
+            Dim Circle As New Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._GDIDevice, FillColor:=FillColor)
             Call Me._lstElements.Add(Circle)
             Return Circle
         End Function
@@ -64,11 +65,11 @@ Namespace Drawing2D
                 Call Element.InvokeDrawing()
             Next
 
-            Return _gdiDevice.ImageResource
+            Return _GDIDevice.ImageResource
         End Function
 
         Public Overrides Function ToString() As String
-            Return _gdiDevice.ToString
+            Return _GDIDevice.ToString
         End Function
 
 #Region "System Interface Implements"

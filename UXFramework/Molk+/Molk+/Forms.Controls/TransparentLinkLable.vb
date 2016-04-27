@@ -1,4 +1,6 @@
-﻿Public Class TransparentLinkLable
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Public Class TransparentLinkLable
 
     Public Property LabelText As String
         Get

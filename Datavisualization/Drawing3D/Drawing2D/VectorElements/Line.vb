@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D.VectorElements
 

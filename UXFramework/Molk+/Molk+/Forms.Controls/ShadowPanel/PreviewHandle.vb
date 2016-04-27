@@ -1,4 +1,6 @@
-﻿Public Class PreviewHandle
+﻿Imports Microsoft.VisualBasic.Imaging
+
+Public Class PreviewHandle
 
     Public Event ItemClick()
     Public Event ItemDoubleClick()
