@@ -4,6 +4,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Scripting
 

@@ -1,10 +1,8 @@
-﻿
-Imports System.Drawing
+﻿Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
-''' <summary>
-''' Specifies the file format of the image. Not inheritable.
-''' </summary>
-Public Module ImageFormat
+
+Namespace Imaging
 
     ''' <summary>
     ''' Specifies the file format of the image.
@@ -53,44 +51,51 @@ Public Module ImageFormat
         Wmf
     End Enum
 
-    <Extension> Public Function GetFormat(format As ImageFormat.ImageFormats) As System.Drawing.Imaging.ImageFormat
-        Return __formats(format)
-    End Function
-
-    ReadOnly __formats As SortedDictionary(Of ImageFormats, System.Drawing.Imaging.ImageFormat) =
-        New SortedDictionary(Of ImageFormats, Drawing.Imaging.ImageFormat) From {
- _
-        {ImageFormats.Bmp, System.Drawing.Imaging.ImageFormat.Bmp},
-        {ImageFormats.Emf, System.Drawing.Imaging.ImageFormat.Emf},
-        {ImageFormats.Exif, System.Drawing.Imaging.ImageFormat.Exif},
-        {ImageFormats.Gif, System.Drawing.Imaging.ImageFormat.Gif},
-        {ImageFormats.Icon, System.Drawing.Imaging.ImageFormat.Icon},
-        {ImageFormats.Jpeg, System.Drawing.Imaging.ImageFormat.Jpeg},
-        {ImageFormats.MemoryBmp, System.Drawing.Imaging.ImageFormat.MemoryBmp},
-        {ImageFormats.Png, System.Drawing.Imaging.ImageFormat.Png},
-        {ImageFormats.Tiff, System.Drawing.Imaging.ImageFormat.Tiff},
-        {ImageFormats.Wmf, System.Drawing.Imaging.ImageFormat.Wmf}
-    }
 
     ''' <summary>
-    ''' Saves this System.Drawing.Image to the specified file in the specified format.
+    ''' Specifies the file format of the image. Not inheritable.
     ''' </summary>
-    ''' <param name="res"></param>
-    ''' <param name="path"></param>
-    ''' <param name="format"></param>
-    ''' <returns></returns>
-    <Extension> Public Function SaveAs(res As Image, path As String, format As ImageFormats) As Boolean
-        Try
-            Dim parent As String = FileIO.FileSystem.GetParentPath(path)
-            Call FileIO.FileSystem.CreateDirectory(parent)
-            Call res.Save(path, format.GetFormat)
-        Catch ex As Exception
-            ex = New Exception(path.ToFileURL, ex)
-            Call App.LogException(ex)
-            Call ex.PrintException
-            Return False
-        End Try
+    Public Module ImageFormatExtensions
 
-        Return True
-    End Function
-End Module
+        <Extension> Public Function GetFormat(format As ImageFormats) As ImageFormat
+            Return __formats(format)
+        End Function
+
+        ReadOnly __formats As SortedDictionary(Of ImageFormats, ImageFormat) =
+            New SortedDictionary(Of ImageFormats, ImageFormat) From {
+ _
+            {ImageFormats.Bmp, ImageFormat.Bmp},
+            {ImageFormats.Emf, ImageFormat.Emf},
+            {ImageFormats.Exif, ImageFormat.Exif},
+            {ImageFormats.Gif, ImageFormat.Gif},
+            {ImageFormats.Icon, ImageFormat.Icon},
+            {ImageFormats.Jpeg, ImageFormat.Jpeg},
+            {ImageFormats.MemoryBmp, ImageFormat.MemoryBmp},
+            {ImageFormats.Png, ImageFormat.Png},
+            {ImageFormats.Tiff, ImageFormat.Tiff},
+            {ImageFormats.Wmf, ImageFormat.Wmf}
+        }
+
+        ''' <summary>
+        ''' Saves this System.Drawing.Image to the specified file in the specified format.
+        ''' </summary>
+        ''' <param name="res"></param>
+        ''' <param name="path"></param>
+        ''' <param name="format"></param>
+        ''' <returns></returns>
+        <Extension> Public Function SaveAs(res As Image, path As String, format As ImageFormats) As Boolean
+            Try
+                Dim parent As String = FileIO.FileSystem.GetParentPath(path)
+                Call FileIO.FileSystem.CreateDirectory(parent)
+                Call res.Save(path, format.GetFormat)
+            Catch ex As Exception
+                ex = New Exception(path.ToFileURL, ex)
+                Call App.LogException(ex)
+                Call ex.PrintException
+                Return False
+            End Try
+
+            Return True
+        End Function
+    End Module
+End Namespace

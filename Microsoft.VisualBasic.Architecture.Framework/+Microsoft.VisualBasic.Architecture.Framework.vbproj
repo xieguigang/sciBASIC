@@ -239,7 +239,8 @@
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
-    <Compile Include="Extensions\Image\hcBitmap.vb" />
+    <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
+    <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Win32API.vb" />
