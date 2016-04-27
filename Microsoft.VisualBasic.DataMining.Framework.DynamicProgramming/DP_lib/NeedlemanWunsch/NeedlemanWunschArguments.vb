@@ -50,13 +50,13 @@ Public Class NeedlemanWunschArguments(Of T)
 
     ''' <summary>
     ''' get sequence 1 </summary>
-    ''' <returns>  sequence 1 </returns>
+    ''' <return>  sequence 1 </return>
     Protected Sequence1 As T()
 
     ''' <summary>
     ''' get sequence 2cted int max (int a, int b, int c) {
     '''    return Math.max(a, Math.max(b, c)); </summary>
-    ''' <returns> sequence 2 </returns>
+    ''' <return> sequence 2 </return>
     Protected Sequence2 As T()
 
     ''' <summary>
