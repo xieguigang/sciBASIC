@@ -262,7 +262,7 @@ Public Module VBMathExtensions
     End Function
 
     <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-    <Extension> Public Function EuclideanDistance(a As Generic.IEnumerable(Of Integer), b As Generic.IEnumerable(Of Integer)) As Double
+    <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Integer), b As IEnumerable(Of Integer)) As Double
         If a.Count <> b.Count Then
             Return -1
         Else
@@ -271,8 +271,23 @@ Public Module VBMathExtensions
     End Function
 
     <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-    <Extension> Public Function EuclideanDistance(a As Generic.IEnumerable(Of Double), b As Generic.IEnumerable(Of Double)) As Double
+    <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
         Return EuclideanDistance(a.ToArray, b.ToArray)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="a">Point A</param>
+    ''' <param name="b">Point B</param>
+    ''' <returns></returns>
+    <ExportAPI("Euclidean", Info:="Euclidean Distance")>
+    <Extension> Public Function EuclideanDistance(a As Byte(), b As Byte()) As Double
+        If a.Length <> b.Length Then
+            Return -1.0R
+        Else
+            Return Math.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+        End If
     End Function
 
     ''' <summary>

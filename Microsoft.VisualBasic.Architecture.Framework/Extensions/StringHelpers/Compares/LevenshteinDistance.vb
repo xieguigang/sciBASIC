@@ -91,6 +91,25 @@ Public Module LevenshteinDistance
     ''' <param name="reference"></param>
     ''' <param name="hypotheses"></param>
     ''' <param name="equals"></param>
+    ''' <param name="cost"></param>
+    ''' <returns></returns>
+    Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As Equals(Of T), Optional cost As Double = 0.7) As Double
+        If hypotheses Is Nothing Then hypotheses = New T() {}
+        If reference Is Nothing Then reference = New T() {}
+
+        Dim distTable As Double(,) = CreateTable(reference, hypotheses, cost, equals)
+        Dim i As Integer = reference.Length, j As Integer = hypotheses.Length
+
+        Return distTable(i, j)
+    End Function
+
+    ''' <summary>
+    ''' 泛型序列的相似度的比较计算方法
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="reference"></param>
+    ''' <param name="hypotheses"></param>
+    ''' <param name="equals"></param>
     ''' <param name="asChar"></param>
     ''' <param name="cost"></param>
     ''' <returns></returns>
