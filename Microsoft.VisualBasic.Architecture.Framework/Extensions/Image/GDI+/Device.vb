@@ -76,7 +76,7 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Function Save(Path As String, Optional Format As ImageFormat.ImageFormats = ImageFormats.Png) As Boolean
+        Public Function Save(Path As String, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
             Return Save(Path, Format.GetFormat)
         End Function
 
@@ -86,9 +86,9 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Function Save(Path As String, Optional Format As System.Drawing.Imaging.ImageFormat = Nothing) As Boolean
+        Public Function Save(Path As String, Optional Format As ImageFormat = Nothing) As Boolean
             If Format Is Nothing Then
-                Format = System.Drawing.Imaging.ImageFormat.Png
+                Format = ImageFormat.Png
             End If
 
             Try
@@ -100,7 +100,7 @@ Namespace Imaging
             Return True
         End Function
 
-        Private Sub __save(path As String, format As System.Drawing.Imaging.ImageFormat)
+        Private Sub __save(path As String, format As ImageFormat)
             Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(path))
             Call __BitmapResources.Save(path, format)
         End Sub
@@ -115,7 +115,7 @@ Namespace Imaging
         ''' <param name="r"></param>
         ''' <param name="filled">所填充的颜色</param>
         ''' <returns></returns>
-        Public Shared Function CreateDevice(r As Drawing.Size, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
+        Public Shared Function CreateDevice(r As Size, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
             Return r.CreateGDIDevice(filled)
         End Function
 
