@@ -145,6 +145,12 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Return all
     End Operator
 
+    ' 请注意，由于下面的代码是和Csv文件操作模块有冲突的，所以代码在这里被注释掉了
+    'Public Shared Operator +(vals As IEnumerable(Of IEnumerable(Of T)), list As List(Of T)) As List(Of T)
+    '    Call list.AddRange(vals.MatrixAsIterator)
+    '    Return list
+    'End Operator
+
     Public Shared Operator -(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)
         If Not vals Is Nothing Then
             For Each x As T In vals

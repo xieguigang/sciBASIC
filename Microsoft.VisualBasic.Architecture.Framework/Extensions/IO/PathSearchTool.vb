@@ -443,13 +443,18 @@ Public Module ProgramPathSearchTool
     End Function
 
     <ExportAPI("Get.FrequentPath", Info:="Gets a directory path which is most frequent appeared in the file list.")>
-    Public Function GetMostAppreancePath(FileList As Generic.IEnumerable(Of String)) As String
-        If FileList.IsNullOrEmpty Then
+    Public Function GetMostAppreancePath(files As IEnumerable(Of String)) As String
+        If files.IsNullOrEmpty Then
             Return ""
         End If
 
-        Dim LQuery = (From strPath As String In FileList Select FileIO.FileSystem.GetParentPath(strPath)).ToArray
-        Return LQuery.CountStringTokens(IgnoreCase:=True).First.Key
+        Dim LQuery = (From strPath As String
+                      In files
+                      Select FileIO.FileSystem.GetParentPath(strPath)).ToArray
+        Return LQuery _
+            .CountTokens(IgnoreCase:=True) _
+            .OrderByDescending(Function(x) x.Value) _
+            .First.Key
     End Function
 
     ''' <summary>

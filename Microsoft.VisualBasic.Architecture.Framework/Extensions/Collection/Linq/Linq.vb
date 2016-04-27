@@ -14,6 +14,15 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        <Extension>
+        Public Iterator Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+            If Not source Is Nothing Then
+                For Each x As T In source
+                    Yield x
+                Next
+            End If
+        End Function
+
         ''' <summary>
         ''' Gets the max element its index in the collection
         ''' </summary>
@@ -249,15 +258,16 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Creates an array from a System.Collections.Generic.IEnumerable`1.(默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
+        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.
+        ''' (默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
         ''' </summary>
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
         ''' <returns>An array that contains the elements from the input sequence.</returns>
         <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
-                                                    [CType] As Func(Of T, TOut),
-                                                    Optional Parallel As Boolean = False) As TOut()
+                                                        [ctype] As Func(Of T, TOut),
+                                                        Optional Parallel As Boolean = False) As TOut()
             If source.IsNullOrEmpty Then
                 Return New TOut() {}
             End If
@@ -265,9 +275,9 @@ Namespace Linq
             Dim LQuery As TOut()
 
             If Parallel Then
-                LQuery = (From obj As T In source.AsParallel Select [CType](obj)).ToArray
+                LQuery = (From obj As T In source.AsParallel Select [ctype](obj)).ToArray
             Else
-                LQuery = (From obj As T In source Select [CType](obj)).ToArray
+                LQuery = (From obj As T In source Select [ctype](obj)).ToArray
             End If
 
             Return LQuery

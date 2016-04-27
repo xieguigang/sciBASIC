@@ -18,7 +18,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' Execute a linq expression. Creates an array from a <see cref="System.Collections.Generic.IEnumerable(Of T)"/>.
+        ''' Execute a linq expression. Creates an array from a <see cref="IEnumerable(Of T)"/>.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns>An array that contains the elements from the input sequence.</returns>

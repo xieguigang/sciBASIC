@@ -13,26 +13,6 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module StringHelpers
 
     ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <param name="pos">The text length of each field property value.</param>
-    ''' <returns></returns>
-    <Extension> Public Function FieldParser(s As String, pos As Integer()) As String()
-        Dim list As New List(Of String)
-        Dim offset As Integer
-
-        For Each len As Integer In pos.Take(pos.Length - 1)
-            list += s.Substring(offset, len)  ' 起始的位置是根据域的长度逐步叠加的
-            offset += len
-        Next
-
-        list += s.Substring(offset)
-
-        Return list.ToArray
-    End Function
-
-    ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
     ''' </summary>
     Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
@@ -225,27 +205,45 @@ Public Module StringHelpers
     ''' <summary>
     ''' 求交集
     ''' </summary>
-    ''' <param name="Chunkbuffer"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Intersection")>
-    <Extension> Public Function Intersection(Chunkbuffer As IEnumerable(Of IEnumerable(Of String))) As String()
-        Chunkbuffer = (From line In Chunkbuffer Select (From strValue As String In line Select strValue Distinct Order By strValue Ascending).ToArray).ToArray
-        Dim Union As List(Of String) = New List(Of String)
-        For Each Line As String() In Chunkbuffer
-            Call Union.AddRange(Line)
+    <Extension> Public Function Intersection(source As IEnumerable(Of IEnumerable(Of String))) As String()
+        Dim union As New List(Of String)
+
+        source = (From line As IEnumerable(Of String)
+                  In source
+                  Select (From s As String
+                          In line
+                          Select s
+                          Distinct
+                          Order By s Ascending).ToArray).ToArray
+
+        For Each line As String() In source
+            union += line
         Next
-        Union = (From strValue As String In Union Select strValue Distinct Order By strValue Ascending).ToList  '获取并集，接下来需要从并集之中去除在两个集合之中都不存在的
-        For Each Line In Chunkbuffer
-            For Each Collection In Chunkbuffer       '遍历每一个集合
-                Dim LQuery = (From strvalue As String In Collection Where Array.IndexOf(Line, strvalue) = -1 Select strvalue).ToArray
-                For Each value As String In LQuery
-                    Call Union.Remove(value) '假若line之中存在不存在的元素，则从并集之中移除
+
+        union = (From s As String
+                 In union
+                 Select s
+                 Distinct
+                 Order By s Ascending).ToList  '获取并集，接下来需要从并集之中去除在两个集合之中都不存在的
+
+        For Each Line As IEnumerable(Of String) In source
+            For Each row In source       '遍历每一个集合
+                Dim LQuery As IEnumerable(Of String) = From s As String
+                                                       In row
+                                                       Where Array.IndexOf(Line, s) = -1
+                                                       Select s
+                For Each s As String In LQuery
+                    Call union.Remove(s) '假若line之中存在不存在的元素，则从并集之中移除
                 Next
             Next
         Next
-        Return Union.ToArray
+
+        Return union.ToArray
     End Function
 
     ''' <summary>
@@ -290,40 +288,41 @@ Public Module StringHelpers
         Return values.SaveTo(path)
     End Function
 
-#If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Count the string value numbers.(请注意，这个函数是倒序排序的)
     ''' </summary>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
-    <Extension> Public Function CountStringTokens(Collection As Generic.IEnumerable(Of String), Optional IgnoreCase As Boolean = False) As KeyValuePair(Of String, Integer)()
-#Else
-    <Extension> Public Function CountStringTokens(Collection As Generic.IEnumerable(Of String), Optional IgnoreCase As Boolean = False) As KeyValuePair(Of String, Integer)()
-#End If
-
-        If Not IgnoreCase Then '大小写敏感
-            Dim GroupList = (From s As String In Collection Select s Group s By s Into Group).ToArray
-            Dim ChunkBuffer = (From item In GroupList Select data = New KeyValuePair(Of String, Integer)(item.s, item.Group.Count) Order By data.Value Descending).ToArray
-            Return ChunkBuffer
+    <Extension> Public Function CountTokens(source As IEnumerable(Of String), Optional IgnoreCase As Boolean = False) As Dictionary(Of String, Integer)
+        If Not IgnoreCase Then ' 大小写敏感
+            Return (From s As String
+                    In source
+                    Select s
+                    Group s By s Into Count) _
+                         .ToDictionary(Function(x) x.s,
+                                       Function(x) x.Count)
         End If
 
         Dim Uniques = (From s As String
-                       In (From strValue As String In Collection Select strValue Distinct).ToArray
+                       In (From strValue As String In source Select strValue Distinct).ToArray
                        Let data As String = s
                        Select UNIQUE_KEY = s.ToLower, data
                        Group By UNIQUE_KEY Into Group).ToArray
         Dim ChunkList As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))
 
-        Dim LQuery = (From UniqueString In Uniques
-                      Let s As String = UniqueString.UNIQUE_KEY
-                      Let Count As Integer = (From strValue As String In Collection Where String.Equals(strValue, s, StringComparison.OrdinalIgnoreCase) Select 1).ToArray.Length
-                      Let ori = (From nn In UniqueString.Group Select nn.data).ToArray
-                      Let DataItem As KeyValuePair(Of String, Integer) = New KeyValuePair(Of String, Integer)(ori((UniqueString.Group.Count - 1) * Rnd()).ToString, Count)
-                      Select DataItem
-                      Order By DataItem.Value Descending).ToArray
+        Dim LQuery = (From ustr In Uniques
+                      Let s As String = ustr.UNIQUE_KEY
+                      Let Count As Integer = (From str As String In source Where String.Equals(str, s, StringComparison.OrdinalIgnoreCase) Select 1).Count
+                      Let original As String() = (From nn In ustr.Group Select nn.data).ToArray
+                      Let key As String = original((ustr.Group.Count - 1) * Rnd())
+                      Select key,
+                          Count
+                      Order By Count Descending) _
+                              .ToDictionary(Function(x) x.key,
+                                            Function(x) x.Count)
         Return LQuery
     End Function
 
@@ -404,20 +403,21 @@ Public Module StringHelpers
     ''' using function <see cref="String.Equals"/> function to search string, this function using <see cref="Strings.InStr(String, String, CompareMethod)"/>
     ''' to search the keyword.
     ''' </summary>
-    ''' <param name="collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="keyword"></param>
     ''' <param name="caseSensitive"></param>
-    ''' <returns></returns>
+    ''' <returns>返回第一个找到关键词的行数，没有找到则返回-1</returns>
     <ExportAPI("Lookup", Info:="Search the string by keyword in a string collection.")>
     <Extension>
-    Public Function Lookup(collection As Generic.IEnumerable(Of String), keyword As String, Optional caseSensitive As Boolean = True) As Integer
-        Dim Method = If(caseSensitive, CompareMethod.Binary, CompareMethod.Text)
-        Dim Len As Integer = collection.Count - 1
-        Dim array = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
+    Public Function Lookup(source As IEnumerable(Of String), keyword As String, Optional caseSensitive As Boolean = True) As Integer
+        Dim method As CompareMethod = If(caseSensitive, CompareMethod.Binary, CompareMethod.Text)
+        Dim i As Integer
 
-        For i As Integer = 0 To Len
-            If InStr(array(i), keyword, Method) > 0 Then
+        For Each line As String In source
+            If InStr(line, keyword, method) > 0 Then
                 Return i
+            Else
+                i += 1
             End If
         Next
 

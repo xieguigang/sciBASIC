@@ -16,6 +16,10 @@ Public Module ListExtensions
     <Extension> Public Function ToList(Of T, TOut)(source As IEnumerable(Of T),
                                                    [CType] As Func(Of T, TOut),
                                                    Optional parallel As Boolean = False) As List(Of TOut)
+        If source Is Nothing Then
+            Return New List(Of TOut)
+        End If
+
         Dim result As List(Of TOut)
 
         If parallel Then
