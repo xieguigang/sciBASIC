@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Text
@@ -7,6 +8,25 @@ Namespace Text
     ''' Parser API for the well formatted documents.
     ''' </summary>
     Public Module FormattedParser
+
+        ''' <summary>
+        ''' Example as: ------- ------ -----    ------- ------ -----   ---- --  --------   ----------- 
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        <Extension> Public Function CrossFields(s As String) As Integer()
+            Dim sps As String() = Regex.Matches(s, "\s+").ToArray
+            Dim lens As String() = Regex.Matches(s, "-+").ToArray
+            Dim fieldLens As New List(Of Integer)
+
+            For i As Integer = 0 To lens.Length - 1
+                fieldLens += sps(i).Length
+                fieldLens += lens(i).Length
+            Next
+
+            Dim fields As Integer() = fieldLens.ToArray
+            Return fields
+        End Function
 
         ''' <summary>
         ''' Parsing a line of string into several fields fragments based on the fields length.
@@ -45,6 +65,7 @@ Namespace Text
         ''' </param>
         ''' <param name="__isHead">Condition for continue move the parser pointer to the next line.</param>
         ''' <returns></returns>
+        <Extension>
         Public Function ReadHead(buf As String(), ByRef offset As Integer, __isHead As DoContinute) As String()
             Do While __isHead(buf.Read(offset))
             Loop
