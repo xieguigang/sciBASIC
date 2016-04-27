@@ -241,7 +241,7 @@
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Image\hcBitmap.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
-    <Compile Include="WebResult.vb" />
+    <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Win32API.vb" />
     <Compile Include="Win32File.vb" />
     <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
