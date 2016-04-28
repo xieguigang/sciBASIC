@@ -79,18 +79,17 @@ Namespace Imaging
 
         <Extension>
         Public Function ByteLength(rect As Rectangle) As Integer
-            Dim width As Integer = rect.Width * 3
+            Dim width As Integer = rect.Width * 4  ' ARGB -> 4
             Return width * rect.Height
         End Function
 
         <Extension>
         Public Iterator Function Colors(buffer As Byte()) As IEnumerable(Of Color)
-            Dim byts As Byte() = New Byte(2) {}
             Dim iR As Byte
             Dim iG As Byte
             Dim iB As Byte
 
-            For i As Integer = 0 To buffer.Length - 1 Step 3
+            For i As Integer = 0 To buffer.Length - 1 Step 4
                 iR = buffer(i + 2)
                 iG = buffer(i + 1)
                 iB = buffer(i + 0)

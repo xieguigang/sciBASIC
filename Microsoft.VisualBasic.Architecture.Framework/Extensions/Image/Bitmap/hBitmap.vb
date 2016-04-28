@@ -43,8 +43,8 @@ Namespace Imaging
         ''' <param name="y"></param>
         ''' <returns>B, G, R</returns>
         Public Function GetIndex(x As Integer, y As Integer) As Integer
-            y = y * (Width * 3)
-            x = x * 3
+            y = y * (Width * 4)
+            x = x * 4
             Return x + y
         End Function
 
