@@ -153,8 +153,7 @@ Namespace Imaging
         ''' Releases all resources used by this System.Drawing.Graphics.
         ''' </summary>
         Public Sub Dispose() Implements IDisposable.Dispose
-            Call Me.Gr_Device.Dispose()
-            Call Me.__BitmapResources.Dispose()
+            Call Me.Gr_Device.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
         End Sub
 
 #Region "Implements Class Graphics"

@@ -21,7 +21,7 @@
     End Function
 
     Public Shared Function IsAbsolutePath(file As String) As Boolean
-        If InStr(file, ":\") > 0 Then
+        If InStr(file, ":\") > 0 OrElse InStr(file, ":/") > 0 Then
             Return True
         ElseIf file.First = "/" AndAlso
             (Environment.OSVersion.Platform = PlatformID.Unix OrElse
