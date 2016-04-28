@@ -14,6 +14,12 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        ''' <summary>
+        ''' A query proxy function makes your linq not so easily crashed due to the unexpected null reference collection as linq source.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not source Is Nothing Then
