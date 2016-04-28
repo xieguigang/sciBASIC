@@ -98,55 +98,55 @@ Namespace ComponentModel.DataStructures
             Dim n As Integer = data.Count
 
             If slideWindowSize >= n Then
-                Return {New SlideWindowHandle(Of T)() With {
-                    .Left = 0,
-                    .Elements = data.ToArray}
+                Return {
+                    New SlideWindowHandle(Of T)() With {
+                        .Left = 0,
+                        .Elements = data.ToArray
+                    }
                 }
             End If
 
             If offset < 1 Then
-                Call $"The offset parameter '{offset}' is not correct, set its value to 1 as default!".__DEBUG_ECHO
+                Call VBDebugger.Warning($"The offset parameter '{offset}' is not correct, set its value to 1 as default!")
                 offset = 1
             End If
 
-            Dim TempList As List(Of T) = data.ToList
-            Dim List As List(Of SlideWindowHandle(Of T)) =
-                New List(Of SlideWindowHandle(Of T))
+            Dim tmp As List(Of T) = data.ToList
+            Dim list As New List(Of SlideWindowHandle(Of T))
             Dim p As Integer = 0
 
             n = n - slideWindowSize - 1
 
             For i As Integer = 0 To n Step offset
-                Dim ChunkBuffer As T() = TempList.Take(slideWindowSize).ToArray
-                Call List.Add(New SlideWindowHandle(Of T)() With {
-                              .Elements = ChunkBuffer,
-                              .Left = i,
-                              .p = p})
-                Call TempList.RemoveRange(0, offset)
+                Dim buf As T() = tmp.Take(slideWindowSize).ToArray
+
+                list += New SlideWindowHandle(Of T)() With {
+                    .Elements = buf,
+                    .Left = i,
+                    .p = p
+                }
+                tmp.RemoveRange(0, offset)
 
                 p += 1
             Next
 
-            If Not TempList.IsNullOrEmpty Then
+            If Not tmp.IsNullOrEmpty Then
 
                 Dim left As Integer = n + 1
 
                 If extTails Then
-                    Call List.AddRange(__extendTails(TempList,
-                                                     slideWindowSize,
-                                                     left,
-                                                     p))
+                    list += __extendTails(tmp, slideWindowSize, left, p)
                 Else
                     Dim last As New SlideWindowHandle(Of T)() With {
                         .Left = left,
-                        .Elements = TempList.ToArray,
+                        .Elements = tmp.ToArray,
                         .p = p
                     }
-                    Call List.Add(last)
+                    Call list.Add(last)
                 End If
             End If
 
-            Return List.ToArray
+            Return list.ToArray
         End Function
 
         Private Function __extendTails(Of T)(lstTemp As List(Of T),
