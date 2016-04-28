@@ -194,7 +194,7 @@ Namespace DocumentStream.Linq
         Private disposedValue As Boolean ' To detect redundant calls
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected Overridable Overloads Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
@@ -218,7 +218,7 @@ Namespace DocumentStream.Linq
         'End Sub
 
         ' This code added by Visual Basic to correctly implement the disposable pattern.
-        Public Sub Dispose() Implements IDisposable.Dispose
+        Public Overloads Sub Dispose() Implements IDisposable.Dispose
             ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(True)
             ' TODO: uncomment the following line if Finalize() is overridden above.
