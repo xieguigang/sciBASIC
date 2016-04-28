@@ -62,6 +62,13 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public Class [Property](Of T) : Inherits DynamicPropertyBase(Of T)
 
+        Sub New()
+        End Sub
+
+        Sub New(initKey As String, initValue As T)
+            Call Properties.Add(initKey, initValue)
+        End Sub
+
         <ScriptIgnore> Public Property source As NamedValue(Of T)()
             Get
                 Return Properties.ToArray(Function(x) New NamedValue(Of T) With {.Name = x.Key, .x = x.Value})
