@@ -67,6 +67,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -91,6 +92,7 @@
     <Compile Include="AppServer\PushAPI\UserAPI.vb" />
     <Compile Include="AppServer\PushAPI\InvokeAPI.vb" />
     <Compile Include="AppServer\PushServer.vb" />
+    <Compile Include="Captcha.vb" />
     <Compile Include="SynchronizingTime.vb" />
     <Compile Include="Protocols\POST.vb" />
     <Compile Include="Protocols\PushServices.vb" />
