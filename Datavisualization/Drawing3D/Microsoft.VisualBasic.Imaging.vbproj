@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.Drawing</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.Drawing.Drawing3D</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Imaging</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Imaging</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Drawing.Drawing3D.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\GCModeller\GCModeller\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Drawing.Drawing3D.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Drawing.Drawing3D.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\GCModeller\GCModeller-x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Drawing.Drawing3D.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -87,6 +87,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing2D\VectorObject.vb" />
     <Compile Include="Drawing2D\ImageCoded.vb" />
     <Compile Include="Drawing2D\VectorAPI.vb" />
     <Compile Include="Drawing2D\Vectogram.vb" />
@@ -141,6 +142,10 @@
     <None Include="Resources\DefaultTexture.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DocumentFormats\MSHtml\MSHtml\DocumentFormat.HTML.vbproj">
+      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
+      <Name>DocumentFormat.HTML</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>

@@ -1,8 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Drawing.Drawing2D.VectorElements
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.VectorElements
 
 Namespace Drawing2D
 
