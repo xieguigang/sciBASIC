@@ -45,6 +45,13 @@ Public Module TextAPI
             If c = "<"c Then  ' 遇到了一个html标签的起始符号
                 c = +str
 
+                If chars.Count > 0 Then
+                    tokens += New TextString With {
+                        .Font = curFont,
+                        .Text = New String(chars.PopAll)
+                    }
+                End If
+
                 If c = "/"c Then  ' 这个是一个结束的标记
                     Dim tag As String = str.__nextEndTag
 
@@ -73,10 +80,28 @@ Public Module TextAPI
                             curFont = curFont.__setFontStyle(bold, italic)
                         Case "br"
                             chars += vbLf
+                        Case Else
+
                     End Select
                 End If
+
+                str.MoveNext()
+            Else
+                chars += c
             End If
         Loop
+
+        If chars.Count > 0 Then
+            tokens += New TextString With {
+                .Font = curFont,
+                .Text = New String(chars.PopAll)
+            }
+        End If
+
+        ' 在这里处理转义
+        For Each x In tokens
+            x.Text = x.Text.Replace("&lt;", "<")
+        Next
 
         Return tokens
     End Function
@@ -139,19 +164,61 @@ Public Module TextAPI
         Dim chars As New List(Of Char) From {c}
         Dim tag As New HtmlElement
 
-        If str.__readToken(chars, " "c) Then
+        Do While Not str.EndRead AndAlso str.Current <> " "c AndAlso str.Current <> ">"c
+            chars += +str
+        Loop
 
-        End If
+        tag.Name = New String(chars.PopAll)
 
-        Do While Not str.EndRead AndAlso str.Current <> ">"c
+        Dim name As String
+        Dim stacked As Boolean
 
+        Do While Not str.EndRead
+            If str.Current = ">"c Then
+                Exit Do
+            End If
+
+            Do While Not str.EndRead AndAlso str.Current <> "="c
+                If str.Current = " "c Then
+                    If chars.Count > 0 Then
+                        Do While Not str.EndRead AndAlso +str <> "="c
+                        Loop
+                        Exit Do   ' 在这里进行解析的是属性的名称，不允许有空格
+                    Else
+                        Call str.MoveNext()
+                    End If
+                Else
+                    chars += +str
+                End If
+            Loop
+            name = New String(chars.PopAll)
+            str.MoveNext()
+
+            Do While Not str.EndRead
+                If str.Current = """"c Then
+                    If chars.Count = 0 AndAlso stacked = False Then
+                        stacked = True
+                        str.MoveNext()
+                    Else ' 这里是一个结束的标志，准备开始下一个token
+                        stacked = False
+                        str.MoveNext()
+                        Exit Do
+                    End If
+                Else
+                    If str.Current = " "c Then
+                        If Not chars.Count = 0 Then
+                            chars += " "c
+                        End If
+                        str.MoveNext()
+                    Else
+                        chars += +str
+                    End If
+                End If
+            Loop
+
+            Call tag.Add(New ValueAttribute(name, New String(chars.PopAll)))
         Loop
 
         Return tag
-    End Function
-
-    <Extension>
-    Private Function __readToken(str As Pointer(Of Char), ByRef chars As List(Of Char), tagStop As Char) As Boolean
-
     End Function
 End Module

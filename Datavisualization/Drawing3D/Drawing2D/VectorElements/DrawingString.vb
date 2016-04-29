@@ -19,10 +19,14 @@ Namespace Drawing2D.VectorElements
         End Sub
 
         Sub New(text As TextString, rect As Rectangle)
+            Call Me.New(text.Text, text.Font, rect)
+        End Sub
+
+        Sub New(text As String, font As Font, rect As Rectangle)
             Call MyBase.New(rect)
 
-            Me.Text = text.Text
-            Me.Font = text.Font
+            Me.Text = text
+            Me.Font = font
         End Sub
 
         Public Overrides Function ToString() As String

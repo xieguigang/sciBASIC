@@ -48,9 +48,11 @@ Namespace Drawing2D
             Return Me._lstElements.Count
         End Function
 
-        Public Function AddTextElement(str As String, Font As Font, Color As Color, Location As Point) As Drawing2D.VectorElements.DrawingString
-            Dim strElement As DrawingString = New DrawingString(str, Color, Me._GDIDevice, Location) With {.Font = Font}
-            Call Me._lstElements.Add(strElement)
+        Public Function AddTextElement(str As String, Font As Font, Color As Color, Location As Point) As DrawingString
+            Dim strElement As New DrawingString(str, Font, New Rectangle(Location, New Size)) With {
+                .Pen = New SolidBrush(Color)
+            }
+            '   Call Me._lstElements.Add(strElement)
             Return strElement
         End Function
 

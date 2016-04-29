@@ -140,6 +140,15 @@ Namespace Marshal
         End Operator
 
         ''' <summary>
+        ''' Pointer move to next and then returns is <see cref="EndRead"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function MoveNext() As Boolean
+            __index += 1
+            Return Not EndRead
+        End Function
+
+        ''' <summary>
         ''' Pointer move to next and then returns the previous value
         ''' </summary>
         ''' <param name="ptr"></param>

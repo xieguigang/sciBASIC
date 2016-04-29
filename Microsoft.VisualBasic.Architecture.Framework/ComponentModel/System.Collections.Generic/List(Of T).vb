@@ -53,6 +53,16 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     End Sub
 
     ''' <summary>
+    ''' Pop all of the elements value in to array from the list object and then clear all of the list data.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function PopAll() As T()
+        Dim array As T() = ToArray()
+        Call Clear()
+        Return array
+    End Function
+
+    ''' <summary>
     ''' Move Next
     ''' </summary>
     ''' <param name="list"></param>

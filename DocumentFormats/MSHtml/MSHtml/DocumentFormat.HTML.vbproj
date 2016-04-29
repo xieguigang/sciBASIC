@@ -93,12 +93,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlParser\DocParserAPI.vb" />
     <Compile Include="TextString.vb" />
     <Compile Include="Head\Meta.vb" />
     <Compile Include="Image.vb" />
     <Compile Include="HTML.vb" />
-    <Compile Include="HtmlDocument.vb" />
-    <Compile Include="HtmlElement.vb" />
+    <Compile Include="HtmlParser\HtmlDocument.vb" />
+    <Compile Include="HtmlParser\HtmlElement.vb" />
     <Compile Include="DocumentWriter.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="DocFormatter.vb" />

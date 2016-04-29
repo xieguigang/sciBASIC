@@ -62,6 +62,8 @@ Public Module DocumentWriter
     End Function
 
     <Extension> Public Function IsBr(node As HtmlElement) As Boolean
-        Return String.Equals(node.Name, "br") AndAlso node.Attributes.IsNullOrEmpty AndAlso node.HtmlElements.IsNullOrEmpty
+        Return String.Equals(node.Name, "br") AndAlso
+            node.Attributes.IsNullOrEmpty AndAlso
+            node.HtmlElements.IsNullOrEmpty
     End Function
 End Module
