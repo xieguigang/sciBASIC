@@ -136,6 +136,22 @@ Public Module TextAPI
 
     <Extension>
     Public Function __nextTag(str As Pointer(Of Char), c As Char) As HtmlElement
+        Dim chars As New List(Of Char) From {c}
+        Dim tag As New HtmlElement
+
+        If str.__readToken(chars, " "c) Then
+
+        End If
+
+        Do While Not str.EndRead AndAlso str.Current <> ">"c
+
+        Loop
+
+        Return tag
+    End Function
+
+    <Extension>
+    Private Function __readToken(str As Pointer(Of Char), ByRef chars As List(Of Char), tagStop As Char) As Boolean
 
     End Function
 End Module
