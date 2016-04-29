@@ -5,7 +5,7 @@ Namespace Drawing3D
     ''' <summary>
     ''' GDI+图形设备的简易抽象
     ''' </summary>
-    Public Class GDIDevice : Inherits System.Windows.Forms.UserControl
+    Public Class GDIDevice : Inherits UserControl
 
         Protected WithEvents _animationLoop As Timer
 
@@ -56,12 +56,23 @@ Namespace Drawing3D
             Throw New Exception("Please Implements the control code at here.")
         End Sub
 
-        Protected Overridable Sub __updateGraphics(sender As Object, Gr As System.Windows.Forms.PaintEventArgs)
+        Protected Overridable Sub __updateGraphics(sender As Object, Gr As PaintEventArgs)
             Throw New Exception("Please Implements the graphics updates code at here.")
         End Sub
 
         Private Sub GDIDevice_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
             Call __updateGraphics(sender, Gr:=e)
+        End Sub
+
+        Private Sub InitializeComponent()
+            Me.SuspendLayout()
+            '
+            'GDIDevice
+            '
+            Me.Name = "GDIDevice"
+            Me.Size = New System.Drawing.Size(438, 355)
+            Me.ResumeLayout(False)
+
         End Sub
     End Class
 End Namespace
