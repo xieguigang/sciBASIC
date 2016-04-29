@@ -58,7 +58,7 @@ Namespace Drawing2D.VectorElements
         ''' System.Drawing.Brush and System.Drawing.Font objects.
         ''' </summary>
         Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle)
-            Call gdi.DrawString(Text, Font, Pen, New RectangleF(RECT.X, RECT.Y, RECT.Width, RECT.Height))
+            Call gdi.DrawString(Text, Font, Pen, RECT.Location)
         End Sub
     End Class
 
@@ -89,13 +89,18 @@ Namespace Drawing2D.VectorElements
         ''' <param name="loc">最开始的左上角的位置</param>
         ''' <param name="gdi"></param>
         <Extension>
-        Public Sub DrawStrng(texts As DrawingString(), loc As Point, ByRef gdi As GDIPlusDeviceHandle)
+        Public Sub DrawStrng(texts As DrawingString(), loc As Point, gdi As GDIPlusDeviceHandle)
             Dim szs As SizeF() = texts.ToArray(Function(x) x.MeasureString(gdi))
             Dim maxH As Integer = szs.Select(Function(x) x.Height).Max
             Dim lowY As Integer = loc.Y + maxH
+            Dim lx As Integer = loc.X
 
-            For Each s As DrawingString In texts
+            For Each s As SeqValue(Of DrawingString, SizeF) In texts.SeqIterator(Of SizeF)(szs)
+                Dim y As Integer = lowY - s.Follow.Height
+                Dim pos As New Point(lx.Move(s.Follow.Width), y)
+                Dim rect As New Rectangle(pos, New Size(s.Follow.ToSize))
 
+                Call New DrawingString(s.obj, rect).Draw(gdi)
             Next
         End Sub
     End Module

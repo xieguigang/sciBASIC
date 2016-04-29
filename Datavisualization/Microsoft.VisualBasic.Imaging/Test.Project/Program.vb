@@ -7,11 +7,11 @@ Module Program
 
     Sub Main()
 
-        Dim html As String = "<font face=""Microsoft YaHei"" size=""5.5""><strong>text</strong><b> &lt;&lt;&lt; <i>value</i></b></font> "
+        Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong>text</strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> "
 
         Dim strings = TextAPI.GetStrings(html)
 
-        Using gdi As GDIPlusDeviceHandle = New Size(1200, 800).CreateGDIDevice
+        Using gdi As GDIPlusDeviceHandle = New Size(500, 200).CreateGDIDevice
             Call strings.DrawStrng(New Point(100, 100), gdi)
             Call gdi.Save("./test_text.png", ImageFormats.Png)
         End Using
