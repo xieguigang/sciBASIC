@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.DocumentFormat.HTML
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D.VectorElements
@@ -17,6 +18,13 @@ Namespace Drawing2D.VectorElements
             Call MyBase.New(rect)
         End Sub
 
+        Sub New(text As TextString, rect As Rectangle)
+            Call MyBase.New(rect)
+
+            Me.Text = text.Text
+            Me.Font = text.Font
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Text
         End Function
@@ -25,4 +33,22 @@ Namespace Drawing2D.VectorElements
             Call gdi.DrawString(Text, Font, Pen, New RectangleF(RECT.X, RECT.Y, RECT.Width, RECT.Height))
         End Sub
     End Class
+
+    ''' <summary>
+    ''' 基于HTML语法的字符串的绘制描述信息的解析
+    ''' </summary>
+    Public Module TextAPI
+
+        ' html -->  <font face="Microsoft YaHei" size="1.5"><strong>text</strong><b><i>value</i></b></font> 
+        ' 解析上述的表达式会产生一个栈，根据html标记来赋值字符串的gdi+属性
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="html">这里只是一个很小的html的片段，仅仅用来描述所需要进行绘制的字符串的gdi+属性</param>
+        ''' <returns></returns>
+        Public Function GetStrings(html As String) As DrawingString()
+
+        End Function
+    End Module
 End Namespace
