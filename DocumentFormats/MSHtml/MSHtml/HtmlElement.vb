@@ -5,6 +5,31 @@ Imports System.Text.RegularExpressions
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+
+Public Structure ValueAttribute : Implements sIdEnumerable
+
+    Public Property Name As String Implements sIdEnumerable.Identifier
+    Public Property Value As String
+
+    Sub New(strText As String)
+        Dim ep As Integer = InStr(strText, "=")
+        Name = Mid(strText, 1, ep - 1)
+        Value = Mid(strText, ep + 1)
+        If Value.First = """"c AndAlso Value.Last = """"c Then
+            Value = Mid(Value, 2, Len(Value) - 2)
+        End If
+    End Sub
+
+    Sub New(name As String, value As String)
+        Me.Name = name
+        Me.Value = value
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"{Name}=""{Value}"""
+    End Function
+End Structure
 
 ''' <summary>
 ''' 一个标签所标记的元素以及内部文本
@@ -90,6 +115,10 @@ Public Class HtmlElement : Inherits PlantText
         Return sbr.ToString
     End Function
 
+    Public Sub Add(attr As ValueAttribute)
+        Call __attrs.Add(attr.Name, attr)
+    End Sub
+
     Public Sub Add(Node As PlantText)
         Call __elementNodes.Add(Node)
     End Sub
@@ -105,23 +134,6 @@ Public Class HtmlElement : Inherits PlantText
             Return MyBase.IsEmpty AndAlso String.IsNullOrEmpty(Name) AndAlso Attributes.IsNullOrEmpty AndAlso HtmlElements.IsNullOrEmpty
         End Get
     End Property
-
-    Public Structure ValueAttribute
-        Dim Name, Value As String
-
-        Sub New(strText As String)
-            Dim ep As Integer = InStr(strText, "=")
-            Name = Mid(strText, 1, ep - 1)
-            Value = Mid(strText, ep + 1)
-            If Value.First = """"c AndAlso Value.Last = """"c Then
-                Value = Mid(Value, 2, Len(Value) - 2)
-            End If
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{Name}=""{Value}"""
-        End Function
-    End Structure
 
     Public Shared Function SingleNodeParser(value As String) As HtmlElement
         Return InnerTextParse(value).As(Of HtmlElement)

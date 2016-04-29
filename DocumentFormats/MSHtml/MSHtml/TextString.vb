@@ -73,8 +73,12 @@ Public Module TextAPI
                             curFont = curFont.__setFontStyle(bold, italic)
                         Case "br"
                             chars += vbLf
+                        Case Else
+
                     End Select
                 End If
+            Else
+                chars += c
             End If
         Loop
 
@@ -139,19 +143,47 @@ Public Module TextAPI
         Dim chars As New List(Of Char) From {c}
         Dim tag As New HtmlElement
 
-        If str.__readToken(chars, " "c) Then
+        Do While Not str.EndRead AndAlso str.Current <> " "c
+            chars += +str
+        Loop
 
-        End If
+        tag.Name = New String(chars.PopAll)
 
-        Do While Not str.EndRead AndAlso str.Current <> ">"c
+        Dim name As String
+        Dim stacked As Boolean
 
+        Do While Not str.EndRead
+            If str.Current = ">"c Then
+                Exit Do
+            End If
+
+            Do While Not str.EndRead AndAlso str.Current <> "="c
+                chars += +str
+            Loop
+            name = New String(chars.PopAll)
+
+            Do While Not str.EndRead
+                If str.Current = """"c Then
+                    If chars.Count = 0 AndAlso stacked = False Then
+                        stacked = True
+                    Else ' 这里是一个结束的标志，准备开始下一个token
+                        stacked = False
+                        Exit Do
+                    End If
+                Else
+                    If str.Current = " "c Then
+                        If Not chars.Count = 0 Then
+                            chars += " "c
+                        End If
+                    Else
+                        chars += +str
+                    End If
+                End If
+            Loop
+
+            Call tag.Add(New ValueAttribute(name, New String(chars.PopAll)))
         Loop
 
         Return tag
-    End Function
-
-    <Extension>
-    Private Function __readToken(str As Pointer(Of Char), ByRef chars As List(Of Char), tagStop As Char) As Boolean
-
     End Function
 End Module
