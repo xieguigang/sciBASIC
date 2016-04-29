@@ -21,7 +21,7 @@ Public Class HtmlDocument
         pageContent = Regex.Replace(pageContent, "<!--.+?-->", "")
 
         Do While pageContent.Length > 0
-            Dim element = HtmlElement.InnerTextParse(pageContent)
+            Dim element = HtmlElement.TextParse(pageContent)
             If element Is Nothing Then
                 Exit Do
             Else

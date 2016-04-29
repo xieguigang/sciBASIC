@@ -60,9 +60,9 @@ Public Class HtmlElement : Inherits PlantText
             __attrsArray = value
 
             If __attrsArray.IsNullOrEmpty Then
-                __attrs = New Dictionary(Of String, ValueAttribute)
+                __attrs = New Dictionary(Of ValueAttribute)
             Else
-                __attrs = value.ToDictionary(Function(x) x.Name)
+                __attrs = value.ToDictionary
             End If
         End Set
     End Property
@@ -99,7 +99,7 @@ Public Class HtmlElement : Inherits PlantText
         End Get
     End Property
 
-    Dim __attrs As Dictionary(Of String, ValueAttribute)
+    Dim __attrs As Dictionary(Of ValueAttribute)
     Dim __attrsArray As ValueAttribute()
     Dim __elementNodes As List(Of PlantText) = New List(Of PlantText)
 
@@ -116,6 +116,9 @@ Public Class HtmlElement : Inherits PlantText
     End Function
 
     Public Sub Add(attr As ValueAttribute)
+        If __attrs Is Nothing Then
+            __attrs = New Dictionary(Of ValueAttribute)
+        End If
         Call __attrs.Add(attr.Name, attr)
     End Sub
 
@@ -125,18 +128,22 @@ Public Class HtmlElement : Inherits PlantText
 
     Public ReadOnly Property OnlyInnerText As Boolean
         Get
-            Return __elementNodes.Count = 1 AndAlso __elementNodes(Scan0).IsPlantText
+            Return __elementNodes.Count = 1 AndAlso
+                __elementNodes(Scan0).IsPlantText
         End Get
     End Property
 
     Public Overrides ReadOnly Property IsEmpty As Boolean
         Get
-            Return MyBase.IsEmpty AndAlso String.IsNullOrEmpty(Name) AndAlso Attributes.IsNullOrEmpty AndAlso HtmlElements.IsNullOrEmpty
+            Return MyBase.IsEmpty AndAlso
+                String.IsNullOrEmpty(Name) AndAlso
+                Attributes.IsNullOrEmpty AndAlso
+                HtmlElements.IsNullOrEmpty
         End Get
     End Property
 
     Public Shared Function SingleNodeParser(value As String) As HtmlElement
-        Return InnerTextParse(value).As(Of HtmlElement)
+        Return TextParse(value).As(Of HtmlElement)
     End Function
 
     ''' <summary>
@@ -145,7 +152,7 @@ Public Class HtmlElement : Inherits PlantText
     ''' <param name="doc"></param>
     ''' <returns></returns>
     ''' <remarks>这个方法是最开始的解析函数，非递归的</remarks>
-    Public Shared Function InnerTextParse(ByRef doc As String) As PlantText
+    Public Shared Function TextParse(ByRef doc As String) As PlantText
         Dim strElement As String = Regex.Match(doc, HTML_ELEMENT_REGEX).Value  ' 得到开始的标签
 
         If String.IsNullOrEmpty(strElement) Then
@@ -160,7 +167,7 @@ Public Class HtmlElement : Inherits PlantText
             Return SpecialHtmlElements.DocumentType
         End If
 
-        Dim Element As HtmlElement = New HtmlElement With {
+        Dim el As HtmlElement = New HtmlElement With {
             .Name = HtmlElement.__getElementName(strElement),
             .Attributes = __getElementAttrs(strElement)
         }
@@ -168,22 +175,22 @@ Public Class HtmlElement : Inherits PlantText
         p = InStr(doc, strElement)  '由于前面的文本已经解析完了，所以前面的文本全部扔掉
         doc = Mid(doc, p + Len(strElement))
 
-        If String.Equals(Element.Name, "?xml", StringComparison.OrdinalIgnoreCase) Then
+        If String.Equals(el.Name, "?xml", StringComparison.OrdinalIgnoreCase) Then
             '这个是在解析XML文档，并且这个是头部，则跳过后续
-            Return Element
+            Return el
         End If
 
         '解析内部文本
 
         Do While True
             Dim parentEnd As Boolean = False
-            Dim node As PlantText = __innerTextParser(doc, Element.Name, parentEnd)
+            Dim node As PlantText = __innerTextParser(doc, el.Name, parentEnd)
             If node Is Nothing Then
                 Exit Do
             End If
 
             If Not node.IsEmpty Then
-                Call Element.Add(node)
+                Call el.Add(node)
             End If
 
             If parentEnd Then
@@ -191,16 +198,18 @@ Public Class HtmlElement : Inherits PlantText
             End If
         Loop
 
-        Return Element
+        Return el
     End Function
 
     ''' <summary>
     ''' 在得到一个标签之后前面的数据会被扔掉，开始解析标签后面的数据
     ''' </summary>
     ''' <param name="innerText"></param>
-    ''' <param name="parentNode"></param>
+    ''' <param name="parent"></param>
     ''' <returns>这个函数是一个递归函数</returns>
-    Private Shared Function __innerTextParser(ByRef innerText As String, parentNode As String, ByRef parentEnd As Boolean) As PlantText
+    Private Shared Function __innerTextParser(ByRef innerText As String,
+                                              parent As String,
+                                              ByRef parentEnd As Boolean) As PlantText
         If String.IsNullOrEmpty(innerText) Then
             Return Nothing
         End If
@@ -209,8 +218,8 @@ Public Class HtmlElement : Inherits PlantText
         Dim p As Integer = InStr(innerText, strElement)
         ' 下一个标签和父节点标签之间的文本为内部文本
         Dim innerDoc As String = Mid(innerText, 1, p - 1)  ' 如果内部文档里面含有父节点的结束标签，则父节点结束
-        parentNode = $"</{parentNode}>"
-        Dim endTag As String = Regex.Match(innerDoc, parentNode, RegexOptions.IgnoreCase).Value
+        parent = $"</{parent}>"
+        Dim endTag As String = Regex.Match(innerDoc, parent, RegexOptions.IgnoreCase).Value
         If Not String.IsNullOrEmpty(endTag) Then
             Dim innerLen As Integer = Len(innerDoc)
 
@@ -237,20 +246,20 @@ Public Class HtmlElement : Inherits PlantText
         End If
 
         If String.IsNullOrEmpty(strElement) Then '准备结束了，因为已经没有新的节点了
-            p = InStr(innerText, parentNode, CompareMethod.Text)
+            p = InStr(innerText, parent, CompareMethod.Text)
             Dim lenth = p - 1
             If lenth < 0 Then
                 lenth = 0
             End If
             innerDoc = Mid(innerText, 1, lenth)
-            innerText = Mid(innerText, p + Len(parentNode))
+            innerText = Mid(innerText, p + Len(parent))
             parentEnd = True
             Return New PlantText With {.InnerText = innerDoc}
         End If
 
         '新的子节点的解析开始了
 
-        Dim Element As HtmlElement = New HtmlElement With {
+        Dim x As HtmlElement = New HtmlElement With {
             .Name = HtmlElement.__getElementName(strElement),
             .Attributes = __getElementAttrs(strElement)
         }
@@ -259,29 +268,29 @@ Public Class HtmlElement : Inherits PlantText
 
         If SpecialHtmlElements.IsBrChangeLine(strElement) Then
             parentEnd = False
-            Return Element
+            Return x
         End If
 
-        If String.Equals(Element.Name, "img", StringComparison.OrdinalIgnoreCase) Then
+        If String.Equals(x.Name, "img", StringComparison.OrdinalIgnoreCase) Then
             parentEnd = False
-            Return Element
+            Return x
         End If
 
-        If String.Equals(Element.Name, "meta", StringComparison.OrdinalIgnoreCase) Then
-            If String.Equals(parentNode, "</head>", StringComparison.OrdinalIgnoreCase) Then
-                Return Element '头部区域的元数据，没有子节点的
+        If String.Equals(x.Name, "meta", StringComparison.OrdinalIgnoreCase) Then
+            If String.Equals(parent, "</head>", StringComparison.OrdinalIgnoreCase) Then
+                Return x '头部区域的元数据，没有子节点的
             End If
         End If
 
         Do While True
             Dim innerParentEnd As Boolean = False
-            Dim node As PlantText = __innerTextParser(innerText, Element.Name, innerParentEnd)
+            Dim node As PlantText = __innerTextParser(innerText, x.Name, innerParentEnd)
             If node Is Nothing Then
                 Exit Do
             End If
 
             If Not node.IsEmpty Then
-                Call Element.Add(node)
+                Call x.Add(node)
             End If
 
             If innerParentEnd Then
@@ -291,23 +300,30 @@ Public Class HtmlElement : Inherits PlantText
 
         parentEnd = False
 
-        Return Element
+        Return x
     End Function
 
-    Private Shared Function __getElementAttrs(strText As String) As ValueAttribute()
-        Dim Tokens = CommandLine.GetTokens(strText).Skip(1).ToArray
-        If Tokens.Length > 0 Then
-            Tokens(Tokens.Length - 1) = Mid(Tokens.Last, 1, Len(Tokens.Last) - 1)
+    Private Shared Function __getElementAttrs(s As String) As ValueAttribute()
+        Dim tokens As String() = CommandLine.GetTokens(s).Skip(1).ToArray
+        If tokens.Length > 0 Then
+            tokens(tokens.Length - 1) =
+                Mid(tokens.Last, 1, Len(tokens.Last) - 1)
         End If
-        Return Tokens.TakeWhile(Function(attr) Not String.Equals(attr, "\") AndAlso Not String.Equals(attr, "/")).ToArray(Function(attr) New ValueAttribute(attr))
+        Return tokens _
+            .TakeWhile(AddressOf __takesWhile) _
+            .ToArray(Function(attr) New ValueAttribute(attr))
     End Function
 
-    Private Shared Function __getElementName(strText As String) As String
-        Dim p As Integer = InStr(strText, " ")
+    Private Shared Function __takesWhile(attr As String) As Boolean
+        Return Not String.Equals(attr, "\") AndAlso Not String.Equals(attr, "/")
+    End Function
+
+    Private Shared Function __getElementName(s As String) As String
+        Dim p As Integer = InStr(s, " ")
         If p = 0 Then
-            Return Mid(strText, 2, Len(strText) - 2)
+            Return Mid(s, 2, Len(s) - 2)
         Else
-            Dim Name As String = Mid(strText, 2, p - 2)
+            Dim Name As String = Mid(s, 2, p - 2)
             Return Name
         End If
     End Function

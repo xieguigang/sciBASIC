@@ -158,14 +158,24 @@ Public Module TextAPI
             End If
 
             Do While Not str.EndRead AndAlso str.Current <> "="c
-                chars += +str
+                If str.Current = " "c Then
+                    If chars.Count > 0 Then
+                        chars += " "c
+                    Else
+                        Call str.MoveNext()
+                    End If
+                Else
+                    chars += +str
+                End If
             Loop
             name = New String(chars.PopAll)
+            str.MoveNext()
 
             Do While Not str.EndRead
                 If str.Current = """"c Then
                     If chars.Count = 0 AndAlso stacked = False Then
                         stacked = True
+                        str.MoveNext()
                     Else ' 这里是一个结束的标志，准备开始下一个token
                         stacked = False
                         Exit Do
@@ -175,6 +185,7 @@ Public Module TextAPI
                         If Not chars.Count = 0 Then
                             chars += " "c
                         End If
+                        str.MoveNext()
                     Else
                         chars += +str
                     End If

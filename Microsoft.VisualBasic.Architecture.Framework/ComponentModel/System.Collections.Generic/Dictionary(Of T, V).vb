@@ -88,6 +88,20 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     End Function
 
     ''' <summary>
+    ''' Gets the value associated with the specified key.
+    ''' </summary>
+    ''' <param name="name">The key of the value to get.</param>
+    ''' <param name="success">true if the System.Collections.Generic.SortedDictionary`2 contains an element
+    ''' with the specified key; otherwise, false.</param>
+    ''' <returns>When this method returns, the value associated with the specified key, if the
+    ''' key is found; otherwise, the default value for the type of the value parameter.</returns>
+    Public Overloads Function TryGetValue(name As String, Optional ByRef success As Boolean = True) As V
+        Dim value As V = Nothing
+        success = MyBase.TryGetValue(name, value)
+        Return value
+    End Function
+
+    ''' <summary>
     ''' 假若目标元素不存在于本字典之中，则会返回False
     ''' </summary>
     ''' <param name="x"></param>
