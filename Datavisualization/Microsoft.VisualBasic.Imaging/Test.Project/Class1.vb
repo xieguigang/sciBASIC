@@ -1,8 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.Drawing.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
-Public Class Class1 : Inherits Microsoft.VisualBasic.Drawing.Drawing3D.GDIDevice
+Public Class Class1 : Inherits GDIDevice
 
     Protected m_vertices(8) As Point3D
     Protected m_faces(6, 4) As Integer

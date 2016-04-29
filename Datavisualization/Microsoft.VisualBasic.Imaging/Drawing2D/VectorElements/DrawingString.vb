@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.DocumentFormat.HTML
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.VectorElements
 
@@ -22,11 +22,19 @@ Namespace Drawing2D.VectorElements
             Call Me.New(text.Text, text.Font, rect)
         End Sub
 
+        Sub New(text As TextString)
+            Call Me.New(text, Nothing)
+        End Sub
+
         Sub New(text As String, font As Font, rect As Rectangle)
             Call MyBase.New(rect)
 
             Me.Text = text
             Me.Font = font
+        End Sub
+
+        Sub New(text As DrawingString, rect As Rectangle)
+            Call Me.New(text.Text, text.Font, rect)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -52,7 +60,14 @@ Namespace Drawing2D.VectorElements
         ''' <param name="html">这里只是一个很小的html的片段，仅仅用来描述所需要进行绘制的字符串的gdi+属性</param>
         ''' <returns></returns>
         Public Function GetStrings(html As String) As DrawingString()
-
+            Dim texts As TextString() = DocumentFormat.HTML.TextAPI.TryParse(html)
+            Dim models As DrawingString() =
+                texts.ToArray(Function(x) New DrawingString(x))
+            Return models
         End Function
+
+        Public Sub DrawStrng(texts As DrawingString(), loc As Point, gdi As GDIPlusDeviceHandle)
+
+        End Sub
     End Module
 End Namespace

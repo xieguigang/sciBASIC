@@ -160,7 +160,7 @@ Public Module TextAPI
     End Function
 
     <Extension>
-    Public Function __nextTag(str As Pointer(Of Char), c As Char) As HtmlElement
+    Private Function __nextTag(str As Pointer(Of Char), c As Char) As HtmlElement
         Dim chars As New List(Of Char) From {c}
         Dim tag As New HtmlElement
 

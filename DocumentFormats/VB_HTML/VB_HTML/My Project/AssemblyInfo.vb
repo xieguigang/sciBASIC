@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("MSHtml")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("蓝思生物信息工程师工作站")> 
-<Assembly: AssemblyProduct("MSHtml")> 
-<Assembly: AssemblyCopyright("Copyright © 蓝思生物信息工程师工作站 2014")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("HTML document read parser and writer for VisualBasic")>
+<Assembly: AssemblyDescription("HTML document read parser and writer for VisualBasic")>
+<Assembly: AssemblyCompany("xie.guigang@gmail.com")>
+<Assembly: AssemblyProduct("VB_HTML")>
+<Assembly: AssemblyCopyright("Copyright © VB_HTML. 2014")>
+<Assembly: AssemblyTrademark("Microsoft.VisualBasic")>
 
 <Assembly: ComVisible(False)>
 
