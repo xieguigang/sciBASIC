@@ -193,6 +193,7 @@
     <Compile Include="CommandLine\Interpreters\Abstract.vb" />
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\CommandEntryPoint.vb" />
+    <Compile Include="ComponentModel\DataSource\IMatched.vb" />
     <Compile Include="ComponentModel\DataSource\Repository.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
@@ -241,6 +242,7 @@
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
+    <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\FormattedParser.vb" />

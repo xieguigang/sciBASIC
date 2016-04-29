@@ -75,6 +75,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
@@ -92,6 +93,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextString.vb" />
     <Compile Include="Head\Meta.vb" />
     <Compile Include="Image.vb" />
     <Compile Include="HTML.vb" />

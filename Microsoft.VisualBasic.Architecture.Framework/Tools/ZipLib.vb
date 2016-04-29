@@ -108,7 +108,7 @@ Public Module GZip
         Dim destinationFilePath As String = Path.GetDirectoryName(destinationFileName)
 
         'Creates the directory (if it doesn't exist) for the new path
-        Directory.CreateDirectory(destinationFilePath)
+        IO.Directory.CreateDirectory(destinationFilePath)
 
         'Determines what to do with the file based upon the
         'method of overwriting chosen

@@ -43,10 +43,8 @@ Public Class Image
     End Function
 
     Public Shared Function GetImages(html As String) As Image()
-        Dim data As String() = (From m As Match
-                                In Regex.Matches(html, WebServiceUtils.IMAGE_SOURCE, RegexOptions.Singleline + RegexOptions.IgnoreCase)
-                                Select m.Value).ToArray
-        Dim res = data.ToArray(Function(tag) Image.ResParser(tag))
+        Dim data As String() = Regex.Matches(html, WebServiceUtils.IMAGE_SOURCE, RegexICSng).ToArray
+        Dim res As Image() = data.ToArray(Function(tag) Image.ResParser(tag))
         Return res
     End Function
 

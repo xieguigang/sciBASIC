@@ -58,6 +58,13 @@ Public Class ExtendedProps : Inherits Dynamic.DynamicObject
         End Set
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(init As [Property](Of Object))
+        __hash = init
+    End Sub
+
     Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
         Return DynamicHash.Properties.Keys
     End Function

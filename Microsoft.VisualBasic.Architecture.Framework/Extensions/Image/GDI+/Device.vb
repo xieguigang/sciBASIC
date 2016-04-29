@@ -153,8 +153,7 @@ Namespace Imaging
         ''' Releases all resources used by this System.Drawing.Graphics.
         ''' </summary>
         Public Sub Dispose() Implements IDisposable.Dispose
-            Call Me.Gr_Device.Dispose()
-            Call Me.__BitmapResources.Dispose()
+            Call Me.Gr_Device.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
         End Sub
 
 #Region "Implements Class Graphics"
@@ -674,36 +673,21 @@ Namespace Imaging
         Public Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
 
         End Sub
-        '
-        ' Summary:
-        '     Draws a Bézier spline defined by four System.Drawing.Point structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen structure that determines the color, width, and style of the
-        '     curve.
-        '
-        '   pt1:
-        '     System.Drawing.Point structure that represents the starting point of the curve.
-        '
-        '   pt2:
-        '     System.Drawing.Point structure that represents the first control point for the
-        '     curve.
-        '
-        '   pt3:
-        '     System.Drawing.Point structure that represents the second control point for the
-        '     curve.
-        '
-        '   pt4:
-        '     System.Drawing.Point structure that represents the ending point of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
-        Public Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
 
+        ''' <summary>
+        ''' Draws a Bézier spline defined by four System.Drawing.Point structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen structure that determines the color, width, and style of the
+        ''' curve.</param>
+        ''' <param name="pt1">System.Drawing.Point structure that represents the starting point of the curve.</param>
+        ''' <param name="pt2">System.Drawing.Point structure that represents the first control point for the
+        ''' curve.</param>
+        ''' <param name="pt3">System.Drawing.Point structure that represents the second control point for the
+        ''' curve.</param>
+        ''' <param name="pt4">System.Drawing.Point structure that represents the ending point of the curve.</param>
+        Public Sub DrawBézier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
+            Call Gr_Device.DrawBezier(pen, pt1, pt2, pt3, pt4)
         End Sub
-        '
 
         ' Summary:
         '     Draws a Bézier spline defined by four System.Drawing.PointF structures.
@@ -2246,25 +2230,15 @@ Namespace Imaging
         Public Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
             Call Gr_Device.DrawImageUnscaledAndClipped(image, rect)
         End Sub
-        '
-        ' Summary:
-        '     Draws a line connecting two System.Drawing.Point structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   pt1:
-        '     System.Drawing.Point structure that represents the first point to connect.
-        '
-        '   pt2:
-        '     System.Drawing.Point structure that represents the second point to connect.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
-        Public Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
 
+        ''' <summary>
+        ''' Draws a line connecting two System.Drawing.Point structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
+        ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
+        Public Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
+            Call Gr_Device.DrawLine(pen, pt1, pt2)
         End Sub
         '
         ' Summary:

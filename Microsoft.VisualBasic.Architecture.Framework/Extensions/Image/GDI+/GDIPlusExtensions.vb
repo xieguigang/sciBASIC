@@ -72,12 +72,28 @@ Namespace Imaging
             Return stream.ToArray
         End Function
 
-        Private ReadOnly GrCommon As Graphics = Graphics.FromImage(New Bitmap(64, 64))
+        Private ReadOnly gdiShared As Graphics = Graphics.FromImage(New Bitmap(64, 64))
 
-        <Extension> Public Function MeasureString(s As String, Font As Font, Optional XScaleSize As Single = 1, Optional YScaleSize As Single = 1) As Size
-            Call GrCommon.ScaleTransform(XScaleSize, YScaleSize)
-            Dim Size = GrCommon.MeasureString(s, Font)
-            Return New Size(Size.Width, Size.Height)
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <param name="s">String to measure.</param>
+        ''' <param name="Font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="XScaleSize"></param>
+        ''' <param name="YScaleSize"></param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.
+        ''' </returns>
+        <Extension> Public Function MeasureString(s As String,
+                                                  Font As Font,
+                                                  Optional XScaleSize As Single = 1,
+                                                  Optional YScaleSize As Single = 1) As Size
+            SyncLock gdiShared
+                Call gdiShared.ScaleTransform(XScaleSize, YScaleSize)
+                Dim sz As SizeF = gdiShared.MeasureString(s, Font)
+                Return New Size(sz.Width, sz.Height)
+            End SyncLock
         End Function
 
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
