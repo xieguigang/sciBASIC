@@ -1,10 +1,20 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.VectorElements
 
 Module Program
 
     Sub Main()
+
+        Dim html As String = "<font face=""Microsoft YaHei"" size=""5.5""><strong>text</strong><b> &lt;&lt;&lt; <i>value</i></b></font> "
+
+        Dim strings = TextAPI.GetStrings(html)
+
+        Using gdi As GDIPlusDeviceHandle = New Size(1200, 800).CreateGDIDevice
+            Call strings.DrawStrng(New Point(100, 100), gdi)
+            Call gdi.Save("./test_text.png", ImageFormats.Png)
+        End Using
 
         Call New Form1().ShowDialog()
 

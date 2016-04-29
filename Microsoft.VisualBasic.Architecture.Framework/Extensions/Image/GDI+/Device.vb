@@ -2646,28 +2646,16 @@ Namespace Imaging
         Public Sub DrawRectangles(pen As Pen, rects() As RectangleF)
 
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified text string in the specified rectangle with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   layoutRectangle:
-        '     System.Drawing.RectangleF structure that specifies the location of the drawn
-        '     text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
+
+        ''' <summary>
+        ''' Draws the specified text string in the specified rectangle with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
+        ''' text.</param>
         Public Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
             Call Gr_Device.DrawString(s, font, brush, layoutRectangle)
         End Sub
@@ -5113,25 +5101,15 @@ Namespace Imaging
         Public Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
             Throw New NotImplementedException
         End Function
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified by the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.</returns>
         Public Function MeasureString(text As String, font As Font) As SizeF
             Return Gr_Device.MeasureString(text, font)
         End Function

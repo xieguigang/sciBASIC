@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DocumentFormat.HTML
 Imports Microsoft.VisualBasic.Linq
 
@@ -31,6 +32,7 @@ Namespace Drawing2D.VectorElements
 
             Me.Text = text
             Me.Font = font
+            Me.Pen = New SolidBrush(Color.Black)
         End Sub
 
         Sub New(text As DrawingString, rect As Rectangle)
@@ -41,6 +43,20 @@ Namespace Drawing2D.VectorElements
             Return Text
         End Function
 
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.</returns>
+        Public Function MeasureString(gdi As GDIPlusDeviceHandle) As SizeF
+            Return gdi.MeasureString(Text, Font)
+        End Function
+
+        ''' <summary>
+        ''' Draws the specified text string in the specified rectangle with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
         Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle)
             Call gdi.DrawString(Text, Font, Pen, New RectangleF(RECT.X, RECT.Y, RECT.Width, RECT.Height))
         End Sub
@@ -66,8 +82,21 @@ Namespace Drawing2D.VectorElements
             Return models
         End Function
 
-        Public Sub DrawStrng(texts As DrawingString(), loc As Point, gdi As GDIPlusDeviceHandle)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="texts">需要进行绘制的文本的集合</param>
+        ''' <param name="loc">最开始的左上角的位置</param>
+        ''' <param name="gdi"></param>
+        <Extension>
+        Public Sub DrawStrng(texts As DrawingString(), loc As Point, ByRef gdi As GDIPlusDeviceHandle)
+            Dim szs As SizeF() = texts.ToArray(Function(x) x.MeasureString(gdi))
+            Dim maxH As Integer = szs.Select(Function(x) x.Height).Max
+            Dim lowY As Integer = loc.Y + maxH
 
+            For Each s As DrawingString In texts
+
+            Next
         End Sub
     End Module
 End Namespace
