@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace DDM
@@ -45,13 +46,13 @@ Namespace DDM
                 CSS = New CSS
             End If
 
-            Dim backColor As New Microsoft.VisualBasic.ComponentModel.KeyValuePair With {
+            Dim backColor As New KeyValuePair With {
             .Key = "background-color",
             .Value = color
         }
             Dim cssElement = New CSSElement With {
             .Name = "body",
-            .Properties = New List(Of ComponentModel.KeyValuePair)({backColor})
+            .Properties = New List(Of KeyValuePair)({backColor})
         }
             Call CSS.Add(cssElement)
         End Sub
@@ -90,13 +91,12 @@ Namespace DDM
 
     Public Class CSSElement
 
-        Public Property Properties As List(Of Microsoft.VisualBasic.ComponentModel.KeyValuePair)
+        Public Property Properties As List(Of KeyValuePair)
         Public Property Name As String
 
         Public Overrides Function ToString() As String
             Dim pValues As String() = Properties.ToArray(Function(prop) $"{prop.Key}: {prop.Value}")
             Return $"{Name} {"{"} {String.Join("; ", pValues)} {"}"}"
         End Function
-
     End Class
 End Namespace

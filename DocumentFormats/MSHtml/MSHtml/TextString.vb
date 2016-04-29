@@ -77,10 +77,26 @@ Public Module TextAPI
 
                     End Select
                 End If
+
+                str.MoveNext()
+
+                If chars.Count > 0 Then
+                    tokens += New TextString With {
+                        .Font = curFont,
+                        .Text = New String(chars.PopAll)
+                    }
+                End If
             Else
                 chars += c
             End If
         Loop
+
+        If chars.Count > 0 Then
+            tokens += New TextString With {
+                .Font = curFont,
+                .Text = New String(chars.PopAll)
+            }
+        End If
 
         Return tokens
     End Function
@@ -143,7 +159,7 @@ Public Module TextAPI
         Dim chars As New List(Of Char) From {c}
         Dim tag As New HtmlElement
 
-        Do While Not str.EndRead AndAlso str.Current <> " "c
+        Do While Not str.EndRead AndAlso str.Current <> " "c AndAlso str.Current <> ">"c
             chars += +str
         Loop
 
@@ -160,7 +176,9 @@ Public Module TextAPI
             Do While Not str.EndRead AndAlso str.Current <> "="c
                 If str.Current = " "c Then
                     If chars.Count > 0 Then
-                        chars += " "c
+                        Do While Not str.EndRead AndAlso +str <> "="c
+                        Loop
+                        Exit Do   ' 在这里进行解析的是属性的名称，不允许有空格
                     Else
                         Call str.MoveNext()
                     End If
@@ -178,6 +196,7 @@ Public Module TextAPI
                         str.MoveNext()
                     Else ' 这里是一个结束的标志，准备开始下一个token
                         stacked = False
+                        str.MoveNext()
                         Exit Do
                     End If
                 Else
