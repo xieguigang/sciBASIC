@@ -47,8 +47,19 @@ Public Module TextAPI
 
                 If c = "/"c Then  ' 这个是一个结束的标记
                     Dim tag As String = str.__nextEndTag
+
+                    Select Case tag.ToLower
+                        Case "font"
+                            curFont = defaultFont
+                        Case "b", "strong"
+                            bold = False
+                            curFont = curFont.__setFontStyle(bold, italic)
+                        Case "i"
+                            italic = False
+                            curFont = curFont.__setFontStyle(bold, italic)
+                    End Select
                 Else ' 这个是一个html标记的开始
-                    Dim tag As HtmlElement = str.__nextTag
+                    Dim tag As HtmlElement = str.__nextTag(c)
                     Dim tagName As String = tag.Name.ToLower
 
                     Select Case tagName
@@ -56,8 +67,10 @@ Public Module TextAPI
                             curFont = tag.__setFont(bold, italic, defaultFont)
                         Case "strong", "b"
                             bold = True
+                            curFont = curFont.__setFontStyle(bold, italic)
                         Case "i"
                             italic = True
+                            curFont = curFont.__setFontStyle(bold, italic)
                         Case "br"
                             chars += vbLf
                     End Select
@@ -72,6 +85,27 @@ Public Module TextAPI
     Const FontSizeTag As String = "size"
 
     <Extension>
+    Private Function __setFontStyle(font As Font, bold As Boolean, italic As Boolean) As Font
+        Return New Font(font, __getFontStyle(bold, italic))
+    End Function
+
+    Private Function __getFontStyle(bold As Boolean, italic As Boolean) As FontStyle
+        Dim style As FontStyle
+
+        If bold Then
+            style += FontStyle.Bold
+        End If
+        If italic Then
+            style += FontStyle.Italic
+        End If
+        If Not bold AndAlso Not italic Then
+            style = FontStyle.Regular
+        End If
+
+        Return style
+    End Function
+
+    <Extension>
     Private Function __setFont(font As HtmlElement, bold As Boolean, italic As Boolean, [default] As Font) As Font
         Dim name As String = font(FontFaceTag).Value
         Dim size As String = font(FontSizeTag).Value
@@ -83,18 +117,10 @@ Public Module TextAPI
             size = [default].Size
         End If
 
-        Dim style As FontStyle
-        If bold Then
-            style += FontStyle.Bold
-        End If
-        If italic Then
-            style += FontStyle.Italic
-        End If
-        If Not bold AndAlso Not italic Then
-            style = FontStyle.Regular
-        End If
+        Dim style As FontStyle = __getFontStyle(bold, italic)
+        Dim sz As Single = Scripting.CTypeDynamic(Of Single)(size)
 
-        Return New Font(name, Scripting.CTypeDynamic(Of Single)(size), style)
+        Return New Font(name, sz, style)
     End Function
 
     <Extension>
@@ -109,7 +135,7 @@ Public Module TextAPI
     End Function
 
     <Extension>
-    Public Function __nextTag(str As Pointer(Of Char)) As HtmlElement
+    Public Function __nextTag(str As Pointer(Of Char), c As Char) As HtmlElement
 
     End Function
 End Module
