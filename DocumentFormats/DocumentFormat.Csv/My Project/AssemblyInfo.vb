@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DocumentFormat.Csv: Csv file IO and dataset operation wrapper")> 
-<Assembly: AssemblyDescription("DocumentFormat.Csv")> 
-<Assembly: AssemblyCompany("LANS Engineering Workstation")> 
-<Assembly: AssemblyProduct("DocumentFormat.Csv")> 
-<Assembly: AssemblyCopyright("Copyright © LANS Engineering Workstation 2013")> 
+<Assembly: AssemblyTitle("DocumentFormat.Csv: Csv file IO and dataset operation wrapper")>
+<Assembly: AssemblyDescription("DocumentFormat.Csv: Csv file IO and dataset operation wrapper")>
+<Assembly: AssemblyCompany("Microsoft")>
+<Assembly: AssemblyProduct("Dynamics DataFrame")>
+<Assembly: AssemblyCopyright("Copyright © xie.guigang@live.com 2016")>
 <Assembly: AssemblyTrademark("Excel")> 
 
 <Assembly: ComVisible(False)>
