@@ -45,6 +45,13 @@ Public Module TextAPI
             If c = "<"c Then  ' 遇到了一个html标签的起始符号
                 c = +str
 
+                If chars.Count > 0 Then
+                    tokens += New TextString With {
+                        .Font = curFont,
+                        .Text = New String(chars.PopAll)
+                    }
+                End If
+
                 If c = "/"c Then  ' 这个是一个结束的标记
                     Dim tag As String = str.__nextEndTag
 
@@ -79,13 +86,6 @@ Public Module TextAPI
                 End If
 
                 str.MoveNext()
-
-                If chars.Count > 0 Then
-                    tokens += New TextString With {
-                        .Font = curFont,
-                        .Text = New String(chars.PopAll)
-                    }
-                End If
             Else
                 chars += c
             End If
@@ -97,6 +97,11 @@ Public Module TextAPI
                 .Text = New String(chars.PopAll)
             }
         End If
+
+        ' 在这里处理转义
+        For Each x In tokens
+            x.Text = x.Text.Replace("&lt;", "<")
+        Next
 
         Return tokens
     End Function
