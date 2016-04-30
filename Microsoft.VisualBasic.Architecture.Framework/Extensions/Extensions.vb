@@ -843,9 +843,7 @@ Public Module Extensions
             Call p.SetValue(obj, value)
         Else
             Dim lstName As String = String.Join("; ", (From pp In lstProp Select ss = pp.Name).ToArray)
-#If DEBUG Then
-            Call $"Could Not found the target parameter which is named {Name} // {lstName}".__DEBUG_ECHO
-#End If
+            VBDebugger.Warning($"Could Not found the target parameter which is named {Name} // {lstName}")
         End If
 
         Return obj
