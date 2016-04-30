@@ -98,6 +98,7 @@
     <Compile Include="Drawing2D\VectorScript.vb" />
     <Compile Include="Drawing2D\VectorElements\DrawingString.vb" />
     <Compile Include="Drawing2D\VectorElements\LayoutsElement.vb" />
+    <Compile Include="Drawing3D\Model.vb" />
     <Compile Include="Drawing3D\GDIDevice.vb">
       <SubType>UserControl</SubType>
     </Compile>

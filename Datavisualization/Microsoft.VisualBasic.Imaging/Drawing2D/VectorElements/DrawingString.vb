@@ -62,6 +62,24 @@ Namespace Drawing2D.VectorElements
         End Sub
     End Class
 
+    Public Class Text : Inherits VectorObject
+
+        Public Property [Strings] As List(Of DrawingString)
+
+        Sub New(text As IEnumerable(Of DrawingString), rect As Rectangle)
+            Call MyBase.New(rect)
+            Strings = New List(Of DrawingString)(text)
+        End Sub
+
+        Sub New(html As String, rect As Rectangle)
+            Call Me.New(TextAPI.GetStrings(html), rect)
+        End Sub
+
+        Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle)
+
+        End Sub
+    End Class
+
     ''' <summary>
     ''' 基于HTML语法的字符串的绘制描述信息的解析
     ''' </summary>
