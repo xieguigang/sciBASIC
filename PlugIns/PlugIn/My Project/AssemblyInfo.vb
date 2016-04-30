@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' 查看程序集特性的值
 
-<Assembly: AssemblyTitle("PlugIn")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("蓝思生物信息工程师工作站")> 
-<Assembly: AssemblyProduct("PlugIn")> 
-<Assembly: AssemblyCopyright("Copyright © 蓝思生物信息工程师工作站 2013")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("Menu PlugIn for WinForm")>
+<Assembly: AssemblyDescription("Menu PlugIn for WinForm")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("PlugIn")>
+<Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2013")>
+<Assembly: AssemblyTrademark("VisualBasic.WinForm")>
 
 <Assembly: ComVisible(False)>
 

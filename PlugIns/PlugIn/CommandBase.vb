@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Reflection
+Imports System.Xml.Serialization
 
 Public MustInherit Class CommandBase : Inherits Attribute
 
@@ -25,33 +26,33 @@ Public MustInherit Class CommandBase : Inherits Attribute
     End Function
 End Class
 
+Public Enum EntryTypes
+    ''' <summary>
+    ''' This method is the entry point to destroy this plugin command and unload it from the target form.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Dispose
+    ''' <summary>
+    ''' Sometimes you need a initialize method to initialize your plugin.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Initialize
+    ''' <summary>
+    ''' This method is the icon loader entry point
+    ''' </summary>
+    ''' <remarks></remarks>
+    IconLoader
+End Enum
+
 ''' <summary>
 ''' 
 ''' </summary>
-<AttributeUsage(AttributeTargets.Method, allowmultiple:=False, inherited:=True)>
+<AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
 Public Class EntryFlag : Inherits Attribute
 
-    Public Enum EntryTypes
-        ''' <summary>
-        ''' This method is the entry point to destroy this plugin command and unload it from the target form.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Dispose
-        ''' <summary>
-        ''' Sometimes you need a initialize method to initialize your plugin.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Initialize
-        ''' <summary>
-        ''' This method is the icon loader entry point
-        ''' </summary>
-        ''' <remarks></remarks>
-        IconLoader
-    End Enum
+    <XmlAttribute> Public Property EntryType As EntryTypes
 
-    <XmlAttribute> Public Property EntryType As EntryFlag.EntryTypes
-
-    Friend Target As Reflection.MethodInfo
+    Friend Target As MethodInfo
     Friend GetIconInvoke As Func(Of String, Object)
 
     Friend ReadOnly Property GetIcon(Name As String) As System.Drawing.Image
@@ -68,7 +69,7 @@ Public Class EntryFlag : Inherits Attribute
         End Get
     End Property
 
-    Friend Function Initialize(Target As Reflection.MethodInfo) As EntryFlag
+    Friend Function Initialize(Target As MethodInfo) As EntryFlag
         Me.Target = Target
         Return Me
     End Function

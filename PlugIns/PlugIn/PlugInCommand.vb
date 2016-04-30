@@ -1,8 +1,11 @@
-﻿''' <summary>
+﻿Imports System.Reflection
+Imports System.Windows.Forms
+
+''' <summary>
 ''' Function Main(Target As Form) As Object.(应用于目标模块中的一个函数的自定义属性，相对应于菜单中的一个项目)
 ''' </summary>
 ''' <remarks></remarks>
-<AttributeUsage(AttributeTargets.Method, allowmultiple:=False, inherited:=True)>
+<AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
 Public Class PlugInCommand : Inherits CommandBase
 
     ''' <summary>
@@ -13,7 +16,7 @@ Public Class PlugInCommand : Inherits CommandBase
     ''' <remarks></remarks>
     Public Property Path As String = "\"
 
-    Dim Method As Reflection.MethodInfo
+    Dim Method As MethodInfo
 
     Public Overrides Function ToString() As String
         If String.IsNullOrEmpty(Path) OrElse String.Equals("\", Path) Then
@@ -23,11 +26,11 @@ Public Class PlugInCommand : Inherits CommandBase
         End If
     End Function
 
-    Public Function Invoke(Target As System.Windows.Forms.Form) As Object
+    Public Function Invoke(Target As Form) As Object
         Return PlugInEntry.Invoke({Target}, Method)
     End Function
 
-    Friend Function Initialize(Method As Reflection.MethodInfo) As PlugInCommand
+    Friend Function Initialize(Method As MethodInfo) As PlugInCommand
         Me.Method = Method
         Return Me
     End Function

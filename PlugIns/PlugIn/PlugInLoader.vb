@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports System.ComponentModel
+Imports System.Reflection
 
 Public NotInheritable Class PlugInLoader
 
@@ -14,7 +15,7 @@ Public NotInheritable Class PlugInLoader
         Dim PlugInEntry = LoadMainModule(AssemblyPath)  'Get the plugin entry module.(获取插件主模块)
         If PlugInEntry Is Nothing Then Return Nothing
 
-        Dim Initialize As EntryFlag = PlugInEntry.GetEntry(EntryFlag.EntryTypes.Initialize)
+        Dim Initialize As EntryFlag = PlugInEntry.GetEntry(EntryTypes.Initialize)
         Dim Target As System.Windows.Forms.Form = Menu.FindForm
 
         If Not PlugInEntry.ShowOnMenu Then 'When the showonmenu property of this plugin entry is false, then this plugin will not load on the form menu but a initialize method is required.
@@ -29,10 +30,10 @@ Public NotInheritable Class PlugInLoader
             If Not Initialize Is Nothing Then Call PlugIn.PlugInEntry.Invoke(New Object() {Target}, Initialize.Target)
         End If
 
-        Dim IconLoader As EntryFlag = PlugInEntry.GetEntry(EntryFlag.EntryTypes.IconLoader)
+        Dim IconLoader As EntryFlag = PlugInEntry.GetEntry(EntryTypes.IconLoader)
         Dim MainModule = PlugInEntry.MainModule
         Dim PluginCommandType = GetType(PlugInCommand)
-        Dim LQuery = From Method As Reflection.MethodInfo In MainModule.GetMethods
+        Dim LQuery = From Method As MethodInfo In MainModule.GetMethods
                      Let attributes = Method.GetCustomAttributes(PluginCommandType, False)
                      Where attributes.Count = 1
                      Let command = DirectCast(attributes(0), PlugInCommand).Initialize(Method)
@@ -43,7 +44,7 @@ Public NotInheritable Class PlugInLoader
 
         If IconLoader Is Nothing Then
             Dim Instance = GetIconLoader(PlugInEntry.Assembly)
-            Dim Method As Reflection.MethodInfo = Instance.Last
+            Dim Method As MethodInfo = Instance.Last
             Dim Invoke As Func(Of String, Object) = Function(Name As String) Method.Invoke(Instance.First, New Object() {Name})
             IconLoader = New EntryFlag With {.GetIconInvoke = Invoke}
         End If
@@ -52,7 +53,7 @@ Public NotInheritable Class PlugInLoader
         PlugInEntry.IconImage = MenuEntry.Image
 
         For Each Command As PlugInCommand In LQuery.ToArray  '生成子菜单命令
-            Dim Item As ToolStripMenuItem = AddCommand(MenuEntry, (From s As String In Command.Path.Split("\") Where Not String.IsNullOrEmpty(s) Select s).ToArray, Command.Name, p:=0)
+            Dim Item As ToolStripMenuItem = AddCommand(MenuEntry, (From s As String In Command.Path.Split("\"c) Where Not String.IsNullOrEmpty(s) Select s).ToArray, Command.Name, p:=0)
             Item.Image = IconLoader.GetIcon(Command.Icon)
             AddHandler Item.Click, Sub() Command.Invoke(Target)      '关联命令
         Next
@@ -66,7 +67,7 @@ Public NotInheritable Class PlugInLoader
     ''' <param name="Assembly"></param>
     ''' <returns>{Resource Manager Instanc, GetObject MethodInfo}</returns>
     ''' <remarks></remarks>
-    Private Shared Function GetIconLoader(Assembly As Reflection.Assembly) As Object()
+    Private Shared Function GetIconLoader(Assembly As Assembly) As Object()
         Dim LQuery = From Type In Assembly.DefinedTypes Where String.Equals(Type.Name, "Resources") Select Type '
         LQuery = LQuery.ToArray
         If LQuery.Count > 0 Then
@@ -85,10 +86,10 @@ Public NotInheritable Class PlugInLoader
             Return Nothing
         End If
 
-        Dim Assembly As Reflection.Assembly = Reflection.Assembly.LoadFile(FileIO.FileSystem.GetFileInfo(AssemblyPath).FullName)
-        Dim EntryType As System.Type = GetType(PlugInEntry)
+        Dim Assembly As Assembly = Assembly.LoadFile(FileIO.FileSystem.GetFileInfo(AssemblyPath).FullName)
+        Dim EntryType As Type = GetType(PlugInEntry)
         Dim EntryFlag = GetType(EntryFlag)
-        Dim FindModule = From [Module] As Reflection.TypeInfo In Assembly.DefinedTypes
+        Dim FindModule = From [Module] As Type In Assembly.DefinedTypes
                          Let attributes As Object() = [Module].GetCustomAttributes(EntryType, False)
                          Where attributes.Count = 1
                          Select DirectCast(attributes(0), PlugInEntry).Initialize([Module]) '
@@ -97,7 +98,7 @@ Public NotInheritable Class PlugInLoader
             Return Nothing
         Else
             Dim MainModule = FindModule.First
-            Dim EntryFlags = From Method As Reflection.MethodInfo In MainModule.MainModule.GetMethods
+            Dim EntryFlags = From Method As MethodInfo In MainModule.MainModule.GetMethods
                              Let attributes = Method.GetCustomAttributes(EntryFlag, False)
                              Where 1 = attributes.Count
                              Select DirectCast(attributes(0), EntryFlag).Initialize(Target:=Method) '
@@ -117,10 +118,10 @@ Public NotInheritable Class PlugInLoader
     ''' <param name="p"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Shared Function AddCommand(MenuRoot As System.Windows.Forms.ToolStripMenuItem, Path As String(), Name As String, p As Integer) As System.Windows.Forms.ToolStripMenuItem
+    Public Shared Function AddCommand(MenuRoot As ToolStripMenuItem, Path As String(), Name As String, p As Integer) As ToolStripMenuItem
         Dim NewItem As System.Func(Of String, ToolStripMenuItem) =
             Function(sName As String) As ToolStripMenuItem
-                Dim MenuItem = New System.Windows.Forms.ToolStripMenuItem() With {.Text = sName}
+                Dim MenuItem = New ToolStripMenuItem() With {.Text = sName}
                 Call MenuRoot.DropDownItems.Add(MenuItem)
                 Return MenuItem
             End Function

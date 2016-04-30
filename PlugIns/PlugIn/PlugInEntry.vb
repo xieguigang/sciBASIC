@@ -1,22 +1,24 @@
 ﻿Imports System.Windows.Forms
 Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Reflection
 
 ''' <summary>
 ''' Module PlugInsMain.(目标模块，在本模块之中包含有一系列插件命令信息，本对象定义了插件在菜单之上的根菜单项目)
 ''' </summary>
 ''' <remarks></remarks>
-<AttributeUsage(AttributeTargets.Class, allowmultiple:=False, inherited:=True)>
+<AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
 Public Class PlugInEntry : Inherits CommandBase
 
-    Protected Friend IconImage As System.Drawing.Image
-    Protected Friend MainModule As Reflection.TypeInfo
+    Protected Friend IconImage As Image
+    Protected Friend MainModule As Type
     Protected Friend EntryList As EntryFlag()
     Protected Friend AssemblyPath As String
-    Protected Friend Assembly As Reflection.Assembly
+    Protected Friend Assembly As Assembly
 
     Public Property ShowOnMenu As Boolean = True
 
-    Friend Function GetEntry(EntryType As EntryFlag.EntryTypes) As EntryFlag
+    Friend Function GetEntry(EntryType As EntryTypes) As EntryFlag
         Dim LQuery = From Entry As EntryFlag In EntryList
                      Where Entry.EntryType = EntryType
                      Select Entry '
@@ -24,7 +26,7 @@ Public Class PlugInEntry : Inherits CommandBase
         If LQuery.Count = 0 Then Return Nothing Else Return LQuery.First
     End Function
 
-    Friend Function Initialize([Module] As Reflection.TypeInfo) As PlugInEntry
+    Friend Function Initialize([Module] As Type) As PlugInEntry
         MainModule = [Module]
         Return Me
     End Function
@@ -56,7 +58,7 @@ Public Class PlugInEntry : Inherits CommandBase
     ''' <param name="Method">Target method reflection information.</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Shared Function Invoke(Parameters As Object(), Method As Reflection.MethodInfo) As Object
+    Public Shared Function Invoke(Parameters As Object(), Method As MethodInfo) As Object
         Dim NumberOfParameters = Method.GetParameters().Length
         Dim CallParameters() As Object
 
@@ -80,8 +82,8 @@ Public Class PlugInEntry : Inherits CommandBase
     ''' <param name="Target"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Shared Function GetControls(Of T As Component)(Target As System.Windows.Forms.Form) As T()
-        Dim LQuery = From ctl As System.Windows.Forms.Control
+    Public Shared Function GetControls(Of T As Component)(Target As Form) As T()
+        Dim LQuery = From ctl As Control
                      In Target.Controls
                      Where TypeOf ctl Is T
                      Let component As Component = ctl
