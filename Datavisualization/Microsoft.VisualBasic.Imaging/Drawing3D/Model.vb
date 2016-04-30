@@ -150,8 +150,31 @@ Namespace Drawing3D
 
     Public Class Cube : Inherits Model
 
-        Sub New()
+        Sub New(Optional colors As Color() = Nothing)
+            ' Create the cube vertices.
+            _vertices = New Point3D() {
+                         New Point3D(-1, 1, -1),
+                         New Point3D(1, 1, -1),
+                         New Point3D(1, -1, -1),
+                         New Point3D(-1, -1, -1),
+                         New Point3D(-1, 1, 1),
+                         New Point3D(1, 1, 1),
+                         New Point3D(1, -1, 1),
+                         New Point3D(-1, -1, 1)}
 
+            ' Create an array representing the 6 faces of a cube. Each face is composed by indices to the vertex array
+            ' above.
+            _faces = New Integer(,) {{0, 1, 2, 3}, {1, 5, 6, 2}, {5, 4, 7, 6}, {4, 0, 3, 7}, {0, 4, 5, 1}, {3, 2, 6, 7}}
+
+            ' Define the colors of each face.
+            If colors.IsNullOrEmpty Then
+                colors = New Color() {Color.BlueViolet, Color.Cyan, Color.Green, Color.Yellow, Color.Violet, Color.LightSkyBlue}
+            End If
+
+            ' Create the brushes to draw each face. Brushes are used to draw filled polygons.
+            For i = 0 To 5
+                _brushes(i) = New SolidBrush(colors(i))
+            Next
         End Sub
 
         Public Overrides Sub Draw(gdi As Graphics)
