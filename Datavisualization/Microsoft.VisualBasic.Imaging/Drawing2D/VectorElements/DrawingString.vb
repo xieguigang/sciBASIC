@@ -58,7 +58,15 @@ Namespace Drawing2D.VectorElements
         ''' System.Drawing.Brush and System.Drawing.Font objects.
         ''' </summary>
         Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle)
-            Call gdi.DrawString(Text, Font, Pen, RECT.Location)
+            Call Draw(gdi, RECT)
+        End Sub
+
+        ''' <summary>
+        ''' Draws the specified text string in the specified rectangle with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
+        Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle, loci As Rectangle)
+            Call gdi.DrawString(Text, Font, Pen, loci)
         End Sub
     End Class
 
@@ -75,9 +83,26 @@ Namespace Drawing2D.VectorElements
             Call Me.New(TextAPI.GetStrings(html), rect)
         End Sub
 
-        Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle)
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.(最大的Rectangle)
+        ''' </summary>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.</returns>
+        Public Function MeasureString(gdi As GDIPlusDeviceHandle) As SizeF
+            Dim szs As SizeF() = Strings.ToArray(Function(x) x.MeasureString(gdi))
+            Dim width As Integer = szs.Sum(Function(x) x.Width)
+            Dim maxh As Integer = szs.Max(Function(x) x.Height)
+            Return New SizeF(width, maxh)
+        End Function
 
+        Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle, loci As Rectangle)
+            Call Strings.ToArray.DrawStrng(loci.Location, gdi)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return String.Join("", Strings.ToArray(Function(x) x.Text))
+        End Function
     End Class
 
     ''' <summary>
@@ -93,11 +118,15 @@ Namespace Drawing2D.VectorElements
         ''' </summary>
         ''' <param name="html">这里只是一个很小的html的片段，仅仅用来描述所需要进行绘制的字符串的gdi+属性</param>
         ''' <returns></returns>
-        Public Function GetStrings(html As String) As DrawingString()
-            Dim texts As TextString() = DocumentFormat.HTML.TextAPI.TryParse(html)
+        Public Function GetStrings(html As String, Optional defaulFont As Font = Nothing) As DrawingString()
+            Dim texts As TextString() = TryParse(html, defaulFont)
             Dim models As DrawingString() =
                 texts.ToArray(Function(x) New DrawingString(x))
             Return models
+        End Function
+
+        Public Function GetText(html As String, Optional defaulFont As Font = Nothing) As Text
+            Return New Text(GetStrings(html, defaulFont), Nothing)
         End Function
 
         ''' <summary>

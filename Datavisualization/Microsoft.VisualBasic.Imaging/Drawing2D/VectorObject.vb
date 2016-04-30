@@ -3,7 +3,16 @@ Imports Microsoft.VisualBasic.Serialization
 
 Public MustInherit Class VectorObject
 
-    Public ReadOnly Property RECT As Rectangle
+    Dim __rectangle As Rectangle
+
+    Public Property RECT As Rectangle
+        Get
+            Return __rectangle
+        End Get
+        Protected Set(value As Rectangle)
+            __rectangle = value
+        End Set
+    End Property
 
     Sub New(locat As Point, size As Size)
         RECT = New Rectangle(locat, size)
@@ -13,7 +22,11 @@ Public MustInherit Class VectorObject
         Me.RECT = rect
     End Sub
 
-    Public MustOverride Sub Draw(gdi As GDIPlusDeviceHandle)
+    Public Overridable Sub Draw(gdi As GDIPlusDeviceHandle)
+        Call Draw(gdi, RECT)
+    End Sub
+
+    Public MustOverride Sub Draw(gdi As GDIPlusDeviceHandle, loci As Rectangle)
 
     Public Overrides Function ToString() As String
         Return RECT.GetJson
