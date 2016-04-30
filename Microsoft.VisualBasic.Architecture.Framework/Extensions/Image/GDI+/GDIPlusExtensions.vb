@@ -3,11 +3,12 @@ Imports System.Drawing
 Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports System.Reflection
 Imports System.IO
 Imports System.Drawing.Imaging
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
@@ -20,6 +21,29 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
+
+#If NET_40 = 0 Then
+
+        Private ReadOnly _AllDotNETPrefixColors As Color() =
+            LinqAPI.Exec(Of Color) <=
+            From Color As Color In (From p As PropertyInfo  ' Gets all of the known name color from the Color object its shared property.
+                                    In GetType(Color).GetProperties(BindingFlags.Public Or BindingFlags.Static)
+                                    Where p.PropertyType = GetType(Color)
+                                    Let ColorValue As Color = DirectCast(p.GetValue(Nothing), Color)
+                                    Select ColorValue)
+            Where Color <> Color.White
+            Select Color
+
+        ''' <summary>
+        ''' Gets all of the known name color from the Color object its shared property.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllDotNetPrefixColors As Color()
+            Get
+                Return _AllDotNETPrefixColors.Randomize
+            End Get
+        End Property
+#End If
 
         Public Function Distance(a As Point, b As Point) As Double
             Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)

@@ -25,6 +25,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.Language
 
 #If FRAMEWORD_CORE Then
 
@@ -720,24 +721,6 @@ Public Module Extensions
     Public ReadOnly Property GPL3 As String
         Get
             Return My.Resources.gpl
-        End Get
-    End Property
-#End If
-
-#If NET_40 = 0 Then
-
-    Private ReadOnly _AllDotNETPrefixColors As Color() =
-        (From Color As Color In (From p As PropertyInfo  'Gets all of the known name color from the Color object its shared property.
-                                 In GetType(Color).GetProperties(System.Reflection.BindingFlags.Public Or System.Reflection.BindingFlags.Static)
-                                 Where p.PropertyType = GetType(Color)
-                                 Let ColorValue As Color = DirectCast(p.GetValue(Nothing), Color)
-                                 Select ColorValue).ToArray
-         Where Color <> Color.White
-         Select Color).ToArray
-
-    Public ReadOnly Property AllDotNetPrefixColors As Color()
-        Get
-            Return _AllDotNETPrefixColors.Randomize
         End Get
     End Property
 #End If
