@@ -3,14 +3,14 @@
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File" Collapsed="true">
     <Position X="3" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>DocumentStream\Csv.vb</FileName>
+      <FileName>DocumentStream\File.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.DataFrame">
     <Position X="0.5" Y="12" Width="6.75" />
     <TypeIdentifier>
-      <HashCode>RgCygAAgMCgCJmAFAABCBAckAAJEAkQ5YBVAAECApEA=</HashCode>
+      <HashCode>RgCygAAgMCgCJmAFAgBCBAckAAJEAkQ5YBVAAECApEA=</HashCode>
       <FileName>DocumentStream\DataFrame.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -23,14 +23,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.FormCustom" Collapsed="true">
-    <Position X="33.25" Y="1.5" Width="1.5" />
+    <Position X="36.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>JAAAAAAgECAAAAAAAACAEAgCAAgQYBAAAAwAIAEAAAg=</HashCode>
       <FileName>DocumentStream\Wrapper\FormCustom.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.ExcelReader" Collapsed="true">
-    <Position X="36.75" Y="0.5" Width="1.5" />
+    <Position X="31.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAACAEAAAAAAAAgAACAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Excel\ExcelReader.vb</FileName>
@@ -53,7 +53,7 @@
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.MetaAttribute">
     <Position X="11.75" Y="4.75" Width="4.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEBAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAABAAEBAAAAAQAAAAABAAAAAEAAAAAAAA=</HashCode>
       <FileName>StorageProvider\ComponntModels\AttrBridges.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -75,21 +75,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.SchemaProvider" Collapsed="true">
-    <Position X="33.25" Y="3.5" Width="1.5" />
+    <Position X="35" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAgQAElAACAQAFAKAAQEAABAAACgCQSIAAAAgAAgA=</HashCode>
       <FileName>StorageProvider\ComponntModels\SchemaProvider.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Ignored" Collapsed="true">
-    <Position X="35" Y="1.5" Width="1.5" />
+    <Position X="38.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\Attributes\ColumnAttributes.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.MetaAttribute" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="31.5" Y="2.5" Width="1.5" />
+    <Position X="33.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEBAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb</FileName>
@@ -97,7 +97,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.CollectionAttribute" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="9" Width="5.5" />
+    <Position X="8.25" Y="10" Width="5.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAAAAEBAAAAAAAEAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\Attributes\Collection.vb</FileName>
@@ -105,7 +105,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ColumnAttribute" Collapsed="true">
-    <Position X="10.25" Y="7.5" Width="1.5" />
+    <Position X="10.25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>StorageProvider\Reflection\Attributes\Column.vb</FileName>
     </TypeIdentifier>
@@ -129,14 +129,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.RowObject" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="36.75" Y="2.5" Width="1.5" />
+    <Position X="31.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>DocumentStream\RowObject.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.My.MySettings" Collapsed="true">
-    <Position X="33.25" Y="2.5" Width="1.5" />
+    <Position X="35" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
@@ -159,72 +159,110 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.DynamicObjectLoader" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="35" Y="0.5" Width="1.5" />
+    <Position X="36.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>DACQAAAgsCgGABAECFAIBIYECAJGIgUQIBQkgAAAJEE=</HashCode>
+      <HashCode>DACQAAAgsCgGABAECFAIBIYkCAJGIgUQIBQkgAAAJEE=</HashCode>
       <FileName>StorageProvider\ComponntModels\DynamicObjectLoader.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.RowBuilder" Collapsed="true">
-    <Position X="35" Y="2.5" Width="1.5" />
+    <Position X="36.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEACAQAAAAUAAAAUAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AEACAQAAEAUAAAAUAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>StorageProvider\ComponntModels\RowBuilder.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.RowWriter" Collapsed="true">
-    <Position X="31.5" Y="3.5" Width="1.5" />
+    <Position X="33.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAQAAAAEAAAAAAAAAAAAAAAAAIAAAAgAAAA=</HashCode>
+      <HashCode>AAAAACABEgQAAACEAAAAAQAAgABAAAAAAIAAAAgAAAA=</HashCode>
       <FileName>StorageProvider\ComponntModels\RowWriter.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq.DataStream" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="33.25" Y="0.5" Width="1.5" />
+    <Position X="35" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQCIBAAIAAAAAAAAAQAAAAAAAAAAAIAEAAAAAAAAA=</HashCode>
+      <HashCode>AEAQCABAAKAAAAAAAAAQAAAAAAAAAAgIAAAAAgAAIAA=</HashCode>
       <FileName>Linq\DataStream.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq.LinqWhere(Of T)" Collapsed="true">
-    <Position X="36.75" Y="1.5" Width="1.5" />
+    <Position X="31.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIEJAABAAAAAgCAEAAgAIAAgIAAAAAAAAICACAABQEA=</HashCode>
       <FileName>Linq\LinqWhere.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq.ExprToken" Collapsed="true">
-    <Position X="31.5" Y="1.5" Width="1.5" />
+    <Position X="33.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAQAAAAAEAABAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Linq\LinqWhere.vb</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.EntityObject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAQAAAAAA=</HashCode>
+      <FileName>DocumentStream\EntityObject.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.DataSet" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAQAAAAAA=</HashCode>
+      <FileName>DocumentStream\EntityObject.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.NetStream.File" Collapsed="true">
+    <Position X="35" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentStream\NetStream\File.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.NetStream.RowObject" Collapsed="true">
+    <Position X="38.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentStream\NetStream\RowObject.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq.WriteStream(Of T)" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="36.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAEAAAAAAAAAAkAAAAAAAACAgBIgAA=</HashCode>
+      <FileName>Linq\WriteStream.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
   <Interface Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.IAttributeComponent" Collapsed="true">
-    <Position X="31.5" Y="7" Width="1.5" />
+    <Position X="31.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\Attributes\ColumnAttributes.vb</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.ISchema" Collapsed="true">
-    <Position X="33.25" Y="7" Width="1.5" />
+    <Position X="33.25" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\ComponntModels\RowBuilder.vb</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ProviderIds" Collapsed="true">
-    <Position X="31.5" Y="8" Width="1.5" />
+    <Position X="31.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAABABAAAAAEAAAIAAAAAEAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\Attributes\ColumnAttributes.vb</FileName>
     </TypeIdentifier>
   </Enum>
   <Delegate Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq.GetOrdinal" Collapsed="true">
-    <Position X="31.5" Y="9" Width="1.5" />
+    <Position X="31.5" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Linq\DataStream.vb</FileName>
@@ -245,43 +283,78 @@
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.Extensions" Collapsed="true">
-    <Position X="35" Y="4.75" Width="1.5" />
+    <Position X="36.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAgAQgAAABAAAAAQAIAAAAAQAAABAAAAAgAAAAA=</HashCode>
+      <HashCode>AgAACAgAQgAAABAAAAAQAAABAAAQAAABAQAAAAAAAAA=</HashCode>
       <FileName>Extensions\Extensions.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector" Collapsed="true">
-    <Position X="33.25" Y="5.75" Width="1.5" />
+    <Position X="35" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAgIAAAAAAAAAAAIAAAAACIAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\StorageProviders\Reflection.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.MetaAttributeParser" Collapsed="true">
-    <Position X="36.75" Y="4.75" Width="1.5" />
+    <Position X="31.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAQAQAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StorageProvider\Reflection\StorageProviders\MetaAttributes.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.TypeSchemaProvider" Collapsed="true">
-    <Position X="36.75" Y="5.75" Width="1.5" />
+    <Position X="35" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAgAACAAAEAIAAAAAAAAAAIABAABIAAAAAAAI=</HashCode>
       <FileName>StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.My.Resources.Resources" Collapsed="true">
-    <Position X="35" Y="5.75" Width="1.5" />
+    <Position X="36.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAABAAAgIA=</HashCode>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.My.MySettingsProperty" Collapsed="true">
-    <Position X="31.5" Y="5.75" Width="1.5" />
+    <Position X="33.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.HTMLWriter" Collapsed="true">
+    <Position X="38.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAgAAAAAAAAAAABABAAAAAAAAA=</HashCode>
+      <FileName>DocumentStream\HTMLWriter.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.StreamIO" Collapsed="true">
+    <Position X="31.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>DocumentStream\StreamIO.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Tokenizer" Collapsed="true">
+    <Position X="33.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>DocumentStream\Tokenizer.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.NetStream.StreamHelper" Collapsed="true">
+    <Position X="38.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentStream\NetStream\StreamHelper.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.DocumentFormat.Csv.DataSetHandler" Collapsed="true">
+    <Position X="35" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Extensions\DataSetHandler.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Font Name="Segoe UI" Size="9" />

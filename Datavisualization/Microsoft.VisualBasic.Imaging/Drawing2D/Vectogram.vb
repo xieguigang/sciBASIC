@@ -3,6 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.VectorElements
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vectors
 
 Namespace Drawing2D
 

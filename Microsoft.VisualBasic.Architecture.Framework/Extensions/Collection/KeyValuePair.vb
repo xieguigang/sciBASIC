@@ -14,6 +14,12 @@ Public Module KeyValuePairExtensions
     Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of T)
         Dim hash As Dictionary(Of T) = New Dictionary(Of T)
         Dim i As Integer = 0
+
+        If source Is Nothing Then
+            Call VBDebugger.Warning("Source is nothing, returns empty dictionary table!")
+            Return hash
+        End If
+
         Try
             For Each item As T In source
                 Call hash.Add(item.Identifier, item)
