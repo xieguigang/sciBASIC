@@ -196,7 +196,12 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function __sysTEMP() As String
-        Dim DIR As String = Environment.GetEnvironmentVariable("TMP")
+        Dim DIR As String = Environment.GetEnvironmentVariable("TMP") ' Linux系统可能没有这个东西
+
+        If String.IsNullOrEmpty(DIR) Then
+            DIR = IO.Path.GetTempPath
+        End If
+
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
         Catch ex As Exception

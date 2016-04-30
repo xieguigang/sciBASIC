@@ -128,7 +128,7 @@ Public Module ProgramPathSearchTool
             Call ex.PrintException
             Call App.LogException(ex, caller & " -> " & MethodBase.GetCurrentMethod.GetFullName)
 
-            Return parent
+            Return parent.Replace("\", "/")
         Else
             Return FileIO.FileSystem.GetFileInfo(path).FullName
         End If
