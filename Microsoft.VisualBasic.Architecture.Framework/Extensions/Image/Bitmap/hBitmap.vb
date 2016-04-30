@@ -32,6 +32,10 @@ Namespace Imaging
         Public ReadOnly Property Height As Integer
         Public ReadOnly Property Size As Size
 
+        ''' <summary>
+        ''' Gets a copy of the original raw image value that which constructed this bitmap object class
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetImage() As Bitmap
             Return DirectCast(__source.Clone, Bitmap)
         End Function
@@ -78,6 +82,11 @@ Namespace Imaging
             __innerRaw(i + 0) = color.B
         End Sub
 
+        ''' <summary>
+        ''' 这个函数会自动复制原始图片数据里面的东西的
+        ''' </summary>
+        ''' <param name="res"></param>
+        ''' <returns></returns>
         Public Shared Function FromImage(res As Image) As hBitmap
             Return hBitmap.FromBitmap(New Bitmap(res))
         End Function
