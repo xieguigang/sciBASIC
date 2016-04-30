@@ -252,6 +252,10 @@ Namespace SoftwareToolkits
             Return New Resources(Nothing, Assembly.GetExecutingAssembly)
         End Function
 
+        Public Shared Function DirectLoadFrom(assm As Assembly) As Resources
+            Return New Resources(Nothing, assm)
+        End Function
+
         ''' <summary>
         ''' Returns the cached ResourceManager instance used by this class.
         ''' </summary>

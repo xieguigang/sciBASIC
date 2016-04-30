@@ -170,6 +170,11 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Return list
     End Operator
 
+    Public Overloads Shared Operator -(list As List(Of T), all As Func(Of T, Boolean)) As List(Of T)
+        Call list.RemoveAll(Function(x) all(x))
+        Return list
+    End Operator
+
     Public Shared Operator -(list As List(Of T), index As Integer) As List(Of T)
         Call list.RemoveAt(index)
         Return list
