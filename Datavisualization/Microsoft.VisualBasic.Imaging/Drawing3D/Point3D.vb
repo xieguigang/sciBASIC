@@ -59,7 +59,7 @@ Namespace Drawing3D
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
 
-        Public Function Project(viewWidth, viewHeight, fov, viewDistance)
+        Public Function Project(viewWidth As Integer, viewHeight As Integer, fov As Integer, viewDistance As Integer)
             Dim factor As Double, Xn As Double, Yn As Double
             factor = fov / (viewDistance + Me.Z)
             Xn = Me.X * factor + viewWidth / 2
