@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.VectorElements
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vectors
 
 Module Program
 
