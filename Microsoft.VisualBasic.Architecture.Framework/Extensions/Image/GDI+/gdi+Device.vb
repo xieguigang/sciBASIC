@@ -26,43 +26,47 @@ Namespace Imaging
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property Gr_Device As Graphics
-        ''' <summary>
-        ''' GDI+ device handle memory
-        ''' </summary>
-        ''' <remarks></remarks>
-        Friend __BitmapResources As Image
 
         ''' <summary>
         ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property ImageResource As Image
+        Public Property ImageResource As Image
             Get
-                Return __BitmapResources
+                Return __innerImage
             End Get
+            Protected Set(value As Image)
+                __innerImage = value
+                If Not value Is Nothing Then
+                    _Size = value.Size
+                    _Center = New Point(Size.Width / 2, Size.Height / 2)
+                Else
+                    _Size = Nothing
+                    _Center = Nothing
+                End If
+            End Set
         End Property
+
+        Dim __innerImage As Image
 
         Public ReadOnly Property Width As Integer
             Get
-                Return __BitmapResources.Width
+                Return Size.Width
             End Get
         End Property
 
         Public ReadOnly Property Height As Integer
             Get
-                Return __BitmapResources.Height
+                Return Size.Height
             End Get
         End Property
 
         ''' <summary>
-        ''' 图像的大小
+        ''' Gets the width and height, in pixels, of this image.(图像的大小)
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A System.Drawing.Size structure that represents the width and height, in pixels,
+        ''' of this image.</returns>
         Public ReadOnly Property Size As Size
-            Get
-                Return __BitmapResources.Size
-            End Get
-        End Property
 
         ''' <summary>
         ''' 在图象上面的中心的位置点
@@ -102,11 +106,11 @@ Namespace Imaging
 
         Private Sub __save(path As String, format As ImageFormat)
             Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(path))
-            Call __BitmapResources.Save(path, format)
+            Call ImageResource.Save(path, format)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return __BitmapResources.Size.ToString
+            Return ImageResource.Size.ToString
         End Function
 
         ''' <summary>
@@ -120,33 +124,30 @@ Namespace Imaging
         End Function
 
         Public Shared Narrowing Operator CType(obj As GDIPlusDeviceHandle) As Image
-            Return obj.__BitmapResources
+            Return obj.ImageResource
         End Operator
 
         Public Shared Widening Operator CType(obj As Image) As GDIPlusDeviceHandle
             Dim Gr As Graphics = Graphics.FromImage(obj)
             Return New GDIPlusDeviceHandle With {
-            .__BitmapResources = obj,
-            ._Gr_Device = Gr,
-            ._Center = New Point(CInt(obj.Width / 2), CInt(obj.Height / 2))
-        }
+                .ImageResource = obj,
+                ._Gr_Device = Gr
+            }
         End Operator
 
         Public Shared Widening Operator CType(obj As Bitmap) As GDIPlusDeviceHandle
             Dim Gr As Graphics = Graphics.FromImage(obj)
             Return New GDIPlusDeviceHandle With {
-            .__BitmapResources = obj,
-            ._Gr_Device = Gr,
-            ._Center = New Point(CInt(obj.Width / 2), CInt(obj.Height / 2))
-        }
+                .ImageResource = obj,
+                ._Gr_Device = Gr
+            }
         End Operator
 
         Friend Shared Function CreateObject(g As Graphics, res As Image) As GDIPlusDeviceHandle
             Return New GDIPlusDeviceHandle With {
-            .__BitmapResources = res,
-            ._Gr_Device = g,
-            ._Center = New Point(CInt(res.Width / 2), CInt(res.Height / 2))
-        }
+                .ImageResource = res,
+                ._Gr_Device = g
+            }
         End Function
 
         ''' <summary>
@@ -5299,6 +5300,5 @@ Namespace Imaging
         End Function
 
 #End Region
-
     End Class
 End Namespace
