@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DocumentFormat.HTML
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Drawing2D.VectorElements
+Namespace Drawing2D.Vectors
 
     Public Class DrawingString : Inherits VectorObject
 
@@ -97,7 +97,11 @@ Namespace Drawing2D.VectorElements
         End Function
 
         Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle, loci As Rectangle)
-            Call Strings.ToArray.DrawStrng(loci.Location, gdi)
+            Call Draw(gdi, loci.Location)
+        End Sub
+
+        Public Overloads Sub Draw(gdi As GDIPlusDeviceHandle, loci As Point)
+            Call Strings.ToArray.DrawStrng(loci, gdi)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -118,15 +122,37 @@ Namespace Drawing2D.VectorElements
         ''' </summary>
         ''' <param name="html">这里只是一个很小的html的片段，仅仅用来描述所需要进行绘制的字符串的gdi+属性</param>
         ''' <returns></returns>
-        Public Function GetStrings(html As String, Optional defaulFont As Font = Nothing) As DrawingString()
+        Public Function GetStrings(html As String,
+                                   Optional defaulFont As Font = Nothing,
+                                   Optional defaultColor As Color = Nothing) As DrawingString()
             Dim texts As TextString() = TryParse(html, defaulFont)
+
+            If defaultColor.IsEmpty Then
+                defaultColor = Color.Black
+            End If
+
+            Dim parserHelper As New __parserHelper With {
+                .defaultColor = defaultColor
+            }
             Dim models As DrawingString() =
-                texts.ToArray(Function(x) New DrawingString(x))
+                texts.ToArray(AddressOf parserHelper.GetString)
             Return models
         End Function
 
-        Public Function GetText(html As String, Optional defaulFont As Font = Nothing) As Text
-            Return New Text(GetStrings(html, defaulFont), Nothing)
+        Private Structure __parserHelper
+            Dim defaultColor As Color
+
+            Public Function GetString(x As TextString) As DrawingString
+                Return New DrawingString(x) With {
+                    .Pen = New SolidBrush(defaultColor)
+                }
+            End Function
+        End Structure
+
+        Public Function GetText(html As String,
+                                Optional defaulFont As Font = Nothing,
+                                Optional defaultColor As Color = Nothing) As Text
+            Return New Text(GetStrings(html, defaulFont, defaultColor), Nothing)
         End Function
 
         ''' <summary>
