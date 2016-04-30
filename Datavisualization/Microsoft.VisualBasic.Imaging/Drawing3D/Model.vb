@@ -8,14 +8,9 @@ Namespace Drawing3D
     Public MustInherit Class Model : Inherits ModelData
 
         ''' <summary>
-        ''' 表面的颜色
+        ''' The <see cref="Point3D"/> data vector array length
         ''' </summary>
-        Protected _colors(6) As Color
-        ''' <summary>
-        ''' 颜色刷子的缓存
-        ''' </summary>
-        Protected _brushes(6) As Brush
-
+        ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             Get
                 Return _vertices.Length
@@ -83,6 +78,8 @@ Namespace Drawing3D
                     order(iMax) = tmp
                 End If
             Next
+
+            Return New ModelView(t, _faces, _brushes, order)
         End Function
     End Class
 
@@ -94,8 +91,28 @@ Namespace Drawing3D
         ''' </summary>
         Dim order(6) As Integer
 
-        Public Sub UpdateGraphics(gdi As Graphics)
+        Sub New(vertices As Point3D(), faces As Integer(,), brushes As Brush(), orders As Integer())
+            Call MyBase.New(vertices, faces, brushes)
+            order = orders
+        End Sub
 
+        ''' <summary>
+        ''' Draw the faces using the PAINTERS ALGORITHM (distant faces first, closer faces last).
+        ''' </summary>
+        ''' <param name="gdi"></param>
+        Public Sub UpdateGraphics(gdi As Graphics)
+            Dim points() As Point
+
+            For Each index As Integer In order
+
+                points = New Point() {
+                    New Point(CInt(_vertices(_faces(index, 0)).X), CInt(_vertices(_faces(index, 0)).Y)),
+                    New Point(CInt(_vertices(_faces(index, 1)).X), CInt(_vertices(_faces(index, 1)).Y)),
+                    New Point(CInt(_vertices(_faces(index, 2)).X), CInt(_vertices(_faces(index, 2)).Y)),
+                    New Point(CInt(_vertices(_faces(index, 3)).X), CInt(_vertices(_faces(index, 3)).Y))
+                }
+                gdi.FillPolygon(_brushes(index), points)
+            Next
         End Sub
     End Class
 
@@ -109,6 +126,19 @@ Namespace Drawing3D
         ''' 表面
         ''' </summary>
         Protected _faces(6, 4) As Integer
+        ''' <summary>
+        ''' 颜色刷子的缓存
+        ''' </summary>
+        Protected _brushes(6) As Brush
+
+        Sub New()
+        End Sub
+
+        Sub New(vertices As Point3D(), faces As Integer(,), brushes As Brush())
+            _vertices = vertices
+            _faces = faces
+            _brushes = brushes
+        End Sub
     End Class
 
     Public Enum Aixs As Byte
@@ -119,6 +149,10 @@ Namespace Drawing3D
     End Enum
 
     Public Class Cube : Inherits Model
+
+        Sub New()
+
+        End Sub
 
         Public Overrides Sub Draw(gdi As Graphics)
 
