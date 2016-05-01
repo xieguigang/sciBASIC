@@ -22,29 +22,6 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
 
-#If NET_40 = 0 Then
-
-        Private ReadOnly _AllDotNETPrefixColors As Color() =
-            LinqAPI.Exec(Of Color) <=
-            From Color As Color In (From p As PropertyInfo  ' Gets all of the known name color from the Color object its shared property.
-                                    In GetType(Color).GetProperties(BindingFlags.Public Or BindingFlags.Static)
-                                    Where p.PropertyType = GetType(Color)
-                                    Let ColorValue As Color = DirectCast(p.GetValue(Nothing), Color)
-                                    Select ColorValue)
-            Where Color <> Color.White
-            Select Color
-
-        ''' <summary>
-        ''' Gets all of the known name color from the Color object its shared property.
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property AllDotNetPrefixColors As Color()
-            Get
-                Return _AllDotNETPrefixColors.Randomize
-            End Get
-        End Property
-#End If
-
         Public Function Distance(a As Point, b As Point) As Double
             Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
@@ -109,8 +86,7 @@ Namespace Imaging
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.
         ''' </returns>
-        <Extension> Public Function MeasureString(s As String,
-                                                  Font As Font,
+        <Extension> Public Function MeasureString(s As String, Font As Font,
                                                   Optional XScaleSize As Single = 1,
                                                   Optional YScaleSize As Single = 1) As Size
             SyncLock gdiShared
@@ -357,29 +333,6 @@ Namespace Imaging
             Return DirectCast(res.Clone, Image)
         End Function
 
-        Const RGB_EXPRESSION As String = "\d+,\d+,\d+"
-
-        <ExportAPI("Get.Color")>
-        <Extension> Public Function ToColor(str As String) As Color
-            Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
-            If String.IsNullOrEmpty(s) Then
-                Return Color.FromName(str)
-            Else
-                Dim Tokens = s.Split(","c)
-                Dim R As Integer = CInt(Val(Tokens(0))), G As Integer = CInt(Val(Tokens(1))), B As Integer = CInt(Val(Tokens(2)))
-                Return Color.FromArgb(R, G, B)
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Determine that the target color value is a empty variable.(判断目标颜色值是否为空值)
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension> Public Function IsNullOrEmpty(Color As Color) As Boolean
-            Return Color = Nothing OrElse Color.IsEmpty
-        End Function
-
         ''' <summary>
         ''' 羽化
         ''' </summary>
@@ -529,23 +482,6 @@ Namespace Imaging
             End If
 
             Return res
-        End Function
-
-        <Extension> Public Function Equals(a As Color, b As Color) As Boolean
-            If a.A <> b.A Then
-                Return False
-            End If
-            If a.B <> b.B Then
-                Return False
-            End If
-            If a.G <> b.G Then
-                Return False
-            End If
-            If a.R <> b.R Then
-                Return False
-            End If
-
-            Return True
         End Function
     End Module
 End Namespace
