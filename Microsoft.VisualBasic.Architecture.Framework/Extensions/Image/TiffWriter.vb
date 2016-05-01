@@ -41,7 +41,7 @@ Namespace Imaging
                 Return False
             End If
 
-            Dim Res = saveMultipage(_imageLayers, path, "TIFF")
+            Dim Res = SaveMultipage(_imageLayers, path, "TIFF")
             Return Res
         End Function
 
