@@ -1,11 +1,12 @@
 Imports System.Collections.Generic
 Imports System.Linq
+Imports System.Runtime.CompilerServices
 
 Namespace StatisticsMathExtensions
 
     Public Module EnumerableStatsMode
 
-        <System.Runtime.CompilerServices.Extension> _
+        <Extension>
         Public Function Modes(Of T As Structure)(source As IEnumerable(Of System.Nullable(Of T))) As IEnumerable(Of T)
             Dim values As IEnumerable(Of T) = source.Coalesce()
             If values.Any() Then
@@ -15,7 +16,7 @@ Namespace StatisticsMathExtensions
             Return Enumerable.Empty(Of T)()
         End Function
 
-        <System.Runtime.CompilerServices.Extension> _
+        <Extension>
         Public Function Modes(Of T As Structure)(source As IEnumerable(Of T)) As IEnumerable(Of T)
             Dim modes__1 As New List(Of T)()
 
@@ -29,7 +30,7 @@ Namespace StatisticsMathExtensions
             Return modes__1
         End Function
 
-        <System.Runtime.CompilerServices.Extension> _
+        <Extension>
         Public Function Mode(Of T As Structure)(source As IEnumerable(Of System.Nullable(Of T))) As System.Nullable(Of T)
             Dim values As IEnumerable(Of T) = source.Coalesce()
             If values.Any() Then
@@ -39,7 +40,7 @@ Namespace StatisticsMathExtensions
             Return Nothing
         End Function
 
-        <System.Runtime.CompilerServices.Extension> _
+        <Extension>
         Public Function Mode(Of T As Structure)(source As IEnumerable(Of T)) As System.Nullable(Of T)
             Dim sortedList = From number In source Order By number Select number
 
@@ -48,7 +49,7 @@ Namespace StatisticsMathExtensions
             Dim current As T = Nothing
             Dim mode__1 As New System.Nullable(Of T)()
 
-            For Each [next] As T In SortedList
+            For Each [next] As T In sortedList
                 If current.Equals([next]) = False Then
                     current = [next]
                     count = 1
@@ -69,12 +70,12 @@ Namespace StatisticsMathExtensions
             Return Nothing
         End Function
 
-        <System.Runtime.CompilerServices.Extension> _
+        <Extension>
         Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, TMode)) As System.Nullable(Of TMode)
             Return source.[Select](selector).Mode
         End Function
 
-        <System.Runtime.CompilerServices.Extension> _
+        <Extension>
         Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of TMode))) As System.Nullable(Of TMode)
             Return source.[Select](selector).Mode
         End Function
