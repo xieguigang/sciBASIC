@@ -54,6 +54,10 @@ Namespace Imaging
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
         <Extension> Public Function ToColor(str As String) As Color
+            If String.IsNullOrEmpty(str) Then
+                Return Color.Black
+            End If
+
             Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
 
             If String.IsNullOrEmpty(s) Then

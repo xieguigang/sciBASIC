@@ -23,14 +23,13 @@ Namespace CommandLine
     <[Namespace]("Interpreter")>
     Public Class Interpreter
 
-        Implements System.IDisposable
-        Implements System.Collections.Generic.IDictionary(Of String, EntryPoints.APIEntryPoint)
+        Implements IDisposable
+        Implements IDictionary(Of String, APIEntryPoint)
 
         ''' <summary>
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
-        Protected _CommandInfoHash As Dictionary(Of String, EntryPoints.APIEntryPoint) =
-            New Dictionary(Of String, EntryPoints.APIEntryPoint)
+        Protected _CommandInfoHash As New Dictionary(Of String, APIEntryPoint)
         Protected _nsRoot As String
 
         ''' <summary>
@@ -54,7 +53,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function ToDictionary() As Dictionary(Of String, EntryPoints.APIEntryPoint)
+        Public Function ToDictionary() As Dictionary(Of String, APIEntryPoint)
             Return _CommandInfoHash
         End Function
 
@@ -224,7 +223,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="Command"></param>
         ''' <remarks></remarks>
-        Public Sub AddCommand(Command As EntryPoints.APIEntryPoint)
+        Public Sub AddCommand(Command As APIEntryPoint)
             Dim NameId As String = Command.Name.ToLower
 
             If Not _CommandInfoHash.ContainsKey(NameId) Then
@@ -342,9 +341,9 @@ Namespace CommandLine
             End If
 
             Dim Methods = Type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
-            Dim commandAttribute As System.Type = GetType(ExportAPIAttribute)
+            Dim commandAttribute As Type = GetType(ExportAPIAttribute)
             Dim commandsInfo = From methodInfo As MethodInfo In Methods
-                               Let commandInfo As EntryPoints.APIEntryPoint = __getsAPI(methodInfo, commandAttribute, [Throw])
+                               Let commandInfo As APIEntryPoint = __getsAPI(methodInfo, commandAttribute, [Throw])
                                Where Not commandInfo Is Nothing
                                Select commandInfo
                                Order By commandInfo.Name Ascending   '
@@ -384,8 +383,8 @@ Namespace CommandLine
         ''' <remarks></remarks>
         '''
         <ExportAPI("CreateObject")>
-        Public Shared Function CreateInstance(Type As System.Type) As Microsoft.VisualBasic.CommandLine.Interpreter
-            Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type)
+        Public Shared Function CreateInstance(Type As System.Type) As Interpreter
+            Return New Interpreter(Type)
         End Function
 
         ''' <summary>
@@ -394,7 +393,7 @@ Namespace CommandLine
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function CreateInstance(Of T As Class)() As Microsoft.VisualBasic.CommandLine.Interpreter
+        Public Shared Function CreateInstance(Of T As Class)() As Interpreter
             Return New Interpreter(type:=GetType(Type))
         End Function
 
@@ -409,7 +408,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         '''
         <ExportAPI("rundll")>
-        Public Shared Function CreateInstance(assmPath As String) As Microsoft.VisualBasic.CommandLine.Interpreter
+        Public Shared Function CreateInstance(assmPath As String) As Interpreter
             Dim assembly As Assembly = Assembly.LoadFrom(assmPath)
             Dim dllMain As Type = GetType(RunDllEntryPoint)
             Dim LQuery = (From [mod] As Type

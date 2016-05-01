@@ -81,7 +81,7 @@ Public Module TextDoc
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="text"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="encoding">这个函数会自动处理文本的编码的</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''

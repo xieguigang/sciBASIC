@@ -12,12 +12,12 @@ Namespace CommandLine.Reflection.EntryPoints
 
 #Region "ReadOnly Properties"
 
-        Public ReadOnly Property ParameterInfo As Reflection.ParameterInfoCollection
+        Public ReadOnly Property ParameterInfo As ParameterInfoCollection
         ''' <summary>
         ''' The reflection entry point in the assembly for the target method object.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property EntryPoint As System.Reflection.MethodInfo
+        Public ReadOnly Property EntryPoint As MethodInfo
 
         ''' <summary>
         ''' If the target invoked <see cref="EntryPoint">method delegate</see> is a instance method, 
