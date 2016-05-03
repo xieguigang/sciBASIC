@@ -1,8 +1,15 @@
-﻿Public Interface IMatched
+﻿
+Namespace ComponentModel.DataSourceModel
 
     ''' <summary>
-    ''' Is this object matched the condition?
+    ''' The object implements on this interface can be matched with some rules.
     ''' </summary>
-    ''' <returns></returns>
-    ReadOnly Property IsMatched As Boolean
-End Interface
+    Public Interface IMatched
+
+        ''' <summary>
+        ''' Is this object matched the condition?
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property IsMatched As Boolean
+    End Interface
+End Namespace

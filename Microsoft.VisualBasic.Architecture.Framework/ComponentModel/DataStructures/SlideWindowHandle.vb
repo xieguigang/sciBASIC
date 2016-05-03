@@ -56,7 +56,7 @@ Namespace ComponentModel.DataStructures
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"{p}  ----> {String.Join(", ", Elements.ToArray(Function(obj) obj.ToString))}"
+            Return $"{p} --> {String.Join(", ", Elements.ToArray(Function(obj) obj.ToString))}"
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator

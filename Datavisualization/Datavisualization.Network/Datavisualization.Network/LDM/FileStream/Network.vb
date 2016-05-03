@@ -24,6 +24,13 @@ Namespace FileStream
             Me.Nodes = nodes.ToArray
             Me.Edges = edges.ToArray
         End Sub
+
+        Public Overloads Shared Function Load(DIR As String) As Network
+            Return New Network With {
+                .Edges = $"{DIR}/Edges.csv".LoadCsv(Of NetworkEdge),
+                .Nodes = $"{DIR}/Nodes.csv".LoadCsv(Of Node)
+            }
+        End Function
     End Class
 
     ''' <summary>
@@ -115,13 +122,20 @@ Namespace FileStream
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function Save(Optional outDIR As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Overrides Function Save(Optional outDIR As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             If String.IsNullOrEmpty(outDIR) Then outDIR = My.Computer.FileSystem.CurrentDirectory
 
             Call Nodes.SaveTo(String.Format("{0}/Nodes.csv", outDIR), False, encoding)
             Call Edges.SaveTo(String.Format("{0}/Edges.csv", outDIR), False, encoding)
 
             Return True
+        End Function
+
+        Public Shared Function Load(DIR As String) As Network(Of T_Node, T_Edge)
+            Return New Network(Of T_Node, T_Edge) With {
+                .Edges = $"{DIR}/Edges.csv".LoadCsv(Of T_Edge),
+                .Nodes = $"{DIR}/Nodes.csv".LoadCsv(Of T_Node)
+            }
         End Function
 
         Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As T_Node) As Network(Of T_Node, T_Edge)

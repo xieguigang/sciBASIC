@@ -107,7 +107,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateObject(Of T)(DataCollection As IEnumerable(Of T)) As DataTable
-            Dim Columns = InitlaizeSchema(GetType(T))
+            Dim Columns = __initSchema(GetType(T))
             Dim DataTable As DataTable = New DataTable
             For Each column In Columns
                 Call DataTable.Columns.Add(column.Key.Name, column.Value.PropertyType)
@@ -129,7 +129,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetValue(Of T)(DataTable As DataTable) As T()
-            Dim Columns = InitlaizeSchema(GetType(T))
+            Dim Columns = __initSchema(GetType(T))
             Dim rtvlData As T() = New T(DataTable.Rows.Count - 1) {}
             Dim i As Integer = 0
 
@@ -160,36 +160,35 @@ Namespace ComponentModel.DataSourceModel
             Return rtvlData
         End Function
 
-        Private Function InitlaizeSchema(type As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+        Private Function __initSchema(type As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
             Dim DataColumnType As Type = GetType(DataFrameColumnAttribute)
-            Dim Properties = type.GetProperties
+            Dim props As PropertyInfo() = type.GetProperties
             Dim Columns = (From [property] As PropertyInfo
-                           In Properties
+                           In props
                            Let attrs As Object() = [property].GetCustomAttributes(DataColumnType, True)
                            Where Not attrs.IsNullOrEmpty
-                           Select ColumnMapping =
+                           Select colMaps =
                                DirectCast(attrs.First, DataFrameColumnAttribute), [property]
-                           Order By ColumnMapping.Index Ascending).ToList
+                           Order By colMaps.Index Ascending).ToList
 
-            For i As Integer = 0 To Columns.Count - 1
-                Dim column = Columns(i)
-                If String.IsNullOrEmpty(column.ColumnMapping.Name) Then
-                    Call column.ColumnMapping.SetNameValue(column.property.Name)
+            For Each column In Columns
+                If String.IsNullOrEmpty(column.colMaps.Name) Then
+                    Call column.colMaps.SetNameValue(column.property.Name)
                 End If
             Next
 
-            Dim UnIndexColumn = (From col In Columns
-                                 Where col.ColumnMapping.Index <= 0
-                                 Select col
-                                 Order By col.ColumnMapping.Name Ascending).ToArray '未建立索引的对象按照名称排序
+            Dim UnIndexColumn = (From col
+                                 In Columns
+                                 Where col.colMaps.Index <= 0
+                                 Select col  ' 未建立索引的对象按照名称排序
+                                 Order By col.colMaps.Name Ascending).ToArray ' 由于在后面会涉及到修改list对象，所以在这里使用ToArray来隔绝域list的关系，避免出现冲突
 
-            For Each item In UnIndexColumn
-                Call Columns.Remove(item)
-                Call Columns.Add(item) '将未建立索引的对象放置到列表的最末尾
+            For Each col In UnIndexColumn
+                Call Columns.Remove(col)
+                Call Columns.Add(col) '将未建立索引的对象放置到列表的最末尾
             Next
 
-            Return Columns.ToDictionary(Function(obj) obj.ColumnMapping,
-                                        Function(obj) obj.property)
+            Return Columns.ToDictionary(Function(x) x.colMaps, Function(x) x.property)
         End Function
     End Module
 End Namespace
