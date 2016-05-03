@@ -1854,12 +1854,16 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function [AddHandle](Of THandle As IAddressHandle)(ByRef source As IEnumerable(Of THandle), Optional offset As Integer = 0) As IEnumerable(Of THandle)
-        Dim l As Integer = source.Count
-        For i As Integer = 0 To l - 1
-            source(i).Address = i + offset
+    <Extension> Public Function [AddHandle](Of THandle As IAddressHandle)(ByRef source As IEnumerable(Of THandle), Optional offset As Integer = 0) As THandle()
+        Dim list As New List(Of THandle)
+        Dim i As Integer = offset
+
+        For Each x As THandle In source
+            x.Address = i
+            i += 1
+            list += x
         Next
-        Return source
+        Return list
     End Function
 #End If
 
