@@ -72,9 +72,11 @@ Namespace ComponentModel.DataSourceModel
             Return _Name
         End Function
 
+        Const NameException As String = "Name must not be null when Index is not defined."
+
         Public Function SetNameValue(value As String) As DataFrameColumnAttribute
             If Me._Index < 0 AndAlso String.IsNullOrEmpty(value) Then
-                Throw New ArgumentNullException("value", "Name must not be null when Index is not defined.")
+                Throw New ArgumentNullException(NameOf(value), NameException)
             End If
             Me._Name = value
             Return Me
@@ -104,13 +106,15 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function LoadMapping(typeInfo As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
-            Dim Properties = (From pInfo As PropertyInfo
-                              In typeInfo.GetProperties()
-                              Let attrs As Object() = pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
-                              Where Not attrs.IsNullOrEmpty
-                              Select pInfo,
-                                  mapping = DirectCast(attrs.First, DataFrameColumnAttribute)).ToArray
-            Dim LQuery = (From pInfo In Properties
+            Dim Properties = From pInfo As PropertyInfo
+                             In typeInfo.GetProperties()
+                             Let attrs As Object() =
+                                 pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
+                             Where Not attrs.IsNullOrEmpty
+                             Select pInfo,
+                                 mapping = DirectCast(attrs.First, DataFrameColumnAttribute)
+            Dim LQuery = (From pInfo
+                          In Properties
                           Let Mapping = If(String.IsNullOrEmpty(pInfo.mapping.Name),
                               pInfo.mapping.SetNameValue(pInfo.pInfo.Name),
                               pInfo.mapping)
