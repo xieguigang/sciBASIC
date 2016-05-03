@@ -37,7 +37,7 @@ Public Module KeyValuePairExtensions
         If list Is Nothing Then
             list = New List(Of KeyValuePair(Of TKey, TValue))
         End If
-        Call list.Add(New KeyValuePair(Of TKey, TValue)(key, value))
+        list += New KeyValuePair(Of TKey, TValue)(key, value)
         Return list
     End Function
 
@@ -54,7 +54,7 @@ Public Module KeyValuePairExtensions
         If list Is Nothing Then
             list = New List(Of KeyValuePairObject(Of TKey, TValue))
         End If
-        Call list.Add(New KeyValuePairObject(Of TKey, TValue)(key, value))
+        list += New KeyValuePairObject(Of TKey, TValue)(key, value)
         Return list
     End Function
 End Module

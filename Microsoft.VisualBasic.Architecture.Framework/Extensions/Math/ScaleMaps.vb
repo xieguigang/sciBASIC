@@ -80,7 +80,7 @@ Public Module ScaleMaps
         ' 将等级映射到log2的y轴上面
         Dim lgMax As Double = log2Data.Max
         priMaps = priMaps.ToArray(Function(d) lgMax * d) ' lgMax * %
-        Dim Maps = priMaps.ToArray(Function(d) CLng(2 ^ d))  ' 找到x坐标的位置 0-100
+        Dim Maps As Long() = priMaps.ToArray(Function(d) CLng(2 ^ d))  ' 找到x坐标的位置 0-100
         Return Maps
     End Function
 
