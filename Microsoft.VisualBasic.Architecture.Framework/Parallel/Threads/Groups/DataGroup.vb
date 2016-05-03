@@ -55,6 +55,11 @@
         End Function
     End Class
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T">Group的元素的类型</typeparam>
+    ''' <typeparam name="Itag">Group的Key的类型</typeparam>
     Public Class GroupResult(Of T, Itag) : Inherits TaggedGroupData(Of Itag)
         Implements IEnumerable(Of T)
         Implements IGrouping(Of Itag, T)
