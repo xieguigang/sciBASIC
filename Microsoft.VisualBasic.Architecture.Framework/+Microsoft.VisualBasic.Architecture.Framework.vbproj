@@ -244,6 +244,7 @@
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
+    <Compile Include="LICENSE.vb" />
     <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
@@ -421,7 +422,7 @@
     <Compile Include="Extensions\Security\SHA.vb" />
     <Compile Include="Extensions\Security\RSACrypto.vb" />
     <Compile Include="Extensions\Security\SecurityString.vb" />
-    <Compile Include="OperationTimeOut.vb" />
+    <Compile Include="Parallel\OperationTimeOut.vb" />
     <Compile Include="Tools\Network\Tcp\TCPExtensions.vb" />
     <Compile Include="Tools\Network\Tcp\AsynInvoke.vb" />
     <Compile Include="Parallel\Threading.vb" />
