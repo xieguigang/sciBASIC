@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-Public Module Matrix
+Public Module MatrixExtensions
 
     ''' <summary>
     ''' 生成一个有m行n列的矩阵，但是是使用数组来表示的
