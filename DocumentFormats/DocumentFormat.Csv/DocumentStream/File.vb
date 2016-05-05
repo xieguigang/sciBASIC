@@ -493,7 +493,7 @@ Namespace DocumentStream
                 Dim Rows = (From line As SeqValue(Of String)
                             In cache.AsParallel
                             Let __innerList As List(Of String) = line.obj.Split(","c).ToList
-                            Select i = line.Pos,
+                            Select i = line.i,
                                 data = New RowObject With {._innerColumns = __innerList}
                             Order By i Ascending)
                 cData._innerTable = (From item In Rows Select item.data).ToList

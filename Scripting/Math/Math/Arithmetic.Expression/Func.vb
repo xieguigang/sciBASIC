@@ -67,7 +67,7 @@ Public Class Func
 
         Public Function Evaluate(args As Double()) As Double
             For Each x As SeqValue(Of Double) In args.SeqIterator  ' 对lambda表达式设置环境变量
-                __args(__names(x.Pos)).Value = x.obj
+                __args(__names(x.i)).Value = x.obj
             Next
 
             Return __expr.Evaluate

@@ -52,7 +52,7 @@ Public Class Network : Implements IReadOnlyCollection(Of Node)
         Dim Nodes = (From strt As SeqValue(Of String) In NodeNames.SeqIterator
                      Select New Node With {
                          ._DispName = strt.obj,
-                         ._Id = strt.Pos,
+                         ._Id = strt.i,
                          .Color = __randColor()}).ToArray
 
         For i As Integer = 0 To Nodes.Count - 1  '创建连接
