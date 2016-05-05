@@ -216,10 +216,10 @@ rtvl:           Dim strValue As String = enumValue.Description
         <Extension>
         Public Function ClearParameters(Of TInteropService As Class)(inst As TInteropService) As Integer
             Dim n As Integer
-            Dim lstProperty As System.Reflection.PropertyInfo() = inst.GetType().GetProperties()
+            Dim lstProperty As PropertyInfo() = inst.GetType().GetProperties()
 
             Try
-                For Each [Property] As System.Reflection.PropertyInfo In lstProperty
+                For Each [Property] As PropertyInfo In lstProperty
                     Dim attrs As Object() = [Property].GetCustomAttributes(_innerTypeInfo, inherit:=False)
                     If Not (attrs Is Nothing OrElse attrs.Length = 0) Then
                         Call [Property].SetValue(inst, "", Nothing)
@@ -227,10 +227,12 @@ rtvl:           Dim strValue As String = enumValue.Description
                     End If
                 Next
             Catch ex As Exception
-                Throw New InvalidOperationException("The target type information is not the 'System.String'!")
+                Throw New InvalidOperationException(InvalidOperation)
             End Try
 
             Return n
         End Function
+
+        Const InvalidOperation As String = "The target type information is not the 'System.String'!"
     End Module
 End Namespace

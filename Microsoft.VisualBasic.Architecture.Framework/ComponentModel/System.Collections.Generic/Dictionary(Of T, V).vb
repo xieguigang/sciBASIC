@@ -78,9 +78,19 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         End If
     End Function
 
-    Public Function SafeGetValue(name As String, Optional ByRef [default] As V = Nothing) As V
+    ''' <summary>
+    ''' If the value is not found in the hash directionary, then the default value will be returns, and the default value is nothing.
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="[default]"></param>
+    ''' <param name="success">可能value本身就是空值，所以在这里使用这个参数来判断是否存在</param>
+    ''' <returns></returns>
+    Public Function SafeGetValue(name As String,
+                                 Optional ByRef [default] As V = Nothing,
+                                 Optional ByRef success As Boolean = False) As V
         Dim x As V = Nothing
-        If TryGetValue(name, x) Then
+
+        If MyBase.TryGetValue(name, x).ShadowCopy(success) Then
             Return x
         Else
             Return [default]

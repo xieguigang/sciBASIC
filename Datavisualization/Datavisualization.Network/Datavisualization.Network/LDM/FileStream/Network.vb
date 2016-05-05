@@ -25,6 +25,19 @@ Namespace FileStream
             Me.Edges = edges.ToArray
         End Sub
 
+        ''' <summary>
+        ''' 获取指定节点的连接数量
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
+        Public Function Links(node As String) As Integer
+            Dim LQuery = (From x As NetworkEdge
+                          In Edges
+                          Where x.Contains(node)
+                          Select x).Count
+            Return LQuery
+        End Function
+
         Public Overloads Shared Function Load(DIR As String) As Network
             Return New Network With {
                 .Edges = $"{DIR}/Edges.csv".LoadCsv(Of NetworkEdge),

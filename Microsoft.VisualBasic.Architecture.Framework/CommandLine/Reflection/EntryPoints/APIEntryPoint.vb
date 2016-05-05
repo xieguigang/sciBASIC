@@ -5,10 +5,12 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Namespace CommandLine.Reflection.EntryPoints
 
     ''' <summary>
-    ''' The entry point data of the commands in the command line which was original loaded from the source meta data in the compiled target.(命令行命令的执行入口点)
+    ''' The entry point data of the commands in the command line which was original loaded 
+    ''' from the source meta data in the compiled target.
+    ''' (命令行命令的执行入口点)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class APIEntryPoint : Inherits DelegateEntryPoint
+    Public Class APIEntryPoint : Inherits APIDelegate
 
 #Region "ReadOnly Properties"
 
@@ -61,21 +63,16 @@ Namespace CommandLine.Reflection.EntryPoints
 
 #Region "Constructors"
 
-        ''' <summary>
-        ''' The null string value.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Const NULL As String = ""
-
         Public Sub New()
         End Sub
 
-        Public Sub New(InvokeOnObject As Object)
-            Me.InvokeOnObject = InvokeOnObject
+        Public Sub New(invokeOn As Object)
+            Me.InvokeOnObject = invokeOn
         End Sub
 
         ''' <summary>
-        ''' 假若目标方法为实例方法，请使用本方法进行初始化
+        ''' Instance method can be initialize from this constructor.
+        ''' (假若目标方法为实例方法，请使用本方法进行初始化)
         ''' </summary>
         ''' <param name="attribute"></param>
         ''' <param name="Invoke"></param>
@@ -146,8 +143,8 @@ Namespace CommandLine.Reflection.EntryPoints
             Try
                 rtvl = EntryPoint.Invoke(target, callParameters)
             Catch ex As Exception
-                Dim paramTrace As String =
-                    String.Join(vbCrLf, callParameters.ToArray(Function(obj) Scripting.ToString(obj)))
+                Dim args As String() = callParameters.ToArray(AddressOf Scripting.ToString)
+                Dim paramTrace As String = String.Join(vbCrLf, args)
                 ex = New Exception(paramTrace, ex)
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
@@ -164,7 +161,8 @@ Namespace CommandLine.Reflection.EntryPoints
         End Function
 
         ''' <summary>
-        ''' Invoke this command line and returns the function value.(函数会补齐可选参数)
+        ''' Invoke this command line and returns the function value.
+        ''' (函数会补齐可选参数)
         ''' </summary>
         ''' <param name="parameters">The function parameter for the target invoked method, the optional value will be filled 
         ''' using the paramter default value if you are not specific the optional paramter value is the element position of 
@@ -193,7 +191,8 @@ Namespace CommandLine.Reflection.EntryPoints
         End Function
 
         ''' <summary>
-        ''' Invoke this command line but returns the function execute success, Zero for success and -1 for failure.(函数会补齐可选参数)
+        ''' Invoke this command line but returns the function execute success, Zero for success and -1 for failure.
+        ''' (函数会补齐可选参数)
         ''' </summary>
         ''' <param name="parameters"></param>
         ''' <param name="target"></param>

@@ -28,6 +28,15 @@ Namespace FileStream
         Public Const REFLECTION_ID_MAPPING_CONFIDENCE As String = "confidence"
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
 
+        Public Sub New()
+        End Sub
+
+        Sub New(from As String, target As String, confi As Double)
+            Me.FromNode = from
+            Me.ToNode = target
+            Me.Confidence = confi
+        End Sub
+
         <Column("fromNode")> <XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
         <Column("toNode")> <XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.Address
         <XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence

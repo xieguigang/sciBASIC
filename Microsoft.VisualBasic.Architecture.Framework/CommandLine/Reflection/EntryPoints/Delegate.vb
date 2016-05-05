@@ -3,7 +3,7 @@ Imports System.Text
 
 Namespace CommandLine.Reflection.EntryPoints
 
-    Public Class DelegateEntryPoint : Implements ExportAPIAttribute.ICommandEntryPoint
+    Public Class APIDelegate : Implements IExportAPI
 
         Protected _NumberOfParameters As Integer
         Protected _metaData As ExportAPIAttribute
@@ -15,25 +15,25 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Name() As String Implements ExportAPIAttribute.ICommandEntryPoint.Name
+        Public ReadOnly Property Name() As String Implements IExportAPI.Name
             Get
                 Return _metaData.Name
             End Get
         End Property
 
-        Public ReadOnly Property Info() As String Implements ExportAPIAttribute.ICommandEntryPoint.Info
+        Public ReadOnly Property Info() As String Implements IExportAPI.Info
             Get
                 Return _metaData.Info
             End Get
         End Property
 
-        Public ReadOnly Property Usage() As String Implements ExportAPIAttribute.ICommandEntryPoint.Usage
+        Public ReadOnly Property Usage() As String Implements IExportAPI.Usage
             Get
                 Return _metaData.Usage
             End Get
         End Property
 
-        Public ReadOnly Property Example() As String Implements ExportAPIAttribute.ICommandEntryPoint.Example
+        Public ReadOnly Property Example() As String Implements IExportAPI.Example
             Get
                 Return _metaData.Example
             End Get

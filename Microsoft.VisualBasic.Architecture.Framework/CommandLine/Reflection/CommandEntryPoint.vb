@@ -9,7 +9,7 @@ Namespace CommandLine.Reflection
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public Class ExportAPIAttribute : Inherits Attribute
-        Implements ICommandEntryPoint
+        Implements IExportAPI
 
         ''' <summary>
         ''' The name of the commandline object.(这个命令的名称)
@@ -17,28 +17,28 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Name As String Implements ICommandEntryPoint.Name
+        Public ReadOnly Property Name As String Implements IExportAPI.Name
         ''' <summary>
         ''' Something detail of help information.(详细的帮助信息)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Info As String Implements ICommandEntryPoint.Info
+        Public Property Info As String Implements IExportAPI.Info
         ''' <summary>
         ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Usage As String Implements ICommandEntryPoint.Usage
+        Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
         ''' A example that to useing this command.(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Example As String Implements ICommandEntryPoint.Example
+        Public Property Example As String Implements IExportAPI.Example
 
         ''' <summary>
         ''' You are going to define a available export api for you application to another language or scripting program environment.
@@ -76,7 +76,7 @@ Namespace CommandLine.Reflection
             Return ExportAPIAttribute.GenerateHtmlDoc(Me, "", "")
         End Function
 
-        Public Shared Function GenerateHtmlDoc(Command As ICommandEntryPoint, addNode As String, addValue As String) As String
+        Public Shared Function GenerateHtmlDoc(Command As IExportAPI, addNode As String, addValue As String) As String
             Dim add As String = If(Not String.IsNullOrEmpty(addValue), $"           <tr>
     <td>{addNode}</td>
     <td>{addValue}</td>
@@ -109,37 +109,38 @@ Namespace CommandLine.Reflection
 </table>"
         End Function
 
-        Public Shared ReadOnly Property TypeINFO As System.Type = GetType(ExportAPIAttribute)
-
-        Public Interface ICommandEntryPoint
-            ''' <summary>
-            ''' The name of the commandline object.(这个命令的名称)
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            ReadOnly Property Name As String
-            ''' <summary>
-            ''' Something detail of help information.(详细的帮助信息)
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            ReadOnly Property Info As String
-            ''' <summary>
-            ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            ReadOnly Property Usage As String
-            ''' <summary>
-            ''' A example that to useing this command.(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值)
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            ReadOnly Property Example As String
-        End Interface
+        Public Shared ReadOnly Property Type As Type = GetType(ExportAPIAttribute)
     End Class
+
+    Public Interface IExportAPI
+
+        ''' <summary>
+        ''' The name of the commandline object.(这个命令的名称)
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ReadOnly Property Name As String
+        ''' <summary>
+        ''' Something detail of help information.(详细的帮助信息)
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ReadOnly Property Info As String
+        ''' <summary>
+        ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ReadOnly Property Usage As String
+        ''' <summary>
+        ''' A example that to useing this command.(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值)
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ReadOnly Property Example As String
+    End Interface
 End Namespace
