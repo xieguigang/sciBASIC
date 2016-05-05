@@ -61,6 +61,10 @@ Namespace CommandLine.Reflection
             Me.AutoExtract = auto
         End Sub
 
+        ''' <summary>
+        ''' Constant of type information for the reflection
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property TypeInfo As System.Type = GetType([Namespace])
 
         Public Overrides Function ToString() As String
@@ -77,8 +81,8 @@ Namespace CommandLine.Reflection
         ''' <param name="Type"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function CreateInstance(Type As System.Type) As Microsoft.VisualBasic.CommandLine.Interpreter
-            Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type)
+        Public Shared Function CreateInstance(Type As Type) As Interpreter
+            Return New Interpreter(Type)
         End Function
     End Class
 

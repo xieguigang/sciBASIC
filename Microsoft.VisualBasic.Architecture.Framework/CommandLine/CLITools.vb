@@ -11,7 +11,8 @@ Namespace CommandLine
     Public Module CLITools
 
         ''' <summary>
-        ''' 从给定的词组之中解析出参数的结构
+        ''' Parsing parameters from a specific tokens.
+        ''' (从给定的词组之中解析出参数的结构)
         ''' </summary>
         ''' <param name="Tokens">个数为偶数的，但是假若含有开关的时候，则可能为奇数了</param>
         ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
@@ -64,7 +65,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get all of the logical parameters from the input tokens
         ''' </summary>
         ''' <param name="Tokens">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
@@ -155,6 +156,10 @@ Namespace CommandLine
             Return (From Gr In LQuery Where Gr.Group.Count > 1 Select Gr.ToLower).ToArray
         End Function
 
+        ''' <summary>
+        ''' Gets the commandline object for the current program.
+        ''' </summary>
+        ''' <returns></returns>
         <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
         Public Function Args() As CommandLine
             Return App.CommandLine
@@ -187,6 +192,11 @@ Namespace CommandLine
             Return args
         End Function
 
+        ''' <summary>
+        ''' Is this string tokens is a possible boolean value flag
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <ExportAPI("IsPossibleBoolFlag?")>
         Public Function IsPossibleLogicSW(obj As String) As Boolean
             If obj.Contains(" ") Then
@@ -313,12 +323,12 @@ Namespace CommandLine
 
         <ExportAPI("CreateObject")>
         Public Function CreateObject(Name As String,
-                                    args As Generic.IEnumerable(Of KeyValuePair(Of String, String)),
-                                    Optional bFlags As Generic.IEnumerable(Of String) = Nothing) As CommandLine
+                                    args As IEnumerable(Of KeyValuePair(Of String, String)),
+                                    Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
 
             Dim parameters As List(Of KeyValuePair(Of String, String)) =
                 New List(Of KeyValuePair(Of String, String))
-            Dim Tokens As List(Of String) = New List(Of String) From {Name}
+            Dim Tokens As New List(Of String) From {Name}
 
             For Each Item As KeyValuePair(Of String, String) In args
                 Dim key As String = Item.Key.ToLower

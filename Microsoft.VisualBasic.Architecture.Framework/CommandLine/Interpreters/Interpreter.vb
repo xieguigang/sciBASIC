@@ -32,6 +32,8 @@ Namespace CommandLine
         Protected _CommandInfoHash As New Dictionary(Of String, APIEntryPoint)
         Protected _nsRoot As String
 
+#Region "Optional delegates"
+
         ''' <summary>
         ''' Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer,
         ''' (<seealso cref="__executefile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
@@ -46,6 +48,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Property ExecuteEmptyCli As __ExecuteEmptyCLI
         Public Property ExecuteNotFound As __ExecuteNotFound
+#End Region
 
         ''' <summary>
         ''' Gets the dictionary data which contains all of the available command information in this assembly module.
@@ -99,7 +102,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 所有的命令行都从这里开始执行
+        ''' The interpreter runs all of the command from here.(所有的命令行都从这里开始执行)
         ''' </summary>
         ''' <param name="commandName"></param>
         ''' <param name="argvs">就只有一个命令行对象</param>
@@ -159,7 +162,7 @@ Namespace CommandLine
                     If lst.IsNullOrEmpty Then
                         Console.WriteLine(BAD_COMMAND_NAME, commandName)
                     Else
-                        Call Console.WriteLine($"Bad command, no such a command named ""{commandName}"", but you probably want to use commands:")
+                        Call Console.WriteLine(BAD_COMMAND_MAN, commandName)
                         For Each name As String In lst
                             Call Console.WriteLine("    " & name)
                         Next
@@ -170,6 +173,7 @@ Namespace CommandLine
             Return -1
         End Function
 
+        Const BAD_COMMAND_MAN As String = "Bad command, no such a command named ""{0}"", but you probably want to use commands:"
         Const BAD_COMMAND_NAME As String = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
 
         ''' <summary>
@@ -178,22 +182,22 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function SDKdocs() As String
-            Dim sBuilder As StringBuilder = New StringBuilder($"{Application.ProductName} [version {Application.ProductVersion}]")
+            Dim sb As StringBuilder = New StringBuilder($"{Application.ProductName} [version {Application.ProductVersion}]")
             Dim Index As Integer = 1
 
-            Call sBuilder.AppendLine()
-            Call sBuilder.AppendLine($"Module AssemblyName: {_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
-            Call sBuilder.AppendLine("Root namespace: " & Me._nsRoot)
-            Call sBuilder.AppendLine(vbCrLf & vbCrLf & HelpSummary())
-            Call sBuilder.AppendLine("Commands")
-            Call sBuilder.AppendLine("--------------------------------------------------------------------------------")
+            Call sb.AppendLine()
+            Call sb.AppendLine($"Module AssemblyName: {_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
+            Call sb.AppendLine("Root namespace: " & Me._nsRoot)
+            Call sb.AppendLine(vbCrLf & vbCrLf & HelpSummary())
+            Call sb.AppendLine("Commands")
+            Call sb.AppendLine("--------------------------------------------------------------------------------")
 
             For Each CmdlEntry As APIEntryPoint In _CommandInfoHash.Values
-                sBuilder.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
+                sb.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
                 Index += 1
             Next
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
         ''' <summary>
@@ -252,7 +256,7 @@ Namespace CommandLine
                     If lst.IsNullOrEmpty Then
                         Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", ? for command list.")
                     Else
-                        Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", but you probably want to find commands:")
+                        Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
                         For Each name As String In lst
                             Call Console.WriteLine("    " & name)
                         Next
@@ -272,23 +276,26 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Function HelpSummary() As String
-            Dim sBuilder As StringBuilder = New StringBuilder(1024)
-            Dim NameMaxLen As Integer = (From commandInfo As EntryPoints.APIEntryPoint
+            Dim sb As StringBuilder = New StringBuilder(1024)
+            Dim NameMaxLen As Integer = (From commandInfo As APIEntryPoint
                                          In _CommandInfoHash.Values
                                          Select Len(commandInfo.Name)).Max
 
-            Call sBuilder.AppendLine("All of the command that available in this program has been list below:")
-            Call sBuilder.AppendLine()
+            Call sb.AppendLine(ListAllCommandsPrompt)
+            Call sb.AppendLine()
 
-            For Each commandInfo As EntryPoints.APIEntryPoint In _CommandInfoHash.Values
-                Call sBuilder.AppendLine(String.Format(" {0}:  {1}{2}",
-                                                       commandInfo.Name,
-                                                       New String(c:=" "c, count:=NameMaxLen - Len(commandInfo.Name)),
-                                                       commandInfo.Info))
+            For Each commandInfo As APIEntryPoint In _CommandInfoHash.Values
+                Dim blank As String =
+                    New String(c:=" "c, count:=NameMaxLen - Len(commandInfo.Name))
+                Dim line As String = String.Format(" {0}:  {1}{2}", commandInfo.Name, blank, commandInfo.Info)
+
+                Call sb.AppendLine(line)
             Next
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
+
+        Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"
 
         ''' <summary>
         ''' Returns the command entry info list array.
@@ -367,7 +374,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Create an empty cli command line interpreter object which contains no commands entry.(创建一个没有包含有任何命令入口点的空的CLI命令行解释器)
+        ''' Create an empty cli command line interpreter object which contains no commands entry.
+        ''' (创建一个没有包含有任何命令入口点的空的CLI命令行解释器)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -376,7 +384,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Create a new interpreter instance from a specific type information.(从目标类型之中构造出一个命令行解释器)
+        ''' Create a new interpreter instance from a specific type information.
+        ''' (从目标类型之中构造出一个命令行解释器)
         ''' </summary>
         ''' <param name="Type"></param>
         ''' <returns></returns>
@@ -388,7 +397,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Create a new interpreter instance using the specific type information.(使用所制定的目标类型信息构造出一个CLI命令行解释器)
+        ''' Create a new interpreter instance using the specific type information.
+        ''' (使用所制定的目标类型信息构造出一个CLI命令行解释器)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
