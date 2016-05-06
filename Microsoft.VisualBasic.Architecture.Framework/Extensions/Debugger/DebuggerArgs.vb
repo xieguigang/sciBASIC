@@ -29,7 +29,7 @@ Module DebuggerArgs
     ''' <param name="args"></param>
     Private Sub __logShell(args As CommandLine.CommandLine)
         Dim CLI As String = App.ExecutablePath & " " & args.CLICommandArgvs
-        Dim log As String = $"[{Now.ToString & "]" & vbTab}  {App.CurrentWork}>  {CLI}"
+        Dim log As String = $"[{Now.ToString & "]" & vbTab}  {App.CurrentDirectory}>  {CLI}"
         Dim logFile As String = App.LogErrDIR.ParentPath & "/.shells.log"
 
         If FileHandles.Wait(file:=logFile) Then

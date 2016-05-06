@@ -261,11 +261,11 @@ Public Module ProgramPathSearchTool
         Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
 
         If InStr(file, "../") = 1 Then
-            Parent = FileIO.FileSystem.GetParentPath(App.CurrentWork)
+            Parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
             Tokens = Tokens.Skip(1).ToArray
             Parent &= "/"
         ElseIf InStr(file, "./") = 1 Then
-            Parent = App.CurrentWork
+            Parent = App.CurrentDirectory
             Tokens = Tokens.Skip(1).ToArray
             Parent &= "/"
         Else
