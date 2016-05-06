@@ -261,11 +261,11 @@ Public Module ProgramPathSearchTool
         Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
 
         If InStr(file, "../") = 1 Then
-            Parent = FileIO.FileSystem.GetParentPath(App.CurrentWork)
+            Parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
             Tokens = Tokens.Skip(1).ToArray
             Parent &= "/"
         ElseIf InStr(file, "./") = 1 Then
-            Parent = App.CurrentWork
+            Parent = App.CurrentDirectory
             Tokens = Tokens.Skip(1).ToArray
             Parent &= "/"
         Else
@@ -701,8 +701,8 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimFileExt(file As String) As String
-        Dim fileInfo = FileIO.FileSystem.GetFileInfo(file)
-        Dim Name As String = IO.Path.GetFileNameWithoutExtension(file)
+        Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
+        Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
         Return $"{fileInfo.Directory.FullName}/{Name}"
     End Function
 

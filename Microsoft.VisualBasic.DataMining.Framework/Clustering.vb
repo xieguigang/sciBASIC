@@ -106,7 +106,7 @@ Namespace Clustering
                           Let kk = i.obj
                           Let p = kk.offset
                           Where p <> 0
-                          Let merged_into = get_Merged(i.Pos - p)
+                          Let merged_into = get_Merged(i.i - p)
                           Select kernel = kk,
                               MergedInto = merged_into).ToArray
 

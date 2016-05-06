@@ -102,10 +102,10 @@ Public Module App
     Public ReadOnly Property HOME As String = FileIO.FileSystem.GetParentPath(ExecutablePath)
 
     ''' <summary>
-    ''' 应用程序的当前的工作目录
+    ''' The currrent working directory of this application.(应用程序的当前的工作目录)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property CurrentWork As String
+    Public ReadOnly Property CurrentDirectory As String
         Get  ' 由于会因为切换目录而发生变化，所以这里不适用简写形式了
             Return FileIO.FileSystem.CurrentDirectory
         End Get
@@ -150,13 +150,14 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 应用程序的启动的时间
+    ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property StartTime As Long = Now.ToBinary
 
     ''' <summary>
-    ''' 当前距离应用程序启动所逝去的时间
+    ''' The distance of time that this application running from start and to current time.
+    ''' (当前距离应用程序启动所逝去的时间)
     ''' </summary>
     ''' <returns></returns>
     '''
@@ -259,7 +260,8 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 函数返回的是日志文件的文件路径
+    ''' Function returns the file path of the application log file.
+    ''' (函数返回的是日志文件的文件路径)
     ''' </summary>
     ''' <returns></returns>
     '''
@@ -292,7 +294,7 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 存放自动存储的错误日志的文件夹
+    ''' Error default log fie location from function <see cref="App.LogException(Exception, String)"/>.(存放自动存储的错误日志的文件夹)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property LogErrDIR As String = App.LocalData & $"/.logs/err/"
@@ -625,7 +627,8 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 获取位于共享文件夹<see cref="App.ProductSharedDIR"/>里面的临时文件
+    ''' Gets a temp file name which is located at directory <see cref="App.ProductSharedDIR"/>.
+    ''' (获取位于共享文件夹<see cref="App.ProductSharedDIR"/>里面的临时文件)
     ''' </summary>
     ''' <returns></returns>
     '''

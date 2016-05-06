@@ -4,7 +4,8 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Net.Protocols.Streams.Array
 
     ''' <summary>
-    ''' 里面的元素的长度是不固定的
+    ''' The bytes length of the element in thee source sequence is not fixed.
+    ''' (序列里面的元素的长度是不固定的)
     ''' </summary>
     Public Class VarArray(Of T) : Inherits ArrayAbstract(Of T)
 
@@ -49,8 +50,9 @@ Namespace Net.Protocols.Streams.Array
             Dim list As New List(Of Byte)
             Dim LQuery = (From ind As SeqValue(Of T)
                           In Values.SeqIterator.AsParallel
-                          Select ind.Pos, byts = __serialization(ind.obj)
-                          Order By Pos Ascending)
+                          Select ind.i,
+                              byts = __serialization(ind.obj)
+                          Order By i Ascending)
 
             For Each x In LQuery
                 Dim byts As Byte() = x.byts

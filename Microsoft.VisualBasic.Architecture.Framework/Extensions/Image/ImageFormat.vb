@@ -77,11 +77,11 @@ Namespace Imaging
         }
 
         ''' <summary>
-        ''' Saves this System.Drawing.Image to the specified file in the specified format.
+        ''' Saves this <see cref="System.Drawing.Image"/> to the specified file in the specified format.
         ''' </summary>
-        ''' <param name="res"></param>
-        ''' <param name="path"></param>
-        ''' <param name="format"></param>
+        ''' <param name="res">The image resource data that will be saved to the disk</param>
+        ''' <param name="path">path string</param>
+        ''' <param name="format">Image formats enumeration.</param>
         ''' <returns></returns>
         <Extension> Public Function SaveAs(res As Image, path As String, format As ImageFormats) As Boolean
             Try

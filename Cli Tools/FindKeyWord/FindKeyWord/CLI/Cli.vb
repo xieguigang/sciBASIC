@@ -31,7 +31,7 @@ Module CLI
                    Description:="The directory which the files searches for, if this parameter is not presented, then the current work directory will be used.")>
     Public Function Found(argvs As CommandLine.CommandLine) As Integer
         Dim Key As String = argvs("--key")
-        Dim DIR As String = argvs.GetValue("--dir", App.CurrentWork)
+        Dim DIR As String = argvs.GetValue("--dir", App.CurrentDirectory)
         Dim Ext As String = argvs("--ext")
         Dim Regex As Boolean = argvs.GetBoolean("/regex")
         Dim FilteringExt As Boolean = argvs.GetBoolean("/filtering")

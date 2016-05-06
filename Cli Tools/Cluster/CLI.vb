@@ -28,7 +28,7 @@ Module CLI
         Else
             nums = [in].Split(","c).ToArray(Function(s) Val(s.Trim))
             If String.IsNullOrEmpty(out) Then
-                out = App.CurrentWork & "/ClusterNumber.Csv"
+                out = App.CurrentDirectory & "/ClusterNumber.Csv"
             End If
         End If
 
