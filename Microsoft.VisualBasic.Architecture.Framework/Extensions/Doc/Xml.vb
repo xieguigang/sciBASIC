@@ -11,6 +11,17 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module XmlDoc
 
     ''' <summary>
+    ''' 这个函数主要是用作于Linq里面的Select语句拓展的，这个函数永远也不会报错，只会返回空值
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
+    Public Function SafeLoadXml(Of T)(xml As String,
+                                      Optional encoding As Encodings = Encodings.Default,
+                                      Optional preProcess As Func(Of String, String) = Nothing) As T
+        Return xml.LoadXml(Of T)(encoding.GetEncodings, False, preProcess)
+    End Function
+
+    ''' <summary>
     ''' Load class object from the exists Xml document.(从文件之中加载XML之中的数据至一个对象类型之中)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
