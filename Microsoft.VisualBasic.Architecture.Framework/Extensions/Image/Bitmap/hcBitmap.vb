@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit
 
 Namespace Imaging
 

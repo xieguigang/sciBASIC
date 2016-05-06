@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices.Marshal
-Imports Microsoft.VisualBasic.Marshal
+Imports Microsoft.VisualBasic.Emit.Marshal
 
 ''' <summary>
 ''' 

@@ -2097,7 +2097,7 @@ Public Module Extensions
     ''' <param name="path"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function Serialize(Of T As Class)(obj As T, path As String) As Integer
+    <Extension> Public Function Serialize(Of T As Structure)(obj As T, path As String) As Integer
         Dim Stream As Stream = New IO.FileStream(path, IO.FileMode.OpenOrCreate, FileAccess.Write, FileShare.None)
         Dim buffer As Byte() = obj.GetSerializeBuffer
         Call Stream.Write(buffer, Scan0, buffer.Length)
@@ -2106,7 +2106,7 @@ Public Module Extensions
         Return 0
     End Function
 
-    <Extension> Public Function GetSerializeBuffer(Of T As Class)(obj As T) As Byte()
+    <Extension> Public Function GetSerializeBuffer(Of T As Structure)(obj As T) As Byte()
         Dim IFormatter As IFormatter = New BinaryFormatter()
         Dim Stream As New IO.MemoryStream()
         Call IFormatter.Serialize(Stream, obj)
@@ -2115,7 +2115,7 @@ Public Module Extensions
         Return buffer
     End Function
 
-    <Extension> Public Function DeSerialize(Of T As Class)(bytes As Byte()) As T
+    <Extension> Public Function DeSerialize(Of T As Structure)(bytes As Byte()) As T
         Dim obj As Object = (New BinaryFormatter).[Deserialize](New MemoryStream(bytes))
         Return DirectCast(obj, T)
     End Function

@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Scripting
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Module __DEBUG_MAIN
 

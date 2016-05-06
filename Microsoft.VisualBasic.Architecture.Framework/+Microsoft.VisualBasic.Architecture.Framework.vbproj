@@ -247,6 +247,7 @@
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
+    <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
     <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
