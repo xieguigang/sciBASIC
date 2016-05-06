@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports System.Reflection
 Imports System.Web
+Imports Microsoft.VisualBasic.HtmlParser
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -381,8 +382,6 @@ Public Module WebServiceUtils
 
     Private ReadOnly vbCrLfLen As Integer = Len(vbCrLf)
 
-    Public Const PAGE_CONTENT_TITLE As String = "<title>.+</title>"
-
     ''' <summary>
     ''' 获取两个尖括号之间的内容
     ''' </summary>
@@ -478,28 +477,21 @@ RETRY:      Return __downloadWebpage(url)
 
         WebRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
         WebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240"
-        ' WebRequest.Headers.Add("Accept-Encoding", "gzip, deflate")
 
         Dim WebResponse As WebResponse = WebRequest.GetResponse
 
         Using respStream As Stream = WebResponse.GetResponseStream, ioStream As StreamReader = New StreamReader(respStream)
-            Dim pageContent As String = ioStream.ReadToEnd
+            Dim html As String = ioStream.ReadToEnd
+            Dim title As String = html.HTMLtitle
 
-            If InStr(pageContent, "http://www.doctorcom.com") Then
+            If InStr(html, "http://www.doctorcom.com") Then
                 Return ""
             End If
 
-            Dim Title = Regex.Match(pageContent, PAGE_CONTENT_TITLE, RegexOptions.IgnoreCase).Value
-            If String.IsNullOrEmpty(Title) Then
-                Title = "NULL_TITLE"
-            Else
-                Title = Mid(Title, 8, Len(Title) - 15)
-            End If
+            Call $"[{title}  {url}] -->  Package Size:= {Len(html)}bytes; Response time:= {Timer.ElapsedMilliseconds}ms".__DEBUG_ECHO
+            Call html.SaveTo($"{App.AppSystemTemp}/{url.NormalizePathString}.tmp")
 
-            Call $"[{Title}  {url}] -->  Package Size:= {Len(pageContent)}bytes; Response time:= {Timer.ElapsedMilliseconds}ms".__DEBUG_ECHO
-            Call pageContent.SaveTo($"{App.AppSystemTemp}/{url.NormalizePathString}.tmp")
-
-            Return pageContent
+            Return html
         End Using
     End Function
 

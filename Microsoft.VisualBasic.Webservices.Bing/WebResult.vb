@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
@@ -6,33 +7,43 @@ Imports Microsoft.VisualBasic.Serialization
 ''' </summary>
 Public Class WebResult : Inherits Microsoft.VisualBasic.WebResult
 
-    Const PAGET_TITLE_AND_URL As String = "<h2><a href="".+?"" target="".+?"" h="".+?"">.+?</a></h2>"
-
     Public Shared Function TryParse(html As String) As WebResult
-        Dim Title As String = Regex.Match(html, PAGET_TITLE_AND_URL).Value
+        Dim tokens As String() = Strings.Split(html, "</h2>", -1, CompareMethod.Text)
+        Dim Title As String = tokens(Scan0)
         Dim URL As String = Title.Get_href
         Title = Regex.Match(Title, """>.+</a>").Value
         Title = Title.GetValue.Trim
+        html = tokens(1)
+        html = Regex.Replace(html, "<cite>.+?</cite>", "", RegexICSng)
+        html = Regex.Replace(html, "<.+?>", "", RegexICSng)
 
-        Dim BriefText As String = Regex.Match(html, "<div class=""b_caption""><p>.+</p>").Value.Replace("<div class=""b_caption""><p>", "")
-        If Len(BriefText) > 5 Then BriefText = Mid(BriefText, 1, Len(BriefText) - 4)
+        Dim [date] As String = Regex.Match(New String(html.Reverse.ToArray), "\d+-\d+-\d+", RegexICSng).Value
+        [date] = New String([date].Reverse.ToArray)
+
+        Dim BriefText As String = html
+        If Not String.IsNullOrEmpty([date]) Then
+            BriefText = BriefText.Replace([date], "")
+        End If
 
         Return New WebResult With {
             .Title = Title,
             .URL = URL,
-            .BriefText = BriefText
+            .BriefText = BriefText,
+            .Update = [date]
         }
     End Function
 End Class
 
-Public Class SearchResult
+Public Class SearchResult : Inherits ClassObject
 
+    Public Property Title As String
     ''' <summary>
     ''' 总的结果数目
     ''' </summary>
     ''' <returns></returns>
     Public Property Results As Integer
     Public Property CurrentPage As WebResult()
+    Public Property [Next] As String
 
     Public Function NextPage() As SearchResult
 

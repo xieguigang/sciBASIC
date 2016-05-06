@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.HtmlParser
 
 ''' <summary>
 ''' Interface wrapper of Microsoft bing.com search engine.
@@ -13,24 +14,51 @@ Imports Microsoft.VisualBasic.Linq
                     Url:="http://cn.bing.com/")>
 Public Module SearchEngineProvider
 
-    Const _BING_SEARCH_URL As String = "https://www.bing.com/search?q={0}&PC=U316&FORM=Firefox"
-    Const LIST_ITEM_REGEX As String = "<li class=""b_algo""><div class=""b_title"">.+?</div></div></li>"
+    Const BingURL As String = "https://www.bing.com/search?q={0}&PC=U316&FORM=Firefox"
+    Const TotalCount As String = "<span class=""sb_count"">\d+ results</span>"
+    Const TranslateThisPage As String = "Translate this page"
+
+    Public Function URLProvider(keyword As String) As String
+        Dim Url As String = String.Format(BingURL, WebServiceUtils.UrlEncode(keyword))
+        Return Url
+    End Function
 
     ''' <summary>
     ''' Bing.com online web search engine services provider
     ''' </summary>
-    ''' <param name="KeywordExpression"></param>
+    ''' <param name="keyword"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("search")>
-    Public Function Search(KeywordExpression As String) As SearchResult
-        Dim Url As String = String.Format(_BING_SEARCH_URL, WebServiceUtils.UrlEncode(KeywordExpression))
-        Dim web As String = Regex.Replace(Url.GET, "<strong>|</strong>", "", RegexOptions.IgnoreCase)
-        web = Strings.Split(web, "</script><div id=""b_content""><div id=""b_pole""><div class=""b_poleContent""><ul class=""b_hList"">").Last
-        web = Strings.Split(web, "</li><li class=""b_pag""><span class=""sb_count"">").First
-        Dim htmlItems As String() = Regex.Matches(web, LIST_ITEM_REGEX).ToArray
-        Dim result As WebResult() = htmlItems.ToArray(AddressOf WebResult.TryParse)
+    Public Function Search(keyword As String) As SearchResult
+        Dim url As String = URLProvider(keyword)
+        Return DownloadResult(url)
+    End Function
 
-        Return New SearchResult With {.CurrentPage = result}
+    Public Function DownloadResult(url As String) As SearchResult
+        Dim web As String = Regex.Replace(url.GET, "<strong>|</strong>", "", RegexICSng)
+        Dim count As String = Regex.Match(web, TotalCount).Value
+        Dim itms As String() = Strings.Split(
+            web.Replace(TranslateThisPage, ""), "<h2>", -1, CompareMethod.Text)
+        Dim result As WebResult() = itms.Skip(1).ToArray(AddressOf WebResult.TryParse)
+        Dim [next] As String = __getNextPageLink(web)
+
+        count = Regex.Match(count, "\d+").Value
+
+        Return New SearchResult With {
+            .CurrentPage = result,
+            .Results = Scripting.CTypeDynamic(Of Integer)(count),
+            .Next = [next],
+            .Title = web.HTMLtitle
+        }
+    End Function
+
+    Const NextPage As String = "<a href=""/search\?q=.*?"" class=""sb_pagN"" title=""Next """
+
+    Private Function __getNextPageLink(html As String) As String
+        Dim link As String = Regex.Match(html, NextPage, RegexICSng).Value
+        link = Regex.Matches(link, "<a href=""/search\?q=.*?""", RegexICSng).ToArray.Last
+        link = link.Get_href
+        Return "http://cn.bing.com" & link
     End Function
 End Module
