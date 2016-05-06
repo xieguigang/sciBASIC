@@ -18,6 +18,11 @@ Public Module StringHelpers
     Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
 
     ''' <summary>
+    ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Multiline"/> 
+    ''' </summary>
+    Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Multiline
+
+    ''' <summary>
     ''' <paramref name="s"/> Is Nothing, <see cref="String.IsNullOrEmpty"/>, <see cref="String.IsNullOrWhiteSpace"/>
     ''' </summary>
     ''' <param name="s">The input test string</param>

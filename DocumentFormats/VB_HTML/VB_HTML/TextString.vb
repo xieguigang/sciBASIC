@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Marshal
+Imports Microsoft.VisualBasic.Emit.Marshal
 
 Public Class TextString
 

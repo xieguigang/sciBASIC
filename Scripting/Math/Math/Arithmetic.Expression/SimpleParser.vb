@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Marshal
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Mathematical.Types
 Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
