@@ -46,8 +46,18 @@ Public Class SearchResult : Inherits ClassObject
     Public Property [Next] As String
 
     Public Function NextPage() As SearchResult
-
+        Return SearchEngineProvider.DownloadResult([Next])
     End Function
+
+    ''' <summary>
+    ''' Is there have next page?
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property HaveNext As Boolean
+        Get
+            Return Not String.IsNullOrEmpty([Next])
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return Me.GetJson

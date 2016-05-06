@@ -12,6 +12,7 @@ namespace Test
         {
 
             var result = Microsoft.VisualBasic.Webservices.Bing.SearchEngineProvider.Search("GCModeller");
+            Microsoft.VisualBasic.Webservices.Bing.SearchResult nextr = result.NextPage();
 
         }
     }

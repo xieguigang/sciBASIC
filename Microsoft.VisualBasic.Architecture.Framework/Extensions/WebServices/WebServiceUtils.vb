@@ -75,8 +75,15 @@ Public Module WebServiceUtils
     ''' <remarks></remarks>
     '''
     <ExportAPI("Html.Href")>
-    <Extension> Public Function Get_href(<Parameter("A string that contains the url string pattern like: href=""url_text""")> html As String) As String
+    <Extension> Public Function Get_href(<Parameter("HTML",
+                                                    "A string that contains the url string pattern like: href=""url_text""")>
+                                         html As String) As String
+        If String.IsNullOrEmpty(html) Then
+            Return ""
+        End If
+
         Dim url As String = Regex.Match(html, "href="".+?""", RegexOptions.IgnoreCase).Value
+
         If String.IsNullOrEmpty(url) Then
             Return ""
         Else
