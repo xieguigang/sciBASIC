@@ -20,6 +20,11 @@ Public Class WebResult
     ''' </summary>
     ''' <returns></returns>
     Public Property URL As String
+    ''' <summary>
+    ''' Update time.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Update As String
 
     Public ReadOnly Property Site As String
         Get
