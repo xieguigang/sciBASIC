@@ -35,6 +35,22 @@ Public Module SearchEngineProvider
         Return DownloadResult(url)
     End Function
 
+    Public Iterator Function GetAllResults(keyword As String) As IEnumerable(Of WebResult)
+        Dim page As SearchResult = Search(keyword)
+
+        Do While True
+            For Each x As WebResult In page.CurrentPage
+                Yield x
+            Next
+
+            If page.HaveNext Then
+                page = page.NextPage
+            Else
+                Exit Do
+            End If
+        Loop
+    End Function
+
     Public Function DownloadResult(url As String) As SearchResult
         Dim web As String = Regex.Replace(url.GET, "<strong>|</strong>", "", RegexICSng)
         Dim count As String = Regex.Match(web, TotalCount).Value
