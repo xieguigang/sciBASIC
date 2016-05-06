@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 
 Namespace HtmlParser
@@ -37,6 +38,22 @@ Namespace HtmlParser
             Dim cols As String() = Regex.Matches(row, "<td.+?</td>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
             cols = cols.ToArray(Function(s) s.GetValue)
             Return cols
+        End Function
+
+        Public Const PAGE_CONTENT_TITLE As String = "<title>.+</title>"
+
+        <Extension>
+        Public Function HTMLtitle(html As String) As String
+            Dim title As String =
+                Regex.Match(html, PAGE_CONTENT_TITLE, RegexOptions.IgnoreCase).Value
+
+            If String.IsNullOrEmpty(title) Then
+                title = "NULL_TITLE"
+            Else
+                title = title.GetValue
+            End If
+
+            Return title
         End Function
     End Module
 End Namespace
