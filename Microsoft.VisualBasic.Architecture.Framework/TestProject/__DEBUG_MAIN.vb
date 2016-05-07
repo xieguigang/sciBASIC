@@ -5,12 +5,13 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Scripting
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Terminal
 
 Module __DEBUG_MAIN
 
     Sub Main()
 
-        Dim n As New Microsoft.VisualBasic.ConsoleDevice.ProgressBar("test 1323333")
+        Dim n As New ProgressBar("test 1323333")
 
         Do While True
             n.Step()
@@ -123,7 +124,7 @@ Module __DEBUG_MAIN
 
         ss = ss.Replace(NIL, " ")
 
-        Dim Console As Microsoft.VisualBasic.ConsoleDevice.InteractiveDevice = New ConsoleDevice.InteractiveDevice With {.PromptText = "#"}
+        Dim Console As InteractiveDevice = New InteractiveDevice With {.PromptText = "#"}
 
         Do While True
             Call Console.PrintPrompted()
