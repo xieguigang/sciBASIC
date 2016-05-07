@@ -11,11 +11,17 @@ Namespace Terminal
         Dim _old As Size
         Dim _eventThread As Thread
 
+        Public ReadOnly Property CurrentSize As Size
+            Get
+                Return _old
+            End Get
+        End Property
+
         Private Sub __detects()
             Do While True
                 If Console.WindowHeight <> _old.Height Then
                     RaiseEvent Resize()
-                ElseIf Console.WindowWidth <> _old.Height Then
+                ElseIf Console.WindowWidth <> _old.Width Then
                     RaiseEvent Resize()
                 End If
 
@@ -36,7 +42,6 @@ Namespace Terminal
                     _old = New Size(Console.WindowWidth, Console.WindowHeight)
                     _eventThread = New Thread(AddressOf __detects)
                     _eventThread.Start()
-                    _eventThread.Join()
                 End If
             End AddHandler
             RemoveHandler(value As ResizeEventHandle)

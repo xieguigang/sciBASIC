@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ConsoleDevice
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ConsoleDevice
 
 Namespace Terminal
 
@@ -19,6 +20,14 @@ Namespace Terminal
         Sub New(title As String)
             Call Console.WriteLine(title)
 
+            AddHandler TerminalEvents.Resize, AddressOf __resize
+
+            Call __resize(Nothing, Nothing)
+        End Sub
+
+        Private Sub __resize(size As Size, old As Size)
+            Console.ResetColor()
+            Console.SetCursorPosition(0, 1)
             Console.BackgroundColor = ConsoleColor.DarkCyan
             For i = 0 To Console.WindowWidth - 3
                 '(0,1) 第二行
@@ -30,27 +39,34 @@ Namespace Terminal
         End Sub
 
         Public Overrides Sub [Step]()
-            current += 1
             Call SetProgress(current)
+            current += 1
         End Sub
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="p">Percentage</param>
-        Public Sub SetProgress(p As Integer)
+        ''' <param name="p">Percentage, 假设是从p到current</param>
+        Public Sub SetProgress(p As Integer, Optional detail As String = "")
             Console.BackgroundColor = ConsoleColor.Yellow
-            '/返回完整的商，包括余数，SetCursorPosition会自动四舍五入
-            Console.SetCursorPosition(p * (Console.WindowWidth - 2) / 100, 1)
-            'MsgBox(i * (Console.WindowWidth - 2) / 100)
-            'MsgBox(Console.CursorLeft)
-            'MsgBox(Console.CursorSize)
-            Console.Write(" ")
+            ' /运算返回完整的商，包括余数，SetCursorPosition会自动四舍五入
+            Dim cx As Integer = p * (Console.WindowWidth - 2) / 100
+
+            Console.SetCursorPosition(0, 1)
+
+            For i As Integer = 0 To cx
+                Console.Write(" ")
+            Next
+
             Console.BackgroundColor = colorBack
             Console.ForegroundColor = ConsoleColor.Green
             Console.SetCursorPosition(0, 2)
             Console.Write("{0}%", p)
             Console.ForegroundColor = colorFore
+
+            If Not String.IsNullOrEmpty(detail) Then
+                Console.WriteLine("  " & detail)
+            End If
         End Sub
 
 #Region "IDisposable Support"
@@ -61,6 +77,7 @@ Namespace Terminal
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
+                    RemoveHandler TerminalEvents.Resize, AddressOf __resize
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

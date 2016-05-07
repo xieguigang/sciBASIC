@@ -12,9 +12,11 @@ Module __DEBUG_MAIN
     Sub Main()
 
         Dim n As New ProgressBar("test 1323333")
+        Dim i As Integer = 0
 
         Do While True
             n.Step()
+            '   n.SetProgress(i.MoveNext, SecurityString.GetMd5Hash(RandomDouble))
             Threading.Thread.Sleep(1000)
         Loop
 
