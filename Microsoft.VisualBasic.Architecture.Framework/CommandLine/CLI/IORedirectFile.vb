@@ -1,8 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
 Imports System.Text
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO__
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace CommandLine
@@ -15,7 +13,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks>先重定向到一个临时文件之中，然后再返回临时文件给用户代码</remarks>
     Public Class IORedirectFile
-        Implements System.IDisposable, Microsoft.VisualBasic.CommandLine.IIORedirectAbstract
+        Implements IDisposable, IIORedirectAbstract
 
 #Region "Temp File"
 

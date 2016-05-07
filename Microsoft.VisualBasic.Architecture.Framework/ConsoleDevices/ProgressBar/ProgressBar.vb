@@ -1,5 +1,4 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.ConsoleDevice
 
 Namespace Terminal
 

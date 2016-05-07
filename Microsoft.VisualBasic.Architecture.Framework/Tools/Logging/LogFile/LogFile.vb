@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Terminal.STDIO__
 
 Namespace Logging
 
@@ -9,11 +10,11 @@ Namespace Logging
     ''' 日志文件记录模块.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class LogFile : Inherits ComponentModel.ITextFile
+    Public Class LogFile : Inherits ITextFile
 
         Implements ISaveHandle
-        Implements System.IDisposable
-        Implements ConsoleDevice.STDIO__.I_ConsoleDeviceHandle
+        Implements IDisposable
+        Implements I_ConsoleDeviceHandle
 
         Dim _LogsEntry As New List(Of Logging.LogEntry)
         Dim _RecordCounts As Long
@@ -233,11 +234,11 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
             Return String.Format("[{0} records]'{1}'", _RecordCounts, ToFileURL(FilePath))
         End Function
 
-        Public Function ReadLine() As String Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.ReadLine
+        Public Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
             Return ""
         End Function
 
-        Public Sub WriteLine(s As String) Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(s As String) Implements I_ConsoleDeviceHandle.WriteLine
             Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:="", WriteToScreen:=True)
         End Sub
 
@@ -252,12 +253,12 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
         ''' <param name="s"></param>
         ''' <param name="args">{[Object] As String, Optional Type As MsgType = MsgType.INF, Optional WriteToScreen As Boolean = True}</param>
         ''' <remarks></remarks>
-        Public Sub WriteLine(s As String, ParamArray args() As String) Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(s As String, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
             Dim [Object] As String = IIf(String.IsNullOrEmpty(args(0)), "", args(0))
             Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:=[Object], WriteToScreen:=True)
         End Sub
 
-        Public Overloads Function Read() As Integer Implements Microsoft.VisualBasic.ConsoleDevice.STDIO__.I_ConsoleDeviceHandle.Read
+        Public Overloads Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
             Return -1
         End Function
 

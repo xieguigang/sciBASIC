@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.ConsoleDevice
-Imports STDIO = System.Console
+﻿Imports STDIO = System.Console
 
 Namespace Terminal
 

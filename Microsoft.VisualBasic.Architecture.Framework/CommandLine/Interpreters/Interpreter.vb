@@ -6,7 +6,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
 
 #Const NET_45 = 0
 
