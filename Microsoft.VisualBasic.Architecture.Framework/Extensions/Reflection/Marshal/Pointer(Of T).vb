@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
 
-Namespace Marshal
+Namespace Emit.Marshal
 
     Public Class Pointer(Of T) : Inherits DataStructures.Pointer(Of T)
 

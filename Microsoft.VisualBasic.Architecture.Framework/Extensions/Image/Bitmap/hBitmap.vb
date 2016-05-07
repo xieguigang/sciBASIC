@@ -7,7 +7,7 @@ Namespace Imaging
     ''' <summary>
     ''' 线程不安全的图片数据对象
     ''' </summary>
-    Public Class hBitmap : Inherits Marshal.Byte
+    Public Class hBitmap : Inherits Emit.Marshal.Byte
         Implements IDisposable
         Implements IEnumerable(Of Color)
 

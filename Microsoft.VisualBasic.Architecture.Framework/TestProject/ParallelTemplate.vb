@@ -8,6 +8,6 @@ Module ParallelTemplate
         Dim LoadResult = ParallelLoadingTest.Load(File)  '数据加载
         Dim host As String = Microsoft.VisualBasic.Parallel.ParallelLoading.SendMessageAPI(Port)  '返回消息
         Dim Socket As New MMFSocket(host) '打开映射的端口
-        Call Socket.SendMessage(LoadResult.GetSerializeBuffer) '返回内存数据
+        '   Call Socket.SendMessage(LoadResult.GetSerializeBuffer) '返回内存数据
     End Sub
 End Module

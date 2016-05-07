@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices.Marshal
 
-Namespace Marshal
+Namespace Emit.Marshal
 
     Public Delegate Sub UnsafeCopys(Of T)(source As System.IntPtr, destination As T(), startIndex As Integer, length As Integer)
     Public Delegate Sub UnsafeWrite(Of T)(destination As T(), startIndex As Integer, source As System.IntPtr, length As Integer)
