@@ -455,8 +455,8 @@ Public Module WebServiceUtils
         Try
 RETRY:      Return __downloadWebpage(url)
         Catch ex As Exception
-
-            Call Console.WriteLine(ex.ToString)
+            ex = New Exception(url, ex)
+            Call ex.PrintException
 
             If RequestTime < RequestTimeOut Then
                 RequestTime += 1
