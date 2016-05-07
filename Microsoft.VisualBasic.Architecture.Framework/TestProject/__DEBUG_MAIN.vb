@@ -10,6 +10,12 @@ Module __DEBUG_MAIN
 
     Sub Main()
 
+        Dim n As New Microsoft.VisualBasic.ConsoleDevice.ProgressBar("test 1323333")
+
+        Do While True
+            n.Step()
+            Threading.Thread.Sleep(1000)
+        Loop
 
         Dim bitmap As Image = Image.FromFile("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         bitmap = bitmap.GetBinaryBitmap
