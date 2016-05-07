@@ -34,7 +34,10 @@ Namespace Terminal
         End Function
 
         <DllImport("kernel32")>
-        Private Function GetConsoleFontInfo(hOutput As IntPtr, <MarshalAs(UnmanagedType.Bool)> bMaximize As Boolean, count As UInteger, <MarshalAs(UnmanagedType.LPArray), Out> fonts As ConsoleFont()) As Boolean
+        Private Function GetConsoleFontInfo(hOutput As IntPtr,
+                                            <MarshalAs(UnmanagedType.Bool)> bMaximize As Boolean,
+                                            count As UInteger,
+                                            <MarshalAs(UnmanagedType.LPArray), Out> fonts As ConsoleFont()) As Boolean
         End Function
 
         <DllImport("kernel32")>
@@ -69,5 +72,6 @@ Namespace Terminal
         End Structure
 
 #End Region
+
     End Module
 End Namespace

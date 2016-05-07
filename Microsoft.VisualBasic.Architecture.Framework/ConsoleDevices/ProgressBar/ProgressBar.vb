@@ -15,10 +15,12 @@ Namespace Terminal
         Dim colorFore As ConsoleColor = Console.ForegroundColor
 
         Dim current As Integer
+        Dim y As Integer
 
-        Sub New(title As String)
+        Sub New(title As String, Optional Y As Integer = 1)
             Call Console.WriteLine(title)
 
+            Me.y = Y
             AddHandler TerminalEvents.Resize, AddressOf __resize
 
             Call __resize(Nothing, Nothing)
@@ -26,7 +28,7 @@ Namespace Terminal
 
         Private Sub __resize(size As Size, old As Size)
             Console.ResetColor()
-            Console.SetCursorPosition(0, 1)
+            Console.SetCursorPosition(0, y)
             Console.BackgroundColor = ConsoleColor.DarkCyan
             For i = 0 To Console.WindowWidth - 3
                 '(0,1) 第二行
@@ -51,7 +53,7 @@ Namespace Terminal
             ' /运算返回完整的商，包括余数，SetCursorPosition会自动四舍五入
             Dim cx As Integer = p * (Console.WindowWidth - 2) / 100
 
-            Console.SetCursorPosition(0, 1)
+            Console.SetCursorPosition(0, y)
 
             For i As Integer = 0 To cx
                 Console.Write(" ")
@@ -59,7 +61,7 @@ Namespace Terminal
 
             Console.BackgroundColor = colorBack
             Console.ForegroundColor = ConsoleColor.Green
-            Console.SetCursorPosition(0, 2)
+            Console.SetCursorPosition(0, y + 1)
             Console.Write("{0}%", p)
             Console.ForegroundColor = colorFore
 
