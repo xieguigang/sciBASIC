@@ -3,7 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     ''' <summary>
     ''' A standard input/output compatibility package that makes VisualBasic console

@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
 
-Namespace ConsoleDevice.STDIO__
+Namespace Terminal.STDIO__
 
     '
     ' * Created by SharpDevelop.
@@ -23,15 +23,15 @@ Namespace ConsoleDevice.STDIO__
         ''' <returns></returns>
         Public Declare Auto Function AllocConsole Lib "kernel32.dll" () As Boolean
 
-        <DllImport("user32.dll")> _
+        <DllImport("user32.dll")>
         Public Function ShowWindow(hWnd As IntPtr, nCmdShow As Integer) As Boolean
         End Function
 
-        <DllImport("kernel32")> _
+        <DllImport("kernel32")>
         Public Function GetConsoleWindow() As IntPtr
         End Function
 
-        <DllImport("Kernel32")> _
+        <DllImport("Kernel32")>
         Private Function SetConsoleCtrlHandler(handler As EventHandler, add As Boolean) As Boolean
         End Function
 

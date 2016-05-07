@@ -14,7 +14,7 @@ Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports System.Xml
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     ''' <summary>
     ''' Allows you to color and animate the console. ~ overpowered.it ~ TheTrigger - 💸

@@ -1,7 +1,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Collections
 
-Namespace ConsoleDevice.Utility
+Namespace Terminal.Utility
 
     ''' <summary>
     ''' Constants used with PInvoke methods
