@@ -93,7 +93,13 @@ Namespace CommandLine
                     In Me.__lstParameter
                     Where String.Equals(obj.Key, paramName, StringComparison.OrdinalIgnoreCase)
                     Select obj).FirstOrDefault  ' 是值类型，不会出现空引用的情况，
-                Return LQuery.Value
+                Dim value As String = LQuery.Value
+
+                If value Is Nothing Then
+                    value = ""
+                End If
+
+                Return value
             End Get
         End Property
 
@@ -381,7 +387,8 @@ Namespace CommandLine
             End If
 
             Dim str As String = Me(name)
-            Dim value As Object = Scripting.InputHandler.CTypeDynamic(str, GetType(T))
+            Dim value As Object =
+                Scripting.InputHandler.CTypeDynamic(str, GetType(T))
             Return DirectCast(value, T)
         End Function
 

@@ -2,7 +2,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ConsoleDevice
+Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 

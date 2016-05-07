@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 
-Namespace ConsoleDevice.STDIO__
+Namespace Terminal.STDIO__
 
     Module I_FormatProvider
 

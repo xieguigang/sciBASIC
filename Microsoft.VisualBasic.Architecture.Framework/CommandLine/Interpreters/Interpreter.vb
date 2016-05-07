@@ -6,7 +6,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
 
 #Const NET_45 = 0
 
@@ -132,7 +131,7 @@ Namespace CommandLine
                 Return 0
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
-                Return PerlShell()
+                Return BashShell()
 
             Else
                 If commandName.FileExists AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
