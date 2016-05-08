@@ -44,16 +44,16 @@ Namespace Terminal
             current += 1
         End Sub
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="p">Percentage, 假设是从p到current</param>
-        Public Sub SetProgress(p As Integer, Optional detail As String = "")
+        Private Sub __tick(p As Integer, details As String)
             Console.BackgroundColor = ConsoleColor.Yellow
             ' /运算返回完整的商，包括余数，SetCursorPosition会自动四舍五入
             Dim cx As Integer = p * (Console.WindowWidth - 2) / 100
 
             Console.SetCursorPosition(0, y)
+
+            If p < current Then
+                Call __resize(Nothing, Nothing)
+            End If
 
             For i As Integer = 0 To cx
                 Console.Write(" ")
@@ -65,9 +65,18 @@ Namespace Terminal
             Console.Write("{0}%", p)
             Console.ForegroundColor = colorFore
 
-            If Not String.IsNullOrEmpty(detail) Then
-                Console.WriteLine("  " & detail)
+            If Not String.IsNullOrEmpty(details) Then
+                Console.WriteLine("  " & details)
             End If
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="p">Percentage, 假设是从p到current</param>
+        Public Sub SetProgress(p As Integer, Optional detail As String = "")
+            current = p
+            Call __tick(current, detail)
         End Sub
 
 #Region "IDisposable Support"
