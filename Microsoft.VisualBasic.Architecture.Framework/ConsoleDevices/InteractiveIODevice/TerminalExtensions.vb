@@ -18,7 +18,7 @@ Namespace Terminal
         End Property
 
         Private Sub __detects()
-            Do While True
+            Do While App.Running
                 If Console.WindowHeight <> _old.Height Then
                     RaiseEvent Resize()
                 ElseIf Console.WindowWidth <> _old.Width Then

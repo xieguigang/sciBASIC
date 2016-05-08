@@ -356,6 +356,8 @@ Public Module App
 
 #Region "CLI interpreter"
 
+    Public ReadOnly Property Running As Boolean = True
+
     ''' <summary>
     '''  Terminates this <see cref="System.Diagnostics.Process"/> and gives the underlying operating system the specified exit code.
     '''  (这个方法还会终止本应用程序里面的自动GC线程)
@@ -363,6 +365,8 @@ Public Module App
     ''' <param name="state">Exit code to be given to the operating system. Use 0 (zero) to indicate that the process completed successfully.</param>
     '''
     <SecuritySafeCritical> Public Function [Exit](state As Integer) As Integer
+        App._Running = False
+
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
