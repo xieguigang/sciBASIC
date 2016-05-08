@@ -99,7 +99,7 @@ Public Module TextDoc
             path = ProgramPathSearchTool.Long2Short(path)
             DIR = FileIO.FileSystem.GetParentPath(path)
         Catch ex As Exception
-            Dim MSG As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260".__DEBUG_ECHO
+            Dim MSG As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
             Throw New Exception(MSG, ex)
         End Try
 

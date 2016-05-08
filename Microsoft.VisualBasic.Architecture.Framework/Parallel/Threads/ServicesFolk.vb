@@ -49,10 +49,12 @@ Namespace Parallel
                 CLI = __getChildPortal.addArgs
             End Using
 
-            Dim Message As String = $"Get folked child services {assm} local_services:={Portal}".__DEBUG_ECHO
+            Dim msg As String = $"Get folked child services {assm} local_services:={Portal}"
+
+            Call msg.__DEBUG_ECHO
 
             If WindowsServices.Initialized Then
-                Call ServicesLogs.WriteEntry(Message, EventLogEntryType.SuccessAudit)
+                Call ServicesLogs.WriteEntry(msg, EventLogEntryType.SuccessAudit)
             End If
 
             Return Portal
