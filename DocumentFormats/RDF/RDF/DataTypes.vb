@@ -37,4 +37,16 @@ Public Module DataTypes
             Return DataTypes.GetType(x.dataType)
         End If
     End Function
+
+    <Extension>
+    Public Function SchemaDataType(type As Type) As String
+        Return __types(type)
+    End Function
+
+    ReadOnly __types As Dictionary(Of Type, String) =
+        New Dictionary(Of Type, String) From {
+            {GetType(String), dtString},
+            {GetType(Integer), dtInteger},
+            {GetType(Double), dtDouble}
+    }
 End Module

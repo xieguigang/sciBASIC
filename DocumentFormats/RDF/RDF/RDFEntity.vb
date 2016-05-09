@@ -10,6 +10,12 @@ Imports Microsoft.VisualBasic.Serialization
 Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
 
     ''' <summary>
+    ''' rdf:ID
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute("ID")> Public Property Id As String
+
+    ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
@@ -37,6 +43,17 @@ Public MustInherit Class EntityProperty
     ''' <returns></returns>
     <XmlAttribute("rdf_resource")> Public Property resource As String
     Public Property value As String
+
+    Sub New()
+    End Sub
+
+    Protected Sub New(dt As String)
+        dataType = dt
+    End Sub
+
+    Protected Sub New(type As Type)
+        Call Me.New(type.SchemaDataType)
+    End Sub
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
