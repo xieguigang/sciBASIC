@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Serialization
 ''' 在rdf之中被描述的对象实体
 ''' </summary>
 ''' 
-<XmlType("Description")>
+<XmlType(RDF.RDF_PREFIX & "Description")>
 Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
 
     ''' <summary>
