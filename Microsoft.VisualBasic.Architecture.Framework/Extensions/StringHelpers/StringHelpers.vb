@@ -13,6 +13,17 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module StringHelpers
 
     ''' <summary>
+    ''' Shortcuts for method <see cref="String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
+    ''' </summary>
+    ''' <param name="s1"></param>
+    ''' <param name="s2"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TextEquals(s1 As String, s2 As String) As Boolean
+        Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
     ''' </summary>
     Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
