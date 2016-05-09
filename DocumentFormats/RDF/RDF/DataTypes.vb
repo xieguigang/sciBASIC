@@ -1,4 +1,5 @@
-﻿''' <summary>
+﻿Imports System.Runtime.CompilerServices
+''' <summary>
 ''' http://www.w3.org/2001/XMLSchema
 ''' </summary>
 Public Module DataTypes
@@ -20,6 +21,20 @@ Public Module DataTypes
             Return GetType(String)
         Else
             Throw New NotSupportedException(schema)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Default is string type if property value of <see cref="EntityProperty.dataType"/> is null or empty
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SchemaDataType(x As EntityProperty) As Type
+        If String.IsNullOrEmpty(x.dataType) Then
+            Return GetType(String)
+        Else
+            Return DataTypes.GetType(x.dataType)
         End If
     End Function
 End Module

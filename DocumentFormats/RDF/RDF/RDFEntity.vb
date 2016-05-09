@@ -25,7 +25,17 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
 End Class
 
 Public MustInherit Class EntityProperty
+
+    ''' <summary>
+    ''' rdf:datatype
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute("rdf_datatype")> Public Property dataType As String
+    ''' <summary>
+    ''' rdf:resource
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute("rdf_resource")> Public Property resource As String
     Public Property value As String
 
     Public Overrides Function ToString() As String
