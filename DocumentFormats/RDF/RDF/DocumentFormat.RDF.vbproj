@@ -5,12 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{20912FF3-CE68-497C-854D-21E372F11D7C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <StartupObject>Microsoft.VisualBasic.DocumentFormat.RDF.Program</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
     <RootNamespace>Microsoft.VisualBasic.DocumentFormat.RDF</RootNamespace>
-    <AssemblyName>DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -21,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -31,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\..\GCModeller\GCModeller\</OutputPath>
-    <DocumentationFile>DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -54,7 +55,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -64,7 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\GCModeller\GCModeller-x64\</OutputPath>
-    <DocumentationFile>DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.RDF_v1.0_32.0.0.86544__84845dcb8280ca91.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>

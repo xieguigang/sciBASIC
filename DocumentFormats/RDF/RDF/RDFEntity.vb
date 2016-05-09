@@ -1,5 +1,6 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
 ''' 在rdf之中被描述的对象实体
@@ -21,4 +22,13 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' <returns></returns>
     <XmlIgnore>
     Public Property Properties As Dictionary(Of String, RDFEntity)
+End Class
+
+Public MustInherit Class EntityProperty
+    <XmlAttribute("rdf_datatype")> Public Property dataType As String
+    Public Property value As String
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class
