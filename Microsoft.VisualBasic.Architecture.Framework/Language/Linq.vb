@@ -30,6 +30,13 @@ Namespace Language
             Return New FirstOrDefaultHelper(Of T)([default])
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T">Is the type of linq source</typeparam>
+        ''' <typeparam name="V">Is the type of value output</typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         Public Function Exec(Of T, V)(source As IEnumerable(Of T)) As ToArrayHelper(Of T, V)
             Return New ToArrayHelper(Of T, V)(source)
         End Function
