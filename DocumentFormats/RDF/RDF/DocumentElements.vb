@@ -6,13 +6,13 @@ Imports Microsoft.VisualBasic.DocumentFormat.RDF.DocumentStream
 ''' <summary>
 ''' 
 ''' </summary>
-<XmlType(RDF.RDF_PREFIX & "RDF")>
+<XmlRoot(RDF.RDF_PREFIX & "RDF", [Namespace]:="http://www.w3.org/1999/02/22-rdf-syntax-ns#")>
 Public Class RDF
 
     Public Const RDF_PREFIX As String = "rdf-"
 
-    <XmlElement(RDF.RDF_PREFIX & "Description")>
-    Public Property ResourceDescription As RDFResourceDescription
+    ' <XmlElement(RDF.RDF_PREFIX & "Description")>
+    '   Public Property ResourceDescription As RDFResourceDescription
 
     ''' <summary>
     ''' 
@@ -25,11 +25,11 @@ Public Class RDF
         Call sBuilder.Replace("rdf:", RDF.RDF_PREFIX)
         Dim Document As GenericXmlDocument = GenericXmlDocument.CreateObjectFromXmlText(sBuilder.ToString)
         Dim Description As String = Document.DocumentNodes.First.InternalText
-        Dim doc As New RDF With {
-                .ResourceDescription = Description.CreateObjectFromXmlFragment(Of RDFResourceDescription)()
-            }
-        doc.ResourceDescription.InternalText = Description
-        Return doc
+        ' Dim doc As New RDF With {
+        ' .ResourceDescription = Description.CreateObjectFromXmlFragment(Of RDFResourceDescription)()
+        '     }
+        '    doc.ResourceDescription.InternalText = Description
+        '   Return doc
     End Function
 
     Public Shared Function LoadDocument(Of T As RDF)(path As String, Proc As Func(Of StringBuilder, String)) As T
@@ -45,6 +45,7 @@ Public Class RDF
             Call sb.Replace("<rdf:", "<" & RDF.RDF_PREFIX)
             Call sb.Replace("</rdf:", "</" & RDF.RDF_PREFIX)
             Call sb.Replace(" rdf:", " " & RDF.RDF_PREFIX)
+            Call sb.Replace(" xmlns:rdf=", " xmlns=")
 
             Return Proc(sb)
         End Function
@@ -74,18 +75,5 @@ Public Class RDF
         value = Regex.Replace(value, "<rdf:Description xmlns:xsd=.+? xmlns:xsi=.+?>", "")
 
         Return value
-    End Function
-End Class
-
-<XmlType(RDF.RDF_PREFIX & "Description")>
-Public Class RDFResourceDescription
-
-    <XmlAttribute(RDF.RDF_PREFIX & "about")>
-    Public Property About As String
-
-    <XmlText> Public Property InternalText As String
-
-    Public Overrides Function ToString() As String
-        Return InternalText
     End Function
 End Class

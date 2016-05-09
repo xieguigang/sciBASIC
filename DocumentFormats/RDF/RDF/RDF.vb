@@ -74,7 +74,7 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="RDF.Serialization.RDFElement"></see>
+        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="Serialization.RDFElement"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend Shared ReadOnly TypeInfo As System.Type = GetType(RDFElement)
@@ -92,7 +92,7 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="RDF.Serialization.RDFAttribute"></see>
+        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="Serialization.RDFAttribute"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend Shared ReadOnly TypeInfo As System.Type = GetType(RDFAttribute)
@@ -199,7 +199,7 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="RDF.Serialization.RDFNamespaceImports"></see>
+        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="Serialization.RDFNamespaceImports"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend Shared ReadOnly TypeInfo As System.Type = GetType(RDFNamespaceImports)
