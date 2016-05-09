@@ -70,35 +70,47 @@ Namespace DocumentStream
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Column(Index As Integer) As String()
+        Public Iterator Property Column(Index As Integer) As IEnumerable(Of String)
             Get
-                Dim LQuery = From row In _innerTable Select row.Column(Index) '
-                Return LQuery.ToArray
-            End Get
-            Set(value As String())
-                If _innerTable.Count < value.Count Then
-                    Dim d As Integer = value.Count - _innerTable.Count
-                    For i As Integer = 0 To d - 1
-                        Call _innerTable.Add(New RowObject)
-                    Next
-                End If
-                For i As Integer = 0 To value.Count - 1
-                    _innerTable(i).Column(Index) = value(i)
+                For Each row As RowObject In _innerTable
+                    Yield row.Column(Index)
                 Next
+            End Get
+            Set(value As IEnumerable(Of String))
+                Call __setColumn(value.ToArray, Index)
             End Set
         End Property
+
+        Private Sub __setColumn(value As String(), index As Integer)
+            If _innerTable.Count < value.Length Then
+                Dim d As Integer = value.Length - _innerTable.Count
+
+                For i As Integer = 0 To d - 1
+                    Call _innerTable.Add(New RowObject)
+                Next
+            End If
+
+            For i As Integer = 0 To value.Length - 1
+                _innerTable(i).Column(index) = value(i)
+            Next
+        End Sub
 
         ''' <summary>
         ''' 将本文件之中的所有列取出来，假若有任意一个列的元素的数目不够的话，则会在相应的位置之上使用空白来替换
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Columns As String()()
+        Public ReadOnly Iterator Property Columns As IEnumerable(Of String())
             Get
                 If _innerTable.Count = 0 Then
-                    Return New String()() {}
+                    Return
                 End If
-                Dim LQuery = From col As Integer In Width.Sequence Select Column(col) '
-                Return LQuery.ToArray
+                For Each column As IEnumerable(Of String) In
+                    From col As Integer
+                    In Width.Sequence
+                    Select Me.Column(col)
+
+                    Yield column.ToArray
+                Next
             End Get
         End Property
 
