@@ -10,7 +10,7 @@ Namespace Serialization
         Public Property Name As String
 
         Protected Friend Property _bindProperty As System.Reflection.PropertyInfo
-        Protected Friend Property _rdfType As RDF.Serialization.RDFType
+        Protected Friend Property _rdfType As Serialization.RDFType
         Protected Friend Property _valueType As System.Type
 
         Protected Friend MustOverride Function GetXmlSerializationCustomAttribute() As KeyValuePair(Of String, Type)
@@ -74,7 +74,7 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="RDF.Serialization.RDFElement"></see>
+        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="Serialization.RDFElement"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend Shared ReadOnly TypeInfo As System.Type = GetType(RDFElement)
@@ -92,7 +92,7 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="RDF.Serialization.RDFAttribute"></see>
+        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="Serialization.RDFAttribute"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend Shared ReadOnly TypeInfo As System.Type = GetType(RDFAttribute)
@@ -120,7 +120,7 @@ Namespace Serialization
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Protected Friend Property _BindElementTypeInfo As RDF.Serialization.RDFType
+        Protected Friend Property _BindElementTypeInfo As Serialization.RDFType
 
         Sub New(Name As String)
             TypeName = Name
@@ -142,7 +142,7 @@ Namespace Serialization
             Return New KeyValuePair(Of String, System.Type)(TypeName, GetType(Xml.Serialization.XmlTypeAttribute))
         End Function
 
-        Public Shared Function GetTypeDefine(TypeInfo As System.Type) As RDF.Serialization.RDFType
+        Public Shared Function GetTypeDefine(TypeInfo As System.Type) As Serialization.RDFType
             Dim LQuery = (From attrs As Object In TypeInfo.GetCustomAttributes(RDFType.TypeInfo, True) Select DirectCast(attrs, RDFType)).ToArray
             If Not LQuery.IsNullOrEmpty Then
                 Dim retVal = LQuery.First
@@ -159,8 +159,8 @@ Namespace Serialization
         ''' <param name="TypeInfo"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function CreateTypeDefine(TypeInfo As System.Type) As RDF.Serialization.RDFType
-            Dim RDFType As RDFType = New RDF.Serialization.RDFType(TypeInfo.Name)
+        Public Shared Function CreateTypeDefine(TypeInfo As System.Type) As Serialization.RDFType
+            Dim RDFType As RDFType = New Serialization.RDFType(TypeInfo.Name)
             RDFType._BindTypeInfo = TypeInfo
             Return RDFType
         End Function
@@ -199,7 +199,7 @@ Namespace Serialization
         End Function
 
         ''' <summary>
-        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="RDF.Serialization.RDFNamespaceImports"></see>
+        ''' Get the <see cref="System.Type"></see> type information of the class type <see cref="Serialization.RDFNamespaceImports"></see>
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend Shared ReadOnly TypeInfo As System.Type = GetType(RDFNamespaceImports)

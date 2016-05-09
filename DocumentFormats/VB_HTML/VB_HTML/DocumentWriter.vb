@@ -4,10 +4,21 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module DocumentWriter
 
-    <Extension> Public Function Save(doc As DocumentFormat.HTML.HtmlDocument, SaveTo As String) As Boolean
+    ''' <summary>
+    ''' Saves the html data model into a specific text document
+    ''' </summary>
+    ''' <param name="doc"></param>
+    ''' <param name="SaveTo"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Save(doc As HtmlDocument, SaveTo As String) As Boolean
         Return ToString(doc).SaveTo(SaveTo)
     End Function
 
+    ''' <summary>
+    ''' Generates document string from the html data model.
+    ''' </summary>
+    ''' <param name="doc"></param>
+    ''' <returns></returns>
     Public Function ToString(doc As HtmlDocument) As String
         Dim sbr As New StringBuilder(1024)
 

@@ -164,6 +164,11 @@ Namespace Linq
             Return n.ToArray(Function(x) source)
         End Function
 
+        <Extension>
+        Public Function CopyVector(Of T)(n As Integer, source As Func(Of T)) As T()
+            Return n.ToArray(Function(x) source())
+        End Function
+
         <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer, ByRef out As T) As T
             out = array(i)
             i += 1

@@ -44,9 +44,9 @@
         result = System.Text.RegularExpressions.Regex.Replace(result, "<( )*script([^>])*>", "<script>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
         result = System.Text.RegularExpressions.Regex.Replace(result, "(<( )*(/)( )*script( )*>)", "</script>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
         'result = System.Text.RegularExpressions.Regex.Replace(result,
-        '         @"(<script>)([^(<script>\.</script>)])*(</script>)",
+        '        "(<script>)([^(<script>\.</script>)])*(</script>)",
         '         string.Empty,
-        '         System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        '         System.Text.RegularExpressions.RegexOptions.IgnoreCase)
         result = System.Text.RegularExpressions.Regex.Replace(result, "(<script>).*(</script>)", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
 
         ' remove all styles (prepare first by clearing attributes)
@@ -90,7 +90,7 @@
         ' for testing
         'System.Text.RegularExpressions.Regex.Replace(result,
         '       this.txtRegex.Text,string.Empty,
-        '       System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        '       System.Text.RegularExpressions.RegexOptions.IgnoreCase)
 
         ' make line breaking consistent
         result = result.Replace(vbLf, vbCr)
