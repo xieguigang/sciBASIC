@@ -5,10 +5,13 @@ Imports Microsoft.VisualBasic.DocumentFormat.RDF.DocumentStream
 
 Namespace DocumentElements
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     <XmlType(RDF.RDF_PREFIX & "RDF")>
     Public Class RDF
 
-        Public Const RDF_PREFIX As String = "rdf__"
+        Public Const RDF_PREFIX As String = "rdf-"
 
         <XmlElement(RDF.RDF_PREFIX & "Description")>
         Public Property ResourceDescription As RDFResourceDescription
@@ -30,6 +33,23 @@ Namespace DocumentElements
             RDF.ResourceDescription.InternalText = Description
             Return RDF
         End Function
+
+        Public Shared Function LoadDocument(Of T As RDF)(path As String, Proc As Func(Of StringBuilder, String)) As T
+            Return path.LoadXml(Of T)(preprocess:=AddressOf New __docHelper With {.Proc = Proc}.ProcDoc)
+        End Function
+
+        Private Structure __docHelper
+            Public Proc As Func(Of StringBuilder, String)
+
+            Public Function ProcDoc(doc As String) As String
+                Dim sb As New StringBuilder(doc)
+
+                Call sb.Replace("<rdf:", "<" & RDF.RDF_PREFIX)
+                Call sb.Replace("</rdf:", "</" & RDF.RDF_PREFIX)
+
+                Return Proc(sb)
+            End Function
+        End Structure
 
         ''' <summary>
         ''' 将RDF对象转换为XML文件之中的字符串
