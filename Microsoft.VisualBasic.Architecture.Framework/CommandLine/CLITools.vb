@@ -3,7 +3,9 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
 
 Namespace CommandLine
 
@@ -19,16 +21,18 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateParameterValues(Tokens As String(), IncludeLogicSW As Boolean) As List(Of KeyValuePair(Of String, String))
-            Dim Dict As List(Of KeyValuePair(Of String, String)) = New List(Of KeyValuePair(Of String, String))
+            Dim list As New List(Of KeyValuePair(Of String, String))
 
             If Tokens.IsNullOrEmpty Then
-                Return Dict
+                Return list
             ElseIf Tokens.Length = 1 Then
 
-                If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(Tokens(Scan0)) AndAlso IncludeLogicSW Then
-                    Call Dict.Add(New KeyValuePair(Of String, String)(Tokens(Scan0), True))
+                If IsPossibleLogicSW(Tokens(Scan0)) AndAlso
+                    IncludeLogicSW Then
+
+                    Call list.Add(Tokens(Scan0), CStr(True))
                 Else
-                    Return Dict
+                    Return list
                 End If
             End If
 
@@ -40,7 +44,7 @@ Namespace CommandLine
 
                 If [Next] = Tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
                     If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(Tokens(i)) AndAlso IncludeLogicSW Then
-                        Call Dict.Add(New KeyValuePair(Of String, String)(Tokens(i), True))
+                        Call list.Add(New KeyValuePair(Of String, String)(Tokens(i), True))
                     End If
 
                     Exit For
@@ -50,18 +54,18 @@ Namespace CommandLine
 
                 If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
-                        Call Dict.Add(New KeyValuePair(Of String, String)(Tokens(i), True))
+                        Call list.Add(New KeyValuePair(Of String, String)(Tokens(i), True))
                     End If
                     Continue For
                 Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
                     Dim key As String = Tokens(i).ToLower
-                    Call Dict.Add(New KeyValuePair(Of String, String)(key, s))
+                    Call list.Add(New KeyValuePair(Of String, String)(key, s))
 
                     i += 1
                 End If
             Next
 
-            Return Dict
+            Return list
         End Function
 
         ''' <summary>
@@ -76,15 +80,15 @@ Namespace CommandLine
                 Return {Tokens(0)}
             End If
 
-            Dim List As New List(Of String)
+            Dim tkList As New List(Of String)
 
             For i As Integer = 0 To Tokens.Length - 1 '数目多于一个的
 
                 Dim [Next] As Integer = i + 1
 
                 If [Next] = Tokens.Length Then
-                    If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(obj:=Tokens(i)) Then
-                        Call List.Add(Tokens(i))  '
+                    If IsPossibleLogicSW(obj:=Tokens(i)) Then
+                        tkList += Tokens(i)  '
                     End If
 
                     Exit For
@@ -92,9 +96,9 @@ Namespace CommandLine
 
                 Dim s As String = Tokens([Next])
 
-                If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                    If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(obj:=Tokens(i)) Then
-                        Call List.Add(Tokens(i))
+                If IsPossibleLogicSW(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
+                    If IsPossibleLogicSW(obj:=Tokens(i)) Then
+                        tkList += Tokens(i)
                     Else
 
                         If i = 0 Then
@@ -108,7 +112,7 @@ Namespace CommandLine
 
             Next
 
-            Return (From s As String In List Select s.ToLower).ToArray
+            Return (From s As String In tkList Select s.ToLower).ToArray
         End Function
 
         ''' <summary>
@@ -120,7 +124,9 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(args As Generic.IEnumerable(Of String), Optional DuplicatedAllowed As Boolean = False) As CommandLine
+        Public Function TryParse(args As IEnumerable(Of String),
+                                 Optional DuplicatedAllowed As Boolean = False) As CommandLine
+
             If args.IsNullOrEmpty Then
                 Return New CommandLine
             End If
@@ -129,8 +135,9 @@ Namespace CommandLine
             Dim CommandLine As CommandLine = New CommandLine With {
                 ._name = args(Scan0).ToLower,
                 .Tokens = args.ToArray,
-                .BoolFlags = Microsoft.VisualBasic.CommandLine.GetLogicSWs(args.Skip(1).ToArray, SingleValue),
-                ._CLICommandArgvs = Microsoft.VisualBasic.CommandLine.Join(args)}
+                .BoolFlags = GetLogicSWs(args.Skip(1).ToArray, SingleValue),
+                ._CLICommandArgvs = Join(args)
+            }
 
             CommandLine.SingleValue = SingleValue
 
@@ -139,7 +146,9 @@ Namespace CommandLine
                 Dim Dk As String() = __checkKeyDuplicated(CommandLine.__lstParameter)
                 If Not DuplicatedAllowed AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key As String = String.Join(", ", Dk)
-                    Throw New Exception(String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", args.Skip(1).ToArray)))
+                    Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", args.Skip(1).ToArray))
+
+                    Throw New Exception(msg)
                 End If
             End If
 
@@ -148,12 +157,16 @@ Namespace CommandLine
 
         Const EX_KEY_DUPLICATED As String = "[DEBUG] The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
-        Private Function __checkKeyDuplicated(source As Generic.IEnumerable(Of KeyValuePair(Of String, String))) As String()
+        Private Function __checkKeyDuplicated(source As IEnumerable(Of KeyValuePair(Of String, String))) As String()
             Dim LQuery = (From param As KeyValuePair(Of String, String)
                           In source
                           Select param.Key.ToLower
                           Group By ToLower Into Group).ToArray
-            Return (From Gr In LQuery Where Gr.Group.Count > 1 Select Gr.ToLower).ToArray
+
+            Return LinqAPI.Exec(Of String) <= From group
+                                              In LQuery
+                                              Where group.Group.Count > 1
+                                              Select group.ToLower
         End Function
 
         ''' <summary>
@@ -175,7 +188,8 @@ Namespace CommandLine
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(CLI As String, <Parameter("Duplicated.Allowed")> Optional DuplicatedAllowed As Boolean = False) As CommandLine
+        Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI As String,
+                                 <Parameter("Duplicated.Allowed")> Optional DuplicatedAllowed As Boolean = False) As CommandLine
 
             If String.IsNullOrEmpty(CLI) Then
                 Return New CommandLine
@@ -230,7 +244,7 @@ Namespace CommandLine
             If Tokens.IsNullOrEmpty Then
                 Return ""
             Else
-                Return String.Join(" ", (From Token As String In Tokens Select __innerWrapper(Token)).ToArray)
+                Return String.Join(" ", Tokens.ToArray(AddressOf __innerWrapper))
             End If
         End Function
 
