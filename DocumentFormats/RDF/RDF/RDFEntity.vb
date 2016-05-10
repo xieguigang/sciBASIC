@@ -13,13 +13,13 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' rdf:ID
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("ID")> Public Property Id As String
+    <XmlAttribute(RDF.RDF_PREFIX & "ID")> Public Property Id As String
 
     ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("about")> Public Property Resource As String Implements sIdEnumerable.Identifier, IReadOnlyId.locusId
+    <XmlAttribute(RDF.RDF_PREFIX & "about")> Public Property Resource As String Implements sIdEnumerable.Identifier, IReadOnlyId.locusId
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）
@@ -36,12 +36,12 @@ Public MustInherit Class EntityProperty
     ''' rdf:datatype
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("datatype")> Public Property dataType As String
+    <XmlAttribute(RDF.RDF_PREFIX & "datatype")> Public Property dataType As String
     ''' <summary>
     ''' rdf:resource
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("resource")> Public Property resource As String
+    <XmlAttribute(RDF.RDF_PREFIX & "resource")> Public Property resource As String
     <XmlText> Public Property value As String
 
     Sub New()
