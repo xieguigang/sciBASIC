@@ -7,20 +7,20 @@ Namespace ComponentModel.Settings.Inf
     Public Class Section
 
         <XmlAttribute> Public Property Name As String
-        <XmlElement> Public Property Items As ComponentModel.KeyValuePair()
+        <XmlElement> Public Property Items As HashValue()
             Get
                 Return _innerHash.Values.ToArray
             End Get
-            Set(value As ComponentModel.KeyValuePair())
+            Set(value As HashValue())
                 If value Is Nothing Then
-                    value = New ComponentModel.KeyValuePair() {}
+                    value = New HashValue() {}
                 End If
 
-                _innerHash = value.ToDictionary(Function(obj) obj.Key.ToLower)
+                _innerHash = New Dictionary(Of HashValue)(value.ToDictionary(Function(x) x.Identifier.ToLower))
             End Set
         End Property
 
-        Dim _innerHash As Dictionary(Of String, ComponentModel.KeyValuePair)
+        Dim _innerHash As Dictionary(Of HashValue)
 
         Public Function GetValue(Key As String) As String
             Key = Key.ToLower
@@ -44,7 +44,7 @@ Namespace ComponentModel.Settings.Inf
                 Call _innerHash.Remove(KeyFind)
             End If
 
-            Call _innerHash.Add(KeyFind, New KeyValuePair(Name, value))
+            Call _innerHash.Add(KeyFind, New HashValue(Name, value))
         End Sub
     End Class
 End Namespace

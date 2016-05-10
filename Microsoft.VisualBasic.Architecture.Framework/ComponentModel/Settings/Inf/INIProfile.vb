@@ -10,7 +10,8 @@ Namespace ComponentModel.Settings.Inf
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <PackageNamespace("Settings.Inf", Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
+    <PackageNamespace("Settings.Inf",
+                      Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
     Public Module INIProfile
 
         Const REGEX_SECTION_HEAD As String = "^\s*\[[^]]+\]\s*$"
@@ -24,7 +25,8 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like:  section/key")>
+        <ExportAPI("GetValue",
+                   Info:="Get profile data from the ini file which the data is stores in a specific path like:  section/key")>
         Public Function GetValue(path As String, Section As String, key As String) As String
             Dim strLines As String() = (From line As String In IO.File.ReadAllLines(path)
                                         Let strLine As String = line.Trim
@@ -55,7 +57,8 @@ Namespace ComponentModel.Settings.Inf
             Return String.IsNullOrEmpty(strLine) OrElse (strLine.First = ";"c OrElse strLine.First = "#"c)
         End Function
 
-        <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like:  section/key. If the path is not exists, the function will create new.")>
+        <ExportAPI("SetValue",
+                   Info:="Setting profile data from the ini file which the data is stores in a specific path like:  section/key. If the path is not exists, the function will create new.")>
         Public Sub SetValue(path As String, Section As String, key As String, value As String)
             Dim strLines As String() = IO.File.ReadAllLines(path)
             Dim sectionFind As String = $"^\s*\[{Section}\]\s*$"
