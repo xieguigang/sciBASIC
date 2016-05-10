@@ -26,11 +26,29 @@
     ''' Mode field values
     ''' </summary>
     Public Enum Mode
+        ''' <summary>
+        ''' 1 - Symmetric active
+        ''' </summary>
         SymmetricActive     '1 - Symmetric active
+        ''' <summary>
+        ''' 2 - Symmetric pasive
+        ''' </summary>
         SymmetricPassive    '2 - Symmetric pasive
+        ''' <summary>
+        ''' 3 - Client
+        ''' </summary>
         Client              '3 - Client
+        ''' <summary>
+        ''' 4 - Server
+        ''' </summary>
         Server              '4 - Server
+        ''' <summary>
+        ''' 5 - Broadcast
+        ''' </summary>
         Broadcast           '5 - Broadcast
+        ''' <summary>
+        ''' 0, 6, 7 - Reserved
+        ''' </summary>
         Unknown             '0, 6, 7 - Reserved
     End Enum
 
@@ -38,9 +56,21 @@
     ''' Stratum field values
     ''' </summary>
     Public Enum Stratum
+        ''' <summary>
+        ''' 0 - unspecified or unavailable
+        ''' </summary>
         Unspecified         '0 - unspecified or unavailable
+        ''' <summary>
+        ''' 1 - primary reference (e.g. radio-clock)
+        ''' </summary>
         PrimaryReference    '1 - primary reference (e.g. radio-clock)
+        ''' <summary>
+        ''' 2-15 - secondary reference (via NTP or SNTP)
+        ''' </summary>
         SecondaryReference  '2-15 - secondary reference (via NTP or SNTP)
+        ''' <summary>
+        ''' 16-255 - reserved
+        ''' </summary>
         Reserved            '16-255 - reserved
     End Enum
 End Namespace
