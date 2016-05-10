@@ -13,7 +13,7 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' rdf:ID
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "ID")> Public Property Id As String
+    <XmlAttribute(RDF.RDF_PREFIX & "ID")> Public Property RDFId As String
 
     ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
@@ -28,6 +28,10 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' <returns></returns>
     <XmlIgnore>
     Public Property Properties As Dictionary(Of String, RDFEntity)
+
+    Public Overrides Function ToString() As String
+        Return RDFId & "  // " & Resource
+    End Function
 End Class
 
 Public MustInherit Class EntityProperty
@@ -56,6 +60,6 @@ Public MustInherit Class EntityProperty
     End Sub
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return $"({Me.SchemaDataType.ToString}) {value}; resource: {resource}"
     End Function
 End Class
