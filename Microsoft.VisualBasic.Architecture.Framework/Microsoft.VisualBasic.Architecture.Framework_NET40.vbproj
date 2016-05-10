@@ -97,8 +97,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLine\Reflection\EntryPoints\CommandEntryPointInfo.vb" />
-    <Compile Include="CommandLine\Reflection\EntryPoints\DelegateEntryPointInfo.vb" />
+    <Compile Include="CommandLine\CLIBuilder.vb" />
+    <Compile Include="CommandLine\CLIMapper.vb" />
+    <Compile Include="CommandLine\CliResCommon.vb" />
+    <Compile Include="CommandLine\CLITools.vb" />
+    <Compile Include="CommandLine\Reflection\CLIToken.vb" />
+    <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
+    <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
+    <Compile Include="CommandLine\Reflection\ExportAPI.vb" />
+    <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="CommandLine\Reflection\ParameterInfoCollection.vb" />
+    <Compile Include="CommandLine\Reflection\SDKManual.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
@@ -129,9 +138,6 @@
     <Compile Include="Extensions\StatisticsMathExtensions\EnumerableStatsVariance.vb" />
     <Compile Include="Extensions\StatisticsMathExtensions\EnumerableStatsVarianceP.vb" />
     <Compile Include="Extensions\Win32API.vb" />
-    <Compile Include="LQuerySchedule.vb" />
-    <Compile Include="CommandLine\Interpreter.InstanceClass.vb" />
-    <Compile Include="OperationTimeOut.vb" />
     <Compile Include="Serialization\DynamicsConfiguration.vb" />
     <Compile Include="Serialization\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
@@ -141,11 +147,8 @@
     <Compile Include="Text\MatchString.vb" />
     <Compile Include="Text\TextFileEncodingDetector.vb" />
     <Compile Include="Text\TextGrepScriptEngine.vb" />
-    <Compile Include="Threading.vb" />
-    <Compile Include="ZipLib.vb" />
     <Compile Include="SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
-    <Compile Include="SoftwareToolkits\ShellScriptAPI.vb" />
     <Compile Include="SoftwareToolkits\UpdatesEditor.Designer.vb">
       <DependentUpon>UpdatesEditor.vb</DependentUpon>
     </Compile>
@@ -154,7 +157,6 @@
     </Compile>
     <Compile Include="Win32File.vb" />
     <Compile Include="ComponentModel\SimpleConfig.vb" />
-    <Compile Include="PathSearchTool.vb" />
     <Compile Include="ComponentModel\Href.vb" />
     <Compile Include="ComponentModel\DataSource\DataSource.vb" />
     <Compile Include="ComponentModel\ValuePair.vb" />
@@ -164,16 +166,8 @@
     <Compile Include="ComponentModel\ITextFile.vb" />
     <Compile Include="ComponentModel\Settings.vb" />
     <Compile Include="ComponentModel\Comb.vb" />
-    <Compile Include="CommandLine\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attribute.vb" />
-    <Compile Include="CommandLine\Reflection\Switchs.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
-    <Compile Include="Extensions\Math.vb" />
-    <Compile Include="GMailClient.vb" />
-    <Compile Include="CommandLine\IORedirect.vb" />
-    <Compile Include="LanguageHelper\LanguageManager.vb" />
-    <Compile Include="LanguageHelper\LanguageAttribute.vb" />
-    <Compile Include="LanguageHelper\LanguageHelper.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="MMFProtocol\MMFSocket.vb" />
     <Compile Include="MMFProtocol\ProcessLock.vb" />
@@ -237,9 +231,7 @@
   <ItemGroup>
     <None Include="Resources\license.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ConsoleDevices\Utility" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
