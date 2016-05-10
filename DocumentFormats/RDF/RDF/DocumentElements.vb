@@ -4,9 +4,8 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.DocumentFormat.RDF.DocumentStream
 
 ''' <summary>
-''' 
+''' 做序列化的时候请务必要添加一个自定义的属性：&lt;XmlType(RDF.RDF_PREFIX &amp; "RDF")>
 ''' </summary>
-<XmlRoot(RDF.RDF_PREFIX & "RDF", [Namespace]:="http://www.w3.org/1999/02/22-rdf-syntax-ns#")>
 Public Class RDF
 
     Public Const RDF_PREFIX As String = "rdf-"
@@ -39,8 +38,10 @@ Public Class RDF
     Private Structure __docHelper
         Public Proc As Func(Of StringBuilder, String)
 
+        Const XmlNs As String = "xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
+
         Public Function ProcDoc(doc As String) As String
-            Dim sb As New StringBuilder(doc)
+            Dim sb As New StringBuilder(Regex.Replace(doc, "<rdf:RDF.+?>", $"<rdf:RDF {XmlNs} >", RegexICSng))
 
             Call sb.Replace("<rdf:", "<" & RDF.RDF_PREFIX)
             Call sb.Replace("</rdf:", "</" & RDF.RDF_PREFIX)

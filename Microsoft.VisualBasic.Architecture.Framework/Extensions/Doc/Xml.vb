@@ -90,7 +90,11 @@ Public Module XmlDoc
             Catch ex As Exception
                 ex = New Exception(type.FullName, ex)
                 ex = New Exception(XmlFile.ToFileURL, ex)
+
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
+#If DEBUG Then
+                Call ex.ToString.__DEBUG_ECHO
+#End If
                 If ThrowEx Then
                     Throw ex
                 Else

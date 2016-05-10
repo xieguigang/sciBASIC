@@ -36,13 +36,13 @@ Public MustInherit Class EntityProperty
     ''' rdf:datatype
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("rdf_datatype")> Public Property dataType As String
+    <XmlAttribute("datatype")> Public Property dataType As String
     ''' <summary>
     ''' rdf:resource
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("rdf_resource")> Public Property resource As String
-    Public Property value As String
+    <XmlAttribute("resource")> Public Property resource As String
+    <XmlText> Public Property value As String
 
     Sub New()
     End Sub
