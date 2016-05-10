@@ -2,21 +2,21 @@
 
     Public Class ManualPages : Implements System.IDisposable
 
-        Protected _Internal_ChunkBuffer As List(Of String)
+        Protected _manualData As List(Of String)
         Protected p As Integer
 
         Public Const MANUAL_PAGE_PROMPTED As String = "Press [ENTER] or [DONW_ARROW] to continute the next page, press [Q] or [ESC] to exit manual...."
 
         Sub New(strManual As String)
-            Me._Internal_ChunkBuffer = Strings.Split(strManual, vbCr).ToList
+            Me._manualData = Strings.Split(strManual, vbCr).ToList
         End Sub
 
-        Sub New(strManual As Generic.IEnumerable(Of String))
-            _Internal_ChunkBuffer = strManual.ToList
+        Sub New(strManual As IEnumerable(Of String))
+            _manualData = strManual.ToList
         End Sub
 
         Public Overrides Function ToString() As String
-            Return _Internal_ChunkBuffer.FirstOrDefault & "....."
+            Return _manualData.FirstOrDefault & "....."
         End Function
 
         ''' <summary>
@@ -25,12 +25,12 @@
         ''' <param name="initLines">最开始显示的行数</param>
         ''' <remarks></remarks>
         Public Overridable Sub ShowManual(Optional initLines As Integer = 50, Optional printLines As Integer = 10)
-            If initLines >= _Internal_ChunkBuffer.Count - 1 Then
-                Call Console.WriteLine(String.Join(vbCrLf, _Internal_ChunkBuffer))
+            If initLines >= _manualData.Count - 1 Then
+                Call Console.WriteLine(String.Join(vbCrLf, _manualData))
                 Return
             End If
 
-            Dim s As String = String.Join(vbCrLf, _Internal_ChunkBuffer.Take(initLines).ToArray)
+            Dim s As String = String.Join(vbCrLf, _manualData.Take(initLines).ToArray)
             Dim PrintPrompted = Sub()
                                     Call Console.WriteLine(s)
                                     Call Console.WriteLine(vbCrLf & vbCrLf & MANUAL_PAGE_PROMPTED)
@@ -38,15 +38,15 @@
             Call PrintPrompted()
 
             p = initLines
-            _Internal_ChunkBuffer = _Internal_ChunkBuffer.Skip(initLines).ToList
+            _manualData = _manualData.Skip(initLines).ToList
 
-            Do While _Internal_ChunkBuffer.Count > 0
+            Do While _manualData.Count > 0
                 Dim c As ConsoleKeyInfo = Console.ReadKey
 
                 If c.Key = ConsoleKey.Enter OrElse c.Key = ConsoleKey.DownArrow Then
                     p += printLines
-                    s = String.Join(vbCrLf, _Internal_ChunkBuffer.Take(printLines).ToArray)
-                    _Internal_ChunkBuffer = _Internal_ChunkBuffer.Skip(printLines).ToList
+                    s = String.Join(vbCrLf, _manualData.Take(printLines).ToArray)
+                    _manualData = _manualData.Skip(printLines).ToList
 
                     Console.CursorTop -= 1
                     Call Console.WriteLine(New String(" "c, Console.BufferWidth))
@@ -102,9 +102,11 @@
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
     End Class
 
+    ''' <summary>
+    ''' 有显示标题的
+    ''' </summary>
     Public Class IndexedManual : Inherits ManualPages
 
         Dim Title As String
@@ -126,12 +128,13 @@
         ''' <param name="printLines">无用的参数</param>
         ''' <remarks></remarks>
         Public Overrides Sub ShowManual(Optional initLines As Integer = 50, Optional printLines As Integer = 10)
-            Dim currentPage As String = _Internal_ChunkBuffer(p)
+            Dim currentPage As String = _manualData(p)
             Dim PrintPrompted = Sub()
-                                    currentPage = _Internal_ChunkBuffer(p)
+                                    currentPage = _manualData(p)
                                     Call Console.Clear()
                                     Call Console.WriteLine(Title)
-                                    Call Console.WriteLine(String.Format("---------------------------------------------------------------------------------------------------{0}/{1}--", p + 1, _Internal_ChunkBuffer.Count))
+                                    Call Console.WriteLine()
+                                    Call Console.WriteLine(String.Format("---------------------------------------------------------------------------------------------------{0}/{1}--", p + 1, _manualData.Count))
                                     Call Console.WriteLine(vbCrLf)
 
                                     Dim ChunkBuffer As String() = Strings.Split(currentPage, vbCrLf)
@@ -143,11 +146,11 @@
                                         Call Console.WriteLine(currentPage)
                                     End If
 
-                                    If p < _Internal_ChunkBuffer.Count - 1 Then Call Console.WriteLine(vbCrLf & vbCrLf & MANUAL_PAGE_PROMPTED)
+                                    If p < _manualData.Count - 1 Then Call Console.WriteLine(vbCrLf & vbCrLf & MANUAL_PAGE_PROMPTED)
                                 End Sub
             Call PrintPrompted()
 
-            Do While p < Me._Internal_ChunkBuffer.Count - 1
+            Do While p < Me._manualData.Count - 1
                 Dim c As ConsoleKeyInfo = Console.ReadKey
 
                 If c.Key = ConsoleKey.Enter OrElse c.Key = ConsoleKey.DownArrow OrElse c.Key = ConsoleKey.PageDown Then
@@ -163,7 +166,7 @@
                     p = 0
                     Call PrintPrompted()
                 ElseIf c.Key = ConsoleKey.End Then
-                    p = _Internal_ChunkBuffer.Count - 1
+                    p = _manualData.Count - 1
                     Call PrintPrompted()
                 End If
             Loop

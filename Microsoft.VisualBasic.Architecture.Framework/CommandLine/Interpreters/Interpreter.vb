@@ -121,14 +121,9 @@ Namespace CommandLine
                 Call Console.WriteLine(App.ExecutablePath)
                 Return 0
 
-            ElseIf String.Equals(commandName, "man") Then
-                Dim sdk As String = SDKdocs()
-                Dim DocPath As String = $"{__API_InfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location}.txt"
-
-                Call Console.WriteLine(DebuggerArgs.DebuggerHelps)
-                Call Console.WriteLine(sdk)
-                Call FileIO.FileSystem.WriteAllText(DocPath, sdk, append:=False)
-                Return 0
+            ElseIf String.Equals(commandName, "man") Then  ' 默认是分段打印帮助信息，假若加上了  --print参数的话，则才会一次性的打印所有的信息出来
+                Call SDKManual.LaunchManual(CLI:=Me)
+                Return SDKdocs().SaveTo(DocPath).CLICode
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
@@ -274,7 +269,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function HelpSummary() As String
+        Public Function HelpSummary() As String
             Dim sb As StringBuilder = New StringBuilder(1024)
             Dim NameMaxLen As Integer = (From commandInfo As APIEntryPoint
                                          In __API_InfoHash.Values
