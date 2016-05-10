@@ -122,7 +122,15 @@ Namespace CommandLine
                 Return 0
 
             ElseIf String.Equals(commandName, "man") Then  ' 默认是分段打印帮助信息，假若加上了  --print参数的话，则才会一次性的打印所有的信息出来
-                Call SDKManual.LaunchManual(CLI:=Me)
+                Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
+                Dim doc As String = SDKdocs()
+
+                If CLI.GetBoolean("--print") Then
+                    Call Console.WriteLine(doc)
+                Else
+                    Call SDKManual.LaunchManual(CLI:=Me)
+                End If
+
                 Return SDKdocs().SaveTo(DocPath).CLICode
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
