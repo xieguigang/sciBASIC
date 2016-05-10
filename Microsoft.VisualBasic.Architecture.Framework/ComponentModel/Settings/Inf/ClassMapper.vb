@@ -56,8 +56,13 @@ Namespace ComponentModel.Settings.Inf
         ''' 
         <Extension>
         Public Function ClassWriter(Of T As Class)(ini As IniFile) As T
-            Dim maps As NamedValue(Of BindProperty()) = MapParser(Of T)()
-            Dim obj As Object = Activator.CreateInstance(Of T)
+            Dim obj As Object = ClassWriter(ini, GetType(T))
+            Return DirectCast(obj, T)
+        End Function
+
+        Public Function ClassWriter(ini As IniFile, type As Type) As Object
+            Dim maps As NamedValue(Of BindProperty()) = MapParser(type)
+            Dim obj As Object = Activator.CreateInstance(type)
 
             For Each map In maps.x
                 Dim key As String = map.Column.Name
@@ -66,7 +71,7 @@ Namespace ComponentModel.Settings.Inf
                 Call map.SetValue(obj, o)
             Next
 
-            Return DirectCast(obj, T)
+            Return obj
         End Function
 
         <Extension>
