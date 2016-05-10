@@ -39,7 +39,33 @@ Namespace CommandLine.Reflection
             If Not api.ParameterInfo.IsNullOrEmpty Then
                 Call Console.WriteLine(vbCrLf & vbCrLf)
                 Call Console.WriteLine("   Parameters information:" & vbCrLf & "   ---------------------------------------")
-                Call Console.WriteLine("    " & api.ParameterInfo.ToString)
+
+                Dim maxLen As Integer = (From x In api.ParameterInfo Select x.Key.Length + 2).Max
+                Dim l As Integer
+
+                For Each param As ParameterInfo In api.ParameterInfo.Select(Function(x) x.Value)
+                    fore = Console.ForegroundColor
+
+                    If param.[Optional] Then
+                        Call Console.Write("   [")
+                        Console.ForegroundColor = ConsoleColor.Green
+                        Call Console.Write(param.Name)
+                        Console.ForegroundColor = fore
+                        Call Console.Write("]")
+                        l = param.Name.Length
+                    Else
+                        Call Console.Write("    " & param.Name)
+                        l = param.Name.Length - 1
+                    End If
+
+                    Dim blank As String = New String(" "c, maxLen - l + 1)
+
+                    Call Console.Write(blank)
+                    Call Console.WriteLine($"Description:  {param.Description}")
+                    Call Console.Write(New String(" "c, maxLen + 5))
+                    Call Console.WriteLine($">Example:      {param.Name} ""{param.Example}""")
+                    Call Console.WriteLine()
+                Next
             End If
 
             Return 0

@@ -4,7 +4,8 @@ Imports Microsoft.VisualBasic.Text
 
 Partial Module CLI
 
-    <ExportAPI("--search", Usage:="--search /in <in.txt/text> /text <content.txt/text> /out <out.txt> [/min <3> /max <20> /cutoff <0.6>]")>
+    <ExportAPI("--search",
+               Usage:="--search /in <in.txt/text> /text <content.txt/text> /out <out.txt> [/min <3> /max <20> /cutoff <0.6>]")>
     Public Function Search(args As CommandLine.CommandLine) As Integer
         Dim inStream As String = args("/in")
         Dim outStream As String = args("/out")
