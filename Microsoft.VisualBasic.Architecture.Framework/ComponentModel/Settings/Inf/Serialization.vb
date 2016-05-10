@@ -37,6 +37,10 @@ Namespace ComponentModel.Settings.Inf
         Private Shared Function GetPrivateProfileString(section As String, key As String, def As String, retVal As StringBuilder, size As Integer, filePath As String) As Integer
         End Function
 
+        ''' <summary>
+        ''' Open a ini file handle.
+        ''' </summary>
+        ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
             path = INIPath
         End Sub

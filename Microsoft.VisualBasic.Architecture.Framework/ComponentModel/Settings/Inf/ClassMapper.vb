@@ -53,6 +53,8 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T"></typeparam>
         ''' <param name="ini"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function ClassWriter(Of T As Class)(ini As IniFile) As T
             Dim maps As NamedValue(Of BindProperty()) = MapParser(Of T)()
             Dim obj As Object = Activator.CreateInstance(Of T)
@@ -77,5 +79,25 @@ Namespace ComponentModel.Settings.Inf
                 Call ini.WriteValue(maps.Name, key, value)
             Next
         End Sub
+
+        <Extension>
+        Public Function LoadIni(Of T As Class)(path As String) As T
+            Return New IniFile(path).ClassWriter(Of T)
+        End Function
+
+        <Extension>
+        Public Function WriteClass(Of T As Class)(x As T, ini As String) As Boolean
+            Try
+                Call x.ClassDumper(New IniFile(ini))
+            Catch ex As Exception
+                ex = New Exception(ini, ex)
+                ex = New Exception(GetType(T).FullName, ex)
+                Call ex.PrintException
+                Call App.LogException(ex)
+                Return False
+            End Try
+
+            Return True
+        End Function
     End Module
 End Namespace
