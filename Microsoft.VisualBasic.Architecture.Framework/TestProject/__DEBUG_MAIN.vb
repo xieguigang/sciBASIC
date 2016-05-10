@@ -6,10 +6,29 @@ Imports Microsoft.VisualBasic.Scripting
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+
+<ClassName("df-ini")>
+Public Class ssfsfs
+    <DataFrameColumn("123")> Public Property dddd As String
+    <DataFrameColumn("1ff23")> Public Property xdddd As Integer
+    <DataFrameColumn("9x-123")> Public Property dssssddd As Double
+End Class
+
+<IniMapIO("~/test.ini")>
+Public Class dddddFile
+    Public Property a As ssfsfs
+
+End Class
 
 Module __DEBUG_MAIN
 
     Sub Main()
+
+        Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = RandomDouble(), .xdddd = 345}.WriteClass("~/test.ini")
+
+        Dim nnndasdasd As dddddFile = IOProvider.LoadProfile(Of dddddFile)
 
         Dim n As New ProgressBar("Console ProgressBar Testing.")
         Dim i As Integer = 0

@@ -2,6 +2,40 @@
 
 Namespace ComponentModel.DataSourceModel
 
+    Public Structure BindProperty
+        Public [Property] As PropertyInfo
+        Public Column As DataFrameColumnAttribute
+
+        ''' <summary>
+        ''' Gets the type of this property.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Type As Type
+            Get
+                Return [Property].PropertyType
+            End Get
+        End Property
+
+        Public Sub SetValue(obj As Object, value As Object)
+            Call [Property].SetValue(obj, value)
+        End Sub
+
+        Public Function GetValue(x As Object) As Object
+            Return [Property].GetValue(x)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
+        End Function
+
+        Public Shared Function FromHash(x As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) As BindProperty
+            Return New BindProperty With {
+                .Column = x.Key,
+                .Property = x.Value
+            }
+        End Function
+    End Structure
+
     ''' <summary>
     ''' Represents a column of certain data frames. The mapping between to schema is also can be represent by this attribute. 
     ''' (也可以使用这个对象来完成在两个数据源之间的属性的映射，由于对于一些列名称的属性值缺失的映射而言，
@@ -99,6 +133,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' Load the mapping property, if the custom attribute <see cref="DataFrameColumnAttribute"></see> 
         ''' have no name value, then the property name will be used as the mapping name.
+        ''' (这个函数会自动给空名称值进行属性名的赋值操作的)
         ''' </summary>
         ''' <param name="typeInfo">The type should be a class type or its properties should have the 
         ''' mapping option which was created by the custom attribute <see cref="DataFrameColumnAttribute"></see>
@@ -115,7 +150,7 @@ Namespace ComponentModel.DataSourceModel
                                  mapping = DirectCast(attrs.First, DataFrameColumnAttribute)
             Dim LQuery = (From pInfo
                           In Properties
-                          Let Mapping = If(String.IsNullOrEmpty(pInfo.mapping.Name),
+                          Let Mapping = If(String.IsNullOrEmpty(pInfo.mapping.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
                               pInfo.mapping.SetNameValue(pInfo.pInfo.Name),
                               pInfo.mapping)
                           Select Mapping,

@@ -6,6 +6,11 @@ Public Structure HashValue : Implements sIdEnumerable
     Public Property Identifier As String Implements sIdEnumerable.Identifier
     Public Property value As String
 
+    Sub New(name As String, value As String)
+        Me.Identifier = name
+        Me.value = value
+    End Sub
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function

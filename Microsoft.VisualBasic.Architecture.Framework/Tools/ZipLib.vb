@@ -101,11 +101,11 @@ Public Module GZip
                                                      Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
         'Gets the complete path for the destination file, including any
         'relative paths that were in the zip file
-        Dim destinationFileName As String = Path.Combine(destinationPath, file__1.FullName)
+        Dim destinationFileName As String = IO.Path.Combine(destinationPath, file__1.FullName)
 
         'Gets just the new path, minus the file name so we can create the
         'directory if it does not exist
-        Dim destinationFilePath As String = Path.GetDirectoryName(destinationFileName)
+        Dim destinationFilePath As String = IO.Path.GetDirectoryName(destinationFileName)
 
         'Creates the directory (if it doesn't exist) for the new path
         IO.Directory.CreateDirectory(destinationFilePath)
@@ -229,11 +229,11 @@ Public Module GZip
             If mode = ZipArchiveMode.Create Then
                 For Each file__2 As String In files
                     'Adds the file to the archive
-                    zipFile__1.CreateEntryFromFile(file__2, Path.GetFileName(file__2), compression)
+                    zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
                 Next
             Else
                 For Each file__2 As String In files
-                    Dim fileInZip = (From f In zipFile__1.Entries Where f.Name = Path.GetFileName(file__2)).FirstOrDefault()
+                    Dim fileInZip = (From f In zipFile__1.Entries Where f.Name = IO.Path.GetFileName(file__2)).FirstOrDefault()
 
                     Select Case fileOverwrite
                         Case Overwrite.Always
@@ -243,7 +243,7 @@ Public Module GZip
                             End If
 
                             'Adds the file to the archive
-                            zipFile__1.CreateEntryFromFile(file__2, Path.GetFileName(file__2), compression)
+                            zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
 
 
                         Case Overwrite.IfNewer
@@ -258,11 +258,11 @@ Public Module GZip
                                     fileInZip.Delete()
 
                                     'Adds the file to the archive
-                                    zipFile__1.CreateEntryFromFile(file__2, Path.GetFileName(file__2), compression)
+                                    zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
                                 End If
                             Else
                                 'The file wasn't already in the zip file so add it to the archive
-                                zipFile__1.CreateEntryFromFile(file__2, Path.GetFileName(file__2), compression)
+                                zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
                             End If
 
                         Case Overwrite.Never

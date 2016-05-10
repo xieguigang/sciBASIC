@@ -208,6 +208,8 @@
     <Compile Include="ComponentModel\Ranges\Range.vb" />
     <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
     <Compile Include="ComponentModel\Ranges\IntRange.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
@@ -248,6 +250,7 @@
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />

@@ -5,6 +5,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -100,14 +101,44 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property HOME As String = FileIO.FileSystem.GetParentPath(ExecutablePath)
+    ''' <summary>
+    ''' Getting the path of the home directory
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property UsrHome As String = PathMapper.HOME
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property CurrentDirectory As String
+    Public Property CurrentDirectory As String
         Get  ' 由于会因为切换目录而发生变化，所以这里不适用简写形式了
             Return FileIO.FileSystem.CurrentDirectory
+        End Get
+        Set(value As String)
+            If String.Equals(value, "-") Then  ' 切换到前一个工作目录
+                FileIO.FileSystem.CurrentDirectory = _preDIR
+            Else
+                _preDIR = FileIO.FileSystem.CurrentDirectory
+                FileIO.FileSystem.CurrentDirectory = value
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' -
+    ''' Linux里面的前一个文件夹
+    ''' </summary>
+    ''' <remarks>
+    ''' 假设你之前好不容易进入了一个很深的目录，然后不小心敲了个 cd /，是不是快气晕了啊，不用着急，通过下面的指令可以轻松的回到前一个指令：
+    '''
+    '''      cd -
+    ''' </remarks>
+    Dim _preDIR As String
+
+    Public ReadOnly Property PreviousDirectory As String
+        Get
+            Return _preDIR
         End Get
     End Property
 
@@ -236,6 +267,8 @@ Public Module App
     Sub New()
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        _preDIR = App.StartupDirectory
     End Sub
 
     ''' <summary>
