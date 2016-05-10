@@ -46,5 +46,36 @@ Namespace ComponentModel.Settings.Inf
                 .x = binds
             }
         End Function
+
+        ''' <summary>
+        ''' Read data from ini file.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="ini"></param>
+        ''' <returns></returns>
+        Public Function ClassWriter(Of T As Class)(ini As IniFile) As T
+            Dim maps As NamedValue(Of BindProperty()) = MapParser(Of T)()
+            Dim obj As Object = Activator.CreateInstance(Of T)
+
+            For Each map In maps.x
+                Dim key As String = map.Column.Name
+                Dim value As String = ini.ReadValue(maps.Name, key)
+                Dim o As Object = Scripting.CTypeDynamic(value, map.Type)
+                Call map.SetValue(obj, o)
+            Next
+
+            Return DirectCast(obj, T)
+        End Function
+
+        <Extension>
+        Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
+            Dim maps As NamedValue(Of BindProperty()) = MapParser(Of T)()
+
+            For Each map In maps.x
+                Dim key As String = map.Column.Name
+                Dim value As String = Scripting.ToString(map.GetValue(x))
+                Call ini.WriteValue(maps.Name, key, value)
+            Next
+        End Sub
     End Module
 End Namespace

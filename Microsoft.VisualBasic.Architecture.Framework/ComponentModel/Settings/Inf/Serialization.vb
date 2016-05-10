@@ -22,6 +22,9 @@ Namespace ComponentModel.Settings.Inf
         End Function
     End Class
 
+    ''' <summary>
+    ''' Ini file I/O handler
+    ''' </summary>
     Public Class IniFile
 
         Public ReadOnly Property path As String
