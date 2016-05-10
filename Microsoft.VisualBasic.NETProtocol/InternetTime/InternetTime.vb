@@ -557,22 +557,6 @@ Namespace InternetTime
             Return sb.ToString
         End Function
 
-        '// SYSTEMTIME structure used by SetSystemTime
-        <StructLayout(LayoutKind.Sequential)> Private Structure SYSTEMTIME
-            Public year As Int16
-            Public month As Int16
-            Public dayOfWeek As Int16
-            Public day As Int16
-            Public hour As Int16
-            Public minute As Int16
-            Public second As Int16
-            Public milliseconds As Int16
-        End Structure
-
-        <DllImport("KERNEL32.DLL", EntryPoint:="SetLocalTime", SetLastError:=True, CharSet:=CharSet.Unicode, ExactSpelling:=False, CallingConvention:=CallingConvention.StdCall)>
-        Private Shared Function SetLocalTime(ByRef time As SYSTEMTIME) As Int32
-        End Function
-
         '// Set system time according to transmit timestamp
         Private Sub SetTime()
             Dim st As SYSTEMTIME
