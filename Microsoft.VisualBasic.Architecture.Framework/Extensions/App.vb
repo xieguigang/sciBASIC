@@ -5,6 +5,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -100,6 +101,11 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property HOME As String = FileIO.FileSystem.GetParentPath(ExecutablePath)
+    ''' <summary>
+    ''' Getting the path of the home directory
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property UsrHome As String = PathMapper.HOME
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
