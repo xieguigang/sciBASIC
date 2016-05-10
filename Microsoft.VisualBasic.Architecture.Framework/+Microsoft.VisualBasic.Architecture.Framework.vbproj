@@ -249,6 +249,7 @@
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />

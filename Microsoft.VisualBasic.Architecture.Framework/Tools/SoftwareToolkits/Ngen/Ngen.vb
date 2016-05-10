@@ -308,7 +308,7 @@ Namespace SoftwareToolkits
         Public ReadOnly Property Ngen As String
             Get
                 Dim envDir As String = RuntimeEnvironment.GetRuntimeDirectory()
-                Dim ngenPath As String = Path.Combine(envDir, "ngen.exe")
+                Dim ngenPath As String = IO.Path.Combine(envDir, "ngen.exe")
                 Return ngenPath
             End Get
         End Property

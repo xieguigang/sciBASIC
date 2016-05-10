@@ -629,11 +629,11 @@ Public Module ProgramPathSearchTool
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
 
-        If lcFrom.Length > 0 AndAlso lcTo.Length > 0 AndAlso Path.GetPathRoot(lcFrom.ToUpper()).Equals(Path.GetPathRoot(lcTo.ToUpper())) Then
+        If lcFrom.Length > 0 AndAlso lcTo.Length > 0 AndAlso IO.Path.GetPathRoot(lcFrom.ToUpper()).Equals(IO.Path.GetPathRoot(lcTo.ToUpper())) Then
             Dim laDirSep As Char() = {"\"c}
-            Dim lcPathFrom As String = (If(Path.GetDirectoryName(lcFrom) Is Nothing, Path.GetPathRoot(lcFrom.ToUpper()), Path.GetDirectoryName(lcFrom)))
-            Dim lcPathTo As String = (If(Path.GetDirectoryName(lcTo) Is Nothing, Path.GetPathRoot(lcTo.ToUpper()), Path.GetDirectoryName(lcTo)))
-            Dim lcFileTo As String = (If(Path.GetFileName(lcTo) Is Nothing, "", Path.GetFileName(lcTo)))
+            Dim lcPathFrom As String = (If(IO.Path.GetDirectoryName(lcFrom) Is Nothing, IO.Path.GetPathRoot(lcFrom.ToUpper()), IO.Path.GetDirectoryName(lcFrom)))
+            Dim lcPathTo As String = (If(IO.Path.GetDirectoryName(lcTo) Is Nothing, IO.Path.GetPathRoot(lcTo.ToUpper()), IO.Path.GetDirectoryName(lcTo)))
+            Dim lcFileTo As String = (If(IO.Path.GetFileName(lcTo) Is Nothing, "", IO.Path.GetFileName(lcTo)))
             Dim laFrom As String() = lcPathFrom.Split(laDirSep)
             Dim laTo As String() = lcPathTo.Split(laDirSep)
             Dim lnFromCnt As Integer = laFrom.Length
