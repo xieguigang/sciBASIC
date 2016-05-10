@@ -116,7 +116,7 @@ Namespace CommandLine
             If _DISP_DEBUG_INFO Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(ProcessInfo.StartInfo.FileName).FullName.Replace("\", "/")
                 Dim argvs As String = If(String.IsNullOrEmpty(ProcessInfo.StartInfo.Arguments), "", " " & ProcessInfo.StartInfo.Arguments)
-                Call Console.WriteLine("      ---> system(""file:///{0}""{1})", Exe, argvs)
+                Call Console.WriteLine("      ---> system(""file:''{0}""{1})", Exe, argvs)
             End If
 
             Try
