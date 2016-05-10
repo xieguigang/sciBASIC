@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="DCMI.vb" />
     <Compile Include="DataTypes.vb" />
+    <Compile Include="RDFWriter.vb" />
     <Compile Include="RDFEntity.vb" />
     <Compile Include="RDF.vb" />
     <Compile Include="GenericXmlDocument.vb" />
