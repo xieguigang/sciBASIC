@@ -19,7 +19,7 @@ Namespace CommandLine
         Sub New(obj As Object)
             Call MyBase.New(obj.GetType)
             Call (From api As EntryPoints.APIEntryPoint
-                  In Me._CommandInfoHash.Values.AsParallel
+                  In Me.__API_InfoHash.Values.AsParallel
                   Where api.IsInstanceMethod  ' 只联系实例方法
                   Let name As String =
                       NameOf(EntryPoints.APIEntryPoint.InvokeOnObject)

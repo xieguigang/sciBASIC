@@ -29,6 +29,8 @@ Module CLI
     <ParameterInfo("--ext", True, Description:="No format limitations.")>
     <ParameterInfo("--dir", True,
                    Description:="The directory which the files searches for, if this parameter is not presented, then the current work directory will be used.")>
+    <ParameterInfo("--key", False,
+                   Description:="The keyword or regular expression that using for the text search.")>
     Public Function Found(argvs As CommandLine.CommandLine) As Integer
         Dim Key As String = argvs("--key")
         Dim DIR As String = argvs.GetValue("--dir", App.CurrentDirectory)

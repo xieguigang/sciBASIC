@@ -100,141 +100,117 @@ Imports System.Text
 'Of the approximate time from other sources. Since this only requires time accurate To a few decades, 
 'this Is Not a problem In general use.
 
-
-
 Namespace InternetTime
-    'Leap indicator field values
-    Public Enum _LeapIndicator
-        NoWarning       '0 - No warning
-        LastMinute61    '1 - Last minute has 61 seconds
-        LastMinute59    '2 - Last minute has 59 seconds
-        Alarm           '3 - Alarm condition (clock not synchronized)
-    End Enum
 
-    'Mode field values
-    Public Enum _Mode
-        SymmetricActive     '1 - Symmetric active
-        SymmetricPassive    '2 - Symmetric pasive
-        Client              '3 - Client
-        Server              '4 - Server
-        Broadcast           '5 - Broadcast
-        Unknown             '0, 6, 7 - Reserved
-    End Enum
-
-    'Stratum field values
-    Public Enum _Stratum
-        Unspecified         '0 - unspecified or unavailable
-        PrimaryReference    '1 - primary reference (e.g. radio-clock)
-        SecondaryReference  '2-15 - secondary reference (via NTP or SNTP)
-        Reserved            '16-255 - reserved
-    End Enum
-
-    '/// <summary>
-    '/// SNTPClient is a VB.NET# class designed to connect to time servers on the Internet and
-    '/// fetch the current date and time. Optionally, it may update the time of the local system.
-    '/// The implementation of the protocol is based on the RFC 2030.
-    '/// 
-    '/// Public class members:
-    '///
-    '/// LeapIndicator - Warns of an impending leap second to be inserted/deleted in the last
-    '/// minute of the current day. (See the _LeapIndicator enum)
-    '/// 
-    '/// VersionNumber - Version number of the protocol (3 or 4).
-    '/// 
-    '/// Mode - Returns mode. (See the _Mode enum)
-    '/// 
-    '/// Stratum - Stratum of the clock. (See the _Stratum enum)
-    '/// 
-    '/// PollInterval - Maximum interval between successive messages
-    '/// 
-    '/// Precision - Precision of the clock
-    '/// 
-    '/// RootDelay - Round trip time to the primary reference source.
-    '/// 
-    '/// RootDispersion - Nominal error relative to the primary reference source.
-    '/// 
-    '/// ReferenceID - Reference identifier (either a 4 character string or an IP address).
-    '/// 
-    '/// ReferenceTimestamp - The time at which the clock was last set or corrected.
-    '/// 
-    '/// OriginateTimestamp - The time at which the request departed the client for the server.
-    '/// 
-    '/// ReceiveTimestamp - The time at which the request arrived at the server.
-    '/// 
-    '/// Transmit Timestamp - The time at which the reply departed the server for client.
-    '/// 
-    '/// RoundTripDelay - The time between the departure of request and arrival of reply.
-    '/// 
-    '/// LocalClockOffset - The offset of the local clock relative to the primary reference
-    '/// source.
-    '/// 
-    '/// Initialize - Sets up data structure and prepares for connection.
-    '/// 
-    '/// Connect - Connects to the time server and populates the data structure.
-    '///	It can also update the system time.
-    '/// 
-    '/// IsResponseValid - Returns true if received data is valid and if comes from
-    '/// a NTP-compliant time server.
-    '/// 
-    '/// ToString - Returns a string representation of the object.
-    '/// 
-    '/// -----------------------------------------------------------------------------
-    '/// Structure of the standard NTP header (as described in RFC 2030)
-    '///                       1                   2                   3
-    '///   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |LI | VN  |Mode |    Stratum    |     Poll      |   Precision   |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                          Root Delay                           |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                       Root Dispersion                         |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                     Reference Identifier                      |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                                                               |
-    '///  |                   Reference Timestamp (64)                    |
-    '///  |                                                               |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                                                               |
-    '///  |                   Originate Timestamp (64)                    |
-    '///  |                                                               |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                                                               |
-    '///  |                    Receive Timestamp (64)                     |
-    '///  |                                                               |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                                                               |
-    '///  |                    Transmit Timestamp (64)                    |
-    '///  |                                                               |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                 Key Identifier (optional) (32)                |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '///  |                                                               |
-    '///  |                                                               |
-    '///  |                 Message Digest (optional) (128)               |
-    '///  |                                                               |
-    '///  |                                                               |
-    '///  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '/// 
-    '/// -----------------------------------------------------------------------------
-    '/// 
-    '/// SNTP Timestamp Format (as described in RFC 2030)
-    '///                         1                   2                   3
-    '///     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    '/// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '/// |                           Seconds                             |
-    '/// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '/// |                  Seconds Fraction (0-padded)                  |
-    '/// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    '/// 
-    '/// </summary>
-
+    ''' <summary>
+    ''' SNTPClient is a VB.NET# class designed to connect to time servers on the Internet and
+    ''' fetch the current date and time. Optionally, it may update the time of the local system.
+    ''' The implementation of the protocol is based on the RFC 2030.
+    ''' 
+    ''' Public class members:
+    '''
+    ''' LeapIndicator - Warns of an impending leap second to be inserted/deleted in the last
+    ''' minute of the current day. (See the _LeapIndicator enum)
+    ''' 
+    ''' VersionNumber - Version number of the protocol (3 or 4).
+    ''' 
+    ''' Mode - Returns mode. (See the _Mode enum)
+    ''' 
+    ''' Stratum - Stratum of the clock. (See the _Stratum enum)
+    ''' 
+    ''' PollInterval - Maximum interval between successive messages
+    ''' 
+    ''' Precision - Precision of the clock
+    ''' 
+    ''' RootDelay - Round trip time to the primary reference source.
+    ''' 
+    ''' RootDispersion - Nominal error relative to the primary reference source.
+    ''' 
+    ''' ReferenceID - Reference identifier (either a 4 character string or an IP address).
+    ''' 
+    ''' ReferenceTimestamp - The time at which the clock was last set or corrected.
+    ''' 
+    ''' OriginateTimestamp - The time at which the request departed the client for the server.
+    ''' 
+    ''' ReceiveTimestamp - The time at which the request arrived at the server.
+    ''' 
+    ''' Transmit Timestamp - The time at which the reply departed the server for client.
+    ''' 
+    ''' RoundTripDelay - The time between the departure of request and arrival of reply.
+    ''' 
+    ''' LocalClockOffset - The offset of the local clock relative to the primary reference
+    ''' source.
+    ''' 
+    ''' Initialize - Sets up data structure and prepares for connection.
+    ''' 
+    ''' Connect - Connects to the time server and populates the data structure.
+    '''	It can also update the system time.
+    ''' 
+    ''' IsResponseValid - Returns true if received data is valid and if comes from
+    ''' a NTP-compliant time server.
+    ''' 
+    ''' ToString - Returns a string representation of the object.
+    ''' 
+    ''' -----------------------------------------------------------------------------
+    ''' Structure of the standard NTP header (as described in RFC 2030)
+    '''                       1                   2                   3
+    '''   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |LI | VN  |Mode |    Stratum    |     Poll      |   Precision   |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                          Root Delay                           |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                       Root Dispersion                         |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                     Reference Identifier                      |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                                                               |
+    '''  |                   Reference Timestamp (64)                    |
+    '''  |                                                               |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                                                               |
+    '''  |                   Originate Timestamp (64)                    |
+    '''  |                                                               |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                                                               |
+    '''  |                    Receive Timestamp (64)                     |
+    '''  |                                                               |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                                                               |
+    '''  |                    Transmit Timestamp (64)                    |
+    '''  |                                                               |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                 Key Identifier (optional) (32)                |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    '''  |                                                               |
+    '''  |                                                               |
+    '''  |                 Message Digest (optional) (128)               |
+    '''  |                                                               |
+    '''  |                                                               |
+    '''  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    ''' 
+    ''' -----------------------------------------------------------------------------
+    ''' 
+    ''' SNTP Timestamp Format (as described in RFC 2030)
+    '''                         1                   2                   3
+    '''     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    ''' +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    ''' |                           Seconds                             |
+    ''' +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    ''' |                  Seconds Fraction (0-padded)                  |
+    ''' +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    ''' 
+    ''' </summary>
     Public Class SNTPClient
 
-        '// NTP Data Structure Length
-        Private Const SNTPDataLength As Byte = 47
+        ''' <summary>
+        ''' NTP Data Structure Length
+        ''' </summary>
+        Const SNTPDataLength As Byte = 47
 
-        '// NTP Data Structure (as described in RFC 2030)
+        ''' <summary>
+        ''' NTP Data Structure (as described in RFC 2030)
+        ''' </summary>
         Dim SNTPData(SNTPDataLength) As Byte
 
         '// Offset constants for timestamps in the data structure
@@ -244,22 +220,28 @@ Namespace InternetTime
         Private Const offReceiveTimestamp As Byte = 32
         Private Const offTransmitTimestamp As Byte = 40
 
-        'Leap Indicator
-        Public ReadOnly Property LeapIndicator() As _LeapIndicator
+        ''' <summary>
+        ''' Leap Indicator
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property LeapIndicator() As LeapIndicator
             Get
                 'Isolate the two most significant bits
                 Dim bVal As Byte = (SNTPData(0) >> 6)
                 Select Case bVal
-                    Case 0 : Return _LeapIndicator.NoWarning
-                    Case 1 : Return _LeapIndicator.LastMinute61
-                    Case 2 : Return _LeapIndicator.LastMinute59
-                    Case 3 : Return _LeapIndicator.Alarm
-                    Case Else : Return _LeapIndicator.Alarm
+                    Case 0 : Return LeapIndicator.NoWarning
+                    Case 1 : Return LeapIndicator.LastMinute61
+                    Case 2 : Return LeapIndicator.LastMinute59
+                    Case 3 : Return LeapIndicator.Alarm
+                    Case Else : Return LeapIndicator.Alarm
                 End Select
             End Get
         End Property
 
-        ' Version Number
+        ''' <summary>
+        ''' Version Number
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VersionNumber() As Byte
             Get
                 'Isolate bits 3 - 5
@@ -268,46 +250,52 @@ Namespace InternetTime
             End Get
         End Property
 
-        Public ReadOnly Property Mode() As _Mode
+        Public ReadOnly Property Mode() As Mode
             Get
                 'Isolate bits 0 - 3
                 Dim bVal As Byte = (SNTPData(0) And &H7)
                 Select Case bVal
                     Case 0, 6, 7
-                        Return _Mode.Unknown
+                        Return Mode.Unknown
                     Case 1
-                        Return _Mode.SymmetricActive
+                        Return Mode.SymmetricActive
                     Case 2
-                        Return _Mode.SymmetricPassive
+                        Return Mode.SymmetricPassive
                     Case 3
-                        Return _Mode.Client
+                        Return Mode.Client
                     Case 4
-                        Return _Mode.Server
+                        Return Mode.Server
                     Case 5
-                        Return _Mode.Broadcast
+                        Return Mode.Broadcast
                     Case Else
-                        Return _Mode.Unknown
+                        Return Mode.Unknown
                 End Select
             End Get
         End Property
 
-        'Stratum
-        Public ReadOnly Property Stratum() As _Stratum
+        ''' <summary>
+        ''' Stratum
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Stratum() As Stratum
             Get
                 Dim bVal As Byte = SNTPData(1)
                 If (bVal = 0) Then
-                    Return _Stratum.Unspecified
+                    Return Stratum.Unspecified
                 ElseIf (bVal = 1) Then
-                    Return _Stratum.PrimaryReference
+                    Return Stratum.PrimaryReference
                 ElseIf (bVal <= 15) Then
-                    Return _Stratum.SecondaryReference
+                    Return Stratum.SecondaryReference
                 Else
-                    Return _Stratum.Reserved
+                    Return Stratum.Reserved
                 End If
             End Get
         End Property
 
-        'Poll Interval
+        ''' <summary>
+        ''' Poll Interval
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property PollInterval() As Int32
             Get
                 '// Thanks to Jim Hollenhorst <hollenho@attbi.com>
@@ -316,7 +304,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        'Precision (in milliseconds)
+        ''' <summary>
+        ''' Precision (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Precision() As Double
             Get
                 '// Thanks to Jim Hollenhorst <hollenho@attbi.com>
@@ -325,7 +316,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        'Root Delay (in milliseconds)
+        ''' <summary>
+        ''' Root Delay (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RootDelay() As Double
             Get
                 Dim temp As Int64 = 0
@@ -334,7 +328,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        'Root Dispersion (in milliseconds)
+        ''' <summary>
+        ''' Root Dispersion (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RootDispersion() As Double
             Get
                 Dim temp As Int64 = 0
@@ -343,17 +340,20 @@ Namespace InternetTime
             End Get
         End Property
 
-        'Reference Identifier
+        ''' <summary>
+        ''' Reference Identifier
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReferenceID() As String
             Get
                 Dim val As String = ""
                 Select Case Stratum
-                    Case _Stratum.PrimaryReference Or _Stratum.Unspecified
+                    Case Stratum.PrimaryReference Or Stratum.Unspecified
                         If SNTPData(offReferenceID + 0) <> 0 Then val += Chr(SNTPData(offReferenceID + 0))
                         If SNTPData(offReferenceID + 1) <> 0 Then val += Chr(SNTPData(offReferenceID + 1))
                         If SNTPData(offReferenceID + 2) <> 0 Then val += Chr(SNTPData(offReferenceID + 2))
                         If SNTPData(offReferenceID + 3) <> 0 Then val += Chr(SNTPData(offReferenceID + 3))
-                    Case _Stratum.SecondaryReference
+                    Case Stratum.SecondaryReference
                         Select Case VersionNumber
                             Case 3 '// Version 3, Reference ID is an IPv4 address
                                 Dim Address As String = SNTPData(offReferenceID + 0).ToString() + "." + SNTPData(offReferenceID + 1).ToString() + "." + SNTPData(offReferenceID + 2).ToString() + "." + SNTPData(offReferenceID + 3).ToString()
@@ -376,7 +376,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Reference Timestamp
+        ''' <summary>
+        ''' Reference Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReferenceTimestamp() As DateTime
             Get
                 Dim time As DateTime = ComputeDate(GetMilliSeconds(offReferenceTimestamp))
@@ -386,14 +389,20 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Originate Timestamp
+        ''' <summary>
+        ''' Originate Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property OriginateTimestamp() As DateTime
             Get
                 Return ComputeDate(GetMilliSeconds(offOriginateTimestamp))
             End Get
         End Property
 
-        '// Receive Timestamp
+        ''' <summary>
+        ''' Receive Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReceiveTimestamp() As DateTime
             Get
                 Dim time As DateTime = ComputeDate(GetMilliSeconds(offReceiveTimestamp))
@@ -403,7 +412,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Transmit Timestamp
+        ''' <summary>
+        ''' Transmit Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public Property TransmitTimestamp() As DateTime
             Get
                 Dim time As DateTime = ComputeDate(GetMilliSeconds(offTransmitTimestamp))
@@ -416,10 +428,15 @@ Namespace InternetTime
             End Set
         End Property
 
-        '// Destination Timestamp
+        ''' <summary>
+        ''' Destination Timestamp
+        ''' </summary>
         Public DestinationTimestamp As DateTime
 
-        '// Round trip delay (in milliseconds)
+        ''' <summary>
+        ''' Round trip delay (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RoundTripDelay() As Int64
             Get
                 '// Thanks to DNH <dnharris@csrlink.net>
@@ -428,7 +445,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Local clock offset (in milliseconds)
+        ''' <summary>
+        ''' Local clock offset (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LocalClockOffset() As Int64
             Get
                 '// Thanks to DNH <dnharris@csrlink.net>
@@ -437,7 +457,11 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Compute date, given the number of milliseconds since January 1, 1900
+        ''' <summary>
+        ''' Compute date, given the number of milliseconds since January 1, 1900
+        ''' </summary>
+        ''' <param name="milliseconds"></param>
+        ''' <returns></returns>
         Private Function ComputeDate(ByVal milliseconds As Decimal) As DateTime
             Dim span As TimeSpan = TimeSpan.FromMilliseconds(milliseconds)
             Dim time As DateTime = New DateTime(1900, 1, 1)
@@ -445,7 +469,11 @@ Namespace InternetTime
             Return time
         End Function
 
-        '// Compute the number of milliseconds, given the offset of a 8-byte array
+        ''' <summary>
+        ''' Compute the number of milliseconds, given the offset of a 8-byte array
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         Private Function GetMilliSeconds(ByVal offset As Byte) As Decimal
             Dim intPart As Decimal = 0, fractPart As Decimal = 0
             Dim i As Int32
@@ -459,7 +487,11 @@ Namespace InternetTime
             Return milliseconds
         End Function
 
-        '// Compute the 8-byte array, given the date
+        ''' <summary>
+        ''' Compute the 8-byte array, given the date
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <param name="dateval"></param>
         Private Sub SetDate(ByVal offset As Byte, ByVal dateval As DateTime)
             Dim intPart As Decimal = 0, fractPart As Decimal = 0
             Dim StartOfCentury As DateTime = New DateTime(1900, 1, 1, 0, 0, 0)
@@ -479,7 +511,9 @@ Namespace InternetTime
             Next
         End Sub
 
-        '// Initialize the NTPClient data
+        ''' <summary>
+        ''' Initialize the NTPClient data
+        ''' </summary>
         Private Sub Initialize()
             'Set version number to 4 and Mode to 3 (client)
             SNTPData(0) = &H1B
@@ -496,7 +530,10 @@ Namespace InternetTime
             TimeServer = host
         End Sub
 
-        '// Connect to the time server and update system time
+        ''' <summary>
+        ''' Connect to the time server and update system time
+        ''' </summary>
+        ''' <param name="UpdateSystemTime"></param>
         Public Sub Connect(ByVal UpdateSystemTime As Boolean)
             'Resolve server address
             Dim hostadd As IPHostEntry = Dns.GetHostEntry(TimeServer) ' Dns.Resolve(TimeServer)
@@ -521,54 +558,60 @@ Namespace InternetTime
             End If
         End Sub
 
-        '// Check if the response from server is valid
+        ''' <summary>
+        ''' Check if the response from server is valid
+        ''' </summary>
+        ''' <returns></returns>
         Public Function IsResponseValid() As Boolean
-            If (SNTPData.Length < SNTPDataLength Or Mode <> _Mode.Server) Then
+            If (SNTPData.Length < SNTPDataLength Or Mode <> Mode.Server) Then
                 Return False
             Else
                 Return True
             End If
         End Function
 
-        '// Converts the object to string
+        ''' <summary>
+        ''' Converts the object to string
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder("")
 
             sb.Append("Leap Indicator: ")
             Select Case LeapIndicator
-                Case _LeapIndicator.NoWarning
+                Case LeapIndicator.NoWarning
                     sb.Append("No warning")
-                Case _LeapIndicator.LastMinute61
+                Case LeapIndicator.LastMinute61
                     sb.Append("Last minute has 61 seconds")
-                Case _LeapIndicator.LastMinute59
+                Case LeapIndicator.LastMinute59
                     sb.Append("Last minute has 59 seconds")
-                Case _LeapIndicator.Alarm
+                Case LeapIndicator.Alarm
                     sb.Append("Alarm Condition (clock not synchronized)")
             End Select
             sb.Append(vbCrLf & "Version number: " + VersionNumber.ToString())
             sb.Append(vbCrLf & "Mode: ")
             Select Case Mode
-                Case _Mode.Unknown
+                Case Mode.Unknown
                     sb.Append("Unknown")
-                Case _Mode.SymmetricActive
+                Case Mode.SymmetricActive
                     sb.Append("Symmetric Active")
-                Case _Mode.SymmetricPassive
+                Case Mode.SymmetricPassive
                     sb.Append("Symmetric Pasive")
-                Case _Mode.Client
+                Case Mode.Client
                     sb.Append("Client")
-                Case _Mode.Server
+                Case Mode.Server
                     sb.Append("Server")
-                Case _Mode.Broadcast
+                Case Mode.Broadcast
                     sb.Append("Broadcast")
             End Select
             sb.Append(vbCrLf & "Stratum: ")
             Select Case Stratum
-                Case _Stratum.Unspecified
-                Case _Stratum.Reserved
+                Case Stratum.Unspecified
+                Case Stratum.Reserved
                     sb.Append("Unspecified")
-                Case _Stratum.PrimaryReference
+                Case Stratum.PrimaryReference
                     sb.Append("Primary Reference")
-                Case _Stratum.SecondaryReference
+                Case Stratum.SecondaryReference
                     sb.Append("Secondary Reference")
             End Select
             sb.Append(vbCrLf & "Local time: " + TransmitTimestamp.ToString())
@@ -584,38 +627,26 @@ Namespace InternetTime
             Return sb.ToString
         End Function
 
-        '// SYSTEMTIME structure used by SetSystemTime
-        <StructLayout(LayoutKind.Sequential)> Private Structure SYSTEMTIME
-            Public year As Int16
-            Public month As Int16
-            Public dayOfWeek As Int16
-            Public day As Int16
-            Public hour As Int16
-            Public minute As Int16
-            Public second As Int16
-            Public milliseconds As Int16
-        End Structure
-
-        <DllImport("KERNEL32.DLL", EntryPoint:="SetLocalTime", SetLastError:=True, CharSet:=CharSet.Unicode, ExactSpelling:=False, CallingConvention:=CallingConvention.StdCall)>
-        Private Shared Function SetLocalTime(ByRef time As SYSTEMTIME) As Int32
-        End Function
-
-        '// Set system time according to transmit timestamp
+        ''' <summary>
+        ''' Set system time according to transmit timestamp
+        ''' </summary>
         Private Sub SetTime()
             Dim st As SYSTEMTIME
             Dim trts As DateTime = DateTime.Now.AddMilliseconds(LocalClockOffset)
-            st.year = trts.Year
-            st.month = trts.Month
-            st.dayOfWeek = trts.DayOfWeek
-            st.day = trts.Day
-            st.hour = trts.Hour
-            st.minute = trts.Minute
-            st.second = trts.Second
-            st.milliseconds = trts.Millisecond
+            st.Year = trts.Year
+            st.Month = trts.Month
+            st.DayOfWeek = trts.DayOfWeek
+            st.Day = trts.Day
+            st.Hour = trts.Hour
+            st.Minute = trts.Minute
+            st.Second = trts.Second
+            st.Miliseconds = trts.Millisecond
             SetLocalTime(st)
         End Sub
 
-        '// The URL of the time server we're connecting to
+        ''' <summary>
+        ''' The URL of the time server we're connecting to
+        ''' </summary>
         Private TimeServer As String
     End Class
 End Namespace

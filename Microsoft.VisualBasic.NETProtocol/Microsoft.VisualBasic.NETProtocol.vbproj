@@ -93,8 +93,10 @@
     <Compile Include="AppServer\PushAPI\InvokeAPI.vb" />
     <Compile Include="AppServer\PushServer.vb" />
     <Compile Include="Captcha.vb" />
-    <Compile Include="InternetTime.vb" />
-    <Compile Include="SynchronizingTime.vb" />
+    <Compile Include="InternetTime\WinAPI.vb" />
+    <Compile Include="InternetTime\Constant.vb" />
+    <Compile Include="InternetTime\InternetTime.vb" />
+    <Compile Include="InternetTime\SynchronizingTime.vb" />
     <Compile Include="Protocols\POST.vb" />
     <Compile Include="Protocols\PushServices.vb" />
     <Compile Include="Protocols\InvokeAPI.vb" />
