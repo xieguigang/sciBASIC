@@ -661,7 +661,7 @@ Public Module App
     End Function
 
     ''' <summary>
-    '''
+    ''' Folk this program itself for the large amount data batch processing.
     ''' </summary>
     ''' <param name="CLI"></param>
     ''' <param name="parallel">小于等于零表示非并行化，单线程任务</param>

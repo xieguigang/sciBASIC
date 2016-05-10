@@ -26,7 +26,7 @@ Namespace CommandLine
         ''' <summary>
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
-        Protected _CommandInfoHash As New Dictionary(Of String, APIEntryPoint)
+        Protected __API_InfoHash As New Dictionary(Of String, APIEntryPoint)
         Protected _nsRoot As String
 
 #Region "Optional delegates"
@@ -54,7 +54,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function ToDictionary() As Dictionary(Of String, APIEntryPoint)
-            Return _CommandInfoHash
+            Return __API_InfoHash
         End Function
 
         Public Overrides Function ToString() As String
@@ -107,8 +107,8 @@ Namespace CommandLine
         ''' <returns></returns>
         Private Function __methodInvoke(commandName As String, argvs As Object(), help_argvs As String()) As Integer
 
-            If _CommandInfoHash.ContainsKey(commandName) Then _
-                Return _CommandInfoHash(commandName).Execute(argvs)
+            If __API_InfoHash.ContainsKey(commandName) Then _
+                Return __API_InfoHash(commandName).Execute(argvs)
 
             If String.Equals(commandName, "?") Then
                 If help_argvs.IsNullOrEmpty Then
@@ -123,7 +123,7 @@ Namespace CommandLine
 
             ElseIf String.Equals(commandName, "man") Then
                 Dim sdk As String = SDKdocs()
-                Dim DocPath As String = $"{_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location}.txt"
+                Dim DocPath As String = $"{__API_InfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location}.txt"
 
                 Call Console.WriteLine(DebuggerArgs.DebuggerHelps)
                 Call Console.WriteLine(sdk)
@@ -186,13 +186,13 @@ Namespace CommandLine
             Dim Index As Integer = 1
 
             Call sb.AppendLine()
-            Call sb.AppendLine($"Module AssemblyName: {_CommandInfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
+            Call sb.AppendLine($"Module AssemblyName: {__API_InfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
             Call sb.AppendLine("Root namespace: " & Me._nsRoot)
             Call sb.AppendLine(vbCrLf & vbCrLf & HelpSummary())
             Call sb.AppendLine("Commands")
             Call sb.AppendLine("--------------------------------------------------------------------------------")
 
-            For Each CmdlEntry As APIEntryPoint In _CommandInfoHash.Values
+            For Each CmdlEntry As APIEntryPoint In __API_InfoHash.Values
                 sb.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
                 Index += 1
             Next
@@ -230,8 +230,8 @@ Namespace CommandLine
         Public Sub AddCommand(Command As APIEntryPoint)
             Dim NameId As String = Command.Name.ToLower
 
-            If Not _CommandInfoHash.ContainsKey(NameId) Then
-                Call _CommandInfoHash.Add(NameId, Command)
+            If Not __API_InfoHash.ContainsKey(NameId) Then
+                Call __API_InfoHash.Add(NameId, Command)
             End If
         End Sub
 
@@ -247,9 +247,8 @@ Namespace CommandLine
             If String.IsNullOrEmpty(CommandName) Then 'List all commands.
                 Call Console.WriteLine(HelpSummary)
             Else
-                If _CommandInfoHash.ContainsKey(CommandName.ToLower.ShadowCopy(CommandName)) Then
-                    Dim CommandInfo = _CommandInfoHash(CommandName)
-                    Console.WriteLine(vbCrLf & CommandInfo.HelpInformation)
+                If __API_InfoHash.ContainsKey(CommandName.ToLower.ShadowCopy(CommandName)) Then
+                    Call __API_InfoHash(CommandName).PrintHelp
                 Else
                     Dim lst As String() = Me.ListPossible(CommandName)
 
@@ -278,13 +277,13 @@ Namespace CommandLine
         Private Function HelpSummary() As String
             Dim sb As StringBuilder = New StringBuilder(1024)
             Dim NameMaxLen As Integer = (From commandInfo As APIEntryPoint
-                                         In _CommandInfoHash.Values
+                                         In __API_InfoHash.Values
                                          Select Len(commandInfo.Name)).Max
 
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
 
-            For Each commandInfo As APIEntryPoint In _CommandInfoHash.Values
+            For Each commandInfo As APIEntryPoint In __API_InfoHash.Values
                 Dim blank As String =
                     New String(c:=" "c, count:=NameMaxLen - Len(commandInfo.Name))
                 Dim line As String = String.Format(" {0}:  {1}{2}", commandInfo.Name, blank, commandInfo.Info)
@@ -305,7 +304,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property ListCommandInfo As EntryPoints.APIEntryPoint()
             Get
-                Return _CommandInfoHash.Values.ToArray
+                Return __API_InfoHash.Values.ToArray
             End Get
         End Property
 
@@ -320,7 +319,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Sub New(type As Type, <CallerMemberName> Optional caller As String = Nothing)
             For Each cInfo As APIEntryPoint In __getsAllCommands(type, False)
-                Call _CommandInfoHash.Add(cInfo.Name.ToLower, cInfo)
+                Call __API_InfoHash.Add(cInfo.Name.ToLower, cInfo)
             Next
             Me._nsRoot = type.Namespace
             Me._Stack = caller
@@ -470,8 +469,8 @@ Namespace CommandLine
 #Region "Implements System.Collections.Generic.IReadOnlyDictionary(Of String, CommandInfo)"
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)) Implements IEnumerable(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).GetEnumerator
-            For Each key As String In Me._CommandInfoHash.Keys
-                Yield New KeyValuePair(Of String, EntryPoints.APIEntryPoint)(key, Me._CommandInfoHash(key))
+            For Each key As String In Me.__API_InfoHash.Keys
+                Yield New KeyValuePair(Of String, EntryPoints.APIEntryPoint)(key, Me.__API_InfoHash(key))
             Next
         End Function
 
@@ -480,7 +479,7 @@ Namespace CommandLine
         End Function
 
         Public Sub Add(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Add
-            Call _CommandInfoHash.Add(item.Key, item.Value)
+            Call __API_InfoHash.Add(item.Key, item.Value)
         End Sub
 
         ''' <summary>
@@ -488,15 +487,15 @@ Namespace CommandLine
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Clear
-            Call _CommandInfoHash.Clear()
+            Call __API_InfoHash.Clear()
         End Sub
 
         Public Function Contains(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) As Boolean Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Contains
-            Return _CommandInfoHash.Contains(item)
+            Return __API_InfoHash.Contains(item)
         End Function
 
         Public Sub CopyTo(array() As KeyValuePair(Of String, EntryPoints.APIEntryPoint), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).CopyTo
-            Call _CommandInfoHash.ToArray.CopyTo(array, arrayIndex)
+            Call __API_InfoHash.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -507,7 +506,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Count
             Get
-                Return Me._CommandInfoHash.Count
+                Return Me.__API_InfoHash.Count
             End Get
         End Property
 
@@ -518,11 +517,11 @@ Namespace CommandLine
         End Property
 
         Public Function Remove(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) As Boolean Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Remove
-            Return _CommandInfoHash.Remove(item.Key)
+            Return __API_InfoHash.Remove(item.Key)
         End Function
 
         Public Sub Add(key As String, value As EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Add
-            Call _CommandInfoHash.Add(key, value)
+            Call __API_InfoHash.Add(key, value)
         End Sub
 
         ''' <summary>
@@ -532,7 +531,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function ExistsCommand(CommandName As String) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).ContainsKey
-            Return Me._CommandInfoHash.ContainsKey(CommandName.ToLower)
+            Return Me.__API_InfoHash.ContainsKey(CommandName.ToLower)
         End Function
 
         ''' <summary>
@@ -542,7 +541,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As EntryPoints.APIEntryPoint Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Item
             Get
-                Return Me._CommandInfoHash(key)
+                Return Me.__API_InfoHash(key)
             End Get
             Set(value As EntryPoints.APIEntryPoint)
                 'DO NOTHING
@@ -550,11 +549,11 @@ Namespace CommandLine
         End Property
 
         Public Function GetPossibleCommand(name As String) As EntryPoints.APIEntryPoint
-            If Me._CommandInfoHash.ContainsKey(name.ToLower.ShadowCopy(name)) Then
-                Return _CommandInfoHash(name)
+            If Me.__API_InfoHash.ContainsKey(name.ToLower.ShadowCopy(name)) Then
+                Return __API_InfoHash(name)
             Else
                 Dim LQuery = (From x As KeyValuePair(Of String, EntryPoints.APIEntryPoint)
-                              In _CommandInfoHash
+                              In __API_InfoHash
                               Let similarity = LevenshteinDistance.ComputeDistance(x.Key, name)
                               Where Not similarity Is Nothing
                               Select similarity.Score, x.Value
@@ -574,7 +573,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function ListPossible(Name As String) As String()
             Name = Name.ToLower
-            Dim LQuery = (From x As String In _CommandInfoHash.Keys.AsParallel
+            Dim LQuery = (From x As String In __API_InfoHash.Keys.AsParallel
                           Let lev = LevenshteinDistance.ComputeDistance(x, Name)
                           Where Not lev Is Nothing AndAlso
                               lev.Score > 0.3
@@ -592,21 +591,21 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property ListCommandsEntryName As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
             Get
-                Return Me._CommandInfoHash.Keys
+                Return Me.__API_InfoHash.Keys
             End Get
         End Property
 
         Public Function Remove(CommandName As String) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Remove
-            Return _CommandInfoHash.Remove(CommandName)
+            Return __API_InfoHash.Remove(CommandName)
         End Function
 
         Public Function TryGetValue(key As String, ByRef value As EntryPoints.APIEntryPoint) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).TryGetValue
-            Return Me._CommandInfoHash.TryGetValue(key, value)
+            Return Me.__API_InfoHash.TryGetValue(key, value)
         End Function
 
         Public ReadOnly Property Values As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
             Get
-                Return Me._CommandInfoHash.Values
+                Return Me.__API_InfoHash.Values
             End Get
         End Property
 #End Region
