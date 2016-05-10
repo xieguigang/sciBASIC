@@ -27,6 +27,11 @@ Namespace ComponentModel.Settings.Inf
             Return GetType(T).MapParser
         End Function
 
+        ''' <summary>
+        ''' Get mapping data, includes section name and keys
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function MapParser(type As Type) As NamedValue(Of BindProperty())
             Dim nameCLS As ClassName = type.GetAttribute(Of ClassName)
@@ -89,11 +94,24 @@ Namespace ComponentModel.Settings.Inf
             Next
         End Sub
 
+        ''' <summary>
+        ''' Load a ini section profile data from a ini file.
+        ''' </summary>
+        ''' <typeparam name="T">The section mapper</typeparam>
+        ''' <param name="path">*.ini file</param>
+        ''' <returns></returns>
         <Extension>
         Public Function LoadIni(Of T As Class)(path As String) As T
             Return New IniFile(path).ClassWriter(Of T)
         End Function
 
+        ''' <summary>
+        ''' Write ini section into data file.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x">A section class in the ini profile file.</param>
+        ''' <param name="ini"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function WriteClass(Of T As Class)(x As T, ini As String) As Boolean
             Try
