@@ -232,6 +232,7 @@
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AbstractBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AnimatedBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
@@ -245,7 +246,9 @@
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
+    <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
+    <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
     <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
@@ -433,7 +436,7 @@
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\HistoryStacks.vb" />
-    <Compile Include="ConsoleDevices\InteractiveIODevice\SystemConsoleObject.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\Terminal.vb" />
     <Compile Include="ConsoleDevices\Utility\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStats.vb" />

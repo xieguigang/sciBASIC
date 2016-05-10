@@ -1,12 +1,12 @@
 ﻿Imports STDIO = System.Console
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     ''' <summary>
     ''' Represents the standard input, output, and error streams for console applications. 交互式的命令行终端
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class I_SystemConsoleObject : Implements STDIO__.I_ConsoleDeviceHandle
+    Public MustInherit Class Terminal : Implements STDIO__.I_ConsoleDeviceHandle
 
 #Region "Console Member Inherits Details"
 

@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
 Imports System.Xml.Serialization
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     Public Class HistoryStacks : Inherits ITextFile
         Implements ISaveHandle

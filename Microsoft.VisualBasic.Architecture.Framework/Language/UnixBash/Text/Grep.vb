@@ -120,11 +120,11 @@ Namespace Language.UnixBash
             For Each line As SeqValue(Of String) In source.SeqIterator
                 If Regex.Match(__regx, line.obj, options).Success Then
                     If Not reversed Then
-                        Yield __out(line.obj, i, line.Pos)
+                        Yield __out(line.obj, i, line.i)
                     End If
                 Else
                     If reversed Then
-                        Yield __out(line.obj, i, line.Pos)
+                        Yield __out(line.obj, i, line.i)
                     End If
                 End If
             Next

@@ -133,7 +133,7 @@ Namespace Parallel
             End Sub
 
             Private Sub FillData(byteBuffer As Byte())
-                resultBuffer = byteBuffer.DeSerialize(Of T())
+                '  resultBuffer = byteBuffer.DeSerialize(Of T())
                 TaskComplete = True
             End Sub
         End Class

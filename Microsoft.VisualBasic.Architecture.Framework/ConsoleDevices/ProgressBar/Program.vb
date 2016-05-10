@@ -4,7 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     Public Module Program
 

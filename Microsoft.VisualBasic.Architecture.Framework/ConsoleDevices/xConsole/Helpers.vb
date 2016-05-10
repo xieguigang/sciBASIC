@@ -2,7 +2,7 @@
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     ''' <summary>
     ''' Console helper. http://blogs.microsoft.co.il/blogs/pavely/archive/2009/07/23/changing-console-fonts.aspx
@@ -34,7 +34,10 @@ Namespace ConsoleDevice
         End Function
 
         <DllImport("kernel32")>
-        Private Function GetConsoleFontInfo(hOutput As IntPtr, <MarshalAs(UnmanagedType.Bool)> bMaximize As Boolean, count As UInteger, <MarshalAs(UnmanagedType.LPArray), Out> fonts As ConsoleFont()) As Boolean
+        Private Function GetConsoleFontInfo(hOutput As IntPtr,
+                                            <MarshalAs(UnmanagedType.Bool)> bMaximize As Boolean,
+                                            count As UInteger,
+                                            <MarshalAs(UnmanagedType.LPArray), Out> fonts As ConsoleFont()) As Boolean
         End Function
 
         <DllImport("kernel32")>
@@ -69,5 +72,6 @@ Namespace ConsoleDevice
         End Structure
 
 #End Region
+
     End Module
 End Namespace

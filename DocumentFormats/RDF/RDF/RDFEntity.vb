@@ -1,12 +1,19 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
 ''' 在rdf之中被描述的对象实体
 ''' </summary>
 ''' 
-<XmlType("Description")>
+<XmlType(RDF.RDF_PREFIX & "Description")>
 Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
+
+    ''' <summary>
+    ''' rdf:ID
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute("ID")> Public Property Id As String
 
     ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
@@ -21,4 +28,34 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' <returns></returns>
     <XmlIgnore>
     Public Property Properties As Dictionary(Of String, RDFEntity)
+End Class
+
+Public MustInherit Class EntityProperty
+
+    ''' <summary>
+    ''' rdf:datatype
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute("rdf_datatype")> Public Property dataType As String
+    ''' <summary>
+    ''' rdf:resource
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute("rdf_resource")> Public Property resource As String
+    Public Property value As String
+
+    Sub New()
+    End Sub
+
+    Protected Sub New(dt As String)
+        dataType = dt
+    End Sub
+
+    Protected Sub New(type As Type)
+        Call Me.New(type.SchemaDataType)
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class

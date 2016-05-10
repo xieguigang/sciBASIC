@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.ConsoleDevice
-Imports Microsoft.VisualBasic.ConsoleDevice.Utility
+Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 ''' <summary>
@@ -56,18 +55,24 @@ Public Module VBDebugger
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
     '''
-    <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
-        Dim str = $"[DEBUG {Now.ToString}]{_Indent(Indent)} {MSG}"
-
+    <Extension> Public Sub __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0)
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(str)
+            Dim head As String = $"DEBUG {Now.ToString}"
+            Dim str As String = $"{_Indent(Indent)} {MSG}"
+            Dim cl As ConsoleColor = Console.ForegroundColor
+
+            Call Console.Write("[")
+            Console.ForegroundColor = ConsoleColor.DarkGreen
+            Call Console.Write(head)
+            Console.ForegroundColor = cl
+            Call Console.Write("]")
+
+            Call Console.WriteLine(Str)
 #If DEBUG Then
-            Call Debug.WriteLine(str)
+            Call Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
-
-        Return str
-    End Function
+    End Sub
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.
@@ -191,21 +196,21 @@ Public Module VBDebugger
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
     '''
-    <Extension> Public Function __DEBUG_ECHO(MSG As StringBuilder, Optional Indent As Integer = 0) As String
-        Return MSG.ToString.__DEBUG_ECHO(Indent)
-    End Function
+    <Extension> Public Sub __DEBUG_ECHO(MSG As StringBuilder, Optional Indent As Integer = 0)
+        Call MSG.ToString.__DEBUG_ECHO(Indent)
+    End Sub
 
-    <Extension> Public Function __DEBUG_ECHO(Of T)(value As T, <CallerMemberName> Optional memberName As String = "") As String
-        Return (Scripting.InputHandler.ToString(value) & "              @" & memberName).__DEBUG_ECHO
-    End Function
+    <Extension> Public Sub __DEBUG_ECHO(Of T)(value As T, <CallerMemberName> Optional memberName As String = "")
+        Call (Scripting.InputHandler.ToString(value) & "              @" & memberName).__DEBUG_ECHO
+    End Sub
 
     Public Function WhoseThere(<CallerMemberName> Optional memberName As String = "") As String
         Return memberName
     End Function
 
-    <Extension> Public Function Echo(Of T)(array As Generic.IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "") As String
-        Return String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
-    End Function
+    <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")
+      Call  String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
+    End Sub
 
     ''' <summary>
     ''' Alias for <see cref="Console.Write"/>

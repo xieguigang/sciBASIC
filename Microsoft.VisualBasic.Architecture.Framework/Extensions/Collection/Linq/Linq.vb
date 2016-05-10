@@ -14,6 +14,15 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        <Extension>
+        Public Function ToArray(Of T)(source As IEnumerable(Of Object)) As T()
+            If source Is Nothing Then
+                Return New T() {}
+            Else
+                Return (From x As Object In source Select DirectCast(x, T)).ToArray
+            End If
+        End Function
+
         ''' <summary>
         ''' A query proxy function makes your linq not so easily crashed due to the unexpected null reference collection as linq source.
         ''' </summary>
@@ -153,6 +162,11 @@ Namespace Linq
         ''' <returns>An array consist of source with n elements.</returns>
         <Extension> Public Function CopyVector(Of T)(source As T, n As Integer) As T()
             Return n.ToArray(Function(x) source)
+        End Function
+
+        <Extension>
+        Public Function CopyVector(Of T)(n As Integer, source As Func(Of T)) As T()
+            Return n.ToArray(Function(x) source())
         End Function
 
         <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer, ByRef out As T) As T

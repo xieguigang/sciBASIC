@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports System.Text
@@ -261,11 +262,11 @@ Public Module ProgramPathSearchTool
         Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
 
         If InStr(file, "../") = 1 Then
-            Parent = FileIO.FileSystem.GetParentPath(App.CurrentWork)
+            Parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
             Tokens = Tokens.Skip(1).ToArray
             Parent &= "/"
         ElseIf InStr(file, "./") = 1 Then
-            Parent = App.CurrentWork
+            Parent = App.CurrentDirectory
             Tokens = Tokens.Skip(1).ToArray
             Parent &= "/"
         Else
@@ -343,15 +344,16 @@ Public Module ProgramPathSearchTool
     <Extension>
     Public Function LoadSourceEntryList(<Parameter("Dir.Source", "The source directory which will be searchs for file.")> source As String,
                                         <Parameter("List.Ext", "The list of the file extension.")> ext As String(),
-                                        Optional TopLevel As Boolean = True) As Dictionary(Of String, String)
+                                        Optional topLevel As Boolean = True) As Dictionary(Of String, String)
 
         If ext.IsNullOrEmpty Then
             ext = {"*.*"}
         End If
 
         Dim LQuery = (From path As String
-                      In FileIO.FileSystem.GetFiles(source, If(TopLevel, FileIO.SearchOption.SearchTopLevelOnly, FileIO.SearchOption.SearchAllSubDirectories), ext).AsParallel
-                      Select ID = IO.Path.GetFileNameWithoutExtension(path), path
+                      In If(topLevel, ls - l, ls - l - r) - wildcards(ext) <= source
+                      Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                          path
                       Group By ID Into Group).ToArray
         ext = (From value As String In ext Select value.Split(CChar(".")).Last.ToLower).ToArray
         Dim Dict As Dictionary(Of String, String) = LQuery.ToDictionary(Function(Entry) Entry.ID,
@@ -362,9 +364,11 @@ Public Module ProgramPathSearchTool
         Dict = (From Entry
                 In Dict
                 Where Not String.IsNullOrEmpty(Entry.Value)
-                Select Entry).ToDictionary(Function(obj) obj.Key, elementSelector:=Function(obj) obj.Value)
+                Select Entry) _
+                    .ToDictionary(Function(x) x.Key,
+                                  Function(x) x.Value)
 
-        Call Console.WriteLine($"[DEBUG {Now.ToString}] {NameOf(ProgramPathSearchTool)} load {Dict.Count} source entry...")
+        Call $"{NameOf(ProgramPathSearchTool)} load {Dict.Count} source entry...".__DEBUG_ECHO
 
         Return Dict
     End Function
@@ -701,8 +705,8 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimFileExt(file As String) As String
-        Dim fileInfo = FileIO.FileSystem.GetFileInfo(file)
-        Dim Name As String = IO.Path.GetFileNameWithoutExtension(file)
+        Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
+        Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
         Return $"{fileInfo.Directory.FullName}/{Name}"
     End Function
 
@@ -718,7 +722,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 进行安全的复制，出现错误不会导致应用程序崩溃
+    ''' 进行安全的复制，出现错误不会导致应用程序崩溃，大文件不推荐使用这个函数进行复制
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="copyTo"></param>
@@ -726,7 +730,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI("SafeCopyTo")>
     Public Function SafeCopyTo(source As String, copyTo As String) As Boolean
         Try
-            Dim buf As Byte() = File.ReadAllBytes(source)
+            Dim buf As Byte() = IO.File.ReadAllBytes(source)
             Call buf.FlushStream(copyTo)
         Catch ex As Exception
             Call App.LogException(New Exception($"{source.ToFileURL} ===> {copyTo.ToFileURL}", ex))

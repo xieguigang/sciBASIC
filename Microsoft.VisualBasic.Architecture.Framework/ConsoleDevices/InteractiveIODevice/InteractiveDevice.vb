@@ -1,14 +1,14 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 
-Namespace ConsoleDevice
+Namespace Terminal
 
-    Public Class InteractiveDevice : Inherits ConsoleDevice.I_SystemConsoleObject
+    Public Class InteractiveDevice : Inherits Terminal
         Implements System.IDisposable
         Implements ISaveHandle
 
         Dim _innerBuffer As StringBuilder = New StringBuilder(2048)
-        Dim _cmdsHistory As ConsoleDevice.HistoryStacks
+        Dim _cmdsHistory As HistoryStacks
         Dim Blanks As String
 
         ''' <summary>

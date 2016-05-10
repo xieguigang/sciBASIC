@@ -1,14 +1,17 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic
 
 Module CLI
 
-    <ExportAPI("Change", Usage:="Change Ext <*.ext> As <*.ext> [In <DIR> /all]")>
+    <ExportAPI("Change",
+               Usage:="Change Ext <*.ext> As <*.ext> [In <DIR> /all]")>
     Public Function ChangeExt(args As CommandLine.CommandLine) As Integer
         Dim fromExt As String = args("ext").Split("."c).Last
         Dim toExt As String = "." & args("as").Split("."c).Last
-        Dim fromDIR As String = args.GetValue("in", App.CurrentWork)
+        Dim fromDIR As String = args.GetValue("in", App.CurrentDirectory)
         Dim method As FileIO.SearchOption =
             If(args.GetBoolean("/all"),
             FileIO.SearchOption.SearchAllSubDirectories,
@@ -30,7 +33,7 @@ Module CLI
     Public Function Replace(args As CommandLine.CommandLine) As Integer
         Dim from As String = args("from")
         Dim toS As String = args("to")
-        Dim fromDIR As String = args.GetValue("in", App.CurrentWork)
+        Dim fromDIR As String = args.GetValue("in", App.CurrentDirectory)
         Dim lstExt As String() = args.GetValue("limits", "*.*").Split(";"c).ToArray(Function(x) "*." & x.Split("."c).Last)
         Dim method As FileIO.SearchOption =
             If(args.GetBoolean("/all"),
@@ -77,19 +80,26 @@ Module CLI
         Return True
     End Function
 
-    <ExportAPI("Copys", Usage:="Copys From <DIR> to <DIR> NameOf <file_name> /no-name")>
+    <ExportAPI("Copys",
+               Usage:="Copys From <DIR> to <DIR> [NameOf <file_name> /no-name /parentName]")>
+    <ParameterInfo("NameOf", True,
+                   Description:="Default is ""*.*"".")>
     Public Function Copy(args As CommandLine.CommandLine) As Integer
         Dim fromDIR As String = args("from")
         Dim copyToDIR As String = args("to")
         Dim name As String = args("nameof")
-        Dim files = FileIO.FileSystem.GetFiles(fromDIR, FileIO.SearchOption.SearchAllSubDirectories, name)
         Dim noName As Boolean = args.GetBoolean("/no-name")
         Dim ext As String = name.Split("."c).Last
+        Dim parentName As Boolean = args.GetBoolean("/parentName")
 
         Call FileIO.FileSystem.CreateDirectory(copyToDIR)
 
-        For Each file As String In files
-            Dim dest As String = __copyTo(file, copyToDIR, fromDIR, noName) & ext
+        If String.IsNullOrEmpty(name) Then
+            name = "*.*"
+        End If
+
+        For Each file As String In ls - l - r - wildcards(name) <= fromDIR
+            Dim dest As String = __copyTo(file, copyToDIR, fromDIR, noName, parentName, ext)
             Try
                 Call FileIO.FileSystem.DeleteFile(dest)
             Catch ex As Exception
@@ -110,17 +120,18 @@ Module CLI
     Private Function __copyTo(source As String,
                               copyToDIR As String,
                               from As String,
-                              noName As String) As String
+                              noName As Boolean,
+                              parentName As Boolean,
+                              ext As String) As String
 
-        Dim sourInfo = FileIO.FileSystem.GetFileInfo(source)
+        Dim name As String = If(String.IsNullOrEmpty(ext),
+            FileIO.FileSystem.GetFileInfo(source).Name,
+            source.BaseName & "." & ext)
 
-        source = Mid(sourInfo.FullName, FileIO.FileSystem.GetDirectoryInfo(from).FullName.Length + 2)
-        source = source.Replace("\", "/").Replace("/", ".")
-
-        If noName Then
-            source = source.Replace(sourInfo.Name, "")
+        If parentName Then
+            name = source.ParentDirName & "-" & name
         End If
 
-        Return copyToDIR & "/" & source
+        Return copyToDIR & "/" & name
     End Function
 End Module

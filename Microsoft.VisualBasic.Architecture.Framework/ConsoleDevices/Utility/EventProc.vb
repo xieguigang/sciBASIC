@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-Namespace ConsoleDevice.Utility
+Namespace Terminal.Utility
 
     Public Class EventProc
 

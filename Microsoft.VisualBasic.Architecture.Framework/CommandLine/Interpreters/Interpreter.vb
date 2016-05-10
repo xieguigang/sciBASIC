@@ -1,14 +1,11 @@
-﻿Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
-
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports System.Reflection
-
-Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
-Imports System.Runtime.CompilerServices
 
 #Const NET_45 = 0
 
@@ -132,6 +129,9 @@ Namespace CommandLine
                 Call Console.WriteLine(sdk)
                 Call FileIO.FileSystem.WriteAllText(DocPath, sdk, append:=False)
                 Return 0
+
+            ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
+                Return BashShell()
 
             Else
                 If commandName.FileExists AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄

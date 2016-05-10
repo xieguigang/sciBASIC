@@ -2,7 +2,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     Public MustInherit Class AbstractBar
 

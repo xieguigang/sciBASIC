@@ -1,4 +1,4 @@
-﻿Namespace ConsoleDevice.STDIO__
+﻿Namespace Terminal.STDIO__
 
     ''' <summary>
     ''' Represents the standard input, output, and error streams for console applications.(表示一个输入输出流控制台界面接口)

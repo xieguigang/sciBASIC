@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices.Marshal
 
-Namespace Marshal
+Namespace Emit.Marshal
 
     Public Class [Integer] : Inherits IntPtr(Of Integer)
 

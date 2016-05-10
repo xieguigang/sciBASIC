@@ -30,6 +30,13 @@ Namespace Language
             Return New FirstOrDefaultHelper(Of T)([default])
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T">Is the type of linq source</typeparam>
+        ''' <typeparam name="V">Is the type of value output</typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         Public Function Exec(Of T, V)(source As IEnumerable(Of T)) As ToArrayHelper(Of T, V)
             Return New ToArrayHelper(Of T, V)(source)
         End Function
@@ -247,7 +254,7 @@ Namespace Language
         Public Shared Operator <=(cls As ToArrayHelper(Of T, V), linq As Func(Of T, Integer, V)) As V()
             Return (From x As SeqValue(Of T)
                     In cls.__source.SeqIterator
-                    Select linq(x.obj, x.Pos)).ToArray
+                    Select linq(x.obj, x.i)).ToArray
         End Operator
 
         Public Shared Operator >=(cls As ToArrayHelper(Of T, V), linq As Func(Of T, Integer, V)) As V()

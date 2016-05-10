@@ -13,7 +13,7 @@ Namespace NeuralNetwork.Models
             Dim network As New FileStream.Network
             Dim hash = (New List(Of Neuron) + net.HiddenLayer.ToArray + net.InputLayer.ToArray + net.OutputLayer.ToArray).SeqIterator _
                 .ToDictionary(Function(x) x.obj,
-                              Function(x) x.Pos)
+                              Function(x) x.i)
 
             network += net.HiddenLayer.ToArray(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
             network += net.InputLayer.ToArray(Function(x) x.__node(NameOf(net.InputLayer), hash))

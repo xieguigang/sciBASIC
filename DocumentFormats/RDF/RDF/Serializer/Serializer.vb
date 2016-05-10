@@ -1,8 +1,9 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.DocumentFormat.RDF.Serialization
 
 Public Class Schema
-    Public Property ImportsNamespaces As RDF.Serialization.RDFNamespaceImports()
-    Protected Friend _bindType As RDF.Serialization.RDFType
+    Public Property ImportsNamespaces As Serialization.RDFNamespaceImports()
+    Protected Friend _bindType As Serialization.RDFType
 
     Public Overrides Function ToString() As String
         Return _bindType.ToString
@@ -14,7 +15,7 @@ Public Class Schema
     ''' <param name="RDFRootType"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Protected Friend Overloads Shared Function [GetType](RDFRootType As RDF.Serialization.RDFType) As RDF.Serialization.RDFType
+    Protected Friend Overloads Shared Function [GetType](RDFRootType As Serialization.RDFType) As Serialization.RDFType
         Dim RootTypeInfo = RDFRootType._BindTypeInfo
 
         If RootTypeInfo.IsArray Then
@@ -50,28 +51,28 @@ Public Class Schema
     End Function
 
     Protected Friend Shared Function IsIgnoredProperty(PropertyInfo As System.Reflection.PropertyInfo) As Boolean
-        Dim f = [PropertyInfo].GetCustomAttributes(RDF.Serialization.RDFIgnore.TypeInfo, True).IsNullOrEmpty
+        Dim f = [PropertyInfo].GetCustomAttributes(Serialization.RDFIgnore.TypeInfo, True).IsNullOrEmpty
         Dim r = [PropertyInfo].GetCustomAttributes(XmlIgnore, True).IsNullOrEmpty
         Dim result = f AndAlso r
         Return Not result
     End Function
 
-    Protected Friend Shared Function GetRDFPropertyAttribute(PropertyInfo As System.Reflection.PropertyInfo) As RDF.Serialization.PropertyAttribute
-        Dim attrs As Object() = [PropertyInfo].GetCustomAttributes(RDF.Serialization.RDFElement.TypeInfo, True)
+    Protected Friend Shared Function GetRDFPropertyAttribute(PropertyInfo As System.Reflection.PropertyInfo) As Serialization.PropertyAttribute
+        Dim attrs As Object() = [PropertyInfo].GetCustomAttributes(Serialization.RDFElement.TypeInfo, True)
 
         If attrs.IsNullOrEmpty Then
-            attrs = [PropertyInfo].GetCustomAttributes(RDF.Serialization.RDFAttribute.TypeInfo, True)
+            attrs = [PropertyInfo].GetCustomAttributes(Serialization.RDFAttribute.TypeInfo, True)
             If attrs.IsNullOrEmpty Then '完全没有的话默认新构造RDFElement属性
-                Return New RDF.Serialization.RDFElement([PropertyInfo].Name).Initlaize([PropertyInfo])
+                Return New Serialization.RDFElement([PropertyInfo].Name).Initlaize([PropertyInfo])
             Else
-                Dim attr = DirectCast(attrs.First, RDF.Serialization.RDFAttribute)
+                Dim attr = DirectCast(attrs.First, Serialization.RDFAttribute)
                 If String.IsNullOrEmpty(attr.Name) Then
                     attr.Name = [PropertyInfo].Name
                 End If
                 Return attr.Initlaize([PropertyInfo])
             End If
         Else
-            Dim attr = DirectCast(attrs.First, RDF.Serialization.RDFElement)
+            Dim attr = DirectCast(attrs.First, Serialization.RDFElement)
             If String.IsNullOrEmpty(attr.Name) Then
                 attr.Name = [PropertyInfo].Name
             End If
@@ -112,11 +113,14 @@ Public Class Serializer(Of T As Class)
     Protected Friend Shared Function InitlaizeSchema() As Schema
         Dim TypeInfo As System.Type = GetType(T)
         Dim Namespaces = (From attr As Object
-                          In TypeInfo.GetCustomAttributes(Microsoft.VisualBasic.DocumentFormat.RDF.Serialization.RDFNamespaceImports.TypeInfo, True)
-                          Select DirectCast(attr, RDF.Serialization.RDFNamespaceImports)).ToArray
+                          In TypeInfo.GetCustomAttributes(RDFNamespaceImports.TypeInfo, True)
+                          Select DirectCast(attr, Serialization.RDFNamespaceImports)).ToArray
         Dim RDFRootType = DocumentFormat.RDF.Serialization.RDFType.GetTypeDefine(TypeInfo)
         RDFRootType.TypeName = "rdf_RDF"
-        Dim Schema As Schema = New Schema With {.ImportsNamespaces = Namespaces, ._bindType = Schema.[GetType](RDFRootType)}
+        Dim Schema As Schema = New Schema With {
+            .ImportsNamespaces = Namespaces,
+            ._bindType = Schema.[GetType](RDFRootType)
+        }
 
         Return Schema
     End Function
@@ -133,9 +137,9 @@ Public Class Serializer(Of T As Class)
     ''' <returns></returns>
     ''' <remarks></remarks>
     Protected Friend Shared Function CreateDynamicType(SchemaInfo As Schema) As System.Type
-        Dim DynamicAssembly = New RDF.Framework.DynamicCode.VBC.CodeDOMCreator().DeclareAssembly(SchemaInfo)
+        Dim DynamicAssembly = New Framework.DynamicCode.VBC.CodeDOMCreator().DeclareAssembly(SchemaInfo)
         Dim DynamicTypeId As String = Framework.DynamicCode.VBC.CodeDOMCreator.ROOT_NAMESPACE & "." & SchemaInfo._bindType.TypeName
-        Dim DynamicType = New RDF.Framework.DynamicCode.VBC.DynamicCompiler("").Compile(DynamicAssembly, New String() {}).GetType(DynamicTypeId)
+        Dim DynamicType = New Framework.DynamicCode.VBC.DynamicCompiler("").Compile(DynamicAssembly, New String() {}).GetType(DynamicTypeId)
 
         Return DynamicType
     End Function

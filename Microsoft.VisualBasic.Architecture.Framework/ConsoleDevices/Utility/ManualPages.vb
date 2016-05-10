@@ -1,4 +1,4 @@
-﻿Namespace ConsoleDevice.Utility
+﻿Namespace Terminal.Utility
 
     Public Class ManualPages : Implements System.IDisposable
 

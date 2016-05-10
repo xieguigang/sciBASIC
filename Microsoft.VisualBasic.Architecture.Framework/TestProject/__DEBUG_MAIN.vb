@@ -4,11 +4,21 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Scripting
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Terminal
 
 Module __DEBUG_MAIN
 
     Sub Main()
 
+        Dim n As New ProgressBar("Console ProgressBar Testing.")
+        Dim i As Integer = 0
+
+        Do While True
+            n.Step()
+            n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(RandomDouble))
+            Threading.Thread.Sleep(1000)
+        Loop
 
         Dim bitmap As Image = Image.FromFile("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         bitmap = bitmap.GetBinaryBitmap
@@ -116,7 +126,7 @@ Module __DEBUG_MAIN
 
         ss = ss.Replace(NIL, " ")
 
-        Dim Console As Microsoft.VisualBasic.ConsoleDevice.InteractiveDevice = New ConsoleDevice.InteractiveDevice With {.PromptText = "#"}
+        Dim Console As InteractiveDevice = New InteractiveDevice With {.PromptText = "#"}
 
         Do While True
             Call Console.PrintPrompted()

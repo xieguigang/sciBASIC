@@ -3,13 +3,14 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.IO
 Imports System.Net
+Imports System.Reflection
+Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
-Imports System.Reflection
-Imports System.Web
 Imports Microsoft.VisualBasic.HtmlParser
+Imports Microsoft.VisualBasic.Terminal.Utility
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -440,8 +441,7 @@ Public Module WebServiceUtils
         End If
 
 #If FRAMEWORD_CORE Then
-        Using Process As ConsoleDevice.Utility.CBusyIndicator =
-            New ConsoleDevice.Utility.CBusyIndicator(_start:=True)
+        Using Process As CBusyIndicator = New CBusyIndicator(_start:=True)
 #End If
             Return __downloadWebpage(url, RequestTimeOut)
 #If FRAMEWORD_CORE Then
@@ -455,8 +455,8 @@ Public Module WebServiceUtils
         Try
 RETRY:      Return __downloadWebpage(url)
         Catch ex As Exception
-
-            Call Console.WriteLine(ex.ToString)
+            ex = New Exception(url, ex)
+            Call ex.PrintException
 
             If RequestTime < RequestTimeOut Then
                 RequestTime += 1

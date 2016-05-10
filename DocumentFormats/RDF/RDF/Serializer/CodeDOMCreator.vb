@@ -6,7 +6,7 @@
 
         Dim CreatedTypeList As Dictionary(Of String, CodeDom.CodeTypeDeclaration) = New Dictionary(Of String, CodeDom.CodeTypeDeclaration)
 
-        Public Function DeclareAssembly(Schema As RDF.Schema) As CodeDom.CodeCompileUnit
+        Public Function DeclareAssembly(Schema As Schema) As CodeDom.CodeCompileUnit
             Dim Assembly As CodeDom.CodeCompileUnit = New CodeDom.CodeCompileUnit
             Dim DynamicCodeNameSpace As CodeDom.CodeNamespace = New CodeDom.CodeNamespace(ROOT_NAMESPACE)
             Call Assembly.Namespaces.Add(DynamicCodeNameSpace)
@@ -37,7 +37,7 @@
         ''' <param name="RDFType"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Protected Friend Function DeclareTypeDefine(RDFType As RDF.Serialization.RDFType, TypeId As String) As CodeDom.CodeTypeDeclaration
+        Protected Friend Function DeclareTypeDefine(RDFType As Serialization.RDFType, TypeId As String) As CodeDom.CodeTypeDeclaration
             Dim Type = New CodeDom.CodeTypeDeclaration(TypeId)
             Dim attribute = RDFType.GetXmlSerializationCustomAttribute
             Type.CustomAttributes.Add(New CodeDom.CodeAttributeDeclaration(New CodeDom.CodeTypeReference(attribute.Value), New CodeDom.CodeAttributeArgument(New CodeDom.CodePrimitiveExpression(attribute.Key))))

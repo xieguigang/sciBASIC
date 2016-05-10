@@ -1,10 +1,10 @@
 ﻿Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports System.Reflection
 Imports System.Threading
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO__
+Imports Microsoft.VisualBasic.Terminal.STDIO
+Imports Microsoft.VisualBasic.Terminal.STDIO__
 
 Namespace CommandLine
 

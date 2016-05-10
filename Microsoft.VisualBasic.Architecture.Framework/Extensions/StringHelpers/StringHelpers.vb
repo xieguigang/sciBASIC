@@ -2,7 +2,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ConsoleDevice
+Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -13,9 +13,25 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module StringHelpers
 
     ''' <summary>
+    ''' Shortcuts for method <see cref="String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
+    ''' </summary>
+    ''' <param name="s1"></param>
+    ''' <param name="s2"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TextEquals(s1 As String, s2 As String) As Boolean
+        Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
     ''' </summary>
     Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
+
+    ''' <summary>
+    ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Multiline"/> 
+    ''' </summary>
+    Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Multiline
 
     ''' <summary>
     ''' <paramref name="s"/> Is Nothing, <see cref="String.IsNullOrEmpty"/>, <see cref="String.IsNullOrWhiteSpace"/>

@@ -6,6 +6,13 @@ Namespace Linq
 
     Public Module IteratorExtensions
 
+        ''' <summary>
+        ''' Iterates all of the objects in the source sequence with collection index position.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source">the source sequence</param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of SeqValue(Of T))
             If Not source.IsNullOrEmpty Then
@@ -62,20 +69,28 @@ Namespace Linq
 
     Public Structure SeqValue(Of T) : Implements IAddressHandle
 
-        Public Property Pos As Integer
+        ''' <summary>
+        ''' The position of this object value in the original sequence.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property i As Integer
+        ''' <summary>
+        ''' The Object data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property obj As T
 
         Private Property Address As Integer Implements IAddressHandle.Address
             Get
-                Return CLng(Pos)
+                Return CLng(i)
             End Get
             Set
-                Pos = CInt(Value)
+                i = CInt(Value)
             End Set
         End Property
 
         Sub New(i As Integer, x As T)
-            Pos = i
+            Me.i = i
             obj = x
         End Sub
 
@@ -88,7 +103,7 @@ Namespace Linq
         End Operator
 
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As Integer
-            Return x.Pos
+            Return x.i
         End Operator
 
         Public Sub Dispose() Implements IDisposable.Dispose

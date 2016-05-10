@@ -1,7 +1,8 @@
-﻿
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Parallel
 
@@ -49,10 +50,12 @@ Namespace Parallel
                 CLI = __getChildPortal.addArgs
             End Using
 
-            Dim Message As String = $"Get folked child services {assm} local_services:={Portal}".__DEBUG_ECHO
+            Dim msg As String = $"Get folked child services {assm} local_services:={Portal}"
+
+            Call msg.__DEBUG_ECHO
 
             If WindowsServices.Initialized Then
-                Call ServicesLogs.WriteEntry(Message, EventLogEntryType.SuccessAudit)
+                Call ServicesLogs.WriteEntry(msg, EventLogEntryType.SuccessAudit)
             End If
 
             Return Portal
@@ -127,19 +130,55 @@ Namespace Parallel
                                    Optional TimeInterval As Integer = 1000)
 
             Dim srcArray As Func(Of Integer)() = (From x As T In source
-                                                  Let task As CommandLine.IORedirectFile = New CommandLine.IORedirectFile(getExe(), getCLI(x))
+                                                  Let task As CommandLine.IORedirectFile =
+                                                      New CommandLine.IORedirectFile(getExe(), getCLI(x))
                                                   Let runTask As Func(Of Integer) = AddressOf task.Run
                                                   Select runTask).ToArray
             Call BatchTask(srcArray, numThreads, TimeInterval)
         End Sub
 
         ''' <summary>
-        ''' 由于LINQ是分片段来执行的，当某个片段有一个线程被卡住之后整个进程都会被卡住，所以执行大型的计算任务的时候效率不太好，使用这个并行化函数可以避免这个问题，同时也可以自己手动控制线程的并发数
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="TIn"></typeparam>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="getTask"></param>
+        ''' <param name="numThreads">可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量，如果想要单线程，请将这个参数设置为1</param>
+        ''' <param name="TimeInterval"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function BatchTask(Of TIn, T)(source As IEnumerable(Of TIn),
+                                             getTask As Func(Of TIn, T),
+                                             Optional numThreads As Integer = -1,
+                                             Optional TimeInterval As Integer = 1000) As T()
+            Dim taskHelper As New __threadHelper(Of TIn, T) With {
+                .__invoke = getTask
+            }
+            Return source.ToArray(AddressOf taskHelper.__task) _
+                .BatchTask(numThreads, TimeInterval)
+        End Function
+
+        Private Structure __threadHelper(Of TIn, T)
+
+            Public __invoke As Func(Of TIn, T)
+
+            Public Function __task(obj As TIn) As Func(Of T)
+                Dim __invoke As Func(Of TIn, T) = Me.__invoke
+                Return Function() __invoke(obj)
+            End Function
+        End Structure
+
+        ''' <summary>
+        ''' 由于LINQ是分片段来执行的，当某个片段有一个线程被卡住之后整个进程都会被卡住，所以执行大型的计算任务的时候效率不太好，
+        ''' 使用这个并行化函数可以避免这个问题，同时也可以自己手动控制线程的并发数
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="actions"></param>
-        ''' <param name="numThreads">可以在这里手动的控制任务的并发数</param>
+        ''' <param name="numThreads">可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量</param>
         ''' <param name="TimeInterval"></param>
+        ''' 
+        <Extension>
         Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads As Integer = -1, Optional TimeInterval As Integer = 1000) As T()
             Dim taskPool As New List(Of AsyncHandle(Of T))
             Dim p As Integer = Scan0

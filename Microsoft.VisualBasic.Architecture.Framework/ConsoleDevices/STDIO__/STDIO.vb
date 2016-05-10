@@ -3,7 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace ConsoleDevice
+Namespace Terminal
 
     ''' <summary>
     ''' A standard input/output compatibility package that makes VisualBasic console
@@ -187,9 +187,12 @@ Namespace ConsoleDevice
         ''' <param name="s"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function scanf(ByRef s As String) As String
+        Public Function scanf(ByRef s As String, Optional color As ConsoleColor = ConsoleColor.White) As String
+            Dim cl As ConsoleColor = Console.ForegroundColor
             Call Console.Write(s)
+            Console.ForegroundColor = color
             s = IORedirected.ReadLine
+            Console.ForegroundColor = cl
             Return s
         End Function
 
