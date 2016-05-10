@@ -16,7 +16,10 @@ Namespace CommandLine.Reflection
             Dim assm As New ApplicationDetails
             Dim title As String = $"{Application.ProductName} [version {Application.ProductVersion}]" & vbCrLf &
                 assm.ProductTitle & vbCrLf &
-                assm.ProductDescription
+                assm.ProductDescription & vbCrLf &
+                assm.CompanyName & vbCrLf &
+                assm.CopyRightsDetail
+
             Dim sb As New StringBuilder
 
             Call sb.AppendLine($"Module AssemblyName: {App.ExecutablePath.ToFileURL}")
