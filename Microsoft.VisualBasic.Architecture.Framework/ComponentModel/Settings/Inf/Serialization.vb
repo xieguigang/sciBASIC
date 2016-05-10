@@ -33,7 +33,7 @@ Namespace ComponentModel.Settings.Inf
         Public ReadOnly Property Path As String
 
         Sub New(path As String)
-            path = PathMapper.GetMapPath(path)
+            Me.Path = PathMapper.GetMapPath(path)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -68,7 +68,7 @@ Namespace ComponentModel.Settings.Inf
                 LinqAPI.Exec(Of PropertyInfo) <= From p As PropertyInfo
                                                  In properties
                                                  Let type As Type = p.PropertyType
-                                                 Let attr As ClassName = p.GetAttribute(Of ClassName)
+                                                 Let attr As ClassName = type.GetAttribute(Of ClassName)
                                                  Where Not attr Is Nothing
                                                  Select p
             Return properties

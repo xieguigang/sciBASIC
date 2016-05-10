@@ -16,11 +16,19 @@ Public Class ssfsfs
     <DataFrameColumn("9x-123")> Public Property dssssddd As Double
 End Class
 
+<IniMapIO("~/test.ini")>
+Public Class dddddFile
+    Public Property a As ssfsfs
+
+End Class
+
 Module __DEBUG_MAIN
 
     Sub Main()
 
         Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = RandomDouble(), .xdddd = 345}.WriteClass("~/test.ini")
+
+        Dim nnndasdasd As dddddFile = IOProvider.LoadProfile(Of dddddFile)
 
         Dim n As New ProgressBar("Console ProgressBar Testing.")
         Dim i As Integer = 0
