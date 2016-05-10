@@ -76,7 +76,11 @@ Namespace ComponentModel.Settings.Inf
 
         <Extension>
         Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
-            Dim maps As NamedValue(Of BindProperty()) = MapParser(Of T)()
+            Call ClassDumper(x, GetType(T), ini)
+        End Sub
+
+        Public Sub ClassDumper(x As Object, type As Type, ini As IniFile)
+            Dim maps As NamedValue(Of BindProperty()) = MapParser(type)
 
             For Each map In maps.x
                 Dim key As String = map.Column.Name

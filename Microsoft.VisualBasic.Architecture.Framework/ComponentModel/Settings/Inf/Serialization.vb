@@ -44,7 +44,22 @@ Namespace ComponentModel.Settings.Inf
     Public Module IOProvider
 
         <Extension>
-        Public Function LoadProfile(Of T As Class)(path As String) As T
+        Public Function WriteProfile(Of T As Class)(x As T, path As String) As Boolean
+            Dim ini As New IniFile(path)
+
+            For Each section As PropertyInfo In __getSections(Of T)()
+                Dim obj As Object = section.GetValue(x)
+                Call ClassMapper.ClassDumper(obj, section.PropertyType, ini)
+            Next
+
+            Return True
+        End Function
+
+        Public Function WriteProfile(Of T As Class)(x As T) As Boolean
+            Return x.WriteProfile(__getPath(Of T))
+        End Function
+
+        Private Function __getSections(Of T As Class)() As PropertyInfo()
             Dim properties As PropertyInfo() =
                 GetType(T).GetProperties(bindingAttr:=
                 BindingFlags.Instance Or
@@ -56,10 +71,15 @@ Namespace ComponentModel.Settings.Inf
                                                  Let attr As ClassName = p.GetAttribute(Of ClassName)
                                                  Where Not attr Is Nothing
                                                  Select p
+            Return properties
+        End Function
+
+        <Extension>
+        Public Function LoadProfile(Of T As Class)(path As String) As T
             Dim obj As Object = Activator.CreateInstance(Of T)
             Dim ini As New IniFile(path)
 
-            For Each prop As PropertyInfo In properties
+            For Each prop As PropertyInfo In __getSections(Of T)()
                 Dim x As Object = ClassMapper.ClassWriter(ini, prop.PropertyType)
                 Call prop.SetValue(obj, x)
             Next
@@ -67,13 +87,17 @@ Namespace ComponentModel.Settings.Inf
             Return DirectCast(obj, T)
         End Function
 
-        Public Function LoadProfile(Of T As Class)() As T
+        Private Function __getPath(Of T As Class)() As String
             Dim path As IniMapIO = GetType(T).GetAttribute(Of IniMapIO)
             If path Is Nothing Then
                 Throw New Exception("Could not found path mapping! @" & GetType(T).FullName)
+            Else
+                Return path.Path
             End If
+        End Function
 
-            Return path.Path.LoadProfile(Of T)
+        Public Function LoadProfile(Of T As Class)() As T
+            Return __getPath(Of T).LoadProfile(Of T)
         End Function
     End Module
 End Namespace
