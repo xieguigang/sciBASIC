@@ -2,6 +2,15 @@
 
 Namespace ComponentModel.DataSourceModel
 
+    Public Structure BindProperty
+        Public [Property] As PropertyInfo
+        Public Column As DataFrameColumnAttribute
+
+        Public Overrides Function ToString() As String
+            Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
+        End Function
+    End Structure
+
     ''' <summary>
     ''' Represents a column of certain data frames. The mapping between to schema is also can be represent by this attribute. 
     ''' (也可以使用这个对象来完成在两个数据源之间的属性的映射，由于对于一些列名称的属性值缺失的映射而言，
