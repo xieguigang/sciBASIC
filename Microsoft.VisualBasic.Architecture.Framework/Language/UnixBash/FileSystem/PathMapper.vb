@@ -20,7 +20,30 @@ Namespace Language.UnixBash
             End If
 
             If path.First = "~" Then ' HOME
+                path = Mid(path, 2)
+                path = App.UsrHome & "/" & path
 
+                If path.Second = "/" Then
+
+                Else
+                    ' ~username
+                    Dim DIR As String = path.ParentPath
+                    path = DIR & "/" & path
+                End If
+            ElseIf path.First = "/" Then  ' /   ROOT
+                path = "C:\" & path
+            ElseIf InStr(path, "/usr/bin", CompareMethod.Text) = 1 Then
+                path = Mid(path, 9)
+                path = "C:\Program Files/" & path
+            ElseIf InStr(path, "/usr", CompareMethod.Text) = 1 Then
+                path = Mid(path, 5)
+                path = App.UsrHome.ParentPath & "/" & path
+            ElseIf InStr(path, "-/") = 1 Then
+                ' 前一个文件夹
+                path = Mid(path, 2)
+                path = App.PreviousDirectory & "/" & path
+            ElseIf path = "-" Then
+                path = App.PreviousDirectory
             End If
 
             Return path

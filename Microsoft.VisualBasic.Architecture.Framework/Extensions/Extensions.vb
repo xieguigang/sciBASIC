@@ -49,6 +49,15 @@ Imports Microsoft.VisualBasic.Language
 Public Module Extensions
 #End If
 
+    <Extension>
+    Public Function Second(Of T)(source As IEnumerable(Of T)) As T
+        If source.Count > 1 Then
+            Return source(1)
+        Else
+            Return Nothing
+        End If
+    End Function
+
     <Extension> Public Function Add(Of T As sIdEnumerable)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
         If hash Is Nothing Then
             hash = New Dictionary(Of String, T)
@@ -1428,7 +1437,6 @@ Public Module Extensions
     ''' The first element in a collection.
     ''' </summary>
     Public Const Scan0 As Integer = 0
-    Public Const Second As Integer = 1
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
