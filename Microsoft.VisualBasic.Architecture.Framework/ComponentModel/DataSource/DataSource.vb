@@ -9,6 +9,13 @@ Namespace ComponentModel.DataSourceModel
         Public Overrides Function ToString() As String
             Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
         End Function
+
+        Public Shared Function FromHash(x As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) As BindProperty
+            Return New BindProperty With {
+                .Column = x.Key,
+                .Property = x.Value
+            }
+        End Function
     End Structure
 
     ''' <summary>

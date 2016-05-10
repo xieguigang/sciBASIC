@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Settings.Inf
 
@@ -28,7 +29,22 @@ Namespace ComponentModel.Settings.Inf
 
         <Extension>
         Public Function MapParser(type As Type) As NamedValue(Of BindProperty())
+            Dim nameCLS As ClassName = type.GetAttribute(Of ClassName)
+            Dim name As String
 
+            If nameCLS Is Nothing Then
+                name = type.Name
+            Else
+                name = nameCLS.Name
+            End If
+
+            Dim source = DataFrameColumnAttribute.LoadMapping(type)
+            Dim binds As BindProperty() = source.ToArray(AddressOf BindProperty.FromHash)
+
+            Return New NamedValue(Of BindProperty()) With {
+                .Name = name,
+                .x = binds
+            }
         End Function
     End Module
 End Namespace
