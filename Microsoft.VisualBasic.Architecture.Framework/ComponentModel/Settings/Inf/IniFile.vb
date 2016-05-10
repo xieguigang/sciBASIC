@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace ComponentModel.Settings.Inf
 
@@ -23,7 +24,7 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
-            path = INIPath
+            path = PathMapper.GetMapPath(INIPath)
         End Sub
 
         Public Overrides Function ToString() As String

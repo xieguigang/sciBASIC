@@ -21,13 +21,12 @@ Namespace Language.UnixBash
 
             If path.First = "~" Then ' HOME
                 path = Mid(path, 2)
-                path = App.UsrHome & "/" & path
 
-                If path.Second = "/" Then
-
+                If path.First = "/" Then
+                    path = App.UsrHome & "/" & path
                 Else
                     ' ~username
-                    Dim DIR As String = path.ParentPath
+                    Dim DIR As String = App.UsrHome.ParentPath
                     path = DIR & "/" & path
                 End If
             ElseIf path.First = "/" Then  ' /   ROOT
