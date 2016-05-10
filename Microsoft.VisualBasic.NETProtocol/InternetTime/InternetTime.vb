@@ -316,7 +316,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        'Reference Identifier
+        ''' <summary>
+        ''' Reference Identifier
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReferenceID() As String
             Get
                 Dim val As String = ""
@@ -349,7 +352,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Reference Timestamp
+        ''' <summary>
+        ''' Reference Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReferenceTimestamp() As DateTime
             Get
                 Dim time As DateTime = ComputeDate(GetMilliSeconds(offReferenceTimestamp))
@@ -359,14 +365,20 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Originate Timestamp
+        ''' <summary>
+        ''' Originate Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property OriginateTimestamp() As DateTime
             Get
                 Return ComputeDate(GetMilliSeconds(offOriginateTimestamp))
             End Get
         End Property
 
-        '// Receive Timestamp
+        ''' <summary>
+        ''' Receive Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ReceiveTimestamp() As DateTime
             Get
                 Dim time As DateTime = ComputeDate(GetMilliSeconds(offReceiveTimestamp))
@@ -376,7 +388,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Transmit Timestamp
+        ''' <summary>
+        ''' Transmit Timestamp
+        ''' </summary>
+        ''' <returns></returns>
         Public Property TransmitTimestamp() As DateTime
             Get
                 Dim time As DateTime = ComputeDate(GetMilliSeconds(offTransmitTimestamp))
@@ -389,10 +404,15 @@ Namespace InternetTime
             End Set
         End Property
 
-        '// Destination Timestamp
+        ''' <summary>
+        ''' Destination Timestamp
+        ''' </summary>
         Public DestinationTimestamp As DateTime
 
-        '// Round trip delay (in milliseconds)
+        ''' <summary>
+        ''' Round trip delay (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RoundTripDelay() As Int64
             Get
                 '// Thanks to DNH <dnharris@csrlink.net>
@@ -401,7 +421,10 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Local clock offset (in milliseconds)
+        ''' <summary>
+        ''' Local clock offset (in milliseconds)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LocalClockOffset() As Int64
             Get
                 '// Thanks to DNH <dnharris@csrlink.net>
@@ -410,7 +433,11 @@ Namespace InternetTime
             End Get
         End Property
 
-        '// Compute date, given the number of milliseconds since January 1, 1900
+        ''' <summary>
+        ''' Compute date, given the number of milliseconds since January 1, 1900
+        ''' </summary>
+        ''' <param name="milliseconds"></param>
+        ''' <returns></returns>
         Private Function ComputeDate(ByVal milliseconds As Decimal) As DateTime
             Dim span As TimeSpan = TimeSpan.FromMilliseconds(milliseconds)
             Dim time As DateTime = New DateTime(1900, 1, 1)
@@ -418,7 +445,11 @@ Namespace InternetTime
             Return time
         End Function
 
-        '// Compute the number of milliseconds, given the offset of a 8-byte array
+        ''' <summary>
+        ''' Compute the number of milliseconds, given the offset of a 8-byte array
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         Private Function GetMilliSeconds(ByVal offset As Byte) As Decimal
             Dim intPart As Decimal = 0, fractPart As Decimal = 0
             Dim i As Int32
@@ -432,7 +463,11 @@ Namespace InternetTime
             Return milliseconds
         End Function
 
-        '// Compute the 8-byte array, given the date
+        ''' <summary>
+        ''' Compute the 8-byte array, given the date
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <param name="dateval"></param>
         Private Sub SetDate(ByVal offset As Byte, ByVal dateval As DateTime)
             Dim intPart As Decimal = 0, fractPart As Decimal = 0
             Dim StartOfCentury As DateTime = New DateTime(1900, 1, 1, 0, 0, 0)
@@ -452,7 +487,9 @@ Namespace InternetTime
             Next
         End Sub
 
-        '// Initialize the NTPClient data
+        ''' <summary>
+        ''' Initialize the NTPClient data
+        ''' </summary>
         Private Sub Initialize()
             'Set version number to 4 and Mode to 3 (client)
             SNTPData(0) = &H1B
@@ -469,7 +506,10 @@ Namespace InternetTime
             TimeServer = host
         End Sub
 
-        '// Connect to the time server and update system time
+        ''' <summary>
+        ''' Connect to the time server and update system time
+        ''' </summary>
+        ''' <param name="UpdateSystemTime"></param>
         Public Sub Connect(ByVal UpdateSystemTime As Boolean)
             'Resolve server address
             Dim hostadd As IPHostEntry = Dns.GetHostEntry(TimeServer) ' Dns.Resolve(TimeServer)
@@ -494,7 +534,10 @@ Namespace InternetTime
             End If
         End Sub
 
-        '// Check if the response from server is valid
+        ''' <summary>
+        ''' Check if the response from server is valid
+        ''' </summary>
+        ''' <returns></returns>
         Public Function IsResponseValid() As Boolean
             If (SNTPData.Length < SNTPDataLength Or Mode <> _Mode.Server) Then
                 Return False
@@ -503,7 +546,10 @@ Namespace InternetTime
             End If
         End Function
 
-        '// Converts the object to string
+        ''' <summary>
+        ''' Converts the object to string
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder("")
 
@@ -557,7 +603,9 @@ Namespace InternetTime
             Return sb.ToString
         End Function
 
-        '// Set system time according to transmit timestamp
+        ''' <summary>
+        ''' Set system time according to transmit timestamp
+        ''' </summary>
         Private Sub SetTime()
             Dim st As SYSTEMTIME
             Dim trts As DateTime = DateTime.Now.AddMilliseconds(LocalClockOffset)
@@ -568,11 +616,13 @@ Namespace InternetTime
             st.hour = trts.Hour
             st.minute = trts.Minute
             st.second = trts.Second
-            st.milliseconds = trts.Millisecond
+            st.Miliseconds = trts.Millisecond
             SetLocalTime(st)
         End Sub
 
-        '// The URL of the time server we're connecting to
+        ''' <summary>
+        ''' The URL of the time server we're connecting to
+        ''' </summary>
         Private TimeServer As String
     End Class
 End Namespace
