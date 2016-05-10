@@ -5,7 +5,9 @@ Namespace InternetTime
 
     Public Module WinAPI
 
-        '// SYSTEMTIME structure used by SetSystemTime
+        ''' <summary>
+        ''' SYSTEMTIME structure used by SetSystemTime
+        ''' </summary>
         <StructLayout(LayoutKind.Sequential)> Public Structure SYSTEMTIME
             Public Year As Short
             Public Month As Short

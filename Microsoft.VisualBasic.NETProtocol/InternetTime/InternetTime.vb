@@ -224,16 +224,16 @@ Namespace InternetTime
         ''' Leap Indicator
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property LeapIndicator() As _LeapIndicator
+        Public ReadOnly Property LeapIndicator() As LeapIndicator
             Get
                 'Isolate the two most significant bits
                 Dim bVal As Byte = (SNTPData(0) >> 6)
                 Select Case bVal
-                    Case 0 : Return _LeapIndicator.NoWarning
-                    Case 1 : Return _LeapIndicator.LastMinute61
-                    Case 2 : Return _LeapIndicator.LastMinute59
-                    Case 3 : Return _LeapIndicator.Alarm
-                    Case Else : Return _LeapIndicator.Alarm
+                    Case 0 : Return LeapIndicator.NoWarning
+                    Case 1 : Return LeapIndicator.LastMinute61
+                    Case 2 : Return LeapIndicator.LastMinute59
+                    Case 3 : Return LeapIndicator.Alarm
+                    Case Else : Return LeapIndicator.Alarm
                 End Select
             End Get
         End Property
@@ -250,25 +250,25 @@ Namespace InternetTime
             End Get
         End Property
 
-        Public ReadOnly Property Mode() As _Mode
+        Public ReadOnly Property Mode() As Mode
             Get
                 'Isolate bits 0 - 3
                 Dim bVal As Byte = (SNTPData(0) And &H7)
                 Select Case bVal
                     Case 0, 6, 7
-                        Return _Mode.Unknown
+                        Return Mode.Unknown
                     Case 1
-                        Return _Mode.SymmetricActive
+                        Return Mode.SymmetricActive
                     Case 2
-                        Return _Mode.SymmetricPassive
+                        Return Mode.SymmetricPassive
                     Case 3
-                        Return _Mode.Client
+                        Return Mode.Client
                     Case 4
-                        Return _Mode.Server
+                        Return Mode.Server
                     Case 5
-                        Return _Mode.Broadcast
+                        Return Mode.Broadcast
                     Case Else
-                        Return _Mode.Unknown
+                        Return Mode.Unknown
                 End Select
             End Get
         End Property
@@ -277,17 +277,17 @@ Namespace InternetTime
         ''' Stratum
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Stratum() As _Stratum
+        Public ReadOnly Property Stratum() As Stratum
             Get
                 Dim bVal As Byte = SNTPData(1)
                 If (bVal = 0) Then
-                    Return _Stratum.Unspecified
+                    Return Stratum.Unspecified
                 ElseIf (bVal = 1) Then
-                    Return _Stratum.PrimaryReference
+                    Return Stratum.PrimaryReference
                 ElseIf (bVal <= 15) Then
-                    Return _Stratum.SecondaryReference
+                    Return Stratum.SecondaryReference
                 Else
-                    Return _Stratum.Reserved
+                    Return Stratum.Reserved
                 End If
             End Get
         End Property
@@ -348,12 +348,12 @@ Namespace InternetTime
             Get
                 Dim val As String = ""
                 Select Case Stratum
-                    Case _Stratum.PrimaryReference Or _Stratum.Unspecified
+                    Case Stratum.PrimaryReference Or Stratum.Unspecified
                         If SNTPData(offReferenceID + 0) <> 0 Then val += Chr(SNTPData(offReferenceID + 0))
                         If SNTPData(offReferenceID + 1) <> 0 Then val += Chr(SNTPData(offReferenceID + 1))
                         If SNTPData(offReferenceID + 2) <> 0 Then val += Chr(SNTPData(offReferenceID + 2))
                         If SNTPData(offReferenceID + 3) <> 0 Then val += Chr(SNTPData(offReferenceID + 3))
-                    Case _Stratum.SecondaryReference
+                    Case Stratum.SecondaryReference
                         Select Case VersionNumber
                             Case 3 '// Version 3, Reference ID is an IPv4 address
                                 Dim Address As String = SNTPData(offReferenceID + 0).ToString() + "." + SNTPData(offReferenceID + 1).ToString() + "." + SNTPData(offReferenceID + 2).ToString() + "." + SNTPData(offReferenceID + 3).ToString()
@@ -563,7 +563,7 @@ Namespace InternetTime
         ''' </summary>
         ''' <returns></returns>
         Public Function IsResponseValid() As Boolean
-            If (SNTPData.Length < SNTPDataLength Or Mode <> _Mode.Server) Then
+            If (SNTPData.Length < SNTPDataLength Or Mode <> Mode.Server) Then
                 Return False
             Else
                 Return True
@@ -579,39 +579,39 @@ Namespace InternetTime
 
             sb.Append("Leap Indicator: ")
             Select Case LeapIndicator
-                Case _LeapIndicator.NoWarning
+                Case LeapIndicator.NoWarning
                     sb.Append("No warning")
-                Case _LeapIndicator.LastMinute61
+                Case LeapIndicator.LastMinute61
                     sb.Append("Last minute has 61 seconds")
-                Case _LeapIndicator.LastMinute59
+                Case LeapIndicator.LastMinute59
                     sb.Append("Last minute has 59 seconds")
-                Case _LeapIndicator.Alarm
+                Case LeapIndicator.Alarm
                     sb.Append("Alarm Condition (clock not synchronized)")
             End Select
             sb.Append(vbCrLf & "Version number: " + VersionNumber.ToString())
             sb.Append(vbCrLf & "Mode: ")
             Select Case Mode
-                Case _Mode.Unknown
+                Case Mode.Unknown
                     sb.Append("Unknown")
-                Case _Mode.SymmetricActive
+                Case Mode.SymmetricActive
                     sb.Append("Symmetric Active")
-                Case _Mode.SymmetricPassive
+                Case Mode.SymmetricPassive
                     sb.Append("Symmetric Pasive")
-                Case _Mode.Client
+                Case Mode.Client
                     sb.Append("Client")
-                Case _Mode.Server
+                Case Mode.Server
                     sb.Append("Server")
-                Case _Mode.Broadcast
+                Case Mode.Broadcast
                     sb.Append("Broadcast")
             End Select
             sb.Append(vbCrLf & "Stratum: ")
             Select Case Stratum
-                Case _Stratum.Unspecified
-                Case _Stratum.Reserved
+                Case Stratum.Unspecified
+                Case Stratum.Reserved
                     sb.Append("Unspecified")
-                Case _Stratum.PrimaryReference
+                Case Stratum.PrimaryReference
                     sb.Append("Primary Reference")
-                Case _Stratum.SecondaryReference
+                Case Stratum.SecondaryReference
                     sb.Append("Secondary Reference")
             End Select
             sb.Append(vbCrLf & "Local time: " + TransmitTimestamp.ToString())
