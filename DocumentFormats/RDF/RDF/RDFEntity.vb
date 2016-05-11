@@ -9,6 +9,8 @@ Imports Microsoft.VisualBasic.Serialization
 <XmlType(RDF.RDF_PREFIX & "Description")>
 Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
 
+    Public Property comment As RDFProperty
+
     ''' <summary>
     ''' rdf:ID
     ''' </summary>
@@ -32,6 +34,10 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     Public Overrides Function ToString() As String
         Return RDFId & "  // " & Resource
     End Function
+End Class
+
+Public Class RDFProperty : Inherits EntityProperty
+
 End Class
 
 Public MustInherit Class EntityProperty
