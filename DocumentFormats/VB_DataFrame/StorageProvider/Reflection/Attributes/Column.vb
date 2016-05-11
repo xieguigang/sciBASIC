@@ -1,11 +1,15 @@
-﻿Namespace StorageProvider.Reflection
+﻿Imports System.Data.Linq.Mapping
+
+Namespace StorageProvider.Reflection
 
     ''' <summary>
     ''' This is a column in the csv document. 
     ''' </summary>
     ''' <remarks></remarks>
-    <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=False)>
-    Public Class ColumnAttribute : Inherits System.Data.Linq.Mapping.DataAttribute
+    <AttributeUsage(AttributeTargets.Property,
+                    AllowMultiple:=False,
+                    Inherited:=False)>
+    Public Class ColumnAttribute : Inherits DataAttribute
         Implements Reflection.IAttributeComponent
 
         Public Overridable ReadOnly Property ProviderId As ProviderIds Implements IAttributeComponent.ProviderId

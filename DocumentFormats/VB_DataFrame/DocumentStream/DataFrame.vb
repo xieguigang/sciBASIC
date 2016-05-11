@@ -301,22 +301,22 @@ Namespace DocumentStream
             Return FilePath.ToFileURL & "  // " & _innerTable(__currentPointer).ToString
         End Function
 
-        Public Sub ShowDialog(Optional Title As String = "")
-            Dim Dialog = New CsvChartDevice
+        'Public Sub ShowDialog(Optional Title As String = "")
+        '    Dim Dialog = New CsvChartDevice
 
-            If String.IsNullOrEmpty(Title) Then
-                Dialog.Text = FilePath
-            Else
-                Dialog.Text = Title
-                Dialog._chart.Titles.Add(Title)
-                Dim T = Dialog._chart.Titles("Title1")
-                T.Font = New Font("Microsoft YaHei", 16, FontStyle.Bold)
-            End If
+        '    If String.IsNullOrEmpty(Title) Then
+        '        Dialog.Text = FilePath
+        '    Else
+        '        Dialog.Text = Title
+        '        Dialog._chart.Titles.Add(Title)
+        '        Dim T = Dialog._chart.Titles("Title1")
+        '        T.Font = New Font("Microsoft YaHei", 16, FontStyle.Bold)
+        '    End If
 
-            Dialog.Draw(Me)
+        '    Dialog.Draw(Me)
 
-            Call Dialog.ShowDialog()
-        End Sub
+        '    Call Dialog.ShowDialog()
+        'End Sub
 
         Public Function Take(ColumnList As String()) As DataFrame
             Dim PQuery = From Column In ColumnList Select Me.__columnList.IndexOf(Column) '
