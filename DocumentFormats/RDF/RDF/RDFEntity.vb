@@ -7,7 +7,11 @@ Imports Microsoft.VisualBasic.Serialization
 ''' </summary>
 ''' 
 <XmlType(RDF.RDF_PREFIX & "Description")>
-Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
+Public MustInherit Class RDFEntity : Inherits RDFProperty
+    Implements sIdEnumerable, IReadOnlyId
+
+    Public Property range As RDFProperty
+    Public Property comment As RDFProperty
 
     ''' <summary>
     ''' rdf:ID
@@ -19,7 +23,7 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "about")> Public Property Resource As String Implements sIdEnumerable.Identifier, IReadOnlyId.locusId
+    <XmlAttribute(RDF.RDF_PREFIX & "about")> Public Property about As String Implements sIdEnumerable.Identifier, IReadOnlyId.locusId
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）
@@ -30,8 +34,12 @@ Public MustInherit Class RDFEntity : Implements sIdEnumerable, IReadOnlyId
     Public Property Properties As Dictionary(Of String, RDFEntity)
 
     Public Overrides Function ToString() As String
-        Return RDFId & "  // " & Resource
+        Return RDFId & "  // " & about
     End Function
+End Class
+
+Public Class RDFProperty : Inherits EntityProperty
+
 End Class
 
 Public MustInherit Class EntityProperty
