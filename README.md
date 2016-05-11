@@ -1,5 +1,10 @@
 # VisualBasic_AppFramework
 
+Install this framework via nuget package:
+https://www.nuget.org/packages/VB_AppFramework/
+
+>  PM> Install-Package VB_AppFramework
+
 Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Microsoft.VisualBasic.Imaging) 3D engine.
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/2016-04-30.png)
