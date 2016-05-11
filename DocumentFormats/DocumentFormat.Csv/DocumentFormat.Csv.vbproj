@@ -76,7 +76,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>..\..\..\GCModeller\bin-Debug\</OutputPath>
     <DefineConstants>_MYFORMS=True</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.Csv.xml</DocumentationFile>
     <NoWarn>

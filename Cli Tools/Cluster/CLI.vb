@@ -39,6 +39,9 @@ Module CLI
                Info:="Performance a kmeans clustering operation.",
                Usage:="/kmeans /MAT <entity_matrix.Csv> /n <num_of_cluster> [/map <Name> /out <cluster.csv>]")>
     Public Function ClusterDataSet(args As CommandLine.CommandLine) As Integer
+
+        Throw New Exception("Hello world!")
+
         Dim inFile As String = args("/MAT")
         Dim n As Integer = args.GetInt32("/n")
         Dim out As String = args.GetValue("/out", inFile.TrimFileExt & ".Cluster.Csv")
