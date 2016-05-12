@@ -6,6 +6,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization
 
 #Const NET_45 = 0
 
@@ -322,8 +324,13 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Sub New(type As Type, <CallerMemberName> Optional caller As String = Nothing)
             For Each cInfo As APIEntryPoint In __getsAllCommands(type, False)
-                Call __API_InfoHash.Add(cInfo.Name.ToLower, cInfo)
+                If __API_InfoHash.ContainsKey(cInfo.Name.ToLower) Then
+                    Throw New Exception(cInfo.Name & " is duplicated with other command!")
+                Else
+                    Call __API_InfoHash.Add(cInfo.Name.ToLower, cInfo)
+                End If
             Next
+
             Me._nsRoot = type.Namespace
             Me._Stack = caller
         End Sub
@@ -349,31 +356,44 @@ Namespace CommandLine
                 Return New List(Of EntryPoints.APIEntryPoint)
             End If
 
-            Dim Methods = Type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
+            Dim Methods As MethodInfo() = Type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
             Dim commandAttribute As Type = GetType(ExportAPIAttribute)
-            Dim commandsInfo = From methodInfo As MethodInfo In Methods
-                               Let commandInfo As APIEntryPoint = __getsAPI(methodInfo, commandAttribute, [Throw])
-                               Where Not commandInfo Is Nothing
-                               Select commandInfo
-                               Order By commandInfo.Name Ascending   '
-            Return commandsInfo.ToList
+            Dim commandsInfo As List(Of APIEntryPoint) =
+                LinqAPI.MakeList(Of APIEntryPoint) <=
+                From methodInfo As MethodInfo
+                In Methods
+                Let commandInfo As APIEntryPoint =
+                    __getsAPI(methodInfo, commandAttribute, [Throw])
+                Where Not commandInfo Is Nothing
+                Select commandInfo
+                Order By commandInfo.Name Ascending
+            Return commandsInfo
         End Function
 
         Private Shared Function __getsAPI(methodInfo As MethodInfo, commandAttribute As System.Type, [throw] As Boolean) As EntryPoints.APIEntryPoint
+            Dim cmdAttr As ExportAPIAttribute = Nothing
+            Dim commandInfo As APIEntryPoint
+
             Try
-                Dim attributes As Object() = methodInfo.GetCustomAttributes(commandAttribute, False)
+                Dim attrs As Object() = methodInfo.GetCustomAttributes(commandAttribute, False)
+                If attrs.IsNullOrEmpty Then Return Nothing
 
-                If attributes.IsNullOrEmpty Then Return Nothing
-
-                Dim cmdAttr As ExportAPIAttribute = DirectCast(attributes(0), ExportAPIAttribute)
-                Dim commandInfo As New EntryPoints.APIEntryPoint(cmdAttr, methodInfo, [throw]) '在这里将外部的属性标记和所属的函数的入口点进行连接
-
+                cmdAttr = DirectCast(attrs(0), ExportAPIAttribute)
+                commandInfo = New APIEntryPoint(cmdAttr, methodInfo, [throw]) '在这里将外部的属性标记和所属的函数的入口点进行连接
                 Return commandInfo
             Catch ex As Exception
+                If Not cmdAttr Is Nothing Then
+                    ex = New Exception("This command API can not be imports: " & cmdAttr.GetJson, ex)
+                    ex = New Exception(CheckNotice, ex)
+                End If
                 Call App.LogException(New Exception(methodInfo.FullName(True), ex))
+                Call ex.PrintException
+
                 Return Nothing
             End Try
         End Function
+
+        Const CheckNotice As String = "Please checks for the export api definition on your CLI interface function."
 
         ''' <summary>
         ''' Create an empty cli command line interpreter object which contains no commands entry.

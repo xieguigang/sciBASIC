@@ -126,14 +126,17 @@ Namespace CommandLine
         End Sub
 
         ''' <summary>
-        ''' 启动目标子进程，然后等待执行完毕并返回退出代码(请注意，在进程未执行完毕之前，整个线程会阻塞在这里)
+        ''' Start target child process and then wait for the child process exits. 
+        ''' So that the thread will be stuck at here until the sub process is 
+        ''' job done!
+        ''' (启动目标子进程，然后等待执行完毕并返回退出代码(请注意，在进程未执行完毕
+        ''' 之前，整个线程会阻塞在这里))
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
             Dim tmpBAT As String = App.GetAppSysTempFile(".bat")
             Call ProcessBAT.SaveTo(tmpBAT)
-            ' Call New Threading.Thread(AddressOf InternalReadSTDOUT).Start()
-            Dim ExitCode As Integer = Microsoft.VisualBasic.Interaction.Shell(tmpBAT, AppWinStyle.Hide, Wait:=True)
+            Dim ExitCode As Integer = Interaction.Shell(tmpBAT, AppWinStyle.Hide, Wait:=True)
 
             Call Console.WriteLine(StandardOutput)
             Call $"Process exit with code {ExitCode}....".__DEBUG_ECHO
@@ -144,12 +147,6 @@ Namespace CommandLine
             End Try
 
             Return ExitCode
-            'Call Process.Start()
-            'InputDevice = Process.StandardInput
-            'ConsoleReader = New IO.StreamReader(_TempRedirect)
-            'Call Process.WaitForExit()
-
-            'Return Process.ExitCode
         End Function
 
         Dim currentLength As Long
@@ -171,9 +168,9 @@ Namespace CommandLine
                 If fs.Length <= currentLength Then Return
 
                 Dim d As Long = fs.Length - currentLength
-                Dim ChunkBuffer As Byte() = New Byte(d - 1) {}
-                Call fs.Read(ChunkBuffer, currentLength, ChunkBuffer.Length)
-                Call Console.WriteLine(System.Text.Encoding.Default.GetString(ChunkBuffer))
+                Dim buf As Byte() = New Byte(d - 1) {}
+                Call fs.Read(buf, currentLength, buf.Length)
+                Call Console.WriteLine(Encoding.Default.GetString(buf))
 
                 currentLength = fs.Length
             End Using
