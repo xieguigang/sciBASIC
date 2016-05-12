@@ -294,6 +294,7 @@
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
+    <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
