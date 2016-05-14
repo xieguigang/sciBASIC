@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Serialization
 
 Public Structure PathMatch
 
@@ -49,3 +50,37 @@ Public Structure PathMatch
         Next
     End Function
 End Structure
+
+Public Module PathMatches
+
+    Public Iterator Function Pairs(ParamArray paths As NamedValue(Of String())()) As IEnumerable(Of Dictionary(Of String, String))
+        Dim primary As NamedValue(Of String()) = paths(Scan0)
+        Dim others = (From path As NamedValue(Of String())
+                      In paths.Skip(1)
+                      Select path.Name,
+                          pls = (From p As String
+                                 In path.x
+                                 Select pName = p.BaseName,
+                                     p).ToArray).ToArray
+
+        For Each path As String In primary.x
+            Dim q As String = path.BaseName
+            Dim result As New Dictionary(Of String, String) From {{primary.Name, path}}
+
+            For Each otherpath In others
+                For Each s In otherpath.pls
+                    If InStr(q, s.pName, CompareMethod.Text) = 1 OrElse
+                        InStr(s.pName, q, CompareMethod.Text) = 1 Then
+
+                        result.Add(otherpath.Name, s.p)
+                        Exit For
+                    End If
+                Next
+            Next
+
+            If result.Count = paths.Length Then
+                Yield result
+            End If
+        Next
+    End Function
+End Module
