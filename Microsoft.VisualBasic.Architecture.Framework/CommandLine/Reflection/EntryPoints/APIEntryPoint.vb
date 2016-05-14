@@ -145,7 +145,10 @@ Namespace CommandLine.Reflection.EntryPoints
             Catch ex As Exception
                 Dim args As String() = callParameters.ToArray(AddressOf Scripting.ToString)
                 Dim paramTrace As String = String.Join(vbCrLf, args)
+
                 ex = New Exception(paramTrace, ex)
+                VBDebugger.Mute = False
+
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
 
