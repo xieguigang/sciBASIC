@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Terminal
 
 Namespace CommandLine.Reflection
 
@@ -85,7 +86,7 @@ Namespace CommandLine.Reflection
         '      http://groups.google.com/group/circos-data-visualization
 
         '  Stack trace : 
-        ' at /home/xieguigang/circos/bin/../lib/Circos/Error.pm line 423.
+        '  at /home/xieguigang/circos/bin/../lib/Circos/Error.pm line 423.
         '        Circos: Error: fatal_error('configuration', 'missing') called at /home/xieguigang/circos/bin/../lib/Circos.pm line 141
         '        Circos:run('Circos', '_argv', '', '_cwd', '/home/xieguigang/circos/bin') called at ./circos line 529
 
@@ -96,7 +97,21 @@ Namespace CommandLine.Reflection
             If helps Is Nothing Then
                 Call ex.PrintException
             Else
-
+                Call Console.WriteLine("Environment summary:")
+                Call Console.WriteLine("CLI:  " & App.Command)
+                Call Console.WriteLine("Program: " & App.ExecutablePath.ToFileURL)
+                Call Console.WriteLine("CWD: " & App.CurrentDirectory)
+                Call Console.WriteLine("Start From: " & App.StartupDirectory)
+                Call Console.WriteLine("Exception: ")
+                Call STDIO.print(ex.Message, ConsoleColor.Red)
+                Call Console.WriteLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems")
+                Call STDIO.print(helps.Documentation, ConsoleColor.Blue)
+                Call Console.WriteLine("The debugging facility Is helpful To figure out what's happening under the hood")
+                Call STDIO.print(helps.Debugging, ConsoleColor.Blue)
+                Call Console.WriteLine("If you're still stumped, you can try get help from author directly from E-mail:")
+                Call STDIO.print(helps.HelpsLink, ConsoleColor.Blue)
+                Call Console.WriteLine("Stack trace : ")
+                Call STDIO.print(ex.ToString, ConsoleColor.Red)
             End If
         End Sub
     End Module
