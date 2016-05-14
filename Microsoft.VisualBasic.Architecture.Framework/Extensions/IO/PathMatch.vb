@@ -10,16 +10,20 @@ Public Structure PathMatch
         Return Me.GetJson
     End Function
 
-    Public Shared Iterator Function Pairs(paths1 As IEnumerable(Of String), path2 As IEnumerable(Of String)) As IEnumerable(Of PathMatch)
+    Public Shared Iterator Function Pairs(paths1 As IEnumerable(Of String), path2 As IEnumerable(Of String), Optional process As Func(Of String, String) = Nothing) As IEnumerable(Of PathMatch)
         Dim pas1 As String() = paths1.ToArray
         Dim pas2 As String() = path2.ToArray
 
+        If process Is Nothing Then
+            process = Function(s) s
+        End If
+
         If pas1.Length >= pas2.Length Then
-            For Each x As PathMatch In __pairs(pas1, pas2)
+            For Each x As PathMatch In __pairs(pas1, pas2, process)
                 Yield x
             Next
         Else
-            For Each x As PathMatch In __pairs(pas2, pas1)
+            For Each x As PathMatch In __pairs(pas2, pas1, process)
                 Yield x
             Next
         End If
@@ -31,11 +35,11 @@ Public Structure PathMatch
     ''' <param name="paths1"></param>
     ''' <param name="path2"></param>
     ''' <returns></returns>
-    Private Shared Iterator Function __pairs(paths1 As String(), path2 As String()) As IEnumerable(Of PathMatch)
-        Dim pls = (From p As String In path2 Select name = p.BaseName, p).ToArray
+    Private Shared Iterator Function __pairs(paths1 As String(), path2 As String(), process As Func(Of String, String)) As IEnumerable(Of PathMatch)
+        Dim pls = (From p As String In path2 Select name = process(p.BaseName), p).ToArray
 
         For Each path As String In paths1
-            Dim q As String = path.BaseName
+            Dim q As String = process(path.BaseName)
 
             For Each s In pls
                 If InStr(q, s.name, CompareMethod.Text) = 1 OrElse
