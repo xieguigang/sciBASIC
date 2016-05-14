@@ -40,7 +40,7 @@ Namespace Net.Persistent.Socket
         ''' </summary>
         ''' <remarks></remarks>
         Protected _LocalPort As Integer
-        Protected __exceptionHandle As ExceptionHandler
+        Protected __exceptionHandle As Abstract.ExceptionHandler
         Dim _socketListener As System.Net.Sockets.Socket
 
 #End Region
@@ -68,12 +68,12 @@ Namespace Net.Persistent.Socket
         ''' </summary>
         ''' <param name="LocalPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
         ''' <remarks></remarks>
-        Sub New(Optional LocalPort As Integer = 11000, Optional exHandler As ExceptionHandler = Nothing)
+        Sub New(Optional LocalPort As Integer = 11000, Optional exHandler As Abstract.ExceptionHandler = Nothing)
             Me._LocalPort = LocalPort
             Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
         End Sub
 
-        Sub New(Optional exHandler As ExceptionHandler = Nothing)
+        Sub New(Optional exHandler As Abstract.ExceptionHandler = Nothing)
             Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
         End Sub
 

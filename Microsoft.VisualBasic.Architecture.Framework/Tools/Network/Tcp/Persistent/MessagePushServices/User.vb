@@ -19,7 +19,7 @@ Namespace Net.Persistent.Application
         Public ReadOnly Property USER_ID As Long
 
         Friend remotePort As Integer, remoteHost As String
-        Dim __exceptionHandler As ExceptionHandler
+        Dim __exceptionHandler As Abstract.ExceptionHandler
         Dim _requestHandler As ProtocolHandler
 
         ''' <summary>
@@ -34,7 +34,7 @@ Namespace Net.Persistent.Application
                 RemotePort As Integer,
                 ID As Long,
                 DataRequestHandle As PushMessage,
-                Optional ExceptionHandler As ExceptionHandler = Nothing)
+                Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
 
             Me.remoteHost = HostName
             Me.USER_ID = ID
@@ -43,15 +43,15 @@ Namespace Net.Persistent.Application
             Me._requestHandler = New ProtocolHandler(Me)
         End Sub
 
-        Sub New(services As System.Net.IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(services As System.Net.IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             Call Me.New(New IPEndPoint(services), ID, DataRequestHandle, ExceptionHandler)
         End Sub
 
-        Sub New(services As IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(services As IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             Call Me.New(services.IPAddress, services.Port, ID, DataRequestHandle, ExceptionHandler)
         End Sub
 
-        Sub New(post As UserId, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(post As UserId, DataRequestHandle As PushMessage, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             Call Me.New(post.Remote.IPAddress, post.Remote.Port, post.uid, DataRequestHandle, ExceptionHandler)
         End Sub
 
