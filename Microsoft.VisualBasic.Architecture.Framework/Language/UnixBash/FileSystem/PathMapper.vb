@@ -54,6 +54,25 @@ Namespace Language.UnixBash
         ''' <returns></returns>
         Public Function HOME() As String
             If platform = PlatformID.MacOSX OrElse platform = PlatformID.Unix Then
+
+                ' Fixed error:
+
+                'Unhandled Exception
+                'System.TypeInitializationException : The Type initializer for 'Microsoft.VisualBasic.App' threw an exception. ---> Microsoft.VisualBasic.VBDebugger+VisualBasicAppException: @HOME ---> System.Exception: Environment variable error, there is no 'HOMEDRIVE'
+                '  --- End of inner exception stack trace ---
+                '  at Microsoft.VisualBasic.VBDebugger.Assertion(Boolean test, System.String msg, System.String calls) < 0x410e6520 + 0x00037> in <filename unknown>:0 
+                '  at Microsoft.VisualBasic.Language.UnixBash.PathMapper.HOME() < 0x410e62c0 + 0x0009f> in <filename unknown>: 0 
+                '  at Microsoft.VisualBasic.App..cctor() < 0x410ddfc0 + 0x0017f> in <filename unknown>:0 
+                '  --- End of inner exception stack trace ---
+                '  at MathApp.Program.Main() < 0x410ddd60 + 0x0000b> in <filename unknown>: 0 
+                '[ERROR] FATAL UNHANDLED EXCEPTION: System.TypeInitializationException : The Type initializer for 'Microsoft.VisualBasic.App' threw an exception. ---> Microsoft.VisualBasic.VBDebugger+VisualBasicAppException: @HOME ---> System.Exception: Environment variable error, there is no 'HOMEDRIVE'
+                '  --- End of inner exception stack trace ---
+                '  at Microsoft.VisualBasic.VBDebugger.Assertion(Boolean test, System.String msg, System.String calls) < 0x410e6520 + 0x00037> in <filename unknown>:0 
+                '  at Microsoft.VisualBasic.Language.UnixBash.PathMapper.HOME() < 0x410e62c0 + 0x0009f> in <filename unknown>: 0 
+                '  at Microsoft.VisualBasic.App..cctor() < 0x410ddfc0 + 0x0017f> in <filename unknown>:0 
+                '  --- End of inner exception stack trace ---
+                '  at MathApp.Program.Main() < 0x410ddd60 + 0x0000b> in <filename unknown>: 0 
+
                 Return Environment.GetEnvironmentVariable("HOME")
             End If
 
