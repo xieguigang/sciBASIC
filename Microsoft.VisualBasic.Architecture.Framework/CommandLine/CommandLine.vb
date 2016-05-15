@@ -375,7 +375,7 @@ Namespace CommandLine
         ''' <param name="name"></param>
         ''' <param name="[default]">The default value for returns when the parameter is not exists in the user input.</param>
         ''' <returns></returns>
-        Public Function GetValue(Of T)(name As String, [default] As T) As T
+        Public Function GetValue(Of T)(name As String, [default] As T, Optional __ctype As Func(Of String, T) = Nothing) As T
             If Not Me.ContainsParameter(name, False) Then
                 If GetType(T).Equals(GetType(Boolean)) Then
                     If HavebFlag(name) Then
@@ -387,9 +387,14 @@ Namespace CommandLine
             End If
 
             Dim str As String = Me(name)
-            Dim value As Object =
-                Scripting.InputHandler.CTypeDynamic(str, GetType(T))
-            Return DirectCast(value, T)
+
+            If __ctype Is Nothing Then
+                Dim value As Object =
+                    Scripting.InputHandler.CTypeDynamic(str, GetType(T))
+                Return DirectCast(value, T)
+            Else
+                Return __ctype(str)
+            End If
         End Function
 
         Public Function OpenHandle(name As String, Optional [default] As String = "") As Int
