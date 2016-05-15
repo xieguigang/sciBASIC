@@ -398,7 +398,7 @@ Public Module App
     ''' </summary>
     ''' <param name="state">Exit code to be given to the operating system. Use 0 (zero) to indicate that the process completed successfully.</param>
     '''
-    <SecuritySafeCritical> Public Function [Exit](state As Integer) As Integer
+    <SecuritySafeCritical> Public Function [Exit](Optional state As Integer = 0) As Integer
         App._Running = False
 
         Call App.StopGC()
