@@ -53,6 +53,10 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Function HOME() As String
+            If platform = PlatformID.MacOSX OrElse platform = PlatformID.Unix Then
+                Return Environment.GetEnvironmentVariable("HOME")
+            End If
+
             Dim homeDrive As String = Environment.GetEnvironmentVariable("HOMEDRIVE")
             Dim homePath = Environment.GetEnvironmentVariable("HOMEPATH")
 
