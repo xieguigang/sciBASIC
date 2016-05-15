@@ -7,7 +7,7 @@ If you are running on Windows, just double click on the program and then applica
 
 Have a try of some test:
 
-> \> function f1(a,b,c,d) a*b*c+d
+> \> function f1(a,b,c,d) a\*b\*c+d
 
 > \> f1(1,2,3,1)
 
