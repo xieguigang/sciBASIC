@@ -8,7 +8,7 @@ Namespace Net.Persistent.Socket
     ''' 长连接之中只是进行消息的发送处理，并不保证数据能够被接收到
     ''' </summary>
     Public Class WorkSocket : Inherits StateObject
-        Public ExceptionHandle As ExceptionHandler
+        Public ExceptionHandle As Abstract.ExceptionHandler
         Public ForceCloseHandle As ForceCloseHandle
         Public ReadOnly ConnectTime As Date = Now
         Public TotalBytes As Double

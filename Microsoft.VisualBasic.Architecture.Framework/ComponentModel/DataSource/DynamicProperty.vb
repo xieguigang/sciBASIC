@@ -97,6 +97,11 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         <XmlElement> Public Property x As T
 
+        Sub New(name As String, value As T)
+            Me.Name = name
+            Me.x = value
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

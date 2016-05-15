@@ -48,7 +48,7 @@ Namespace ComponentModel.Settings.Inf
             Dim ini As New IniFile(path)
 
             For Each section As PropertyInfo In __getSections(Of T)()
-                Dim obj As Object = section.GetValue(x)
+                Dim obj As Object = section.GetValue(x, Nothing)
                 Call ClassMapper.ClassDumper(obj, section.PropertyType, ini)
             Next
 
@@ -81,7 +81,7 @@ Namespace ComponentModel.Settings.Inf
 
             For Each prop As PropertyInfo In __getSections(Of T)()
                 Dim x As Object = ClassMapper.ClassWriter(ini, prop.PropertyType)
-                Call prop.SetValue(obj, x)
+                Call prop.SetValue(obj, x, Nothing)
             Next
 
             Return DirectCast(obj, T)

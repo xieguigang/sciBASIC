@@ -24,7 +24,7 @@ Namespace Net
 #Region "INTERNAL FIELDS"
 
         Dim _threadEndAccept As Boolean = True
-        Dim __exceptionHandle As ExceptionHandler
+        Dim __exceptionHandle As Abstract.ExceptionHandler
         Dim _servicesSocket As Socket
 
 #End Region
@@ -57,7 +57,7 @@ Namespace Net
         ''' <param name="LocalPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
         ''' <remarks></remarks>
         Sub New(Optional LocalPort As Integer = 11000,
-                Optional exHandler As ExceptionHandler = Nothing)
+                Optional exHandler As Abstract.ExceptionHandler = Nothing)
 
             Me._LocalPort = LocalPort
             Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
@@ -69,7 +69,7 @@ Namespace Net
         ''' <param name="DataArrivalEventHandler"></param>
         ''' <param name="LocalPort"></param>
         ''' <param name="exHandler"></param>
-        Sub New(DataArrivalEventHandler As DataRequestHandler, LocalPort As Integer, Optional exHandler As ExceptionHandler = Nothing)
+        Sub New(DataArrivalEventHandler As DataRequestHandler, LocalPort As Integer, Optional exHandler As Abstract.ExceptionHandler = Nothing)
             Me.Responsehandler = DataArrivalEventHandler
             Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
             Me._LocalPort = LocalPort
@@ -85,7 +85,7 @@ Namespace Net
         ''' <remarks></remarks>
         Public Shared Function BeginListen(DataArrivalEventHandler As DataRequestHandler,
                                            Optional LocalPort As Integer = 11000,
-                                           Optional exHandler As ExceptionHandler = Nothing) As Action
+                                           Optional exHandler As Abstract.ExceptionHandler = Nothing) As Action
             Dim Socket As New TcpSynchronizationServicesSocket(DataArrivalEventHandler, LocalPort, exHandler)
             Call (Sub() Call Socket.Run()).BeginInvoke(Nothing, Nothing)
             Return AddressOf Socket.Dispose

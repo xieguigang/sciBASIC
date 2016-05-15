@@ -22,7 +22,7 @@ Namespace ComponentModel.Settings
         Public ReadOnly Property Value As String
             Get
                 Dim result As Object =
-                    BindProperty.GetValue(_target)
+                    BindProperty.GetValue(_target, Nothing)
                 Return Scripting.ToString(result)
             End Get
         End Property
@@ -30,7 +30,7 @@ Namespace ComponentModel.Settings
         Public Sub [Set](value As String)
             Dim obj As Object =
                 Scripting.CTypeDynamic(value, _bindProperty.PropertyType)
-            Call _bindProperty.SetValue(_target, obj)
+            Call _BindProperty.SetValue(_target, obj, Nothing)
         End Sub
 
         ''' <summary>

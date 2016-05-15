@@ -5,6 +5,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>

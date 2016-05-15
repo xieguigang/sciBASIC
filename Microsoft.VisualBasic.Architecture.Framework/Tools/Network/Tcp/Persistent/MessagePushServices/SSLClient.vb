@@ -22,7 +22,7 @@ Namespace Net.Persistent.Application
         ''' <param name="ID"></param>
         ''' <param name="DataRequestHandle">Public Delegate Function PushMessage(USER_ID As <see cref="Long"/>, Message As <see cref="RequestStream"/>) As <see cref="RequestStream"/></param>
         ''' <param name="ExceptionHandler"></param>
-        Sub New(services As System.Net.IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(services As System.Net.IPEndPoint, ID As Long, DataRequestHandle As PushMessage, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             _DataRequestHandle = DataRequestHandle
             PushUser = New USER(services, ID, AddressOf __sslRedirect, ExceptionHandler)
         End Sub

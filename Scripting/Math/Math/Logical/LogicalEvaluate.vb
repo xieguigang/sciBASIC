@@ -29,7 +29,7 @@
         }
 
         Public Function ExpressionParser(s As String)
-
+            Throw New NotSupportedException
         End Function
 
     End Module

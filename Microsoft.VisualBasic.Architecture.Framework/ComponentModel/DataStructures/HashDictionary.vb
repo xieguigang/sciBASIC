@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.Collection.Generic
 
@@ -60,7 +61,11 @@ Namespace ComponentModel.Collection.Generic
             Return False
         End Function
 
-        Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count, IReadOnlyCollection(Of KeyValuePair(Of String, T)).Count
+#If NET_40 = 1 Then
+        Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count
+#Else
+           Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count, IReadOnlyCollection(Of KeyValuePair(Of String, T)).Count
+#End If
             Get
                 Return _keysHash.Count
             End Get
@@ -88,7 +93,12 @@ Namespace ComponentModel.Collection.Generic
         ''' <param name="key">大小写不敏感</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+#If NET_40 = 1 Then
+        Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, T).ContainsKey
+#Else
         Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, T).ContainsKey, IReadOnlyDictionary(Of String, T).ContainsKey
+#End If
             Return _keysHash.ContainsKey(key.ToLower)
         End Function
 
@@ -99,7 +109,13 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Default Public Property Item(key As String) As T Implements IDictionary(Of String, T).Item, IReadOnlyDictionary(Of String, T).Item
+        ''' 
+#If NET_40 = 1 Then
+        Default Public Property Item(key As String) As T Implements IDictionary(Of String, T).Item
+#Else
+           Default Public Property Item(key As String) As T Implements IDictionary(Of String, T).Item, IReadOnlyDictionary(Of String, T).Item
+#End If
+
             Get
                 key = key.ToLower
                 If _keysHash.ContainsKey(key) Then
@@ -131,11 +147,13 @@ Namespace ComponentModel.Collection.Generic
             End Get
         End Property
 
+#If NET_40 = 0 Then
         Private ReadOnly Property __keys As IEnumerable(Of String) Implements IReadOnlyDictionary(Of String, T).Keys
             Get
                 Return Keys
             End Get
         End Property
+#End If
 
         Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, T).Remove
             key = key.ToLower
@@ -149,7 +167,12 @@ Namespace ComponentModel.Collection.Generic
             End If
         End Function
 
+#If NET_40 = 1 Then
+        Public Function TryGetValue(key As String, ByRef value As T) As Boolean Implements IDictionary(Of String, T).TryGetValue
+#Else
         Public Function TryGetValue(key As String, ByRef value As T) As Boolean Implements IDictionary(Of String, T).TryGetValue, IReadOnlyDictionary(Of String, T).TryGetValue
+#End If
+
             value = Me(key)
             Return _keysHash.ContainsKey(key.ToLower)
         End Function
@@ -160,12 +183,13 @@ Namespace ComponentModel.Collection.Generic
             End Get
         End Property
 
+#If NET_40 = 0 Then
         Private ReadOnly Property __values As IEnumerable(Of T) Implements IReadOnlyDictionary(Of String, T).Values
             Get
                 Return Values
             End Get
         End Property
-
+#End If
         Public Iterator Function GetEnumerator1() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
             For Each ItemObject In Me._hashBuffer
                 Yield New KeyValuePair(Of String, T)(Me._keysHash(ItemObject.Key), ItemObject.Value)

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq.Extensions
+﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace Net.Protocols.ContentTypes
 

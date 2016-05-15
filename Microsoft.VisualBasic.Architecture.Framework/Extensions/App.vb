@@ -5,6 +5,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -709,10 +710,12 @@ Public Module App
                 Call App.SelfFolk(args).Run()
             Next
         Else
-            Dim Tasks = (From args As String In CLI
-                         Let io As IORedirectFile = App.SelfFolk(args)
-                         Let task As Func(Of Integer) = AddressOf io.Run
-                         Select task).ToArray
+            Dim Tasks As Func(Of Integer)() =
+                LinqAPI.Exec(Of Func(Of Integer)) <= From args As String
+                                                     In CLI
+                                                     Let io As IORedirectFile = App.SelfFolk(args)
+                                                     Let task As Func(Of Integer) = AddressOf io.Run
+                                                     Select task
             Call ServicesFolk.BatchTask(Of Integer)(Tasks, parallel)
         End If
 

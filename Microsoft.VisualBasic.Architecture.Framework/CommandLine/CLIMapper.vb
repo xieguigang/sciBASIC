@@ -27,12 +27,12 @@ Namespace CommandLine
                 End If
 
                 If prop.PropertyType.Equals(GetType(Boolean)) Then
-                    Call prop.SetValue(obj, True)  ' 由于是逻辑值，所以只要存在就是真，不存在就是False
+                    Call prop.SetValue(obj, True, Nothing)  ' 由于是逻辑值，所以只要存在就是真，不存在就是False
                 Else
                     Dim cast As Func(Of String, Object) = Scripting.CasterString(prop.PropertyType)
                     Dim s As String = args(name)
                     Dim value As Object = cast(s)
-                    Call prop.SetValue(obj, value)
+                    Call prop.SetValue(obj, value, Nothing)
                 End If
             Next
 

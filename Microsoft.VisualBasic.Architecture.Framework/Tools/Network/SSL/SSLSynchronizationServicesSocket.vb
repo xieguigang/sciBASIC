@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 
@@ -31,11 +32,11 @@ Namespace Net.SSL
         ''' </summary>
         ''' <param name="LocalPort"></param>
         ''' <param name="CA">服务器在部署的时候向对应版本您的客户端的数字签名</param>
-        ''' <param name="exHandler">Public Delegate Sub <see cref="ExceptionHandler"/>(ex As <see cref="Exception"/>)</param>
+        ''' <param name="exHandler">Public Delegate Sub <see cref="Abstract.ExceptionHandler"/>(ex As <see cref="Exception"/>)</param>
         Sub New(LocalPort As Integer,
                 CA As SSL.Certificate,
                 container As Object,
-                Optional exHandler As ExceptionHandler = Nothing)
+                Optional exHandler As Abstract.ExceptionHandler = Nothing)
 
             _DeclaringModule = container
             _ServicesSocket = New TcpSynchronizationServicesSocket(LocalPort, exHandler)

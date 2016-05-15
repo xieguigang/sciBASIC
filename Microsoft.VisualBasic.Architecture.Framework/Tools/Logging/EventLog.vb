@@ -154,7 +154,12 @@ Namespace Logging
         ''' <param name="category">A resource identifier that corresponds to a string defined in the category resource file of the event source, or zero to specify no category for the event.</param>
         ''' <returns></returns>
         ''' <param name="Trace">可以不需要进行额外的处理，编译器会自动在这个参数填充调用栈的位置</param>
+        ''' 
+#If NET_40 = 0 Then
         Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace As String = "", Optional category As Integer = 3) As Boolean
+#Else
+        Public Function LogException(ex As Exception, Optional Trace As String = "", Optional category As Integer = 3) As Boolean
+#End If
             Dim Data As String = ""
 
             If Not ex.Data Is Nothing Then
@@ -164,13 +169,22 @@ Namespace Logging
                 End Try
             End If
 
+#If NET_40 = 0 Then
+                        Dim MSG_DATA As New List(Of String) From {
+                "Exception: " & Scripting.InputHandler.ToString(ex.Message),
+                "InnerException: " & Scripting.InputHandler.ToString(ex.InnerException),
+                "HelpLink: " & Scripting.InputHandler.ToString(ex.HelpLink),              
+                "Handle: " & Scripting.InputHandler.ToString(ex.HResult),             
+                "Source: " & Scripting.InputHandler.ToString(ex.Source)
+            }
+#Else
             Dim MSG_DATA As New List(Of String) From {
                 "Exception: " & Scripting.InputHandler.ToString(ex.Message),
                 "InnerException: " & Scripting.InputHandler.ToString(ex.InnerException),
                 "HelpLink: " & Scripting.InputHandler.ToString(ex.HelpLink),
-                "Handle: " & Scripting.InputHandler.ToString(ex.HResult),
                 "Source: " & Scripting.InputHandler.ToString(ex.Source)
             }
+#End If
             Dim Stacks As String() = Strings.Split(Scripting.InputHandler.ToString(ex.StackTrace), vbCrLf)
             Dim exTrace As String = If(ex.TargetSite Is Nothing OrElse ex.TargetSite.DeclaringType Is Nothing, "null", ex.TargetSite.DeclaringType.FullName)
             Call MSG_DATA.AddRange((From deepth As Integer In Stacks.Sequence Select $"stack__{Stacks.Length - deepth}:  {Stacks(deepth)}").ToArray)

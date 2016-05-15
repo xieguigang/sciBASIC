@@ -16,6 +16,7 @@ Public Module EmitReflection
     ''' <param name="[nameOf]"></param>
     ''' <returns></returns>
     <Extension> Public Function API(type As Type, [nameOf] As String, Optional strict As Boolean = False) As String
+#If NET_40 = 0 Then
         Dim methods = type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
         Dim mBase As MethodInfo = (From m As MethodInfo In methods
                                    Where String.Equals([nameOf], m.Name)
@@ -34,6 +35,9 @@ NULL:       If Not strict Then
                 Return APIExport.Name
             End If
         End If
+#Else
+        Throw New NotSupportedException
+#End If
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
@@ -109,7 +113,8 @@ NULL:       If Not strict Then
     ''' <returns></returns>
     '''
     <ExportAPI("Get.Version")>
-    <Extension> Public Function GetVersion(assm As System.Reflection.Assembly) As Version
+    <Extension> Public Function GetVersion(assm As Assembly) As Version
+#If NET_40 = 0 Then
         Dim attrs As IEnumerable(Of System.Reflection.CustomAttributeData) = assm.CustomAttributes
         Dim vLQuery = (From attr As System.Reflection.CustomAttributeData
                        In attrs
@@ -120,6 +125,9 @@ NULL:       If Not strict Then
         Else
             Return New Version(vLQuery(Scan0).Value.ToString)
         End If
+#Else
+        Throw New NotSupportedException
+#End If
     End Function
 
     <ExportAPI("Is.Module")>
@@ -139,7 +147,7 @@ NULL:       If Not strict Then
     ''' <param name="collection"></param>
     ''' <param name="Name">使用System.NameOf()操作符来获取</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T, TProperty)(collection As Generic.ICollection(Of T), Name As String, Optional TrimNull As Boolean = True) As TProperty()
+    <Extension> Public Function [Get](Of T, TProperty)(collection As ICollection(Of T), Name As String, Optional TrimNull As Boolean = True) As TProperty()
         Dim Type As Type = GetType(T)
         Dim Properties = (From p In Type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
                           Where String.Equals(p.Name, Name)
@@ -153,12 +161,12 @@ NULL:       If Not strict Then
 
         If TrimNull Then
             resultBuffer = (From obj As T In collection.AsParallel
-                            Let value As Object = [Property].GetValue(obj)
+                            Let value As Object = [Property].GetValue(obj, Nothing)
                             Where Not value Is Nothing
                             Select DirectCast(value, TProperty)).ToArray
         Else
             resultBuffer = (From obj As T In collection.AsParallel
-                            Let value As Object = [Property].GetValue(obj)
+                            Let value As Object = [Property].GetValue(obj, Nothing)
                             Select If(value Is Nothing, Nothing, DirectCast(value, TProperty))).ToArray
         End If
 
@@ -249,7 +257,7 @@ NULL:       If Not strict Then
         If [property] Is Nothing Then
             Return Nothing
         End If
-        Dim value = [property].GetValue(obj)
+        Dim value = [property].GetValue(obj, Nothing)
         Return value
     End Function
 
@@ -409,6 +417,8 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
         Return Nothing
     End Function
 
+#If NET_40 = 0 Then
+
     ''' <summary>
     '''
     ''' </summary>
@@ -434,4 +444,5 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
             End If
         End Try
     End Function
+#End If
 End Module

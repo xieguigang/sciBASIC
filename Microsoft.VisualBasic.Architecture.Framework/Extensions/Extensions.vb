@@ -387,11 +387,11 @@ Public Module Extensions
             Return Nothing
         End If
 
-        Dim value As Object = propertyInfo.GetValue(obj)
+        Dim value As Object = propertyInfo.GetValue(obj, Nothing)
         Return DirectCast(value, TProp)
     End Function
 
-    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef hash As Dictionary(Of TKey, TValue), data As Generic.IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
+    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef hash As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
         If data.IsNullOrEmpty Then
             Return hash
         End If
@@ -474,16 +474,6 @@ Public Module Extensions
         Return New List(Of TAnonymousType)
     End Function
 #Enable Warning
-
-#If FRAMEWORD_CORE Then
-
-    <Extension> Public Function ModuleVersion(Type As Type) As String
-        Dim Assembly = Type.Assembly
-        Dim attrs = Assembly.CustomAttributes
-
-        Return ""
-    End Function
-#End If
 
     ''' <summary>
     ''' Removes VbCr and VbLf
@@ -824,7 +814,7 @@ Public Module Extensions
                                  Select pInfo).FirstOrDefault
         If Not p Is Nothing Then
             'Call Console.WriteLine(value.ToString)
-            Call p.SetValue(obj, value)
+            Call p.SetValue(obj, value, Nothing)
         Else
             Dim lstName As String = String.Join("; ", (From pp In lstProp Select ss = pp.Name).ToArray)
             VBDebugger.Warning($"Could Not found the target parameter which is named {Name} // {lstName}")
@@ -834,7 +824,7 @@ Public Module Extensions
     End Function
 
     <Extension> Public Function InvokeSet(Of T As Class, Tvalue)(obj As T, [Property] As PropertyInfo, value As Tvalue) As T
-        Call [Property].SetValue(obj, value)
+        Call [Property].SetValue(obj, value, Nothing)
         Return obj
     End Function
 

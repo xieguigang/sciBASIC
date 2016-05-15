@@ -29,7 +29,7 @@ Namespace ComponentModel
         Protected Friend Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
         <XmlIgnore>
-        Public Overridable Property FilePath As String
+             Protected Friend  Overridable Property FilePath As String
 #End If
             Get
                 If String.IsNullOrEmpty(FileName) Then
@@ -45,7 +45,7 @@ Namespace ComponentModel
 #If NET_40 = 0 Then
         Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
 #Else
-        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements I_FileSaveHandle.Save
+        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
 #End If
 
         Public Overrides Function ToString() As String

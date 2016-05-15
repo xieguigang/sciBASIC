@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FAA7DF95-44A9-4BCD-8C02-8D0A740C8638}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>MathApp.DEBUG</StartupObject>
+    <StartupObject>MathApp.Program</StartupObject>
     <RootNamespace>MathApp</RootNamespace>
     <AssemblyName>vbmath</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -61,7 +61,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\..\..\..\GCModeller\GCModeller-x64\</OutputPath>
     <DocumentationFile>vbmath.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>

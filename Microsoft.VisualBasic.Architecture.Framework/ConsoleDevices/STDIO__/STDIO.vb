@@ -170,6 +170,13 @@ Namespace Terminal
             Call Debug.Write(s)
         End Sub
 
+        Public Sub print(s As String, Optional color As ConsoleColor = ConsoleColor.White)
+            Dim cl As ConsoleColor = Console.ForegroundColor
+            Console.ForegroundColor = color
+            Console.Write(s)
+            Console.ForegroundColor = cl
+        End Sub
+
         ''' <summary>
         ''' 不换行
         ''' </summary>

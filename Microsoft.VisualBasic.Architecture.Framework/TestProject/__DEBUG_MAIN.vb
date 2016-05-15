@@ -8,23 +8,18 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-
-<ClassName("df-ini")>
-Public Class ssfsfs
-    <DataFrameColumn("123")> Public Property dddd As String
-    <DataFrameColumn("1ff23")> Public Property xdddd As Integer
-    <DataFrameColumn("9x-123")> Public Property dssssddd As Double
-End Class
-
-<IniMapIO("~/test.ini")>
-Public Class dddddFile
-    Public Property a As ssfsfs
-
-End Class
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language
 
 Module __DEBUG_MAIN
 
     Sub Main()
+
+        Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
+                                                           In ls - l - r - wildcards("*.txt") <= "D:\MyDocuments"
+                                                           Where (grep * "/\*.../\*" <= path).IsNullOrEmpty
+                                                           Select path
+
 
         Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = RandomDouble(), .xdddd = 345}.WriteClass("~/test.ini")
 
@@ -153,7 +148,18 @@ Module __DEBUG_MAIN
             Call Console.WriteLine("   ------> ""{0}""", s)
         Loop
     End Sub
+    <ClassName("df-ini")>
+    Public Class ssfsfs
+        <DataFrameColumn("123")> Public Property dddd As String
+        <DataFrameColumn("1ff23")> Public Property xdddd As Integer
+        <DataFrameColumn("9x-123")> Public Property dssssddd As Double
+    End Class
 
+    <IniMapIO("~/test.ini")>
+    Public Class dddddFile
+        Public Property a As ssfsfs
+
+    End Class
     Public Class Test
         <DumpNode> Private ArrayData As String() = New String() {"23234", "!!!!!!!!", "aaaaaaaaaaaa", "*&$^$%^#$%@#$%$#@$@"}
         <DumpNode> Private dded As KeyValuePair(Of Integer, Integer) = New KeyValuePair(Of Integer, Integer)(41, 23)

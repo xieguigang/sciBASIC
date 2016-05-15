@@ -80,7 +80,7 @@ Namespace Net.Persistent.Application
         ''' <param name="exHandler"></param>
         Sub New(Optional LocalPort As Integer = 11000,
                 Optional OffLineMessageSendHandler As OffLineMessageSendHandler = Nothing,
-                Optional exHandler As ExceptionHandler = Nothing)
+                Optional exHandler As Abstract.ExceptionHandler = Nothing)
 
             Call MyBase.New(GetFirstAvailablePort(5000), exHandler)
 

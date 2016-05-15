@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Public Module TextEncodings
 
@@ -26,7 +27,7 @@ Public Module TextEncodings
         GB2312
     End Enum
 
-    Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, System.Text.Encoding) =
+    Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, Encoding) =
         New Dictionary(Of Encodings, System.Text.Encoding) From {
  _
         {Encodings.ASCII, System.Text.Encoding.ASCII},
@@ -45,7 +46,7 @@ Public Module TextEncodings
     ''' <returns></returns>
     <Extension> Public Function GetEncodings(value As Encodings) As System.Text.Encoding
         If TextEncodings.ContainsKey(value) Then
-            Return TextEncodings(value)
+            Return _TextEncodings(value)
         Else
             Return System.Text.Encoding.UTF8
         End If

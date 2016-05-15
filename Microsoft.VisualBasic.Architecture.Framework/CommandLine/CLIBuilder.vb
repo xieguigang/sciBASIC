@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.Optional
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine
 

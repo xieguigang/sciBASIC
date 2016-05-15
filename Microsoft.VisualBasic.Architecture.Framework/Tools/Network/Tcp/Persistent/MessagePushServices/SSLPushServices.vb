@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Persistent.Application.MessagePushServer
 Imports Microsoft.VisualBasic.Net.Persistent.Socket
@@ -90,7 +91,7 @@ Namespace Net.Persistent.Application
         Sub New(LocalPort As Integer,
                 container As Object,
                 Optional OffLineMessageSendHandler As OffLineMessageSendHandler = Nothing,
-                Optional exHandler As ExceptionHandler = Nothing)
+                Optional exHandler As Abstract.ExceptionHandler = Nothing)
             _PushServices = New MessagePushServer(LocalPort, OffLineMessageSendHandler, exHandler)
             _DeclaringModule = container
             Responsehandler = AddressOf __redirect

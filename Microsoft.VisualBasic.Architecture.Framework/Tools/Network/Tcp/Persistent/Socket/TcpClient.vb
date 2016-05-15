@@ -45,11 +45,11 @@ Namespace Net.Persistent.Socket
 
         Const LocalIPAddress As String = "127.0.0.1"
 
-        Dim _ExceptionHandler As ExceptionHandler
+        Dim _ExceptionHandler As Abstract.ExceptionHandler
 
         Dim _MyLocalPort As Integer
 
-        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)
         End Sub
 
@@ -59,7 +59,7 @@ Namespace Net.Persistent.Socket
         ''' <param name="Client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
         ''' <param name="ExceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(Client As PersistentClient, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(Client As PersistentClient, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             remoteHost = Client.remoteHost
             port = Client.port
             _ExceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
@@ -72,7 +72,7 @@ Namespace Net.Persistent.Socket
         ''' <param name="RemotePort"></param>
         ''' <param name="ExceptionHandler">Public Delegate Sub ExceptionHandler(ex As Exception)</param>
         ''' <remarks></remarks>
-        Sub New(HostName As String, RemotePort As Integer, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(HostName As String, RemotePort As Integer, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             remoteHost = HostName
 
             If String.Equals(remoteHost, "localhost", StringComparison.OrdinalIgnoreCase) Then

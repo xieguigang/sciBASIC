@@ -17,11 +17,11 @@ Namespace ComponentModel.DataSourceModel
         End Property
 
         Public Sub SetValue(obj As Object, value As Object)
-            Call [Property].SetValue(obj, value)
+            Call [Property].SetValue(obj, value, Nothing)
         End Sub
 
         Public Function GetValue(x As Object) As Object
-            Return [Property].GetValue(x)
+            Return [Property].GetValue(x, Nothing)
         End Function
 
         Public Overrides Function ToString() As String

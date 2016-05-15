@@ -1,9 +1,20 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
-#If NET_40 = 0 Then
+
 
 Namespace Serialization
+
+    ''' <summary>
+    ''' 数据类型转换方法的句柄对象
+    ''' </summary>
+    ''' <param name="data">源之中的数据，由于源是一个TEXT格式的数据文件，故而这里的数据类型为字符串，通过本句柄对象可以将字符串数据映射为其他的复杂数据类型</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Delegate Function __StringTypeCaster(data As String) As Object
+    Public Delegate Function __LDMStringTypeCastHandler(data As Object) As String
+
+#If NET_40 = 0 Then
 
     ''' <summary>
     ''' 最基本的思想是将属性值按照同名属性名称在A和B两个对象类型之间进行映射，即A与B两个对象之间必须要具备相同的属性名称，才可以产生映射，请注意在本对象之中仅能够映射最基本的值类型的数据类型
@@ -61,15 +72,6 @@ Namespace Serialization
             Dim Source As T_Mapping = Activator.CreateInstance(Of T_Mapping)()
             Return WriteMapping(Of T_Entity, T_Mapping)(Model, WriteToSource:=Source)
         End Function
-
-        ''' <summary>
-        ''' 数据类型转换方法的句柄对象
-        ''' </summary>
-        ''' <param name="data">源之中的数据，由于源是一个TEXT格式的数据文件，故而这里的数据类型为字符串，通过本句柄对象可以将字符串数据映射为其他的复杂数据类型</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Delegate Function __StringTypeCaster(data As String) As Object
-        Public Delegate Function __LDMStringTypeCastHandler(data As Object) As String
 
         Private Function __knowsIsIgnored(p As PropertyInfo) As Boolean
             Dim c_attrs As Object() = p.GetCustomAttributes(attributeType:=GetType(MappingsIgnored), inherit:=False)
@@ -143,6 +145,6 @@ Namespace Serialization
             Return LQuery
         End Function
     End Module
+#End If
 End Namespace
 
-#End If

@@ -38,7 +38,7 @@ Namespace Net
         Dim connectDone As ManualResetEvent
         Dim sendDone As ManualResetEvent
         Dim receiveDone As ManualResetEvent
-        Dim __exceptionHandler As ExceptionHandler
+        Dim __exceptionHandler As Abstract.ExceptionHandler
         Dim remoteHost As String
 
         ''' <summary>
@@ -69,11 +69,11 @@ Namespace Net
             Return $"Remote_connection={remoteHost}:{port},  local_host={LocalIPAddress}"
         End Function
 
-        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)
         End Sub
 
-        Sub New(remoteDevice As IPEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(remoteDevice As IPEndPoint, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, ExceptionHandler)
         End Sub
 
@@ -83,7 +83,7 @@ Namespace Net
         ''' <param name="Client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
         ''' <param name="ExceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(Client As AsynInvoke, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(Client As AsynInvoke, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             remoteHost = Client.remoteHost
             port = Client.port
             __exceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
@@ -96,7 +96,7 @@ Namespace Net
         ''' <param name="remotePort"></param>
         ''' <param name="ExceptionHandler">Public Delegate Sub ExceptionHandler(ex As Exception)</param>
         ''' <remarks></remarks>
-        Sub New(hostName As String, remotePort As Integer, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(hostName As String, remotePort As Integer, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
             remoteHost = hostName
 
             If String.Equals(remoteHost, "localhost", StringComparison.OrdinalIgnoreCase) Then
@@ -115,7 +115,7 @@ Namespace Net
         ''' <param name="ExceptionHandler"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LocalConnection(LocalPort As Integer, Optional ExceptionHandler As ExceptionHandler = Nothing) As AsynInvoke
+        Public Shared Function LocalConnection(LocalPort As Integer, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing) As AsynInvoke
             Return New AsynInvoke(LocalIPAddress, LocalPort, ExceptionHandler)
         End Function
 
