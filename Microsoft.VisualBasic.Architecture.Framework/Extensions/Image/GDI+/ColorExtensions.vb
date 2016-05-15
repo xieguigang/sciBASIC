@@ -54,6 +54,7 @@ Namespace Imaging
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
         <Extension> Public Function ToColor(str As String) As Color
+#If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
                 Return Color.Black
             End If
@@ -76,6 +77,9 @@ Namespace Imaging
 
                 Return Color.FromArgb(R, G, B)
             End If
+#Else
+            Throw New NotSupportedException
+#End If
         End Function
 
         ''' <summary>

@@ -24,6 +24,7 @@ Namespace Parallel.Tasks
         End Sub
 
         Public Sub Start()
+#If NET_40 = 0 Then
             If __running Then
                 Return
             Else
@@ -31,16 +32,18 @@ Namespace Parallel.Tasks
             End If
 
             Call RunTask(Async Sub() Await __run(__cts))
+#End If
         End Sub
 
-#Disable Warning
+#If NET_40 = 0 Then
+        #Disable Warning
         Private Async Function __run(cts As CancellationTokenSource) As Threading.Tasks.Task
 #Enable Warning
             Call Me._Task()
             Call Me._Callback()
             __running = False
         End Function
-
+#End If
         Public Overrides Function ToString() As String
             Return New With {
                 .Task = Task.ToString,

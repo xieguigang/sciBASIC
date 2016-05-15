@@ -8,6 +8,7 @@ Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.Reflection
 Imports System.Collections.ObjectModel
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' Search the path from a specific keyword.(通过关键词来推测路径)

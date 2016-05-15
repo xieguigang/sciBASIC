@@ -1,5 +1,5 @@
 ﻿Imports System.Reflection
-Imports Microsoft.VisualBasic.Serialization.ConfigurationMappings
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
 

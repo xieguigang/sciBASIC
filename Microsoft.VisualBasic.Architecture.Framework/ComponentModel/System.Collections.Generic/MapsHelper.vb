@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel
+﻿Imports Microsoft.VisualBasic.Language
+
+Namespace ComponentModel
 
     Public Structure MapsHelper(Of T)
         ReadOnly __default As T

@@ -213,6 +213,7 @@ Namespace SoftwareToolkits
         End Sub
 
         Private Sub __load(assm As Assembly)
+#If NET_40 = 0 Then
             Dim __resEXPORT As Type = GetType(ExportAttribute)
             Dim typeDef As Type = (From type As Type
                                    In assm.GetTypes
@@ -233,6 +234,7 @@ Namespace SoftwareToolkits
                     _Resources = DirectCast(value, Global.System.Resources.ResourceManager)
                 End If
             End If
+#End If
         End Sub
 
         ''' <summary>

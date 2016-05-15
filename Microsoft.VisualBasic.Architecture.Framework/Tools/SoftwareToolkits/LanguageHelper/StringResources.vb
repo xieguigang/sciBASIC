@@ -15,7 +15,9 @@ Namespace SoftwareToolkits.Globalization
 
         Sub New(Name As String, resources As LanguageAttribute())
             Me.Name = Name
-            Me.Resources = resources.ToDictionary(Of TLanguage, LanguageAttribute)(Function(lang) CTypeDynamic(Of TLanguage)(lang.Language), elementSelector:=Function(lang) lang)
+            Me.Resources = resources.ToDictionary(Of TLanguage, LanguageAttribute)(
+                Function(lang) CTypeDynamic(Of TLanguage)(lang.Language),
+                Function(lang) lang)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -27,12 +29,16 @@ Namespace SoftwareToolkits.Globalization
             If langResources.IsNullOrEmpty Then
                 Return Nothing
             Else
-                Return New StringResources(Of TLanguage)(member.Name, langResources) With {._Default = __getValue(member)}
+                Return New StringResources(Of TLanguage)(member.Name, langResources) With {
+                    ._Default = __getValue(member)
+                }
             End If
         End Function
 
         Private Shared Function __getValue(member As MemberInfo) As String
-            Dim value As Object = If(member.MemberType = MemberTypes.Property, DirectCast(member, PropertyInfo).GetValue(Nothing), DirectCast(member, FieldInfo).GetValue(Nothing))
+            Dim value As Object = If(member.MemberType = MemberTypes.Property,
+                DirectCast(member, PropertyInfo).GetValue(Nothing, Nothing),
+                DirectCast(member, FieldInfo).GetValue(Nothing))
             Return Scripting.ToString(value)
         End Function
 

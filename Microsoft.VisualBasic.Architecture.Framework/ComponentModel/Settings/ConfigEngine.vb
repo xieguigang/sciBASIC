@@ -18,7 +18,7 @@ Namespace ComponentModel.Settings
         ''' <summary>
         ''' 键名都是小写的
         ''' </summary>
-        Protected ProfileItemCollection As IReadOnlyDictionary(Of String, BindMapping)
+        Protected ProfileItemCollection As IDictionary(Of String, BindMapping)
 
         ''' <summary>
         ''' List all of the available settings nodes in this profile data session.
@@ -33,7 +33,7 @@ Namespace ComponentModel.Settings
             End Get
         End Property
 
-        Protected Friend Overrides Property FilePath As String
+        Public Overrides Property FilePath As String
             Get
                 Return _SettingsData.FilePath
             End Get

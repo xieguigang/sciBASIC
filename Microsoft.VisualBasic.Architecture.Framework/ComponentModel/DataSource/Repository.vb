@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel.DataSourceModel.Repository
+﻿Imports Microsoft.VisualBasic.Language
+
+Namespace ComponentModel.DataSourceModel.Repository
 
     ' http://www.codeproject.com/Reference/731015/The-repository-pattern-in-VB-Net
 

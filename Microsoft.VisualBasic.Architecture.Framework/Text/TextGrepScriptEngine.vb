@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports System.Text.RegularExpressions
 
 Imports TextGrepMethodTokenHandle = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Text.TextGrepMethodToken)
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text
 
@@ -52,7 +53,7 @@ Namespace Text
                                           Let tokens As String() = TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
                                           Let EntryPoint As String = sToken.Split.First.ToLower
                                           Where MethodsHash.ContainsKey(EntryPoint)
-                                          Select New TextGrepMethodTokenHandle(tokens, MethodsHash(EntryPoint))).ToArray
+                                          Select New TextGrepMethodTokenHandle(tokens, _MethodsHash(EntryPoint))).ToArray
             If Script.Length > OperationLQueryBuilder.Length Then
                 Return Nothing         ' 有非法的命令短语，则为了保护数据的一致性，这个含有错误的语法的脚本是不能够用于操作的，则函数返回空指针
             Else

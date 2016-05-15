@@ -42,8 +42,12 @@ Namespace Scripting.MetaData
         ''' <param name="type"></param>
         ''' <returns></returns>
         Public Function GetEntry(type As Type) As PackageNamespace
+#If NET_40 = 0 Then
             Dim attrs = type.GetCustomAttributes(Of PackageNamespace)(inherit:=True)
             Return attrs.FirstOrDefault
+#Else
+            Throw New NotSupportedException
+#End If
         End Function
     End Module
 End Namespace

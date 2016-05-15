@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
@@ -67,7 +68,7 @@ Public Module VBDebugger
             Console.ForegroundColor = cl
             Call Console.Write("]")
 
-            Call Console.WriteLine(Str)
+            Call Console.WriteLine(str)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -209,7 +210,7 @@ Public Module VBDebugger
     End Function
 
     <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")
-      Call  String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
+        Call String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
     End Sub
 
     ''' <summary>

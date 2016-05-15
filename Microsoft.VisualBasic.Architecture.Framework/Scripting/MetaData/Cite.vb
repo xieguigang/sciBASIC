@@ -91,14 +91,22 @@ Namespace Scripting.MetaData
         End Function
 
         Public Shared Function GetCiteList(Of T)() As Cite()
+#If NET_40 = 0 Then
             Dim typeDef As Type = GetType(T)
             Dim attrs = typeDef.GetCustomAttributes(Of Cite)(inherit:=True)
             Return attrs
+#Else
+            Throw New NotSupportedException
+#End If
         End Function
 
         Public Shared Function GetCiteList(typeDef As Type) As Cite()
+#If NET_40 = 0 Then
             Dim attrs As Cite() = typeDef.GetCustomAttributes(Of Cite)(inherit:=True)
             Return attrs
+#Else
+            Throw New NotSupportedException
+#End If
         End Function
 
         Public Function HTML(absLen As Integer) As String
