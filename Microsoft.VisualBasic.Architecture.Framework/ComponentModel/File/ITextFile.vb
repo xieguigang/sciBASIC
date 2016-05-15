@@ -29,7 +29,7 @@ Namespace ComponentModel
         Protected Friend Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
         <XmlIgnore>
-        Public Overridable Property FilePath As String
+             Protected Friend  Overridable Property FilePath As String
 #End If
             Get
                 If String.IsNullOrEmpty(FileName) Then
