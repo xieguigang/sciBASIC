@@ -29,6 +29,10 @@ Namespace Language.UnixBash
                     Dim DIR As String = App.UsrHome.ParentPath
                     path = DIR & "/" & path
                 End If
+            ElseIf path.First = "#"c Then
+                path = Mid(path, 2)
+                Return $"{App.HOME}/{path}"
+
             ElseIf path.First = "/" Then  ' /   ROOT
                 path = "C:\" & path
             ElseIf InStr(path, "/usr/bin", CompareMethod.Text) = 1 Then
