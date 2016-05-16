@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
@@ -19,6 +20,24 @@ Namespace ComponentModel.DataSourceModel
         Public Average As Double
         Public data As T()
         Public Ranges As IRanges(Of T)
+
+        Public ReadOnly Property Length As Integer
+            Get
+                Return data.Length
+            End Get
+        End Property
+
+        Public Function SlideWindows(winSize As Integer,
+                                     Optional offset As Integer = 1,
+                                     Optional extendTails As Boolean = False) As SlideWindowHandle(Of T)()
+            Return data.CreateSlideWindows(winSize, offset, extendTails)
+        End Function
+
+        Public Iterator Function Split(partSize As Integer) As IEnumerable(Of T())
+            For Each chunk As T() In data.SplitIterator(partSize)
+                Yield chunk
+            Next
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
