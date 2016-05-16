@@ -27,6 +27,12 @@ Namespace ComponentModel.DataSourceModel
             End Get
         End Property
 
+        Public ReadOnly Property First As T
+            Get
+                Return data(Scan0)
+            End Get
+        End Property
+
         Public Function SlideWindows(winSize As Integer,
                                      Optional offset As Integer = 1,
                                      Optional extendTails As Boolean = False) As SlideWindowHandle(Of T)()
