@@ -2259,7 +2259,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-
+            Call Gr_Device.DrawLine(pen, pt1, pt2)
         End Sub
         '
         ' Summary:
@@ -2285,7 +2285,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-
+            Call Gr_Device.DrawLine(pen, x1, y1, x2, y2)
         End Sub
         '
         ' Summary:
@@ -2311,7 +2311,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-
+            Call Gr_Device.DrawLine(pen, x1, y1, x2, y2)
         End Sub
         '
         ' Summary:
