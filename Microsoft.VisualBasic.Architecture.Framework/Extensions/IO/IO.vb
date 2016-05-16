@@ -8,6 +8,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("IO")>
 Public Module IOExtensions
 
+    <Extension>
+    Public Function ReadVector(path As String) As Double()
+        Return IO.File.ReadAllLines(path).ToArray(Function(x) CDbl(x))
+    End Function
+
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream

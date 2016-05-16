@@ -18,7 +18,7 @@ Namespace Imaging
     ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class GDIPlusDeviceHandle : Inherits MarshalByRefObject
+    Public Class GDIPlusDeviceHandle : Inherits IGraphics
         Implements IDisposable, IDeviceContext
 
         ''' <summary>
@@ -80,7 +80,7 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Function Save(Path As String, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
+        Public Overloads Function Save(Path As String, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
             Return Save(Path, Format.GetFormat)
         End Function
 
@@ -90,7 +90,7 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Function Save(Path As String, Optional Format As ImageFormat = Nothing) As Boolean
+        Public Overloads Function Save(Path As String, Optional Format As ImageFormat = Nothing) As Boolean
             If Format Is Nothing Then
                 Format = ImageFormat.Png
             End If
@@ -153,7 +153,7 @@ Namespace Imaging
         ''' <summary>
         ''' Releases all resources used by this System.Drawing.Graphics.
         ''' </summary>
-        Public Sub Dispose() Implements IDisposable.Dispose
+        Public Overrides Sub Dispose() Implements IDisposable.Dispose
             Call Me.Gr_Device.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
         End Sub
 
@@ -166,7 +166,7 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
         '     that is currently available for drawing.
-        Public Property Clip As Region
+        Public Overrides Property Clip As Region
             Get
                 Return Gr_Device.Clip
             End Get
@@ -182,7 +182,7 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         '     the clipping region of this System.Drawing.Graphics.
-        Public ReadOnly Property ClipBounds As RectangleF
+        Public Overrides ReadOnly Property ClipBounds As RectangleF
             Get
                 Return Gr_Device.ClipBounds
             End Get
@@ -195,7 +195,7 @@ Namespace Imaging
         ''' This property specifies a member of the System.Drawing.Drawing2D.CompositingMode enumeration. 
         ''' The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
         ''' </returns>
-        Public Property CompositingMode As CompositingMode
+        Public Overrides Property CompositingMode As CompositingMode
             Get
                 Return Gr_Device.CompositingMode
             End Get
@@ -211,7 +211,7 @@ Namespace Imaging
         ''' This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality enumeration. 
         ''' The default is System.Drawing.Drawing2D.CompositingQuality.Default.
         ''' </returns>
-        Public Property CompositingQuality As CompositingQuality
+        Public Overrides Property CompositingQuality As CompositingQuality
             Get
                 Return Gr_Device.CompositingQuality
             End Get
@@ -226,7 +226,7 @@ Namespace Imaging
         ''' <returns>
         ''' The value, in dots per inch, for the horizontal resolution supported by this System.Drawing.Graphics.
         ''' </returns>
-        Public ReadOnly Property DpiX As Single
+        Public Overrides ReadOnly Property DpiX As Single
             Get
                 Return Gr_Device.DpiX
             End Get
@@ -237,7 +237,7 @@ Namespace Imaging
         '
         ' Returns:
         '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
-        Public ReadOnly Property DpiY As Single
+        Public Overrides ReadOnly Property DpiY As Single
             Get
                 Return Gr_Device.DpiY
             End Get
@@ -247,7 +247,7 @@ Namespace Imaging
         ''' Gets or sets the interpolation mode associated with this System.Drawing.Graphics.
         ''' </summary>
         ''' <returns>One of the System.Drawing.Drawing2D.InterpolationMode values.</returns>
-        Public Property InterpolationMode As InterpolationMode
+        Public Overrides Property InterpolationMode As InterpolationMode
             Get
                 Return Gr_Device.InterpolationMode
             End Get
@@ -263,7 +263,7 @@ Namespace Imaging
         ' Returns:
         '     true if the clipping region of this System.Drawing.Graphics is empty; otherwise,
         '     false.
-        Public ReadOnly Property IsClipEmpty As Boolean
+        Public Overrides ReadOnly Property IsClipEmpty As Boolean
             Get
                 Return Gr_Device.IsClipEmpty
             End Get
@@ -276,7 +276,7 @@ Namespace Imaging
         ' Returns:
         '     true if the visible portion of the clipping region of this System.Drawing.Graphics
         '     is empty; otherwise, false.
-        Public ReadOnly Property IsVisibleClipEmpty As Boolean
+        Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
             Get
                 Return Gr_Device.IsVisibleClipEmpty
             End Get
@@ -288,7 +288,7 @@ Namespace Imaging
         ' Returns:
         '     This property specifies a value for the scaling between world units and page
         '     units for this System.Drawing.Graphics.
-        Public Property PageScale As Single
+        Public Overrides Property PageScale As Single
             Get
                 Return Gr_Device.PageScale
             End Get
@@ -307,7 +307,7 @@ Namespace Imaging
         '   T:System.ComponentModel.InvalidEnumArgumentException:
         '     System.Drawing.Graphics.PageUnit is set to System.Drawing.GraphicsUnit.World,
         '     which is not a physical unit.
-        Public Property PageUnit As GraphicsUnit
+        Public Overrides Property PageUnit As GraphicsUnit
             Get
                 Return Gr_Device.PageUnit
             End Get
@@ -323,7 +323,7 @@ Namespace Imaging
         ' Returns:
         '     This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
         '     enumeration
-        Public Property PixelOffsetMode As PixelOffsetMode
+        Public Overrides Property PixelOffsetMode As PixelOffsetMode
             Get
                 Return Gr_Device.PixelOffsetMode
             End Get
@@ -340,7 +340,7 @@ Namespace Imaging
         '     A System.Drawing.Point structure that represents the dither origin for 8-bits-per-pixel
         '     and 16-bits-per-pixel dithering and is also used to set the origin for hatch
         '     brushes.
-        Public Property RenderingOrigin As Point
+        Public Overrides Property RenderingOrigin As Point
             Get
                 Return Gr_Device.RenderingOrigin
             End Get
@@ -354,7 +354,7 @@ Namespace Imaging
         '
         ' Returns:
         '     One of the System.Drawing.Drawing2D.SmoothingMode values.
-        Public Property SmoothingMode As SmoothingMode
+        Public Overrides Property SmoothingMode As SmoothingMode
             Get
                 Return Gr_Device.SmoothingMode
             End Get
@@ -368,7 +368,7 @@ Namespace Imaging
         '
         ' Returns:
         '     The gamma correction value used for rendering antialiased and ClearType text.
-        Public Property TextContrast As Integer
+        Public Overrides Property TextContrast As Integer
             Get
                 Return Gr_Device.TextContrast
             End Get
@@ -382,7 +382,7 @@ Namespace Imaging
         '
         ' Returns:
         '     One of the System.Drawing.Text.TextRenderingHint values.
-        Public Property TextRenderingHint As TextRenderingHint
+        Public Overrides Property TextRenderingHint As TextRenderingHint
             Get
                 Return Gr_Device.TextRenderingHint
             End Get
@@ -397,7 +397,7 @@ Namespace Imaging
         ' Returns:
         '     A copy of the System.Drawing.Drawing2D.Matrix that represents the geometric world
         '     transformation for this System.Drawing.Graphics.
-        Public Property Transform As Drawing2D.Matrix
+        Public Overrides Property Transform As Drawing2D.Matrix
             Get
                 Return Gr_Device.Transform
             End Get
@@ -412,7 +412,7 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         '     the visible clipping region of this System.Drawing.Graphics.
-        Public ReadOnly Property VisibleClipBounds As RectangleF
+        Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
             Get
                 Return Gr_Device.VisibleClipBounds
             End Get
@@ -425,7 +425,7 @@ Namespace Imaging
         ' Parameters:
         '   data:
         '     Array of bytes that contains the comment.
-        Public Sub AddMetafileComment(data() As Byte)
+        Public Overrides Sub AddMetafileComment(data() As Byte)
             Call Gr_Device.AddMetafileComment(data)
         End Sub
         '
@@ -437,7 +437,7 @@ Namespace Imaging
         '   color:
         '     System.Drawing.Color structure that represents the background color of the drawing
         '     surface.
-        Public Sub Clear(color As Color)
+        Public Overrides Sub Clear(color As Color)
             Call Gr_Device.Clear(color)
         End Sub
         '
@@ -458,7 +458,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
+        Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
             Call Gr_Device.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize)
         End Sub
         '
@@ -485,7 +485,7 @@ Namespace Imaging
         '
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
+        Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
             Call Gr_Device.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize, copyPixelOperation)
         End Sub
         '
@@ -512,7 +512,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size)
+        Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size)
             Call Gr_Device.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize)
         End Sub
         '
@@ -545,7 +545,7 @@ Namespace Imaging
         '
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
+        Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
             Call Gr_Device.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize, copyPixelOperation)
         End Sub
 
@@ -572,7 +572,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -598,7 +598,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null
-        Public Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -636,7 +636,7 @@ Namespace Imaging
         '
         '   T:System.ArgumentNullException:
         '     rects is a zero-length array.
-        Public Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+        Public Overrides Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
 
         End Sub
         '
@@ -671,7 +671,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
 
         End Sub
 
@@ -714,7 +714,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawBezier(pen As Pen, pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
+        Public Overrides Sub DrawBezier(pen As Pen, pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
 
         End Sub
         '
@@ -753,7 +753,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawBezier(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single, x3 As Single, y3 As Single, x4 As Single, y4 As Single)
+        Public Overrides Sub DrawBezier(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single, x3 As Single, y3 As Single, x4 As Single, y4 As Single)
 
         End Sub
         '
@@ -772,7 +772,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawBeziers(pen As Pen, points() As Point)
+        Public Overrides Sub DrawBeziers(pen As Pen, points() As Point)
 
         End Sub
         '
@@ -791,7 +791,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawBeziers(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawBeziers(pen As Pen, points() As PointF)
 
         End Sub
         '
@@ -808,7 +808,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawClosedCurve(pen As Pen, points() As Point)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point)
 
         End Sub
         '
@@ -825,7 +825,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawClosedCurve(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF)
 
         End Sub
         '
@@ -850,7 +850,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
 
         End Sub
         '
@@ -875,7 +875,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
 
         End Sub
         '
@@ -892,7 +892,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As Point)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
 
         End Sub
         '
@@ -909,7 +909,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF)
 
         End Sub
 
@@ -931,7 +931,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As Point, tension As Single)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, tension As Single)
 
         End Sub
 
@@ -954,7 +954,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
 
         End Sub
 
@@ -980,7 +980,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer)
 
         End Sub
 
@@ -1009,7 +1009,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As Point, offset As Integer, numberOfSegments As Integer, tension As Single)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, offset As Integer, numberOfSegments As Integer, tension As Single)
 
         End Sub
 
@@ -1040,7 +1040,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer, tension As Single)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer, tension As Single)
 
         End Sub
         '
@@ -1057,7 +1057,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawEllipse(pen As Pen, rect As Rectangle)
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
 
         End Sub
         '
@@ -1074,7 +1074,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawEllipse(pen As Pen, rect As RectangleF)
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
 
         End Sub
         '
@@ -1103,7 +1103,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
 
         End Sub
         '
@@ -1132,7 +1132,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
 
         End Sub
         '
@@ -1152,7 +1152,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     icon is null.
-        Public Sub DrawIcon(icon As Icon, targetRect As Rectangle)
+        Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
 
         End Sub
         '
@@ -1173,7 +1173,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     icon is null.
-        Public Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
+        Public Overrides Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
 
         End Sub
         '
@@ -1194,7 +1194,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     icon is null.
-        Public Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
+        Public Overrides Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
 
         End Sub
         '
@@ -1213,7 +1213,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, rect As RectangleF)
+        Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
 
         End Sub
         '
@@ -1232,7 +1232,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, rect As Rectangle)
+        Public Overrides Sub DrawImage(image As Image, rect As Rectangle)
 
         End Sub
         '
@@ -1250,7 +1250,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As Point)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point)
 
         End Sub
         '
@@ -1268,7 +1268,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As PointF)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
 
         End Sub
         '
@@ -1287,7 +1287,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, point As Point)
+        Public Overrides Sub DrawImage(image As Image, point As Point)
 
         End Sub
         '
@@ -1306,7 +1306,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, point As PointF)
+        Public Overrides Sub DrawImage(image As Image, point As PointF)
 
         End Sub
         '
@@ -1327,7 +1327,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, x As Integer, y As Integer)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer)
 
         End Sub
         '
@@ -1348,7 +1348,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, x As Single, y As Single)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single)
 
         End Sub
         '
@@ -1374,7 +1374,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1401,7 +1401,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1427,7 +1427,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1454,7 +1454,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1482,7 +1482,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1512,7 +1512,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -1542,7 +1542,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -1570,7 +1570,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1597,7 +1597,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
 
         End Sub
         '
@@ -1624,7 +1624,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
 
         End Sub
         '
@@ -1660,7 +1660,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
 
         End Sub
         '
@@ -1696,7 +1696,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
 
         End Sub
         '
@@ -1733,7 +1733,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1770,7 +1770,7 @@ Namespace Imaging
         '     Value specifying additional data for the System.Drawing.Graphics.DrawImageAbort
         '     delegate to use when checking whether to stop execution of the System.Drawing.Graphics.DrawImage(System.Drawing.Image,System.Drawing.Point[],System.Drawing.Rectangle,System.Drawing.GraphicsUnit,System.Drawing.Imaging.ImageAttributes,System.Drawing.Graphics.DrawImageAbort,System.Int32)
         '     method.
-        Public Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
 
         End Sub
         '
@@ -1807,7 +1807,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -1848,7 +1848,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
 
         End Sub
         '
@@ -1889,7 +1889,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -1930,7 +1930,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
 
         End Sub
         '
@@ -1977,7 +1977,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
 
         End Sub
         '
@@ -2024,7 +2024,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort)
 
         End Sub
         '
@@ -2075,7 +2075,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
 
         End Sub
         '
@@ -2126,7 +2126,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
 
         End Sub
         '
@@ -2145,7 +2145,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImageUnscaled(image As Image, rect As Rectangle)
+        Public Overrides Sub DrawImageUnscaled(image As Image, rect As Rectangle)
             Call Gr_Device.DrawImageUnscaled(image, rect)
         End Sub
         '
@@ -2163,7 +2163,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImageUnscaled(image As Image, point As Point)
+        Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
             Call Gr_Device.DrawImageUnscaled(image, point)
         End Sub
         '
@@ -2184,7 +2184,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
+        Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
             Call Gr_Device.DrawImageUnscaled(image, x, y)
         End Sub
         '
@@ -2210,7 +2210,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Gr_Device.DrawImageUnscaled(image, x, y, width, height)
         End Sub
         '
@@ -2228,7 +2228,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
+        Public Overrides Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
             Call Gr_Device.DrawImageUnscaledAndClipped(image, rect)
         End Sub
 
@@ -2238,7 +2238,7 @@ Namespace Imaging
         ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
         ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
-        Public Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
+        Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
             Call Gr_Device.DrawLine(pen, pt1, pt2)
         End Sub
         '
@@ -2258,8 +2258,8 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-
+        Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
+            Call Gr_Device.DrawLine(pen, pt1, pt2)
         End Sub
         '
         ' Summary:
@@ -2284,8 +2284,8 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-
+        Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+            Call Gr_Device.DrawLine(pen, x1, y1, x2, y2)
         End Sub
         '
         ' Summary:
@@ -2310,8 +2310,8 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-
+        Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
+            Call Gr_Device.DrawLine(pen, x1, y1, x2, y2)
         End Sub
         '
         ' Summary:
@@ -2328,7 +2328,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawLines(pen As Pen, points() As Point)
+        Public Overrides Sub DrawLines(pen As Pen, points() As Point)
 
         End Sub
         '
@@ -2346,7 +2346,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawLines(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
 
         End Sub
         '
@@ -2363,7 +2363,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-path is null.
-        Public Sub DrawPath(pen As Pen, path As GraphicsPath)
+        Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
 
         End Sub
         '
@@ -2390,7 +2390,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -2417,7 +2417,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -2456,7 +2456,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+        Public Overrides Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
 
         End Sub
         '
@@ -2496,7 +2496,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
 
-        Public Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -2513,7 +2513,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawPolygon(pen As Pen, points() As Point)
+        Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
 
         End Sub
         '
@@ -2531,7 +2531,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public Sub DrawPolygon(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
 
         End Sub
         '
@@ -2548,7 +2548,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawRectangle(pen As Pen, rect As Rectangle)
+        Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
 
         End Sub
         '
@@ -2574,7 +2574,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
 
         End Sub
         '
@@ -2600,7 +2600,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
 
         End Sub
         '
@@ -2622,7 +2622,7 @@ Namespace Imaging
         '
         '   T:System.ArgumentException:
         '     rects is a zero-length array.
-        Public Sub DrawRectangles(pen As Pen, rects() As Rectangle)
+        Public Overrides Sub DrawRectangles(pen As Pen, rects() As Rectangle)
 
         End Sub
         '
@@ -2644,7 +2644,7 @@ Namespace Imaging
         '
         '   T:System.ArgumentException:
         '     rects is a zero-length array.
-        Public Sub DrawRectangles(pen As Pen, rects() As RectangleF)
+        Public Overrides Sub DrawRectangles(pen As Pen, rects() As RectangleF)
 
         End Sub
 
@@ -2657,7 +2657,7 @@ Namespace Imaging
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
         ''' text.</param>
-        Public Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
             Call Gr_Device.DrawString(s, font, brush, layoutRectangle)
         End Sub
 
@@ -2670,7 +2670,7 @@ Namespace Imaging
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
-        Public Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
             Call Gr_Device.DrawString(s, font, brush, point)
         End Sub
         '
@@ -2700,7 +2700,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
             Call Gr_Device.DrawString(s, font, brush, point, format)
         End Sub
         '
@@ -2730,7 +2730,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
             Call Gr_Device.DrawString(s, font, brush, layoutRectangle, format)
         End Sub
         '
@@ -2757,7 +2757,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
             Call Gr_Device.DrawString(s, font, brush, x, y)
         End Sub
         '
@@ -2789,7 +2789,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
             Call Gr_Device.DrawString(s, font, brush, x, y, format)
         End Sub
         '
@@ -2801,7 +2801,7 @@ Namespace Imaging
         '   container:
         '     System.Drawing.Drawing2D.GraphicsContainer that represents the container this
         '     method restores.
-        Public Sub EndContainer(container As GraphicsContainer)
+        Public Overrides Sub EndContainer(container As GraphicsContainer)
 
         End Sub
         '
@@ -2820,7 +2820,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -2839,7 +2839,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -2858,7 +2858,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -2877,7 +2877,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -2896,7 +2896,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -2915,7 +2915,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -2938,7 +2938,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -2961,7 +2961,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -2984,7 +2984,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3007,7 +3007,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3030,7 +3030,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3053,7 +3053,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3081,7 +3081,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -3109,7 +3109,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3137,7 +3137,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -3165,7 +3165,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3193,7 +3193,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -3221,7 +3221,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3249,7 +3249,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -3277,7 +3277,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -3305,7 +3305,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3333,7 +3333,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3361,7 +3361,7 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
 
         End Sub
         '
@@ -3389,7 +3389,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3421,7 +3421,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3453,7 +3453,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3485,7 +3485,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3517,7 +3517,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3549,7 +3549,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3581,7 +3581,7 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
 
         End Sub
         '
@@ -3618,7 +3618,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3655,7 +3655,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3692,7 +3692,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3729,7 +3729,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3766,7 +3766,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3803,7 +3803,7 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -3814,7 +3814,7 @@ Namespace Imaging
         ' Parameters:
         '   region:
         '     System.Drawing.Region that specifies the region to exclude from the clip region.
-        Public Sub ExcludeClip(region As Region)
+        Public Overrides Sub ExcludeClip(region As Region)
 
         End Sub
         '
@@ -3826,7 +3826,7 @@ Namespace Imaging
         '   rect:
         '     System.Drawing.Rectangle structure that specifies the rectangle to exclude from
         '     the clip region.
-        Public Sub ExcludeClip(rect As Rectangle)
+        Public Overrides Sub ExcludeClip(rect As Rectangle)
 
         End Sub
         '
@@ -3844,7 +3844,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillClosedCurve(brush As Brush, points() As Point)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
 
         End Sub
         '
@@ -3862,7 +3862,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillClosedCurve(brush As Brush, points() As PointF)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
 
         End Sub
         '
@@ -3884,7 +3884,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
 
         End Sub
         '
@@ -3906,7 +3906,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
 
         End Sub
         '
@@ -3931,7 +3931,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
 
         End Sub
         '
@@ -3956,7 +3956,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
 
         End Sub
         '
@@ -3975,7 +3975,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillEllipse(brush As Brush, rect As Rectangle)
+        Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
 
         End Sub
         '
@@ -3994,7 +3994,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillEllipse(brush As Brush, rect As RectangleF)
+        Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
 
         End Sub
         '
@@ -4023,7 +4023,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
 
         End Sub
         '
@@ -4052,7 +4052,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
 
         End Sub
         '
@@ -4069,7 +4069,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-path is null.
-        Public Sub FillPath(brush As Brush, path As GraphicsPath)
+        Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
 
         End Sub
         '
@@ -4096,7 +4096,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -4135,7 +4135,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+        Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
 
         End Sub
         '
@@ -4174,7 +4174,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
 
         End Sub
         '
@@ -4193,7 +4193,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillPolygon(brush As Brush, points() As Point)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
 
         End Sub
         '
@@ -4212,7 +4212,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillPolygon(brush As Brush, points() As PointF)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
 
         End Sub
         '
@@ -4235,7 +4235,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
 
         End Sub
         '
@@ -4258,7 +4258,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
 
         End Sub
         '
@@ -4275,7 +4275,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillRectangle(brush As Brush, rect As Rectangle)
+        Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
             Call Gr_Device.FillRectangle(brush, rect)
         End Sub
         '
@@ -4292,7 +4292,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillRectangle(brush As Brush, rect As RectangleF)
+        Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)
             Call Gr_Device.FillRectangle(brush, rect)
         End Sub
         '
@@ -4319,7 +4319,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
 
         End Sub
         '
@@ -4346,7 +4346,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
 
         End Sub
         '
@@ -4368,7 +4368,7 @@ Namespace Imaging
         '
         '   T:System.ArgumentException:
         '     rects is a zero-length array.
-        Public Sub FillRectangles(brush As Brush, rects() As Rectangle)
+        Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
 
         End Sub
         '
@@ -4390,7 +4390,7 @@ Namespace Imaging
         '
         '   T:System.ArgumentException:
         '     Rects is a zero-length array.
-        Public Sub FillRectangles(brush As Brush, rects() As RectangleF)
+        Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
 
         End Sub
         '
@@ -4407,14 +4407,14 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-region is null.
-        Public Sub FillRegion(brush As Brush, region As Region)
+        Public Overrides Sub FillRegion(brush As Brush, region As Region)
 
         End Sub
         '
         ' Summary:
         '     Forces execution of all pending graphics operations and returns immediately without
         '     waiting for the operations to finish.
-        Public Sub Flush()
+        Public Overrides Sub Flush()
 
         End Sub
         '
@@ -4427,7 +4427,7 @@ Namespace Imaging
         '     Member of the System.Drawing.Drawing2D.FlushIntention enumeration that specifies
         '     whether the method returns immediately or waits for any existing operations to
         '     finish.
-        Public Sub Flush(intention As FlushIntention)
+        Public Overrides Sub Flush(intention As FlushIntention)
 
         End Sub
         '
@@ -4438,7 +4438,7 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.RectangleF structure to intersect with the current clip region.
-        Public Sub IntersectClip(rect As RectangleF)
+        Public Overrides Sub IntersectClip(rect As RectangleF)
 
         End Sub
         '
@@ -4449,7 +4449,7 @@ Namespace Imaging
         ' Parameters:
         '   region:
         '     System.Drawing.Region to intersect with the current region.
-        Public Sub IntersectClip(region As Region)
+        Public Overrides Sub IntersectClip(region As Region)
 
         End Sub
         '
@@ -4460,7 +4460,7 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.Rectangle structure to intersect with the current clip region.
-        Public Sub IntersectClip(rect As Rectangle)
+        Public Overrides Sub IntersectClip(rect As Rectangle)
 
         End Sub
         '
@@ -4471,7 +4471,7 @@ Namespace Imaging
         ' Parameters:
         '   matrix:
         '     4x4 System.Drawing.Drawing2D.Matrix that multiplies the world transformation.
-        Public Sub MultiplyTransform(matrix As Drawing2D.Matrix)
+        Public Overrides Sub MultiplyTransform(matrix As Drawing2D.Matrix)
 
         End Sub
         '
@@ -4486,14 +4486,14 @@ Namespace Imaging
         '   order:
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that determines
         '     the order of the multiplication.
-        Public Sub MultiplyTransform(matrix As Drawing2D.Matrix, order As MatrixOrder)
+        Public Overrides Sub MultiplyTransform(matrix As Drawing2D.Matrix, order As MatrixOrder)
 
         End Sub
         '
         ' Summary:
         '     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
         '     method of this System.Drawing.Graphics.
-        Public Sub ReleaseHdc() Implements IDeviceContext.ReleaseHdc
+        Public Overrides Sub ReleaseHdc() Implements IDeviceContext.ReleaseHdc
 
         End Sub
         '
@@ -4506,7 +4506,7 @@ Namespace Imaging
         '     Handle to a device context obtained by a previous call to the System.Drawing.Graphics.GetHdc
         '     method of this System.Drawing.Graphics.
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public Sub ReleaseHdc(hdc As IntPtr)
+        Public Overrides Sub ReleaseHdc(hdc As IntPtr)
 
         End Sub
         '
@@ -4517,20 +4517,20 @@ Namespace Imaging
         '   hdc:
         '     Handle to a device context.
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Sub ReleaseHdcInternal(hdc As IntPtr)
+        Public Overrides Sub ReleaseHdcInternal(hdc As IntPtr)
 
         End Sub
         '
         ' Summary:
         '     Resets the clip region of this System.Drawing.Graphics to an infinite region.
-        Public Sub ResetClip()
+        Public Overrides Sub ResetClip()
 
         End Sub
         '
         ' Summary:
         '     Resets the world transformation matrix of this System.Drawing.Graphics to the
         '     identity matrix.
-        Public Sub ResetTransform()
+        Public Overrides Sub ResetTransform()
 
         End Sub
         '
@@ -4542,7 +4542,7 @@ Namespace Imaging
         '   gstate:
         '     System.Drawing.Drawing2D.GraphicsState that represents the state to which to
         '     restore this System.Drawing.Graphics.
-        Public Sub Restore(gstate As GraphicsState)
+        Public Overrides Sub Restore(gstate As GraphicsState)
 
         End Sub
         '
@@ -4552,7 +4552,7 @@ Namespace Imaging
         ' Parameters:
         '   angle:
         '     Angle of rotation in degrees.
-        Public Sub RotateTransform(angle As Single)
+        Public Overrides Sub RotateTransform(angle As Single)
 
         End Sub
         '
@@ -4567,7 +4567,7 @@ Namespace Imaging
         '   order:
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         '     whether the rotation is appended or prepended to the matrix transformation.
-        Public Sub RotateTransform(angle As Single, order As MatrixOrder)
+        Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
 
         End Sub
         '
@@ -4581,7 +4581,7 @@ Namespace Imaging
         '
         '   sy:
         '     Scale factor in the y direction.
-        Public Sub ScaleTransform(sx As Single, sy As Single)
+        Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
 
         End Sub
         '
@@ -4600,7 +4600,7 @@ Namespace Imaging
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         '     whether the scaling operation is prepended or appended to the transformation
         '     matrix.
-        Public Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
+        Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
 
         End Sub
         '
@@ -4611,7 +4611,7 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.Rectangle structure that represents the new clip region.
-        Public Sub SetClip(rect As Rectangle)
+        Public Overrides Sub SetClip(rect As Rectangle)
 
         End Sub
         '
@@ -4622,7 +4622,7 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.RectangleF structure that represents the new clip region.
-        Public Sub SetClip(rect As RectangleF)
+        Public Overrides Sub SetClip(rect As RectangleF)
 
         End Sub
         '
@@ -4632,7 +4632,7 @@ Namespace Imaging
         ' Parameters:
         '   path:
         '     System.Drawing.Drawing2D.GraphicsPath that represents the new clip region.
-        Public Sub SetClip(path As GraphicsPath)
+        Public Overrides Sub SetClip(path As GraphicsPath)
 
         End Sub
         '
@@ -4643,7 +4643,7 @@ Namespace Imaging
         ' Parameters:
         '   g:
         '     System.Drawing.Graphics from which to take the new clip region.
-        Public Sub SetClip(g As Graphics)
+        Public Overrides Sub SetClip(g As Graphics)
 
         End Sub
         '
@@ -4658,7 +4658,7 @@ Namespace Imaging
         '   combineMode:
         '     Member from the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public Sub SetClip(region As Region, combineMode As CombineMode)
+        Public Overrides Sub SetClip(region As Region, combineMode As CombineMode)
 
         End Sub
         '
@@ -4674,7 +4674,7 @@ Namespace Imaging
         '   combineMode:
         '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public Sub SetClip(rect As RectangleF, combineMode As CombineMode)
+        Public Overrides Sub SetClip(rect As RectangleF, combineMode As CombineMode)
 
         End Sub
         '
@@ -4690,7 +4690,7 @@ Namespace Imaging
         '   combineMode:
         '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public Sub SetClip(rect As Rectangle, combineMode As CombineMode)
+        Public Overrides Sub SetClip(rect As Rectangle, combineMode As CombineMode)
 
         End Sub
         '
@@ -4705,7 +4705,7 @@ Namespace Imaging
         '   combineMode:
         '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
+        Public Overrides Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
 
         End Sub
         '
@@ -4721,7 +4721,7 @@ Namespace Imaging
         '   combineMode:
         '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public Sub SetClip(g As Graphics, combineMode As CombineMode)
+        Public Overrides Sub SetClip(g As Graphics, combineMode As CombineMode)
 
         End Sub
         '
@@ -4740,7 +4740,7 @@ Namespace Imaging
         '
         '   pts:
         '     Array of System.Drawing.Point structures that represents the points to transformation.
-        Public Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
+        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
 
         End Sub
         '
@@ -4759,7 +4759,7 @@ Namespace Imaging
         '
         '   pts:
         '     Array of System.Drawing.PointF structures that represent the points to transform.
-        Public Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
+        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
 
         End Sub
         '
@@ -4773,7 +4773,7 @@ Namespace Imaging
         '
         '   dy:
         '     The y-coordinate of the translation.
-        Public Sub TranslateClip(dx As Integer, dy As Integer)
+        Public Overrides Sub TranslateClip(dx As Integer, dy As Integer)
 
         End Sub
         '
@@ -4787,7 +4787,7 @@ Namespace Imaging
         '
         '   dy:
         '     The y-coordinate of the translation.
-        Public Sub TranslateClip(dx As Single, dy As Single)
+        Public Overrides Sub TranslateClip(dx As Single, dy As Single)
 
         End Sub
         '
@@ -4801,7 +4801,7 @@ Namespace Imaging
         '
         '   dy:
         '     The y-coordinate of the translation.
-        Public Sub TranslateTransform(dx As Single, dy As Single)
+        Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
 
         End Sub
         '
@@ -4820,7 +4820,7 @@ Namespace Imaging
         '   order:
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         '     whether the translation is prepended or appended to the transformation matrix.
-        Public Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
+        Public Overrides Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
 
         End Sub
         Protected Overrides Sub Finalize()
@@ -4836,7 +4836,7 @@ Namespace Imaging
         ' Returns:
         '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
         '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public Function BeginContainer() As GraphicsContainer
+        Public Overrides Function BeginContainer() As GraphicsContainer
             Throw New NotImplementedException
         End Function
         '
@@ -4860,7 +4860,7 @@ Namespace Imaging
         ' Returns:
         '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
         '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
+        Public Overrides Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
             Throw New NotImplementedException
         End Function
         '
@@ -4884,7 +4884,7 @@ Namespace Imaging
         ' Returns:
         '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
         '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
+        Public Overrides Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
             Throw New NotImplementedException
         End Function
         '
@@ -4894,7 +4894,7 @@ Namespace Imaging
         ' Returns:
         '     An System.Object representing the cumulative graphics context.
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Function GetContextInfo() As Object
+        Public Overrides Function GetContextInfo() As Object
             Throw New NotImplementedException
         End Function
         '
@@ -4903,7 +4903,7 @@ Namespace Imaging
         '
         ' Returns:
         '     Handle to the device context associated with this System.Drawing.Graphics.
-        Public Function GetHdc() As IntPtr Implements IDeviceContext.GetHdc
+        Public Overrides Function GetHdc() As IntPtr Implements IDeviceContext.GetHdc
             Throw New NotImplementedException
         End Function
         '
@@ -4917,7 +4917,7 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.Color structure that represents the nearest color to the one
         '     specified with the color parameter.
-        Public Function GetNearestColor(color As Color) As Color
+        Public Overrides Function GetNearestColor(color As Color) As Color
             Throw New NotImplementedException
         End Function
         '
@@ -4932,7 +4932,7 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(rect As Rectangle) As Boolean
+        Public Overrides Function IsVisible(rect As Rectangle) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -4947,7 +4947,7 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(rect As RectangleF) As Boolean
+        Public Overrides Function IsVisible(rect As RectangleF) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -4962,7 +4962,7 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(point As PointF) As Boolean
+        Public Overrides Function IsVisible(point As PointF) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -4977,7 +4977,7 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(point As Point) As Boolean
+        Public Overrides Function IsVisible(point As Point) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -4995,7 +4995,7 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(x As Single, y As Single) As Boolean
+        Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -5013,7 +5013,7 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(x As Integer, y As Integer) As Boolean
+        Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -5037,7 +5037,7 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle defined by the x, y, width, and height parameters is contained
         '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
+        Public Overrides Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -5061,7 +5061,7 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle defined by the x, y, width, and height parameters is contained
         '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Function IsVisible(x As Integer, y As Integer, width As Integer, height As Integer) As Boolean
+        Public Overrides Function IsVisible(x As Integer, y As Integer, width As Integer, height As Integer) As Boolean
             Throw New NotImplementedException
         End Function
         '
@@ -5087,7 +5087,7 @@ Namespace Imaging
         ' Returns:
         '     This method returns an array of System.Drawing.Region objects, each of which
         '     bounds a range of character positions within the specified string.
-        Public Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
+        Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
             Throw New NotImplementedException
         End Function
 
@@ -5099,7 +5099,7 @@ Namespace Imaging
         ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.</returns>
-        Public Function MeasureString(text As String, font As Font) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font) As SizeF
             Return Gr_Device.MeasureString(text, font)
         End Function
         '
@@ -5124,7 +5124,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public Function MeasureString(text As String, font As Font, width As Integer) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
             Return Gr_Device.MeasureString(text, font, width)
         End Function
         '
@@ -5151,7 +5151,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
             Return Gr_Device.MeasureString(text, font, layoutArea)
         End Function
         '
@@ -5183,7 +5183,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
             Return Gr_Device.MeasureString(text, font, layoutArea, stringFormat)
         End Function
         '
@@ -5214,7 +5214,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
             Return Gr_Device.MeasureString(text, font, width, format)
         End Function
         '
@@ -5246,7 +5246,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
             Return Gr_Device.MeasureString(text, font, origin, stringFormat)
         End Function
         '
@@ -5284,7 +5284,7 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
             Return Gr_Device.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
         '
@@ -5295,10 +5295,13 @@ Namespace Imaging
         ' Returns:
         '     This method returns a System.Drawing.Drawing2D.GraphicsState that represents
         '     the saved state of this System.Drawing.Graphics.
-        Public Function Save() As GraphicsState
+        Public Overrides Function Save() As GraphicsState
             Return Gr_Device.Save
         End Function
 
+        Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
+            Call Gr_Device.DrawBezier(pen, pt1, pt2, pt3, pt4)
+        End Sub
 #End Region
     End Class
 End Namespace

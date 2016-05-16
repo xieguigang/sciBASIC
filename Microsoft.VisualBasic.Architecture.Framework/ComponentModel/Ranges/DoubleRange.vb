@@ -4,6 +4,8 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports Microsoft.VisualBasic.Serialization
+
 Namespace ComponentModel.Ranges
 
     ''' <summary>
@@ -14,12 +16,12 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' Minimum value
         ''' </summary>
-        Public Property Min() As Double Implements IRanges(Of Double).Min
+        Public Property Min As Double Implements IRanges(Of Double).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
-        Public Property Max() As Double Implements IRanges(Of Double).Max
+        Public Property Max As Double Implements IRanges(Of Double).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
@@ -40,6 +42,10 @@ Namespace ComponentModel.Ranges
             Me.Min = min
             Me.Max = max
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
         ''' <summary>
         ''' Check if the specified value is inside this range
