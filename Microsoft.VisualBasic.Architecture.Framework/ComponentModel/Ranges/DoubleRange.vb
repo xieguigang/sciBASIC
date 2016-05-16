@@ -4,6 +4,8 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports Microsoft.VisualBasic.Serialization
+
 Namespace ComponentModel.Ranges
 
     ''' <summary>
@@ -40,6 +42,10 @@ Namespace ComponentModel.Ranges
             Me.Min = min
             Me.Max = max
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
         ''' <summary>
         ''' Check if the specified value is inside this range
