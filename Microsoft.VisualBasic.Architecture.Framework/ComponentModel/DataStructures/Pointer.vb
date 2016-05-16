@@ -86,7 +86,7 @@
         End Operator
 
         ''' <summary>
-        ''' 自增1，然后返回之前的数值
+        ''' Automatically increasing self +1 and then returns the previous value.(自增1，然后返回之前的数值)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
