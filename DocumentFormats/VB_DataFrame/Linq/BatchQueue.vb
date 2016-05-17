@@ -32,10 +32,19 @@ Namespace DocumentStream.Linq
 
             Call $"All I/O queue job done!   {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
 
-            For Each data As NamedValue(Of String()) In IO
-                Dim buf As T() = data.x.LoadStream(Of T)(False)
+            For i As Integer = 0 To IO.Length - 1
+                Dim data As NamedValue(Of String()) = IO(i)
+                Dim buf As T() = Data.x.LoadStream(Of T)(False)
+
                 Yield New NamedValue(Of T())(data.Name, buf)
+
+                IO(i) = Nothing   ' 数据量非常大的话，在这里进行内存的释放
+                Call GC.SuppressFinalize(data.x)
+                Call GC.SuppressFinalize(data)
+                Call Console.Write(".")
             Next
+
+            Call GC.SuppressFinalize(IO)
         End Function
     End Module
 End Namespace
