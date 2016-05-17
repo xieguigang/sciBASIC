@@ -226,10 +226,10 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function SaveTo(Of T As Class)(source As IEnumerable(Of T),
-                                                      path As String,
-                                                      Optional explicit As Boolean = False,
-                                                      Optional encoding As Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
+                                             path As String,
+                                             Optional explicit As Boolean = False,
+                                             Optional encoding As Encoding = Nothing) As Boolean
 
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
@@ -247,10 +247,10 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
         Return True
     End Function
 
-    <Extension> Public Function SaveTo(Of T As Class)(source As IEnumerable(Of T),
-                                                      path As String,
-                                                      encoding As Encodings,
-                                                      Optional explicit As Boolean = False) As Boolean
+    <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
+                                             path As String,
+                                             encoding As Encodings,
+                                             Optional explicit As Boolean = False) As Boolean
         Return source.SaveTo(path, explicit, encoding.GetEncodings)
     End Function
 
