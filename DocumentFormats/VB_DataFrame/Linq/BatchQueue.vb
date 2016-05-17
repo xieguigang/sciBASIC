@@ -21,25 +21,22 @@ Namespace DocumentStream.Linq
 
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim encode As Encoding = encoding.GetEncodings
-            Dim IO As NamedValue(Of String())() =
-                LinqAPI.Exec(Of NamedValue(Of String())) <= From path As String
-                                                            In files.AsParallel
-                                                            Let echoIni As String = $"{path.ToFileURL} init start...".__DEBUG_ECHO
-                                                            Let buf As String() = path.ReadAllLines(encode)
-                                                            Let echo As String = $"{path.ToFileURL} I/O read done!".__DEBUG_ECHO
-                                                            Let name As String = path.BaseName
-                                                            Select New NamedValue(Of String())(name, buf) ' 不清楚为什么服务器上面有时候的IO会非常慢，则在这里可以一次性的先读完所有数据，然后再返回数据
+            Dim IO As IEnumerable(Of NamedValue(Of String())) = From path As String
+                                                                In files.AsParallel
+                                                                Let echoIni As String = $"{path.ToFileURL} init start...".__DEBUG_ECHO
+                                                                Let buf As String() = path.ReadAllLines(encode)
+                                                                Let echo As String = $"{path.ToFileURL} I/O read done!".__DEBUG_ECHO
+                                                                Let name As String = path.BaseName
+                                                                Select New NamedValue(Of String())(name, buf) ' 不清楚为什么服务器上面有时候的IO会非常慢，则在这里可以一次性的先读完所有数据，然后再返回数据
 
             Call $"All I/O queue job done!   {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
 
-            For i As Integer = 0 To IO.Length - 1
-                Dim data As NamedValue(Of String()) = IO(i)
-                Dim buf As T() = Data.x.LoadStream(Of T)(False)
+            For Each data As NamedValue(Of String()) In IO
+                Dim buf As T() = data.x.LoadStream(Of T)(False)
 
                 Yield New NamedValue(Of T())(data.Name, buf)
 
-                IO(i) = Nothing   ' 数据量非常大的话，在这里进行内存的释放
-                Call GC.SuppressFinalize(data.x)
+                Call GC.SuppressFinalize(data.x)    ' 数据量非常大的话，在这里进行内存的释放
                 Call GC.SuppressFinalize(data)
                 Call Console.Write(".")
             Next
