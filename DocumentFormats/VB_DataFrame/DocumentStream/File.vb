@@ -460,7 +460,8 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks>为了提高数据的加载效率，先使用LINQ预加载数据，之后使用Parallel LINQ进行数据的解析操作</remarks>
         Private Shared Function __LINQ_LOAD(data As String()) As File
-            Dim LQuery = (From line As String In data.AsParallel
+            Dim LQuery = (From line As String
+                          In data.AsParallel
                           Let row As RowObject = CType(line, RowObject)
                           Select row).ToList
             Return New File With {
@@ -548,10 +549,14 @@ Namespace DocumentStream
         ''' <returns></returns>
         Private Shared Function __loads(path As String, encoding As Encoding) As List(Of RowObject)
             Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
-            Dim first As RowObject = CType(lines.First, RowObject)
+            Return Load(lines)
+        End Function
+
+        Public Shared Function Load(buf As String()) As List(Of RowObject)
+            Dim first As New RowObject(buf(Scan0))
             Dim rows As List(Of RowObject) = (From s As String
-                                              In lines.Skip(1).AsParallel
-                                              Select CType(s, RowObject)).ToList
+                                              In buf.Skip(1).AsParallel
+                                              Select New RowObject(s)).ToList
             Return first + rows
         End Function
 #End Region
