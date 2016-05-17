@@ -43,5 +43,27 @@ Namespace DocumentStream.Linq
 
             Call GC.SuppressFinalize(IO)
         End Function
+
+#Region "How this workflow works?"
+
+        ' The data loading workflow can be explained by the example code show below:
+        ' ===========================================================================
+
+        ' Sub Main()
+        '    For Each x As String In TestWorkflowBase()
+        '        Console.WriteLine(x)
+        '    Next
+        ' End Sub
+
+        ' Private Iterator Function TestWorkflowBase() As IEnumerable(Of String)
+        '    Dim LQuery As IEnumerable(Of String) = From s As Integer
+        '                                           In {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}.AsParallel
+        '                                           Let exc = MsgBox(s)
+        '                                           Select CStr(s)
+        '    For Each s As String In LQuery
+        '        Yield s
+        '    Next
+        ' End Function
+#End Region
     End Module
 End Namespace
