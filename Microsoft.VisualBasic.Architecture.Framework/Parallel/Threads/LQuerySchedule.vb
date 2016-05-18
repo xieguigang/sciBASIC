@@ -3,8 +3,9 @@
 Namespace Parallel
 
     ''' <summary>
-    ''' 用于高效率执行批量查询操作和用于检测操作超时的工具对象，请注意，为了提高查询的工作效率，请尽量避免在查询操作之中生成新的临时对象
-    ''' 并行版本的LINQ查询和原始的线程操作相比具有一些性能上面的局限性
+    ''' Parallel Linq query library for VisualBasic.
+    ''' (用于高效率执行批量查询操作和用于检测操作超时的工具对象，请注意，为了提高查询的工作效率，请尽量避免在查询操作之中生成新的临时对象
+    ''' 并行版本的LINQ查询和原始的线程操作相比具有一些性能上面的局限性)
     ''' </summary>
     ''' <remarks>在使用Parallel LINQ的时候，请务必要注意不能够使用Let语句操作共享变量，因为排除死锁的开销比较大</remarks>
     Public Class LQuerySchedule : Implements System.IDisposable
