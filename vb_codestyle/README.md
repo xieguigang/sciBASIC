@@ -317,8 +317,8 @@ Dim args As String()
 <tr><td>SQL query</td><td>SQL, sql, query</td><td>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</td></tr>
 <tr><td>Iterator</td><td>i, j, k, l</td><td>
     For i As Integer = 0 to [stop]<br />
-	    For j As Integer = i to [stop]<br />
-    	    For k As Integer = j to [stop]<br />
+        For j As Integer = i to [stop]<br />
+            For k As Integer = j to [stop]<br />
             Next<br />
         Next<br />
     Next<br />
