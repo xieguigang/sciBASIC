@@ -21,7 +21,7 @@ Where, the type **CLI** is the CLI interface which it is a module that contains 
 ###How to define the CLI module?
 A **Module** is a static _Class_ type in the VisualBasic, and it usually used for _the API exportation and common method definition for a set of similarity or functional correlated utility functions_.
 
-And then so that the CLI module in the VisualBasic can be explained as: <b>A module for exposed the CLI interface API to your user.</b>
+And then so that the CLI module in the VisualBasic can be explained as: **A module for exposed the CLI interface API to your user.**
 
 Here is a example:
 
@@ -90,6 +90,32 @@ Or batch removes elements:
             Where True = <test>
             Select x
 
+Here is some example of the list **+** operator
+
+	' This add operation makes the code more easily to read and understand:
+    ' This function returns a list of RfamHit element and it also merge a
+    ' list of uncertainly elements into the result list at the same time
+    Public Function GetDataFrame() As RfamHit() Implements IRfamHits.GetDataFrame
+        Return hits.ToList(Function(x) New RfamHit(x, Me)) + From x As Hit
+                                                             In Uncertain
+                                                             Select New RfamHit(x, Me)
+    End Function
+
+And using the **+** operator for add a new object into the list, this syntax can makes the code more readable instead of the poorly readable code from by using method **List(of T).Add**:
+
+    genomes += New GenomeBrief With {
+        .Name = title,
+        .Size = last.Size,
+        .Y = h1
+    }
+
+	' Poorly readable
+    genomes.Add(New GenomeBrief With {
+            .Name = title,
+            .Size = last.Size,
+            .Y = h1
+        })
+
 ##VisualBasic identifer names
 
 ####Directory type
@@ -156,7 +182,7 @@ All of the Linq Expression is recommended execute using [**LinqAPI**]() if the o
 
 ####Function And Type name
 
-For Public member function, the function name is recommended in formats **UpperUpper**, but if the function is Private, Friend, or Protected visible, then your function is recommended start with two underlines, likes \_\_lowerUpper. The definition of the Class, Structure names is in the same rule as function name.
+For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
 
 Here is some function name examples:
 
@@ -171,6 +197,8 @@ Here is some function name examples:
                               	genome As IGenomicsContextProvider(Of T),
                               	TF As IEnumerable(Of String),
                               	Optional ranges As Integer = 10000) As Density()
+
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
 
 
 _Make sure your name is short enough_
