@@ -1,4 +1,4 @@
-﻿##Common Architecture of a CLI program
+##Common Architecture of a CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
 Microsoft.VisualBasic.App
