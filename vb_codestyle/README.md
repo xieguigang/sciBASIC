@@ -258,8 +258,25 @@ And by using the **String.Format** function, then format control string is recom
 	Dim msg As String = String.Format(OutMsg, name)
 
 ######2. String contacts
-For contacts a large amount of string tokens, the **StringBuilder** is recommended used for this job, not recommend directly using & operator to contacts a large string collection due to the reason of performance issue.
-If you just want to contact the string, then a shared method **String.Join** is recommended used:
+For contacts a large amount of string tokens, the **StringBuilder** is recommended used for this job, **not recommend directly using _& operator_ to contacts a large string collection due to the reason of performance issue**.
+
+	' Convert the input string to a byte array and compute the hash.
+	Dim data As Byte() = md5Hash.ComputeHash(input)
+
+    ' Create a new Stringbuilder to collect the bytes
+    ' and create a string.
+    Dim sBuilder As New StringBuilder()
+
+    ' Loop through each byte of the hashed data
+    ' and format each one as a hexadecimal string.
+    For i As Integer = 0 To data.Length - 1
+    	sBuilder.Append(data(i).ToString("x2"))
+    Next i
+
+    Return sBuilder.ToString() ' Return the hexadecimal string.
+
+If you just want to contact the string, then a shared method **String.Join** is recommended used.
+If the string tokens will be join by a specific delimiter, then using **String.Join** instead of **StringBuilder.Append**
 
 	Dim tokens As String()
 	Dim sb As New StringBuilder
@@ -269,7 +286,7 @@ If you just want to contact the string, then a shared method **String.Join** is 
 	Next
 	Call sb.Remove(sb.Length -1)
 
-Or just use **String.Join**
+Or just use **String.Join**, this method is more clean and readable than **StringBuilder.Append**:
 
 	Dim tokens As String()
 	Dim out As String = String.Join(" ", tokens)
