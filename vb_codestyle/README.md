@@ -58,7 +58,7 @@ And the **CLI** interface should define as in the format of this example:
 
 
 
-##VisualBasic variable names
+##VisualBasic identifer names
 
 ####Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
@@ -67,8 +67,8 @@ If possible, then all of the directory path variable can be **UPCASE**, such as:
 	Dim EXPORT As String = "/usr/lib/GCModeller/"
 
 ####Module variable
-All of the module variable should in format like **_lowerUper** if the variable is _private_
-But if the variable is _Public_ or _Friend_ visible, then it should in format like **UperUper**
+All of the module variable should in format like **_lowerUpper** if the variable is _private_
+But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
 
 Here is some example:
 
@@ -86,7 +86,28 @@ All of the Linq Expression is recommended execute using [**LinqAPI**]() if the o
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/LinqStyle.png)
 
-Make sure your name is short enough
+####Function And Type name
+
+For Public member function, the function name is recommended in formats **UpperUpper**, but if the function is Private, Friend, or Protected visible, then your function is recommended start with two underlines, likes __lowerUpper
+
+Here is some function name examples:
+
+	' Private
+	Private Function __worker(Of T As I_GeneBrief)(genome As IGenomicsContextProvider(Of T),
+                                               	getTF As Func(Of Strands, T()),
+                                               	getRelated As Func(Of T, T(), Integer, T()),
+                                               	numTotal As Integer,
+                                               	ranges As Integer) As Density()
+	' Public
+	Public Function DensityCis(Of T As I_GeneBrief)(
+                              	genome As IGenomicsContextProvider(Of T),
+                              	TF As IEnumerable(Of String),
+                              	Optional ranges As Integer = 10000) As Density()
+
+
+_Make sure your name is short enough_
+
+
 
 >Some common used name for common types <table>
 <tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
@@ -107,5 +128,15 @@ Dim x As Integer
 Dim o As Object<br />
 Dim obj As Object<br />
 Dim value As Object
+</td></tr>
+</table>
+
+
+>Name for some meaning
+<table>
+<tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
+<tr><td>Commandline arguments</td><td>args, CLI</td><td>Dim args As CommandLine<br />
+Dim CLI As String<br />
+Dim args As String()
 </td></tr>
 </table>
