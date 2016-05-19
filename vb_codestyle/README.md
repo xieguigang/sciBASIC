@@ -3,7 +3,7 @@
 ##Code Architecture of a VisualBasic CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
-[Microsoft.VisualBasic.App]()
+[Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
 
 **A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
@@ -24,7 +24,7 @@ By using a **Integer** _Function_ instead of _Sub_ in VisualBasic, this makes yo
 		// blablabla...
 	}
 
-Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in **CLI** module.
+Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in **CLI** module.
 
 ###How to define the CLI module?
 A **Module** is a static _Class_ type in the VisualBasic, and it usually used for _the API exportation and common method definition for a set of similarity or functional correlated utility functions_.
@@ -52,9 +52,11 @@ Here is a example:
     	End Function
 	End Module
 
+This example code can be found at: [github](https://github.com/SMRUCC/ncbi-localblast/tree/master/Tools/CLI)
+
 ###How to expose the CLI interface API in your application?
 
-A wrapper for parsing the commandline from your user is already been defined in namespace: [**Microsoft.VisualBasic.CommandLine**]()
+A wrapper for parsing the commandline from your user is already been defined in namespace: [**Microsoft.VisualBasic.CommandLine**](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Microsoft.VisualBasic.Architecture.Framework/CommandLine)
 
 And the **CLI** interface should define as in the format of this example:
 
@@ -65,10 +67,10 @@ And the **CLI** interface should define as in the format of this example:
 	Public Function CLI_API(args As CommandLine) As Integer
 
 ###Using the VisualBasic CommandLine Parser
-For learn how to using the CommandLine Parser, 
+For learn how to using the CommandLine Parser, we first lean the syntax of the VisualBasic commandline arguments.
 A typical commandline arguments in VisualBasic is consist of two parts:
-1. Command Name
-2. Arguments
+1. _Command Name_
+2. _Arguments_
 
 Here is a simple example:
 
@@ -91,7 +93,7 @@ You call your CLI command in the console terminal is just like call a function i
     App.exe /API1 /test /test2-enable /test3-enable /msg "Hello World!!!"
     App.exe /API1 /test2-enable /test /test3-enable /msg "Hello World!!!"
 
-Simple Example of VisualBasic CLI application:
+Simple Example of VisualBasic CLI application(Example source code at [here](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Example/CLI_Example)):
 
 	Imports Microsoft.VisualBasic.CommandLine
 	Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -132,6 +134,8 @@ Example CLI is:
 
 -------------------------------------
 ##List(Of T) operation in VisualBasic
+For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
+
 
 	Dim source As IEnumerable(Of <Type>)
 	Dim list As New List(of <Type>)(source)
@@ -183,7 +187,7 @@ And using the **+** operator for add a new object into the list, this syntax can
         .Y = h1
     }
 
-	' Poorly readable
+	' Using the + operator to instead of this poorly readable function code
     genomes.Add(New GenomeBrief With {
             .Name = title,
             .Size = last.Size,
@@ -220,7 +224,7 @@ If possible, all of the local varaible within a function or sub program and the 
 
 For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
 
-Here is some function name examples:
+Here is some function name examples(Example picked from [here](https://github.com/SMRUCC/GCModeller.Core/Bio.Assembly/GenomicsContext/TFDensity.vb)):
 
 	' Private
 	Private Function __worker(Of T As I_GeneBrief)(genome As IGenomicsContextProvider(Of T),
@@ -279,7 +283,7 @@ The string interpolate syntax in VisualBasic language is recommended used for **
 So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
 ####Linq Expression
-All of the Linq Expression is recommended execute using [**LinqAPI**]() if the output type of the expression is a known type:
+All of the Linq Expression is recommended execute using [**LinqAPI**](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Language/Linq.vb) if the output type of the expression is a known type:
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/LinqStyle.png)
 
