@@ -63,10 +63,34 @@ And the **CLI** interface should define as in the format of this example:
 	<ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
 	Public Function CLI_API(args As CommandLine) As Integer
 
-Using the VisualBasic CommandLine Parser
+###Using the VisualBasic CommandLine Parser
+For learn how to using the CommandLine Parser, 
+A typical commandline arguments in VisualBasic is consist of two parts:
+1. Command Name
+2. Arguments
 
+Here is a simple example:
 
+	App.exe /API1 /test /msg "Hello World!!!" /test2-enable /test3-enable
 
+Where in this CLI, token **App.exe** is the executable file name of your application; And **/API1** token, is the **Command Name**; And then the last tokens are the parameter arguments, using the commandline in VisualBasic just like function programming in VisualBasic:
+
+	Module App
+    	Public Function API1(test As Boolean, msg As String, test2Enable As Boolean, test3Enable As Boolean) As Integer
+	End Module
+
+You call your CLI command in the console terminal is just like call a function in the VisualBasic Code:
+
+	Dim code As Integer = App.API1(True, "Hello World!!!", True, True)
+
+**_NOTE:_ There is no order of the VisualBasic CLI arguments**, so that all of these CLI examples are equals to each other:
+
+	App.exe /API1 /msg "Hello World!!!" /test2-enable /test3-enable /test
+    App.exe /API1 /msg "Hello World!!!" /test /test2-enable /test3-enable
+    App.exe /API1 /test /test2-enable /test3-enable /msg "Hello World!!!"
+    App.exe /API1 /test2-enable /test /test3-enable /msg "Hello World!!!"
+
+-------------------------------------
 ##List(Of T) operation in VisualBasic
 
 	Dim source As IEnumerable(Of <Type>)
