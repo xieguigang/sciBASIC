@@ -192,15 +192,15 @@ And using the **+** operator for add a new object into the list, this syntax can
 
 ##VisualBasic identifer names
 
-####Directory type
+####1. Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
 
 	Dim DIR As String = "/home/xieguigang/Downloads"
 	Dim EXPORT As String = "/usr/lib/GCModeller/"
 
-####Module variable
-All of the module variable should in format like **_lowerUpper** if the variable is _private_
-But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
+####2. Module variable
++ All of the module variable should in format like **_lowerUpper** if the variable is _private_
++ But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
 
 Here is some example:
 
@@ -212,13 +212,39 @@ Here is some example:
 	Public ReadOnly Property FileName As String
 	Public ReadOnly Property InDIR As Directory
 
-####Local varaible and function parameter
+####3. Local varaible and function parameter
 If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
+
+
+####4. Function And Type name
+
+For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
+
+Here is some function name examples:
+
+	' Private
+	Private Function __worker(Of T As I_GeneBrief)(genome As IGenomicsContextProvider(Of T),
+                                               	getTF As Func(Of Strands, T()),
+                                               	getRelated As Func(Of T, T(), Integer, T()),
+                                               	numTotal As Integer,
+                                               	ranges As Integer) As Density()
+	' Public
+	Public Function DensityCis(Of T As I_GeneBrief)(
+                              	genome As IGenomicsContextProvider(Of T),
+                              	TF As IEnumerable(Of String),
+                              	Optional ranges As Integer = 10000) As Density()
+
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
+
++ Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
++ Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
+
+At last, for improves of the code readable, try _**Make your identifier name short enough as possible**_
 
 
 ![Code standard overview example](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/codeStandard.png)
 
-####String manipulate
+##String manipulate
 ######1. String.Format
 For formatted a string output, then recommended used **String.Format** function or string interpolate syntax in VisualBasic language.
 And by using the **String.Format** function, then format control string is recommended puts in a constant variable instead of directly used in the format function:
@@ -257,33 +283,9 @@ All of the Linq Expression is recommended execute using [**LinqAPI**]() if the o
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/LinqStyle.png)
 
-####Function And Type name
-
-For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
-
-Here is some function name examples:
-
-	' Private
-	Private Function __worker(Of T As I_GeneBrief)(genome As IGenomicsContextProvider(Of T),
-                                               	getTF As Func(Of Strands, T()),
-                                               	getRelated As Func(Of T, T(), Integer, T()),
-                                               	numTotal As Integer,
-                                               	ranges As Integer) As Density()
-	' Public
-	Public Function DensityCis(Of T As I_GeneBrief)(
-                              	genome As IGenomicsContextProvider(Of T),
-                              	TF As IEnumerable(Of String),
-                              	Optional ranges As Integer = 10000) As Density()
-
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
-
-Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
-
-Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
-
-At last, for improves of the code readable, try _**Make your identifier name short enough as possible**_
-
 ##Appendix
+
+Here are tables of names that i used in my programming, and continues updated....
 
 >1. Some common used name for common types
 <table>
@@ -348,6 +350,6 @@ Dim args As String()
     	' blablabla...
     Loop
 
-    </td>
+</td>
     </tr>
 </table>
