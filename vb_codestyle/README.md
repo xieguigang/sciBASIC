@@ -57,6 +57,38 @@ And the **CLI** interface should define as in the format of this example:
 	Public Function CLI_API(args As CommandLine) As Integer
 
 
+##List(Of T) operation in VisualBasic
+
+	Dim source As IEnumerable(Of <Type>)
+	Dim list As New List(of <Type>)(source)
+
+For Add a new instance
+
+	list += New <Type> With {
+    	.Property1 = value1,
+        .Property2 = value2
+    }
+
+For Add a sequence of new elements
+
+	list += From x As T
+    		In source
+    		Where True = <test>
+            Select New <Type> With {
+            	.Property1 = <expression>,
+                .Property2 = <expression>
+            }
+
+if want to removes a specific element in the list
+
+	list -= x
+
+Or batch removes elements:
+
+	list -= From x As T
+    		In source
+            Where True = <test>
+            Select x
 
 ##VisualBasic identifer names
 
@@ -80,6 +112,42 @@ Here is some example:
 	Public ReadOnly Property FileName As String
 	Public ReadOnly Property InDIR As Directory
 
+####Local varaible
+If possible, all of the local varaible within a function or sub program, should be in format **lowerUpper**
+
+####String manipulate
+######1. String.Format
+For formatted a string output, then recommended used **String.Format** function or string interpolate syntax in VisualBasic language.
+And by using the **String.Format** function, then format control string is recommended puts in a constant variable instead of directly used in the format function:
+
+	Const OutMsg As String = "Hello world, {0}, Right?"
+	' blablabla.......
+	Dim msg As String = String.Format(OutMsg, name)
+
+######2. String contacts
+For contacts a large amount of string tokens, the **StringBuilder** is recommended used for this job, not recommend directly using & operator to contacts a large string collection due to the reason of performance issue.
+If you just want to contact the string, then a shared method **String.Join** is recommended used:
+
+	Dim tokens As String()
+	Dim sb As New StringBuilder
+
+	For Each s As String In tokens
+		Call sb.Append(s & " ")
+	Next
+	Call sb.Remove(sb.Length -1)
+
+Or just use **String.Join**
+
+	Dim tokens As String()
+	Dim out As String = String.Join(" ", tokens)
+
+######3. String interpolate
+The string interpolate syntax in VisualBasic language is recommended used for **build _SQL_ statement and _CLI_ arguments as this syntax is very easily for understand and code readable**:
+
+	Dim SQL As String = $"SELECT * FROM table WHERE id='{id}' AND ppi>{ppi}"
+	Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
+
+So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
 ####Linq Expression
 All of the Linq Expression is recommended execute using [**LinqAPI**]() if the output type of the expression is a known type:
@@ -88,7 +156,7 @@ All of the Linq Expression is recommended execute using [**LinqAPI**]() if the o
 
 ####Function And Type name
 
-For Public member function, the function name is recommended in formats **UpperUpper**, but if the function is Private, Friend, or Protected visible, then your function is recommended start with two underlines, likes __lowerUpper
+For Public member function, the function name is recommended in formats **UpperUpper**, but if the function is Private, Friend, or Protected visible, then your function is recommended start with two underlines, likes \_\_lowerUpper. The definition of the Class, Structure names is in the same rule as function name.
 
 Here is some function name examples:
 
@@ -109,7 +177,7 @@ _Make sure your name is short enough_
 
 
 
->Some common used name for common types <table>
+>1. Some common used name for common types <table>
 <tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
 <tr><td>System.Text.StringBuilder</td><td>sb</td><td>Dim sb As New StringBuilder</td></tr>
 <tr><td>System.String</td><td>s, str, name, sId, id, x</td><td>Dim s As String<br />
@@ -132,11 +200,11 @@ Dim value As Object
 </table>
 
 
->Name for some meaning
-<table>
+>2. Name for some meaning <table>
 <tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
 <tr><td>Commandline arguments</td><td>args, CLI</td><td>Dim args As CommandLine<br />
 Dim CLI As String<br />
 Dim args As String()
 </td></tr>
+<tr><td>SQL query</td><td>SQL, sql, query</td><td>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</td></tr>
 </table>
