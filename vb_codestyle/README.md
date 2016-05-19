@@ -216,7 +216,7 @@ Here is some example:
 If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
 
 
-![Code standard overview example]()
+![Code standard overview example](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/codeStandard.png)
 
 ####String manipulate
 ######1. String.Format
