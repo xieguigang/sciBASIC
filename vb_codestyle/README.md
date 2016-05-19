@@ -333,17 +333,21 @@ Dim args As String()
     </tr>
 	<tr><td>Iterator</td>
     	<td>i, j, k, l</td>
-        <td>    For i As Integer = 0 to [stop]<br />
-        For j As Integer = i to [stop]<br />
-            For k As Integer = j to [stop]<br />
-            Next<br />
-        Next<br />
-    Next<br />
+        <td>
+
+    For i As Integer = 0 to [stop]
+        For j As Integer = i to [stop]
+            For k As Integer = j to [stop]
+            Next
+        Next
+    Next
 
     Dim l As Integer = 100
 
     Do while l = 100
     	' blablabla...
-    Loop</td>
+    Loop
+
+    </td>
     </tr>
 </table>
