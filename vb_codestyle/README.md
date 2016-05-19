@@ -4,7 +4,8 @@
 
 There is a VisualBasic application helper module that define in the namespace:
 [Microsoft.VisualBasic.App]()
-A VisualBasic CLI application should define the Main entry point in a Module which is named Program and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
+
+**A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
     Module Program
 
@@ -17,9 +18,9 @@ A VisualBasic CLI application should define the Main entry point in a Module whi
     	End Function
 	End Module
 
-By using a **Integer** Function instead of Sub in VisualBasic, this makes your code style is more standard compare with the main function from C++.
+By using a **Integer** _Function_ instead of _Sub_ in VisualBasic, this makes your code style is more standard compare with the main function from C++.
 
-	int main(**char ARGV) {
+	int main(int argc, char *argv[]) {
 		// blablabla...
 	}
 
