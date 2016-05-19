@@ -82,3 +82,5 @@ Public ReadOnly Property InDIR As Directory
 Linq Expression
 All of the Linq Expression is recommended execute using LinqAPI if the output type of the expression is a known type:
 
+![](./LinqStyle.png)
+
