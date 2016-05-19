@@ -1,9 +1,10 @@
 #Code style guidelines for Microsoft VisualBasic
 ------------------------------------------------
-##Common Architecture of a CLI program
+##Code Architecture of a VisualBasic CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
 [Microsoft.VisualBasic.App]()
+A VisualBasic CLI application should define the Main entry point in a Module which is named Program and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
     Module Program
 
@@ -15,6 +16,12 @@ There is a VisualBasic application helper module that define in the namespace:
         	Return GetType(CLI).RunCLI(App.CommandLine)
     	End Function
 	End Module
+
+By using a **Integer** Function instead of Sub in VisualBasic, this makes your code style is more standard compare with the main function from C++.
+
+	int main(**char ARGV) {
+		// blablabla...
+	}
 
 Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in **CLI** module.
 
@@ -55,6 +62,9 @@ And the **CLI** interface should define as in the format of this example:
 
 	<ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
 	Public Function CLI_API(args As CommandLine) As Integer
+
+Using the VisualBasic CommandLine Parser
+
 
 
 ##List(Of T) operation in VisualBasic
@@ -138,8 +148,11 @@ Here is some example:
 	Public ReadOnly Property FileName As String
 	Public ReadOnly Property InDIR As Directory
 
-####Local varaible
-If possible, all of the local varaible within a function or sub program, should be in format **lowerUpper**
+####Local varaible and function parameter
+If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
+
+
+![Code standard overview example]()
 
 ####String manipulate
 ######1. String.Format
