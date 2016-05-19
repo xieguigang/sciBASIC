@@ -90,6 +90,45 @@ You call your CLI command in the console terminal is just like call a function i
     App.exe /API1 /test /test2-enable /test3-enable /msg "Hello World!!!"
     App.exe /API1 /test2-enable /test /test3-enable /msg "Hello World!!!"
 
+Simple Example of VisualBasic CLI application:
+
+	Imports Microsoft.VisualBasic.CommandLine
+	Imports Microsoft.VisualBasic.CommandLine.Reflection
+
+	Module Program
+
+    	Public Function Main() As Integer
+        	Return GetType(CLI).RunCLI(App.CommandLine)
+    	End Function
+	End Module
+
+	Module CLI
+
+    	<ExportAPI("/API1",
+               Info:="Puts the brief description of this API command at here.",
+               Usage:="/API1 /msg ""Puts the CLI usage syntax at here""",
+               Example:="/API1 /msg ""Hello world!!!""")>
+    	Public Function API1(args As CommandLine) As Integer
+        	Call Console.WriteLine(args("/msg"))
+        	Return 0
+    	End Function
+	End Module
+
+Here are some mostly used function in VisualBasic CLI parser
+Example CLI is:
+
+	App.exe /Test-Example /b /n 52 /xml "~/test.Xml" /num_threads 96 /path "~/tmp/test.log"
+
+<table>
+<tr><td>Function</td><td>Usage</td><td>Example</td></tr>
+<tr><td>CommandLine.GetBoolean(String) As Boolean</td><td>Get a boolean flag argument from the CLI</td><td>Dim b As Boolean = args.GetBoolean("/b")</td></tr>
+<tr><td>CommandLine.GetInt32(String) As Integer</td><td>Get a parameter value as Integer</td><td>Dim n As Integer = args.GetInt32("/n")</td></tr>
+<tr><td>CommandLine.GetObject(Of T)(String, System.Func(Of String, T)) As T</td><td>Get a parameter string value and then apply a string parser on it for load an .NET object</td><td>Dim x As T = args.GetObject(of T)("/xml", AddressOf LoadXml)</td></tr>
+<tr><td>CommandLine.GetValue(Of T)(String, T, System.Func(Of String, T)) As T</td><td>Get a parameter value, if the parameter is not exist, then default value will be returns, this method is usually used on optional value</td><td>Dim n As Long = args.GetValue("/num_threads", 100L)</td></tr>
+<tr><td>CommandLine.Item(String) As String</td><td>Default readonly property for read string value of a specific parameter</td><td>Dim path As String = args("/file")</td></tr>
+</table>
+
+
 -------------------------------------
 ##List(Of T) operation in VisualBasic
 
