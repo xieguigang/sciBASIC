@@ -276,6 +276,9 @@ Here is some function name examples:
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
 
+Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
+Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
+
 
 _Make sure your name is short enough_
 
@@ -311,4 +314,18 @@ Dim CLI As String<br />
 Dim args As String()
 </td></tr>
 <tr><td>SQL query</td><td>SQL, sql, query</td><td>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</td></tr>
+<tr><td>Iterator</td><td>i, j, k, l</td><td>
+	For i As Integer = 0 to [stop]
+		For j As Integer = i to [stop]
+    		For k As Integer = j to [stop]
+        	Next
+    	Next
+	Next
+
+    Dim l As Integer
+
+    Do while l &lt;= 100
+    	' blablabla...
+    Loop
+</td></tr>
 </table>
