@@ -86,3 +86,27 @@ All of the Linq Expression is recommended execute using [**LinqAPI**]() if the o
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/LinqStyle.png)
 
+Make sure your name is short enough
+
+Some common used name for common types
+<table>
+<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
+<tr><td>System.Text.StringBuilder</td><td>sb</td><td>Dim sb As New StringBuilder</td></tr>
+<tr><td>System.String</td><td>s, str, name, sId, id, x</td><td>Dim s As String
+Dim str As String
+Dim name As String
+Dim sId As String
+Dim id As String
+Dim x As String
+</td></tr>
+<tr><td>System.Integer, System.Long</td><td>i, j, n, x</td><td>Dim i As Integer
+Dim j As Integer
+Dim n As Integer
+Dim x As Integer
+</td></tr>
+<tr><td>System.Object</td><td>x, o, obj, value</td><td>Dim x As Object
+Dim o As Object
+Dim obj As Object
+Dim value As Object
+</td></tr>
+</table>
