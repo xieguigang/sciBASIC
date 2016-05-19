@@ -278,45 +278,62 @@ Here is some function name examples:
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
 
 Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
+
 Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
 
+At last, for improves of the code readable, try _**Make your identifier name short enough as possible**_
 
-_Make sure your name is short enough_
+##Appendix
 
-
-
->1. Some common used name for common types <table>
-<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
-<tr><td>System.Text.StringBuilder</td><td>sb</td><td>Dim sb As New StringBuilder</td></tr>
-<tr><td>System.String</td><td>s, str, name, sId, id, x</td><td>Dim s As String<br />
+>1. Some common used name for common types
+<table>
+	<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
+	<tr><td>System.Text.StringBuilder</td>
+    	<td>sb</td>
+        <td>Dim sb As New StringBuilder</td>
+    </tr>
+	<tr><td>System.String</td>
+    	<td>s, str, name, sId, id, x</td>
+        <td>Dim s As String<br />
 Dim str As String<br />
 Dim name As String<br />
 Dim sId As String<br />
 Dim id As String<br />
-Dim x As String
-</td></tr>
-<tr><td>System.Integer, System.Long</td><td>i, j, n, x</td><td>Dim i As Integer<br />
+Dim x As String</td>
+	</tr>
+	<tr><td>System.Integer, System.Long</td>
+    	<td>i, j, n, x</td>
+        <td>Dim i As Integer<br />
 Dim j As Integer<br />
 Dim n As Integer<br />
-Dim x As Integer
-</td></tr>
-<tr><td>System.Object</td><td>x, o, obj, value</td><td>Dim x As Object<br />
+Dim x As Integer</td>
+	</tr>
+	<tr><td>System.Object</td>
+    	<td>x, o, obj, value</td>
+        <td>Dim x As Object<br />
 Dim o As Object<br />
 Dim obj As Object<br />
-Dim value As Object
-</td></tr>
+Dim value As Object</td>
+	</tr>
 </table>
 
-
->2. Name for some meaning <table>
-<tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
-<tr><td>Commandline arguments</td><td>args, CLI</td><td>Dim args As CommandLine<br />
+>2. Name for some meaning
+<table>
+	<tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
+	<tr><td>Commandline arguments</td>
+    	<td>args, CLI</td>
+        <td>Dim args As CommandLine<br />
 Dim CLI As String<br />
 Dim args As String()
-</td></tr>
-<tr><td>SQL query</td><td>SQL, sql, query</td><td>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</td></tr>
-<tr><td>Iterator</td><td>i, j, k, l</td><td>
-    For i As Integer = 0 to [stop]<br />
+		</td>
+    </tr>
+	<tr><td>SQL query</td>
+    	<td>SQL, sql, query</td>
+        <td>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</td>
+    </tr>
+	<tr><td>Iterator</td>
+    	<td>i, j, k, l</td>
+        <td>    For i As Integer = 0 to [stop]<br />
         For j As Integer = i to [stop]<br />
             For k As Integer = j to [stop]<br />
             Next<br />
@@ -327,5 +344,6 @@ Dim args As String()
 
     Do while l = 100
     	' blablabla...
-    Loop</td></tr>
+    Loop</td>
+    </tr>
 </table>
