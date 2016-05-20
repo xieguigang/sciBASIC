@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Win32
 
 Namespace ComponentModel.Settings.Inf
 
@@ -12,15 +13,15 @@ Namespace ComponentModel.Settings.Inf
         Public ReadOnly Property path As String
 
         ''' <summary>
-        ''' 在初始化文件指定小节内设置一个字串
+        ''' Write a string value into a specific section in a specifc ini profile.(在初始化文件指定小节内设置一个字串)
         ''' </summary>
-        ''' <param name="section">String，要在其中写入新字串的小节名称。这个字串不区分大小写</param>
-        ''' <param name="key">Any，要设置的项名或条目名。这个字串不区分大小写。用vbNullString可删除这个小节的所有设置项</param>
-        ''' <param name="val">String，指定为这个项写入的字串值。用vbNullString表示删除这个项现有的字串</param>
-        ''' <param name="filePath">String，初始化文件的名字。如果没有指定完整路径名，则windows会在windows目录查找文件。如果文件没有找到，则函数会创建它</param>
-        ''' <returns>Long，非零表示成功，零表示失败。会设置GetLastError</returns>
+        ''' <param name="section"><see cref="String"/>，要在其中写入新字串的小节名称。这个字串不区分大小写</param>
+        ''' <param name="key"><see cref="String"/>，要设置的项名或条目名。这个字串不区分大小写。用<see cref="vbNullString"/>可删除这个小节的所有设置项</param>
+        ''' <param name="val"><see cref="String"/>，指定为这个项写入的字串值。用<see cref="vbNullString"/>表示删除这个项现有的字串</param>
+        ''' <param name="filePath"><see cref="String"/>，初始化文件的名字。如果没有指定完整路径名，则windows会在windows目录查找文件。如果文件没有找到，则函数会创建它</param>
+        ''' <returns>Long，非零表示成功，零表示失败。会设置<see cref="GetLastErrorAPI.GetLastError()"/></returns>
         <DllImport("kernel32")>
-        Private Shared Function WritePrivateProfileString(section As String, key As String, val As String, filePath As String) As Long
+        Public Shared Function WritePrivateProfileString(section As String, key As String, val As String, filePath As String) As Long
         End Function
 
         ''' <summary>
@@ -41,7 +42,7 @@ Namespace ComponentModel.Settings.Inf
         ''' 就返回nSize-1（若lpApplicationName或lpKeyName为NULL，则返回nSize-2）
         ''' </returns>
         <DllImport("kernel32")>
-        Private Shared Function GetPrivateProfileString(section As String, key As String, def As String, retVal As StringBuilder, size As Integer, filePath As String) As Integer
+        Public Shared Function GetPrivateProfileString(section As String, key As String, def As String, retVal As StringBuilder, size As Integer, filePath As String) As Integer
         End Function
 
         ''' <summary>

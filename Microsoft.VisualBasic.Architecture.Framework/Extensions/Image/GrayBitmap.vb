@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Win32
 
 Namespace Imaging
 
