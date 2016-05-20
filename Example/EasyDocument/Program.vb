@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping.StructFormatter
 
 Module Program
 
@@ -20,11 +21,11 @@ Public Class TestObject
 
 End Class
 
-Public Structure TestBin
-    Public Property1 As String
-    Public D As Date
-    Public n As Integer
-    Public f As Double
+<Serializable> Public Class TestBin
+    Public Property Property1 As String
+    Public Property D As Date
+    Public Property n As Integer
+    Public Property f As Double
 
     Public Shared Function inst() As TestBin
         Return New TestBin With {
@@ -34,4 +35,4 @@ Public Structure TestBin
             .Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
         }
     End Function
-End Structure
+End Class

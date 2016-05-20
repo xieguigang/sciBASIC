@@ -4,7 +4,7 @@ Imports System.Runtime.InteropServices
 Namespace Serialization.BinaryDumping
 
     ''' <summary>
-    ''' 
+    ''' Some times these method is not works well, not sure why?
     ''' </summary>
     ''' <remarks>
     ''' http://blog.csdn.net/zztoll/article/details/8695992
