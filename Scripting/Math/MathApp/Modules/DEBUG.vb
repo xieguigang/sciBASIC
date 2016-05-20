@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Marshal
+﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Scripting
@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Module DEBUG
 
-    Public Class [Integer] : Inherits Microsoft.VisualBasic.Language.ClassObject
+    Public Class [Integer] : Inherits ClassObject
         Dim n As Integer
 
         Sub New(x As Integer)

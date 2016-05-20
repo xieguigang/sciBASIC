@@ -188,7 +188,7 @@ In fact, except the **BinaryFormatter** class, there is another method that can 
 
 ##JSON
 
-The json format is a popular data format on the network, in my job, the d3js with VisualBasic hybrids solution required of json data, 
+The json format is a popular data format on the network, in my job, the d3js with VisualBasic hybrids solution required of json data,
 
 This document format in VisualBasic needs imports this namespace at first:
 
@@ -221,13 +221,26 @@ And just using this two extension that can enable you to serialize any object in
     a = json.LoadObject(Of TestBin)
     Call json.__DEBUG_ECHO
 
-And there is another perfect fast Json serialization solution for VisualBasic: [Newton.Json](https://github.com/JamesNK/Newtonsoft.Json), but in this article I just want to introduce the System json serialization solution as this solution no needs for referecne of the third-part library
-
-
-
-
+And there is another perfect fast Json serialization solution for VisualBasic: [Newton.Json](https://github.com/JamesNK/Newtonsoft.Json), but in this article I just want to introduce the System json serialization solution as this solution no needs for referecne of the third-part library.
 
 ##XML
+
+Generates the Xml document is very easy in the VisualBasic, just using your object's **GetXml** extension function, and then using function **LoadXml(of T)** can be easily load your saved object from a Xml file:
+
+    ' XML test
+    Dim xml As String = a.GetXml   ' Convert object into Xml
+    Call xml.__DEBUG_ECHO
+    Call a.SaveAsXml("./testssss.Xml")   ' Save Object to Xml
+    a = Nothing
+    a = "./testssss.Xml".LoadXml(Of TestBin)  ' Load Object from Xml
+    Call a.GetXml.__DEBUG_ECHO
+
+######Simple Usage
+
+1. <T>.GetXml
+	>Gets the object generated Xml document text. By combine using of the **String.SaveTo(path)** Extension function, that you can easily save the object as a Xml text file.
+2. <path>.LoadXml(of T)
+	>Load object from Xml
 
 ##Csv
 
