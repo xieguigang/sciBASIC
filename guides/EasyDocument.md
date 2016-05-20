@@ -237,9 +237,9 @@ Generates the Xml document is very easy in the VisualBasic, just using your obje
 
 ######Simple Usage
 
-1. <T>.GetXml
+1. <T>.GetXml<br />
 	>Gets the object generated Xml document text. By combine using of the **String.SaveTo(path)** Extension function, that you can easily save the object as a Xml text file.
-2. <path>.LoadXml(of T)
+2. <path>.LoadXml(of T)<br />
 	>Load object from Xml
 
 ##Csv
