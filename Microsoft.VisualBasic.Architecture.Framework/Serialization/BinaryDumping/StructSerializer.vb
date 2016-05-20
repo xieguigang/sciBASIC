@@ -53,6 +53,8 @@ Namespace Serialization.BinaryDumping
         '  at Microsoft.VisualBasic.Serialization.BinaryDumping.StructSerializer.StructureToByte[T](T struct) 
         '  at EasyDocument.Program.Main() 
 
+        ' These two function will not works, prefer to the extensions in StructFormatter Module
+
         ''' <summary>
         ''' 由结构体转换为byte数组
         ''' </summary>

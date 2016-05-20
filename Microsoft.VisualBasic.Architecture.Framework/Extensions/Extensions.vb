@@ -2088,55 +2088,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Save a structure type object into a binary file.(使用二进制序列化保存一个对象)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="obj"></param>
-    ''' <param name="path"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Serialize(Of T As Structure)(obj As T, path As String) As Integer
-        Dim buffer As Byte() = obj.StructureToByte
-        Return buffer.FlushStream(path)
-    End Function
-
-    '<Extension> Public Function GetSerializeBuffer(Of T As Structure)(obj As T) As Byte()
-    '    Dim IFormatter As IFormatter = New BinaryFormatter()
-    '    Dim Stream As New IO.MemoryStream()
-    '    Call IFormatter.Serialize(Stream, obj)
-    '    Dim buffer As Byte() = New Byte(Stream.Length - 1) {}
-    '    Call Stream.Read(buffer, Scan0, buffer.Length)
-    '    Return buffer
-    'End Function
-
-    '<Extension> Public Function DeSerialize(Of T As Structure)(bytes As Byte()) As T
-    '    Dim obj As Object = (New BinaryFormatter).[Deserialize](New MemoryStream(bytes))
-    '    Return DirectCast(obj, T)
-    'End Function
-
-    ''' <summary>
-    ''' Load a strucutre object from the file system by using binary serializer deserialize.
-    ''' (使用反二进制序列化从指定的文件之中加载一个对象)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="path"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Load(Of T As Structure)(path As String) As T
-        'If Not FileIO.FileSystem.FileExists(path) Then
-        '    Return DirectCast(Activator.CreateInstance(Of T)(), T)
-        'End If
-        'Using Stream As Stream = New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
-        '    Dim IFormatter As IFormatter = New BinaryFormatter()
-        '    Dim obj As T = DirectCast(IFormatter.Deserialize(Stream), T)
-        '    Return obj
-        'End Using
-
-        Dim bytes As Byte() = IO.File.ReadAllBytes(path)
-        Return ByteToStructure(Of T)(bytes)
-    End Function
-
-    ''' <summary>
     ''' 0 for null object
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

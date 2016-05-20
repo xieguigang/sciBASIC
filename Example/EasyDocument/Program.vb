@@ -21,7 +21,7 @@ Public Class TestObject
 
 End Class
 
-<Serializable> Public Class TestBin
+<Serializable> Public Structure TestBin
     Public Property Property1 As String
     Public Property D As Date
     Public Property n As Integer
@@ -35,4 +35,4 @@ End Class
             .Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
         }
     End Function
-End Class
+End Structure

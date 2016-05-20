@@ -15,12 +15,12 @@ Namespace Serialization.BinaryDumping
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Serialize(Of T As Class)(obj As T, path As String) As Integer
+        <Extension> Public Function Serialize(Of T)(obj As T, path As String) As Integer
             Dim buffer As Byte() = obj.GetSerializeBuffer
             Return buffer.FlushStream(path)
         End Function
 
-        <Extension> Public Function GetSerializeBuffer(Of T As Class)(obj As T) As Byte()
+        <Extension> Public Function GetSerializeBuffer(Of T)(obj As T) As Byte()
             Dim IFormatter As IFormatter = New BinaryFormatter()
             Dim Stream As New IO.MemoryStream()
             Call IFormatter.Serialize(Stream, obj)
@@ -28,7 +28,7 @@ Namespace Serialization.BinaryDumping
             Return buffer
         End Function
 
-        <Extension> Public Function DeSerialize(Of T As Class)(bytes As Byte()) As T
+        <Extension> Public Function DeSerialize(Of T)(bytes As Byte()) As T
             Dim obj As Object = (New BinaryFormatter).[Deserialize](New MemoryStream(bytes))
             Return DirectCast(obj, T)
         End Function
@@ -41,7 +41,7 @@ Namespace Serialization.BinaryDumping
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Load(Of T As Class)(path As String) As T
+        <Extension> Public Function Load(Of T)(path As String) As T
             If Not FileIO.FileSystem.FileExists(path) Then
                 Return Activator.CreateInstance(Of T)()
             End If
