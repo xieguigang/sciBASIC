@@ -308,69 +308,102 @@ All of the Linq Expression is recommended execute using [**LinqAPI**](https://gi
 
 Here are tables of names that i used in my programming, and continues updated....
 
->1. Some common used name for common types
+>1.Some common used name for common types
 <table>
 	<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
 	<tr><td>System.Text.StringBuilder</td>
     	<td>sb</td>
-        <td>Dim sb As New StringBuilder</td>
+        <td>
+
+    Dim sb As New StringBuilder
+</td>
     </tr>
 	<tr><td>System.String</td>
     	<td>s, str, name, sId, id, x</td>
-        <td>Dim s As String<br />
-Dim str As String<br />
-Dim name As String<br />
-Dim sId As String<br />
-Dim id As String<br />
-Dim x As String</td>
-	</tr>
+        <td>
+        
+    Dim s As String
+    Dim str As String
+    Dim name As String
+    Dim sId As String
+    Dim id As String
+    Dim x As String
+
+</tr>
 	<tr><td>System.Integer, System.Long</td>
     	<td>i, j, n, x</td>
-        <td>Dim i As Integer<br />
-Dim j As Integer<br />
-Dim n As Integer<br />
-Dim x As Integer</td>
-	</tr>
+        <td>
+
+    Dim i As Integer
+    Dim j As Integer
+    Dim n As Integer
+    Dim x As Integer
+
+</tr>
 	<tr><td>System.Object</td>
     	<td>x, o, obj, value</td>
-        <td>Dim x As Object<br />
-Dim o As Object<br />
-Dim obj As Object<br />
-Dim value As Object</td>
+        <td>
+
+    Dim x As Object
+    Dim o As Object
+    Dim obj As Object
+    Dim value As Object
+
+</td>
 	</tr>
 </table>
 
->2. Name for some meaning
+2.Name for some meaning
+
 <table>
-	<tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
-	<tr><td>Commandline arguments</td>
-    	<td>args, CLI</td>
-        <td>Dim args As CommandLine<br />
-Dim CLI As String<br />
-Dim args As String()
-		</td>
-    </tr>
+   <tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
+   <tr><td>Commandline arguments</td>
+       <td>args, CLI</td>
+       <td>
+<pre>Dim args As CommandLine
+Dim CLI As String
+Dim args As String()</pre>
+</td></tr>
 	<tr><td>SQL query</td>
     	<td>SQL, sql, query</td>
-        <td>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</td>
+        <td>
+<pre>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</pre>
+</td>
     </tr>
 	<tr><td>Iterator</td>
     	<td>i, j, k, l</td>
         <td>
-
-    For i As Integer = 0 to [stop]
-        For j As Integer = i to [stop]
-            For k As Integer = j to [stop]
-            Next
+<pre>For i As Integer = 0 to [stop]
+    For j As Integer = i to [stop]
+        For k As Integer = j to [stop]
         Next
     Next
+Next
 
-    Dim l As Integer = 100
+Dim l As Integer = 100
 
-    Do while l = 100
-    	' blablabla...
-    Loop
-
+Do while l = 100
+    ' blablabla...
+Loop</pre>
 </td>
     </tr>
+    <tr><td>Linq query expression</td><td>LQuery</td><td>
+<pre>Dim LQuery = From path As String
+             In ls -l -r -wildcards("*.Xml") <= DIR
+             Where InStr(path.BaseName, "xcb") = 1
+             Select path.LoadXml(Of KEGG.DBGET.Module)</pre>
+</td>
+</tr>
+    <tr>
+    	<td>Query Result/Function Returns</td><td>result, rtvl</td><td>
+<pre>Dim result As [Module] = 
+    LinqAPI.Exec(Of [Module]) <= 
+          From path As String
+          In ls -l -r -wildcards("*.Xml") <= DIR
+          Where InStr(path.BaseName, "xcb") = 1
+          Select path.LoadXml(Of KEGG.DBGET.Module)
+        
+Return result</pre>
+</td>
+</tr>
 </table>

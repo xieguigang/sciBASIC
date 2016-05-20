@@ -56,7 +56,7 @@ Namespace Serialization.BinaryDumping
         ' These two function will not works, prefer to the extensions in StructFormatter Module
 
         ''' <summary>
-        ''' 由结构体转换为byte数组
+        ''' 由结构体转换为byte数组(字符串类型以及Class类型都将会被序列化为内存指针，所以这个函数只适合于值类型的)
         ''' </summary>
         ''' 
         <Extension>
@@ -74,7 +74,7 @@ Namespace Serialization.BinaryDumping
         End Function
 
         ''' <summary>
-        ''' 由byte数组转换为结构体
+        ''' 由byte数组转换为结构体(字符串类型以及Class类型都将会被序列化为内存指针，所以这个函数只适合于值类型的)
         ''' </summary>
         ''' 
         <Extension>
