@@ -227,7 +227,7 @@ And there is another perfect fast Json serialization solution for VisualBasic: [
 
 Generates the Xml document is very easy in the VisualBasic, just using your object's **GetXml** extension function, and then using function **LoadXml(of T)** can be easily load your saved object from a Xml file:
 
-    ' XML test
+>     ' XML test
     Dim xml As String = a.GetXml   ' Convert object into Xml
     Call xml.__DEBUG_ECHO
     Call a.SaveAsXml("./testssss.Xml")   ' Save Object to Xml
@@ -266,6 +266,29 @@ A bug in the Microsoft Excel Csv Parser was found in this test: The filed Proper
 
 > ![The fields parsing successful in this library](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/guides/ParserSuccess.png)
 
+#####Additional
+1. Read and Write text document
+
+**Read/Write** text document in the VisualBasic is so easy!, just one method for write text file and two method for read text file, here is a very simple example:
+
+>     Dim s As String = array.GetJson
+    Call s.SaveTo("./tesssss.txt")
+
+>     Dim lines As String() = "./tesssss.txt".ReadAllLines()
+    s = "./tesssss.txt".ReadAllText
+
+######Usage
+
+>You can not believe how easily that you can do on the text document read/write! *By using the system default text file read/write function, you should determined that the parent directory of your text file is exists or not, or if not exist when you save you text file data, then your program will crash*. But using these VisualBasic text file read/write function, no worried about this problem, the function is already do it for you.
+>1. &lt;String>.SaveTo(path)
+2. &lt;path>.ReadAllText
+3. &lt;path>.ReadAllLines
+
+2. Read/Write binary data
+
+>The usage of the binary data **Byte()** read/write is as easy as the same of text file read/write:
+1. Byte().FlushStream(&lt;path>) ' Write binary data
+2. &lt;path>.ReadBinary() ' Read binary bytes from file.
 
 NOTE
 

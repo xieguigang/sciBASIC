@@ -26,6 +26,13 @@ Public Module IOExtensions
         Return New StreamReader(File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
 
+    <Extension>
+    Public Function ReadBinary(path As String) As Byte()
+        If Not path.FileExists Then
+            Return {}
+        End If
+        Return IO.File.ReadAllBytes(path)
+    End Function
 
     <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T),
                                                     SaveTo As String,

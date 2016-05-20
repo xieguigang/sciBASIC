@@ -41,6 +41,12 @@ Module Program
         array = "./test.Csv".LoadCsv(Of TestBin)  ' test on load csv data
         Call array.GetJson.__DEBUG_ECHO
 
+        Dim s As String = array.GetJson
+        Call s.SaveTo("./tesssss.txt")
+
+        Dim lines As String() = "./tesssss.txt".ReadAllLines()
+        s = "./tesssss.txt".ReadAllText
+
         Pause()
     End Sub
 End Module
