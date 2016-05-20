@@ -3,6 +3,9 @@
 Abount VisualBasic code style guidelines:
 https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
 
+Guides for using this framework:
+https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/
+
 
 Install this framework via nuget package:
 https://www.nuget.org/packages/VB_AppFramework/
