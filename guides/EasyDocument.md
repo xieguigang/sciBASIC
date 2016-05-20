@@ -199,27 +199,27 @@ And the json serialization extension method is based on the System Json serializ
 >Imports System.Runtime.Serialization.Json<br />
 Imports System.Web.Script.Serialization
 
->        ''' <summary>
-        ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
-        ''' can be used for block the property which is will not serialize to the text.
-        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="obj"></param>
-        ''' <returns></returns>
-        <Extension> Public Function GetJson(Of T)(obj As T) As String
+>     ''' <summary>
+    ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
+    ''' can be used for block the property which is will not serialize to the text.
+    ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
+    <Extension> Public Function GetJson(Of T)(obj As T) As String
 
->                ''' <summary>
-        ''' JSON反序列化
-        ''' </summary>
-        <Extension> Public Function LoadObject(Of T)(json As String) As T
+>     ''' <summary>
+    ''' JSON反序列化
+    ''' </summary>
+    <Extension> Public Function LoadObject(Of T)(json As String) As T
 
 And just using this two extension that can enable you to serialize any object in to Json document and deserialize Json document for instance any object type:
 
->      Dim json As String = a.GetJson   ' JSON serialization test
-     a = Nothing
-     a = json.LoadObject(Of TestBin)
-     Call json.__DEBUG_ECHO
+>     Dim json As String = a.GetJson   ' JSON serialization test
+    a = Nothing
+    a = json.LoadObject(Of TestBin)
+    Call json.__DEBUG_ECHO
 
 And there is another perfect fast Json serialization solution for VisualBasic: [Newton.Json](https://github.com/JamesNK/Newtonsoft.Json), but in this article I just want to introduce the System json serialization solution as this solution no needs for referecne of the third-part library
 
@@ -238,10 +238,10 @@ By using this serialization feature, you should imports this namespace at first:
 Assuming that you have a type specific collection, and you want to save this collection into Csv data file and for the data exchange with R language or d3js data visualization, so that you just needs simple by using SaveTo extension function applied on your data collection, then you are save successfully your data collection into a csv data file.
 
 >     Dim array As TestBin() = {a, a, a, a, a, a, a, a, a, a}   ' We have a collection of object
-     Call array.SaveTo("./test.Csv")    ' then wen can save this collection into Csv file
-     array = Nothing
-     array = "./test.Csv".LoadCsv(Of TestBin)  ' test on load csv data
-     Call array.GetJson.__DEBUG_ECHO
+    Call array.SaveTo("./test.Csv")    ' then wen can save this collection into Csv file
+    array = Nothing
+    array = "./test.Csv".LoadCsv(Of TestBin)  ' test on load csv data
+    Call array.GetJson.__DEBUG_ECHO
 
 If you want to load the csv data to a collection, so that you just needs using LoadCsv(Of T) function:
 
