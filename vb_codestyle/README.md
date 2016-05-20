@@ -352,8 +352,7 @@ Here are tables of names that i used in my programming, and continues updated...
 </td>
 	</tr>
 </table>
-
->2. Name for some meaning
+2. Name for some meaning
 <table>
 	<tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
 	<tr><td>Commandline arguments</td>
