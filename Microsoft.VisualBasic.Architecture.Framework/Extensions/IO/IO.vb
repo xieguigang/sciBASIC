@@ -47,19 +47,19 @@ Public Module IOExtensions
     ''' <summary>
     ''' Save the binary data into the filesystem.(保存二进制数据包值文件系统)
     ''' </summary>
-    ''' <param name="ChunkBuffer">The binary bytes data of the target package's data.(目标二进制数据)</param>
-    ''' <param name="SavePath">The saved file path of the target binary data chunk.(目标二进制数据包所要进行保存的文件名路径)</param>
+    ''' <param name="buf">The binary bytes data of the target package's data.(目标二进制数据)</param>
+    ''' <param name="path">The saved file path of the target binary data chunk.(目标二进制数据包所要进行保存的文件名路径)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(ChunkBuffer As IEnumerable(Of Byte), <Parameter("Path.Save")> SavePath As String) As Boolean
-        Dim ParentDir As String = If(String.IsNullOrEmpty(SavePath),
+    <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path As String) As Boolean
+        Dim parentDIR As String = If(String.IsNullOrEmpty(path),
             FileIO.FileSystem.CurrentDirectory,
-            FileIO.FileSystem.GetParentPath(SavePath))
+            FileIO.FileSystem.GetParentPath(path))
 
-        Call FileIO.FileSystem.CreateDirectory(ParentDir)
-        Call FileIO.FileSystem.WriteAllBytes(SavePath, ChunkBuffer.ToArray, False)
+        Call FileIO.FileSystem.CreateDirectory(parentDIR)
+        Call FileIO.FileSystem.WriteAllBytes(path, buf.ToArray, False)
 
         Return True
     End Function

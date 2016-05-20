@@ -1,3 +1,4 @@
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 Namespace Serialization.BinaryDumping
@@ -48,6 +49,8 @@ Namespace Serialization.BinaryDumping
         ''' <summary>
         ''' 由结构体转换为byte数组
         ''' </summary>
+        ''' 
+        <Extension>
         Public Function StructureToByte(Of T As Structure)(struct As T) As Byte()
             Dim size As Integer = Marshal.SizeOf(GetType(T))
             Dim buffer As Byte() = New Byte(size - 1) {}
@@ -64,6 +67,8 @@ Namespace Serialization.BinaryDumping
         ''' <summary>
         ''' 由byte数组转换为结构体
         ''' </summary>
+        ''' 
+        <Extension>
         Public Function ByteToStructure(Of T As Structure)(dataBuffer As Byte()) As T
             Dim [structure] As Object = Nothing
             Dim size As Integer = Marshal.SizeOf(GetType(T))
