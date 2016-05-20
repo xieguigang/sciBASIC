@@ -70,5 +70,9 @@ And the wrapper for the ini data serialization and deserialization is already be
 ##XML
 ##Csv
 
+A bug in the Microsoft Excel Csv Parser was found in this test:
+
+![The fields is not parsing successful in the Microsoft Excel](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/guides/ExcelBugs.png)
+![The fields parsing successful in this library](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/guides/ParserSuccess.png)
 
 All of the example test code can be download from [here](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Example/EasyDocument)
