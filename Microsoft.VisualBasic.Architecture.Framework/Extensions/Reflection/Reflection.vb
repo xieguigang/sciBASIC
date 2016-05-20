@@ -370,7 +370,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
 
     <ExportAPI("Get.FullName")>
     <Extension> Public Function GetFullName(Method As System.Reflection.MethodBase, Optional IncludeAssembly As Boolean = False) As String
-        Dim Name As String = $"{Method.DeclaringType.FullName}::{Method.Name}"
+        Dim Name As String = $"{Method.DeclaringType.FullName}::{Method.ToString}"
         If Not IncludeAssembly Then
             Return Name
         Else

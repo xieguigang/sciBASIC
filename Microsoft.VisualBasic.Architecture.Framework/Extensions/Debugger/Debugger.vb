@@ -3,6 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language
+Imports System.Reflection
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
@@ -63,7 +64,7 @@ Public Module VBDebugger
             Dim cl As ConsoleColor = Console.ForegroundColor
 
             Call Console.Write("[")
-            Console.ForegroundColor = ConsoleColor.DarkGreen
+            Console.ForegroundColor = DebuggerTagColor
             Call Console.Write(head)
             Console.ForegroundColor = cl
             Call Console.Write("]")
@@ -88,9 +89,15 @@ Public Module VBDebugger
         Return PrintException(exMsg, memberName)
     End Function
 
+    ''' <summary>
+    ''' 可以使用这个方法<see cref="MethodBase.GetCurrentMethod"/>.<see cref="GetFullName"/>获取得到<paramref name="memberName"/>所需要的参数信息
+    ''' </summary>
+    ''' <param name="msg"></param>
+    ''' <param name="memberName"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = $"[ERROR {Now.ToString}]  @{memberName}::{msg}"
+        Dim exMsg As String = $"[ERROR {Now.ToString}] @{memberName}::{msg}"
         Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red)
         Return False
     End Function
@@ -112,6 +119,8 @@ Public Module VBDebugger
 #End If
     End Sub
 
+    Const DebuggerTagColor As ConsoleColor = ConsoleColor.DarkGreen
+
     ''' <summary>
     ''' Display the wraning level(YELLOW color) message on the console.
     ''' </summary>
@@ -120,13 +129,25 @@ Public Module VBDebugger
     ''' <returns></returns>
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
-        Dim str = $"[WARN@{calls} {Now.ToString}] {msg}"
-
         If Not Mute Then
-            Call WriteLine(str, ConsoleColor.Yellow)
+
+            Dim head As String = $"WARN@{calls} {Now.ToString}"
+            Dim cl As ConsoleColor = Console.ForegroundColor
+
+            Call Console.Write("[")
+            Console.ForegroundColor = DebuggerTagColor
+            Call Console.Write(head)
+            Console.ForegroundColor = cl
+            Call Console.Write("] ")
+
+#If DEBUG Then
+            Call Debug.WriteLine($"[{head}]{msg}")
+#End If
+            Call WriteLine(msg, ConsoleColor.Yellow)
+
         End If
 
-        Return str
+        Return Nothing
     End Function
 
     ''' <summary>
