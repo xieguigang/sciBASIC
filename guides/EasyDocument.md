@@ -108,10 +108,10 @@ Assuming that you have a **TestBin** type simple object, then you want to write 
 And in this example the **WriteClass** function produce the ini profile data as:
 
 >[**JSON**]<br />
->Property1=_{"_BufferLength":8,"_ChunkBuffer":[72,84,84,80,47,53,50,48],"_Protocol":520,"_ProtocolCategory":0,"_uid":0}_
->D=5/20/2016 3:40:27 PM
->n=330
->f=0.33
+>Property1=_{"_BufferLength":8,"_ChunkBuffer":[72,84,84,80,47,53,50,48],"_Protocol":520,"_ProtocolCategory":0,"_uid":0}_<br />
+>D=_5/20/2016 3:40:27 PM_<br />
+>n=_330_<br />
+>f=_0.33_<br />
 
 NOTE: the profile key in the ini file should be decorating with **&lt;DataFrameColumn>** attribute, and using **ClassName** attribute on the Class object definition, can makes tweaks on your section name and allow some identifier illegal character in VisualBasic is also able used as the section name, example is a section name is **"test-section"**, the character - is illegal in the VB identifier, so that you just needs using this attribute decorated as **&lt;ClassName("test-section")>**, the same of the usage of **&lt;DataFrameColumn>** attribute can be applied on the property.
 
@@ -188,7 +188,40 @@ In fact, except the **BinaryFormatter** class, there is another method that can 
 
 ##JSON
 
+The json format is a popular data format on the network, in my job, the d3js with VisualBasic hybrids solution required of json data, 
 
+This document format in VisualBasic needs imports this namespace at first:
+
+> Imports Microsoft.VisualBasic.Serialization
+
+And the json serialization extension method is based on the System Json serialization solution:
+
+>Imports System.Runtime.Serialization.Json<br />
+Imports System.Web.Script.Serialization
+
+>        ''' <summary>
+        ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
+        ''' can be used for block the property which is will not serialize to the text.
+        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetJson(Of T)(obj As T) As String
+
+>                ''' <summary>
+        ''' JSON反序列化
+        ''' </summary>
+        <Extension> Public Function LoadObject(Of T)(json As String) As T
+
+And just using this two extension that can enable you to serialize any object in to Json document and deserialize Json document for instance any object type:
+
+>      Dim json As String = a.GetJson   ' JSON serialization test
+     a = Nothing
+     a = json.LoadObject(Of TestBin)
+     Call json.__DEBUG_ECHO
+
+And there is another perfect fast Json serialization solution for VisualBasic: [Newton.Json](https://github.com/JamesNK/Newtonsoft.Json), but in this article I just want to introduce the System json serialization solution as this solution no needs for referecne of the third-part library
 
 
 
