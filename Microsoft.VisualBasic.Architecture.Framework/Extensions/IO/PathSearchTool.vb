@@ -700,7 +700,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 去除掉文件的拓展名
+    ''' Removes the file extension name from the file path.(去除掉文件的拓展名)
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
@@ -709,6 +709,17 @@ Public Module ProgramPathSearchTool
         Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
         Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
         Return $"{fileInfo.Directory.FullName}/{Name}"
+    End Function
+
+    ''' <summary>
+    ''' Removes the last \ and / character in a directory path string.
+    ''' (使用这个函数修剪文件夹路径之中的最后一个分隔符，以方便生成文件名)
+    ''' </summary>
+    ''' <param name="DIR"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TrimDIR(DIR As String) As String
+        Return DIR.TrimEnd("/"c, "\"c)
     End Function
 
     ''' <summary>

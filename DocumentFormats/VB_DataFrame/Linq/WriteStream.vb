@@ -27,6 +27,9 @@ Namespace DocumentStream.Linq
         Sub New(path As String, Optional Explicit As Boolean = False)
             Dim typeDef As Type = GetType(T)
             Dim Schema = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
+            Dim parent As String = path.ParentPath
+
+            Call FileIO.FileSystem.CreateDirectory(parent)
 
             RowWriter = New RowWriter(Schema)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName

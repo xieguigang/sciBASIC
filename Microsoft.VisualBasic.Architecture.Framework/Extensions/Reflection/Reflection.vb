@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language
 
 <PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
@@ -107,6 +108,18 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
+    ''' Gets the <see cref="AssemblyFileVersionAttribute"/> value from the type defined assembly.
+    ''' </summary>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("Get.Version")>
+    <Extension>
+    Public Function ModuleVersion(type As Type) As String
+        Return type.Assembly.GetVersion.ToString
+    End Function
+
+    ''' <summary>
     '''
     ''' </summary>
     ''' <param name="assm">.NET EXE/DLL assembly</param>
@@ -115,15 +128,18 @@ NULL:       If Not strict Then
     <ExportAPI("Get.Version")>
     <Extension> Public Function GetVersion(assm As Assembly) As Version
 #If NET_40 = 0 Then
-        Dim attrs As IEnumerable(Of System.Reflection.CustomAttributeData) = assm.CustomAttributes
-        Dim vLQuery = (From attr As System.Reflection.CustomAttributeData
-                       In attrs
-                       Where attr.AttributeType.Equals(GetType(System.Reflection.AssemblyFileVersionAttribute))
-                       Select value = attr.ConstructorArguments(Scan0)).ToArray
-        If vLQuery.Length = 0 Then
+        Dim attrs As IEnumerable(Of CustomAttributeData) = assm.CustomAttributes
+        Dim vLQuery As CustomAttributeTypedArgument =
+            LinqAPI.DefaultFirst(Of CustomAttributeTypedArgument) <=
+                    From attr As CustomAttributeData
+                    In attrs
+                    Where attr.AttributeType.Equals(GetType(AssemblyFileVersionAttribute))
+                    Select value = attr.ConstructorArguments(Scan0)
+
+        If vLQuery.Value Is Nothing Then
             Return New Version("1.0.0.0")
         Else
-            Return New Version(vLQuery(Scan0).Value.ToString)
+            Return New Version(Scripting.ToString(vLQuery.Value))
         End If
 #Else
         Throw New NotSupportedException

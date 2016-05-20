@@ -249,6 +249,7 @@
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
+    <Compile Include="ComponentModel\DataSource\DataSample.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
     <Compile Include="ComponentModel\Ranges\IRanges.vb" />
     <Compile Include="ComponentModel\Ranges\Range.vb" />
@@ -294,6 +295,7 @@
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
+    <Compile Include="Extensions\Image\GDI+\Interface.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
