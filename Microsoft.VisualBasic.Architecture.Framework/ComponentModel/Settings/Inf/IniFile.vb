@@ -50,7 +50,7 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
-            path = PathMapper.GetMapPath(INIPath)
+            path = IO.Path.GetFullPath(PathMapper.GetMapPath(INIPath))
         End Sub
 
         Public Overrides Function ToString() As String

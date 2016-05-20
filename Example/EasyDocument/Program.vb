@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping.StructFormatter
 
 Module Program
@@ -13,19 +15,23 @@ Module Program
 
         Call a.GetJson.__DEBUG_ECHO
 
+        Call New Profiles With {.Test = a}.WriteProfile
+
         Pause()
     End Sub
 End Module
 
-Public Class TestObject
-
+<IniMapIO("#/test.ini")>
+Public Class Profiles
+    Public Property Test As TestBin
 End Class
 
-<Serializable> Public Structure TestBin
-    Public Property Property1 As String
-    Public Property D As Date
-    Public Property n As Integer
-    Public Property f As Double
+<ClassName("JSON")>
+<Serializable> Public Class TestBin
+    <DataFrameColumn> Public Property Property1 As String
+    <DataFrameColumn> Public Property D As Date
+    <DataFrameColumn> Public Property n As Integer
+    <DataFrameColumn> Public Property f As Double
 
     Public Shared Function inst() As TestBin
         Return New TestBin With {
@@ -35,4 +41,4 @@ End Class
             .Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
         }
     End Function
-End Structure
+End Class

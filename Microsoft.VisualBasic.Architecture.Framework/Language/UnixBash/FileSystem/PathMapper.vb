@@ -14,6 +14,17 @@ Namespace Language.UnixBash
         ''' <returns></returns>
         Public ReadOnly Property platform As PlatformID = Environment.OSVersion.Platform
 
+        ''' <summary>
+        ''' Map linux path on Windows:
+        ''' [~ -> C:\User\&lt;user_name>]
+        ''' [# -> <see cref="App.HOME"/>]
+        ''' [/ -> C:\]
+        ''' [/usr/bin -> C:\Program Files\]
+        ''' [/usr -> C:\User\]
+        ''' [- -> <see cref="App.PreviousDirectory"/>]
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Function GetMapPath(path As String) As String
             If platform = PlatformID.MacOSX OrElse platform = PlatformID.Unix Then
                 Return path

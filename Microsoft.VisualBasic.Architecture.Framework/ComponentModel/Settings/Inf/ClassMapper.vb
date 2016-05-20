@@ -4,11 +4,18 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Settings.Inf
 
+    ''' <summary>
+    ''' 定义在Ini配置文件之中的Section的名称
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
     Public Class ClassName : Inherits Attribute
 
         Public ReadOnly Property Name As String
 
+        ''' <summary>
+        ''' Defines the section name in the ini profile data.(定义在Ini配置文件之中的Section的名称)
+        ''' </summary>
+        ''' <param name="name"></param>
         Sub New(name As String)
             Me.Name = name
         End Sub
@@ -23,7 +30,7 @@ Namespace ComponentModel.Settings.Inf
     ''' </summary>
     Public Module ClassMapper
 
-        Public Function MapParser(Of T As Class)() As NamedValue(Of BindProperty())
+        Public Function MapParser(Of T As Class)() As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
             Return GetType(T).MapParser
         End Function
 
@@ -33,7 +40,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="type"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function MapParser(type As Type) As NamedValue(Of BindProperty())
+        Public Function MapParser(type As Type) As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
             Dim nameCLS As ClassName = type.GetAttribute(Of ClassName)
             Dim name As String
 
@@ -44,9 +51,10 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             Dim source = DataFrameColumnAttribute.LoadMapping(type)
-            Dim binds As BindProperty() = source.ToArray(AddressOf BindProperty.FromHash)
+            Dim binds As BindProperty(Of DataFrameColumnAttribute)() =
+                source.ToArray(AddressOf BindProperty(Of DataFrameColumnAttribute).FromHash)
 
-            Return New NamedValue(Of BindProperty()) With {
+            Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
                 .Name = name,
                 .x = binds
             }
@@ -66,7 +74,8 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
-            Dim maps As NamedValue(Of BindProperty()) = MapParser(type)
+            Dim maps As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) =
+                MapParser(type)
             Dim obj As Object = Activator.CreateInstance(type)
 
             For Each map In maps.x
@@ -85,7 +94,8 @@ Namespace ComponentModel.Settings.Inf
         End Sub
 
         Public Sub ClassDumper(x As Object, type As Type, ini As IniFile)
-            Dim maps As NamedValue(Of BindProperty()) = MapParser(type)
+            Dim maps As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) =
+                MapParser(type)
 
             For Each map In maps.x
                 Dim key As String = map.Column.Name
