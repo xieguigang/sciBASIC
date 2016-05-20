@@ -148,8 +148,6 @@ Namespace ComponentModel
                     Next
                 Next
             Else
-                Dim ChunkBuffer As List(Of T()) = New List(Of T())
-
                 For Each x As T In first
                     For Each subArray As T() In source.Skip(1).ToArray.Iteration   ' 递归组合迭代
                         Yield New List(Of T)(x) + subArray

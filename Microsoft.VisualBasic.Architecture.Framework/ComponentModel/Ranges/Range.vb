@@ -19,7 +19,7 @@ Namespace ComponentModel.Ranges
         End Function
 
         Public Function IsInside(x As T) As Boolean Implements IRanges(Of T).IsInside
-            Return (Language.GreaterThanOrEquals(x, Min) AndAlso Language.LessThanOrEquals(x, Min))
+            Return (Language.GreaterThanOrEquals(x, Min) AndAlso Language.LessThanOrEquals(x, Max))
         End Function
 
         Public Function IsInside(range As IRanges(Of T)) As Boolean Implements IRanges(Of T).IsInside

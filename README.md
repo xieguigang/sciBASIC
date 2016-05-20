@@ -1,5 +1,9 @@
 # VisualBasic_AppFramework
 
+Abount VisualBasic code style guidelines:
+https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
+
+
 Install this framework via nuget package:
 https://www.nuget.org/packages/VB_AppFramework/
 

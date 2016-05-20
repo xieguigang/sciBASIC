@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Terminal
 
@@ -71,7 +72,7 @@ Namespace Terminal
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' <paramref name="p"/>是进度条的百分比
         ''' </summary>
         ''' <param name="p">Percentage, 假设是从p到current</param>
         Public Sub SetProgress(p As Integer, Optional detail As String = "")
@@ -111,5 +112,32 @@ Namespace Terminal
             ' GC.SuppressFinalize(Me)
         End Sub
 #End Region
+    End Class
+
+    Public Class ProgressProvider
+
+        Public ReadOnly Property Target As Integer
+        Public ReadOnly Property Current As Integer
+
+        Sub New(total As Integer)
+            Target = total
+        End Sub
+
+        ''' <summary>
+        ''' 返回来的百分比小数，还需要乘以100才能得到进度
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function [Step]() As Double
+            _Current += 1
+            Return Current / Target
+        End Function
+
+        Public Function StepProgress() As Integer
+            Return CInt([Step]() * 100)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace

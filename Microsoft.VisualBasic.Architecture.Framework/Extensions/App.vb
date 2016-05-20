@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
 ''' Provides information about, and means to manipulate, the current environment Application information collection.
-''' (More easily runtime environment information provider on LINUX platform for visualbasic program.)
+''' (More easily runtime environment information provider on <see cref="PlatformID.Unix"/>/LINUX platform for visualbasic program.)
 ''' </summary>
 '''
 <PackageNamespace("App", Description:="More easily runtime environment information provider on LINUX platform for visualbasic program.",
@@ -106,7 +106,7 @@ Public Module App
     ''' Getting the path of the home directory
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UsrHome As String = PathMapper.HOME
+    Public ReadOnly Property userHOME As String = PathMapper.HOME
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)

@@ -33,7 +33,7 @@ Namespace DocumentStream
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 这个构造函数会使用<see cref="Tokenizer.CharsParser"/>解析所输入的字符串为列数据的集合
         ''' </summary>
         ''' <param name="raw">A raw string line which read from the Csv text file.</param>
         Sub New(raw As String)

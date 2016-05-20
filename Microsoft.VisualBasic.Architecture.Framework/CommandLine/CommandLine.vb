@@ -202,6 +202,14 @@ Namespace CommandLine
             Return Microsoft.VisualBasic.CommandLine.TryParse(CommandLine())
         End Operator
 
+        Public Function Assert(name As String, Optional failure As String = "") As String
+            If GetBoolean(name) Then
+                Return name
+            Else
+                Return failure
+            End If
+        End Function
+
 #Region "IDataRecord Methods"
 
         ''' <summary>
