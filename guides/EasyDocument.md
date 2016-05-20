@@ -267,7 +267,7 @@ A bug in the Microsoft Excel Csv Parser was found in this test: The filed Proper
 > ![The fields parsing successful in this library](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/guides/ParserSuccess.png)
 
 #####Additional
-1. Read and Write text document
+1.Read and Write text document
 
 **Read/Write** text document in the VisualBasic is so easy!, just one method for write text file and two method for read text file, here is a very simple example:
 
@@ -280,15 +280,17 @@ A bug in the Microsoft Excel Csv Parser was found in this test: The filed Proper
 ######Usage
 
 >You can not believe how easily that you can do on the text document read/write! *By using the system default text file read/write function, you should determined that the parent directory of your text file is exists or not, or if not exist when you save you text file data, then your program will crash*. But using these VisualBasic text file read/write function, no worried about this problem, the function is already do it for you.
->1. &lt;String>.SaveTo(path)
-2. &lt;path>.ReadAllText
-3. &lt;path>.ReadAllLines
 
-2. Read/Write binary data
+>1. *&lt;String>*.**SaveTo(path)**
+>2. *&lt;path>*.**ReadAllText**
+>3. *&lt;path>*.**ReadAllLines**
+
+2.Read/Write binary data
 
 >The usage of the binary data **Byte()** read/write is as easy as the same of text file read/write:
-1. Byte().FlushStream(&lt;path>) ' Write binary data
-2. &lt;path>.ReadBinary() ' Read binary bytes from file.
+
+>1. *Byte()*.**FlushStream(**_&lt;path>_) ' Write binary data
+>2. *&lt;path>*.**ReadBinary()**        ' Read binary bytes from file.
 
 NOTE
 
