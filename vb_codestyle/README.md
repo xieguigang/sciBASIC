@@ -313,7 +313,11 @@ Here are tables of names that i used in my programming, and continues updated...
 	<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
 	<tr><td>System.Text.StringBuilder</td>
     	<td>sb</td>
-        <td>Dim sb As New StringBuilder</td>
+        <td>
+
+    Dim sb As New StringBuilder
+
+</td>
     </tr>
 	<tr><td>System.String</td>
     	<td>s, str, name, sId, id, x</td>
