@@ -56,8 +56,8 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
-    '''
-    <Extension> Public Sub __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0)
+    ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
+    <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
             Dim str As String = $"{_Indent(Indent)} {MSG}"
@@ -74,7 +74,9 @@ Public Module VBDebugger
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
-    End Sub
+
+        Return Nothing
+    End Function
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.

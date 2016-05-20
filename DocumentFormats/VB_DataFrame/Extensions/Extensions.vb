@@ -16,6 +16,9 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports System.Data.Common
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Scripting.InputHandler
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.
@@ -72,9 +75,10 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI(NameOf(DataFrame), Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
-    <Extension> Public Function DataFrame(DataSource As System.Data.Common.DbDataReader) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.DataFrame
-        Dim File As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File = New Csv.DocumentStream.File
+    <ExportAPI(NameOf(DataFrame),
+               Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
+    <Extension> Public Function DataFrame(DataSource As DbDataReader) As DataFrame
+        Dim File As DocumentStream.File = New DocumentStream.File
         Dim Fields As Integer() = DataSource.FieldCount.Sequence
         Call File.AppendLine((From i As Integer In Fields Select DataSource.GetName(i)).ToArray)
 
@@ -82,19 +86,19 @@ Public Module Extensions
             Call File.AppendLine((From i As Integer In Fields Select s = DataSource.GetValue(i).ToString).ToArray)
         Loop
 
-        Return Csv.DocumentStream.DataFrame.CreateObject(File)
+        Return DataFrame.CreateObject(File)
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As Generic.IEnumerable(Of Object), path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
-        Return DocumentFormat.Csv.StorageProvider.Reflection.Save(data, False).Save(path, False, encoding)
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
+        Return Save(data, False).Save(path, False, encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As Generic.IEnumerable(Of DocumentFormat.Csv.StorageProvider.ComponentModels.DynamicObjectLoader), Path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), Path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         Dim Headers = data.First.Schema
-        Dim LQuery = (From item In data Select CType((From p In Headers Select item.GetValue(p.Value)).ToList, DocumentFormat.Csv.DocumentStream.RowObject)).ToArray
-        Dim File As New Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
+        Dim LQuery = (From item In data Select CType((From p In Headers Select item.GetValue(p.Value)).ToList, RowObject)).ToArray
+        Dim File As New DocumentStream.File
 
         Call File.AppendLine((From p In Headers Select p.Key).ToList)
         Call File.AppendRange(LQuery)
@@ -103,13 +107,13 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(dat As Generic.IEnumerable(Of DocumentFormat.Csv.DocumentStream.RowObject), Path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
-        Dim Csv As DocumentFormat.Csv.DocumentStream.File = CType(dat, DocumentFormat.Csv.DocumentStream.File)
+    <Extension> Public Function SaveTo(dat As IEnumerable(Of DocumentStream.RowObject), Path As String, Optional encoding As Encoding = Nothing) As Boolean
+        Dim Csv As DocumentStream.File = CType(dat, DocumentStream.File)
         Return Csv.Save(Path, Encoding:=encoding)
     End Function
 
     <ExportAPI("Row.Parsing")>
-    <Extension> Public Function ToCsvRow(data As Generic.IEnumerable(Of String)) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.RowObject
+    <Extension> Public Function ToCsvRow(data As Generic.IEnumerable(Of String)) As RowObject
         Return CType(data.ToList, Csv.DocumentStream.RowObject)
     End Function
 
@@ -134,7 +138,9 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(dataSet As DocumentStream.File, Optional explicit As Boolean = False) As T()
-        Dim source As T() = Reflector.Convert(Of T)(DocumentStream.DataFrame.CreateObject(dataSet), explicit).ToArray
+        Dim dataFrame As DataFrame =
+            DocumentStream.DataFrame.CreateObject(dataSet)
+        Dim source As T() = Reflector.Convert(Of T)(dataFrame, explicit).ToArray
         Return source
     End Function
 
@@ -149,7 +155,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(ImportsFile As String, Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
         Dim Wrapper = DocumentFormat.Csv.DocumentStream.DataFrame.CreateObject([Imports](ImportsFile, Delimiter))
-        Dim DataCollection As T() = Csv.StorageProvider.Reflection.Reflector.Convert(Of T)(Wrapper, explicit).ToArray
+        Dim DataCollection As T() = Reflector.Convert(Of T)(Wrapper, explicit).ToArray
         Return DataCollection
     End Function
 
@@ -164,7 +170,7 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As Generic.IEnumerable(Of String), Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
+    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
         Dim Expression As String = String.Format(DocumentFormat.Csv.DataImports.SplitRegxExpression, Delimiter)
         Dim LQuery = (From line As String In strDataLines Select RowParsing(line, Expression)).ToArray
         Return CType(LQuery, Csv.DocumentStream.File).AsDataSource(Of T)(explicit)
@@ -194,10 +200,20 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
         Return ChunkBuffer
     End Function
 
-    <Extension> Public Function LoadCsv(Of T As Class)(DataChunk As Generic.IEnumerable(Of String), Optional explicit As Boolean = True) As T()
-        Dim Expression As String = String.Format(DocumentFormat.Csv.DataImports.SplitRegxExpression, ",")
-        Dim LQuery = (From line As String In DataChunk Select RowParsing(line, Expression)).ToArray
-        Return CType(LQuery, Csv.DocumentStream.File).AsDataSource(Of T)(explicit)
+    ''' <summary>
+    ''' Load object data set from the text lines stream.(从文本行之中加载数据集)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="explicit"></param>
+    ''' <returns></returns>
+    <Extension> Public Function LoadStream(Of T As Class)(
+                                              source As IEnumerable(Of String),
+                                              Optional explicit As Boolean = True) As T()
+        Dim dataFrame As DocumentStream.File =
+            DocumentStream.File.Load(source.ToArray)
+        Dim buf As T() = dataFrame.AsDataSource(Of T)(explicit)
+        Return buf
     End Function
 
     ''' <summary>
@@ -212,10 +228,10 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function SaveTo(Of T As Class)(source As IEnumerable(Of T),
-                                                      path As String,
-                                                      Optional explicit As Boolean = False,
-                                                      Optional encoding As Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
+                                             path As String,
+                                             Optional explicit As Boolean = False,
+                                             Optional encoding As Encoding = Nothing) As Boolean
 
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
@@ -233,10 +249,10 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
         Return True
     End Function
 
-    <Extension> Public Function SaveTo(Of T As Class)(source As IEnumerable(Of T),
-                                                      path As String,
-                                                      encoding As Encodings,
-                                                      Optional explicit As Boolean = False) As Boolean
+    <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
+                                             path As String,
+                                             encoding As Encodings,
+                                             Optional explicit As Boolean = False) As Boolean
         Return source.SaveTo(path, explicit, encoding.GetEncodings)
     End Function
 
@@ -248,8 +264,8 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' <param name="explicit">默认导出所有的可用属性</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToCsvDoc(Of T As Class)(source As Generic.IEnumerable(Of T), Optional explicit As Boolean = False) As DocumentStream.File
-        Return Csv.StorageProvider.Reflection.Reflector.Save(source, explicit)
+    <Extension> Public Function ToCsvDoc(Of T As Class)(source As IEnumerable(Of T), Optional explicit As Boolean = False) As DocumentStream.File
+        Return Reflector.Save(source, explicit)
     End Function
 
     ''' <summary>
@@ -261,10 +277,13 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
-    <Extension> Public Function SaveTo(data As Generic.IEnumerable(Of Double), path As String) As Boolean
-        Dim Row As List(Of String) = (From n In data Select s = n.ToString).ToList
-        Dim Csv = CType({CType(Row, Csv.DocumentStream.RowObject)}, Csv.DocumentStream.File)
-        Return Csv.Save(path, LazySaved:=False)
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path As String) As Boolean
+        Dim row As IEnumerable(Of String) = From n As Double
+                                            In data
+                                            Select s =
+                                                n.ToString
+        Dim buf As New DocumentStream.File({New RowObject(row)})
+        Return buf.Save(path, LazySaved:=False)
     End Function
 
     ''' <summary>
@@ -276,15 +295,27 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     '''
     <ExportAPI("DblVector.LoadCsv", Info:="Load the data from the csv document as a double data type vector. ")>
     <Extension> Public Function LoadDblVector(path As String) As Double()
-        Dim Csv = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File.Load(path)
-        Dim FirstRow = Csv.First
-        Dim DblCollection = (From s As String In FirstRow Select Val(s)).ToArray
-        Return DblCollection
+        Dim buf As DocumentStream.File = DocumentStream.File.Load(path)
+        Dim FirstRow As RowObject = buf.First
+        Dim data As Double() = FirstRow.ToArray(AddressOf Val)
+        Return data
     End Function
 
-    <Extension> Public Function Cable(Of T)(Method As Microsoft.VisualBasic.Scripting.LoadObject(Of T)) As Boolean
-        Dim typeDef As Type = GetType(T)
-        Call Microsoft.VisualBasic.Scripting.UpdateHandle(typeDef.FullName, typeDef, Function(field) Method(field))
-        Return True
-    End Function
+    <Extension> Public Sub Cable(Of T)(Method As LoadObject(Of T))
+        Dim type As Type = GetType(T)
+        Dim name As String = type.FullName
+        Dim helper As New __loadHelper(Of T) With {
+            .handle = Method
+        }
+
+        Call UpdateHandle(name, type, AddressOf helper.LoadObject)
+    End Sub
+
+    Private Structure __loadHelper(Of T)
+        Public handle As LoadObject(Of T)
+
+        Public Function LoadObject(s As String) As T
+            Return handle(s)
+        End Function
+    End Structure
 End Module

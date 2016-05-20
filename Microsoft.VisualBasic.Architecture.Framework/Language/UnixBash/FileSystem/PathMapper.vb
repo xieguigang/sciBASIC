@@ -23,10 +23,10 @@ Namespace Language.UnixBash
                 path = Mid(path, 2)
 
                 If path.First = "/" Then
-                    path = App.UsrHome & "/" & path
+                    path = App.userHOME & "/" & path
                 Else
                     ' ~username
-                    Dim DIR As String = App.UsrHome.ParentPath
+                    Dim DIR As String = App.userHOME.ParentPath
                     path = DIR & "/" & path
                 End If
             ElseIf path.First = "#"c Then
@@ -40,7 +40,7 @@ Namespace Language.UnixBash
                 path = "C:\Program Files/" & path
             ElseIf InStr(path, "/usr", CompareMethod.Text) = 1 Then
                 path = Mid(path, 5)
-                path = App.UsrHome.ParentPath & "/" & path
+                path = App.userHOME.ParentPath & "/" & path
             ElseIf InStr(path, "-/") = 1 Then
                 ' 前一个文件夹
                 path = Mid(path, 2)
