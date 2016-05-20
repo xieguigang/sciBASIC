@@ -235,12 +235,12 @@ Generates the Xml document is very easy in the VisualBasic, just using your obje
     a = "./testssss.Xml".LoadXml(Of TestBin)  ' Load Object from Xml
     Call a.GetXml.__DEBUG_ECHO
 
-######Simple Usage
-
-1. <T>.GetXml<br />
-	>Gets the object generated Xml document text. By combine using of the **String.SaveTo(path)** Extension function, that you can easily save the object as a Xml text file.
-2. <path>.LoadXml(of T)<br />
-	>Load object from Xml
+>######Simple Usage
+>
+>1. <T>.GetXml<br />
+	+ _Gets the object generated Xml document text. By combine using of the **String.SaveTo(path)** Extension function, that you can easily save the object as a Xml text file._
+>2. <path>.LoadXml(of T)<br />
+	+ _Load object from Xml_
 
 ##Csv
 
