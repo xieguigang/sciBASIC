@@ -303,13 +303,15 @@
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Scripting\MetaData\Author.vb" />
+    <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
     <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\FormattedParser.vb" />
-    <Compile Include="Win32API.vb" />
-    <Compile Include="Win32File.vb" />
+    <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
+    <Compile Include="Tools\Win32\Win32API.vb" />
+    <Compile Include="Tools\Win32\Win32File.vb" />
     <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Language\UnixBash\Cowsay.vb" />

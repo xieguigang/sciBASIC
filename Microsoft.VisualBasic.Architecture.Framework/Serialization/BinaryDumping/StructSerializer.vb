@@ -1,9 +1,10 @@
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 Namespace Serialization.BinaryDumping
 
     ''' <summary>
-    ''' 
+    ''' Some times these method is not works well, not sure why?
     ''' </summary>
     ''' <remarks>
     ''' http://blog.csdn.net/zztoll/article/details/8695992
@@ -45,9 +46,20 @@ Namespace Serialization.BinaryDumping
     ''' </remarks>
     Public Module StructSerializer
 
+        ' 2016.5.20 debugger exception:
+        '
+        ' Unhandled Exception: System.AccessViolationException: Attempted to read Or write protected memory. This Is often an indication that other memory Is corrupt.
+        '  at System.Runtime.InteropServices.Marshal.StructureToPtr(Object Structure, IntPtr ptr, Boolean fDeleteOld)
+        '  at Microsoft.VisualBasic.Serialization.BinaryDumping.StructSerializer.StructureToByte[T](T struct) 
+        '  at EasyDocument.Program.Main() 
+
+        ' These two function will not works, prefer to the extensions in StructFormatter Module
+
         ''' <summary>
         ''' 由结构体转换为byte数组
         ''' </summary>
+        ''' 
+        <Extension>
         Public Function StructureToByte(Of T As Structure)(struct As T) As Byte()
             Dim size As Integer = Marshal.SizeOf(GetType(T))
             Dim buffer As Byte() = New Byte(size - 1) {}
@@ -64,6 +76,8 @@ Namespace Serialization.BinaryDumping
         ''' <summary>
         ''' 由byte数组转换为结构体
         ''' </summary>
+        ''' 
+        <Extension>
         Public Function ByteToStructure(Of T As Structure)(dataBuffer As Byte()) As T
             Dim [structure] As Object = Nothing
             Dim size As Integer = Marshal.SizeOf(GetType(T))

@@ -1,10 +1,17 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ComponentModel.DataSourceModel
 
-    Public Structure BindProperty
+    ''' <summary>
+    ''' Schema for <see cref="Attribute"/> and its bind <see cref="PropertyInfo"/> object target
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Structure BindProperty(Of T As Attribute)
+        Implements IReadOnlyId
+
         Public [Property] As PropertyInfo
-        Public Column As DataFrameColumnAttribute
+        Public Column As T
 
         ''' <summary>
         ''' Gets the type of this property.
@@ -13,6 +20,12 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property Type As Type
             Get
                 Return [Property].PropertyType
+            End Get
+        End Property
+
+        Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
+            Get
+                Return [Property].Name
             End Get
         End Property
 
@@ -28,8 +41,8 @@ Namespace ComponentModel.DataSourceModel
             Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
         End Function
 
-        Public Shared Function FromHash(x As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) As BindProperty
-            Return New BindProperty With {
+        Public Shared Function FromHash(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
+            Return New BindProperty(Of T) With {
                 .Column = x.Key,
                 .Property = x.Value
             }

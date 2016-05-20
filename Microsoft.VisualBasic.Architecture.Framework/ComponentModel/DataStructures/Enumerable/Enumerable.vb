@@ -120,14 +120,14 @@ Public Module IEnumerations
     End Function
 
     <Extension> Public Function ToEntryDictionary(Of T As IReadOnlyId)(source As IEnumerable(Of T)) As Dictionary(Of String, T)
-        Return source.ToDictionary(Function(item As T) item.locusId)
+        Return source.ToDictionary(Function(item As T) item.Identity)
     End Function
 
     <Extension> Public Function GetItem(Of T As IReadOnlyId)(source As IEnumerable(Of T), uniqueId As String, Optional caseSensitive As Boolean = True) As T
         Dim method As StringComparison = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From itemObj As T
                       In source
-                      Where String.Equals(itemObj.locusId, uniqueId, method)
+                      Where String.Equals(itemObj.Identity, uniqueId, method)
                       Select itemObj).FirstOrDefault
         Return LQuery
     End Function

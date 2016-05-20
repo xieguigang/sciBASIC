@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace Parallel
 
@@ -335,7 +336,7 @@ Namespace Parallel
             Call invoke.Statements.Add(LocalsInit(Socket, GetType(MMFProtocol.MMFSocket), [New](GetType(MMFProtocol.MMFSocket), {LocalVariable(Host)})))
             Call invoke.Statements.Add([Call](GetType(Extensions), NameOf(__DEBUG_ECHO), {"Init transfer device job done, start to transferred data!"}))
             ' Call Socket.SendMessage(LoadResult.GetSerializeBuffer) '返回内存数据
-            Call invoke.Statements.Add(LocalsInit(Buffer, GetType(Byte()), [Call](GetType(Extensions), NameOf(GetSerializeBuffer), {LocalVariable(LoadResult)})))
+            Call invoke.Statements.Add(LocalsInit(Buffer, GetType(Byte()), [Call](GetType(StructSerializer), NameOf(StructureToByte), {LocalVariable(LoadResult)})))
             Call invoke.Statements.Add([Call](LocalVariable(Socket), NameOf(MMFProtocol.MMFSocket.SendMessage), {LocalVariable(Buffer)}))
             Call invoke.Statements.Add([Call](GetType(Extensions), NameOf(__DEBUG_ECHO), {"Data transportation Job Done!"}))
 
