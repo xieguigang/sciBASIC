@@ -28,7 +28,7 @@ In this document format guidelines, we want to introduce how easily that save ob
 
 First of all, we define a object for the test example in this article:
 
-> 	Dim a As TestBin = TestBin.inst  ' Init test data
+> 	 Dim a As TestBin = TestBin.inst  ' Init test data
 
 ##INI
 
@@ -91,11 +91,29 @@ There are two Win32 API was used for ini profile file data read and write:
     End Function
 
 
-And the wrapper for the ini data serialization and deserialization is already been developed for the Class object in the VisualBasic. let's see how simple it is:
+And the wrapper for the ini data serialization and deserialization is already been developed for the Class object in the VisualBasic. First just needs imports two namespace, and then let's see how simple it is:
+
+>Imports **Microsoft.VisualBasic.ComponentModel.DataSourceModel**
+Imports **Microsoft.VisualBasic.ComponentModel.Settings.Inf**
+
+Assuming that you have a **TestBin** type simple object, then you want to write this object as the program profile ini file, so that you just needs using **WriteClass** function, **if your object just stands for a section in the ini profile file.**
 
 
+>     Call New Profiles With {.Test = a}.WriteProfile  ' Write profile file data
+    Call a.WriteClass("./test2.ini")                 ' Write ini section data.
+    a = Nothing
+    a = "./test2.ini".LoadIni(Of TestBin)                        ' Load ini section data
+    Dim pp As Profiles = "./test2.ini".LoadProfile(Of Profiles)  ' Load entire ini file
 
+And in this example the **WriteClass** function produce the ini profile data as:
 
+>[**JSON**]
+Property1=_{"_BufferLength":8,"_ChunkBuffer":[72,84,84,80,47,53,50,48],"_Protocol":520,"_ProtocolCategory":0,"_uid":0}_
+D=_5/20/2016 3:40:27 PM_
+n=_330_
+f=_0.33_
+
+NOTE: the profile key in the ini file should be decorating with **&lt;DataFrameColumn>** attribute, and using **ClassName** attribute on the Class object definition, can makes tweaks on your section name and allow some identifier illegal character in VisualBasic is also able used as the section name, example is a section name is **"test-section"**, the character - is illegal in the VB identifier, so that you just needs using this attribute decorated as **&lt;ClassName("test-section")>**, the same of the usage of **&lt;DataFrameColumn>** attribute can be applied on the property.
 
 
 
