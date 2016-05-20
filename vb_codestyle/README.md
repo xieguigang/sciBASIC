@@ -376,16 +376,24 @@ Dim args As String()
     <tr><td>Linq query expression</td><td>LQuery</td><td>
 
     Dim LQuery = From path As String
-    			 In ls -l -r -wildcards("*.Xml") &lt;= DIR
+    			 In ls -l -r -wildcards("*.Xml") <= DIR
     			 Where InStr(path.BaseName, "xcb") = 1
-                 Select path.LoadXml(Of KEGG.DBGET.Module)</td>
-                 </tr>
+                 Select path.LoadXml(Of KEGG.DBGET.Module)
+                 
+</td>
+</tr>
     <tr>
     	<td>Query Result/Function Returns</td><td>result, rtvl</td><td>
+    	
     Dim result As [Module] = 
-    	LinqAPI.Exec(Of [Module]) &lt;= From path As String
-    			 			   	 In ls -l -r -wildcards("*.Xml") &lt;= DIR
-    			 					Where InStr(path.BaseName, "xcb") = 1
-                 					Select path.LoadXml(Of KEGG.DBGET.Module)</td>
-                                    </tr>
+    	LinqAPI.Exec(Of [Module]) <= 
+    	    From path As String
+    	    In ls -l -r -wildcards("*.Xml") <= DIR
+    	    Where InStr(path.BaseName, "xcb") = 1
+            Select path.LoadXml(Of KEGG.DBGET.Module)
+        
+    Return result
+                 					
+</td>
+</tr>
 </table>
