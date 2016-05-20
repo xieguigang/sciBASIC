@@ -308,7 +308,7 @@ All of the Linq Expression is recommended execute using [**LinqAPI**](https://gi
 
 Here are tables of names that i used in my programming, and continues updated....
 
->1. Some common used name for common types
+>1.Some common used name for common types
 <table>
 	<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
 	<tr><td>System.Text.StringBuilder</td>
@@ -352,67 +352,58 @@ Here are tables of names that i used in my programming, and continues updated...
 </td>
 	</tr>
 </table>
-2. Name for some meaning
-<table>
-	<tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
-	<tr><td>Commandline arguments</td>
-    	<td>args, CLI</td>
-        <td>
-        
-    Dim args As CommandLine
-    Dim CLI As String
-    Dim args As String()
 
-</td>
-    </tr>
+2.Name for some meaning
+
+<table>
+   <tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
+   <tr><td>Commandline arguments</td>
+       <td>args, CLI</td>
+       <td>
+<pre>Dim args As CommandLine
+Dim CLI As String
+Dim args As String()</pre>
+</td></tr>
 	<tr><td>SQL query</td>
     	<td>SQL, sql, query</td>
         <td>
- 
-    Dim SQL As String = "SELECT * FROM table LIMIT 1;"
-    
+<pre>Dim SQL As String = "SELECT * FROM table LIMIT 1;"</pre>
 </td>
     </tr>
 	<tr><td>Iterator</td>
     	<td>i, j, k, l</td>
         <td>
-
-    For i As Integer = 0 to [stop]
-        For j As Integer = i to [stop]
-            For k As Integer = j to [stop]
-            Next
+<pre>For i As Integer = 0 to [stop]
+    For j As Integer = i to [stop]
+        For k As Integer = j to [stop]
         Next
     Next
+Next
 
-    Dim l As Integer = 100
+Dim l As Integer = 100
 
-    Do while l = 100
-    	' blablabla...
-    Loop
-
+Do while l = 100
+    ' blablabla...
+Loop</pre>
 </td>
     </tr>
     <tr><td>Linq query expression</td><td>LQuery</td><td>
-
-    Dim LQuery = From path As String
-    			 In ls -l -r -wildcards("*.Xml") <= DIR
-    			 Where InStr(path.BaseName, "xcb") = 1
-                 Select path.LoadXml(Of KEGG.DBGET.Module)
-                 
+<pre>Dim LQuery = From path As String
+             In ls -l -r -wildcards("*.Xml") <= DIR
+             Where InStr(path.BaseName, "xcb") = 1
+             Select path.LoadXml(Of KEGG.DBGET.Module)</pre>
 </td>
 </tr>
     <tr>
     	<td>Query Result/Function Returns</td><td>result, rtvl</td><td>
-    	
-    Dim result As [Module] = 
-    	LinqAPI.Exec(Of [Module]) <= 
-    	    From path As String
-    	    In ls -l -r -wildcards("*.Xml") <= DIR
-    	    Where InStr(path.BaseName, "xcb") = 1
-            Select path.LoadXml(Of KEGG.DBGET.Module)
+<pre>Dim result As [Module] = 
+    LinqAPI.Exec(Of [Module]) <= 
+          From path As String
+          In ls -l -r -wildcards("*.Xml") <= DIR
+          Where InStr(path.BaseName, "xcb") = 1
+          Select path.LoadXml(Of KEGG.DBGET.Module)
         
-    Return result
-                 					
+Return result</pre>
 </td>
 </tr>
 </table>
