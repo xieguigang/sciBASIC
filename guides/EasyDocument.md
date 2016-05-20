@@ -3,26 +3,27 @@
 Here are some of the data object that we want to save to file and read object from the file. In VisualBasic, there are two document format for the storage of simple document(_*.ini_, _*.Csv_), and 3 type of document format(_*.json_, _*.Xml_, _*.dat_) for the storage of complex object automatically.
 In this document format guidelines, we want to introduce how easily that save object instance in the VisualBasic program.
 
-> 	<IniMapIO("#/test.ini")>
-	Public Class Profiles
-    	Public Property Test As TestBin
-	End Class
 
-> 	<ClassName("JSON")>
+>     <IniMapIO("#/test.ini")>
+     Public Class Profiles
+         Public Property Test As TestBin
+     End Class
+
+>     <ClassName("JSON")>
 	<Serializable> Public Class TestBin
     	<DataFrameColumn> Public Property Property1 As String
     	<DataFrameColumn> Public Property D As Date
     	<DataFrameColumn> Public Property n As Integer
     	<DataFrameColumn> Public Property f As Double
 
->     	Public Shared Function inst() As TestBin
-        	Return New TestBin With {
-            	.D = Now,
-            	.f = RandomDouble(),
-            	.n = RandomDouble() * 1000,
-            	.Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
-        	}
-    	End Function
+>         Public Shared Function inst() As TestBin
+          	Return New TestBin With {
+               	.D = Now,
+               	.f = RandomDouble(),
+               	.n = RandomDouble() * 1000,
+               	.Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
+           	}
+        End Function
 	End Class
 
 First of all, we define a object for the test example in this article:
