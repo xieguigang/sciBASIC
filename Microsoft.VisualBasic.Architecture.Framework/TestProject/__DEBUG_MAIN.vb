@@ -10,10 +10,15 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language
+Imports System.Reflection
 
 Module __DEBUG_MAIN
 
-    Sub Main()
+    Function Main(args As String()) As Integer
+
+        Call VBDebugger.Warning("ddddddddd")
+        Call VBDebugger.PrintException("123123123", MethodBase.GetCurrentMethod.GetFullName)
+        Call VBDebugger.__DEBUG_ECHO("sfsdddddddddddddddd")
 
         Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
                                                            In ls - l - r - wildcards("*.txt") <= "D:\MyDocuments"
@@ -147,7 +152,7 @@ Module __DEBUG_MAIN
             Dim s As String = Console.ReadLine
             Call Console.WriteLine("   ------> ""{0}""", s)
         Loop
-    End Sub
+    End Function
     <ClassName("df-ini")>
     Public Class ssfsfs
         <DataFrameColumn("123")> Public Property dddd As String

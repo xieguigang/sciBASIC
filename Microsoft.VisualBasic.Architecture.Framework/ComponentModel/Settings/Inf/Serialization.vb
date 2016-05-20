@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports System.Runtime.CompilerServices
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace ComponentModel.Settings.Inf
 
@@ -32,6 +33,10 @@ Namespace ComponentModel.Settings.Inf
 
         Public ReadOnly Property Path As String
 
+        ''' <summary>
+        ''' The path parameter can be shortcut by method <see cref="PathMapper.GetMapPath"/>
+        ''' </summary>
+        ''' <param name="path"></param>
         Sub New(path As String)
             Me.Path = PathMapper.GetMapPath(path)
         End Sub
@@ -55,6 +60,13 @@ Namespace ComponentModel.Settings.Inf
             Return True
         End Function
 
+        ''' <summary>
+        ''' 属性的类型需要定义<see cref="ClassName"/>，Section类型里面的属性还需要定义<see cref="DataFrameColumnAttribute"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
         Public Function WriteProfile(Of T As Class)(x As T) As Boolean
             Return x.WriteProfile(__getPath(Of T))
         End Function
