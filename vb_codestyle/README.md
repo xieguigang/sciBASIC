@@ -373,4 +373,18 @@ Dim args As String()
 
 </td>
     </tr>
+    <tr><td>Linq query expression</td><td>LQuery</td><td>
+
+    Dim LQuery = From path As String
+    			 In ls -l -r -wildcards("*.Xml") <= DIR
+    			 Where InStr(path.BaseName, "xcb") = 1
+                 Select path.LoadXml(Of KEGG.DBGET.Module)
+    </td></tr>
+    <tr><td>Query Result/Function Returns</td><td>result, rtvl</td><td>
+    Dim result As [Module] = 
+    	LinqAPI.Exec(Of [Module]) <= From path As String
+    			 			   	 In ls -l -r -wildcards("*.Xml") <= DIR
+    			 					Where InStr(path.BaseName, "xcb") = 1
+                 					Select path.LoadXml(Of KEGG.DBGET.Module)
+                 </td></tr>
 </table>
