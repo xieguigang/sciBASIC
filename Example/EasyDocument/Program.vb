@@ -3,8 +3,16 @@
 Module Program
 
     Sub Main()
+
         Dim a As TestBin = TestBin.inst
         Call a.Serialize("./test.dat")
+
+        a = Nothing
+        a = "./test.dat".Load(Of TestBin)
+
+        Call a.GetJson.__DEBUG_ECHO
+
+        Pause()
     End Sub
 End Module
 

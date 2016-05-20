@@ -46,6 +46,13 @@ Namespace Serialization.BinaryDumping
     ''' </remarks>
     Public Module StructSerializer
 
+        ' 2016.5.20 debugger exception:
+        '
+        ' Unhandled Exception: System.AccessViolationException: Attempted to read Or write protected memory. This Is often an indication that other memory Is corrupt.
+        '  at System.Runtime.InteropServices.Marshal.StructureToPtr(Object Structure, IntPtr ptr, Boolean fDeleteOld)
+        '  at Microsoft.VisualBasic.Serialization.BinaryDumping.StructSerializer.StructureToByte[T](T struct) 
+        '  at EasyDocument.Program.Main() 
+
         ''' <summary>
         ''' 由结构体转换为byte数组
         ''' </summary>

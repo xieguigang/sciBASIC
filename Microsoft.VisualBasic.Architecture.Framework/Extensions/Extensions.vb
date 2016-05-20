@@ -2114,23 +2114,27 @@ Public Module Extensions
     '    Return DirectCast(obj, T)
     'End Function
 
-    '''' <summary>
-    '''' 使用反二进制序列化从指定的文件之中加载一个对象
-    '''' </summary>
-    '''' <typeparam name="T"></typeparam>
-    '''' <param name="path"></param>
-    '''' <returns></returns>
-    '''' <remarks></remarks>
-    '<Extension> Public Function Load(Of T As Class)(path As String) As T
-    '    If Not FileIO.FileSystem.FileExists(path) Then
-    '        Return DirectCast(Activator.CreateInstance(Of T)(), T)
-    '    End If
-    '    Using Stream As Stream = New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
-    '        Dim IFormatter As IFormatter = New BinaryFormatter()
-    '        Dim obj As T = DirectCast(IFormatter.Deserialize(Stream), T)
-    '        Return obj
-    '    End Using
-    'End Function
+    ''' <summary>
+    ''' Load a strucutre object from the file system by using binary serializer deserialize.
+    ''' (使用反二进制序列化从指定的文件之中加载一个对象)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension> Public Function Load(Of T As Structure)(path As String) As T
+        'If Not FileIO.FileSystem.FileExists(path) Then
+        '    Return DirectCast(Activator.CreateInstance(Of T)(), T)
+        'End If
+        'Using Stream As Stream = New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
+        '    Dim IFormatter As IFormatter = New BinaryFormatter()
+        '    Dim obj As T = DirectCast(IFormatter.Deserialize(Stream), T)
+        '    Return obj
+        'End Using
+
+        Dim bytes As Byte() = IO.File.ReadAllBytes(path)
+        Return ByteToStructure(Of T)(bytes)
+    End Function
 
     ''' <summary>
     ''' 0 for null object
