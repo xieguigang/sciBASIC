@@ -3,6 +3,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
@@ -105,6 +106,11 @@ Public Module XmlDoc
         End Using
     End Function
 
+    Public Enum XmlEncodings
+        UTF8
+        UTF16
+    End Enum
+
     ''' <summary>
     ''' Serialization the target object type into a XML document.(将一个类对象序列化为XML文档)
     ''' </summary>
@@ -112,27 +118,52 @@ Public Module XmlDoc
     ''' <param name="obj"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function GetXml(Of T As Class)(obj As T, Optional ThrowEx As Boolean = True) As String
-        Return GetXml(obj, GetType(T), ThrowEx)
+    <Extension> Public Function GetXml(Of T As Class)(obj As T,
+                                                      Optional ThrowEx As Boolean = True,
+                                                      Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+        Return GetXml(obj, GetType(T), ThrowEx, xmlEncoding)
     End Function
 
-    Public Function GetXml(obj As Object, type As Type, Optional throwEx As Boolean = True) As String
-        Dim sBuilder As StringBuilder = New StringBuilder(1024)
+    Public Function GetXml(obj As Object, type As Type,
+                           Optional throwEx As Boolean = True,
+                           Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+        Try
 
-        Using StreamWriter As StringWriter = New StringWriter(sb:=sBuilder)
-            Try
-                Call (New XmlSerializer(type)).Serialize(StreamWriter, obj)
-            Catch ex As Exception
-                Call App.LogException(ex)
+            If xmlEncoding = XmlEncodings.UTF8 Then
+                Dim serializer As New XmlSerializer(type)
 
-                If throwEx Then
-                    Throw ex
-                Else
-                    Return Nothing
-                End If
-            End Try
-            Return sBuilder.ToString
-        End Using
+                ' create a MemoryStream here, we are just working
+                ' exclusively in memory
+                Dim stream As New MemoryStream()
+
+                ' The XmlTextWriter takes a stream And encoding
+                ' as one of its constructors
+                Dim xtWriter As New XmlTextWriter(stream, Encoding.UTF8)
+
+                Call serializer.Serialize(xtWriter, obj)
+                Call xtWriter.Flush()
+
+                ' read back the contents of the stream And supply the encoding
+                Dim result As String = Encoding.UTF8.GetString(stream.ToArray())
+                Return result
+            Else
+                Dim sBuilder As StringBuilder = New StringBuilder(1024)
+                Using StreamWriter As StringWriter = New StringWriter(sb:=sBuilder)
+                    Call (New XmlSerializer(type)).Serialize(StreamWriter, obj)
+                    Return sBuilder.ToString
+                End Using
+            End If
+
+        Catch ex As Exception
+            ex = New Exception(type.ToString, ex)
+            Call App.LogException(ex)
+
+            If throwEx Then
+                Throw ex
+            Else
+                Return Nothing
+            End If
+        End Try
     End Function
 
     ''' <summary>
@@ -235,5 +266,23 @@ Public Module XmlDoc
         Using Stream As New StringReader(s:="<?xml version=""1.0""?>" & vbCrLf & Xml)
             Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(Stream), T)
         End Using
+    End Function
+
+    Const XmlEncoding As String = "﻿<[\?]xml .+?encoding="".+?"".*[\?]>"
+
+    <Extension>
+    Public Function ModifyEncoding(xml As String, encoding As XmlEncodings) As String
+        Dim xmlEncoding As String = If(encoding = XmlEncodings.UTF8, "utf-8", "utf-16")
+        Dim head As String = Regex.Match(xml, XmlDoc.XmlEncoding, RegexICSng).Value
+        Dim enc As String = Regex.Match(head, "encoding=""\s*?""", RegexICSng).Value
+        If String.IsNullOrEmpty(enc) Then
+            enc = head.Replace("<?xml", $"<?xml encoding=""{xmlEncoding}""")
+        Else
+            enc = head.Replace(enc, $"encoding=""{xmlEncoding}""")
+        End If
+
+        xml = xml.Replace(head, enc)
+
+        Return xml
     End Function
 End Module
