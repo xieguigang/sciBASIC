@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -77,7 +78,7 @@ Namespace DDM
             Call _cssElements.Add(element)
         End Sub
 
-        Public Overrides Property InnerText As String
+        <XmlText> Public Overrides Property InnerText As String
             Get
                 Dim values As String() = _cssElements.ToArray(Function(css) css.ToString)
                 Return String.Join(vbCrLf, values)
@@ -86,7 +87,6 @@ Namespace DDM
                 MyBase.InnerText = value
             End Set
         End Property
-
     End Class
 
     Public Class CSSElement
