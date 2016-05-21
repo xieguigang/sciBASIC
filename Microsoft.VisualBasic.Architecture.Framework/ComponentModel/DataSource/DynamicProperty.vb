@@ -103,7 +103,7 @@ Namespace ComponentModel.DataSourceModel
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"{Name} --> {x.GetJson}"
         End Function
     End Structure
 End Namespace

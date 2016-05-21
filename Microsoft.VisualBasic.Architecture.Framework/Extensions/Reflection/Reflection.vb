@@ -348,33 +348,39 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 
     ''' <summary>
-    ''' Get the scripting namespace value from <see cref="Microsoft.VisualBasic.CommandLine.Reflection.Namespace"/>
+    ''' Get the scripting namespace value from <see cref="[Namespace]"/>
     ''' </summary>
     ''' <param name="__nsType"></param>
     ''' <returns></returns>
     '''
     <ExportAPI("Get.APINamespace")>
-    <Extension> Public Function NamespaceEntry(__nsType As Type) As Microsoft.VisualBasic.CommandLine.Reflection.Namespace
+    <Extension> Public Function NamespaceEntry(__nsType As Type) As [Namespace]
         Dim attr As Object() = Nothing
         Try
-            attr = __nsType.GetCustomAttributes(GetType(Microsoft.VisualBasic.CommandLine.Reflection.Namespace), True)
+            attr = __nsType.GetCustomAttributes(GetType([Namespace]), True)
         Catch ex As Exception
             Call App.LogException(New Exception(__nsType.FullName, ex))
         End Try
         If attr.IsNullOrEmpty Then
             Return New [Namespace](__nsType.Name, __nsType.FullName, True)
         Else
-            Return DirectCast(attr(Scan0), Microsoft.VisualBasic.CommandLine.Reflection.Namespace)
+            Return DirectCast(attr(Scan0), [Namespace])
         End If
     End Function
 
+    ''' <summary>
+    ''' Gets the full name of a method reflection meta data.
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="IncludeAssembly"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.FullName")>
-    <Extension> Public Function GetFullName(Method As System.Reflection.MethodBase, Optional IncludeAssembly As Boolean = False) As String
-        Dim Name As String = $"{Method.DeclaringType.FullName}::{Method.ToString}"
+    <Extension> Public Function GetFullName(method As MethodBase, Optional IncludeAssembly As Boolean = False) As String
+        Dim Name As String = $"{method.DeclaringType.FullName}::{method.ToString}"
         If Not IncludeAssembly Then
             Return Name
         Else
-            Return $"{Method.DeclaringType.Module.Assembly.Location.ToFileURL}!{Name}"
+            Return $"{method.DeclaringType.Module.Assembly.Location.ToFileURL}!{Name}"
         End If
     End Function
 
