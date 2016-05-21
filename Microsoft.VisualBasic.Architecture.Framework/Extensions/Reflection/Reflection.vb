@@ -348,7 +348,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 
     ''' <summary>
-    ''' Get the scripting namespace value from <see cref="Namespace"/>
+    ''' Get the scripting namespace value from <see cref="[Namespace]"/>
     ''' </summary>
     ''' <param name="__nsType"></param>
     ''' <returns></returns>

@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Imaging
 
@@ -44,7 +45,9 @@ Namespace Scripting
                 {GetType(Font), AddressOf Casting.CastFont},
                 {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
                 {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
-                {GetType(Process), AddressOf Casting.CastProcess}}
+                {GetType(Process), AddressOf Casting.CastProcess},
+                {GetType(RegexOptions), AddressOf Casting.CastRegexOptions}
+        }
 
         ''' <summary>
         ''' Converts a string expression which was input from the console or script file to the specified type.
@@ -60,7 +63,7 @@ Namespace Scripting
             End If
 
             Try
-                Return Microsoft.VisualBasic.Conversion.CTypeDynamic(Expression, TargetType)
+                Return Conversion.CTypeDynamic(Expression, TargetType)
             Catch ex As Exception
                 Call App.LogException(
                     New Exception($"{Expression}  ===> {TargetType.FullName}", ex),
@@ -143,7 +146,9 @@ Namespace Scripting
                 {"integer()", GetType(Integer())},
                 {"double()", GetType(Double())},
                 {"bitmap", GetType(Bitmap)},
-                {"object", GetType(Object)}}
+                {"object", GetType(Object)},
+                {"regexoptions", GetType(RegexOptions)}
+        }
 
         ''' <summary>
         ''' 类型获取失败会返回空值，大小写不敏感
