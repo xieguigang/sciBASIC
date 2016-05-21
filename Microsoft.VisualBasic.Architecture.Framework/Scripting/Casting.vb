@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Scripting
@@ -108,5 +109,28 @@ Namespace Scripting
             Return Process.Start(exe)
         End Function
 
+        Public Function CastRegexOptions(name As String) As RegexOptions
+            If String.Equals(name, RegexExtensions.Compiled, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.Compiled
+            ElseIf String.Equals(name, RegexExtensions.CultureInvariant, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.CultureInvariant
+            ElseIf String.Equals(name, RegexExtensions.ECMAScript, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.ECMAScript
+            ElseIf String.Equals(name, RegexExtensions.ExplicitCapture, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.ExplicitCapture
+            ElseIf String.Equals(name, RegexExtensions.IgnoreCase, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.IgnoreCase
+            ElseIf String.Equals(name, RegexExtensions.IgnorePatternWhitespace, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.IgnorePatternWhitespace
+            ElseIf String.Equals(name, RegexExtensions.Multiline, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.Multiline
+            ElseIf String.Equals(name, RegexExtensions.RightToLeft, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.RightToLeft
+            ElseIf String.Equals(name, RegexExtensions.Singleline, StringComparison.OrdinalIgnoreCase) Then
+                Return RegexOptions.Singleline
+            Else
+                Return RegexOptions.None
+            End If
+        End Function
     End Module
 End Namespace

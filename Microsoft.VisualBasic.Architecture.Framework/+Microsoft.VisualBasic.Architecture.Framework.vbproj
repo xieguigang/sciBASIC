@@ -293,12 +293,14 @@
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
+    <Compile Include="Extensions\Doc\XmlDoc.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
+    <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
@@ -334,7 +336,7 @@
     <Compile Include="Extensions\IO\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
-    <Compile Include="Extensions\Doc\Xml.vb" />
+    <Compile Include="Extensions\Doc\XmlExtensions.vb" />
     <Compile Include="Extensions\Image\ColorCube.vb" />
     <Compile Include="Extensions\Image\ColorMap.vb" />
     <Compile Include="Extensions\Image\GDI+\gdi+Device.vb" />
