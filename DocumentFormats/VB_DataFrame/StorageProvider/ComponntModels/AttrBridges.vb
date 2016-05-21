@@ -248,8 +248,8 @@ Namespace StorageProvider.ComponentModels
         End Class
 
         Public Overrides Function ToString([object] As Object) As String
-            Dim Key As Object = _KeyProperty.GetValue([object])
-            Dim value As Object = _ValueProperty.GetValue([object])
+            Dim Key As Object = _KeyProperty.GetValue([object], Nothing)
+            Dim value As Object = _ValueProperty.GetValue([object], Nothing)
             Dim strKey As String = Scripting.ToString(Key)
             Dim strValue As String = Scripting.ToString(value)
             Return $"{strKey}:={strValue}"

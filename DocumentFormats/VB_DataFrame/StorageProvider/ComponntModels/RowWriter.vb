@@ -46,7 +46,7 @@ Namespace StorageProvider.ComponentModels
         Private Function __buildRowNullMeta(obj As Object) As DocumentStream.RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
-                                          Let value As Object = colum.BindProperty.GetValue(obj)
+                                          Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
                                           Let strData As String = colum.ToString(value)
                                           Select strData).ToList
             Return New DocumentStream.RowObject(row)
@@ -60,7 +60,7 @@ Namespace StorageProvider.ComponentModels
             End If
 
             Dim hashMetas = (From obj As Object In source.AsParallel
-                             Let x As Object = MetaRow.BindProperty.GetValue(obj)
+                             Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
                              Where Not x Is Nothing
                              Let hash As IDictionary = DirectCast(x, IDictionary)
                              Select hash).ToArray
@@ -91,7 +91,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Function __meta(obj As Object) As String()
-            Dim source As Object = MetaRow.BindProperty.GetValue(obj)
+            Dim source As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
 
             If source Is Nothing Then
                 Return "".CopyVector(__cachedIndex.Length)

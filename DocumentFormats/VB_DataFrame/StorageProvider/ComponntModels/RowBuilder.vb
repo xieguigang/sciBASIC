@@ -65,7 +65,7 @@ Namespace StorageProvider.ComponentModels
                     Call meta.Add(x.name, x.value)
                 Next
 
-                Call SchemaProvider.MetaAttributes.BindProperty.SetValue(obj, meta)
+                Call SchemaProvider.MetaAttributes.BindProperty.SetValue(obj, meta, Nothing)
             End If
 
             Return obj
@@ -80,7 +80,7 @@ Namespace StorageProvider.ComponentModels
                 Dim value As String = row.Column(column.Ordinal)
                 Dim propValue As Object = column.LoadMethod()(value)
 
-                Call column.BindProperty.SetValue(obj, propValue)
+                Call column.BindProperty.SetValue(obj, propValue, Nothing)
             Next
 
             Return obj

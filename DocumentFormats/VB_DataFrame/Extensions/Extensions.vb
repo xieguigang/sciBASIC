@@ -3,7 +3,6 @@ Imports System.Text
 Imports System.Runtime.Serialization
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Drawing
 Imports System.Net
 Imports System.Text.RegularExpressions
 Imports System.Reflection

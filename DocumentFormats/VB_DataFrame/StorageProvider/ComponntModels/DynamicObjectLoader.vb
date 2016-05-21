@@ -11,7 +11,8 @@ Namespace StorageProvider.ComponentModels
     ''' </summary>
     ''' <remarks></remarks>
     Public Class DynamicObjectLoader : Inherits Dynamic.DynamicObject
-        Implements System.Data.IDataRecord
+        Implements IDataRecord
+        Implements IEnumerable(Of KeyValuePair(Of String, String))
 
 #If NET_40 = 0 Then
         Implements IReadOnlyDictionary(Of String, String)
@@ -121,7 +122,7 @@ Namespace StorageProvider.ComponentModels
                 Call __tryGetValue([Property].Name, value)
 
                 Dim obj_Value As Object = Scripting.CTypeDynamic(value, [Property].PropertyType)
-                Call [Property].SetValue(FilledObject, obj_Value)
+                Call [Property].SetValue(FilledObject, obj_Value, Nothing)
             Next
 
             Return FilledObject
@@ -211,13 +212,15 @@ Namespace StorageProvider.ComponentModels
         End Function
 
 #Region "Implements IReadOnlyDictionary(Of String, String)"
-#If NET_40 = 0 Then
+
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, String)) Implements IEnumerable(Of KeyValuePair(Of String, String)).GetEnumerator
             For Each col In Me.Schema
                 Yield New KeyValuePair(Of String, String)(col.Key, _RowData(Index:=col.Value))
             Next
         End Function
+
+#If NET_40 = 0 Then
 
         Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of KeyValuePair(Of String, String)).Count
             Get

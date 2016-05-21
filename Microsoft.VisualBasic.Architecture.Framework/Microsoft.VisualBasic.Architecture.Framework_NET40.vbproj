@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A2E8F7D1-6517-45F6-95F1-56C7F5A05F3B}</ProjectGuid>
+    <ProjectGuid>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a</AssemblyName>
@@ -39,7 +39,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_40=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -53,7 +53,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_40=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
@@ -101,8 +101,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Publish\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1, NET_40=1</DefineConstants>
+    <OutputPath>..\..\GCModeller\GCModeller-x64\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -145,7 +145,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Publish\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_40=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -174,7 +174,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Publish\</OutputPath>
+    <OutputPath>X:\nuget_publish\x86\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
@@ -244,6 +244,7 @@
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
+    <Compile Include="ComponentModel\DataSource\DataSample.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
     <Compile Include="ComponentModel\Ranges\IRanges.vb" />
     <Compile Include="ComponentModel\Ranges\Range.vb" />
@@ -287,22 +288,28 @@
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
+    <Compile Include="Extensions\Doc\XmlDoc.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
+    <Compile Include="Extensions\Image\GDI+\Interface.vb" />
     <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
+    <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\NET40_Compatible.vb" />
     <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
+    <Compile Include="Scripting\MetaData\Author.vb" />
+    <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
     <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\FormattedParser.vb" />
-    <Compile Include="Win32API.vb" />
-    <Compile Include="Win32File.vb" />
+    <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
+    <Compile Include="Tools\Win32\Win32API.vb" />
+    <Compile Include="Tools\Win32\Win32File.vb" />
     <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Language\UnixBash\Cowsay.vb" />
@@ -325,7 +332,7 @@
     <Compile Include="Extensions\IO\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
-    <Compile Include="Extensions\Doc\Xml.vb" />
+    <Compile Include="Extensions\Doc\XmlExtensions.vb" />
     <Compile Include="Extensions\Image\ColorCube.vb" />
     <Compile Include="Extensions\Image\ColorMap.vb" />
     <Compile Include="Extensions\Image\GDI+\gdi+Device.vb" />
