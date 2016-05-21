@@ -188,13 +188,16 @@ Public Module XmlDoc
     <Extension> Public Function CreateObjectFromXml(Of T As Class)(Xml As String, Optional ThrowEx As Boolean = True) As T
         Using Stream As New StringReader(s:=Xml)
             Try
-                Dim Type = GetType(T)
-                Dim Data = New XmlSerializer(Type).Deserialize(Stream)
-                Return DirectCast(Data, T)
+                Dim type As Type = GetType(T)
+                Dim o As Object = New XmlSerializer(type).Deserialize(Stream)
+                Return DirectCast(o, T)
             Catch ex As Exception
-                Call App.LogException(New Exception(Xml, ex), MethodBase.GetCurrentMethod.GetFullName)
+                Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
+                ex = New Exception(Xml, ex)
+                App.LogException(ex, curMethod)
+
                 If ThrowEx Then
-                    Throw
+                    Throw ex
                 Else
                     Return Nothing
                 End If
