@@ -38,6 +38,9 @@
         If Not sensitive Then
             Name = Name.ToLower
         End If
+
+        Name = Name.Trim
+
         If _objHash.ContainsKey(Name) Then
             Call _objHash.Remove(Name)
         End If

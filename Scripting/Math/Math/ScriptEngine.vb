@@ -9,8 +9,8 @@
     ''' <remarks>
     ''' .quit for do nothing and end of this program.
     ''' </remarks>
-    Public ReadOnly Property StatementEngine As Dictionary(Of String, System.Action(Of String)) =
-        New Dictionary(Of String, System.Action(Of String)) From {
+    Public ReadOnly Property StatementEngine As Dictionary(Of String, Action(Of String)) =
+        New Dictionary(Of String, Action(Of String)) From {
             {"const", AddressOf Expression.Constant.Add},
             {"function", AddressOf Expression.Functions.Add},
             {"func", AddressOf Expression.Functions.Add},

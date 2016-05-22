@@ -14,12 +14,14 @@ Namespace Helpers
         ''' </remarks>
         Default Public Property Variable(Name As String) As Double
             Get
-                If _objHash.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
-                    Return _objHash(Name)
-                Else
+                Dim key As String = Name.ToLower
+
+                If Not _objHash.ContainsKey(key) Then
                     Call Warning($"Variable '{Name}' is not exists in the memory, returns ZERO by default!")
                     Return 0
                 End If
+
+                Return _objHash(key)
             End Get
             Set(value As Double)
                 Call [Set](Name, value)
