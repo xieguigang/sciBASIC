@@ -7,7 +7,7 @@ There is a VisualBasic application helper module that define in the namespace:
 
 **A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
-```VisualBasic
+```visualbasic
 Module Program
 
     ''' <summary>
@@ -37,7 +37,7 @@ And then so that the CLI module in the VisualBasic can be explained as: **A modu
 
 Here is a example:
 
-```VisualBasic
+```visualbasic
 Partial Module CLI
 
     <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
