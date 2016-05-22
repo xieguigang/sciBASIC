@@ -22,6 +22,7 @@ Public Module QueryBuilder
         Dim igs As String() = If(term Is Nothing, {}, {term.Name})
         Dim value As New NameValueCollection
         Dim s As String
+        Dim o As Object
 
         If Not term Is Nothing Then
             s = Scripting.ToString(term.GetValue(args))
@@ -29,8 +30,12 @@ Public Module QueryBuilder
         End If
 
         For Each prop In DataFrameColumnAttribute.LoadMapping(type, igs, True)
-            s = Scripting.ToString(prop.Value.GetValue(args))
-            Call value.Add(prop.Key.Name, s)
+            o = prop.Value.GetValue(args)
+
+            If Not o Is Nothing Then
+                s = Scripting.ToString(o)
+                Call value.Add(prop.Key.Name, s)
+            End If
         Next
 
         Return value
@@ -62,13 +67,13 @@ Public Module QueryBuilder
         Dim s As String() =
             LinqAPI.Exec(Of String) <= From key As String
                                        In x.Keys
-                                       Select $"{key}:{x(key)}"
-        Call args.Append("+"c)
-        Call args.Append(String.Join("+", s))
+                                       Select $"{key}:{HttpUtility.UrlEncode(x(key))}"
+        If s.Length > 0 Then
+            Call args.Append("+"c)
+            Call args.Append(String.Join("+", s))
+        End If
 
         Dim query As String = args.ToString
-        query = HttpUtility.UrlEncode(query)
-
         Return query
     End Function
 

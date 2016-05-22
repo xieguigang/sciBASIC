@@ -314,6 +314,7 @@
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />
+    <None Include="app.config" />
     <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
     <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
     <Compile Include="Language\UnixBash\Cowsay.vb" />

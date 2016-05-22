@@ -42,7 +42,7 @@ Namespace API
             End If
             url &= $"+{NameOf(order)}:{order.ToString}"
 
-            Dim json As String = url.GetRequest
+            Dim json As String = url.GetRequest(https:=True)
             Return json.LoadObject(Of SearchResult(Of SearchUser))
         End Function
 
@@ -57,7 +57,7 @@ Namespace API
             Public Property created As String
             Public Property followers As String
 
-            Public Const API As String = "https://api.github.com/search/users?"
+            Public Const API As String = "https://api.github.com/search/users?q="
 
             Public Overrides Function ToString() As String
                 Return Me.GetJson

@@ -11,6 +11,8 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.HtmlParser
 Imports Microsoft.VisualBasic.Terminal.Utility
+Imports System.Security.Cryptography.X509Certificates
+Imports System.Net.Security
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -324,10 +326,10 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url As String) As String
+    <Extension> Public Function GetRequest(url As String, Optional https As Boolean = False) As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
-        Dim Reader As New StreamReader(GetRequestRaw(url), Encoding.UTF8)
+        Dim Reader As New StreamReader(GetRequestRaw(url, https), Encoding.UTF8)
 
         Do While True
             strData = Reader.ReadLine()
@@ -342,12 +344,31 @@ Public Module WebServiceUtils
         Return strData
     End Function
 
+    Sub New()
+        ServicePointManager.ServerCertificateValidationCallback =
+            New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
+    End Sub
+
+    Private Function CheckValidationResult(sender As Object,
+                                           certificate As X509Certificate,
+                                           chain As X509Chain,
+                                           errors As SslPolicyErrors) As Boolean
+        Return True
+    End Function
+
     <ExportAPI("GET.Raw", Info:="GET http request")>
-    <Extension> Public Function GetRequestRaw(url As String) As Stream
+    <Extension> Public Function GetRequestRaw(url As String, Optional https As Boolean = False) As Stream
         Dim request As HttpWebRequest
-        request = WebRequest.Create(url).As(Of HttpWebRequest)
+        If https Then
+            request = WebRequest.CreateDefault(New Uri(url))
+        Else
+            request = WebRequest.Create(url).As(Of HttpWebRequest)
+        End If
+
         request.Method = "GET"
-        Dim response = request.GetResponse.As(Of HttpWebResponse)
+
+        Dim response As HttpWebResponse =
+            request.GetResponse.As(Of HttpWebResponse)
         Dim s As Stream = response.GetResponseStream()
         Return s
     End Function
