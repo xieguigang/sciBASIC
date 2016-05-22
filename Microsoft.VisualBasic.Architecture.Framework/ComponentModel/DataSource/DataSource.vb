@@ -153,8 +153,8 @@ Namespace ComponentModel.DataSourceModel
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(Of T As Class)() As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
-            Return LoadMapping(GetType(T))
+        Public Shared Function LoadMapping(Of T As Class)(Optional ignores As String() = Nothing) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+            Return LoadMapping(GetType(T), ignores)
         End Function
 
         ''' <summary>
@@ -165,11 +165,19 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="typeInfo">The type should be a class type or its properties should have the 
         ''' mapping option which was created by the custom attribute <see cref="DataFrameColumnAttribute"></see>
         ''' </param>
+        ''' <param name="ignores">这个是大小写敏感的</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(typeInfo As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+        Public Shared Function LoadMapping(typeInfo As Type, Optional ignores As String() = Nothing) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+            If ignores Is Nothing Then
+                ignores = New String() {}
+            End If
+
             Dim Properties = From pInfo As PropertyInfo
-                             In typeInfo.GetProperties()
+                             In (From p As PropertyInfo
+                                 In typeInfo.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+                                 Where Array.IndexOf(ignores, p.Name) = -1
+                                 Select p)
                              Let attrs As Object() =
                                  pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
                              Where Not attrs.IsNullOrEmpty
@@ -177,7 +185,8 @@ Namespace ComponentModel.DataSourceModel
                                  mapping = DirectCast(attrs.First, DataFrameColumnAttribute)
             Dim LQuery = (From pInfo
                           In Properties
-                          Let Mapping = If(String.IsNullOrEmpty(pInfo.mapping.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
+                          Let Mapping As DataFrameColumnAttribute =
+                              If(String.IsNullOrEmpty(pInfo.mapping.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
                               pInfo.mapping.SetNameValue(pInfo.pInfo.Name),
                               pInfo.mapping)
                           Select Mapping,

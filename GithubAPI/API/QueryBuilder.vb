@@ -1,6 +1,9 @@
 ﻿Imports System.Collections.Specialized
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.InputHandler
 
 Module QueryBuilder
 
@@ -12,7 +15,37 @@ Module QueryBuilder
     ''' <returns></returns>
     <Extension>
     Public Function Build(Of T As Structure)(args As T) As NameValueCollection
+        Dim type As Type = GetType(T)
+        Dim term As PropertyInfo = type.GetTerm
+        Dim igs As String() = If(term Is Nothing, {}, {term.Name})
+        Dim value As New NameValueCollection
+        Dim s As String
 
+        If Not term Is Nothing Then
+            s = Scripting.ToString(term.GetValue(args))
+            Call value.Add(QueryBuilder.Term.Key, s)
+        End If
+
+        For Each prop In DataFrameColumnAttribute.LoadMapping(type, igs)
+            s = Scripting.ToString(prop.Value.GetValue(args))
+            Call value.Add(prop.Key.Name, s)
+        Next
+
+        Return value
+    End Function
+
+    <Extension>
+    Public Function GetTerm(type As Type) As PropertyInfo
+        Dim props As IEnumerable(Of PropertyInfo) =
+            type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+        Dim term As Type = GetType(Term)
+        Dim LQuery As PropertyInfo =
+            LinqAPI.DefaultFirst(Of PropertyInfo) <= From p As PropertyInfo
+                                                     In props
+                                                     Let attrs As Attribute = p.GetCustomAttribute(term)
+                                                     Where Not attrs Is Nothing
+                                                     Select p
+        Return LQuery
     End Function
 
     ''' <summary>
