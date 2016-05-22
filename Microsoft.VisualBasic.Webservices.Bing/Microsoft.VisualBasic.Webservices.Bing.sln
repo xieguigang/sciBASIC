@@ -11,6 +11,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Arch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{935DBE83-F53D-4D2C-B4FD-81D6B5E56C20}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GithubAPI", "..\GithubAPI\GithubAPI.vbproj", "{F296B483-7DE4-4D62-9399-6FE0E110EC42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,18 @@ Global
 		{935DBE83-F53D-4D2C-B4FD-81D6B5E56C20}.Release|x64.Build.0 = Release|Any CPU
 		{935DBE83-F53D-4D2C-B4FD-81D6B5E56C20}.Release|x86.ActiveCfg = Release|Any CPU
 		{935DBE83-F53D-4D2C-B4FD-81D6B5E56C20}.Release|x86.Build.0 = Release|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Debug|x64.Build.0 = Debug|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Debug|x86.Build.0 = Debug|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Release|x64.ActiveCfg = Release|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Release|x64.Build.0 = Release|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Release|x86.ActiveCfg = Release|Any CPU
+		{F296B483-7DE4-4D62-9399-6FE0E110EC42}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
