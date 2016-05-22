@@ -40,7 +40,7 @@ Namespace API
             If sort <> UserSorts.default Then
                 url &= $"+{NameOf(sort)}:{sort.ToString}"
             End If
-            url &= $"+{NameOf(order)}:{order.ToString}"
+            ' url &= $"+{NameOf(order)}:{order.ToString}"
 
             Dim json As String = url.GetRequest(https:=True)
             Return json.LoadObject(Of SearchResult(Of SearchUser))

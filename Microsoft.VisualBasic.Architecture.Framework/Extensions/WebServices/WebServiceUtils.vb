@@ -356,8 +356,26 @@ Public Module WebServiceUtils
         Return True
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="https"></param>
+    ''' <param name="userAgent">
+    ''' 
+    ''' fix a bug for github API:
+    ''' 
+    ''' Protocol violation using Github api
+    ''' 
+    ''' You need to set UserAgent like this:
+    ''' webRequest.UserAgent = "YourAppName"
+    ''' Otherwise it will give The server committed a protocol violation. Section=ResponseStatusLine Error.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("GET.Raw", Info:="GET http request")>
-    <Extension> Public Function GetRequestRaw(url As String, Optional https As Boolean = False) As Stream
+    <Extension> Public Function GetRequestRaw(url As String,
+                                              Optional https As Boolean = False,
+                                              Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As Stream
         Dim request As HttpWebRequest
         If https Then
             request = WebRequest.CreateDefault(New Uri(url))
@@ -366,6 +384,9 @@ Public Module WebServiceUtils
         End If
 
         request.Method = "GET"
+        request.KeepAlive = False
+        request.ServicePoint.Expect100Continue = False
+        request.UserAgent = userAgent
 
         Dim response As HttpWebResponse =
             request.GetResponse.As(Of HttpWebResponse)
