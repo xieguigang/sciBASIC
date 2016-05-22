@@ -7,22 +7,26 @@ There is a VisualBasic application helper module that define in the namespace:
 
 **A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
-    Module Program
+```visualbasic
+Module Program
 
-        ''' <summary>
-    	''' This is the main entry point of your VisualBasic application.
-    	''' </summary>
-    	''' <returns></returns>
-    	Public Function Main() As Integer
-        	Return GetType(CLI).RunCLI(App.CommandLine)
-    	End Function
-	End Module
+    ''' <summary>
+    ''' This is the main entry point of your VisualBasic application.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function Main() As Integer
+        Return GetType(CLI).RunCLI(App.CommandLine)
+    End Function
+End Module
+```
 
 By using a **Integer** _Function_ instead of _Sub_ in VisualBasic, this makes your code style is more standard compare with the main function from C++.
 
+```c
 	int main(int argc, char *argv[]) {
 		// blablabla...
 	}
+```
 
 Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in **CLI** module.
 
@@ -33,24 +37,26 @@ And then so that the CLI module in the VisualBasic can be explained as: **A modu
 
 Here is a example:
 
-	Partial Module CLI
+```visualbasic
+Partial Module CLI
 
-    	<ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
-    	Public Function Print(args As CommandLine.CommandLine) As Integer
-        	Dim ext As String = args.GetValue("/ext", "*.*")
-        	Dim inDIR As String = args - "/in"
-        	Dim out As String = args.GetValue("/out", inDIR.TrimDIR & ".contents.Csv")
-        	Dim files As IEnumerable(Of String) =
-            	ls - l - r - wildcards(ext) <= inDIR
-        	Dim content As NamedValue(Of String)() =
-            	LinqAPI.Exec(Of NamedValue(Of String)) <= From file As String
-                                                      	In files
-                                                      	Let name As String = file.BaseName
-                                                      	Let genome As String = file.ParentDirName
-                                                      	Select New NamedValue(Of String)(genome, name)
-        	Return content.SaveTo(out).CLICode
-    	End Function
-	End Module
+    <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+    Public Function Print(args As CommandLine.CommandLine) As Integer
+        Dim ext As String = args.GetValue("/ext", "*.*")
+        Dim inDIR As String = args - "/in"
+        Dim out As String = args.GetValue("/out", inDIR.TrimDIR & ".contents.Csv")
+        Dim files As IEnumerable(Of String) =
+            ls - l - r - wildcards(ext) <= inDIR
+        Dim content As NamedValue(Of String)() =
+            LinqAPI.Exec(Of NamedValue(Of String)) <= From file As String
+                                                      In files
+                                                      Let name As String = file.BaseName
+                                                      Let genome As String = file.ParentDirName
+                                                      Select New NamedValue(Of String)(genome, name)
+        Return content.SaveTo(out).CLICode
+    End Function
+End Module
+```
 
 This example code can be found at: [github](https://github.com/SMRUCC/ncbi-localblast/tree/master/Tools/CLI)
 
