@@ -318,17 +318,28 @@ Public Module WebServiceUtils
         End If
     End Function
 
+    ''' <summary>
+    ''' GET http request
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(strUrl As String) As String
-        Dim strDate As String = ""
-        Dim strValue As String = ""
-        Dim Reader As StreamReader = New StreamReader(GetRequestRaw(strUrl), Encoding.UTF8)
+    <Extension> Public Function GetRequest(url As String) As String
+        Dim strData As String = ""
+        Dim strValue As New List(Of String)
+        Dim Reader As New StreamReader(GetRequestRaw(url), Encoding.UTF8)
 
-        Do While Not Reader.ReadLine().ShadowCopy(strDate) Is Nothing
-            strValue &= (strDate & vbCrLf)
+        Do While True
+            strData = Reader.ReadLine()
+            If strData Is Nothing Then
+                Exit Do
+            Else
+                strValue += strData
+            End If
         Loop
 
-        Return Mid(strValue, 1, Len(strValue) - vbCrLfLen)
+        strData = String.Join(vbCrLf, strValue.ToArray)
+        Return strData
     End Function
 
     <ExportAPI("GET.Raw", Info:="GET http request")>

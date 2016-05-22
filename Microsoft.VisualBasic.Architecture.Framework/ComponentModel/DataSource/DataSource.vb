@@ -153,8 +153,9 @@ Namespace ComponentModel.DataSourceModel
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(Of T As Class)(Optional ignores As String() = Nothing) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
-            Return LoadMapping(GetType(T), ignores)
+        Public Shared Function LoadMapping(Of T As Class)(Optional ignores As String() = Nothing,
+                                                          Optional mapsAll As Boolean = False) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+            Return LoadMapping(GetType(T), ignores, mapsAll)
         End Function
 
         ''' <summary>
@@ -168,32 +169,50 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="ignores">这个是大小写敏感的</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(typeInfo As Type, Optional ignores As String() = Nothing) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
-            If ignores Is Nothing Then
-                ignores = New String() {}
-            End If
+        Public Shared Function LoadMapping(typeInfo As Type,
+                                           Optional ignores As String() = Nothing,
+                                           Optional mapsAll As Boolean = False) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
 
-            Dim Properties = From pInfo As PropertyInfo
-                             In (From p As PropertyInfo
-                                 In typeInfo.GetProperties(BindingFlags.Public + BindingFlags.Instance)
-                                 Where Array.IndexOf(ignores, p.Name) = -1
-                                 Select p)
-                             Let attrs As Object() =
-                                 pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
-                             Where Not attrs.IsNullOrEmpty
-                             Select pInfo,
-                                 mapping = DirectCast(attrs.First, DataFrameColumnAttribute)
-            Dim LQuery = (From pInfo
-                          In Properties
+            Dim source As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) =
+                __source(typeInfo, If(ignores Is Nothing, {}, ignores), mapsAll)
+            Dim LQuery = (From pInfo As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)
+                          In source
                           Let Mapping As DataFrameColumnAttribute =
-                              If(String.IsNullOrEmpty(pInfo.mapping.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
-                              pInfo.mapping.SetNameValue(pInfo.pInfo.Name),
-                              pInfo.mapping)
+                              If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
+                              pInfo.Key.SetNameValue(pInfo.Value.Name),
+                              pInfo.Key)
                           Select Mapping,
-                              pInfo.pInfo) _
+                              pInfo.Value) _
                                 .ToDictionary(Function(x) x.Mapping,
-                                              Function(x) x.pInfo)  ' 补全名称属性
+                                              Function(x) x.Value)  ' 补全名称属性
             Return LQuery
+        End Function
+
+        Private Shared Iterator Function __source(type As Type, ignores As String(), mapsAll As Boolean) As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo))
+            Dim props As IEnumerable(Of PropertyInfo) =
+                From p As PropertyInfo
+                In type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+                Where Array.IndexOf(ignores, p.Name) = -1
+                Select p
+
+            If Not mapsAll Then
+                For Each x In From pInfo As PropertyInfo
+                              In props
+                              Let attrs As Object() =
+                                  pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
+                              Where Not attrs.IsNullOrEmpty
+                              Let attr = DirectCast(attrs.First, DataFrameColumnAttribute)
+                              Select New KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)(attr, pInfo)
+                    Yield x
+                Next
+            Else
+                For Each x In From pInfo As PropertyInfo
+                              In props
+                              Let attr = New DataFrameColumnAttribute
+                              Select New KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)(attr, pInfo)
+                    Yield x
+                Next
+            End If
         End Function
     End Class
 

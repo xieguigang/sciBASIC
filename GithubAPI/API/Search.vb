@@ -36,10 +36,18 @@ Namespace API
         Public Function Users(q As NameValueCollection,
                               Optional sort As UserSorts = UserSorts.default,
                               Optional [order] As UserSortOrders = UserSortOrders.desc) As SearchResult(Of SearchUser)
+            Dim url As String = UsersQuery.API & q.BuildQueryArgs
+            If sort <> UserSorts.default Then
+                url &= $"+{NameOf(sort)}:{sort.ToString}"
+            End If
+            url &= $"+{NameOf(order)}:{order.ToString}"
 
+            Dim json As String = url.GetRequest
+            Return json.LoadObject(Of SearchResult(Of SearchUser))
         End Function
 
         Public Structure UsersQuery
+
             <Term> Public Property term As String
             Public Property type As String
             Public Property [in] As String
@@ -48,6 +56,8 @@ Namespace API
             Public Property language As String
             Public Property created As String
             Public Property followers As String
+
+            Public Const API As String = "https://api.github.com/search/users?"
 
             Public Overrides Function ToString() As String
                 Return Me.GetJson
