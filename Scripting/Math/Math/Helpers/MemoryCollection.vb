@@ -1,4 +1,4 @@
-﻿Public MustInherit Class MemoryCollection(Of T) : Implements IEnumerable(Of KeyValuePair(Of String, T))
+Public MustInherit Class MemoryCollection(Of T) : Implements IEnumerable(Of KeyValuePair(Of String, T))
 
     Protected ReadOnly _objHash As Dictionary(Of String, T) = New Dictionary(Of String, T)
     Protected ReadOnly __engine As Expression
