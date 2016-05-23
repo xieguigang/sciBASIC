@@ -65,14 +65,26 @@ Namespace ComponentModel.Ranges
     Public Class OrderSelector(Of T As IComparable)
 
         ReadOnly _source As T()
+        ReadOnly _direct As String
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="asc">当这个参数为真的时候</param>
         Sub New(source As IEnumerable(Of T), Optional asc As Boolean = True)
             If asc Then
                 _source = source.OrderBy(Function(x) x).ToArray
+                _direct = " -> "
             Else
                 _source = source.OrderByDescending(Function(x) x).ToArray
+                _direct = " <- "
             End If
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{_direct}] {GetType(T).ToString}"
+        End Function
 
         ''' <summary>
         ''' 直到当前元素大于指定值
@@ -88,5 +100,58 @@ Namespace ComponentModel.Ranges
                 End If
             Next
         End Function
+
+        ''' <summary>
+        ''' 直到当前元素小于指定值
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Iterator Function SelectUntilLessThan(n As T) As IEnumerable(Of T)
+            For Each x In _source
+                If Language.GreaterThanOrEquals(x, n) Then
+                    Yield x
+                Else
+                    Exit For
+                End If
+            Next
+        End Function
     End Class
+
+    Public Structure IntTag(Of T)
+        Implements IComparable
+
+        Public ReadOnly n As Integer
+        Public ReadOnly x As T
+
+        Sub New(x As T, getInt As Func(Of T, Integer))
+            Me.x = x
+            Me.n = getInt(x)
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+            If obj Is Nothing Then
+                Return 1
+            Else
+                If TypeOf obj Is Integer Then
+                    Return n.CompareTo(DirectCast(obj, Integer))
+                ElseIf TypeOf obj Is IntTag(Of T) Then
+                    Return n.CompareTo(DirectCast(obj, IntTag(Of T)).n)
+                Else
+                    Return 0
+                End If
+            End If
+        End Function
+
+        Public Function OrderSelector(source As IEnumerable(Of T),
+                                      getInt As Func(Of T, Integer),
+                                      Optional asc As Boolean = True) As OrderSelector(Of IntTag(Of T))
+            Dim array As IEnumerable(Of IntTag(Of T)) = source.Select(Function(x) New IntTag(Of T)(x, getInt))
+            Dim selects As New OrderSelector(Of IntTag(Of T))(array, asc)
+            Return selects
+        End Function
+    End Structure
 End Namespace
