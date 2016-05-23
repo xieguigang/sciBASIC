@@ -146,9 +146,9 @@ Namespace ComponentModel.Ranges
             End If
         End Function
 
-        Public Function OrderSelector(source As IEnumerable(Of T),
-                                      getInt As Func(Of T, Integer),
-                                      Optional asc As Boolean = True) As OrderSelector(Of IntTag(Of T))
+        Public Shared Function OrderSelector(source As IEnumerable(Of T),
+                                             getInt As Func(Of T, Integer),
+                                             Optional asc As Boolean = True) As OrderSelector(Of IntTag(Of T))
             Dim array As IEnumerable(Of IntTag(Of T)) = source.Select(Function(x) New IntTag(Of T)(x, getInt))
             Dim selects As New OrderSelector(Of IntTag(Of T))(array, asc)
             Return selects
