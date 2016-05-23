@@ -67,6 +67,8 @@ Namespace ComponentModel.Ranges
         ReadOnly _source As T()
         ReadOnly _direct As String
 
+        Public ReadOnly Property Desc As Boolean
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -80,6 +82,8 @@ Namespace ComponentModel.Ranges
                 _source = source.OrderByDescending(Function(x) x).ToArray
                 _direct = " <- "
             End If
+
+            Desc = Not asc
         End Sub
 
         Public Overrides Function ToString() As String
@@ -128,6 +132,10 @@ Namespace ComponentModel.Ranges
             Me.n = getInt(x)
         End Sub
 
+        Sub New(n As Integer)
+            Me.n = n
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
@@ -153,5 +161,9 @@ Namespace ComponentModel.Ranges
             Dim selects As New OrderSelector(Of IntTag(Of T))(array, asc)
             Return selects
         End Function
+
+        Public Shared Widening Operator CType(n As Integer) As IntTag(Of T)
+            Return New IntTag(Of T)(n)
+        End Operator
     End Structure
 End Namespace

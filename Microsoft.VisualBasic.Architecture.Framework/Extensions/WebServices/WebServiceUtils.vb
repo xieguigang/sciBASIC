@@ -287,7 +287,9 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' Download stream data from the http response.
     ''' </summary>
-    ''' <param name="stream">Create from <see cref="WebServiceUtils.GetRequestRaw(String)"/></param>
+    ''' <param name="stream">
+    ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
     <Extension> Public Function CopyStream(stream As Stream) As Byte()
