@@ -1,18 +1,44 @@
 Imports System.Windows.Input
 Imports System.Diagnostics
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ComponentModel
+
+    Public MustInherit Class ICallbackInvoke
+        Implements ICallbackTask
+
+        Protected ReadOnly _execute As Action
+
+        Public ReadOnly Property CallbackInvoke As Action Implements ICallbackTask.CallbackInvoke
+            Get
+                Return _execute
+            End Get
+        End Property
+
+        Const execute As String = NameOf(execute)
+
+        Protected Sub New(callback As Action)
+            If callback Is Nothing Then
+                Throw New ArgumentNullException(execute)
+            Else
+                _execute = callback
+            End If
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return _execute.ToString
+        End Function
+    End Class
 
     ''' <summary>
     ''' Taken from http://msdn.microsoft.com/en-us/magazine/dd419663.aspx
     ''' </summary>
-    Public Class RelayCommand
+    Public Class RelayCommand : Inherits ICallbackInvoke
         Implements ICommand
 
 #Region "Members"
 
         ReadOnly _canExecute As Func(Of [Boolean])
-        ReadOnly _execute As Action
 
 #End Region
 
@@ -23,10 +49,7 @@ Namespace ComponentModel
         End Sub
 
         Public Sub New(execute As Action, canExecute As Func(Of [Boolean]))
-            If execute Is Nothing Then
-                Throw New ArgumentNullException("execute")
-            End If
-            _execute = execute
+            Call MyBase.New(execute)
             _canExecute = canExecute
         End Sub
 

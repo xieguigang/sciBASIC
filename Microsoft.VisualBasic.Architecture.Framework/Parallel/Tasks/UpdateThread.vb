@@ -1,17 +1,24 @@
-﻿Namespace Parallel.Tasks
+﻿Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Triggers
+
+Namespace Parallel.Tasks
 
     ''' <summary>
     ''' Running a specific <see cref="System.Action"/> in the background periodically.
     ''' (比较适合用于在服务器上面执行周期性的计划任务)
     ''' </summary>
-    Public Class UpdateThread : Implements System.IDisposable
+    Public Class UpdateThread : Inherits ICallbackInvoke
+        Implements IDisposable
+        Implements IObjectModel_Driver
+        Implements ITimer
 
         ''' <summary>
         ''' ms
         ''' </summary>
         ''' <returns></returns>
-        Public Property Periods As Integer
-        Public ReadOnly Property Updates As System.Action
+        Public Property Periods As Integer Implements ITimer.Interval
+
         ''' <summary>
         ''' If this exception handler is null, then when the unhandled exception occurring,
         ''' this thread object will throw the exception and then stop working.
@@ -29,10 +36,11 @@
         ''' </summary>
         ''' <param name="Periods">ms for update thread sleeps</param>
         ''' <param name="updates"></param>
-        Sub New(Periods As Integer, updates As System.Action)
-            Me.Periods = Periods
-            Me.Updates = updates
+        Sub New(Periods As Integer, updates As Action)
+            Call MyBase.New(updates)
+
             Me.Running = False
+            Me.Periods = Periods
         End Sub
 
         Private Sub __updates()
@@ -46,25 +54,27 @@
         ''' <summary>
         ''' 运行这条线程，假若更新线程已经在运行了，则会自动忽略这次调用
         ''' </summary>
-        Public Sub Start()
+        Public Function Start() As Integer Implements IObjectModel_Driver.Run
             If Running Then
-                Return
+                Return 2
             Else
                 _Running = True
                 Call RunTask(AddressOf __updates)
             End If
-        End Sub
+
+            Return 0
+        End Function
 
         ''' <summary>
         ''' 停止更新线程的运行
         ''' </summary>
-        Public Sub [Stop]()
+        Public Sub [Stop]() Implements ITimer.Stop
             _Running = False
         End Sub
 
         Private Sub __invoke()
             Try
-                Call _Updates()
+                Call _execute()
             Catch ex As Exception
                 If Not ErrHandle Is Nothing Then
                     Call _ErrHandle(ex)
@@ -78,7 +88,7 @@
 
         Public Overrides Function ToString() As String
             Dim state As String = If(Running, NameOf(Running), NameOf([Stop]))
-            Return $"[{state}, {Me.Periods}ms]  => {Me.Updates.ToString}"
+            Return $"[{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
         End Function
 
 #Region "IDisposable Support"

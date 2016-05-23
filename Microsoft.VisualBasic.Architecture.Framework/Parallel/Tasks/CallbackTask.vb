@@ -1,19 +1,23 @@
 ﻿Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace Parallel.Tasks
 
+    Public Interface ICallbackTask
+        ReadOnly Property CallbackInvoke As Action
+    End Interface
+
     ''' <summary>
     ''' When the task job complete, then the program will notify user code through callback function.
     ''' </summary>
-    Public Class CallbackTask
+    Public Class CallbackTask : Inherits ICallbackInvoke
 
         Public ReadOnly Property Task As Action
-        Public ReadOnly Property Callback As Action
 
         Sub New(task As Action, callback As Action)
+            Call MyBase.New(callback)
             Me.Task = task
-            Me.Callback = callback
         End Sub
 
         Dim __running As Boolean = False
@@ -36,18 +40,18 @@ Namespace Parallel.Tasks
         End Sub
 
 #If NET_40 = 0 Then
-        #Disable Warning
+#Disable Warning
         Private Async Function __run(cts As CancellationTokenSource) As Threading.Tasks.Task
 #Enable Warning
             Call Me._Task()
-            Call Me._Callback()
+            Call Me._execute()
             __running = False
         End Function
 #End If
         Public Overrides Function ToString() As String
             Return New With {
                 .Task = Task.ToString,
-                .callback = Callback.ToString,
+                .callback = CallbackInvoke.ToString,
                 .Running = __running.ToString
             }.GetJson
         End Function
