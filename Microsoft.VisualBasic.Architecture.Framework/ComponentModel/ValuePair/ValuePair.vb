@@ -23,8 +23,11 @@ Namespace ComponentModel
     ''' <summary>
     ''' An object for the text file format xml data storage.(用于存储与XML文件之中的字符串键值对对象)
     ''' </summary>
-    ''' <remarks></remarks>
-    Public Class KeyValuePair : Inherits KeyValuePairObject(Of String, String)
+    ''' <remarks>
+    ''' 20160524 为了更好的构建GCModeller项目的数据文档的格式，本类型对象不再继承自<see cref="KeyValuePairObject(Of String, String)"/>类型
+    ''' </remarks>
+    ''' 
+    <XmlType("hashEntry")> Public Class KeyValuePair
         Implements sIdEnumerable
         Implements IKeyValuePair
 
@@ -57,14 +60,8 @@ Namespace ComponentModel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>在这里可能用不了<see cref="XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
-        Public Overrides Property Key As String Implements sIdEnumerable.Identifier
-            Get
-                Return MyBase.Key
-            End Get
-            Set(value As String)
-                MyBase.Key = value
-            End Set
-        End Property
+        <XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, IKeyValuePair.Identifier
+        <XmlAttribute> Public Property Value As String Implements IKeyValuePairObject(Of String, String).Value
 #End Region
 
         Public Overloads Shared Widening Operator CType(obj As KeyValuePair(Of String, String)) As KeyValuePair
