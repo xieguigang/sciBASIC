@@ -11,6 +11,7 @@ Public Class XmlDoc : Implements ISaveHandle
     Public Enum XmlEncodings
         UTF8
         UTF16
+        GB2312
     End Enum
 
     ReadOnly xml As String

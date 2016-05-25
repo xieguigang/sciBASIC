@@ -6,6 +6,10 @@ Namespace DocumentStream
     Public Class EntityObject : Inherits DynamicPropertyBase(Of String)
         Implements sIdEnumerable
 
+        ''' <summary>
+        ''' This object identifier
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Identifier As String Implements sIdEnumerable.Identifier
 
         Public Shared Iterator Function LoadDataSet(path As String, uidMap As String) As IEnumerable(Of EntityObject)
