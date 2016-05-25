@@ -417,4 +417,26 @@ Return result</pre>
     ls -l -r -wildcards("*.Xml") <= DIR</pre>
 </td>
 </tr>
+    <tr><td>json</td><td>json, JSON</td><td>
+<pre>Dim JSON As String = (ls -l -r -wildcards("*.json") <= DIR).GetJson</pre>
+</td>
+</tr>
+    <tr><td>data frame</td><td>df, ds, data</td><td>
+<pre>Dim df As DataFrame = DataFrame.CreateObject(path)</pre>
+</td>
+</tr>
+    <tr><td>Network objects</td><td>net, network, node, nodes, edge, edges</td><td>
+<pre>Dim net As Network = Network.Load(DIR)
+
+net += New Node With {
+    .Identifier = "Linq"
+}
+net += New Edge With {
+    .FromNode = "Linq",
+    .ToNode = "SQL"
+}
+Return net >> Open("./test.net/")
+</pre>
+</td>
+</tr>
 </table>
