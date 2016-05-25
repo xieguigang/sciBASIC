@@ -412,4 +412,9 @@ Loop</pre>
 Return result</pre>
 </td>
 </tr>
+    <tr><td>Directory</td><td>DIR, out, inDIR</td><td>
+<pre>Dim files As IEnumerable(Of String) = 
+    ls -l -r -wildcards("*.Xml") <= DIR</pre>
+</td>
+</tr>
 </table>
