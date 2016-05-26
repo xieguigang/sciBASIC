@@ -303,6 +303,7 @@
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
+    <Compile Include="Language\NET40_Compatible.vb" />
     <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
