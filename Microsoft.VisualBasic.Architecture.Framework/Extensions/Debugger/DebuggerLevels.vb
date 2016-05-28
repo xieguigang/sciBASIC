@@ -1,5 +1,8 @@
 ﻿Namespace Debugging
 
+    ''' <summary>
+    ''' 默认的参数值是<see cref="DebuggerLevels.On"/>
+    ''' </summary>
     Public Enum DebuggerLevels
         ''' <summary>
         ''' 是否输出调试信息有程序代码来控制，这个是默认的参数

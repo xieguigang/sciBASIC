@@ -45,7 +45,7 @@ Namespace Debugging
         ''' Some optional VisualBasic debugger parameter help information.(VisualBasic调试器的一些额外的开关参数的帮助信息)
         ''' </summary>
         Public Const DebuggerHelps As String =
-        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error --err <filename.log>
+        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute --err <filename.log>
 
     [--echo] The debugger echo options, it have 5 values:
              on     App will output all of the debugger echo message, but the VBDebugger.Mute option is enabled, disable echo options can be control by the program code;
@@ -80,6 +80,8 @@ Namespace Debugging
             Else
 
             End If
+
+
 
             If String.IsNullOrEmpty(opt) Then ' 默认的on参数
                 VBDebugger.__level = DebuggerLevels.On
