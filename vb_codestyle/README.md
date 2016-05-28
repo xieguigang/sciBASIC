@@ -7,7 +7,7 @@ There is a VisualBasic application helper module that define in the namespace:
 
 **A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
-```visualbasic
+```vb.net
 Module Program
 
     ''' <summary>
@@ -37,7 +37,7 @@ And then so that the CLI module in the VisualBasic can be explained as: **A modu
 
 Here is a example:
 
-```visualbasic
+```vb.net
 Partial Module CLI
 
     <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
@@ -66,11 +66,13 @@ A wrapper for parsing the commandline from your user is already been defined in 
 
 And the **CLI** interface should define as in the format of this example:
 
-	Imports Microsoft.VisualBasic.CommandLine
-	Imports Microsoft.VisualBasic.CommandLine.Reflection
+```vb.net
+Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 
-	<ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
-	Public Function CLI_API(args As CommandLine) As Integer
+<ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+Public Function CLI_API(args As CommandLine) As Integer
+```
 
 ###Using the VisualBasic CommandLine Parser
 For learn how to using the CommandLine Parser, we first lean the syntax of the VisualBasic commandline arguments.
@@ -84,44 +86,50 @@ Here is a simple example:
 
 Where in this CLI, token **App.exe** is the executable file name of your application; And **/API1** token, is the **Command Name**; And then the last tokens are the parameter arguments, using the commandline in VisualBasic just like function programming in VisualBasic:
 
-	Module App
-    	Public Function API1(test As Boolean, msg As String, test2Enable As Boolean, test3Enable As Boolean) As Integer
-	End Module
+```vb.net
+    Module App
+        Public Function API1(test As Boolean, msg As String, test2Enable As Boolean, test3Enable As Boolean) As Integer
+    End Module
+```
 
 You call your CLI command in the console terminal is just like call a function in the VisualBasic Code:
 
-	Dim code As Integer = App.API1(True, "Hello World!!!", True, True)
+```vb.net
+    Dim code As Integer = App.API1(True, "Hello World!!!", True, True)
+```
 
 **_NOTE:_ There is no order of the VisualBasic CLI arguments**, so that all of these CLI examples are equals to each other:
 
-	App.exe /API1 /msg "Hello World!!!" /test2-enable /test3-enable /test
+    App.exe /API1 /msg "Hello World!!!" /test2-enable /test3-enable /test
     App.exe /API1 /msg "Hello World!!!" /test /test2-enable /test3-enable
     App.exe /API1 /test /test2-enable /test3-enable /msg "Hello World!!!"
     App.exe /API1 /test2-enable /test /test3-enable /msg "Hello World!!!"
 
 Simple Example of VisualBasic CLI application(Example source code at [here](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Example/CLI_Example)):
 
-	Imports Microsoft.VisualBasic.CommandLine
-	Imports Microsoft.VisualBasic.CommandLine.Reflection
+```vb.net
+Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 
-	Module Program
+Module Program
 
-    	Public Function Main() As Integer
-        	Return GetType(CLI).RunCLI(App.CommandLine)
-    	End Function
-	End Module
+    Public Function Main() As Integer
+        Return GetType(CLI).RunCLI(App.CommandLine)
+    End Function
+End Module
 
-	Module CLI
+Module CLI
 
-    	<ExportAPI("/API1",
-               Info:="Puts the brief description of this API command at here.",
-               Usage:="/API1 /msg ""Puts the CLI usage syntax at here""",
-               Example:="/API1 /msg ""Hello world!!!""")>
-    	Public Function API1(args As CommandLine) As Integer
-        	Call Console.WriteLine(args("/msg"))
-        	Return 0
-    	End Function
-	End Module
+    <ExportAPI("/API1",
+         Info:="Puts the brief description of this API command at here.",
+         Usage:="/API1 /msg ""Puts the CLI usage syntax at here""",
+         Example:="/API1 /msg ""Hello world!!!""")>
+    Public Function API1(args As CommandLine) As Integer
+        Call Console.WriteLine(args("/msg"))
+        Return 0
+    End Function
+End Module
+```
 
 Here are some mostly used function in VisualBasic CLI parser
 Example CLI is:
@@ -142,19 +150,22 @@ Example CLI is:
 ##List(Of T) operation in VisualBasic
 For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
 
-
+```vb.net
 	Dim source As IEnumerable(Of <Type>)
 	Dim list As New List(of <Type>)(source)
+```
 
 For Add a new instance
 
+```vb.net
 	list += New <Type> With {
     	.Property1 = value1,
         .Property2 = value2
     }
+```
 
 For Add a sequence of new elements
-
+```vb.net
 	list += From x As T
     		In source
     		Where True = <test>
@@ -162,21 +173,23 @@ For Add a sequence of new elements
             	.Property1 = <expression>,
                 .Property2 = <expression>
             }
+```
 
 if want to removes a specific element in the list
-
+```vb.net
 	list -= x
-
+```
 Or batch removes elements:
-
+```vb.net
 	list -= From x As T
     		In source
             Where True = <test>
             Select x
+```
 
 Here is some example of the list **+** operator
-
-	' This add operation makes the code more easily to read and understand:
+```vb.net
+    ' This add operation makes the code more easily to read and understand:
     ' This function returns a list of RfamHit element and it also merge a
     ' list of uncertainly elements into the result list at the same time
     Public Function GetDataFrame() As RfamHit() Implements IRfamHits.GetDataFrame
@@ -184,36 +197,38 @@ Here is some example of the list **+** operator
                                                              In Uncertain
                                                              Select New RfamHit(x, Me)
     End Function
-
+```
 And using the **+** operator for add a new object into the list, this syntax can makes the code more readable instead of the poorly readable code from by using method **List(of T).Add**:
-
+```vb.net
     genomes += New GenomeBrief With {
         .Name = title,
         .Size = last.Size,
         .Y = h1
     }
 
-	' Using the + operator to instead of this poorly readable function code
+    ' Using the + operator to instead of this poorly readable function code
     genomes.Add(New GenomeBrief With {
             .Name = title,
             .Size = last.Size,
             .Y = h1
         })
+```
 
 ##VisualBasic identifer names
 
 ####1. Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
-
+```vb.net
 	Dim DIR As String = "/home/xieguigang/Downloads"
 	Dim EXPORT As String = "/usr/lib/GCModeller/"
+```
 
 ####2. Module variable
 + All of the module variable should in format like **_lowerUpper** if the variable is _private_
 + But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
 
 Here is some example:
-
+```vb.net
 	' Private
 	Dim _fileName As String
 	Dim _inDIR As Directory
@@ -221,6 +236,7 @@ Here is some example:
 	' Public
 	Public ReadOnly Property FileName As String
 	Public ReadOnly Property InDIR As Directory
+```
 
 ####3. Local varaible and function parameter
 If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
@@ -231,7 +247,7 @@ If possible, all of the local varaible within a function or sub program and the 
 For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
 
 Here is some function name examples(Example picked from [here](https://github.com/SMRUCC/GCModeller.Core/Bio.Assembly/GenomicsContext/TFDensity.vb)):
-
+```vb.net
 	' Private
 	Private Function __worker(Of T As I_GeneBrief)(genome As IGenomicsContextProvider(Of T),
                                                	getTF As Func(Of Strands, T()),
@@ -243,6 +259,7 @@ Here is some function name examples(Example picked from [here](https://github.co
                               	genome As IGenomicsContextProvider(Of T),
                               	TF As IEnumerable(Of String),
                               	Optional ranges As Integer = 10000) As Density()
+```
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
 
@@ -259,13 +276,15 @@ At last, for improves of the code readable, try _**Make your identifier name sho
 For formatted a string output, then recommended used **String.Format** function or string interpolate syntax in VisualBasic language.
 And by using the **String.Format** function, then format control string is recommended puts in a constant variable instead of directly used in the format function:
 
+```vb.net
 	Const OutMsg As String = "Hello world, {0}, Right?"
 	' blablabla.......
 	Dim msg As String = String.Format(OutMsg, name)
+```
 
 ######2. String contacts
 For contacts a large amount of string tokens, the **StringBuilder** is recommended used for this job, **not recommend directly using _& operator_ to contacts a large string collection due to the reason of performance issue**.
-
+```vb.net
 	' Convert the input string to a byte array and compute the hash.
 	Dim data As Byte() = md5Hash.ComputeHash(input)
 
@@ -280,10 +299,11 @@ For contacts a large amount of string tokens, the **StringBuilder** is recommend
     Next i
 
     Return sBuilder.ToString() ' Return the hexadecimal string.
+```
 
 If you just want to contact the string, then a shared method **String.Join** is recommended used.
 If the string tokens will be join by a specific delimiter, then using **String.Join** instead of **StringBuilder.Append**
-
+```vb.net
 	Dim tokens As String()
 	Dim sb As New StringBuilder
 
@@ -291,18 +311,20 @@ If the string tokens will be join by a specific delimiter, then using **String.J
 		Call sb.Append(s & " ")
 	Next
 	Call sb.Remove(sb.Length -1)
+```
 
 Or just use **String.Join**, this method is more clean and readable than **StringBuilder.Append**:
-
+```vb.net
 	Dim tokens As String()
 	Dim out As String = String.Join(" ", tokens)
+```
 
 ######3. String interpolate
 The string interpolate syntax in VisualBasic language is recommended used for **build _SQL_ statement and _CLI_ arguments as this syntax is very easily for understand and code readable**:
-
+```vb.net
 	Dim SQL As String = $"SELECT * FROM table WHERE id='{id}' AND ppi>{ppi}"
 	Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
-
+```
 So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
 ####Linq Expression
