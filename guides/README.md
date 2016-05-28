@@ -10,7 +10,7 @@
 ##Index
 >1. [Easy Document in VisualBasic](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/EasyDocument.md)
 >2. [Code Style guidelines](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle)
->
+>3. [VisualBasic Type Characters](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/dataTypes.md)
 >
 >
 >
@@ -20,5 +20,5 @@
 >
 
 
-Hope this could help.
+Hope this guide could help.
 
