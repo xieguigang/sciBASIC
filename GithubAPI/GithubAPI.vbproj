@@ -86,9 +86,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Organizations.vb" />
     <Compile Include="API\Users.vb" />
     <Compile Include="API\QueryBuilder.vb" />
     <Compile Include="API\Search.vb" />
+    <Compile Include="Class\Organization.vb" />
     <Compile Include="Class\SearchUser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
