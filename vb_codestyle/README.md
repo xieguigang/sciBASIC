@@ -87,9 +87,12 @@ Here is a simple example:
 Where in this CLI, token **App.exe** is the executable file name of your application; And **/API1** token, is the **Command Name**; And then the last tokens are the parameter arguments, using the commandline in VisualBasic just like function programming in VisualBasic:
 
 ```vb.net
-    Module App
-        Public Function API1(test As Boolean, msg As String, test2Enable As Boolean, test3Enable As Boolean) As Integer
-    End Module
+Module App
+    Public Function API1(test As Boolean, 
+    			 msg As String, 
+    			 test2Enable As Boolean, 
+    			 test3Enable As Boolean) As Integer
+End Module
 ```
 
 You call your CLI command in the console terminal is just like call a function in the VisualBasic Code:
