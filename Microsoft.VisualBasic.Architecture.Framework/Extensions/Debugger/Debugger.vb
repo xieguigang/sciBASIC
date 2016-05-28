@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Debugging
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
