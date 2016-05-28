@@ -3,32 +3,41 @@
 Here are some of the data object that we want to save to file and read object from the file. In VisualBasic, there are two document format for the storage of simple document(_*.ini_, _*.Csv_), and 3 type of document format(_*.json_, _*.Xml_, _*.dat_) for the storage of complex object automatically.
 In this document format guidelines, we want to introduce how easily that save object instance in the VisualBasic program.
 
-
->     <IniMapIO("#/test.ini")>
-     Public Class Profiles
-         Public Property Test As TestBin
-     End Class
-
->     <ClassName("JSON")>
-	<Serializable> Public Class TestBin
-    	<DataFrameColumn> Public Property Property1 As String
-    	<DataFrameColumn> Public Property D As Date
-    	<DataFrameColumn> Public Property n As Integer
-    	<DataFrameColumn> Public Property f As Double
-
->         Public Shared Function inst() As TestBin
-          	Return New TestBin With {
-               	.D = Now,
-               	.f = RandomDouble(),
-               	.n = RandomDouble() * 1000,
-               	.Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
-           	}
-        End Function
-	End Class
+>
+```vb.net
+<IniMapIO("#/test.ini")>
+Public Class Profiles
+    Public Property Test As TestBin
+End Class
+```
+>
+```vb.net
+<ClassName("JSON")>
+<Serializable> Public Class TestBin
+    <DataFrameColumn> Public Property Property1 As String
+    <DataFrameColumn> Public Property D As Date
+    <DataFrameColumn> Public Property n As Integer
+    <DataFrameColumn> Public Property f As Double
+```
+>
+```vb.net
+    Public Shared Function inst() As TestBin
+        Return New TestBin With {
+            .D = Now,
+            .f = RandomDouble(),
+            .n = RandomDouble() * 1000,
+            .Property1 = NetResponse.RFC_UNKNOWN_ERROR.GetJson
+        }
+    End Function
+End Class
+```
 
 First of all, we define a object for the test example in this article:
 
->     Dim a As TestBin = TestBin.inst  ' Init test data
+>
+```vb.net
+Dim a As TestBin = TestBin.inst  ' Init test data
+```
 
 ##INI
 
@@ -93,17 +102,23 @@ There are two Win32 API was used for ini profile file data read and write:
 
 And the wrapper for the ini data serialization and deserialization is already been developed for the Class object in the VisualBasic. First just needs imports two namespace, and then let's see how simple it is:
 
->     Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
->     Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+>
+```vb.net
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+```
 
 Assuming that you have a **TestBin** type simple object, then you want to write this object as the program profile ini file, so that you just needs using **WriteClass** function, **if your object just stands for a section in the ini profile file.**
 
 
->     Call New Profiles With {.Test = a}.WriteProfile  ' Write profile file data
-    Call a.WriteClass("./test2.ini")                 ' Write ini section data.
-    a = Nothing
-    a = "./test2.ini".LoadIni(Of TestBin)                        ' Load ini section data
-    Dim pp As Profiles = "./test2.ini".LoadProfile(Of Profiles)  ' Load entire ini file
+>
+```vb.net
+Call New Profiles With {.Test = a}.WriteProfile  ' Write profile file data
+Call a.WriteClass("./test2.ini")                 ' Write ini section data.
+a = Nothing
+a = "./test2.ini".LoadIni(Of TestBin)                        ' Load ini section data
+Dim pp As Profiles = "./test2.ini".LoadProfile(Of Profiles)  ' Load entire ini file
+```
 
 And in this example the **WriteClass** function produce the ini profile data as:
 
@@ -121,9 +136,12 @@ NOTE: the profile key in the ini file should be decorating with **&lt;DataFrameC
 
 In VisualBasic, there is a BinaryFormatter that can be used for the binary serialization, all you needs to do just imports a namespace **Microsoft.VisualBasic.Serialization.BinaryDumping.StructFormatter**, then you get two extension method for the serialization and deserialization.
 
->     Call a.Serialize("./test.dat")   ' test on the binary serialization
->     a = Nothing
->     a = "./test.dat".Load(Of TestBin)
+>
+```vb.net
+Call a.Serialize("./test.dat")   ' test on the binary serialization
+a = Nothing
+a = "./test.dat".Load(Of TestBin)
+```
 
 > **StructFormatter.Serialize** for save any object as a binary file, and **StructFormatter.Load(of T)** function for load any object from a binary file.
 
@@ -192,12 +210,18 @@ The json format is a popular data format on the network, in my job, the d3js wit
 
 This document format in VisualBasic needs imports this namespace at first:
 
-> Imports Microsoft.VisualBasic.Serialization
+>
+```vb.net
+Imports Microsoft.VisualBasic.Serialization
+```
 
 And the json serialization extension method is based on the System Json serialization solution:
 
->Imports System.Runtime.Serialization.Json<br />
+>
+```vb.net
+Imports System.Runtime.Serialization.Json
 Imports System.Web.Script.Serialization
+```
 
 >     ''' <summary>
     ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
@@ -216,10 +240,13 @@ Imports System.Web.Script.Serialization
 
 And just using this two extension that can enable you to serialize any object in to Json document and deserialize Json document for instance any object type:
 
->     Dim json As String = a.GetJson   ' JSON serialization test
-    a = Nothing
-    a = json.LoadObject(Of TestBin)
-    Call json.__DEBUG_ECHO
+>
+```vb.net
+Dim json As String = a.GetJson   ' JSON serialization test
+a = Nothing
+a = json.LoadObject(Of TestBin)
+Call json.__DEBUG_ECHO
+```
 
 And there is another perfect fast Json serialization solution for VisualBasic: [Newton.Json](https://github.com/JamesNK/Newtonsoft.Json), but in this article I just want to introduce the System json serialization solution as this solution no needs for referecne of the third-part library.
 
