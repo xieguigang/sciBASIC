@@ -8,7 +8,7 @@ Namespace Debugging
         Public Property mute As Boolean = False
 
         Public Shared ReadOnly Property DefaultFile As String =
-            App.ProductProgramData & "/debugger-config.json"
+            App.LocalData & "/debugger-config.json"
 
         Public Shared Function Load() As Config
             Try
