@@ -335,6 +335,24 @@ All of the Linq Expression is recommended execute using [**LinqAPI**](https://gi
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/LinqStyle.png)
 
+####Instantiation 
+For define a new object, a short format is recommended:
+```vb.net
+Dim x As New <Type>
+```
+
+If the type you want to create object instance can be initialize from its property, then the With keyword is recommended to used:
+```vb.net
+Dim MyvaCog As MyvaCOG = 
+    LinqAPI.Exec(Of MyvaCOG) <= From gene As GeneDumpInfo
+                                In GenomeBrief
+                                Select New MyvaCOG With {
+                                    .COG = gene.COG,
+                                    .QueryName = gene.LocusID,
+                                    .QueryLength = gene.Length
+                                }
+```
+
 ##Appendix
 
 Here are tables of names that i used in my programming, and continues updated....
