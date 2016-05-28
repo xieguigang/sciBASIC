@@ -7,13 +7,13 @@ Namespace Debugging
         Public Property level As DebuggerLevels = DebuggerLevels.On
         Public Property mute As Boolean = False
 
-        Public Shared ReadOnly Property DefaultFile As String = App.ProductProgramData & "/debugger-config.json"
+        Public Shared ReadOnly Property DefaultFile As String =
+            App.ProductProgramData & "/debugger-config.json"
 
         Public Shared Function Load() As Config
             Try
                 Dim cfg As Config =
-                    IO.File.ReadAllText(DefaultFile) _
-                      .LoadObject(Of Config)
+                    IO.File.ReadAllText(DefaultFile).LoadObject(Of Config)
 
                 If cfg Is Nothing Then
                     Return New Config().Save()

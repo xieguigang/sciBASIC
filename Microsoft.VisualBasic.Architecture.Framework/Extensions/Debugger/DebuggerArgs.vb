@@ -45,7 +45,7 @@ Namespace Debugging
         ''' Some optional VisualBasic debugger parameter help information.(VisualBasic调试器的一些额外的开关参数的帮助信息)
         ''' </summary>
         Public Const DebuggerHelps As String =
-        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute --err <filename.log>
+        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute /auto-paused --err <filename.log>
 
     [--echo] The debugger echo options, it have 5 values:
              on     App will output all of the debugger echo message, but the VBDebugger.Mute option is enabled, disable echo options can be control by the program code;
@@ -59,7 +59,13 @@ Namespace Debugging
              and by default the error log is saved in the AppData, then if this option is enabled, the error log will saved a copy to the 
              specific location at the mean time. 
 
+    [/mute]  This boolean flag will mute all debugger output.
+
+    [/auto-paused] This boolean flag will makes the program paused after the command is executed done. and print a message on the console:
+                       ""Press any key to continute..."" 
+
 "
+        Public ReadOnly Property AutoPaused As Boolean
 
         ''' <summary>
         ''' Initialize the global environment variables in this App process.
@@ -81,10 +87,10 @@ Namespace Debugging
 
             End If
 
-
+            Dim config As Config = Config.Load
 
             If String.IsNullOrEmpty(opt) Then ' 默认的on参数
-                VBDebugger.__level = DebuggerLevels.On
+                VBDebugger.__level = config.level
             Else
                 Select Case opt.ToLower
                     Case "on"
@@ -101,6 +107,14 @@ Namespace Debugging
                         VBDebugger.__level = DebuggerLevels.On
                         Call Console.WriteLine($"[INFO] The debugger argument value --echo:={opt} is invalid, using default settings.")
                 End Select
+            End If
+
+            _AutoPaused = args.GetBoolean("/auto-paused")
+
+            If args.GetBoolean("/mute") Then
+                VBDebugger.Mute = True
+            Else
+                VBDebugger.Mute = config.mute
             End If
         End Sub
     End Module
