@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("GithubAPI")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("GithubAPI")> 
-<Assembly: AssemblyCopyright("Copyright ©  2016")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("Github API")>
+<Assembly: AssemblyDescription("https://developer.github.com/v3/")>
+<Assembly: AssemblyCompany("gpl3")>
+<Assembly: AssemblyProduct("GithubAPI")>
+<Assembly: AssemblyCopyright("Copyright © gpl3 2016")>
+<Assembly: AssemblyTrademark("VisualBasic")>
 
 <Assembly: ComVisible(False)>
 

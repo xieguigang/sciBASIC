@@ -328,10 +328,10 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url As String, Optional https As Boolean = False) As String
+    <Extension> Public Function GetRequest(url As String, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
-        Dim Reader As New StreamReader(GetRequestRaw(url, https), Encoding.UTF8)
+        Dim Reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
 
         Do While True
             strData = Reader.ReadLine()
