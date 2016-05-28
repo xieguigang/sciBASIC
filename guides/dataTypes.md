@@ -1,4 +1,12 @@
-<table>
+# [Type Characters](https://msdn.microsoft.com/en-us/library/s9cz43ek.aspx)
+
+In addition to specifying a data type in a declaration statement, you can force the data type of some programming elements with a type character. The type character must immediately follow the element, with no intervening characters of any kind.
+The type character is not part of the name of the element. An element defined with a type character can be referenced without the type character.
+
+## Identifier Type Characters
+Visual Basic supplies a set of identifier type characters, which you can use in a declaration to specify the data type of a variable or constant. The following table shows the available identifier type characters with examples of usage.
+
+><table>
 <tr><td>标识符类型字符</td><td>数据类型</td><td>示例</td></tr>
 <tr><td>%</td><td>Integer</td><td>Dim L%</td></tr>
 <tr><td>&amp;</td><td>Long</td><td>Dim M&amp;</td></tr>
