@@ -10,7 +10,6 @@ Public Class Profiles
     Public Property Test As TestBin
 End Class
 ```
->
 ```vb.net
 <ClassName("JSON")>
 <Serializable> Public Class TestBin
@@ -19,7 +18,6 @@ End Class
     <DataFrameColumn> Public Property n As Integer
     <DataFrameColumn> Public Property f As Double
 ```
->
 ```vb.net
     Public Shared Function inst() As TestBin
         Return New TestBin With {
@@ -42,8 +40,6 @@ Dim a As TestBin = TestBin.inst  ' Init test data
 ##INI
 
 There are two Win32 API was used for ini profile file data read and write:
-
-
 
 >     ''' <summary>
     ''' Write a string value into a specific section in a specifc ini profile.(在初始化文件指定小节内设置一个字串)
@@ -147,62 +143,68 @@ a = "./test.dat".Load(Of TestBin)
 
 In fact, except the **BinaryFormatter** class, there is another method that can be using for the binary serialization, by using **Marshal.StructureToPtr** and **Marshal.PtrToStructure** function and combine with **Marshal.Copy** for memory data copy, that we can serialize any structure object into binary stream, in theoretical, and from the test it actually works, but there is some problems in the serialization on the **String** value(As the **String** type is a reference type, so that when performance this serialization work, it actually serialize the memory address of your string, so that this function just works perfect on the **Integer, Long, Short, Enum, etc, value types.**):
 
->     ' Summary:
-    '     [Supported in the .NET Framework 4.5.1 and later versions] Marshals data from
-    '     a managed object of a specified type to an unmanaged block of memory.
-    '
-    ' Parameters:
-    '   structure:
-    '     A managed object that holds the data to be marshaled. The object must be a structure
-    '     or an instance of a formatted class.
-    '
-    '   ptr:
-    '     A pointer to an unmanaged block of memory, which must be allocated before this
-    '     method is called.
-    '
-    '   fDeleteOld:
-    '     true to call the System.Runtime.InteropServices.Marshal.DestroyStructure``1(System.IntPtr)
-    '     method on the ptr parameter before this method copies the data. The block must
-    '     contain valid data. Note that passing false when the memory block already contains
-    '     data can lead to a memory leak.
-    '
-    ' Type parameters:
-    '   T:
-    '     The type of the managed object.
-    '
-    ' Exceptions:
-    '   T:System.ArgumentException:
-    '     structure is a reference type that is not a formatted class.
-    <SecurityCritical>
-    Public Shared Sub StructureToPtr(Of T)([structure] As T, ptr As IntPtr, fDeleteOld As Boolean)
+>
+```vb.net
+' Summary:
+'     [Supported in the .NET Framework 4.5.1 and later versions] Marshals data from
+'     a managed object of a specified type to an unmanaged block of memory.
+'
+' Parameters:
+'   structure:
+'     A managed object that holds the data to be marshaled. The object must be a structure
+'     or an instance of a formatted class.
+'
+'   ptr:
+'     A pointer to an unmanaged block of memory, which must be allocated before this
+'     method is called.
+'
+'   fDeleteOld:
+'     true to call the System.Runtime.InteropServices.Marshal.DestroyStructure``1(System.IntPtr)
+'     method on the ptr parameter before this method copies the data. The block must
+'     contain valid data. Note that passing false when the memory block already contains
+'     data can lead to a memory leak.
+'
+' Type parameters:
+'   T:
+'     The type of the managed object.
+'
+' Exceptions:
+'   T:System.ArgumentException:
+'     structure is a reference type that is not a formatted class.
+<SecurityCritical>
+Public Shared Sub StructureToPtr(Of T)([structure] As T, ptr As IntPtr, fDeleteOld As Boolean)
+```
 
->     ' Summary:
-    '     Marshals data from an unmanaged block of memory to a newly allocated managed
-    '     object of the specified type.
-    '
-    ' Parameters:
-    '   ptr:
-    '     A pointer to an unmanaged block of memory.
-    '
-    '   structureType:
-    '     The type of object to be created. This object must represent a formatted class
-    '     or a structure.
-    '
-    ' Returns:
-    '     A managed object containing the data pointed to by the ptr parameter.
-    '
-    ' Exceptions:
-    '   T:System.ArgumentException:
-    '     The structureType parameter layout is not sequential or explicit.-or-The structureType
-    '     parameter is a generic type.
-    '
-    '   T:System.ArgumentNullException:
-    '     structureType is null.
-    '
-    '   T:System.MissingMethodException:
-    '     The class specified by structureType does not have an accessible default constructor.
-    <ComVisible(True)> <SecurityCritical>
-    Public Shared Function PtrToStructure(ptr As IntPtr, structureType As Type) As Object
+>
+```vb.net
+' Summary:
+'     Marshals data from an unmanaged block of memory to a newly allocated managed
+'     object of the specified type.
+'
+' Parameters:
+'   ptr:
+'     A pointer to an unmanaged block of memory.
+'
+'   structureType:
+'     The type of object to be created. This object must represent a formatted class
+'     or a structure.
+'
+' Returns:
+'     A managed object containing the data pointed to by the ptr parameter.
+'
+' Exceptions:
+'   T:System.ArgumentException:
+'     The structureType parameter layout is not sequential or explicit.-or-The structureType
+'     parameter is a generic type.
+'
+'   T:System.ArgumentNullException:
+'     structureType is null.
+'
+'   T:System.MissingMethodException:
+'     The class specified by structureType does not have an accessible default constructor.
+<ComVisible(True)> <SecurityCritical>
+Public Shared Function PtrToStructure(ptr As IntPtr, structureType As Type) As Object
+```
 
 ##JSON
 
@@ -223,20 +225,26 @@ Imports System.Runtime.Serialization.Json
 Imports System.Web.Script.Serialization
 ```
 
->     ''' <summary>
-    ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
-    ''' can be used for block the property which is will not serialize to the text.
-    ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="obj"></param>
-    ''' <returns></returns>
-    <Extension> Public Function GetJson(Of T)(obj As T) As String
+>
+```vb.net
+''' <summary>
+''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
+''' can be used for block the property which is will not serialize to the text.
+''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
+''' </summary>
+''' <typeparam name="T"></typeparam>
+''' <param name="obj"></param>
+''' <returns></returns>
+<Extension> Public Function GetJson(Of T)(obj As T) As String
+```
 
->     ''' <summary>
-    ''' JSON反序列化
-    ''' </summary>
-    <Extension> Public Function LoadObject(Of T)(json As String) As T
+>
+```vb.net
+''' <summary>
+''' JSON反序列化
+''' </summary>
+<Extension> Public Function LoadObject(Of T)(json As String) As T
+```
 
 And just using this two extension that can enable you to serialize any object in to Json document and deserialize Json document for instance any object type:
 
@@ -254,13 +262,16 @@ And there is another perfect fast Json serialization solution for VisualBasic: [
 
 Generates the Xml document is very easy in the VisualBasic, just using your object's **GetXml** extension function, and then using function **LoadXml(of T)** can be easily load your saved object from a Xml file:
 
->     ' XML test
-    Dim xml As String = a.GetXml   ' Convert object into Xml
-    Call xml.__DEBUG_ECHO
-    Call a.SaveAsXml("./testssss.Xml")   ' Save Object to Xml
-    a = Nothing
-    a = "./testssss.Xml".LoadXml(Of TestBin)  ' Load Object from Xml
-    Call a.GetXml.__DEBUG_ECHO
+>
+```vb.net
+' XML test
+Dim xml As String = a.GetXml   ' Convert object into Xml
+Call xml.__DEBUG_ECHO
+Call a.SaveAsXml("./testssss.Xml")   ' Save Object to Xml
+a = Nothing
+a = "./testssss.Xml".LoadXml(Of TestBin)  ' Load Object from Xml
+Call a.GetXml.__DEBUG_ECHO
+```
 
 >######Simple Usage
 >
@@ -273,19 +284,28 @@ Generates the Xml document is very easy in the VisualBasic, just using your obje
 
 By using this serialization feature, you should imports this namespace at first:
 
->Imports **Microsoft.VisualBasic.DocumentFormat.Csv**
+>
+```vb.net
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
+```
 
 Assuming that you have a type specific collection, and you want to save this collection into Csv data file and for the data exchange with R language or d3js data visualization, so that you just needs simple by using SaveTo extension function applied on your data collection, then you are save successfully your data collection into a csv data file.
 
->     Dim array As TestBin() = {a, a, a, a, a, a, a, a, a, a}   ' We have a collection of object
-    Call array.SaveTo("./test.Csv")    ' then wen can save this collection into Csv file
-    array = Nothing
-    array = "./test.Csv".LoadCsv(Of TestBin)  ' test on load csv data
-    Call array.GetJson.__DEBUG_ECHO
+>
+```vb.net
+Dim array As TestBin() = {a, a, a, a, a, a, a, a, a, a}   ' We have a collection of object
+Call array.SaveTo("./test.Csv")    ' then wen can save this collection into Csv file
+array = Nothing
+array = "./test.Csv".LoadCsv(Of TestBin)  ' test on load csv data
+Call array.GetJson.__DEBUG_ECHO
+```
 
 If you want to load the csv data to a collection, so that you just needs using LoadCsv(Of T) function:
 
->     <path>.LoadCsv(Of <type>)
+>
+```vb.net
+<path>.LoadCsv(Of <type>)
+```
 
 A bug in the Microsoft Excel Csv Parser was found in this test: The filed Property1 is a json text in this test, but the Excel parser can not parsing this field correctly.
 
@@ -298,11 +318,17 @@ A bug in the Microsoft Excel Csv Parser was found in this test: The filed Proper
 
 **Read/Write** text document in the VisualBasic is so easy!, just one method for write text file and two method for read text file, here is a very simple example:
 
->     Dim s As String = array.GetJson
-    Call s.SaveTo("./tesssss.txt")
+>
+```vb.net
+Dim s As String = array.GetJson
+Call s.SaveTo("./tesssss.txt")
+```
 
->     Dim lines As String() = "./tesssss.txt".ReadAllLines()
-    s = "./tesssss.txt".ReadAllText
+>
+```vb.net
+Dim lines As String() = "./tesssss.txt".ReadAllLines()
+s = "./tesssss.txt".ReadAllText
+```
 
 ######Usage
 
