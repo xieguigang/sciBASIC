@@ -86,6 +86,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Repositories.vb" />
     <Compile Include="API\Organizations.vb" />
     <Compile Include="API\Users.vb" />
     <Compile Include="QueryBuilder.vb" />
