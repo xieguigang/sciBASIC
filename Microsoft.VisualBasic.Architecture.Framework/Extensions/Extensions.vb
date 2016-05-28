@@ -49,6 +49,34 @@ Imports Microsoft.VisualBasic.Language
 Public Module Extensions
 #End If
 
+    Public Function NotNull(Of T)(ParamArray args As T()) As T
+        If args.IsNullOrEmpty Then
+            Return Nothing
+        Else
+            For Each x In args
+                If Not x Is Nothing Then
+                    Return x
+                End If
+            Next
+        End If
+
+        Return Nothing
+    End Function
+
+    Public Function NotEmpty(ParamArray args As String()) As String
+        If args.IsNullOrEmpty Then
+            Return ""
+        Else
+            For Each s As String In args
+                If Not String.IsNullOrEmpty(s) Then
+                    Return s
+                End If
+            Next
+        End If
+
+        Return ""
+    End Function
+
     <Extension>
     Public Function Second(Of T)(source As IEnumerable(Of T)) As T
         If source.Count > 1 Then
