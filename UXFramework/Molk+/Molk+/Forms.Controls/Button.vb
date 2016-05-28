@@ -124,10 +124,10 @@ Namespace Windows.Forms.Controls
                                      End If
 
                                      Dim Gr = GDIPlusExtensions.GdiFromImage(resImage)
-                                     Dim size = Gr.Gr_Device.MeasureString(Text, Font)
+                                     Dim size = Gr.Graphics.MeasureString(Text, Font)
                                      Dim Loci As Point = New Point((Width - size.Width) / 2, (Height - size.Height) / 2) '‘文字剧中显示
 
-                                     Call Gr.Gr_Device.DrawString(Text, Font, New SolidBrush(Color), Loci)
+                                     Call Gr.Graphics.DrawString(Text, Font, New SolidBrush(Color), Loci)
                                  End Sub
 
             Call InternalRedraw(res.Active, Color.Black)

@@ -96,7 +96,7 @@ Namespace Windows.Forms.Controls.TabControl.TabPage
             Dim x As Integer = 0
 
             For Each TAB As TabPage In Me._InternalTabList.Values
-                Dim wd As Integer = Gr.Gr_Device.MeasureString(TAB.Text, TAB.Font).Width + Renderer.UIResource.TextoffSets.X * 2
+                Dim wd As Integer = Gr.Graphics.MeasureString(TAB.Text, TAB.Font).Width + Renderer.UIResource.TextoffSets.X * 2
 
                 TAB.AutoSize = False
                 TAB.Size = New Size(wd, Me.Renderer.LabelHeight)

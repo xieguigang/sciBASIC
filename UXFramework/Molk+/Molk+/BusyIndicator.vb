@@ -15,7 +15,7 @@ Friend Class BusyIndicator
             a = 0
         End If
 
-        Call DrawImageRotatedAroundCenter(Device.Gr_Device, New Point(Width / 2, Height / 2), Indicator, a)
+        Call DrawImageRotatedAroundCenter(Device.Graphics, New Point(Width / 2, Height / 2), Indicator, a)
 
         BackgroundImage = Device.ImageResource
         Call BackgroundImage.Save("x:\" & a & ".jpg")

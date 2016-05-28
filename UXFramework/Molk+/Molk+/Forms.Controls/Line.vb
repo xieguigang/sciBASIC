@@ -15,12 +15,12 @@ Public Class Line
 
         If Me.Size.Width >= Me.Size.Height Then
             '画横线
-            Call Gr.Gr_Device.DrawLine(LinePen, New Point(0, Height / 2), New Point(Width, Height / 2))
+            Call Gr.Graphics.DrawLine(LinePen, New Point(0, Height / 2), New Point(Width, Height / 2))
 
         Else
             '画数显
 
-            Call Gr.Gr_Device.DrawLine(LinePen, New Point(Width / 2, 0), New Point(Width / 2, Height))
+            Call Gr.Graphics.DrawLine(LinePen, New Point(Width / 2, 0), New Point(Width / 2, Height))
 
         End If
 

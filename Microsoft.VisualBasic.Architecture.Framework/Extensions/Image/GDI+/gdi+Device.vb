@@ -25,7 +25,7 @@ Namespace Imaging
         ''' GDI+ device handle.(GDI+绘图设备句柄)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Gr_Device As Graphics
+        Public ReadOnly Property Graphics As Graphics
 
         ''' <summary>
         ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
@@ -131,7 +131,7 @@ Namespace Imaging
             Dim Gr As Graphics = Graphics.FromImage(obj)
             Return New GDIPlusDeviceHandle With {
                 .ImageResource = obj,
-                ._Gr_Device = Gr
+                ._Graphics = Gr
             }
         End Operator
 
@@ -139,14 +139,14 @@ Namespace Imaging
             Dim Gr As Graphics = Graphics.FromImage(obj)
             Return New GDIPlusDeviceHandle With {
                 .ImageResource = obj,
-                ._Gr_Device = Gr
+                ._Graphics = Gr
             }
         End Operator
 
         Friend Shared Function CreateObject(g As Graphics, res As Image) As GDIPlusDeviceHandle
             Return New GDIPlusDeviceHandle With {
                 .ImageResource = res,
-                ._Gr_Device = g
+                ._Graphics = g
             }
         End Function
 
@@ -154,7 +154,7 @@ Namespace Imaging
         ''' Releases all resources used by this System.Drawing.Graphics.
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
-            Call Me.Gr_Device.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            Call Me.Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
         End Sub
 
 #Region "Implements Class Graphics"
@@ -168,10 +168,10 @@ Namespace Imaging
         '     that is currently available for drawing.
         Public Overrides Property Clip As Region
             Get
-                Return Gr_Device.Clip
+                Return Graphics.Clip
             End Get
             Set(value As Region)
-                Gr_Device.Clip = value
+                Graphics.Clip = value
             End Set
         End Property
         '
@@ -184,7 +184,7 @@ Namespace Imaging
         '     the clipping region of this System.Drawing.Graphics.
         Public Overrides ReadOnly Property ClipBounds As RectangleF
             Get
-                Return Gr_Device.ClipBounds
+                Return Graphics.ClipBounds
             End Get
         End Property
 
@@ -197,10 +197,10 @@ Namespace Imaging
         ''' </returns>
         Public Overrides Property CompositingMode As CompositingMode
             Get
-                Return Gr_Device.CompositingMode
+                Return Graphics.CompositingMode
             End Get
             Set(value As CompositingMode)
-                Gr_Device.CompositingMode = value
+                Graphics.CompositingMode = value
             End Set
         End Property
 
@@ -213,10 +213,10 @@ Namespace Imaging
         ''' </returns>
         Public Overrides Property CompositingQuality As CompositingQuality
             Get
-                Return Gr_Device.CompositingQuality
+                Return Graphics.CompositingQuality
             End Get
             Set(value As CompositingQuality)
-                Gr_Device.CompositingQuality = value
+                Graphics.CompositingQuality = value
             End Set
         End Property
 
@@ -228,7 +228,7 @@ Namespace Imaging
         ''' </returns>
         Public Overrides ReadOnly Property DpiX As Single
             Get
-                Return Gr_Device.DpiX
+                Return Graphics.DpiX
             End Get
         End Property
         '
@@ -239,7 +239,7 @@ Namespace Imaging
         '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
         Public Overrides ReadOnly Property DpiY As Single
             Get
-                Return Gr_Device.DpiY
+                Return Graphics.DpiY
             End Get
         End Property
 
@@ -249,10 +249,10 @@ Namespace Imaging
         ''' <returns>One of the System.Drawing.Drawing2D.InterpolationMode values.</returns>
         Public Overrides Property InterpolationMode As InterpolationMode
             Get
-                Return Gr_Device.InterpolationMode
+                Return Graphics.InterpolationMode
             End Get
             Set(value As InterpolationMode)
-                Gr_Device.InterpolationMode = value
+                Graphics.InterpolationMode = value
             End Set
         End Property
         '
@@ -265,7 +265,7 @@ Namespace Imaging
         '     false.
         Public Overrides ReadOnly Property IsClipEmpty As Boolean
             Get
-                Return Gr_Device.IsClipEmpty
+                Return Graphics.IsClipEmpty
             End Get
         End Property
         '
@@ -278,7 +278,7 @@ Namespace Imaging
         '     is empty; otherwise, false.
         Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
             Get
-                Return Gr_Device.IsVisibleClipEmpty
+                Return Graphics.IsVisibleClipEmpty
             End Get
         End Property
         '
@@ -290,10 +290,10 @@ Namespace Imaging
         '     units for this System.Drawing.Graphics.
         Public Overrides Property PageScale As Single
             Get
-                Return Gr_Device.PageScale
+                Return Graphics.PageScale
             End Get
             Set(value As Single)
-                Gr_Device.PageScale = value
+                Graphics.PageScale = value
             End Set
         End Property
         '
@@ -309,10 +309,10 @@ Namespace Imaging
         '     which is not a physical unit.
         Public Overrides Property PageUnit As GraphicsUnit
             Get
-                Return Gr_Device.PageUnit
+                Return Graphics.PageUnit
             End Get
             Set(value As GraphicsUnit)
-                Gr_Device.PageUnit = value
+                Graphics.PageUnit = value
             End Set
         End Property
         '
@@ -325,10 +325,10 @@ Namespace Imaging
         '     enumeration
         Public Overrides Property PixelOffsetMode As PixelOffsetMode
             Get
-                Return Gr_Device.PixelOffsetMode
+                Return Graphics.PixelOffsetMode
             End Get
             Set(value As PixelOffsetMode)
-                Gr_Device.PixelOffsetMode = value
+                Graphics.PixelOffsetMode = value
             End Set
         End Property
         '
@@ -342,10 +342,10 @@ Namespace Imaging
         '     brushes.
         Public Overrides Property RenderingOrigin As Point
             Get
-                Return Gr_Device.RenderingOrigin
+                Return Graphics.RenderingOrigin
             End Get
             Set(value As Point)
-                Gr_Device.RenderingOrigin = value
+                Graphics.RenderingOrigin = value
             End Set
         End Property
         '
@@ -356,10 +356,10 @@ Namespace Imaging
         '     One of the System.Drawing.Drawing2D.SmoothingMode values.
         Public Overrides Property SmoothingMode As SmoothingMode
             Get
-                Return Gr_Device.SmoothingMode
+                Return Graphics.SmoothingMode
             End Get
             Set(value As SmoothingMode)
-                Gr_Device.SmoothingMode = value
+                Graphics.SmoothingMode = value
             End Set
         End Property
         '
@@ -370,10 +370,10 @@ Namespace Imaging
         '     The gamma correction value used for rendering antialiased and ClearType text.
         Public Overrides Property TextContrast As Integer
             Get
-                Return Gr_Device.TextContrast
+                Return Graphics.TextContrast
             End Get
             Set(value As Integer)
-                Gr_Device.TextContrast = value
+                Graphics.TextContrast = value
             End Set
         End Property
         '
@@ -384,10 +384,10 @@ Namespace Imaging
         '     One of the System.Drawing.Text.TextRenderingHint values.
         Public Overrides Property TextRenderingHint As TextRenderingHint
             Get
-                Return Gr_Device.TextRenderingHint
+                Return Graphics.TextRenderingHint
             End Get
             Set(value As TextRenderingHint)
-                Gr_Device.TextRenderingHint = value
+                Graphics.TextRenderingHint = value
             End Set
         End Property
         '
@@ -399,10 +399,10 @@ Namespace Imaging
         '     transformation for this System.Drawing.Graphics.
         Public Overrides Property Transform As Drawing2D.Matrix
             Get
-                Return Gr_Device.Transform
+                Return Graphics.Transform
             End Get
             Set(value As Drawing2D.Matrix)
-                Gr_Device.Transform = value
+                Graphics.Transform = value
             End Set
         End Property
         '
@@ -414,7 +414,7 @@ Namespace Imaging
         '     the visible clipping region of this System.Drawing.Graphics.
         Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
             Get
-                Return Gr_Device.VisibleClipBounds
+                Return Graphics.VisibleClipBounds
             End Get
         End Property
 
@@ -426,7 +426,7 @@ Namespace Imaging
         '   data:
         '     Array of bytes that contains the comment.
         Public Overrides Sub AddMetafileComment(data() As Byte)
-            Call Gr_Device.AddMetafileComment(data)
+            Call Graphics.AddMetafileComment(data)
         End Sub
         '
         ' Summary:
@@ -438,7 +438,7 @@ Namespace Imaging
         '     System.Drawing.Color structure that represents the background color of the drawing
         '     surface.
         Public Overrides Sub Clear(color As Color)
-            Call Gr_Device.Clear(color)
+            Call Graphics.Clear(color)
         End Sub
         '
         ' Summary:
@@ -459,7 +459,7 @@ Namespace Imaging
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
-            Call Gr_Device.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize)
+            Call Graphics.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize)
         End Sub
         '
         ' Summary:
@@ -486,7 +486,7 @@ Namespace Imaging
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
-            Call Gr_Device.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize, copyPixelOperation)
+            Call Graphics.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize, copyPixelOperation)
         End Sub
         '
         ' Summary:
@@ -513,7 +513,7 @@ Namespace Imaging
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
         Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size)
-            Call Gr_Device.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize)
+            Call Graphics.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize)
         End Sub
         '
         ' Summary:
@@ -546,7 +546,7 @@ Namespace Imaging
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
         Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
-            Call Gr_Device.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize, copyPixelOperation)
+            Call Graphics.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize, copyPixelOperation)
         End Sub
 
         '
@@ -687,7 +687,7 @@ Namespace Imaging
         ''' curve.</param>
         ''' <param name="pt4">System.Drawing.Point structure that represents the ending point of the curve.</param>
         Public Sub DrawBézier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
-            Call Gr_Device.DrawBezier(pen, pt1, pt2, pt3, pt4)
+            Call Graphics.DrawBezier(pen, pt1, pt2, pt3, pt4)
         End Sub
 
         ' Summary:
@@ -2146,7 +2146,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImageUnscaled(image As Image, rect As Rectangle)
-            Call Gr_Device.DrawImageUnscaled(image, rect)
+            Call Graphics.DrawImageUnscaled(image, rect)
         End Sub
         '
         ' Summary:
@@ -2164,7 +2164,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
-            Call Gr_Device.DrawImageUnscaled(image, point)
+            Call Graphics.DrawImageUnscaled(image, point)
         End Sub
         '
         ' Summary:
@@ -2185,7 +2185,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
-            Call Gr_Device.DrawImageUnscaled(image, x, y)
+            Call Graphics.DrawImageUnscaled(image, x, y)
         End Sub
         '
         ' Summary:
@@ -2211,7 +2211,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Call Gr_Device.DrawImageUnscaled(image, x, y, width, height)
+            Call Graphics.DrawImageUnscaled(image, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -2229,7 +2229,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
-            Call Gr_Device.DrawImageUnscaledAndClipped(image, rect)
+            Call Graphics.DrawImageUnscaledAndClipped(image, rect)
         End Sub
 
         ''' <summary>
@@ -2239,7 +2239,7 @@ Namespace Imaging
         ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
-            Call Gr_Device.DrawLine(pen, pt1, pt2)
+            Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
         '
         ' Summary:
@@ -2259,7 +2259,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-            Call Gr_Device.DrawLine(pen, pt1, pt2)
+            Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
         '
         ' Summary:
@@ -2285,7 +2285,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-            Call Gr_Device.DrawLine(pen, x1, y1, x2, y2)
+            Call Graphics.DrawLine(pen, x1, y1, x2, y2)
         End Sub
         '
         ' Summary:
@@ -2311,7 +2311,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-            Call Gr_Device.DrawLine(pen, x1, y1, x2, y2)
+            Call Graphics.DrawLine(pen, x1, y1, x2, y2)
         End Sub
         '
         ' Summary:
@@ -2658,7 +2658,7 @@ Namespace Imaging
         ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
         ''' text.</param>
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
-            Call Gr_Device.DrawString(s, font, brush, layoutRectangle)
+            Call Graphics.DrawString(s, font, brush, layoutRectangle)
         End Sub
 
         ''' <summary>
@@ -2671,7 +2671,7 @@ Namespace Imaging
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
-            Call Gr_Device.DrawString(s, font, brush, point)
+            Call Graphics.DrawString(s, font, brush, point)
         End Sub
         '
         ' Summary:
@@ -2701,7 +2701,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
-            Call Gr_Device.DrawString(s, font, brush, point, format)
+            Call Graphics.DrawString(s, font, brush, point, format)
         End Sub
         '
         ' Summary:
@@ -2731,7 +2731,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
-            Call Gr_Device.DrawString(s, font, brush, layoutRectangle, format)
+            Call Graphics.DrawString(s, font, brush, layoutRectangle, format)
         End Sub
         '
         ' Summary:
@@ -2758,7 +2758,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
-            Call Gr_Device.DrawString(s, font, brush, x, y)
+            Call Graphics.DrawString(s, font, brush, x, y)
         End Sub
         '
         ' Summary:
@@ -2790,7 +2790,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
-            Call Gr_Device.DrawString(s, font, brush, x, y, format)
+            Call Graphics.DrawString(s, font, brush, x, y, format)
         End Sub
         '
         ' Summary:
@@ -4276,7 +4276,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
-            Call Gr_Device.FillRectangle(brush, rect)
+            Call Graphics.FillRectangle(brush, rect)
         End Sub
         '
         ' Summary:
@@ -4293,7 +4293,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)
-            Call Gr_Device.FillRectangle(brush, rect)
+            Call Graphics.FillRectangle(brush, rect)
         End Sub
         '
         ' Summary:
@@ -5100,7 +5100,7 @@ Namespace Imaging
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.</returns>
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Return Gr_Device.MeasureString(text, font)
+            Return Graphics.MeasureString(text, font)
         End Function
         '
         ' Summary:
@@ -5125,7 +5125,7 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-            Return Gr_Device.MeasureString(text, font, width)
+            Return Graphics.MeasureString(text, font, width)
         End Function
         '
         ' Summary:
@@ -5152,7 +5152,7 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Return Gr_Device.MeasureString(text, font, layoutArea)
+            Return Graphics.MeasureString(text, font, layoutArea)
         End Function
         '
         ' Summary:
@@ -5184,7 +5184,7 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-            Return Gr_Device.MeasureString(text, font, layoutArea, stringFormat)
+            Return Graphics.MeasureString(text, font, layoutArea, stringFormat)
         End Function
         '
         ' Summary:
@@ -5215,7 +5215,7 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-            Return Gr_Device.MeasureString(text, font, width, format)
+            Return Graphics.MeasureString(text, font, width, format)
         End Function
         '
         ' Summary:
@@ -5247,7 +5247,7 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-            Return Gr_Device.MeasureString(text, font, origin, stringFormat)
+            Return Graphics.MeasureString(text, font, origin, stringFormat)
         End Function
         '
         ' Summary:
@@ -5285,7 +5285,7 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
-            Return Gr_Device.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
+            Return Graphics.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
         '
         ' Summary:
@@ -5296,11 +5296,11 @@ Namespace Imaging
         '     This method returns a System.Drawing.Drawing2D.GraphicsState that represents
         '     the saved state of this System.Drawing.Graphics.
         Public Overrides Function Save() As GraphicsState
-            Return Gr_Device.Save
+            Return Graphics.Save
         End Function
 
         Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
-            Call Gr_Device.DrawBezier(pen, pt1, pt2, pt3, pt4)
+            Call Graphics.DrawBezier(pen, pt1, pt2, pt3, pt4)
         End Sub
 #End Region
     End Class
