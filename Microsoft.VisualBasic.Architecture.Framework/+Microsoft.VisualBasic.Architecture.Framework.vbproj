@@ -296,7 +296,9 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
-    <Compile Include="Extensions\Doc\XmlDoc.vb" />
+    <Compile Include="Text\Xml\XmlDeclaration.vb" />
+    <Compile Include="Text\Xml\Xmlns.vb" />
+    <Compile Include="Text\Xml\XmlDoc.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
