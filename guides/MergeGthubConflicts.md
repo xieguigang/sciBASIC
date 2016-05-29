@@ -3,9 +3,9 @@
 ### First: checkout branch
 
 >
-```batch
-git checkout -b xieguigang-master master
-git pull git://github.com/xieguigang/GCModeller.Core.git master
+```bash
+git checkout -b <branch-name> master
+git pull git://github.com/{username}/{<repo>.git} master
 ```
 
 ### Second: edits the conflict file
@@ -21,17 +21,18 @@ git commit -a
 >
 ```batch
 git checkout master
-git merge --no-ff xieguigang-master
+git merge --no-ff <branch-name>
 git push origin master
 ```
 
 ### Example
 >
-<pre>
-F:\GCModeller.Core>git checkout -b xieguigang-master master
+```
+# git checkout -b xieguigang-master master
 Switched to a new branch 'xieguigang-master'
-
-F:\GCModeller.Core>git pull git://github.com/xieguigang/GCModeller.Core.git master
+```
+```
+# git pull git://github.com/xieguigang/GCModeller.Core.git master
 remote: Counting objects: 6, done.
 remote: Compressing objects: 100% (4/4), done.
 remote: Total 6 (delta 3), reused 5 (delta 2), pack-reused 0
@@ -41,24 +42,29 @@ From git://github.com/xieguigang/GCModeller.Core
 Auto-merging README.md
 CONFLICT (content): Merge conflict in README.md
 Automatic merge failed; fix conflicts and then commit the result.
-
-F:\GCModeller.Core>git checkout master
+```
+```
+# git checkout master
 README.md: needs merge
 error: you need to resolve your current index first
-
-F:\GCModeller.Core>git commit -a
+```
+```
+# git commit -a
 [xieguigang-master b5f50e6] Merge branch 'master' of git://github.com/xieguigang/GCModeller.Core into xieguigang-master
-
-F:\GCModeller.Core>git checkout master
+```
+```
+# git checkout master
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
-
-F:\GCModeller.Core>git merge --no-ff xieguigang-master
+```
+```
+# git merge --no-ff xieguigang-master
 Merge made by the 'recursive' strategy.
  README.md | 34 +++++++++++++++++++++++++++-------
  1 file changed, 27 insertions(+), 7 deletions(-)
-
-F:\GCModeller.Core>git push origin master
+```
+```
+# git push origin master
 Counting objects: 9, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (9/9), done.
@@ -66,5 +72,4 @@ Writing objects: 100% (9/9), 1.46 KiB | 0 bytes/s, done.
 Total 9 (delta 5), reused 0 (delta 0)
 To https://github.com/SMRUCC/GCModeller.Core.git
    ffa7199..1408682  master -> master
-
-</pre>
+```
