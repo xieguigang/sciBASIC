@@ -4,8 +4,8 @@
 
 >
 ```batch
-git checkout -b xieguigang-master master
-git pull git://github.com/xieguigang/GCModeller.Core.git master
+git checkout -b <branch-name> master
+git pull git://github.com/{username}/{<repo>.git} master
 ```
 
 ### Second: edits the conflict file
@@ -21,7 +21,7 @@ git commit -a
 >
 ```batch
 git checkout master
-git merge --no-ff xieguigang-master
+git merge --no-ff <branch-name>
 git push origin master
 ```
 
