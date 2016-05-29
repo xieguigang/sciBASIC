@@ -15,7 +15,7 @@
 >
 ### Appendix
 >1. [Deal with the github merge conflicts](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/MergeGthubConflicts.md)
->
+>2. [VB.NET how to?(Chinese version)](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/VBdotNET_howto.md)
 >
 >
 
