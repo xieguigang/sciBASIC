@@ -1,17 +1,14 @@
 # [VB.NET是怎样做到的（搬家版）](http://www.cnhackhy.com/forum.php?mod=viewthread&tid=911&extra=page%3D2)
 
-VB.net能够实现很多C#不能做到的功能，如**When**语句、**Optional**参数、局部**Static**变量、对象实例访问静态方法、Handles绑定事件、**On Error**处理异常、Object直接后期绑定等等。VB和C#同属.net的语言，编译出来的是同样的CIL，但为什么VB支持很多有趣的特性呢。我们一起来探究一下。
+VB.net能够实现很多C#不能做到的功能，如**When**语句、**Optional**参数、局部**Static**变量、对象实例访问静态方法、**Handles**绑定事件、**On Error**处理异常、**Object**直接后期绑定等等。VB和C#同属.net的语言，编译出来的是同样的CIL，但为什么VB支持很多有趣的特性呢。我们一起来探究一下。
 
 ### 局部静态变量
 
-VB支持用Static关键字声明局部变量，这样在过程结束的时候可以保持变量的数值：
+VB支持用**Static**关键字声明局部变量，这样在过程结束的时候可以保持变量的数值：
 ```vb.net
 Public Sub Test1()
-
    Static i As Integer
-
-   i += 1 ' 实现一个过程调用计数器
-
+   i += 1  ' 实现一个过程调用计数器
 End Sub
 ```
 我们实现了一个简单的过程计数器。每调用一次Test，计数器的数值就增加1。其实还有很多情况我们希望保持变量的数值。而C#的static是不能用在过程内部的。因此要实现过程计数器，我们必须声明一个类级别的变量。这样做明显不如VB好。因为无法防止其他过程修改计数器变量。这就和对象封装一个道理，本来应该是一个方法的局部变量，现在我要被迫把它独立出来，显然是不好的设计。那么VB是怎么生成局部静态变量的呢？将上述代码返汇编，我们可以清楚地看到在VB生成的CIL中，i不是作为局部变量，而是作为类的Field出现的：
@@ -114,38 +111,34 @@ Public WithEvents MyObj As EventClass
 ```
 翻译成下面这个过程：
 ```vb.net
-   Private _MyObj As EventClass
+Private _MyObj As EventClass
 
-   Public Property MyObj() As EventClass
-      Get
+Public Property MyObj() As EventClass
+    Get
         Return _MyObj
-      End Get
-      Set(ByVal Value As EventClass)
-
+    End Get
+    Set(ByVal Value As EventClass)
         If Not (Me._MyObj Is Nothing) Then
-           RemoveHandler _MyObj.MyEvent, AddressOf MyObj_MyEvent
+            RemoveHandler _MyObj.MyEvent, AddressOf MyObj_MyEvent
         End If
-
         Me._MyObj = Value
-
         If Me._MyObj Is Nothing Then Exit Property
 
         AddHandler _MyObj.MyEvent, AddressOf MyObj_MyEvent
-
-      End Set
-   End Property
+    End Set
+End Property
 ```
 
 由此可见，当对WithEvents变量赋值的时候，会自动触发这个属性以绑定事件。我们所用的大部分事件响应都是1对1的，即一个过程响应一个事件，所以这种WithEvents静态方法是非常有用的，它可以显著增强代码可读性，同时也让VB.net中的事件处理非常方便，不像C#那样离开了窗体设计器就必须手工绑定事件。
 
-不过在分析这段IL的时候，我也发现了VB.net在翻译时小小的问题，就是ldarg.0出现得过多，这是频繁使用Me或this的表现，所以我们在编码过程中一定要注意，除了使用到Me/this本身引用以外，使用它的成员时不要带上Me/this，比如Me.MyInt = 1就改成MyInt = 1，这样的小习惯会为你带来很大的性能收益。
+不过在分析这段IL的时候，我也发现了VB.net在翻译时小小的问题，就是**ldarg.0**出现得过多，这是频繁使用Me或this的表现，所以我们在编码过程中一定要注意，除了使用到Me/this本身引用以外，使用它的成员时不要带上Me/this，比如**Me.MyInt = 1**就改成**MyInt = 1**，这样的小习惯会为你带来很大的性能收益。
 
 ### 类型转换运算符
 
 在Visual Basic 2005中将加入一个新的运算符——TryCast，相当于C#的as运算符。我一直希望VB有这样一个运算符。VB目前的类型转换运算符主要有CType和DirectCast。他们的用法几乎一样。我详细比较了一下这两个运算符，得出以下结论：
 
 + 在转换成引用类型时，两者没有什么区别，都是直接调用castclass指令，除非重载了类型转换运算符CType。DirectCast运算符是不能重载的。
-+ 转换成值类型时，CType会调用VB指定的类型转换函数（如果有的话），比如将String转换为Int32时，就会自动调用VisualBasic.CompilerServices.IntegerType.FromString，而将Object转换为Int32则会调用FromObject。其他数值类型转换为Int32时，CType也会调用类型本身的转换方法实施转换。DirectCast运算符则很简单，直接将对象拆箱成所需类型。
++ 转换成值类型时，CType会调用VB指定的类型转换函数（如果有的话），比如将String转换为Int32时，就会自动调用**VisualBasic.CompilerServices.IntegerType.FromString**，而将Object转换为Int32则会调用FromObject。其他数值类型转换为Int32时，CType也会调用类型本身的转换方法实施转换。DirectCast运算符则很简单，直接将对象拆箱成所需类型。
 
 所以在用于值类型时，CType没有DirectCast快速但可以支持更多的转换。在C#中，类型转换则为（type)运算符和as运算符。(type)运算符的工作方式与VB的DirectCast很相似，也是直接拆箱或castclass的，但是如果遇到支持的类型转换（如long到int），(type)运算符也会调用相应的转换方法，但不支持从String到int的转换。C#另一个运算符as则更加智能，它只要判断对象的运行实例能否转成目标类型，然后就可以省略castclass指令，直接按已知类型进行操作，而且编译器还可以自动对as进行优化，比如节省一个对象引用等。所以在将Object转换成所需的类型时，as是最佳选择。
 
@@ -166,34 +159,26 @@ End Interface
 这两个接口有一个完全一样的成员Test。假设我需要用一个类同时实现两个接口会怎么样呢？先想想看，如果是Java，JScrip.NET这样的语言就只能用一个Test函数实现两个接口的Test成员。假如两个Test只是偶然重名，其内容必须要分别实现怎么办，于是一些解决接口重名的设计出现了……。在VB中，独特的Implements语句可以让你想怎么实现接口就怎么实现，比如下面的类Implementation用两个名字根本不一样的方法实现了两个接口。
 ```vb.net
 Public Class Implementation
-   Implements Interface1, Interface2
+    Implements Interface1, Interface2
 
-   Public Sub Hello() Implements Interface1.Test
+    Public Sub Hello() Implements Interface1.Test
+    End Sub
 
-   End Sub
-
-   Private Sub Hi() Implements Interface2.Test
-
-   End Sub
+    Private Sub Hi() Implements Interface2.Test
+    End Sub
 End Class
 ```
 也就是说，VB允许用任意名字的函数实现接口中的成员，而且访问器可以是任意的，比如想用Public还是Private都可以。
 
 C#在处理重名成员上提供了显式实现（explicit implementation）的语法，其实现上述两个接口的语法为
-```c
-public class Class1 : Interface1, Interface2
-{
-    public Class1()
-    {
+```csharp
+public class Class1 : Interface1, Interface2 {
+    public Class1() {
     }
-    void Interface1.Test()
-    {
+    void Interface1.Test() {
     }
-
-    void Interface2.Test()
-    {
+    void Interface2.Test() {
     }
-
 }
 ```
 注意这里，C#只能用接口名.成员名的名字来命名实现方法，而且访问器只能是private，不能公开显式实现的方法。
@@ -244,7 +229,7 @@ Public Class PropTest
    End Property 
 End Class
 ```
-P1和P2两个属性基本上完全相同，唯一的不同是P2带有一个Default修饰符。反汇编这个类以后，可以发现两个属性完全相同，没有任何差异。但是PropTest类却被增加了一个自定义元属性System.Reflection.DefaultMemberAttribute。这个元属性指定的成员是InvokeMember所使用默认类型，也就是说后期绑定也可以使用默认属性。可是我试验将DefaultMember元属性手工添加到类型上却不能达到让某属性成为默认属性的功能。看来这项功能又是VB的一项“语法甜头”。但是，VB或C#的编译器对别人生成的类的默认属性应该只能通过DefaultMemberAttribute来判断，所以我将一个VB类只用DefaultMemberAttribute指定一个默认方法，不使用Default，然后将它编译以后给C#用，果然，C#将它识别为一个索引器（indexer）！
+P1和P2两个属性基本上完全相同，唯一的不同是P2带有一个Default修饰符。反汇编这个类以后，可以发现两个属性完全相同，没有任何差异。但是PropTest类却被增加了一个自定义元属性**System.Reflection.DefaultMemberAttribute**。这个元属性指定的成员是InvokeMember所使用默认类型，也就是说后期绑定也可以使用默认属性。可是我试验将DefaultMember元属性手工添加到类型上却不能达到让某属性成为默认属性的功能。看来这项功能又是VB的一项“语法甜头”。但是，VB或C#的编译器对别人生成的类的默认属性应该只能通过**DefaultMemberAttribute**来判断，所以我将一个VB类只用**DefaultMemberAttribute**指定一个默认方法，不使用Default，然后将它编译以后给C#用，果然，C#将它识别为一个索引器（indexer）！
 
 既然说到了C#的索引器，我们就顺便来研究一下VB和C#属性方面的不同。刚才的实验结果是VB的默认属性在C#中就是索引器。但是VB仍然可以用属性的语法来访问默认属性，而C#只能用数组的语法访问索引器。更特别的是，VB可以创建不是默认属性，但是带有参数的属性，如上面例子里的P1，而C#则不支持带参数的属性，如果将VB编写的，含有带参数属性的类给C#用，C#会提示“属性不受该语言支持，请用get_XXX和set_XXX的语法访问”。也就是说，带参数的属性是CLR的一项功能，但不符合CLS（通用语言规范），因此就会出现跨语言的障碍。这也更加深了我们对CLS的认识——如果你希望让你的代码跨语言工作，请一定要注意符合CLS。
 
@@ -259,7 +244,6 @@ End Sub
 调用的时候，既可以写成TestOptional(2)，也可以写成TestOptional()，这种情况参数i自动等于1。如果过程有不止一个可选参数，则VB还提供一种简化操作的方法——按名传递参数。比如过程
 ```vb.net
 Public Sub TestOptional(Optional i As Int32 = 1, Optional j As Int32 = 1, Optional k As Int32 = 1) 
-
 End Sub 
 ```
 如果只想指定k，让i和j使用默认值，就可以使用按名传递，如下 
@@ -271,19 +255,19 @@ TestOptional(k := 2)
 TestOptional(k := 2, i := 3, j := 5) 
 ```
 这些的确是相当方便的功能，C#就不支持上述两个特性。我们看看它是怎样在IL级别实现的。上述第一个方法在IL中的定义为 
-```vb.net
+```il
 .method public instance void TestOptional([opt] int32 i) cil managed
 {
 .param [1] = int32(0x00000001)
 .maxstack 8 
 ```
-可见，参数被加上了[opt]修饰符，而且.param指定了参数的默认值。这是只有VB能识别的内容，C#会跳过他们。在调用的时候，VB若发现参数被省略，则自动读取.param部分的默认值，并显式传递给过程。这一部分完全由编译器处理，而且没有任何性能损失，和手工传递所有参数是完全一样的。至于按名传递，VB会自动调整参数的顺序，其结果与传统方式的传递也没有任何的不同。这说明我们可以放心地使用这项便利。而且带有可选参数的过程拿到C#中，顶多变成不可选参数，也不会造成什么其他的麻烦。 
+可见，参数被加上了[opt]修饰符，而且.param指定了参数的默认值。这是只有VB能识别的内容，C#会跳过他们。在调用的时候，VB若发现参数被省略，则自动读取*.param*部分的默认值，并显式传递给过程。这一部分完全由编译器处理，而且没有任何性能损失，和手工传递所有参数是完全一样的。至于按名传递，VB会自动调整参数的顺序，其结果与传统方式的传递也没有任何的不同。这说明我们可以放心地使用这项便利。而且带有可选参数的过程拿到C#中，顶多变成不可选参数，也不会造成什么其他的麻烦。 
 
 PS.很多COM组件都使用了默认参数，而且有些过程的参数列表非常长，在VB里可以轻松地处理它们，而在C#中经常让开发者传参数传到吐血。 
 
 ### On Error语句和When语句
 
-本次讨论的是异常处理语句。VB.NET推荐使用Try...End Try块来进行结构化的异常处理，但是为了确保兼容性，它也从以前版本的BASIC中借鉴了On Error语句。其实On Error并不能算是VB的优点，因为使用它会破坏程序的结构，让带有异常处理的程序难以看懂和调试。但是我一直很惊叹于VB的工程师是怎样实现它的，因为On Error可以让异常的跳转变得很灵活，不像Try那样受到限制。首先看看Try是怎样实现的：
+本次讨论的是异常处理语句。VB.NET推荐使用**Try...End Try**块来进行结构化的异常处理，但是为了确保兼容性，它也从以前版本的BASIC中借鉴了On Error语句。其实On Error并不能算是VB的优点，因为使用它会破坏程序的结构，让带有异常处理的程序难以看懂和调试。但是我一直很惊叹于VB的工程师是怎样实现它的，因为On Error可以让异常的跳转变得很灵活，不像Try那样受到限制。首先看看Try是怎样实现的：
 ```vb.net
 Public Function F1() As Integer
    Try
@@ -300,7 +284,6 @@ End Function
 这就是典型的try块，在catch处直接指定要捕获的异常，然后指定catch区的位置，非常清晰。还要留意这两句：
 ```vb.net
 L_0007: call ProjectData.SetProjectError
-
 L_001b: call ProjectData.ClearProjectError
 ```
 可以看出，这两句是在catch块的开头和末尾。深入这两个过程我发现它是在为Err对象记录异常。看来使用Err也是语法甜头，性能苦头，凭空添加了这两句（幸好都不太复杂）。
@@ -311,10 +294,9 @@ Public Function F2() As Integer
    On Error GoTo CATCHBLOCK
    Dim n As Integer = 2 \ n
    Exit Function
+   
 CATCHBLOCK:
-
    MsgBox(Err.Description)
-
 End Function
 ```
 这不比上一个过程复杂，但是反汇编以后，它的IL代码竟然有47条指令，刚才才19条啊！最主要的改变是try部分，现在它是这样：
@@ -334,7 +316,7 @@ L_0031: br.s L_0034
 L_0033: ldc.i4.0 
 L_0034: endfilter
 ```
-endfilter就是异常处理部分代码的开始。而L0030之前的代码是过滤器的判断部分，V_4和V_3是VB自己加入保存错误代码的变量。在整个反汇编中，我发现设计成处理异常部分的代码在IL里其实也是在try块中，也就是说程序的结构已经不是规整的try...catch块，产生异常的语句和处理异常的语句在一起，而真正处理异常的指令是一大堆繁冗拖沓的跳转语句。
+endfilter就是异常处理部分代码的开始。而L0030之前的代码是过滤器的判断部分，**V_4**和**V_3**是VB自己加入保存错误代码的变量。在整个反汇编中，我发现设计成处理异常部分的代码在IL里其实也是在try块中，也就是说程序的结构已经不是规整的**try...catch**块，产生异常的语句和处理异常的语句在一起，而真正处理异常的指令是一大堆繁冗拖沓的跳转语句。
 
 下面看看我编写的第三个例子：
 ```vb.net
@@ -343,7 +325,7 @@ Public Function F3() As Integer
    Dim n As Integer = 2 \ n
 End Function
 ```
-这个值有2行的过程动用了VB强大的语法杀手——On Error Resume Next，它将忽略所有异常，让代码紧接产生异常的语句继续执行下去，猜猜这个功能产生了多少IL指令？答案是50条！比普通的On Error还要长。其实现我就不多说了，和前面的On语句差不多。不过50这个数字似乎提醒了大家，不要在程序里偷懒使用On Error处理异常，这样产生的代价是不可接受的。
+这个值有2行的过程动用了VB强大的语法杀手——**On Error Resume** Next，它将忽略所有异常，让代码紧接产生异常的语句继续执行下去，猜猜这个功能产生了多少IL指令？答案是**50**条！比普通的**On Error**还要长。其实现我就不多说了，和前面的On语句差不多。不过50这个数字似乎提醒了大家，不要在程序里偷懒使用On Error处理异常，这样产生的代价是不可接受的。
 
 最后一个例子是VB.NET的When语句，它可以实现对Catch部分的过滤：
 ```vb.net
@@ -356,7 +338,9 @@ Public Function F1() As Integer
    End Try
 End Function
 ```
-里面的When语句进行了对变量n的判断，仅当n = 0的时候才进入处理部分。听到“过滤”两个字，我们已经猜出，它是用try...filter来实现的。没错。这里的filter主要是进行ex是否是Exception型，n是否等于零等，当过滤成功，就会转移到异常处理段进行处理。这次VB生成的代码要比On Error语句规则得多，结构相当清晰。
+里面的When语句进行了对变量n的判断，仅当**n = 0**的时候才进入处理部分。
+
+听到“过滤”两个字，我们已经猜出，它是用try...filter来实现的。没错。这里的filter主要是进行ex是否是Exception型，n是否等于零等，当过滤成功，就会转移到异常处理段进行处理。这次VB生成的代码要比On Error语句规则得多，结构相当清晰。
 
 本次我们还借助On Error语句和When语句了解到try filter结构，它是C#不能生成的，因此，我发现它不能被常见的反编译器反编译（因为反编译器的编写者只知道C#，呵呵）。而且用了On Error后程序结构变得异常混乱，这在产生负面作用的时候，是不是能够变相起到保护我们代码的作用呢？
 
@@ -366,7 +350,7 @@ End Function
 ```vb.net
 Public Class Class1
    Public Shared i As Integer
-   &#39;Other none-shared members
+   ' Other none-shared members
 End Class
 ```
 不但像在C#中那样，可以用Class1.i访问共享成员i，还可以用实例变量来访问:
