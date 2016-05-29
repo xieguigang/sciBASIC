@@ -30,7 +30,7 @@ Namespace Drawing2D.VectorElements
         End Sub
 
         Protected Overloads Overrides Sub InvokeDrawing()
-            Call Me._GDIDevice.Gr_Device.FillPie(Me.Brush, Me.DrawingRegion, 0, 360)
+            Call Me._GDIDevice.Graphics.FillPie(Me.Brush, Me.DrawingRegion, 0, 360)
         End Sub
 
         Public Overrides ReadOnly Property Size As Size

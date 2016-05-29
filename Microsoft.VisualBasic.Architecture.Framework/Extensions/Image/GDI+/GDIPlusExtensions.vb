@@ -99,7 +99,7 @@ Namespace Imaging
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
         <Extension> Public Function CreateGrayBitmap(res As Image) As Image
             Dim Gr = DirectCast(res.Clone, Image).GdiFromImage
-            Call System.Windows.Forms.ControlPaint.DrawImageDisabled(Gr.Gr_Device, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
+            Call System.Windows.Forms.ControlPaint.DrawImageDisabled(Gr.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
             Return Gr.ImageResource
         End Function
 
@@ -123,12 +123,12 @@ Namespace Imaging
                 pen = Drawing.Pens.Black
             End If
 
-            Call Handle.Gr_Device.DrawLine(pen, TopLeft, TopRight)
-            Call Handle.Gr_Device.DrawLine(pen, TopRight, BottomRight)
-            Call Handle.Gr_Device.DrawLine(pen, BottomRight, BottomLeft)
-            Call Handle.Gr_Device.DrawLine(pen, BottomLeft, TopLeft)
+            Call Handle.Graphics.DrawLine(pen, TopLeft, TopRight)
+            Call Handle.Graphics.DrawLine(pen, TopRight, BottomRight)
+            Call Handle.Graphics.DrawLine(pen, BottomRight, BottomLeft)
+            Call Handle.Graphics.DrawLine(pen, BottomLeft, TopLeft)
 
-            Call Handle.Gr_Device.FillRectangle(New SolidBrush(pen.Color), New Rectangle(New Point, New Size(1, 1)))
+            Call Handle.Graphics.FillRectangle(New SolidBrush(pen.Color), New Rectangle(New Point, New Size(1, 1)))
 
             Return Handle
         End Function
@@ -158,7 +158,7 @@ Namespace Imaging
             Dim Device = ImageRes.GdiFromImage
 
             If ctrl.BackgroundImage Is Nothing Then
-                Call Device.Gr_Device.FillRectangle(Brushes.White, New Rectangle(New Point, ImageRes.Size))
+                Call Device.Graphics.FillRectangle(Brushes.White, New Rectangle(New Point, ImageRes.Size))
             End If
 
             Return Device
@@ -195,7 +195,7 @@ Namespace Imaging
                 Throw ex
             End Try
             Dim Gr As GDIPlusDeviceHandle = res.Size.CreateGDIDevice
-            Call Gr.Gr_Device.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
+            Call Gr.Graphics.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
             Return Gr
         End Function
 
@@ -285,7 +285,7 @@ Namespace Imaging
         Public Function Resize(Image As Image, newSize As Size) As Image
             SyncLock Image
                 Dim Gr As GDIPlusDeviceHandle = newSize.CreateGDIDevice
-                Call Gr.Gr_Device.DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
+                Call Gr.Graphics.DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
                 Return Gr.ImageResource
             End SyncLock
         End Function
@@ -353,14 +353,14 @@ Namespace Imaging
 
             For y As Integer = y1 To y2
                 Dim Color = System.Drawing.Color.FromArgb(Alpha, RenderColor.R, RenderColor.G, RenderColor.B)
-                Call Gr.Gr_Device.DrawLine(New Pen(Color), New Point(0, y), New Point(Gr.Width, y))
+                Call Gr.Graphics.DrawLine(New Pen(Color), New Point(0, y), New Point(Gr.Width, y))
 
                 Alpha = CInt(255 * Math.Sin(offset) ^ 2)
                 offset += delta
             Next
 
             Dim Rect = New Rectangle(New Point(0, y2), New Size(Image.Width, Image.Height - y2))
-            Call Gr.Gr_Device.FillRectangle(New SolidBrush(RenderColor), Rect)
+            Call Gr.Graphics.FillRectangle(New SolidBrush(RenderColor), Rect)
 
             Return Gr.ImageResource
         End Function
@@ -477,7 +477,7 @@ Namespace Imaging
 
             If margin > 0 Then
                 Dim gr = New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
-                Call gr.Gr_Device.DrawImage(res, New Point(margin, margin))
+                Call gr.Graphics.DrawImage(res, New Point(margin, margin))
                 res = gr.ImageResource
             End If
 

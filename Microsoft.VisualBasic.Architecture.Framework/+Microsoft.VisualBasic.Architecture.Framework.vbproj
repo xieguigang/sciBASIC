@@ -284,6 +284,7 @@
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="ConsoleDevices\InnerQueue.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AbstractBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AnimatedBar.vb" />
@@ -294,7 +295,10 @@
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
-    <Compile Include="Extensions\Doc\XmlDoc.vb" />
+    <Compile Include="Extensions\Debugger\Config.vb" />
+    <Compile Include="Text\Xml\XmlDeclaration.vb" />
+    <Compile Include="Text\Xml\Xmlns.vb" />
+    <Compile Include="Text\Xml\XmlDoc.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
@@ -302,6 +306,7 @@
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
+    <Compile Include="Language\NET40_Compatible.vb" />
     <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />

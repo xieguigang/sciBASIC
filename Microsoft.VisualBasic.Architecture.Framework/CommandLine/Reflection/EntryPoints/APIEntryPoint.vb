@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace CommandLine.Reflection.EntryPoints

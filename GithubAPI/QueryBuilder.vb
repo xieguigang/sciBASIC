@@ -9,6 +9,8 @@ Imports Microsoft.VisualBasic.Scripting.InputHandler
 
 Public Module QueryBuilder
 
+    Public Const GithubAPI As String = "https://api.github.com"
+
     ''' <summary>
     ''' 假若有非法字符，则需要使用<see cref="Field"/>来标记出来
     ''' </summary>

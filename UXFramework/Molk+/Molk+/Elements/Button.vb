@@ -129,30 +129,30 @@ Namespace Visualise.Elements
             If Font Is Nothing Then Font = Me._Font
 
             Dim Gr = InternalCreateButton(Size, _NormalColor)
-            Gr.Gr_Device.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            Gr.Gr_Device.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
-            Call Gr.Gr_Device.DrawRectangle(New Pen(Color.FromArgb(229, 229, 229), 1),
+            Gr.Graphics.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            Gr.Graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            Call Gr.Graphics.DrawRectangle(New Pen(Color.FromArgb(229, 229, 229), 1),
                                             New Rectangle(New Point, New Size(Gr.Width - 1, Gr.Height - 1)))
 
             Call InternalTextRender(Gr, Text, _TextColor, Font)
             res.Normal = Gr.ImageResource
 
             Gr = InternalCreateButton(Size, _HighlightColor)
-            Gr.Gr_Device.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            Gr.Gr_Device.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            Gr.Graphics.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            Gr.Graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
             Call InternalTextRender(Gr, Text, Brushes.White, Font)
             res.PreLight = Gr.ImageResource
 
             Gr = InternalCreateButton(Size, _PressColor)
-            Gr.Gr_Device.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            Gr.Gr_Device.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            Gr.Graphics.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            Gr.Graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
             Call InternalTextRender(Gr, Text, Brushes.White, Font)
             res.Active = Gr.ImageResource
 
             Gr = InternalCreateButton(Size, Color.Gray)
-            Gr.Gr_Device.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            Gr.Gr_Device.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
-            Call Gr.Gr_Device.DrawRectangle(New Pen(Color.FromArgb(229, 229, 229), 1),
+            Gr.Graphics.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            Gr.Graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            Call Gr.Graphics.DrawRectangle(New Pen(Color.FromArgb(229, 229, 229), 1),
                                             New Rectangle(New Point, New Size(Gr.Width - 1, Gr.Height - 1)))
 
             Call InternalTextRender(Gr, Text, _TextColor, Font)
@@ -170,9 +170,9 @@ Namespace Visualise.Elements
                                               Text As String,
                                               TextColor As SolidBrush,
                                               Font As Font)
-            Dim Size = Gr.Gr_Device.MeasureString(Text, Font)
+            Dim Size = Gr.Graphics.MeasureString(Text, Font)
 
-            Call Gr.Gr_Device.DrawString(Text,
+            Call Gr.Graphics.DrawString(Text,
                                          Font,
                                          TextColor,
                                          New Point((Gr.Width - Size.Width) / 2, (Gr.Height - Size.Height) / 2))

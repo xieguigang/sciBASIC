@@ -49,6 +49,21 @@ Namespace Parallel
         End Property
 
         ''' <summary>
+        ''' 假如小于0，则认为是自动配置，0被认为是单线程，反之直接返回
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Function AutoConfig(n As Integer) As Integer
+            If n < 0 Then
+                Return CPU_NUMBER
+            ElseIf n = 0 OrElse n = 1 Then
+                Return 1
+            Else
+                Return n
+            End If
+        End Function
+
+        ''' <summary>
         ''' The possible recommended threads of the linq based on you machine processors number, i'm not sure...
         ''' </summary>
         ''' <value></value>

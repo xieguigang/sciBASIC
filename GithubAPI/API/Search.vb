@@ -35,7 +35,7 @@ Namespace API
         ''' <returns></returns>
         Public Function Users(q As NameValueCollection,
                               Optional sort As UserSorts = UserSorts.default,
-                              Optional [order] As UserSortOrders = UserSortOrders.desc) As SearchResult(Of SearchUser)
+                              Optional [order] As UserSortOrders = UserSortOrders.desc) As SearchResult(Of User)
             Dim url As String = UsersQuery.API & q.BuildQueryArgs
             If sort <> UserSorts.default Then
                 url &= $"+{NameOf(sort)}:{sort.ToString}"
@@ -43,7 +43,13 @@ Namespace API
             ' url &= $"+{NameOf(order)}:{order.ToString}"
 
             Dim json As String = url.GetRequest(https:=True)
-            Return json.LoadObject(Of SearchResult(Of SearchUser))
+            Return json.LoadObject(Of SearchResult(Of User))
+        End Function
+
+        Public Function Users(q As UsersQuery,
+                              Optional sort As UserSorts = UserSorts.default,
+                              Optional [order] As UserSortOrders = UserSortOrders.desc) As SearchResult(Of User)
+            Return Users(q.Build, sort, order)
         End Function
 
         Public Structure UsersQuery

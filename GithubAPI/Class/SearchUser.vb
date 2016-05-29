@@ -8,7 +8,8 @@ Namespace [Class]
         Public Property items As T()
     End Class
 
-    Public Class SearchUser : Inherits ClassObject
+    Public Class User : Inherits ClassObject
+        Public Property score As Double
         Public Property login As String
         Public Property id As String
         Public Property avatar_url As String
@@ -25,7 +26,19 @@ Namespace [Class]
         Public Property events_url As String
         Public Property received_events_url As String
         Public Property type As String
-        Public Property site_admin As Boolean
-        Public Property score As Double
+        Public Property site_admin As String
+        Public Property name As String
+        Public Property company As String
+        Public Property blog As String
+        Public Property location As String
+        Public Property email As String
+        Public Property hireable As String
+        Public Property bio As String
+        Public Property public_repos As String
+        Public Property public_gists As String
+        Public Property followers As String
+        Public Property following As String
+        Public Property created_at As String
+        Public Property updated_at As String
     End Class
 End Namespace

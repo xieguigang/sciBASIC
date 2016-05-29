@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Text.Xml
 
 <PackageNamespace("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
@@ -116,16 +117,16 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     <Extension> Public Function GetXml(Of T As Class)(obj As T,
                                                       Optional ThrowEx As Boolean = True,
-                                                      Optional xmlEncoding As XmlDoc.XmlEncodings = XmlDoc.XmlEncodings.UTF16) As String
+                                                      Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
         Return GetXml(obj, GetType(T), ThrowEx, xmlEncoding)
     End Function
 
     Public Function GetXml(obj As Object, type As Type,
                            Optional throwEx As Boolean = True,
-                           Optional xmlEncoding As XmlDoc.XmlEncodings = XmlDoc.XmlEncodings.UTF16) As String
+                           Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
         Try
 
-            If xmlEncoding = XmlDoc.XmlEncodings.UTF8 Then
+            If xmlEncoding = XmlEncodings.UTF8 Then
                 Dim serializer As New XmlSerializer(type)
 
                 ' create a MemoryStream here, we are just working
@@ -265,8 +266,8 @@ Public Module XmlExtensions
     End Function
 
     <Extension>
-    Public Function SetXmlEncoding(xml As String, encoding As XmlDoc.XmlEncodings) As String
-        Dim xmlEncoding As String = XmlDeclaration.XmlEncodingString(encoding)
+    Public Function SetXmlEncoding(xml As String, encoding As XmlEncodings) As String
+        Dim xmlEncoding As String = Text.Xml.XmlDeclaration.XmlEncodingString(encoding)
         Dim head As String = Regex.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
         Dim enc As String = Regex.Match(head, "encoding=""\S+""", RegexICSng).Value
 
@@ -283,7 +284,7 @@ Public Module XmlExtensions
 
     <Extension>
     Public Function SetXmlStandalone(xml As String, standalone As Boolean) As String
-        Dim opt As String = XmlDeclaration.XmlStandaloneString(standalone)
+        Dim opt As String = Text.Xml.XmlDeclaration.XmlStandaloneString(standalone)
         Dim head As String = Regex.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
         Dim enc As String = Regex.Match(head, "standalone=""\S+""", RegexICSng).Value
 

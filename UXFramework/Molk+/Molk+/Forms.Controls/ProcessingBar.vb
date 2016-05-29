@@ -40,7 +40,7 @@ Public Class ProcessingBar
             Dim x As Integer = 1
 
             Do While x < gr.Width
-                Call gr.Gr_Device.DrawImage(value, x, 0, value.Width, value.Height)
+                Call gr.Graphics.DrawImage(value, x, 0, value.Width, value.Height)
                 x += value.Width
             Loop
 
@@ -86,7 +86,7 @@ Public Class ProcessingBar
         End If
 
         Dim res = ImageCorping.Corping(Me.accomplish, New Rectangle(New Point(_Animated + 1, 0), New Size(Length, Me.Height)))
-        Call Gr.Gr_Device.DrawImage(res, 0, 0, res.Width, res.Height)
+        Call Gr.Graphics.DrawImage(res, 0, 0, res.Width, res.Height)
 
         Me.BackgroundImage = Gr.ImageResource
     End Sub

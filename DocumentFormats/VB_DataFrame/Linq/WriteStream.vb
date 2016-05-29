@@ -1,5 +1,6 @@
 ﻿Option Strict Off
 
+Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
@@ -16,7 +17,7 @@ Namespace DocumentStream.Linq
         Implements System.IDisposable
 
         ReadOnly handle As String
-        ReadOnly _fileIO As System.IO.StreamWriter
+        ReadOnly _fileIO As StreamWriter
         ReadOnly RowWriter As RowWriter
 
         ''' <summary>
@@ -24,14 +25,14 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="Explicit">Schema parsing of the object strictly?</param>
-        Sub New(path As String, Optional Explicit As Boolean = False)
+        Sub New(path As String, Optional Explicit As Boolean = False, Optional metaBlank As String = "")
             Dim typeDef As Type = GetType(T)
             Dim Schema = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim parent As String = path.ParentPath
 
             Call FileIO.FileSystem.CreateDirectory(parent)
 
-            RowWriter = New RowWriter(Schema)
+            RowWriter = New RowWriter(Schema, metaBlank)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
             _fileIO = New IO.StreamWriter(path:=handle)
 

@@ -27,7 +27,7 @@ Namespace Drawing2D.VectorElements
         Protected Overloads Overrides Sub InvokeDrawing()
             Dim p1 = Location
             Dim p2 = New Point(Me.Location.X + pt2.X - pt1.X, Me.Location.Y + pt2.Y - pt1.Y)
-            Call Me._GDIDevice.Gr_Device.DrawLine(BrushPen, p1, p2)
+            Call Me._GDIDevice.Graphics.DrawLine(BrushPen, p1, p2)
         End Sub
 
         Public Overrides ReadOnly Property Size As Size

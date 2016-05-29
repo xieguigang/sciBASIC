@@ -198,7 +198,6 @@ Namespace ComponentModel.DataSourceModel.Repository
             Fatal = fatalInit
         End Sub
 
-
         Public Sub New(message As String, fatalInit As Boolean)
             MyBase.New(message)
             Fatal = fatalInit
