@@ -73,3 +73,4 @@ Total 9 (delta 5), reused 0 (delta 0)
 To https://github.com/SMRUCC/GCModeller.Core.git
    ffa7199..1408682  master -> master
 ```
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/guides/MergeGthubConflicts-example.png)
