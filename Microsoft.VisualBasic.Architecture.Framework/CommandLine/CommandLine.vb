@@ -105,8 +105,17 @@ Namespace CommandLine
 
         Public Property SingleValue As String
 
+        ''' <summary>
+        ''' 查看命令行之中是否存在某一个逻辑开关
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Public Function HavebFlag(name As String) As Boolean
-            Return Array.IndexOf(Me.BoolFlags, name.ToLower) > -1
+            If Me.BoolFlags.IsNullOrEmpty Then
+                Return False
+            Else
+                Return Array.IndexOf(BoolFlags, name.ToLower) > -1
+            End If
         End Function
 
         ''' <summary>
