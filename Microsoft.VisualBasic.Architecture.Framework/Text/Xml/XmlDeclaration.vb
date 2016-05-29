@@ -26,11 +26,11 @@ Namespace Text.Xml
         End Sub
 
         Public Shared ReadOnly Property [Default] As XmlDeclaration =
-        New XmlDeclaration With {
-            .version = "1.0",
-            .standalone = True,
-            .encoding = XmlEncodings.UTF16
-    }
+            New XmlDeclaration With {
+                .version = "1.0",
+                .standalone = True,
+                .encoding = XmlEncodings.UTF16
+        }
 
         ''' <summary>
         ''' &lt;?xml version="{<see cref="version"/>}" encoding="{<see cref="encoding"/>}" standalone="{<see cref="standalone"/>}"?>

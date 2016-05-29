@@ -23,6 +23,10 @@ Namespace Text.Xml
         ''' <returns></returns>
         Public Property xmlns As Xmlns
 
+        ''' <summary>
+        ''' Create a xml tools from xml document text.
+        ''' </summary>
+        ''' <param name="xml"></param>
         Sub New(xml As String)
             Dim [declare] As New XmlDeclaration(
             Regex.Match(xml, XmlDeclares, RegexICSng).Value)
@@ -46,10 +50,10 @@ Namespace Text.Xml
         Public Overrides Function ToString() As String
             Dim [declare] As String = Regex.Match(xml, XmlDeclares, RegexICSng).Value
             Dim setDeclare As New XmlDeclaration With {
-            .encoding = encoding,
-            .standalone = standalone,
-            .version = version
-        }
+                .encoding = encoding,
+                .standalone = standalone,
+                .version = version
+            }
 
             Dim doc As New StringBuilder(xml)
             Call doc.Replace([declare], setDeclare.ToString)
@@ -59,6 +63,10 @@ Namespace Text.Xml
 
         Public Shared Function FromObject(Of T As Class)(x As T) As XmlDoc
             Return New XmlDoc(x.GetXml)
+        End Function
+
+        Public Shared Function FromXmlFile(path As String) As XmlDoc
+            Return New XmlDoc(path.ReadAllText)
         End Function
 
         Public Function SaveTo(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save

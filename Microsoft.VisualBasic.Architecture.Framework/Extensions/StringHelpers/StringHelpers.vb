@@ -19,8 +19,8 @@ Public Module StringHelpers
         If p = 0 Then
             Return New NamedValue(Of String)("", s)
         Else
-            Dim key As String = Mid(s, 1, p)
-            Dim value As String = Mid(s, p + 1)
+            Dim key As String = Mid(s, 1, p - delimiter.Length)
+            Dim value As String = Mid(s, p + delimiter.Length)
             Return New NamedValue(Of String)(key, value)
         End If
     End Function

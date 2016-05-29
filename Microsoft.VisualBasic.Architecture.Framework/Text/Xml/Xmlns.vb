@@ -49,11 +49,19 @@ Namespace Text.Xml
             s = Regex.Match(root, "xmlns="".+?""", RegexICSng).Value
             xmlns = s.GetStackValue("""", """")
 
-            Dim nsList As String() = Regex.Matches(root, xmlnsRegex, RegexICSng).ToArray
+            Dim nsList As String() =
+                Regex.Matches(root, xmlnsRegex, RegexICSng) _
+                .ToArray(AddressOf Trim)
 
             For Each ns As String In nsList
-                [namespace] += ns.GetTagValue("=").FixValue(Function(x) x.GetStackValue("""", """"))
+                [namespace] += ns.GetTagValue("=") _
+                    .FixValue(Function(x) x.GetStackValue("""", """"))
             Next
+        End Sub
+
+        Public Sub Add(ns As String, value As String)
+            ns = $"xmlns:{ns}"
+            [namespace](ns) = New NamedValue(Of String)(ns, value)
         End Sub
 
         ''' <summary>
@@ -86,10 +94,10 @@ Namespace Text.Xml
                 Dim rootNs As String = root(nsValue.Name)
 
                 If Not String.IsNullOrEmpty(rootNs) Then
-                    Call ns.Replace($"xmlns:xsd=""{rootNs}""", If(String.IsNullOrEmpty(nsValue.x), "", $"xmlns:xsd=""{nsValue.x}"""))
+                    Call ns.Replace($"{nsValue.Name}=""{rootNs}""", If(String.IsNullOrEmpty(nsValue.x), "", $"{nsValue.Name}=""{nsValue.x}"""))
                 Else
                     If Not String.IsNullOrEmpty(nsValue.x) Then
-                        Call ns.Replace(">", $" xmlns:xsd=""{nsValue.x}"">")
+                        Call ns.Replace(">", $" {nsValue.Name}=""{nsValue.x}"">")
                     End If
                 End If
             Next
