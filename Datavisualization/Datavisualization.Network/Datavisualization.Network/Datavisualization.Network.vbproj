@@ -144,6 +144,7 @@
     <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
+    <Compile Include="LDM\FileStream\NameOf.vb" />
     <Compile Include="LDM\FileStream\Edge.vb" />
     <Compile Include="LDM\FileStream\Network.vb" />
     <Compile Include="LDM\FileStream\Node.vb" />

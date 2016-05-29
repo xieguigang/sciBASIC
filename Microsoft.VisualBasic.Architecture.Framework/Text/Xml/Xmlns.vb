@@ -59,7 +59,12 @@ Namespace Text.Xml
             Next
         End Sub
 
-        Public Sub Add(ns As String, value As String)
+        ''' <summary>
+        ''' <paramref name="ns"/>命名空间参数不需要添加 xmlns: 前缀
+        ''' </summary>
+        ''' <param name="ns"></param>
+        ''' <param name="value"></param>
+        Public Sub [Set](ns As String, value As String)
             ns = $"xmlns:{ns}"
             [namespace](ns) = New NamedValue(Of String)(ns, value)
         End Sub

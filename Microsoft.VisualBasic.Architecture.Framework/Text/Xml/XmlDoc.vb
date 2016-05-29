@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Text.Xml
 
+    ''' <summary>
+    ''' 请使用<see cref="XmlDoc.ToString"/>方法获取修改之后的Xml文档
+    ''' </summary>
     Public Class XmlDoc : Implements ISaveHandle
 
         Public Const XmlDeclares As String = "<\?xml.+?>"
@@ -47,6 +50,10 @@ Namespace Text.Xml
             Return xml
         End Function
 
+        ''' <summary>
+        ''' 使用这个函数可以得到修改之后的Xml文档
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Dim [declare] As String = Regex.Match(xml, XmlDeclares, RegexICSng).Value
             Dim setDeclare As New XmlDeclaration With {
@@ -69,6 +76,12 @@ Namespace Text.Xml
             Return New XmlDoc(path.ReadAllText)
         End Function
 
+        ''' <summary>
+        ''' Me.ToString.SaveTo(Path, encoding)
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function SaveTo(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             Return Me.ToString.SaveTo(Path, encoding)
         End Function
