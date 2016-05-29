@@ -97,7 +97,7 @@ Public Module XmlExtensions
 
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
 #If DEBUG Then
-                Call ex.ToString.__DEBUG_ECHO
+                Call ex.PrintException
 #End If
                 If ThrowEx Then
                     Throw ex
@@ -154,6 +154,10 @@ Public Module XmlExtensions
         Catch ex As Exception
             ex = New Exception(type.ToString, ex)
             Call App.LogException(ex)
+
+#If DEBUG Then
+            Call ex.PrintException
+#End If
 
             If throwEx Then
                 Throw ex

@@ -13,6 +13,15 @@ Namespace Language
         ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Dummy field for solve the problem of xml serialization >>>simpleContent&lt;&lt;&lt;   
+        ''' 
+        ''' http://stackoverflow.com/questions/2501466/xmltext-attribute-in-base-class-breakes-serialization
+        ''' 
+        ''' So I think you could make it work by adding a dummy property or field that you never use in the LookupItem class. 
+        ''' If you're never assign a value to it, it will remain null and will not be serialized, but it will prevent your 
+        ''' class from being treated as simpleContent. I know it's a dirty workaround, but I see no other easy way...
+        ''' </remarks>
         <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
 
         ''' <summary>

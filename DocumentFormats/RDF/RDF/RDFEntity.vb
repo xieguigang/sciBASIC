@@ -1,5 +1,6 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
@@ -42,7 +43,25 @@ Public Class RDFProperty : Inherits EntityProperty
 
 End Class
 
-Public MustInherit Class EntityProperty
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' 2016.5.29
+''' 
+''' 请注意，在这里的对<see cref="ClassObject"/>类型的继承是为了解决simpleContent的BUG的:
+''' 
+''' System.Exception: 
+''' LANS.SystemsBiology.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute 
+''' ---> System.InvalidOperationException: There was an error reflecting type 'LANS.SystemsBiology.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute'. 
+''' ---> System.InvalidOperationException: There was an error reflecting property 'RDF'. 
+''' ---> System.InvalidOperationException: There was an error reflecting type 'LANS.SystemsBiology.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.DocumentElements.NetworkMetadata'. 
+''' ---> System.InvalidOperationException: Cannot serialize object of type '<see cref="RDFEntity"/>'. 
+''' 
+''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding XmlAttribute elements. 
+''' Please consider changing XmlText member of the base class to string array.
+''' </remarks>
+Public MustInherit Class EntityProperty : Inherits ClassObject
 
     ''' <summary>
     ''' rdf:datatype
