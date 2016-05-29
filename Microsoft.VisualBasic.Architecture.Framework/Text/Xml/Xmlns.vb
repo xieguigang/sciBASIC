@@ -8,21 +8,52 @@ Namespace Text.Xml
     Public Class Xmlns
 
         Public Property xmlns As String
-        Public Property xlink As String
+        Public Property [namespace] As Dictionary(Of NamedValue(Of String))
+
         Public Property xsd As String
+            Get
+                Return Me(xmlns_xsd)
+            End Get
+            Set(value As String)
+                [namespace](xmlns_xsd) = New NamedValue(Of String)(xmlns_xsd, value)
+            End Set
+        End Property
+
         Public Property xsi As String
+            Get
+                Return Me(xmlns_xsi)
+            End Get
+            Set(value As String)
+                [namespace](xmlns_xsi) = New NamedValue(Of String)(xmlns_xsi, value)
+            End Set
+        End Property
+
+        Default Public ReadOnly Property ns(name As String) As String
+            Get
+                If [namespace].ContainsKey(name) Then
+                    Return [namespace](name).x
+                Else
+                    Return ""
+                End If
+            End Get
+        End Property
+
+        Const xmlnsRegex As String = "\sxmlns:\S+="".+?"""
+        Const xmlns_xsd As String = "xmlns:xsd"
+        Const xmlns_xsi As String = "xmlns:xsi"
 
         Sub New(root As String)
             Dim s As String
 
-            s = Regex.Match(root, "xmlns:xsd="".+?""", RegexICSng).Value
-            xsd = s.GetStackValue("""", """")
-            s = Regex.Match(root, "xmlns:xsi="".+?""", RegexICSng).Value
-            xsi = s.GetStackValue("""", """")
+            [namespace] = New Dictionary(Of NamedValue(Of String))
             s = Regex.Match(root, "xmlns="".+?""", RegexICSng).Value
             xmlns = s.GetStackValue("""", """")
-            s = Regex.Match(root, "xmlns:xlink="".+?""", RegexICSng).Value
-            xlink = s.GetStackValue("""", """")
+
+            Dim nsList As String() = Regex.Matches(root, xmlnsRegex, RegexICSng).ToArray
+
+            For Each ns As String In nsList
+                [namespace] += ns.GetTagValue("=").FixValue(Function(x) x.GetStackValue("""", """"))
+            Next
         End Sub
 
         ''' <summary>
@@ -51,35 +82,23 @@ Namespace Text.Xml
             Dim root As Xmlns = New Xmlns(rs) ' old xmlns value
             Dim ns As New StringBuilder(rs)  ' 可能还有其他的属性，所以在这里还不可以直接拼接字符串然后直接进行替换
 
-            If Not String.IsNullOrEmpty(root.xsd) Then
-                Call ns.Replace($"xmlns:xsd=""{root.xsd}""", If(String.IsNullOrEmpty(xsd), "", $"xmlns:xsd=""{xsd}"""))
-            Else
-                If Not String.IsNullOrEmpty(xsd) Then
-                    Call ns.Replace(">", $" xmlns:xsd=""{xsd}"">")
-                End If
-            End If
+            For Each nsValue As NamedValue(Of String) In [namespace].Values
+                Dim rootNs As String = root(nsValue.Name)
 
-            If Not String.IsNullOrEmpty(root.xsi) Then
-                Call ns.Replace($"xmlns:xsi=""{root.xsi}""", If(String.IsNullOrEmpty(xsi), "", $"xmlns:xsi=""{xsi}"""))
-            Else
-                If Not String.IsNullOrEmpty(xsi) Then
-                    Call ns.Replace(">", $" xmlns:xsi=""{xsi}"">")
+                If Not String.IsNullOrEmpty(rootNs) Then
+                    Call ns.Replace($"xmlns:xsd=""{rootNs}""", If(String.IsNullOrEmpty(nsValue.x), "", $"xmlns:xsd=""{nsValue.x}"""))
+                Else
+                    If Not String.IsNullOrEmpty(nsValue.x) Then
+                        Call ns.Replace(">", $" xmlns:xsd=""{nsValue.x}"">")
+                    End If
                 End If
-            End If
+            Next
 
             If Not String.IsNullOrEmpty(root.xmlns) Then
                 Call ns.Replace($"xmlns=""{root.xmlns}""", If(String.IsNullOrEmpty(xmlns), "", $"xmlns=""{xmlns}"""))
             Else
                 If Not String.IsNullOrEmpty(xmlns) Then
                     Call ns.Replace(">", $" xmlns=""{xmlns}"">")
-                End If
-            End If
-
-            If Not String.IsNullOrEmpty(root.xlink) Then
-                Call ns.Replace($"xmlns:xlink=""{root.xlink}""", If(String.IsNullOrEmpty(xlink), "", $"xmlns:xlink=""{xlink}"""))
-            Else
-                If Not String.IsNullOrEmpty(xlink) Then
-                    Call ns.Replace(">", $" xmlns:xlink=""{xlink}"">")
                 End If
             End If
 

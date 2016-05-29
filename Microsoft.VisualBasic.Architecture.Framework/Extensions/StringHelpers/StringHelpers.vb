@@ -5,12 +5,25 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
 ''' </summary>
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
+
+    <Extension>
+    Public Function GetTagValue(s As String, Optional delimiter As String = " ") As NamedValue(Of String)
+        Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
+        If p = 0 Then
+            Return New NamedValue(Of String)("", s)
+        Else
+            Dim key As String = Mid(s, 1, p)
+            Dim value As String = Mid(s, p + 1)
+            Return New NamedValue(Of String)(key, value)
+        End If
+    End Function
 
     ''' <summary>
     ''' Shortcuts for method <see cref="String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
