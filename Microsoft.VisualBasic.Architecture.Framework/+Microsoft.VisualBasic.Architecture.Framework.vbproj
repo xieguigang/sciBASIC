@@ -318,6 +318,7 @@
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\FormattedParser.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
+    <Compile Include="Tools\Win32\PriorityClass.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />
     <None Include="app.config" />

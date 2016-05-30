@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine
 
@@ -19,9 +20,12 @@ Namespace CommandLine
         <Extension> Public Function GetProc(CLI As String) As Process
             Dim CLICompared As CommandLine = CLI
             Dim lstProc As Process() = System.Diagnostics.Process.GetProcesses
-            Dim LQuery = (From proc As Process In lstProc
-                          Where CLITools.Equals(CLICompared, TryParse(proc.StartInfo.Arguments))  ' 由于参数的顺序可能会有些不一样，所以不可以直接按照字符串比较来获取
-                          Select proc).FirstOrDefault
+            Dim LQuery As Process =
+                LinqAPI.DefaultFirst(Of Process) <= From proc As Process
+                                                    In lstProc
+                                                    Let args = TryParse(proc.StartInfo.Arguments)
+                                                    Where CLITools.Equals(CLICompared, args)  ' 由于参数的顺序可能会有些不一样，所以不可以直接按照字符串比较来获取
+                                                    Select proc
             Return LQuery
         End Function
 
@@ -34,12 +38,13 @@ Namespace CommandLine
         Public Function FindProc(IO As IIORedirectAbstract) As Process
             Dim proc As System.Diagnostics.Process = IO.CLIArguments.GetProc
             If proc Is Nothing Then '空值说明进程还没有启动或者已经终止了，所以查找将不会查找到进程的信息
-                Dim msg As String =
-                    $"Unable to found associated process {IO.ToString}, it maybe haven't been started or already terminated."
+                Dim msg As String = String.Format(NoProcessFound, IO.ToString)
                 Call VBDebugger.Warning(msg)
             End If
 
             Return proc
         End Function
+
+        Const NoProcessFound As String = "Unable to found associated process {0}, it maybe haven't been started or already terminated."
     End Module
 End Namespace
