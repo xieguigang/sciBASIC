@@ -1606,7 +1606,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("Elements.Randomize")>
-    <Extension> Public Function Randomize(Of T)(source As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function Randomize(Of T)(source As IEnumerable(Of T)) As T()
 #Else
     ''' <summary>
     ''' Return a collection with randomize element position in <paramref name="Collection">the original collection</paramref>.(从原有序序列中获取一个随机元素的序列)
@@ -1615,24 +1615,24 @@ Public Module Extensions
     ''' <param name="Collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function RandomizeElements(Of T)(Collection As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function Randomize(Of T)(source As IEnumerable(Of T)) As T()
 #End If
         Call VBMath.Randomize()
 
-        Dim ChunkBuffer As T() = New T(source.Count - 1) {}
-        Dim TempList = source.ToList
+        Dim tmp As New List(Of T)(source)
+        Dim buf As T() = New T(tmp.Count - 1) {}
         Dim Seeds As Integer = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / CLng(Integer.MaxValue) * 2
         Dim Rand As New Random(Seed:=Seeds)
-        Dim Length As Integer = TempList.Count - 1
+        Dim Length As Integer = tmp.Count - 1
 
-        For i As Integer = 0 To ChunkBuffer.Length - 1
+        For i As Integer = 0 To buf.Length - 1
             Dim index As Integer = Rand.Next(minValue:=0, maxValue:=Length)
-            ChunkBuffer(i) = TempList(index)
-            Call TempList.RemoveAt(index)
+            buf(i) = tmp(index)
+            Call tmp.RemoveAt(index)
             Length -= 1
         Next
 
-        Return ChunkBuffer
+        Return buf
     End Function
 
     <ExportAPI("Sequence.Random")>
