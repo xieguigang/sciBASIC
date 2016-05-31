@@ -99,7 +99,11 @@ Namespace Text.Xml
                 Dim rootNs As String = root(nsValue.Name)
 
                 If Not String.IsNullOrEmpty(rootNs) Then
-                    Call ns.Replace($"{nsValue.Name}=""{rootNs}""", If(String.IsNullOrEmpty(nsValue.x), "", $"{nsValue.Name}=""{nsValue.x}"""))
+                    Dim s As String =
+                        If(String.IsNullOrEmpty(nsValue.x),
+                        "",
+                        $"{nsValue.Name}=""{nsValue.x}""")
+                    Call ns.Replace($"{nsValue.Name}=""{rootNs}""", s)
                 Else
                     If Not String.IsNullOrEmpty(nsValue.x) Then
                         Call ns.Replace(">", $" {nsValue.Name}=""{nsValue.x}"">")
@@ -107,12 +111,12 @@ Namespace Text.Xml
                 End If
             Next
 
-            If Not String.IsNullOrEmpty(root.xmlns) Then
-                Call ns.Replace($"xmlns=""{root.xmlns}""", If(String.IsNullOrEmpty(xmlns), "", $"xmlns=""{xmlns}"""))
-            Else
-                If Not String.IsNullOrEmpty(xmlns) Then
-                    Call ns.Replace(">", $" xmlns=""{xmlns}"">")
+            If Not String.IsNullOrEmpty(xmlns) Then
+                If Not String.IsNullOrEmpty(root.xmlns) Then
+                    Call ns.Replace($"xmlns=""{root.xmlns}""", "")
                 End If
+
+                Call ns.Replace(">", $" xmlns=""{xmlns}"">")
             End If
 
             Call xml.Replace(rs, ns.ToString)
