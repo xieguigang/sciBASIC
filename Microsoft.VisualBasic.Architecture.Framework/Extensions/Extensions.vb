@@ -2031,14 +2031,16 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' This object collection is a null object or contains zero count items.(判断某一个对象集合是否为空)
+    ''' This object collection is a null object or contains zero count items.
+    ''' NOTE: Do not use this function on the Linq Expression for the performance issue.
+    ''' (判断某一个对象集合是否为空，请注意，由于在这里是使用了集合的Count进行判断是否有元素，所以这个函数可能不是太适合用于Linq的非立即查询)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function IsNullOrEmpty(Of T)(Collection As Generic.IEnumerable(Of T)) As Boolean
-        Return Collection Is Nothing OrElse Collection.Count = 0
+    <Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
+        Return source Is Nothing OrElse source.Count = 0
     End Function
 
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean
