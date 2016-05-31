@@ -1855,11 +1855,11 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function [AddHandle](Of THandle As IAddressHandle)(ByRef source As IEnumerable(Of THandle), Optional offset As Integer = 0) As THandle()
-        Dim list As New List(Of THandle)
+    <Extension> Public Function [AddHandle](Of T As IAddressHandle)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
+        Dim list As New List(Of T)
         Dim i As Integer = offset
 
-        For Each x As THandle In source
+        For Each x As T In source
             x.Address = i
             i += 1
             list += x
@@ -2005,18 +2005,18 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="remoteDuplicates">当这个参数为False的时候，出现重复的键名会抛出错误，当为True的时候，有重复的键名存在的话，可能会丢失一部分的数据</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of TKey, TValue)(Collection As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+    <Extension> Public Function ToDictionary(Of TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
                                                               Optional remoteDuplicates As Boolean = False) As Dictionary(Of TKey, TValue)
         If remoteDuplicates Then
             Dim hash As Dictionary(Of TKey, TValue) = New Dictionary(Of TKey, TValue)
 
-            For Each x In Collection
+            For Each x In source
                 If hash.ContainsKey(x.Key) Then
-                    Call Console.WriteLine("  " & "[Duplicated] " & x.Key.ToString)
+                    Call $"[Duplicated] {x.Key.ToString}".PrintException
                 Else
                     Call hash.Add(x.Key, x.Value)
                 End If
@@ -2025,14 +2025,14 @@ Public Module Extensions
             Return hash
         Else
             Dim Dictionary As Dictionary(Of TKey, TValue) =
-                Collection.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+                source.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
             Return Dictionary
         End If
     End Function
 
     ''' <summary>
     ''' This object collection is a null object or contains zero count items.
-    ''' NOTE: Do not use this function on the Linq Expression for the performance issue.
+    ''' NOTE: Do not applied this function on the Linq Expression due to the performance issue.
     ''' (判断某一个对象集合是否为空，请注意，由于在这里是使用了集合的Count进行判断是否有元素，所以这个函数可能不是太适合用于Linq的非立即查询)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
