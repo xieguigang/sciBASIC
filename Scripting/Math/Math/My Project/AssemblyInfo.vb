@@ -10,7 +10,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Math script")>
 <Assembly: AssemblyDescription("Math script engine")>
-<Assembly: AssemblyCompany("SMRUCC Inc.")>
+<Assembly: AssemblyCompany("123456789*8+9")>
 <Assembly: AssemblyProduct("Math")>
 <Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2013. All rights reserved.")>
 <Assembly: AssemblyTrademark("VisualBasic")>
