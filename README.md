@@ -1,6 +1,7 @@
 # VisualBasic_AppFramework
 
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
+![(๑•̀ㅂ•́)و✧](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/badge.png)
 
 A language feature runtime library for server side CLI application. This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the VisualBasic programming language syntax and the utility code function. Makes the VisualBasic programming style more modernization by using this runtime library framework.
 
