@@ -1,4 +1,4 @@
-# VisualBasic_AppFramework
+# Microsoft VisualBasic App Runtime
 
 ![(๑•̀ㅂ•́)و✧](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
