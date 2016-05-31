@@ -1,4 +1,6 @@
-# Programming Guidelines for VisualBasic_AppFramework
+# Programming Guidelines for VisualBasic App
+
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/badge.png)
 
 ## Authors
 1. [@xieguigang](https://github.com/xieguigang) ([xie.guigang@gcmodeller.org](mailto://xie.guigang@gcmodeller.org))
