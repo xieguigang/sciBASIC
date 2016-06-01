@@ -125,7 +125,7 @@ Namespace ComponentModel.DataSourceModel
                 Dim LQuery As Object() =
                     LinqAPI.Exec(Of Object) <= From column As BindProperty(Of DataFrameColumnAttribute)
                                                In fields
-                                               Select column.Property.GetValue(row)
+                                               Select column.Property.GetValue(row, Nothing)
                 Call DataTable.Rows.Add(LQuery)
             Next
 
