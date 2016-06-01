@@ -241,6 +241,7 @@
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\IMatched.vb" />
     <Compile Include="ComponentModel\DataSource\Repository.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
@@ -543,7 +544,7 @@
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
     <Compile Include="Extensions\IO\PathSearchTool.vb" />
     <Compile Include="ComponentModel\Href.vb" />
-    <Compile Include="ComponentModel\DataSource\DataSource.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
     <Compile Include="ComponentModel\ValuePair\ValuePair.vb" />
     <Compile Include="Serialization\DumpData\DumpData.vb" />

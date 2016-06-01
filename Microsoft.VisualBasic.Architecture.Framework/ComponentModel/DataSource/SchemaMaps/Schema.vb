@@ -1,12 +1,15 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization
 
-Public Class Schema(Of T As Attribute)
+Namespace ComponentModel.DataSourceModel.SchemaMaps
 
-    Public Property SchemaName As String
-    Public Property Fields As BindProperty(Of T)()
+    Public Class Schema(Of T As Attribute)
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        Public Property SchemaName As String
+        Public Property Fields As BindProperty(Of T)()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+End Namespace
