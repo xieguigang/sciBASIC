@@ -20,6 +20,19 @@ Namespace SecurityString
             Return GetMd5Hash(input:=data)
         End Function
 
+        Public Function GetMd5Bytes(input As Byte()) As Byte()
+            If input.IsNullOrEmpty Then
+                Return {}
+            End If
+
+            Dim data As Byte() = md5Hash.ComputeHash(input)
+            Return data
+        End Function
+
+        Public Function GetMd5hashLong(input As Byte()) As Long
+            Return GetMd5Bytes(input).ToLong
+        End Function
+
         Public Function GetMd5Hash(input As Byte()) As String
             If input.IsNullOrEmpty Then
                 Return ""
