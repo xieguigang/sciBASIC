@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Security.Cryptography
+Imports System.Text
 
 Namespace SecurityString
 
@@ -29,6 +30,11 @@ Namespace SecurityString
             Return data
         End Function
 
+        ''' <summary>
+        ''' <see cref="MD5.ComputeHash"/> -> <see cref="ToLong"/>
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
         Public Function GetMd5hashLong(input As Byte()) As Long
             Return GetMd5Bytes(input).ToLong
         End Function
