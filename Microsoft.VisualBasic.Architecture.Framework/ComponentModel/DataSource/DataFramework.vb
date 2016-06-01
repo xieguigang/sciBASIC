@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
@@ -103,18 +104,27 @@ Namespace ComponentModel.DataSourceModel
         ''' (将目标对象集合转换为一个数据表对象，用作DataGridView控件的数据源)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="DataCollection"></param>
+        ''' <param name="source"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function CreateObject(Of T)(DataCollection As IEnumerable(Of T)) As DataTable
+        Public Function CreateObject(Of T)(source As IEnumerable(Of T)) As DataTable
             Dim Columns = __initSchema(GetType(T))
             Dim DataTable As DataTable = New DataTable
-            For Each column In Columns
-                Call DataTable.Columns.Add(column.Key.Name, column.Value.PropertyType)
+
+            For Each column In Columns.Values
+                Call DataTable.Columns.Add(
+                    column.Identity,
+                    column.Property.PropertyType)
             Next
 
-            For Each row In DataCollection
-                Dim LQuery As Object() = (From column In Columns Select column.Value.GetValue(row, Nothing)).ToArray
+            Dim fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)) =
+                Columns.Values
+
+            For Each row As T In source
+                Dim LQuery As Object() =
+                    LinqAPI.Exec(Of Object) <= From column As BindProperty(Of DataFrameColumnAttribute)
+                                               In fields
+                                               Select column.Property.GetValue(row)
                 Call DataTable.Rows.Add(LQuery)
             Next
 
@@ -136,11 +146,15 @@ Namespace ComponentModel.DataSourceModel
             Dim Schema As List(Of KeyValuePair(Of Integer, PropertyInfo)) =
                 New List(Of KeyValuePair(Of Integer, PropertyInfo))
             For Each column As DataColumn In DataTable.Columns
-                Dim LQuery = (From schemaColumn In Columns
-                              Where String.Equals(schemaColumn.Key.Name, column.ColumnName)
-                              Select schemaColumn.Value).FirstOrDefault
-                If Not LQuery Is Nothing Then
-                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery))
+                Dim LQuery As BindProperty(Of DataFrameColumnAttribute) =
+                    LinqAPI.DefaultFirst(Of BindProperty(Of DataFrameColumnAttribute)) <=
+                        From schemaColumn As BindProperty(Of DataFrameColumnAttribute)
+                        In Columns.Values
+                        Where String.Equals(schemaColumn.Identity, column.ColumnName)
+                        Select schemaColumn
+
+                If Not LQuery.IsNull Then
+                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.Property))
                 End If
             Next
 
@@ -160,7 +174,7 @@ Namespace ComponentModel.DataSourceModel
             Return rtvlData
         End Function
 
-        Private Function __initSchema(type As Type) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+        Private Function __initSchema(type As Type) As Dictionary(Of String, BindProperty(Of DataFrameColumnAttribute))
             Dim DataColumnType As Type = GetType(DataFrameColumnAttribute)
             Dim props As PropertyInfo() = type.GetProperties
             Dim Columns = (From [property] As PropertyInfo
@@ -188,7 +202,9 @@ Namespace ComponentModel.DataSourceModel
                 Call Columns.Add(col) '将未建立索引的对象放置到列表的最末尾
             Next
 
-            Return Columns.ToDictionary(Function(x) x.colMaps, Function(x) x.property)
+            Return Columns.ToDictionary(
+                Function(x) x.colMaps.Name,
+                Function(x) New BindProperty(Of DataFrameColumnAttribute)(x.colMaps, x.property))
         End Function
     End Module
 End Namespace

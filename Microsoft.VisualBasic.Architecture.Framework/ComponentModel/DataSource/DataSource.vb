@@ -10,6 +10,9 @@ Namespace ComponentModel.DataSourceModel
     Public Structure BindProperty(Of T As Attribute)
         Implements IReadOnlyId
 
+        ''' <summary>
+        ''' The property object that bind with its custom attribute <see cref="Column"/> of type <typeparamref name="T"/>
+        ''' </summary>
         Public [Property] As PropertyInfo
         Public Column As T
 
@@ -23,11 +26,30 @@ Namespace ComponentModel.DataSourceModel
             End Get
         End Property
 
+        ''' <summary>
+        ''' The map name or the <see cref="PropertyInfo.Name"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
             Get
                 Return [Property].Name
             End Get
         End Property
+
+        ''' <summary>
+        ''' Is this map data is null on its attribute or property data?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsNull As Boolean
+            Get
+                Return [Property] Is Nothing OrElse Column Is Nothing
+            End Get
+        End Property
+
+        Sub New(attr As T, prop As PropertyInfo)
+            Column = attr
+            [Property] = prop
+        End Sub
 
         Public Sub SetValue(obj As Object, value As Object)
             Call [Property].SetValue(obj, value, Nothing)
@@ -37,6 +59,10 @@ Namespace ComponentModel.DataSourceModel
             Return [Property].GetValue(x, Nothing)
         End Function
 
+        ''' <summary>
+        ''' Display this schema maps in Visualbasic style.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
         End Function

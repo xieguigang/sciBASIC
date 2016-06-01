@@ -24,6 +24,14 @@ Public Module Mappings
         End If
     End Function
 
+    ''' <summary>
+    ''' 这个只是得到最上面的一层属性值
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="type"></param>
+    ''' <param name="getFieldName"></param>
+    ''' <param name="explict"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetFields(Of T As Attribute)(
                                  type As Type,
