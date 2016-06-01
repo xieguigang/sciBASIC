@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language.LinqAPIHelpers
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Language
 
@@ -53,9 +54,34 @@ Namespace Language
         Public Function BuildHash(Of T As sIdEnumerable)() As BuildHashHelper(Of String, T, T)
             Return New BuildHashHelper(Of String, T, T)(Function(x) x.Identifier, Function(x) x)
         End Function
+
+        Public Function Takes(Of T)(n As Integer) As TakeHelper(Of T)
+            Return New TakeHelper(Of T)(n)
+        End Function
     End Module
 
     Namespace LinqAPIHelpers
+
+        Public Structure TakeHelper(Of T)
+
+            Public ReadOnly Property n As Integer
+
+            Sub New(n As Integer)
+                Me.n = n
+            End Sub
+
+            Public Overrides Function ToString() As String
+                Return Me.GetJson
+            End Function
+
+            Public Overloads Shared Operator <=(num As TakeHelper(Of T), source As IEnumerable(Of T)) As IEnumerable(Of T)
+                Return source.Take(num.n)
+            End Operator
+
+            Public Overloads Shared Operator >=(num As TakeHelper(Of T), source As IEnumerable(Of T)) As IEnumerable(Of T)
+                Throw New NotSupportedException
+            End Operator
+        End Structure
 
         ' Summary:
         '     Creates a System.Collections.Generic.Dictionary`2 from an System.Collections.Generic.IEnumerable`1
