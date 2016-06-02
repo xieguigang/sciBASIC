@@ -92,7 +92,7 @@ Namespace Text
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function DetectTextFileEncoding(InputFilename As String, Optional DefaultEncoding As Encoding = Nothing) As Encoding
-            Using textfileStream As FileStream = File.OpenRead(InputFilename)
+            Using textfileStream As FileStream = IO.File.OpenRead(InputFilename)
                 If DefaultEncoding Is Nothing Then
                     DefaultEncoding = System.Text.Encoding.Default
                 End If

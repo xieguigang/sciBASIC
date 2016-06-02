@@ -120,7 +120,7 @@ Public Module GZip
             Case Overwrite.IfNewer
                 'Checks to see if the file exists, and if so, if it should
                 'be overwritten
-                If Not File.Exists(destinationFileName) OrElse File.GetLastWriteTime(destinationFileName) < file__1.LastWriteTime Then
+                If Not IO.File.Exists(destinationFileName) OrElse IO.File.GetLastWriteTime(destinationFileName) < file__1.LastWriteTime Then
                     'Either the file didn't exist or this file is newer, so
                     'we will extract it and overwrite any existing file
                     file__1.ExtractToFile(destinationFileName, True)
@@ -129,7 +129,7 @@ Public Module GZip
             Case Overwrite.Never
                 'Put the file in if it is new but ignores the 
                 'file if it already exists
-                If Not File.Exists(destinationFileName) Then
+                If Not IO.File.Exists(destinationFileName) Then
                     file__1.ExtractToFile(destinationFileName)
                 End If
 
@@ -184,7 +184,7 @@ Public Module GZip
         Dim mode As ZipArchiveMode = ZipArchiveMode.Create
 
         'Determines if the zip file even exists
-        Dim archiveExists As Boolean = File.Exists(archiveFullName)
+        Dim archiveExists As Boolean = IO.File.Exists(archiveFullName)
 
         'Figures out what to do based upon our specified overwrite method
         Select Case action
@@ -199,7 +199,7 @@ Public Module GZip
                 'Deletes the file if it exists.  Either way, the default
                 'mode of Create is fine
                 If archiveExists Then
-                    File.Delete(archiveFullName)
+                    IO.File.Delete(archiveFullName)
                 End If
 
             Case ArchiveAction.[Error]
@@ -254,7 +254,7 @@ Public Module GZip
                                 'Deletes the file only if it is older than our file.
                                 'Note that the file will be ignored if the existing file
                                 'in the archive is newer.
-                                If fileInZip.LastWriteTime < File.GetLastWriteTime(file__2) Then
+                                If fileInZip.LastWriteTime < IO.File.GetLastWriteTime(file__2) Then
                                     fileInZip.Delete()
 
                                     'Adds the file to the archive

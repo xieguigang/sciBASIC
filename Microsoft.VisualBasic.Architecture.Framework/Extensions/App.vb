@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Security
 Imports System.Text
@@ -53,6 +54,9 @@ Public Module App
             Return My.Computer.FileSystem.SpecialDirectories.Desktop
         End Get
     End Property
+
+    Public ReadOnly Property StdErr As StreamWriter =
+        New StreamWriter(Console.OpenStandardError)
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
