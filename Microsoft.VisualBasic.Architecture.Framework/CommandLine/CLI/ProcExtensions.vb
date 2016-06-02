@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine
@@ -46,5 +47,57 @@ Namespace CommandLine
         End Function
 
         Const NoProcessFound As String = "Unable to found associated process {0}, it maybe haven't been started or already terminated."
+
+        Public Delegate Sub dReadLine(strLine As String)
+
+        ''' <summary>
+        ''' 执行CMD命令
+        ''' Example:excuteCommand("ipconfig", "/all", AddressOf PrintMessage)
+        ''' </summary>
+        ''' <param name="app">命令</param>
+        ''' <param name="args">参数</param>
+        ''' <param name="onReadLine">行信息（委托）</param>
+        ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
+        Public Sub ExecSub(app As String, args As String, onReadLine As dReadLine, Optional [in] As String = "")
+            Dim p As New Process
+            p.StartInfo = New ProcessStartInfo
+            p.StartInfo.FileName = app
+            p.StartInfo.Arguments = args
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+            p.StartInfo.RedirectStandardOutput = True
+            p.StartInfo.RedirectStandardInput = True
+            p.StartInfo.UseShellExecute = False
+            p.StartInfo.CreateNoWindow = True
+            p.Start()
+
+            Dim reader As StreamReader = p.StandardOutput
+            Dim line As String = reader.ReadLine
+
+            If Not String.IsNullOrEmpty([in]) Then
+                Dim writer As StreamWriter = p.StandardInput
+                Call writer.WriteLine([in])
+                Call writer.FlushAsync()
+            End If
+
+            While Not reader.EndOfStream
+                onReadLine(line)
+                line = reader.ReadLine()
+            End While
+
+            Call p.WaitForExit()
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="app">The file path of the application to be called by its parent process.</param>
+        ''' <param name="args">CLI arguments</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function [Call](app As String, args As String, Optional [in] As String = "") As String
+            Dim STDout As New List(Of String)
+            Call ExecSub(app, args, AddressOf STDout.Add, [in])
+            Return STDout.JoinBy(vbCrLf)
+        End Function
     End Module
 End Namespace

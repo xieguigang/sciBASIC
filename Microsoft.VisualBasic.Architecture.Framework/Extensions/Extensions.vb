@@ -608,16 +608,17 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串
+    ''' This is a safe function: if the source string collection is nothing, then whistle function will returns a empty string instead of throw exception. 
+    ''' (<see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串)
     ''' </summary>
-    ''' <param name="Tokens"></param>
+    ''' <param name="tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(Tokens As IEnumerable(Of String), delimiter As String) As String
-        If Tokens Is Nothing Then
+    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter As String) As String
+        If tokens Is Nothing Then
             Return ""
         End If
-        Return String.Join(delimiter, Tokens.ToArray)
+        Return String.Join(delimiter, tokens.ToArray)
     End Function
 
     ''' <summary>
@@ -626,18 +627,18 @@ Public Module Extensions
     ''' <param name="values"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(values As Generic.IEnumerable(Of Integer), delimiter As String) As String
+    <Extension> Public Function JoinBy(values As IEnumerable(Of Integer), delimiter As String) As String
         If values Is Nothing Then
             Return ""
         End If
         Return String.Join(delimiter, values.ToArray(Function(n) CStr(n)))
     End Function
 
-    <Extension> Public Function Join(Of T)(Collection As Generic.IEnumerable(Of T), data As T) As List(Of T)
-        Return Collection.Join({data})
+    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As T) As List(Of T)
+        Return source.Join({data})
     End Function
 
-    <Extension> Public Function Join(Of T)(obj As T, collection As Generic.IEnumerable(Of T)) As List(Of T)
+    <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
         Dim list As New List(Of T) From {obj}
         Call list.AddRange(collection)
         Return list
