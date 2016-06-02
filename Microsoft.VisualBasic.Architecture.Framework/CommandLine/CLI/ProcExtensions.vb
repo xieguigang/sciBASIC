@@ -76,7 +76,7 @@ Namespace CommandLine
             If Not String.IsNullOrEmpty([in]) Then
                 Dim writer As StreamWriter = p.StandardInput
                 Call writer.WriteLine([in])
-                Call writer.FlushAsync()
+                Call writer.Flush()
             End If
 
             While Not reader.EndOfStream
