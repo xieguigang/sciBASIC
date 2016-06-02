@@ -3,6 +3,18 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
 
+    <Extension>
+    Public Sub Memset(Of T)(ByRef array As T(), o As T, len As Integer)
+        For i As Integer = 0 To len - 1
+            array(i) = o
+        Next
+    End Sub
+
+    <Extension>
+    Public Sub Memset(ByRef s As String, c As Char, len As Integer)
+        s = New String(c, len)
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
