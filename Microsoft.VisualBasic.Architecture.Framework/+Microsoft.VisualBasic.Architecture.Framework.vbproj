@@ -304,6 +304,7 @@
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
+    <None Include="Parallel\Threads\ParallelLinq.md" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />

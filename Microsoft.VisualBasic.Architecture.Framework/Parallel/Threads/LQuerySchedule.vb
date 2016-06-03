@@ -8,33 +8,18 @@ Namespace Parallel
     ''' 并行版本的LINQ查询和原始的线程操作相比具有一些性能上面的局限性)
     ''' </summary>
     ''' <remarks>在使用Parallel LINQ的时候，请务必要注意不能够使用Let语句操作共享变量，因为排除死锁的开销比较大</remarks>
-    Public Class LQuerySchedule : Implements System.IDisposable
+    Public Module LQuerySchedule
 
         ''' <summary>
         ''' 查询操作超时的时间阈值，单位为秒
         ''' </summary>
         ''' <remarks></remarks>
-        Dim _TimeOut As Integer
+        Public Property TimeOut As Integer
         ''' <summary>
         ''' 查询操作的线程数目
         ''' </summary>
         ''' <remarks></remarks>
-        Dim _n As Integer
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="timeout">查询操作超时的时间阈值，单位为秒</param>
-        ''' <param name="n">这个参数通常是指CPU的核心数目，或者查询任务执行的最大线程数目</param>
-        ''' <remarks></remarks>
-        Sub New(Timeout As Integer, Optional n As Integer = -1)
-            _n = n
-            _TimeOut = Timeout
-
-            If n <= 0 Then
-                _n = 12  '默认是12条线程
-            End If
-        End Sub
+        Public Property NumThreads As Integer
 
         ''' <summary>
         ''' Get the number of processors on the current machine.(获取当前的系统主机的CPU核心数)
@@ -42,7 +27,7 @@ Namespace Parallel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared ReadOnly Property CPU_NUMBER As Integer
+        Public ReadOnly Property CPU_NUMBER As Integer
             Get
                 Return Environment.ProcessorCount
             End Get
@@ -53,7 +38,7 @@ Namespace Parallel
         ''' </summary>
         ''' <param name="n"></param>
         ''' <returns></returns>
-        Public Shared Function AutoConfig(n As Integer) As Integer
+        Public Function AutoConfig(n As Integer) As Integer
             If n < 0 Then
                 Return CPU_NUMBER
             ElseIf n = 0 OrElse n = 1 Then
@@ -69,7 +54,7 @@ Namespace Parallel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared ReadOnly Property Recommended_NUM_THREADS As Integer
+        Public ReadOnly Property Recommended_NUM_THREADS As Integer
             Get
                 Return Environment.ProcessorCount * 10
             End Get
@@ -84,7 +69,7 @@ Namespace Parallel
             End Function
         End Structure
 
-        Public Shared Function get_LQueryCacheHandles(Of T)(data As Generic.IEnumerable(Of T)) As LQueryCacheHandle(Of T)()
+        Public Function get_LQueryCacheHandles(Of T)(data As Generic.IEnumerable(Of T)) As LQueryCacheHandle(Of T)()
             Return (From i As Integer In data.Sequence Select New LQueryCacheHandle(Of T) With {.p_Handle = i, .data = data(i)}).ToArray
         End Function
 
@@ -100,7 +85,7 @@ Namespace Parallel
             Return ChunkBuffer
         End Function
 
-        Public Shared Function InvokeParallelLQuery(Of T, TOut)(data As Generic.IEnumerable(Of LQueryCacheHandle(Of T)), invoke As Func(Of T, TOut)) As TOut()
+        Public Function InvokeParallelLQuery(Of T, TOut)(data As Generic.IEnumerable(Of LQueryCacheHandle(Of T)), invoke As Func(Of T, TOut)) As TOut()
             Dim LQuery As LQueryHandle(Of T, TOut)() = __startLQuery(Of T, TOut)(data, invoke)
             Dim get_LQueryResult As LQueryResult(Of TOut)() = (From query_HWND As LQueryHandle(Of T, TOut) In LQuery.AsParallel
                                                                Let p As Integer = query_HWND.p
@@ -147,10 +132,10 @@ Namespace Parallel
         End Function
 
         Public Function InvokeQuery(Of T, Out)(source As IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
-            Dim ChunkTemp As T()() = source.Split(source.Count / Me._n)
+            Dim ChunkTemp As T()() = source.Split(source.Count / NumThreads)
             Dim LQuery As Out() = (From Chunk As T()
                                    In ChunkTemp.AsParallel
-                                   Select InternalInvokeQuery(Of T, Out)(Chunk, invoke, [Default])).ToArray.MatrixToVector
+                                   Select InternalInvokeQuery(Of T, Out)(Chunk, invoke, [Default])).MatrixToVector
             Return LQuery
         End Function
 
@@ -162,7 +147,7 @@ Namespace Parallel
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Shared Function __startLQuery(Of T, TOut)(source As Generic.IEnumerable(Of T), invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
+        Private Function __startLQuery(Of T, TOut)(source As Generic.IEnumerable(Of T), invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
             Dim LQuery As LQueryHandle(Of T, TOut)() =
                 (From p As Integer In source.Sequence
                  Let item As T = source(p)
@@ -187,7 +172,7 @@ Namespace Parallel
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Shared Function __startLQuery(Of T, TOut)(source As Generic.IEnumerable(Of LQueryCacheHandle(Of T)),
+        Private Function __startLQuery(Of T, TOut)(source As Generic.IEnumerable(Of LQueryCacheHandle(Of T)),
                                                           invoke As Func(Of T, TOut)) As LQueryHandle(Of T, TOut)()
             Dim LQuery As LQueryHandle(Of T, TOut)() =
                 (From cache As LQueryCacheHandle(Of T)
@@ -257,13 +242,13 @@ Namespace Parallel
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function InvokeQuery(Of T, Out)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, Out)) As Out()
+        Public Function InvokeQuery(Of T, Out)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, Out)) As Out()
             Dim LQuery = (From obj As T In Collection Select invoke(obj)).ToArray
             Return LQuery
         End Function
 
         Public Function InvokeQuery_p(Of T, Out)(Collection As Generic.IEnumerable(Of T), invoke As Func(Of T, Out), get_Default As Func(Of T, Out)) As Out()
-            Dim ChunkTemp = Collection.Split(Collection.Count / Me._n)
+            Dim ChunkTemp = Collection.Split(Collection.Count / NumThreads)
             Dim LQuery = (From Chunk In ChunkTemp.AsParallel Select InternalInvokeQuery_p(Of T, Out)(Chunk, invoke, get_Default)).ToArray.MatrixToVector
             Return LQuery
         End Function
@@ -288,10 +273,6 @@ Namespace Parallel
                 Return String.Format("[{0}] ==> {1}", p_Handle, Result.ToString)
             End Function
         End Structure
-
-        Public Overrides Function ToString() As String
-            Return String.Format("TIME_OUT query schedule operations in time threshold {1}(s).", _TimeOut)
-        End Function
 
         Private Function InternalTimeoutQuery(Of T, Out)(invoke As Func(Of T, Out), handle As System.IAsyncResult, [default] As Func(Of Out), Thread_ID As String) As Out
             For p As Integer = 0 To _TimeOut
@@ -324,7 +305,7 @@ END_INVOKE:     Dim rtvl As Out = invoke.EndInvoke(handle)
         ''' <param name="Input"></param>
         ''' <param name="Handle"></param>
         ''' <returns></returns>
-        Public Shared Function LQuery(Of T, TOut)(Input As Generic.IEnumerable(Of T), Handle As Func(Of T, TOut)) As TOut()
+        Public Function LQuery(Of T, TOut)(Input As Generic.IEnumerable(Of T), Handle As Func(Of T, TOut)) As TOut()
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Start schedule task pool for {GetType(T).FullName }   ---->  {GetType(TOut).FullName }")
             Dim HandleHash = (From HandleData As T In Input Select OutAr = New Tasks.Task(Of T, TOut)(HandleData, Handle).Start).ToArray
             Call Console.WriteLine($"[DEBUG {Now.ToString }] Start task pool job completed!, waiting for data processing....")
@@ -332,60 +313,5 @@ END_INVOKE:     Dim rtvl As Out = invoke.EndInvoke(handle)
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Task job done!")
             Return Out
         End Function
-
-#Region "IDisposable Support"
-        Private disposedValue As Boolean ' To detect redundant calls
-
-        ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
-            If Not Me.disposedValue Then
-                If disposing Then
-                    ' TODO: dispose managed state (managed objects).
-                End If
-
-                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-                ' TODO: set large fields to null.
-            End If
-            Me.disposedValue = True
-        End Sub
-
-        ' TODO: override Finalize() only if Dispose(      disposing As Boolean) above has code to free unmanaged resources.
-        'Protected Overrides Sub Finalize()
-        '    ' Do not change this code.  Put cleanup code in Dispose(      disposing As Boolean) above.
-        '    Dispose(False)
-        '    MyBase.Finalize()
-        'End Sub
-
-        ' This code added by Visual Basic to correctly implement the disposable pattern.
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-            Dispose(True)
-            GC.SuppressFinalize(Me)
-        End Sub
-#End Region
-
-        ''' <summary>
-        ''' DEBUG
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function PBS_TEST() As String
-            Dim invoke_handle = Function(n As Integer) New Integer(n - 1) {}
-            Dim sw As Stopwatch = Stopwatch.StartNew
-            Dim LQuery = (From i As Integer In Integer.MaxValue.Sequence Let s As Integer() = invoke_handle(i) Select s).ToArray
-            Call Console.WriteLine("Normal {0}ms", sw.ElapsedMilliseconds)
-
-            Using PBS As LQuerySchedule = New LQuerySchedule(10 * 60, Recommended_NUM_THREADS)
-                sw = Stopwatch.StartNew
-                LQuery = LQuerySchedule.InvokeQuery(Integer.MaxValue.Sequence, invoke_handle)
-                Call Console.WriteLine("Timeout query {0}ms", sw.ElapsedMilliseconds)
-
-                sw = Stopwatch.StartNew
-                LQuery = PBS.InvokeQuery_UltraLargeSize(Integer.MaxValue.Sequence, invoke_handle)
-                Call Console.WriteLine("Ultra large size query {0}ms", sw.ElapsedMilliseconds)
-            End Using
-
-            Return ""
-        End Function
-    End Class
+    End Module
 End Namespace
