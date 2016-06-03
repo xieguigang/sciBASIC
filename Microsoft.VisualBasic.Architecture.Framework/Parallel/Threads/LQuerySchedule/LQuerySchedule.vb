@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace Parallel
+Namespace Parallel.Linq
 
     ''' <summary>
     ''' Parallel Linq query library for VisualBasic.
@@ -127,7 +127,7 @@ Namespace Parallel
         ''' <param name="invoke"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function InternalInvokeQuery(Of T, Out)(source As Generic.IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
+        Public Function InternalInvokeQuery(Of T, Out)(source As IEnumerable(Of T), invoke As Func(Of T, Out), Optional [Default] As Out = Nothing) As Out()
             Dim LQuery As LQueryHandle(Of T, Out)() = __startLQuery(Of T, Out)(source, invoke)
             Dim getLQueryResult As LQueryResult(Of Out)() =
                 (From query_HWND As LQueryHandle(Of T, Out) In LQuery.AsParallel

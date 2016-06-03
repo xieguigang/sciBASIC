@@ -562,6 +562,14 @@ Public Module Extensions
         Return source.SplitIterator(parTokens).ToArray
     End Function
 
+    ''' <summary>
+    ''' Performance the partitioning operation on the input sequence.
+    ''' (对所输入的序列进行分区操作，<paramref name="parTokens"/>函数参数是每一个分区里面的元素的数量)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="parTokens"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
         Dim buf As T() = source.ToArray
@@ -581,7 +589,7 @@ Public Module Extensions
                 buffer = New T(n - i - 1) {}
             End If
 
-            Array.ConstrainedCopy(buf, i, buffer, Scan0, buffer.Length)
+            Call Array.ConstrainedCopy(buf, i, buffer, Scan0, buffer.Length)
             Yield buffer
 
             count += 1
