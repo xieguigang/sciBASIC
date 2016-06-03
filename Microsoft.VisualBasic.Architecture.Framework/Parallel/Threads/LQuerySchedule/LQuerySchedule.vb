@@ -264,7 +264,7 @@ Namespace Parallel.Linq
         End Function
 
         Private Structure LQueryHandle(Of T, TOut)
-            Dim Handle As System.IAsyncResult
+            Dim Handle As IAsyncResult
             Dim TID As String
             Dim Query As Func(Of T, TOut)
             Dim Source As T
@@ -308,20 +308,28 @@ END_INVOKE:     Dim rtvl As Out = invoke.EndInvoke(handle)
         End Function
 
         ''' <summary>
-        ''' .NET 4.6之中的并行LINQ失效了？？？？？？
+        ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="Input"></param>
-        ''' <param name="Handle"></param>
+        ''' <param name="inputs"></param>
+        ''' <param name="task"></param>
         ''' <returns></returns>
-        Public Function LQuery(Of T, TOut)(Input As Generic.IEnumerable(Of T), Handle As Func(Of T, TOut)) As TOut()
-            Call Console.WriteLine($"[DEBUG {Now.ToString}] Start schedule task pool for {GetType(T).FullName }   ---->  {GetType(TOut).FullName }")
-            Dim HandleHash = (From HandleData As T In Input Select OutAr = New Tasks.Task(Of T, TOut)(HandleData, Handle).Start).ToArray
-            Call Console.WriteLine($"[DEBUG {Now.ToString }] Start task pool job completed!, waiting for data processing....")
-            Dim Out = (From HandleHashAr In HandleHash Select HandleHashAr.GetValue).ToArray
-            Call Console.WriteLine($"[DEBUG {Now.ToString}] Task job done!")
-            Return Out
+        Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T), task As Func(Of T, TOut), Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
+            Call $"Start schedule task pool for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
+
+            Dim buf = TaskPartitions.Partitioning(inputs, parTokens, task)
+            Dim LQueryInvoke = From part As Func(Of TOut())
+                               In buf.AsParallel
+                               Select part()
+
+            For Each part As TOut() In LQueryInvoke
+                For Each x As TOut In part
+                    Yield x
+                Next
+            Next
+
+            Call $"Task job done!".__DEBUG_ECHO
         End Function
     End Module
 End Namespace

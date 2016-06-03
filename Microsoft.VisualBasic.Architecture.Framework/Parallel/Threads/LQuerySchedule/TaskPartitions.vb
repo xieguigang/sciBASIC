@@ -9,6 +9,44 @@ Namespace Parallel.Linq
     Public Module TaskPartitions
 
         ''' <summary>
+        ''' Performance the partitioning operation on the input sequence.
+        ''' (请注意，这个函数适用于数量非常多的序列。对所输入的序列进行分区操作，<paramref name="parTokens"/>函数参数是每一个分区里面的元素的数量)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="parTokens"></param>
+        ''' <returns></returns>
+        ''' <remarks>对于数量较少的序列，可以使用<see cref="Extensions.SplitIterator(Of T)(IEnumerable(Of T), Integer)"/>进行分区操作，
+        ''' 该函数使用数组的<see cref="Array.ConstrainedCopy(Array, Integer, Array, Integer, Integer)"/>方法进行分区复制，效率较高
+        ''' 
+        ''' 由于本函数需要处理大量的数据，使用Array的方法会内存占用较厉害，所以在这里更改为List操作以降低内存的占用
+        ''' </remarks>
+        <Extension>
+        Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
+            Dim buf As New List(Of T)
+            Dim n As Integer = 0
+            Dim parts As Integer
+
+            For Each x As T In source
+                If n = parTokens Then
+                    Yield buf.ToArray
+                    buf.Clear()
+                    n = 0
+                    parts += 1
+                End If
+
+                buf.Add(x)
+                n += 1
+            Next
+
+            If buf.Count > 0 Then
+                Yield buf.ToArray
+            End If
+
+            Call $"Large data set data partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
+        End Function
+
+        ''' <summary>
         ''' 进行分区之后返回一个长时间的任务组合
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
