@@ -2,75 +2,12 @@
 
 Namespace Parallel.Tasks
 
-    Public Delegate Function BackgroundTask(Of T)() As T
-
-    Friend Class __backgroundTask(Of T)
-
-        Public ReadOnly Property IsCompleted As Boolean
-        Public ReadOnly Property IsRunning As Boolean
-        Public ReadOnly Property Value As T
-            Get
-                Call Start()
-                Call __waitComplete()
-                Return __getValue
-            End Get
-        End Property
-
-        Public ReadOnly Property TaskHandle As BackgroundTask(Of T)
-
-        ReadOnly _taskThread As Threading.Thread
-
-        Dim __getValue As T
-
-        Public ReadOnly Property ExecuteException As Exception
-
-        Public Overrides Function ToString() As String
-            Return TaskHandle.ToString
-        End Function
-
-        Private Sub __runTask()
-            _IsRunning = True
-            _IsCompleted = False
-            Try
-                __getValue = _TaskHandle()
-            Catch ex As Exception
-                _ExecuteException =
-                    New Exception(MethodBase.GetCurrentMethod.GetFullName, ex)
-            End Try
-            _IsRunning = False
-            _IsCompleted = True
-        End Sub
-
-        Private Sub __waitComplete()
-            Do While IsRunning
-                Call Threading.Thread.Sleep(10)
-            Loop
-        End Sub
-
-        Sub New(task As BackgroundTask(Of T))
-            _TaskHandle = task
-            _taskThread = New Threading.Thread(AddressOf __runTask)
-        End Sub
-
-        Public Sub Abort()
-            Call _taskThread.Abort()
-        End Sub
-
-        Public Function Start() As __backgroundTask(Of T)
-            If Not IsRunning Then
-                _taskThread.Start()
-            End If
-
-            Return Me
-        End Function
-    End Class
-
     ''' <summary>
     ''' 更加底层的线程模式，和LINQ相比不会受到CPU核心数目的限制
     ''' </summary>
     ''' <typeparam name="T">后台任务的执行参数</typeparam>
     ''' <typeparam name="TOut">后台任务的执行结果</typeparam>
-    Public Class Task(Of T, TOut) : Inherits ParallelTaskCommon
+    Public Class Task(Of T, TOut) : Inherits IParallelTask
 
         Dim _Handle As Func(Of T, TOut)
         Dim _Input As T
@@ -117,36 +54,14 @@ Namespace Parallel.Tasks
         End Sub
     End Class
 
-    Public MustInherit Class ParallelTaskCommon
+    ''' <summary>
+    ''' 这个是带有<see cref="Task.TaskJobComplete"/>事件的任务对象
+    ''' </summary>
+    Public Class Task : Inherits IParallelTask
 
-        Public ReadOnly Property TaskComplete As Boolean
-            Get
-                Return _TaskComplete
-            End Get
-        End Property
-
-        Public ReadOnly Property TaskRunning As Boolean
-            Get
-                Return _RunningTask
-            End Get
-        End Property
-
-        Protected _RunningTask As Boolean
-        Protected _TaskComplete As Boolean = False
-
-        Public Sub WaitForExit()
-            Do While Not TaskComplete
-                Call Threading.Thread.Sleep(1)
-            Loop
-
-            Call "Job DONE!".__DEBUG_ECHO
-        End Sub
-
-        Protected MustOverride Sub __invokeTask()
-    End Class
-
-    Public Class Task : Inherits ParallelTaskCommon
-
+        ''' <summary>
+        ''' 当所请求的任务执行完毕之后触发
+        ''' </summary>
         Public Event TaskJobComplete()
 
         Dim _Handle As Action
@@ -178,7 +93,7 @@ Namespace Parallel.Tasks
         End Sub
     End Class
 
-    Public Class Task(Of T) : Inherits ParallelTaskCommon
+    Public Class Task(Of T) : Inherits IParallelTask
 
         Dim _Input As T
         Dim _Handle As Action(Of T)

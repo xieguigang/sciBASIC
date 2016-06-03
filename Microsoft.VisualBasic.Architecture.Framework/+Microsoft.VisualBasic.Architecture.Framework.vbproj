@@ -305,6 +305,8 @@
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
     <None Include="Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
+    <Compile Include="Parallel\Tasks\IParallelTask.vb" />
+    <Compile Include="Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
