@@ -304,7 +304,7 @@
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
-    <None Include="Parallel\Threads\ParallelLinq.md" />
+    <None Include="Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />
@@ -525,7 +525,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsStandardDeviationP.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsVariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsVarianceP.vb" />
-    <Compile Include="Parallel\Threads\LQuerySchedule.vb" />
+    <Compile Include="Parallel\Threads\LQuerySchedule\LQuerySchedule.vb" />
     <Compile Include="CommandLine\Interpreters\ActivityInst.vb" />
     <Compile Include="Serialization\ConfigMappings\DynamicsConfiguration.vb" />
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
