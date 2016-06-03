@@ -1,43 +1,38 @@
-﻿'Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Parallel.Threads
 
-'Namespace Parallel
+Namespace Parallel
 
-'    Public Module PBSThreading
+    Public Module InvokesHelper
 
-'        ''' <summary>
-'        ''' 
-'        ''' </summary>
-'        ''' <param name="Handles"></param>
-'        ''' <param name="NumOfThreads">同时执行的句柄的数目</param>
-'        ''' <returns></returns>
-'        ''' <remarks></remarks>
-'        <Extension> Public Function Invoke([Handles] As System.Action(), NumOfThreads As Integer) As Integer
-'            Dim CurrentThreads As Integer
-'            Dim InternalStartThread As System.Action(Of System.Action) = Sub(Handle As System.Action)
-'                                                                             CurrentThreads += 1
-'                                                                             Call Handle()
-'                                                                             CurrentThreads -= 1
-'                                                                         End Sub '启动计算线程
-'            Dim InternalCreateThread As System.Action(Of System.Action) =
-'            Sub(Handle As System.Action) Call (New System.Threading.Thread(start:=Sub() InternalStartThread([Handle]))).Start()
-'            Dim St As Stopwatch = Stopwatch.StartNew
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="tasks"></param>
+        ''' <param name="numOfThreads">同时执行的句柄的数目</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension> Public Function Invoke(tasks As Action(), numOfThreads As Integer) As Integer
+            Dim getTask As Func(Of Action, Func(Of Integer)) =
+                Function(task) AddressOf New __invokeHelper With {
+                    .__task = task
+                }.Task
+            Dim invokes As Func(Of Integer)() =
+                LinqAPI.Exec(Of Func(Of Integer)) <= From action As Action
+                                                     In tasks
+                                                     Select getTask(action)
+            Return BatchTasks.BatchTask(invokes, numOfThreads).Length
+        End Function
 
-'            For Each Handle As System.Action In [Handles]
-'_AWAIT:         Call System.Threading.Thread.Sleep(1)
+        Private Structure __invokeHelper
 
-'                If CurrentThreads > NumOfThreads Then
-'                    Call System.Threading.Thread.Sleep(10)
-'                    GoTo _AWAIT
-'                End If
+            Dim __task As Action
 
-'                Call InternalCreateThread(Handle)
-'            Next
-
-'            Do While CurrentThreads > 0
-'                Call System.Threading.Thread.Sleep(10)
-'            Loop
-
-'            Return St.ElapsedTicks
-'        End Function
-'    End Module
-'End Namespace
+            Public Function Task() As Integer
+                Call __task()
+                Return 0
+            End Function
+        End Structure
+    End Module
+End Namespace

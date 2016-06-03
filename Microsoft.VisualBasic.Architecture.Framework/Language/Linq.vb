@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language.LinqAPIHelpers
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace Language
@@ -58,9 +59,38 @@ Namespace Language
         Public Function Takes(Of T)(n As Integer) As TakeHelper(Of T)
             Return New TakeHelper(Of T)(n)
         End Function
+
+        Public Function LQuery(Of T, out)(task As Func(Of T, out), Optional partTokens As Integer = 20000) As LQueryHelper(Of T, out)
+            Return New LQueryHelper(Of T, out) With {
+                .task = task,
+                .partTokens = partTokens
+            }
+        End Function
     End Module
 
     Namespace LinqAPIHelpers
+
+        Public Structure LQueryHelper(Of T, out)
+
+            Dim task As Func(Of T, out)
+            Dim partTokens As Integer
+
+            Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()
+                Return LQuerySchedule.LQuery(source, helper.task, helper.partTokens).ToArray
+            End Operator
+
+            Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()
+                Throw New NotSupportedException
+            End Operator
+
+            Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of IEnumerable(Of T))) As out()
+                Return helper <= source.MatrixAsIterator
+            End Operator
+
+            Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of IEnumerable(Of T))) As out()
+                Throw New NotSupportedException
+            End Operator
+        End Structure
 
         Public Structure TakeHelper(Of T)
 

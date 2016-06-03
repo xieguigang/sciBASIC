@@ -12,6 +12,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Parallel.Threads
 
 '                   _ooOoo_
 '                  o8888888o
@@ -721,7 +722,7 @@ Public Module App
                                                      Let io As IORedirectFile = App.SelfFolk(args)
                                                      Let task As Func(Of Integer) = AddressOf io.Run
                                                      Select task
-            Call ServicesFolk.BatchTask(Of Integer)(Tasks, parallel)
+            Call BatchTask(Of Integer)(Tasks, parallel)
         End If
 
         Return sw.ElapsedMilliseconds
