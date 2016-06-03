@@ -5,6 +5,7 @@ Imports System.Reflection
 Imports System.Threading
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace CommandLine
 
@@ -159,7 +160,7 @@ Namespace CommandLine
             If WaitForExit Then
                 Call ProcessInfo.WaitForExit()
                 Call Thread.Sleep(100)
-                Call OperationTimeOut.OperationTimeOut(AddressOf __tryGetSTDOUT, 2)  '将剩余的标准输出之中的数据完全的打印出来
+                Call OperationTimeOut(AddressOf __tryGetSTDOUT, 2)  '将剩余的标准输出之中的数据完全的打印出来
 
                 Return ProcessInfo.ExitCode
             Else

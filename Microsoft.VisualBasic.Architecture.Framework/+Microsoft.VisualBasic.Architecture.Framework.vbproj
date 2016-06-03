@@ -329,6 +329,7 @@
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\FormattedParser.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
+    <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />
@@ -407,7 +408,7 @@
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
     <Compile Include="Extensions\WebServices\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />
-    <Compile Include="Extensions\WindowsServices.vb" />
+    <Compile Include="Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="Extensions\StringHelpers\Compares\LevenshteinDistance.vb" />
