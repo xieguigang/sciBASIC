@@ -9,6 +9,10 @@ Namespace ComponentModel.Settings
     Public Class Settings(Of T As IProfile) : Inherits ConfigEngine
         Implements System.IDisposable
 
+        ''' <summary>
+        ''' The target object instance that provides the data source for this config engine.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property SettingsData As T
             Get
                 Return _SettingsData.As(Of T)
