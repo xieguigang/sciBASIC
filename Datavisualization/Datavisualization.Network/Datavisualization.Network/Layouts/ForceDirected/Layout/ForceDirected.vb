@@ -54,7 +54,7 @@ Namespace Layouts
         End Sub
 
         Public node As Node
-        Public point As Point
+        Public point As LayoutPoint
         Public distance As System.Nullable(Of Single)
     End Class
 
@@ -81,7 +81,7 @@ Namespace Layouts
         Public Property Threadshold() As Single Implements IForceDirected.Threadshold
         Public Property WithinThreashold() As Boolean Implements IForceDirected.WithinThreashold
 
-        Protected m_nodePoints As Dictionary(Of String, Point)
+        Protected m_nodePoints As Dictionary(Of String, LayoutPoint)
         Protected m_edgeSprings As Dictionary(Of String, Spring)
         Public Property graph() As IGraph Implements IForceDirected.graph
 
@@ -96,13 +96,13 @@ Namespace Layouts
             Stiffness = iStiffness
             Repulsion = iRepulsion
             Damping = iDamping
-            m_nodePoints = New Dictionary(Of String, Point)()
+            m_nodePoints = New Dictionary(Of String, LayoutPoint)()
             m_edgeSprings = New Dictionary(Of String, Spring)()
 
             Threadshold = 0.01F
         End Sub
 
-        Public MustOverride Function GetPoint(iNode As Node) As Point
+        Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint
 
         Public Function GetSpring(iEdge As Edge) As Spring
             If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
@@ -145,9 +145,9 @@ Namespace Layouts
         ' TODO: change this for group only after node grouping
         Protected Sub applyCoulombsLaw()
             For Each n1 As Node In graph.nodes
-                Dim point1 As Point = GetPoint(n1)
+                Dim point1 As LayoutPoint = GetPoint(n1)
                 For Each n2 As Node In graph.nodes
-                    Dim point2 As Point = GetPoint(n2)
+                    Dim point2 As LayoutPoint = GetPoint(n2)
                     If point1 IsNot point2 Then
                         Dim d As AbstractVector = point1.position - point2.position
                         Dim distance As Single = d.Magnitude() + 0.1F
@@ -202,7 +202,7 @@ Namespace Layouts
 
         Protected Sub attractToCentre()
             For Each n As Node In graph.nodes
-                Dim point As Point = GetPoint(n)
+                Dim point As LayoutPoint = GetPoint(n)
                 If Not point.node.Pinned Then
                     Dim direction As AbstractVector = point.position * -1.0F
                     'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
@@ -217,7 +217,7 @@ Namespace Layouts
 
         Protected Sub updateVelocity(iTimeStep As Single)
             For Each n As Node In graph.nodes
-                Dim point As Point = GetPoint(n)
+                Dim point As LayoutPoint = GetPoint(n)
                 point.velocity.Add(point.acceleration * iTimeStep)
                 point.velocity.Multiply(Damping)
                 point.acceleration.SetZero()
@@ -226,7 +226,7 @@ Namespace Layouts
 
         Protected Sub updatePosition(iTimeStep As Single)
             For Each n As Node In graph.nodes
-                Dim point As Point = GetPoint(n)
+                Dim point As LayoutPoint = GetPoint(n)
                 point.position.Add(point.velocity * iTimeStep)
             Next
         End Sub
@@ -234,7 +234,7 @@ Namespace Layouts
         Protected Function getTotalEnergy() As Single
             Dim energy As Single = 0F
             For Each n As Node In graph.nodes
-                Dim point As Point = GetPoint(n)
+                Dim point As LayoutPoint = GetPoint(n)
                 Dim speed As Single = point.velocity.Magnitude()
                 energy += 0.5F * point.mass * speed * speed
             Next
@@ -271,7 +271,7 @@ Namespace Layouts
         Public Function Nearest(position As AbstractVector) As NearestPoint Implements IForceDirected.Nearest
             Dim min As New NearestPoint()
             For Each n As Node In graph.nodes
-                Dim point As Point = GetPoint(n)
+                Dim point As LayoutPoint = GetPoint(n)
                 Dim distance As Single = (point.position - position).Magnitude()
                 If min.distance Is Nothing OrElse distance < min.distance Then
                     min.node = n
@@ -292,13 +292,13 @@ Namespace Layouts
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
-        Public Overrides Function GetPoint(iNode As Node) As Point
+        Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
                 Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
-                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                m_nodePoints(iNode.ID) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
             Return m_nodePoints(iNode.ID)
         End Function
@@ -338,13 +338,13 @@ Namespace Layouts
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
-        Public Overrides Function GetPoint(iNode As Node) As Point
+        Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
                 Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+                m_nodePoints(iNode.ID) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
             End If
             Return m_nodePoints(iNode.ID)
         End Function

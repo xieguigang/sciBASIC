@@ -45,15 +45,15 @@ Namespace Layouts
 
     Public Class Spring
 
-        Public Sub New(iPoint1 As Point, iPoint2 As Point, iLength As Single, iK As Single)
+        Public Sub New(iPoint1 As LayoutPoint, iPoint2 As LayoutPoint, iLength As Single, iK As Single)
             point1 = iPoint1
             point2 = iPoint2
             Length = iLength
             K = iK
         End Sub
 
-        Public Property point1() As Point
-        Public Property point2() As Point
+        Public Property point1() As LayoutPoint
+        Public Property point2() As LayoutPoint
         Public Property Length() As Single
         Public Property K() As Single
 

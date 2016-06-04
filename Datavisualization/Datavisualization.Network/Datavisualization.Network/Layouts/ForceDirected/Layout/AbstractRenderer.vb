@@ -57,7 +57,7 @@ Namespace Layouts
             forceDirected.Calculate(iTimeStep)
             Clear()
             forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
-            forceDirected.EachNode(Sub(node As Node, point As Point) drawNode(node, point.position))
+            forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
         End Sub
 
         Public MustOverride Sub Clear() Implements IRenderer.Clear

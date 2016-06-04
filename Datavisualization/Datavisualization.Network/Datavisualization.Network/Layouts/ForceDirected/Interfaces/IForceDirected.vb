@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Namespace Layouts.Interfaces
 
     Public Delegate Sub EdgeAction(edge As Edge, spring As Spring)
-    Public Delegate Sub NodeAction(edge As Node, point As Point)
+    Public Delegate Sub NodeAction(edge As Node, point As LayoutPoint)
 
     Public Interface IForceDirected
         ReadOnly Property graph() As IGraph

@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Layouts
 
-    Public Class Point
+    Public Class LayoutPoint
 
         Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)
             position = iPosition
@@ -64,7 +64,7 @@ Namespace Layouts
             End If
 
             ' If parameter cannot be cast to Point return false.
-            Dim p As Point = TryCast(obj, Point)
+            Dim p As LayoutPoint = TryCast(obj, LayoutPoint)
             If DirectCast(p, System.Object) Is Nothing Then
                 Return False
             End If
@@ -73,7 +73,7 @@ Namespace Layouts
             Return position Is p.position
         End Function
 
-        Public Overloads Function Equals(p As Point) As Boolean
+        Public Overloads Function Equals(p As LayoutPoint) As Boolean
             ' If parameter is null return false:
             If DirectCast(p, Object) Is Nothing Then
                 Return False
@@ -83,7 +83,7 @@ Namespace Layouts
             Return position Is p.position
         End Function
 
-        Public Shared Operator =(a As Point, b As Point) As Boolean
+        Public Shared Operator =(a As LayoutPoint, b As LayoutPoint) As Boolean
             ' If both are null, or both are same instance, return true.
             If System.[Object].ReferenceEquals(a, b) Then
                 Return True
@@ -98,7 +98,7 @@ Namespace Layouts
             Return (a.position = b.position)
         End Operator
 
-        Public Shared Operator <>(a As Point, b As Point) As Boolean
+        Public Shared Operator <>(a As LayoutPoint, b As LayoutPoint) As Boolean
             Return Not (a = b)
         End Operator
 
