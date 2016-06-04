@@ -23,11 +23,6 @@ Namespace FileStream
                 String.Equals(Interactor, ToNode, StringComparison.OrdinalIgnoreCase)
         End Function
 
-        Public Const REFLECTION_ID_MAPPING_FROM_NODE As String = "fromNode"
-        Public Const REFLECTION_ID_MAPPING_TO_NODE As String = "toNode"
-        Public Const REFLECTION_ID_MAPPING_CONFIDENCE As String = "confidence"
-        Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
-
         Public Sub New()
         End Sub
 
@@ -37,10 +32,14 @@ Namespace FileStream
             Me.Confidence = confi
         End Sub
 
-        <Column("fromNode")> <XmlAttribute("Node_a")> Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
-        <Column("toNode")> <XmlAttribute("Node_b")> Public Overridable Property ToNode As String Implements I_InteractionModel.Address
-        <XmlAttribute("confidence")> Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
-        <Column("InteractionType")> Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
+        <Column("fromNode")> <XmlAttribute("source")>
+        Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
+        <Column("toNode")> <XmlAttribute("target")>
+        Public Overridable Property ToNode As String Implements I_InteractionModel.Address
+        <XmlAttribute("confidence")>
+        Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
+        <Column("InteractionType")>
+        Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
 
         Public Iterator Function Nodes() As IEnumerable(Of String)
             Yield FromNode

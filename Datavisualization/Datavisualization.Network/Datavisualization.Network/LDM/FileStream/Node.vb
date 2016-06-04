@@ -37,13 +37,10 @@ Namespace FileStream
         ''' <returns></returns>
         Public Overridable Property Identifier As String Implements sIdEnumerable.Identifier, INode.Identifier
         ''' <summary>
-        ''' 这个节点的类型的定义
+        ''' Node data groups identifier.(这个节点的分组类型的定义)
         ''' </summary>
         ''' <returns></returns>
         Public Overridable Property NodeType As String Implements INode.NodeType
-
-        Public Const REFLECTION_ID_MAPPING_IDENTIFIER As String = "Identifier"
-        Public Const REFLECTION_ID_MAPPING_NODETYPE As String = "NodeType"
 
         Public Overrides Function ToString() As String
             Return Identifier

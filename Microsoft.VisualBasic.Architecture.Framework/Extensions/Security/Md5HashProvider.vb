@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Security.Cryptography
+Imports System.Text
 
 Namespace SecurityString
 
@@ -18,6 +19,24 @@ Namespace SecurityString
 
             Dim data As Byte() = Encoding.UTF8.GetBytes(input)  ' Convert the input string to a byte array and compute the hash.
             Return GetMd5Hash(input:=data)
+        End Function
+
+        Public Function GetMd5Bytes(input As Byte()) As Byte()
+            If input.IsNullOrEmpty Then
+                Return {}
+            End If
+
+            Dim data As Byte() = md5Hash.ComputeHash(input)
+            Return data
+        End Function
+
+        ''' <summary>
+        ''' <see cref="MD5.ComputeHash"/> -> <see cref="ToLong"/>
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
+        Public Function GetMd5hashLong(input As Byte()) As Long
+            Return GetMd5Bytes(input).ToLong
         End Function
 
         Public Function GetMd5Hash(input As Byte()) As String

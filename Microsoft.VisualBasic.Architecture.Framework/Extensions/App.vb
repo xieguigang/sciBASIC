@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Security
 Imports System.Text
@@ -11,6 +12,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Parallel.Threads
 
 '                   _ooOoo_
 '                  o8888888o
@@ -53,6 +55,9 @@ Public Module App
             Return My.Computer.FileSystem.SpecialDirectories.Desktop
         End Get
     End Property
+
+    Public ReadOnly Property StdErr As StreamWriter =
+        New StreamWriter(Console.OpenStandardError)
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -717,7 +722,7 @@ Public Module App
                                                      Let io As IORedirectFile = App.SelfFolk(args)
                                                      Let task As Func(Of Integer) = AddressOf io.Run
                                                      Select task
-            Call ServicesFolk.BatchTask(Of Integer)(Tasks, parallel)
+            Call BatchTask(Of Integer)(Tasks, parallel)
         End If
 
         Return sw.ElapsedMilliseconds

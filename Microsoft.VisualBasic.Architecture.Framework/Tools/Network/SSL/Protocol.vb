@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Win32
 
 Namespace Net.SSL
 
@@ -133,7 +134,7 @@ Namespace Net.SSL
             If request.IsSSLHandshaking Then  '客户端与服务器之间进行连接的初始化，服务器会在这里为客户端动态的生成一个密匙
                 request = __sslHandshake(uid, ssl, request, remoteDev, InstallCertificates)
                 Return request
-            ElseIf request.IsSSLProtocol
+            ElseIf request.IsSSLProtocol Then
                 uid = request.uid
 
                 If Not ssl.PrivateKeys.ContainsKey(uid) Then  ' 不存在的数字证书

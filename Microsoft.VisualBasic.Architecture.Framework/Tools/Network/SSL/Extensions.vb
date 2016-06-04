@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Win32
 
 Namespace Net.SSL
 

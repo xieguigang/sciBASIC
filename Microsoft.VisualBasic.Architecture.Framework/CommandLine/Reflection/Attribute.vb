@@ -93,34 +93,7 @@ Namespace CommandLine.Reflection
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class [Optional] : Inherits CLIToken
 
-        ''' <summary>
-        ''' The data type enumeration of the target optional parameter switch.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Enum [Types]
-            ''' <summary>
-            ''' String
-            ''' </summary>
-            ''' <remarks></remarks>
-            [String]
-            ''' <summary>
-            ''' Int
-            ''' </summary>
-            ''' <remarks></remarks>
-            [Integer]
-            ''' <summary>
-            ''' Real
-            ''' </summary>
-            ''' <remarks></remarks>
-            [Double]
-            [Boolean]
-            ''' <summary>
-            ''' File path, is equals most string
-            ''' </summary>
-            File
-        End Enum
-
-        Dim _type As Types
+        Dim _type As CLITypes
 
         Public Overrides ReadOnly Property Name As String
             Get
@@ -128,11 +101,11 @@ Namespace CommandLine.Reflection
             End Get
         End Property
 
-        Public Property Type As Types
+        Public Property Type As CLITypes
             Get
                 Return _type
             End Get
-            Protected Set(value As Types)
+            Protected Set(value As CLITypes)
                 _type = value
             End Set
         End Property
@@ -144,7 +117,7 @@ Namespace CommandLine.Reflection
         ''' (目标将要被标记为可选参数的命令行参数开关对象)</param>
         ''' <param name="Type">The data type of the target command line parameter switch, default type is string type.</param>
         ''' <remarks></remarks>
-        Public Sub New(Name As String, Optional Type As Types = Types.String)
+        Public Sub New(Name As String, Optional Type As CLITypes = CLITypes.String)
             Call MyBase.New(Name)
             Me.Type = Type
         End Sub

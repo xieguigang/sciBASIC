@@ -110,5 +110,9 @@ Namespace ComponentModel.DataSourceModel
         Public Overrides Function ToString() As String
             Return $"{Name} --> {x.GetJson}"
         End Function
+
+        Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)
+            Return New NamedValue(Of T)(Name, h(x))
+        End Function
     End Structure
 End Namespace

@@ -60,7 +60,7 @@ Namespace ComponentModel.Ranges
         ''' <b>false</b> otherwise.</returns>
         '''
         Public Function IsInside(x As Integer) As Boolean Implements IRanges(Of Integer).IsInside
-            Return ((x >= Min) AndAlso (x <= Min))
+            Return ((x >= Min) AndAlso (x <= Max))
         End Function
 
         ''' <summary>

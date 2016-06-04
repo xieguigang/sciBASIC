@@ -1,53 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-Namespace ComponentModel.DataSourceModel
-
-    ''' <summary>
-    ''' Schema for <see cref="Attribute"/> and its bind <see cref="PropertyInfo"/> object target
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Structure BindProperty(Of T As Attribute)
-        Implements IReadOnlyId
-
-        Public [Property] As PropertyInfo
-        Public Column As T
-
-        ''' <summary>
-        ''' Gets the type of this property.
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Type As Type
-            Get
-                Return [Property].PropertyType
-            End Get
-        End Property
-
-        Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
-            Get
-                Return [Property].Name
-            End Get
-        End Property
-
-        Public Sub SetValue(obj As Object, value As Object)
-            Call [Property].SetValue(obj, value, Nothing)
-        End Sub
-
-        Public Function GetValue(x As Object) As Object
-            Return [Property].GetValue(x, Nothing)
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
-        End Function
-
-        Public Shared Function FromHash(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
-            Return New BindProperty(Of T) With {
-                .Column = x.Key,
-                .Property = x.Value
-            }
-        End Function
-    End Structure
+Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
     ''' <see cref="DataFrameColumnAttribute"/>属性的别称

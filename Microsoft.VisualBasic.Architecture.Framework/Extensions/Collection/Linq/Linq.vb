@@ -288,7 +288,7 @@ Namespace Linq
         <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
                                                         [ctype] As Func(Of T, TOut),
                                                         Optional Parallel As Boolean = False) As TOut()
-            If source.IsNullOrEmpty Then
+            If source Is Nothing Then  ' 假若这里使用IsNullOrEmpty的话，会导致Linq查询会被执行两次，所以在这里直接判断是否为空值就行了
                 Return New TOut() {}
             End If
 

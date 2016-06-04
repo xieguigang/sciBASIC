@@ -157,7 +157,7 @@ Namespace Net
                                     Optional OperationTimeOut As Integer = 30 * 1000,
                                     Optional OperationTimeoutHandler As Action = Nothing) As RequestStream
             Dim response As RequestStream = Nothing
-            Dim bResult As Boolean = Microsoft.VisualBasic.OperationTimeOut.OperationTimeOut(
+            Dim bResult As Boolean = Parallel.OperationTimeOut(
                 AddressOf SendMessage,
                 [In]:=Message,
                 Out:=response,
