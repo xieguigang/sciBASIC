@@ -149,6 +149,10 @@
     <Compile Include="Layouts\ForceDirected\General\SingletonHolder.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
     <Compile Include="Layouts\ForceDirected\General\Util.vb" />
+    <Compile Include="Layouts\ForceDirected\Graph\Edge.vb" />
+    <Compile Include="Layouts\ForceDirected\Graph\Graph.vb" />
+    <Compile Include="Layouts\ForceDirected\Graph\GraphData.vb" />
+    <Compile Include="Layouts\ForceDirected\Graph\Node.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IGraph.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IRenderer.vb" />
@@ -206,10 +210,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Layouts\ForceDirected\Graph\Edge.cs" />
-    <None Include="Layouts\ForceDirected\Graph\Graph.cs" />
-    <None Include="Layouts\ForceDirected\Graph\GraphData.cs" />
-    <None Include="Layouts\ForceDirected\Graph\Node.cs" />
     <None Include="Layouts\ForceDirected\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -231,7 +231,9 @@
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Layouts\ForceDirected\Graph" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

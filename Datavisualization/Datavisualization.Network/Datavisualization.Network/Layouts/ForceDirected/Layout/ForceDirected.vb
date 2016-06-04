@@ -41,388 +41,390 @@ Imports System.Linq
 Imports System.Text
 Imports System.Timers
 
+Namespace Layouts
 
-Public Class NearestPoint
-	Public Sub New()
-		node = Nothing
-		point = Nothing
-		distance = Nothing
-	End Sub
-	Public node As Node
-	Public point As Point
-	Public distance As System.Nullable(Of Single)
-End Class
+    Public Class NearestPoint
+        Public Sub New()
+            node = Nothing
+            point = Nothing
+            distance = Nothing
+        End Sub
+        Public node As Node
+        Public point As Point
+        Public distance As System.Nullable(Of Single)
+    End Class
 
-Public Class BoundingBox
-	Public Shared defaultBB As Single = 2F
-	Public Shared defaultPadding As Single = 0.07F
-	' ~5% padding
-	Public Sub New()
-		topRightBack = Nothing
-		bottomLeftFront = Nothing
-	End Sub
-	Public topRightBack As AbstractVector
-	Public bottomLeftFront As AbstractVector
-End Class
+    Public Class BoundingBox
+        Public Shared defaultBB As Single = 2.0F
+        Public Shared defaultPadding As Single = 0.07F
+        ' ~5% padding
+        Public Sub New()
+            topRightBack = Nothing
+            bottomLeftFront = Nothing
+        End Sub
+        Public topRightBack As AbstractVector
+        Public bottomLeftFront As AbstractVector
+    End Class
 
-Public MustInherit Class ForceDirected(Of Vector As IVector)
-	Implements IForceDirected
-	Public Property Stiffness() As Single Implements IForceDirected.Stiffness
-		Get
-			Return m_Stiffness
-		End Get
-		Set
-			m_Stiffness = Value
-		End Set
-	End Property
-	Private m_Stiffness As Single
+    Public MustInherit Class ForceDirected(Of Vector As IVector)
+        Implements IForceDirected
+        Public Property Stiffness() As Single Implements IForceDirected.Stiffness
+            Get
+                Return m_Stiffness
+            End Get
+            Set
+                m_Stiffness = Value
+            End Set
+        End Property
+        Private m_Stiffness As Single
 
-	Public Property Repulsion() As Single Implements IForceDirected.Repulsion
-		Get
-			Return m_Repulsion
-		End Get
-		Set
-			m_Repulsion = Value
-		End Set
-	End Property
-	Private m_Repulsion As Single
+        Public Property Repulsion() As Single Implements IForceDirected.Repulsion
+            Get
+                Return m_Repulsion
+            End Get
+            Set
+                m_Repulsion = Value
+            End Set
+        End Property
+        Private m_Repulsion As Single
 
-	Public Property Damping() As Single Implements IForceDirected.Damping
-		Get
-			Return m_Damping
-		End Get
-		Set
-			m_Damping = Value
-		End Set
-	End Property
-	Private m_Damping As Single
+        Public Property Damping() As Single Implements IForceDirected.Damping
+            Get
+                Return m_Damping
+            End Get
+            Set
+                m_Damping = Value
+            End Set
+        End Property
+        Private m_Damping As Single
 
-	Public Property Threadshold() As Single Implements IForceDirected.Threadshold
-		Get
-			Return m_Threadshold
-		End Get
-		Set
-			m_Threadshold = Value
-		End Set
-	End Property
-	Private m_Threadshold As Single
+        Public Property Threadshold() As Single Implements IForceDirected.Threadshold
+            Get
+                Return m_Threadshold
+            End Get
+            Set
+                m_Threadshold = Value
+            End Set
+        End Property
+        Private m_Threadshold As Single
 
-	Public Property WithinThreashold() As Boolean Implements IForceDirected.WithinThreashold
-		Get
-			Return m_WithinThreashold
-		End Get
-		Private Set
-			m_WithinThreashold = Value
-		End Set
-	End Property
-	Private m_WithinThreashold As Boolean
-	Protected m_nodePoints As Dictionary(Of String, Point)
-	Protected m_edgeSprings As Dictionary(Of String, Spring)
-	Public Property graph() As IGraph Implements IForceDirected.graph
-		Get
-			Return m_graph
-		End Get
-		Protected Set
-			m_graph = Value
-		End Set
-	End Property
-	Private m_graph As IGraph
-	Public Sub Clear() Implements IForceDirected.Clear
-		m_nodePoints.Clear()
-		m_edgeSprings.Clear()
-		graph.Clear()
-	End Sub
+        Public Property WithinThreashold() As Boolean Implements IForceDirected.WithinThreashold
+            Get
+                Return m_WithinThreashold
+            End Get
+            Private Set
+                m_WithinThreashold = Value
+            End Set
+        End Property
+        Private m_WithinThreashold As Boolean
+        Protected m_nodePoints As Dictionary(Of String, Point)
+        Protected m_edgeSprings As Dictionary(Of String, Spring)
+        Public Property graph() As IGraph Implements IForceDirected.graph
+            Get
+                Return m_graph
+            End Get
+            Protected Set
+                m_graph = Value
+            End Set
+        End Property
+        Private m_graph As IGraph
+        Public Sub Clear() Implements IForceDirected.Clear
+            m_nodePoints.Clear()
+            m_edgeSprings.Clear()
+            graph.Clear()
+        End Sub
 
-	Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
-		graph = iGraph
-		Stiffness = iStiffness
-		Repulsion = iRepulsion
-		Damping = iDamping
-		m_nodePoints = New Dictionary(Of String, Point)()
-		m_edgeSprings = New Dictionary(Of String, Spring)()
+        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+            graph = iGraph
+            Stiffness = iStiffness
+            Repulsion = iRepulsion
+            Damping = iDamping
+            m_nodePoints = New Dictionary(Of String, Point)()
+            m_edgeSprings = New Dictionary(Of String, Spring)()
 
-		Threadshold = 0.01F
-	End Sub
+            Threadshold = 0.01F
+        End Sub
 
-	Public MustOverride Function GetPoint(iNode As Node) As Point
-
-
-
-	Public Function GetSpring(iEdge As Edge) As Spring
-		If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
-			Dim length As Single = iEdge.Data.length
-			Dim existingSpring As Spring = Nothing
-
-			Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.Source, iEdge.Target)
-			If fromEdges IsNot Nothing Then
-				For Each e As Edge In fromEdges
-					If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
-						existingSpring = m_edgeSprings(e.ID)
-						Exit For
-					End If
-
-				Next
-			End If
-			If existingSpring IsNot Nothing Then
-				Return New Spring(existingSpring.point1, existingSpring.point2, 0F, 0F)
-			End If
-
-			Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.Target, iEdge.Source)
-			If toEdges IsNot Nothing Then
-				For Each e As Edge In toEdges
-					If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
-						existingSpring = m_edgeSprings(e.ID)
-						Exit For
-					End If
-				Next
-			End If
-
-			If existingSpring IsNot Nothing Then
-				Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
-			End If
-
-			m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.Source), GetPoint(iEdge.Target), length, Stiffness)
-		End If
-		Return m_edgeSprings(iEdge.ID)
-	End Function
-
-	' TODO: change this for group only after node grouping
-	Protected Sub applyCoulombsLaw()
-		For Each n1 As Node In graph.nodes
-			Dim point1 As Point = GetPoint(n1)
-			For Each n2 As Node In graph.nodes
-				Dim point2 As Point = GetPoint(n2)
-				If point1 IsNot point2 Then
-					Dim d As AbstractVector = point1.position - point2.position
-					Dim distance As Single = d.Magnitude() + 0.1F
-					Dim direction As AbstractVector = d.Normalize()
-					If n1.Pinned AndAlso n2.Pinned Then
-						point1.ApplyForce(direction * 0F)
-						point2.ApplyForce(direction * 0F)
-					ElseIf n1.Pinned Then
-						point1.ApplyForce(direction * 0F)
-						'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
-						point2.ApplyForce((direction * Repulsion) / (distance * -1F))
-					ElseIf n2.Pinned Then
-						'point1.ApplyForce((direction * Repulsion) / (distance * distance));
-						point1.ApplyForce((direction * Repulsion) / (distance))
-						point2.ApplyForce(direction * 0F)
-					Else
-						'                             point1.ApplyForce((direction * Repulsion) / (distance * distance * 0.5f));
-						'                             point2.ApplyForce((direction * Repulsion) / (distance * distance * -0.5f));
-						point1.ApplyForce((direction * Repulsion) / (distance * 0.5F))
-						point2.ApplyForce((direction * Repulsion) / (distance * -0.5F))
-
-					End If
-				End If
-			Next
-		Next
-	End Sub
-
-	Protected Sub applyHookesLaw()
-		For Each e As Edge In graph.edges
-			Dim spring As Spring = GetSpring(e)
-			Dim d As AbstractVector = spring.point2.position - spring.point1.position
-			Dim displacement As Single = spring.Length - d.Magnitude()
-			Dim direction As AbstractVector = d.Normalize()
-
-			If spring.point1.node.Pinned AndAlso spring.point2.node.Pinned Then
-				spring.point1.ApplyForce(direction * 0F)
-				spring.point2.ApplyForce(direction * 0F)
-			ElseIf spring.point1.node.Pinned Then
-				spring.point1.ApplyForce(direction * 0F)
-				spring.point2.ApplyForce(direction * (spring.K * displacement))
-			ElseIf spring.point2.node.Pinned Then
-				spring.point1.ApplyForce(direction * (spring.K * displacement * -1F))
-				spring.point2.ApplyForce(direction * 0F)
-			Else
-				spring.point1.ApplyForce(direction * (spring.K * displacement * -0.5F))
-				spring.point2.ApplyForce(direction * (spring.K * displacement * 0.5F))
+        Public MustOverride Function GetPoint(iNode As Node) As Point
 
 
-			End If
-		Next
-	End Sub
 
-	Protected Sub attractToCentre()
-		For Each n As Node In graph.nodes
-			Dim point As Point = GetPoint(n)
-			If Not point.node.Pinned Then
-				Dim direction As AbstractVector = point.position * -1F
-				'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
+        Public Function GetSpring(iEdge As Edge) As Spring
+            If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
+                Dim length As Single = iEdge.Data.length
+                Dim existingSpring As Spring = Nothing
+
+                Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.Source, iEdge.Target)
+                If fromEdges IsNot Nothing Then
+                    For Each e As Edge In fromEdges
+                        If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
+                            existingSpring = m_edgeSprings(e.ID)
+                            Exit For
+                        End If
+
+                    Next
+                End If
+                If existingSpring IsNot Nothing Then
+                    Return New Spring(existingSpring.point1, existingSpring.point2, 0F, 0F)
+                End If
+
+                Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.Target, iEdge.Source)
+                If toEdges IsNot Nothing Then
+                    For Each e As Edge In toEdges
+                        If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
+                            existingSpring = m_edgeSprings(e.ID)
+                            Exit For
+                        End If
+                    Next
+                End If
+
+                If existingSpring IsNot Nothing Then
+                    Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
+                End If
+
+                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.Source), GetPoint(iEdge.Target), length, Stiffness)
+            End If
+            Return m_edgeSprings(iEdge.ID)
+        End Function
+
+        ' TODO: change this for group only after node grouping
+        Protected Sub applyCoulombsLaw()
+            For Each n1 As Node In graph.nodes
+                Dim point1 As Point = GetPoint(n1)
+                For Each n2 As Node In graph.nodes
+                    Dim point2 As Point = GetPoint(n2)
+                    If point1 IsNot point2 Then
+                        Dim d As AbstractVector = point1.position - point2.position
+                        Dim distance As Single = d.Magnitude() + 0.1F
+                        Dim direction As AbstractVector = d.Normalize()
+                        If n1.Pinned AndAlso n2.Pinned Then
+                            point1.ApplyForce(direction * 0F)
+                            point2.ApplyForce(direction * 0F)
+                        ElseIf n1.Pinned Then
+                            point1.ApplyForce(direction * 0F)
+                            'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
+                            point2.ApplyForce((direction * Repulsion) / (distance * -1.0F))
+                        ElseIf n2.Pinned Then
+                            'point1.ApplyForce((direction * Repulsion) / (distance * distance));
+                            point1.ApplyForce((direction * Repulsion) / (distance))
+                            point2.ApplyForce(direction * 0F)
+                        Else
+                            '                             point1.ApplyForce((direction * Repulsion) / (distance * distance * 0.5f));
+                            '                             point2.ApplyForce((direction * Repulsion) / (distance * distance * -0.5f));
+                            point1.ApplyForce((direction * Repulsion) / (distance * 0.5F))
+                            point2.ApplyForce((direction * Repulsion) / (distance * -0.5F))
+
+                        End If
+                    End If
+                Next
+            Next
+        End Sub
+
+        Protected Sub applyHookesLaw()
+            For Each e As Edge In graph.edges
+                Dim spring As Spring = GetSpring(e)
+                Dim d As AbstractVector = spring.point2.position - spring.point1.position
+                Dim displacement As Single = spring.Length - d.Magnitude()
+                Dim direction As AbstractVector = d.Normalize()
+
+                If spring.point1.node.Pinned AndAlso spring.point2.node.Pinned Then
+                    spring.point1.ApplyForce(direction * 0F)
+                    spring.point2.ApplyForce(direction * 0F)
+                ElseIf spring.point1.node.Pinned Then
+                    spring.point1.ApplyForce(direction * 0F)
+                    spring.point2.ApplyForce(direction * (spring.K * displacement))
+                ElseIf spring.point2.node.Pinned Then
+                    spring.point1.ApplyForce(direction * (spring.K * displacement * -1.0F))
+                    spring.point2.ApplyForce(direction * 0F)
+                Else
+                    spring.point1.ApplyForce(direction * (spring.K * displacement * -0.5F))
+                    spring.point2.ApplyForce(direction * (spring.K * displacement * 0.5F))
 
 
-				Dim displacement As Single = direction.Magnitude()
-				direction = direction.Normalize()
-				point.ApplyForce(direction * (Stiffness * displacement * 0.4F))
-			End If
-		Next
-	End Sub
+                End If
+            Next
+        End Sub
 
-	Protected Sub updateVelocity(iTimeStep As Single)
-		For Each n As Node In graph.nodes
-			Dim point As Point = GetPoint(n)
-			point.velocity.Add(point.acceleration * iTimeStep)
-			point.velocity.Multiply(Damping)
-			point.acceleration.SetZero()
-		Next
-	End Sub
-
-	Protected Sub updatePosition(iTimeStep As Single)
-		For Each n As Node In graph.nodes
-			Dim point As Point = GetPoint(n)
-			point.position.Add(point.velocity * iTimeStep)
-		Next
-	End Sub
-
-	Protected Function getTotalEnergy() As Single
-		Dim energy As Single = 0F
-		For Each n As Node In graph.nodes
-			Dim point As Point = GetPoint(n)
-			Dim speed As Single = point.velocity.Magnitude()
-			energy += 0.5F * point.mass * speed * speed
-		Next
-		Return energy
-	End Function
-
-	Public Sub Calculate(iTimeStep As Single) Implements IForceDirected.Calculate
-	' time in second
-		applyCoulombsLaw()
-		applyHookesLaw()
-		attractToCentre()
-		updateVelocity(iTimeStep)
-		updatePosition(iTimeStep)
-		If getTotalEnergy() < Threadshold Then
-			WithinThreashold = True
-		Else
-			WithinThreashold = False
-		End If
-	End Sub
+        Protected Sub attractToCentre()
+            For Each n As Node In graph.nodes
+                Dim point As Point = GetPoint(n)
+                If Not point.node.Pinned Then
+                    Dim direction As AbstractVector = point.position * -1.0F
+                    'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
 
 
-	Public Sub EachEdge(del As EdgeAction) Implements IForceDirected.EachEdge
-		For Each e As Edge In graph.edges
-			del(e, GetSpring(e))
-		Next
-	End Sub
+                    Dim displacement As Single = direction.Magnitude()
+                    direction = direction.Normalize()
+                    point.ApplyForce(direction * (Stiffness * displacement * 0.4F))
+                End If
+            Next
+        End Sub
 
-	Public Sub EachNode(del As NodeAction) Implements IForceDirected.EachNode
-		For Each n As Node In graph.nodes
-			del(n, GetPoint(n))
-		Next
-	End Sub
+        Protected Sub updateVelocity(iTimeStep As Single)
+            For Each n As Node In graph.nodes
+                Dim point As Point = GetPoint(n)
+                point.velocity.Add(point.acceleration * iTimeStep)
+                point.velocity.Multiply(Damping)
+                point.acceleration.SetZero()
+            Next
+        End Sub
 
-	Public Function Nearest(position As AbstractVector) As NearestPoint Implements IForceDirected.Nearest
-		Dim min As New NearestPoint()
-		For Each n As Node In graph.nodes
-			Dim point As Point = GetPoint(n)
-			Dim distance As Single = (point.position - position).Magnitude()
-			If min.distance Is Nothing OrElse distance < min.distance Then
-				min.node = n
-				min.point = point
-				min.distance = distance
-			End If
-		Next
-		Return min
-	End Function
+        Protected Sub updatePosition(iTimeStep As Single)
+            For Each n As Node In graph.nodes
+                Dim point As Point = GetPoint(n)
+                point.position.Add(point.velocity * iTimeStep)
+            Next
+        End Sub
 
-	Public MustOverride Function GetBoundingBox() As BoundingBox
+        Protected Function getTotalEnergy() As Single
+            Dim energy As Single = 0F
+            For Each n As Node In graph.nodes
+                Dim point As Point = GetPoint(n)
+                Dim speed As Single = point.velocity.Magnitude()
+                energy += 0.5F * point.mass * speed * speed
+            Next
+            Return energy
+        End Function
 
-End Class
+        Public Sub Calculate(iTimeStep As Single) Implements IForceDirected.Calculate
+            ' time in second
+            applyCoulombsLaw()
+            applyHookesLaw()
+            attractToCentre()
+            updateVelocity(iTimeStep)
+            updatePosition(iTimeStep)
+            If getTotalEnergy() < Threadshold Then
+                WithinThreashold = True
+            Else
+                WithinThreashold = False
+            End If
+        End Sub
 
-Public Class ForceDirected2D
-	Inherits ForceDirected(Of FDGVector2)
-	Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
 
-		MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
-	End Sub
+        Public Sub EachEdge(del As EdgeAction) Implements IForceDirected.EachEdge
+            For Each e As Edge In graph.edges
+                del(e, GetSpring(e))
+            Next
+        End Sub
 
-	Public Overrides Function GetPoint(iNode As Node) As Point
-		If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
-			Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
-			If iniPosition Is Nothing Then
-				iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
-			End If
-			m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
-		End If
-		Return m_nodePoints(iNode.ID)
-	End Function
+        Public Sub EachNode(del As NodeAction) Implements IForceDirected.EachNode
+            For Each n As Node In graph.nodes
+                del(n, GetPoint(n))
+            Next
+        End Sub
 
-	Public Overrides Function GetBoundingBox() As BoundingBox
-		Dim boundingBox__1 As New BoundingBox()
-		Dim bottomLeft As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB * -1F), FDGVector2)
-		Dim topRight As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB), FDGVector2)
-		For Each n As Node In graph.nodes
-			Dim position As FDGVector2 = TryCast(GetPoint(n).position, FDGVector2)
+        Public Function Nearest(position As AbstractVector) As NearestPoint Implements IForceDirected.Nearest
+            Dim min As New NearestPoint()
+            For Each n As Node In graph.nodes
+                Dim point As Point = GetPoint(n)
+                Dim distance As Single = (point.position - position).Magnitude()
+                If min.distance Is Nothing OrElse distance < min.distance Then
+                    min.node = n
+                    min.point = point
+                    min.distance = distance
+                End If
+            Next
+            Return min
+        End Function
 
-			If position.x < bottomLeft.x Then
-				bottomLeft.x = position.x
-			End If
-			If position.y < bottomLeft.y Then
-				bottomLeft.y = position.y
-			End If
-			If position.x > topRight.x Then
-				topRight.x = position.x
-			End If
-			If position.y > topRight.y Then
-				topRight.y = position.y
-			End If
-		Next
-		Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
-		boundingBox__1.bottomLeftFront = bottomLeft.Subtract(padding)
-		boundingBox__1.topRightBack = topRight.Add(padding)
-		Return boundingBox__1
+        Public MustOverride Function GetBoundingBox() As BoundingBox
 
-	End Function
-End Class
+    End Class
 
-Public Class ForceDirected3D
-	Inherits ForceDirected(Of FDGVector3)
-	Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+    Public Class ForceDirected2D
+        Inherits ForceDirected(Of FDGVector2)
+        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
 
-		MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
-	End Sub
+            MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
+        End Sub
 
-	Public Overrides Function GetPoint(iNode As Node) As Point
-		If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
-			Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
-			If iniPosition Is Nothing Then
-				iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
-			End If
-			m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
-		End If
-		Return m_nodePoints(iNode.ID)
-	End Function
+        Public Overrides Function GetPoint(iNode As Node) As Point
+            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+                Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
+                If iniPosition Is Nothing Then
+                    iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
+                End If
+                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+            End If
+            Return m_nodePoints(iNode.ID)
+        End Function
 
-	Public Overrides Function GetBoundingBox() As BoundingBox
-		Dim boundingBox__1 As New BoundingBox()
-		Dim bottomLeft As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB * -1F), FDGVector3)
-		Dim topRight As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB), FDGVector3)
-		For Each n As Node In graph.nodes
-			Dim position As FDGVector3 = TryCast(GetPoint(n).position, FDGVector3)
-			If position.x < bottomLeft.x Then
-				bottomLeft.x = position.x
-			End If
-			If position.y < bottomLeft.y Then
-				bottomLeft.y = position.y
-			End If
-			If position.z < bottomLeft.z Then
-				bottomLeft.z = position.z
-			End If
-			If position.x > topRight.x Then
-				topRight.x = position.x
-			End If
-			If position.y > topRight.y Then
-				topRight.y = position.y
-			End If
-			If position.z > topRight.z Then
-				topRight.z = position.z
-			End If
-		Next
-		Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
-		boundingBox__1.bottomLeftFront = bottomLeft.Subtract(padding)
-		boundingBox__1.topRightBack = topRight.Add(padding)
-		Return boundingBox__1
+        Public Overrides Function GetBoundingBox() As BoundingBox
+            Dim boundingBox__1 As New BoundingBox()
+            Dim bottomLeft As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB * -1.0F), FDGVector2)
+            Dim topRight As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB), FDGVector2)
+            For Each n As Node In graph.nodes
+                Dim position As FDGVector2 = TryCast(GetPoint(n).position, FDGVector2)
 
-	End Function
-End Class
+                If position.x < bottomLeft.x Then
+                    bottomLeft.x = position.x
+                End If
+                If position.y < bottomLeft.y Then
+                    bottomLeft.y = position.y
+                End If
+                If position.x > topRight.x Then
+                    topRight.x = position.x
+                End If
+                If position.y > topRight.y Then
+                    topRight.y = position.y
+                End If
+            Next
+            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
+            boundingBox__1.bottomLeftFront = bottomLeft.Subtract(padding)
+            boundingBox__1.topRightBack = topRight.Add(padding)
+            Return boundingBox__1
+
+        End Function
+    End Class
+
+    Public Class ForceDirected3D
+        Inherits ForceDirected(Of FDGVector3)
+        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+
+            MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
+        End Sub
+
+        Public Overrides Function GetPoint(iNode As Node) As Point
+            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+                Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
+                If iniPosition Is Nothing Then
+                    iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
+                End If
+                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+            End If
+            Return m_nodePoints(iNode.ID)
+        End Function
+
+        Public Overrides Function GetBoundingBox() As BoundingBox
+            Dim boundingBox__1 As New BoundingBox()
+            Dim bottomLeft As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB * -1.0F), FDGVector3)
+            Dim topRight As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB), FDGVector3)
+            For Each n As Node In graph.nodes
+                Dim position As FDGVector3 = TryCast(GetPoint(n).position, FDGVector3)
+                If position.x < bottomLeft.x Then
+                    bottomLeft.x = position.x
+                End If
+                If position.y < bottomLeft.y Then
+                    bottomLeft.y = position.y
+                End If
+                If position.z < bottomLeft.z Then
+                    bottomLeft.z = position.z
+                End If
+                If position.x > topRight.x Then
+                    topRight.x = position.x
+                End If
+                If position.y > topRight.y Then
+                    topRight.y = position.y
+                End If
+                If position.z > topRight.z Then
+                    topRight.z = position.z
+                End If
+            Next
+            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
+            boundingBox__1.bottomLeftFront = bottomLeft.Subtract(padding)
+            boundingBox__1.topRightBack = topRight.Add(padding)
+            Return boundingBox__1
+
+        End Function
+    End Class
+End Namespace

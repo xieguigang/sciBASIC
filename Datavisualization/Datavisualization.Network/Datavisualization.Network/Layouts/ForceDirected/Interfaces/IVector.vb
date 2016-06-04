@@ -40,20 +40,23 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public Interface IVector
-	Property x() As Single
+Namespace Layouts.Interfaces
 
-	Property y() As Single
+    Public Interface IVector
+        Property x() As Single
 
-	Property z() As Single
+        Property y() As Single
 
-	Function Add(v2 As AbstractVector) As AbstractVector
-	Function Subtract(v2 As AbstractVector) As AbstractVector
-	Function Multiply(n As Single) As AbstractVector
-	Function Divide(n As Single) As AbstractVector
-	Function Magnitude() As Single
-	'public abstract AbstractVector Normal();
-	Function Normalize() As AbstractVector
-	Function SetZero() As AbstractVector
-	Function SetIdentity() As AbstractVector
-End Interface
+        Property z() As Single
+
+        Function Add(v2 As AbstractVector) As AbstractVector
+        Function Subtract(v2 As AbstractVector) As AbstractVector
+        Function Multiply(n As Single) As AbstractVector
+        Function Divide(n As Single) As AbstractVector
+        Function Magnitude() As Single
+        'public abstract AbstractVector Normal();
+        Function Normalize() As AbstractVector
+        Function SetZero() As AbstractVector
+        Function SetIdentity() As AbstractVector
+    End Interface
+End Namespace

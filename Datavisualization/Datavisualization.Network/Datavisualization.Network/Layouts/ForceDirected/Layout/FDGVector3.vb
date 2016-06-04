@@ -40,167 +40,170 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public Class FDGVector3
-	Inherits AbstractVector
+Namespace Layouts
 
-	Public Sub New()
-		MyBase.New()
-		x = 0F
-		y = 0F
-		z = 0F
-	End Sub
+    Public Class FDGVector3
+        Inherits AbstractVector
 
-	Public Sub New(iX As Single, iY As Single, iZ As Single)
-		MyBase.New()
-		x = iX
-		y = iY
+        Public Sub New()
+            MyBase.New()
+            x = 0F
+            y = 0F
+            z = 0F
+        End Sub
 
-		z = iZ
-	End Sub
+        Public Sub New(iX As Single, iY As Single, iZ As Single)
+            MyBase.New()
+            x = iX
+            y = iY
 
-	Public Overrides Function GetHashCode() As Integer
-		Return CInt(Math.Truncate(x)) Xor CInt(Math.Truncate(y)) Xor CInt(Math.Truncate(z))
-	End Function
-	Public Overrides Function Equals(obj As System.Object) As Boolean
-		' If parameter is null return false.
-		If obj Is Nothing Then
-			Return False
-		End If
+            z = iZ
+        End Sub
 
-		' If parameter cannot be cast to Point return false.
-		Dim p As FDGVector3 = TryCast(obj, FDGVector3)
-		If DirectCast(p, System.Object) Is Nothing Then
-			Return False
-		End If
+        Public Overrides Function GetHashCode() As Integer
+            Return CInt(Math.Truncate(x)) Xor CInt(Math.Truncate(y)) Xor CInt(Math.Truncate(z))
+        End Function
+        Public Overrides Function Equals(obj As System.Object) As Boolean
+            ' If parameter is null return false.
+            If obj Is Nothing Then
+                Return False
+            End If
 
-		' Return true if the fields match:
-		Return (x = p.x) AndAlso (y = p.y) AndAlso (z = p.z)
-	End Function
+            ' If parameter cannot be cast to Point return false.
+            Dim p As FDGVector3 = TryCast(obj, FDGVector3)
+            If DirectCast(p, System.Object) Is Nothing Then
+                Return False
+            End If
 
-	Public Overloads Function Equals(p As FDGVector3) As Boolean
-		' If parameter is null return false:
-		If DirectCast(p, Object) Is Nothing Then
-			Return False
-		End If
+            ' Return true if the fields match:
+            Return (x = p.x) AndAlso (y = p.y) AndAlso (z = p.z)
+        End Function
 
-		' Return true if the fields match:
-		Return (x = p.x) AndAlso (y = p.y) AndAlso (z = p.z)
-	End Function
+        Public Overloads Function Equals(p As FDGVector3) As Boolean
+            ' If parameter is null return false:
+            If DirectCast(p, Object) Is Nothing Then
+                Return False
+            End If
 
-	Public Shared Operator =(a As FDGVector3, b As FDGVector3) As Boolean
-		' If both are null, or both are same instance, return true.
-		If System.[Object].ReferenceEquals(a, b) Then
-			Return True
-		End If
+            ' Return true if the fields match:
+            Return (x = p.x) AndAlso (y = p.y) AndAlso (z = p.z)
+        End Function
 
-		' If one is null, but not both, return false.
-		If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
-			Return False
-		End If
+        Public Shared Operator =(a As FDGVector3, b As FDGVector3) As Boolean
+            ' If both are null, or both are same instance, return true.
+            If System.[Object].ReferenceEquals(a, b) Then
+                Return True
+            End If
 
-		' Return true if the fields match:
-		Return (a.x = b.x) AndAlso (a.y = b.y) AndAlso (a.z = b.z)
-	End Operator
+            ' If one is null, but not both, return false.
+            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+                Return False
+            End If
 
-	Public Shared Operator <>(a As FDGVector3, b As FDGVector3) As Boolean
-		Return Not (a = b)
-	End Operator
+            ' Return true if the fields match:
+            Return (a.x = b.x) AndAlso (a.y = b.y) AndAlso (a.z = b.z)
+        End Operator
 
-
-	Public Overrides Function Add(v2 As AbstractVector) As AbstractVector
-		Dim v32 As FDGVector3 = TryCast(v2, FDGVector3)
-		x = x + v32.x
-		y = y + v32.y
-		z = z + v32.z
-		Return Me
-	End Function
-
-	Public Overrides Function Subtract(v2 As AbstractVector) As AbstractVector
-		Dim v32 As FDGVector3 = TryCast(v2, FDGVector3)
-		x = x - v32.x
-		y = y - v32.y
-		z = z - v32.z
-		Return Me
-	End Function
-
-	Public Overrides Function Multiply(n As Single) As AbstractVector
-		x = x * n
-		y = y * n
-		z = z * n
-		Return Me
-	End Function
-
-	Public Overrides Function Divide(n As Single) As AbstractVector
-		If n = 0F Then
-			x = 0F
-			y = 0F
-			z = 0F
-		Else
-			x = x / n
-			y = y / n
-			z = z / n
-		End If
-		Return Me
-	End Function
-
-	Public Overrides Function Magnitude() As Single
-		Return CSng(Math.Sqrt(CDbl(x * x) + CDbl(y * y) + CDbl(z * z)))
-	End Function
+        Public Shared Operator <>(a As FDGVector3, b As FDGVector3) As Boolean
+            Return Not (a = b)
+        End Operator
 
 
-	Public Overrides Function Normalize() As AbstractVector
-		Return Me / Magnitude()
-	End Function
+        Public Overrides Function Add(v2 As AbstractVector) As AbstractVector
+            Dim v32 As FDGVector3 = TryCast(v2, FDGVector3)
+            x = x + v32.x
+            y = y + v32.y
+            z = z + v32.z
+            Return Me
+        End Function
 
-	Public Overrides Function SetZero() As AbstractVector
-		x = 0F
-		y = 0F
-		z = 0F
-		Return Me
-	End Function
-	Public Overrides Function SetIdentity() As AbstractVector
-		x = 1F
-		y = 1F
-		z = 1F
-		Return Me
-	End Function
-	Public Shared Function Zero() As AbstractVector
-		Return New FDGVector3(0F, 0F, 0F)
-	End Function
+        Public Overrides Function Subtract(v2 As AbstractVector) As AbstractVector
+            Dim v32 As FDGVector3 = TryCast(v2, FDGVector3)
+            x = x - v32.x
+            y = y - v32.y
+            z = z - v32.z
+            Return Me
+        End Function
 
-	Public Shared Function Identity() As AbstractVector
-		Return New FDGVector3(1F, 1F, 1F)
-	End Function
+        Public Overrides Function Multiply(n As Single) As AbstractVector
+            x = x * n
+            y = y * n
+            z = z * n
+            Return Me
+        End Function
 
-	Public Shared Function Random() As AbstractVector
-		Return New FDGVector3(10F * (Util.Random() - 0.5F), 10F * (Util.Random() - 0.5F), 10F * (Util.Random() - 0.5F))
-	End Function
+        Public Overrides Function Divide(n As Single) As AbstractVector
+            If n = 0F Then
+                x = 0F
+                y = 0F
+                z = 0F
+            Else
+                x = x / n
+                y = y / n
+                z = z / n
+            End If
+            Return Me
+        End Function
 
-	Public Shared Operator +(a As FDGVector3, b As FDGVector3) As FDGVector3
-		Dim temp As New FDGVector3(a.x, a.y, a.z)
-		temp.Add(b)
-		Return temp
-	End Operator
-	Public Shared Operator -(a As FDGVector3, b As FDGVector3) As FDGVector3
-		Dim temp As New FDGVector3(a.x, a.y, a.z)
-		temp.Subtract(b)
-		Return temp
-	End Operator
-	Public Shared Operator *(a As FDGVector3, b As Single) As FDGVector3
-		Dim temp As New FDGVector3(a.x, a.y, a.z)
-		temp.Multiply(b)
-		Return temp
-	End Operator
-	Public Shared Operator *(a As Single, b As FDGVector3) As FDGVector3
-		Dim temp As New FDGVector3(b.x, b.y, b.z)
-		temp.Multiply(a)
-		Return temp
-	End Operator
+        Public Overrides Function Magnitude() As Single
+            Return CSng(Math.Sqrt(CDbl(x * x) + CDbl(y * y) + CDbl(z * z)))
+        End Function
 
-	Public Shared Operator /(a As FDGVector3, b As Single) As FDGVector3
-		Dim temp As New FDGVector3(a.x, a.y, a.z)
-		temp.Divide(b)
-		Return temp
-	End Operator
 
-End Class
+        Public Overrides Function Normalize() As AbstractVector
+            Return Me / Magnitude()
+        End Function
+
+        Public Overrides Function SetZero() As AbstractVector
+            x = 0F
+            y = 0F
+            z = 0F
+            Return Me
+        End Function
+        Public Overrides Function SetIdentity() As AbstractVector
+            x = 1.0F
+            y = 1.0F
+            z = 1.0F
+            Return Me
+        End Function
+        Public Shared Function Zero() As AbstractVector
+            Return New FDGVector3(0F, 0F, 0F)
+        End Function
+
+        Public Shared Function Identity() As AbstractVector
+            Return New FDGVector3(1.0F, 1.0F, 1.0F)
+        End Function
+
+        Public Shared Function Random() As AbstractVector
+            Return New FDGVector3(10.0F * (Util.Random() - 0.5F), 10.0F * (Util.Random() - 0.5F), 10.0F * (Util.Random() - 0.5F))
+        End Function
+
+        Public Shared Operator +(a As FDGVector3, b As FDGVector3) As FDGVector3
+            Dim temp As New FDGVector3(a.x, a.y, a.z)
+            temp.Add(b)
+            Return temp
+        End Operator
+        Public Shared Operator -(a As FDGVector3, b As FDGVector3) As FDGVector3
+            Dim temp As New FDGVector3(a.x, a.y, a.z)
+            temp.Subtract(b)
+            Return temp
+        End Operator
+        Public Shared Operator *(a As FDGVector3, b As Single) As FDGVector3
+            Dim temp As New FDGVector3(a.x, a.y, a.z)
+            temp.Multiply(b)
+            Return temp
+        End Operator
+        Public Shared Operator *(a As Single, b As FDGVector3) As FDGVector3
+            Dim temp As New FDGVector3(b.x, b.y, b.z)
+            temp.Multiply(a)
+            Return temp
+        End Operator
+
+        Public Shared Operator /(a As FDGVector3, b As Single) As FDGVector3
+            Dim temp As New FDGVector3(a.x, a.y, a.z)
+            temp.Divide(b)
+            Return temp
+        End Operator
+
+    End Class
+End Namespace

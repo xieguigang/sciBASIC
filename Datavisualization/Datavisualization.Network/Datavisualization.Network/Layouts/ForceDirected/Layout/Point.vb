@@ -40,108 +40,111 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public Class Point
-	Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)
-		position = iPosition
-		node = iNode
-		velocity = iVelocity
-		acceleration = iAcceleration
-	End Sub
+Namespace Layouts
 
-	Public Overrides Function GetHashCode() As Integer
-		Return position.GetHashCode()
-	End Function
-	Public Overrides Function Equals(obj As System.Object) As Boolean
-		' If parameter is null return false.
-		If obj Is Nothing Then
-			Return False
-		End If
+    Public Class Point
+        Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)
+            position = iPosition
+            node = iNode
+            velocity = iVelocity
+            acceleration = iAcceleration
+        End Sub
 
-		' If parameter cannot be cast to Point return false.
-		Dim p As Point = TryCast(obj, Point)
-		If DirectCast(p, System.Object) Is Nothing Then
-			Return False
-		End If
+        Public Overrides Function GetHashCode() As Integer
+            Return position.GetHashCode()
+        End Function
+        Public Overrides Function Equals(obj As System.Object) As Boolean
+            ' If parameter is null return false.
+            If obj Is Nothing Then
+                Return False
+            End If
 
-		' Return true if the fields match:
-		Return position Is p.position
-	End Function
+            ' If parameter cannot be cast to Point return false.
+            Dim p As Point = TryCast(obj, Point)
+            If DirectCast(p, System.Object) Is Nothing Then
+                Return False
+            End If
 
-	Public Overloads Function Equals(p As Point) As Boolean
-		' If parameter is null return false:
-		If DirectCast(p, Object) Is Nothing Then
-			Return False
-		End If
+            ' Return true if the fields match:
+            Return position Is p.position
+        End Function
 
-		' Return true if the fields match:
-		Return position Is p.position
-	End Function
+        Public Overloads Function Equals(p As Point) As Boolean
+            ' If parameter is null return false:
+            If DirectCast(p, Object) Is Nothing Then
+                Return False
+            End If
 
-	Public Shared Operator =(a As Point, b As Point) As Boolean
-		' If both are null, or both are same instance, return true.
-		If System.[Object].ReferenceEquals(a, b) Then
-			Return True
-		End If
+            ' Return true if the fields match:
+            Return position Is p.position
+        End Function
 
-		' If one is null, but not both, return false.
-		If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
-			Return False
-		End If
+        Public Shared Operator =(a As Point, b As Point) As Boolean
+            ' If both are null, or both are same instance, return true.
+            If System.[Object].ReferenceEquals(a, b) Then
+                Return True
+            End If
 
-		' Return true if the fields match:
-		Return (a.position = b.position)
-	End Operator
+            ' If one is null, but not both, return false.
+            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+                Return False
+            End If
 
-	Public Shared Operator <>(a As Point, b As Point) As Boolean
-		Return Not (a = b)
-	End Operator
+            ' Return true if the fields match:
+            Return (a.position = b.position)
+        End Operator
 
-	Public Sub ApplyForce(force As AbstractVector)
-		acceleration.Add(force / mass)
-	End Sub
+        Public Shared Operator <>(a As Point, b As Point) As Boolean
+            Return Not (a = b)
+        End Operator
 
-	Public Property position() As AbstractVector
-		Get
-			Return m_position
-		End Get
-		Set
-			m_position = Value
-		End Set
-	End Property
-	Private m_position As AbstractVector
-	Public Property node() As Node
-		Get
-			Return m_node
-		End Get
-		Private Set
-			m_node = Value
-		End Set
-	End Property
-	Private m_node As Node
-	Public Property mass() As Single
-		Get
-			Return node.Data.mass
-		End Get
-		Private Set
-			node.Data.mass = value
-		End Set
-	End Property
-	Public Property velocity() As AbstractVector
-		Get
-			Return m_velocity
-		End Get
-		Private Set
-			m_velocity = Value
-		End Set
-	End Property
-	Private m_velocity As AbstractVector
-	Public Property acceleration() As AbstractVector
-		Get
-			Return m_acceleration
-		End Get
-		Private Set
-			m_acceleration = Value
-		End Set
-	End Property
-	Private m_acceleration As AbstractVector
-End Class
+        Public Sub ApplyForce(force As AbstractVector)
+            acceleration.Add(force / mass)
+        End Sub
+
+        Public Property position() As AbstractVector
+            Get
+                Return m_position
+            End Get
+            Set
+                m_position = Value
+            End Set
+        End Property
+        Private m_position As AbstractVector
+        Public Property node() As Node
+            Get
+                Return m_node
+            End Get
+            Private Set
+                m_node = Value
+            End Set
+        End Property
+        Private m_node As Node
+        Public Property mass() As Single
+            Get
+                Return node.Data.mass
+            End Get
+            Private Set
+                node.Data.mass = value
+            End Set
+        End Property
+        Public Property velocity() As AbstractVector
+            Get
+                Return m_velocity
+            End Get
+            Private Set
+                m_velocity = Value
+            End Set
+        End Property
+        Private m_velocity As AbstractVector
+        Public Property acceleration() As AbstractVector
+            Get
+                Return m_acceleration
+            End Get
+            Private Set
+                m_acceleration = Value
+            End Set
+        End Property
+        Private m_acceleration As AbstractVector
+    End Class
+End Namespace

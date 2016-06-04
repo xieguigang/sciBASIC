@@ -1,9 +1,9 @@
 '! 
-'@file IForceDirected.cs
+'@file PhysicsData.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
 '@date August 08, 2013
-'@brief ForceDirected Interface
+'@brief PhysicsData Interface
 '@version 1.0
 '
 '@section LICENSE
@@ -32,7 +32,7 @@
 '
 '@section DESCRIPTION
 '
-'An Interface for the ForceDirected.
+'An Interface for the PhysicsData Class.
 '
 '
 
@@ -40,28 +40,76 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Namespace Layouts.Interfaces
+Public Class NodeData
+	Inherits GraphData
+	Public Sub New()
+		MyBase.New()
+		mass = 1F
+		initialPostion = Nothing
+			' for merging the graph
+		origID = ""
+	End Sub
+	Public Property mass() As Single
+		Get
+			Return m_mass
+		End Get
+		Set
+			m_mass = Value
+		End Set
+	End Property
+	Private m_mass As Single
 
-    Public Delegate Sub EdgeAction(edge As Edge, spring As Spring)
-    Public Delegate Sub NodeAction(edge As Node, point As Point)
+	Public Property initialPostion() As AbstractVector
+		Get
+			Return m_initialPostion
+		End Get
+		Set
+			m_initialPostion = Value
+		End Set
+	End Property
+	Private m_initialPostion As AbstractVector
+	Public Property origID() As String
+		Get
+			Return m_origID
+		End Get
+		Set
+			m_origID = Value
+		End Set
+	End Property
+	Private m_origID As String
 
-    Public Interface IForceDirected
-        ReadOnly Property graph() As IGraph
+End Class
+Public Class EdgeData
+	Inherits GraphData
+	Public Sub New()
+		MyBase.New()
+		length = 1F
+	End Sub
+	Public Property length() As Single
+		Get
+			Return m_length
+		End Get
+		Set
+			m_length = Value
+		End Set
+	End Property
+	Private m_length As Single
+End Class
+Public Class GraphData
+	Public Sub New()
+		label = ""
+	End Sub
 
-        ReadOnly Property Stiffness() As Single
 
-        ReadOnly Property Repulsion() As Single
+	Public Property label() As String
+		Get
+			Return m_label
+		End Get
+		Set
+			m_label = Value
+		End Set
+	End Property
+	Private m_label As String
 
-        ReadOnly Property Damping() As Single
 
-        Property Threadshold() As Single
-        ' NOT Using
-        ReadOnly Property WithinThreashold() As Boolean
-        Sub Clear()
-        Sub Calculate(iTimeStep As Single)
-        Sub EachEdge(del As EdgeAction)
-        Sub EachNode(del As NodeAction)
-        Function Nearest(position As AbstractVector) As NearestPoint
-        Function GetBoundingBox() As BoundingBox
-    End Interface
-End Namespace
+End Class

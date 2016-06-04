@@ -40,126 +40,129 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public MustInherit Class AbstractVector
-	Implements IVector
+Namespace Layouts
 
-	Public Property x() As Single Implements IVector.x
-		Get
-			Return m_x
-		End Get
-		Set
-			m_x = Value
-		End Set
-	End Property
-	Private m_x As Single
+    Public MustInherit Class AbstractVector
+        Implements IVector
 
-	Public Property y() As Single Implements IVector.y
-		Get
-			Return m_y
-		End Get
-		Set
-			m_y = Value
-		End Set
-	End Property
-	Private m_y As Single
+        Public Property x() As Single Implements IVector.x
+            Get
+                Return m_x
+            End Get
+            Set
+                m_x = Value
+            End Set
+        End Property
+        Private m_x As Single
 
-	Public Property z() As Single Implements IVector.z
-		Get
-			Return m_z
-		End Get
-		Set
-			m_z = Value
-		End Set
-	End Property
-	Private m_z As Single
+        Public Property y() As Single Implements IVector.y
+            Get
+                Return m_y
+            End Get
+            Set
+                m_y = Value
+            End Set
+        End Property
+        Private m_y As Single
 
-	Public Sub New()
-	End Sub
+        Public Property z() As Single Implements IVector.z
+            Get
+                Return m_z
+            End Get
+            Set
+                m_z = Value
+            End Set
+        End Property
+        Private m_z As Single
 
-	Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector
-	Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector
-	Public MustOverride Function Multiply(n As Single) As AbstractVector
-	Public MustOverride Function Divide(n As Single) As AbstractVector
-	Public MustOverride Function Magnitude() As Single
-	'public abstract public abstract AbstractVector Normal();
-	Public MustOverride Function Normalize() As AbstractVector
-	Public MustOverride Function SetZero() As AbstractVector
-	Public MustOverride Function SetIdentity() As AbstractVector
+        Public Sub New()
+        End Sub
 
-	Public Shared Operator +(a As AbstractVector, b As AbstractVector) As AbstractVector
-		If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
-			Return TryCast(a, FDGVector2) + TryCast(b, FDGVector2)
-		ElseIf TypeOf a Is FDGVector3 AndAlso TypeOf b Is FDGVector3 Then
-			Return TryCast(a, FDGVector3) + TryCast(b, FDGVector3)
-		End If
-		Return Nothing
-	End Operator
-	Public Shared Operator -(a As AbstractVector, b As AbstractVector) As AbstractVector
-		If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
-			Return TryCast(a, FDGVector2) - TryCast(b, FDGVector2)
-		ElseIf TypeOf a Is FDGVector3 AndAlso TypeOf b Is FDGVector3 Then
-			Return TryCast(a, FDGVector3) - TryCast(b, FDGVector3)
-		End If
-		Return Nothing
-	End Operator
-	Public Shared Operator *(a As AbstractVector, b As Single) As AbstractVector
-		If TypeOf a Is FDGVector2 Then
-			Return TryCast(a, FDGVector2) * b
-		ElseIf TypeOf a Is FDGVector3 Then
-			Return TryCast(a, FDGVector3) * b
-		End If
-		Return Nothing
-	End Operator
-	Public Shared Operator *(a As Single, b As AbstractVector) As AbstractVector
-		If TypeOf b Is FDGVector2 Then
-			Return a * TryCast(b, FDGVector2)
-		ElseIf TypeOf b Is FDGVector3 Then
-			Return a * TryCast(b, FDGVector3)
-		End If
-		Return Nothing
-	End Operator
+        Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector
+        Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector
+        Public MustOverride Function Multiply(n As Single) As AbstractVector
+        Public MustOverride Function Divide(n As Single) As AbstractVector
+        Public MustOverride Function Magnitude() As Single
+        'public abstract public abstract AbstractVector Normal();
+        Public MustOverride Function Normalize() As AbstractVector
+        Public MustOverride Function SetZero() As AbstractVector
+        Public MustOverride Function SetIdentity() As AbstractVector
 
-	Public Shared Operator /(a As AbstractVector, b As Single) As AbstractVector
-		If TypeOf a Is FDGVector2 Then
-			Return TryCast(a, FDGVector2) / b
-		ElseIf TypeOf a Is FDGVector3 Then
-			Return TryCast(a, FDGVector3) / b
-		End If
-		Return Nothing
-	End Operator
-	Public Overrides Function GetHashCode() As Integer
-		Return MyBase.GetHashCode()
-	End Function
-	Public Overrides Function Equals(obj As System.Object) As Boolean
-		Return Me Is TryCast(obj, AbstractVector)
-	End Function
-	Public Shared Operator =(a As AbstractVector, b As AbstractVector) As Boolean
-		' If both are null, or both are same instance, return true.
-		If System.[Object].ReferenceEquals(a, b) Then
-			Return True
-		End If
+        Public Shared Operator +(a As AbstractVector, b As AbstractVector) As AbstractVector
+            If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
+                Return TryCast(a, FDGVector2) + TryCast(b, FDGVector2)
+            ElseIf TypeOf a Is FDGVector3 AndAlso TypeOf b Is FDGVector3 Then
+                Return TryCast(a, FDGVector3) + TryCast(b, FDGVector3)
+            End If
+            Return Nothing
+        End Operator
+        Public Shared Operator -(a As AbstractVector, b As AbstractVector) As AbstractVector
+            If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
+                Return TryCast(a, FDGVector2) - TryCast(b, FDGVector2)
+            ElseIf TypeOf a Is FDGVector3 AndAlso TypeOf b Is FDGVector3 Then
+                Return TryCast(a, FDGVector3) - TryCast(b, FDGVector3)
+            End If
+            Return Nothing
+        End Operator
+        Public Shared Operator *(a As AbstractVector, b As Single) As AbstractVector
+            If TypeOf a Is FDGVector2 Then
+                Return TryCast(a, FDGVector2) * b
+            ElseIf TypeOf a Is FDGVector3 Then
+                Return TryCast(a, FDGVector3) * b
+            End If
+            Return Nothing
+        End Operator
+        Public Shared Operator *(a As Single, b As AbstractVector) As AbstractVector
+            If TypeOf b Is FDGVector2 Then
+                Return a * TryCast(b, FDGVector2)
+            ElseIf TypeOf b Is FDGVector3 Then
+                Return a * TryCast(b, FDGVector3)
+            End If
+            Return Nothing
+        End Operator
 
-		' If one is null, but not both, return false.
-		If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
-			Return False
-		End If
+        Public Shared Operator /(a As AbstractVector, b As Single) As AbstractVector
+            If TypeOf a Is FDGVector2 Then
+                Return TryCast(a, FDGVector2) / b
+            ElseIf TypeOf a Is FDGVector3 Then
+                Return TryCast(a, FDGVector3) / b
+            End If
+            Return Nothing
+        End Operator
+        Public Overrides Function GetHashCode() As Integer
+            Return MyBase.GetHashCode()
+        End Function
+        Public Overrides Function Equals(obj As System.Object) As Boolean
+            Return Me Is TryCast(obj, AbstractVector)
+        End Function
+        Public Shared Operator =(a As AbstractVector, b As AbstractVector) As Boolean
+            ' If both are null, or both are same instance, return true.
+            If System.[Object].ReferenceEquals(a, b) Then
+                Return True
+            End If
 
-		' Return true if the fields match:
-		If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
-			Return TryCast(a, FDGVector2) Is TryCast(b, FDGVector2)
-		ElseIf TypeOf a Is FDGVector3 AndAlso TypeOf b Is FDGVector3 Then
-			Return TryCast(a, FDGVector3) Is TryCast(b, FDGVector3)
-		End If
+            ' If one is null, but not both, return false.
+            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+                Return False
+            End If
 
-		Return False
-	End Operator
+            ' Return true if the fields match:
+            If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
+                Return TryCast(a, FDGVector2) Is TryCast(b, FDGVector2)
+            ElseIf TypeOf a Is FDGVector3 AndAlso TypeOf b Is FDGVector3 Then
+                Return TryCast(a, FDGVector3) Is TryCast(b, FDGVector3)
+            End If
 
-	Public Shared Operator <>(a As AbstractVector, b As AbstractVector) As Boolean
-		Return Not (a = b)
-	End Operator
+            Return False
+        End Operator
 
-
-
-End Class
+        Public Shared Operator <>(a As AbstractVector, b As AbstractVector) As Boolean
+            Return Not (a = b)
+        End Operator
 
 
+
+    End Class
+
+
+End Namespace

@@ -40,22 +40,25 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public MustInherit Class AbstractRenderer
-	Implements IRenderer
-	Protected forceDirected As IForceDirected
-	Public Sub New(iForceDirected As IForceDirected)
-		forceDirected = iForceDirected
-	End Sub
+Namespace Layouts
+
+    Public MustInherit Class AbstractRenderer
+        Implements IRenderer
+        Protected forceDirected As IForceDirected
+        Public Sub New(iForceDirected As IForceDirected)
+            forceDirected = iForceDirected
+        End Sub
 
 
-	Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
-		forceDirected.Calculate(iTimeStep)
-		Clear()
-		forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
-		forceDirected.EachNode(Sub(node As Node, point As Point) drawNode(node, point.position))
-	End Sub
-	Public MustOverride Sub Clear()
-	Protected MustOverride Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-	Protected MustOverride Sub drawNode(iNode As Node, iPosition As AbstractVector)
+        Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
+            forceDirected.Calculate(iTimeStep)
+            Clear()
+            forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
+            forceDirected.EachNode(Sub(node As Node, point As Point) drawNode(node, point.position))
+        End Sub
+        Public MustOverride Sub Clear()
+        Protected MustOverride Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
+        Protected MustOverride Sub drawNode(iNode As Node, iPosition As AbstractVector)
 
-End Class
+    End Class
+End Namespace

@@ -40,9 +40,11 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
+Namespace Layouts.Interfaces
 
-Public Interface IRenderer
+    Public Interface IRenderer
 
-	Sub Clear()
-	Sub Draw(iTimeStep As Single)
-End Interface
+        Sub Clear()
+        Sub Draw(iTimeStep As Single)
+    End Interface
+End Namespace
