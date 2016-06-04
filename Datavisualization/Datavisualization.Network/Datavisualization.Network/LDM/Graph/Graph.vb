@@ -40,10 +40,13 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
-    Public Class Graph
+
+    Public Class NetworkGraph : Inherits ClassObject
         Implements IGraph
+
         Public Sub New()
             m_nodeSet = New Dictionary(Of String, Node)()
             nodes = New List(Of Node)()
@@ -51,11 +54,13 @@ Namespace Graph
             m_eventListeners = New List(Of IGraphEventListener)()
             m_adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
         End Sub
+
         Public Sub Clear() Implements IGraph.Clear
             nodes.Clear()
             edges.Clear()
             m_adjacencySet.Clear()
         End Sub
+
         Public Function AddNode(iNode As Node) As Node Implements IGraph.AddNode
             If Not m_nodeSet.ContainsKey(iNode.ID) Then
                 nodes.Add(iNode)
@@ -87,6 +92,7 @@ Namespace Graph
             notify()
             Return iEdge
         End Function
+
         Public Sub CreateNodes(iDataList As List(Of NodeData)) Implements IGraph.CreateNodes
             For listTrav As Integer = 0 To iDataList.Count - 1
                 CreateNode(iDataList(listTrav))
@@ -203,8 +209,8 @@ Namespace Graph
             End If
             nodes.Remove(iNode)
             DetachNode(iNode)
-
         End Sub
+
         Public Sub DetachNode(iNode As Node) Implements IGraph.DetachNode
             edges.ForEach(Sub(e As Edge) If e.Source.ID = iNode.ID OrElse e.Target.ID = iNode.ID Then
             RemoveEdge(e)
@@ -250,7 +256,8 @@ Namespace Graph
             End If)
 		Return retEdge
         End Function
-        Public Sub Merge(iMergeGraph As Graph) Implements IGraph.Merge
+
+        Public Sub Merge(iMergeGraph As NetworkGraph) Implements IGraph.Merge
             For Each n As Node In iMergeGraph.nodes
                 Dim mergeNode As New Node(m_nextNodeId.ToString(), n.Data)
                 AddNode(mergeNode)
@@ -281,7 +288,6 @@ Namespace Graph
                     RemoveEdge(e)
                 End If
             Next
-
         End Sub
 
         Public Sub AddGraphListener(iListener As IGraphEventListener) Implements IGraph.AddGraphListener
@@ -294,24 +300,88 @@ Namespace Graph
             Next
         End Sub
 
+        Public Function AddNode(iNode As Node) As Node Implements IGraph.AddNode
+            Throw New NotImplementedException()
+        End Function
+
+        Public Function AddEdge(iEdge As Edge) As Edge Implements IGraph.AddEdge
+            Throw New NotImplementedException()
+        End Function
+
+        Public Sub CreateNodes(iDataList As List(Of NodeData)) Implements IGraph.CreateNodes
+            Throw New NotImplementedException()
+        End Sub
+
+        Private Sub IGraph_CreateNodes(iNameList As List(Of String)) Implements IGraph.CreateNodes
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub CreateEdges(iDataList As List(Of Triple(Of String, String, EdgeData))) Implements IGraph.CreateEdges
+            Throw New NotImplementedException()
+        End Sub
+
+        Private Sub IGraph_CreateEdges(iDataList As List(Of Pair(Of String, String))) Implements IGraph.CreateEdges
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Function CreateNode(data As NodeData) As Node Implements IGraph.CreateNode
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function IGraph_CreateNode(name As String) As Node Implements IGraph.CreateNode
+            Throw New NotImplementedException()
+        End Function
+
+        Public Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
+            Throw New NotImplementedException()
+        End Function
+
+        Public Function CreateEdge(iSource As String, iTarget As String, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
+            Throw New NotImplementedException()
+        End Function
+
+        Public Function GetEdges(iNode1 As Node, iNode2 As Node) As List(Of Edge) Implements IGraph.GetEdges
+            Throw New NotImplementedException()
+        End Function
+
+        Public Sub RemoveNode(iNode As Node) Implements IGraph.RemoveNode
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub DetachNode(iNode As Node) Implements IGraph.DetachNode
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub RemoveEdge(iEdge As Edge) Implements IGraph.RemoveEdge
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub Merge(iMergeGraph As Graph) Implements IGraph.Merge
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub FilterNodes(match As Predicate(Of Node)) Implements IGraph.FilterNodes
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub FilterEdges(match As Predicate(Of Edge)) Implements IGraph.FilterEdges
+            Throw New NotImplementedException()
+        End Sub
+
         Public Property nodes() As List(Of Node) Implements IGraph.nodes
-            Get
-                Return m_nodes
-            End Get
-            Private Set
-                m_nodes = Value
-            End Set
-        End Property
-        Private m_nodes As List(Of Node)
         Public Property edges() As List(Of Edge) Implements IGraph.edges
+
+        Private ReadOnly Property IGraph_nodes As List(Of Node) Implements IGraph.nodes
             Get
-                Return m_edges
+                Throw New NotImplementedException()
             End Get
-            Private Set
-                m_edges = Value
-            End Set
         End Property
-        Private m_edges As List(Of Edge)
+
+        Private ReadOnly Property IGraph_edges As List(Of Edge) Implements IGraph.edges
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
 
         Private m_nodeSet As Dictionary(Of String, Node)
         Private m_adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))

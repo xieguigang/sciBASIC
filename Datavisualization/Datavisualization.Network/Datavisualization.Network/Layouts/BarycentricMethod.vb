@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Layouts
@@ -13,11 +14,11 @@ Namespace Layouts
         ''' <param name="Network"></param>
         ''' <param name="iterations"></param>
         <ExportAPI("Layout.SpringEmbedder")>
-        Public Sub doLayout(Network As Network, iterations As Integer)
+        Public Sub doLayout(Network As NetworkGraph, iterations As Integer, size As Size)
             Dim nodes As Node() = Network.connectedNodes
-            Dim edges As Edge() = Network.Edges
+            Dim edges As Edge() = Network.edges
 
-            Dim k As Double = Network.FrameSize.Width * Network.FrameSize.Height / (nodes.Count * 1000)
+            Dim k As Double = size.Width * size.Height / (nodes.Count * 1000)
             Dim c As Double = 3
             ' Repulsive forces between nodes that are further apart than this are ignored.
             Dim maxRepulsiveForceDistance As Double = 10
@@ -133,11 +134,9 @@ Namespace Layouts
         ''' <returns></returns>
         ''' 
         <ExportAPI("Layout.ForceDirected")>
-        Public Function ForceDirectedLayout(Network As Network, Optional cutoff As Double = 100, Optional _DEBUG_EXPORT As String = "") As Network
-            Dim FrameSize = Network.FrameSize
-
-            Network._nodesInnerList = (From Node In Network.Nodes
-                                       Let randl = New Point(FrameSize.Width * RandomDouble(), FrameSize.Height * RandomDouble())
+        Public Function ForceDirectedLayout(Network As NetworkGraph, size As Size, Optional cutoff As Double = 100, Optional _DEBUG_EXPORT As String = "") As NetworkGraph
+            Network._nodesInnerList = (From Node In Network.nodes
+                                       Let randl = New Point(size.Width * RandomDouble(), size.Height * RandomDouble())
                                        Select Node.SetLocation(randl)).ToList
             Call doLayout(Network, 1)
 

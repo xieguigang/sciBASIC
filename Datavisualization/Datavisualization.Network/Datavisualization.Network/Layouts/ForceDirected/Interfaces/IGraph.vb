@@ -39,6 +39,7 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 
 Namespace Layouts.Interfaces
 
@@ -58,7 +59,7 @@ Namespace Layouts.Interfaces
         Sub RemoveNode(iNode As Node)
         Sub DetachNode(iNode As Node)
         Sub RemoveEdge(iEdge As Edge)
-        Sub Merge(iMergeGraph As Graph)
+        Sub Merge(iMergeGraph As NetworkGraph)
         Sub FilterNodes(match As Predicate(Of Node))
         Sub FilterEdges(match As Predicate(Of Edge))
         Sub AddGraphListener(iListener As IGraphEventListener)
