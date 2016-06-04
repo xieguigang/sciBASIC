@@ -40,76 +40,79 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public Class NodeData
-	Inherits GraphData
-	Public Sub New()
-		MyBase.New()
-		mass = 1F
-		initialPostion = Nothing
-			' for merging the graph
-		origID = ""
-	End Sub
-	Public Property mass() As Single
-		Get
-			Return m_mass
-		End Get
-		Set
-			m_mass = Value
-		End Set
-	End Property
-	Private m_mass As Single
+Namespace Layouts.Graph
 
-	Public Property initialPostion() As AbstractVector
-		Get
-			Return m_initialPostion
-		End Get
-		Set
-			m_initialPostion = Value
-		End Set
-	End Property
-	Private m_initialPostion As AbstractVector
-	Public Property origID() As String
-		Get
-			Return m_origID
-		End Get
-		Set
-			m_origID = Value
-		End Set
-	End Property
-	Private m_origID As String
+    Public Class NodeData
+        Inherits GraphData
+        Public Sub New()
+            MyBase.New()
+            mass = 1.0F
+            initialPostion = Nothing
+            ' for merging the graph
+            origID = ""
+        End Sub
+        Public Property mass() As Single
+            Get
+                Return m_mass
+            End Get
+            Set
+                m_mass = Value
+            End Set
+        End Property
+        Private m_mass As Single
 
-End Class
-Public Class EdgeData
-	Inherits GraphData
-	Public Sub New()
-		MyBase.New()
-		length = 1F
-	End Sub
-	Public Property length() As Single
-		Get
-			Return m_length
-		End Get
-		Set
-			m_length = Value
-		End Set
-	End Property
-	Private m_length As Single
-End Class
-Public Class GraphData
-	Public Sub New()
-		label = ""
-	End Sub
+        Public Property initialPostion() As AbstractVector
+            Get
+                Return m_initialPostion
+            End Get
+            Set
+                m_initialPostion = Value
+            End Set
+        End Property
+        Private m_initialPostion As AbstractVector
+        Public Property origID() As String
+            Get
+                Return m_origID
+            End Get
+            Set
+                m_origID = Value
+            End Set
+        End Property
+        Private m_origID As String
 
-
-	Public Property label() As String
-		Get
-			Return m_label
-		End Get
-		Set
-			m_label = Value
-		End Set
-	End Property
-	Private m_label As String
+    End Class
+    Public Class EdgeData
+        Inherits GraphData
+        Public Sub New()
+            MyBase.New()
+            length = 1.0F
+        End Sub
+        Public Property length() As Single
+            Get
+                Return m_length
+            End Get
+            Set
+                m_length = Value
+            End Set
+        End Property
+        Private m_length As Single
+    End Class
+    Public Class GraphData
+        Public Sub New()
+            label = ""
+        End Sub
 
 
-End Class
+        Public Property label() As String
+            Get
+                Return m_label
+            End Get
+            Set
+                m_label = Value
+            End Set
+        End Property
+        Private m_label As String
+
+
+    End Class
+End Namespace

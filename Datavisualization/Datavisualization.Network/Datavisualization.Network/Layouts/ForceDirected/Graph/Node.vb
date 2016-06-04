@@ -40,92 +40,95 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public Class Node
-	Public Sub New(iId As String, Optional iData As NodeData = Nothing)
-		ID = iId
-		Data = New NodeData()
-		If iData IsNot Nothing Then
-			Data.initialPostion = iData.initialPostion
-			Data.label = iData.label
-			Data.mass = iData.mass
-		End If
-		Pinned = False
-	End Sub
+Namespace Layouts.Graph
 
-	Public Property ID() As String
-		Get
-			Return m_ID
-		End Get
-		Private Set
-			m_ID = Value
-		End Set
-	End Property
-	Private m_ID As String
-	Public Property Data() As NodeData
-		Get
-			Return m_Data
-		End Get
-		Private Set
-			m_Data = Value
-		End Set
-	End Property
-	Private m_Data As NodeData
+    Public Class Node
+        Public Sub New(iId As String, Optional iData As NodeData = Nothing)
+            ID = iId
+            Data = New NodeData()
+            If iData IsNot Nothing Then
+                Data.initialPostion = iData.initialPostion
+                Data.label = iData.label
+                Data.mass = iData.mass
+            End If
+            Pinned = False
+        End Sub
+
+        Public Property ID() As String
+            Get
+                Return m_ID
+            End Get
+            Private Set
+                m_ID = Value
+            End Set
+        End Property
+        Private m_ID As String
+        Public Property Data() As NodeData
+            Get
+                Return m_Data
+            End Get
+            Private Set
+                m_Data = Value
+            End Set
+        End Property
+        Private m_Data As NodeData
 
 
-	Public Property Pinned() As Boolean
-		Get
-			Return m_Pinned
-		End Get
-		Set
-			m_Pinned = Value
-		End Set
-	End Property
-	Private m_Pinned As Boolean
-	Public Overrides Function GetHashCode() As Integer
-		Return ID.GetHashCode()
-	End Function
-	Public Overrides Function Equals(obj As System.Object) As Boolean
-		' If parameter is null return false.
-		If obj Is Nothing Then
-			Return False
-		End If
+        Public Property Pinned() As Boolean
+            Get
+                Return m_Pinned
+            End Get
+            Set
+                m_Pinned = Value
+            End Set
+        End Property
+        Private m_Pinned As Boolean
+        Public Overrides Function GetHashCode() As Integer
+            Return ID.GetHashCode()
+        End Function
+        Public Overrides Function Equals(obj As System.Object) As Boolean
+            ' If parameter is null return false.
+            If obj Is Nothing Then
+                Return False
+            End If
 
-		' If parameter cannot be cast to Point return false.
-		Dim p As Node = TryCast(obj, Node)
-		If DirectCast(p, System.Object) Is Nothing Then
-			Return False
-		End If
+            ' If parameter cannot be cast to Point return false.
+            Dim p As Node = TryCast(obj, Node)
+            If DirectCast(p, System.Object) Is Nothing Then
+                Return False
+            End If
 
-		' Return true if the fields match:
-		Return (ID = p.ID)
-	End Function
+            ' Return true if the fields match:
+            Return (ID = p.ID)
+        End Function
 
-	Public Overloads Function Equals(p As Node) As Boolean
-		' If parameter is null return false:
-		If DirectCast(p, Object) Is Nothing Then
-			Return False
-		End If
+        Public Overloads Function Equals(p As Node) As Boolean
+            ' If parameter is null return false:
+            If DirectCast(p, Object) Is Nothing Then
+                Return False
+            End If
 
-		' Return true if the fields match:
-		Return (ID = p.ID)
-	End Function
+            ' Return true if the fields match:
+            Return (ID = p.ID)
+        End Function
 
-	Public Shared Operator =(a As Node, b As Node) As Boolean
-		' If both are null, or both are same instance, return true.
-		If System.[Object].ReferenceEquals(a, b) Then
-			Return True
-		End If
+        Public Shared Operator =(a As Node, b As Node) As Boolean
+            ' If both are null, or both are same instance, return true.
+            If System.[Object].ReferenceEquals(a, b) Then
+                Return True
+            End If
 
-		' If one is null, but not both, return false.
-		If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
-			Return False
-		End If
+            ' If one is null, but not both, return false.
+            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+                Return False
+            End If
 
-		' Return true if the fields match:
-		Return a.ID = b.ID
-	End Operator
+            ' Return true if the fields match:
+            Return a.ID = b.ID
+        End Operator
 
-	Public Shared Operator <>(a As Node, b As Node) As Boolean
-		Return Not (a = b)
-	End Operator
-End Class
+        Public Shared Operator <>(a As Node, b As Node) As Boolean
+            Return Not (a = b)
+        End Operator
+    End Class
+End Namespace
