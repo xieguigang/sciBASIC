@@ -23,6 +23,7 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 >  PM> Install-Package VB_AppFramework_40
 
 ##Framework Gallery
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
 Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Microsoft.VisualBasic.Imaging) 3D engine.
 
