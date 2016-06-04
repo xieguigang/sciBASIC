@@ -12,6 +12,13 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
 Public Module RandomExtensions
 
+    ReadOnly __randomSeeds As New Random(RandomDouble() * 10000)
+
+    Public Function RandomSingle() As Single
+        Dim result = __randomSeeds.NextDouble()
+        Return CSng(result)
+    End Function
+
     ''' <summary>
     ''' Generates normally distributed numbers. Each operation makes two Gaussians for the price of one, and apparently they can be cached or something for better performance, but who cares.
     ''' </summary>

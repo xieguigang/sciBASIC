@@ -1,24 +1,29 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkVisualizer
 
     <ExportAPI("Draw.Image")>
-    Public Function DrawImage(Network As Network, Optional Margin As Point = Nothing) As Bitmap
-        Dim FrameSize = Network.FrameSize
-        Margin = If(Margin = Nothing, New Point(3, 3), Margin)
+    <Extension>
+    Public Function DrawImage(Network As NetworkGraph,
+                              frameSize As Size,
+                              Optional margin As Point = Nothing,
+                              Optional backgroundImage As Image = Nothing) As Bitmap
 
-        Dim Bitmap As Bitmap = New Bitmap(FrameSize.Width, FrameSize.Height)
+        Using Graphic As GDIPlusDeviceHandle = frameSize.CreateGDIDevice
+            margin = If(margin = Nothing, New Point(3, 3), margin)
 
-        Using Graphic As System.Drawing.Graphics = Graphics.FromImage(Bitmap)
-            If Network.BackgroundImage Is Nothing Then
+            If backgroundImage Is Nothing Then
                 Dim BackgroundColor = Color.FromArgb(219, 243, 255)
-                Call Graphic.FillRectangle(New SolidBrush(BackgroundColor), New Rectangle(New Point, New Size(FrameSize.Width, FrameSize.Height))) '绘制背景纹理
+                Call Graphic.FillRectangle(New SolidBrush(BackgroundColor), New Rectangle(New Point, New Size(frameSize.Width, frameSize.Height))) '绘制背景纹理
             Else
-                Call Graphic.DrawImage(Network.BackgroundImage, 0, 0, FrameSize.Width, FrameSize.Height)
+                Call Graphic.DrawImage(backgroundImage, 0, 0, frameSize.Width, frameSize.Height)
             End If
 
             Graphic.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
@@ -26,11 +31,11 @@ Public Module NetworkVisualizer
             Graphic.PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
             Graphic.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 
-            For Each Nod In Network
-                For i As Integer = 0 To Nod.Neighbours.Count - 1
-                    Dim cnnId = Nod.Neighbours(i)
-                    Dim otherNode = Network.Nodes(cnnId)
-                    Dim Weight = Nod.Weights(i)
+            For Each Nod In Network.nodes
+                For i As Integer = 0 To Nod.Data.Neighborhoods - 1
+                    Dim cnnId = Nod.Data.Neighbours(i)
+                    Dim otherNode = Network.nodes(cnnId)
+                    Dim Weight = Nod.Data.Weights(i)
                     Dim Color As Color = Color.FromArgb(131, 131, 131)
 
                     If Weight < 0.5 Then
@@ -41,7 +46,7 @@ Public Module NetworkVisualizer
 
                     Dim LineColor As Pen = New Pen(Color, 5 * Weight)
 
-                    Call Graphic.DrawLine(LineColor, Nod.Location, otherNode.Location)
+                    Call Graphic.DrawLine(LineColor, Nod.Data.initialPostion.Point2D, otherNode.Data.initialPostion.Point2D)
                 Next
             Next
 
@@ -53,29 +58,29 @@ Public Module NetworkVisualizer
             'Call path.CloseAllFigures()
             'Call Graphic.DrawPath(Pens.Black, path)
 
-            For Each Nod In Network
-                Dim Font As Font = New Font("Ubuntu", 12 + Nod.Neighbours.Count, FontStyle.Bold)
-                Dim size = Graphic.MeasureString(Nod.DispName, Font)
-                Dim r As Integer = If(Nod.Neighbours.Count < 30, Nod.Neighborhoods * 9, Nod.Neighborhoods * 7)
+            For Each Nod As Node In Network.nodes
+                Dim Font As Font = New Font(FontFace.Ubuntu, 12 + Nod.Data.Neighborhoods, FontStyle.Bold)
+                Dim size = Graphic.MeasureString(Nod.Data.origID, Font)
+                Dim r As Integer = If(Nod.Data.Neighborhoods < 30, Nod.Data.Neighborhoods * 9, Nod.Data.Neighborhoods * 7)
 
-                Call Graphic.FillPie(New SolidBrush(Nod.Color), New Rectangle(New Point(Nod.Location.X - r / 2, Nod.Location.Y - r / 2), New Size(r, r)), 0, 360)
+                Call Graphic.FillPie(New SolidBrush(Nod.Data.Color), New Rectangle(New Point(Nod.Data.initialPostion.x - r / 2, Nod.Data.initialPostion.y - r / 2), New Size(r, r)), 0, 360)
 
-                Dim stringLocation As Point = New Point(Nod.Location.X - size.Width / 2, Nod.Location.Y + r / 2 + 2)
-                If stringLocation.X < Margin.X Then
-                    stringLocation = New Point(Margin.X, stringLocation.Y)
+                Dim stringLocation As Point = New Point(Nod.Data.initialPostion.x - size.Width / 2, Nod.Data.initialPostion.y + r / 2 + 2)
+                If stringLocation.X < margin.X Then
+                    stringLocation = New Point(margin.X, stringLocation.Y)
                 End If
-                If stringLocation.Y + size.Height > FrameSize.Height - Margin.Y Then
-                    stringLocation = New Point(stringLocation.X, FrameSize.Height - Margin.Y - size.Height)
+                If stringLocation.Y + size.Height > frameSize.Height - margin.Y Then
+                    stringLocation = New Point(stringLocation.X, frameSize.Height - margin.Y - size.Height)
                 End If
-                If stringLocation.X + size.Width > FrameSize.Width - Margin.X Then
-                    stringLocation = New Point(FrameSize.Width - Margin.X - size.Width, stringLocation.Y)
+                If stringLocation.X + size.Width > frameSize.Width - margin.X Then
+                    stringLocation = New Point(frameSize.Width - margin.X - size.Width, stringLocation.Y)
                 End If
 
-                Call Graphic.DrawString(Nod.DispName, Font, Brushes.Black, stringLocation)
+                Call Graphic.DrawString(Nod.Data.origID, Font, Brushes.Black, stringLocation)
             Next
-        End Using
 
-        Return Bitmap
+            Return Graphic.ImageResource
+        End Using
     End Function
 
     ''' <summary>
