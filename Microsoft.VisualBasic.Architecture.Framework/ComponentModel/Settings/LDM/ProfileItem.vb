@@ -41,14 +41,14 @@ Namespace ComponentModel.Settings
         Implements IKeyValuePairObject(Of String, String)
         Implements sIdEnumerable
 
-        <XmlAttribute> Public Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, sIdEnumerable.Identifier
-        <XmlAttribute> Public Property Description As String Implements IKeyValuePairObject(Of String, String).Value
+        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, sIdEnumerable.Identifier
+        <XmlAttribute> Public Overridable Property Description As String Implements IKeyValuePairObject(Of String, String).Value
 
         ''' <summary>
         ''' 默认的数据类型是字符串类型
         ''' </summary>
         ''' <returns></returns>
-        Public Property Type As ValueTypes = ValueTypes.Text
+        Public Overridable Property Type As ValueTypes = ValueTypes.Text
 
         Sub New()
         End Sub
