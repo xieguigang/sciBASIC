@@ -39,10 +39,11 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge
+    Public Class Edge : Inherits ClassObject
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId
