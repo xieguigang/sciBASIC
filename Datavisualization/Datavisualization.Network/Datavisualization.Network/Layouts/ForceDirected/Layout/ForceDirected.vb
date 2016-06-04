@@ -40,16 +40,19 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Timers
+Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 
 Namespace Layouts
 
     Public Class NearestPoint
+
         Public Sub New()
             node = Nothing
             point = Nothing
             distance = Nothing
         End Sub
+
         Public node As Node
         Public point As Point
         Public distance As System.Nullable(Of Single)
@@ -59,76 +62,29 @@ Namespace Layouts
         Public Shared defaultBB As Single = 2.0F
         Public Shared defaultPadding As Single = 0.07F
         ' ~5% padding
+
         Public Sub New()
             topRightBack = Nothing
             bottomLeftFront = Nothing
         End Sub
+
         Public topRightBack As AbstractVector
         Public bottomLeftFront As AbstractVector
     End Class
 
     Public MustInherit Class ForceDirected(Of Vector As IVector)
         Implements IForceDirected
+
         Public Property Stiffness() As Single Implements IForceDirected.Stiffness
-            Get
-                Return m_Stiffness
-            End Get
-            Set
-                m_Stiffness = Value
-            End Set
-        End Property
-        Private m_Stiffness As Single
-
         Public Property Repulsion() As Single Implements IForceDirected.Repulsion
-            Get
-                Return m_Repulsion
-            End Get
-            Set
-                m_Repulsion = Value
-            End Set
-        End Property
-        Private m_Repulsion As Single
-
         Public Property Damping() As Single Implements IForceDirected.Damping
-            Get
-                Return m_Damping
-            End Get
-            Set
-                m_Damping = Value
-            End Set
-        End Property
-        Private m_Damping As Single
-
         Public Property Threadshold() As Single Implements IForceDirected.Threadshold
-            Get
-                Return m_Threadshold
-            End Get
-            Set
-                m_Threadshold = Value
-            End Set
-        End Property
-        Private m_Threadshold As Single
-
         Public Property WithinThreashold() As Boolean Implements IForceDirected.WithinThreashold
-            Get
-                Return m_WithinThreashold
-            End Get
-            Private Set
-                m_WithinThreashold = Value
-            End Set
-        End Property
-        Private m_WithinThreashold As Boolean
+
         Protected m_nodePoints As Dictionary(Of String, Point)
         Protected m_edgeSprings As Dictionary(Of String, Spring)
         Public Property graph() As IGraph Implements IForceDirected.graph
-            Get
-                Return m_graph
-            End Get
-            Protected Set
-                m_graph = Value
-            End Set
-        End Property
-        Private m_graph As IGraph
+
         Public Sub Clear() Implements IForceDirected.Clear
             m_nodePoints.Clear()
             m_edgeSprings.Clear()
@@ -147,8 +103,6 @@ Namespace Layouts
         End Sub
 
         Public MustOverride Function GetPoint(iNode As Node) As Point
-
-
 
         Public Function GetSpring(iEdge As Edge) As Spring
             If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
@@ -328,26 +282,25 @@ Namespace Layouts
             Return min
         End Function
 
-        Public MustOverride Function GetBoundingBox() As BoundingBox
-
+        Public MustOverride Function GetBoundingBox() As BoundingBox Implements IForceDirected.GetBoundingBox
     End Class
 
     Public Class ForceDirected2D
         Inherits ForceDirected(Of FDGVector2)
-        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
 
+        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As Point
-            If Not (m_nodePoints.ContainsKey(iNode.Id)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
                 Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
-                m_nodePoints(iNode.Id) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.Id)
+            Return m_nodePoints(iNode.ID)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
@@ -380,20 +333,20 @@ Namespace Layouts
 
     Public Class ForceDirected3D
         Inherits ForceDirected(Of FDGVector3)
-        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
 
+        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As Point
-            If Not (m_nodePoints.ContainsKey(iNode.Id)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
                 Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                m_nodePoints(iNode.Id) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.Id)
+            Return m_nodePoints(iNode.ID)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

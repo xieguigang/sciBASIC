@@ -39,6 +39,8 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Layouts
 
@@ -46,47 +48,25 @@ Namespace Layouts
         Implements IVector
 
         Public Property x() As Single Implements IVector.x
-            Get
-                Return m_x
-            End Get
-            Set
-                m_x = Value
-            End Set
-        End Property
-        Private m_x As Single
-
         Public Property y() As Single Implements IVector.y
-            Get
-                Return m_y
-            End Get
-            Set
-                m_y = Value
-            End Set
-        End Property
-        Private m_y As Single
-
         Public Property z() As Single Implements IVector.z
-            Get
-                Return m_z
-            End Get
-            Set
-                m_z = Value
-            End Set
-        End Property
-        Private m_z As Single
 
         Public Sub New()
         End Sub
 
-        Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector
-        Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector
-        Public MustOverride Function Multiply(n As Single) As AbstractVector
-        Public MustOverride Function Divide(n As Single) As AbstractVector
-        Public MustOverride Function Magnitude() As Single
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector Implements IVector.Add
+        Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector Implements IVector.Subtract
+        Public MustOverride Function Multiply(n As Single) As AbstractVector Implements IVector.Multiply
+        Public MustOverride Function Divide(n As Single) As AbstractVector Implements IVector.Divide
+        Public MustOverride Function Magnitude() As Single Implements IVector.Magnitude
         'public abstract public abstract AbstractVector Normal();
-        Public MustOverride Function Normalize() As AbstractVector
-        Public MustOverride Function SetZero() As AbstractVector
-        Public MustOverride Function SetIdentity() As AbstractVector
+        Public MustOverride Function Normalize() As AbstractVector Implements IVector.Normalize
+        Public MustOverride Function SetZero() As AbstractVector Implements IVector.SetZero
+        Public MustOverride Function SetIdentity() As AbstractVector Implements IVector.SetIdentity
 
         Public Shared Operator +(a As AbstractVector, b As AbstractVector) As AbstractVector
             If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
@@ -159,10 +139,5 @@ Namespace Layouts
         Public Shared Operator <>(a As AbstractVector, b As AbstractVector) As Boolean
             Return Not (a = b)
         End Operator
-
-
-
     End Class
-
-
 End Namespace

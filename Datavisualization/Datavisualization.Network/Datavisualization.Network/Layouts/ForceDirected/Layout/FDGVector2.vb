@@ -44,6 +44,7 @@ Namespace Layouts
 
     Public Class FDGVector2
         Inherits AbstractVector
+
         Public Sub New()
             MyBase.New()
             x = 0F

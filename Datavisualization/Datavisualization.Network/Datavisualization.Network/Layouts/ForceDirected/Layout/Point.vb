@@ -39,10 +39,13 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Layouts
 
     Public Class Point
+
         Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)
             position = iPosition
             node = iNode
@@ -53,6 +56,7 @@ Namespace Layouts
         Public Overrides Function GetHashCode() As Integer
             Return position.GetHashCode()
         End Function
+
         Public Overrides Function Equals(obj As System.Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
@@ -103,48 +107,21 @@ Namespace Layouts
         End Sub
 
         Public Property position() As AbstractVector
-            Get
-                Return m_position
-            End Get
-            Set
-                m_position = Value
-            End Set
-        End Property
-        Private m_position As AbstractVector
         Public Property node() As Node
-            Get
-                Return m_node
-            End Get
-            Private Set
-                m_node = Value
-            End Set
-        End Property
-        Private m_node As Node
         Public Property mass() As Single
             Get
                 Return node.Data.mass
             End Get
             Private Set
-                node.Data.mass = value
+                node.Data.mass = Value
             End Set
         End Property
+
         Public Property velocity() As AbstractVector
-            Get
-                Return m_velocity
-            End Get
-            Private Set
-                m_velocity = Value
-            End Set
-        End Property
-        Private m_velocity As AbstractVector
         Public Property acceleration() As AbstractVector
-            Get
-                Return m_acceleration
-            End Get
-            Private Set
-                m_acceleration = Value
-            End Set
-        End Property
-        Private m_acceleration As AbstractVector
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace

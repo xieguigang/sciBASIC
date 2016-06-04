@@ -39,10 +39,12 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Layouts
 
     Public Class Spring
+
         Public Sub New(iPoint1 As Point, iPoint2 As Point, iLength As Single, iK As Single)
             point1 = iPoint1
             point2 = iPoint2
@@ -51,42 +53,12 @@ Namespace Layouts
         End Sub
 
         Public Property point1() As Point
-            Get
-                Return m_point1
-            End Get
-            Private Set
-                m_point1 = Value
-            End Set
-        End Property
-        Private m_point1 As Point
         Public Property point2() As Point
-            Get
-                Return m_point2
-            End Get
-            Private Set
-                m_point2 = Value
-            End Set
-        End Property
-        Private m_point2 As Point
-
         Public Property Length() As Single
-            Get
-                Return m_Length
-            End Get
-            Private Set
-                m_Length = Value
-            End Set
-        End Property
-        Private m_Length As Single
-
         Public Property K() As Single
-            Get
-                Return m_K
-            End Get
-            Private Set
-                m_K = Value
-            End Set
-        End Property
-        Private m_K As Single
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace
