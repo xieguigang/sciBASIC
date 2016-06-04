@@ -88,7 +88,7 @@ Namespace Layouts
             Return (x = p.x) AndAlso (y = p.y)
         End Function
 
-        Public Shared Operator =(a As FDGVector2, b As FDGVector2) As Boolean
+        Public Overloads Shared Operator =(a As FDGVector2, b As FDGVector2) As Boolean
             ' If both are null, or both are same instance, return true.
             If System.[Object].ReferenceEquals(a, b) Then
                 Return True
@@ -103,7 +103,7 @@ Namespace Layouts
             Return (a.x = b.x) AndAlso (a.y = b.y)
         End Operator
 
-        Public Shared Operator <>(a As FDGVector2, b As FDGVector2) As Boolean
+        Public Overloads Shared Operator <>(a As FDGVector2, b As FDGVector2) As Boolean
             Return Not (a = b)
         End Operator
 
@@ -175,33 +175,33 @@ Namespace Layouts
             Return retVec
         End Function
 
-        Public Shared Operator +(a As FDGVector2, b As FDGVector2) As FDGVector2
+        Public Overloads Shared Operator +(a As FDGVector2, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Add(b)
             Return temp
         End Operator
-        Public Shared Operator -(a As FDGVector2, b As FDGVector2) As FDGVector2
+        Public Overloads Shared Operator -(a As FDGVector2, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Subtract(b)
             Return temp
         End Operator
-        Public Shared Operator *(a As FDGVector2, b As Single) As FDGVector2
+        Public Overloads Shared Operator *(a As FDGVector2, b As Single) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Multiply(b)
             Return temp
         End Operator
-        Public Shared Operator *(a As Single, b As FDGVector2) As FDGVector2
+        Public Overloads Shared Operator *(a As Single, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(b.x, b.y)
             temp.Multiply(a)
             Return temp
         End Operator
 
-        Public Shared Operator /(a As FDGVector2, b As Single) As FDGVector2
+        Public Overloads Shared Operator /(a As FDGVector2, b As Single) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Divide(b)
             Return temp
         End Operator
-        Public Shared Operator /(a As Single, b As FDGVector2) As FDGVector2
+        Public Overloads Shared Operator /(a As Single, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(b.x, b.y)
             temp.Divide(a)
             Return temp

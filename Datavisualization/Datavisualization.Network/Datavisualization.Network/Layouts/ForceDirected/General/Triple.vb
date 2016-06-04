@@ -40,41 +40,22 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Public Class Triple(Of T, U, V)
-	Public Sub New()
-	End Sub
+Namespace Layouts
 
-	Public Sub New(iFirst As T, iSecond As U, iThird As V)
-		Me.first = iFirst
-		Me.second = iSecond
-		Me.third = iThird
-	End Sub
+    Public Class Triple(Of T, U, V)
 
-	Public Property first() As T
-		Get
-			Return m_first
-		End Get
-		Set
-			m_first = Value
-		End Set
-	End Property
-	Private m_first As T
-	Public Property second() As U
-		Get
-			Return m_second
-		End Get
-		Set
-			m_second = Value
-		End Set
-	End Property
-	Private m_second As U
-	Public Property third() As V
-		Get
-			Return m_third
-		End Get
-		Set
-			m_third = Value
-		End Set
-	End Property
-	Private m_third As V
-End Class
+        Public Sub New()
+        End Sub
+
+        Public Sub New(iFirst As T, iSecond As U, iThird As V)
+            Me.first = iFirst
+            Me.second = iSecond
+            Me.third = iThird
+        End Sub
+
+        Public Property first() As T
+        Public Property second() As U
+        Public Property third() As V
+
+    End Class
+End Namespace

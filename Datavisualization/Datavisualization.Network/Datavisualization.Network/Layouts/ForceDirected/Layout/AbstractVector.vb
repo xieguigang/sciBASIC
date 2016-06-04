@@ -76,6 +76,7 @@ Namespace Layouts
             End If
             Return Nothing
         End Operator
+
         Public Shared Operator -(a As AbstractVector, b As AbstractVector) As AbstractVector
             If TypeOf a Is FDGVector2 AndAlso TypeOf b Is FDGVector2 Then
                 Return TryCast(a, FDGVector2) - TryCast(b, FDGVector2)
@@ -84,6 +85,7 @@ Namespace Layouts
             End If
             Return Nothing
         End Operator
+
         Public Shared Operator *(a As AbstractVector, b As Single) As AbstractVector
             If TypeOf a Is FDGVector2 Then
                 Return TryCast(a, FDGVector2) * b
@@ -92,6 +94,7 @@ Namespace Layouts
             End If
             Return Nothing
         End Operator
+
         Public Shared Operator *(a As Single, b As AbstractVector) As AbstractVector
             If TypeOf b Is FDGVector2 Then
                 Return a * TryCast(b, FDGVector2)
@@ -109,12 +112,15 @@ Namespace Layouts
             End If
             Return Nothing
         End Operator
+
         Public Overrides Function GetHashCode() As Integer
             Return MyBase.GetHashCode()
         End Function
+
         Public Overrides Function Equals(obj As System.Object) As Boolean
             Return Me Is TryCast(obj, AbstractVector)
         End Function
+
         Public Shared Operator =(a As AbstractVector, b As AbstractVector) As Boolean
             ' If both are null, or both are same instance, return true.
             If System.[Object].ReferenceEquals(a, b) Then

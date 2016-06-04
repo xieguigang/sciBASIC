@@ -40,34 +40,25 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Collections
+Imports Microsoft.VisualBasic.Serialization
 
+Namespace Layouts
 
-Public Class Pair(Of T, U)
-	Public Sub New()
-	End Sub
+    Public Class Pair(Of T, U)
 
-	Public Sub New(iFirst As T, iSecond As U)
-		Me.first = iFirst
-		Me.second = iSecond
-	End Sub
+        Public Sub New()
+        End Sub
 
-	Public Property first() As T
-		Get
-			Return m_first
-		End Get
-		Set
-			m_first = Value
-		End Set
-	End Property
-	Private m_first As T
-	Public Property second() As U
-		Get
-			Return m_second
-		End Get
-		Set
-			m_second = Value
-		End Set
-	End Property
-	Private m_second As U
-End Class
+        Public Sub New(iFirst As T, iSecond As U)
+            Me.first = iFirst
+            Me.second = iSecond
+        End Sub
 
+        Public Property first() As T
+        Public Property second() As U
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+End Namespace

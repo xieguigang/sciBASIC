@@ -39,6 +39,7 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 
 Namespace Layouts.Interfaces
 

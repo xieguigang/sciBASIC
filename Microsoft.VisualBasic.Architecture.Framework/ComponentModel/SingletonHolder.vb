@@ -1,9 +1,9 @@
 '! 
-'@file PriorityQueue.cs
+'@file SingletonHolder.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
 '@date September 27, 2013
-'@brief PriorityQueue Interface
+'@brief SingletonHolder Interface
 '@version 2.0
 '
 '@section LICENSE
@@ -32,7 +32,7 @@
 '
 '@section DESCRIPTION
 '
-'An Interface for the PriorityQueue Class.
+'An Interface for the SingletonHolder Class.
 '
 '
 
@@ -41,41 +41,23 @@ Imports System.Linq
 Imports System.Text
 Imports System.Collections
 
-Public Class PriorityQueue(Of T As IComparable)
-	Private m_data As List(Of T)
 
-	Public Sub New()
-		Me.m_data = New List(Of T)()
-	End Sub
+Namespace ComponentModel
 
-	Public Sub Enqueue(queueItem As T)
-		m_data.Add(queueItem)
-		m_data.Sort()
-	End Sub
+    Public Class SingletonHolder(Of T As New)
 
-	Public Sub Clear()
-		m_data.Clear()
-	End Sub
+        Shared m_instance As T
 
+        Private Sub New()
+        End Sub
 
-	Public Function Dequeue() As T
-		Dim frontItem As T = m_data(0)
-		m_data.RemoveAt(0)
-		Return frontItem
-	End Function
-
-	Public Function Peek() As T
-		Dim frontItem As T = m_data(0)
-		Return frontItem
-	End Function
-
-	Public Function Contains(queueItem As T) As Boolean
-		Return m_data.Contains(queueItem)
-	End Function
-	Public ReadOnly Property Count() As Integer
-		Get
-			Return m_data.Count
-		End Get
-	End Property
-End Class
-
+        Public Shared ReadOnly Property Instance() As T
+            Get
+                If m_instance Is Nothing Then
+                    m_instance = New T()
+                End If
+                Return m_instance
+            End Get
+        End Property
+    End Class
+End Namespace
