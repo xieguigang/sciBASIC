@@ -37,6 +37,7 @@
 '
 
 Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
@@ -50,6 +51,16 @@ Namespace Layouts
         Public Property x() As Single Implements IVector.x
         Public Property y() As Single Implements IVector.y
         Public Property z() As Single Implements IVector.z
+
+        Public Property Point2D As Point
+            Get
+                Return New Point(x, y)
+            End Get
+            Set(value As Point)
+                x = value.X
+                y = value.Y
+            End Set
+        End Property
 
         Public Sub New()
         End Sub

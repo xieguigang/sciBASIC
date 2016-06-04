@@ -309,6 +309,24 @@ Namespace Graph
         Public Property nodes() As List(Of Node) Implements IGraph.nodes
         Public Property edges() As List(Of Edge) Implements IGraph.edges
 
+        ''' <summary>
+        ''' Returns the set of all Nodes that have emanating Edges.
+        ''' This therefore returns all Nodes that will be visible in the drawing.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property connectedNodes() As Node()
+            Get
+                Dim _connectedNodes As New List(Of Node)
+
+                For Each Edge In edges
+                    Call _connectedNodes.Add(Edge.Source)
+                    Call _connectedNodes.Add(Edge.Target)
+                Next
+
+                Return _connectedNodes.Distinct.ToArray
+            End Get
+        End Property
+
         Private m_nodeSet As Dictionary(Of String, Node)
         Private m_adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
 

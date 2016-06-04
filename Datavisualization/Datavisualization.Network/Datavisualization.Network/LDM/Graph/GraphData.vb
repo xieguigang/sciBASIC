@@ -37,6 +37,7 @@
 '
 
 Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
@@ -58,6 +59,7 @@ Namespace Graph
         Public Property mass() As Single
         Public Property initialPostion() As AbstractVector
         Public Property origID() As String
+        Public Property Force As Point
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -72,6 +74,7 @@ Namespace Graph
         End Sub
 
         Public Property length() As Single
+        Public Property weight As Double
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
