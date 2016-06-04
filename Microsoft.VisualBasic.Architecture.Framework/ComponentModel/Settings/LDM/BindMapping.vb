@@ -3,6 +3,7 @@
 Namespace ComponentModel.Settings
 
     Public Class BindMapping : Inherits ProfileItem
+        Implements IProfileTable
 
         Dim _target As Object
 
@@ -19,7 +20,7 @@ Namespace ComponentModel.Settings
             Return maps
         End Function
 
-        Public ReadOnly Property Value As String
+        Public ReadOnly Property Value As String Implements IProfileTable.value
             Get
                 Dim result As Object =
                     BindProperty.GetValue(_target, Nothing)
@@ -41,6 +42,33 @@ Namespace ComponentModel.Settings
             Get
                 Return String.Format("{0} = ""{1}""", Name, Value)
             End Get
+        End Property
+
+        Public Overrides Property Name As String Implements IProfileTable.Name
+            Get
+                Return MyBase.Name
+            End Get
+            Set(value As String)
+                MyBase.Name = value
+            End Set
+        End Property
+
+        Public Overrides Property Type As ValueTypes Implements IProfileTable.Type
+            Get
+                Return MyBase.Type
+            End Get
+            Set(value As ValueTypes)
+                MyBase.Type = value
+            End Set
+        End Property
+
+        Public Overrides Property Description As String Implements IProfileTable.Description
+            Get
+                Return MyBase.Description
+            End Get
+            Set(value As String)
+                MyBase.Description = value
+            End Set
         End Property
 
         ''' <summary>

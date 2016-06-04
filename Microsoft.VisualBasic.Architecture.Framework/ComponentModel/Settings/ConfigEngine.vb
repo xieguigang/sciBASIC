@@ -56,13 +56,17 @@ Namespace ComponentModel.Settings
                          Where attributes.Length > 0
                          Let attr = DirectCast(attributes(0), ProfileItem)
                          Select BindMapping.Initialize(attr, [Property], TargetData) '
-            Dim LoadLQuery = (From ProfileItem As BindMapping In LQuery
+            Dim LoadLQuery = (From ProfileItem As BindMapping
+                              In LQuery
                               Select New KeyValuePair(Of String, BindMapping)(GetName(ProfileItem, ProfileItem.BindProperty), ProfileItem)).ToList
 
             Dim Nodes = From [property] As PropertyInfo In Type.GetProperties
                         Let attributes = [property].GetCustomAttributes(attributeType:=ProfileItemNode, inherit:=False)
                         Where attributes.Length = 1
-                        Select New With {.[Property] = [property], .Entity = [property].GetValue(TargetData, Nothing)} '
+                        Select New With {
+                            .[Property] = [property],
+                            .Entity = [property].GetValue(TargetData, Nothing)} ' 在这里是用匿名类型而不是直接使用Linq的匿名类型的原因是在后面还需要进行赋值操作，而Linq的匿名类型的属性是ReadOnly的
+
             Dim lstNodes = Nodes.ToArray
 
             If lstNodes.Length > 0 Then
