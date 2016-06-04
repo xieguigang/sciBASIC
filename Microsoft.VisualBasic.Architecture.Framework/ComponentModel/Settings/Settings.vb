@@ -18,8 +18,12 @@ Namespace ComponentModel.Settings
         Sub New()
         End Sub
 
-        Sub New(Data As T)
-            Call MyBase.New(Data)
+        ''' <summary>
+        ''' 从配置数据的实例对象创建配置映射
+        ''' </summary>
+        ''' <param name="config"></param>
+        Sub New(config As T)
+            Call MyBase.New(config)
         End Sub
 
         ''' <summary>
@@ -54,23 +58,10 @@ Namespace ComponentModel.Settings
             Return New ComponentModel.Settings.Settings(Of T)(Data)
         End Function
 
-        'Private Shared Sub LoadMethods(Settings As Settings(Of T))
-        '    Dim Type As System.Type = GetType(T)
-        '    Dim ProfileItem As System.Type = GetType(ProfileItem)
-        '    Dim LQuery = (From [Property] In Type.GetProperties
-        '                  Let Attributes = [Property].GetCustomAttributes(attributeType:=ProfileItem, inherit:=False)
-        '                  Where Attributes.Count > 0
-        '                  Let Attr = DirectCast(Attributes(0), ProfileItem)
-        '                  Select New KeyValuePair(Of ProfileItem, System.Reflection.PropertyInfo)(Attr, [Property])).ToArray
-
-        '    Dim ItemCollection = (From Pair In LQuery Select Pair.Key).ToArray
-
-        '    For i As Integer = 0 To ItemCollection.Count - 1
-        '        Dim item = ItemCollection(i)
-        '        item._PropertyInfo = LQuery(i).Value
-        '        Call Settings.ProfileItemCollection.Add(GetName(item, item._PropertyInfo), item)
-        '    Next
-        'End Sub
+        Public Shared Function CreateEmpty() As Settings(Of T)
+            Dim x As T = Activator.CreateInstance(Of T)
+            Return New Settings(Of T)(x)
+        End Function
 
         Public Overloads Shared Narrowing Operator CType(Settings As Settings.Settings(Of T)) As T
             Return Settings._SettingsData.As(Of T)

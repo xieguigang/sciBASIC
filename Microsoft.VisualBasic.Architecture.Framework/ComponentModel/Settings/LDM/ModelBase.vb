@@ -5,6 +5,7 @@ Namespace ComponentModel.Settings
     ''' 具备有保存数据功能的可配置数据文件的基本定义
     ''' </summary>
     Public Interface IProfile
+
         Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean
 
         ''' <summary>
