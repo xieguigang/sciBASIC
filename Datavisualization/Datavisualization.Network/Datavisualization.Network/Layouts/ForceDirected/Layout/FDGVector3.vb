@@ -175,7 +175,7 @@ Namespace Layouts
         End Function
 
         Public Shared Function Random() As AbstractVector
-            Return New FDGVector3(10.0F * (Util.Random() - 0.5F), 10.0F * (Util.Random() - 0.5F), 10.0F * (Util.Random() - 0.5F))
+            Return New FDGVector3(10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F))
         End Function
 
         Public Shared Operator +(a As FDGVector3, b As FDGVector3) As FDGVector3

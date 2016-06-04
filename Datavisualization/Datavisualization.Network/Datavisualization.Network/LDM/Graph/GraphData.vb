@@ -39,11 +39,13 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization
 
-Namespace Layouts.Graph
+Namespace Graph
 
-    Public Class NodeData
-        Inherits GraphData
+    Public Class NodeData : Inherits GraphData
+
         Public Sub New()
             MyBase.New()
             mass = 1.0F
@@ -51,68 +53,40 @@ Namespace Layouts.Graph
             ' for merging the graph
             origID = ""
         End Sub
+
         Public Property mass() As Single
-            Get
-                Return m_mass
-            End Get
-            Set
-                m_mass = Value
-            End Set
-        End Property
-        Private m_mass As Single
-
         Public Property initialPostion() As AbstractVector
-            Get
-                Return m_initialPostion
-            End Get
-            Set
-                m_initialPostion = Value
-            End Set
-        End Property
-        Private m_initialPostion As AbstractVector
         Public Property origID() As String
-            Get
-                Return m_origID
-            End Get
-            Set
-                m_origID = Value
-            End Set
-        End Property
-        Private m_origID As String
 
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
-    Public Class EdgeData
-        Inherits GraphData
+
+    Public Class EdgeData : Inherits GraphData
+
         Public Sub New()
             MyBase.New()
             length = 1.0F
         End Sub
+
         Public Property length() As Single
-            Get
-                Return m_length
-            End Get
-            Set
-                m_length = Value
-            End Set
-        End Property
-        Private m_length As Single
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
-    Public Class GraphData
+
+    Public Class GraphData : Inherits ClassObject
+
         Public Sub New()
             label = ""
         End Sub
 
-
         Public Property label() As String
-            Get
-                Return m_label
-            End Get
-            Set
-                m_label = Value
-            End Set
-        End Property
-        Private m_label As String
 
-
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace

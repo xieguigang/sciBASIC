@@ -148,10 +148,10 @@
     <Compile Include="Layouts\ForceDirected\General\PriorityQueue.vb" />
     <Compile Include="Layouts\ForceDirected\General\SingletonHolder.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
-    <Compile Include="Layouts\ForceDirected\Graph\Edge.vb" />
-    <Compile Include="Layouts\ForceDirected\Graph\Graph.vb" />
-    <Compile Include="Layouts\ForceDirected\Graph\GraphData.vb" />
-    <Compile Include="Layouts\ForceDirected\Graph\Node.vb" />
+    <Compile Include="LDM\Graph\Edge.vb" />
+    <Compile Include="LDM\Graph\Graph.vb" />
+    <Compile Include="LDM\Graph\GraphData.vb" />
+    <Compile Include="LDM\Graph\Node.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IGraph.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IRenderer.vb" />
@@ -174,16 +174,12 @@
     <Compile Include="FindPath\PQDijkstra\HeapNode.vb" />
     <Compile Include="FindPath\PQDijkstra\PriorityQueue.vb" />
     <Compile Include="LDM\Abstract.vb" />
-    <Compile Include="LDM\ObjectModel\Edge.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="FindPath\PathFinder.vb" />
-    <Compile Include="LDM\ObjectModel\Network.vb" />
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
     <None Include="Designer.cd" />
     <Compile Include="NetworkVisualizer.vb" />
-    <Compile Include="LDM\ObjectModel\Node.vb" />
-    <Compile Include="Layouts\LayoutCreator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

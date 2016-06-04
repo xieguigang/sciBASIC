@@ -40,9 +40,10 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Namespace Layouts.Graph
+Namespace Graph
 
     Public Class Edge
+
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId
             Source = iSource
@@ -52,57 +53,15 @@ Namespace Layouts.Graph
         End Sub
 
         Public Property ID() As String
-            Get
-                Return m_ID
-            End Get
-            Private Set
-                m_ID = Value
-            End Set
-        End Property
-        Private m_ID As String
         Public Property Data() As EdgeData
-            Get
-                Return m_Data
-            End Get
-            Private Set
-                m_Data = Value
-            End Set
-        End Property
-        Private m_Data As EdgeData
-
         Public Property Source() As Node
-            Get
-                Return m_Source
-            End Get
-            Private Set
-                m_Source = Value
-            End Set
-        End Property
-        Private m_Source As Node
-
         Public Property Target() As Node
-            Get
-                Return m_Target
-            End Get
-            Private Set
-                m_Target = Value
-            End Set
-        End Property
-        Private m_Target As Node
-
         Public Property Directed() As Boolean
-            Get
-                Return m_Directed
-            End Get
-            Set
-                m_Directed = Value
-            End Set
-        End Property
-        Private m_Directed As Boolean
 
         Public Overrides Function GetHashCode() As Integer
             Return ID.GetHashCode()
         End Function
+
         Public Overrides Function Equals(obj As System.Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then

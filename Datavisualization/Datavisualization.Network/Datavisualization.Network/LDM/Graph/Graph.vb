@@ -39,7 +39,9 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
-Namespace Layouts.Graph
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+
+Namespace Graph
     Public Class Graph
         Implements IGraph
         Public Sub New()
@@ -212,6 +214,7 @@ Namespace Layouts.Graph
 
         Public Sub RemoveEdge(iEdge As Edge) Implements IGraph.RemoveEdge
             edges.Remove(iEdge)
+
             For Each x As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In m_adjacencySet
                 For Each y As KeyValuePair(Of String, List(Of Edge)) In x.Value
                     Dim tEdges As List(Of Edge) = y.Value
@@ -226,16 +229,18 @@ Namespace Layouts.Graph
                     Exit For
                 End If
             Next
-            notify()
 
+            Call notify()
         End Sub
 
         Public Function GetNode(label As String) As Node
             Dim retNode As Node = Nothing
-            nodes.ForEach(Sub(n As Node) If n.Data.label = label Then
-            retNode = n
-            End If)
-		Return retNode
+            nodes.ForEach(Sub(n As Node)
+                              If n.Data.label = label Then
+                                  retNode = n
+                              End If
+                          End Sub)
+            Return retNode
         End Function
 
         Public Function GetEdge(label As String) As Edge
@@ -254,21 +259,8 @@ Namespace Layouts.Graph
             Next
 
             For Each e As Edge In iMergeGraph.edges
-                Dim fromNode As Node = nodes.Find(Sub(n As Node)
-                                                      If e.Source.ID = n.Data.origID Then
-                                                          Return True
-                                                      End If
-                                                      Return False
-
-                                                  End Sub)
-
-                Dim toNode As Node = nodes.Find(Sub(n As Node)
-                                                    If e.Target.ID = n.Data.origID Then
-                                                        Return True
-                                                    End If
-                                                    Return False
-
-                                                End Sub)
+                Dim fromNode As Node = nodes.Find(Function(n) e.Source.ID = n.Data.origID)
+                Dim toNode As Node = nodes.Find(Sub(n) e.Target.ID = n.Data.origID)
 
                 Dim tNewEdge As Edge = AddEdge(New Edge(m_nextEdgeId.ToString(), fromNode, toNode, e.Data))
                 m_nextEdgeId += 1

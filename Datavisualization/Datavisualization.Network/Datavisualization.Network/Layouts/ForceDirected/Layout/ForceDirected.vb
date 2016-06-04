@@ -40,6 +40,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Timers
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 
 Namespace Layouts
 
@@ -339,14 +340,14 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As Point
-            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.Id)) Then
                 Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
-                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                m_nodePoints(iNode.Id) = New Point(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.ID)
+            Return m_nodePoints(iNode.Id)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
@@ -385,14 +386,14 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As Point
-            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.Id)) Then
                 Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                m_nodePoints(iNode.ID) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+                m_nodePoints(iNode.Id) = New Point(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.ID)
+            Return m_nodePoints(iNode.Id)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

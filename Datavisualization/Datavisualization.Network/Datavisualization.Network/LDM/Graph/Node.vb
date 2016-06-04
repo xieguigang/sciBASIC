@@ -40,9 +40,10 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Namespace Layouts.Graph
+Namespace Graph
 
     Public Class Node
+
         Public Sub New(iId As String, Optional iData As NodeData = Nothing)
             ID = iId
             Data = New NodeData()
@@ -55,37 +56,13 @@ Namespace Layouts.Graph
         End Sub
 
         Public Property ID() As String
-            Get
-                Return m_ID
-            End Get
-            Private Set
-                m_ID = Value
-            End Set
-        End Property
-        Private m_ID As String
         Public Property Data() As NodeData
-            Get
-                Return m_Data
-            End Get
-            Private Set
-                m_Data = Value
-            End Set
-        End Property
-        Private m_Data As NodeData
-
-
         Public Property Pinned() As Boolean
-            Get
-                Return m_Pinned
-            End Get
-            Set
-                m_Pinned = Value
-            End Set
-        End Property
-        Private m_Pinned As Boolean
+
         Public Overrides Function GetHashCode() As Integer
             Return ID.GetHashCode()
         End Function
+
         Public Overrides Function Equals(obj As System.Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then

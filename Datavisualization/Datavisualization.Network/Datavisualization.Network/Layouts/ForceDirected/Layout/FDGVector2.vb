@@ -170,7 +170,7 @@ Namespace Layouts
 
         Public Shared Function Random() As AbstractVector
 
-            Dim retVec As New FDGVector2(10.0F * (Util.Random() - 0.5F), 10.0F * (Util.Random() - 0.5F))
+            Dim retVec As New FDGVector2(10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F))
             Return retVec
         End Function
 
