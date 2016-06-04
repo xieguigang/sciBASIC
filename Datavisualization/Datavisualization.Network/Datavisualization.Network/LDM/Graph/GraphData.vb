@@ -1,4 +1,4 @@
-'! 
+﻿'! 
 '@file PhysicsData.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
@@ -56,10 +56,30 @@ Namespace Graph
             origID = ""
         End Sub
 
+        Public ReadOnly Property Neighborhoods As Integer
+            Get
+                If Neighbours Is Nothing Then
+                    Return 0
+                Else
+                    Return Neighbours.Length
+                End If
+            End Get
+        End Property
+
         Public Property mass() As Single
         Public Property initialPostion() As AbstractVector
         Public Property origID() As String
         Public Property Force As Point
+        Public Property Color As Color
+        <DumpNode> Public Property Weights As Double()
+
+        ''' <summary>
+        ''' 与本节点相连接的其他节点的<see cref="Node.Id">编号</see>
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <DumpNode> Public Property Neighbours As Integer()
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
