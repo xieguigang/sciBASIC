@@ -20,7 +20,7 @@ Namespace ComponentModel.DataSourceModel
         Implements IDynamicMeta(Of T)
 
         ''' <summary>
-        '''
+        ''' The dynamics property object with specific type of value.
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>Can not serialize the dictionary object in to xml document.</remarks>
@@ -38,6 +38,11 @@ Namespace ComponentModel.DataSourceModel
 
         Dim _propHash As Dictionary(Of String, T)
 
+        ''' <summary>
+        ''' Get value by property name.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Default Public Property Value(name As String) As T
             Get
                 If Properties.ContainsKey(name) Then
@@ -104,6 +109,10 @@ Namespace ComponentModel.DataSourceModel
 
         Public Overrides Function ToString() As String
             Return $"{Name} --> {x.GetJson}"
+        End Function
+
+        Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)
+            Return New NamedValue(Of T)(Name, h(x))
         End Function
     End Structure
 End Namespace

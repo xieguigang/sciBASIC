@@ -114,7 +114,7 @@ Public Class Ping
         Dim Gr As GDIPlusDeviceHandle = Me.Size.CreateGDIDevice(BackColor)
 
         For Each Rectange As Rectangle In RECT
-            Call Gr.Gr_Device.FillRectangle(Brushes.LightGray, Rectange)
+            Call Gr.Graphics.FillRectangle(Brushes.LightGray, Rectange)
         Next
 
         Dim Color As SolidBrush
@@ -132,14 +132,14 @@ Public Class Ping
         End If
 
         For i As Integer = Level - 1 To 0 Step -1
-            Call Gr.Gr_Device.FillRectangle(Color, RECT(i))
+            Call Gr.Graphics.FillRectangle(Color, RECT(i))
         Next
 
         Dim Text As String = Ping & "ms"
         Dim Font As Font = New Font(FontFace.MicrosoftYaHei, 9)
-        Dim Size = Gr.Gr_Device.MeasureString(Text, Font)
+        Dim Size = Gr.Graphics.MeasureString(Text, Font)
 
-        Call Gr.Gr_Device.DrawString(Text, Font, Brushes.Black, New Point(RECT.Last.Right + 3, 0.5 * (Height - RECT.Last.Y - Size.Height) + RECT.Last.Y))
+        Call Gr.Graphics.DrawString(Text, Font, Brushes.Black, New Point(RECT.Last.Right + 3, 0.5 * (Height - RECT.Last.Y - Size.Height) + RECT.Last.Y))
 
         Me.BackgroundImage = Gr.ImageResource
     End Sub

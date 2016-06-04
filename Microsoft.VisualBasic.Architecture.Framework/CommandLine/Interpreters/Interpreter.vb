@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Debugging
 
 #Const NET_45 = 0
 
@@ -74,6 +75,12 @@ Namespace CommandLine
                 Dim i As Integer = __methodInvoke(args.Name.ToLower, {args}, args.Parameters)
 #If DEBUG Then
                 Call Pause()
+#Else
+                If Stack.TextEquals("Main") Then
+                    If AutoPaused Then
+                        Call Pause()
+                    End If
+                End If
 #End If
                 Return i
             Else
@@ -219,6 +226,12 @@ Namespace CommandLine
             Dim i As Integer = __methodInvoke(CommandName, argvs, help_argvs:=argvs)
 #If DEBUG Then
             Call Pause()
+#Else
+            If Stack.TextEquals("Main") Then
+                If AutoPaused Then
+                    Call Pause()
+                End If
+            End If
 #End If
             Return i
         End Function
@@ -281,16 +294,16 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Function HelpSummary() As String
             Dim sb As StringBuilder = New StringBuilder(1024)
-            Dim NameMaxLen As Integer = (From commandInfo As APIEntryPoint
-                                         In __API_InfoHash.Values
-                                         Select Len(commandInfo.Name)).Max
+            Dim nameMaxLen As Integer =
+                __API_InfoHash.Values _
+                .Select(Function(x) Len(x.Name)).Max
 
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
 
             For Each commandInfo As APIEntryPoint In __API_InfoHash.Values
                 Dim blank As String =
-                    New String(c:=" "c, count:=NameMaxLen - Len(commandInfo.Name))
+                    New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
                 Dim line As String = String.Format(" {0}:  {1}{2}", commandInfo.Name, blank, commandInfo.Info)
 
                 Call sb.AppendLine(line)
@@ -443,13 +456,14 @@ Namespace CommandLine
         Public Shared Function CreateInstance(assmPath As String) As Interpreter
             Dim assembly As Assembly = Assembly.LoadFrom(assmPath)
             Dim dllMain As Type = GetType(RunDllEntryPoint)
-            Dim LQuery = (From [mod] As Type
-                          In assembly.DefinedTypes
-                          Let attributes As Object() = [mod].GetCustomAttributes(dllMain, inherit:=False)
-                          Where Not attributes Is Nothing AndAlso attributes.Length = 1
-                          Select [mod])
-            Dim main As Type = LQuery.FirstOrDefault
-
+            Dim main As Type =
+                LinqAPI.DefaultFirst(Of Type) <= From [mod] As Type
+                                                 In assembly.DefinedTypes
+                                                 Let attributes As Object() =
+                                                     [mod].GetCustomAttributes(dllMain, inherit:=False)
+                                                 Where Not attributes Is Nothing AndAlso
+                                                     attributes.Length = 1
+                                                 Select [mod]
             If main Is Nothing Then
                 Return Nothing  ' 没有找到执行入口点
             Else
@@ -595,13 +609,14 @@ Namespace CommandLine
         ''' <param name="Name">模糊匹配</param>
         ''' <returns></returns>
         Public Function ListPossible(Name As String) As String()
-            Name = Name.ToLower
-            Dim LQuery = (From x As String In __API_InfoHash.Keys.AsParallel
-                          Let lev = LevenshteinDistance.ComputeDistance(x, Name)
-                          Where Not lev Is Nothing AndAlso
+            Dim key As String = Name.ToLower
+            Dim LQuery = From x As String
+                         In __API_InfoHash.Keys.AsParallel
+                         Let lev = LevenshteinDistance.ComputeDistance(x, key)
+                         Where Not lev Is Nothing AndAlso
                               lev.Score > 0.3
-                          Select lev.Score, x
-                          Order By Score Descending).ToArray
+                         Select lev.Score, x
+                         Order By Score Descending
             Return LQuery.ToArray(Function(x) x.x)
         End Function
 

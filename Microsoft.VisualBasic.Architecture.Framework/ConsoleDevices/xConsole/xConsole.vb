@@ -54,93 +54,6 @@ Namespace Terminal
 
 #End Region
 
-#Region "QUEUE SOLVER 🙉"
-
-        ''' <summary>
-        ''' Writer Thread ☺
-        ''' </summary>
-        Dim MyThread As New Thread(AddressOf exeQueue)
-
-        ''' <summary>
-        ''' Is thread running?
-        ''' hum
-        ''' </summary>
-        Dim QSolverRunning As Boolean = False
-
-        ''' <summary>
-        ''' Just my queue
-        ''' </summary>
-        Dim Queue As New Queue(Of Action)(6666)
-
-        ''' <summary>
-        ''' If TRUE, the Writing process will be separated from the main thread.
-        ''' </summary>
-        Public Property MultiThreadSupport As Boolean = True
-
-        ''' <summary>
-        ''' lock
-        ''' </summary>
-        Dim dummy As New Object()
-
-        ''' <summary>
-        ''' Execute the queue list
-        ''' </summary>
-        Private Sub exeQueue()
-            QSolverRunning = True
-
-            While Queue IsNot Nothing AndAlso Queue.Count > 0
-                Thread.MemoryBarrier()
-
-                Dim a As Action = Queue.Dequeue()
-
-                If a IsNot Nothing Then
-                    a.Invoke()
-                End If
-            End While
-
-            QSolverRunning = False
-        End Sub
-
-        ''' <summary>
-        ''' Add an Action to the queue.
-        ''' </summary>
-        ''' <param name="A">()=>{ .. }</param>
-        Private Sub AddToQueue(A As Action)
-            Queue.Enqueue(A)
-            'QSolverRunning = true;
-            'if (QSolverRunning == false)
-            If True Then
-                If MultiThreadSupport Then
-                    SyncLock dummy
-                        If Not MyThread.IsAlive Then
-                            QSolverRunning = False
-                            MyThread = New Thread(AddressOf exeQueue)
-
-                            MyThread.Name = "xConsole · Multi-Thread Writer"
-                            MyThread.Start()
-                        End If
-                    End SyncLock
-                Else
-                    exeQueue()
-                End If
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Wait for xConsole queue (Needed if you are using multiThreaded queue)
-        ''' </summary>
-        Public Sub WaitQueue()
-            While QSolverRunning = True
-                Thread.Sleep(10)
-            End While
-        End Sub
-
-        '''////////////////////////////////////////////////////////////////////////////////////////////////
-        '''////////////////////////////////////////////////////////////////////////////////////////////////
-        '''////////////////////////////////////////////////////////////////////////////////////////////////
-#End Region
-
 #Region "COOL WRITING ✌"
 
         Public NotInheritable Class CoolWriteSettings
@@ -306,7 +219,7 @@ Namespace Terminal
         ''' <param name="ClearInput">Clear the buffer input</param>
         ''' <returns>Return a List of strings</returns>
         Public Function ReadLine(Optional Clearinput As Boolean = True) As List(Of String)
-            xConsole.WaitQueue()
+            InnerQueue.WaitQueue()
 
             If Clearinput Then
                 xConsole.ClearInput()
@@ -371,7 +284,7 @@ Namespace Terminal
         ''' <param name="ClearInput">Clear the buffer input</param>
         ''' <returns>string with all chars</returns>
         Public Function ReadKeys(Optional Clearinput As Boolean = True) As String
-            xConsole.WaitQueue()
+            InnerQueue.WaitQueue()
 
             If Clearinput Then
                 xConsole.ClearInput()

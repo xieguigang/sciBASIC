@@ -65,12 +65,12 @@ Namespace CommandLine
         ''' <param name="Instance">目标交互对象的实例</param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' 依照类型<see cref="[Optional].Types"/>来生成参数字符串
+        ''' 依照类型<see cref="CLITypes"/>来生成参数字符串
         ''' 
-        ''' <see cref="[Optional].Types.Boolean"/>, True => 参数名；
-        ''' <see cref="[Optional].Types.Double"/>, <see cref="[Optional].Types.Integer"/>, <see cref="[Optional].Types.String"/>, => 参数名 + 参数值，假若字符串为空则不添加；
+        ''' <see cref="CLITypes.Boolean"/>, True => 参数名；
+        ''' <see cref="CLITypes.Double"/>, <see cref="CLITypes.Integer"/>, <see cref="CLITypes.String"/>, => 参数名 + 参数值，假若字符串为空则不添加；
         ''' （假若是枚举值类型，可能还需要再枚举值之中添加<see cref="DescriptionAttribute"/>属性）
-        ''' <see cref="[Optional].Types.File"/>, 假若字符串为空则不添加，有空格自动添加双引号，相对路径会自动转换为全路径。
+        ''' <see cref="CLITypes.File"/>, 假若字符串为空则不添加，有空格自动添加双引号，相对路径会自动转换为全路径。
         ''' </remarks>
         <Extension>
         Public Function GetCLI(Of TInteropService As Class)(Instance As TInteropService) As String
@@ -113,14 +113,14 @@ Namespace CommandLine
 
 #Region ""
 
-        Private ReadOnly __getMethods As IReadOnlyDictionary(Of [Optional].Types, __getCLIToken) =
-            New Dictionary(Of [Optional].Types, __getCLIToken) From {
+        Private ReadOnly __getMethods As IReadOnlyDictionary(Of CLITypes, __getCLIToken) =
+            New Dictionary(Of CLITypes, __getCLIToken) From {
  _
-            {[Optional].Types.Boolean, AddressOf CLIBuildMethod.__booleanRule},
-            {[Optional].Types.Double, AddressOf CLIBuildMethod.__stringRule},
-            {[Optional].Types.File, AddressOf CLIBuildMethod.__pathRule},
-            {[Optional].Types.Integer, AddressOf CLIBuildMethod.__stringRule},
-            {[Optional].Types.String, AddressOf CLIBuildMethod.__stringRule}
+            {CLITypes.Boolean, AddressOf CLIBuildMethod.__booleanRule},
+            {CLITypes.Double, AddressOf CLIBuildMethod.__stringRule},
+            {CLITypes.File, AddressOf CLIBuildMethod.__pathRule},
+            {CLITypes.Integer, AddressOf CLIBuildMethod.__stringRule},
+            {CLITypes.String, AddressOf CLIBuildMethod.__stringRule}
         }
 
         Private Delegate Function __getCLIToken(value As Object, attr As [Optional], prop As PropertyInfo) As String

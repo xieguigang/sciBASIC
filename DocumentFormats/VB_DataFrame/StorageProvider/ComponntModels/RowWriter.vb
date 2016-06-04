@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.ComponentModels
 
@@ -9,18 +10,20 @@ Namespace StorageProvider.ComponentModels
         Public ReadOnly Property SchemaProvider As SchemaProvider
         Public ReadOnly Property MetaRow As MetaAttribute
 
-        Sub New(SchemaProvider As SchemaProvider)
+        Sub New(SchemaProvider As SchemaProvider, metaBlank As String)
             Me.SchemaProvider = SchemaProvider
-            Me.Columns = {
-                SchemaProvider.Columns.ToArray(Function(field) DirectCast(field, StorageProvider)),
-                SchemaProvider.EnumColumns.ToArray(Function(field) DirectCast(field, StorageProvider)),
-                SchemaProvider.KeyValuePairColumns.ToArray(Function(field) DirectCast(field, StorageProvider)),
+            Me.Columns =
+                SchemaProvider.Columns.ToList(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.EnumColumns.ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.KeyValuePairColumns.ToArray(Function(field) DirectCast(field, StorageProvider)) +
                 SchemaProvider.CollectionColumns.ToArray(Function(field) DirectCast(field, StorageProvider))
-            }.MatrixToVector
-            Me.Columns = (From field As StorageProvider In Me.Columns
-                          Where Not field Is Nothing
-                          Select field).ToArray
+            Me.Columns =
+                LinqAPI.Exec(Of StorageProvider) <= From field As StorageProvider
+                                                    In Me.Columns
+                                                    Where Not field Is Nothing
+                                                    Select field
             Me.MetaRow = SchemaProvider.MetaAttributes
+            Me._metaBlank = metaBlank
 
             If Me.MetaRow Is Nothing Then
                 __buildRow = AddressOf __buildRowNullMeta
@@ -34,6 +37,10 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         ReadOnly __buildRow As IRowBuilder
+        ''' <summary>
+        ''' 填充不存在的动态属性的默认字符串
+        ''' </summary>
+        ReadOnly _metaBlank As String
 
         Public Function ToRow(obj As Object) As DocumentStream.RowObject
             Dim row As DocumentStream.RowObject = __buildRow(obj)
@@ -41,8 +48,19 @@ Namespace StorageProvider.ComponentModels
         End Function
 
 #Region "IRowBuilder"
+
+        ''' <summary>
+        ''' 将实体对象映射为一个数据行
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Private Delegate Function IRowBuilder(obj As Object) As DocumentStream.RowObject
 
+        ''' <summary>
+        ''' 这里是没有动态属性的
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Private Function __buildRowNullMeta(obj As Object) As DocumentStream.RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
@@ -59,17 +77,29 @@ Namespace StorageProvider.ComponentModels
                 Return Me
             End If
 
-            Dim hashMetas = (From obj As Object In source.AsParallel
-                             Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
-                             Where Not x Is Nothing
-                             Let hash As IDictionary = DirectCast(x, IDictionary)
-                             Select hash).ToArray
-            Dim indexs = (From x In hashMetas.AsParallel Select (From o In x.Keys Select Scripting.ToString(o))).MatrixToList
+            Dim hashMetas As IDictionary() =
+                LinqAPI.Exec(Of IDictionary) <= From obj As Object
+                                                In source.AsParallel
+                                                Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
+                                                Where Not x Is Nothing
+                                                Let hash As IDictionary = DirectCast(x, IDictionary)
+                                                Select hash
+
+            Dim indexs As IEnumerable(Of String) = (From x As IDictionary
+                                                    In hashMetas.AsParallel
+                                                    Select From o As Object
+                                                           In x.Keys
+                                                           Select Scripting.ToString(o)).MatrixAsIterator
             __cachedIndex = indexs.Distinct.ToArray
 
             Return Me
         End Function
 
+        ''' <summary>
+        ''' 这里是含有动态属性的
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Private Function __buildRowMeta(obj As Object) As DocumentStream.RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
@@ -91,10 +121,11 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Function __meta(obj As Object) As String()
-            Dim source As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
+            Dim source As Object = ' 得到实体之中的字典类型的属性值
+                MetaRow.BindProperty.GetValue(obj, Nothing)
 
             If source Is Nothing Then
-                Return "".CopyVector(__cachedIndex.Length)
+                Return _metaBlank.CopyVector(__cachedIndex.Length)
             End If
 
             Dim values As String() = New String(Me.__cachedIndex.Length - 1) {}
@@ -102,11 +133,12 @@ Namespace StorageProvider.ComponentModels
 
             For i As Integer = 0 To __cachedIndex.Length - 1
                 Dim tag As String = __cachedIndex(i)
+
                 If hash.Contains(tag) Then
                     Dim value As Object = hash(key:=tag)
                     values(i) = Scripting.ToString(value)
                 Else
-                    values(i) = ""
+                    values(i) = _metaBlank  ' 假若不存在，则使用默认字符串进行替换，默认是空白字符串
                 End If
             Next
 

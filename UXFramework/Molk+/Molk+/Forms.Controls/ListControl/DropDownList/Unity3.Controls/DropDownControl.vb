@@ -379,7 +379,7 @@ Namespace Unity3.Controls
             Dim graph = size.CreateGDIDevice(Color.White)
             Dim res As Image = If(state = 0, My.Resources.DropDownNormal,
                 If(state = 1, My.Resources.DropDownHighLight, My.Resources.DropDownPress))
-            Call graph.Gr_Device.DrawImage(res, New Point((size.Width - res.Width) / 2, (size.Height - res.Height) / 2))
+            Call graph.Graphics.DrawImage(res, New Point((size.Width - res.Width) / 2, (size.Height - res.Height) / 2))
 
             Return graph.ImageResource
         End Function

@@ -16,14 +16,14 @@ Public Module IOExtensions
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
-        Return File.Open(path, mode)
+        Return IO.File.Open(path, mode)
     End Function
 
     <ExportAPI("Open.Reader")>
     <Extension>
     Public Function OpenReader(path As String, Optional encoding As Encoding = Nothing) As StreamReader
         encoding = If(encoding Is Nothing, System.Text.Encoding.Default, encoding)
-        Return New StreamReader(File.Open(path, FileMode.OpenOrCreate), encoding)
+        Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
 
     <Extension>

@@ -101,7 +101,7 @@ Namespace Imaging
                 EncoderParams.Param(0) = CompressionEncodeParam
                 EncoderParams.Param(1) = SaveEncodeParam
 
-                Call File.Delete(location)
+                Call IO.File.Delete(location)
                 Call bmp(0).Save(location, codecInfo, EncoderParams)
 
                 For i As Integer = 1 To bmp.Count - 1
@@ -152,7 +152,7 @@ Namespace Imaging
         Private Shared Sub __saveToExistingFile(fileName As String, bmp As Image(), type As String)
             'bmp[0] is containing Image from Existing file on which we will append newly scanned Images
             'SO first we will dicide wheter existing file is single page or multipage
-            Dim fr As FileStream = File.Open(fileName, FileMode.Open, FileAccess.ReadWrite)
+            Dim fr As FileStream = IO.File.Open(fileName, FileMode.Open, FileAccess.ReadWrite)
             Dim origionalFile As Image = Image.FromStream(fr)
             Dim PageNumber As Integer = __getPageNumber(origionalFile)
 
@@ -165,7 +165,7 @@ Namespace Imaging
             Call fr.Flush()
             Call fr.Close()
 
-            Call File.Replace("shreeTemp.tif", fileName, "Backup.tif", True)
+            Call IO.File.Replace("shreeTemp.tif", fileName, "Backup.tif", True)
         End Sub
 
         Private Shared Sub __saveImageExistingSinglePage(bmp As Image(), origionalFile As Image, type As String, location As String)

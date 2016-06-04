@@ -8,6 +8,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace ComponentModel.Settings.Inf
 

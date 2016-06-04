@@ -5,6 +5,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.Reflection
 
@@ -182,16 +183,26 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function __save(___source As IEnumerable, typeDef As Type, Explicit As Boolean) As DocumentStream.File
-            Dim source As Object() = (From x In ___source Select x).ToArray
-            Dim Schema As SchemaProvider = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
-            Dim RowWriter As RowWriter = New RowWriter(Schema).CacheIndex(source)
-            Dim LQuery As List(Of RowObject) = (From itmRow As Object In source.AsParallel
-                                                Where Not itmRow Is Nothing
-                                                Let createdRow As RowObject = RowWriter.ToRow(itmRow)
-                                                Select createdRow).ToList  '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
+        Public Function __save(___source As IEnumerable,
+                               typeDef As Type,
+                               Explicit As Boolean,
+                               Optional metaBlank As String = "") As DocumentStream.File
+            Dim source As Object() = (From x As Object
+                                      In ___source
+                                      Select x).ToArray
+            Dim Schema As SchemaProvider =
+                SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
+            Dim RowWriter As RowWriter = New RowWriter(Schema, metaBlank).CacheIndex(source)
+            Dim LQuery As List(Of RowObject) =
+                LinqAPI.MakeList(Of RowObject) <= From itmRow As Object
+                                                  In source.AsParallel
+                                                  Where Not itmRow Is Nothing
+                                                  Let createdRow As RowObject =
+                                                      RowWriter.ToRow(itmRow)
+                                                  Select createdRow  '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
-            Dim title As RowObject = RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles(source.FirstOrDefault))
+            Dim title As RowObject = RowWriter.GetRowNames _
+                .Join(RowWriter.GetMetaTitles(source.FirstOrDefault))
             Dim dataFrame As New File(title + LQuery)
 
             Return dataFrame
@@ -206,33 +217,41 @@ Namespace StorageProvider.Reflection
         ''' <param name="explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(Of T)(source As IEnumerable(Of T), Optional explicit As Boolean = True) As DocumentStream.File
+        Public Function Save(Of T)(source As IEnumerable(Of T),
+                                   Optional explicit As Boolean = True,
+                                   Optional metaBlank As String = "") As DocumentStream.File
             Dim Type As Type = GetType(T)
-            Dim doc As DocumentStream.File = __save(source, Type, explicit)
+            Dim doc As DocumentStream.File = __save(source, Type, explicit, metaBlank)
             Return doc
         End Function
 
         ''' <summary>
         ''' 将数据集合导出为键值对，以方便其他操作
         ''' </summary>
-        ''' <typeparam name="ItemType"></typeparam>
-        ''' <param name="Collection"></param>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function ExportAsPropertyAttributes(Of ItemType)(
-                        Collection As Generic.IEnumerable(Of ItemType),
-                        Optional Explicit As Boolean = True) As List(Of Dictionary(Of String, String))
+        <Extension> Public Function ExportAsPropertyAttributes(Of T)(
+                                    source As IEnumerable(Of T),
+                                    Optional Explicit As Boolean = True) As List(Of Dictionary(Of String, String))
 
-            Dim Csv As Csv.DocumentStream.File = Save(Collection, Explicit)
-            Dim TitleRow As DocumentStream.RowObject = Csv.First
+            Dim df As DocumentStream.File = Save(source, Explicit)
+            Dim TitleRow As DocumentStream.RowObject = df.First
             Dim __pCache As Integer() = TitleRow.Sequence
-            Dim ChunkBuffer = (From rowL As DocumentStream.RowObject In Csv.Skip(1).AsParallel
-                               Select (From p As Integer
-                                       In __pCache
-                                       Select key = TitleRow(CInt(p)),
-                                           value = rowL(CInt(p))).ToDictionary(Function(x) x.key, Function(x) x.value)).ToList
-            Return ChunkBuffer
+
+            Dim buf As List(Of Dictionary(Of String, String)) =
+                LinqAPI.MakeList(Of Dictionary(Of String, String)) <=
+                    From rowL As DocumentStream.RowObject
+                    In df.Skip(1).AsParallel
+                    Select (From p As Integer
+                            In __pCache
+                            Select key = TitleRow(CInt(p)),
+                                value = rowL(CInt(p))) _
+                                  .ToDictionary(Function(x) x.key,
+                                                Function(x) x.value)
+            Return buf
         End Function
 
         Public Enum OperationTypes

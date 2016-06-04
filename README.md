@@ -1,12 +1,15 @@
-# VisualBasic_AppFramework
+# Microsoft VisualBasic App Runtime
+
+![(๑•̀ㅂ•́)و✧](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/badge.png)
+![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
 
 A language feature runtime library for server side CLI application. This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the VisualBasic programming language syntax and the utility code function. Makes the VisualBasic programming style more modernization by using this runtime library framework.
 
-Abount VisualBasic code style guidelines:
-https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
+>Abount VisualBasic code style guidelines:
+> + https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
 
-Guides for using this framework, you can found the document and content index at the [README.md](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/README.md)(This guidelines document is currently compile for users):
-https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/
+>Guides for using this framework, you can found the document and content index at the [README.md](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/README.md)(This guidelines document is currently compiling for users):
+> + https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/
 
 
 + Install this framework via nuget package:
@@ -35,6 +38,7 @@ Console ProgressBar
 
 Modules that Includes in this Framework:
 
+>
 1. A document library of read and write Csv document for facility the data exchanges between the GCModeller and R program.
 2. A distribution computing framework available at repository: https://github.com/xieguigang/Microsoft.VisualBasic.Parallel
 3. Microsoft VisualBasic Application Framework codes

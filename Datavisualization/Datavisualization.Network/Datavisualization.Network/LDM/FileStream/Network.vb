@@ -243,6 +243,12 @@ Namespace FileStream
             End If
         End Operator
 
+        ''' <summary>
+        ''' Select nodes from the network based on the input identifers <paramref name="nodes"/>
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="nodes"></param>
+        ''' <returns></returns>
         Public Shared Operator <=(net As Network(Of T_Node, T_Edge), nodes As IEnumerable(Of String)) As T_Node()
             Dim LQuery = (From sId As String In nodes Select net.__nodes(sId)).ToArray
             Return LQuery

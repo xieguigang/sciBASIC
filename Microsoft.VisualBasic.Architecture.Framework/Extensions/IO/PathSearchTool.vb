@@ -678,7 +678,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Gets the full path of the specific file.
+    ''' Gets the full path of the specific file.(为了兼容Linux，这个函数会自动替换路径之中的\为/符号)
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>

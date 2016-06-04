@@ -230,20 +230,19 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
                                              path As String,
                                              Optional explicit As Boolean = False,
-                                             Optional encoding As Encoding = Nothing) As Boolean
+                                             Optional encoding As Encoding = Nothing,
+                                             Optional metaBlank As String = "") As Boolean
 
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
         Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
 
-        If source.Count > 20000 Then
-            Call Reflector.Save(source, explicit).Save(path, LazySaved:=True, encoding:=encoding)
-        Else
-            Call Reflector.Save(source, explicit).Save(path, LazySaved:=False, encoding:=encoding)
-        End If
+        Dim df As DocumentStream.File = Reflector.Save(source, explicit, metaBlank)
+        Dim lazy As Boolean = source.Count > 20000
 
-        Call Console.WriteLine("CSV saved!")
+        Call df.Save(path, LazySaved:=lazy, encoding:=encoding)
+        Call "CSV saved!".__DEBUG_ECHO
 
         Return True
     End Function

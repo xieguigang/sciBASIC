@@ -125,7 +125,7 @@ Namespace Windows.Forms.Controls.TabControl.TabPage
 
         Private Function InternalDrawingTabpage(UI As Drawing.Image, s As String, Color As Brush) As Drawing.Image
             Dim Gr = Me.Size.CreateGDIDevice()
-            Dim size = Gr.Gr_Device.MeasureString(s, Me.Font)
+            Dim size = Gr.Graphics.MeasureString(s, Me.Font)
             Dim pt As Point
 
             Select Case Me.UI.TextAlign
@@ -141,8 +141,8 @@ Namespace Windows.Forms.Controls.TabControl.TabPage
                     pt = New Point((Width - size.Width) / 2, Me.UI.TextoffSets.Y)
             End Select
 
-            Call Gr.Gr_Device.DrawImage(UI, CInt((Width - UI.Width) / 2), CInt((Height - UI.Height) / 2))
-            Call Gr.Gr_Device.DrawString(s, Me.Font, Color, pt)
+            Call Gr.Graphics.DrawImage(UI, CInt((Width - UI.Width) / 2), CInt((Height - UI.Height) / 2))
+            Call Gr.Graphics.DrawString(s, Me.Font, Color, pt)
 
             If Not Me.UI.BorderColor Is Nothing Then
 

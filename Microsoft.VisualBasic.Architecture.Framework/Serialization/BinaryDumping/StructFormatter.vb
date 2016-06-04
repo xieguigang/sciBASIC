@@ -15,7 +15,7 @@ Namespace Serialization.BinaryDumping
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Serialize(Of T)(obj As T, path As String) As Integer
+        <Extension> Public Function Serialize(Of T)(obj As T, path As String) As Boolean
             Dim buffer As Byte() = obj.GetSerializeBuffer
             Return buffer.FlushStream(path)
         End Function

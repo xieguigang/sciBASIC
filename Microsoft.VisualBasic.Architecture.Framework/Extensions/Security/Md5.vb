@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
 
 Namespace SecurityString
 
@@ -15,10 +16,15 @@ Namespace SecurityString
             Return GetMd5Hash(input)
         End Function
 
+        ReadOnly __hashProvider As New Md5HashProvider
+
         <ExportAPI("Md5")>
         <Extension>
         Public Function GetMd5Hash(input As String) As String
-            Return New Md5HashProvider().GetMd5Hash(input)
+            SyncLock __hashProvider
+                Return __hashProvider.GetMd5Hash(input)
+            End SyncLock
+            '  Return New Md5HashProvider().GetMd5Hash(input)
         End Function
 
         ''' <summary>
@@ -52,13 +58,43 @@ Namespace SecurityString
             Return ToLong(bytes)
         End Function
 
+        ''' <summary>
+        ''' CityHash algorithm for convert the md5 hash value as a <see cref="Int64"/> value.
+        ''' </summary>
+        ''' <param name="bytes">
+        ''' this input value should compute from <see cref="Md5HashProvider.GetMd5Bytes(Byte())"/>
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' http://stackoverflow.com/questions/9661227/convert-md5-to-long
+        ''' 
+        ''' The very best solution I found (based on my needs... mix of speed and good hash function) is Google's CityHash. 
+        ''' The input can be any byte array including an MD5 result and the output is an unsigned 64-bit long.
+        '''
+        ''' CityHash has a very good but Not perfect hash distribution, And Is very fast.
+        '''
+        ''' I ported CityHash from C++ To C# In half an hour. A Java port should be straightforward too.
+        '''
+        ''' Just XORing the bits doesn't give as good a distribution (though admittedly that will be very fast).
+        '''
+        ''' I'm not familiar enough with Java to tell you exactly how to populate a long from a byte array 
+        ''' (there could be a good helper I'm not familiar with, or I could get some details of arithmetic 
+        ''' in Java wrong). 
+        ''' Essentially, though, you'll want to do something like this:
+        '''
+        ''' Long a = md5[0] * 256 * md5[1] + 256 * 256 * md5[2] + 256 * 256 * 256 * md5[3];
+        ''' Long b = md5[4] * 256 * md5[5] + 256 * 256 * md5[6] + 256 * 256 * 256 * md5[7];
+        ''' Long result = a ^ b;
+        ''' 
+        ''' Note I have made no attempt To deal With endianness. If you just care about a consistent hash value, 
+        ''' though, endianness should Not matter.
+        ''' </remarks>
         <ExportAPI("As.Long")> <Extension>
         Public Function ToLong(bytes As Byte()) As Long
-            Dim result As Long
-
-            For i As Integer = 0 To bytes.Length - 1
-                result += bytes(i) ^ (i / 2.5 + 1.5)
-            Next
+            Dim md5 As Long() = bytes.ToArray(Function(x) CLng(x))
+            Dim a As Long = md5(0) * 256 * md5(1) + 256 * 256 * md5(2) + 256 * 256 * 256 * md5(3)
+            Dim b As Long = md5(4) * 256 * md5(5) + 256 * 256 * md5(6) + 256 * 256 * 256 * md5(7)
+            Dim result As Long = a Xor b
 
             Return result
         End Function

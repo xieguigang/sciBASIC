@@ -49,6 +49,34 @@ Imports Microsoft.VisualBasic.Language
 Public Module Extensions
 #End If
 
+    Public Function NotNull(Of T)(ParamArray args As T()) As T
+        If args.IsNullOrEmpty Then
+            Return Nothing
+        Else
+            For Each x In args
+                If Not x Is Nothing Then
+                    Return x
+                End If
+            Next
+        End If
+
+        Return Nothing
+    End Function
+
+    Public Function NotEmpty(ParamArray args As String()) As String
+        If args.IsNullOrEmpty Then
+            Return ""
+        Else
+            For Each s As String In args
+                If Not String.IsNullOrEmpty(s) Then
+                    Return s
+                End If
+            Next
+        End If
+
+        Return ""
+    End Function
+
     <Extension>
     Public Function Second(Of T)(source As IEnumerable(Of T)) As T
         If source.Count > 1 Then
@@ -534,6 +562,14 @@ Public Module Extensions
         Return source.SplitIterator(parTokens).ToArray
     End Function
 
+    ''' <summary>
+    ''' Performance the partitioning operation on the input sequence.
+    ''' (请注意，这个函数只适用于数量较少的序列。对所输入的序列进行分区操作，<paramref name="parTokens"/>函数参数是每一个分区里面的元素的数量)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="parTokens"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
         Dim buf As T() = source.ToArray
@@ -553,7 +589,7 @@ Public Module Extensions
                 buffer = New T(n - i - 1) {}
             End If
 
-            Array.ConstrainedCopy(buf, i, buffer, Scan0, buffer.Length)
+            Call Array.ConstrainedCopy(buf, i, buffer, Scan0, buffer.Length)
             Yield buffer
 
             count += 1
@@ -580,16 +616,17 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串
+    ''' This is a safe function: if the source string collection is nothing, then whistle function will returns a empty string instead of throw exception. 
+    ''' (<see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串)
     ''' </summary>
-    ''' <param name="Tokens"></param>
+    ''' <param name="tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(Tokens As IEnumerable(Of String), delimiter As String) As String
-        If Tokens Is Nothing Then
+    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter As String) As String
+        If tokens Is Nothing Then
             Return ""
         End If
-        Return String.Join(delimiter, Tokens.ToArray)
+        Return String.Join(delimiter, tokens.ToArray)
     End Function
 
     ''' <summary>
@@ -598,18 +635,18 @@ Public Module Extensions
     ''' <param name="values"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(values As Generic.IEnumerable(Of Integer), delimiter As String) As String
+    <Extension> Public Function JoinBy(values As IEnumerable(Of Integer), delimiter As String) As String
         If values Is Nothing Then
             Return ""
         End If
         Return String.Join(delimiter, values.ToArray(Function(n) CStr(n)))
     End Function
 
-    <Extension> Public Function Join(Of T)(Collection As Generic.IEnumerable(Of T), data As T) As List(Of T)
-        Return Collection.Join({data})
+    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As T) As List(Of T)
+        Return source.Join({data})
     End Function
 
-    <Extension> Public Function Join(Of T)(obj As T, collection As Generic.IEnumerable(Of T)) As List(Of T)
+    <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
         Dim list As New List(Of T) From {obj}
         Call list.AddRange(collection)
         Return list
@@ -1578,7 +1615,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("Elements.Randomize")>
-    <Extension> Public Function Randomize(Of T)(source As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function Randomize(Of T)(source As IEnumerable(Of T)) As T()
 #Else
     ''' <summary>
     ''' Return a collection with randomize element position in <paramref name="Collection">the original collection</paramref>.(从原有序序列中获取一个随机元素的序列)
@@ -1587,24 +1624,24 @@ Public Module Extensions
     ''' <param name="Collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function RandomizeElements(Of T)(Collection As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function Randomize(Of T)(source As IEnumerable(Of T)) As T()
 #End If
         Call VBMath.Randomize()
 
-        Dim ChunkBuffer As T() = New T(source.Count - 1) {}
-        Dim TempList = source.ToList
+        Dim tmp As New List(Of T)(source)
+        Dim buf As T() = New T(tmp.Count - 1) {}
         Dim Seeds As Integer = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / CLng(Integer.MaxValue) * 2
         Dim Rand As New Random(Seed:=Seeds)
-        Dim Length As Integer = TempList.Count - 1
+        Dim Length As Integer = tmp.Count - 1
 
-        For i As Integer = 0 To ChunkBuffer.Length - 1
+        For i As Integer = 0 To buf.Length - 1
             Dim index As Integer = Rand.Next(minValue:=0, maxValue:=Length)
-            ChunkBuffer(i) = TempList(index)
-            Call TempList.RemoveAt(index)
+            buf(i) = tmp(index)
+            Call tmp.RemoveAt(index)
             Length -= 1
         Next
 
-        Return ChunkBuffer
+        Return buf
     End Function
 
     <ExportAPI("Sequence.Random")>
@@ -1827,11 +1864,11 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function [AddHandle](Of THandle As IAddressHandle)(ByRef source As IEnumerable(Of THandle), Optional offset As Integer = 0) As THandle()
-        Dim list As New List(Of THandle)
+    <Extension> Public Function [AddHandle](Of T As IAddressHandle)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
+        Dim list As New List(Of T)
         Dim i As Integer = offset
 
-        For Each x As THandle In source
+        For Each x As T In source
             x.Address = i
             i += 1
             list += x
@@ -1977,18 +2014,18 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <param name="remoteDuplicates">当这个参数为False的时候，出现重复的键名会抛出错误，当为True的时候，有重复的键名存在的话，可能会丢失一部分的数据</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of TKey, TValue)(Collection As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+    <Extension> Public Function ToDictionary(Of TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
                                                               Optional remoteDuplicates As Boolean = False) As Dictionary(Of TKey, TValue)
         If remoteDuplicates Then
             Dim hash As Dictionary(Of TKey, TValue) = New Dictionary(Of TKey, TValue)
 
-            For Each x In Collection
+            For Each x In source
                 If hash.ContainsKey(x.Key) Then
-                    Call Console.WriteLine("  " & "[Duplicated] " & x.Key.ToString)
+                    Call $"[Duplicated] {x.Key.ToString}".PrintException
                 Else
                     Call hash.Add(x.Key, x.Value)
                 End If
@@ -1997,20 +2034,22 @@ Public Module Extensions
             Return hash
         Else
             Dim Dictionary As Dictionary(Of TKey, TValue) =
-                Collection.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+                source.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
             Return Dictionary
         End If
     End Function
 
     ''' <summary>
-    ''' This object collection is a null object or contains zero count items.(判断某一个对象集合是否为空)
+    ''' This object collection is a null object or contains zero count items.
+    ''' NOTE: Do not applied this function on the Linq Expression due to the performance issue.
+    ''' (判断某一个对象集合是否为空，请注意，由于在这里是使用了集合的Count进行判断是否有元素，所以这个函数可能不是太适合用于Linq的非立即查询)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function IsNullOrEmpty(Of T)(Collection As Generic.IEnumerable(Of T)) As Boolean
-        Return Collection Is Nothing OrElse Collection.Count = 0
+    <Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
+        Return source Is Nothing OrElse source.Count = 0
     End Function
 
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean

@@ -3,6 +3,18 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
 
+    <Extension>
+    Public Sub Memset(Of T)(ByRef array As T(), o As T, len As Integer)
+        For i As Integer = 0 To len - 1
+            array(i) = o
+        Next
+    End Sub
+
+    <Extension>
+    Public Sub Memset(ByRef s As String, c As Char, len As Integer)
+        s = New String(c, len)
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -59,5 +71,21 @@ Public Module VectorExtensions
         Next
 
         Return list.ToArray
+    End Function
+
+    ''' <summary>
+    ''' 查找出列表之中符合条件的所有的索引编号
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="condi"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function GetIndexes(Of T)(array As T(), condi As Func(Of T, Boolean)) As IEnumerable(Of Integer)
+        For i As Integer = 0 To array.Length - 1
+            If condi(array(i)) Then
+                Yield i
+            End If
+        Next
     End Function
 End Module

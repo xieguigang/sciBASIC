@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Debugging
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
@@ -61,15 +62,8 @@ Public Module VBDebugger
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
             Dim str As String = $"{_Indent(Indent)} {MSG}"
-            Dim cl As ConsoleColor = Console.ForegroundColor
 
-            Call Console.Write("[")
-            Console.ForegroundColor = DebuggerTagColor
-            Call Console.Write(head)
-            Console.ForegroundColor = cl
-            Call Console.Write("]")
-
-            Call Console.WriteLine(str)
+            Call Terminal.AddToQueue(Sub() Call __print(head, str, ConsoleColor.White))
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -77,6 +71,18 @@ Public Module VBDebugger
 
         Return Nothing
     End Function
+
+    Private Sub __print(head As String, str As String, msgColor As ConsoleColor)
+        Dim cl As ConsoleColor = Console.ForegroundColor
+
+        Call Console.Write("[")
+        Console.ForegroundColor = DebuggerTagColor
+        Call Console.Write(head)
+        Console.ForegroundColor = cl
+        Call Console.Write("]")
+
+        Call WriteLine(str, msgColor)
+    End Sub
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.
@@ -130,21 +136,12 @@ Public Module VBDebugger
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
         If Not Mute Then
-
             Dim head As String = $"WARN@{calls} {Now.ToString}"
-            Dim cl As ConsoleColor = Console.ForegroundColor
 
-            Call Console.Write("[")
-            Console.ForegroundColor = DebuggerTagColor
-            Call Console.Write(head)
-            Console.ForegroundColor = cl
-            Call Console.Write("] ")
-
+            Call Terminal.AddToQueue(Sub() Call __print(head, msg, ConsoleColor.Yellow))
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
 #End If
-            Call WriteLine(msg, ConsoleColor.Yellow)
-
         End If
 
         Return Nothing

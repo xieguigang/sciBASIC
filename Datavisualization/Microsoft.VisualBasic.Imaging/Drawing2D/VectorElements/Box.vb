@@ -130,7 +130,7 @@ Namespace Drawing2D.VectorElements
             Call Path.AddLine(prePoint, Me.Location)                                                                            '\
             Call Path.CloseFigure()
 
-            Call Me._GDIDevice.Gr_Device.FillPath(New SolidBrush(Me.Color), Path)
+            Call Me._GDIDevice.Graphics.FillPath(New SolidBrush(Me.Color), Path)
         End Sub
     End Class
 End Namespace
