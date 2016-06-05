@@ -8,7 +8,13 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 Public Class Renderer
     Inherits AbstractRenderer
 
+    ''' <summary>
+    ''' Gets the graphics source
+    ''' </summary>
     Dim __graphicsProvider As Func(Of Graphics)
+    ''' <summary>
+    ''' gets the graphics region for the projections: <see cref="GraphToScreen"/> and <see cref="ScreenToGraph"/>
+    ''' </summary>
     Dim __regionProvider As Func(Of Rectangle)
 
     Public Sub New(canvas As Func(Of Graphics), regionProvider As Func(Of Rectangle), iForceDirected As IForceDirected)
@@ -21,6 +27,11 @@ Public Class Renderer
 
     End Sub
 
+    ''' <summary>
+    ''' Projects the data model to our screen for display.
+    ''' </summary>
+    ''' <param name="iPos"></param>
+    ''' <returns></returns>
     Public Function GraphToScreen(iPos As FDGVector2) As Point
         Dim rect = __regionProvider()
         Dim x = CInt(Math.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
@@ -28,6 +39,11 @@ Public Class Renderer
         Return New Point(x, y)
     End Function
 
+    ''' <summary>
+    ''' Projects the client graphics data to the data model. 
+    ''' </summary>
+    ''' <param name="iScreenPos"></param>
+    ''' <returns></returns>
     Public Function ScreenToGraph(iScreenPos As Point) As FDGVector2
         Dim retVec As New FDGVector2()
         Dim rect = __regionProvider()

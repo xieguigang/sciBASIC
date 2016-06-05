@@ -285,6 +285,9 @@ Namespace Layouts
         Public MustOverride Function GetBoundingBox() As BoundingBox Implements IForceDirected.GetBoundingBox
     End Class
 
+    ''' <summary>
+    ''' Layout provider engine for the 2D network graphics.
+    ''' </summary>
     Public Class ForceDirected2D
         Inherits ForceDirected(Of FDGVector2)
 

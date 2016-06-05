@@ -31,10 +31,25 @@ Public Class Canvas
 
     Public ReadOnly Property FdgArgs As ForceDirectedArgs = Config.Load
 
+    ''' <summary>
+    ''' The network data model for the visualization 
+    ''' </summary>
     Dim net As NetworkGraph
+    ''' <summary>
+    ''' Layout provider engine
+    ''' </summary>
     Protected Friend fdgPhysics As ForceDirected2D
+    ''' <summary>
+    ''' The graphics updates thread.
+    ''' </summary>
     Protected Friend timer As New UpdateThread(30, AddressOf __invokePaint)
+    ''' <summary>
+    ''' The graphics rendering provider
+    ''' </summary>
     Protected Friend fdgRenderer As Renderer
+    ''' <summary>
+    ''' GDI+ interface for the canvas control.
+    ''' </summary>
     Dim paper As Graphics
 
     Private Sub __invokePaint()
