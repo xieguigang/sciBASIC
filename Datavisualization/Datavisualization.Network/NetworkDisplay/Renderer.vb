@@ -49,19 +49,32 @@ Public Class Renderer
         Dim pos1 As Pair(Of Integer, Integer) = GraphToScreen(TryCast(iPosition1, FDGVector2))
         Dim pos2 As Pair(Of Integer, Integer) = GraphToScreen(TryCast(iPosition2, FDGVector2))
         Dim canvas As Graphics = __graphicsProvider()
+        Dim w As Integer = 5 * iEdge.Data.weight
+        w = If(w < 1.5, 1.5, w)
+        Dim LineColor As New Pen(Color.Gray, w)
 
         Call canvas.DrawLine(
-            New Pen(brush:=Brushes.Gray),
+            LineColor,
             pos1.first,
             pos1.second,
             pos2.first,
             pos2.second)
     End Sub
 
-    Public Sub DrawBox(iNode As Node, iPosition As AbstractVector)
+    Public Sub DrawBox(n As Node, iPosition As AbstractVector)
         Dim pos As Pair(Of Integer, Integer) = GraphToScreen(TryCast(iPosition, FDGVector2))
         Dim canvas As Graphics = __graphicsProvider()
+        Dim r As Single = n.Data.radius
 
-        Call canvas.DrawPie(New Pen(Brushes.Green), New Rectangle(New Point(pos.first, pos.second), New Size(20, 20)), 0, 360)
+        If r = 0! Then
+            r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
+            r = If(r = 0, 20, r)
+        End If
+
+        Dim br As New SolidBrush(If(n.Data.Color.IsEmpty, Color.Black, n.Data.Color))
+        Dim pt As New Point(pos.first - r / 2, pos.second - r / 2)
+        Dim rect As New Rectangle(pt, New Size(r, r))
+
+        Call canvas.FillPie(br, rect, 0, 360)
     End Sub
 End Class

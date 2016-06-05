@@ -51,6 +51,9 @@ Public Class Canvas
 
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         paper = e.Graphics
+        paper.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+        paper.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+
         fdgRenderer.Draw(0.05F)
     End Sub
 
