@@ -6,6 +6,8 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Imaging
+Imports System.Drawing
 
 Namespace FileStream
 
@@ -41,11 +43,16 @@ Namespace FileStream
         Public Function CytoscapeExportAsGraph(edgesDf As String, nodesDf As String) As NetworkGraph
             Dim edges As Edges() = edgesDf.LoadCsv(Of Edges)
             Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
+            Dim colors As Color() = AllDotNetPrefixColors
+            Dim randColor = Function() As Color
+                                Return Color.FromArgb(200, colors(RandomSingle() * (colors.Length - 1)))
+                            End Function
             Dim gNodes As List(Of Graph.Node) =
                 LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
                                                    In nodes
                                                    Let nd As NodeData = New NodeData With {
-                                                       .radius = 50 * RandomDouble()
+                                                       .radius = If(n.Degree <= 4, 4, n.Degree) * 5,
+                                                       .Color = New SolidBrush(randColor())
                                                    }
                                                    Select New Graph.Node(n.name, nd)
             Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)

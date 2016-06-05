@@ -103,7 +103,7 @@ Public Module NetworkVisualizer
                     r = If(r = 0, 9, r)
                 End If
 
-                br = New SolidBrush(If(n.Data.Color.IsEmpty, defaultColor, n.Data.Color))
+                br = If(n.Data.Color Is Nothing, New SolidBrush(defaultColor), n.Data.Color)
                 pt = New Point(n.Data.initialPostion.x - r / 2, n.Data.initialPostion.y - r / 2)
                 pt = pt.OffSet2D(offset)
                 rect = New Rectangle(pt, New Size(r, r))

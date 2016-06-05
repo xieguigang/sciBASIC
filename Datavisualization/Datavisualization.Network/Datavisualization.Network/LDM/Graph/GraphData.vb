@@ -71,7 +71,7 @@ Namespace Graph
         Public Property initialPostion() As AbstractVector
         Public Property origID() As String
         Public Property Force As Point
-        Public Property Color As Color
+        Public Property Color As Brush
         <DumpNode> Public Property Weights As Double()
 
         ''' <summary>

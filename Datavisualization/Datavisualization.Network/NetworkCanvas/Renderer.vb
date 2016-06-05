@@ -62,10 +62,9 @@ Public Class Renderer
             r = If(r = 0, 20, r)
         End If
 
-        Dim br As New SolidBrush(If(n.Data.Color.IsEmpty, Color.Black, n.Data.Color))
         Dim pt As New Point(pos.X - r / 2, pos.Y - r / 2)
         Dim rect As New Rectangle(pt, New Size(r, r))
 
-        Call canvas.FillPie(br, rect, 0, 360)
+        Call canvas.FillPie(n.Data.Color, rect, 0, 360)
     End Sub
 End Class
