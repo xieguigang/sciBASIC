@@ -145,7 +145,6 @@
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
-    <Compile Include="Layouts\ForceDirected\General\Pair.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
     <Compile Include="LDM\FileStream\GraphAPI.vb" />
     <Compile Include="LDM\Graph\Extensions.vb" />

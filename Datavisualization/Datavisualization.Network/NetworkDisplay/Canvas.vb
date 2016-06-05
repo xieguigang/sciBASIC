@@ -25,6 +25,7 @@ Public Class Canvas
             Function() paper,
             Function() New Rectangle(New Point, Size),
             fdgPhysics)
+        inputs = New InputDevice(Me)
     End Sub
 
     Public Const DefaultStiffness As Single = 81.76!
@@ -45,10 +46,6 @@ Public Class Canvas
         Call Me.Invoke(Sub() Invalidate())
     End Sub
 
-    Private Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
-
-    End Sub
-
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         paper = e.Graphics
         paper.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
@@ -57,18 +54,12 @@ Public Class Canvas
         fdgRenderer.Draw(0.05F)
     End Sub
 
+    Dim inputs As InputDevice
+
     Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
         Graph = New NetworkGraph
         timer.ErrHandle = AddressOf App.LogException
         timer.Start()
-    End Sub
-
-    Private Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-
-    End Sub
-
-    Private Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-
     End Sub
 
     Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
