@@ -40,16 +40,19 @@ Public Class Renderer
         Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2))
         Dim pos2 As Point = GraphToScreen(TryCast(iPosition2, FDGVector2))
         Dim canvas As Graphics = __graphicsProvider()
-        Dim w As Integer = 5 * iEdge.Data.weight
-        w = If(w < 1.5, 1.5, w)
-        Dim LineColor As New Pen(Color.Gray, w)
 
-        Call canvas.DrawLine(
-            LineColor,
-            pos1.X,
-            pos1.Y,
-            pos2.X,
-            pos2.Y)
+        SyncLock canvas
+            Dim w As Integer = 5 * iEdge.Data.weight
+            w = If(w < 1.5, 1.5, w)
+            Dim LineColor As New Pen(Color.Gray, w)
+
+            Call canvas.DrawLine(
+                LineColor,
+                pos1.X,
+                pos1.Y,
+                pos2.X,
+                pos2.Y)
+        End SyncLock
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
@@ -57,14 +60,16 @@ Public Class Renderer
         Dim canvas As Graphics = __graphicsProvider()
         Dim r As Single = n.Data.radius
 
-        If r = 0! Then
-            r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
-            r = If(r = 0, 20, r)
-        End If
+        SyncLock canvas
+            If r = 0! Then
+                r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
+                r = If(r = 0, 20, r)
+            End If
 
-        Dim pt As New Point(pos.X - r / 2, pos.Y - r / 2)
-        Dim rect As New Rectangle(pt, New Size(r, r))
+            Dim pt As New Point(pos.X - r / 2, pos.Y - r / 2)
+            Dim rect As New Rectangle(pt, New Size(r, r))
 
-        Call canvas.FillPie(n.Data.Color, rect, 0, 360)
+            Call canvas.FillPie(n.Data.Color, rect, 0, 360)
+        End SyncLock
     End Sub
 End Class

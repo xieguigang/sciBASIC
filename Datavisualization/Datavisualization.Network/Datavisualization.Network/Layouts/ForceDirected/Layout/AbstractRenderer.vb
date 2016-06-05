@@ -41,11 +41,18 @@ Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Layouts
 
     Public MustInherit Class AbstractRenderer
         Implements IRenderer
+
+        ''' <summary>
+        ''' Running the drawing task in another thread?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Asynchronous As Boolean = False
 
         Protected forceDirected As IForceDirected
 
@@ -53,10 +60,17 @@ Namespace Layouts
             forceDirected = iForceDirected
         End Sub
 
+        Dim taskQueue As New ThreadQueue
+
         Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
             Call forceDirected.Calculate(iTimeStep)   '  计算力的变化
             Call Clear()    ' 清理画板
-            Call DirectDraw()
+
+            If Asynchronous Then
+                Call taskQueue.AddToQueue(AddressOf DirectDraw)
+            Else
+                Call DirectDraw()
+            End If
         End Sub
 
         ''' <summary>

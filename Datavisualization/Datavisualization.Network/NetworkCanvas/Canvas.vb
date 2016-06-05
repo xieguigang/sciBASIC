@@ -26,6 +26,7 @@ Public Class Canvas
             Function() New Rectangle(New Point, Size),
             fdgPhysics)
         inputs = New InputDevice(Me)
+        fdgRenderer.Asynchronous = False
     End Sub
 
     Public ReadOnly Property FdgArgs As ForceDirectedArgs = Config.Load
