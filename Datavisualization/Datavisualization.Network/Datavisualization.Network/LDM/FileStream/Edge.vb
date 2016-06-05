@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
-Imports Microsoft.VisualBasic.DataVisualization.Network.LDM.Abstract
+Imports Microsoft.VisualBasic.DataVisualization.Network.Abstract
 
 Namespace FileStream
 
@@ -11,12 +11,7 @@ Namespace FileStream
     ''' <remarks></remarks>
     <XmlType("VisualizeNode")>
     Public Class NetworkEdge : Inherits INetComponent
-        Implements I_InteractionModel, INetworkEdge
-
-        Public Shared Function Contains(edge As I_InteractionModel, node As String) As Boolean
-            Return String.Equals(node, edge.locusId, StringComparison.OrdinalIgnoreCase) OrElse
-                String.Equals(node, edge.Address, StringComparison.OrdinalIgnoreCase)
-        End Function
+        Implements IInteraction, INetworkEdge
 
         Public Function Contains(Interactor As String) As Boolean
             Return String.Equals(Interactor, FromNode, StringComparison.OrdinalIgnoreCase) OrElse
@@ -33,9 +28,9 @@ Namespace FileStream
         End Sub
 
         <Column("fromNode")> <XmlAttribute("source")>
-        Public Overridable Property FromNode As String Implements I_InteractionModel.locusId
+        Public Overridable Property FromNode As String Implements IInteraction.source
         <Column("toNode")> <XmlAttribute("target")>
-        Public Overridable Property ToNode As String Implements I_InteractionModel.Address
+        Public Overridable Property ToNode As String Implements IInteraction.target
         <XmlAttribute("confidence")>
         Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
         <Column("InteractionType")>
@@ -69,26 +64,6 @@ Namespace FileStream
             End Get
         End Property
 
-        Public Overloads Shared Function Equals(Model As I_InteractionModel, Node1 As String, Node2 As String) As Boolean
-            If String.Equals(Model.locusId, Node1, StringComparison.OrdinalIgnoreCase) Then
-                Return String.Equals(Model.Address, Node2, StringComparison.OrdinalIgnoreCase)
-            ElseIf String.Equals(Model.Address, Node1, StringComparison.OrdinalIgnoreCase) Then
-                Return String.Equals(Model.locusId, Node2, StringComparison.OrdinalIgnoreCase)
-            Else
-                Return False
-            End If
-        End Function
-
-        Public Shared Function GetConnectedNode(Node As I_InteractionModel, a As String) As String
-            If String.Equals(Node.locusId, a) Then
-                Return Node.Address
-            ElseIf String.Equals(Node.Address, a) Then
-                Return Node.locusId
-            Else
-                Return ""
-            End If
-        End Function
-
         ''' <summary>
         ''' 假若存在连接则返回相对的节点，否则返回空字符串
         ''' </summary>
@@ -96,7 +71,7 @@ Namespace FileStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetConnectedNode(Node As String) As String
-            Return GetConnectedNode(Me, Node)
+            Return Abstract.GetConnectedNode(Me, Node)
         End Function
 
         Public Overloads Function Equals(Id1 As String, Id2 As String) As Boolean

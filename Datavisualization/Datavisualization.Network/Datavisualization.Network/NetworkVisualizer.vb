@@ -33,6 +33,15 @@ Public Module NetworkVisualizer
         Return nodes.CentralOffset(size)
     End Function
 
+    ''' <summary>
+    ''' 假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析
+    ''' </summary>
+    ''' <param name="net"></param>
+    ''' <param name="frameSize"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="backgroundImage"></param>
+    ''' <param name="defaultColor"></param>
+    ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
     Public Function DrawImage(net As NetworkGraph,

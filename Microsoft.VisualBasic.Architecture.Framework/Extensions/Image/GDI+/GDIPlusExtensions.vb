@@ -226,6 +226,8 @@ Namespace Imaging
             Return size.Width > 0 AndAlso size.Height > 0
         End Function
 
+        Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
+
         ''' <summary>
         ''' 创建一个GDI+的绘图设备
         ''' </summary>
@@ -235,13 +237,13 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Drawing.Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace As String = "") As GDIPlusDeviceHandle
+        <Extension> Public Function CreateGDIDevice(r As Size,
+                                                    Optional filled As Color = Nothing,
+                                                    <CallerMemberName> Optional trace As String = "") As GDIPlusDeviceHandle
             Dim Bitmap As Bitmap
 
-            'Call Console.WriteLine($"[DEBUG {Now.ToString}] device area ==> {r.ToString}.")
-
             If r.Width = 0 OrElse r.Height = 0 Then
-                Throw New Exception("One of the size parameter for the gdi+ device is not valid!")
+                Throw New Exception(InvalidSize)
             End If
 
             Try
@@ -253,19 +255,21 @@ Namespace Imaging
                 Throw ex
             End Try
 
-            Dim GrDevice As Graphics = Graphics.FromImage(Bitmap)
+            Dim gdi As Graphics = Graphics.FromImage(Bitmap)
+            Dim rect As New Rectangle(New Point, Bitmap.Size)
 
             If filled = Nothing Then
                 filled = Color.White
             End If
 
-            Call GrDevice.FillRectangle(New SolidBrush(filled), New Rectangle(New Point, Bitmap.Size))
+            Call gdi.FillRectangle(New SolidBrush(filled), rect)
 
-            GrDevice.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-            GrDevice.PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
-            GrDevice.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            gdi.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            gdi.PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
+            gdi.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            gdi.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 
-            Return GDIPlusDeviceHandle.CreateObject(GrDevice, Bitmap)
+            Return GDIPlusDeviceHandle.CreateObject(gdi, Bitmap)
         End Function
 
         ''' <summary>

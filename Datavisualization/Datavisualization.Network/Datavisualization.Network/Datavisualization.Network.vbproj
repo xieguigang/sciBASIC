@@ -147,6 +147,7 @@
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Pair.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
+    <Compile Include="LDM\Graph\Extensions.vb" />
     <Compile Include="LDM\Graph\Edge.vb" />
     <Compile Include="LDM\Graph\Graph.vb" />
     <Compile Include="LDM\Graph\GraphData.vb" />
