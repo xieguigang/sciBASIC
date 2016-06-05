@@ -28,19 +28,9 @@ Public Module NetworkVisualizer
 
     <Extension>
     Private Function __calOffsets(net As NetworkGraph, size As Size) As Point
-        Dim nodes As Point() = net.nodes.ToArray(Function(n) n.Data.initialPostion.Point2D)
-        Dim xOffset As Integer() = nodes.Where(Function(x) x.X <= 0).ToArray(Function(x) x.X)
-        Dim yOffset As Integer() = nodes.Where(Function(x) x.Y <= 0).ToArray(Function(x) x.Y)
-        Dim xo, yo As Integer
-
-        If xOffset.Length > 0 Then
-            xo = xOffset.Min
-        End If
-        If yOffset.Length > 0 Then
-            yo = yOffset.Min
-        End If
-
-        Return New Point(Math.Abs(xo), Math.Abs(yo))
+        Dim nodes As Point() =
+            net.nodes.ToArray(Function(n) n.Data.initialPostion.Point2D)
+        Return nodes.CentralOffset(size)
     End Function
 
     <ExportAPI("Draw.Image")>
