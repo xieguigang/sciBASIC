@@ -14,27 +14,16 @@ Public Class InputDevice
             Return
         End If
 
-        If dragNode Is Nothing Then
+        If dragNode IsNot Nothing Then
+            Dim vec As FDGVector2 =
+                Canvas.fdgRenderer.ScreenToGraph(
+                New Point(e.Location.X, e.Location.Y))
+
+            dragNode.Pinned = True
+            Canvas.fdgPhysics.GetPoint(dragNode).position = vec
+        Else
             dragNode = __getNode(e.Location)
         End If
-        If dragNode Is Nothing Then
-            Return
-        Else
-            dragNode.Pinned = True
-        End If
-
-        Dim npt As AbstractVector =
-            Canvas.fdgPhysics.GetPoint(dragNode).position
-        Dim pt As Point =
-            Canvas.fdgRenderer.GraphToScreen(npt)
-
-        pt.X = pt.X - userCursor.X + e.X
-        pt.Y = pt.Y - userCursor.Y + e.Y
-
-        Dim w = Canvas.fdgRenderer.ScreenToGraph(pt)
-
-        npt.x = w.x
-        npt.y = w.y
     End Sub
 
     Dim dragNode As Node
@@ -57,16 +46,15 @@ Public Class InputDevice
     End Function
 
     Dim drag As Boolean
-    Dim userCursor As Point
 
     Private Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs) Handles Canvas.MouseDown
         drag = True
-        userCursor = e.Location
+        dragNode = __getNode(e.Location)
     End Sub
 
     Private Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Canvas.MouseUp
         drag = False
-        If Not dragNode Is Nothing Then
+        If dragNode IsNot Nothing Then
             dragNode.Pinned = False
             dragNode = Nothing
         End If
