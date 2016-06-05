@@ -9,63 +9,83 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkVisualizer
 
+    ''' <summary>
+    ''' This background color was picked from https://github.com/whichlight/reddit-network-vis
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
+
+    <Extension>
+    Public Function GetDisplayText(n As Node) As String
+        If n.Data Is Nothing OrElse n.Data.origID.IsBlank Then
+            Return n.ID
+        Else
+            Return n.Data.origID
+        End If
+    End Function
+
     <ExportAPI("Draw.Image")>
     <Extension>
     Public Function DrawImage(Network As NetworkGraph,
                               frameSize As Size,
                               Optional margin As Point = Nothing,
-                              Optional backgroundImage As Image = Nothing) As Bitmap
+                              Optional backgroundImage As Image = Nothing,
+                              Optional defaultColor As Color = Nothing) As Bitmap
+
+        Dim br As Brush
+        Dim rect As Rectangle
 
         Using Graphic As GDIPlusDeviceHandle = frameSize.CreateGDIDevice
-            margin = If(margin = Nothing, New Point(3, 3), margin)
-
             If backgroundImage Is Nothing Then
-                Dim BackgroundColor = Color.FromArgb(219, 243, 255)
-                Call Graphic.FillRectangle(New SolidBrush(BackgroundColor), New Rectangle(New Point, New Size(frameSize.Width, frameSize.Height))) '绘制背景纹理
+                br = New SolidBrush(BackgroundColor)
+                rect = New Rectangle(
+                    New Point,
+                    New Size(frameSize.Width, frameSize.Height))
+                Call Graphic.FillRectangle(br, rect) '绘制背景纹理
             Else
                 Call Graphic.DrawImage(backgroundImage, 0, 0, frameSize.Width, frameSize.Height)
             End If
 
-            Graphic.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-            Graphic.CompositingMode = Drawing2D.CompositingMode.SourceOver
-            Graphic.PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
-            Graphic.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-
-            For Each Nod In Network.nodes
-                For i As Integer = 0 To Nod.Data.Neighborhoods - 1
-                    Dim cnnId = Nod.Data.Neighbours(i)
+            For Each n As Node In Network.nodes
+                For i As Integer = 0 To n.Data.Neighborhoods - 1
+                    Dim cnnId As Integer = n.Data.Neighbours(i)
                     Dim otherNode = Network.nodes(cnnId)
-                    Dim Weight = Nod.Data.Weights(i)
+                    Dim Weight = n.Data.Weights(i)
                     Dim Color As Color = Color.FromArgb(131, 131, 131)
 
                     If Weight < 0.5 Then
-                        Color = Drawing.Color.Gray
+                        Color = Color.Gray
                     ElseIf Weight < 0.75 Then
-                        Color = Drawing.Color.Blue
+                        Color = Color.Blue
                     End If
 
-                    Dim LineColor As Pen = New Pen(Color, 5 * Weight)
+                    Dim LineColor As New Pen(Color, 5 * Weight)
 
-                    Call Graphic.DrawLine(LineColor, Nod.Data.initialPostion.Point2D, otherNode.Data.initialPostion.Point2D)
+                    Call Graphic.DrawLine(   ' 在这里绘制的是节点之间相连接的边
+                        LineColor,
+                        n.Data.initialPostion.Point2D,
+                        otherNode.Data.initialPostion.Point2D)
                 Next
             Next
 
-            'Dim resilt = CatmullRomSpline((From node In Network Select node.Location).ToList, 0.1, True)
-            'Dim path = New GraphicsPath
-            'For Each p In resilt
-            '    Call path.AddLine(p, p)
-            'Next
-            'Call path.CloseAllFigures()
-            'Call Graphic.DrawPath(Pens.Black, path)
+            margin = If(margin.IsEmpty, New Point(3, 3), margin)
+            defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
 
-            For Each Nod As Node In Network.nodes
-                Dim Font As Font = New Font(FontFace.Ubuntu, 12 + Nod.Data.Neighborhoods, FontStyle.Bold)
-                Dim size = Graphic.MeasureString(Nod.Data.origID, Font)
-                Dim r As Integer = If(Nod.Data.Neighborhoods < 30, Nod.Data.Neighborhoods * 9, Nod.Data.Neighborhoods * 7)
+            For Each n As Node In Network.nodes  ' 在这里进行节点的绘制
+                Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods, FontStyle.Bold)
+                Dim s As String = n.GetDisplayText
+                Dim size As SizeF = Graphic.MeasureString(s, Font)
+                Dim r As Integer = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
 
-                Call Graphic.FillPie(New SolidBrush(Nod.Data.Color), New Rectangle(New Point(Nod.Data.initialPostion.x - r / 2, Nod.Data.initialPostion.y - r / 2), New Size(r, r)), 0, 360)
+                r = If(r = 0, 9, r)
+                br = New SolidBrush(If(n.Data.Color.IsEmpty, defaultColor, n.Data.Color))
+                rect = New Rectangle(
+                    New Point(n.Data.initialPostion.x - r / 2, n.Data.initialPostion.y - r / 2),
+                    New Size(r, r))
 
-                Dim stringLocation As Point = New Point(Nod.Data.initialPostion.x - size.Width / 2, Nod.Data.initialPostion.y + r / 2 + 2)
+                Call Graphic.FillPie(br, rect, 0, 360)
+
+                Dim stringLocation As New Point(n.Data.initialPostion.x - size.Width / 2, n.Data.initialPostion.y + r / 2 + 2)
                 If stringLocation.X < margin.X Then
                     stringLocation = New Point(margin.X, stringLocation.Y)
                 End If
@@ -76,7 +96,7 @@ Public Module NetworkVisualizer
                     stringLocation = New Point(frameSize.Width - margin.X - size.Width, stringLocation.Y)
                 End If
 
-                Call Graphic.DrawString(Nod.Data.origID, Font, Brushes.Black, stringLocation)
+                Call Graphic.DrawString(s, Font, Brushes.Black, stringLocation)
             Next
 
             Return Graphic.ImageResource
@@ -173,5 +193,4 @@ Public Module NetworkVisualizer
 
         Return result
     End Function
-
 End Module

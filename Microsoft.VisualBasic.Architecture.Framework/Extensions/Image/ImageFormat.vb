@@ -83,7 +83,7 @@ Namespace Imaging
         ''' <param name="path">path string</param>
         ''' <param name="format">Image formats enumeration.</param>
         ''' <returns></returns>
-        <Extension> Public Function SaveAs(res As Image, path As String, format As ImageFormats) As Boolean
+        <Extension> Public Function SaveAs(res As Image, path As String, Optional format As ImageFormats = ImageFormats.Png) As Boolean
             Try
                 Dim parent As String = FileIO.FileSystem.GetParentPath(path)
                 Call FileIO.FileSystem.CreateDirectory(parent)
