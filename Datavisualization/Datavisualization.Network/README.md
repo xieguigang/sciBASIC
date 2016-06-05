@@ -11,6 +11,7 @@ One of Is using d3js for this data visualization. But as the .NET Webbrowser con
 This canvas library is majority based on the work of [Mr. Woong Gyu La](http://www.codeproject.com/Articles/833043/EpForceDirectedGraph-cs-A-D-D-force-directed-gra)
 
 This canvas library is consist with 4 parts majority:
+
 1. Force Directed layout engine
 2. Canvas control for WinForm
 3. InputDevice for user mouse events
