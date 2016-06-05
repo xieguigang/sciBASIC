@@ -156,7 +156,7 @@
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Datavisualization.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetworkDisplay\NetworkCanvas.vbproj">
+    <ProjectReference Include="..\NetworkCanvas\NetworkCanvas.vbproj">
       <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>
       <Name>NetworkCanvas</Name>
     </ProjectReference>
