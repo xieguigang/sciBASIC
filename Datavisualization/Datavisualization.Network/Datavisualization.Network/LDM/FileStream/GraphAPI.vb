@@ -44,7 +44,7 @@ Namespace FileStream
             Dim gNodes As List(Of Graph.Node) =
                 LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
                                                    In nodes
-                                                   Select New Graph.Node(n.SUID)
+                                                   Select New Graph.Node(n.name)
             Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)
             Dim gEdges As List(Of Graph.Edge) =
                 LinqAPI.MakeList(Of Edge) <= From edge As Edges
