@@ -14,6 +14,7 @@ Public Module NetworkVisualizer
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
+    Public ReadOnly Property DefaultEdgeColor As Color = Color.FromArgb(131, 131, 131)
 
     <Extension>
     Public Function GetDisplayText(n As Node) As String
@@ -24,9 +25,14 @@ Public Module NetworkVisualizer
         End If
     End Function
 
+    <Extension>
+    Private Function __calOffsets(net As NetworkGraph, size As Size) As Point
+
+    End Function
+
     <ExportAPI("Draw.Image")>
     <Extension>
-    Public Function DrawImage(Network As NetworkGraph,
+    Public Function DrawImage(net As NetworkGraph,
                               frameSize As Size,
                               Optional margin As Point = Nothing,
                               Optional backgroundImage As Image = Nothing,
@@ -34,8 +40,11 @@ Public Module NetworkVisualizer
 
         Dim br As Brush
         Dim rect As Rectangle
+        Dim cl As Color
+        Dim offset As Point = net.__calOffsets(frameSize)
 
         Using Graphic As GDIPlusDeviceHandle = frameSize.CreateGDIDevice
+
             If backgroundImage Is Nothing Then
                 br = New SolidBrush(BackgroundColor)
                 rect = New Rectangle(
@@ -46,32 +55,30 @@ Public Module NetworkVisualizer
                 Call Graphic.DrawImage(backgroundImage, 0, 0, frameSize.Width, frameSize.Height)
             End If
 
-            For Each n As Node In Network.nodes
-                For i As Integer = 0 To n.Data.Neighborhoods - 1
-                    Dim cnnId As Integer = n.Data.Neighbours(i)
-                    Dim otherNode = Network.nodes(cnnId)
-                    Dim Weight = n.Data.Weights(i)
-                    Dim Color As Color = Color.FromArgb(131, 131, 131)
+            For Each edge As Edge In net.edges
+                Dim n As Node = edge.Source
+                Dim otherNode As Node = edge.Target
 
-                    If Weight < 0.5 Then
-                        Color = Color.Gray
-                    ElseIf Weight < 0.75 Then
-                        Color = Color.Blue
-                    End If
+                cl = DefaultEdgeColor
 
-                    Dim LineColor As New Pen(Color, 5 * Weight)
+                If edge.Data.weight < 0.5 Then
+                    cl = Color.Gray
+                ElseIf edge.Data.weight < 0.75 Then
+                    cl = Color.Blue
+                End If
 
-                    Call Graphic.DrawLine(   ' 在这里绘制的是节点之间相连接的边
-                        LineColor,
-                        n.Data.initialPostion.Point2D,
-                        otherNode.Data.initialPostion.Point2D)
-                Next
+                Dim LineColor As New Pen(cl, 5 * edge.Data.weight)
+
+                Call Graphic.DrawLine(   ' 在这里绘制的是节点之间相连接的边
+                    LineColor,
+                    n.Data.initialPostion.Point2D,
+                    otherNode.Data.initialPostion.Point2D)
             Next
 
             margin = If(margin.IsEmpty, New Point(3, 3), margin)
             defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
 
-            For Each n As Node In Network.nodes  ' 在这里进行节点的绘制
+            For Each n As Node In net.nodes  ' 在这里进行节点的绘制
                 Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods, FontStyle.Bold)
                 Dim s As String = n.GetDisplayText
                 Dim size As SizeF = Graphic.MeasureString(s, Font)
@@ -85,18 +92,18 @@ Public Module NetworkVisualizer
 
                 Call Graphic.FillPie(br, rect, 0, 360)
 
-                Dim stringLocation As New Point(n.Data.initialPostion.x - size.Width / 2, n.Data.initialPostion.y + r / 2 + 2)
-                If stringLocation.X < margin.X Then
-                    stringLocation = New Point(margin.X, stringLocation.Y)
+                Dim sloci As New Point(n.Data.initialPostion.x - size.Width / 2, n.Data.initialPostion.y + r / 2 + 2)
+                If sloci.X < margin.X Then
+                    sloci = New Point(margin.X, sloci.Y)
                 End If
-                If stringLocation.Y + size.Height > frameSize.Height - margin.Y Then
-                    stringLocation = New Point(stringLocation.X, frameSize.Height - margin.Y - size.Height)
+                If sloci.Y + size.Height > frameSize.Height - margin.Y Then
+                    sloci = New Point(sloci.X, frameSize.Height - margin.Y - size.Height)
                 End If
-                If stringLocation.X + size.Width > frameSize.Width - margin.X Then
-                    stringLocation = New Point(frameSize.Width - margin.X - size.Width, stringLocation.Y)
+                If sloci.X + size.Width > frameSize.Width - margin.X Then
+                    sloci = New Point(frameSize.Width - margin.X - size.Width, sloci.Y)
                 End If
 
-                Call Graphic.DrawString(s, Font, Brushes.Black, stringLocation)
+                Call Graphic.DrawString(s, Font, Brushes.Black, sloci)
             Next
 
             Return Graphic.ImageResource
