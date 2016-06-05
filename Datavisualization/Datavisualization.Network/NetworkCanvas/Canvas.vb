@@ -20,7 +20,7 @@ Public Class Canvas
 
     Private Sub __invokeSet(g As NetworkGraph)
         net = g
-        fdgPhysics = New ForceDirected2D(net, Stiffness, Repulsion, Damping)
+        fdgPhysics = New ForceDirected2D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
         fdgRenderer = New Renderer(
             Function() paper,
             Function() New Rectangle(New Point, Size),
@@ -28,13 +28,7 @@ Public Class Canvas
         inputs = New InputDevice(Me)
     End Sub
 
-    Public Const DefaultStiffness As Single = 81.76!
-    Public Const DefaultRepulsion As Single = 40000.0!
-    Public Const DefaultDamping As Single = 0.5!
-
-    Public Property Stiffness As Single = 81.76!
-    Public Property Repulsion As Single = 40000.0!
-    Public Property Damping As Single = 0.5!
+    Public ReadOnly Property FdgArgs As ForceDirectedArgs = Config.Load
 
     Dim net As NetworkGraph
     Protected Friend fdgPhysics As ForceDirected2D

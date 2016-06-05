@@ -23,8 +23,8 @@ Public Class Form1
         '    App.HOME & "\Resources\Nodes.csv")
         'Try
         canvas.Graph = CytoscapeExportAsGraph(
-         "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\xcb\Edges.csv",
-         "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\xcb\Nodes.csv")
+         "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\xcb-main-Edges.csv",
+         "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\xcb-main-Nodes.csv")
         '  Catch ex As Exception
         '   Call App.LogException(ex)
         '   End Try

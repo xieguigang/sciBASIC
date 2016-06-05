@@ -45,7 +45,7 @@ Namespace FileStream
             Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
             Dim colors As Color() = AllDotNetPrefixColors
             Dim randColor = Function() As Color
-                                Return Color.FromArgb(200, colors(RandomSingle() * (colors.Length - 1)))
+                                Return Color.FromArgb(220, colors(RandomSingle() * (colors.Length - 1)))
                             End Function
             Dim gNodes As List(Of Graph.Node) =
                 LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
