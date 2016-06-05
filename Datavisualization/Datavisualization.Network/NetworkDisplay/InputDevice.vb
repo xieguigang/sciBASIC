@@ -10,14 +10,14 @@ Public Class InputDevice
     End Sub
 
     Private Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs) Handles Canvas.MouseMove
-        If Not drag Then
+        If Not drag Then   ' 设置tooltip
             Return
         End If
 
         If dragNode IsNot Nothing Then
             Dim vec As FDGVector2 =
-                Canvas.fdgRenderer.ScreenToGraph(
-                New Point(e.Location.X, e.Location.Y))
+                    Canvas.fdgRenderer.ScreenToGraph(
+                    New Point(e.Location.X, e.Location.Y))
 
             dragNode.Pinned = True
             Canvas.fdgPhysics.GetPoint(dragNode).position = vec
