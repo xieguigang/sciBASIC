@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace FileStream
 
@@ -40,6 +41,25 @@ Namespace FileStream
         Public Function CytoscapeExportAsGraph(edgesDf As String, nodesDf As String) As NetworkGraph
             Dim edges As Edges() = edgesDf.LoadCsv(Of Edges)
             Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
+            Dim gNodes As List(Of Graph.Node) =
+                LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
+                                                   In nodes
+                                                   Select New Graph.Node(n.SUID)
+            Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)
+            Dim gEdges As List(Of Graph.Edge) =
+                LinqAPI.MakeList(Of Edge) <= From edge As Edges
+                                             In edges
+                                             Let geNodes As Graph.Node() =
+                                                 edge.GetNodes(nodehash).ToArray
+                                             Select New Edge(
+                                                 edge.SUID,
+                                                 geNodes(0),
+                                                 geNodes(1),
+                                                 Nothing)
+            Return New NetworkGraph With {
+                .edges = gEdges,
+                .nodes = gNodes
+            }
         End Function
     End Module
 
@@ -50,6 +70,15 @@ Namespace FileStream
             Public Property EdgeBetweenness As String
             Public Property interaction As String
             Public Property name As String
+
+            Public Iterator Function GetNodes(nodeHash As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
+                Dim tokens As String() =
+                    Strings.Split(name, $"({interaction})") _
+                    .ToArray(Function(s) s.Trim)
+
+                Yield nodeHash(tokens.First)
+                Yield nodeHash(tokens.Last)
+            End Function
 
             Public Overrides Function ToString() As String
                 Return Me.GetJson
