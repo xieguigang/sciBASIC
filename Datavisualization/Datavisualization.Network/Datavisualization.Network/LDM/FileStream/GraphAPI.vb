@@ -44,7 +44,10 @@ Namespace FileStream
             Dim gNodes As List(Of Graph.Node) =
                 LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
                                                    In nodes
-                                                   Select New Graph.Node(n.name, New NodeData)
+                                                   Let nd As NodeData = New NodeData With {
+                                                       .radius = 50 * RandomDouble()
+                                                   }
+                                                   Select New Graph.Node(n.name, nd)
             Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)
             Dim gEdges As List(Of Graph.Edge) =
                 LinqAPI.MakeList(Of Edge) <= From edge As Edges

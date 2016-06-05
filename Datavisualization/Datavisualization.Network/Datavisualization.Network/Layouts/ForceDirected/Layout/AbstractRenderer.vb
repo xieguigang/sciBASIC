@@ -54,8 +54,15 @@ Namespace Layouts
         End Sub
 
         Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
-            forceDirected.Calculate(iTimeStep)   '  计算力的变化
-            Clear()    ' 清理画板
+            Call forceDirected.Calculate(iTimeStep)   '  计算力的变化
+            Call Clear()    ' 清理画板
+            Call DirectDraw()
+        End Sub
+
+        ''' <summary>
+        ''' 不计算位置而直接更新绘图
+        ''' </summary>
+        Public Sub DirectDraw()
             forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
             forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
         End Sub

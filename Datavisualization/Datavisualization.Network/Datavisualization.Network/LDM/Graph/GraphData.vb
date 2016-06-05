@@ -74,10 +74,6 @@ Namespace Graph
         Public Property Color As Color
         <DumpNode> Public Property Weights As Double()
 
-        Public Function Intersect(pt As Point) As Boolean
-            Return True
-        End Function
-
         ''' <summary>
         ''' 与本节点相连接的其他节点的<see cref="Node.Id">编号</see>
         ''' </summary>

@@ -37,9 +37,9 @@ Public Class Canvas
     Public Property Damping As Single = 0.5!
 
     Dim net As NetworkGraph
-    Dim fdgPhysics As ForceDirected2D
-    Dim timer As New UpdateThread(30, AddressOf __invokePaint)
-    Dim fdgRenderer As Renderer
+    Protected Friend fdgPhysics As ForceDirected2D
+    Protected Friend timer As New UpdateThread(30, AddressOf __invokePaint)
+    Protected Friend fdgRenderer As Renderer
     Dim paper As Graphics
 
     Private Sub __invokePaint()
@@ -51,7 +51,7 @@ Public Class Canvas
         paper.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
         paper.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 
-        fdgRenderer.Draw(0.05F)
+        Call fdgRenderer.Draw(0.05F)
     End Sub
 
     Dim inputs As InputDevice
