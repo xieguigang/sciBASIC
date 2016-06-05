@@ -39,7 +39,6 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
-Imports EpForceDirectedGraph.cs
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces

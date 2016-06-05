@@ -8,7 +8,6 @@ Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Xml
 Imports System.IO
-Imports EpForceDirectedGraph.cs
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 
@@ -73,7 +72,7 @@ Namespace EpForceDirectedGraphDemo
         End Sub
         Private Sub DrawPanel_Paint(sender As Object, e As PaintEventArgs)
             stopwatch.[Stop]()
-            Dim p = TryCast(sender, Panel)
+            Dim p As Panel = TryCast(sender, Panel)
             paper = e.Graphics
 
             Dim box As New GridBox((panelRight - panelLeft) \ 2, (panelBottom - panelTop) \ 2, BoxType.Pinned)
@@ -91,31 +90,31 @@ Namespace EpForceDirectedGraphDemo
 
 
         End Sub
-        Public Function GraphToScreen(iPos As FDGVector2) As Pair(Of Integer, Integer)
-            Dim retPair As New Pair(Of Integer, Integer)()
-            retPair.first = CInt(Math.Truncate(iPos.x + (CSng(panelRight - panelLeft) / 2.0F)))
-            retPair.second = CInt(Math.Truncate(iPos.y + (CSng(panelBottom - panelTop) / 2.0F)))
+        Public Function GraphToScreen(iPos As FDGVector2) As Point
+            Dim retPair As New Point
+            retPair.X = CInt(Math.Truncate(iPos.x + (CSng(panelRight - panelLeft) / 2.0F)))
+            retPair.Y = CInt(Math.Truncate(iPos.y + (CSng(panelBottom - panelTop) / 2.0F)))
             Return retPair
         End Function
 
-        Public Function ScreenToGraph(iScreenPos As Pair(Of Integer, Integer)) As FDGVector2
+        Public Function ScreenToGraph(iScreenPos As Point) As FDGVector2
             Dim retVec As New FDGVector2()
-            retVec.x = CSng(iScreenPos.first) - (CSng(panelRight - panelLeft) / 2.0F)
-            retVec.y = CSng(iScreenPos.second) - (CSng(panelBottom - panelTop) / 2.0F)
+            retVec.x = CSng(iScreenPos.X) - (CSng(panelRight - panelLeft) / 2.0F)
+            retVec.y = CSng(iScreenPos.Y) - (CSng(panelBottom - panelTop) / 2.0F)
             Return retVec
         End Function
 
         Public Sub DrawLine(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-            Dim pos1 As Pair(Of Integer, Integer) = GraphToScreen(TryCast(iPosition1, FDGVector2))
-            Dim pos2 As Pair(Of Integer, Integer) = GraphToScreen(TryCast(iPosition2, FDGVector2))
-            m_fdgLines(iEdge).[Set](pos1.first, pos1.second, pos2.first, pos2.second)
+            Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2))
+            Dim pos2 As Point = GraphToScreen(TryCast(iPosition2, FDGVector2))
+            m_fdgLines(iEdge).[Set](pos1.X, pos1.Y, pos2.X, pos2.Y)
             m_fdgLines(iEdge).DrawLine(paper)
 
         End Sub
 
         Public Sub DrawBox(iNode As Node, iPosition As AbstractVector)
-            Dim pos As Pair(Of Integer, Integer) = GraphToScreen(TryCast(iPosition, FDGVector2))
-            m_fdgBoxes(iNode).[Set](pos.first, pos.second)
+            Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2))
+            m_fdgBoxes(iNode).[Set](pos.X, pos.Y)
             m_fdgBoxes(iNode).DrawBox(paper)
         End Sub
 
@@ -242,7 +241,7 @@ Namespace EpForceDirectedGraphDemo
         Private Sub pDrawPanel_MouseMove(sender As Object, e As MouseEventArgs)
             If clickedNode IsNot Nothing Then
 
-                Dim vec As FDGVector2 = ScreenToGraph(New Pair(Of Integer, Integer)(e.Location.X, e.Location.Y))
+                Dim vec As FDGVector2 = ScreenToGraph(New Point(e.Location.X, e.Location.Y))
                 clickedNode.Pinned = True
                 m_fdgPhysics.GetPoint(clickedNode).position = vec
             Else
