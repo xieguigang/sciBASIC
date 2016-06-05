@@ -21,7 +21,7 @@ Namespace FileStream
             Dim nodes As Graph.Node() =
                 LinqAPI.Exec(Of Graph.Node) <= From n As Node
                                                In net.Nodes
-                                               Select New Graph.Node(n.Identifier)
+                                               Select New Graph.Node(n.Identifier, New NodeData)
             Dim nodehash As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
@@ -30,7 +30,7 @@ Namespace FileStream
                                              edge.GetNullDirectedGuid,
                                              nodehash(edge.FromNode),
                                              nodehash(edge.ToNode),
-                                             Nothing)
+                                             New EdgeData)
             Dim graph As New NetworkGraph With {
                 .nodes = New List(Of Graph.Node)(nodes),
                 .edges = New List(Of Edge)(edges)
@@ -44,7 +44,7 @@ Namespace FileStream
             Dim gNodes As List(Of Graph.Node) =
                 LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
                                                    In nodes
-                                                   Select New Graph.Node(n.name)
+                                                   Select New Graph.Node(n.name, New NodeData)
             Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)
             Dim gEdges As List(Of Graph.Edge) =
                 LinqAPI.MakeList(Of Edge) <= From edge As Edges
@@ -55,7 +55,7 @@ Namespace FileStream
                                                  edge.SUID,
                                                  geNodes(0),
                                                  geNodes(1),
-                                                 Nothing)
+                                                 New EdgeData)
             Return New NetworkGraph With {
                 .edges = gEdges,
                 .nodes = gNodes
