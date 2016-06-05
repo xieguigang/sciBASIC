@@ -16,8 +16,11 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'canvas.Graph = CytoscapeExportAsGraph(
+        '    App.HOME & "\Resources\Edges.csv",
+        '    App.HOME & "\Resources\Nodes.csv")
         canvas.Graph = CytoscapeExportAsGraph(
-            App.HOME & "\Resources\Edges.csv",
-            App.HOME & "\Resources\Nodes.csv")
+            "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\xcb\Edges.csv",
+            "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\xcb\Nodes.csv")
     End Sub
 End Class

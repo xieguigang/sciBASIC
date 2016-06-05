@@ -94,8 +94,8 @@ Namespace FileStream
             Public Property BetweennessCentrality As String
             Public Property ClosenessCentrality As String
             Public Property ClusteringCoefficient As String
-            Public Property Degree As String
-            Public Property Eccentricity As String
+            Public Property Degree As Integer
+            Public Property Eccentricity As Integer
             Public Property IsSingleNode As String
             Public Property name As String
             Public Property NeighborhoodConnectivity As String
