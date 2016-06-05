@@ -1,9 +1,9 @@
-﻿'! 
-'@file AbstractRenderer.cs
+'! 
+'@file Renderer.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
 '@date August 08, 2013
-'@brief Abstract Renderer Interface
+'@brief Renderer Interface
 '@version 1.0
 '
 '@section LICENSE
@@ -32,37 +32,42 @@
 '
 '@section DESCRIPTION
 '
-'An Interface for the Abstract Renderer Class.
+'An Interface for the Renderer Class.
 '
 '
 
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports EpForceDirectedGraph.cs
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 
-Namespace Layouts
-
-    Public MustInherit Class AbstractRenderer
-        Implements IRenderer
-
-        Protected forceDirected As IForceDirected
-
-        Public Sub New(iForceDirected As IForceDirected)
-            forceDirected = iForceDirected
+Namespace EpForceDirectedGraphDemo
+    Class Renderer
+        Inherits AbstractRenderer
+        Private form As ForceDirectedGraphForm
+        Public Sub New(iForm As ForceDirectedGraphForm, iForceDirected As IForceDirected)
+            MyBase.New(iForceDirected)
+            form = iForm
         End Sub
 
-        Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
-            forceDirected.Calculate(iTimeStep)   '  计算力的变化
-            Clear()    ' 清理画板
-            forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
-            forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
+        Public Overrides Sub Clear()
+
         End Sub
 
-        Public MustOverride Sub Clear() Implements IRenderer.Clear
-        Protected MustOverride Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-        Protected MustOverride Sub drawNode(iNode As Node, iPosition As AbstractVector)
+        Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
+            'TODO: Change positions of line
+
+            form.DrawLine(iEdge, iPosition1, iPosition2)
+        End Sub
+
+        Protected Overrides Sub drawNode(iNode As Node, iPosition As AbstractVector)
+            'TODO: Change positions of line
+            form.DrawBox(iNode, iPosition)
+        End Sub
+
 
     End Class
 End Namespace

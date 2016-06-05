@@ -1,9 +1,9 @@
-﻿'! 
-'@file AbstractRenderer.cs
+'! 
+'@file GridLine.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
 '@date August 08, 2013
-'@brief Abstract Renderer Interface
+'@brief GridLine Interface
 '@version 1.0
 '
 '@section LICENSE
@@ -32,37 +32,48 @@
 '
 '@section DESCRIPTION
 '
-'An Interface for the Abstract Renderer Class.
+'An Interface for the GridLine Class.
 '
 '
 
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
-Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports System.Threading.Tasks
+Imports System.Drawing
 
-Namespace Layouts
+Namespace EpForceDirectedGraphDemo
+	Class GridLine
+		Public fromX As Integer, fromY As Integer, toX As Integer, toY As Integer
+		Public pen As Pen
 
-    Public MustInherit Class AbstractRenderer
-        Implements IRenderer
+		Public Sub New(iFromX As Integer, iFromY As Integer, iToX As Integer, iToY As Integer)
+			Me.fromX = iFromX + 9
+			Me.fromY = iFromY + 9
+			Me.toX = iToX + 9
+			Me.toY = iToY + 9
+			pen = New Pen(Color.Yellow)
 
-        Protected forceDirected As IForceDirected
 
-        Public Sub New(iForceDirected As IForceDirected)
-            forceDirected = iForceDirected
-        End Sub
+			pen.Width = 2
+		End Sub
+		Public Sub [Set](iFromX As Integer, iFromY As Integer, iToX As Integer, iToY As Integer)
+			Me.fromX = iFromX + 9
+			Me.fromY = iFromY + 9
+			Me.toX = iToX + 9
+			Me.toY = iToY + 9
+		End Sub
+		Public Sub DrawLine(iPaper As Graphics)
+			iPaper.DrawLine(pen, fromX, fromY, toX, toY)
 
-        Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
-            forceDirected.Calculate(iTimeStep)   '  计算力的变化
-            Clear()    ' 清理画板
-            forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
-            forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
-        End Sub
+		End Sub
 
-        Public MustOverride Sub Clear() Implements IRenderer.Clear
-        Protected MustOverride Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-        Protected MustOverride Sub drawNode(iNode As Node, iPosition As AbstractVector)
 
-    End Class
+		Public Sub Dispose()
+			If Me.pen IsNot Nothing Then
+				Me.pen.Dispose()
+			End If
+
+		End Sub
+	End Class
 End Namespace
