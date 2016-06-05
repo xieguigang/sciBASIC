@@ -4,7 +4,7 @@ tags: [d3js,VB.NET,my works]
 date: 2016.06.06
 ---
 
-> [Downloads the demo example](https://github.com/xieguigang/VisualBasic_AppFramework/releases/tag/v0.16-update)
+> [Downloads the demo example](https://github.com/xieguigang/VisualBasic_AppFramework/releases/tag/v0.16-update)<br />
 > [Downloads the latest source code from github](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Datavisualization.Network)
 
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/net_test/xcb-main.png)
@@ -17,8 +17,8 @@ The [Cytoscape](http://cytoscape.org/) software is doing the best in the network
 
 Here is my most favorite project from Mr. whichlight's work: a project for visualize the reddit discussion network by using d3js.
 
->![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
->[Reddit Discussion Network Visualization](https://github.com/whichlight/reddit-network-vis)
+>![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)<br />
+>[_Reddit Discussion Network Visualization_](https://github.com/whichlight/reddit-network-vis)
 
 And the d3js is my first choice in this work. And here is the force directed graphic engine that I write with d3js hybrid programming with VB.NET (whole source cdoe and example can be download from [here](https://github.com/SMRUCC/GCModeller.Workbench/tree/master/d3js/Force-Directed%20Graph/js)):
 
