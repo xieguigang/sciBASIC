@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
 Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 
 Public Class Form1
-    Dim car As New Canvas
+    Dim canvas As New Canvas
     Sub New()
 
         ' This call is required by the designer.
@@ -11,13 +11,13 @@ Public Class Form1
 
         ' Add any initialization after the InitializeComponent() call.
 
-        Me.Controls.Add(car)
-        car.Dock = DockStyle.Fill
+        Me.Controls.Add(canvas)
+        canvas.Dock = DockStyle.Fill
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        car.Graph = CytoscapeExportAsGraph(
-            "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\Edges.csv",
-            "F:\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\net_test\Nodes.csv")
+        canvas.Graph = CytoscapeExportAsGraph(
+            App.HOME & "\Resources\Edges.csv",
+            App.HOME & "\Resources\Nodes.csv")
     End Sub
 End Class
