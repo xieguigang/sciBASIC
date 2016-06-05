@@ -48,7 +48,8 @@ Public Module NetworkVisualizer
                               frameSize As Size,
                               Optional margin As Point = Nothing,
                               Optional backgroundImage As Image = Nothing,
-                              Optional defaultColor As Color = Nothing) As Bitmap
+                              Optional defaultColor As Color = Nothing,
+                              Optional displayId As Boolean = True) As Bitmap
 
         Dim br As Brush
         Dim rect As Rectangle
@@ -79,7 +80,9 @@ Public Module NetworkVisualizer
                     cl = Color.Blue
                 End If
 
-                Dim LineColor As New Pen(cl, 5 * edge.Data.weight)
+                Dim w As Integer = 5 * edge.Data.weight
+                w = If(w < 1.5, 1.5, w)
+                Dim LineColor As New Pen(cl, w)
 
                 Call Graphic.DrawLine(   ' 在这里绘制的是节点之间相连接的边
                     LineColor,
@@ -93,12 +96,13 @@ Public Module NetworkVisualizer
             Dim pt As Point
 
             For Each n As Node In net.nodes  ' 在这里进行节点的绘制
-                Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods, FontStyle.Bold)
-                Dim s As String = n.GetDisplayText
-                Dim size As SizeF = Graphic.MeasureString(s, Font)
-                Dim r As Integer = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
+                Dim r As Single = n.Data.radius
 
-                r = If(r = 0, 9, r)
+                If r = 0! Then
+                    r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
+                    r = If(r = 0, 9, r)
+                End If
+
                 br = New SolidBrush(If(n.Data.Color.IsEmpty, defaultColor, n.Data.Color))
                 pt = New Point(n.Data.initialPostion.x - r / 2, n.Data.initialPostion.y - r / 2)
                 pt = pt.OffSet2D(offset)
@@ -106,18 +110,24 @@ Public Module NetworkVisualizer
 
                 Call Graphic.FillPie(br, rect, 0, 360)
 
-                Dim sloci As New Point(pt.X - size.Width / 2, pt.Y + r / 2 + 2)
-                If sloci.X < margin.X Then
-                    sloci = New Point(margin.X, sloci.Y)
-                End If
-                If sloci.Y + size.Height > frameSize.Height - margin.Y Then
-                    sloci = New Point(sloci.X, frameSize.Height - margin.Y - size.Height)
-                End If
-                If sloci.X + size.Width > frameSize.Width - margin.X Then
-                    sloci = New Point(frameSize.Width - margin.X - size.Width, sloci.Y)
-                End If
+                If displayId Then
+                    Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods)
+                    Dim s As String = n.GetDisplayText
+                    Dim size As SizeF = Graphic.MeasureString(s, Font)
+                    Dim sloci As New Point(pt.X - size.Width / 2, pt.Y + r / 2 + 2)
 
-                Call Graphic.DrawString(s, Font, Brushes.Black, sloci)
+                    If sloci.X < margin.X Then
+                        sloci = New Point(margin.X, sloci.Y)
+                    End If
+                    If sloci.Y + size.Height > frameSize.Height - margin.Y Then
+                        sloci = New Point(sloci.X, frameSize.Height - margin.Y - size.Height)
+                    End If
+                    If sloci.X + size.Width > frameSize.Width - margin.X Then
+                        sloci = New Point(frameSize.Width - margin.X - size.Width, sloci.Y)
+                    End If
+
+                    Call Graphic.DrawString(s, Font, Brushes.Black, sloci)
+                End If
             Next
 
             Return Graphic.ImageResource

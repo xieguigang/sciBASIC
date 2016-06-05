@@ -53,13 +53,11 @@ Namespace Graph
         ''' <param name="iId"></param>
         ''' <param name="iData"></param>
         Public Sub New(iId As String, Optional iData As NodeData = Nothing)
-            ID = iId
-            Data = New NodeData()
             If iData IsNot Nothing Then
-                Data.initialPostion = iData.initialPostion
-                Data.label = iData.label
-                Data.mass = iData.mass
+                Data = iData.Clone
             End If
+
+            ID = iId
             Pinned = False
         End Sub
 
