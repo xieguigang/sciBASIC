@@ -213,8 +213,13 @@ Namespace Imaging
         End Function
 
         <ExportAPI("Offset")>
-        <Extension> Public Function OffSet(p As Point, x As Integer, y As Integer) As Point
+        <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
             Return New Point(x + p.X, y + p.Y)
+        End Function
+
+        <ExportAPI("Offset")>
+        <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
+            Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean

@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
 
 <PackageNamespace("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkVisualizer
@@ -27,7 +28,19 @@ Public Module NetworkVisualizer
 
     <Extension>
     Private Function __calOffsets(net As NetworkGraph, size As Size) As Point
+        Dim nodes As Point() = net.nodes.ToArray(Function(n) n.Data.initialPostion.Point2D)
+        Dim xOffset As Integer() = nodes.Where(Function(x) x.X <= 0).ToArray(Function(x) x.X)
+        Dim yOffset As Integer() = nodes.Where(Function(x) x.Y <= 0).ToArray(Function(x) x.Y)
+        Dim xo, yo As Integer
 
+        If xOffset.Length > 0 Then
+            xo = xOffset.Min
+        End If
+        If yOffset.Length > 0 Then
+            yo = yOffset.Min
+        End If
+
+        Return New Point(Math.Abs(xo), Math.Abs(yo))
     End Function
 
     <ExportAPI("Draw.Image")>
@@ -71,12 +84,14 @@ Public Module NetworkVisualizer
 
                 Call Graphic.DrawLine(   ' 在这里绘制的是节点之间相连接的边
                     LineColor,
-                    n.Data.initialPostion.Point2D,
-                    otherNode.Data.initialPostion.Point2D)
+                    n.Data.initialPostion.Point2D.OffSet2D(offset),
+                    otherNode.Data.initialPostion.Point2D.OffSet2D(offset))
             Next
 
             margin = If(margin.IsEmpty, New Point(3, 3), margin)
             defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
+
+            Dim pt As Point
 
             For Each n As Node In net.nodes  ' 在这里进行节点的绘制
                 Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods, FontStyle.Bold)
@@ -86,13 +101,13 @@ Public Module NetworkVisualizer
 
                 r = If(r = 0, 9, r)
                 br = New SolidBrush(If(n.Data.Color.IsEmpty, defaultColor, n.Data.Color))
-                rect = New Rectangle(
-                    New Point(n.Data.initialPostion.x - r / 2, n.Data.initialPostion.y - r / 2),
-                    New Size(r, r))
+                pt = New Point(n.Data.initialPostion.x - r / 2, n.Data.initialPostion.y - r / 2)
+                pt = pt.OffSet2D(offset)
+                rect = New Rectangle(pt, New Size(r, r))
 
                 Call Graphic.FillPie(br, rect, 0, 360)
 
-                Dim sloci As New Point(n.Data.initialPostion.x - size.Width / 2, n.Data.initialPostion.y + r / 2 + 2)
+                Dim sloci As New Point(pt.X - size.Width / 2, pt.Y + r / 2 + 2)
                 If sloci.X < margin.X Then
                     sloci = New Point(margin.X, sloci.Y)
                 End If
