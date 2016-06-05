@@ -56,6 +56,7 @@ Public Class Canvas
 
     Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
         Graph = New NetworkGraph
+        timer.ErrHandle = AddressOf App.LogException
         timer.Start()
     End Sub
 
@@ -65,5 +66,9 @@ Public Class Canvas
 
     Private Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
 
+    End Sub
+
+    Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        timer.Dispose()
     End Sub
 End Class
