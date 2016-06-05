@@ -59,15 +59,21 @@ Namespace DocumentStream
                         Call temp.Clear()
                         deliExit = True
                     Else  '  是以双引号开始的
-                        If temp.Last = """"c Then ' 但是逗号的前一个符号是双引号，则是结束的标识
+                        If temp.Count > 0 AndAlso temp.Last = """"c Then ' 但是逗号的前一个符号是双引号，则是结束的标识
                             Call temp.RemoveLast
                             stack = False
                             Call tokens.Add(New String(temp.ToArray))
                             Call temp.Clear()
                             deliExit = True
                         Else
-                            Call temp.Add(c)
-                            deliExit = False
+                            If temp.Count = 0 AndAlso stack Then
+                                Call tokens.Add("")
+                                deliExit = True
+                                stack = False
+                            Else
+                                Call temp.Add(c)
+                                deliExit = False
+                            End If
                         End If
                     End If
                 ElseIf c = """"c Then  ' 必须要在逗号分隔符之前才起作用
