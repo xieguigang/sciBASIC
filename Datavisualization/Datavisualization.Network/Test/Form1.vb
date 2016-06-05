@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
+﻿Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
+Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
 
 Public Class Form1
     Dim car As New Canvas
