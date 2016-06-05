@@ -1,6 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace FileStream
 
@@ -32,5 +36,49 @@ Namespace FileStream
             }
             Return graph
         End Function
+
+        Public Function CytoscapeExportAsGraph(edgesDf As String, nodesDf As String) As NetworkGraph
+            Dim edges As Edges() = edgesDf.LoadCsv(Of Edges)
+            Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
+        End Function
     End Module
+
+    Namespace Cytoscape
+
+        Public Class Edges
+            Public Property SUID As String
+            Public Property EdgeBetweenness As String
+            Public Property interaction As String
+            Public Property name As String
+
+            Public Overrides Function ToString() As String
+                Return Me.GetJson
+            End Function
+        End Class
+
+        Public Class Nodes
+            Public Property SUID As String
+            Public Property AverageShortestPathLength As String
+            Public Property BetweennessCentrality As String
+            Public Property ClosenessCentrality As String
+            Public Property ClusteringCoefficient As String
+            Public Property Degree As String
+            Public Property Eccentricity As String
+            Public Property IsSingleNode As String
+            Public Property name As String
+            Public Property NeighborhoodConnectivity As String
+            Public Property NumberOfDirectedEdges As String
+            Public Property NumberOfUndirectedEdges As String
+            Public Property PartnerOfMultiEdgedNodePairs As String
+            Public Property Radiality As String
+            Public Property SelfLoops As String
+            <Column("shared name")> Public Property SharedName As String
+            Public Property Stress As String
+            Public Property TopologicalCoefficient As String
+
+            Public Overrides Function ToString() As String
+                Return Me.GetJson
+            End Function
+        End Class
+    End Namespace
 End Namespace
