@@ -7,6 +7,7 @@ date: 2016.06.06
 > [Downloads the demo example](https://github.com/xieguigang/VisualBasic_AppFramework/releases/tag/v0.16-update)<br />
 > [Downloads the latest source code from github](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Datavisualization.Network)
 
+![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/Previews.gif)
 ![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/net_test/xcb-main.png)
 
 ## Introduction and background
