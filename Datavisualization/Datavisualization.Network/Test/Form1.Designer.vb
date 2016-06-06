@@ -28,7 +28,7 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(993, 672)
+        Me.ClientSize = New System.Drawing.Size(584, 381)
         Me.Name = "Form1"
         Me.Text = "Network Canvas"
         Me.ResumeLayout(False)
