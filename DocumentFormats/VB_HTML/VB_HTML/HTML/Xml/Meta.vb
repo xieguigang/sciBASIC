@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
 
-Namespace XmlMeta
+Namespace HTML.XmlMeta
 
     Public Class CSS
 

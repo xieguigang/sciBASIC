@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 
-Namespace Head
+Namespace HTML.Head
 
     Public Class Charset : Inherits MetaData
 
