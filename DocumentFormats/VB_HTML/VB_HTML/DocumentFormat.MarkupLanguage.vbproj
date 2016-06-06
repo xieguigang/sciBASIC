@@ -155,6 +155,9 @@
     <Compile Include="HTML\Extensions.vb" />
     <Compile Include="HTML\DocFormatter.vb" />
     <Compile Include="MarkDown\Block.vb" />
+    <Compile Include="MarkDown\HTMLGenerator.vb" />
+    <Compile Include="MarkDown\MarkdownParser.vb" />
+    <Compile Include="Markups\Markup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
