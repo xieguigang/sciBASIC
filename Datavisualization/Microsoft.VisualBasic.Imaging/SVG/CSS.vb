@@ -30,12 +30,16 @@ Namespace SVG.CSS
         <DataFrameColumn> Public Property stroke As String
         <DataFrameColumn("stroke-width")> Public Property strokeWidth As String
         <DataFrameColumn("stroke-opacity")> Public Property strokeOpacity As String
+        <DataFrameColumn> Public Property opacity As String
 
         Protected Overrides Function __toString() As String
             Dim sb As New StringBuilder
 
-            For Each prop In DataFrameColumnAttribute.LoadMapping(Of CssValue)
-
+            For Each prop In DataFrameColumnAttribute.LoadMapping(Of CssValue).Values
+                Dim value As Object = prop.GetValue(Me)
+                If Not value Is Nothing Then
+                    Call sb.AppendLine("    " & $"{prop.Identity}: {Scripting.ToString(value)};")
+                End If
             Next
 
             Return sb.ToString

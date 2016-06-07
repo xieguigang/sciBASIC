@@ -32,8 +32,9 @@ Public Class InputDevice
         For Each node As Node In Canvas.Graph.nodes
             Dim r As Single = node.Data.radius
             Dim npt As Point =
-                Canvas.fdgRenderer.GraphToScreen(
-                Canvas.fdgPhysics.GetPoint(node).position)
+                Renderer.GraphToScreen(
+                    Canvas.fdgPhysics.GetPoint(node).position,
+                    Canvas.fdgRenderer.ClientRegion)
             Dim pt As New Point(npt.X - r / 2, npt.Y - r / 2)
             Dim rect As New Rectangle(pt, New Size(r, r))
 

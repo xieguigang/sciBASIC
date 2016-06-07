@@ -17,6 +17,12 @@ Public Class Renderer
     ''' </summary>
     Dim __regionProvider As Func(Of Rectangle)
 
+    Public ReadOnly Property ClientRegion As Rectangle
+        Get
+            Return __regionProvider()
+        End Get
+    End Property
+
     Public Sub New(canvas As Func(Of Graphics), regionProvider As Func(Of Rectangle), iForceDirected As IForceDirected)
         MyBase.New(iForceDirected)
         __graphicsProvider = canvas
@@ -32,10 +38,9 @@ Public Class Renderer
     ''' </summary>
     ''' <param name="iPos"></param>
     ''' <returns></returns>
-    Public Function GraphToScreen(iPos As FDGVector2) As Point
-        Dim rect = __regionProvider()
-        Dim x = CInt(Math.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y = CInt(Math.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+    Public Shared Function GraphToScreen(iPos As FDGVector2, rect As Rectangle) As Point
+        Dim x As Integer = CInt(Math.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(Math.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 
@@ -53,8 +58,9 @@ Public Class Renderer
     End Function
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-        Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2))
-        Dim pos2 As Point = GraphToScreen(TryCast(iPosition2, FDGVector2))
+        Dim rect As Rectangle = __regionProvider()
+        Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2), rect)
+        Dim pos2 As Point = GraphToScreen(TryCast(iPosition2, FDGVector2), rect)
         Dim canvas As Graphics = __graphicsProvider()
 
         SyncLock canvas
@@ -72,7 +78,7 @@ Public Class Renderer
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2))
+        Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2), __regionProvider())
         Dim canvas As Graphics = __graphicsProvider()
         Dim r As Single = n.Data.radius
 

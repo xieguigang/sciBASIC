@@ -37,6 +37,7 @@
 '
 
 Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.Linq
 Imports System.Text
 
@@ -57,6 +58,10 @@ Namespace Layouts
             y = iY
 
             z = 0F
+        End Sub
+
+        Sub New(pt As Point)
+            Call Me.New(pt.X, pt.Y)
         End Sub
 
         Public Overrides Function GetHashCode() As Integer
