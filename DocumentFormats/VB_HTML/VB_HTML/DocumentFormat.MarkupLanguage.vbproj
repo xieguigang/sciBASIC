@@ -157,6 +157,10 @@
     <Compile Include="MarkDown\Block.vb" />
     <Compile Include="MarkDown\HTMLGenerator.vb" />
     <Compile Include="MarkDown\MarkdownParser.vb" />
+    <Compile Include="MarkDown\Paragraph.vb" />
+    <Compile Include="MarkDown\Span\LinksParser.vb" />
+    <Compile Include="Markups\Blocks.vb" />
+    <Compile Include="Markups\Paragraph.vb" />
     <Compile Include="Markups\Markup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

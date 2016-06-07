@@ -110,23 +110,23 @@ Namespace Scripting
         End Function
 
         Public Function CastRegexOptions(name As String) As RegexOptions
-            If String.Equals(name, RegexExtensions.Compiled, StringComparison.OrdinalIgnoreCase) Then
+            If String.Equals(name, RegexExtensions.NameOf.Compiled, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.Compiled
-            ElseIf String.Equals(name, RegexExtensions.CultureInvariant, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.CultureInvariant, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.CultureInvariant
-            ElseIf String.Equals(name, RegexExtensions.ECMAScript, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.ECMAScript, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.ECMAScript
-            ElseIf String.Equals(name, RegexExtensions.ExplicitCapture, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.ExplicitCapture, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.ExplicitCapture
-            ElseIf String.Equals(name, RegexExtensions.IgnoreCase, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.IgnoreCase, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.IgnoreCase
-            ElseIf String.Equals(name, RegexExtensions.IgnorePatternWhitespace, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.IgnorePatternWhitespace, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.IgnorePatternWhitespace
-            ElseIf String.Equals(name, RegexExtensions.Multiline, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.Multiline, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.Multiline
-            ElseIf String.Equals(name, RegexExtensions.RightToLeft, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.RightToLeft, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.RightToLeft
-            ElseIf String.Equals(name, RegexExtensions.Singleline, StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(name, RegexExtensions.NameOf.Singleline, StringComparison.OrdinalIgnoreCase) Then
                 Return RegexOptions.Singleline
             Else
                 Return RegexOptions.None

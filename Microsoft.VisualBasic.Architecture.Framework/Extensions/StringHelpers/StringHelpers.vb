@@ -545,20 +545,4 @@ Public Module StringHelpers
 
         Return False
     End Function
-
-    <ExportAPI("As.Array")>
-    <Extension> Public Function ToArray(source As MatchCollection) As String()
-        Dim LQuery As String() = (From m As Match
-                                  In source
-                                  Select m.Value).ToArray
-        Return LQuery
-    End Function
-
-    <Extension> Public Function ToArray(Of T)(source As MatchCollection, [CType] As Func(Of String, T)) As T()
-        Dim LQuery As T() = (From m As Match
-                             In source
-                             Let s As String = m.Value
-                             Select [CType](s)).ToArray
-        Return LQuery
-    End Function
 End Module

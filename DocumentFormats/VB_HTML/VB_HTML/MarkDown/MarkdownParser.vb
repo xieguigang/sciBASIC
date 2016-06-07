@@ -3,6 +3,13 @@ Imports System.Text.RegularExpressions
 
 Namespace MarkDown
 
+    ''' <summary>
+    ''' 在markdown里面有两张类型的标记语法：
+    ''' 
+    ''' + 一种是和普通的文本混合在一起的
+    ''' + 一种是自己占有一整行文本或者一整个文本块的
+    ''' 
+    ''' </summary>
     Public Module MarkdownParser
 
         ''' <summary>
@@ -19,7 +26,7 @@ Namespace MarkDown
         ''' </summary>
         ''' <param name="md">The markdown file text content, not file path</param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>在这个函数之中只是解析区块的文本数据，段落型的格式则是在另外的一个模块之中解析的</remarks>
         <Extension>
         Public Function SyntaxParser(md As String) As Markup
             Dim lines As String() = md.lTokens
@@ -27,21 +34,31 @@ Namespace MarkDown
 
             For i As Integer = 0 To lines.Length - 1
                 Dim s As String = lines(i)
-                Dim syn As PlantText = IsHeader(s, lines, i)
+                Dim block As PlantText = BlockParser(s, lines, i)
 
-                If Not syn Is Nothing Then
-                    result += syn
+                If Not block Is Nothing Then
+                    result += block
                 Else
-                    If Not String.IsNullOrEmpty(s) Then
-                        result += New PlantText With {
-                            .Text = s
-                        }
-                    End If
+                    result += ParagraphParser(s, lines, i)
                 End If
             Next
 
-            Dim model As New Markup With {.Document = result}
+            Dim model As New Markup With {
+                .nodes = result
+            }
             Return model
+        End Function
+
+        Public Delegate Function IParser(s As String, lines As String(), ByRef i As Integer) As PlantText
+
+        Private Function BlockParser(s As String, lines As String(), ByRef i As Integer) As PlantText
+            Dim syn As PlantText = IsHeader(s, lines, i)
+
+            If Not syn Is Nothing Then
+                Return syn
+            End If
+
+            Return Nothing
         End Function
 
         ''' <summary>
