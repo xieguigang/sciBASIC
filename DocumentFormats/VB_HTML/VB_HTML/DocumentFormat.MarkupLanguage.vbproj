@@ -127,6 +127,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
@@ -151,6 +153,12 @@
     <Compile Include="HTML\HTML.vb" />
     <Compile Include="HTML\HtmlParser\HtmlDocument.vb" />
     <Compile Include="HTML\HtmlParser\HtmlElement.vb" />
+    <Compile Include="MarkDown\Articles.vb" />
+    <Compile Include="MarkDown\IExtensionInterface.vb" />
+    <Compile Include="MarkDown\LinkToTitle.vb" />
+    <Compile Include="MarkDown\Markdown.vb" />
+    <Compile Include="MarkDown\MarkdownOptions.vb" />
+    <Compile Include="MarkDown\FormatHelper.vb" />
     <Compile Include="StreamWriter\HTMLWriter.vb" />
     <Compile Include="HTML\Extensions.vb" />
     <Compile Include="HTML\DocFormatter.vb" />
@@ -189,6 +197,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="MarkDown\LICENSE" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

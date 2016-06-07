@@ -9,6 +9,9 @@ Public Class ParagraphText : Inherits PlantText
     End Function
 End Class
 
+Public Class Bold : Inherits ParagraphText
+End Class
+
 ''' <summary>
 ''' 单纯的文本对象
 ''' </summary>
