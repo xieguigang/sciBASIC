@@ -23,7 +23,18 @@ Namespace MarkDown
         <Extension>
         Public Function SyntaxParser(md As String) As Markup
             Dim lines As String() = md.lTokens
+            Dim result As New List(Of PlantText)
 
+            For i As Integer = 0 To lines.Length - 1
+                Dim syn As PlantText = IsHeader(lines, i)
+
+                If Not syn Is Nothing Then
+                    result += syn
+                End If
+            Next
+
+            Dim model As New Markup With {.Document = result}
+            Return model
         End Function
 
         ''' <summary>
@@ -70,23 +81,28 @@ Namespace MarkDown
         '''
         '''     ### This Is an H3 ######
         ''' ]]>
-        Private Function IsHeader(lines As String(), i As Integer) As Header
+        Private Function IsHeader(lines As String(), ByRef i As Integer) As Header
             Dim s As String = lines(i)
-            Dim m As String = Regex.Match(s, "^#+\s", RegexICMul).Value
+            Dim m As String = Regex.Match(s, "^#+\s", RegexOptions.Multiline).Value
 
             If Not String.IsNullOrEmpty(m) Then
                 Dim level As Integer = m.Count("#"c)
                 If level > 6 Then
                     level = 6
                 End If
-                s = Regex.Replace(s, "^#+", "").Trim
+                s = Regex.Replace(s, "^#+", "", RegexOptions.Multiline)
+                s = Regex.Replace(s, "#+$", "", RegexOptions.Multiline)
+                s = s.Trim
+
                 Return New Header With {
                     .Level = level,
                     .Text = s
                 }
             Else
                 Dim sNext As String = lines(i + 1)
-                If Regex.Match(sNext, "^[+-]+$", RegexICMul).Success Then
+                If Regex.Match(sNext, "^[=-]+$", RegexOptions.Multiline).Success Then
+                    i += 1
+
                     Return New Header With {
                         .Level = 1,
                         .Text = s
