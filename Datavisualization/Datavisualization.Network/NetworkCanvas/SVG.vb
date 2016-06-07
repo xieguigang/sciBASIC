@@ -42,13 +42,13 @@ Public Module SVGExtensions
         Dim nodes As SVG.circle() =
             LinqAPI.Exec(Of SVG.circle) <= From n As Graph.Node
                                            In graph.nodes
-                                           Let pos As Point = Renderer.GraphToScreen(n.Data.initialPostion, rect)
+                                           Let pos As Point = Renderer.GraphToScreen(TryCast(n.Data.initialPostion, FDGVector2), rect)
                                            Let c As Color = If(
                                                TypeOf n.Data.Color Is SolidBrush,
                                                DirectCast(n.Data.Color, SolidBrush).Color,
                                                Color.Black)
                                            Let r As Single = n.__getRadius
-                                           Let pt = New Point(pos.X - r / 2, pos.Y - r / 2)
+                                           Let pt = New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
                                            Select New circle With {
                                                .class = "node",
                                                .cx = pt.X,
@@ -61,8 +61,8 @@ Public Module SVGExtensions
                                      In graph.edges
                                      Let source As Graph.Node = edge.Source
                                      Let target As Graph.Node = edge.Target
-                                     Let pts As Point = Renderer.GraphToScreen(source.Data.initialPostion, rect)
-                                     Let ptt As Point = Renderer.GraphToScreen(target.Data.initialPostion, rect)
+                                     Let pts As Point = Renderer.GraphToScreen(TryCast(source.Data.initialPostion, FDGVector2), rect)
+                                     Let ptt As Point = Renderer.GraphToScreen(TryCast(target.Data.initialPostion, FDGVector2), rect)
                                      Let rs As Single = source.__getRadius / 2,
                                          rt As Single = target.__getRadius / 2
                                      Select New line With {
@@ -93,8 +93,8 @@ Public Module SVGExtensions
     <Extension>
     Private Function __getRadius(n As Graph.Node) As Single
         Dim r As Single = n.Data.radius
-        Dim rd = If(r = 0!, If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7), r)
-        Dim r2 = If(rd = 0, 10, rd) / 2.5
+        Dim rd As Single = If(r = 0!, If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7), r)
+        Dim r2 As Single = If(rd = 0, 10.0!, rd) / 2.5!
 
         Return r2
     End Function

@@ -64,8 +64,8 @@ Public Class Renderer
         Dim canvas As Graphics = __graphicsProvider()
 
         SyncLock canvas
-            Dim w As Integer = 5 * iEdge.Data.weight
-            w = If(w < 1.5, 1.5, w)
+            Dim w As Single = CSng(5.0! * iEdge.Data.weight)
+            w = If(w < 1.5!, 1.5!, w)
             Dim LineColor As New Pen(Color.Gray, w)
 
             Call canvas.DrawLine(
@@ -88,8 +88,8 @@ Public Class Renderer
                 r = If(r = 0, 20, r)
             End If
 
-            Dim pt As New Point(pos.X - r / 2, pos.Y - r / 2)
-            Dim rect As New Rectangle(pt, New Size(r, r))
+            Dim pt As New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
+            Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
             Call canvas.FillPie(n.Data.Color, rect, 0, 360)
         End SyncLock

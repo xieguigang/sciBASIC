@@ -31,12 +31,11 @@ Public Class InputDevice
     Private Function __getNode(p As Point) As Node
         For Each node As Node In Canvas.Graph.nodes
             Dim r As Single = node.Data.radius
+            Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
             Dim npt As Point =
-                Renderer.GraphToScreen(
-                    Canvas.fdgPhysics.GetPoint(node).position,
-                    Canvas.fdgRenderer.ClientRegion)
-            Dim pt As New Point(npt.X - r / 2, npt.Y - r / 2)
-            Dim rect As New Rectangle(pt, New Size(r, r))
+                Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
+            Dim pt As New Point(CInt(npt.X - r / 2), CInt(npt.Y - r / 2))
+            Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
             If rect.Contains(p) Then
                 Return node

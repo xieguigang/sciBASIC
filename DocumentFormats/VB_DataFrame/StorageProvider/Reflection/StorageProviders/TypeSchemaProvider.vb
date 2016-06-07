@@ -113,7 +113,7 @@ Namespace StorageProvider.Reflection
         Const KeyValuePairObject As String = "Microsoft.VisualBasic.ComponentModel.Collection.Generic.KeyValuePairObject`2"
 
         ''' <summary>
-        ''' 这个属性的类型可以同时允许系统的内建的键值对类型，也可以是<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.KeyValuePairObject(Of TKey, TValue)"/>
+        ''' 这个属性的类型可以同时允许系统的内建的键值对类型，也可以是<see cref="KeyValuePairObject"/>
         ''' </summary>
         ''' <param name="Property"></param>
         ''' <returns></returns>
