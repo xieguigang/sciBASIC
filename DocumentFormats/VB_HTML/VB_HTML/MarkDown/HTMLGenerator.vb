@@ -1,6 +1,12 @@
-﻿Namespace MarkDown
+﻿Imports System.Runtime.CompilerServices
 
-    Public Class HTMLGenerator
+Namespace MarkDown
 
-    End Class
+    Public Module HTMLGenerator
+
+        <Extension>
+        Public Function ToHTML(mk As Markup) As String
+
+        End Function
+    End Module
 End Namespace

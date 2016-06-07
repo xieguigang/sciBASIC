@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DocumentFormat.HTML
+Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Vectors
