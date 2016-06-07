@@ -53,7 +53,7 @@ Namespace ComponentModel.Settings.Inf
 
             Dim source = DataFrameColumnAttribute.LoadMapping(type)
             Dim binds As BindProperty(Of DataFrameColumnAttribute)() =
-                source.ToArray(AddressOf BindProperty(Of DataFrameColumnAttribute).FromHash)
+                source.Values.ToArray
 
             Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
                 .Name = name,

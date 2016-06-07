@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -23,7 +24,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' 其是使用属性名来作为列映射名称的，故而在修改这些没有预设的列名称的映射属性的属性名的时候，请注意
     ''' 要小心维护这种映射关系)
     ''' </summary>
-    <AttributeUsage(AttributeTargets.[Property] Or AttributeTargets.Field, Inherited:=True, AllowMultiple:=False)>
+    <AttributeUsage(AttributeTargets.[Property] Or AttributeTargets.Field,
+                    Inherited:=True,
+                    AllowMultiple:=False)>
     Public Class DataFrameColumnAttribute : Inherits Attribute
 
         Protected Shared ReadOnly __emptyIndex As String() = New String(-1) {}
@@ -108,7 +111,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function LoadMapping(Of T As Class)(Optional ignores As String() = Nothing,
-                                                          Optional mapsAll As Boolean = False) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+                                                          Optional mapsAll As Boolean = False) As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
             Return LoadMapping(GetType(T), ignores, mapsAll)
         End Function
 
@@ -125,21 +128,23 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <remarks></remarks>
         Public Shared Function LoadMapping(typeInfo As Type,
                                            Optional ignores As String() = Nothing,
-                                           Optional mapsAll As Boolean = False) As Dictionary(Of DataFrameColumnAttribute, PropertyInfo)
+                                           Optional mapsAll As Boolean = False) As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
 
             Dim source As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) =
                 __source(typeInfo, If(ignores Is Nothing, {}, ignores), mapsAll)
-            Dim LQuery = (From pInfo As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)
-                          In source
-                          Let Mapping As DataFrameColumnAttribute =
-                              If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
-                              pInfo.Key.SetNameValue(pInfo.Value.Name),
-                              pInfo.Key)
-                          Select Mapping,
-                              pInfo.Value) _
-                                .ToDictionary(Function(x) x.Mapping,
-                                              Function(x) x.Value)  ' 补全名称属性
-            Return LQuery
+            Dim LQuery As BindProperty(Of DataFrameColumnAttribute)() =
+                LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) <=
+                    From pInfo As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)
+                    In source
+                    Let Mapping As DataFrameColumnAttribute =
+                        If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
+                        pInfo.Key.SetNameValue(pInfo.Value.Name),
+                        pInfo.Key)
+                    Select New BindProperty(Of DataFrameColumnAttribute)(
+                        Mapping,
+                        pInfo.Value) ' 补全名称属性
+            Dim out As New Dictionary(Of BindProperty(Of DataFrameColumnAttribute))(LQuery)
+            Return out
         End Function
 
         Private Shared Iterator Function __source(type As Type, ignores As String(), mapsAll As Boolean) As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo))
