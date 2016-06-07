@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
 
-Public Class Paragraph : Inherits PlantText
+Public Class ParagraphText : Inherits PlantText
 
     Public Property Nodes As PlantText()
 

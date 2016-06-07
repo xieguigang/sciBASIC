@@ -2,6 +2,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.MarkupLanguage.StreamWriter
 
 Namespace HTML.DDM
 
@@ -20,7 +21,7 @@ Namespace HTML.DDM
         End Sub
 
         Public Function ToArray() As HtmlDocument
-            Dim array As New List(Of PlantText)
+            Dim array As New List(Of InnerPlantText)
             Call array.Add(Head)
             Call array.Add(Body)
 
@@ -33,7 +34,7 @@ Namespace HTML.DDM
         End Function
 
         Public Overrides Function ToString() As String
-            Return DocumentWriter.ToString(ToArray)
+            Return HTMLWriter.ToString(ToArray)
         End Function
     End Class
 

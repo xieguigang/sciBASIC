@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.MarkupLanguage
 Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 Imports Microsoft.VisualBasic.MarkupLanguage.MarkDown
+Imports Microsoft.VisualBasic.MarkupLanguage.StreamWriter
 
 Module Program
 

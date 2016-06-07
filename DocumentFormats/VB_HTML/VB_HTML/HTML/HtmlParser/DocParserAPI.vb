@@ -20,11 +20,11 @@ Namespace HTML
         ''' <param name="doc"></param>
         ''' <returns></returns>
         ''' <remarks>这个方法是最开始的解析函数，非递归的</remarks>
-        Public Function TextParse(ByRef doc As String) As PlantText
+        Public Function TextParse(ByRef doc As String) As InnerPlantText
             Dim strElement As String = Regex.Match(doc, HTML_ELEMENT_REGEX).Value  ' 得到开始的标签
 
             If String.IsNullOrEmpty(strElement) Then
-                Return New PlantText With {.InnerText = doc} '找不到开始的标签，则为纯文本
+                Return New InnerPlantText With {.InnerText = doc} '找不到开始的标签，则为纯文本
             End If
 
             Dim p As Integer
@@ -52,7 +52,7 @@ Namespace HTML
 
             Do While True
                 Dim parentEnd As Boolean = False
-                Dim node As PlantText = __innerTextParser(doc, el.Name, parentEnd)
+                Dim node As InnerPlantText = __innerTextParser(doc, el.Name, parentEnd)
                 If node Is Nothing Then
                     Exit Do
                 End If
@@ -75,7 +75,7 @@ Namespace HTML
         ''' <param name="innerText"></param>
         ''' <param name="parent"></param>
         ''' <returns>这个函数是一个递归函数</returns>
-        Private Function __innerTextParser(ByRef innerText As String, parent As String, ByRef parentEnd As Boolean) As PlantText
+        Private Function __innerTextParser(ByRef innerText As String, parent As String, ByRef parentEnd As Boolean) As InnerPlantText
             If String.IsNullOrEmpty(innerText) Then
                 Return Nothing
             End If
@@ -101,14 +101,14 @@ Namespace HTML
 
                 innerText = Mid(innerText, 1 + innerLen)
 
-                Return New PlantText With {.InnerText = innerDoc}
+                Return New InnerPlantText With {.InnerText = innerDoc}
             End If
 
             If Not String.IsNullOrEmpty(innerDoc) Then
                 ' 这部分的文本是纯文本，也是父节点的一部分
                 innerText = Mid(innerText, Len(innerDoc) + 1)
                 parentEnd = False
-                Return New PlantText With {.InnerText = innerDoc}
+                Return New InnerPlantText With {.InnerText = innerDoc}
             End If
 
             If String.IsNullOrEmpty(strElement) Then '准备结束了，因为已经没有新的节点了
@@ -120,7 +120,7 @@ Namespace HTML
                 innerDoc = Mid(innerText, 1, lenth)
                 innerText = Mid(innerText, p + Len(parent))
                 parentEnd = True
-                Return New PlantText With {.InnerText = innerDoc}
+                Return New InnerPlantText With {.InnerText = innerDoc}
             End If
 
             '新的子节点的解析开始了
@@ -150,7 +150,7 @@ Namespace HTML
 
             Do While True
                 Dim innerParentEnd As Boolean = False
-                Dim node As PlantText = __innerTextParser(innerText, x.Name, innerParentEnd)
+                Dim node As InnerPlantText = __innerTextParser(innerText, x.Name, innerParentEnd)
                 If node Is Nothing Then
                     Exit Do
                 End If

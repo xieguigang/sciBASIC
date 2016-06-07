@@ -1,5 +1,6 @@
 ﻿
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Text
 
 Namespace MarkDown.Span
 
@@ -174,14 +175,16 @@ Namespace MarkDown.Span
         '''
         ''' [This link](http//example.net/) has no title attribute.
         ''' </remarks>
-        Public Iterator Function InlineLinks(s As String) As IEnumerable(Of Hyperlink)
-            Yield Regex.Matches(s, "\[.*?\]\(.*?\)").EachValue(AddressOf InlineLink)
+        Public Iterator Function InlineLinks(s As String) As IEnumerable(Of ParserValue(Of Hyperlink))
+            For Each x In Regex.Matches(s, "\[.*?\]\(.*?\)").EachValue(AddressOf InlineLink)
+                Yield x
+            Next
         End Function
 
-        Public Function InlineLink(s As String) As Hyperlink
+        Public Function InlineLink(s As String) As ParserValue(Of Hyperlink)
             Dim text As String = Regex.Match(s, "^\[.*?\]", RegexOptions.Multiline).Value
             Dim link As String = s.Replace(text, "").GetStackValue("(", ")")
-            Dim title As String = Regex.Match(link, "\s "".+?""").Value
+            Dim title As String = Regex.Match(link, "\s"".+?""").Value
 
             If Not String.IsNullOrEmpty(title) Then
                 link = link.Replace(title, "")
@@ -189,10 +192,13 @@ Namespace MarkDown.Span
             End If
             text = text.GetStackValue("[", "]")
 
-            Return New Hyperlink With {
-                .Links = link,
-                .Text = text,
-                .Title = title
+            Return New ParserValue(Of Hyperlink) With {
+                .Raw = s,
+                .value = New Hyperlink With {
+                    .Links = link,
+                    .Text = text,
+                    .Title = title
+                }
             }
         End Function
     End Module

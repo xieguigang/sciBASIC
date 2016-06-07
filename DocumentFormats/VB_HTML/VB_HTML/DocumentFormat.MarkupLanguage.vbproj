@@ -151,7 +151,7 @@
     <Compile Include="HTML\HTML.vb" />
     <Compile Include="HTML\HtmlParser\HtmlDocument.vb" />
     <Compile Include="HTML\HtmlParser\HtmlElement.vb" />
-    <Compile Include="HTML\DocumentWriter.vb" />
+    <Compile Include="StreamWriter\HTMLWriter.vb" />
     <Compile Include="HTML\Extensions.vb" />
     <Compile Include="HTML\DocFormatter.vb" />
     <Compile Include="MarkDown\Block.vb" />
@@ -178,6 +178,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="HTML\Xml\Meta.vb" />
+    <Compile Include="StreamWriter\Markdown.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

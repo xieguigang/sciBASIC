@@ -36,7 +36,7 @@ Namespace HTML
     ''' <summary>
     ''' 一个标签所标记的元素以及内部文本
     ''' </summary>
-    Public Class HtmlElement : Inherits PlantText
+    Public Class HtmlElement : Inherits InnerPlantText
 
         ''' <summary>
         ''' 标签名
@@ -62,13 +62,13 @@ Namespace HTML
             End Set
         End Property
 
-        Public Property HtmlElements As PlantText()
+        Public Property HtmlElements As InnerPlantText()
             Get
                 Return __elementNodes.ToArray
             End Get
-            Set(value As PlantText())
+            Set(value As InnerPlantText())
                 If value.IsNullOrEmpty Then
-                    __elementNodes = New List(Of PlantText)
+                    __elementNodes = New List(Of InnerPlantText)
                 Else
                     __elementNodes = value.ToList
                 End If
@@ -95,7 +95,7 @@ Namespace HTML
         End Property
 
         Dim __attrs As Dictionary(Of ValueAttribute)
-        Dim __elementNodes As New List(Of PlantText)
+        Dim __elementNodes As New List(Of InnerPlantText)
 
         Public Overrides Function GetPlantText() As String
             Dim sbr As StringBuilder = New StringBuilder(Me.InnerText)
@@ -116,7 +116,7 @@ Namespace HTML
             Call __attrs.Add(attr.Name, attr)
         End Sub
 
-        Public Sub Add(Node As PlantText)
+        Public Sub Add(Node As InnerPlantText)
             Call __elementNodes.Add(Node)
         End Sub
 
@@ -146,9 +146,9 @@ Namespace HTML
     End Class
 
     ''' <summary>
-    ''' 纯文本对象
+    ''' Plant text inner the html.(HTML文档内的纯文本对象)
     ''' </summary>
-    Public Class PlantText
+    Public Class InnerPlantText
 
         Public Overridable Property InnerText As String
 

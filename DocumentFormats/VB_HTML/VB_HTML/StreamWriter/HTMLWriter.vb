@@ -1,10 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 
-Namespace HTML
+Namespace StreamWriter
 
-    Public Module DocumentWriter
+    Public Module HTMLWriter
 
         ''' <summary>
         ''' Saves the html data model into a specific text document
@@ -31,7 +32,7 @@ Namespace HTML
             Return sbr.ToString
         End Function
 
-        <Extension> Private Function __generateDocNode(node As PlantText, indent As String) As String
+        <Extension> Private Function __generateDocNode(node As InnerPlantText, indent As String) As String
             If node.IsPlantText Then
                 Return node.InnerText
             End If

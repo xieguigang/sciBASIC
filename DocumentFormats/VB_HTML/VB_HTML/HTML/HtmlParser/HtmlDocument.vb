@@ -9,7 +9,7 @@ Namespace HTML
 
         Public Const HTML_PAGE_CONTENT_TITLE As String = "<title>.+?</title>"
 
-        Public Property Tags As PlantText()
+        Public Property Tags As InnerPlantText()
 
         ''' <summary>
         ''' 假设所加载的html文档是完好的格式的，即没有不匹配的标签的
@@ -18,12 +18,12 @@ Namespace HTML
         ''' <returns></returns>
         Public Function LoadDocument(url As String) As HtmlDocument
             Dim pageContent As String = url.GET.Replace(vbCr, "").Replace(vbLf, "") '是使用<br />标签来分行的
-            Dim List As List(Of PlantText) = New List(Of PlantText)
+            Dim List As List(Of InnerPlantText) = New List(Of InnerPlantText)
 
             pageContent = Regex.Replace(pageContent, "<!--.+?-->", "")
 
             Do While pageContent.Length > 0
-                Dim element As PlantText = DocParserAPI.TextParse(pageContent)
+                Dim element As InnerPlantText = DocParserAPI.TextParse(pageContent)
                 If element Is Nothing Then
                     Exit Do
                 Else
