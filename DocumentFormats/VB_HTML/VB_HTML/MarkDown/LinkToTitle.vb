@@ -14,11 +14,12 @@ Imports System.Web.Script.Serialization
 
 
 Namespace MarkDown
+
     ''' <summary>
     ''' Add title to youtube link
     ''' </summary>
     Public Class LinkToTitle
-        Implements IExtensionInterface
+
         ''' <summary>
         ''' Array of links: videoID/title
         ''' </summary>
@@ -31,7 +32,6 @@ Namespace MarkDown
         Private _maxLinks As Integer
 
         Private Shared _youtubeLink As New Regex(vbCr & vbLf & "                    (?:https?\:\/\/)" & vbCr & vbLf & "                    (?:www\.)?" & vbCr & vbLf & "                    (?:youtu\.be|youtube\.com)\/" & vbCr & vbLf & "                    (?:embed\/|v\/|watch\?v=)?" & vbCr & vbLf & "                    ([\w\-]{10,12})", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
-
 
         ''' <summary>
         ''' FiXME: max ids?
@@ -47,8 +47,16 @@ Namespace MarkDown
             _links = New String(_maxLinks - 1, 1) {}
         End Sub
 
+        ''' <summary>
+        ''' FiXME: max ids?
+        ''' </summary>
+        ''' <param name="apiKey"></param>
+        ''' <param name="maxLinks"></param>
+        Public Shared Function GetExtension(apiKey As String, Optional maxLinks As Integer = 10) As ExtensionTransform
+            Return AddressOf New LinkToTitle(apiKey, maxLinks).Transform
+        End Function
 
-        Public Function Transform(text As String) As String Implements IExtensionInterface.Transform
+        Public Function Transform(text As String) As String
             Dim linksCount As Integer = 0
             For Each match As Match In _youtubeLink.Matches(text)
                 If linksCount = _maxLinks Then

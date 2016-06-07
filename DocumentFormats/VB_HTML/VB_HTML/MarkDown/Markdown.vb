@@ -92,16 +92,6 @@ Namespace MarkDown
 
 #End Region
 
-        Private Enum TokenType
-            Text
-            Tag
-        End Enum
-
-        ''' <summary>
-        ''' maximum nested depth of [] and () supported by the transform; implementation detail
-        ''' </summary>
-        Private Const _nestDepth As Integer = 6
-
         Private Const _markerUL As String = "[*+-]"
         Private Const _markerOL As String = "\d+[.]"
 
@@ -147,8 +137,8 @@ Namespace MarkDown
         ''' </summary>
         Private Function RunBlockGamut(text As String, Optional unhash As Boolean = True, Optional createParagraphs As Boolean = True) As String
             ' Apply extensions
-            For Each extension As IExtensionInterface In _inlineExtensions
-                text = extension.Transform(text)
+            For Each extension As ExtensionTransform In _inlineExtensions
+                text = extension(text)
             Next
 
             If Not _DisableHeaders Then
@@ -175,9 +165,9 @@ Namespace MarkDown
         End Function
 
 
-        Private _inlineExtensions As New List(Of IExtensionInterface)()
+        Private _inlineExtensions As New List(Of ExtensionTransform)()
 
-        Public Sub AddExtension(ext As IExtensionInterface)
+        Public Sub AddExtension(ext As ExtensionTransform)
             _inlineExtensions.Add(ext)
         End Sub
 
@@ -397,40 +387,6 @@ Namespace MarkDown
             _htmlBlocks(key) = text
 
             Return String.Concat(vbLf & vbLf, key, vbLf & vbLf)
-        End Function
-
-        Private Shared _htmlTokens As New Regex(vbCr & vbLf & "            (<!--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)-->)|        # match <!-- foo -->" & vbCr & vbLf & "            (<\?.*?\?>)|                 # match <?foo?> " & RepeatString(" " & vbCr & vbLf & "            (<[A-Za-z\/!$](?:[^<>]|", _nestDepth) & RepeatString(")*>)", _nestDepth) & " # match <tag> and </tag>", RegexOptions.Multiline Or RegexOptions.Singleline Or RegexOptions.ExplicitCapture Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
-
-        ''' <summary>
-        ''' returns an array of HTML tokens comprising the input string. Each token is 
-        ''' either a tag (possibly with nested, tags contained therein, such 
-        ''' as &lt;a href="&lt;MTFoo&gt;"&gt;, or a run of text between tags. Each element of the 
-        ''' array is a two-element array; the first is either 'tag' or 'text'; the second is 
-        ''' the actual value.
-        ''' </summary>
-        Private Function TokenizeHTML(text As String) As List(Of Token(Of TokenType))
-            Dim pos As Integer = 0
-            Dim tagStart As Integer = 0
-            Dim tokens = New List(Of Token(Of TokenType))()
-
-            ' this regex is derived from the _tokenize() subroutine in Brad Choate's MTRegex plugin.
-            ' http://www.bradchoate.com/past/mtregex.php
-            For Each m As Match In _htmlTokens.Matches(text)
-                tagStart = m.Index
-
-                If pos < tagStart Then
-                    tokens.Add(New Token(Of TokenType)(TokenType.Text, text.Substring(pos, tagStart - pos)))
-                End If
-
-                tokens.Add(New Token(Of TokenType)(TokenType.Tag, m.Value))
-                pos = tagStart + m.Length
-            Next
-
-            If pos < text.Length Then
-                tokens.Add(New Token(Of TokenType)(TokenType.Text, text.Substring(pos, text.Length - pos)))
-            End If
-
-            Return tokens
         End Function
 
 
@@ -1144,75 +1100,6 @@ Namespace MarkDown
 
             Return sb.ToString()
         End Function
-
-        ''' <summary>
-        ''' convert all tabs to _tabWidth spaces; 
-        ''' standardizes line endings from DOS (CR LF) or Mac (CR) to UNIX (LF); 
-        ''' makes sure text ends with a couple of newlines; 
-        ''' removes any blank lines (only spaces) in the text
-        ''' </summary>
-        Private Function Normalize(text As String) As String
-            Dim output = New StringBuilder(text.Length)
-            Dim line = New StringBuilder()
-            Dim valid As Boolean = False
-
-            For i As Integer = 0 To text.Length - 1
-                Select Case text(i)
-                    Case ControlChars.Lf
-                        If valid Then
-                            output.Append(line)
-                        End If
-                        output.Append(ControlChars.Lf)
-                        line.Length = 0
-                        valid = False
-                        Exit Select
-                    Case ControlChars.Cr
-                        If (i < text.Length - 1) AndAlso (text(i + 1) <> ControlChars.Lf) Then
-                            If valid Then
-                                output.Append(line)
-                            End If
-                            output.Append(ControlChars.Lf)
-                            line.Length = 0
-                            valid = False
-                        End If
-                        Exit Select
-                    Case ControlChars.Tab
-                        Dim width As Integer = (_tabWidth - line.Length Mod _tabWidth)
-                        For k As Integer = 0 To width - 1
-                            line.Append(" "c)
-                        Next
-                        Exit Select
-                    Case ChrW(26)
-                        Exit Select
-                    Case Else
-                        If Not valid AndAlso text(i) <> " "c Then
-                            valid = True
-                        End If
-                        line.Append(text(i))
-                        Exit Select
-                End Select
-            Next
-
-            If valid Then
-                output.Append(line)
-            End If
-            output.Append(ControlChars.Lf)
-
-            ' add two newlines to the end before return
-            Return output.Append(vbLf & vbLf).ToString()
-        End Function
-
 #End Region
-
-        ''' <summary>
-        ''' this is to emulate what's evailable in PHP
-        ''' </summary>
-        Private Shared Function RepeatString(text As String, count As Integer) As String
-            Dim sb = New StringBuilder(text.Length * count)
-            For i As Integer = 0 To count - 1
-                sb.Append(text)
-            Next
-            Return sb.ToString()
-        End Function
     End Class
 End Namespace

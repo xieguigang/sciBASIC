@@ -13,6 +13,19 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' this is to emulate what's evailable in PHP
+    ''' </summary>
+    ''' 
+    <Extension>
+    Public Function RepeatString(text As String, count As Integer) As String
+        Dim sb = New StringBuilder(text.Length * count)
+        For i As Integer = 0 To count - 1
+            Call sb.Append(text)
+        Next
+        Return sb.ToString()
+    End Function
+
     <Extension>
     Public Function GetTagValue(s As String, Optional delimiter As String = " ") As NamedValue(Of String)
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)

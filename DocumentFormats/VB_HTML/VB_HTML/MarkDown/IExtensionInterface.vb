@@ -6,13 +6,11 @@
 
 Namespace MarkDown
 
-    Public Interface IExtensionInterface
+    ''' <summary>
+    ''' Replace inline element
+    ''' </summary>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
+    Public Delegate Function ExtensionTransform(text As String) As String
 
-        ''' <summary>
-        ''' Replace inline element
-        ''' </summary>
-        ''' <param name="text"></param>
-        ''' <returns></returns>
-        Function Transform(text As String) As String
-    End Interface
 End Namespace

@@ -8,6 +8,10 @@ Module Program
 
     Sub Main()
 
+        Dim mmmmm As New MarkupLanguage.MarkDown.Markdown(New MarkdownOptions)
+
+        Dim hhhh = mmmmm.Transform("F:\VisualBasic_AppFramework\DocumentFormats\VB_HTML\syntax_test.md".GET)
+
         Dim mark As Markup = MarkdownParser.MarkdownParser("F:\VisualBasic_AppFramework\DocumentFormats\VB_HTML\syntax_test.md")
 
         Dim html As String = mark.ToHTML

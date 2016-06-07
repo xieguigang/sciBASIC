@@ -11,3 +11,6 @@ ffffff
 # fdgdgdf
 ######### ttttttttttttt ###
 
+<form>
+<input type="file" value="default.txt" />
+</form>
