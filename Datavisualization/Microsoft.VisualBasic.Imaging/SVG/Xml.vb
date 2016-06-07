@@ -37,6 +37,7 @@ Namespace SVG
         <XmlElement> Public Property polygon As polygon()
         <XmlElement("line")> Public Property lines As line()
         <XmlElement("circle")> Public Property circles As circle()
+        <XmlAttribute> Public Property fill As String
     End Class
 
     Public Class polygon : Inherits node

@@ -17,14 +17,14 @@ Public Module SVGExtensions
         Return New DirectedForceGraph With {
             .link = New CssValue With {
                 .stroke = "#CCC",
-                .strokeOpacity = "0.6",
-                .strokeWidth = "0.5"
+                .strokeOpacity = "0.85",
+                .strokeWidth = "3"
             },
             .node = New CssValue With {
                 .strokeWidth = "0.5px",
                 .strokeOpacity = "0.8",
                 .stroke = "#FFF",
-                .opacity = "0.8"
+                .opacity = "0.85"
             }
         }
     End Function
@@ -40,20 +40,24 @@ Public Module SVGExtensions
     Public Function ToSVG(graph As NetworkGraph, size As Size, Optional style As CSS.DirectedForceGraph = Nothing) As SVGXml
         Dim rect As New Rectangle(New Point, size)
         Dim nodes As SVG.circle() =
-            LinqAPI.Exec(Of SVG.node) <= From n As Graph.Node
-                                         In graph.nodes
-                                         Let pt As Point = Renderer.GraphToScreen(n.Data.initialPostion, rect)
-                                         Let c As Color = If(
-                                             TypeOf n.Data.Color Is SolidBrush,
-                                             DirectCast(n.Data.Color, SolidBrush).Color,
-                                             Color.Black)
-                                         Select New circle With {
-                                             .class = "node",
-                                             .cx = pt.X,
-                                             .cy = pt.Y,
-                                             .r = n.Data.radius,
-                                             .style = $"fill: rgb({c.R}, {c.G}, {c.B});"
-                                         }
+            LinqAPI.Exec(Of SVG.circle) <= From n As Graph.Node
+                                           In graph.nodes
+                                           Let pos As Point = Renderer.GraphToScreen(n.Data.initialPostion, rect)
+                                           Let c As Color = If(
+                                               TypeOf n.Data.Color Is SolidBrush,
+                                               DirectCast(n.Data.Color, SolidBrush).Color,
+                                               Color.Black)
+                                           Let r = n.Data.radius
+                                           Let rd = If(r = 0!, If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7), r)
+                                           Let r2 = If(rd = 0, 10, rd) / 2.5
+                                           Let pt = New Point(pos.X - r2 / 2, pos.Y - r2 / 2)
+                                           Select New circle With {
+                                               .class = "node",
+                                               .cx = pt.X,
+                                               .cy = pt.Y,
+                                               .r = r2,
+                                               .style = $"fill: rgb({c.R}, {c.G}, {c.B});"
+                                           }
         Dim links As line() =
             LinqAPI.Exec(Of line) <= From edge As Edge
                                      In graph.edges
@@ -79,7 +83,8 @@ Public Module SVGExtensions
             .width = size.Width & "px",
             .height = size.Height & "px",
             .lines = links,
-            .circles = nodes
+            .circles = nodes,
+            .fill = "#dbf3ff"
         }
 
         Return svg

@@ -31,6 +31,14 @@ Public Class Canvas
 
     Public ReadOnly Property FdgArgs As ForceDirectedArgs = Config.Load
 
+    Public Sub SetFDGParams(value As ForceDirectedArgs)
+        FdgArgs.Damping = value.Damping
+        FdgArgs.Repulsion = value.Repulsion
+        FdgArgs.Stiffness = value.Stiffness
+
+        Call __invokeSet(Graph)
+    End Sub
+
     ''' <summary>
     ''' The network data model for the visualization 
     ''' </summary>
@@ -70,6 +78,18 @@ Public Class Canvas
         Graph = New NetworkGraph
         timer.ErrHandle = AddressOf App.LogException
         timer.Start()
+    End Sub
+
+    Public Sub [Stop]()
+        Call timer.Stop()
+    End Sub
+
+    Public Sub Run()
+        Call timer.Start()
+    End Sub
+
+    Public Sub WriteLayout()
+        Call Graph.WriteLayouts(fdgPhysics)
     End Sub
 
     Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed

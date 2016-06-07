@@ -32,7 +32,7 @@ Namespace SVG.CSS
         <DataFrameColumn("stroke-opacity")> Public Property strokeOpacity As String
         <DataFrameColumn> Public Property opacity As String
 
-        Protected Overrides Function __toString() As String
+        Public Overrides Function ToString() As String
             Dim sb As New StringBuilder
 
             For Each prop In DataFrameColumnAttribute.LoadMapping(Of CssValue).Values
