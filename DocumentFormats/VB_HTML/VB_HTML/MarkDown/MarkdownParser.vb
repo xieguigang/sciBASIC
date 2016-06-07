@@ -26,10 +26,17 @@ Namespace MarkDown
             Dim result As New List(Of PlantText)
 
             For i As Integer = 0 To lines.Length - 1
-                Dim syn As PlantText = IsHeader(lines, i)
+                Dim s As String = lines(i)
+                Dim syn As PlantText = IsHeader(s, lines, i)
 
                 If Not syn Is Nothing Then
                     result += syn
+                Else
+                    If Not String.IsNullOrEmpty(s) Then
+                        result += New PlantText With {
+                            .Text = s
+                        }
+                    End If
                 End If
             Next
 
@@ -81,8 +88,7 @@ Namespace MarkDown
         '''
         '''     ### This Is an H3 ######
         ''' ]]>
-        Private Function IsHeader(lines As String(), ByRef i As Integer) As Header
-            Dim s As String = lines(i)
+        Private Function IsHeader(s As String, lines As String(), ByRef i As Integer) As Header
             Dim m As String = Regex.Match(s, "^#+\s", RegexOptions.Multiline).Value
 
             If Not String.IsNullOrEmpty(m) Then
@@ -91,7 +97,7 @@ Namespace MarkDown
                     level = 6
                 End If
                 s = Regex.Replace(s, "^#+", "", RegexOptions.Multiline)
-                s = Regex.Replace(s, "#+$", "", RegexOptions.Multiline)
+                s = Regex.Replace(s, "\s#+$", "", RegexOptions.Multiline)
                 s = s.Trim
 
                 Return New Header With {
@@ -99,10 +105,14 @@ Namespace MarkDown
                     .Text = s
                 }
             Else
+                If i + 1 = lines.Length Then
+                    Return Nothing
+                End If
+
                 Dim sNext As String = lines(i + 1)
+
                 If Regex.Match(sNext, "^[=-]+$", RegexOptions.Multiline).Success Then
                     i += 1
-
                     Return New Header With {
                         .Level = 1,
                         .Text = s

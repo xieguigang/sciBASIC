@@ -7,7 +7,7 @@ Module Program
 
     Sub Main()
 
-        Dim mark As Markup = MarkdownParser.MarkdownParser("F:\VisualBasic_AppFramework\DocumentFormats\VB_HTML\markdown_syntax.md")
+        Dim mark As Markup = MarkdownParser.MarkdownParser("F:\VisualBasic_AppFramework\DocumentFormats\VB_HTML\syntax_test.md")
 
         Dim html As String = mark.ToHTML
         Call html.SaveTo("x:\test.html")
