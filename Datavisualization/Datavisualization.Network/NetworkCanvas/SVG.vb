@@ -18,7 +18,7 @@ Public Module SVGExtensions
             .link = New CssValue With {
                 .stroke = "#CCC",
                 .strokeOpacity = "0.85",
-                .strokeWidth = "3"
+                .strokeWidth = "6"
             },
             .node = New CssValue With {
                 .strokeWidth = "0.5px",
@@ -47,15 +47,13 @@ Public Module SVGExtensions
                                                TypeOf n.Data.Color Is SolidBrush,
                                                DirectCast(n.Data.Color, SolidBrush).Color,
                                                Color.Black)
-                                           Let r = n.Data.radius
-                                           Let rd = If(r = 0!, If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7), r)
-                                           Let r2 = If(rd = 0, 10, rd) / 2.5
-                                           Let pt = New Point(pos.X - r2 / 2, pos.Y - r2 / 2)
+                                           Let r As Single = n.__getRadius
+                                           Let pt = New Point(pos.X - r / 2, pos.Y - r / 2)
                                            Select New circle With {
                                                .class = "node",
                                                .cx = pt.X,
                                                .cy = pt.Y,
-                                               .r = r2,
+                                               .r = r,
                                                .style = $"fill: rgb({c.R}, {c.G}, {c.B});"
                                            }
         Dim links As line() =
@@ -65,12 +63,14 @@ Public Module SVGExtensions
                                      Let target As Graph.Node = edge.Target
                                      Let pts As Point = Renderer.GraphToScreen(source.Data.initialPostion, rect)
                                      Let ptt As Point = Renderer.GraphToScreen(target.Data.initialPostion, rect)
+                                     Let rs As Single = source.__getRadius / 2,
+                                         rt As Single = target.__getRadius / 2
                                      Select New line With {
                                          .class = "link",
-                                         .x1 = pts.X,
-                                         .x2 = ptt.X,
-                                         .y1 = pts.Y,
-                                         .y2 = ptt.Y
+                                         .x1 = pts.X - rs,
+                                         .x2 = ptt.X - rt,
+                                         .y1 = pts.Y - rs,
+                                         .y2 = ptt.Y - rt
                                      }
         Dim svg As New SVGXml With {
             .defs = New CSSStyles With {
@@ -88,6 +88,15 @@ Public Module SVGExtensions
         }
 
         Return svg
+    End Function
+
+    <Extension>
+    Private Function __getRadius(n As Graph.Node) As Single
+        Dim r As Single = n.Data.radius
+        Dim rd = If(r = 0!, If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7), r)
+        Dim r2 = If(rd = 0, 10, rd) / 2.5
+
+        Return r2
     End Function
 
     <Extension>

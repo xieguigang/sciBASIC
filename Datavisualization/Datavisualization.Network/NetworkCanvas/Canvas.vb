@@ -1,4 +1,5 @@
 ﻿Imports System.Timers
+Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -36,7 +37,13 @@ Public Class Canvas
         FdgArgs.Repulsion = value.Repulsion
         FdgArgs.Stiffness = value.Stiffness
 
-        Call __invokeSet(Graph)
+        'Call New Config With {
+        '    .ForceDirectedArgs = FdgArgs
+        '}.WriteProfile
+
+        fdgPhysics.Damping = value.Damping
+        fdgPhysics.Repulsion = value.Repulsion
+        fdgPhysics.Stiffness = value.Stiffness
     End Sub
 
     ''' <summary>
