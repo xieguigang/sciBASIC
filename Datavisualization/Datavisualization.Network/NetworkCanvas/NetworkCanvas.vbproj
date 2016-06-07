@@ -97,6 +97,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canvas3D\Input3D.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="InputDevice.vb" />
     <Compile Include="SVG.vb" />
@@ -168,9 +169,7 @@
       <Name>Datavisualization.Network</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Canvas3D\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
