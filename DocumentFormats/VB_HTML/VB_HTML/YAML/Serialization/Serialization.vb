@@ -85,6 +85,8 @@ Namespace YAML
 
             Dim sb As New StringBuilder(1024)
             Dim schema = DataFrameColumnAttribute.LoadMapping(Of T)(mapsAll:=True)
+
+            Throw New NotImplementedException
         End Function
     End Module
 End Namespace

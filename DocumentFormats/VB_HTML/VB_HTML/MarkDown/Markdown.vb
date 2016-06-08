@@ -1,4 +1,5 @@
-﻿Imports System.Collections.Generic
+﻿Imports System
+Imports System.Collections.Generic
 Imports System.Configuration
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -169,6 +170,10 @@ Namespace MarkDown
 
         Private _inlineExtensions As New List(Of ExtensionTransform)()
 
+        ''' <summary>
+        ''' Public <see cref="System.Delegate"/> Function ExtensionTransform(text As <see cref="String"/>) As <see cref="String"/>
+        ''' </summary>
+        ''' <param name="ext"></param>
         Public Sub AddExtension(ext As ExtensionTransform)
             _inlineExtensions.Add(ext)
         End Sub
