@@ -48,6 +48,16 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Property
 
         ''' <summary>
+        ''' Gets a value indicating whether the <see cref="System.Type"/> is one of the primitive types.
+        ''' </summary>
+        ''' <returns>true if the <see cref="System.Type"/> is one of the primitive types; otherwise, false.</returns>
+        Public ReadOnly Property IsPrimitive As Boolean
+            Get
+                Return Scripting.IsPrimitive([Property].PropertyType)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Just enable readonly
         ''' </summary>
         ''' <returns></returns>

@@ -1,5 +1,6 @@
 Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace YAML.Syntax
 
@@ -14,7 +15,8 @@ Namespace YAML.Syntax
         End Function
 
         Private Function __maps(doc As YamlDocument) As Dictionary(Of MappingEntry)
-
+            Dim root As Mapping = doc.Root.As(Of Mapping)
+            Return root.GetMaps
         End Function
     End Class
 End Namespace

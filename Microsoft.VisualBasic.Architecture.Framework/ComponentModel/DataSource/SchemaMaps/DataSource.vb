@@ -110,8 +110,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(Of T As Class)(Optional ignores As String() = Nothing,
-                                                          Optional mapsAll As Boolean = False) As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
+        Public Shared Function LoadMapping(Of T)(
+                      Optional ignores As String() = Nothing,
+                      Optional mapsAll As Boolean = False) _
+                                       As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
+
             Return LoadMapping(GetType(T), ignores, mapsAll)
         End Function
 
@@ -126,9 +129,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="ignores">这个是大小写敏感的</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadMapping(typeInfo As Type,
-                                           Optional ignores As String() = Nothing,
-                                           Optional mapsAll As Boolean = False) As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
+        Public Shared Function LoadMapping(
+                               typeInfo As Type,
+                      Optional ignores As String() = Nothing,
+                      Optional mapsAll As Boolean = False) _
+                                       As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
 
             Dim source As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) =
                 __source(typeInfo, If(ignores Is Nothing, {}, ignores), mapsAll)
@@ -147,7 +152,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return out
         End Function
 
-        Private Shared Iterator Function __source(type As Type, ignores As String(), mapsAll As Boolean) As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo))
+        Private Shared Iterator Function __source(
+                                         type As Type,
+                                         ignores As String(),
+                                         mapsAll As Boolean) _
+                                                 As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo))
+
             Dim props As IEnumerable(Of PropertyInfo) =
                 From p As PropertyInfo
                 In type.GetProperties(BindingFlags.Public + BindingFlags.Instance)

@@ -93,14 +93,14 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="targetType"></param>
         ''' <returns></returns>
-        Public Function CanbeCast(targetType As Type) As Boolean
+        Public Function IsPrimitive(targetType As Type) As Boolean
             Return CasterString.ContainsKey(targetType)
         End Function
 
         ''' <summary>
         ''' Dynamics updates the capability of function <see cref="InputHandler.CTypeDynamic(String, System.Type)"/>, 
         ''' <see cref="InputHandler.CTypeDynamic(Of T)(String)"/> and 
-        ''' <see cref="InputHandler.CanbeCast(System.Type)"/>
+        ''' <see cref="InputHandler.IsPrimitive(System.Type)"/>
         ''' </summary>
         ''' <param name="briefName"></param>
         ''' <param name="stringConvertType"></param>
