@@ -258,26 +258,30 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI(NameOf(ParentPath))>
-    <Extension> Public Function ParentPath(file As String) As String
+    <Extension> Public Function ParentPath(file As String, Optional full As Boolean = True) As String
         Dim Parent As String = ""
         Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
 
-        If InStr(file, "../") = 1 Then
-            Parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
-            Tokens = Tokens.Skip(1).ToArray
-            Parent &= "/"
-        ElseIf InStr(file, "./") = 1 Then
-            Parent = App.CurrentDirectory
-            Tokens = Tokens.Skip(1).ToArray
-            Parent &= "/"
-        Else
+        If full Then
+            If InStr(file, "../") = 1 Then
+                Parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
+                Tokens = Tokens.Skip(1).ToArray
+                Parent &= "/"
+            ElseIf InStr(file, "./") = 1 Then
+                Parent = App.CurrentDirectory
+                Tokens = Tokens.Skip(1).ToArray
+                Parent &= "/"
+            Else
 
-        End If
+            End If
 
-        If file.Last = "/"c Then ' 是一个文件夹
-            Parent &= String.Join("/", Tokens.Take(Tokens.Length - 2).ToArray)
+            If file.Last = "/"c Then ' 是一个文件夹
+                Parent &= String.Join("/", Tokens.Take(Tokens.Length - 2).ToArray)
+            Else
+                Parent &= String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+            End If
         Else
-            Parent &= String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+            Parent = String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
         End If
 
         Return Parent
@@ -298,7 +302,7 @@ Public Module ProgramPathSearchTool
                                        <Parameter("List.Ext")> ParamArray ext As String()) _
                                     As <FunctionReturns("A list of file path which match with the keyword and the file extension name.")> String()
 
-        Dim Files As IEnumerable(Of String) = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ext)
+        Dim Files As IEnumerable(Of String) = ls - l - wildcards(ext) <= DIR
         Dim matches = (From Path As String
                        In Files.AsParallel
                        Let NameID = IO.Path.GetFileNameWithoutExtension(Path)
@@ -306,24 +310,26 @@ Public Module ProgramPathSearchTool
                        Let ExtValue = Path.Split("."c).Last
                        Select Path,
                            ExtValue)
-        Dim LQuery = (From ExtType As String
-                      In ext
-                      Select (From path In matches
-                              Where InStr(ExtType, path.ExtValue, CompareMethod.Text) > 0
-                              Select path.Path).ToArray).MatrixAsIterator.Distinct.ToArray
-        Return LQuery
+        Dim LQuery =
+            From extType As String
+            In ext
+            Select From path
+                   In matches
+                   Where InStr(extType, path.ExtValue, CompareMethod.Text) > 0
+                   Select path.Path
+        Return LQuery.MatrixAsIterator.Distinct.ToArray
     End Function
 
     <ExportAPI("Md5.Renamed")>
-    Public Function BatchMd5Renamed(dir As String) As Boolean
-        dir = FileIO.FileSystem.GetDirectoryInfo(dir).FullName
+    Public Function BatchMd5Renamed(DIR As String) As Boolean
+        DIR = FileIO.FileSystem.GetDirectoryInfo(DIR).FullName
 
-        For Each path As String In FileIO.FileSystem.GetFiles(dir)
+        For Each path As String In FileIO.FileSystem.GetFiles(DIR)
             On Error Resume Next
 
             Dim Md5 As String = SecurityString.GetMd5Hash(path)
             Dim ext As String = IO.Path.GetExtension(path)
-            Dim FileName As String = dir & "/" & Md5 & ext
+            Dim FileName As String = DIR & "/" & Md5 & ext
 
             Call IO.File.Move(path, FileName)
         Next
@@ -356,12 +362,18 @@ Public Module ProgramPathSearchTool
                       Select ID = IO.Path.GetFileNameWithoutExtension(path),
                           path
                       Group By ID Into Group).ToArray
-        ext = (From value As String In ext Select value.Split(CChar(".")).Last.ToLower).ToArray
-        Dim Dict As Dictionary(Of String, String) = LQuery.ToDictionary(Function(Entry) Entry.ID,
-                                                                        Function(Entry) (From path In Entry.Group.ToArray
-                                                                                         Let extValue As String = path.path.Split("."c).Last.ToLower
-                                                                                         Where Array.IndexOf(ext, extValue) > -1
-                                                                                         Select path.path).FirstOrDefault)
+
+        ext = LinqAPI.Exec(Of String) <= From value As String
+                                         In ext
+                                         Select value.Split(CChar(".")).Last.ToLower
+
+        Dim Dict As Dictionary(Of String, String) =
+            LQuery.ToDictionary(Function(x) x.ID,
+                                Function(x) LinqAPI.DefaultFirst(Of String) <= From path
+                                                                               In x.Group
+                                                                               Let extValue As String = path.path.Split("."c).Last.ToLower
+                                                                               Where Array.IndexOf(ext, extValue) > -1
+                                                                               Select path.path)
         Dict = (From Entry
                 In Dict
                 Where Not String.IsNullOrEmpty(Entry.Value)

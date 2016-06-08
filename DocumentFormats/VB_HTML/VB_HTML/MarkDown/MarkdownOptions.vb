@@ -1,3 +1,8 @@
+Imports Microsoft.VisualBasic.Serialization
+
+''' <summary>
+''' The markdown document generate options.
+''' </summary>
 Public Class MarkdownOptions
 
     ''' <summary>
@@ -59,4 +64,8 @@ Public Class MarkdownOptions
     ''' this does nothing if StrictBoldItalic is false
     ''' </summary>
     Public Property AsteriskIntraWordEmphasis() As Boolean
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class

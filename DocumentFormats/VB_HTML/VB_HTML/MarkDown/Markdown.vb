@@ -5,12 +5,13 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace MarkDown
+
     ''' <summary>
     ''' Markdown is a text-to-HTML conversion tool for web writers. 
     ''' Markdown allows you to write using an easy-to-read, easy-to-write plain text format, 
     ''' then convert it to structurally valid XHTML (or HTML).
     ''' </summary>
-    Public Class Markdown
+    Public Class MarkdownHTML
 
 #Region "Constructors and Options"
 

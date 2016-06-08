@@ -37,6 +37,7 @@ Partial Class Form1
         Me.CheckBox8 = New System.Windows.Forms.CheckBox()
         Me.CheckBox9 = New System.Windows.Forms.CheckBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox10 = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -182,11 +183,22 @@ Partial Class Form1
         Me.CheckBox1.Text = "IgnoreCase"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
+        'CheckBox10
+        '
+        Me.CheckBox10.AutoSize = True
+        Me.CheckBox10.Location = New System.Drawing.Point(943, 413)
+        Me.CheckBox10.Name = "CheckBox10"
+        Me.CheckBox10.Size = New System.Drawing.Size(81, 17)
+        Me.CheckBox10.TabIndex = 14
+        Me.CheckBox10.Text = "Line tokens"
+        Me.CheckBox10.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1093, 575)
+        Me.Controls.Add(Me.CheckBox10)
         Me.Controls.Add(Me.CheckBox9)
         Me.Controls.Add(Me.CheckBox5)
         Me.Controls.Add(Me.CheckBox6)
@@ -225,4 +237,5 @@ Partial Class Form1
     Friend WithEvents CheckBox8 As CheckBox
     Friend WithEvents CheckBox9 As CheckBox
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CheckBox10 As CheckBox
 End Class
