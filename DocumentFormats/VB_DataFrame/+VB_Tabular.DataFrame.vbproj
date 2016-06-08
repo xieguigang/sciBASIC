@@ -96,7 +96,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>X:\nuget_publish\</OutputPath>
+    <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.Csv.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>
