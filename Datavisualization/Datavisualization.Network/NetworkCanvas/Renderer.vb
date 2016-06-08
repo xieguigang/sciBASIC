@@ -27,6 +27,29 @@ Public Class Renderer
         MyBase.New(iForceDirected)
         __graphicsProvider = canvas
         __regionProvider = regionProvider
+
+        ' using cache
+        Dim ws As New Dictionary(Of Edge, Single)
+        Dim nr As New Dictionary(Of Node, Single)
+
+        For Each edge As Edge In iForceDirected.graph.edges
+            Dim w As Single = CSng(5.0! * edge.Data.weight)
+            w = If(w < 1.5!, 1.5!, w)
+            Call ws.Add(edge, w)
+        Next
+        For Each n As Node In iForceDirected.graph.nodes
+            Dim r As Single = n.Data.radius
+            If r = 0! Then
+                r = If(n.Data.Neighborhoods < 30,
+                    n.Data.Neighborhoods * 9,
+                    n.Data.Neighborhoods * 7)
+                r = If(r = 0, 20, r)
+            End If
+            Call nr.Add(n, r)
+        Next
+
+        widthHash = ws
+        radiushash = nr
     End Sub
 
     Public Overrides Sub Clear()
@@ -57,6 +80,9 @@ Public Class Renderer
         Return retVec
     End Function
 
+    Dim widthHash As IReadOnlyDictionary(Of Edge, Single)
+    Dim radiushash As IReadOnlyDictionary(Of Node, Single)
+
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = __regionProvider()
         Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2), rect)
@@ -64,8 +90,7 @@ Public Class Renderer
         Dim canvas As Graphics = __graphicsProvider()
 
         SyncLock canvas
-            Dim w As Single = CSng(5.0! * iEdge.Data.weight)
-            w = If(w < 1.5!, 1.5!, w)
+            Dim w As Single = widthHash(iEdge)
             Dim LineColor As New Pen(Color.Gray, w)
 
             Call canvas.DrawLine(
@@ -80,14 +105,9 @@ Public Class Renderer
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
         Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2), __regionProvider())
         Dim canvas As Graphics = __graphicsProvider()
-        Dim r As Single = n.Data.radius
 
         SyncLock canvas
-            If r = 0! Then
-                r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
-                r = If(r = 0, 20, r)
-            End If
-
+            Dim r As Single = radiushash(n)
             Dim pt As New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 

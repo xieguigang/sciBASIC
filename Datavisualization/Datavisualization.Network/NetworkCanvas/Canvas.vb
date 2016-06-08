@@ -68,7 +68,7 @@ Public Class Canvas
     Dim paper As Graphics
 
     Private Sub __invokePaint()
-        Call Me.Invoke(Sub() Invalidate())
+        Call Me.Invoke(Sub() Call Invalidate())
     End Sub
 
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
@@ -95,6 +95,9 @@ Public Class Canvas
         Call timer.Start()
     End Sub
 
+    ''' <summary>
+    ''' Write the node layout position into its extensions data, for generates the svg graphics.
+    ''' </summary>
     Public Sub WriteLayout()
         Call Graph.WriteLayouts(fdgPhysics)
     End Sub

@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Text.Xml
 
+    ''' <summary>
+    ''' Xml namespace
+    ''' </summary>
     Public Class Xmlns
 
         Public Property xmlns As String
@@ -60,7 +63,7 @@ Namespace Text.Xml
         End Sub
 
         ''' <summary>
-        ''' <paramref name="ns"/>命名空间参数不需要添加 xmlns: 前缀
+        ''' Set the value of a new xml namespace.(<paramref name="ns"/>命名空间参数不需要添加 xmlns: 前缀)
         ''' </summary>
         ''' <param name="ns"></param>
         ''' <param name="value"></param>

@@ -23,7 +23,7 @@ Public Class Form1
 
             If file.ShowDialog = DialogResult.OK Then
                 Call canvas.WriteLayout()
-                Call canvas.Graph.ToSVG(New Size(1440, 900)).SaveAsXml(file.FileName)
+                Call canvas.Graph.ToSVG(New Size(1920, 1200)).SaveAsXml(file.FileName)
             End If
 
             Call canvas.Run()

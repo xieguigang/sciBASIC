@@ -71,6 +71,9 @@ Namespace SVG
         <XmlAttribute> Public Property x As String
     End Class
 
+    ''' <summary>
+    ''' The svg vector graphics in Xml document format.
+    ''' </summary>
     <XmlType("svg")> Public Class SVGXml : Inherits g
         Implements ISaveHandle
 
@@ -81,6 +84,13 @@ Namespace SVG
         <XmlAttribute> Public Property version As String
 #End Region
 
+        ''' <summary>
+        ''' Style definition of the xml node in this svg document. 
+        ''' you can define the style by using css and set the class 
+        ''' attribute for the specific node to controls the 
+        ''' visualize style.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property defs As CSSStyles
 
         Public Sub SetSize(size As Size)
@@ -88,6 +98,12 @@ Namespace SVG
             height = size.Height & "px"
         End Sub
 
+        ''' <summary>
+        ''' Save this svg document object into the file system.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Private Function SaveAsXml(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             Dim xml As New XmlDoc(Me.GetXml)
             xml.encoding = XmlEncodings.UTF8
