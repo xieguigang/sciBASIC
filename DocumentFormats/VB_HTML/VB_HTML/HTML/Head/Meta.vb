@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace HTML.Head
 
@@ -102,6 +103,7 @@ Namespace HTML.Head
     End Class
 
     Public MustInherit Class Script
+        Public Property type As String = "text/javascript"
 
     End Class
 
@@ -110,7 +112,11 @@ Namespace HTML.Head
         Public Property src As String
 
         Public Overrides Function ToString() As String
-            Return $"<script src=""{src}""></script>"
+            If String.IsNullOrEmpty(type) Then
+                Return $"<script src=""{src}""></script>"
+            Else
+                Return $"<script type=""{type}"" src=""{src}""></script>"
+            End If
         End Function
     End Class
 
@@ -119,13 +125,19 @@ Namespace HTML.Head
         Public Property Content As String
 
         Public Overrides Function ToString() As String
-            Return $"<script type=""text/javascript"">
+            If String.IsNullOrEmpty(type) Then
+                Return $"<script>
 {Content}
 </script>"
+            Else
+                Return $"<script type=""{type}"">
+{Content}
+</script>"
+            End If
         End Function
     End Class
 
-    Public Class Head
+    Public Class HeadMeta
 
         Public Property Metas As Meta()
         Public Property MetaDatas As MetaData()
@@ -136,19 +148,19 @@ Namespace HTML.Head
         Public Overrides Function ToString() As String
             Dim htmlBuilder As New StringBuilder("<head>")
 
-            For Each meta In Metas
+            For Each meta In Metas.SafeQuery
                 Call htmlBuilder.AppendLine(vbTab & meta.ToString)
             Next
             Call htmlBuilder.AppendLine()
-            For Each meta In MetaDatas
+            For Each meta In MetaDatas.SafeQuery
                 Call htmlBuilder.AppendLine(vbTab & meta.ToString)
             Next
             Call htmlBuilder.AppendLine()
-            For Each link In Links
+            For Each link In Links.SafeQuery
                 Call htmlBuilder.AppendLine(vbTab & link.ToString)
             Next
             Call htmlBuilder.AppendLine()
-            For Each script In Scripts
+            For Each script In Scripts.SafeQuery
                 Call htmlBuilder.AppendLine(vbTab & script.ToString)
             Next
             Call htmlBuilder.AppendLine()
