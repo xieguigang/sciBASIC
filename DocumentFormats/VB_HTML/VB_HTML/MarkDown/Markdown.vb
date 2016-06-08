@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Configuration
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -106,6 +106,7 @@ Namespace MarkDown
         ''' <summary>
         ''' Transforms the provided Markdown-formatted text to HTML;  
         ''' see http://en.wikipedia.org/wiki/Markdown
+        ''' (好像这个并不支持代码高亮的格式化)
         ''' </summary>
         ''' <remarks>
         ''' The order in which other subs are called here is
