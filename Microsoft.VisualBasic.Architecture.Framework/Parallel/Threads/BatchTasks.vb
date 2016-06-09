@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Parallel.Threads
 
@@ -25,11 +26,12 @@ Namespace Parallel.Threads
                                    Optional numThreads As Integer = -1,
                                    Optional TimeInterval As Integer = 1000)
 
-            Dim srcArray As Func(Of Integer)() = (From x As T In source
-                                                  Let task As CommandLine.IORedirectFile =
-                                                      New CommandLine.IORedirectFile(getExe(), getCLI(x))
-                                                  Let runTask As Func(Of Integer) = AddressOf task.Run
-                                                  Select runTask).ToArray
+            Dim srcArray As Func(Of Integer)() =
+                LinqAPI.Exec(Of Func(Of Integer)) <= From x As T In source
+                                                     Let task As IORedirectFile =
+                                                         New IORedirectFile(getExe(), getCLI(x))
+                                                     Let runTask As Func(Of Integer) = AddressOf task.Run
+                                                     Select runTask
             Call BatchTask(srcArray, numThreads, TimeInterval)
         End Sub
 
@@ -94,6 +96,7 @@ Namespace Parallel.Threads
                                                           In taskPool
                                                           Where task.IsCompleted ' 在这里获得完成的任务
                                                           Select task
+
                 For Each completeTask As AsyncHandle(Of T) In LQuery
                     Call taskPool.Remove(completeTask)
                     Call resultList.Add(completeTask.GetValue)  '  将完成的任务从任务池之中移除然后获取返回值
