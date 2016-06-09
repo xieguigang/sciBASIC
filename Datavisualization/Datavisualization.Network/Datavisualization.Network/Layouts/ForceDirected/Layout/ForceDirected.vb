@@ -102,7 +102,7 @@ Namespace Layouts
             Threadshold = 0.01F
         End Sub
 
-        Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint
+        Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint Implements IForceDirected.GetPoint
 
         Public Function GetSpring(iEdge As Edge) As Spring
             If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
@@ -283,6 +283,12 @@ Namespace Layouts
         End Function
 
         Public MustOverride Function GetBoundingBox() As BoundingBox Implements IForceDirected.GetBoundingBox
+
+        Public Sub SetPhysics(Stiffness As Single, Repulsion As Single, Damping As Single) Implements IForceDirected.SetPhysics
+            Me.Stiffness = Stiffness
+            Me.Repulsion = Repulsion
+            Me.Damping = Damping
+        End Sub
     End Class
 
     ''' <summary>

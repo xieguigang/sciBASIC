@@ -2,31 +2,48 @@
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Public Class Canvas
 
-    Public Property Graph As NetworkGraph
+    Public Property Graph(Optional space As Boolean = False) As NetworkGraph
         Get
             If net Is Nothing Then
-                Call __invokeSet(New NetworkGraph)
+                Call __invokeSet(New NetworkGraph, space3D)
             End If
 
             Return net
         End Get
         Set(value As NetworkGraph)
-            Call __invokeSet(value)
+            space3D = space
+            Call __invokeSet(value, space3D)
         End Set
     End Property
 
-    Private Sub __invokeSet(g As NetworkGraph)
+    ''' <summary>
+    ''' Render and layout engine works in 3D mode?
+    ''' </summary>
+    Dim space3D As Boolean
+
+    Private Sub __invokeSet(g As NetworkGraph, space As Boolean)
         net = g
-        fdgPhysics = New ForceDirected2D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
-        fdgRenderer = New Renderer(
-            Function() paper,
-            Function() New Rectangle(New Point, Size),
-            fdgPhysics)
-        inputs = New InputDevice(Me)
+
+        If space Then
+            fdgPhysics = New ForceDirected3D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
+            fdgRenderer = New Renderer3D(
+                Function() paper,
+                Function() New Rectangle(New Point, Size),
+                fdgPhysics)
+        Else
+            fdgPhysics = New ForceDirected2D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
+            fdgRenderer = New Renderer(
+                Function() paper,
+                Function() New Rectangle(New Point, Size),
+                fdgPhysics)
+            inputs = New InputDevice(Me)
+        End If
+
         fdgRenderer.Asynchronous = False
     End Sub
 
@@ -41,9 +58,10 @@ Public Class Canvas
         '    .ForceDirectedArgs = FdgArgs
         '}.WriteProfile
 
-        fdgPhysics.Damping = value.Damping
-        fdgPhysics.Repulsion = value.Repulsion
-        fdgPhysics.Stiffness = value.Stiffness
+        Call fdgPhysics.SetPhysics(
+            value.Stiffness,
+            value.Repulsion,
+            value.Damping)
     End Sub
 
     ''' <summary>
@@ -53,7 +71,7 @@ Public Class Canvas
     ''' <summary>
     ''' Layout provider engine
     ''' </summary>
-    Protected Friend fdgPhysics As ForceDirected2D
+    Protected Friend fdgPhysics As IForceDirected
     ''' <summary>
     ''' The graphics updates thread.
     ''' </summary>

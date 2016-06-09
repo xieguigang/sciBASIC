@@ -12,7 +12,7 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Me.Controls.Add(canvas)
 
-        canvas.Graph = CytoscapeExportAsGraph(
+        canvas.Graph(True) = CytoscapeExportAsGraph(
             App.HOME & "\Resources\xcb-main-Edges.csv",
             App.HOME & "\Resources\xcb-main-Nodes.csv")
     End Sub
