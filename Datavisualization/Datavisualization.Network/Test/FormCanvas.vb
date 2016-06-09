@@ -18,6 +18,8 @@ Public Class FormCanvas
 
         TrackBar1.Minimum = 0
         TrackBar1.Maximum = Math.PI * 2 * 1000
+
+        DToolStripMenuItem.Checked = True
     End Sub
 
     Private Sub SaveAsSVGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsSVGToolStripMenuItem.Click
