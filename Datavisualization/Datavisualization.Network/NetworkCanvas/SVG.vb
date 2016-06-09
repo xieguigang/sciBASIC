@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 
 ''' <summary>
 ''' <see cref="NetworkGraph"/> to svg doc
@@ -100,7 +101,7 @@ Public Module SVGExtensions
     End Function
 
     <Extension>
-    Public Sub WriteLayouts(ByRef graph As NetworkGraph, engine As ForceDirected2D)
+    Public Sub WriteLayouts(ByRef graph As NetworkGraph, engine As IForceDirected)
         For Each node As Graph.Node In graph.nodes
             node.Data.initialPostion =
                 New FDGVector2(engine.GetPoint(node).position.Point2D)

@@ -29,12 +29,19 @@ Public Class Canvas
     Private Sub __invokeSet(g As NetworkGraph, space As Boolean)
         net = g
 
+        If Not inputs Is Nothing Then
+            Call inputs.Dispose()
+            GC.SuppressFinalize(inputs)
+            inputs = Nothing
+        End If
+
         If space Then
             fdgPhysics = New ForceDirected3D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
             fdgRenderer = New Renderer3D(
                 Function() paper,
                 Function() New Rectangle(New Point, Size),
                 fdgPhysics)
+            inputs = New Input3D(Me)
         Else
             fdgPhysics = New ForceDirected2D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
             fdgRenderer = New Renderer(
