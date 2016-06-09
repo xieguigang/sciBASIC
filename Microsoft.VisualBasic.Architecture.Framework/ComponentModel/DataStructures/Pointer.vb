@@ -27,7 +27,7 @@
         End Sub
 
         ''' <summary>
-        ''' 构造一个初始值为零的整形数指针对象
+        ''' Creates a new <see cref="Integer"/> type pointer object in VisualBasic with its initial value is ZERO.(构造一个初始值为零的整形数指针对象)
         ''' </summary>
         Sub New()
             Call Me.New(Scan0)

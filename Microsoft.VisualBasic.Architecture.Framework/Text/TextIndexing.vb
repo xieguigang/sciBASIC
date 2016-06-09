@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text
 
@@ -75,10 +76,11 @@ Namespace Text
         ''' <param name="min"></param>
         ''' <param name="max"></param>
         Sub New(text As String, min As Integer, max As Integer)
-            Dim LQuery = (From d As Integer
-                      In (max - min).Sequence.AsParallel
-                          Let len As Integer = min + d
-                          Select __cache(text, len)).ToArray.MatrixToVector
+            Dim LQuery As TextSegment() =
+                LinqAPI.Exec(Of TextSegment) <= From d As Integer
+                                                In (max - min).Sequence.AsParallel
+                                                Let len As Integer = min + d
+                                                Select __cache(text, len)
             If min = max Then
                 _preCaches = __cache(text, max)
             Else
@@ -88,9 +90,11 @@ Namespace Text
             _text = text
             _max = max
             _mMatches = (From d As Integer
-                     In max.Sequence
-                         Select len = d, m = New String("m"c, d)) _
-                        .ToDictionary(Function(x) x.len, elementSelector:=Function(x) x.m)
+                         In max.Sequence
+                         Select len = d,
+                             m = New String("m"c, d)) _
+                            .ToDictionary(Function(x) x.len,
+                                          Function(x) x.m)
 
             Call $"{_preCaches.Length} cache data from length range from {min} to {max}...".__DEBUG_ECHO
         End Sub
@@ -104,7 +108,9 @@ Namespace Text
 
             For i As Integer = 1 To text.Length - len
                 Dim piece As String = Mid(text, i, len)
-                Call lstCache.Add(New TextSegment(piece) With {.Index = i})
+                lstCache += New TextSegment(piece) With {
+                    .Index = i
+                }
             Next
 
             Return lstCache.ToArray
@@ -118,8 +124,9 @@ Namespace Text
         ''' <param name="NumPartitions">负数表示不进行分区</param>
         ''' <returns></returns>
         Public Function Found(keyword As String,
-                          Optional cutoff As Double = 0.6,
-                          Optional NumPartitions As Integer = 1024) As Dictionary(Of TextSegment, DistResult)
+               Optional cutoff As Double = 0.6,
+               Optional NumPartitions As Integer = 1024) _
+                                      As Dictionary(Of TextSegment, DistResult)
 
             If NumPartitions <= 0 Then
                 Dim resultSet As New Dictionary(Of TextSegment, DistResult)
@@ -157,12 +164,15 @@ Namespace Text
             End If
 
             Dim LQuery = (From piece As TextSegment
-                      In Me._preCaches
-                          Let levl As DistResult = LevenshteinDistance.ComputeDistance(piece.Array, keyword)
-                          Where Not levl Is Nothing AndAlso IsMatch(levl.DistEdits, cutoff)
-                          Select piece, levl) _
-                         .ToDictionary(Function(x) x.piece,
-                                       elementSelector:=Function(x) x.levl)
+                          In Me._preCaches
+                          Let levl As DistResult =
+                              LevenshteinDistance.ComputeDistance(piece.Array, keyword)
+                          Where Not levl Is Nothing AndAlso
+                              IsMatch(levl.DistEdits, cutoff)
+                          Select piece,
+                              levl) _
+                             .ToDictionary(Function(x) x.piece,
+                                           Function(x) x.levl)
             Call Console.Write(".")
             Return LQuery
         End Function
@@ -195,7 +205,7 @@ Namespace Text
             Call Console.Write(".")
 
             Dim LQuery = (From piece As TextSegment
-                      In part'.AsParallel
+                          In part'.AsParallel
                           Let lev As DistResult = LevenshteinDistance.ComputeDistance(piece.Array, keyword)
                           Where Not lev Is Nothing AndAlso lev.Score >= cutoff
                           Select piece, lev).ToArray
@@ -218,7 +228,8 @@ Namespace Text
 
         <ExportAPI("Index.Fuzzy")>
         Public Shared Function FuzzyIndex(text As String, keyword As String,
-                                      <Parameter("Cutoff", "The continues length of the matches, if this value is ZERO or negative value, then the function will using the expression len(keyword)/2 as the default value.")>
+                                      <Parameter("Cutoff",
+                                                 "The continues length of the matches, if this value is ZERO or negative value, then the function will using the expression len(keyword)/2 as the default value.")>
                                       Optional Matches As Integer = -1,
                                       Optional min As Integer = 3,
                                       Optional max As Integer = 20) As Dictionary(Of TextSegment, DistResult)

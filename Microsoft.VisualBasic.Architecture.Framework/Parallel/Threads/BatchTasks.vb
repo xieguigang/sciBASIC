@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
 Namespace Parallel.Threads
 
@@ -76,7 +77,7 @@ Namespace Parallel.Threads
         <Extension>
         Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads As Integer = -1, Optional TimeInterval As Integer = 1000) As T()
             Dim taskPool As New List(Of AsyncHandle(Of T))
-            Dim p As Integer = Scan0
+            Dim p As New Pointer
             Dim resultList As New List(Of T)
 
             If numThreads <= 0 Then
@@ -85,8 +86,7 @@ Namespace Parallel.Threads
 
             Do While p <= actions.Length - 1
                 If taskPool.Count < numThreads Then  ' 向任务池里面添加新的并行任务
-                    Call taskPool.Add(New AsyncHandle(Of T)(actions(p)).Run)
-                    Call p.MoveNext
+                    taskPool += New AsyncHandle(Of T)(actions(++p)).Run
                 End If
 
                 Dim LQuery As AsyncHandle(Of T)() =
@@ -107,7 +107,7 @@ Namespace Parallel.Threads
                                       In taskPool.AsParallel  ' 等待剩余的计算任务完成计算过程
                                       Let cli As T = task.GetValue
                                       Select cli
-            Call resultList.Add(WaitForExit)
+            resultList += WaitForExit
 
             Return resultList.ToArray
         End Function
