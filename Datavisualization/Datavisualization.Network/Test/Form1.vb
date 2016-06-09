@@ -15,6 +15,9 @@ Public Class Form1
         canvas.Graph(True) = CytoscapeExportAsGraph(
             App.HOME & "\Resources\xcb-main-Edges.csv",
             App.HOME & "\Resources\xcb-main-Nodes.csv")
+
+        TrackBar1.Minimum = 0
+        TrackBar1.Maximum = Math.PI * 2 * 1000
     End Sub
 
     Private Sub SaveAsSVGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsSVGToolStripMenuItem.Click
@@ -33,5 +36,13 @@ Public Class Form1
     Private Sub RefreshParametersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RefreshParametersToolStripMenuItem.Click
         Dim value As ForceDirectedArgs = Config.Load
         Call canvas.SetFDGParams(value)
+    End Sub
+
+    Private Sub DToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
+        canvas.SetRotate(TrackBar1.Value / 1000)
     End Sub
 End Class

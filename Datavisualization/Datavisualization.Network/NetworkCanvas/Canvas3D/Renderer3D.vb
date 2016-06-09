@@ -15,11 +15,13 @@ Public Class Renderer3D : Inherits Renderer
         Call MyBase.New(canvas, regionProvider, iForceDirected)
     End Sub
 
+    Public Property rotate As Double = Math.PI / 3
+
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = __regionProvider()
-        Dim pos1 As Point = SpaceToGrid(iPosition1.x, iPosition1.y, iPosition1.z, Math.PI / 2)
+        Dim pos1 As Point = SpaceToGrid(iPosition1.x, iPosition1.y, iPosition1.z, rotate)
         pos1 = GraphToScreen(pos1, rect)
-        Dim pos2 As Point = SpaceToGrid(iPosition2.x, iPosition2.y, iPosition2.z, Math.PI / 2)
+        Dim pos2 As Point = SpaceToGrid(iPosition2.x, iPosition2.y, iPosition2.z, rotate)
         pos2 = GraphToScreen(pos2, rect)
         Dim canvas As Graphics = __graphicsProvider()
 
@@ -37,7 +39,7 @@ Public Class Renderer3D : Inherits Renderer
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim pos As Point = SpaceToGrid(iPosition.x, iPosition.y, iPosition.z, Math.PI / 2)
+        Dim pos As Point = SpaceToGrid(iPosition.x, iPosition.y, iPosition.z, rotate)
         Dim canvas As Graphics = __graphicsProvider()
 
         pos = GraphToScreen(pos, __regionProvider())

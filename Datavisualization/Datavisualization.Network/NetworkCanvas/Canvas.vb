@@ -49,14 +49,17 @@ Public Class Canvas
 
     Public ReadOnly Property FdgArgs As ForceDirectedArgs = Config.Load
 
+    Public Sub SetRotate(x As Double)
+        If Not space3D Then
+        Else
+            DirectCast(fdgRenderer, Renderer3D).rotate = x
+        End If
+    End Sub
+
     Public Sub SetFDGParams(value As ForceDirectedArgs)
         FdgArgs.Damping = value.Damping
         FdgArgs.Repulsion = value.Repulsion
         FdgArgs.Stiffness = value.Stiffness
-
-        'Call New Config With {
-        '    .ForceDirectedArgs = FdgArgs
-        '}.WriteProfile
 
         Call fdgPhysics.SetPhysics(
             value.Stiffness,
