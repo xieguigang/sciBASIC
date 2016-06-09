@@ -21,7 +21,7 @@
             __step = 1
         End Sub
 
-        Private Sub New(n As Integer, [step] As Integer)
+        Public Sub New(n As Integer, [step] As Integer)
             __index = n
             __step = [step]
         End Sub
@@ -108,17 +108,23 @@
         End Operator
 
         ''' <summary>
-        ''' Setup the offsets
+        ''' Less than or equals
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <param name="steps"></param>
+        ''' <param name="n"></param>
         ''' <returns></returns>
-        Public Shared Operator <=(x As Pointer, steps As Integer) As Pointer
-            Return New Pointer(x.__index, steps)
+        Public Shared Operator <=(x As Pointer, n As Integer) As Boolean
+            Return x.__index <= n
         End Operator
 
-        Public Shared Operator >=(x As Pointer, steps As Integer) As Pointer
-            Throw New NotSupportedException
+        ''' <summary>
+        ''' Greater than or equals
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Operator >=(x As Pointer, n As Integer) As Boolean
+            Return x.__index >= n
         End Operator
     End Class
 

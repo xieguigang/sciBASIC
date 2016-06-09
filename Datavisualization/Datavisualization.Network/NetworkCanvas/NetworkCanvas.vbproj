@@ -129,6 +129,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canvas3D\Renderer3D.vb" />
     <Compile Include="Canvas3D\Input3D.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="InputDevice.vb" />

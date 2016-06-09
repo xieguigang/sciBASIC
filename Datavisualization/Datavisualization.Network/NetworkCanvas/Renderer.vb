@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
@@ -11,11 +11,11 @@ Public Class Renderer
     ''' <summary>
     ''' Gets the graphics source
     ''' </summary>
-    Dim __graphicsProvider As Func(Of Graphics)
+    Protected __graphicsProvider As Func(Of Graphics)
     ''' <summary>
     ''' gets the graphics region for the projections: <see cref="GraphToScreen"/> and <see cref="ScreenToGraph"/>
     ''' </summary>
-    Dim __regionProvider As Func(Of Rectangle)
+    Protected __regionProvider As Func(Of Rectangle)
 
     Public ReadOnly Property ClientRegion As Rectangle
         Get
@@ -23,6 +23,12 @@ Public Class Renderer
         End Get
     End Property
 
+    ''' <summary>
+    ''' 这个构造函数会生成一些静态数据的缓存
+    ''' </summary>
+    ''' <param name="canvas"></param>
+    ''' <param name="regionProvider"></param>
+    ''' <param name="iForceDirected"></param>
     Public Sub New(canvas As Func(Of Graphics), regionProvider As Func(Of Rectangle), iForceDirected As IForceDirected)
         MyBase.New(iForceDirected)
         __graphicsProvider = canvas
@@ -67,6 +73,12 @@ Public Class Renderer
         Return New Point(x, y)
     End Function
 
+    Public Shared Function GraphToScreen(iPos As Point, rect As Rectangle) As Point
+        Dim x As Integer = CInt(Math.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(Math.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Return New Point(x, y)
+    End Function
+
     ''' <summary>
     ''' Projects the client graphics data to the data model. 
     ''' </summary>
@@ -80,8 +92,14 @@ Public Class Renderer
         Return retVec
     End Function
 
-    Dim widthHash As IReadOnlyDictionary(Of Edge, Single)
-    Dim radiushash As IReadOnlyDictionary(Of Node, Single)
+    ''' <summary>
+    ''' The edge drawing width cache
+    ''' </summary>
+    Protected widthHash As IReadOnlyDictionary(Of Edge, Single)
+    ''' <summary>
+    ''' The node drawing radius cache
+    ''' </summary>
+    Protected radiushash As IReadOnlyDictionary(Of Node, Single)
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = __regionProvider()

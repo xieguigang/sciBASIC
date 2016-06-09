@@ -84,7 +84,7 @@ Namespace Parallel.Threads
                 numThreads = LQuerySchedule.CPU_NUMBER * 2
             End If
 
-            Do While p <= actions.Length - 1
+            Do While p <= (actions.Length - 1)
                 If taskPool.Count < numThreads Then  ' 向任务池里面添加新的并行任务
                     taskPool += New AsyncHandle(Of T)(actions(++p)).Run
                 End If
