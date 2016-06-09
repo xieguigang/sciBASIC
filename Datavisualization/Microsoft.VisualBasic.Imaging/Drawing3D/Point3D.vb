@@ -9,7 +9,7 @@ Namespace Drawing3D
     '''
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
-    Public Class Point3D
+    Public Structure Point3D
 
         Public Sub New(x As Double, y As Double, Optional z As Double = 0)
             Me.X = x
@@ -66,5 +66,5 @@ Namespace Drawing3D
             Yn = Me.Y * factor + viewHeight / 2
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
-    End Class
+    End Structure
 End Namespace
