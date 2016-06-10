@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 ''' <summary>
 ''' Mouse input device in 3D space
@@ -30,4 +31,20 @@ Public Class Input3D : Inherits InputDevice
     Protected Overrides Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs)
         drag = False
     End Sub
+
+    Dim vd As Integer
+
+    '    Protected Overrides Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs)
+    '        vd += e.Delta / 200
+
+    '        Dim rect = renderer.ClientRegion
+
+    '        For Each node In Canvas.Graph.nodes
+    '            Dim pos As AbstractVector = Canvas.fdgPhysics.GetPoint(node).position
+    '            Call Point3D.Project(pos.x, pos.y, pos.z, rect.Width, rect.Height, 1, vd)
+    '#If DEBUG Then
+    '            Call pos.__DEBUG_ECHO
+    '#End If
+    '        Next
+    '    End Sub
 End Class

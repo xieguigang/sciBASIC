@@ -60,6 +60,10 @@ Public Class InputDevice : Implements IDisposable
         End If
     End Sub
 
+    Protected Overridable Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs) Handles Canvas.MouseWheel
+
+    End Sub
+
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
 
