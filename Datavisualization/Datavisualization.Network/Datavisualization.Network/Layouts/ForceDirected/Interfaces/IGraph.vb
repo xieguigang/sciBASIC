@@ -50,7 +50,7 @@ Namespace Layouts.Interfaces
         Sub CreateNodes(iDataList As List(Of NodeData))
         Sub CreateNodes(iNameList As List(Of String))
         Sub CreateEdges(iDataList As List(Of Triple(Of String, String, EdgeData)))
-        Sub CreateEdges(iDataList As List(Of Pair(Of String, String)))
+        Sub CreateEdges(iDataList As List(Of KeyValuePair(Of String, String)))
         Function CreateNode(data As NodeData) As Node
         Function CreateNode(name As String) As Node
         Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge

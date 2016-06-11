@@ -97,7 +97,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>X:\nuget_publish\</OutputPath>
+    <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -144,8 +144,10 @@
     <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
-    <Compile Include="Layouts\ForceDirected\General\Pair.vb" />
+    <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
+    <Compile Include="LDM\FileStream\GraphAPI.vb" />
+    <Compile Include="LDM\Graph\Extensions.vb" />
     <Compile Include="LDM\Graph\Edge.vb" />
     <Compile Include="LDM\Graph\Graph.vb" />
     <Compile Include="LDM\Graph\GraphData.vb" />
@@ -177,7 +179,9 @@
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
     <None Include="Designer.cd" />
-    <Compile Include="NetworkVisualizer.vb" />
+    <Compile Include="Visualize\Lines.vb" />
+    <Compile Include="Visualize\StyleMappings.vb" />
+    <Compile Include="Visualize\NetworkVisualizer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

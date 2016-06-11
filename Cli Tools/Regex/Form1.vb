@@ -55,9 +55,15 @@ Public Class Form1
         Next
 
         options = opt
+
+        Call Button1_Click(Nothing, Nothing)
     End Sub
 
     Private Sub tbRegex_TextChanged(sender As Object, e As EventArgs) Handles tbRegex.TextChanged
         Call Button1_Click(Nothing, Nothing)
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Call CheckBox9_CheckedChanged(Nothing, Nothing)
     End Sub
 End Class

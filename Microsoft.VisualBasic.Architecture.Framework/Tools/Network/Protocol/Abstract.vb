@@ -62,6 +62,30 @@ Namespace Net.Protocols
         Public Const ShortInt As Integer = 2
         Public Const SingleFloat As Integer = 4
         Public Const DecimalInt As Integer = 12
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="addr">IPEndPoint string value likes 127.0.0.1:8080</param>
+        ''' <param name="raw"></param>
+        ''' <returns></returns>
+        ''' <![CDATA[
+        '''
+        ''' Dim rep As RequestStream =
+        '''    "127.0.0.1:80" <= New RequestStream With {
+        '''           ...
+        '''     }
+        ''' ]]>
+        Public Shared Operator <=(addr As String, raw As RawStream) As RequestStream
+            Dim ep As New IPEndPoint(addr)
+            Dim invoke As New AsynInvoke(ep)
+            Dim rep As RequestStream = New RequestStream(invoke.SendMessage(raw.Serialize))
+            Return rep
+        End Operator
+
+        Public Shared Operator >=(addr As String, raw As RawStream) As RequestStream
+            Throw New NotSupportedException
+        End Operator
     End Class
 
     Public Delegate Function LoadObject(Of T)(source As String) As T

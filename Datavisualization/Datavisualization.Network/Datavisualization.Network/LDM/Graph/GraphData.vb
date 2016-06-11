@@ -66,11 +66,12 @@ Namespace Graph
             End Get
         End Property
 
+        Public Property radius As Single
         Public Property mass() As Single
         Public Property initialPostion() As AbstractVector
         Public Property origID() As String
         Public Property Force As Point
-        Public Property Color As Color
+        Public Property Color As Brush
         <DumpNode> Public Property Weights As Double()
 
         ''' <summary>
@@ -80,6 +81,10 @@ Namespace Graph
         ''' <returns></returns>
         ''' <remarks></remarks>
         <DumpNode> Public Property Neighbours As Integer()
+
+        Public Function Clone() As NodeData
+            Return DirectCast(Me.MemberwiseClone, NodeData)
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -98,6 +103,10 @@ Namespace Graph
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        Public Function Clone() As EdgeData
+            Return DirectCast(Me.MemberwiseClone, EdgeData)
         End Function
     End Class
 

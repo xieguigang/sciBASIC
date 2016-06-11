@@ -1,4 +1,4 @@
-'! 
+﻿'! 
 '@file Node.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
@@ -39,23 +39,33 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Node
+    Public Class Node : Inherits ClassObject
+        Implements sIdEnumerable
 
+        ''' <summary>
+        ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
+        ''' </summary>
+        ''' <param name="iId"></param>
+        ''' <param name="iData"></param>
         Public Sub New(iId As String, Optional iData As NodeData = Nothing)
-            ID = iId
-            Data = New NodeData()
             If iData IsNot Nothing Then
-                Data.initialPostion = iData.initialPostion
-                Data.label = iData.label
-                Data.mass = iData.mass
+                Data = iData.Clone
             End If
+
+            ID = iId
             Pinned = False
         End Sub
 
-        Public Property ID() As String
+        ''' <summary>
+        ''' The unique id of this node
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ID() As String Implements sIdEnumerable.Identifier
         Public Property Data() As NodeData
         Public Property Pinned() As Boolean
 

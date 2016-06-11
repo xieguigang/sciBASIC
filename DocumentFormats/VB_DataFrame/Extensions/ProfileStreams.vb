@@ -24,7 +24,7 @@ Public Module ProfileStreams
 
     <Extension>
     Public Function LoadProfiles(Of T As IProfile)(path As String, Optional encoding As Encodings = Encodings.UTF8) As T
-        Dim buf As ProfileTable() = path.LoadCsv(Of ProfileTable)(encoding:=encoding.GetEncodings)
+        Dim buf As ProfileTable() = path.LoadCsv(Of ProfileTable)(encoding:=encoding.GetEncodings).ToArray
         Dim config As Settings(Of T) = Settings(Of T).CreateEmpty
 
         For Each x As ProfileTable In buf

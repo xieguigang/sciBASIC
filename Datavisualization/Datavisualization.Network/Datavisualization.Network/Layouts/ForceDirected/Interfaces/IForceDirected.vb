@@ -1,4 +1,4 @@
-'! 
+﻿'! 
 '@file IForceDirected.cs
 '@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 '		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
@@ -61,8 +61,15 @@ Namespace Layouts.Interfaces
         Sub Clear()
         Sub Calculate(iTimeStep As Single)
         Sub EachEdge(del As EdgeAction)
+        Sub SetPhysics(Stiffness As Single, Repulsion As Single, Damping As Single)
+
+        ''' <summary>
+        ''' 节点的经过计算之后的当前位置可以从这个方法之中获取得到
+        ''' </summary>
+        ''' <param name="del"></param>
         Sub EachNode(del As NodeAction)
         Function Nearest(position As AbstractVector) As NearestPoint
         Function GetBoundingBox() As BoundingBox
+        Function GetPoint(iNode As Node) As LayoutPoint
     End Interface
 End Namespace

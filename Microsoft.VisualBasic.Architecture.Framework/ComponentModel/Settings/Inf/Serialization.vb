@@ -55,7 +55,13 @@ Namespace ComponentModel.Settings.Inf
 
             For Each section As PropertyInfo In __getSections(Of T)()
                 Dim obj As Object = section.GetValue(x, Nothing)
-                Call ClassMapper.ClassDumper(obj, section.PropertyType, ini)
+                If Not obj Is Nothing Then
+                    Call ClassMapper.ClassDumper(obj, section.PropertyType, ini)
+                Else
+                    Dim msg As String = $"Property {section.ToString} for ini section is null."
+                    Call msg.Warning
+                    Call App.LogException(msg)
+                End If
             Next
 
             Return True
@@ -109,8 +115,19 @@ Namespace ComponentModel.Settings.Inf
             End If
         End Function
 
-        Public Function LoadProfile(Of T As Class)() As T
-            Return __getPath(Of T).LoadProfile(Of T)
+        Public Function LoadProfile(Of T As Class)(Optional ByRef fileExists As Boolean = False) As T
+            Dim path As String = __getPath(Of T)()
+
+            If Not path.FileExists Then  ' 文件不存在，则直接写文件了
+                Dim obj As T = Activator.CreateInstance(Of T)
+
+                fileExists = False
+                Call obj.WriteProfile
+                Return obj
+            Else
+                fileExists = True
+                Return path.LoadProfile(Of T)
+            End If
         End Function
     End Module
 End Namespace

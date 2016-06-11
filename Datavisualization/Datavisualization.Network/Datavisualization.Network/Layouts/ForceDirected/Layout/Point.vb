@@ -44,6 +44,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Layouts
 
+    ''' <summary>
+    ''' The position of the node object in the fdg data model.
+    ''' </summary>
     Public Class LayoutPoint
 
         Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)

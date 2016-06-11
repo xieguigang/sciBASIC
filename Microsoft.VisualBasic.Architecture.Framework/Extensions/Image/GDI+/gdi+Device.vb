@@ -4097,7 +4097,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.FillPie(brush, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:

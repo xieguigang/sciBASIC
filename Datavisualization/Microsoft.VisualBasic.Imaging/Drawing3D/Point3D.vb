@@ -9,7 +9,7 @@ Namespace Drawing3D
     '''
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
-    Public Class Point3D
+    Public Structure Point3D
 
         Public Sub New(x As Double, y As Double, Optional z As Double = 0)
             Me.X = x
@@ -59,12 +59,27 @@ Namespace Drawing3D
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
 
-        Public Function Project(viewWidth As Integer, viewHeight As Integer, fov As Integer, viewDistance As Integer)
+        Public Function Project(viewWidth As Integer, viewHeight As Integer, fov As Integer, viewDistance As Integer) As Point3D
             Dim factor As Double, Xn As Double, Yn As Double
             factor = fov / (viewDistance + Me.Z)
             Xn = Me.X * factor + viewWidth / 2
             Yn = Me.Y * factor + viewHeight / 2
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
-    End Class
+
+        Public Shared Sub Project(ByRef x As Single,
+                                  ByRef y As Single,
+                                  ByRef z As Single,
+                                  viewWidth As Integer,
+                                  viewHeight As Integer,
+                                  fov As Integer,
+                                  viewDistance As Integer)
+
+            Dim factor As Double
+
+            factor = fov / (viewDistance + z)
+            x = x * factor + viewWidth / 2
+            y = y * factor + viewHeight / 2
+        End Sub
+    End Structure
 End Namespace

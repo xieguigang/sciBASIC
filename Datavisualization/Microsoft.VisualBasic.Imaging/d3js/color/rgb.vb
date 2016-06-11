@@ -19,10 +19,12 @@ Namespace d3.color
             '       arguments.length <2 ? (r instanceof d3_rgb ? new d3_rgb(r.r, r.g, r.b)
             '      : d3_rgb_parse("" + r, d3_rgb, d3_hsl_rgb))
             '      : new d3_rgb(r, g, b);
+            Throw New NotImplementedException
         End Function
 
         Public Function d3_rgbNumber(value)
             '     Return New d3_rgb_names(value >> 16, value >> 8 & &HFF, value & &HFF)
+            Throw New NotImplementedException
         End Function
 
         Function d3_rgbString(value)

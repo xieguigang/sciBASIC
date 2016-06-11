@@ -39,10 +39,13 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataVisualization.Network.Abstract
+Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge
+    Public Class Edge : Inherits ClassObject
+        Implements Abstract.IInteraction
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId
@@ -57,6 +60,24 @@ Namespace Graph
         Public Property Source() As Node
         Public Property Target() As Node
         Public Property Directed() As Boolean
+
+        Private Property __source As String Implements IInteraction.source
+            Get
+                Return Source.ID
+            End Get
+            Set(value As String)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Private Property __target As String Implements IInteraction.target
+            Get
+                Return Target.ID
+            End Get
+            Set(value As String)
+                Throw New NotImplementedException()
+            End Set
+        End Property
 
         Public Overrides Function GetHashCode() As Integer
             Return ID.GetHashCode()

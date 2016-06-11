@@ -184,6 +184,11 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Return list.ToArray
     End Operator
 
+    ' 因为这个隐式会使得数组被默认转换为本List对象，会导致 + 运算符重载失败，所以在这里将这个隐式转换取消掉
+    'Public Shared Widening Operator CType(array As T()) As List(Of T)
+    '    Return New List(Of T)(array)
+    'End Operator
+
     ''' <summary>
     ''' Find a item in the list
     ''' </summary>

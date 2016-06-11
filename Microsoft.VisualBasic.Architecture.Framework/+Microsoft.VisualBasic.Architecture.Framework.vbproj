@@ -294,6 +294,7 @@
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
     <Compile Include="ConsoleDevices\InnerQueue.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
+    <Compile Include="ConsoleDevices\PrintAsTable.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AbstractBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\AnimatedBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
@@ -314,6 +315,7 @@
     <Compile Include="Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
+    <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />
@@ -334,7 +336,7 @@
     <Compile Include="Tools\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
-    <Compile Include="Text\FormattedParser.vb" />
+    <Compile Include="Text\Parser\FormattedParser.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />

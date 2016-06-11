@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Imaging
 
@@ -11,6 +12,26 @@ Namespace Imaging
         <ExportAPI("Center")>
         <Extension> Public Function Center(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        <Extension>
+        Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As Point
+            Dim xOffset As Integer() = pts.ToArray(Function(x) x.X)
+            Dim yOffset As Integer() = pts.ToArray(Function(x) x.Y)
+            Dim xo, yo As Integer
+
+            If xOffset.Length > 0 Then
+                xo = xOffset.Min
+            End If
+            If yOffset.Length > 0 Then
+                yo = yOffset.Min
+            End If
+
+            Dim size As New Size(xOffset.Max - xOffset.Min, yOffset.Max - yOffset.Min)
+            Dim left As Integer = (frameSize.Width - size.Width) / 2
+            Dim top As Integer = (frameSize.Height - size.Height) / 2
+
+            Return New Point(left - xo, top - yo)
         End Function
 
         Const pi2 As Double = Math.PI / 2.0

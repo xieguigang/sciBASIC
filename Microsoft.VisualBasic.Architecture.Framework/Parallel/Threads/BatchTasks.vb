@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Parallel.Threads
 
@@ -24,11 +26,12 @@ Namespace Parallel.Threads
                                    Optional numThreads As Integer = -1,
                                    Optional TimeInterval As Integer = 1000)
 
-            Dim srcArray As Func(Of Integer)() = (From x As T In source
-                                                  Let task As CommandLine.IORedirectFile =
-                                                      New CommandLine.IORedirectFile(getExe(), getCLI(x))
-                                                  Let runTask As Func(Of Integer) = AddressOf task.Run
-                                                  Select runTask).ToArray
+            Dim srcArray As Func(Of Integer)() =
+                LinqAPI.Exec(Of Func(Of Integer)) <= From x As T In source
+                                                     Let task As IORedirectFile =
+                                                         New IORedirectFile(getExe(), getCLI(x))
+                                                     Let runTask As Func(Of Integer) = AddressOf task.Run
+                                                     Select runTask
             Call BatchTask(srcArray, numThreads, TimeInterval)
         End Sub
 
@@ -76,17 +79,16 @@ Namespace Parallel.Threads
         <Extension>
         Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads As Integer = -1, Optional TimeInterval As Integer = 1000) As T()
             Dim taskPool As New List(Of AsyncHandle(Of T))
-            Dim p As Integer = Scan0
+            Dim p As New Pointer
             Dim resultList As New List(Of T)
 
             If numThreads <= 0 Then
                 numThreads = LQuerySchedule.CPU_NUMBER * 2
             End If
 
-            Do While p <= actions.Length - 1
+            Do While p <= (actions.Length - 1)
                 If taskPool.Count < numThreads Then  ' 向任务池里面添加新的并行任务
-                    Call taskPool.Add(New AsyncHandle(Of T)(actions(p)).Run)
-                    Call p.MoveNext
+                    taskPool += New AsyncHandle(Of T)(actions(++p)).Run
                 End If
 
                 Dim LQuery As AsyncHandle(Of T)() =
@@ -94,6 +96,7 @@ Namespace Parallel.Threads
                                                           In taskPool
                                                           Where task.IsCompleted ' 在这里获得完成的任务
                                                           Select task
+
                 For Each completeTask As AsyncHandle(Of T) In LQuery
                     Call taskPool.Remove(completeTask)
                     Call resultList.Add(completeTask.GetValue)  '  将完成的任务从任务池之中移除然后获取返回值
@@ -107,7 +110,7 @@ Namespace Parallel.Threads
                                       In taskPool.AsParallel  ' 等待剩余的计算任务完成计算过程
                                       Let cli As T = task.GetValue
                                       Select cli
-            Call resultList.Add(WaitForExit)
+            resultList += WaitForExit
 
             Return resultList.ToArray
         End Function

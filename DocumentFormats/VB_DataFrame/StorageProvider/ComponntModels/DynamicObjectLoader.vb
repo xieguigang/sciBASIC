@@ -113,7 +113,7 @@ Namespace StorageProvider.ComponentModels
             Dim Properties As System.Reflection.PropertyInfo() =
                 (From pInfo As System.Reflection.PropertyInfo
                  In GetType(T).GetProperties(System.Reflection.BindingFlags.Public)
-                 Where Scripting.CanbeCast(pInfo.PropertyType)
+                 Where Scripting.IsPrimitive(pInfo.PropertyType)
                  Select pInfo).ToArray
             Dim FilledObject As T = Activator.CreateInstance(Of T)()
 

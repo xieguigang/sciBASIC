@@ -120,16 +120,16 @@ Namespace Graph
             Next
         End Sub
 
-        Public Sub CreateEdges(iDataList As List(Of Pair(Of String, String))) Implements IGraph.CreateEdges
+        Public Sub CreateEdges(iDataList As List(Of KeyValuePair(Of String, String))) Implements IGraph.CreateEdges
             For listTrav As Integer = 0 To iDataList.Count - 1
-                If Not m_nodeSet.ContainsKey(iDataList(listTrav).first) Then
+                If Not m_nodeSet.ContainsKey(iDataList(listTrav).Key) Then
                     Return
                 End If
-                If Not m_nodeSet.ContainsKey(iDataList(listTrav).second) Then
+                If Not m_nodeSet.ContainsKey(iDataList(listTrav).Value) Then
                     Return
                 End If
-                Dim node1 As Node = m_nodeSet(iDataList(listTrav).first)
-                Dim node2 As Node = m_nodeSet(iDataList(listTrav).second)
+                Dim node1 As Node = m_nodeSet(iDataList(listTrav).Key)
+                Dim node2 As Node = m_nodeSet(iDataList(listTrav).Value)
                 CreateEdge(node1, node2)
             Next
         End Sub

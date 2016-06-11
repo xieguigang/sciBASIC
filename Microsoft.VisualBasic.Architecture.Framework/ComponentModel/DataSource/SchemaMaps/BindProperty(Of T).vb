@@ -9,6 +9,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' <typeparam name="T"></typeparam>
     Public Structure BindProperty(Of T As Attribute)
         Implements IReadOnlyId
+        Implements sIdEnumerable
 
         ''' <summary>
         ''' The property object that bind with its custom attribute <see cref="Column"/> of type <typeparamref name="T"/>
@@ -44,6 +45,29 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Get
                 Return [Property] Is Nothing OrElse Column Is Nothing
             End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets a value indicating whether the <see cref="System.Type"/> is one of the primitive types.
+        ''' </summary>
+        ''' <returns>true if the <see cref="System.Type"/> is one of the primitive types; otherwise, false.</returns>
+        Public ReadOnly Property IsPrimitive As Boolean
+            Get
+                Return Scripting.IsPrimitive([Property].PropertyType)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Just enable readonly
+        ''' </summary>
+        ''' <returns></returns>
+        Private Property Identifier As String Implements sIdEnumerable.Identifier
+            Get
+                Return [Property].Name
+            End Get
+            Set(value As String)
+                Throw New NotSupportedException
+            End Set
         End Property
 
         Sub New(attr As T, prop As PropertyInfo)

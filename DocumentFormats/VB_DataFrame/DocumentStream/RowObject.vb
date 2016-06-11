@@ -37,7 +37,12 @@ Namespace DocumentStream
         ''' </summary>
         ''' <param name="raw">A raw string line which read from the Csv text file.</param>
         Sub New(raw As String)
-            _innerColumns = Tokenizer.CharsParser(raw)
+            Try
+                _innerColumns = Tokenizer.CharsParser(raw)
+            Catch ex As Exception
+                ex = New Exception(raw)
+                Throw ex
+            End Try
         End Sub
 
         ''' <summary>

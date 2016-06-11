@@ -13,6 +13,25 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' this is to emulate what's evailable in PHP
+    ''' </summary>
+    ''' 
+    <Extension>
+    Public Function RepeatString(text As String, count As Integer) As String
+        Dim sb = New StringBuilder(text.Length * count)
+        For i As Integer = 0 To count - 1
+            Call sb.Append(text)
+        Next
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>
+    ''' tagName{<paramref name="delimiter"/>}value
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="delimiter"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetTagValue(s As String, Optional delimiter As String = " ") As NamedValue(Of String)
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
@@ -490,7 +509,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>.
+    ''' Line tokens. ==> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>.
     ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
     ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
     ''' 所以可以使用这个函数来进行统一的分行操作)
@@ -544,21 +563,5 @@ Public Module StringHelpers
         End If
 
         Return False
-    End Function
-
-    <ExportAPI("As.Array")>
-    <Extension> Public Function ToArray(source As MatchCollection) As String()
-        Dim LQuery As String() = (From m As Match
-                                  In source
-                                  Select m.Value).ToArray
-        Return LQuery
-    End Function
-
-    <Extension> Public Function ToArray(Of T)(source As MatchCollection, [CType] As Func(Of String, T)) As T()
-        Dim LQuery As T() = (From m As Match
-                             In source
-                             Let s As String = m.Value
-                             Select [CType](s)).ToArray
-        Return LQuery
     End Function
 End Module

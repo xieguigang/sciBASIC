@@ -188,6 +188,7 @@
     <Compile Include="Helpers\Logical.vb" />
     <Compile Include="Helpers\Variable.vb" />
     <Compile Include="Arithmetic.Expression\TokenIcer.vb" />
+    <Compile Include="LinearTrend.vb" />
     <Compile Include="Logical\LogicalEvaluate.vb" />
     <Compile Include="Logical\FuzzyLogic\FuzzyEngine.vb" />
     <Compile Include="Logical\FuzzyLogic\FuzzyRule.vb" />

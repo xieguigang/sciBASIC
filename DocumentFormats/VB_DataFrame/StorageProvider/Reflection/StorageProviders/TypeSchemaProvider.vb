@@ -80,7 +80,7 @@ Namespace StorageProvider.Reflection
         Private Function __generateMask([Property] As System.Reflection.PropertyInfo, [alias] As String) As ComponentModels.StorageProvider
             Dim _getName As String = If(String.IsNullOrEmpty([alias]), [Property].Name, [alias])
 
-            If Scripting.CanbeCast([Property].PropertyType) Then
+            If Scripting.IsPrimitive([Property].PropertyType) Then
                 Dim column As New ColumnAttribute(_getName)  '属性值的类型是简单类型，则其标记的类型只能是普通列
                 Return New ComponentModels.Column(column, [Property])
             End If
@@ -113,7 +113,7 @@ Namespace StorageProvider.Reflection
         Const KeyValuePairObject As String = "Microsoft.VisualBasic.ComponentModel.Collection.Generic.KeyValuePairObject`2"
 
         ''' <summary>
-        ''' 这个属性的类型可以同时允许系统的内建的键值对类型，也可以是<see cref="Microsoft.VisualBasic.ComponentModel.Collection.Generic.KeyValuePairObject(Of TKey, TValue)"/>
+        ''' 这个属性的类型可以同时允许系统的内建的键值对类型，也可以是<see cref="KeyValuePairObject"/>
         ''' </summary>
         ''' <param name="Property"></param>
         ''' <returns></returns>
@@ -129,7 +129,7 @@ Namespace StorageProvider.Reflection
             Dim TKey As Type = GenericEntries.First
             Dim TValue As Type = GenericEntries.Last
 
-            If Not Scripting.CanbeCast(TKey) OrElse Not Scripting.CanbeCast(TValue) Then
+            If Not Scripting.IsPrimitive(TKey) OrElse Not Scripting.IsPrimitive(TValue) Then
                 Return False
             End If
 
@@ -153,7 +153,7 @@ Namespace StorageProvider.Reflection
                     ElementType = Type.GetGenericArguments.First
                 End If
 
-                If Scripting.CanbeCast(ElementType) Then
+                If Scripting.IsPrimitive(ElementType) Then
                     Return ElementType
                 End If
             End If
@@ -183,7 +183,7 @@ Namespace StorageProvider.Reflection
                 Return Nothing
             End If
 
-            If Not Scripting.CanbeCast(TypeDef.Last) Then
+            If Not Scripting.IsPrimitive(TypeDef.Last) Then
                 Return Nothing
             End If
 
