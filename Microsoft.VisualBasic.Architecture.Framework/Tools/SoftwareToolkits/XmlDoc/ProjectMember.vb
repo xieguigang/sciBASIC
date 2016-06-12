@@ -8,65 +8,41 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Xml
 
-''' <summary>
-''' Base class for a method or property.
-''' </summary>
-Public Class ProjectMember
-	Private m_name As [String]
-	Private projectType As ProjectType
-	Private m_summary As [String]
-	Private m_returns As [String]
+Namespace SoftwareToolkits.XmlDoc.Assembly
 
-	Public Property Name() As [String]
-		Get
-			Return Me.m_name
-		End Get
+    ''' <summary>
+    ''' Base class for a method or property.
+    ''' </summary>
+    Public Class ProjectMember
 
-		Set
-			Me.m_name = value
-		End Set
-	End Property
+        Dim projectType As ProjectType
 
-	Public Property Summary() As [String]
-		Get
-			Return Me.m_summary
-		End Get
+        Public Property Name() As [String]
+        Public Property Summary() As [String]
+        Public Property Returns() As [String]
 
-		Set
-			Me.m_summary = value
-		End Set
-	End Property
-	Public Property Returns() As [String]
-		Get
-			Return Me.m_returns
-		End Get
+        Public ReadOnly Property Type() As ProjectType
+            Get
+                Return Me.projectType
+            End Get
+        End Property
 
-		Set
-			Me.m_returns = value
-		End Set
-	End Property
+        Public Sub New(projectType As ProjectType)
+            Me.projectType = projectType
+        End Sub
 
-	Public ReadOnly Property Type() As ProjectType
-		Get
-			Return Me.projectType
-		End Get
-	End Property
+        Public Sub LoadFromNode(xn As XmlNode)
+            Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
 
-	Public Sub New(projectType As ProjectType)
-		Me.projectType = projectType
-	End Sub
+            If summaryNode IsNot Nothing Then
+                Me._Summary = summaryNode.InnerText
+            End If
 
-	Public Sub LoadFromNode(xn As XmlNode)
-		Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
+            Dim returnsNode As XmlNode = xn.SelectSingleNode("returns")
 
-		If summaryNode IsNot Nothing Then
-			Me.m_summary = summaryNode.InnerText
-		End If
-
-		Dim returnsNode As XmlNode = xn.SelectSingleNode("returns")
-
-		If returnsNode IsNot Nothing Then
-			Me.m_returns = returnsNode.InnerText
-		End If
-	End Sub
-End Class
+            If returnsNode IsNot Nothing Then
+                Me._Returns = returnsNode.InnerText
+            End If
+        End Sub
+    End Class
+End Namespace

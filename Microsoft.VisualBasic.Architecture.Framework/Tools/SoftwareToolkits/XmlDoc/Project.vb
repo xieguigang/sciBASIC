@@ -8,124 +8,119 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Xml
 
-''' <summary>
-''' Describes a Project, a collection of related types and namespaces.  In this case, one Project = one DLL.
-''' </summary>
-Public Class Project
-	Private m_name As [String]
-	Private m_namespaces As Dictionary(Of [String], ProjectNamespace)
+Namespace SoftwareToolkits.XmlDoc.Assembly
 
-	Public Property Name() As [String]
-		Get
-			Return Me.m_name
-		End Get
+    ''' <summary>
+    ''' Describes a Project, a collection of related types and namespaces.  In this case, one Project = one DLL.
+    ''' </summary>
+    Public Class Project
 
-		Set
-			Me.m_name = value
-		End Set
-	End Property
+        Private m_namespaces As Dictionary(Of [String], ProjectNamespace)
 
-	Public ReadOnly Property Namespaces() As IEnumerable(Of ProjectNamespace)
-		Get
-			Return Me.m_namespaces.Values
-		End Get
-	End Property
+        Public Property Name() As [String]
 
-	Public Sub New(name As [String])
-		Me.m_name = name
-		Me.m_namespaces = New Dictionary(Of String, ProjectNamespace)()
-	End Sub
+        Public ReadOnly Property Namespaces() As IEnumerable(Of ProjectNamespace)
+            Get
+                Return Me.m_namespaces.Values
+            End Get
+        End Property
 
-	Public Function GetNamespace(namespacePath As [String]) As ProjectNamespace
-		If Me.m_namespaces.ContainsKey(namespacePath.ToLower()) Then
-			Return Me.m_namespaces(namespacePath.ToLower())
-		End If
+        Public Sub New(name As [String])
+            Me._Name = name
+            Me.m_namespaces = New Dictionary(Of String, ProjectNamespace)()
+        End Sub
 
-		Return Nothing
-	End Function
+        Public Function GetNamespace(namespacePath As [String]) As ProjectNamespace
+            If Me.m_namespaces.ContainsKey(namespacePath.ToLower()) Then
+                Return Me.m_namespaces(namespacePath.ToLower())
+            End If
 
-	Public Function EnsureNamespace(namespacePath As [String]) As ProjectNamespace
-		Dim pn As ProjectNamespace = Me.GetNamespace(namespacePath)
+            Return Nothing
+        End Function
 
-		If pn Is Nothing Then
-			pn = New ProjectNamespace(Me)
-			pn.Path = namespacePath
+        Public Function EnsureNamespace(namespacePath As [String]) As ProjectNamespace
+            Dim pn As ProjectNamespace = Me.GetNamespace(namespacePath)
 
-			Me.m_namespaces.Add(namespacePath.ToLower(), pn)
-		End If
+            If pn Is Nothing Then
+                pn = New ProjectNamespace(Me)
+                pn.Path = namespacePath
 
-		Return pn
-	End Function
+                Me.m_namespaces.Add(namespacePath.ToLower(), pn)
+            End If
 
-	Friend Sub ProcessXmlDoc(document As XmlDocument)
-		Dim memberNodes As XmlNodeList = document.DocumentElement.SelectNodes("members/member")
+            Return pn
+        End Function
 
-		For Each memberNode As XmlNode In memberNodes
-			Dim memberDescription As [String] = memberNode.Attributes.GetNamedItem("name").InnerText
+        Friend Sub ProcessXmlDoc(document As XmlDocument)
+            Dim memberNodes As XmlNodeList = document.DocumentElement.SelectNodes("members/member")
 
-			Dim firstSemicolon As Integer = memberDescription.IndexOf(":")
+            For Each memberNode As XmlNode In memberNodes
+                Dim memberDescription As [String] = memberNode.Attributes.GetNamedItem("name").InnerText
 
-			If firstSemicolon = 1 Then
-				Dim typeChar As Char = memberDescription(0)
+                Dim firstSemicolon As Integer = memberDescription.IndexOf(":")
 
-				If typeChar = "T"C Then
-					Dim typeFullName As [String] = memberDescription.Substring(2, memberDescription.Length - 2)
-					Dim lastPeriod As Integer = typeFullName.LastIndexOf(".")
+                If firstSemicolon = 1 Then
+                    Dim typeChar As Char = memberDescription(0)
 
-					lastPeriod = typeFullName.LastIndexOf(".")
+                    If typeChar = "T"c Then
+                        Dim typeFullName As [String] = memberDescription.Substring(2, memberDescription.Length - 2)
+                        Dim lastPeriod As Integer = typeFullName.LastIndexOf(".")
 
-					If lastPeriod > 0 Then
-						Dim namespaceFullName As [String] = typeFullName.Substring(0, lastPeriod)
+                        lastPeriod = typeFullName.LastIndexOf(".")
 
-						Dim typeShortName As [String] = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
+                        If lastPeriod > 0 Then
+                            Dim namespaceFullName As [String] = typeFullName.Substring(0, lastPeriod)
 
-						Me.EnsureNamespace(namespaceFullName).EnsureType(typeShortName).LoadFromNode(memberNode)
-					End If
-				Else
-					Dim memberFullName As [String] = memberDescription.Substring(2, memberDescription.Length - 2)
+                            Dim typeShortName As [String] = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
 
-					Dim firstParen As Integer = memberFullName.IndexOf("(")
+                            Me.EnsureNamespace(namespaceFullName).EnsureType(typeShortName).LoadFromNode(memberNode)
+                        End If
+                    Else
+                        Dim memberFullName As [String] = memberDescription.Substring(2, memberDescription.Length - 2)
 
-					If firstParen > 0 Then
-						memberFullName = memberFullName.Substring(0, firstParen)
-					End If
+                        Dim firstParen As Integer = memberFullName.IndexOf("(")
 
-					Dim lastPeriod As Integer = memberFullName.LastIndexOf(".")
+                        If firstParen > 0 Then
+                            memberFullName = memberFullName.Substring(0, firstParen)
+                        End If
 
-					If lastPeriod > 0 Then
-						Dim typeFullName As [String] = memberFullName.Substring(0, lastPeriod)
+                        Dim lastPeriod As Integer = memberFullName.LastIndexOf(".")
 
-						lastPeriod = typeFullName.LastIndexOf(".")
+                        If lastPeriod > 0 Then
+                            Dim typeFullName As [String] = memberFullName.Substring(0, lastPeriod)
 
-						If lastPeriod > 0 Then
-							Dim namespaceFullName As [String] = typeFullName.Substring(0, lastPeriod)
+                            lastPeriod = typeFullName.LastIndexOf(".")
 
-							lastPeriod = typeFullName.LastIndexOf(".")
+                            If lastPeriod > 0 Then
+                                Dim namespaceFullName As [String] = typeFullName.Substring(0, lastPeriod)
 
-							If lastPeriod > 0 Then
-								Dim typeShortName As [String] = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
+                                lastPeriod = typeFullName.LastIndexOf(".")
+
+                                If lastPeriod > 0 Then
+                                    Dim typeShortName As [String] = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
 
 
-								lastPeriod = memberFullName.LastIndexOf(".")
+                                    lastPeriod = memberFullName.LastIndexOf(".")
 
-								If lastPeriod > 0 Then
-									Dim memberShortName As [String] = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
+                                    If lastPeriod > 0 Then
+                                        Dim memberShortName As [String] = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
 
-									Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
+                                        Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
 
-									Dim pt As ProjectType = pn.EnsureType(typeShortName)
+                                        Dim pt As ProjectType = pn.EnsureType(typeShortName)
 
-									If typeChar = "M"C Then
-										pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
-									ElseIf typeChar = "P"C Then
-										pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
-									End If
-								End If
-							End If
-						End If
-					End If
-				End If
-			End If
-		Next
-	End Sub
-End Class
+                                        If typeChar = "M"c Then
+                                            pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
+                                        ElseIf typeChar = "P"c Then
+                                            pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Next
+        End Sub
+    End Class
+End Namespace

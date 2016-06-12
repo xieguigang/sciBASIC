@@ -6,74 +6,69 @@ Imports System.Linq
 Imports System.Text
 Imports System.Threading.Tasks
 
-''' <summary>
-''' A namespace within a project -- typically a collection of related types.  Equates to a .net Namespace.
-''' </summary>
-Public Class ProjectNamespace
-	Private project As Project
-	Private m_path As [String]
-	Private m_types As Dictionary(Of [String], ProjectType)
+Namespace SoftwareToolkits.XmlDoc.Assembly
 
-	Public Property Path() As [String]
-		Get
-			Return Me.m_path
-		End Get
+    ''' <summary>
+    ''' A namespace within a project -- typically a collection of related types.  Equates to a .net Namespace.
+    ''' </summary>
+    Public Class ProjectNamespace
+        Private project As Project
 
-		Set
-			Me.m_path = value
-		End Set
-	End Property
+        Private m_types As Dictionary(Of [String], ProjectType)
 
-	Public ReadOnly Property Types() As IEnumerable(Of ProjectType)
-		Get
-			Return Me.m_types.Values
-		End Get
-	End Property
-	Public Sub New(project As Project)
-		Me.project = project
-		Me.m_types = New Dictionary(Of String, ProjectType)()
-	End Sub
+        Public Property Path() As [String]
 
-	Public Overloads Function [GetType](typeName As [String]) As ProjectType
-		If Me.m_types.ContainsKey(typeName.ToLower()) Then
-			Return Me.m_types(typeName.ToLower())
-		End If
+        Public ReadOnly Property Types() As IEnumerable(Of ProjectType)
+            Get
+                Return Me.m_types.Values
+            End Get
+        End Property
+        Public Sub New(project As Project)
+            Me.project = project
+            Me.m_types = New Dictionary(Of String, ProjectType)()
+        End Sub
 
-		Return Nothing
-	End Function
+        Public Overloads Function [GetType](typeName As [String]) As ProjectType
+            If Me.m_types.ContainsKey(typeName.ToLower()) Then
+                Return Me.m_types(typeName.ToLower())
+            End If
 
-	Public Function EnsureType(typeName As [String]) As ProjectType
-		Dim pt As ProjectType = Me.[GetType](typeName)
+            Return Nothing
+        End Function
 
-		If pt Is Nothing Then
-			pt = New ProjectType(Me)
-			pt.Name = typeName
+        Public Function EnsureType(typeName As [String]) As ProjectType
+            Dim pt As ProjectType = Me.[GetType](typeName)
 
-			Me.m_types.Add(typeName.ToLower(), pt)
-		End If
+            If pt Is Nothing Then
+                pt = New ProjectType(Me)
+                pt.Name = typeName
 
-		Return pt
-	End Function
+                Me.m_types.Add(typeName.ToLower(), pt)
+            End If
 
-	Public Sub ExportMarkdownFile(folderPath As [String], pageTemplate As [String])
-		Dim typeList As New StringBuilder()
+            Return pt
+        End Function
 
-		Dim projectTypes As SortedList(Of [String], ProjectType) = New SortedList(Of String, ProjectType)()
+        Public Sub ExportMarkdownFile(folderPath As [String], pageTemplate As [String])
+            Dim typeList As New StringBuilder()
 
-		For Each pt As ProjectType In Me.Types
-			projectTypes.Add(pt.Name, pt)
-		Next
+            Dim projectTypes As SortedList(Of [String], ProjectType) = New SortedList(Of String, ProjectType)()
 
-		For Each pt As ProjectType In projectTypes.Values
-			typeList.AppendLine("[" & pt.Name & "](T" & Me.Path & "." & pt.Name & ".md)")
-		Next
+            For Each pt As ProjectType In Me.Types
+                projectTypes.Add(pt.Name, pt)
+            Next
 
-		Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
+            For Each pt As ProjectType In projectTypes.Values
+                typeList.AppendLine("[" & pt.Name & "](T" & Me.Path & "." & pt.Name & ".md)")
+            Next
 
-		If pageTemplate IsNot Nothing Then
-			text = pageTemplate.Replace("[content]", text)
-		End If
+            Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
 
-        Call text.SaveTo(folderPath & "/N" & Me.Path & ".md")
-    End Sub
-End Class
+            If pageTemplate IsNot Nothing Then
+                text = pageTemplate.Replace("[content]", text)
+            End If
+
+            Call text.SaveTo(folderPath & "/N" & Me.Path & ".md")
+        End Sub
+    End Class
+End Namespace

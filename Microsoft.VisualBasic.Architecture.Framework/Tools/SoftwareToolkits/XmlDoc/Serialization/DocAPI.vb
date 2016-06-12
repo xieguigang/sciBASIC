@@ -4,7 +4,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace SoftwareToolkits.XmlDoc
+Namespace SoftwareToolkits.XmlDoc.Serialization
 
     <PackageNamespace("Assembly.Doc.API")>
     Public Module DocAPI

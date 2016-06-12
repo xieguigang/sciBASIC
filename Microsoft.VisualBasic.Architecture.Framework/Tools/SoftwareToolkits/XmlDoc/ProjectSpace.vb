@@ -9,90 +9,93 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Xml
 
-''' <summary>
-''' A collection of one or more projects put together, and their attendant namespaces.
-''' </summary>
-Public Class ProjectSpace
-	Private projects As List(Of Project)
+Namespace SoftwareToolkits.XmlDoc.Assembly
 
-	Public Sub New()
-		Me.projects = New List(Of Project)()
-	End Sub
+    ''' <summary>
+    ''' A collection of one or more projects put together, and their attendant namespaces.
+    ''' </summary>
+    Public Class ProjectSpace
+        Private projects As List(Of Project)
 
-	Public Function GetProject(name As [String]) As Project
-		For Each p As Project In Me.projects
-			If p.Name.Equals(name) Then
-				Return p
-			End If
-		Next
+        Public Sub New()
+            Me.projects = New List(Of Project)()
+        End Sub
 
-		Return Nothing
-	End Function
+        Public Function GetProject(name As [String]) As Project
+            For Each p As Project In Me.projects
+                If p.Name.Equals(name) Then
+                    Return p
+                End If
+            Next
 
-	Private Function EnsureProject(name As [String]) As Project
-		Dim p As Project = Me.GetProject(name)
+            Return Nothing
+        End Function
 
-		If p Is Nothing Then
-			p = New Project(name)
+        Private Function EnsureProject(name As [String]) As Project
+            Dim p As Project = Me.GetProject(name)
 
-			Me.projects.Add(p)
-		End If
+            If p Is Nothing Then
+                p = New Project(name)
 
-		Return p
-	End Function
+                Me.projects.Add(p)
+            End If
 
-	Public Sub ImportFromXmlDocFolder(path As [String])
-		If Not Directory.Exists(path) Then
-			Throw New InvalidOperationException()
-		End If
+            Return p
+        End Function
 
-		Dim di As New DirectoryInfo(path)
+        Public Sub ImportFromXmlDocFolder(path As [String])
+            If Not Directory.Exists(path) Then
+                Throw New InvalidOperationException()
+            End If
 
-		Dim files As FileInfo() = di.GetFiles()
+            Dim di As New DirectoryInfo(path)
 
-		For Each fi As FileInfo In files
-			Me.LoadFile(fi)
-		Next
-	End Sub
+            Dim files As FileInfo() = di.GetFiles()
 
-	Public Sub ImportFromXmlDocFile(path As [String])
-		If Not File.Exists(path) Then
-			Throw New InvalidOperationException()
-		End If
+            For Each fi As FileInfo In files
+                Me.LoadFile(fi)
+            Next
+        End Sub
 
-		Dim fi As New FileInfo(path)
+        Public Sub ImportFromXmlDocFile(path As [String])
+            If Not File.Exists(path) Then
+                Throw New InvalidOperationException()
+            End If
 
-		Me.LoadFile(fi)
-	End Sub
+            Dim fi As New FileInfo(path)
 
-	Private Sub LoadFile(fi As FileInfo)
-		If fi.Extension.ToLower() = ".xml" Then
-			Using fs As New FileStream(fi.FullName, FileMode.Open)
-				Using xr As XmlReader = XmlReader.Create(fs)
-					Dim xd As New XmlDocument()
+            Me.LoadFile(fi)
+        End Sub
 
-					xd.Load(xr)
+        Private Sub LoadFile(fi As FileInfo)
+            If fi.Extension.ToLower() = ".xml" Then
+                Using fs As New FileStream(fi.FullName, FileMode.Open)
+                    Using xr As XmlReader = XmlReader.Create(fs)
+                        Dim xd As New XmlDocument()
 
-					Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
+                        xd.Load(xr)
 
-					If nameNode IsNot Nothing Then
-						Dim p As Project = Me.EnsureProject(nameNode.InnerText)
+                        Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
 
-						p.ProcessXmlDoc(xd)
-					End If
-				End Using
-			End Using
-		End If
-	End Sub
-	Public Sub ExportMarkdownFiles(folderPath As [String], pageTemplate As [String])
-		For Each p As Project In Me.projects
-			For Each pn As ProjectNamespace In p.Namespaces
-				pn.ExportMarkdownFile(folderPath, pageTemplate)
+                        If nameNode IsNot Nothing Then
+                            Dim p As Project = Me.EnsureProject(nameNode.InnerText)
 
-				For Each pt As ProjectType In pn.Types
-					pt.ExportMarkdownFile(folderPath, pageTemplate)
-				Next
-			Next
-		Next
-	End Sub
-End Class
+                            p.ProcessXmlDoc(xd)
+                        End If
+                    End Using
+                End Using
+            End If
+        End Sub
+        Public Sub ExportMarkdownFiles(folderPath As [String], pageTemplate As [String])
+            For Each p As Project In Me.projects
+                For Each pn As ProjectNamespace In p.Namespaces
+                    pn.ExportMarkdownFile(folderPath, pageTemplate)
+
+                    For Each pt As ProjectType In pn.Types
+                        pt.ExportMarkdownFile(folderPath, pageTemplate)
+                    Next
+                Next
+            Next
+        End Sub
+    End Class
+End Namespace

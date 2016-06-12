@@ -549,9 +549,9 @@
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
     <Compile Include="Text\TextGrepScriptEngine.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Member.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Doc.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\DocAPI.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
     <Compile Include="Tools\ZipLib.vb" />
     <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
