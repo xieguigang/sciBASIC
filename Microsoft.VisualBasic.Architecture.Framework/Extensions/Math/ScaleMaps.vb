@@ -9,6 +9,16 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
                   Publisher:="xie.guigang@live.com")>
 Public Module ScaleMaps
 
+    ''' <summary>
+    ''' Trims the data ranges, 
+    ''' if n in <paramref name="Dbl"/> vector is less than <paramref name="min"/>, then set n = min;
+    ''' else if n is greater than <paramref name="max"/>, then set n value to max, 
+    ''' else do nothing.
+    ''' </summary>
+    ''' <param name="Dbl"></param>
+    ''' <param name="min"></param>
+    ''' <param name="max"></param>
+    ''' <returns></returns>
     <Extension> Public Function TrimRanges(Dbl As Double(), min As Double, max As Double) As Double()
         If Dbl.IsNullOrEmpty Then
             Return New Double() {}

@@ -2,7 +2,9 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector
+Imports Microsoft.VisualBasic.Linq
 
 Namespace StorageProvider.ComponentModels
 
@@ -102,6 +104,26 @@ Namespace StorageProvider.ComponentModels
 
         Public ReadOnly Property DeclaringType As Type
 
+        Public ReadOnly Iterator Property Properties As IEnumerable(Of StorageProvider)
+            Get
+                For Each p In Me.CollectionColumns.SafeQuery
+                    Yield p
+                Next
+                For Each p In Me.Columns.SafeQuery
+                    Yield p
+                Next
+                For Each p In Me.EnumColumns
+                    Yield p
+                Next
+                For Each p In Me.KeyValuePairColumns
+                    Yield p
+                Next
+                If Not Me.MetaAttributes Is Nothing Then
+                    Yield MetaAttributes
+                End If
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return DeclaringType.FullName
         End Function
@@ -124,7 +146,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         ''' <summary>
-        ''' 从目标类型对象之中可以读取这个属性的值将数据写入到文件之中
+        ''' For write csv data file.(从目标类型对象之中可以读取这个属性的值将数据写入到文件之中)
         ''' </summary>
         ''' <returns></returns>
         Public Function CopyReadDataFromObject() As SchemaProvider
@@ -138,7 +160,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         ''' <summary>
-        ''' 可以在读取Csv文件之中的数据之后将数据写入到这个属性之中从而将数据加载进入内存之中
+        ''' For create object instance.(可以在读取Csv文件之中的数据之后将数据写入到这个属性之中从而将数据加载进入内存之中)
         ''' </summary>
         ''' <returns></returns>
         Public Function CopyWriteDataToObject() As SchemaProvider
@@ -190,17 +212,23 @@ Namespace StorageProvider.ComponentModels
             Return Not LQuery.IsNullOrEmpty
         End Function
 
-        Public Shared Function CreateObject(Type As Type, Explicit As Boolean) As SchemaProvider
+        ''' <summary>
+        ''' Creates the data frame schema for the specific object type.
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="Explicit"></param>
+        ''' <returns></returns>
+        Public Shared Function CreateObject(type As Type, Optional Explicit As Boolean = False) As SchemaProvider
             Dim Properties As Dictionary(Of PropertyInfo, StorageProvider) =
-                Csv.StorageProvider.Reflection.TypeSchemaProvider.GetProperties(Type, Explicit)
+                TypeSchemaProvider.GetProperties(type, Explicit)
 
-            Dim Schema As SchemaProvider = New SchemaProvider With {
+            Dim Schema As New SchemaProvider With {
                 .Columns = GetColumns(Properties),
                 .CollectionColumns = GetCollectionColumns(Properties),
                 .EnumColumns = GetEnumColumns(Properties),
                 .MetaAttributes = GetMetaAttributeColumn(Properties),
                 .KeyValuePairColumns = GetKeyValuePairColumn(Properties),
-                ._DeclaringType = Type
+                ._DeclaringType = type
             }
 
             Return Schema
@@ -218,6 +246,11 @@ Namespace StorageProvider.ComponentModels
             Return KeyValuePairs
         End Function
 
+        Const DynamicsNotFound As String = "Explicit option is set TRUE, but could not found Meta attribute for the dynamics property!"
+
+        Public Sub New()
+        End Sub
+
         ''' <summary>
         ''' 对于<see cref="DynamicPropertyBase"/>的继承对象类型，也会自动解析出来的，假若<see cref="MetaAttribute"/>没有被定义的话
         ''' </summary>
@@ -231,11 +264,11 @@ Namespace StorageProvider.ComponentModels
                 Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
 
                 If prop Is Nothing Then
-                    Dim msg As String = "Explicit option is set TRUE, but could not found Meta attribute for the dynamics property!"
-                    Throw New Exception(msg)
+                    Throw New Exception(DynamicsNotFound)
                 End If
 
                 Dim type As Type = prop.DeclaringType
+
                 If type.IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
                     type = type.BaseType
                     Dim metaProp = type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),

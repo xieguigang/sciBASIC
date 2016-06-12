@@ -305,6 +305,7 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
+    <Compile Include="Extensions\IO\Includes.vb" />
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />

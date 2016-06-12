@@ -2,59 +2,61 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-<PackageNamespace("IO.NetFile")>
-Public Module NetFile
+Namespace FileIO
 
-    ''' <summary>
-    ''' 将网络文件映射为本地文件，这个可以同时兼容http或者本地文件路径
-    ''' </summary>
-    ''' <param name="url"></param>
-    ''' <returns></returns>
-    <ExportAPI("MapNetFile")>
-    <Extension>
-    Public Function MapNetFile(url As String) As String
-        Dim path As String = url.GetMapPath
+    <PackageNamespace("IO.NetFile")>
+    Public Module NetFile
 
-        If path.FileExists Then
-            Return path
-        Else  ' 下载数据然后缓存
-            Call DownloadFile(url, path)
-            Return path
-        End If
-    End Function
+        ''' <summary>
+        ''' 将网络文件映射为本地文件，这个可以同时兼容http或者本地文件路径
+        ''' </summary>
+        ''' <param name="url"></param>
+        ''' <returns></returns>
+        <ExportAPI("MapNetFile")>
+        <Extension>
+        Public Function MapNetFile(url As String) As String
+            Dim path As String = url.GetMapPath
 
-    <ExportAPI("NetFile.FileExists")>
-    <Extension>
-    Public Function NetFileExists(url As String) As Boolean
-        Return url.GetMapPath.FileExists
-    End Function
+            If path.FileExists Then
+                Return path
+            Else  ' 下载数据然后缓存
+                Call DownloadFile(url, path)
+                Return path
+            End If
+        End Function
 
-    ''' <summary>
-    ''' 网络文件转换为本地文件路径
-    ''' </summary>
-    ''' <param name="url"></param>
-    ''' <returns></returns>
-    ''' 
-    <ExportAPI("Map.Path")>
-    <Extension>
-    Public Function GetMapPath(url As String) As String
-        If InStr(url, "http://", CompareMethod.Text) +
-            InStr(url, "https://", CompareMethod.Text) > 0 Then
+        <ExportAPI("NetFile.FileExists")>
+        <Extension>
+        Public Function NetFileExists(url As String) As Boolean
+            Return url.GetMapPath.FileExists
+        End Function
 
-            url = Strings.Split(url, "//").Last
-            url = App.AppSystemTemp & "/" & url.NormalizePathString
+        ''' <summary>
+        ''' 网络文件转换为本地文件路径
+        ''' </summary>
+        ''' <param name="url"></param>
+        ''' <returns></returns>
+        ''' 
+        <ExportAPI("Map.Path")>
+        <Extension>
+        Public Function GetMapPath(url As String) As String
+            If InStr(url, "http://", CompareMethod.Text) +
+                InStr(url, "https://", CompareMethod.Text) > 0 Then
 
-            Dim folders As String =
-                FileIO.FileSystem.GetParentPath(url)
-            Call FileIO.FileSystem.CreateDirectory(folders)
+                url = Strings.Split(url, "//").Last
+                url = App.AppSystemTemp & "/" & url.NormalizePathString
 
-            Return url
-        Else
-            If url.FileExists Then
+                Dim folders As String = FileSystem.GetParentPath(url)
+                Call FileSystem.CreateDirectory(folders)
+
                 Return url
             Else
-                Throw New Exception(url & " is a unrecognized url path!")
+                If url.FileExists Then
+                    Return url
+                Else
+                    Throw New Exception(url & " is a unrecognized url path!")
+                End If
             End If
-        End If
-    End Function
-End Module
+        End Function
+    End Module
+End Namespace

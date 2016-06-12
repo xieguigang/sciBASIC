@@ -287,7 +287,7 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Shared Widening Operator CType(Line As String) As RowObject
             Dim row As List(Of String) = Tokenizer.CharsParser(Line)
-            Return New RowObject(Row)
+            Return New RowObject(row)
         End Operator
 
         Public Shared Function TryParse(Line As String) As RowObject

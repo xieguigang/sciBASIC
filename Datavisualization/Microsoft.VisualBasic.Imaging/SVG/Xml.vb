@@ -8,8 +8,20 @@ Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG
 
+    ''' <summary>
+    ''' The basically SVG XML document node, it can be tweaks on the style by using CSS
+    ''' </summary>
     Public MustInherit Class node
+
+        ''' <summary>
+        ''' CSS style definition
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property style As String
+        ''' <summary>
+        ''' node class id, just like the id in HTML, you can also using this attribute to tweaks on the style by CSS.
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property [class] As String
 
         Public Overrides Function ToString() As String
@@ -114,6 +126,12 @@ Namespace SVG
             Return xml.SaveTo(Path, encoding)
         End Function
 
+        ''' <summary>
+        ''' Save this svg document object into the file system.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function SaveAsXml(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return SaveAsXml(Path, encoding.GetEncodings)
         End Function
