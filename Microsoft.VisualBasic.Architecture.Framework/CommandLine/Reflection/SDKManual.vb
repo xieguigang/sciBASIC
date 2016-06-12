@@ -12,6 +12,11 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property DocPath As String = $"{App.ExecutablePath.TrimFileExt}.txt"
 
+        ''' <summary>
+        ''' 这个是用于在终端上面显示的无格式的文本输出
+        ''' </summary>
+        ''' <param name="CLI"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function LaunchManual(CLI As Interpreter) As Integer
             Dim assm As New ApplicationDetails
@@ -39,6 +44,32 @@ Namespace CommandLine.Reflection
             Call manual.ShowManual()
 
             Return 0
+        End Function
+
+        ''' <summary>
+        ''' 这个是用于保存于文件之中的markdown格式的有格式标记的文本输出
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function MarkdownDoc(App As Interpreter) As String
+            Dim sb As New StringBuilder($"{Application.ProductName} [version {Application.ProductVersion}]")
+            Dim Index As Integer = 1
+            Dim type As Type = App.Type
+
+            Call sb.AppendLine()
+            Call sb.AppendLine($"Module AssemblyName: {type.Assembly.Location.ToFileURL}")
+            Call sb.AppendLine("Root namespace: " & App.Type.FullName)
+            Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary())
+            Call sb.AppendLine("Commands")
+            Call sb.AppendLine("--------------------------------------------------------------------------------")
+
+            For Each CmdlEntry As APIEntryPoint In App.Values
+                sb.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
+                Index += 1
+            Next
+
+            Return sb.ToString
         End Function
     End Module
 End Namespace

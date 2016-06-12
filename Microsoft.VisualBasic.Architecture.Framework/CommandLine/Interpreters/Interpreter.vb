@@ -140,7 +140,7 @@ Namespace CommandLine
                     Call SDKManual.LaunchManual(CLI:=Me)
                 End If
 
-                Return SDKdocs().SaveTo(DocPath).CLICode
+                Return doc.SaveTo(DocPath).CLICode
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
@@ -189,27 +189,12 @@ Namespace CommandLine
         Const BAD_COMMAND_NAME As String = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
 
         ''' <summary>
-        ''' Generate the sdk document for the target program assembly.(生成目标应用程序的命令行帮助文档)
+        ''' Generate the sdk document for the target program assembly.(生成目标应用程序的命令行帮助文档，markdown格式的)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function SDKdocs() As String
-            Dim sb As StringBuilder = New StringBuilder($"{Application.ProductName} [version {Application.ProductVersion}]")
-            Dim Index As Integer = 1
-
-            Call sb.AppendLine()
-            Call sb.AppendLine($"Module AssemblyName: {__API_InfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
-            Call sb.AppendLine("Root namespace: " & Me._nsRoot)
-            Call sb.AppendLine(vbCrLf & vbCrLf & HelpSummary())
-            Call sb.AppendLine("Commands")
-            Call sb.AppendLine("--------------------------------------------------------------------------------")
-
-            For Each CmdlEntry As APIEntryPoint In __API_InfoHash.Values
-                sb.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
-                Index += 1
-            Next
-
-            Return sb.ToString
+            Return Me.MarkdownDoc
         End Function
 
         ''' <summary>
@@ -346,7 +331,10 @@ Namespace CommandLine
 
             Me._nsRoot = type.Namespace
             Me._Stack = caller
+            Me._Type = type
         End Sub
+
+        Public ReadOnly Property Type As Type
 
         ''' <summary>
         ''' 导出所有符合条件的静态方法
