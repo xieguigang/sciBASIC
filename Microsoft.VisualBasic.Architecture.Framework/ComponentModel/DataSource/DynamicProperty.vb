@@ -102,6 +102,17 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         <XmlElement> Public Property x As T
 
+        <ScriptIgnore> Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return String.IsNullOrEmpty(Name) AndAlso x Is Nothing
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Creates a object bind with a specific <see cref="Name"/>.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="value"></param>
         Sub New(name As String, value As T)
             Me.Name = name
             Me.x = value

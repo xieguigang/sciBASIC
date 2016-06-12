@@ -89,7 +89,7 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' 目标类型能否由字符串转换过来？？
+        ''' Does this type can be cast from the <see cref="String"/> type?(目标类型能否由字符串转换过来??)
         ''' </summary>
         ''' <param name="targetType"></param>
         ''' <returns></returns>

@@ -7,7 +7,7 @@ Namespace CommandLine
     ''' </summary>
     Public Class CliResCommon
 
-        Private ReadOnly CHUNK_BUFFER As Type = GetType(Byte())
+        Private ReadOnly bufType As Type = GetType(Byte())
         Private ReadOnly Resource As Dictionary(Of String, Func(Of Byte()))
 
         ReadOnly EXPORT As String
@@ -15,15 +15,15 @@ Namespace CommandLine
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="DataCache">资源文件的数据缓存文件夹</param>
-        Sub New(DataCache As String, ResourceManager As Type)
+        ''' <param name="EXPORT">资源文件的数据缓存文件夹</param>
+        Sub New(EXPORT As String, ResourceManager As Type)
             Dim tag As BindingFlags = BindingFlags.NonPublic Or BindingFlags.Static
             Dim propBufs = From [Property] As PropertyInfo
                            In ResourceManager.GetProperties(bindingAttr:=tag)
-                           Where [Property].PropertyType.Equals(CHUNK_BUFFER)
+                           Where [Property].PropertyType.Equals(bufType)
                            Select [Property]
 
-            Me.EXPORT = DataCache
+            Me.EXPORT = EXPORT
             Me.Resource = propBufs.ToDictionary(Of String, Func(Of Byte()))(
                 Function(x) x.Name,
                 Function(x) New Func(Of Byte())(Function() DirectCast(x.GetValue(Nothing, Nothing), Byte())))

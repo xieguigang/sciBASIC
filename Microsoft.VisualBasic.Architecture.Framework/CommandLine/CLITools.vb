@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace CommandLine
 
@@ -20,8 +21,8 @@ Namespace CommandLine
         ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function CreateParameterValues(Tokens As String(), IncludeLogicSW As Boolean) As List(Of KeyValuePair(Of String, String))
-            Dim list As New List(Of KeyValuePair(Of String, String))
+        Public Function CreateParameterValues(Tokens As String(), IncludeLogicSW As Boolean) As List(Of NamedValue(Of String))
+            Dim list As New List(Of NamedValue(Of String))
 
             If Tokens.IsNullOrEmpty Then
                 Return list
@@ -30,7 +31,7 @@ Namespace CommandLine
                 If IsPossibleLogicSW(Tokens(Scan0)) AndAlso
                     IncludeLogicSW Then
 
-                    Call list.Add(Tokens(Scan0), CStr(True))
+                    list += New NamedValue(Of String)(Tokens(Scan0), CStr(True))
                 Else
                     Return list
                 End If
@@ -43,8 +44,8 @@ Namespace CommandLine
                 Dim [Next] As Integer = i + 1
 
                 If [Next] = Tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
-                    If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(Tokens(i)) AndAlso IncludeLogicSW Then
-                        Call list.Add(New KeyValuePair(Of String, String)(Tokens(i), True))
+                    If IsPossibleLogicSW(Tokens(i)) AndAlso IncludeLogicSW Then
+                        list += New NamedValue(Of String)(Tokens(i), True)
                     End If
 
                     Exit For
@@ -52,14 +53,14 @@ Namespace CommandLine
 
                 Dim s As String = Tokens([Next])
 
-                If Microsoft.VisualBasic.CommandLine.IsPossibleLogicSW(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
+                If IsPossibleLogicSW(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
-                        Call list.Add(New KeyValuePair(Of String, String)(Tokens(i), True))
+                        list += New NamedValue(Of String)(Tokens(i), True)
                     End If
                     Continue For
                 Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
                     Dim key As String = Tokens(i).ToLower
-                    Call list.Add(New KeyValuePair(Of String, String)(key, s))
+                    list += New NamedValue(Of String)(key, s)
 
                     i += 1
                 End If
@@ -133,7 +134,7 @@ Namespace CommandLine
 
             Dim SingleValue As String = ""
             Dim CommandLine As CommandLine = New CommandLine With {
-                ._name = args(Scan0).ToLower,
+                .Name = args(Scan0).ToLower,
                 .Tokens = args.ToArray,
                 .BoolFlags = GetLogicSWs(args.Skip(1).ToArray, SingleValue),
                 ._CLICommandArgvs = Join(args)
@@ -340,19 +341,18 @@ Namespace CommandLine
                                     args As IEnumerable(Of KeyValuePair(Of String, String)),
                                     Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
 
-            Dim parameters As List(Of KeyValuePair(Of String, String)) =
-                New List(Of KeyValuePair(Of String, String))
+            Dim parameters As New List(Of NamedValue(Of String))
             Dim Tokens As New List(Of String) From {Name}
 
             For Each Item As KeyValuePair(Of String, String) In args
                 Dim key As String = Item.Key.ToLower
-                Dim param As New KeyValuePair(Of String, String)(key, Item.Value)
+                Dim param As New NamedValue(Of String)(key, Item.Value)
                 Call parameters.Add(param)
                 Call Tokens.AddRange(New String() {key, Item.Value})
             Next
 
             Return New CommandLine With {
-                ._name = Name,
+                .Name = Name,
                 .__lstParameter = parameters,
                 .Tokens = Tokens.Join(bFlags).ToArray,
                 .BoolFlags = If(bFlags.IsNullOrEmpty, New String() {}, bFlags.ToArray)
@@ -396,8 +396,8 @@ Namespace CommandLine
             Next
 
             For Each arg In args1.__lstParameter
-                Dim value2 As String = args2(arg.Key)
-                If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
+                Dim value2 As String = args2(arg.Name)
+                If Not String.Equals(value2, arg.x, StringComparison.OrdinalIgnoreCase) Then
                     Return False
                 End If
             Next
