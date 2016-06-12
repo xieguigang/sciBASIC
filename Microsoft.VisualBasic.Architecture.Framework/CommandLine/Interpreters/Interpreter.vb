@@ -248,7 +248,7 @@ Namespace CommandLine
         <ExportAPI("?", Usage:="? [CommandName]", Info:="Show Application help", Example:="? example_commandName")>
         Public Function Help(CommandName As String) As Integer
             If String.IsNullOrEmpty(CommandName) Then 'List all commands.
-                Call Console.WriteLine(HelpSummary)
+                Call Console.WriteLine(HelpSummary(False))
             Else
                 If __API_InfoHash.ContainsKey(CommandName.ToLower.ShadowCopy(CommandName)) Then
                     Call __API_InfoHash(CommandName).PrintHelp
@@ -270,34 +270,6 @@ Namespace CommandLine
 
             Return 0
         End Function
-
-        ''' <summary>
-        ''' Returns the summary brief help information of all of the commands in current cli interpreter.
-        ''' (枚举出本CLI解释器之中的所有的命令的帮助的摘要信息)
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function HelpSummary() As String
-            Dim sb As StringBuilder = New StringBuilder(1024)
-            Dim nameMaxLen As Integer =
-                __API_InfoHash.Values _
-                .Select(Function(x) Len(x.Name)).Max
-
-            Call sb.AppendLine(ListAllCommandsPrompt)
-            Call sb.AppendLine()
-
-            For Each commandInfo As APIEntryPoint In __API_InfoHash.Values
-                Dim blank As String =
-                    New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
-                Dim line As String = String.Format(" {0}:  {1}{2}", commandInfo.Name, blank, commandInfo.Info)
-
-                Call sb.AppendLine(line)
-            Next
-
-            Return sb.ToString
-        End Function
-
-        Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"
 
         ''' <summary>
         ''' Returns the command entry info list array.
