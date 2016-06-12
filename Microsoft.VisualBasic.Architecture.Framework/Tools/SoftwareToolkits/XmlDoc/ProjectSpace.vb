@@ -86,6 +86,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 End Using
             End If
         End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="folderPath"></param>
+        ''' <param name="pageTemplate">a markdown page template. This token: [content] will be replaced with generated content.</param>
         Public Sub ExportMarkdownFiles(folderPath As [String], pageTemplate As [String])
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
@@ -96,6 +102,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     Next
                 Next
             Next
+        End Sub
+
+        Public Const TemplateToken As String = "[content]"
+
+        Public Sub ExportMarkdownFiles(folderPath As [String])
+            Call ExportMarkdownFiles(folderPath, TemplateToken)
         End Sub
     End Class
 End Namespace

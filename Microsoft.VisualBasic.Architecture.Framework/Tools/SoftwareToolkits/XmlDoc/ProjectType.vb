@@ -117,7 +117,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     methodList.AppendLine(CleanText(pm.Summary))
 
                     If pm.Returns IsNot Nothing Then
-                        methodList.AppendLine("_returns: " & pm.Returns)
+                        methodList.AppendLine("_returns: " & pm.Returns & "_")
                     End If
                 Next
             End If
@@ -139,13 +139,13 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 Next
             End If
 
-            Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N{1}.md)_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
+            Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}.md)_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
 
             If pageTemplate IsNot Nothing Then
                 text = pageTemplate.Replace("[content]", text)
             End If
 
-            Call text.SaveTo(folderPath & "/T" & Me.[Namespace].Path & "." & Me.Name & ".md")
+            Call text.SaveTo(folderPath & "/T-" & Me.[Namespace].Path & "." & Me.Name & ".md", Encoding.UTF8)
         End Sub
 
         Public Sub LoadFromNode(xn As XmlNode)

@@ -59,7 +59,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Next
 
             For Each pt As ProjectType In projectTypes.Values
-                typeList.AppendLine("[" & pt.Name & "](T" & Me.Path & "." & pt.Name & ".md)")
+                typeList.AppendLine("[" & pt.Name & "](T-" & Me.Path & "." & pt.Name & ".md)")
             Next
 
             Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
@@ -68,7 +68,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 text = pageTemplate.Replace("[content]", text)
             End If
 
-            Call text.SaveTo(folderPath & "/N" & Me.Path & ".md")
+            Call text.SaveTo(folderPath & "/N-" & Me.Path & ".md", Encoding.UTF8)
         End Sub
     End Class
 End Namespace
