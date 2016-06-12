@@ -158,10 +158,10 @@ Namespace CommandLine
 
         Const EX_KEY_DUPLICATED As String = "[DEBUG] The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
-        Private Function __checkKeyDuplicated(source As IEnumerable(Of KeyValuePair(Of String, String))) As String()
-            Dim LQuery = (From param As KeyValuePair(Of String, String)
+        Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
+            Dim LQuery = (From param As NamedValue(Of String)
                           In source
-                          Select param.Key.ToLower
+                          Select param.Name.ToLower
                           Group By ToLower Into Group).ToArray
 
             Return LinqAPI.Exec(Of String) <= From group

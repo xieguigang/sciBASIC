@@ -134,10 +134,14 @@ Namespace CommandLine
                 Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
                 Dim doc As String = SDKdocs()
 
-                If CLI.GetBoolean("--print") Then
-                    Call Console.WriteLine(doc)
+                If Not CLI.GetBoolean("--file") Then
+                    If CLI.GetBoolean("--print") Then
+                        Call Console.WriteLine(doc)
+                    Else
+                        Call SDKManual.LaunchManual(CLI:=Me)
+                    End If
                 Else
-                    Call SDKManual.LaunchManual(CLI:=Me)
+                    ' 只会写文件而不会在终端打开帮助窗口
                 End If
 
                 Return doc.SaveTo(DocPath).CLICode
