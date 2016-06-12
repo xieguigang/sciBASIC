@@ -163,7 +163,7 @@ Public Module LevenshteinDistance
 
         Dim distinct = (New [Set](query) + New [Set](subject)).ToArray.ToArray(Function(x) DirectCast(x, T))
         Dim dict = (From index As Integer
-                    In distinct.Sequence.Offset(a)
+                    In distinct.Sequence(offSet:=a)
                     Select ch = ChrW(index),
                         obj = distinct(index - a)) _
                         .ToDictionary(Function(x) x.obj, elementSelector:=Function(x) x.ch)
