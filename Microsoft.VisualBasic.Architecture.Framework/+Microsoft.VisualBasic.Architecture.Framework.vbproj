@@ -338,6 +338,11 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
