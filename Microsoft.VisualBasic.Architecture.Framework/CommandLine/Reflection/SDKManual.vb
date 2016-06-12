@@ -53,20 +53,18 @@ Namespace CommandLine.Reflection
         ''' 
         <Extension>
         Public Function MarkdownDoc(App As Interpreter) As String
-            Dim sb As New StringBuilder($"{Application.ProductName} [version {Application.ProductVersion}]")
-            Dim Index As Integer = 1
+            Dim sb As New StringBuilder($"# {Application.ProductName} [version {Application.ProductVersion}]")
             Dim type As Type = App.Type
 
             Call sb.AppendLine()
-            Call sb.AppendLine($"Module AssemblyName: {type.Assembly.Location.ToFileURL}")
-            Call sb.AppendLine("Root namespace: " & App.Type.FullName)
+            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}")
+            Call sb.AppendLine("**Root namespace**: " & App.Type.FullName)
             Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary(True))
-            Call sb.AppendLine("Commands")
-            Call sb.AppendLine("--------------------------------------------------------------------------------")
+            Call sb.AppendLine("## Commands")
+            Call sb.AppendLine("--------------------------")
 
             For Each CmdlEntry As APIEntryPoint In App.Values
-                sb.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
-                Index += 1
+                sb.AppendLine(CmdlEntry.HelpInformation(md:=True))
             Next
 
             Return sb.ToString
@@ -88,14 +86,21 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
 
-            Dim indent As String = If(markdown, "+ ", "")
+            If markdown Then
+                Call sb.AppendLine("|Function API|Info|")
+                Call sb.AppendLine("|------------|----|")
+            End If
 
             For Each commandInfo As APIEntryPoint In App.Values
-                Dim blank As String =
-                    New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
-                Dim line As String = $" {indent}{commandInfo.Name}:  {blank}{commandInfo.Info}"
+                If Not markdown Then
+                    Dim blank As String =
+                        New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
+                    Dim line As String = $" {commandInfo.Name}:  {blank}{commandInfo.Info}"
 
-                Call sb.AppendLine(line)
+                    Call sb.AppendLine(line)
+                Else
+                    Call sb.AppendLine($"|{commandInfo.Name}|{commandInfo.Info}|")
+                End If
             Next
 
             Return sb.ToString
