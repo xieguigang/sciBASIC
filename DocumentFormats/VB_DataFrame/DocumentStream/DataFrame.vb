@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Language
 
 Namespace DocumentStream
 
@@ -38,7 +39,7 @@ Namespace DocumentStream
         ''' <param name="MappingData">{oldFieldName, newFieldName}</param>
         ''' <remarks></remarks>
         Public Sub ChangeMapping(MappingData As Dictionary(Of String, String))
-            For Each ColumnName In MappingData
+            For Each ColumnName As KeyValuePair(Of String, String) In MappingData
                 Dim p As Integer = __columnList.IndexOf(ColumnName.Key)
                 If Not p = -1 Then '由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
                     __columnList(p) = ColumnName.Value
@@ -60,16 +61,19 @@ Namespace DocumentStream
         End Function
 
         Private Shared Function __createSchemaOridinal(df As DataFrame) As Dictionary(Of String, Integer)
-            Dim arrayCache = df.__columnList.ToArray
+            Dim arrayCache As String() = df.__columnList.ToArray
 
             Try
-                Return arrayCache.Sequence.ToDictionary(Function(oridinal) arrayCache(oridinal), elementSelector:=Function(oridinal) oridinal)
+                Return arrayCache.Sequence _
+                    .ToDictionary(Function(oridinal) arrayCache(oridinal),
+                                  Function(oridinal) oridinal)
             Catch ex As Exception
-                Dim sBuilder As StringBuilder = New StringBuilder("There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!")
-                Call sBuilder.AppendLine("Here is the column header keys in you data: " & vbCrLf & vbCrLf & "   " & String.Join(vbTab, arrayCache.ToArray(Of String)(Function(s) "[" & s & "]").ToArray))
-                Call sBuilder.AppendLine(vbCrLf & "Internal Exception Details:" & vbCrLf & vbCrLf & ex.ToString)
+                Dim sb As New StringBuilder("There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!")
+                Call sb.AppendLine("Here is the column header keys in you data: ")
+                Call sb.AppendLine()
+                Call sb.AppendLine("   " & String.Join(vbTab, arrayCache.ToArray(Of String)(Function(s) "[" & s & "]").ToArray))
 
-                Throw New DataException(sBuilder.ToString)
+                Throw New DataException(sb.ToString, ex)
             End Try
         End Function
 
@@ -79,15 +83,18 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateDataSource() As DynamicObjectLoader()
-            Dim LQuery As DynamicObjectLoader() = (From i As Integer In Me.RowNumbers.Sequence.AsParallel
-                                                   Let Line As Csv.DocumentStream.RowObject = Me._innerTable(i)  '已经去掉了首行标题行了的
-                                                   Select row = New DynamicObjectLoader With {
-                                                       .LineNumber = i,
-                                                       .RowData = Line,
-                                                       .Schema = Me.SchemaOridinal,
-                                                       ._innerDataFrame = Me
-                                                   }
-                                                   Order By row.LineNumber Ascending).ToArray
+            Dim LQuery As DynamicObjectLoader() =
+                LinqAPI.Exec(Of DynamicObjectLoader) <= From i As Integer
+                                                        In Me.RowNumbers.Sequence.AsParallel
+                                                        Let Line As DocumentStream.RowObject =
+                                                            Me._innerTable(i)  '已经去掉了首行标题行了的
+                                                        Select row = New DynamicObjectLoader With {
+                                                            .LineNumber = i,
+                                                            .RowData = Line,
+                                                            .Schema = Me.SchemaOridinal,
+                                                            ._innerDataFrame = Me
+                                                        }
+                                                        Order By row.LineNumber Ascending
             Return LQuery
         End Function
 
@@ -209,7 +216,7 @@ Namespace DocumentStream
         End Function
 
         Protected Friend Overrides Function __createTableVector() As RowObject()
-            Dim readBuffer = {CType(Me.__columnList, RowObject)}.ToList
+            Dim readBuffer As New List(Of RowObject)({CType(Me.__columnList, RowObject)})
             Call readBuffer.AddRange(_innerTable)
             Return readBuffer.ToArray
         End Function
@@ -319,15 +326,18 @@ Namespace DocumentStream
         'End Sub
 
         Public Function Take(ColumnList As String()) As DataFrame
-            Dim PQuery = From Column In ColumnList Select Me.__columnList.IndexOf(Column) '
+            Dim PQuery As IEnumerable(Of Integer) =
+                From Column As String
+                In ColumnList
+                Select Me.__columnList.IndexOf(Column) '
             Dim pList As List(Of Integer) = PQuery.ToList   'Location pointer to the column
-            Dim NewTable = New List(Of RowObject)
+            Dim NewTable As New List(Of RowObject)
 
             Call Me.Reset()
 
             Do While Me.Read
-                Dim Query = From p In pList Select __currentLine.Column(p) '
-                NewTable.Add(Query.ToArray)
+                Dim Query As IEnumerable(Of String) = From p In pList Select __currentLine.Column(p) '
+                NewTable.Add(New RowObject(Query))
             Loop
 
             Return New DataFrame With {
@@ -338,19 +348,20 @@ Namespace DocumentStream
         End Function
 
         Public Iterator Function GetEnumerator2() As IEnumerator(Of DynamicObjectLoader) Implements IEnumerable(Of DynamicObjectLoader).GetEnumerator
-            Dim ColumnSchema = (From i As Integer
-                                In Me.__columnList.Sequence
-                                Select New KeyValuePair(Of String, Integer)(Me.__columnList(i), i)) _
-                                    .ToDictionary(Function(itm) itm.Key,
-                                                  Function(itm) itm.Value)
-            For Each Item As DynamicObjectLoader In (From i As Integer In Me.RowNumbers.Sequence
-                                                     Let Line As RowObject = Me(i)
-                                                     Let loader = New DynamicObjectLoader With {
-                                                         .LineNumber = i,
-                                                         .RowData = Line,
-                                                         .Schema = ColumnSchema
-                                                     }
-                                                     Select loader).ToArray
+            Dim ColumnSchema As Dictionary(Of String, Integer) =
+                (From i As Integer
+                 In Me.__columnList.Sequence
+                 Select New KeyValuePair(Of String, Integer)(Me.__columnList(i), i)) _
+                       .ToDictionary(Function(itm) itm.Key,
+                                     Function(itm) itm.Value)
+            For Each Item As DynamicObjectLoader In From i As Integer In Me.RowNumbers.Sequence
+                                                    Let Line As RowObject = Me(i)
+                                                    Let loader = New DynamicObjectLoader With {
+                                                        .LineNumber = i,
+                                                        .RowData = Line,
+                                                        .Schema = ColumnSchema
+                                                    }
+                                                    Select loader
                 Yield Item
             Next
         End Function

@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace StorageProvider.ComponentModels
@@ -106,16 +107,16 @@ Namespace StorageProvider.ComponentModels
 
         Public ReadOnly Iterator Property Properties As IEnumerable(Of StorageProvider)
             Get
-                For Each p In Me.CollectionColumns.SafeQuery
+                For Each p As CollectionColumn In Me.CollectionColumns.SafeQuery
                     Yield p
                 Next
-                For Each p In Me.Columns.SafeQuery
+                For Each p As Column In Me.Columns.SafeQuery
                     Yield p
                 Next
-                For Each p In Me.EnumColumns
+                For Each p As [Enum] In Me.EnumColumns
                     Yield p
                 Next
-                For Each p In Me.KeyValuePairColumns
+                For Each p As KeyValuePair In Me.KeyValuePairColumns
                     Yield p
                 Next
                 If Not Me.MetaAttributes Is Nothing Then
@@ -178,38 +179,65 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Function CacheOrdinal(GetOrdinal As GetOrdinal) As SchemaProvider
-            For Each Column In Columns
+            For Each Column As StorageProvider In Columns
                 Column.Ordinal = GetOrdinal(Column.Name)
             Next
-            For Each Column In CollectionColumns
+            For Each Column As StorageProvider In CollectionColumns
                 Column.Ordinal = GetOrdinal(Column.Name)
             Next
-            For Each Column In EnumColumns
+            For Each Column As StorageProvider In EnumColumns
                 Column.Ordinal = GetOrdinal(Column.Name)
             Next
-            For Each Column In KeyValuePairColumns
+            For Each Column As StorageProvider In KeyValuePairColumns
                 Column.Ordinal = GetOrdinal(Column.Name)
             Next
 
             Return Me
         End Function
 
+        ''' <summary>
+        ''' 从域名称来判断
+        ''' </summary>
+        ''' <param name="Name"></param>
+        ''' <returns></returns>
         Public Function ContainsField(Name As String) As Boolean
-            Dim LQuery = (From p In Columns Where String.Equals(Name, p.Name) Select p).ToArray
-            If Not LQuery.IsNullOrEmpty Then
+            Dim LQuery As StorageProvider =
+                LinqAPI.DefaultFirst(Of Column) <= From p As Column
+                                                   In Columns
+                                                   Where String.Equals(Name, p.Name)
+                                                   Select p
+            If Not LQuery Is Nothing Then
                 Return True
             End If
-            Dim ColLQuery = (From p In Me.CollectionColumns Where String.Equals(Name, p.Name) Select p).ToArray
-            Return Not ColLQuery.IsNullOrEmpty
+            LQuery =
+                LinqAPI.DefaultFirst(Of CollectionColumn) <= From p As CollectionColumn
+                                                             In Me.CollectionColumns
+                                                             Where String.Equals(Name, p.Name)
+                                                             Select p
+            Return Not LQuery Is Nothing
         End Function
 
+        ''' <summary>
+        ''' 从所绑定的属性来判断
+        ''' </summary>
+        ''' <param name="[Property]"></param>
+        ''' <returns></returns>
+        ''' <remarks>这个函数还需要进行一些绑定的映射</remarks>
         Public Function ContainsProperty([Property] As PropertyInfo) As Boolean
-            Dim LQuery = (From p In Columns Where [Property].Equals(p.BindProperty) Select p).ToArray
-            If Not LQuery.IsNullOrEmpty Then
+            Dim LQuery As StorageProvider =
+                LinqAPI.DefaultFirst(Of Column) <= From p As Column
+                                                   In Columns
+                                                   Where [Property].Equals(p.BindProperty)
+                                                   Select p
+            If Not LQuery Is Nothing Then
                 Return True
             End If
-            Dim ColLQuery = (From p In Me.CollectionColumns Where [Property].Equals(p.BindProperty) Select p).ToArray
-            Return Not LQuery.IsNullOrEmpty
+            LQuery =
+                LinqAPI.DefaultFirst(Of CollectionColumn) <= From p As CollectionColumn
+                                                             In Me.CollectionColumns
+                                                             Where [Property].Equals(p.BindProperty)
+                                                             Select p
+            Return Not LQuery Is Nothing
         End Function
 
         ''' <summary>
@@ -240,10 +268,18 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Shared Function GetKeyValuePairColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As KeyValuePair()
-            Dim KeyValuePairs = (From [Property] In Properties.AsParallel
-                                 Where [Property].Value.ProviderId = Reflection.ProviderIds.KeyValuePair
-                                 Select DirectCast([Property].Value, KeyValuePair)).ToArray
-            Return KeyValuePairs
+            Return __gets(Of KeyValuePair)(Properties, Function(type) type = ProviderIds.KeyValuePair)
+        End Function
+
+        Private Shared Function __gets(Of T As StorageProvider)(
+                                 Properties As Dictionary(Of PropertyInfo, StorageProvider),
+                                 ProviderId As Func(Of Reflection.ProviderIds, Boolean)) As T()
+            Dim LQuery As T() =
+                LinqAPI.Exec(Of T) <= From [Property] As StorageProvider
+                                      In Properties.Values.AsParallel
+                                      Where ProviderId([Property].ProviderId) = True
+                                      Select DirectCast([Property], T)
+            Return LQuery
         End Function
 
         Const DynamicsNotFound As String = "Explicit option is set TRUE, but could not found Meta attribute for the dynamics property!"
@@ -257,9 +293,9 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="Properties"></param>
         ''' <returns></returns>
         Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As MetaAttribute
-            Dim MetaAttributes = (From [Property] In Properties
-                                  Where [Property].Value.ProviderId = Reflection.ProviderIds.MetaAttribute
-                                  Select DirectCast([Property].Value, MetaAttribute)).FirstOrDefault
+            Dim MetaAttributes As MetaAttribute =
+                __gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
+
             If MetaAttributes Is Nothing Then
                 Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
 
@@ -271,8 +307,9 @@ Namespace StorageProvider.ComponentModels
 
                 If type.IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
                     type = type.BaseType
-                    Dim metaProp = type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),
-                                                    BindingFlags.Public Or BindingFlags.Instance)
+                    Dim metaProp As PropertyInfo =
+                        type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),
+                                         BindingFlags.Public Or BindingFlags.Instance)
                     type = type.GetGenericArguments.First
                     MetaAttributes = New MetaAttribute(New Reflection.MetaAttribute(type), metaProp)
                 End If
@@ -282,25 +319,16 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Shared Function GetEnumColumns(Properties As Dictionary(Of PropertyInfo, ComponentModels.StorageProvider)) As [Enum]()
-            Dim EnumColumns = (From [Property] In Properties
-                               Where [Property].Value.ProviderId = Reflection.ProviderIds.Enum
-                               Select DirectCast([Property].Value, ComponentModels.Enum)).ToArray
-            Return EnumColumns
+            Return __gets(Of [Enum])(Properties, Function(type) type = ProviderIds.Enum)
         End Function
 
         Private Shared Function GetCollectionColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As CollectionColumn()
-            Dim CollectionColumns = (From [Property] In Properties
-                                     Where [Property].Value.ProviderId = Reflection.ProviderIds.CollectionColumn
-                                     Select DirectCast([Property].Value, ComponentModels.CollectionColumn)).ToArray
-            Return CollectionColumns
+            Return __gets(Of CollectionColumn)(Properties, Function(type) type = ProviderIds.CollectionColumn)
         End Function
 
         Private Shared Function GetColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As Column()
-            Dim Columns = (From [Property] In Properties
-                           Let Mask = [Property].Value
-                           Where Mask.ProviderId = Reflection.ProviderIds.Column OrElse Mask.ProviderId = Reflection.ProviderIds.NullMask
-                           Select DirectCast([Property].Value, Column)).ToArray
-            Return Columns
+            Return __gets(Of Column)(Properties,
+                                     Function(type) type = Reflection.ProviderIds.Column OrElse type = Reflection.ProviderIds.NullMask)
         End Function
     End Class
 End Namespace

@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.IEnumerations
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -183,9 +184,10 @@ Namespace Serials.PeriodAnalysis
         End Function
 
         <ExportAPI("Data.ConvertToCsv")>
-        Public Function ConvertData(sample As SamplingData) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
-            Dim DataFile As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File = New DocumentFormat.Csv.DocumentStream.File
-            Dim Row = New Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.RowObject From {"Sampling"}
+        Public Function ConvertData(sample As SamplingData) As DocumentStream.File
+            Dim DataFile As New DocumentStream.File
+            Dim Row As New DocumentStream.RowObject From {"Sampling"}
+
             For i As Integer = 0 To sample.TimePoints
                 Dim n = TimePoint.GetData(i, sample.Peaks)
                 If n = 0.0R Then
@@ -193,10 +195,11 @@ Namespace Serials.PeriodAnalysis
                 End If
                 Call Row.Add(n)
             Next
-            Call DataFile.Add(Row)
-            Row = New DocumentFormat.Csv.DocumentStream.RowObject From {"Filted"}
 
-            Dim avg = (From p In sample.FiltedData Select p.Value).ToArray.Average
+            Call DataFile.Add(Row)
+            Row = New DocumentStream.RowObject From {"Filted"}
+
+            Dim avg = (From p In sample.FiltedData Select p.Value).Average
             For i As Integer = 0 To sample.TimePoints
                 Dim n = TimePoint.GetData(i, sample.FiltedData)
                 If n = 0.0R Then
