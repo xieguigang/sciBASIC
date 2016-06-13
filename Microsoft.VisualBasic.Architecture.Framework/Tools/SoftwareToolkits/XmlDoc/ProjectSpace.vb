@@ -1,4 +1,4 @@
-' Copyright (c) Bendyline LLC. All rights reserved. Licensed under the Apache License, Version 2.0.
+﻿' Copyright (c) Bendyline LLC. All rights reserved. Licensed under the Apache License, Version 2.0.
 '    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. 
 
 
@@ -53,7 +53,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim files As FileInfo() = di.GetFiles()
 
             For Each fi As FileInfo In files
-                Me.LoadFile(fi)
+                Try
+                    Call Me.LoadFile(fi)   ' 可能有其他的不是CLR Assembly XML的文件在这里，忽略掉这个错误
+                Catch ex As Exception
+                    ex = New Exception(fi.FullName, ex)
+                    Call App.LogException(ex)
+                End Try
             Next
         End Sub
 
