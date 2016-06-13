@@ -1,5 +1,6 @@
 ﻿Imports System.Net
 Imports Microsoft.VisualBasic.Net.Abstract
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Net.Protocols.Reflection
 

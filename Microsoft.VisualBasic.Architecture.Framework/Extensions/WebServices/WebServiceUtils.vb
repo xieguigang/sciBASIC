@@ -1,18 +1,18 @@
-﻿Imports System.Text.RegularExpressions
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.IO
+﻿Imports System.IO
 Imports System.Net
+Imports System.Net.Security
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Security.Cryptography.X509Certificates
+Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.HtmlParser
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.HtmlParser
+Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.Utility
-Imports System.Security.Cryptography.X509Certificates
-Imports System.Net.Security
 
 ''' <summary>
 ''' The extension module for web services works.

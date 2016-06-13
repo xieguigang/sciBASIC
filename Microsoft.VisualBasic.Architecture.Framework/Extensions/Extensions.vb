@@ -1,31 +1,27 @@
-﻿Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Runtime.Serialization
-Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Binary
+﻿Imports System.ComponentModel
 Imports System.Drawing
+Imports System.IO
 Imports System.Net
-Imports System.Text.RegularExpressions
 Imports System.Reflection
-Imports System.ComponentModel
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization.BinaryDumping
-
-#If FRAMEWORD_CORE Then
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-#End If
-
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Similarity
 
 #If FRAMEWORD_CORE Then
 

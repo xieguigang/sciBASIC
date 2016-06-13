@@ -1,10 +1,11 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Win32
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Parallel.Linq
+Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Win32
 
 Namespace Parallel
 

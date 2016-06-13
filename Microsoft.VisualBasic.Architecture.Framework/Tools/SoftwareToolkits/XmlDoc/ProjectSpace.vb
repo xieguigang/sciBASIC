@@ -9,6 +9,7 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Xml
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
@@ -52,7 +53,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
             Dim di As New DirectoryInfo(path)
 
-            Dim files As FileInfo() = di.GetFiles()
+            Dim files As IEnumerable(Of FileInfo) =
+                (ls - l - wildcards("*.xml") <= path) _
+                .Select(AddressOf FileIO.FileSystem.GetFileInfo)
 
             For Each fi As FileInfo In files
                 Try
@@ -65,7 +68,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         End Sub
 
         Public Sub ImportFromXmlDocFile(path As String)
-            If Not File.Exists(path) Then
+            If Not path.FileExists Then
                 Throw New InvalidOperationException()
             End If
 
