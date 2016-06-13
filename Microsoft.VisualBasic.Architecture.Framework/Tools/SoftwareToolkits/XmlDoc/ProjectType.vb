@@ -117,6 +117,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     methodList.AppendLine(CleanText(pm.Summary))
 
                     If pm.Returns IsNot Nothing Then
+                        methodList.AppendLine()
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
                     End If
                 Next

@@ -22,7 +22,7 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
         <ExportAPI("Load")>
         Public Function Load(path As String) As Doc
             Try
-                Return path.LoadXml(Of Doc)(preprocess:=AddressOf __trim)
+                Return path.LoadXml(Of Doc)(preprocess:=AddressOf TrimAssemblyDoc)
             Catch ex As Exception
                 Call ex.PrintException
                 Throw ex
@@ -40,7 +40,7 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
         Const code As String = "<code>.+?</code>"
         Const example As String = "<example>.*?</example>"
 
-        Private Function __trim(doc As String) As String
+        Public Function TrimAssemblyDoc(doc As String) As String
             Dim sb As StringBuilder = New StringBuilder(doc)
             Dim ms As String() = Regex.Matches(doc, cref, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
 
@@ -62,8 +62,6 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
 
             doc = sb.__boldParam
 
-            Call doc.SaveTo("x:\ffff.xml", Encoding.Unicode)
-
             Return doc
         End Function
 
@@ -73,7 +71,7 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
             For Each m As String In ms
                 Dim bold As String = m.__trans
                 bold = Mid(bold, 2, bold.Length - 2)
-                bold = $"***{bold}***"
+                bold = $"**{bold}**"
                 Call sb.Replace(m, bold)
             Next
 
@@ -82,7 +80,7 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
             For Each m As String In ms
                 Dim bold As String = m.__trans
                 bold = Mid(bold, 2, bold.Length - 2)
-                bold = $"***{bold}***"
+                bold = $"**{bold}**"
                 Call sb.Replace(m, bold)
             Next
 
@@ -92,7 +90,7 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
                 Dim bold As String = m.__trans
                 Dim name As String = Regex.Match(bold, """[^""]*""").Value
                 bold = bold.Replace(name, (Mid(name, 2, name.Length - 2)))
-                bold = $"***{bold}***"
+                bold = $"**{bold}**"
                 Call sb.Replace(m, bold)
             Next
 

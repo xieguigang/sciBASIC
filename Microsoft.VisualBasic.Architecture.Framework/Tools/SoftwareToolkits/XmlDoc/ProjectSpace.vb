@@ -68,23 +68,24 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         End Sub
 
         Private Sub LoadFile(fi As FileInfo)
-            If fi.Extension.ToLower() = ".xml" Then
-                Using fs As New FileStream(fi.FullName, FileMode.Open)
-                    Using xr As XmlReader = XmlReader.Create(fs)
-                        Dim xd As New XmlDocument()
+            Using fs As New FileStream(fi.FullName, FileMode.Open)
+                Dim streamWriter As New StreamReader(fs)
+                Dim s As New StringReader(Serialization.TrimAssemblyDoc(streamWriter.ReadToEnd))
 
-                        xd.Load(xr)
+                Using xr As XmlReader = XmlReader.Create(s)
+                    Dim xd As New XmlDocument()
 
-                        Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
+                    xd.Load(xr)
 
-                        If nameNode IsNot Nothing Then
-                            Dim p As Project = Me.EnsureProject(nameNode.InnerText)
+                    Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
 
-                            p.ProcessXmlDoc(xd)
-                        End If
-                    End Using
+                    If nameNode IsNot Nothing Then
+                        Dim p As Project = Me.EnsureProject(nameNode.InnerText)
+
+                        p.ProcessXmlDoc(xd)
+                    End If
                 End Using
-            End If
+            End Using
         End Sub
 
         ''' <summary>
