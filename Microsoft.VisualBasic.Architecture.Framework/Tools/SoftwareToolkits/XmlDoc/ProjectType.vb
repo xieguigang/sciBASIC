@@ -122,7 +122,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 For Each pm As ProjectMember In sortedMembers.Values
                     methodList.AppendLine("#### " & pm.Name)
                     If Not pm.Declare.IsBlank Then
-                        methodList.AppendLine($"_{pm.Declare}_")
+                        methodList.AppendLine("```csharp")
+                        methodList.AppendLine($"{pm.Declare}")
+                        methodList.AppendLine("```")
                     End If
                     methodList.AppendLine(CleanText(pm.Summary))
 
@@ -150,6 +152,8 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                             Call methodList.AppendLine("> " & line)
                         Next
                     End If
+
+                    Call methodList.AppendLine()
                 Next
             End If
 
@@ -171,10 +175,20 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             End If
 
             Dim ext As String = If(hexoPublish, ".html", ".md")
-            Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
+            Dim text As String
 
-            If pageTemplate IsNot Nothing Then
-                text = pageTemplate.Replace("[content]", text)
+            If hexoPublish Then
+                text = $"---
+title: {Me.Name}
+---
+"
+                text = text & vbCrLf & String.Format("# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
+            Else
+                text = String.Format("# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
+
+                If pageTemplate IsNot Nothing Then
+                    text = pageTemplate.Replace("[content]", text)
+                End If
             End If
 
             Call text.SaveTo(folderPath & "/T-" & Me.[Namespace].Path & "." & Me.Name & ".md", Encoding.UTF8)

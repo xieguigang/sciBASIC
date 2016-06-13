@@ -62,7 +62,17 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 typeList.AppendLine("[" & pt.Name & "](T-" & Me.Path & "." & pt.Name & $"{ext})")
             Next
 
-            Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
+            Dim text As String
+
+            If hexoPublish Then
+                text = $"---
+title: {Me.Path}
+date: {Now.ToString}
+---"
+                text = text & vbCrLf & vbCrLf & typeList.ToString
+            Else
+                text = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
+            End If
 
             If pageTemplate IsNot Nothing Then
                 text = pageTemplate.Replace("[content]", text)

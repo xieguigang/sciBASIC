@@ -8,6 +8,8 @@ Imports System.Linq
 Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Xml
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -112,8 +114,32 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
         Public Const TemplateToken As String = "[content]"
 
-        Public Sub ExportMarkdownFiles(folderPath As String, Optional hexoPublish As Boolean = False)
-            Call ExportMarkdownFiles(folderPath, TemplateToken, hexoPublish)
-        End Sub
+        Public Function ExportMarkdownFiles(folderPath As String, Optional hexoPublish As Boolean = False) As Boolean
+            ExportMarkdownFiles(folderPath, TemplateToken, hexoPublish)
+            Return BuildIndex(folderPath, hexoPublish)
+        End Function
+
+        Public Function BuildIndex(out As String, Optional hexoPublish As Boolean = False) As Boolean
+            Dim path As String = out & "/index.md"
+            Dim allns As String() =
+                LinqAPI.Exec(Of String) <= From x As Project
+                                           In projects
+                                           Select x.Namespaces.Select(Function(ns) ns.Path)
+
+            Dim ext As String = If(hexoPublish, ".html", ".md")
+            Dim links As String() = allns.OrderBy(Function(ns) ns).ToArray(Function(ns) $"+ [{ns}](N-{ns}{ext})")
+            Dim sb As String = "Browser by namespace:" & vbCrLf & vbCrLf & links.JoinBy(vbCrLf)
+
+            If hexoPublish Then
+                sb = $"---
+title: API index
+date: {Now.ToString}
+---
+
+" & sb
+            End If
+
+            Return sb.SaveTo(path)
+        End Function
     End Class
 End Namespace
