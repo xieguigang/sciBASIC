@@ -121,21 +121,31 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
                 For Each pm As ProjectMember In sortedMembers.Values
                     methodList.AppendLine("#### " & pm.Name)
+                    If Not pm.Declare.IsBlank Then
+                        methodList.AppendLine($"_{pm.Declare}_")
+                    End If
                     methodList.AppendLine(CleanText(pm.Summary))
 
-                    If pm.Returns.IsBlank Then
+                    If Not pm.param.IsNullOrEmpty Then
+                        Call methodList.AppendLine()
+                        Call methodList.AppendLine("|Parameter Name|Remarks|")
+                        Call methodList.AppendLine("|--------------|-------|")
+
+                        For Each arg In pm.param
+                            Call methodList.AppendLine($"|{arg.name}|{arg.text}|")
+                        Next
+
+                        Call methodList.AppendLine()
+                    End If
+
+                    If Not pm.Returns.IsBlank Then
                         If Not hexoPublish Then
                             methodList.AppendLine()
                         End If
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
                     End If
 
-                    If pm.Remarks.IsBlank Then
-                        If Not hexoPublish Then
-                            methodList.AppendLine()
-                        End If
-                        methodList.AppendLine("Remarks")
-
+                    If Not pm.Remarks.IsBlank Then
                         For Each line As String In pm.Remarks.lTokens
                             Call methodList.AppendLine("> " & line)
                         Next
