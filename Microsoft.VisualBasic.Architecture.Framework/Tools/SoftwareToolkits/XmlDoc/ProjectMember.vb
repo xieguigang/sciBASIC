@@ -17,9 +17,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
         Dim projectType As ProjectType
 
-        Public Property Name() As [String]
-        Public Property Summary() As [String]
-        Public Property Returns() As [String]
+        Public Property Name() As String
+        Public Property Summary() As String
+        Public Property Returns() As String
 
         Public ReadOnly Property Type() As ProjectType
             Get

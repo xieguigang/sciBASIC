@@ -14,9 +14,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     Public Class ProjectNamespace
         Private project As Project
 
-        Private m_types As Dictionary(Of [String], ProjectType)
+        Private m_types As Dictionary(Of String, ProjectType)
 
-        Public Property Path() As [String]
+        Public Property Path() As String
 
         Public ReadOnly Property Types() As IEnumerable(Of ProjectType)
             Get
@@ -28,7 +28,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Me.m_types = New Dictionary(Of String, ProjectType)()
         End Sub
 
-        Public Overloads Function [GetType](typeName As [String]) As ProjectType
+        Public Overloads Function [GetType](typeName As String) As ProjectType
             If Me.m_types.ContainsKey(typeName.ToLower()) Then
                 Return Me.m_types(typeName.ToLower())
             End If
@@ -36,7 +36,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureType(typeName As [String]) As ProjectType
+        Public Function EnsureType(typeName As String) As ProjectType
             Dim pt As ProjectType = Me.[GetType](typeName)
 
             If pt Is Nothing Then
@@ -49,10 +49,10 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pt
         End Function
 
-        Public Sub ExportMarkdownFile(folderPath As [String], pageTemplate As [String])
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String)
             Dim typeList As New StringBuilder()
 
-            Dim projectTypes As SortedList(Of [String], ProjectType) = New SortedList(Of String, ProjectType)()
+            Dim projectTypes As SortedList(Of String, ProjectType) = New SortedList(Of String, ProjectType)()
 
             For Each pt As ProjectType In Me.Types
                 projectTypes.Add(pt.Name, pt)
@@ -62,7 +62,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 typeList.AppendLine("[" & pt.Name & "](T-" & Me.Path & "." & pt.Name & ".md)")
             Next
 
-            Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
+            Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
 
             If pageTemplate IsNot Nothing Then
                 text = pageTemplate.Replace("[content]", text)

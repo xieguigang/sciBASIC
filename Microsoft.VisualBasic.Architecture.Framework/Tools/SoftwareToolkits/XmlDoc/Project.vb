@@ -15,9 +15,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     ''' </summary>
     Public Class Project
 
-        Private m_namespaces As Dictionary(Of [String], ProjectNamespace)
+        Private m_namespaces As Dictionary(Of String, ProjectNamespace)
 
-        Public Property Name() As [String]
+        Public Property Name() As String
 
         Public ReadOnly Property Namespaces() As IEnumerable(Of ProjectNamespace)
             Get
@@ -25,12 +25,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             End Get
         End Property
 
-        Public Sub New(name As [String])
+        Public Sub New(name As String)
             Me._Name = name
             Me.m_namespaces = New Dictionary(Of String, ProjectNamespace)()
         End Sub
 
-        Public Function GetNamespace(namespacePath As [String]) As ProjectNamespace
+        Public Function GetNamespace(namespacePath As String) As ProjectNamespace
             If Me.m_namespaces.ContainsKey(namespacePath.ToLower()) Then
                 Return Me.m_namespaces(namespacePath.ToLower())
             End If
@@ -38,7 +38,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureNamespace(namespacePath As [String]) As ProjectNamespace
+        Public Function EnsureNamespace(namespacePath As String) As ProjectNamespace
             Dim pn As ProjectNamespace = Me.GetNamespace(namespacePath)
 
             If pn Is Nothing Then
@@ -55,7 +55,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim memberNodes As XmlNodeList = document.DocumentElement.SelectNodes("members/member")
 
             For Each memberNode As XmlNode In memberNodes
-                Dim memberDescription As [String] = memberNode.Attributes.GetNamedItem("name").InnerText
+                Dim memberDescription As String = memberNode.Attributes.GetNamedItem("name").InnerText
 
                 Dim firstSemicolon As Integer = memberDescription.IndexOf(":")
 
@@ -63,20 +63,20 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     Dim typeChar As Char = memberDescription(0)
 
                     If typeChar = "T"c Then
-                        Dim typeFullName As [String] = memberDescription.Substring(2, memberDescription.Length - 2)
+                        Dim typeFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
                         Dim lastPeriod As Integer = typeFullName.LastIndexOf(".")
 
                         lastPeriod = typeFullName.LastIndexOf(".")
 
                         If lastPeriod > 0 Then
-                            Dim namespaceFullName As [String] = typeFullName.Substring(0, lastPeriod)
+                            Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
 
-                            Dim typeShortName As [String] = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
+                            Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
 
                             Me.EnsureNamespace(namespaceFullName).EnsureType(typeShortName).LoadFromNode(memberNode)
                         End If
                     Else
-                        Dim memberFullName As [String] = memberDescription.Substring(2, memberDescription.Length - 2)
+                        Dim memberFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
 
                         Dim firstParen As Integer = memberFullName.IndexOf("(")
 
@@ -87,23 +87,23 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                         Dim lastPeriod As Integer = memberFullName.LastIndexOf(".")
 
                         If lastPeriod > 0 Then
-                            Dim typeFullName As [String] = memberFullName.Substring(0, lastPeriod)
+                            Dim typeFullName As String = memberFullName.Substring(0, lastPeriod)
 
                             lastPeriod = typeFullName.LastIndexOf(".")
 
                             If lastPeriod > 0 Then
-                                Dim namespaceFullName As [String] = typeFullName.Substring(0, lastPeriod)
+                                Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
 
                                 lastPeriod = typeFullName.LastIndexOf(".")
 
                                 If lastPeriod > 0 Then
-                                    Dim typeShortName As [String] = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
+                                    Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
 
 
                                     lastPeriod = memberFullName.LastIndexOf(".")
 
                                     If lastPeriod > 0 Then
-                                        Dim memberShortName As [String] = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
+                                        Dim memberShortName As String = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
 
                                         Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
 

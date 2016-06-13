@@ -21,7 +21,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Me.projects = New List(Of Project)()
         End Sub
 
-        Public Function GetProject(name As [String]) As Project
+        Public Function GetProject(name As String) As Project
             For Each p As Project In Me.projects
                 If p.Name.Equals(name) Then
                     Return p
@@ -31,7 +31,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Private Function EnsureProject(name As [String]) As Project
+        Private Function EnsureProject(name As String) As Project
             Dim p As Project = Me.GetProject(name)
 
             If p Is Nothing Then
@@ -43,7 +43,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return p
         End Function
 
-        Public Sub ImportFromXmlDocFolder(path As [String])
+        Public Sub ImportFromXmlDocFolder(path As String)
             If Not Directory.Exists(path) Then
                 Throw New InvalidOperationException()
             End If
@@ -57,7 +57,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Next
         End Sub
 
-        Public Sub ImportFromXmlDocFile(path As [String])
+        Public Sub ImportFromXmlDocFile(path As String)
             If Not File.Exists(path) Then
                 Throw New InvalidOperationException()
             End If
@@ -93,7 +93,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate">a markdown page template. This token: [content] will be replaced with generated content.</param>
-        Public Sub ExportMarkdownFiles(folderPath As [String], pageTemplate As [String])
+        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String)
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
                     pn.ExportMarkdownFile(folderPath, pageTemplate)
@@ -107,7 +107,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
         Public Const TemplateToken As String = "[content]"
 
-        Public Sub ExportMarkdownFiles(folderPath As [String])
+        Public Sub ExportMarkdownFiles(folderPath As String)
             Call ExportMarkdownFiles(folderPath, TemplateToken)
         End Sub
     End Class

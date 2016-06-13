@@ -16,9 +16,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     ''' </summary>
     Public Class ProjectType
         Private projectNamespace As ProjectNamespace
-        Private fields As Dictionary(Of [String], ProjectMember)
-        Private properties As Dictionary(Of [String], ProjectMember)
-        Private methods As Dictionary(Of [String], ProjectMember)
+        Private fields As Dictionary(Of String, ProjectMember)
+        Private properties As Dictionary(Of String, ProjectMember)
+        Private methods As Dictionary(Of String, ProjectMember)
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             Get
@@ -26,8 +26,8 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             End Get
         End Property
 
-        Public Property Name() As [String]
-        Public Property Summary() As [String]
+        Public Property Name() As String
+        Public Property Summary() As String
 
         Public Sub New(projectNamespace As ProjectNamespace)
             Me.projectNamespace = projectNamespace
@@ -37,7 +37,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Me.methods = New Dictionary(Of String, ProjectMember)()
         End Sub
 
-        Public Function GetMethod(methodName As [String]) As ProjectMember
+        Public Function GetMethod(methodName As String) As ProjectMember
             If Me.methods.ContainsKey(methodName.ToLower()) Then
                 Return Me.methods(methodName.ToLower())
             End If
@@ -45,7 +45,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureMethod(methodName As [String]) As ProjectMember
+        Public Function EnsureMethod(methodName As String) As ProjectMember
             Dim pm As ProjectMember = Me.GetMethod(methodName)
 
             If pm Is Nothing Then
@@ -58,7 +58,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pm
         End Function
 
-        Public Function GetProperty(propertyName As [String]) As ProjectMember
+        Public Function GetProperty(propertyName As String) As ProjectMember
             If Me.properties.ContainsKey(propertyName.ToLower()) Then
                 Return Me.properties(propertyName.ToLower())
             End If
@@ -66,7 +66,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureProperty(propertyName As [String]) As ProjectMember
+        Public Function EnsureProperty(propertyName As String) As ProjectMember
             Dim pm As ProjectMember = Me.GetProperty(propertyName)
 
             If pm Is Nothing Then
@@ -79,7 +79,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pm
         End Function
 
-        Public Function GetField(fieldName As [String]) As ProjectMember
+        Public Function GetField(fieldName As String) As ProjectMember
             If Me.fields.ContainsKey(fieldName.ToLower()) Then
                 Return Me.fields(fieldName.ToLower())
             End If
@@ -87,7 +87,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureField(fieldName As [String]) As ProjectMember
+        Public Function EnsureField(fieldName As String) As ProjectMember
             Dim pm As ProjectMember = Me.GetField(fieldName)
 
             If pm Is Nothing Then
@@ -100,13 +100,13 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pm
         End Function
 
-        Public Sub ExportMarkdownFile(folderPath As [String], pageTemplate As [String])
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String)
             Dim methodList As New StringBuilder()
 
             If Me.methods.Values.Count > 0 Then
                 methodList.AppendLine("### Methods" & vbCr & vbLf)
 
-                Dim sortedMembers As SortedList(Of [String], ProjectMember) = New SortedList(Of String, ProjectMember)()
+                Dim sortedMembers As SortedList(Of String, ProjectMember) = New SortedList(Of String, ProjectMember)()
 
                 For Each pm As ProjectMember In Me.methods.Values
                     sortedMembers.Add(pm.Name, pm)
@@ -128,7 +128,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             If Me.properties.Count > 0 Then
                 propertyList.AppendLine("### Properties" & vbCr & vbLf)
 
-                Dim sortedMembers As SortedList(Of [String], ProjectMember) = New SortedList(Of String, ProjectMember)()
+                Dim sortedMembers As SortedList(Of String, ProjectMember) = New SortedList(Of String, ProjectMember)()
 
                 For Each pm As ProjectMember In Me.properties.Values
                     sortedMembers.Add(pm.Name, pm)
@@ -140,7 +140,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 Next
             End If
 
-            Dim text As [String] = [String].Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}.md)_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
+            Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}.md)_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
 
             If pageTemplate IsNot Nothing Then
                 text = pageTemplate.Replace("[content]", text)
@@ -158,14 +158,14 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         End Sub
 
 
-        Private Function CleanText(incomingText As [String]) As [String]
+        Private Function CleanText(incomingText As String) As String
             If incomingText Is Nothing Then
-                Return [String].Empty
+                Return String.Empty
             End If
 
             incomingText = incomingText.Replace(vbTab, "").Trim()
 
-            Dim results As String = [String].Empty
+            Dim results As String = String.Empty
             Dim lastCharWasSpace As Boolean = False
             For Each c As Char In incomingText
                 If c <> " "c Then

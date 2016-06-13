@@ -106,7 +106,7 @@ Public Module StrUtils
     ''' <param name="sep">The separator.</param>
     ''' <returns></returns>
     Public Function SplitWithSeparator(text As String, sep As Char) As String()
-        If [String].IsNullOrEmpty(text) Then
+        If String.IsNullOrEmpty(text) Then
             Return Nothing
         End If
 
@@ -131,7 +131,7 @@ Public Module StrUtils
     ''' <param name="sep">The separator.</param>
     ''' <returns></returns>
     Public Function SplitWithSeparatorFromRight(text As String, sep As Char) As String()
-        If [String].IsNullOrEmpty(text) Then
+        If String.IsNullOrEmpty(text) Then
             Return Nothing
         End If
 
@@ -377,7 +377,7 @@ Public Module StrUtils
                 Return text.Substring(braIndex + 1, ketIndex - braIndex - 1)
             End If
         End If
-        Return [String].Empty
+        Return String.Empty
     End Function
 
     ''' <summary>
@@ -398,7 +398,7 @@ Public Module StrUtils
                 Return text.Substring(braIndex + 1, ketIndex - braIndex - 1)
             End If
         End If
-        Return [String].Empty
+        Return String.Empty
     End Function
 
     ''' <summary>

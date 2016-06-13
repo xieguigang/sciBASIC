@@ -1178,9 +1178,9 @@ Namespace Text
         ''' </summary>        
         ''' <param name="ch"></param>        
         ''' <returns></returns>        
-        Public Function GetFirst(ch As [Char]) As [String]
+        Public Function GetFirst(ch As [Char]) As String
             Dim rs = [Get](ch)
-            If Not [String].IsNullOrEmpty(rs) Then
+            If Not String.IsNullOrEmpty(rs) Then
                 rs = rs.Substring(0, 1)
             End If
             Return rs
@@ -1190,9 +1190,9 @@ Namespace Text
         ''' </summary>
         ''' <param name="str"></param>
         ''' <returns></returns>
-        Public Function GetFirst(str As [String]) As [String]
-            If [String].IsNullOrEmpty(str) Then
-                Return [String].Empty
+        Public Function GetFirst(str As String) As String
+            If String.IsNullOrEmpty(str) Then
+                Return String.Empty
             End If
             Dim sb = New StringBuilder(str.Length + 1)
             Dim chs = str.ToCharArray()
@@ -1206,7 +1206,7 @@ Namespace Text
         ''' </summary>
         ''' <param name="ch"></param>
         ''' <returns></returns>
-        Public Function [Get](ch As [Char]) As [String]
+        Public Function [Get](ch As [Char]) As String
             ' 拉丁字符            
             If ch <= "ÿ"c Then
                 Return ch.ToString()
@@ -1266,16 +1266,16 @@ Namespace Text
             '{                
             '    if (pyValue[i] <= chr) return pyName[i];//这只能对应数组已经定义的           
             '}             
-            Return [String].Empty
+            Return String.Empty
         End Function
         ''' <summary>
         ''' 把汉字转换成拼音(全拼)
         ''' </summary>
         ''' <param name="str">汉字字符串</param>
         ''' <returns>转换后的拼音(全拼)字符串</returns>
-        Public Function [Get](str As [String]) As [String]
-            If [String].IsNullOrEmpty(str) Then
-                Return [String].Empty
+        Public Function [Get](str As String) As String
+            If String.IsNullOrEmpty(str) Then
+                Return String.Empty
             End If
             Dim sb = New StringBuilder(str.Length * 10)
             Dim chs = str.ToCharArray()
