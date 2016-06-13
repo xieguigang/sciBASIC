@@ -1,4 +1,4 @@
-' Copyright (c) Bendyline LLC. All rights reserved. Licensed under the Apache License, Version 2.0.
+﻿' Copyright (c) Bendyline LLC. All rights reserved. Licensed under the Apache License, Version 2.0.
 '    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. 
 
 
@@ -100,7 +100,14 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pm
         End Function
 
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="folderPath"></param>
+        ''' <param name="pageTemplate"></param>
+        ''' <param name="hexoPublish"></param>
+        ''' <remarks>这里还应该包括完整的函数的参数注释的输出</remarks>
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
             Dim methodList As New StringBuilder()
 
             If Me.methods.Values.Count > 0 Then
@@ -116,9 +123,22 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     methodList.AppendLine("#### " & pm.Name)
                     methodList.AppendLine(CleanText(pm.Summary))
 
-                    If pm.Returns IsNot Nothing Then
-                        methodList.AppendLine()
+                    If pm.Returns.IsBlank Then
+                        If Not hexoPublish Then
+                            methodList.AppendLine()
+                        End If
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
+                    End If
+
+                    If pm.Remarks.IsBlank Then
+                        If Not hexoPublish Then
+                            methodList.AppendLine()
+                        End If
+                        methodList.AppendLine("Remarks")
+
+                        For Each line As String In pm.Remarks.lTokens
+                            Call methodList.AppendLine("> " & line)
+                        Next
                     End If
                 Next
             End If
@@ -140,7 +160,8 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 Next
             End If
 
-            Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}.md)_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
+            Dim ext As String = If(hexoPublish, ".html", ".md")
+            Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
 
             If pageTemplate IsNot Nothing Then
                 text = pageTemplate.Replace("[content]", text)

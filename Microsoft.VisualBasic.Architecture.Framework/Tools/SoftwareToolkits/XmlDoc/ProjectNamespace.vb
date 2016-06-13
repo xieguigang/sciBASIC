@@ -49,17 +49,17 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pt
         End Function
 
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String)
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
             Dim typeList As New StringBuilder()
-
-            Dim projectTypes As SortedList(Of String, ProjectType) = New SortedList(Of String, ProjectType)()
+            Dim projectTypes As New SortedList(Of String, ProjectType)()
+            Dim ext As String = If(hexoPublish, ".html", ".md")
 
             For Each pt As ProjectType In Me.Types
                 projectTypes.Add(pt.Name, pt)
             Next
 
             For Each pt As ProjectType In projectTypes.Values
-                typeList.AppendLine("[" & pt.Name & "](T-" & Me.Path & "." & pt.Name & ".md)")
+                typeList.AppendLine("[" & pt.Name & "](T-" & Me.Path & "." & pt.Name & $"{ext})")
             Next
 
             Dim text As String = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())

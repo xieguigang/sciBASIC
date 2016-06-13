@@ -111,7 +111,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
                                         If typeChar = "M"c Then
                                             pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
-                                        ElseIf typeChar = "P"c Then
+                                        ElseIf typeChar = "P"c OrElse typeChar = "F" Then
                                             pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
                                         End If
                                     End If

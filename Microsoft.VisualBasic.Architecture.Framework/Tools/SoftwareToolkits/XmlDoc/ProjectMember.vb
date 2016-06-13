@@ -20,6 +20,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         Public Property Name() As String
         Public Property Summary() As String
         Public Property Returns() As String
+        Public Property Remarks As String
 
         Public ReadOnly Property Type() As ProjectType
             Get
@@ -42,6 +43,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
             If returnsNode IsNot Nothing Then
                 Me._Returns = returnsNode.InnerText
+            End If
+
+            Dim remarksNode As XmlNode = xn.SelectSingleNode("remarks")
+
+            If remarksNode IsNot Nothing Then
+                Me.Remarks = remarksNode.InnerText
             End If
         End Sub
     End Class
