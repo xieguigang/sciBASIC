@@ -1,10 +1,10 @@
 ﻿Namespace Parallel
 
     Public MustInherit Class TaggedGroupData(Of T_TAG)
-        Public Overridable Property TAG As T_TAG
+        Public Overridable Property Tag As T_TAG
 
         Public Overrides Function ToString() As String
-            Return TAG.ToString
+            Return Tag.ToString
         End Function
     End Class
 
@@ -64,7 +64,7 @@
         Implements IEnumerable(Of T)
         Implements IGrouping(Of Itag, T)
 
-        Public Overrides Property TAG As Itag Implements IGrouping(Of Itag, T).Key
+        Public Overrides Property Tag As Itag Implements IGrouping(Of Itag, T).Key
         Public Property Group As T()
             Get
                 Return __list.ToArray
@@ -90,7 +90,7 @@
         End Sub
 
         Sub New(tag As Itag, data As IEnumerable(Of T))
-            Me.TAG = tag
+            Me.Tag = tag
             Me.Group = data.ToArray
         End Sub
 

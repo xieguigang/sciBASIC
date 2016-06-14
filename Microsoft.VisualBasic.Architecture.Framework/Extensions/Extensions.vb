@@ -1534,7 +1534,7 @@ Public Module Extensions
         Dim KnowDuplicates = (From obj In Groups.AsParallel
                               Where obj.Group.Count > 1
                               Select New GroupResult(Of T, Tag) With {
-                                  .TAG = obj.objTag,
+                                  .Tag = obj.objTag,
                                   .Group = obj.Group.ToArray}).ToArray
         Return KnowDuplicates
     End Function
