@@ -1,9 +1,9 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 
-Public Class Form1
+Public Class frmRegexTest
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    Private Sub __runRegex()
         Dim regexs As String() =
             LinqAPI.Exec(Of String) <= From s As String
                                        In tbRegex.Text.lTokens
@@ -56,11 +56,11 @@ Public Class Form1
 
         options = opt
 
-        Call Button1_Click(Nothing, Nothing)
+        Call __runRegex()
     End Sub
 
     Private Sub tbRegex_TextChanged(sender As Object, e As EventArgs) Handles tbRegex.TextChanged
-        Call Button1_Click(Nothing, Nothing)
+        Call __runRegex()
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
