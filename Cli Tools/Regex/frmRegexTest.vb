@@ -1,5 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization
 
 Public Class frmRegexTest
 
@@ -9,19 +10,25 @@ Public Class frmRegexTest
                                        In tbRegex.Text.lTokens
                                        Where Not String.IsNullOrEmpty(s)
                                        Select s
-        Dim LQuery = From expr As String
-                     In regexs
-                     Select expr,
-                         Regex.Matches(tbInputs.Text, expr, options).ToArray
 
-        Call lbResults.Items.Clear()
+        Try
+            Dim LQuery = From expr As String
+                         In regexs
+                         Select expr,
+                             Regex.Matches(tbInputs.Text, expr, options).ToArray
 
-        For Each block In LQuery
-            For Each result As String In block.ToArray
-                Dim s As String = $"[{block.expr}]{vbTab} {result}"
-                Call lbResults.Items.Add(s)
+            Call lbResults.Items.Clear()
+
+            For Each block In LQuery
+                For Each result As String In block.ToArray
+                    Dim s As String = $"[{block.expr}]{vbTab} {result}"
+                    Call lbResults.Items.Add(s)
+                Next
             Next
-        Next
+        Catch ex As Exception
+            ex = New Exception(tbRegex.Text.lTokens.GetJson, ex)
+            Call App.LogException(ex)
+        End Try
     End Sub
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click

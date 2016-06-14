@@ -38,37 +38,44 @@ Partial Class frmRegexTest
         Me.CheckBox9 = New System.Windows.Forms.CheckBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.CheckBox10 = New System.Windows.Forms.CheckBox()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.MenuStrip1.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer2.Panel1.SuspendLayout()
+        Me.SplitContainer2.Panel2.SuspendLayout()
+        Me.SplitContainer2.SuspendLayout()
         Me.SuspendLayout()
         '
         'tbInputs
         '
-        Me.tbInputs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.tbInputs.Location = New System.Drawing.Point(12, 27)
+        Me.tbInputs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tbInputs.Location = New System.Drawing.Point(0, 0)
         Me.tbInputs.Multiline = True
         Me.tbInputs.Name = "tbInputs"
-        Me.tbInputs.Size = New System.Drawing.Size(918, 308)
+        Me.tbInputs.Size = New System.Drawing.Size(903, 275)
         Me.tbInputs.TabIndex = 0
         '
         'tbRegex
         '
-        Me.tbRegex.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.tbRegex.Location = New System.Drawing.Point(12, 341)
+        Me.tbRegex.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tbRegex.Location = New System.Drawing.Point(0, 0)
         Me.tbRegex.Multiline = True
         Me.tbRegex.Name = "tbRegex"
-        Me.tbRegex.Size = New System.Drawing.Size(441, 222)
+        Me.tbRegex.Size = New System.Drawing.Size(466, 272)
         Me.tbRegex.TabIndex = 1
         '
         'lbResults
         '
+        Me.lbResults.Dock = System.Windows.Forms.DockStyle.Right
         Me.lbResults.FormattingEnabled = True
-        Me.lbResults.Location = New System.Drawing.Point(459, 339)
+        Me.lbResults.Location = New System.Drawing.Point(466, 0)
         Me.lbResults.Name = "lbResults"
-        Me.lbResults.Size = New System.Drawing.Size(471, 225)
+        Me.lbResults.Size = New System.Drawing.Size(437, 272)
         Me.lbResults.TabIndex = 2
         '
         'MenuStrip1
@@ -96,7 +103,7 @@ Partial Class frmRegexTest
         'CheckBox2
         '
         Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(943, 73)
+        Me.CheckBox2.Location = New System.Drawing.Point(12, 33)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(64, 17)
         Me.CheckBox2.TabIndex = 6
@@ -106,7 +113,7 @@ Partial Class frmRegexTest
         'CheckBox3
         '
         Me.CheckBox3.AutoSize = True
-        Me.CheckBox3.Location = New System.Drawing.Point(943, 119)
+        Me.CheckBox3.Location = New System.Drawing.Point(12, 79)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(69, 17)
         Me.CheckBox3.TabIndex = 8
@@ -116,7 +123,7 @@ Partial Class frmRegexTest
         'CheckBox4
         '
         Me.CheckBox4.AutoSize = True
-        Me.CheckBox4.Location = New System.Drawing.Point(943, 96)
+        Me.CheckBox4.Location = New System.Drawing.Point(12, 56)
         Me.CheckBox4.Name = "CheckBox4"
         Me.CheckBox4.Size = New System.Drawing.Size(96, 17)
         Me.CheckBox4.TabIndex = 7
@@ -126,7 +133,7 @@ Partial Class frmRegexTest
         'CheckBox5
         '
         Me.CheckBox5.AutoSize = True
-        Me.CheckBox5.Location = New System.Drawing.Point(943, 211)
+        Me.CheckBox5.Location = New System.Drawing.Point(12, 171)
         Me.CheckBox5.Name = "CheckBox5"
         Me.CheckBox5.Size = New System.Drawing.Size(83, 17)
         Me.CheckBox5.TabIndex = 12
@@ -136,7 +143,7 @@ Partial Class frmRegexTest
         'CheckBox6
         '
         Me.CheckBox6.AutoSize = True
-        Me.CheckBox6.Location = New System.Drawing.Point(943, 188)
+        Me.CheckBox6.Location = New System.Drawing.Point(12, 148)
         Me.CheckBox6.Name = "CheckBox6"
         Me.CheckBox6.Size = New System.Drawing.Size(82, 17)
         Me.CheckBox6.TabIndex = 11
@@ -146,7 +153,7 @@ Partial Class frmRegexTest
         'CheckBox7
         '
         Me.CheckBox7.AutoSize = True
-        Me.CheckBox7.Location = New System.Drawing.Point(943, 165)
+        Me.CheckBox7.Location = New System.Drawing.Point(12, 125)
         Me.CheckBox7.Name = "CheckBox7"
         Me.CheckBox7.Size = New System.Drawing.Size(147, 17)
         Me.CheckBox7.TabIndex = 10
@@ -156,7 +163,7 @@ Partial Class frmRegexTest
         'CheckBox8
         '
         Me.CheckBox8.AutoSize = True
-        Me.CheckBox8.Location = New System.Drawing.Point(943, 142)
+        Me.CheckBox8.Location = New System.Drawing.Point(12, 102)
         Me.CheckBox8.Name = "CheckBox8"
         Me.CheckBox8.Size = New System.Drawing.Size(71, 17)
         Me.CheckBox8.TabIndex = 9
@@ -166,7 +173,7 @@ Partial Class frmRegexTest
         'CheckBox9
         '
         Me.CheckBox9.AutoSize = True
-        Me.CheckBox9.Location = New System.Drawing.Point(943, 234)
+        Me.CheckBox9.Location = New System.Drawing.Point(12, 194)
         Me.CheckBox9.Name = "CheckBox9"
         Me.CheckBox9.Size = New System.Drawing.Size(100, 17)
         Me.CheckBox9.TabIndex = 13
@@ -176,7 +183,7 @@ Partial Class frmRegexTest
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(943, 50)
+        Me.CheckBox1.Location = New System.Drawing.Point(12, 10)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(80, 17)
         Me.CheckBox1.TabIndex = 5
@@ -186,37 +193,81 @@ Partial Class frmRegexTest
         'CheckBox10
         '
         Me.CheckBox10.AutoSize = True
-        Me.CheckBox10.Location = New System.Drawing.Point(943, 413)
+        Me.CheckBox10.Location = New System.Drawing.Point(14, 262)
         Me.CheckBox10.Name = "CheckBox10"
         Me.CheckBox10.Size = New System.Drawing.Size(81, 17)
         Me.CheckBox10.TabIndex = 14
         Me.CheckBox10.Text = "Line tokens"
         Me.CheckBox10.UseVisualStyleBackColor = True
         '
-        'Form1
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 24)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox4)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox10)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox1)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox9)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox2)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox5)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox3)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox6)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox8)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox7)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1093, 551)
+        Me.SplitContainer1.SplitterDistance = 903
+        Me.SplitContainer1.TabIndex = 15
+        '
+        'SplitContainer2
+        '
+        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer2.Name = "SplitContainer2"
+        Me.SplitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer2.Panel1
+        '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.tbInputs)
+        '
+        'SplitContainer2.Panel2
+        '
+        Me.SplitContainer2.Panel2.Controls.Add(Me.tbRegex)
+        Me.SplitContainer2.Panel2.Controls.Add(Me.lbResults)
+        Me.SplitContainer2.Size = New System.Drawing.Size(903, 551)
+        Me.SplitContainer2.SplitterDistance = 275
+        Me.SplitContainer2.TabIndex = 3
+        '
+        'frmRegexTest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1093, 575)
-        Me.Controls.Add(Me.CheckBox10)
-        Me.Controls.Add(Me.CheckBox9)
-        Me.Controls.Add(Me.CheckBox5)
-        Me.Controls.Add(Me.CheckBox6)
-        Me.Controls.Add(Me.CheckBox7)
-        Me.Controls.Add(Me.CheckBox8)
-        Me.Controls.Add(Me.CheckBox3)
-        Me.Controls.Add(Me.CheckBox4)
-        Me.Controls.Add(Me.CheckBox2)
-        Me.Controls.Add(Me.CheckBox1)
-        Me.Controls.Add(Me.lbResults)
-        Me.Controls.Add(Me.tbRegex)
-        Me.Controls.Add(Me.tbInputs)
+        Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Name = "Form1"
+        Me.Name = "frmRegexTest"
         Me.Text = "Form1"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.PerformLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.SplitContainer2.Panel1.ResumeLayout(False)
+        Me.SplitContainer2.Panel1.PerformLayout()
+        Me.SplitContainer2.Panel2.ResumeLayout(False)
+        Me.SplitContainer2.Panel2.PerformLayout()
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer2.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -238,4 +289,6 @@ Partial Class frmRegexTest
     Friend WithEvents CheckBox9 As CheckBox
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents CheckBox10 As CheckBox
+    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents SplitContainer2 As SplitContainer
 End Class
