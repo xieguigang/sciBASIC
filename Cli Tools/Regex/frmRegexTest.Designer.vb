@@ -57,7 +57,7 @@ Partial Class frmRegexTest
         Me.tbInputs.Location = New System.Drawing.Point(0, 0)
         Me.tbInputs.Multiline = True
         Me.tbInputs.Name = "tbInputs"
-        Me.tbInputs.Size = New System.Drawing.Size(903, 275)
+        Me.tbInputs.Size = New System.Drawing.Size(912, 313)
         Me.tbInputs.TabIndex = 0
         '
         'tbRegex
@@ -66,16 +66,16 @@ Partial Class frmRegexTest
         Me.tbRegex.Location = New System.Drawing.Point(0, 0)
         Me.tbRegex.Multiline = True
         Me.tbRegex.Name = "tbRegex"
-        Me.tbRegex.Size = New System.Drawing.Size(466, 272)
+        Me.tbRegex.Size = New System.Drawing.Size(475, 312)
         Me.tbRegex.TabIndex = 1
         '
         'lbResults
         '
         Me.lbResults.Dock = System.Windows.Forms.DockStyle.Right
         Me.lbResults.FormattingEnabled = True
-        Me.lbResults.Location = New System.Drawing.Point(466, 0)
+        Me.lbResults.Location = New System.Drawing.Point(475, 0)
         Me.lbResults.Name = "lbResults"
-        Me.lbResults.Size = New System.Drawing.Size(437, 272)
+        Me.lbResults.Size = New System.Drawing.Size(437, 312)
         Me.lbResults.TabIndex = 2
         '
         'MenuStrip1
@@ -83,7 +83,7 @@ Partial Class frmRegexTest
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1093, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1104, 24)
         Me.MenuStrip1.TabIndex = 4
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -203,6 +203,7 @@ Partial Class frmRegexTest
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.IsSplitterFixed = True
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 24)
         Me.SplitContainer1.Name = "SplitContainer1"
         '
@@ -222,8 +223,8 @@ Partial Class frmRegexTest
         Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox6)
         Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox8)
         Me.SplitContainer1.Panel2.Controls.Add(Me.CheckBox7)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1093, 551)
-        Me.SplitContainer1.SplitterDistance = 903
+        Me.SplitContainer1.Size = New System.Drawing.Size(1104, 629)
+        Me.SplitContainer1.SplitterDistance = 912
         Me.SplitContainer1.TabIndex = 15
         '
         'SplitContainer2
@@ -241,20 +242,20 @@ Partial Class frmRegexTest
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.tbRegex)
         Me.SplitContainer2.Panel2.Controls.Add(Me.lbResults)
-        Me.SplitContainer2.Size = New System.Drawing.Size(903, 551)
-        Me.SplitContainer2.SplitterDistance = 275
+        Me.SplitContainer2.Size = New System.Drawing.Size(912, 629)
+        Me.SplitContainer2.SplitterDistance = 313
         Me.SplitContainer2.TabIndex = 3
         '
         'frmRegexTest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1093, 575)
+        Me.ClientSize = New System.Drawing.Size(1104, 653)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "frmRegexTest"
-        Me.Text = "Form1"
+        Me.Text = "Regular Expression Test Tools"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
