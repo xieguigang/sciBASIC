@@ -73,4 +73,8 @@ Public Class frmRegexTest
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call CheckBox9_CheckedChanged(Nothing, Nothing)
     End Sub
+
+    Private Sub tbInputs_TextChanged(sender As Object, e As EventArgs) Handles tbInputs.TextChanged
+        Call __runRegex()
+    End Sub
 End Class
