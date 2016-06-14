@@ -34,4 +34,19 @@
             Return list
         End Operator
     End Class
+
+    Public Structure Binding(Of T, K)
+        Public Bind As T
+        Public Target As K
+
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return Bind Is Nothing AndAlso Target Is Nothing
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return Bind.ToString & " --> " & Target.ToString
+        End Function
+    End Structure
 End Namespace

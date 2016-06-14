@@ -6,10 +6,11 @@ Imports Microsoft.VisualBasic.ComponentModel.KeyValuePair
 <Extension>
 Public Module IEnumerations
 
-    <Extension> Public Function Differ(Of T As ComponentModel.Collection.Generic.sIdEnumerable, T2)(
-                                          source As System.Collections.Generic.IEnumerable(Of T),
-                                          ToDiffer As System.Collections.Generic.IEnumerable(Of T2),
-                                          getId As Func(Of T2, String)) As String()
+    <Extension> Public Function Differ(Of T As sIdEnumerable,
+                                          T2)(
+                                     source As IEnumerable(Of T),
+                                     ToDiffer As IEnumerable(Of T2),
+                                     getId As Func(Of T2, String)) As String()
 
         Dim TargetIndex As String() = (From item As T In source Select item.Identifier).ToArray
         Dim LQuery = (From item As T2 In ToDiffer
@@ -19,11 +20,7 @@ Public Module IEnumerations
         Return LQuery
     End Function
 
-    <Extension> Public Function Differ(Of T As ComponentModel.Collection.Generic.sIdEnumerable,
-                                         T2 As ComponentModel.Collection.Generic.sIdEnumerable)(
-                                         source As System.Collections.Generic.IEnumerable(Of T),
-                                         ToDiffer As System.Collections.Generic.IEnumerable(Of T2)) As String()
-
+    <Extension> Public Function Differ(Of T As sIdEnumerable, T2 As sIdEnumerable)(source As IEnumerable(Of T), ToDiffer As IEnumerable(Of T2)) As String()
         Dim TargetIndex As String() = (From item In source Select item.Identifier).ToArray
         Dim LQuery = (From item As T2 In ToDiffer
                       Where Array.IndexOf(TargetIndex, item.Identifier) = -1

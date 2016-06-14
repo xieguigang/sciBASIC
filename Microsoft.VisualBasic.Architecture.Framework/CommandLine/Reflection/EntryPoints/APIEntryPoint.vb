@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -79,7 +80,10 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="Invoke"></param>
         ''' <remarks></remarks>
         Public Sub New(attribute As ExportAPIAttribute, [Invoke] As MethodInfo, Optional [Throw] As Boolean = True)
-            _metaData = attribute
+            _metaData = New Binding(Of ExportAPIAttribute, MethodInfo) With {
+                .Bind = attribute,
+                .Target = Invoke
+            }
             __funcInvoker = Function(args As Object()) InvokeCLI(parameters:=args, target:=Nothing, [Throw]:=[Throw])
             _EntryPoint = Invoke
             _ParameterInfo = New ParameterInfoCollection(methodInfo:=Invoke)
@@ -94,13 +98,21 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function HelpInformation() As String
-            Dim sBuilder As StringBuilder = New StringBuilder(MyBase.HelpInformation())
+        Public Overrides Function HelpInformation(Optional md As Boolean = False) As String
+            Dim sBuilder As StringBuilder = New StringBuilder(MyBase.HelpInformation(md))
 
             If Not _ParameterInfo.IsNullOrEmpty Then
                 Call sBuilder.AppendLine(vbCrLf & vbCrLf)
-                Call sBuilder.AppendLine("  Parameters information:" & vbCrLf & "   ---------------------------------------")
+                Call sBuilder.AppendLine("  Parameters information:")
+                If Not md Then
+                    Call sBuilder.AppendLine(vbCrLf & "   ---------------------------------------")
+                Else
+                    Call sBuilder.AppendLine("```")
+                End If
                 Call sBuilder.AppendLine("    " & _ParameterInfo.ToString)
+                If md Then
+                    Call sBuilder.AppendLine("```")
+                End If
             End If
 
             Return sBuilder.ToString

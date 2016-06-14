@@ -172,7 +172,7 @@ Namespace SoftwareToolkits
                     Return s_Edition
                 End If
                 '***** RETURN *****//
-                Dim edition__1 As String = [String].Empty
+                Dim edition__1 As String = String.Empty
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
@@ -877,7 +877,7 @@ Namespace SoftwareToolkits
         ''' </summary>
         Public ReadOnly Property ServicePack() As String
             Get
-                Dim servicePack__1 As String = [String].Empty
+                Dim servicePack__1 As String = String.Empty
                 Dim osVersionInfo As New OSVERSIONINFOEX()
 
                 osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))

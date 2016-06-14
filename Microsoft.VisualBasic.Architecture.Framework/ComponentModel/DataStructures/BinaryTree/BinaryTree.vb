@@ -166,7 +166,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             Dim np As TreeNode(Of T) = Root
             Dim cmp As Integer
             While np IsNot Nothing
-                cmp = [String].Compare(Name, np.Name)
+                cmp = String.Compare(Name, np.Name)
                 If cmp = 0 Then
                     ' found !
                     Return np
@@ -273,7 +273,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             parent = Nothing
             Dim cmp As Integer
             While np IsNot Nothing
-                cmp = [String].Compare(name, np.Name)
+                cmp = String.Compare(name, np.Name)
                 If cmp = 0 Then
                     ' found !
                     Return np

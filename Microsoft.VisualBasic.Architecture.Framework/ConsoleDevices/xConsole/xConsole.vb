@@ -262,7 +262,7 @@ Namespace Terminal
 
             If String.IsNullOrWhiteSpace(s) Then
                 args = New List(Of String)() From {
-                    [String].Empty
+                    String.Empty
                 }
                 Return args
             End If
@@ -273,7 +273,7 @@ Namespace Terminal
             args = s.Split(""""c).Select(Function(element, index) If(index Mod 2 = 0, element.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries), New String() {element})).SelectMany(Function(element) element).ToList()
 
             If args.Count = 0 Then
-                args.Add([String].Empty)
+                args.Add(String.Empty)
             End If
             Return args
         End Function
@@ -805,7 +805,7 @@ Namespace Terminal
         Private Function ConvertHexStringToByteArray(hexString As String) As Byte()
             ' from stackoverflow
             If hexString.Length Mod 2 <> 0 Then
-                Throw New ArgumentException([String].Format(CultureInfo.InvariantCulture, "The binary key cannot have an odd number of digits: {0}", hexString))
+                Throw New ArgumentException(String.Format(CultureInfo.InvariantCulture, "The binary key cannot have an odd number of digits: {0}", hexString))
             End If
 
             Dim HexAsBytes As Byte() = New Byte(hexString.Length \ 2 - 1) {}

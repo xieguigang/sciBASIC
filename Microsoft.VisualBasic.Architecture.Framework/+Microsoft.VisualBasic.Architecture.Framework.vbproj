@@ -251,6 +251,7 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
+    <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
@@ -305,6 +306,7 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
+    <Compile Include="Extensions\IO\Includes.vb" />
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
@@ -337,6 +339,11 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
@@ -543,9 +550,9 @@
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
     <Compile Include="Text\TextGrepScriptEngine.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Member.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Doc.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\DocAPI.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
     <Compile Include="Tools\ZipLib.vb" />
     <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />

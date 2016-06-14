@@ -1,5 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Serialization
-Imports System.Xml.Serialization
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Net.Protocols
 

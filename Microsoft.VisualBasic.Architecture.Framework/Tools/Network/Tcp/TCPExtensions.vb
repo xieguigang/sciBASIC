@@ -1,11 +1,12 @@
-﻿Imports System.Net.NetworkInformation
-Imports System.Net
+﻿Imports System.Net
+Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
-Imports System.Text
-Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports System.Runtime.CompilerServices
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net
 

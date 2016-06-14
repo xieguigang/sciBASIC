@@ -134,19 +134,23 @@ Namespace CommandLine
                 Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
                 Dim doc As String = SDKdocs()
 
-                If CLI.GetBoolean("--print") Then
-                    Call Console.WriteLine(doc)
+                If Not CLI.GetBoolean("--file") Then
+                    If CLI.GetBoolean("--print") Then
+                        Call Console.WriteLine(doc)
+                    Else
+                        Call SDKManual.LaunchManual(CLI:=Me)
+                    End If
                 Else
-                    Call SDKManual.LaunchManual(CLI:=Me)
+                    ' 只会写文件而不会在终端打开帮助窗口
                 End If
 
-                Return SDKdocs().SaveTo(DocPath).CLICode
+                Return doc.SaveTo(DocPath).CLICode
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
 
             Else
-                If commandName.FileExists AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
+                If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
                     Try
                         Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
                     Catch ex As Exception
@@ -189,27 +193,12 @@ Namespace CommandLine
         Const BAD_COMMAND_NAME As String = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
 
         ''' <summary>
-        ''' Generate the sdk document for the target program assembly.(生成目标应用程序的命令行帮助文档)
+        ''' Generate the sdk document for the target program assembly.(生成目标应用程序的命令行帮助文档，markdown格式的)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function SDKdocs() As String
-            Dim sb As StringBuilder = New StringBuilder($"{Application.ProductName} [version {Application.ProductVersion}]")
-            Dim Index As Integer = 1
-
-            Call sb.AppendLine()
-            Call sb.AppendLine($"Module AssemblyName: {__API_InfoHash?.FirstOrDefault.Value.EntryPoint.DeclaringType.Assembly.Location.ToFileURL}")
-            Call sb.AppendLine("Root namespace: " & Me._nsRoot)
-            Call sb.AppendLine(vbCrLf & vbCrLf & HelpSummary())
-            Call sb.AppendLine("Commands")
-            Call sb.AppendLine("--------------------------------------------------------------------------------")
-
-            For Each CmdlEntry As APIEntryPoint In __API_InfoHash.Values
-                sb.AppendLine(Index & ".  " & CmdlEntry.HelpInformation)
-                Index += 1
-            Next
-
-            Return sb.ToString
+            Return Me.MarkdownDoc
         End Function
 
         ''' <summary>
@@ -263,7 +252,7 @@ Namespace CommandLine
         <ExportAPI("?", Usage:="? [CommandName]", Info:="Show Application help", Example:="? example_commandName")>
         Public Function Help(CommandName As String) As Integer
             If String.IsNullOrEmpty(CommandName) Then 'List all commands.
-                Call Console.WriteLine(HelpSummary)
+                Call Console.WriteLine(HelpSummary(False))
             Else
                 If __API_InfoHash.ContainsKey(CommandName.ToLower.ShadowCopy(CommandName)) Then
                     Call __API_InfoHash(CommandName).PrintHelp
@@ -285,34 +274,6 @@ Namespace CommandLine
 
             Return 0
         End Function
-
-        ''' <summary>
-        ''' Returns the summary brief help information of all of the commands in current cli interpreter.
-        ''' (枚举出本CLI解释器之中的所有的命令的帮助的摘要信息)
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function HelpSummary() As String
-            Dim sb As StringBuilder = New StringBuilder(1024)
-            Dim nameMaxLen As Integer =
-                __API_InfoHash.Values _
-                .Select(Function(x) Len(x.Name)).Max
-
-            Call sb.AppendLine(ListAllCommandsPrompt)
-            Call sb.AppendLine()
-
-            For Each commandInfo As APIEntryPoint In __API_InfoHash.Values
-                Dim blank As String =
-                    New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
-                Dim line As String = String.Format(" {0}:  {1}{2}", commandInfo.Name, blank, commandInfo.Info)
-
-                Call sb.AppendLine(line)
-            Next
-
-            Return sb.ToString
-        End Function
-
-        Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"
 
         ''' <summary>
         ''' Returns the command entry info list array.
@@ -346,7 +307,10 @@ Namespace CommandLine
 
             Me._nsRoot = type.Namespace
             Me._Stack = caller
+            Me._Type = type
         End Sub
+
+        Public ReadOnly Property Type As Type
 
         ''' <summary>
         ''' 导出所有符合条件的静态方法

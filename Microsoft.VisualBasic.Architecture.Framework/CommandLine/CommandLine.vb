@@ -5,6 +5,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace CommandLine
 
@@ -15,15 +17,16 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Implements Generic.ICollection(Of KeyValuePair(Of String, String))
+    Public Class CommandLine : Implements ICollection(Of NamedValue(Of String))
+        Implements sIdEnumerable
 
-        Friend __lstParameter As List(Of KeyValuePair(Of String, String)) = New List(Of KeyValuePair(Of String, String))
+        Friend __lstParameter As New List(Of NamedValue(Of String))
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
         Friend _CLICommandArgvs As String
 
-        Friend _name As String
+        Dim _name As String
 
         ''' <summary>
         ''' The command name that parse from the input command line.
@@ -32,10 +35,13 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Name As String
+        Public Property Name As String Implements sIdEnumerable.Identifier
             Get
                 Return _name
             End Get
+            Protected Friend Set(value As String)
+                _name = value
+            End Set
         End Property
 
         ''' <summary>
@@ -88,12 +94,11 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Default Public ReadOnly Property Item(paramName As String) As String
             Get
-                Dim LQuery As KeyValuePair(Of String, String) = (
-                    From obj As KeyValuePair(Of String, String)
-                    In Me.__lstParameter
-                    Where String.Equals(obj.Key, paramName, StringComparison.OrdinalIgnoreCase)
-                    Select obj).FirstOrDefault  ' 是值类型，不会出现空引用的情况，
-                Dim value As String = LQuery.Value
+                Dim LQuery As NamedValue(Of String) =
+                    __lstParameter.Where(
+                        Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault
+
+                Dim value As String = LQuery.x ' 是值类型，不会出现空引用的情况
 
                 If value Is Nothing Then
                     value = ""
@@ -144,11 +149,11 @@ Namespace CommandLine
                 Return sBuilder.ToString
             End If
 
-            Dim MaxSwitchName As Integer = (From item As KeyValuePair(Of String, String)
+            Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
                                             In __lstParameter
-                                            Select Len(item.Key)).Max
-            For Each sw As KeyValuePair(Of String, String) In __lstParameter
-                Call sBuilder.AppendLine($"  {sw.Key}  {New String(" "c, MaxSwitchName - Len(sw.Key))}= ""{sw.Value}"";")
+                                            Select Len(item.Name)).Max
+            For Each sw As NamedValue(Of String) In __lstParameter
+                Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.x}"";")
             Next
 
             Return sBuilder.ToString
@@ -162,8 +167,12 @@ Namespace CommandLine
         ''' <param name="list"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function CheckMissingRequiredParameters(list As Generic.IEnumerable(Of String)) As String()
-            Dim LQuery = (From p As String In list Where String.IsNullOrEmpty(Me(p)) Select p).ToArray
+        Public Function CheckMissingRequiredParameters(list As IEnumerable(Of String)) As String()
+            Dim LQuery As String() =
+                LinqAPI.Exec(Of String) <= From p As String
+                                           In list
+                                           Where String.IsNullOrEmpty(Me(p))
+                                           Select p
             Return LQuery
         End Function
 
@@ -196,11 +205,12 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function ContainsParameter(parameterName As String, trim As Boolean) As Boolean
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
-            Dim LQuery = (From para As KeyValuePair(Of String, String)
-                          In Me.__lstParameter  '  名称都是没有处理过的
-                          Where String.Equals(namer, para.Key, StringComparison.OrdinalIgnoreCase)
-                          Select 1).FirstOrDefault
-            Return LQuery > 0
+            Dim LQuery As Integer =
+                LinqAPI.DefaultFirst(Of Integer) <= From para As NamedValue(Of String)
+                                                    In Me.__lstParameter  '  名称都是没有处理过的
+                                                    Where String.Equals(namer, para.Name, StringComparison.OrdinalIgnoreCase)
+                                                    Select 100
+            Return LQuery > 50
         End Function
 
         Public Shared Widening Operator CType(CommandLine As String) As CommandLine
@@ -340,16 +350,12 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetOrdinal(parameter As String) As Integer
-            Dim i = (From entry As KeyValuePair(Of String, String) In Me.__lstParameter
-                     Where String.Equals(parameter, entry.Key, StringComparison.OrdinalIgnoreCase)
-                     Select New With {
-                         .index = Me.__lstParameter.IndexOf(entry)
-                         }).FirstOrDefault
-            If i Is Nothing Then
-                Return -1
-            Else
-                Return i.index
-            End If
+            Dim i As Integer =
+                LinqAPI.DefaultFirst(Of Integer)(-1) <= From entry As NamedValue(Of String)
+                                                        In Me.__lstParameter
+                                                        Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
+                                                        Select __lstParameter.IndexOf(entry)
+            Return i
         End Function
 
         ''' <summary>
@@ -426,20 +432,20 @@ Namespace CommandLine
 #Region "Implements IReadOnlyCollection(Of KeyValuePair(Of String, String))"
 
         ''' <summary>
-        ''' 这个枚举函数也会将开关给包含进来
+        ''' 这个枚举函数也会将开关给包含进来，与<see cref="GetValueArray"/>方法所不同的是，这个函数里面的逻辑值开关的名称没有被修饰剪裁
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, String)) Implements IEnumerable(Of KeyValuePair(Of String, String)).GetEnumerator
-            Dim List As New List(Of KeyValuePair(Of String, String))(Me.__lstParameter)
+        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements IEnumerable(Of NamedValue(Of String)).GetEnumerator
+            Dim source As New List(Of NamedValue(Of String))(Me.__lstParameter)
 
             If Not Me.BoolFlags.IsNullOrEmpty Then
-                Call List.AddRange((From name As String
-                                    In BoolFlags
-                                    Select New KeyValuePair(Of String, String)(name, "true")).ToArray)
+                source += From name As String
+                          In BoolFlags
+                          Select New NamedValue(Of String)(name, "true")
             End If
 
-            For Each Item As KeyValuePair(Of String, String) In List
-                Yield Item
+            For Each x As NamedValue(Of String) In source
+                Yield x
             Next
         End Function
 
@@ -447,24 +453,33 @@ Namespace CommandLine
             Yield GetEnumerator()
         End Function
 
-        Public Sub Add(item As KeyValuePair(Of String, String)) Implements ICollection(Of KeyValuePair(Of String, String)).Add
+        Public Sub Add(item As NamedValue(Of String)) Implements ICollection(Of NamedValue(Of String)).Add
             Call __lstParameter.Add(item)
         End Sub
 
         Public Sub Add(key As String, value As String)
-            Call __lstParameter.Add(New KeyValuePair(Of String, String)(key.ToLower, value))
+            Call __lstParameter.Add(New NamedValue(Of String)(key.ToLower, value))
         End Sub
 
-        Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, String)).Clear
+        Public Sub Clear() Implements ICollection(Of NamedValue(Of String)).Clear
             Call __lstParameter.Clear()
         End Sub
 
-        Public Function Contains(item As KeyValuePair(Of String, String)) As Boolean Implements ICollection(Of KeyValuePair(Of String, String)).Contains
-            Dim LQuery = (From obj As KeyValuePair(Of String, String) In Me.__lstParameter Where String.Equals(obj.Key, item.Key, StringComparison.OrdinalIgnoreCase) Select obj).ToArray
-            Return LQuery.IsNullOrEmpty
+        ''' <summary>
+        ''' 只是通过比较名称来判断是否存在，值没有进行比较
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        Public Function Contains(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Contains
+            Dim LQuery As Integer =
+                LinqAPI.DefaultFirst(-1) <= From obj As NamedValue(Of String)
+                                            In Me.__lstParameter
+                                            Where String.Equals(obj.Name, item.Name, StringComparison.OrdinalIgnoreCase)
+                                            Select 100
+            Return LQuery > 50
         End Function
 
-        Public Sub CopyTo(array() As KeyValuePair(Of String, String), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, String)).CopyTo
+        Public Sub CopyTo(array() As NamedValue(Of String), arrayIndex As Integer) Implements ICollection(Of NamedValue(Of String)).CopyTo
             Call __lstParameter.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
@@ -474,42 +489,36 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, String)).Count
+        Public ReadOnly Property Count As Integer Implements ICollection(Of NamedValue(Of String)).Count
             Get
                 Return Me.__lstParameter.Count
             End Get
         End Property
 
-        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of KeyValuePair(Of String, String)).IsReadOnly
+        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of NamedValue(Of String)).IsReadOnly
             Get
                 Return True
             End Get
         End Property
 
         Public Function Remove(paramName As String) As Boolean
-            Dim LQuery = (From obj As KeyValuePair(Of String, String)
-                              In Me.__lstParameter
-                          Where String.Equals(obj.Key, paramName, StringComparison.OrdinalIgnoreCase)
-                          Select obj).ToArray
-            If LQuery.IsNullOrEmpty Then
+            Dim LQuery As NamedValue(Of String) =
+                LinqAPI.DefaultFirst(Of NamedValue(Of String)) <=
+                    From obj As NamedValue(Of String)
+                    In Me.__lstParameter
+                    Where String.Equals(obj.Name, paramName, StringComparison.OrdinalIgnoreCase)
+                    Select obj
+
+            If LQuery.IsEmpty Then
                 Return False
             Else
-                Call __lstParameter.Remove(LQuery.First)
+                Call __lstParameter.Remove(LQuery)
                 Return True
             End If
         End Function
 
-        Public Function Remove(item As KeyValuePair(Of String, String)) As Boolean Implements ICollection(Of KeyValuePair(Of String, String)).Remove
-            Dim LQuery = (From obj As KeyValuePair(Of String, String)
-                              In Me.__lstParameter
-                          Where String.Equals(obj.Key, item.Key, StringComparison.OrdinalIgnoreCase)
-                          Select obj).ToArray
-            If LQuery.IsNullOrEmpty Then
-                Return False
-            Else
-                Call __lstParameter.Remove(LQuery.First)
-                Return True
-            End If
+        Public Function Remove(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Remove
+            Return Remove(item.Name)
         End Function
 #End Region
 
@@ -517,21 +526,22 @@ Namespace CommandLine
         ''' ToArray拓展好像是有BUG的，所以请使用这个函数来获取所有的参数信息，请注意，逻辑值开关的名称会被去掉前缀
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValueArray() As KeyValuePair(Of String, String)()
-            Dim List = New List(Of KeyValuePair(Of String, String))
+        Public Function GetValueArray() As NamedValue(Of String)()
+            Dim lst As New List(Of NamedValue(Of String))
+
             If Not Me.__lstParameter.IsNullOrEmpty Then
-                Call List.AddRange((From obj As KeyValuePair(Of String, String)
-                                    In __lstParameter
-                                    Select New KeyValuePair(Of String, String)(obj.Key, obj.Value)).ToArray)
+                lst += From obj As NamedValue(Of String)
+                       In __lstParameter
+                       Select New NamedValue(Of String)(obj.Name, obj.x)
             End If
 
             If Not Me.BoolFlags.IsNullOrEmpty Then
-                Call List.AddRange((From bs As String
-                                    In Me.BoolFlags
-                                    Select New KeyValuePair(Of String, String)(TrimParamPrefix(bs), True)).ToArray)
+                lst += From bs As String
+                       In Me.BoolFlags
+                       Select New NamedValue(Of String)(TrimParamPrefix(bs), "True")
             End If
 
-            Return List.ToArray
+            Return lst.ToArray
         End Function
 
         ''' <summary>

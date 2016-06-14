@@ -2,6 +2,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Language
 
 Namespace DocumentStream
 
@@ -80,7 +81,7 @@ Namespace DocumentStream
                 If Index < _innerColumns.Count Then
                     _innerColumns(Index) = value
                 Else
-                    Dim d = Index - _innerColumns.Count  '当前行的数目少于指定的索引号的时候，进行填充
+                    Dim d As Integer = Index - _innerColumns.Count  '当前行的数目少于指定的索引号的时候，进行填充
                     For i As Integer = 0 To d - 1
                         _innerColumns.Add("")
                     Next
@@ -97,8 +98,12 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
             Get
-                Dim LQuery = From c In _innerColumns Where String.IsNullOrEmpty(c) Select 1 '
-                Return _innerColumns.Count - LQuery.Count
+                Dim LQuery As Integer() =
+                    LinqAPI.Exec(Of Integer) <= From c As String
+                                                In _innerColumns
+                                                Where String.IsNullOrEmpty(c)
+                                                Select 1 '
+                Return _innerColumns.Count - LQuery.Length
             End Get
         End Property
 
@@ -110,8 +115,12 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public ReadOnly Property NotNullColumns As String()
             Get
-                Dim Query = From s As String In _innerColumns Where Not String.IsNullOrEmpty(s) Select s '
-                Return Query.ToArray
+                Dim LQuery As String() =
+                    LinqAPI.Exec(Of String) <= From s As String
+                                               In _innerColumns
+                                               Where Not String.IsNullOrEmpty(s)
+                                               Select s '
+                Return LQuery
             End Get
         End Property
 
@@ -124,8 +133,12 @@ Namespace DocumentStream
         Public ReadOnly Property IsNullOrEmpty As Boolean
             Get
                 If _innerColumns.Count = 0 Then Return True
-                Dim Query = From colum In _innerColumns.AsParallel Where Len(Trim(colum)) > 0 Select 1 '
-                Return Query.ToArray.Length = 0
+                Dim LQuery As Integer =
+                    LinqAPI.DefaultFirst(Of Integer) <= From colum As String
+                                                        In _innerColumns.AsParallel
+                                                        Where Len(Trim(colum)) > 0
+                                                        Select 100 '
+                Return Not LQuery > 50
             End Get
         End Property
 
@@ -137,7 +150,7 @@ Namespace DocumentStream
         ''' <returns>仅为LINQ查询使用的一个无意义的值</returns>
         ''' <remarks></remarks>
         Public Function InsertAt(value As String, column As Integer) As Integer
-            Dim d = column - _innerColumns.Count - 1
+            Dim d As Integer = column - _innerColumns.Count - 1
             If d > 0 Then
                 For i As Integer = 0 To d
                     Call _innerColumns.Add("")
@@ -163,7 +176,7 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Takes(Count As Integer) As String()
-            Dim d = Count - _innerColumns.Count
+            Dim d As Integer = Count - _innerColumns.Count
 
             If d < 0 Then
                 Return _innerColumns.Take(Count).ToArray
@@ -287,7 +300,7 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Shared Widening Operator CType(Line As String) As RowObject
             Dim row As List(Of String) = Tokenizer.CharsParser(Line)
-            Return New RowObject(Row)
+            Return New RowObject(row)
         End Operator
 
         Public Shared Function TryParse(Line As String) As RowObject
@@ -318,16 +331,15 @@ Namespace DocumentStream
         ''' <param name="rowList"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Distinct(rowList As IEnumerable(Of RowObject)) As RowObject()
-            Dim source = (From row In rowList
-                          Let rowLine As String = CType(row, String)
-                          Select rowLine
-                          Distinct
-                          Order By rowLine Ascending)
-            Dim LQuery = (From rowLine As String
-                          In source
-                          Select CType(rowLine, RowObject)).ToArray
-            Return LQuery
+        Public Shared Iterator Function Distinct(rowList As IEnumerable(Of RowObject)) As IEnumerable(Of RowObject)
+            Dim source As IEnumerable(Of String) = From row In rowList
+                                                   Let rowLine As String = CType(row, String)
+                                                   Select rowLine
+                                                   Distinct
+                                                   Order By rowLine Ascending
+            For Each line As String In source
+                Yield New RowObject(line)
+            Next
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator

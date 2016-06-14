@@ -36,7 +36,7 @@ Namespace Parallel
                 Call Address.List.Add(Address.obj.x)
             Next
             Call Console.WriteLine(" * Generate result.....")
-            Dim LQuery = (From TAG In Cache.AsParallel Select New GroupResult(Of T, T_TAG)() With {.TAG = TAG.TAG.TAG, .Group = TAG.List.ToArray}).ToArray
+            Dim LQuery = (From TAG In Cache.AsParallel Select New GroupResult(Of T, T_TAG)() With {.Tag = TAG.TAG.TAG, .Group = TAG.List.ToArray}).ToArray
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Parallel group operation job done!")
             Return LQuery
         End Function

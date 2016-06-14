@@ -1,10 +1,41 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
 
 Namespace DocumentStream
 
     Public Module StreamIO
+
+        ''' <summary>
+        ''' 根据文件的头部的定义，从<paramref name="types"/>之中选取得到最合适的类型的定义
+        ''' </summary>
+        ''' <param name="df"></param>
+        ''' <param name="types"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function [GetType](df As File, ParamArray types As Type()) As Type
+            Dim head As String() = df.First.ToArray
+            Dim scores As New Dictionary(Of Type, Integer)
+
+            For Each schema In types.Select(AddressOf SchemaProvider.CreateObject)
+                Dim allNames As String() = schema.Properties.ToArray(Function(x) x.Name)
+                Dim matches = (From p As String
+                               In allNames
+                               Where Array.IndexOf(head, p) > -1
+                               Select 1).Sum
+                Call scores.Add(schema.DeclaringType, matches)
+            Next
+
+            Dim desc = From x
+                       In scores
+                       Select type = x.Key, x.Value
+                       Order By Value Descending
+            Dim target As Type = desc.FirstOrDefault?.type
+            Return target
+        End Function
 
         ''' <summary>
         ''' Save this csv document into a specific file location <paramref name="path"/>.

@@ -1,12 +1,14 @@
 ﻿Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace CommandLine.Reflection.EntryPoints
 
     Public Class APIDelegate : Implements IExportAPI
 
         Protected _NumberOfParameters As Integer
-        Protected _metaData As ExportAPIAttribute
+        Protected _metaData As Binding(Of ExportAPIAttribute, MethodInfo)
         Protected __funcInvoker As Func(Of Object(), Integer)
 
         ''' <summary>
@@ -17,25 +19,25 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <remarks></remarks>
         Public ReadOnly Property Name() As String Implements IExportAPI.Name
             Get
-                Return _metaData.Name
+                Return _metaData.Bind.Name
             End Get
         End Property
 
         Public ReadOnly Property Info() As String Implements IExportAPI.Info
             Get
-                Return _metaData.Info
+                Return _metaData.Bind.Info
             End Get
         End Property
 
         Public ReadOnly Property Usage() As String Implements IExportAPI.Usage
             Get
-                Return _metaData.Usage
+                Return _metaData.Bind.Usage
             End Get
         End Property
 
         Public ReadOnly Property Example() As String Implements IExportAPI.Example
             Get
-                Return _metaData.Example
+                Return _metaData.Bind.Example
             End Get
         End Property
 
@@ -45,7 +47,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="attribute"></param>
         ''' <param name="Invoke"></param>
         ''' <remarks></remarks>
-        Public Sub New(attribute As ExportAPIAttribute, [Invoke] As Func(Of Object(), Integer))
+        Public Sub New(attribute As Binding(Of ExportAPIAttribute, MethodInfo), [Invoke] As Func(Of Object(), Integer))
             _metaData = attribute
             __funcInvoker = Invoke
             _metaData = attribute
@@ -55,14 +57,26 @@ Namespace CommandLine.Reflection.EntryPoints
         Protected Sub New()
         End Sub
 
-        Public Overridable Function HelpInformation() As String
+        Public Overridable Function HelpInformation(Optional md As Boolean = False) As String
             Dim sBuilder As StringBuilder = New StringBuilder(1024)
 
-            sBuilder.AppendLine(String.Format("Help for command '{0}':", _metaData.Name))
+            If md Then
+                Call sBuilder.Append("##### ")
+            End If
+
+            sBuilder.AppendLine(String.Format("Help for command '{0}':", Name))
             sBuilder.AppendLine()
+            If md Then
+                Call sBuilder.AppendLine("**Prototype**: " & _metaData.Target.GetFullName)
+                Call sBuilder.AppendLine()
+                Call sBuilder.AppendLine("```")
+            End If
             sBuilder.AppendLine(String.Format("  Information:  {0}", Info))
             sBuilder.AppendLine(String.Format("  Usage:        {0} {1}", Application.ExecutablePath, Usage))
             sBuilder.AppendLine(String.Format("  Example:      {0} {1} {2}", IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath), Name, Example))
+            If md Then
+                Call sBuilder.AppendLine("```")
+            End If
 
             Return sBuilder.ToString
         End Function
@@ -90,7 +104,7 @@ Namespace CommandLine.Reflection.EntryPoints
         End Function
 
         Public Overrides Function ToString() As String
-            Return _metaData.Name
+            Return Name
         End Function
     End Class
 End Namespace

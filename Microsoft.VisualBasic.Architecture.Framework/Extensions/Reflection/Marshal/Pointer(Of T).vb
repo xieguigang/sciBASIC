@@ -6,15 +6,24 @@ Namespace Emit.Marshal
 
         Protected __innerRaw As T()
 
-        Public ReadOnly Property Current As T
+        Public Property Current As T
             Get
                 Return Value(Scan0)  ' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
             End Get
+            Protected Friend Set(value As T)
+                Me.Value(Scan0) = value
+            End Set
         End Property
 
         Public ReadOnly Property Length As Integer
             Get
                 Return __innerRaw.Length
+            End Get
+        End Property
+
+        Public ReadOnly Property UBound As Integer
+            Get
+                Return Information.UBound(__innerRaw)
             End Get
         End Property
 
@@ -81,25 +90,25 @@ Namespace Emit.Marshal
             Return $"* {GetType(T).Name} + {__index} --> {Current}  // {Scan0.ToString}"
         End Function
 
-        ''' <summary>
-        ''' 前移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Operator <=(p As Pointer(Of T), offset As Integer) As T
-            Return p(-offset)
-        End Operator
+        '''' <summary>
+        '''' 前移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
+        '''' </summary>
+        '''' <param name="p"></param>
+        '''' <param name="offset"></param>
+        '''' <returns></returns>
+        'Public Overloads Shared Operator <=(p As Pointer(Of T), offset As Integer) As T
+        '    Return p(-offset)
+        'End Operator
 
-        ''' <summary>
-        ''' 后移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Operator >=(p As Pointer(Of T), offset As Integer) As T
-            Return p(offset)
-        End Operator
+        '''' <summary>
+        '''' 后移<paramref name="offset"/>个单位，然后返回值，这个和Peek的作用一样，不会改变指针位置
+        '''' </summary>
+        '''' <param name="p"></param>
+        '''' <param name="offset"></param>
+        '''' <returns></returns>
+        'Public Overloads Shared Operator >=(p As Pointer(Of T), offset As Integer) As T
+        '    Return p(offset)
+        'End Operator
 
         Public Overloads Shared Narrowing Operator CType(p As Pointer(Of T)) As T
             Return p.Current
@@ -164,5 +173,40 @@ Namespace Emit.Marshal
             ptr.__index -= 1
             Return ptr.__innerRaw(i)
         End Operator
+
+        Public Overloads Shared Operator <=(a As Pointer(Of T), b As Pointer(Of T)) As SwapHelper(Of T)
+            Return New SwapHelper(Of T) With {.a = a, .b = b}
+        End Operator
+
+        Public Overloads Shared Operator >=(a As Pointer(Of T), b As Pointer(Of T)) As SwapHelper(Of T)
+            Throw New NotSupportedException
+        End Operator
+
+        Public Overloads Shared Operator <=(a As Pointer(Of T), b As Integer) As SwapHelper(Of T)
+            Return New SwapHelper(Of T) With {.a = a, .i = b}
+        End Operator
+
+        Public Overloads Shared Operator >=(a As Pointer(Of T), b As Integer) As SwapHelper(Of T)
+            Throw New NotSupportedException
+        End Operator
     End Class
+
+    Public Structure SwapHelper(Of T)
+
+        Public a As Pointer(Of T)
+        Public b As Pointer(Of T)
+        Public i As Integer
+
+        Public Sub Swap()
+            Dim tmp As T = a.Current
+
+            If b Is Nothing Then
+                a.Current = a(i)
+                a(i) = tmp
+            Else
+                a.Current = b.Current
+                b.Current = tmp
+            End If
+        End Sub
+    End Structure
 End Namespace

@@ -1,31 +1,27 @@
-﻿Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Runtime.Serialization
-Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Binary
+﻿Imports System.ComponentModel
 Imports System.Drawing
+Imports System.IO
 Imports System.Net
-Imports System.Text.RegularExpressions
 Imports System.Reflection
-Imports System.ComponentModel
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization.BinaryDumping
-
-#If FRAMEWORD_CORE Then
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-#End If
-
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Similarity
 
 #If FRAMEWORD_CORE Then
 
@@ -1538,7 +1534,7 @@ Public Module Extensions
         Dim KnowDuplicates = (From obj In Groups.AsParallel
                               Where obj.Group.Count > 1
                               Select New GroupResult(Of T, Tag) With {
-                                  .TAG = obj.objTag,
+                                  .Tag = obj.objTag,
                                   .Group = obj.Group.ToArray}).ToArray
         Return KnowDuplicates
     End Function
@@ -1899,14 +1895,15 @@ Public Module Extensions
     ''' Gets the subscript index of a generic collection.(获取某一个集合的下标的集合)
     ''' </summary>
     ''' <typeparam name="T">集合中的元素为任意类型的</typeparam>
-    ''' <param name="Collection">目标集合对象</param>
+    ''' <param name="source">目标集合对象</param>
     ''' <returns>A integer array of subscript index of the target generic collection.</returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
-    <Extension> Public Function Sequence(Of T)(<Parameter("Data.Collection", "")> Collection As IEnumerable(Of T),
-                                               <Parameter("Index.OffSet", "")> Optional OffSet As Integer = 0) _
-        As <FunctionReturns("A integer array of subscript index of the target generic collection.")> Integer()
+    <Extension> Public Iterator Function Sequence(Of T)(
+                                        <Parameter("source", "")> source As IEnumerable(Of T),
+                                        <Parameter("index.OffSet", "")> Optional offSet As Integer = 0) _
+                                     As <FunctionReturns("A integer array of subscript index of the target generic collection.")> IEnumerable(Of Integer)
 #Else
     ''' <summary>
     ''' 获取某一个集合的下标的集合
@@ -1918,22 +1915,28 @@ Public Module Extensions
     '''
     <Extension> Public Function Sequence(Of T)(Collection As Generic.IEnumerable(Of T), Optional offset As Integer = 0) As Integer()
 #End If
-        If Collection Is Nothing OrElse Collection.Count = 0 Then
-            Return New Integer() {}
+        If source Is Nothing Then
+            Return
         Else
-            Dim List(Collection.Count - 1) As Integer
-            For i As Integer = 0 To List.Length - 1
-                List(i) = i + OffSet
+            Dim i As Integer = offSet
+
+            For Each x As T In source
+                Yield i
+                i += 1
             Next
-            Return List
         End If
     End Function
 
-    <Extension> Public Function LongSeq(Of T)(source As IEnumerable(Of T)) As Long()
-        If source.IsNullOrEmpty Then
-            Return New Long() {}
+    <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of Long)
+        If source Is Nothing Then
+            Return
         Else
-            Return CLng(source.Count).LongSeq
+            Dim i As Long = offset
+
+            For Each x As T In source
+                Yield i
+                i += 1
+            Next
         End If
     End Function
 
@@ -1950,16 +1953,16 @@ Public Module Extensions
     '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
-    ''' <param name="IndexCollection">所要获取的目标对象的下表的集合</param>
+    ''' <param name="source"></param>
+    ''' <param name="indexs">所要获取的目标对象的下表的集合</param>
     ''' <param name="reversedSelect">是否为反向选择</param>
     ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("takes")>
-    <Extension> Public Function Takes(Of T)(Collection As Generic.IEnumerable(Of T),
-                                            IndexCollection As Integer(),
+    <Extension> Public Function Takes(Of T)(source As Generic.IEnumerable(Of T),
+                                            indexs As Integer(),
                                             Optional OffSet As Integer = 0,
                                             Optional reversedSelect As Boolean = False) As T()
 #Else
@@ -1977,15 +1980,15 @@ Public Module Extensions
     <Extension> Public Function Takes(Of T)(Collection As Generic.IEnumerable(Of T), IndexCollection As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
 #End If
         If reversedSelect Then
-            Return __reversedTakeSelected(Collection, IndexCollection)
+            Return __reversedTakeSelected(source, indexs)
         End If
 
         Dim result As T()
 
         If OffSet = 0 Then
-            result = (From idx As Integer In IndexCollection Select Collection(idx)).ToArray
+            result = (From idx As Integer In indexs Select source(idx)).ToArray
         Else
-            result = (From idx As Integer In IndexCollection Select Collection(idx + OffSet)).ToArray
+            result = (From idx As Integer In indexs Select source(idx + OffSet)).ToArray
         End If
         Return result
     End Function
@@ -2004,7 +2007,7 @@ Public Module Extensions
     ''' <param name="indexs"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function __reversedTakeSelected(Of T)(coll As Generic.IEnumerable(Of T), indexs As Integer()) As T()
+    Private Function __reversedTakeSelected(Of T)(coll As IEnumerable(Of T), indexs As Integer()) As T()
         Dim result As T() = (From i As Integer In coll.Sequence Where Array.IndexOf(indexs, i) = -1 Select coll(i)).ToArray
         Return result
     End Function

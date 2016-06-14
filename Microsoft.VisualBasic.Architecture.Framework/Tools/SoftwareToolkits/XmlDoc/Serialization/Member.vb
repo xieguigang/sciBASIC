@@ -2,7 +2,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
 
-Namespace SoftwareToolkits.XmlDoc
+Namespace SoftwareToolkits.XmlDoc.Serialization
 
     Public Class member : Implements IMember
 

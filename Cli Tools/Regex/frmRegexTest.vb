@@ -1,27 +1,34 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization
 
-Public Class Form1
+Public Class frmRegexTest
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    Private Sub __runRegex()
         Dim regexs As String() =
             LinqAPI.Exec(Of String) <= From s As String
                                        In tbRegex.Text.lTokens
                                        Where Not String.IsNullOrEmpty(s)
                                        Select s
-        Dim LQuery = From expr As String
-                     In regexs
-                     Select expr,
-                         Regex.Matches(tbInputs.Text, expr, options).ToArray
 
-        Call lbResults.Items.Clear()
+        Try
+            Dim LQuery = From expr As String
+                         In regexs
+                         Select expr,
+                             Regex.Matches(tbInputs.Text, expr, options).ToArray
 
-        For Each block In LQuery
-            For Each result As String In block.ToArray
-                Dim s As String = $"[{block.expr}]{vbTab} {result}"
-                Call lbResults.Items.Add(s)
+            Call lbResults.Items.Clear()
+
+            For Each block In LQuery
+                For Each result As String In block.ToArray
+                    Dim s As String = $"[{block.expr}]{vbTab} {result}"
+                    Call lbResults.Items.Add(s)
+                Next
             Next
-        Next
+        Catch ex As Exception
+            ex = New Exception(tbRegex.Text.lTokens.GetJson, ex)
+            Call App.LogException(ex)
+        End Try
     End Sub
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
@@ -56,14 +63,18 @@ Public Class Form1
 
         options = opt
 
-        Call Button1_Click(Nothing, Nothing)
+        Call __runRegex()
     End Sub
 
     Private Sub tbRegex_TextChanged(sender As Object, e As EventArgs) Handles tbRegex.TextChanged
-        Call Button1_Click(Nothing, Nothing)
+        Call __runRegex()
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call CheckBox9_CheckedChanged(Nothing, Nothing)
+    End Sub
+
+    Private Sub tbInputs_TextChanged(sender As Object, e As EventArgs) Handles tbInputs.TextChanged
+        Call __runRegex()
     End Sub
 End Class

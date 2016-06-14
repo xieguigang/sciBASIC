@@ -138,7 +138,7 @@ Namespace Net
         ''' </summary>
         ''' <returns></returns>
         Public Function GetIPAddress() As IPAddress
-            Dim strHostName As [String] = Dns.GetHostName()
+            Dim strHostName As String = Dns.GetHostName()
             Dim ipEntry As IPHostEntry = Dns.GetHostEntry(strHostName)
             Dim addr As IPAddress() = ipEntry.AddressList
             For Each ip As IPAddress In addr

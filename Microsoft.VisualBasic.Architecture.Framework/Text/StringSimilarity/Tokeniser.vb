@@ -65,7 +65,7 @@ Namespace Text.Similarity
             input = input.ToLower()
 
             Dim r As New Regex("([ \t{}():;])")
-            Dim Tokens As [String]() = r.Split(input)
+            Dim Tokens As String() = r.Split(input)
             Dim Filter As New List(Of String)
 
             For i As Integer = 0 To Tokens.Length - 1

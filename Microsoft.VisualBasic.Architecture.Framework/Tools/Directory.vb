@@ -50,4 +50,8 @@ Public Class Directory
     Public Overrides Function ToString() As String
         Return DIR
     End Function
+
+    Public Shared Function Exists(DIR As String) As Boolean
+        Return IO.Directory.Exists(DIR)
+    End Function
 End Class

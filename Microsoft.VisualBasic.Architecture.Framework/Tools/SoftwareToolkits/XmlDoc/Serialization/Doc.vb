@@ -1,6 +1,6 @@
 ﻿Imports System.Xml.Serialization
 
-Namespace SoftwareToolkits.XmlDoc
+Namespace SoftwareToolkits.XmlDoc.Serialization
 
     ''' <summary>
     ''' .NET assembly generated XML comments documents file.

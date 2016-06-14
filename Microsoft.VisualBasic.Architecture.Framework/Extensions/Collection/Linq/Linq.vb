@@ -339,23 +339,32 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="[CType]">第二个参数是index</param>
+        ''' <param name="__ctype">第二个参数是index</param>
         ''' <param name="Parallel"></param>
         ''' <returns></returns>
-        <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
-                                                    [CType] As Func(Of T, Integer, TOut),
-                                                    Optional Parallel As Boolean = False) As TOut()
-            If source.IsNullOrEmpty Then
+        <Extension> Public Function ToArray(Of T, TOut)(
+                                    source As IEnumerable(Of T),
+                                    __ctype As Func(Of T, Integer, TOut),
+                           Optional Parallel As Boolean = False) As TOut()
+
+            If source Is Nothing Then
                 Return New TOut() {}
             End If
 
             Dim LQuery As TOut()
-            Dim index As Integer() = source.Sequence
 
             If Parallel Then
-                LQuery = (From i As Integer In index.AsParallel Let obj As T = source(i) Select [CType](obj, i)).ToArray
+                LQuery = LinqAPI.Exec(Of TOut) <=
+                    From i As SeqValue(Of T)
+                    In source.SeqIterator.AsParallel
+                    Let obj As T = i.obj
+                    Select __ctype(obj, i.i)
             Else
-                LQuery = (From i As Integer In index Let obj As T = source(i) Select [CType](obj, i)).ToArray
+                LQuery = LinqAPI.Exec(Of TOut) <=
+                    From i As SeqValue(Of T)
+                    In source.SeqIterator
+                    Let obj As T = i.obj
+                    Select __ctype(obj, i.i)
             End If
 
             Return LQuery

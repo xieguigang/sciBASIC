@@ -1,11 +1,12 @@
 ﻿Imports System
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Threading
-Imports System.Text
-Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Abstract
 Imports System.Reflection
+Imports System.Text
+Imports System.Threading
+Imports Microsoft.VisualBasic.Net.Abstract
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net
 

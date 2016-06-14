@@ -9,6 +9,13 @@ Namespace CommandLine
     ''' </summary>
     Public Module CLIMapper
 
+        ''' <summary>
+        ''' The properties in the class type needs decorating with attribute <see cref="CLIParameter"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="args"></param>
+        ''' <param name="strict"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Maps(Of T As Class)(args As CommandLine, Optional strict As Boolean = False) As T
             Dim type As Type = GetType(T)
@@ -16,7 +23,7 @@ Namespace CommandLine
             Dim props = (From prop As PropertyInfo
                          In type.GetProperties
                          Where prop.CanWrite AndAlso
-                             Scripting.CasterString.ContainsKey(prop.PropertyType)
+                             Scripting.IsPrimitive(prop.PropertyType)
                          Select prop)
 
             For Each prop As PropertyInfo In props

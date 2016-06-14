@@ -239,7 +239,7 @@ Namespace StorageProvider.Reflection
 
             Dim df As DocumentStream.File = Save(source, Explicit)
             Dim TitleRow As DocumentStream.RowObject = df.First
-            Dim __pCache As Integer() = TitleRow.Sequence
+            Dim __pCache As Integer() = TitleRow.Sequence.ToArray
 
             Dim buf As List(Of Dictionary(Of String, String)) =
                 LinqAPI.MakeList(Of Dictionary(Of String, String)) <=

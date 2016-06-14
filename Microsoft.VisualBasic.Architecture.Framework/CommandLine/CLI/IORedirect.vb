@@ -362,6 +362,10 @@ Namespace CommandLine
             Return Start(WaitForExit, Nothing, True)
         End Function
 
+        ''' <summary>
+        ''' 线程会被阻塞在这里，直到外部应用程序执行完毕
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
             Return Start(WaitForExit:=True)
         End Function

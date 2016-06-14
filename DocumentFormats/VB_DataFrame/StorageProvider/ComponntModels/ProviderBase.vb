@@ -70,7 +70,7 @@ Namespace StorageProvider.ComponentModels
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{Name} As {BindProperty.PropertyType.Name}] //{Me.GetType.Name}   --> {BindProperty.Name}"
+            Return $"[Dim {Name} As {BindProperty.PropertyType.FullName}] //{Me.GetType.Name}   --> {BindProperty.Name}"
         End Function
     End Class
 End Namespace
