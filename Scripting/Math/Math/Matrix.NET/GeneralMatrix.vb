@@ -18,26 +18,28 @@ Namespace Matrix
     ''' of matrices, permutation vectors, and the like, produce results in five
     ''' decomposition classes.  These decompositions are accessed by the GeneralMatrix
     ''' class to compute solutions of simultaneous linear equations, determinants,
-    ''' inverses and other matrix functions.  The five decompositions are:
-    ''' &lt;P>&lt;UL>
-    ''' &lt;LI>Cholesky Decomposition of symmetric, positive definite matrices.
-    ''' &lt;LI>LU Decomposition of rectangular matrices.
-    ''' &lt;LI>QR Decomposition of rectangular matrices.
-    ''' &lt;LI>Singular Value Decomposition of rectangular matrices.
-    ''' &lt;LI>Eigenvalue Decomposition of both symmetric and nonsymmetric square matrices.
-    ''' &lt;DL>
-    ''' &lt;DT>&lt;B>Example of use:&lt;/B>&lt;/DT>&lt;/DL>&lt;/LI>&lt;/LI>&lt;/LI>&lt;/LI>&lt;/LI>&lt;/UL>&lt;/P>
-    ''' &lt;P>
-    ''' &lt;DD>Solve a linear system A x = b and compute the residual norm, ||b - A x||.
-    ''' &lt;P>&lt;PRE>
+    ''' inverses and other matrix functions.  
+    ''' 
+    ''' The five decompositions are:
+    ''' 
+    ''' + Cholesky Decomposition of symmetric, positive definite matrices.
+    ''' + LU Decomposition of rectangular matrices.
+    ''' + QR Decomposition of rectangular matrices.
+    ''' + Singular Value Decomposition of rectangular matrices.
+    ''' + Eigenvalue Decomposition of both symmetric and nonsymmetric square matrices.
+    ''' 
+    ''' Example of use:
+    ''' 
+    ''' Solve a linear system A x = b and compute the residual norm, ||b - A x||.
+    ''' 
+    ''' ```csharp
     ''' double[][] vals = {{1.,2.,3},{4.,5.,6.},{7.,8.,10.}};
     ''' GeneralMatrix A = new GeneralMatrix(vals);
     ''' GeneralMatrix b = GeneralMatrix.Random(3,1);
     ''' GeneralMatrix x = A.Solve(b);
     ''' GeneralMatrix r = A.Multiply(x).Subtract(b);
     ''' double rnorm = r.NormInf();
-    ''' &lt;/PRE>&lt;/DD>
-    ''' &lt;/DL>&lt;/P>&lt;/DD>&lt;/P>
+    ''' ```
     ''' </summary>
     ''' <author>  
     ''' The MathWorks, Inc. and the National Institute of Standards and Technology.
