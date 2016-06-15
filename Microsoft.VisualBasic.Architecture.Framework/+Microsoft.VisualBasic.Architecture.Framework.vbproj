@@ -338,6 +338,7 @@
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="ConsoleDevices\Pipeline.vb" />
     <Compile Include="ConsoleDevices\InnerQueue.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ConsoleDevices\PrintAsTable.vb" />
