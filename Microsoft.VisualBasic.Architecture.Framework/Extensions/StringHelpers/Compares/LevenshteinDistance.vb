@@ -85,7 +85,7 @@ Public Module LevenshteinDistance
     End Function
 
     ''' <summary>
-    ''' 泛型序列的相似度的比较计算方法
+    ''' 泛型序列的相似度的比较计算方法，这个函数返回的是距离
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="reference"></param>
@@ -104,13 +104,13 @@ Public Module LevenshteinDistance
     End Function
 
     ''' <summary>
-    ''' 泛型序列的相似度的比较计算方法
+    ''' 泛型序列的相似度的比较计算方法，这个会返回所有的数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="reference"></param>
     ''' <param name="hypotheses"></param>
     ''' <param name="equals"></param>
-    ''' <param name="asChar"></param>
+    ''' <param name="asChar">这个只是用于进行显示输出的</param>
     ''' <param name="cost"></param>
     ''' <returns></returns>
     Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As Equals(Of T), asChar As ToChar(Of T), Optional cost As Double = 0.7) As DistResult
@@ -121,7 +121,7 @@ Public Module LevenshteinDistance
         Dim i As Integer = reference.Length, j As Integer = hypotheses.Length
         Dim sHyp As String = New String(hypotheses.ToArray(Function(x) asChar(x)))
         Dim sRef As String = New String(reference.ToArray(Function(x) asChar(x)))
-        Dim result As DistResult = New DistResult With {
+        Dim result As New DistResult With {
             .Hypotheses = sHyp,
             .Reference = sRef
         }

@@ -105,10 +105,17 @@ Namespace Parallel.Linq
         ''' <param name="inputs"></param>
         ''' <param name="task"></param>
         ''' <returns></returns>
-        Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T), task As Func(Of T, TOut), Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
+        Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
+                                                    task As Func(Of T, TOut),
+                                                    Optional where As Func(Of T, Boolean) = Nothing,
+                                                    Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
+
             Call $"Start schedule task pool for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
 
-            Dim buf = TaskPartitions.Partitioning(inputs, parTokens, task)
+            Dim buf As IEnumerable(Of Func(Of TOut())) =
+                If(where Is Nothing,
+                TaskPartitions.Partitioning(inputs, parTokens, task),
+                TaskPartitions.Partitioning(inputs, parTokens, task, where))
             Dim LQueryInvoke = From part As Func(Of TOut())
                                In buf.AsParallel
                                Select part()
