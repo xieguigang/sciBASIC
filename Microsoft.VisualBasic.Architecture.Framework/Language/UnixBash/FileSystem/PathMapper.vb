@@ -3,12 +3,12 @@
 Namespace Language.UnixBash
 
     ''' <summary>
-    ''' 这个模块是将Linux路径映射为Windows路径的
+    ''' Maps the linux path to the Windows path.(这个模块是将Linux路径映射为Windows路径的)
     ''' </summary>
     Public Module PathMapper
 
         ''' <summary>
-        ''' Gets a System.PlatformID enumeration value that identifies the operating system
+        ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
         ''' platform.
         ''' </summary>
         ''' <returns></returns>
@@ -16,12 +16,14 @@ Namespace Language.UnixBash
 
         ''' <summary>
         ''' Map linux path on Windows:
-        ''' [~ -> C:\User\&lt;user_name>]
-        ''' [# -> <see cref="App.HOME"/>]
-        ''' [/ -> C:\]
-        ''' [/usr/bin -> C:\Program Files\]
-        ''' [/usr -> C:\User\]
-        ''' [- -> <see cref="App.PreviousDirectory"/>]
+        ''' 
+        ''' + [~ -> C:\User\&lt;user_name>]
+        ''' + [# -> <see cref="App.HOME"/>]
+        ''' + [/ -> C:\]
+        ''' + [/usr/bin -> C:\Program Files\]
+        ''' + [/usr -> C:\User\]
+        ''' + [- -> <see cref="App.PreviousDirectory"/>]
+        ''' 
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>

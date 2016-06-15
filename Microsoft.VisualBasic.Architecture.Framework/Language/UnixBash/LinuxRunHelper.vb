@@ -2,6 +2,9 @@
 
 Namespace Language.UnixBash
 
+    ''' <summary>
+    ''' mono shortcuts
+    ''' </summary>
     Public Module LinuxRunHelper
 
         ''' <summary>
@@ -26,6 +29,10 @@ system(""mono {cmd.CliPath} $cli"");
             Return perl
         End Function
 
+        ''' <summary>
+        ''' Run from bash shell
+        ''' </summary>
+        ''' <returns></returns>
         Public Function BashRun() As String
             Dim cmd As String = Assembly.GetEntryAssembly.Location
             Dim bash As String =
@@ -49,6 +56,10 @@ mono ""{cmd}"" $cli
             Return BashRun.SaveTo(path)
         End Function
 
+        ''' <summary>
+        ''' Execute command using perl script
+        ''' </summary>
+        ''' <returns></returns>
         Public Function PerlShell() As Integer
             Dim path As String = Assembly.GetEntryAssembly.Location.TrimFileExt & ".pl"
             Return ScriptMe.SaveTo(path)
