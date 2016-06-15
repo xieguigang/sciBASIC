@@ -1,10 +1,57 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Emit.Marshal
 
 Namespace DocumentStream
 
     Module Meta
+
+        Public Function TryGetMetaData(Of T)(reader As File, ByRef i As Integer) As T
+            Dim [in] As Dictionary(Of String, String) = TryGetMetaData(reader, i)
+            Dim schema = DataFrameColumnAttribute.LoadMapping(Of T)(mapsAll:=True)
+            Dim x As Object = Activator.CreateInstance(Of T)
+            Dim value As String = Nothing
+
+            For Each prop In schema
+                If [in].TryGetValue(prop.Key, value) Then
+                    Dim o As Object = Scripting.CTypeDynamic(value, prop.Value.Type)
+                    Call prop.Value.SetValue(x, o)
+                End If
+            Next
+
+            Return DirectCast(x, T)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <param name="i">下一行是标题行</param>
+        ''' <returns></returns>
+        Public Function TryGetMetaData(reader As File, ByRef i As Integer) As Dictionary(Of String, String)
+            Dim p As New Pointer(Of RowObject)(reader)
+            Dim out As New Dictionary(Of String, String)
+            Dim name As String
+
+            Do While (++p).IsMetaRow
+                Dim row = p.Current.First.GetTagValue("=")
+                name = row.Name
+                name = Regex.Replace(name, "^#+", "", RegexOptions.Multiline)
+
+                Call out.Add(name, row.x)
+            Loop
+
+            i = p.Pointer
+
+            Return out
+        End Function
+
+        <Extension>
+        Public Function DataFrameWithMeta(Of T)(x As T) As File
+            Return New File(x.ToCsvMeta)
+        End Function
 
         <Extension>
         Public Function IsMetaRow(row As RowObject) As Boolean
@@ -16,7 +63,7 @@ Namespace DocumentStream
         End Function
 
         <Extension>
-        Public Function ToCsvMeta(Of T As Class)(x As T) As RowObject()
+        Public Function ToCsvMeta(Of T)(x As T) As RowObject()
             Return ToCsvMeta(x, GetType(T))
         End Function
 

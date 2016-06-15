@@ -6,6 +6,10 @@ Namespace Emit.Marshal
 
         Protected __innerRaw As T()
 
+        ''' <summary>
+        ''' <see cref="Pointer"/> -> its current value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Current As T
             Get
                 Return Value(Scan0)  ' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
@@ -15,6 +19,10 @@ Namespace Emit.Marshal
             End Set
         End Property
 
+        ''' <summary>
+        ''' Memory block size
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             Get
                 Return __innerRaw.Length
@@ -53,6 +61,10 @@ Namespace Emit.Marshal
             End Set
         End Property
 
+        ''' <summary>
+        ''' Raw memory of this pointer
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Raw As T()
             Get
                 Return __innerRaw
@@ -65,9 +77,23 @@ Namespace Emit.Marshal
             End Get
         End Property
 
+        ''' <summary>
+        ''' Is read to end?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property EndRead As Boolean
             Get
                 Return __index >= __innerRaw.Length
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Current read position
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Pointer As Integer
+            Get
+                Return __index
             End Get
         End Property
 

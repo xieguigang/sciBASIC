@@ -14,8 +14,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' The property object that bind with its custom attribute <see cref="Column"/> of type <typeparamref name="T"/>
         ''' </summary>
-        Public [Property] As PropertyInfo
-        Public Column As T
+        Dim [Property] As PropertyInfo
+        Dim Column As T
 
         ''' <summary>
         ''' Gets the type of this property.
@@ -75,10 +75,70 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             [Property] = prop
         End Sub
 
+        ' Exceptions:
+        '   T:System.ArgumentException:
+        '     The index array does not contain the type of arguments needed.-or- The property's
+        '     set accessor is not found. -or-value cannot be converted to the type of System.Reflection.PropertyInfo.PropertyType.
+        '
+        '   T:System.Reflection.TargetException:
+        '     In the .NET for Windows Store apps or the Portable Class Library, catch System.Exception
+        '     instead.The object does not match the target type, or a property is an instance
+        '     property but obj is null.
+        '
+        '   T:System.Reflection.TargetParameterCountException:
+        '     The number of parameters in index does not match the number of parameters the
+        '     indexed property takes.
+        '
+        '   T:System.MethodAccessException:
+        '     In the .NET for Windows Store apps or the Portable Class Library, catch the base
+        '     class exception, System.MemberAccessException, instead.There was an illegal attempt
+        '     to access a private or protected method inside a class.
+        '
+        '   T:System.Reflection.TargetInvocationException:
+        '     An error occurred while setting the property value. For example, an index value
+        '     specified for an indexed property is out of range. The System.Exception.InnerException
+        '     property indicates the reason for the error.
+
+        ''' <summary>
+        ''' Sets the property value of a specified object with optional index values for
+        ''' index properties.
+        ''' </summary>
+        ''' <param name="obj">The object whose property value will be set.</param>
+        ''' <param name="value">The new property value.</param>
         Public Sub SetValue(obj As Object, value As Object)
             Call [Property].SetValue(obj, value, Nothing)
         End Sub
 
+        ' Exceptions:
+        '   T:System.ArgumentException:
+        '     The index array does not contain the type of arguments needed.-or- The property's
+        '     get accessor is not found.
+        '
+        '   T:System.Reflection.TargetException:
+        '     In the .NET for Windows Store apps or the Portable Class Library, catch System.Exception
+        '     instead.The object does not match the target type, or a property is an instance
+        '     property but obj is null.
+        '
+        '   T:System.Reflection.TargetParameterCountException:
+        '     The number of parameters in index does not match the number of parameters the
+        '     indexed property takes.
+        '
+        '   T:System.MethodAccessException:
+        '     In the .NET for Windows Store apps or the Portable Class Library, catch the base
+        '     class exception, System.MemberAccessException, instead.There was an illegal attempt
+        '     to access a private or protected method inside a class.
+        '
+        '   T:System.Reflection.TargetInvocationException:
+        '     An error occurred while retrieving the property value. For example, an index
+        '     value specified for an indexed property is out of range. The System.Exception.InnerException
+        '     property indicates the reason for the error.
+
+        ''' <summary>
+        ''' Returns the property value of a specified object with optional index values for
+        ''' indexed properties.
+        ''' </summary>
+        ''' <param name="x">The object whose property value will be returned.</param>
+        ''' <returns>The property value of the specified object.</returns>
         Public Function GetValue(x As Object) As Object
             Return [Property].GetValue(x, Nothing)
         End Function
