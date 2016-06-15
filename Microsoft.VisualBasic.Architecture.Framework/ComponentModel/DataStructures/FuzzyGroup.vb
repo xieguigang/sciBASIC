@@ -79,9 +79,13 @@ Namespace ComponentModel.Collection
                     Next
                 End If
 
+                Call Console.Write("-")
+
                 For Each x As __groupHelper(Of T) In tmp
                     Call list.Remove(x)
                 Next
+
+                Call Console.Write("*")
 
                 out = New GroupResult(Of T, String) With {
                     .Group = tmp.ToArray(Function(x) x.x),

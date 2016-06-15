@@ -10,7 +10,14 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace CommandLine
 
-    <[PackageNamespace]("CommandLine", Url:="http://gcmodeller.org", Publisher:="xie.guigang@gcmodeller.org", Description:="", Revision:=52)>
+    ''' <summary>
+    ''' CLI parser and <see cref="CommandLine"/> object creates.
+    ''' </summary>
+    <[PackageNamespace]("CommandLine",
+                        Url:="http://gcmodeller.org",
+                        Publisher:="xie.guigang@gcmodeller.org",
+                        Description:="",
+                        Revision:=52)>
     Public Module CLITools
 
         ''' <summary>
@@ -28,7 +35,7 @@ Namespace CommandLine
                 Return list
             ElseIf Tokens.Length = 1 Then
 
-                If IsPossibleLogicSW(Tokens(Scan0)) AndAlso
+                If IsPossibleLogicFlag(Tokens(Scan0)) AndAlso
                     IncludeLogicSW Then
 
                     list += New NamedValue(Of String)(Tokens(Scan0), CStr(True))
@@ -44,7 +51,7 @@ Namespace CommandLine
                 Dim [Next] As Integer = i + 1
 
                 If [Next] = Tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
-                    If IsPossibleLogicSW(Tokens(i)) AndAlso IncludeLogicSW Then
+                    If IsPossibleLogicFlag(Tokens(i)) AndAlso IncludeLogicSW Then
                         list += New NamedValue(Of String)(Tokens(i), True)
                     End If
 
@@ -53,7 +60,7 @@ Namespace CommandLine
 
                 Dim s As String = Tokens([Next])
 
-                If IsPossibleLogicSW(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
+                If IsPossibleLogicFlag(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
                         list += New NamedValue(Of String)(Tokens(i), True)
                     End If
@@ -88,7 +95,7 @@ Namespace CommandLine
                 Dim [Next] As Integer = i + 1
 
                 If [Next] = Tokens.Length Then
-                    If IsPossibleLogicSW(obj:=Tokens(i)) Then
+                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
                         tkList += Tokens(i)  '
                     End If
 
@@ -97,8 +104,8 @@ Namespace CommandLine
 
                 Dim s As String = Tokens([Next])
 
-                If IsPossibleLogicSW(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                    If IsPossibleLogicSW(obj:=Tokens(i)) Then
+                If IsPossibleLogicFlag(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
+                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
                         tkList += Tokens(i)
                     Else
 
@@ -156,7 +163,7 @@ Namespace CommandLine
             Return CommandLine
         End Function
 
-        Const EX_KEY_DUPLICATED As String = "[DEBUG] The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
+        Const EX_KEY_DUPLICATED As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
         Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
             Dim LQuery = (From param As NamedValue(Of String)
@@ -174,7 +181,8 @@ Namespace CommandLine
         ''' Gets the commandline object for the current program.
         ''' </summary>
         ''' <returns></returns>
-        <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
+        <ExportAPI("args",
+                   Info:="Gets the commandline object for the current program.")>
         Public Function Args() As CommandLine
             Return App.CommandLine
         End Function
@@ -208,12 +216,12 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Is this string tokens is a possible boolean value flag
+        ''' Is this string tokens is a possible <see cref="Boolean"/> value flag
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
         <ExportAPI("IsPossibleBoolFlag?")>
-        Public Function IsPossibleLogicSW(obj As String) As Boolean
+        Public Function IsPossibleLogicFlag(obj As String) As Boolean
             If obj.Contains(" ") Then
                 Return False
             End If
@@ -225,7 +233,12 @@ Namespace CommandLine
                 obj.StartsWith("\")
         End Function
 
-        <ExportAPI("IsNumeric")>
+        ''' <summary>
+        ''' Is this token value string is a number?
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
         Public Function IsNumeric(str As String) As Boolean
             str = str.GetString("""")
             Dim s As String = Regex.Match(str, "[-]?\d*(\.\d+)?([eE][-]?\d*)?").Value
@@ -235,17 +248,18 @@ Namespace CommandLine
         ''' <summary>
         ''' ReGenerate the cli command line argument string text.(重新生成命令行字符串)
         ''' </summary>
-        ''' <param name="Tokens"></param>
+        ''' <param name="tokens">If the token value have a space character, then this function will be wrap that token with quot character automatically.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Join",
-                 Info:="ReGenerate the cli command line argument string text. NOTE: if the token have a space character, then this function will be wrap that token with quot character automatically.")>
-        Public Function Join(Tokens As Generic.IEnumerable(Of String)) As String
-            If Tokens.IsNullOrEmpty Then
+                   Info:="ReGenerate the cli command line argument string text. 
+                   NOTE: If the token have a space character, then this function will be wrap that token with quot character automatically.")>
+        Public Function Join(tokens As IEnumerable(Of String)) As String
+            If tokens.IsNullOrEmpty Then
                 Return ""
             Else
-                Return String.Join(" ", Tokens.ToArray(AddressOf __innerWrapper))
+                Return String.Join(" ", tokens.ToArray(AddressOf __innerWrapper))
             End If
         End Function
 
@@ -310,6 +324,11 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
+        ''' 会对%进行替换的
+        ''' </summary>
+        Const TokenSplitRegex As String = "(?=(?:[^%]|%[^%]*%)*$)"
+
+        ''' <summary>
         ''' 尝试从输入的语句之中解析出词法单元，注意，这个函数不是处理从操作系统所传递进入的命令行语句
         ''' </summary>
         ''' <param name="CommandLine"></param>
@@ -318,13 +337,11 @@ Namespace CommandLine
         ''' 
         <ExportAPI("TryParse")>
         Public Function TryParse(CommandLine As String, TokenDelimited As String, InnerDelimited As Char) As String()
-            Const SPLIT_REGX_EXPRESSION As String = "(?=(?:[^%]|%[^%]*%)*$)"
-
             If String.IsNullOrEmpty(CommandLine) Then
                 Return New String() {""}
             End If
 
-            Dim RegxPattern As String = TokenDelimited & SPLIT_REGX_EXPRESSION.Replace("%"c, InnerDelimited)
+            Dim RegxPattern As String = TokenDelimited & TokenSplitRegex.Replace("%"c, InnerDelimited)
             Dim Tokens = Regex.Split(CommandLine, RegxPattern)
             For i As Integer = 0 To Tokens.Length - 1
                 Dim s As String = Tokens(i)
@@ -336,10 +353,17 @@ Namespace CommandLine
             Return Tokens
         End Function
 
+        ''' <summary>
+        ''' Creates command line object from a set obj <see cref="KeyValuePair(Of String, String)"/>
+        ''' </summary>
+        ''' <param name="Name"></param>
+        ''' <param name="args"></param>
+        ''' <param name="bFlags"></param>
+        ''' <returns></returns>
         <ExportAPI("CreateObject")>
         Public Function CreateObject(Name As String,
-                                    args As IEnumerable(Of KeyValuePair(Of String, String)),
-                                    Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
+                                     args As IEnumerable(Of KeyValuePair(Of String, String)),
+                                     Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
 
             Dim parameters As New List(Of NamedValue(Of String))
             Dim Tokens As New List(Of String) From {Name}
@@ -360,7 +384,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 修建命令行参数名称的前置符号
+        ''' 修剪命令行参数名称的前置符号
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
@@ -395,7 +419,7 @@ Namespace CommandLine
                 End If
             Next
 
-            For Each arg In args1.__lstParameter
+            For Each arg As NamedValue(Of String) In args1.__lstParameter
                 Dim value2 As String = args2(arg.Name)
                 If Not String.Equals(value2, arg.x, StringComparison.OrdinalIgnoreCase) Then
                     Return False

@@ -29,10 +29,15 @@ Namespace Language.UnixBash
         ''' <summary>
         ''' 可以使用这个来限定文件或者文件夹对象的搜索范围
         ''' </summary>
-        ''' <param name="__wildcards">可以为文件拓展或者对文件名的通配符的表达式</param>
+        ''' <param name="__wildcards">可以为文件拓展或者对文件名的通配符的表达式，假若这个是空的，则会默认搜索所有文件*.*</param>
         ''' <returns></returns>
         Public Function wildcards(ParamArray __wildcards As String()) As SearchOpt
             Dim opt As New SearchOpt(SearchOpt.Options.Ext)
+
+            If __wildcards.IsNullOrEmpty Then
+                __wildcards = {"*.*"}
+            End If
+
             For Each s As String In __wildcards
                 Call opt.wildcards.Add(s)
             Next
