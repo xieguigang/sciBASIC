@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Parallel.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.Collection
 
@@ -13,7 +15,7 @@ Namespace ComponentModel.Collection
     Public Module FuzzyGroup
 
         ''' <summary>
-        ''' 
+        ''' Grouping objects in a collection based on their <see cref="sIdEnumerable.Identifier"/> string Fuzzy equals to others'.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
@@ -29,11 +31,11 @@ Namespace ComponentModel.Collection
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Grouping objects in a collection based on their unique key string Fuzzy equals to others'.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="getKey"></param>
+        ''' <param name="getKey">The unique key provider</param>
         ''' <param name="cut">字符串相似度的阈值</param>
         ''' <returns></returns>
         <Extension>
@@ -43,84 +45,96 @@ Namespace ComponentModel.Collection
                         Optional cut As Double = 0.6,
                         Optional parallel As Boolean = False) As IEnumerable(Of GroupResult(Of T, String))
 
-            Dim tmp As New List(Of NamedValue(Of T))
-            Dim key As String
-            Dim list As New List(Of NamedValue(Of T))(
-                source.Select(Function(x) New NamedValue(Of T)(getKey(x), x)))
+            Dim tmp As New List(Of __groupHelper(Of T))
+            Dim list As List(Of __groupHelper(Of T)) =
+                LinqAPI.MakeList(Of __groupHelper(Of T)) <= From x As T
+                                                            In source
+                                                            Let s_key As String = getKey(x)
+                                                            Select New __groupHelper(Of T) With {
+                                                                .cut = cut,
+                                                                .key = s_key,
+                                                                .keyASC = s_key.ToArray(AddressOf Asc),
+                                                                .x = x
+                                                            }
             Dim out As GroupResult(Of T, String)
 
+            If parallel Then
+                Call "Fuzzy grouping running in parallel mode...".__DEBUG_ECHO
+            End If
+
             Do While list.Count > 0
-                key = list(Scan0).Name
-                tmp.Clear()
-                tmp.Add(list(Scan0))
-                list.RemoveAt(Scan0)
+                Dim ref As __groupHelper(Of T) = list(Scan0)
+
+                Call tmp.Clear()
+                Call tmp.Add(list(Scan0))   ' 重置缓存
+                Call list.RemoveAt(Scan0)   ' 写入Group的参考数据
 
                 If parallel Then
-                    tmp += From x As NamedValue(Of T)
-                           In list.AsParallel
-                           Where Equals(key, x.Name, cut)
-                           Select x
+                    tmp += LQuerySchedule.LQuery(list, Function(x) x, Function(x) ref.Equals(x:=x))
                 Else
-                    For Each x As NamedValue(Of T) In list
-                        If Equals(key, x.Name, cut) Then
+                    For Each x As __groupHelper(Of T) In list
+                        If ref.Equals(x:=x) Then
                             Call tmp.Add(x)
                         End If
                     Next
                 End If
 
-                For Each x In tmp
+                Call Console.Write("-")
+
+                For Each x As __groupHelper(Of T) In tmp
                     Call list.Remove(x)
                 Next
 
+                Call Console.Write("*")
+
                 out = New GroupResult(Of T, String) With {
                     .Group = tmp.ToArray(Function(x) x.x),
-                    .Tag = key
+                    .Tag = ref.key
                 }
                 Yield out
             Loop
         End Function
 
-        Public Function Equals(key As String, tag As String, cut As Double) As Boolean
-            Dim edits As DistResult = ComputeDistance(key, tag)
-            If edits Is Nothing Then
-                Return False
-            Else
-                Return edits.MatchSimilarity >= cut
-            End If
-        End Function
+        ''' <summary>
+        ''' 分组操作的内部帮助类
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        Private Structure __groupHelper(Of T)
 
-        '        Private Structure __groupHelper(Of T)
+            ''' <summary>
+            ''' Key for represent this object.
+            ''' </summary>
+            Public key As String
+            ''' <summary>
+            ''' Target element object in the grouping 
+            ''' </summary>
+            Public x As T
+            Public cut As Double
+            ''' <summary>
+            ''' Key cache
+            ''' </summary>
+            Public keyASC As Integer()
 
-        '            Public key As String
-        '            Public x As T
-        '            Public cut As Double
+            Public Overrides Function ToString() As String
+                Return Me.GetJson
+            End Function
 
-        '            Public Overrides Function ToString() As String
-        '                Return Me.GetJson
-        '            End Function
+            ''' <summary>
+            ''' 判断Key是否模糊相等
+            ''' </summary>
+            ''' <param name="x"></param>
+            ''' <returns></returns>
+            Public Overloads Function Equals(x As __groupHelper(Of T)) As Boolean
+                Dim edits As DistResult =
+                    ComputeDistance(keyASC, x.keyASC, Function(a, b) a = b,
+                                    AddressOf Chr)
 
-        '            Public Overloads Function Equals(tag As String) As Boolean
-        '                Dim edits As DistResult = ComputeDistance(key, tag)
-        '                If edits Is Nothing Then
-        '                    Return False
-        '                Else
-        '#If DEBUG Then
-        '                    If edits.MatchSimilarity <> 1.0R Then
-        '                        Call "".__DEBUG_ECHO
-        '                    End If
-        '#End If
-        '                    Return edits.MatchSimilarity >= cut
-        '                End If
-        '            End Function
-
-        '            Public Overrides Function Equals(obj As Object) As Boolean
-        '                If obj Is Nothing Then
-        '                    Return False
-        '                Else
-        '                    Dim tag As String = DirectCast(obj, __groupHelper(Of T)).key
-        '                    Return Equals(tag)
-        '                End If
-        '            End Function
-        '        End Structure
+                If edits Is Nothing Then
+                    Return False
+                Else
+                    Return edits.MatchSimilarity >= cut
+                End If
+            End Function
+        End Structure
     End Module
 End Namespace

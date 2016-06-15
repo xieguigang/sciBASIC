@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports System.IO
 
 Namespace CommandLine
 
@@ -192,6 +193,10 @@ Namespace CommandLine
             End Get
         End Property
 
+        ''' <summary>
+        ''' <see cref="String.IsNullOrEmpty"/> of <see cref="Name"/> AndAlso <see cref="IsNullOrEmpty"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsNothing As Boolean
             Get
                 Return String.IsNullOrEmpty(Me.Name) AndAlso IsNullOrEmpty
@@ -218,9 +223,16 @@ Namespace CommandLine
         End Operator
 
         Public Shared Widening Operator CType(CommandLine As System.Func(Of String)) As CommandLine
-            Return Microsoft.VisualBasic.CommandLine.TryParse(CommandLine())
+            Return TryParse(CommandLine())
         End Operator
 
+        ''' <summary>
+        ''' Determined that the specific Boolean flag is exists or not? 
+        ''' if not then returns <paramref name="failure"/>, if exists such flag, then returns the <paramref name="name"/>.
+        ''' </summary>
+        ''' <param name="name">Boolean flag name</param>
+        ''' <param name="failure"></param>
+        ''' <returns></returns>
         Public Function Assert(name As String, Optional failure As String = "") As String
             If GetBoolean(name) Then
                 Return name
@@ -228,6 +240,42 @@ Namespace CommandLine
                 Return failure
             End If
         End Function
+
+#Region "Pipeline"
+
+        ''' <summary>
+        ''' [管道函数] 假若参数名存在并且所指向的文件也存在，则返回本地文件的文件指针，否则返回标准输入的指针
+        ''' </summary>
+        ''' <param name="param"></param>
+        ''' <returns></returns>
+        Public Function OpenStreamInput(param As String) As StreamReader
+            Dim path As String = Me(param)
+
+            If path.FileExists Then
+                Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
+            Else
+                Return New StreamReader(Console.OpenStandardInput)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' [管道函数] 假若参数名存在，则返回本地文件的文件指针，否则返回标准输出的指针
+        ''' </summary>
+        ''' <param name="param"></param>
+        ''' <returns></returns>
+        Public Function OpenStreamOutput(param As String) As StreamWriter
+            Dim path As String = Me(param)
+
+            If path.IsBlank Then
+                Return New StreamWriter(Console.OpenStandardOutput)
+            Else
+                Call path.ParentPath.MkDIR
+
+                Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
+                Return New StreamWriter(fs)
+            End If
+        End Function
+#End Region
 
 #Region "IDataRecord Methods"
 
@@ -321,6 +369,7 @@ Namespace CommandLine
         Public Function GetGuid(parameter As String) As Guid
             Return Guid.Parse(Me(parameter))
         End Function
+
         ''' <summary>
         ''' Gets the 16-bit signed Integer value Of the specified field.
         ''' </summary>
@@ -351,10 +400,12 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function GetOrdinal(parameter As String) As Integer
             Dim i As Integer =
-                LinqAPI.DefaultFirst(Of Integer)(-1) <= From entry As NamedValue(Of String)
-                                                        In Me.__lstParameter
-                                                        Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
-                                                        Select __lstParameter.IndexOf(entry)
+                LinqAPI.DefaultFirst(Of Integer)(-1) <=
+                From entry As NamedValue(Of String)
+                In Me.__lstParameter
+                Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
+                Select __lstParameter.IndexOf(entry)
+
             Return i
         End Function
 
@@ -453,14 +504,26 @@ Namespace CommandLine
             Yield GetEnumerator()
         End Function
 
+        ''' <summary>
+        ''' Adds an item to the System.Collections.Generic.ICollection`1.
+        ''' </summary>
+        ''' <param name="item"></param>
         Public Sub Add(item As NamedValue(Of String)) Implements ICollection(Of NamedValue(Of String)).Add
             Call __lstParameter.Add(item)
         End Sub
 
+        ''' <summary>
+        ''' Add a parameter with name and its value.
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <param name="value"></param>
         Public Sub Add(key As String, value As String)
             Call __lstParameter.Add(New NamedValue(Of String)(key.ToLower, value))
         End Sub
 
+        ''' <summary>
+        ''' Clear the inner list buffer
+        ''' </summary>
         Public Sub Clear() Implements ICollection(Of NamedValue(Of String)).Clear
             Call __lstParameter.Clear()
         End Sub
@@ -495,12 +558,17 @@ Namespace CommandLine
             End Get
         End Property
 
-        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of NamedValue(Of String)).IsReadOnly
+        Private ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of NamedValue(Of String)).IsReadOnly
             Get
                 Return True
             End Get
         End Property
 
+        ''' <summary>
+        ''' Removes a parameter by name
+        ''' </summary>
+        ''' <param name="paramName"></param>
+        ''' <returns></returns>
         Public Function Remove(paramName As String) As Boolean
             Dim LQuery As NamedValue(Of String) =
                 LinqAPI.DefaultFirst(Of NamedValue(Of String)) <=
@@ -517,6 +585,11 @@ Namespace CommandLine
             End If
         End Function
 
+        ''' <summary>
+        ''' Removes a parameter by <see cref="NamedValue(Of String).Name"/>
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
         Public Function Remove(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Remove
             Return Remove(item.Name)
         End Function

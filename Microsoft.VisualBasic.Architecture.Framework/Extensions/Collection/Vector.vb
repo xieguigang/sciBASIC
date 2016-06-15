@@ -5,6 +5,10 @@ Public Module VectorExtensions
 
     <Extension>
     Public Sub Memset(Of T)(ByRef array As T(), o As T, len As Integer)
+        If array Is Nothing OrElse array.Length < len Then
+            array = New T(len - 1) {}
+        End If
+
         For i As Integer = 0 To len - 1
             array(i) = o
         Next

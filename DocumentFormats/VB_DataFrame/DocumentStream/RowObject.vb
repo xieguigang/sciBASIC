@@ -382,6 +382,10 @@ Namespace DocumentStream
             Return Me
         End Function
 
+        Public Overloads Shared Operator +(x As RowObject) As RowObject
+            Return x
+        End Operator
+
 #Region "Implements of Generic.IList(Of System.String) interface"
 
         Public Sub Add(columnValue As String) Implements ICollection(Of String).Add

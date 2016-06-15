@@ -67,13 +67,53 @@ Namespace Parallel.Linq
             Next
         End Function
 
+        ''' <summary>
+        ''' 进行分区之后返回一个长时间的任务组合
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Iterator Function Partitioning(Of T, out)(source As IEnumerable(Of T),
+                                                         parts As Integer,
+                                                         task As Func(Of T, out),
+                                                         where As Func(Of T, Boolean)) As IEnumerable(Of Func(Of out()))
+
+            Dim buf As IEnumerable(Of T()) = source.SplitIterator(parts)
+
+            For Each part As T() In buf
+                Yield AddressOf New __taskHelper(Of T, out) With {
+                    .source = part,
+                    .task = task,
+                    .where = where
+                }.InvokeWhere
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 因为在上一层调用之中使用了并行化，所以在这里不能够使用并行化拓展了
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="out"></typeparam>
         Private Structure __taskHelper(Of T, out)
 
             Dim task As Func(Of T, out)
             Dim source As T()
+            Dim where As Func(Of T, Boolean)
 
             Public Overrides Function ToString() As String
                 Return task.ToString
+            End Function
+
+            Public Function InvokeWhere() As out()
+                Dim __task As Func(Of T, out) = task
+                Dim test = where
+                Dim LQuery As out() =
+                    LinqAPI.Exec(Of out) <= From x As T
+                                            In source
+                                            Where True = test(x)
+                                            Select __task(x)
+                Return LQuery
             End Function
 
             Public Function Invoke() As out()
