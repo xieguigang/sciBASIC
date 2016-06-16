@@ -38,6 +38,9 @@ Namespace ComponentModel.Collection
         ''' <param name="getKey">The unique key provider</param>
         ''' <param name="cut">字符串相似度的阈值</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 由于list在查找方面的速度非常的慢，而字典可能在生成的时候会慢一些，但是查找很快，所以在这里函数里面使用字典来替代列表
+        ''' </remarks>
         <Extension>
         Public Iterator Function FuzzyGroups(Of T)(
                                  source As IEnumerable(Of T),
@@ -46,7 +49,7 @@ Namespace ComponentModel.Collection
                         Optional parallel As Boolean = False) As IEnumerable(Of GroupResult(Of T, String))
 
             Dim tmp As New List(Of __groupHelper(Of T))
-            Dim list As List(Of __groupHelper(Of T)) =
+            Dim buf As List(Of __groupHelper(Of T)) =
                 LinqAPI.MakeList(Of __groupHelper(Of T)) <= From x As T
                                                             In source
                                                             Let s_key As String = getKey(x)
@@ -57,22 +60,24 @@ Namespace ComponentModel.Collection
                                                                 .x = x
                                                             }
             Dim out As GroupResult(Of T, String)
+            Dim lhash As Dictionary(Of __groupHelper(Of T), Object) =
+                buf.ToDictionary(Function(x) x, Function(x) Nothing)
 
             If parallel Then
                 Call "Fuzzy grouping running in parallel mode...".__DEBUG_ECHO
             End If
 
-            Do While list.Count > 0
-                Dim ref As __groupHelper(Of T) = list(Scan0)
+            Do While lhash.Count > 0
+                Dim ref As __groupHelper(Of T) = lhash.First.Key
 
                 Call tmp.Clear()
-                Call tmp.Add(list(Scan0))   ' 重置缓存
-                Call list.RemoveAt(Scan0)   ' 写入Group的参考数据
+                Call tmp.Add(ref)   ' 重置缓存
+                Call lhash.Remove(ref)   ' 写入Group的参考数据
 
                 If parallel Then
-                    tmp += LQuerySchedule.LQuery(list, Function(x) x, where:=Function(x) ref.Equals(x:=x))
+                    tmp += LQuerySchedule.LQuery(lhash.Keys, Function(x) x, where:=Function(x) ref.Equals(x:=x))
                 Else
-                    For Each x As __groupHelper(Of T) In list
+                    For Each x As __groupHelper(Of T) In lhash.Values
                         If ref.Equals(x:=x) Then
                             Call tmp.Add(x)
                         End If
@@ -82,7 +87,7 @@ Namespace ComponentModel.Collection
                 Call Console.Write("-")
 
                 For Each x As __groupHelper(Of T) In tmp
-                    Call list.Remove(x)
+                    Call lhash.Remove(x)
                 Next
 
                 Call Console.Write("*")
