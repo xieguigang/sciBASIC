@@ -104,6 +104,7 @@ Namespace Parallel.Linq
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="inputs"></param>
         ''' <param name="task"></param>
+        ''' <param name="where">Processing where test on the inputs</param>
         ''' <returns></returns>
         Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
                                                     task As Func(Of T, TOut),
@@ -122,6 +123,39 @@ Namespace Parallel.Linq
 
             For Each part As TOut() In LQueryInvoke
                 For Each x As TOut In part
+                    Yield x
+                Next
+            Next
+
+            Call $"Task job done!".__DEBUG_ECHO
+        End Function
+
+        ''' <summary>
+        ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="TOut"></typeparam>
+        ''' <param name="inputs"></param>
+        ''' <param name="task"></param>
+        ''' <param name="outWhere">Processing where test on the output</param>
+        ''' <returns></returns>
+        Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
+                                                    task As Func(Of T, TOut),
+                                                    outWhere As Func(Of TOut, Boolean),
+                                                    Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
+
+            Call $"Start schedule task pool for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
+
+            Dim buf As IEnumerable(Of Func(Of TOut())) = TaskPartitions.Partitioning(inputs, parTokens, task)
+            Dim LQueryInvoke = From part As Func(Of TOut())
+                               In buf.AsParallel
+                               Select part()
+
+            For Each part As TOut() In LQueryInvoke
+                For Each x As TOut In From o As TOut
+                                      In part
+                                      Where True = outWhere(o)
+                                      Select o
                     Yield x
                 Next
             Next

@@ -70,7 +70,7 @@ Namespace ComponentModel.Collection
                 Call list.RemoveAt(Scan0)   ' 写入Group的参考数据
 
                 If parallel Then
-                    tmp += LQuerySchedule.LQuery(list, Function(x) x, Function(x) ref.Equals(x:=x))
+                    tmp += LQuerySchedule.LQuery(list, Function(x) x, where:=Function(x) ref.Equals(x:=x))
                 Else
                     For Each x As __groupHelper(Of T) In list
                         If ref.Equals(x:=x) Then
