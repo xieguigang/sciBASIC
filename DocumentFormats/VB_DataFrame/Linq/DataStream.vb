@@ -2,7 +2,9 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel.Linq
 
 Namespace DocumentStream.Linq
 
@@ -57,7 +59,7 @@ Namespace DocumentStream.Linq
         Dim __firstBlock As Boolean = True
 
         ''' <summary>
-        ''' 
+        ''' Providers the data buffer for the <see cref="RowObject"/>
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -76,6 +78,11 @@ Namespace DocumentStream.Linq
             Return buffer
         End Function
 
+        ''' <summary>
+        ''' For each item in the source data fram, invoke a specific task
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="invoke"></param>
         Public Sub ForEach(Of T As Class)(invoke As Action(Of T))
             Dim line As String = ""
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
@@ -106,30 +113,30 @@ Namespace DocumentStream.Linq
         ''' Processing large dataset in block partitions.(以分块任务的形式来处理一个非常大的数据集)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="invoke"></param>
-        ''' <param name="blockSize">行数</param>
+        ''' <param name="invoke">task of this block buffer</param>
+        ''' <param name="blockSize">Lines of the data source.(行数)</param>
         Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型
             Dim RowBuilder As New RowBuilder(schema)
 
             Call RowBuilder.Indexof(Me)
 
             Do While True
-                Dim chunks As String()() = BufferProvider().Split(blockSize)
-
-                Call $"{chunks.Length} data partitions, {NameOf(blockSize)}:={blockSize}..".__DEBUG_ECHO
-
-                Dim i As Integer = 0
+                Dim chunks As IEnumerable(Of String()) = TaskPartitions.SplitIterator(BufferProvider(), blockSize)
 
                 For Each block As String() In chunks
-                    Dim LQuery = (From line As String In block.AsParallel Select RowObject.TryParse(line)).ToArray
-                    Dim values = (From row As RowObject In LQuery.AsParallel
-                                  Let obj As T = Activator.CreateInstance(Of T)
-                                  Select RowBuilder.FillData(row, obj)).ToArray
+                    Dim LQuery As RowObject() = (From line As String
+                                                 In block.AsParallel
+                                                 Select RowObject.TryParse(line)).ToArray
+                    Dim values As T() =
+                        LinqAPI.Exec(Of T) <= From row As RowObject
+                                              In LQuery.AsParallel
+                                              Let obj As T = Activator.CreateInstance(Of T)
+                                              Select RowBuilder.FillData(row, obj)
+
                     Call "Start processing block...".__DEBUG_ECHO
                     Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
-                    Call $"{100 * i / chunks.Length}% ({i}/{chunks.Length})...".__DEBUG_ECHO
-                    Call i.MoveNext
+                    Call Console.Write(".")
                 Next
 
                 If EndRead Then
@@ -145,6 +152,12 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         Private Structure __taskHelper(Of T)
+
+            ''' <summary>
+            ''' 赋值任务和数据源
+            ''' </summary>
+            ''' <param name="source"></param>
+            ''' <param name="invoke"></param>
             Sub New(source As T(), invoke As Action(Of T()))
                 Me.__source = source
                 Me.__task = invoke
@@ -186,6 +199,12 @@ Namespace DocumentStream.Linq
             Call Reset()
         End Function
 
+        ''' <summary>
+        ''' Open the data frame reader for the specific csv document.
+        ''' </summary>
+        ''' <param name="file">*.csv data file.</param>
+        ''' <param name="encoding">The text encoding. default is using <see cref="Encodings.Default"/></param>
+        ''' <returns></returns>
         Public Shared Function OpenHandle(file As String, Optional encoding As Encoding = Nothing) As DataStream
             Return New DataStream(file, encoding)
         End Function

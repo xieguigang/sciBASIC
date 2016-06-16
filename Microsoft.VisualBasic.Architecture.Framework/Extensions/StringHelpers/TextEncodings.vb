@@ -17,13 +17,23 @@ Public Module TextEncodings
         End If
     End Function
 
+    ''' <summary>
+    ''' The text document encodings constant for text file read and write
+    ''' </summary>
     Public Enum Encodings As Byte
+        ''' <summary>
+        ''' <see cref="Encoding.Default"/>: Gets an encoding for the operating system's current ANSI code page.
+        ''' </summary>
         [Default] = 0
         ASCII = 10
         Unicode
         UTF7
         UTF8
         UTF32
+
+        ''' <summary>
+        ''' Text encoding for simplify Chinese.
+        ''' </summary>
         GB2312
     End Enum
 
