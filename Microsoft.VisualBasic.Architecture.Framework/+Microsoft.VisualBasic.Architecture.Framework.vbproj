@@ -347,7 +347,6 @@
     <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\Program.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\SwayBar.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\printf.vb" />
     <Compile Include="ConsoleDevices\Utility\EventProc.vb" />
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
@@ -643,7 +642,7 @@
     <Compile Include="MMFProtocol\ProcessLock.vb" />
     <Compile Include="ConsoleDevices\STDIO__\Shell.vb" />
     <Compile Include="ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\I_FormatProvider.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\CFormatProvider.vb" />
     <Compile Include="ConsoleDevices\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
