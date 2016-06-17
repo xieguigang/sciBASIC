@@ -642,7 +642,7 @@
     <Compile Include="MMFProtocol\ProcessLock.vb" />
     <Compile Include="ConsoleDevices\STDIO__\Shell.vb" />
     <Compile Include="ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\I_FormatProvider.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\CFormatProvider.vb" />
     <Compile Include="ConsoleDevices\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />

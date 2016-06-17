@@ -105,21 +105,21 @@ Namespace Scripting
         ''' <param name="briefName"></param>
         ''' <param name="stringConvertType"></param>
         ''' <param name="cast"></param>
-        Public Sub UpdateHandle(briefName As String, stringConvertType As Type, cast As Func(Of String, Object))
+        Public Sub CapabilityPromise(briefName As String, stringConvertType As Type, cast As Func(Of String, Object))
             If CasterString.ContainsKey(stringConvertType) Then
                 Call CasterString.Remove(stringConvertType)
             End If
             Call CasterString.Add(stringConvertType, cast)
-            If TypeNames.ContainsKey(briefName.ToLower.ShadowCopy(briefName)) Then
-                Call TypeNames.Remove(briefName)
+            If Types.ContainsKey(briefName.ToLower.ShadowCopy(briefName)) Then
+                Call Types.Remove(briefName)
             End If
-            Call TypeNames.Add(briefName, stringConvertType)
+            Call Types.Add(briefName, stringConvertType)
         End Sub
 
         ''' <summary>
-        ''' 键值都是小写的
+        ''' Enumerate all of the types that can be handled in this module. All of the key string is in lower case.(键值都是小写的)
         ''' </summary>
-        Public ReadOnly Property TypeNames As SortedDictionary(Of String, Type) =
+        Public ReadOnly Property Types As SortedDictionary(Of String, Type) =
             New SortedDictionary(Of String, Type) From {
  _
                 {"string", GetType(String)},
@@ -159,8 +159,8 @@ Namespace Scripting
         Public Function [GetType](name As String, Optional ObjectGeneric As Boolean = False) As Type
             name = name.ToLower
 
-            If TypeNames.ContainsKey(name) Then
-                Return TypeNames(name)
+            If Types.ContainsKey(name) Then
+                Return Types(name)
             Else
                 Dim typeInfo As Type = System.Type.GetType(name, False, True)
 
@@ -191,12 +191,12 @@ Namespace Scripting
         Public ReadOnly Property [String] As Type = GetType(String)
 
         ''' <summary>
-        ''' 主要为了方便减少脚本编程模块的代码
+        ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.(主要为了方便减少脚本编程模块的代码)
         ''' </summary>
         ''' <param name="inputType"></param>
         ''' <param name="DefType"></param>
         ''' <returns></returns>
-        Public Function CanbeHandle(inputType As Type, DefType As Type) As Boolean
+        Public Function Convertible(inputType As Type, DefType As Type) As Boolean
             Return inputType.Equals([String]) AndAlso CasterString.ContainsKey(DefType)
         End Function
 
@@ -216,7 +216,7 @@ Namespace Scripting
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public Function CastArray(Of T)(obj As Object) As T()
-            Dim array = DirectCast(obj, System.Collections.IEnumerable)
+            Dim array = DirectCast(obj, IEnumerable)
             Dim data = (From val In array Select DirectCast(val, T)).ToArray
             Return data
         End Function
@@ -226,7 +226,7 @@ Namespace Scripting
                 Return obj
             End If
 
-            Dim source As IEnumerable = DirectCast(obj, System.Collections.IEnumerable)
+            Dim source As IEnumerable = DirectCast(obj, IEnumerable)
             Dim data = (From val As Object
                         In source
                         Select Conversion.CTypeDynamic(val, type)).ToArray

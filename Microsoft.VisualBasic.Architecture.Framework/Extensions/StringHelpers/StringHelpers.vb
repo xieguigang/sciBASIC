@@ -116,17 +116,6 @@ Public Module StringHelpers
     Public ReadOnly Property NonStrictCompares As StringComparison = StringComparison.OrdinalIgnoreCase
 
     ''' <summary>
-    ''' Fill the number string with specific length of ZERO sequence to generates the fixed width string.
-    ''' </summary>
-    ''' <param name="n"></param>
-    ''' <param name="len"></param>
-    ''' <returns></returns>
-    <ExportAPI("ZeroFill")>
-    Public Function ZeroFill(n As String, len As Integer) As String
-        Return STDIO__.I_FormatProvider.d.ZeroFill(n, len)
-    End Function
-
-    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="s"></param>

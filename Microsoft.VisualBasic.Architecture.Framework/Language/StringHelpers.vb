@@ -1,12 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Terminal.STDIO__
 
 Namespace Language
 
     Public Module FormatHelpers
 
         ''' <summary>
-        ''' <see cref="STDIO.Format"/>
+        ''' <see cref="sprintf"/>
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
@@ -25,7 +25,7 @@ Namespace Language
         End Function
 
         Public Shared Operator <=(format As FormatHelper, args As String()) As String
-            Return STDIO.Format(format.source, args)
+            Return sprintf(format.source, args)
         End Operator
 
         Public Shared Operator >=(format As FormatHelper, args As String()) As String
