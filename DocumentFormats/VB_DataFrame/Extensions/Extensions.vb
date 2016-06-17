@@ -306,7 +306,7 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
             .handle = Method
         }
 
-        Call UpdateHandle(name, type, AddressOf helper.LoadObject)
+        Call CapabilityPromise(name, type, AddressOf helper.LoadObject)
     End Sub
 
     Private Structure __loadHelper(Of T)
