@@ -9,6 +9,21 @@ Namespace Parallel.Linq
     Public Module TaskPartitions
 
         ''' <summary>
+        ''' 根据任务总量计算出所需要的线程的数量
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="num_threads"></param>
+        ''' <returns></returns>
+        ''' <remarks>假设所有的任务都被平均的分配到每一个线程之上</remarks>
+        Public Function PartTokens(source As Integer, num_threads As Integer) As Integer
+            Return (source / num_threads) - 1
+        End Function
+
+        Public Function PartTokens(source As Integer) As Integer
+            Return PartTokens(source, num_threads:=LQuerySchedule.CPU_NUMBER)
+        End Function
+
+        ''' <summary>
         ''' Performance the partitioning operation on the input sequence.
         ''' (请注意，这个函数适用于数量非常多的序列。对所输入的序列进行分区操作，<paramref name="parTokens"/>函数参数是每一个分区里面的元素的数量)
         ''' </summary>
