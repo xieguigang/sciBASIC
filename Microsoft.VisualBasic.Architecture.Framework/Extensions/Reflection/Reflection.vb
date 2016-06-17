@@ -10,6 +10,29 @@ Imports Microsoft.VisualBasic.Language
 <PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+#Region "IsNumericType"
+    ''' <summary>
+    ''' Determines whether the specified value is of numeric type.
+    ''' </summary>
+    ''' <param name="o">The object to check.</param>
+    ''' <returns>
+    ''' true if o is a numeric type; otherwise, false.
+    ''' </returns>
+    Public Function IsNumericType(o As Object) As Boolean
+        Return (TypeOf o Is Byte OrElse
+            TypeOf o Is SByte OrElse
+            TypeOf o Is Short OrElse
+            TypeOf o Is UShort OrElse
+            TypeOf o Is Integer OrElse
+            TypeOf o Is UInteger OrElse
+            TypeOf o Is Long OrElse
+            TypeOf o Is ULong OrElse
+            TypeOf o Is Single OrElse
+            TypeOf o Is Double OrElse
+            TypeOf o Is Decimal)
+    End Function
+#End Region
+
     ''' <summary>
     '''
     ''' </summary>

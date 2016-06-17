@@ -347,6 +347,7 @@
     <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\Program.vb" />
     <Compile Include="ConsoleDevices\ProgressBar\SwayBar.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\printf.vb" />
     <Compile Include="ConsoleDevices\Utility\EventProc.vb" />
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
