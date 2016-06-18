@@ -46,6 +46,13 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
 
+    Sub New()
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        _preDIR = App.StartupDirectory
+    End Sub
+
     ''' <summary>
     ''' Gets a path name pointing to the Desktop directory.
     ''' </summary>
@@ -270,13 +277,6 @@ Public Module App
             Return Application.ProductVersion
         End Get
     End Property
-
-    Sub New()
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
-        _preDIR = App.StartupDirectory
-    End Sub
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at location: %<see cref="App.LocalData"/>%/.logs/err/.
