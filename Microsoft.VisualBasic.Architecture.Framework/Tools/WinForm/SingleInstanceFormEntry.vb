@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Windows.Forms
 
@@ -60,16 +61,20 @@ Namespace Windows.Forms
             Return Pt
         End Function
 
-        Public Sub Invoke(ParamArray InvokeSets As KeyValuePair(Of String, Object)())
-            __invokeSets = InvokeSets
-            Call __invokeEntry(Nothing, Nothing)
+        Public Sub Invoke(ParamArray InvokeSets As NamedValue(Of Object)())
+            If Not _shown Then
+                _shown = True
+                __invokeSets = InvokeSets
+                Call __invokeEntry(Nothing, Nothing)
+            Else
+
+            End If
         End Sub
 
-        Dim __invokeSets As KeyValuePair(Of String, Object)()
+        Dim _shown As Boolean = False
+        Dim __invokeSets As NamedValue(Of Object)()
 
         Private Sub __invokeEntry(sender As Object, EVtargs As EventArgs)
-            If Not Form Is Nothing Then Return
-
             _Form = DirectCast(Activator.CreateInstance(GetType(TForm), Arguments), TForm)
 
             If Not __getPosition Is Nothing Then
@@ -78,18 +83,23 @@ Namespace Windows.Forms
             End If
 
             If Not __invokeSets.IsNullOrEmpty Then
-                For Each Entry In __invokeSets
-                    Call Form.InvokeSet(Of Object)(Entry.Key, Entry.Value)
+                For Each arg As NamedValue(Of Object) In __invokeSets
+                    Call Form.InvokeSet(Of Object)(arg.Name, arg.x)
                 Next
             End If
 
             If _ShowModel Then
                 Call Form.ShowDialog()
-                Call Form.Free()
+                Call __clean()
             Else
                 Call Form.Show()
-                AddHandler Form.FormClosed, Sub() Call Form.Free()
+                AddHandler Form.FormClosed, AddressOf __clean
             End If
+        End Sub
+
+        Private Sub __clean()
+            Call Form.Free()
+            _shown = False
         End Sub
     End Class
 End Namespace
