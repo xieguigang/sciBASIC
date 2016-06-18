@@ -1,22 +1,20 @@
-' ------------------------------------------------------------------------
-'
-'    WIN32API.TXT -- Win32 API Declarations for Visual Basic
-'
-'              Copyright (C) 1994 Microsoft Corporation
-'
-'
-'  This file contains only the Const, Type,
-' and Declare statements for  Win32 APIs.
-'
-'  You have a royalty-free right to use, modify, reproduce and distribute
-'  this file (and/or any modified version) in any way you find useful,
-'  provided that you agree that Microsoft has no warranty, obligation or
-'  liability for its contents.  Refer to the Microsoft Windows Programmer's
-'  Reference for further information.
-'
-' ------------------------------------------------------------------------
+## WIN32API.TXT -- Win32 API Declarations for Visual Basic
+
+> Copyright (C) 1994 Microsoft Corporation
+
+This file contains only the Const, Type, and Declare statements for  Win32 APIs.
+
+You have a royalty-free right to use, modify, reproduce and distribute
+this file (and/or any modified version) in any way you find useful,
+provided that you agree that Microsoft has no warranty, obligation or
+liability for its contents.  Refer to the Microsoft Windows Programmer's
+Reference for further information.
+------------------------------------------------------------------------
+
+```vbnet
 
 ' Type definitions for Windows' basic types.
+
 Public Const ANYSIZE_ARRAY = 1
 Type RECT
         Left As Long
@@ -15570,4 +15568,4 @@ Public Const BF_SOFT = &H1000     ' Use for softer buttons.
 Public Const BF_ADJUST = &H2000   ' Calculate the space left over.
 Public Const BF_FLAT = &H4000     ' For flat rather than 3-D borders.
 Public Const BF_MONO = &H8000     ' For monochrome borders.
-
+```
