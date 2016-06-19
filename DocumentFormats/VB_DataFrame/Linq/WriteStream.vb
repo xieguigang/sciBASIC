@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace DocumentStream.Linq
@@ -17,7 +18,14 @@ Namespace DocumentStream.Linq
         Implements System.IDisposable
 
         ReadOnly handle As String
+
+        ''' <summary>
+        ''' File system object handle for write csv row data.
+        ''' </summary>
         ReadOnly _fileIO As StreamWriter
+        ''' <summary>
+        ''' Schema for creates row data from the inputs object.
+        ''' </summary>
         ReadOnly RowWriter As RowWriter
 
         ''' <summary>
@@ -56,13 +64,15 @@ Namespace DocumentStream.Linq
                 Return True  ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
             End If
 
-            Dim LQuery As String() = (From line As T In source.AsParallel
-                                      Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
-                                      Let CreatedRow As RowObject = RowWriter.ToRow(line)
-                                      Select CreatedRow).ToArray(Function(x) x.AsLine) ' 对象到数据的投影
+            Dim LQuery As String() = LinqAPI.Exec(Of String) <=
+                From line As T
+                In source.AsParallel
+                Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
+                Let CreatedRow As RowObject =
+                    RowWriter.ToRow(line)
+                Select CreatedRow.AsLine  ' 对象到数据的投影
 
-            Dim block As String = LQuery.JoinBy(vbCrLf)
-            Call _fileIO.WriteLine(block)
+            Call _fileIO.WriteLine(String.Join(vbCrLf, LQuery))
 
             Return True
         End Function
