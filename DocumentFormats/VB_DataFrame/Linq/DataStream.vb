@@ -115,6 +115,9 @@ Namespace DocumentStream.Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="invoke">task of this block buffer</param>
         ''' <param name="blockSize">Lines of the data source.(行数)</param>
+        ''' <remarks>
+        ''' 2016.06.19  代码已经经过测试，没有数据遗漏的bug，请放心使用
+        ''' </remarks>
         Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5)
             Dim schema As SchemaProvider =
                 SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型

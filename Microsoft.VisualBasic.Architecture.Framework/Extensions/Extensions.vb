@@ -1183,12 +1183,11 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
-        Dim list As List(Of T) = New List(Of T)
+        Dim list As New List(Of T)
 
-        For Each Line As IEnumerable(Of T) In source
-
-            If Not Line.IsNullOrEmpty Then
-                Call list.AddRange(collection:=Line)
+        For Each line As IEnumerable(Of T) In source
+            If Not line Is Nothing Then
+                Call list.AddRange(collection:=line)
             End If
         Next
 
@@ -2052,7 +2051,9 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
-        Return source Is Nothing OrElse source.Count = 0
+        If source Is Nothing Then Return True
+        If source.FirstOrDefault Is Nothing Then Return True  ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，主需要查看第一个元素而不是便利整个Linq查询枚举，从而提高了效率
+        Return False
     End Function
 
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean
