@@ -19,10 +19,6 @@ Public Module User32
     Public Declare Function SetWindowsHookEx Lib "user32" Alias "SetWindowsHookExA" (idHook As Integer, lpfn As Integer, hmod As Integer, dwThreadId As Integer) As Integer
     <ExportAPI("SendMessageA")>
     Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (hWnd As Integer, wMsg As Integer, wParam As Integer, lParam As Object) As Integer
-    <ExportAPI("SetCapture")>
-    Public Declare Function SetCapture Lib "user32" (hwnd As Integer) As Integer
-    <ExportAPI("ReleaseCapture")>
-    Public Declare Function ReleaseCapture Lib "user32" () As Integer
     <ExportAPI("GetWindowRect")>
     Public Declare Function GetWindowRect Lib "user32" (hwnd As Integer, lpRect As RECT) As Integer
     <ExportAPI("GetCursorPos")>

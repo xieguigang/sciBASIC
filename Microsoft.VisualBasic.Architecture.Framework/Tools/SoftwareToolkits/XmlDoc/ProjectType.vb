@@ -28,6 +28,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
         Public Property Name() As String
         Public Property Summary() As String
+        Public Property remarks As String
 
         Public Sub New(projectNamespace As ProjectNamespace)
             Me.projectNamespace = projectNamespace
@@ -174,18 +175,30 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 Next
             End If
 
+            Dim rmk As String = ""
+
+            For Each l As String In remarks.lTokens
+                rmk &= "> " & l
+            Next
+
             Dim ext As String = If(hexoPublish, ".html", ".md")
-            Dim text As String
+            Dim text As String = String.Format("# {0}" & vbCr & vbLf &
+                                               "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf &
+                                               vbCr & vbLf &
+                                               "{2}" & vbCr & vbLf &
+                                               vbCr & vbLf &
+                                               "{3}" & vbCr & vbLf &
+                                               vbCr & vbLf &
+                                               "{4}" & vbCr & vbLf &
+                                               "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
 
             If hexoPublish Then
                 text = $"---
 title: {Me.Name}
 ---
-"
-                text = text & vbCrLf & String.Format("# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
-            Else
-                text = String.Format("# {0}" & vbCr & vbLf & "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf & vbCr & vbLf & "{2}" & vbCr & vbLf & vbCr & vbLf & "{3}" & vbCr & vbLf & vbCr & vbLf & "{4}" & vbCr & vbLf, Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), methodList.ToString(), propertyList.ToString())
 
+" & text
+            Else
                 If pageTemplate IsNot Nothing Then
                     text = pageTemplate.Replace("[content]", text)
                 End If
@@ -199,6 +212,11 @@ title: {Me.Name}
 
             If summaryNode IsNot Nothing Then
                 Me._Summary = summaryNode.InnerText
+            End If
+
+            summaryNode = xn.SelectSingleNode("remarks")
+            If Not summaryNode Is Nothing Then
+                remarks = summaryNode.InnerText
             End If
         End Sub
 

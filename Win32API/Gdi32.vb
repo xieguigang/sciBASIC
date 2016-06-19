@@ -31,8 +31,6 @@ Public Module Gdi32
     ''' 
     <ExportAPI("Escape", Info:="The Escape function allows applications to access capabilities of a particular device not directly available through GDI. Escape calls made by an application are translated and sent to the driver.")>
     Public Declare Function Escape Lib "gdi32" Alias "Escape" (hdc As Long, nEscape As Long, nCount As Long, lpInData As String, lpOutData As Object) As Long
-    <ExportAPI("Rectangle")>
-    Public Declare Function Rectangle Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
     <ExportAPI("Polygon")>
     Public Declare Function Polygon Lib "gdi32" (hdc As Integer, lpPoint As Point, nCount As Integer) As Integer
     <ExportAPI("CreateSolidBrush")>
@@ -41,18 +39,10 @@ Public Module Gdi32
     Public Declare Function CreatePatternBrush Lib "gdi32" (hBitmap As Integer) As Integer
     <ExportAPI("CreatePen")>
     Public Declare Function CreatePen Lib "gdi32" (nPenStyle As Integer, nWidth As Integer, crColor As Integer) As Integer
-    <ExportAPI("GetPixel")>
-    Public Declare Function GetPixel Lib "gdi32" (hdc As Integer, x As Integer, y As Integer) As Integer
-    <ExportAPI("SetPixelV")>
-    Public Declare Function SetPixelV Lib "gdi32" (hdc As Integer, x As Integer, y As Integer, crColor As Integer) As Integer
     <ExportAPI("CreateCompatibleDC")>
     Public Declare Function CreateCompatibleDC Lib "gdi32" (hdc As Integer) As Integer
     <ExportAPI("DeleteDC")>
     Public Declare Function DeleteDC Lib "gdi32" (hdc As Integer) As Integer
-    <ExportAPI("SaveDC")>
-    Public Declare Function SaveDC Lib "gdi32" (hdc As Integer) As Integer
-    <ExportAPI("RestoreDC")>
-    Public Declare Function RestoreDC Lib "gdi32" (hdc As Integer, nSavedDC As Integer) As Integer
     <ExportAPI("CreateBitmap")>
     Public Declare Function CreateBitmap Lib "gdi32" (nWidth As Integer, nHeight As Integer, nPlanes As Integer, nBitCount As Integer, lpBits As Object) As Integer
     <ExportAPI("CreateCompatibleBitmap")>
@@ -61,24 +51,10 @@ Public Module Gdi32
     Public Declare Function CreateBitmapIndirect Lib "gdi32" (lpBitmap As C_BITMAP) As Integer
     <ExportAPI("GetObjectA")>
     Public Declare Function GetObject Lib "gdi32" Alias "GetObjectA" (hObject As Integer, nCount As Integer, lpObject As Object) As Integer
-    <ExportAPI("SelectObject")>
-    Public Declare Function SelectObject Lib "gdi32" (hdc As Integer, hObject As Integer) As Integer
     <ExportAPI("DeleteObject")>
     Public Declare Function DeleteObject Lib "gdi32" (hObject As Integer) As Integer
-    <ExportAPI("GetMapMode")>
-    Public Declare Function GetMapMode Lib "gdi32" (hdc As Integer) As Integer
-    <ExportAPI("SetMapMode")>
-    Public Declare Function SetMapMode Lib "gdi32" (hdc As Integer, nMapMode As Integer) As Integer
-    <ExportAPI("SetBkColor")>
-    Public Declare Function SetBkColor Lib "gdi32" (hdc As Integer, crColor As Integer) As Integer
     <ExportAPI("BitBlt")>
     Public Declare Function BitBlt Lib "gdi32" (hDestDC As Integer, x As Integer, y As Integer, nWidth As Integer, nHeight As Integer, hSrcDC As Integer, xSrc As Integer, ySrc As Integer, dwRop As Integer) As Integer
-    <ExportAPI("StretchBlt")>
-    Public Declare Function StretchBlt Lib "gdi32" (hdc As Integer, x As Integer, y As Integer, nWidth As Integer, nHeight As Integer, hSrcDC As Integer, xSrc As Integer, ySrc As Integer, nSrcWidth As Integer, nSrcHeight As Integer, dwRop As Integer) As Integer
-    <ExportAPI("SetTextColor")>
-    Public Declare Function SetTextColor Lib "gdi32" (hdc As Integer, crColor As Integer) As Integer
-    <ExportAPI("SetBkMode")>
-    Public Declare Function SetBkMode Lib "gdi32" (hdc As Integer, nBkMode As Integer) As Integer
 
 
     'UPGRADE_WARNING: ?? PIXELFORMATDESCRIPTOR ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
