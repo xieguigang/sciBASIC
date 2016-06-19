@@ -42,7 +42,13 @@ Namespace DocumentStream.Linq
 
             RowWriter = New RowWriter(Schema, metaBlank)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
-            _fileIO = New IO.StreamWriter(path:=handle)
+
+            Dim file As New FileStream(handle,
+                                       FileMode.OpenOrCreate,
+                                       FileAccess.ReadWrite,
+                                       share:=FileShare.Read)
+
+            _fileIO = New IO.StreamWriter(file)
 
             Dim title As RowObject = RowWriter.GetRowNames
             Dim sTitle As String = title.AsLine

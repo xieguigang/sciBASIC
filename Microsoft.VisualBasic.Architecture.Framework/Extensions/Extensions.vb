@@ -2052,7 +2052,21 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
         If source Is Nothing Then Return True
-        If source.FirstOrDefault Is Nothing Then Return True  ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，主需要查看第一个元素而不是便利整个Linq查询枚举，从而提高了效率
+
+        Dim i As Integer = -1
+
+        For Each x As T In source
+            i += 1   ' 假若是存在元素的，则i的值会为零
+            Return False  ' If is not empty, then this For loop will be used.
+        Next
+
+        ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
+        If i = -1 Then ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，主需要查看第一个元素而不是便利整个Linq查询枚举，从而提高了效率
+            Return True  ' Due to the reason of source is empty, no elements, so that i value is not changed as the For loop didn't used.
+        Else
+            Return False
+        End If
+
         Return False
     End Function
 
