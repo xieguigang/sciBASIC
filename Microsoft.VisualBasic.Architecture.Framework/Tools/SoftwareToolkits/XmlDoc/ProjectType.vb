@@ -178,8 +178,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim rmk As String = ""
 
             For Each l As String In remarks.lTokens
-                rmk &= "> " & l
+                rmk &= "> " & l & vbCrLf
             Next
+
+            If Trim(rmk) = ">" OrElse rmk.IsBlank Then
+                rmk = ""
+            End If
 
             Dim ext As String = If(hexoPublish, ".html", ".md")
             Dim text As String = String.Format("# {0}" & vbCr & vbLf &
