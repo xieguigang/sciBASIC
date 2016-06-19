@@ -175,4 +175,149 @@ Public Module User32
 
     Public Declare Sub SetDebugErrorLevel Lib "user32" (dwLevel As Integer)
 
+
+    Public Declare Function EndDialog Lib "user32" (hDlg As Integer, nResult As Integer) As Integer
+    Public Declare Function GetDlgItem Lib "user32" (hDlg As Integer, nIDDlgItem As Integer) As Integer
+    Public Declare Function SetDlgItemInt Lib "user32" (hDlg As Integer, nIDDlgItem As Integer, wValue As Integer, bSigned As Integer) As Integer
+    Public Declare Function GetDlgItemInt Lib "user32" (hDlg As Integer, nIDDlgItem As Integer, lpTranslated As Integer, bSigned As Integer) As Integer
+    Public Declare Function SetDlgItemText Lib "user32" Alias "SetDlgItemTextA" (hDlg As Integer, nIDDlgItem As Integer, lpString As String) As Integer
+    Public Declare Function GetDlgItemText Lib "user32" Alias "GetDlgItemTextA" (hDlg As Integer, nIDDlgItem As Integer, lpString As String, nMaxCount As Integer) As Integer
+    Public Declare Function CheckDlgButton Lib "user32" Alias "CheckDLGButtonA" (hDlg As Integer, nIDButton As Integer, wCheck As Integer) As Integer
+    Public Declare Function CheckRadioButton Lib "user32" Alias "CheckRadioButtonA" (hDlg As Integer, nIDFirstButton As Integer, nIDLastButton As Integer, nIDCheckButton As Integer) As Integer
+    Public Declare Function IsDlgButtonChecked Lib "user32" (hDlg As Integer, nIDButton As Integer) As Integer
+    Public Declare Function SendDlgItemMessage Lib "user32" Alias "SendDlgItemMessageA" (hDlg As Integer, nIDDlgItem As Integer, wMsg As Integer, wParam As Integer, lParam As Integer) As Integer
+    Public Declare Function GetNextDlgGroupItem Lib "user32" (hDlg As Integer, hCtl As Integer, bPrevious As Integer) As Integer
+    Public Declare Function GetNextDlgTabItem Lib "user32" (hDlg As Integer, hCtl As Integer, bPrevious As Integer) As Integer
+    Public Declare Function GetDlgCtrlID Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function GetDialogBaseUnits Lib "user32" () As Integer
+    Public Declare Function DefDlgProc Lib "user32" Alias "DefDlgProcA" (hDlg As Integer, wMsg As Integer, wParam As Integer, lParam As Integer) As Integer
+
+    Public Const DLGWINDOWEXTRA As Short = 30 '  Window extra bytes needed for private dialog classes
+
+    'UPGRADE_WARNING: ?? Msg ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
+    Public Declare Function CallMsgFilter Lib "user32" Alias "CallMsgFilterA" (ByRef lpMsg As Msg, nCode As Integer) As Integer
+
+    ' Clipboard Manager Functions
+    Public Declare Function OpenClipboard Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function CloseClipboard Lib "user32" () As Integer
+    Public Declare Function GetClipboardOwner Lib "user32" () As Integer
+    Public Declare Function SetClipboardViewer Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function GetClipboardViewer Lib "user32" () As Integer
+    Public Declare Function ChangeClipboardChain Lib "user32" (hWnd As Integer, hWndNext As Integer) As Integer
+    Public Declare Function SetClipboardData Lib "user32" Alias "SetClipboardDataA" (wFormat As Integer, hMem As Integer) As Integer
+    Public Declare Function GetClipboardData Lib "user32" Alias "GetClipboardDataA" (wFormat As Integer) As Integer
+    Public Declare Function RegisterClipboardFormat Lib "user32" Alias "RegisterClipboardFormatA" (lpString As String) As Integer
+    Public Declare Function CountClipboardFormats Lib "user32" () As Integer
+    Public Declare Function EnumClipboardFormats Lib "user32" (wFormat As Integer) As Integer
+    Public Declare Function GetClipboardFormatName Lib "user32" Alias "GetClipboardFormatNameA" (wFormat As Integer, lpString As String, nMaxCount As Integer) As Integer
+    Public Declare Function EmptyClipboard Lib "user32" () As Integer
+    Public Declare Function IsClipboardFormatAvailable Lib "user32" (wFormat As Integer) As Integer
+    Public Declare Function GetPriorityClipboardFormat Lib "user32" (ByRef lpPriorityList As Integer, nCount As Integer) As Integer
+    Public Declare Function GetOpenClipboardWindow Lib "user32" () As Integer
+    Public Declare Function CharToOem Lib "user32" Alias "CharToOemA" (lpszSrc As String, lpszDst As String) As Integer
+    Public Declare Function OemToChar Lib "user32" Alias "OemToCharA" (lpszSrc As String, lpszDst As String) As Integer
+    Public Declare Function CharToOemBuff Lib "user32" Alias "CharToOemBuffA" (lpszSrc As String, lpszDst As String, cchDstLength As Integer) As Integer
+    Public Declare Function OemToCharBuff Lib "user32" Alias "OemToCharBuffA" (lpszSrc As String, lpszDst As String, cchDstLength As Integer) As Integer
+    Public Declare Function CharUpper Lib "user32" Alias "CharUpperA" (lpsz As String) As String
+    Public Declare Function CharUpperBuff Lib "user32" Alias "CharUpperBuffA" (lpsz As String, cchLength As Integer) As Integer
+    Public Declare Function CharLower Lib "user32" Alias "CharLowerA" (lpsz As String) As String
+    Public Declare Function CharLowerBuff Lib "user32" Alias "CharLowerBuffA" (lpsz As String, cchLength As Integer) As Integer
+    Public Declare Function CharNext Lib "user32" Alias "CharNextA" (lpsz As String) As String
+    Public Declare Function CharPrev Lib "user32" Alias "CharPrevA" (lpszStart As String, lpszCurrent As String) As String
+
+    ' Language dependent Routines
+    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
+    Public Declare Function IsCharAlpha Lib "user32" Alias "IsCharAlphaA" (cChar_Renamed As Byte) As Integer
+    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
+    Public Declare Function IsCharAlphaNumeric Lib "user32" Alias "IsCharAlphaNumericA" (cChar_Renamed As Byte) As Integer
+    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
+    Public Declare Function IsCharUpper Lib "user32" Alias "IsCharUpperA" (cChar_Renamed As Byte) As Integer
+    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
+    Public Declare Function IsCharLower Lib "user32" Alias "IsCharLowerA" (cChar_Renamed As Byte) As Integer
+
+    Public Declare Function SetFocus Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function GetFocus Lib "user32" () As Integer
+    Public Declare Function GetActiveWindow Lib "user32" () As Integer
+
+    ' Keyboard Information Routines
+    Public Declare Function GetKBCodePage Lib "user32" () As Integer
+    Public Declare Function GetKeyState Lib "user32" (nVirtKey As Integer) As Short
+    Public Declare Function GetAsyncKeyState Lib "user32" (vKey As Integer) As Short
+    Public Declare Function GetKeyboardState Lib "user32" (ByRef pbKeyState As Byte) As Integer
+    Public Declare Function SetKeyboardState Lib "user32" (ByRef lppbKeyState As Byte) As Integer
+    Public Declare Function GetKeyboardType Lib "user32" (nTypeFlag As Integer) As Integer
+    Public Declare Function GetKeyNameText Lib "user32" Alias "GetKeyNameTextA" (lParam As Integer, lpBuffer As String, nSize As Integer) As Integer
+
+    Public Declare Function ToAscii Lib "user32" (uVirtKey As Integer, uScanCode As Integer, ByRef lpbKeyState As Byte, ByRef lpwTransKey As Integer, fuState As Integer) As Integer
+    Public Declare Function ToUnicode Lib "user32" (wVirtKey As Integer, wScanCode As Integer, ByRef lpKeyState As Byte, pwszBuff As String, cchBuff As Integer, wFlags As Integer) As Integer
+
+    Public Declare Function OemKeyScan Lib "user32" (wOemChar As Integer) As Integer
+    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
+    Public Declare Function VkKeyScan Lib "user32" Alias "VkKeyScanA" (cChar_Renamed As Byte) As Short
+
+
+
+    Public Declare Sub mouse_event Lib "user32" (dwFlags As Integer, dx As Integer, dy As Integer, cButtons As Integer, dwExtraInfo As Integer)
+    Public Declare Function MapVirtualKey Lib "user32" Alias "MapVirtualKeyA" (wCode As Integer, wMapType As Integer) As Integer
+
+    Public Declare Function GetInputState Lib "user32" () As Integer
+    Public Declare Function GetQueueStatus Lib "user32" (fuFlags As Integer) As Integer
+    Public Declare Function GetCapture Lib "user32" () As Integer
+    Public Declare Function SetCapture Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function ReleaseCapture Lib "user32" () As Integer
+
+    Public Declare Function MsgWaitForMultipleObjects Lib "user32" (nCount As Integer, ByRef pHandles As Integer, fWaitAll As Integer, dwMilliseconds As Integer, dwWakeMask As Integer) As Integer
+
+
+    ' Windows Functions
+    Public Declare Function KillTimer Lib "user32" (hWnd As Integer, nIDEvent As Integer) As Integer
+
+    Public Declare Function IsWindowUnicode Lib "user32" (hWnd As Integer) As Integer
+
+    Public Declare Function EnableWindow Lib "user32" (hWnd As Integer, fEnable As Integer) As Integer
+    Public Declare Function IsWindowEnabled Lib "user32" (hWnd As Integer) As Integer
+
+    Public Declare Function LoadAccelerators Lib "user32" Alias "LoadAcceleratorsA" (hInstance As Integer, lpTableName As String) As Integer
+    'UPGRADE_WARNING: ?? ACCEL ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
+    Public Declare Function CreateAcceleratorTable Lib "user32" Alias "CreateAcceleratorTableA" (ByRef lpaccl As ACCEL, cEntries As Integer) As Integer
+    Public Declare Function DestroyAcceleratorTable Lib "user32" (haccel As Integer) As Integer
+    'UPGRADE_WARNING: ?? ACCEL ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
+    Public Declare Function CopyAcceleratorTable Lib "user32" Alias "CopyAcceleratorTableA" (hAccelSrc As Integer, ByRef lpAccelDst As ACCEL, cAccelEntries As Integer) As Integer
+    'UPGRADE_WARNING: ?? Msg ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
+    Public Declare Function TranslateAccelerator Lib "user32" Alias "TranslateAcceleratorA" (hWnd As Integer, hAccTable As Integer, ByRef lpMsg As Msg) As Integer
+
+
+    Public Declare Function GetSystemMetrics Lib "user32" (nIndex As Integer) As Integer
+
+    Public Declare Function LoadMenu Lib "user32" Alias "LoadMenuA" (hInstance As Integer, lpString As String) As Integer
+    Public Declare Function LoadMenuIndirect Lib "user32" Alias "LoadMenuIndirectA" (lpMenuTemplate As Integer) As Integer
+    Public Declare Function GetMenu Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function SetMenu Lib "user32" (hWnd As Integer, hMenu As Integer) As Integer
+    Public Declare Function HiliteMenuItem Lib "user32" (hWnd As Integer, hMenu As Integer, wIDHiliteItem As Integer, wHilite As Integer) As Integer
+    Public Declare Function GetMenuString Lib "user32" Alias "GetMenuStringA" (hMenu As Integer, wIDItem As Integer, lpString As String, nMaxCount As Integer, wFlag As Integer) As Integer
+    Public Declare Function GetMenuState Lib "user32" (hMenu As Integer, wID As Integer, wFlags As Integer) As Integer
+    Public Declare Function DrawMenuBar Lib "user32" (hWnd As Integer) As Integer
+    Public Declare Function GetSystemMenu Lib "user32" (hWnd As Integer, bRevert As Integer) As Integer
+    Public Declare Function CreateMenu Lib "user32" () As Integer
+    Public Declare Function CreatePopupMenu Lib "user32" () As Integer
+    Public Declare Function DestroyMenu Lib "user32" (hMenu As Integer) As Integer
+    Public Declare Function CheckMenuItem Lib "user32" (hMenu As Integer, wIDCheckItem As Integer, wCheck As Integer) As Integer
+    Public Declare Function EnableMenuItem Lib "user32" (hMenu As Integer, wIDEnableItem As Integer, wEnable As Integer) As Integer
+    Public Declare Function GetSubMenu Lib "user32" (hMenu As Integer, nPos As Integer) As Integer
+    Public Declare Function GetMenuItemID Lib "user32" (hMenu As Integer, nPos As Integer) As Integer
+    Public Declare Function GetMenuItemCount Lib "user32" (hMenu As Integer) As Integer
+
+    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
+    Public Declare Function InsertMenu Lib "user32" Alias "InsertMenuA" (hMenu As Integer, nPosition As Integer, wFlags As Integer, wIDNewItem As Integer, lpNewItem As Object) As Integer
+    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
+    Public Declare Function AppendMenu Lib "user32" Alias "AppendMenuA" (hMenu As Integer, wFlags As Integer, wIDNewItem As Integer, lpNewItem As Object) As Integer
+    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
+    Public Declare Function ModifyMenu Lib "user32" Alias "ModifyMenuA" (hMenu As Integer, nPosition As Integer, wFlags As Integer, wIDNewItem As Integer, lpString As Object) As Integer
+    Public Declare Function RemoveMenu Lib "user32" (hMenu As Integer, nPosition As Integer, wFlags As Integer) As Integer
+    Public Declare Function DeleteMenu Lib "user32" (hMenu As Integer, nPosition As Integer, wFlags As Integer) As Integer
+    Public Declare Function SetMenuItemBitmaps Lib "user32" (hMenu As Integer, nPosition As Integer, wFlags As Integer, hBitmapUnchecked As Integer, hBitmapChecked As Integer) As Integer
+    Public Declare Function GetMenuCheckMarkDimensions Lib "user32" () As Integer
+    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
+    Public Declare Function TrackPopupMenu Lib "user32" (hMenu As Integer, wFlags As Integer, X As Integer, Y As Integer, nReserved As Integer, hWnd As Integer, ByRef lprc As RECT) As Integer
+
 End Module

@@ -4704,229 +4704,7 @@ Public Module TypeDef
     Public Const DCTT_DOWNLOAD As Integer = &H2
     Public Const DCTT_SUBDEV As Integer = &H4
 
-    'UPGRADE_WARNING: ?? DEVMODE ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function DeviceCapabilities Lib "winspool.drv" Alias "DeviceCapabilitiesA" (lpDeviceName As String, lpPort As String, iIndex As Integer, lpOutput As String, ByRef lpDevMode As DEVMODE) As Integer
 
-    Public Declare Function Ellipse Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
-
-    Public Declare Function EqualRgn Lib "gdi32" (hSrcRgn1 As Integer, hSrcRgn2 As Integer) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function Escape Lib "gdi32" (hdc As Integer, nEscape As Integer, nCount As Integer, lpInData As String, ByRef lpOutData As Object) As Integer
-    Public Declare Function ExtEscape Lib "gdi32" (hdc As Integer, nEscape As Integer, cbInput As Integer, lpszInData As String, cbOutput As Integer, lpszOutData As String) As Integer
-    Public Declare Function DrawEscape Lib "gdi32" (hdc As Integer, nEscape As Integer, cbInput As Integer, lpszInData As String) As Integer
-    Public Declare Function ExcludeClipRect Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
-    'UPGRADE_WARNING: ?? RgnData ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ExtCreateRegion Lib "gdi32" (ByRef lpXform As xform, nCount As Integer, ByRef lpRgnData As RgnData) As Integer
-    Public Declare Function ExtFloodFill Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, crColor As Integer, wFillType As Integer) As Integer
-    Public Declare Function FillRgn Lib "gdi32" (hdc As Integer, hRgn As Integer, hBrush As Integer) As Integer
-    Public Declare Function FrameRgn Lib "gdi32" (hdc As Integer, hRgn As Integer, hBrush As Integer, nWidth As Integer, nHeight As Integer) As Integer
-    Public Declare Function FloodFill Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, crColor As Integer) As Integer
-    Public Declare Function GetROP2 Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetAspectRatioFilterEx Lib "gdi32" (hdc As Integer, ByRef lpAspectRatio As Size) As Integer
-    Public Declare Function GetBkColor Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function GetBkMode Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function GetBitmapBits Lib "gdi32" (hBitmap As Integer, dwCount As Integer, ByRef lpBits As Object) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetBitmapDimensionEx Lib "gdi32" (hBitmap As Integer, ByRef lpDimension As Size) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetBoundsRect Lib "gdi32" (hdc As Integer, ByRef lprcBounds As RECT, Flags As Integer) As Integer
-
-    'Public Declare Function GetCharWidth Lib "gdi32" Alias "GetCharWidthA" (hdc As Integer, wFirstChar As Integer, wLastChar As Integer, ByRef lpBuffer As Integer) As Integer
-    Public Declare Function GetCharWidth32 Lib "gdi32" Alias "GetCharWidth32A" (hdc As Integer, iFirstChar As Integer, iLastChar As Integer, ByRef lpBuffer As Integer) As Integer
-    Public Declare Function GetCharWidthFloat Lib "gdi32" Alias "GetCharWidthFloatA" (hdc As Integer, iFirstChar As Integer, iLastChar As Integer, ByRef pxBuffer As Double) As Integer
-
-    'UPGRADE_WARNING: ?? ABC ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetCharABCWidths Lib "gdi32" Alias "GetCharABCWidthsA" (hdc As Integer, uFirstChar As Integer, uLastChar As Integer, ByRef lpabc As ABC) As Integer
-    'UPGRADE_WARNING: ?? ABCFLOAT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetCharABCWidthsFloat Lib "gdi32" Alias "GetCharABCWidthsFloatA" (hdc As Integer, iFirstChar As Integer, iLastChar As Integer, ByRef lpABCF As ABCFLOAT) As Integer
-
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetClipBox Lib "gdi32" (hdc As Integer, ByRef lpRect As RECT) As Integer
-    Public Declare Function GetClipRgn Lib "gdi32" (hdc As Integer, hRgn As Integer) As Integer
-    Public Declare Function GetMetaRgn Lib "gdi32" (hdc As Integer, hRgn As Integer) As Integer
-    Public Declare Function GetCurrentObject Lib "gdi32" (hdc As Integer, uObjectType As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetCurrentPositionEx Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI) As Integer
-    Public Declare Function GetDeviceCaps Lib "gdi32" (hdc As Integer, nIndex As Integer) As Integer
-    'UPGRADE_WARNING: ?? BITMAPINFO ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function GetDIBits Lib "gdi32" (aHDC As Integer, hBitmap As Integer, nStartScan As Integer, nNumScans As Integer, ByRef lpBits As Object, ByRef lpBI As BITMAPINFO, wUsage As Integer) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function GetFontData Lib "gdi32" Alias "GetFontDataA" (hdc As Integer, dwTable As Integer, dwOffset As Integer, ByRef lpvBuffer As Object, cbData As Integer) As Integer
-    'UPGRADE_WARNING: ?? MAT2 ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    'UPGRADE_WARNING: ?? GLYPHMETRICS ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetGlyphOutline Lib "gdi32" Alias "GetGlyphOutlineA" (hdc As Integer, uChar As Integer, fuFormat As Integer, ByRef lpgm As GLYPHMETRICS, cbBuffer As Integer, ByRef lpBuffer As Object, ByRef lpmat2 As MAT2) As Integer
-    Public Declare Function GetGraphicsMode Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function GetMapMode Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function GetMetaFileBitsEx Lib "gdi32" (hMF As Integer, nSize As Integer, ByRef lpvData As Object) As Integer
-    Public Declare Function GetMetaFile Lib "gdi32" Alias "GetMetaFileA" (lpFileName As String) As Integer
-    Public Declare Function GetNearestColor Lib "gdi32" (hdc As Integer, crColor As Integer) As Integer
-    Public Declare Function GetNearestPaletteIndex Lib "gdi32" (hPalette As Integer, crColor As Integer) As Integer
-    Public Declare Function GetObjectType Lib "gdi32" (hgdiobj As Integer) As Integer
-
-    'UPGRADE_WARNING: ?? OUTLINETEXTMETRIC ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetOutlineTextMetrics Lib "gdi32" Alias "GetOutlineTextMetricsA" (hdc As Integer, cbData As Integer, ByRef lpotm As OUTLINETEXTMETRIC) As Integer
-
-    'UPGRADE_WARNING: ?? PALETTEENTRY ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetPaletteEntries Lib "gdi32" (hPalette As Integer, wStartIndex As Integer, wNumEntries As Integer, ByRef lpPaletteEntries As PALETTEENTRY) As Integer
-    Public Declare Function GetPixel Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer) As Integer
-    Public Declare Function GetPolyFillMode Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_WARNING: ?? RASTERIZER_STATUS ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetRasterizerCaps Lib "gdi32" (ByRef lpraststat As RASTERIZER_STATUS, cb As Integer) As Integer
-    'UPGRADE_WARNING: ?? RgnData ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetRegionData Lib "gdi32" Alias "GetRegionDataA" (hRgn As Integer, dwCount As Integer, ByRef lpRgnData As RgnData) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetRgnBox Lib "gdi32" (hRgn As Integer, ByRef lpRect As RECT) As Integer
-    Public Declare Function GetStockObject Lib "gdi32" (nIndex As Integer) As Integer
-    Public Declare Function GetStretchBltMode Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_WARNING: ?? PALETTEENTRY ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetSystemPaletteEntries Lib "gdi32" (hdc As Integer, wStartIndex As Integer, wNumEntries As Integer, ByRef lpPaletteEntries As PALETTEENTRY) As Integer
-    Public Declare Function GetSystemPaletteUse Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function GetTextCharacterExtra Lib "gdi32" Alias "GetTextCharacterExtraA" (hdc As Integer) As Integer
-    Public Declare Function GetTextAlign Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function GetTextColor Lib "gdi32" (hdc As Integer) As Integer
-
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetTextExtentPoint Lib "gdi32" Alias "GetTextExtentPointA" (hdc As Integer, lpszString As String, cbString As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetTextExtentPoint32 Lib "gdi32" Alias "GetTextExtentPoint32A" (hdc As Integer, lpsz As String, cbString As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetTextExtentExPoint Lib "gdi32" Alias "GetTextExtentExPointA" (hdc As Integer, lpszStr As String, cchString As Integer, nMaxExtent As Integer, ByRef lpnFit As Integer, ByRef alpDx As Integer, ByRef lpSize As Size) As Integer
-
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetViewportExtEx Lib "gdi32" (hdc As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetViewportOrgEx Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetWindowExtEx Lib "gdi32" (hdc As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetWindowOrgEx Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI) As Integer
-
-    Public Declare Function IntersectClipRect Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
-    Public Declare Function InvertRgn Lib "gdi32" (hdc As Integer, hRgn As Integer) As Integer
-    Public Declare Function LineTo Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer) As Integer
-    Public Declare Function MaskBlt Lib "gdi32" (hdcDest As Integer, nXDest As Integer, nYDest As Integer, nWidth As Integer, nHeight As Integer, hdcSrc As Integer, nXSrc As Integer, nYSrc As Integer, hbmMask As Integer, xMask As Integer, yMask As Integer, dwRop As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PlgBlt Lib "gdi32" (hdcDest As Integer, ByRef lpPoint As POINTAPI, hdcSrc As Integer, nXSrc As Integer, nYSrc As Integer, nWidth As Integer, nHeight As Integer, hbmMask As Integer, xMask As Integer, yMask As Integer) As Integer
-
-    Public Declare Function OffsetClipRgn Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer) As Integer
-    Public Declare Function OffsetRgn Lib "gdi32" (hRgn As Integer, X As Integer, Y As Integer) As Integer
-    Public Declare Function PatBlt Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, nWidth As Integer, nHeight As Integer, dwRop As Integer) As Integer
-    Public Declare Function Pie Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer, X3 As Integer, Y3 As Integer, X4 As Integer, Y4 As Integer) As Integer
-    Public Declare Function PlayMetaFile Lib "gdi32" (hdc As Integer, hMF As Integer) As Integer
-    Public Declare Function PaintRgn Lib "gdi32" (hdc As Integer, hRgn As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolyPolygon Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI, ByRef lpPolyCounts As Integer, nCount As Integer) As Integer
-    Public Declare Function PtInRegion Lib "gdi32" (hRgn As Integer, X As Integer, Y As Integer) As Integer
-    Public Declare Function PtVisible Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function RectVisible Lib "gdi32" (hdc As Integer, ByRef lpRect As RECT) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function RectInRegion Lib "gdi32" (hRgn As Integer, ByRef lpRect As RECT) As Integer
-    Public Declare Function Rectangle Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
-    Public Declare Function RestoreDC Lib "gdi32" (hdc As Integer, nSavedDC As Integer) As Integer
-    'UPGRADE_WARNING: ?? DEVMODE ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ResetDC Lib "gdi32" Alias "ResetDCA" (hdc As Integer, ByRef lpInitData As DEVMODE) As Integer
-    Public Declare Function RealizePalette Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function RemoveFontResource Lib "gdi32" Alias "RemoveFontResourceA" (lpFileName As String) As Integer
-    Public Declare Function RoundRect Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer, X3 As Integer, Y3 As Integer) As Integer
-    Public Declare Function ResizePalette Lib "gdi32" (hPalette As Integer, nNumEntries As Integer) As Integer
-
-    Public Declare Function SaveDC Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function SelectClipRgn Lib "gdi32" (hdc As Integer, hRgn As Integer) As Integer
-    Public Declare Function ExtSelectClipRgn Lib "gdi32" (hdc As Integer, hRgn As Integer, fnMode As Integer) As Integer
-    Public Declare Function SetMetaRgn Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function SelectObject Lib "gdi32" (hdc As Integer, hObject As Integer) As Integer
-    Public Declare Function SelectPalette Lib "gdi32" (hdc As Integer, hPalette As Integer, bForceBackground As Integer) As Integer
-    Public Declare Function SetBkColor Lib "gdi32" (hdc As Integer, crColor As Integer) As Integer
-    Public Declare Function SetBkMode Lib "gdi32" (hdc As Integer, nBkMode As Integer) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function SetBitmapBits Lib "gdi32" (hBitmap As Integer, dwCount As Integer, ByRef lpBits As Object) As Integer
-
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetBoundsRect Lib "gdi32" (hdc As Integer, ByRef lprcBounds As RECT, Flags As Integer) As Integer
-    'UPGRADE_WARNING: ?? BITMAPINFO ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function SetDIBits Lib "gdi32" (hdc As Integer, hBitmap As Integer, nStartScan As Integer, nNumScans As Integer, ByRef lpBits As Object, ByRef lpBI As BITMAPINFO, wUsage As Integer) As Integer
-    'UPGRADE_WARNING: ?? BITMAPINFO ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function SetDIBitsToDevice Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, dx As Integer, dy As Integer, SrcX As Integer, SrcY As Integer, Scan As Integer, NumScans As Integer, ByRef Bits As Object, ByRef BitsInfo As BITMAPINFO, wUsage As Integer) As Integer
-    Public Declare Function SetMapperFlags Lib "gdi32" (hdc As Integer, dwFlag As Integer) As Integer
-    Public Declare Function SetGraphicsMode Lib "gdi32" (hdc As Integer, iMode As Integer) As Integer
-    Public Declare Function SetMapMode Lib "gdi32" (hdc As Integer, nMapMode As Integer) As Integer
-    Public Declare Function SetMetaFileBitsEx Lib "gdi32" (nSize As Integer, ByRef lpData As Byte) As Integer
-    'UPGRADE_WARNING: ?? PALETTEENTRY ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetPaletteEntries Lib "gdi32" (hPalette As Integer, wStartIndex As Integer, wNumEntries As Integer, ByRef lpPaletteEntries As PALETTEENTRY) As Integer
-    Public Declare Function SetPixel Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, crColor As Integer) As Integer
-    Public Declare Function SetPixelV Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, crColor As Integer) As Integer
-    Public Declare Function SetPolyFillMode Lib "gdi32" (hdc As Integer, nPolyFillMode As Integer) As Integer
-    Public Declare Function StretchBlt Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, nWidth As Integer, nHeight As Integer, hSrcDC As Integer, xSrc As Integer, ySrc As Integer, nSrcWidth As Integer, nSrcHeight As Integer, dwRop As Integer) As Integer
-    Public Declare Function SetRectRgn Lib "gdi32" (hRgn As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
-    'UPGRADE_WARNING: ?? BITMAPINFO ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function StretchDIBits Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, dx As Integer, dy As Integer, SrcX As Integer, SrcY As Integer, wSrcWidth As Integer, wSrcHeight As Integer, ByRef lpBits As Object, ByRef lpBitsInfo As BITMAPINFO, wUsage As Integer, dwRop As Integer) As Integer
-    Public Declare Function SetROP2 Lib "gdi32" (hdc As Integer, nDrawMode As Integer) As Integer
-    Public Declare Function SetStretchBltMode Lib "gdi32" (hdc As Integer, nStretchMode As Integer) As Integer
-    Public Declare Function SetSystemPaletteUse Lib "gdi32" (hdc As Integer, wUsage As Integer) As Integer
-    Public Declare Function SetTextCharacterExtra Lib "gdi32" Alias "SetTextCharacterExtraA" (hdc As Integer, nCharExtra As Integer) As Integer
-    Public Declare Function SetTextColor Lib "gdi32" (hdc As Integer, crColor As Integer) As Integer
-    Public Declare Function SetTextAlign Lib "gdi32" (hdc As Integer, wFlags As Integer) As Integer
-    Public Declare Function SetTextJustification Lib "gdi32" (hdc As Integer, nBreakExtra As Integer, nBreakCount As Integer) As Integer
-    Public Declare Function UpdateColors Lib "gdi32" (hdc As Integer) As Integer
-
-    Public Declare Function GetProcAddress Lib "kernel32" (hModule As Integer, lpProcName As String) As Integer
-
-    'UPGRADE_WARNING: ?? METARECORD ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_WARNING: ?? HANDLETABLE ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PlayMetaFileRecord Lib "gdi32" (hdc As Integer, ByRef lpHandletable As HANDLETABLE, ByRef lpMetaRecord As METARECORD, nHandles As Integer) As Integer
-
-    Public Declare Function CloseEnhMetaFile Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function CopyEnhMetaFile Lib "gdi32" Alias "CopyEnhMetaFileA" (hemfSrc As Integer, lpszFile As String) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function CreateEnhMetaFile Lib "gdi32" Alias "CreateEnhMetaFileA" (hdcRef As Integer, lpFileName As String, ByRef lpRect As RECT, lpDescription As String) As Integer
-    Public Declare Function DeleteEnhMetaFile Lib "gdi32" (hemf As Integer) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function EnumEnhMetaFile Lib "gdi32" (hdc As Integer, hemf As Integer, lpEnhMetaFunc As Integer, ByRef lpData As Object, ByRef lpRect As RECT) As Integer
-    Public Declare Function GetEnhMetaFile Lib "gdi32" Alias "GetEnhMetaFileA" (lpszMetaFile As String) As Integer
-    Public Declare Function GetEnhMetaFileBits Lib "gdi32" (hemf As Integer, cbBuffer As Integer, ByRef lpbBuffer As Byte) As Integer
-    Public Declare Function GetEnhMetaFileDescription Lib "gdi32" Alias "GetEnhMetaFileDescriptionA" (hemf As Integer, cchBuffer As Integer, lpszDescription As String) As Integer
-    'UPGRADE_WARNING: ?? ENHMETAHEADER ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetEnhMetaFileHeader Lib "gdi32" (hemf As Integer, cbBuffer As Integer, ByRef lpemh As ENHMETAHEADER) As Integer
-    'UPGRADE_WARNING: ?? PALETTEENTRY ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetEnhMetaFilePaletteEntries Lib "gdi32" (hemf As Integer, cEntries As Integer, ByRef lppe As PALETTEENTRY) As Integer
-    Public Declare Function GetWinMetaFileBits Lib "gdi32" (hemf As Integer, cbBuffer As Integer, ByRef lpbBuffer As Byte, fnMapMode As Integer, hdcRef As Integer) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PlayEnhMetaFile Lib "gdi32" (hdc As Integer, hemf As Integer, ByRef lpRect As RECT) As Integer
-    'UPGRADE_WARNING: ?? ENHMETARECORD ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_WARNING: ?? HANDLETABLE ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PlayEnhMetaFileRecord Lib "gdi32" (hdc As Integer, ByRef lpHandletable As HANDLETABLE, ByRef lpEnhMetaRecord As ENHMETARECORD, nHandles As Integer) As Integer
-    Public Declare Function SetEnhMetaFileBits Lib "gdi32" (cbBuffer As Integer, ByRef lpData As Byte) As Integer
-    'UPGRADE_WARNING: ?? METAFILEPICT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetWinMetaFileBits Lib "gdi32" (cbBuffer As Integer, ByRef lpbBuffer As Byte, hdcRef As Integer, ByRef lpmfp As METAFILEPICT) As Integer
-    Public Declare Function GdiComment Lib "gdi32" (hdc As Integer, cbSize As Integer, ByRef lpData As Byte) As Integer
-
-    'UPGRADE_WARNING: ?? TEXTMETRIC ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetTextMetrics Lib "gdi32" Alias "GetTextMetricsA" (hdc As Integer, ByRef lpMetrics As TEXTMETRIC) As Integer
-
-    Public Declare Function AngleArc Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, dwRadius As Integer, eStartAngle As Double, eSweepAngle As Double) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolyPolyline Lib "gdi32" (hdc As Integer, ByRef lppt As POINTAPI, ByRef lpdwPolyPoints As Integer, cCount As Integer) As Integer
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetWorldTransform Lib "gdi32" (hdc As Integer, ByRef lpXform As xform) As Integer
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetWorldTransform Lib "gdi32" (hdc As Integer, ByRef lpXform As xform) As Integer
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ModifyWorldTransform Lib "gdi32" (hdc As Integer, ByRef lpXform As xform, iMode As Integer) As Integer
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    'UPGRADE_WARNING: ?? xform ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function CombineTransform Lib "gdi32" (ByRef lpxformResult As xform, ByRef lpxform1 As xform, ByRef lpxform2 As xform) As Integer
 
     '  Flags value for COLORADJUSTMENT
     Public Const CA_NEGATIVE As Short = &H1S
@@ -4978,100 +4756,12 @@ Public Module TypeDef
         Dim caRedGreenTint As Short
     End Structure
 
-    'UPGRADE_WARNING: ?? ColorAdjustment ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetColorAdjustment Lib "gdi32" (hdc As Integer, ByRef lpca As ColorAdjustment) As Integer
-    'UPGRADE_WARNING: ?? ColorAdjustment ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetColorAdjustment Lib "gdi32" (hdc As Integer, ByRef lpca As ColorAdjustment) As Integer
-    Public Declare Function CreateHalftonePalette Lib "gdi32" (hdc As Integer) As Integer
-
     Public Structure DOCINFO
         Dim cbSize As Integer
         Dim lpszDocName As String
         Dim lpszOutput As String
     End Structure
 
-    'UPGRADE_WARNING: ?? DOCINFO ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function StartDoc Lib "gdi32" Alias "StartDocA" (hdc As Integer, ByRef lpdi As DOCINFO) As Integer
-    Public Declare Function StartPage Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function EndPage Lib "gdi32" (hdc As Integer) As Integer
-    'Public Declare Function EndDoc Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function AbortDoc Lib "gdi32" (hdc As Integer) As Integer
-
-    Public Declare Function AbortPath Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function ArcTo Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer, X3 As Integer, Y3 As Integer, X4 As Integer, Y4 As Integer) As Integer
-    Public Declare Function BeginPath Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function CloseFigure Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function EndPath Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function FillPath Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function FlattenPath Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetPath Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI, ByRef lpTypes As Byte, nSize As Integer) As Integer
-    Public Declare Function PathToRegion Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolyDraw Lib "gdi32" (hdc As Integer, ByRef lppt As POINTAPI, ByRef lpbTypes As Byte, cCount As Integer) As Integer
-    Public Declare Function SelectClipPath Lib "gdi32" (hdc As Integer, iMode As Integer) As Integer
-    Public Declare Function SetArcDirection Lib "gdi32" (hdc As Integer, ArcDirection As Integer) As Integer
-    Public Declare Function SetMiterLimit Lib "gdi32" (hdc As Integer, eNewLimit As Double, ByRef peOldLimit As Double) As Integer
-    Public Declare Function StrokeAndFillPath Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function StrokePath Lib "gdi32" (hdc As Integer) As Integer
-    Public Declare Function WidenPath Lib "gdi32" (hdc As Integer) As Integer
-    'UPGRADE_WARNING: ?? LOGBRUSH ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ExtCreatePen Lib "gdi32" (dwPenStyle As Integer, dwWidth As Integer, ByRef lplb As LOGBRUSH, dwStyleCount As Integer, ByRef lpStyle As Integer) As Integer
-    Public Declare Function GetMiterLimit Lib "gdi32" (hdc As Integer, ByRef peLimit As Double) As Integer
-    Public Declare Function GetArcDirection Lib "gdi32" (hdc As Integer) As Integer
-
-    'UPGRADE_NOTE: GetObject ???? GetObject_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function GetObject_Renamed Lib "gdi32" Alias "GetObjectA" (hObject As Integer, nCount As Integer, ByRef lpObject As Object) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function MoveToEx Lib "gdi32" (hdc As Integer, X As Integer, Y As Integer, ByRef lpPoint As POINTAPI) As Integer
-    Public Declare Function TextOut Lib "gdi32" Alias "TextOutA" (hdc As Integer, X As Integer, Y As Integer, lpString As String, nCount As Integer) As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ExtTextOut Lib "gdi32" Alias "ExtTextOutA" (hdc As Integer, X As Integer, Y As Integer, wOptions As Integer, ByRef lpRect As RECT, lpString As String, nCount As Integer, ByRef lpDX As Integer) As Integer
-    'UPGRADE_WARNING: ?? POLYTEXT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolyTextOut Lib "gdi32" Alias "PolyTextOutA" (hdc As Integer, ByRef pptxt As POLYTEXT, ByRef cStrings As Integer) As Integer
-
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function CreatePolygonRgn Lib "gdi32" (ByRef lpPoint As POINTAPI, nCount As Integer, nPolyFillMode As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function DPtoLP Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI, nCount As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function LPtoDP Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI, nCount As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function Polyline Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI, nCount As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function Polygon Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI, nCount As Integer) As Integer
-
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolyBezier Lib "gdi32" (hdc As Integer, ByRef lppt As POINTAPI, cPoints As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolyBezierTo Lib "gdi32" (hdc As Integer, ByRef lppt As POINTAPI, cCount As Integer) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function PolylineTo Lib "gdi32" (hdc As Integer, ByRef lppt As POINTAPI, cCount As Integer) As Integer
-
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetViewportExtEx Lib "gdi32" (hdc As Integer, nX As Integer, nY As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetViewportOrgEx Lib "gdi32" (hdc As Integer, nX As Integer, nY As Integer, ByRef lpPoint As POINTAPI) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetWindowOrgEx Lib "gdi32" (hdc As Integer, nX As Integer, nY As Integer, ByRef lpPoint As POINTAPI) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetWindowExtEx Lib "gdi32" (hdc As Integer, nX As Integer, nY As Integer, ByRef lpSize As Size) As Integer
-
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function OffsetViewportOrgEx Lib "gdi32" (hdc As Integer, nX As Integer, nY As Integer, ByRef lpPoint As POINTAPI) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function OffsetWindowOrgEx Lib "gdi32" (hdc As Integer, nX As Integer, nY As Integer, ByRef lpPoint As POINTAPI) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ScaleWindowExtEx Lib "gdi32" (hdc As Integer, nXnum As Integer, nXdenom As Integer, nYnum As Integer, nYdenom As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function ScaleViewportExtEx Lib "gdi32" (hdc As Integer, nXnum As Integer, nXdenom As Integer, nYnum As Integer, nYdenom As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? Size ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetBitmapDimensionEx Lib "gdi32" (hbm As Integer, nX As Integer, nY As Integer, ByRef lpSize As Size) As Integer
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function SetBrushOrgEx Lib "gdi32" (hdc As Integer, nXOrg As Integer, nYOrg As Integer, ByRef lppt As POINTAPI) As Integer
-
-    Public Declare Function GetTextFace Lib "gdi32" Alias "GetTextFaceA" (hdc As Integer, nCount As Integer, lpFacename As String) As Integer
 
     Public Const FONTMAPPER_MAX As Short = 10
 
@@ -5081,16 +4771,6 @@ Public Module TypeDef
         Dim iKernAmount As Integer
     End Structure
 
-    'UPGRADE_WARNING: ?? KERNINGPAIR ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetKerningPairs Lib "gdi32" Alias "GetKerningPairsA" (hdc As Integer, cPairs As Integer, ByRef lpkrnpair As KERNINGPAIR) As Integer
-
-    'UPGRADE_WARNING: ?? POINTAPI ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function GetDCOrgEx Lib "gdi32" (hdc As Integer, ByRef lpPoint As POINTAPI) As Integer
-    Public Declare Function UnrealizeObject Lib "gdi32" (hObject As Integer) As Integer
-
-    Public Declare Function GdiFlush Lib "gdi32" () As Integer
-    Public Declare Function GdiSetBatchLimit Lib "gdi32" (dwLimit As Integer) As Integer
-    Public Declare Function GdiGetBatchLimit Lib "gdi32" () As Integer
 
     ' Enhanced metafile constants
 
@@ -7359,84 +7039,6 @@ Public Module TypeDef
         Dim id As Short
     End Structure
 
-    Public Declare Function EndDialog Lib "user32" (hDlg As Integer, nResult As Integer) As Integer
-    Public Declare Function GetDlgItem Lib "user32" (hDlg As Integer, nIDDlgItem As Integer) As Integer
-    Public Declare Function SetDlgItemInt Lib "user32" (hDlg As Integer, nIDDlgItem As Integer, wValue As Integer, bSigned As Integer) As Integer
-    Public Declare Function GetDlgItemInt Lib "user32" (hDlg As Integer, nIDDlgItem As Integer, lpTranslated As Integer, bSigned As Integer) As Integer
-    Public Declare Function SetDlgItemText Lib "user32" Alias "SetDlgItemTextA" (hDlg As Integer, nIDDlgItem As Integer, lpString As String) As Integer
-    Public Declare Function GetDlgItemText Lib "user32" Alias "GetDlgItemTextA" (hDlg As Integer, nIDDlgItem As Integer, lpString As String, nMaxCount As Integer) As Integer
-    Public Declare Function CheckDlgButton Lib "user32" Alias "CheckDLGButtonA" (hDlg As Integer, nIDButton As Integer, wCheck As Integer) As Integer
-    Public Declare Function CheckRadioButton Lib "user32" Alias "CheckRadioButtonA" (hDlg As Integer, nIDFirstButton As Integer, nIDLastButton As Integer, nIDCheckButton As Integer) As Integer
-    Public Declare Function IsDlgButtonChecked Lib "user32" (hDlg As Integer, nIDButton As Integer) As Integer
-    Public Declare Function SendDlgItemMessage Lib "user32" Alias "SendDlgItemMessageA" (hDlg As Integer, nIDDlgItem As Integer, wMsg As Integer, wParam As Integer, lParam As Integer) As Integer
-    Public Declare Function GetNextDlgGroupItem Lib "user32" (hDlg As Integer, hCtl As Integer, bPrevious As Integer) As Integer
-    Public Declare Function GetNextDlgTabItem Lib "user32" (hDlg As Integer, hCtl As Integer, bPrevious As Integer) As Integer
-    Public Declare Function GetDlgCtrlID Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function GetDialogBaseUnits Lib "user32" () As Integer
-    Public Declare Function DefDlgProc Lib "user32" Alias "DefDlgProcA" (hDlg As Integer, wMsg As Integer, wParam As Integer, lParam As Integer) As Integer
-
-    Public Const DLGWINDOWEXTRA As Short = 30 '  Window extra bytes needed for private dialog classes
-
-    'UPGRADE_WARNING: ?? Msg ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function CallMsgFilter Lib "user32" Alias "CallMsgFilterA" (ByRef lpMsg As Msg, nCode As Integer) As Integer
-
-    ' Clipboard Manager Functions
-    Public Declare Function OpenClipboard Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function CloseClipboard Lib "user32" () As Integer
-    Public Declare Function GetClipboardOwner Lib "user32" () As Integer
-    Public Declare Function SetClipboardViewer Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function GetClipboardViewer Lib "user32" () As Integer
-    Public Declare Function ChangeClipboardChain Lib "user32" (hWnd As Integer, hWndNext As Integer) As Integer
-    Public Declare Function SetClipboardData Lib "user32" Alias "SetClipboardDataA" (wFormat As Integer, hMem As Integer) As Integer
-    Public Declare Function GetClipboardData Lib "user32" Alias "GetClipboardDataA" (wFormat As Integer) As Integer
-    Public Declare Function RegisterClipboardFormat Lib "user32" Alias "RegisterClipboardFormatA" (lpString As String) As Integer
-    Public Declare Function CountClipboardFormats Lib "user32" () As Integer
-    Public Declare Function EnumClipboardFormats Lib "user32" (wFormat As Integer) As Integer
-    Public Declare Function GetClipboardFormatName Lib "user32" Alias "GetClipboardFormatNameA" (wFormat As Integer, lpString As String, nMaxCount As Integer) As Integer
-    Public Declare Function EmptyClipboard Lib "user32" () As Integer
-    Public Declare Function IsClipboardFormatAvailable Lib "user32" (wFormat As Integer) As Integer
-    Public Declare Function GetPriorityClipboardFormat Lib "user32" (ByRef lpPriorityList As Integer, nCount As Integer) As Integer
-    Public Declare Function GetOpenClipboardWindow Lib "user32" () As Integer
-    Public Declare Function CharToOem Lib "user32" Alias "CharToOemA" (lpszSrc As String, lpszDst As String) As Integer
-    Public Declare Function OemToChar Lib "user32" Alias "OemToCharA" (lpszSrc As String, lpszDst As String) As Integer
-    Public Declare Function CharToOemBuff Lib "user32" Alias "CharToOemBuffA" (lpszSrc As String, lpszDst As String, cchDstLength As Integer) As Integer
-    Public Declare Function OemToCharBuff Lib "user32" Alias "OemToCharBuffA" (lpszSrc As String, lpszDst As String, cchDstLength As Integer) As Integer
-    Public Declare Function CharUpper Lib "user32" Alias "CharUpperA" (lpsz As String) As String
-    Public Declare Function CharUpperBuff Lib "user32" Alias "CharUpperBuffA" (lpsz As String, cchLength As Integer) As Integer
-    Public Declare Function CharLower Lib "user32" Alias "CharLowerA" (lpsz As String) As String
-    Public Declare Function CharLowerBuff Lib "user32" Alias "CharLowerBuffA" (lpsz As String, cchLength As Integer) As Integer
-    Public Declare Function CharNext Lib "user32" Alias "CharNextA" (lpsz As String) As String
-    Public Declare Function CharPrev Lib "user32" Alias "CharPrevA" (lpszStart As String, lpszCurrent As String) As String
-
-    ' Language dependent Routines
-    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
-    Public Declare Function IsCharAlpha Lib "user32" Alias "IsCharAlphaA" (cChar_Renamed As Byte) As Integer
-    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
-    Public Declare Function IsCharAlphaNumeric Lib "user32" Alias "IsCharAlphaNumericA" (cChar_Renamed As Byte) As Integer
-    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
-    Public Declare Function IsCharUpper Lib "user32" Alias "IsCharUpperA" (cChar_Renamed As Byte) As Integer
-    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
-    Public Declare Function IsCharLower Lib "user32" Alias "IsCharLowerA" (cChar_Renamed As Byte) As Integer
-
-    Public Declare Function SetFocus Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function GetFocus Lib "user32" () As Integer
-    Public Declare Function GetActiveWindow Lib "user32" () As Integer
-
-    ' Keyboard Information Routines
-    Public Declare Function GetKBCodePage Lib "user32" () As Integer
-    Public Declare Function GetKeyState Lib "user32" (nVirtKey As Integer) As Short
-    Public Declare Function GetAsyncKeyState Lib "user32" (vKey As Integer) As Short
-    Public Declare Function GetKeyboardState Lib "user32" (ByRef pbKeyState As Byte) As Integer
-    Public Declare Function SetKeyboardState Lib "user32" (ByRef lppbKeyState As Byte) As Integer
-    Public Declare Function GetKeyboardType Lib "user32" (nTypeFlag As Integer) As Integer
-    Public Declare Function GetKeyNameText Lib "user32" Alias "GetKeyNameTextA" (lParam As Integer, lpBuffer As String, nSize As Integer) As Integer
-
-    Public Declare Function ToAscii Lib "user32" (uVirtKey As Integer, uScanCode As Integer, ByRef lpbKeyState As Byte, ByRef lpwTransKey As Integer, fuState As Integer) As Integer
-    Public Declare Function ToUnicode Lib "user32" (wVirtKey As Integer, wScanCode As Integer, ByRef lpKeyState As Byte, pwszBuff As String, cchBuff As Integer, wFlags As Integer) As Integer
-
-    Public Declare Function OemKeyScan Lib "user32" (wOemChar As Integer) As Integer
-    'UPGRADE_NOTE: cChar ???? cChar_Renamed? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="A9E4979A-37FA-4718-9994-97DD76ED70A7"”
-    Public Declare Function VkKeyScan Lib "user32" Alias "VkKeyScanA" (cChar_Renamed As Byte) As Short
 
     Public Const KEYEVENTF_EXTENDEDKEY As Short = &H1S
     Public Const KEYEVENTF_KEYUP As Short = &H2S
@@ -7451,17 +7053,6 @@ Public Module TypeDef
     Public Const MOUSEEVENTF_MIDDLEDOWN As Short = &H20S '  middle button down
     Public Const MOUSEEVENTF_MIDDLEUP As Short = &H40S '  middle button up
     Public Const MOUSEEVENTF_ABSOLUTE As Short = &H8000S '  absolute move
-
-    Public Declare Sub mouse_event Lib "user32" (dwFlags As Integer, dx As Integer, dy As Integer, cButtons As Integer, dwExtraInfo As Integer)
-    Public Declare Function MapVirtualKey Lib "user32" Alias "MapVirtualKeyA" (wCode As Integer, wMapType As Integer) As Integer
-
-    Public Declare Function GetInputState Lib "user32" () As Integer
-    Public Declare Function GetQueueStatus Lib "user32" (fuFlags As Integer) As Integer
-    Public Declare Function GetCapture Lib "user32" () As Integer
-    Public Declare Function SetCapture Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function ReleaseCapture Lib "user32" () As Integer
-
-    Public Declare Function MsgWaitForMultipleObjects Lib "user32" (nCount As Integer, ByRef pHandles As Integer, fWaitAll As Integer, dwMilliseconds As Integer, dwWakeMask As Integer) As Integer
 
     ' GetQueueStatus flags
     Public Const QS_KEY As Short = &H1S
@@ -7480,23 +7071,6 @@ Public Module TypeDef
     Public Const QS_ALLEVENTS As Boolean = (QS_INPUT Or QS_POSTMESSAGE Or QS_TIMER Or QS_PAINT Or QS_HOTKEY)
 
     Public Const QS_ALLINPUT As Boolean = (QS_SENDMESSAGE Or QS_PAINT Or QS_TIMER Or QS_POSTMESSAGE Or QS_MOUSEBUTTON Or QS_MOUSEMOVE Or QS_HOTKEY Or QS_KEY)
-
-    ' Windows Functions
-    Public Declare Function KillTimer Lib "user32" (hWnd As Integer, nIDEvent As Integer) As Integer
-
-    Public Declare Function IsWindowUnicode Lib "user32" (hWnd As Integer) As Integer
-
-    Public Declare Function EnableWindow Lib "user32" (hWnd As Integer, fEnable As Integer) As Integer
-    Public Declare Function IsWindowEnabled Lib "user32" (hWnd As Integer) As Integer
-
-    Public Declare Function LoadAccelerators Lib "user32" Alias "LoadAcceleratorsA" (hInstance As Integer, lpTableName As String) As Integer
-    'UPGRADE_WARNING: ?? ACCEL ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function CreateAcceleratorTable Lib "user32" Alias "CreateAcceleratorTableA" (ByRef lpaccl As ACCEL, cEntries As Integer) As Integer
-    Public Declare Function DestroyAcceleratorTable Lib "user32" (haccel As Integer) As Integer
-    'UPGRADE_WARNING: ?? ACCEL ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function CopyAcceleratorTable Lib "user32" Alias "CopyAcceleratorTableA" (hAccelSrc As Integer, ByRef lpAccelDst As ACCEL, cAccelEntries As Integer) As Integer
-    'UPGRADE_WARNING: ?? Msg ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function TranslateAccelerator Lib "user32" Alias "TranslateAcceleratorA" (hWnd As Integer, hAccTable As Integer, ByRef lpMsg As Msg) As Integer
 
     ' GetSystemMetrics() codes
     Public Const SM_CXSCREEN As Short = 0
@@ -7548,39 +7122,6 @@ Public Module TypeDef
     Public Const SM_CYSIZEFRAME As Short = SM_CYFRAME
     Public Const SM_CXFIXEDFRAME As Short = SM_CXDLGFRAME
     Public Const SM_CYFIXEDFRAME As Short = SM_CYDLGFRAME
-
-    Public Declare Function GetSystemMetrics Lib "user32" (nIndex As Integer) As Integer
-
-    Public Declare Function LoadMenu Lib "user32" Alias "LoadMenuA" (hInstance As Integer, lpString As String) As Integer
-    Public Declare Function LoadMenuIndirect Lib "user32" Alias "LoadMenuIndirectA" (lpMenuTemplate As Integer) As Integer
-    Public Declare Function GetMenu Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function SetMenu Lib "user32" (hWnd As Integer, hMenu As Integer) As Integer
-    Public Declare Function HiliteMenuItem Lib "user32" (hWnd As Integer, hMenu As Integer, wIDHiliteItem As Integer, wHilite As Integer) As Integer
-    Public Declare Function GetMenuString Lib "user32" Alias "GetMenuStringA" (hMenu As Integer, wIDItem As Integer, lpString As String, nMaxCount As Integer, wFlag As Integer) As Integer
-    Public Declare Function GetMenuState Lib "user32" (hMenu As Integer, wID As Integer, wFlags As Integer) As Integer
-    Public Declare Function DrawMenuBar Lib "user32" (hWnd As Integer) As Integer
-    Public Declare Function GetSystemMenu Lib "user32" (hWnd As Integer, bRevert As Integer) As Integer
-    Public Declare Function CreateMenu Lib "user32" () As Integer
-    Public Declare Function CreatePopupMenu Lib "user32" () As Integer
-    Public Declare Function DestroyMenu Lib "user32" (hMenu As Integer) As Integer
-    Public Declare Function CheckMenuItem Lib "user32" (hMenu As Integer, wIDCheckItem As Integer, wCheck As Integer) As Integer
-    Public Declare Function EnableMenuItem Lib "user32" (hMenu As Integer, wIDEnableItem As Integer, wEnable As Integer) As Integer
-    Public Declare Function GetSubMenu Lib "user32" (hMenu As Integer, nPos As Integer) As Integer
-    Public Declare Function GetMenuItemID Lib "user32" (hMenu As Integer, nPos As Integer) As Integer
-    Public Declare Function GetMenuItemCount Lib "user32" (hMenu As Integer) As Integer
-
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function InsertMenu Lib "user32" Alias "InsertMenuA" (hMenu As Integer, nPosition As Integer, wFlags As Integer, wIDNewItem As Integer, lpNewItem As Object) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function AppendMenu Lib "user32" Alias "AppendMenuA" (hMenu As Integer, wFlags As Integer, wIDNewItem As Integer, lpNewItem As Object) As Integer
-    'UPGRADE_ISSUE: ?????????“As Object”? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"”
-    Public Declare Function ModifyMenu Lib "user32" Alias "ModifyMenuA" (hMenu As Integer, nPosition As Integer, wFlags As Integer, wIDNewItem As Integer, lpString As Object) As Integer
-    Public Declare Function RemoveMenu Lib "user32" (hMenu As Integer, nPosition As Integer, wFlags As Integer) As Integer
-    Public Declare Function DeleteMenu Lib "user32" (hMenu As Integer, nPosition As Integer, wFlags As Integer) As Integer
-    Public Declare Function SetMenuItemBitmaps Lib "user32" (hMenu As Integer, nPosition As Integer, wFlags As Integer, hBitmapUnchecked As Integer, hBitmapChecked As Integer) As Integer
-    Public Declare Function GetMenuCheckMarkDimensions Lib "user32" () As Integer
-    'UPGRADE_WARNING: ?? RECT ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
-    Public Declare Function TrackPopupMenu Lib "user32" (hMenu As Integer, wFlags As Integer, X As Integer, Y As Integer, nReserved As Integer, hWnd As Integer, ByRef lprc As RECT) As Integer
 
     ' Flags for TrackPopupMenu
     Public Const TPM_LEFTBUTTON As Integer = &H0

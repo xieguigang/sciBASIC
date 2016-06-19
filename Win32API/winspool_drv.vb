@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("winspool.drv")>
 Public Module winspool_drv
 
+    'UPGRADE_WARNING: ?? DEVMODE ????????????? Public Declare ????????? ?????????:“ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?keyword="C429C3A5-5D47-4CD9-8F51-74A1616405DC"”
+    Public Declare Function DeviceCapabilities Lib "winspool.drv" Alias "DeviceCapabilitiesA" (lpDeviceName As String, lpPort As String, iIndex As Integer, lpOutput As String, ByRef lpDevMode As DEVMODE) As Integer
+
     Public Declare Function DeletePrinter Lib "winspool.drv" (hPrinter As Integer) As Integer
 
     Public Declare Function FindClosePrinterChangeNotification Lib "winspool.drv" (hChange As Integer) As Integer

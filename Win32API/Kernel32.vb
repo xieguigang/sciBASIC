@@ -206,4 +206,7 @@ Public Module Kernel32
     Public Declare Function MoveFile Lib "kernel32" Alias "MoveFileA" (lpExistingFileName As String, lpNewFileName As String) As Integer
     Public Declare Function MoveFileEx Lib "kernel32" Alias "MoveFileExA" (lpExistingFileName As String, lpNewFileName As String, dwFlags As Integer) As Integer
 
+
+    Public Declare Function GetProcAddress Lib "kernel32" (hModule As Integer, lpProcName As String) As Integer
+
 End Module
