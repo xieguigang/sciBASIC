@@ -238,7 +238,7 @@ Public Module VBMathExtensions
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("STD", Info:="Standard Deviation")>
-    <Extension> Public Function STD(values As Generic.IEnumerable(Of Single)) As Double
+    <Extension> Public Function STD(values As IEnumerable(Of Single)) As Double
         Dim Avg As Double = values.Average
         Dim LQuery = (From n In values Select (n - Avg) ^ 2).ToArray
         Return System.Math.Sqrt(LQuery.Sum / values.Count)
@@ -252,13 +252,13 @@ Public Module VBMathExtensions
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-    <Extension> Public Function EuclideanDistance(Vector As Generic.IEnumerable(Of Double)) As Double
-        Return Math.Sqrt((From n In Vector Select n ^ 2).ToArray.Sum)
+    <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Double)) As Double
+        Return Math.Sqrt((From n In Vector Select n ^ 2).Sum)
     End Function
 
     <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-    <Extension> Public Function EuclideanDistance(Vector As Generic.IEnumerable(Of Integer)) As Double
-        Return Math.Sqrt((From n In Vector Select n ^ 2).ToArray.Sum)
+    <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
+        Return Math.Sqrt((From n In Vector Select n ^ 2).Sum)
     End Function
 
     <ExportAPI("Euclidean", Info:="Euclidean Distance")>
@@ -266,7 +266,7 @@ Public Module VBMathExtensions
         If a.Count <> b.Count Then
             Return -1
         Else
-            Return Math.Sqrt((From i As Integer In a.Sequence.AsParallel Select (a(i) - b(i)) ^ 2).ToArray.Sum)
+            Return Math.Sqrt((From i As Integer In a.Sequence.AsParallel Select (a(i) - b(i)) ^ 2).Sum)
         End If
     End Function
 
@@ -342,7 +342,7 @@ Public Module VBMathExtensions
     ''' 
     <ExportAPI("RMS", Info:="Root mean square")>
     <Extension> Public Function RMS(data As Generic.IEnumerable(Of Double)) As Double
-        Dim LQuery = (From n In data.AsParallel Select n ^ 2).ToArray.Sum
+        Dim LQuery = (From n In data.AsParallel Select n ^ 2).Sum
         Return Math.Sqrt(LQuery / data.Count)
     End Function
 
