@@ -19,6 +19,7 @@ Namespace Parallel
             Dim i As Integer
 
             TimeOut = TimeOut * 1000
+            invoke.Start()
 
             Do While i < TimeOut
                 If invoke.TaskComplete Then

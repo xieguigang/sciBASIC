@@ -2043,8 +2043,6 @@ Public Module Extensions
 
     ''' <summary>
     ''' This object collection is a null object or contains zero count items.
-    ''' NOTE: Do not applied this function on the Linq Expression due to the performance issue.
-    ''' (判断某一个对象集合是否为空，请注意，由于在这里是使用了集合的Count进行判断是否有元素，所以这个函数可能不是太适合用于Linq的非立即查询)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
