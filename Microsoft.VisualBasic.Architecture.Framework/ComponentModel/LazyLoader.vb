@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel
+﻿Imports Microsoft.VisualBasic.Serialization
+
+Namespace ComponentModel
 
     ''' <summary>
     ''' 当所需要进行加载的数据的量非常大的时候，则可以使用本方法进行延时按需加载
@@ -90,11 +92,25 @@
         End Operator
     End Class
 
+    ''' <summary>
+    ''' The layze loader.
+    ''' </summary>
+    ''' <typeparam name="TOut"></typeparam>
     Public Class Lazy(Of TOut)
 
+        ''' <summary>
+        ''' the data source handler.
+        ''' </summary>
         Protected _dataTask As Func(Of TOut)
+        ''' <summary>
+        ''' The output result cache data.
+        ''' </summary>
         Protected _outCache As TOut
 
+        ''' <summary>
+        ''' Get cache data if it exists, or the data will be loaded first.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Value As TOut
             Get
                 If _outCache Is Nothing Then
@@ -109,6 +125,10 @@
             Me._outCache = value
         End Sub
 
+        ''' <summary>
+        ''' Init this lazy loader with the data source handler.
+        ''' </summary>
+        ''' <param name="Source">the data source handler.</param>
         Sub New(Source As Func(Of TOut))
             _dataTask = Source
         End Sub
@@ -117,7 +137,7 @@
             If _outCache Is Nothing Then
                 Return GetType(TOut).FullName
             Else
-                Return _outCache.ToString
+                Return _outCache.GetJson
             End If
         End Function
     End Class

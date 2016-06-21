@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Parallel.Tasks
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Parallel
 
@@ -14,11 +15,14 @@ Namespace Parallel
         ''' <param name="TimeOut">The time unit of this parameter is second.(单位为秒)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <Extension>
         Public Function OperationTimeOut(Of T, TOut)(handle As Func(Of T, TOut), [In] As T, ByRef Out As TOut, TimeOut As Double) As Boolean
             Dim invoke As New __backgroundTask(Of TOut)(Function() handle([In]))
             Dim i As Integer
 
             TimeOut = TimeOut * 1000
+            invoke.Start()
 
             Do While i < TimeOut
                 If invoke.TaskComplete Then
@@ -43,6 +47,8 @@ Namespace Parallel
         ''' <param name="Out"></param>
         ''' <param name="TimeOut">The time unit of this parameter is second.(单位为秒)</param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function OperationTimeOut(Of T)(handle As Func(Of T), ByRef Out As T, TimeOut As Double) As Boolean
             Return OperationTimeOut(Of Boolean, T)(Function(b) handle(), True, Out, TimeOut)
         End Function
@@ -53,6 +59,8 @@ Namespace Parallel
         ''' <param name="handle"></param>
         ''' <param name="TimeOut">The time unit of this parameter is second.(单位为秒)</param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function OperationTimeOut(handle As Action, TimeOut As Double) As Boolean
             Dim invoke As Func(Of Boolean, Boolean) =
                 Function(b) As Boolean

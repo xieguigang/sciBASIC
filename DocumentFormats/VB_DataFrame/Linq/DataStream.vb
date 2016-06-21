@@ -115,14 +115,19 @@ Namespace DocumentStream.Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="invoke">task of this block buffer</param>
         ''' <param name="blockSize">Lines of the data source.(行数)</param>
+        ''' <remarks>
+        ''' 2016.06.19  代码已经经过测试，没有数据遗漏的bug，请放心使用
+        ''' </remarks>
         Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型
+            Dim schema As SchemaProvider =
+                SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型
             Dim RowBuilder As New RowBuilder(schema)
 
             Call RowBuilder.Indexof(Me)
 
             Do While True
-                Dim chunks As IEnumerable(Of String()) = TaskPartitions.SplitIterator(BufferProvider(), blockSize)
+                Dim chunks As IEnumerable(Of String()) =
+                    TaskPartitions.SplitIterator(BufferProvider(), blockSize)
 
                 For Each block As String() In chunks
                     Dim LQuery As RowObject() = (From line As String
@@ -140,6 +145,7 @@ Namespace DocumentStream.Linq
                 Next
 
                 If EndRead Then
+
                     Exit Do
                 Else
                     Call Console.WriteLine("Process next block....")
@@ -205,8 +211,12 @@ Namespace DocumentStream.Linq
         ''' <param name="file">*.csv data file.</param>
         ''' <param name="encoding">The text encoding. default is using <see cref="Encodings.Default"/></param>
         ''' <returns></returns>
-        Public Shared Function OpenHandle(file As String, Optional encoding As Encoding = Nothing) As DataStream
-            Return New DataStream(file, encoding)
+        Public Shared Function OpenHandle(
+                               file As String,
+                      Optional encoding As Encoding = Nothing,
+                      Optional bufSize As Integer = 64 * 1024 * 1024) As DataStream
+
+            Return New DataStream(file, encoding, bufSize)
         End Function
 
 #Region "IDisposable Support"

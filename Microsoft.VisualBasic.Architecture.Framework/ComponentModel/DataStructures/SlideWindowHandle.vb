@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataStructures
 
@@ -56,7 +57,7 @@ Namespace ComponentModel.DataStructures
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"{p} --> {String.Join(", ", Elements.ToArray(Function(obj) obj.ToString))}"
+            Return $"{p} --> {Elements.GetJson}"
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
@@ -92,16 +93,17 @@ Namespace ComponentModel.DataStructures
         <Extension> Public Function CreateSlideWindows(Of T)(
                                     data As IEnumerable(Of T),
                                     slideWindowSize As Integer,
-                                    Optional offset As Integer = 1,
-                                    Optional extTails As Boolean = False) As SlideWindowHandle(Of T)()
+                           Optional offset As Integer = 1,
+                           Optional extTails As Boolean = False) As SlideWindowHandle(Of T)()
 
-            Dim n As Integer = data.Count
+            Dim tmp As List(Of T) = data.ToList
+            Dim n As Integer = tmp.Count
 
             If slideWindowSize >= n Then
                 Return {
                     New SlideWindowHandle(Of T)() With {
                         .Left = 0,
-                        .Elements = data.ToArray
+                        .Elements = tmp.ToArray
                     }
                 }
             End If
@@ -111,7 +113,6 @@ Namespace ComponentModel.DataStructures
                 offset = 1
             End If
 
-            Dim tmp As List(Of T) = data.ToList
             Dim list As New List(Of SlideWindowHandle(Of T))
             Dim p As Integer = 0
 
