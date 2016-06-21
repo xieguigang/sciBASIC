@@ -1,11 +1,12 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
 ''' 一个结果条目
 ''' </summary>
-Public Class WebResult : Inherits Microsoft.VisualBasic.WebResult
+Public Class WebResult : Inherits Http.WebResult
 
     Public Shared Function TryParse(html As String) As WebResult
         Dim tokens As String() = Strings.Split(html, "</h2>", -1, CompareMethod.Text)

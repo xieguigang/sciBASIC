@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Web
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.InputHandler
 
@@ -36,7 +37,7 @@ Public Module QueryBuilder
 
             If Not o Is Nothing Then
                 s = Scripting.ToString(o)
-                Call value.Add(prop.Key.Name, s)
+                Call value.Add(prop.Key, s)
             End If
         Next
 
