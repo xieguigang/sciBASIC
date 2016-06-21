@@ -116,11 +116,20 @@ Namespace Language
             Return a.GreaterThan(b) OrElse Equals(a, b)
         End Function
 
+        ''' <summary>
+        ''' <see cref="Random"/> get next integer in the specific range <paramref name="max"/>
+        ''' </summary>
+        ''' <param name="rnd"></param>
+        ''' <param name="max"></param>
+        ''' <returns></returns>
         <Extension> Public Function NextInteger(rnd As Random, max As Integer) As Int
             Return New Int(rnd.Next(max))
         End Function
     End Module
 
+    ''' <summary>
+    ''' Alias of <see cref="Int32"/>
+    ''' </summary>
     Public Structure Int : Implements IComparable
 
         Dim value As Integer
@@ -133,6 +142,11 @@ Namespace Language
             Return value
         End Function
 
+        ''' <summary>
+        ''' Compare <see cref="Int"/> or <see cref="Int32"/>
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
             Dim type As Type = obj.GetType
 
