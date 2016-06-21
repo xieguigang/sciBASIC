@@ -115,10 +115,14 @@ Namespace ComponentModel
                     Call Array.ConstrainedCopy(lefts, Scan0, buffer, Scan0, lefts.Length)
 
                     Dim s As String = __encoding.GetString(buffer)
-                    Dim sbuf As String() = s.lTokens
+                    Dim sbuf As String() = s.lTokens()
 
                     If Not EndRead Then
                         Dim last As String = sbuf.Last
+                        Dim lch As Char = s.Last
+                        If lch = vbLf OrElse lch = vbCr Then
+                            last &= vbCrLf  ' 由于ltokens会替换掉换行符，可能会导致bug，所以在这里进行判断，尝试进行补齐操作
+                        End If
                         lefts = __encoding.GetBytes(last)
                         sbuf = sbuf.Take(sbuf.Length - 1).ToArray
                     End If

@@ -1183,12 +1183,11 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
-        Dim list As List(Of T) = New List(Of T)
+        Dim list As New List(Of T)
 
-        For Each Line As IEnumerable(Of T) In source
-
-            If Not Line.IsNullOrEmpty Then
-                Call list.AddRange(collection:=Line)
+        For Each line As IEnumerable(Of T) In source
+            If Not line Is Nothing Then
+                Call list.AddRange(collection:=line)
             End If
         Next
 
@@ -2044,15 +2043,29 @@ Public Module Extensions
 
     ''' <summary>
     ''' This object collection is a null object or contains zero count items.
-    ''' NOTE: Do not applied this function on the Linq Expression due to the performance issue.
-    ''' (判断某一个对象集合是否为空，请注意，由于在这里是使用了集合的Count进行判断是否有元素，所以这个函数可能不是太适合用于Linq的非立即查询)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
-        Return source Is Nothing OrElse source.Count = 0
+        If source Is Nothing Then Return True
+
+        Dim i As Integer = -1
+
+        For Each x As T In source
+            i += 1   ' 假若是存在元素的，则i的值会为零
+            Return False  ' If is not empty, then this For loop will be used.
+        Next
+
+        ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
+        If i = -1 Then ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，主需要查看第一个元素而不是便利整个Linq查询枚举，从而提高了效率
+            Return True  ' Due to the reason of source is empty, no elements, so that i value is not changed as the For loop didn't used.
+        Else
+            Return False
+        End If
+
+        Return False
     End Function
 
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean

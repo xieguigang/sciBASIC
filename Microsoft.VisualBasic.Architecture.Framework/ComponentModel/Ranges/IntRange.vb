@@ -43,6 +43,12 @@ Namespace ComponentModel.Ranges
             Me.Max = max
         End Sub
 
+        Sub New(source As IEnumerable(Of Integer))
+            Dim array As Integer() = source.ToArray
+            Me.Min = array.Min
+            Me.Max = array.Max
+        End Sub
+
         Sub New()
         End Sub
 

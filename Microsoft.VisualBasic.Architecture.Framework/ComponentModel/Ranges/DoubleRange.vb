@@ -43,6 +43,10 @@ Namespace ComponentModel.Ranges
             Me.Max = max
         End Sub
 
+        Sub New(data As Double())
+            Call Me.New(data.Min, data.Max)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

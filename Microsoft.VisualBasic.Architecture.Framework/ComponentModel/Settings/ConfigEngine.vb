@@ -33,7 +33,7 @@ Namespace ComponentModel.Settings
             End Get
         End Property
 
-        Protected Friend Overrides Property FilePath As String
+        Public Overrides Property FilePath As String
             Get
                 Return _SettingsData.FilePath
             End Get
