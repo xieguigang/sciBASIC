@@ -53,7 +53,7 @@ Namespace Windows.Forms
                 Return
             End Try
 
-            Application.[Exit]()
+            Call App.Exit()
         End Sub
     End Module
 End Namespace

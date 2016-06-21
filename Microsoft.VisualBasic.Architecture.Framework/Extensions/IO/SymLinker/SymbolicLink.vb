@@ -5,6 +5,10 @@ Imports System.Text
 
 Namespace FileIO.SymLinker
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>https://github.com/amd989/Symlinker</remarks>
     Public Module SymbolicLink
 
         Private Const genericReadAccess As UInteger = &H80000000UI

@@ -13,6 +13,7 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
 '                   _ooOoo_
 '                  o8888888o
@@ -410,6 +411,7 @@ Public Module App
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
+
         Return state
     End Function
 
@@ -799,4 +801,10 @@ Public Module App
     End Sub
 #End Region
 
+    ''' <summary>
+    ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
+    ''' </summary>
+    Public Sub RunAsAdmin()
+        Call RestartElevated()
+    End Sub
 End Module
