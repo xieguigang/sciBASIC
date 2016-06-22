@@ -1,8 +1,25 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.SecurityString
 
 Namespace Language
+
+    Public Module ClassAPI
+
+        ''' <summary>
+        ''' Example of the extension property in VisualBasic
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
+            Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
+        End Function
+    End Module
 
     ''' <summary>
     ''' The base class object in VisualBasic
@@ -23,6 +40,16 @@ Namespace Language
         ''' class from being treated as simpleContent. I know it's a dirty workaround, but I see no other easy way...
         ''' </remarks>
         <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
+
+        ''' <summary>
+        ''' Get dynamics property value.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Function ReadProperty(Of T)(name As String) As PropertyValue(Of T)
+            Return PropertyValue(Of T).Read(Me, name)
+        End Function
 
         ''' <summary>
         ''' Default is display the json value of the object class
