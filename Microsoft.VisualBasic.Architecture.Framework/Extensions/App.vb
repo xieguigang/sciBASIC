@@ -411,6 +411,7 @@ Public Module App
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
+        Call Terminal.InnerQueue.WaitQueue()
 
         Return state
     End Function

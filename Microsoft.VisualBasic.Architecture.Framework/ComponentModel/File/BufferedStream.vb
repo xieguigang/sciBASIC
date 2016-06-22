@@ -95,6 +95,10 @@ Namespace ComponentModel
 
         Dim l As Integer
 
+        ''' <summary>
+        ''' 当<see cref="EndRead"/>之后，这个函数将不会返回任何值
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function BufferProvider() As String()
             If EndRead Then
                 Return Nothing
