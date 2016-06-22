@@ -9,16 +9,16 @@ Namespace Language
 
     Public Module ClassAPI
 
+        ''' <summary>
+        ''' Example of the extension property in VisualBasic
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
             Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
         End Function
-
-        Private Sub test()
-            Dim x As New ClassObject
-            Dim n As Long = x.Uid
-            x.Uid.Value = n
-        End Sub
     End Module
 
     ''' <summary>
@@ -40,6 +40,16 @@ Namespace Language
         ''' class from being treated as simpleContent. I know it's a dirty workaround, but I see no other easy way...
         ''' </remarks>
         <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
+
+        ''' <summary>
+        ''' Get dynamics property value.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Function ReadProperty(Of T)(name As String) As PropertyValue(Of T)
+            Return PropertyValue(Of T).Read(Me, name)
+        End Function
 
         ''' <summary>
         ''' Default is display the json value of the object class

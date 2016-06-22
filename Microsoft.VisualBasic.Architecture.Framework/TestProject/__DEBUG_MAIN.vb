@@ -11,10 +11,29 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Extensions
 
 Module __DEBUG_MAIN
 
+    Private Sub testProperty()
+        Dim x As New ClassObject
+        Dim n As Long = x.Uid
+
+        Call n.__DEBUG_ECHO
+
+        x.Uid.Value = RandomDouble() * 1000000000000L
+
+        Call x.Uid.__DEBUG_ECHO
+
+
+        Pause()
+    End Sub
+
+
     Function Main(args As String()) As Integer
+
+        Call testProperty()
 
         Call VBDebugger.Warning("ddddddddd")
         Call VBDebugger.PrintException("123123123", MethodBase.GetCurrentMethod.GetFullName)
