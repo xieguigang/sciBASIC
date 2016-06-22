@@ -232,6 +232,13 @@ Namespace Terminal.STDIO__
 
 #End Region
 #Region "sprintf"
+
+        ''' <summary>
+        ''' Format string like C
+        ''' </summary>
+        ''' <param name="Format"></param>
+        ''' <param name="Parameters"></param>
+        ''' <returns></returns>
         Public Function sprintf(Format As String, ParamArray Parameters As Object()) As String
             '#Region "Variables"
             Dim f As New StringBuilder()

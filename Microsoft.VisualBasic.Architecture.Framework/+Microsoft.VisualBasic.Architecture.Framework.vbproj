@@ -353,6 +353,9 @@
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
+    <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
+    <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
+    <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
@@ -382,7 +385,7 @@
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
-    <Compile Include="Tools\Directory.vb" />
+    <Compile Include="Extensions\IO\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
@@ -394,6 +397,7 @@
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
+    <Compile Include="Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
