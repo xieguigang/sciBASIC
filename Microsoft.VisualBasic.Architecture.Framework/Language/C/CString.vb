@@ -6,6 +6,8 @@
 '	which don't have exact equivalents in the .NET Framework.
 '----------------------------------------------------------------------------------------
 
+Imports System.Runtime.CompilerServices
+
 Namespace Language.C
 
     ''' <summary>
@@ -22,6 +24,8 @@ Namespace Language.C
         ''' <param name="charindex"></param>
         ''' <param name="changechar"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function ChangeCharacter(sourcestring As String, charindex As Integer, changechar As Char) As String
             Return (If(charindex > 0, sourcestring.Substring(0, charindex), "")) & changechar.ToString() & (If(charindex < sourcestring.Length - 1, sourcestring.Substring(charindex + 1), ""))
         End Function
@@ -31,6 +35,8 @@ Namespace Language.C
         ''' </summary>
         ''' <param name="character"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function IsXDigit(character As Char) As Boolean
             If Char.IsDigit(character) Then
                 Return True
@@ -47,6 +53,8 @@ Namespace Language.C
         ''' <param name="stringtosearch"></param>
         ''' <param name="chartofind"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function StrChr(stringtosearch As String, chartofind As Char) As String
             Dim index As Integer = stringtosearch.IndexOf(chartofind)
             If index > -1 Then
@@ -62,6 +70,8 @@ Namespace Language.C
         ''' <param name="stringtosearch"></param>
         ''' <param name="chartofind"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function StrRChr(stringtosearch As String, chartofind As Char) As String
             Dim index As Integer = stringtosearch.LastIndexOf(chartofind)
             If index > -1 Then
@@ -77,6 +87,8 @@ Namespace Language.C
         ''' <param name="stringtosearch"></param>
         ''' <param name="stringtofind"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function StrStr(stringtosearch As String, stringtofind As String) As String
             Dim index As Integer = stringtosearch.IndexOf(stringtofind)
             If index > -1 Then
@@ -137,6 +149,15 @@ Namespace Language.C
             End Function
         End Structure
 
+        ''' <summary>
+        ''' This method simulates the classic C string function 'strtok' (and 'wcstok').
+        ''' Note that the .NET string 'Split' method cannot be used to simulate 'strtok' since
+        ''' it doesn't allow changing the delimiters between each token retrieval.
+        ''' </summary>
+        ''' <param name="stringtotokenize"></param>
+        ''' <param name="delimiters"></param>
+        ''' <returns></returns>
+        <Extension>
         Public Function StrTok(stringtotokenize As String, delimiters As String) As String
             Return New __tokensHelper().StrTok(stringtotokenize, delimiters)
         End Function

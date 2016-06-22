@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
@@ -13,6 +14,8 @@ Namespace DocumentStream.Linq
         ''' <param name="files"></param>
         ''' <returns></returns>
         ''' <remarks>在服务器上面可能会出现IO很慢的情况，这个时候可以试一下这个函数进行批量数据加载</remarks>
+        ''' 
+        <Extension>
         Public Iterator Function ReadQueue(Of T As Class)(
                                  files As IEnumerable(Of String),
                                  Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of NamedValue(Of T()))
@@ -42,6 +45,20 @@ Namespace DocumentStream.Linq
             Next
 
             Call GC.SuppressFinalize(IO)
+        End Function
+
+        <Extension>
+        Public Iterator Function IteratesAll(Of T As Class)(
+                                 files As IEnumerable(Of String),
+                        Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of T)
+
+            Dim queue = files.ReadQueue(Of T)(encoding)
+
+            For Each data As NamedValue(Of T()) In queue
+                For Each x As T In data.x
+                    Yield x
+                Next
+            Next
         End Function
 
 #Region "How this workflow works?"
