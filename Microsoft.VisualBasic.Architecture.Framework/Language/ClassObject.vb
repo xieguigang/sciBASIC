@@ -1,8 +1,25 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.SecurityString
 
 Namespace Language
+
+    Public Module ClassAPI
+
+        <Extension>
+        Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
+            Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
+        End Function
+
+        Private Sub test()
+            Dim x As New ClassObject
+            Dim n As Long = x.Uid
+            x.Uid.Value = n
+        End Sub
+    End Module
 
     ''' <summary>
     ''' The base class object in VisualBasic

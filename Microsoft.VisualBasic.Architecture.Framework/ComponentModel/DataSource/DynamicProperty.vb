@@ -7,6 +7,73 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ComponentModel.DataSourceModel
 
+    Public Class PropertyValue(Of T) : Inherits Value(Of T)
+
+        ReadOnly __get As Func(Of T)
+        ReadOnly __set As Action(Of T)
+
+        Public Overrides Property Value As T
+            Get
+                Return __get()
+            End Get
+            Set(value As T)
+                Call __set(value)
+                MyBase.Value = value
+            End Set
+        End Property
+
+        Sub New([get] As Func(Of T), [set] As Action(Of T))
+            __get = [get]
+            __set = [set]
+        End Sub
+
+        Public Overloads Shared Narrowing Operator CType(x As PropertyValue(Of T)) As T
+            Return x.Value
+        End Operator
+
+        Public Overrides Function ToString() As String
+            Return Value.GetJson
+        End Function
+
+        Public Shared Function GetValue(Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+            Dim value As Object = x.Extension.DynamicHash(name)
+            Dim pv As PropertyValue(Of T) = DirectCast(value, PropertyValue(Of T))
+            Return pv
+        End Function
+
+        Public Shared Sub SetValue(Of Cls As ClassObject)(x As Cls, name As String, value As T)
+            Dim pvo As Object = x.Extension.DynamicHash(name)
+            Dim pv As PropertyValue(Of T) = DirectCast(pvo, PropertyValue(Of T))
+            pv.Value = value
+        End Sub
+
+        Public Shared Function [New](Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+            Dim value As New PropertyValue(Of T)(
+                   Function() PropertyValue(Of T).GetValue(Of Cls)(x, NameOf(Uid)).Value,
+                   Sub(u) Call PropertyValue(Of T).SetValue(Of Cls)(x, NameOf(Uid), u))
+            x.Extension.DynamicHash.Value(name) = value
+            Return value
+        End Function
+
+        ''' <summary>
+        ''' 读取<see cref="ClassObject"/>对象之中的一个拓展属性
+        ''' </summary>
+        ''' <typeparam name="Cls"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Shared Function Read(Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+            If x.Extension Is Nothing Then
+                x.Extension = New ExtendedProps
+            End If
+            Dim prop As Object = x.Extension.DynamicHash(name)
+            If prop Is Nothing Then
+                prop = PropertyValue(Of T).[New](Of Cls)(x, name)
+            End If
+            Return DirectCast(prop, PropertyValue(Of T))
+        End Function
+    End Class
+
     Public Interface IDynamicMeta(Of T)
 
         Property Properties As Dictionary(Of String, T)
