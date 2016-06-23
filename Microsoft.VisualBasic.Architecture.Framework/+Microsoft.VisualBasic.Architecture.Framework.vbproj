@@ -716,7 +716,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Serialization\SchemaProvider\" />

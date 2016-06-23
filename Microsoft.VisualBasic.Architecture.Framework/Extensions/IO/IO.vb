@@ -26,6 +26,11 @@ Public Module IOExtensions
         Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
 
+    ''' <summary>
+    ''' <see cref="IO.File.ReadAllBytes"/>, if the file is not exists on the filesystem, then a empty array will be return.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ReadBinary(path As String) As Byte()
         If Not path.FileExists Then

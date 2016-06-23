@@ -25,6 +25,12 @@ Namespace ComponentModel.DataSourceModel
         End Property
 
         ''' <summary>
+        ''' The instance object for this extension property
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property obj As ClassObject
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="[get]">请勿使用<see cref="GetValue"/></param>函数，否则会出现栈空间溢出
@@ -41,7 +47,17 @@ Namespace ComponentModel.DataSourceModel
 			__get = Function() MyBase.Value
 			__set = Sub(v) MyBase.Value = v
 		End Sub
-		
+
+        ''' <summary>
+        ''' 这个主要是应用于Linq表达式之中，将属性值设置之后返回宿主对象实例
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function SetValue(value As T) As ClassObject
+            Call __set(value)
+            Return obj
+        End Function
+
         Public Overloads Shared Narrowing Operator CType(x As PropertyValue(Of T)) As T
             Return x.Value
         End Operator
@@ -65,6 +81,7 @@ Namespace ComponentModel.DataSourceModel
         Public Shared Function [New](Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
             Dim value As New PropertyValue(Of T)()
             x.Extension.DynamicHash.Value(name) = value
+            value.obj = x
             Return value
         End Function
 
