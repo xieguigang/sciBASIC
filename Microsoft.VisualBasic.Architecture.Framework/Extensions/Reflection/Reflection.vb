@@ -21,6 +21,7 @@ Public Module EmitReflection
     ''' </summary>
     ''' <param name="app"></param>
     ''' <param name="CLI"></param>
+    ''' <param name="cs">Going to running a c# program?</param>
     ''' <remarks>
     ''' http://www.codeproject.com/Tips/1108105/Run-external-NET-Program-from-RAM-Memory
     ''' 
@@ -29,7 +30,7 @@ Public Module EmitReflection
     ''' If you loaded the file from disk, you can delete it if you want after it has been loaded 
     ''' by a ``StreamReader()``.
     ''' </remarks>
-    Public Sub Run(app As String, Optional CLI As String = "")
+    Public Sub RunApp(app As String, Optional CLI As String = "", Optional cs As Boolean = False)
         Dim bufs As Byte() = app.GetMapPath.ReadBinary ' Works on both local file or network file. 
 
         Try
@@ -40,7 +41,8 @@ Public Module EmitReflection
                 Dim o As Object = assm.CreateInstance(method.Name)
 
                 If String.IsNullOrEmpty(CLI) Then
-                    Call method.Invoke(o, Nothing)
+                    Dim null As Object() = If(cs, {Nothing}, Nothing)
+                    Call method.Invoke(o, null)
                 Else
                     ' if your app receives parameters
                     Call method.Invoke(o, New Object() {CommandLine.GetTokens(CLI)})
@@ -51,6 +53,9 @@ Public Module EmitReflection
         Catch ex As Exception
             ex = New Exception("CLI:=" & CLI, ex)
             ex = New Exception("app:=" & app, ex)
+#If DEBUG Then
+            Call ex.PrintException
+#End If
             Throw ex
         End Try
     End Sub

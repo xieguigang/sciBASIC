@@ -127,6 +127,10 @@ Namespace ComponentModel.DataSourceModel
             End If
             Return DirectCast(prop, PropertyValue(Of T))
         End Function
+
+        Public Shared Function Read(Of Cls As ClassObject)(x As Cls, pm As MethodBase) As PropertyValue(Of T)
+            Return Read(Of Cls)(x, pm.Name)
+        End Function
     End Class
 
     ''' <summary>

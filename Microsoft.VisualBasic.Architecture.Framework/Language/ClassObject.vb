@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
@@ -18,6 +19,7 @@ Namespace Language
         <Extension>
         Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
             Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
+            Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)  ' Just copy this statement without any modification.
         End Function
     End Module
 
