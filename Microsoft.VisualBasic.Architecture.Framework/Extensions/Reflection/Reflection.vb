@@ -6,8 +6,14 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.FileIO
 
-<PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
+''' <summary>
+''' Some common used reflection operation extension at here.
+''' </summary>
+<PackageNamespace("Emit.Reflection",
+                  Category:=APICategories.SoftwareTools,
+                  Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
     ''' <summary>
@@ -24,7 +30,7 @@ Public Module EmitReflection
     ''' by a ``StreamReader()``.
     ''' </remarks>
     Public Sub Run(app As String, Optional CLI As String = "")
-        Dim bufs As Byte() = app.ReadBinary
+        Dim bufs As Byte() = app.GetMapPath.ReadBinary ' Works on both local file or network file. 
 
         Try
             Dim assm As Assembly = Assembly.Load(bufs) ' or assm = Reflection.Assembly.Load(New WebClient().DownloadData("https://...."))
