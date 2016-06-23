@@ -19,7 +19,9 @@ Namespace Language
         <Extension>
         Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
             Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
-            Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)  ' Just copy this statement without any modification.
+
+            ' Just copy this statement without any big modification. just modify the generics type constraint.
+            Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)
         End Function
     End Module
 
