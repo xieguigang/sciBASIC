@@ -1,5 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.Settings
 
@@ -30,45 +32,51 @@ Namespace ComponentModel.Settings
         ''' <param name="canWrite">从文件之中读取数据的时候，需要设置为真</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function TryParse(Of T As Class, TConfig As SimpleConfig)(canRead As Boolean, canWrite As Boolean) _
-            As KeyValuePair(Of TConfig, PropertyInfo)()
+        Public Shared Function TryParse(Of T As Class,
+                                           TConfig As SimpleConfig)(
+                                           canRead As Boolean,
+                                           canWrite As Boolean) As BindProperty(Of TConfig)()
 
-            Dim TypeInfo As System.Reflection.TypeInfo = GetType(T), ConfigType As System.Type = GetType(TConfig)
-            Dim Properties = TypeInfo.GetProperties(System.Reflection.BindingFlags.Instance Or System.Reflection.BindingFlags.Public)
-            Dim LQuery = (From [property] As System.Reflection.PropertyInfo
-                          In Properties
-                          Let attrs As Object() = [property].GetCustomAttributes(attributeType:=ConfigType, inherit:=True)
-                          Where Not attrs.IsNullOrEmpty AndAlso BasicTypesLoading.containskey([property].PropertyType)
-                          Select New KeyValuePair(Of TConfig, System.Reflection.PropertyInfo)(DirectCast(attrs.First, TConfig), [property])).ToArray
-
+            Dim type As TypeInfo = GetType(T), configType As Type = GetType(TConfig)
+            Dim Properties = type.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
+            Dim LQuery As BindProperty(Of TConfig)() =
+                LinqAPI.Exec(Of BindProperty(Of TConfig)) <= From [property] As PropertyInfo
+                                                             In Properties
+                                                             Let attrs As Object() =
+                                                                 [property].GetCustomAttributes(attributeType:=configType, inherit:=True)
+                                                             Where Not attrs.IsNullOrEmpty AndAlso
+                                                                 BasicTypesLoading.ContainsKey([property].PropertyType)
+                                                             Select New BindProperty(Of TConfig)(DirectCast(attrs.First, TConfig), [property])
             If LQuery.IsNullOrEmpty Then Return Nothing
 
-            Dim Schema As List(Of KeyValuePair(Of TConfig, System.Reflection.PropertyInfo)) =
-                New List(Of KeyValuePair(Of TConfig, PropertyInfo))
+            Dim Schema As New List(Of BindProperty(Of TConfig))
 
-            For Each Line As KeyValuePair(Of TConfig, PropertyInfo) In LQuery
-                If Line.Value.CanRead AndAlso Line.Value.CanWrite Then  '同时满足可读和可写的属性直接添加
+            For Each line As BindProperty(Of TConfig) In LQuery
+                If line.Property.CanRead AndAlso line.Property.CanWrite Then  '同时满足可读和可写的属性直接添加
                     GoTo INSERT
                 End If
 
                 '从这里开始的属性都是只读属性或者只写属性
                 If canRead = True Then
-                    If Line.Value.CanRead = False Then
+                    If line.Property.CanRead = False Then
                         Continue For
                     End If
                 End If
                 If canWrite = True Then
-                    If Line.Value.CanWrite = False Then
+                    If line.Property.CanWrite = False Then
                         Continue For
                     End If
                 End If
 INSERT:
-                If String.IsNullOrEmpty(Line.Key._Name) Then
-                    Line.Key._Name = If(Line.Key._ToLower, Line.Value.Name.ToLower, Line.Value.Name)
+                If String.IsNullOrEmpty(line.Column._Name) Then
+                    line.Column._Name =
+                        If(line.Column._ToLower,
+                        line.Identity.ToLower,
+                        line.Identity)
                 End If
 
                 ' 这里为什么会出现重复的键名？？？
-                Call Schema.Add(New KeyValuePair(Of TConfig, PropertyInfo)(Line.Key, Line.Value))
+                Schema += New BindProperty(Of TConfig)(line.Column, line.Property)
             Next
 
             Return Schema.ToArray
@@ -82,16 +90,20 @@ INSERT:
         ''' <returns></returns>
         ''' <remarks>类型实体之中的简单属性，只要具备可读属性即可被解析出来</remarks>
         Public Shared Function GenerateConfigurations(Of T As Class)(target As T) As String()
-            Dim TypeInfo As System.Type = GetType(T)
+            Dim type As Type = GetType(T)
             Dim Schema = TryParse(Of T, SimpleConfig)(canRead:=True, canWrite:=False)
-            Dim MaxLength As Integer = (From item In Schema.Keys Select Len(item._Name)).ToArray.Max
-            Dim Chunkbuffer As List(Of String) = New List(Of String)
-            For Each [property] In Schema
-                Dim Name As String = String.Format("{0}{1}", [property].Key._Name, New String(" ", MaxLength - Len([property].Key._Name) + 2))
-                Call Chunkbuffer.Add(String.Format("{0}= {1}", Name, [property].Value.GetValue(target).ToString))
+            Dim mlen As Integer = (From cfg As SimpleConfig In Schema.Select(Function(x) x.Column) Select Len(cfg._Name)).Max
+            Dim bufs As New List(Of String)
+
+            For Each [property] As BindProperty(Of SimpleConfig) In Schema
+                Dim blank As New String(" ", mlen - Len([property].Column._Name) + 2)
+                Dim Name As String = [property].Column._Name & blank
+                Dim value As String = Scripting.ToString([property].GetValue(target))
+
+                bufs += $"{Name}= {value}"
             Next
 
-            Return Chunkbuffer.ToArray
+            Return bufs.ToArray
         End Function
     End Class
 
