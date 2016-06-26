@@ -5,6 +5,7 @@ Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
@@ -62,7 +63,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Serialization.GetJson(Me, [GetType])
+            Return JsonContract.GetJson(Me, [GetType])
         End Function
 
         ''' <summary>

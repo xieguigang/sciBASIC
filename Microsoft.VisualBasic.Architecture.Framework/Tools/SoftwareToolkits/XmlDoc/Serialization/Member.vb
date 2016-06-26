@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SoftwareToolkits.XmlDoc.Serialization
 

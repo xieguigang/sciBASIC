@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Language.LinqAPIHelpers
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 

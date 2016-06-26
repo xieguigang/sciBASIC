@@ -9,6 +9,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Settings.Inf
 

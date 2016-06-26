@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Some common used reflection operation extension at here.
@@ -520,7 +521,9 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <typeparam name="T"></typeparam>
     ''' <param name="args">构造函数里面的参数信息</param>
     ''' <returns></returns>
-    Public Function CreateObject(Of T)(args As Object(), Optional throwEx As Boolean = True, <CallerMemberName> Optional caller As String = "") As T
+    Public Function CreateObject(Of T)(args As Object(),
+                                       Optional throwEx As Boolean = True,
+                                       <CallerMemberName> Optional caller As String = "") As T
         Try
             Dim obj As Object =
                 Activator.CreateInstance(GetType(T), args)

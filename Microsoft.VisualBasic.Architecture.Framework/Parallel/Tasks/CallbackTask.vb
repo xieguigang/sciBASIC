@@ -1,6 +1,7 @@
 ﻿Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Parallel.Tasks
 
