@@ -9,7 +9,7 @@ Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
-Namespace Serialization
+Namespace Serialization.JSON
 
     ''' <summary>
     ''' Only works on the Public visible type.
