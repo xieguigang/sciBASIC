@@ -12,7 +12,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Namespace Serialization
 
     ''' <summary>
-    ''' 使用.NET系统环境之中自带的框架进行JSON序列化和反序列化
+    ''' Only works on the Public visible type.
+    ''' (使用.NET系统环境之中自带的框架进行JSON序列化和反序列化)
     ''' </summary>
     <PackageNamespace("Json.Contract")>
     Public Module JsonContract
