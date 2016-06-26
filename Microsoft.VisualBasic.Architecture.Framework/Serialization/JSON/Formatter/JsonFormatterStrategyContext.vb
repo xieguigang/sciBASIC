@@ -1,13 +1,14 @@
 Imports System.Collections.Generic
 Imports System.Text
-Imports JsonFormatterPlus.Internals.Strategies
+Imports Microsoft.VisualBasic.Serialization.JSON.Formatter.Internals.Strategies
+
 Namespace Serialization.JSON.Formatter.Internals
 
     Friend NotInheritable Class JsonFormatterStrategyContext
         Private Const Space As String = " "
         Private Const SpacesPerIndent As Integer = 4
 
-        Private m_indent As String = [String].Empty
+        Private m_indent As String = String.Empty
 
         Private currentCharacter As Char
         Private previousChar As Char
@@ -20,7 +21,7 @@ Namespace Serialization.JSON.Formatter.Internals
 
         Public ReadOnly Property Indent() As String
             Get
-                If Me.m_indent = [String].Empty Then
+                If Me.m_indent = String.Empty Then
                     Me.InitializeIndent()
                 End If
 
@@ -49,23 +50,7 @@ Namespace Serialization.JSON.Formatter.Internals
 
         Public IsProcessingVariableAssignment As Boolean
         Public Property IsProcessingDoubleQuoteInitiatedString() As Boolean
-            Get
-                Return m_IsProcessingDoubleQuoteInitiatedString
-            End Get
-            Set
-                m_IsProcessingDoubleQuoteInitiatedString = Value
-            End Set
-        End Property
-        Private m_IsProcessingDoubleQuoteInitiatedString As Boolean
         Public Property IsProcessingSingleQuoteInitiatedString() As Boolean
-            Get
-                Return m_IsProcessingSingleQuoteInitiatedString
-            End Get
-            Set
-                m_IsProcessingSingleQuoteInitiatedString = Value
-            End Set
-        End Property
-        Private m_IsProcessingSingleQuoteInitiatedString As Boolean
 
         Public ReadOnly Property IsProcessingString() As Boolean
             Get

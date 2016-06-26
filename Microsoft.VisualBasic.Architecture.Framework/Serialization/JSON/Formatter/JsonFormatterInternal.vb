@@ -1,5 +1,6 @@
 Imports System.Text
-Imports JsonFormatterPlus.Internals.Strategies
+Imports Microsoft.VisualBasic.Serialization.JSON.Formatter.Internals.Strategies
+
 Namespace Serialization.JSON.Formatter.Internals
 
     Friend NotInheritable Class JsonFormatterInternal
@@ -25,11 +26,11 @@ Namespace Serialization.JSON.Formatter.Internals
 
         Public Function Format(json As String) As String
             If json Is Nothing Then
-                Return [String].Empty
+                Return String.Empty
             End If
 
-            If json.Trim() = [String].Empty Then
-                Return [String].Empty
+            If json.Trim() = String.Empty Then
+                Return String.Empty
             End If
 
             Dim input As New StringBuilder(json)

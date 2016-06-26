@@ -25,11 +25,14 @@ Namespace Serialization.JSON
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("Get.Json")>
-        Public Function GetJson(obj As Object, type As Type) As String
+        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True) As String
             Using ms As New MemoryStream()
                 Dim jsonSer As New DataContractJsonSerializer(type)
                 Call jsonSer.WriteObject(ms, obj)
                 Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
+                If indent Then
+                    json = Formatter.Format(json)
+                End If
                 Return json
             End Using
         End Function
@@ -42,8 +45,8 @@ Namespace Serialization.JSON
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetJson(Of T)(obj As T) As String
-            Return GetJson(obj, GetType(T))
+        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = True) As String
+            Return GetJson(obj, GetType(T), indent)
         End Function
 
         ''' <summary>

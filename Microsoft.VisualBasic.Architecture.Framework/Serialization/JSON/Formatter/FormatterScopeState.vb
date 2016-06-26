@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+
 Namespace Serialization.JSON.Formatter.Internals
 
     Friend NotInheritable Class FormatterScopeState

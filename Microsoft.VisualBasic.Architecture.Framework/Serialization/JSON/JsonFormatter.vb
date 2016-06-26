@@ -1,20 +1,20 @@
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Serialization.JSON.Formatter.Internals
 
 Namespace Serialization.JSON.Formatter
 
     ''' <summary>
     ''' Provides JSON formatting functionality.
     ''' </summary>
-    Public NotInheritable Class JsonFormatter
-        Private Sub New()
-        End Sub
+    Public Module JsonFormatter
+
         ''' <summary>
         ''' Returns a 'pretty printed' version of the specified JSON string, formatted for human
         ''' consumption.
         ''' </summary>
         ''' <param name="json">A valid JSON string.</param>
         ''' <returns>A 'pretty printed' version of the specified JSON string.</returns>
-        Public Shared Function Format(json As String) As String
+        Public Function Format(json As String) As String
             If json Is Nothing Then
                 Throw New ArgumentNullException("json should not be null.")
             End If
@@ -31,12 +31,12 @@ Namespace Serialization.JSON.Formatter
         ''' </summary>
         ''' <param name="json">A valid JSON string.</param>
         ''' <returns>A 'minified' version of the specified JSON string.</returns>
-        Public Shared Function Minify(json As String) As String
+        Public Function Minify(json As String) As String
             If json Is Nothing Then
                 Throw New ArgumentNullException("json should not be null.")
             End If
 
             Return Regex.Replace(json, "(""(?:[^""\\]|\\.)*"")|\s+", "$1")
         End Function
-    End Class
+    End Module
 End Namespace

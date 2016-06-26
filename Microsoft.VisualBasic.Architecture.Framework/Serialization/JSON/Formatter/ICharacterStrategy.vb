@@ -1,4 +1,5 @@
 Namespace Serialization.JSON.Formatter.Internals
+
     Friend Interface ICharacterStrategy
         Sub Execute(context As JsonFormatterStrategyContext)
 

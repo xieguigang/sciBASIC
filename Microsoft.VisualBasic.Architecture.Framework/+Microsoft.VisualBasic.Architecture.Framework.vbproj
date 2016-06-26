@@ -728,10 +728,12 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
+    <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
