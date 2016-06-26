@@ -4,7 +4,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON.Formatter.Internals.Strategies
 Namespace Serialization.JSON.Formatter.Internals
 
     Friend NotInheritable Class JsonFormatterInternal
-        Private ReadOnly context As JsonFormatterStrategyContext
+
+        ReadOnly context As JsonFormatterStrategyContext
 
         Public Sub New(context As JsonFormatterStrategyContext)
             Me.context = context

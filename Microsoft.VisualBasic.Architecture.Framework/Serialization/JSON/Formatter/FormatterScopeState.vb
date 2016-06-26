@@ -8,7 +8,7 @@ Namespace Serialization.JSON.Formatter.Internals
             Array
         End Enum
 
-        Private ReadOnly scopeStack As New Stack(Of JsonScope)()
+        ReadOnly scopeStack As New Stack(Of JsonScope)()
 
         Public ReadOnly Property IsTopTypeArray() As Boolean
             Get

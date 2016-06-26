@@ -19,8 +19,8 @@ Namespace Serialization.JSON.Formatter
                 Throw New ArgumentNullException("json should not be null.")
             End If
 
-            Dim context = New JsonFormatterStrategyContext()
-            Dim formatter = New JsonFormatterInternal(context)
+            Dim context As New JsonFormatterStrategyContext()
+            Dim formatter As New JsonFormatterInternal(context)
 
             Return formatter.Format(json)
         End Function

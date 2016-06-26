@@ -5,8 +5,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON.Formatter.Internals.Strategies
 Namespace Serialization.JSON.Formatter.Internals
 
     Friend NotInheritable Class JsonFormatterStrategyContext
-        Private Const Space As String = " "
-        Private Const SpacesPerIndent As Integer = 4
+
+        Const Space As String = " "
+        Const SpacesPerIndent As Integer = 4
 
         Private m_indent As String = String.Empty
 
