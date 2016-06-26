@@ -195,6 +195,17 @@ Namespace CommandLine.Reflection
         Public ReadOnly Property [Optional] As Boolean
 
         ''' <summary>
+        ''' Is this parameter is using for the output
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Out As Boolean = False
+        ''' <summary>
+        ''' Accept these types as input or output data in this types if <see cref="Out"/> is true.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property AcceptTypes As Type()
+
+        ''' <summary>
         ''' 对命令行之中的某一个参数进行描述性信息的创建，包括用法和含义
         ''' </summary>
         ''' <param name="Name">The name of this command line parameter switch.(该命令开关的名称)</param>

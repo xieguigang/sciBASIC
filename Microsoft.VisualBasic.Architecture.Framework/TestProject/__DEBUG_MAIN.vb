@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
-Imports System.Reflection
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
@@ -16,6 +16,7 @@ Imports Microsoft.VisualBasic.Terminal
 
 Module __DEBUG_MAIN
 
+    <ParameterInfo("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
     Private Sub TestExtensionProperty()
         Dim x As New ClassObject
         Dim n As Long = x.Uid  ' The init value is zero
@@ -35,10 +36,11 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
+        Call this.__DEBUG_ECHO
         Call TestExtensionProperty()
 
         Call VBDebugger.Warning("ddddddddd")
-        Call VBDebugger.PrintException("123123123", MethodBase.GetCurrentMethod.GetFullName)
+        Call VBDebugger.PrintException("123123123", Reflection.MethodBase.GetCurrentMethod.GetFullName)
         Call VBDebugger.__DEBUG_ECHO("sfsdddddddddddddddd")
 
         Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
