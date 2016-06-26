@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Imaging
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileStream
 

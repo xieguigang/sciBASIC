@@ -41,6 +41,7 @@ Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts
 
