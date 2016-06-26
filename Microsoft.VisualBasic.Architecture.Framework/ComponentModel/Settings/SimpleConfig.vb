@@ -45,7 +45,7 @@ Namespace ComponentModel.Settings
                                                              Let attrs As Object() =
                                                                  [property].GetCustomAttributes(attributeType:=configType, inherit:=True)
                                                              Where Not attrs.IsNullOrEmpty AndAlso
-                                                                 BasicTypesLoading.ContainsKey([property].PropertyType)
+                                                                 PrimitiveFromString.ContainsKey([property].PropertyType)
                                                              Select New BindProperty(Of TConfig)(DirectCast(attrs.First, TConfig), [property])
             If LQuery.IsNullOrEmpty Then Return Nothing
 

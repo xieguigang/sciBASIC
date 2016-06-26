@@ -366,6 +366,7 @@
     <Compile Include="Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
+    <Compile Include="Scripting\Actives.vb" />
     <Compile Include="Scripting\Where.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />

@@ -5,7 +5,15 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
 
+    ''' <summary>
+    ''' Driver abstract model
+    ''' </summary>
     Public Interface IObjectModel_Driver
+
+        ''' <summary>
+        ''' Start run this driver object.
+        ''' </summary>
+        ''' <returns></returns>
         Function Run() As Integer
     End Interface
 
@@ -21,33 +29,25 @@ Namespace ComponentModel.DataSourceModel
             Writeable
         End Enum
 
-        'Public Function LoadSchema(Of T As Class)(AccessibilityControl As PropertyAccessibilityControls)
-        '    Dim PropertyCollection = (From [property] As System.Reflection.PropertyInfo
-        '                              In GetType(T).GetProperties(Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
-        '                              Where BasicTypes.ContainsKey([property].PropertyType) OrElse IsBasicTypeEnumerator([property].PropertyType)
-        '                              Select [property]).ToArray    '仅解析出简单类型的属性值
-
-        'End Function
-
-        'Public Function IsBasicTypeEnumerator(TypeInfo As Type) As Boolean
-        '    If TypeInfo.IsArray Then
-        '        Return BasicTypes.ContainsKey(TypeInfo.GetElementType)
-        '    End If
-
-        '    If Not TypeInfo.IsGenericType Then
-        '        Return False
-        '    End If
-
-
-        'End Function
+        ''' <summary>
+        ''' Controls for <see cref="PropertyAccessibilityControls"/> on <see cref="PropertyInfo"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccessibilityControls, Func(Of PropertyInfo, Boolean)) =
+            New Dictionary(Of PropertyAccessibilityControls, Func(Of PropertyInfo, Boolean)) From {
+ _
+                {PropertyAccessibilityControls.Readable, Function(p) p.CanRead},
+                {PropertyAccessibilityControls.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
+                {PropertyAccessibilityControls.Writeable, Function(p) p.CanWrite}
+        }
 
 #If NET_40 = 0 Then
 
         ''' <summary>
-        ''' 将字符串数据类型转换为其他的数据类型
+        ''' Converts the .NET primitive types from string.(将字符串数据类型转换为其他的数据类型)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property BasicTypesLoading As Dictionary(Of System.Type, __StringTypeCaster) =
+        Public ReadOnly Property PrimitiveFromString As Dictionary(Of Type, __StringTypeCaster) =
             New Dictionary(Of Type, __StringTypeCaster) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
@@ -60,27 +60,40 @@ Namespace ComponentModel.DataSourceModel
                 {GetType(Char), Function(s) s.FirstOrDefault}
         }
 
-        Public ReadOnly Property BasicTypesFlushs As Dictionary(Of Type, __LDMStringTypeCastHandler) =
+        ''' <summary>
+        ''' Object <see cref="Object.ToString"/> methods.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ToStrings As Dictionary(Of Type, __LDMStringTypeCastHandler) =
             New Dictionary(Of Type, __LDMStringTypeCastHandler) From {
  _
                 {GetType(String), AddressOf DataFramework.__toStringInternal},
-                {GetType(Boolean), AddressOf DataFramework.__toStringInternal},
-                {GetType(DateTime), AddressOf DataFramework.__toStringInternal},
-                {GetType(Double), AddressOf DataFramework.__toStringInternal},
-                {GetType(Integer), AddressOf DataFramework.__toStringInternal},
-                {GetType(Long), AddressOf DataFramework.__toStringInternal},
-                {GetType(Byte), AddressOf DataFramework.__toStringInternal},
-                {GetType(ULong), AddressOf DataFramework.__toStringInternal},
-                {GetType(UInteger), AddressOf DataFramework.__toStringInternal},
-                {GetType(Short), AddressOf DataFramework.__toStringInternal},
-                {GetType(UShort), AddressOf DataFramework.__toStringInternal},
+                {GetType(Boolean), AddressOf DataFramework.ValueToString},
+                {GetType(DateTime), AddressOf DataFramework.ValueToString},
+                {GetType(Double), AddressOf DataFramework.ValueToString},
+                {GetType(Integer), AddressOf DataFramework.ValueToString},
+                {GetType(Long), AddressOf DataFramework.ValueToString},
+                {GetType(Byte), AddressOf DataFramework.ValueToString},
+                {GetType(ULong), AddressOf DataFramework.ValueToString},
+                {GetType(UInteger), AddressOf DataFramework.ValueToString},
+                {GetType(Short), AddressOf DataFramework.ValueToString},
+                {GetType(UShort), AddressOf DataFramework.ValueToString},
                 {GetType(Char), AddressOf DataFramework.__toStringInternal},
-                {GetType(Single), AddressOf DataFramework.__toStringInternal},
-                {GetType(SByte), AddressOf DataFramework.__toStringInternal}
+                {GetType(Single), AddressOf DataFramework.ValueToString},
+                {GetType(SByte), AddressOf DataFramework.ValueToString}
         }
 
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
 #End If
+
+        ''' <summary>
+        ''' Call <see cref="Object.ToString"/> of the value types
+        ''' </summary>
+        ''' <param name="x">Object should be <see cref="ValueType"/></param>
+        ''' <returns></returns>
+        Public Function ValueToString(x As Object) As String
+            Return x.ToString
+        End Function
 
         ''' <summary>
         ''' 出现错误的时候总是会返回空字符串的

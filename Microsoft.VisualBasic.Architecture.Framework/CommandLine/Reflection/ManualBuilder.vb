@@ -40,10 +40,10 @@ Namespace CommandLine.Reflection
                 Call Console.WriteLine(vbCrLf & vbCrLf)
                 Call Console.WriteLine("   Parameters information:" & vbCrLf & "   ---------------------------------------")
 
-                Dim maxLen As Integer = (From x In api.ParameterInfo Select x.Key.Length + 2).Max
+                Dim maxLen As Integer = (From x In api.ParameterInfo Select x.Name.Length + 2).Max
                 Dim l As Integer
 
-                For Each param As ParameterInfo In api.ParameterInfo.Select(Function(x) x.Value)
+                For Each param As ParameterInfo In api.ParameterInfo.Select(Function(x) x.x)
                     fore = Console.ForegroundColor
 
                     If param.[Optional] Then
