@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public MustInherit Class VectorObject
 

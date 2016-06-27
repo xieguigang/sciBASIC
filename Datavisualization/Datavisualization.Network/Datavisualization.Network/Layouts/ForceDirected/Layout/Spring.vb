@@ -40,6 +40,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts
 

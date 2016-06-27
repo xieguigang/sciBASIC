@@ -88,7 +88,7 @@ Namespace Serialization
         Public Function GetNodeMapping(Of T_Entity As Class, T_Mapping As Class)(obj_source As Object) As NodeMapping()
             Dim LQuery As PropertyInfo() = (From p In GetType(T_Mapping).GetProperties(BindingFlags.Instance Or BindingFlags.Public)
                                             Where Not __knowsIsIgnored(p) AndAlso
-                                           DataFramework.BasicTypesLoading.ContainsKey(p.PropertyType)
+                                           DataFramework.PrimitiveFromString.ContainsKey(p.PropertyType)
                                             Select p).ToArray  '获取所有的数据源之中的映射
             Dim T_EntityType As Type = GetType(T_Entity)
             Dim CustomMappings As MethodInfo() = (From entry In GetType(T_Mapping).GetMethods()
@@ -120,8 +120,8 @@ Namespace Serialization
         End Function
 
         Private Function __getWrite_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo()) As __LDMStringTypeCastHandler
-            If DataFramework.BasicTypesFlushs.ContainsKey(Model.PropertyType) Then
-                Return DataFramework.BasicTypesFlushs(Model.PropertyType)
+            If DataFramework.ToStrings.ContainsKey(Model.PropertyType) Then
+                Return DataFramework.ToStrings(Model.PropertyType)
             Else
                 Dim Method = __getCustomMapping(p_Type:=Model.PropertyType, ReturnedType:=source.PropertyType, Methods:=Methods)
                 Return Function(obj As Object) DirectCast(Method.Invoke(Nothing, {obj}), String)
@@ -129,8 +129,8 @@ Namespace Serialization
         End Function
 
         Private Function __getReads_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo(), obj_source As Object) As __StringTypeCaster
-            If DataFramework.BasicTypesLoading.ContainsKey(Model.PropertyType) Then
-                Return DataFramework.BasicTypesLoading(Model.PropertyType)
+            If DataFramework.PrimitiveFromString.ContainsKey(Model.PropertyType) Then
+                Return DataFramework.PrimitiveFromString(Model.PropertyType)
             Else
                 Dim Method = __getCustomMapping(p_Type:=source.PropertyType, ReturnedType:=Model.PropertyType, Methods:=Methods)
                 Return Function(s As String) Method.Invoke(obj_source, {s})

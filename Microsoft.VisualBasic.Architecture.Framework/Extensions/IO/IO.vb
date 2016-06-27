@@ -26,6 +26,11 @@ Public Module IOExtensions
         Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
 
+    ''' <summary>
+    ''' <see cref="IO.File.ReadAllBytes"/>, if the file is not exists on the filesystem, then a empty array will be return.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ReadBinary(path As String) As Byte()
         If Not path.FileExists Then
@@ -34,15 +39,32 @@ Public Module IOExtensions
         Return IO.File.ReadAllBytes(path)
     End Function
 
+    ''' <summary>
+    ''' Write all object into a text file by using its <see cref="Object.ToString"/> method.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="SaveTo"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T),
                                                     SaveTo As String,
                                                     Optional encoding As Encoding = Nothing) As Boolean
-        Dim strings As String() = data.ToArray(Function(obj) Scripting.ToString(obj))
+        Dim strings As IEnumerable(Of String) =
+            data.Select(AddressOf Scripting.ToString)
 
         Try
             Dim parent As String = FileIO.FileSystem.GetParentPath(SaveTo)
+
+            encoding = If(encoding Is Nothing, Encoding.Default, encoding)
+
             Call FileIO.FileSystem.CreateDirectory(parent)
-            Call IO.File.WriteAllLines(SaveTo, strings, If(encoding Is Nothing, System.Text.Encoding.Default, encoding))
+
+            Using file As New StreamWriter(New FileStream(SaveTo, FileMode.OpenOrCreate, access:=FileAccess.Write))
+                For Each line As String In strings
+                    Call file.WriteLine(line)
+                Next
+            End Using
         Catch ex As Exception
             Call App.LogException(New Exception(SaveTo, ex))
             Return False

@@ -199,8 +199,16 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' VisualBasic application exception wrapper
+    ''' </summary>
     Public Class VisualBasicAppException : Inherits Exception
 
+        ''' <summary>
+        ''' <see cref="Exception"/> inner wrapper
+        ''' </summary>
+        ''' <param name="ex">The exception details</param>
+        ''' <param name="calls">Method name where occurs this exception.</param>
         Sub New(ex As Exception, calls As String)
             MyBase.New("@" & calls, ex)
         End Sub
@@ -225,8 +233,15 @@ Public Module VBDebugger
         Call (Scripting.InputHandler.ToString(value) & "              @" & memberName).__DEBUG_ECHO
     End Sub
 
-    Public Function WhoseThere(<CallerMemberName> Optional memberName As String = "") As String
-        Return memberName
+    ''' <summary>
+    ''' Returns the current function name.
+    ''' </summary>
+    ''' <param name="caller">
+    ''' The caller function name, do not assign any value to this parameter! Just leave it blank.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function this(<CallerMemberName> Optional caller As String = "") As String
+        Return caller
     End Function
 
     <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")

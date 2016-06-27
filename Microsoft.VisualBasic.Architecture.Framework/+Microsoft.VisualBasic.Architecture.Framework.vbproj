@@ -366,7 +366,23 @@
     <Compile Include="Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
+    <Compile Include="Scripting\Actives.vb" />
     <Compile Include="Scripting\Where.vb" />
+    <Compile Include="Serialization\JSON\JsonFormatter.vb" />
+    <Compile Include="Serialization\JSON\Formatter\FormatterScopeState.vb" />
+    <Compile Include="Serialization\JSON\Formatter\ICharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\JsonFormatterInternal.vb" />
+    <Compile Include="Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CloseSquareBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
@@ -634,7 +650,7 @@
     <Compile Include="ComponentModel\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attribute.vb" />
-    <Compile Include="CommandLine\Reflection\ParameterInfoCollection.vb" />
+    <Compile Include="CommandLine\Reflection\ParameterInfo.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />
@@ -712,11 +728,13 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
-    <None Include="README.txt" />
+    <Content Include="Serialization\JSON\Formatter\license.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Serialization\SchemaProvider\" />

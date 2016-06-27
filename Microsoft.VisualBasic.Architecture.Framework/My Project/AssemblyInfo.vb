@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Microsoft VisualBasic Enterprise System Framework Builder")>
-<Assembly: AssemblyDescription("Enterprise Application Architecture Modelling Framework For VisualBasic(企业级应用程序快速建模工具)")>
-<Assembly: AssemblyCompany("xie.guigang@gmail.com")>
-<Assembly: AssemblyProduct("Microsoft.VisualBasic.Architecture")>
-<Assembly: AssemblyCopyright("Copyright © GPL3 Licensed 2015")>
+<Assembly: AssemblyTitle("Microsoft VisualBasic enterprise system framework runtime")>
+<Assembly: AssemblyDescription("Enterprise system application runtime framework for VisualBasic(企业级应用程序快速建模工具)")>
+<Assembly: AssemblyCompany("xie.guigang@live.com")>
+<Assembly: AssemblyProduct("Microsoft.VisualBasic")>
+<Assembly: AssemblyCopyright("Copyright © GPL3 Licensed 2016")>
 <Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>

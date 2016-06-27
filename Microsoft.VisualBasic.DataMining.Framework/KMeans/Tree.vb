@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
 
@@ -30,7 +31,9 @@ Namespace KMeans
         End Function
     End Class
 
-    <PackageNamespace("KMeans.Tree.NET", Category:=APICategories.ResearchTools, Publisher:="smrucc@gcmodeller.org")>
+    <PackageNamespace("KMeans.Tree.NET",
+                      Category:=APICategories.ResearchTools,
+                      Publisher:="smrucc@gcmodeller.org")>
     Public Module Tree
 
         ''' <summary>

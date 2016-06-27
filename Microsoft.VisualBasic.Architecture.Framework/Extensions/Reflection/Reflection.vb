@@ -6,9 +6,60 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-<PackageNamespace("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
+''' <summary>
+''' Some common used reflection operation extension at here.
+''' </summary>
+<PackageNamespace("Emit.Reflection",
+                  Category:=APICategories.SoftwareTools,
+                  Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
+
+    ''' <summary>
+    ''' Run external [.NET] Program from RAM Memory
+    ''' </summary>
+    ''' <param name="app"></param>
+    ''' <param name="CLI"></param>
+    ''' <param name="cs">Going to running a c# program?</param>
+    ''' <remarks>
+    ''' http://www.codeproject.com/Tips/1108105/Run-external-NET-Program-from-RAM-Memory
+    ''' 
+    ''' Run external app directly from RAM. You can load the specific file into a ``Byte[]`` Array 
+    ''' with a ``StreamReader()`` or even download it from WEB via a direct link provided. 
+    ''' If you loaded the file from disk, you can delete it if you want after it has been loaded 
+    ''' by a ``StreamReader()``.
+    ''' </remarks>
+    Public Sub RunApp(app As String, Optional CLI As String = "", Optional cs As Boolean = False)
+        Dim bufs As Byte() = app.GetMapPath.ReadBinary ' Works on both local file or network file. 
+
+        Try
+            Dim assm As Assembly = Assembly.Load(bufs) ' or assm = Reflection.Assembly.Load(New WebClient().DownloadData("https://...."))
+            Dim method As MethodInfo = assm.EntryPoint
+
+            If (Not method Is Nothing) Then
+                Dim o As Object = assm.CreateInstance(method.Name)
+
+                If String.IsNullOrEmpty(CLI) Then
+                    Dim null As Object() = If(cs, {Nothing}, Nothing)
+                    Call method.Invoke(o, null)
+                Else
+                    ' if your app receives parameters
+                    Call method.Invoke(o, New Object() {CommandLine.GetTokens(CLI)})
+                End If
+            Else
+                Throw New NullReferenceException($"'{app}' No App Entry Point was found!")
+            End If
+        Catch ex As Exception
+            ex = New Exception("CLI:=" & CLI, ex)
+            ex = New Exception("app:=" & app, ex)
+#If DEBUG Then
+            Call ex.PrintException
+#End If
+            Throw ex
+        End Try
+    End Sub
 
 #Region "IsNumericType"
     ''' <summary>
@@ -470,7 +521,9 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <typeparam name="T"></typeparam>
     ''' <param name="args">构造函数里面的参数信息</param>
     ''' <returns></returns>
-    Public Function CreateObject(Of T)(args As Object(), Optional throwEx As Boolean = True, <CallerMemberName> Optional caller As String = "") As T
+    Public Function CreateObject(Of T)(args As Object(),
+                                       Optional throwEx As Boolean = True,
+                                       <CallerMemberName> Optional caller As String = "") As T
         Try
             Dim obj As Object =
                 Activator.CreateInstance(GetType(T), args)
