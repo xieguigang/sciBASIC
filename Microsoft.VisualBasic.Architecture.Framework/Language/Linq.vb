@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Language.LinqAPIHelpers
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
@@ -76,7 +77,7 @@ Namespace Language
             Dim partTokens As Integer
 
             Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()
-                Return LQuerySchedule.LQuery(source, helper.task, helper.partTokens).ToArray
+                Return LQuerySchedule.LQuery(source, helper.task, 20000000, helper.partTokens).ToArray
             End Operator
 
             Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()

@@ -3,13 +3,28 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace SoftwareToolkits
 
+    ''' <summary>
+    ''' Represents a resource manager that provides convenient access to culture-specific
+    ''' resources at run time.Security Note: Calling methods in this class with untrusted
+    ''' data is a security risk. Call the methods in the class only with trusted data.
+    ''' For more information, see Untrusted Data Security Risks.
+    ''' </summary>
     <Export(GetType(Global.System.Resources.ResourceManager))>
     Public Class Resources
 
+        ''' <summary>
+        ''' The file path of the resources satellite assembly.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FileName As String
+        ''' <summary>
+        ''' <see cref="System.Resources.ResourceManager"/> object in the satellite assembly.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Resources As Global.System.Resources.ResourceManager
 
         ' Exceptions:
@@ -54,6 +69,7 @@ Namespace SoftwareToolkits
         '     be found. For information about how to handle this exception, see the "Handling
         '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
         '     section in the System.Resources.ResourceManager class topic.
+
         ''' <summary>
         ''' Gets the value of the specified non-string resource localized for the specified
         ''' culture.
@@ -87,6 +103,7 @@ Namespace SoftwareToolkits
         '     be found. For information about how to handle this exception, see the "Handling
         '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
         '     section in the System.Resources.ResourceManager class topic.
+
         ''' <summary>
         ''' Returns an unmanaged memory stream object from the specified resource.
         ''' </summary>
@@ -116,6 +133,7 @@ Namespace SoftwareToolkits
         '     be found. For information about how to handle this exception, see the "Handling
         '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
         '     section in the System.Resources.ResourceManager class topic.
+
         ''' <summary>
         ''' Returns an unmanaged memory stream object from the specified resource, using
         ''' the specified culture.
@@ -147,6 +165,7 @@ Namespace SoftwareToolkits
         '     be found. For information about how to handle this exception, see the "Handling
         '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
         '     section in the System.Resources.ResourceManager class topic.
+
         ''' <summary>
         ''' Returns the value of the specified string resource.
         ''' </summary>
@@ -175,6 +194,7 @@ Namespace SoftwareToolkits
         '     be found. For information about how to handle this exception, see the "Handling
         '     MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions"
         '     section in the System.Resources.ResourceManager class topic.
+
         ''' <summary>
         ''' Returns the value of the string resource localized for the specified culture.
         ''' </summary>
@@ -215,20 +235,24 @@ Namespace SoftwareToolkits
         Private Sub __load(assm As Assembly)
 #If NET_40 = 0 Then
             Dim __resEXPORT As Type = GetType(ExportAttribute)
-            Dim typeDef As Type = (From type As Type
-                                   In assm.GetTypes
-                                   Let exp As ExportAttribute = type.GetCustomAttribute(__resEXPORT)
-                                   Where Not exp Is Nothing AndAlso
-                                       exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
-                                   Select type).FirstOrDefault
+            Dim typeDef As Type =
+                LinqAPI.DefaultFirst(Of Type) <= From type As Type
+                                                 In assm.GetTypes
+                                                 Let exp As ExportAttribute = type.GetCustomAttribute(__resEXPORT)
+                                                 Where Not exp Is Nothing AndAlso
+                                                     exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
+                                                 Select type
             If Not typeDef Is Nothing Then
-                Dim myRes As PropertyInfo = (From prop As PropertyInfo
-                                             In typeDef.GetProperties(BindingFlags.Public Or BindingFlags.Static)
-                                             Let exp As ExportAttribute = prop.GetCustomAttribute(__resEXPORT)
-                                             Where prop.CanRead AndAlso
-                                                 Not exp Is Nothing AndAlso
-                                                 exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
-                                             Select prop).FirstOrDefault
+                Dim myRes As PropertyInfo =
+                    LinqAPI.DefaultFirst(Of PropertyInfo) <=
+                    From prop As PropertyInfo
+                    In typeDef.GetProperties(BindingFlags.Public Or BindingFlags.Static)
+                    Let exp As ExportAttribute = prop.GetCustomAttribute(__resEXPORT)
+                    Where prop.CanRead AndAlso
+                        Not exp Is Nothing AndAlso
+                        exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
+                    Select prop
+
                 If Not myRes Is Nothing Then
                     Dim value As Object = myRes.GetValue(Nothing, Nothing)
                     _Resources = DirectCast(value, Global.System.Resources.ResourceManager)

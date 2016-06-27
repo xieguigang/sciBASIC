@@ -1,23 +1,54 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports System.Drawing
+Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Extensions
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MemoryDump
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Scripting
-Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Language
-Imports System.Reflection
 
 Module __DEBUG_MAIN
 
+    <ParameterInfo("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
+    Private Sub TestExtensionProperty()
+        Dim x As New ClassObject
+        Dim n As Long = x.Uid  ' The init value is zero
+
+        Call n.__DEBUG_ECHO
+
+        ' Assign value to this extension property
+        x.Uid.Value = RandomDouble() * 1000000000000L
+
+        ' display the extension property value
+        Call x.Uid.__DEBUG_ECHO
+        Call Pause()
+
+        Call RunApp("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\TestProject\Test2\bin\Debug\Test2.exe", cs:=True)
+    End Sub
+
+
     Function Main(args As String()) As Integer
 
+        Call this.__DEBUG_ECHO
+
+        Dim type As Type = GetType(dddddFile)
+
+        Call Scripting.Actives.DisplType(type).__DEBUG_ECHO
+
+        Call Pause()
+
+        Call TestExtensionProperty()
+
         Call VBDebugger.Warning("ddddddddd")
-        Call VBDebugger.PrintException("123123123", MethodBase.GetCurrentMethod.GetFullName)
+        Call VBDebugger.PrintException("123123123", Reflection.MethodBase.GetCurrentMethod.GetFullName)
         Call VBDebugger.__DEBUG_ECHO("sfsdddddddddddddddd")
 
         Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
@@ -153,18 +184,24 @@ Module __DEBUG_MAIN
             Call Console.WriteLine("   ------> ""{0}""", s)
         Loop
     End Function
-    <ClassName("df-ini")>
-    Public Class ssfsfs
-        <DataFrameColumn("123")> Public Property dddd As String
-        <DataFrameColumn("1ff23")> Public Property xdddd As Integer
-        <DataFrameColumn("9x-123")> Public Property dssssddd As Double
-    End Class
+End Module
 
-    <IniMapIO("~/test.ini")>
+<ClassName("df-ini")>
+Public Class ssfsfs
+    <DataFrameColumn("123")> Public Property dddd As String
+    <DataFrameColumn("1ff23")> Public Property xdddd As Integer
+    <DataFrameColumn("9x-123")> Public Property dssssddd As Double
+End Class
+
+
+<IniMapIO("~/test.ini")>
     Public Class dddddFile
-        Public Property a As ssfsfs
+    Public Property a As ssfsfs
 
-    End Class
+    Public Property nnn As Date
+    Public Property ddddddd As Test
+
+End Class
     Public Class Test
         <DumpNode> Private ArrayData As String() = New String() {"23234", "!!!!!!!!", "aaaaaaaaaaaa", "*&$^$%^#$%@#$%$#@$@"}
         <DumpNode> Private dded As KeyValuePair(Of Integer, Integer) = New KeyValuePair(Of Integer, Integer)(41, 23)
@@ -203,4 +240,4 @@ Module __DEBUG_MAIN
         <DumpNode> Public Property safsdfsdf As T3
         <DumpNode> Protected ffff As String = Now.ToString
     End Class
-End Module
+

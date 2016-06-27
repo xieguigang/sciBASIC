@@ -1,18 +1,19 @@
 ﻿Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Web
-Imports System.Runtime.Serialization.Json
 Imports System.IO
-Imports System.Text
+Imports System.Linq
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization.Json
+Imports System.Text
+Imports System.Web
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Serialization
+Namespace Serialization.JSON
 
     ''' <summary>
-    ''' 使用.NET系统环境之中自带的框架进行JSON序列化和反序列化
+    ''' Only works on the Public visible type.
+    ''' (使用.NET系统环境之中自带的框架进行JSON序列化和反序列化)
     ''' </summary>
     <PackageNamespace("Json.Contract")>
     Public Module JsonContract
@@ -24,11 +25,14 @@ Namespace Serialization
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("Get.Json")>
-        Public Function GetJson(obj As Object, type As Type) As String
+        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True) As String
             Using ms As New MemoryStream()
                 Dim jsonSer As New DataContractJsonSerializer(type)
                 Call jsonSer.WriteObject(ms, obj)
                 Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
+                If indent Then
+                    json = Formatter.Format(json)
+                End If
                 Return json
             End Using
         End Function
@@ -41,8 +45,8 @@ Namespace Serialization
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetJson(Of T)(obj As T) As String
-            Return GetJson(obj, GetType(T))
+        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = True) As String
+            Return GetJson(obj, GetType(T), indent)
         End Function
 
         ''' <summary>

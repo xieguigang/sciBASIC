@@ -161,7 +161,9 @@ Namespace CommandLine.Reflection.EntryPoints
                 Dim source As Exception = ex
 
                 ex = New Exception(paramTrace, ex)
-                VBDebugger.Mute = False
+                ex = New VBDebugger.VisualBasicAppException(ex, EntryPoint.GetFullName(True))
+
+                VBDebugger.Mute = False ' Enable output the exception details on the console.
 
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))

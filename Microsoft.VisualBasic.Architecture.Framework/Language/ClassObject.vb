@@ -1,8 +1,30 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
+
+    Public Module ClassAPI
+
+        ''' <summary>
+        ''' Example of the extension property in VisualBasic
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
+            Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
+
+            ' Just copy this statement without any big modification. just modify the generics type constraint.
+            Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)
+        End Function
+    End Module
 
     ''' <summary>
     ''' The base class object in VisualBasic
@@ -18,18 +40,30 @@ Namespace Language
         ''' 
         ''' http://stackoverflow.com/questions/2501466/xmltext-attribute-in-base-class-breakes-serialization
         ''' 
-        ''' So I think you could make it work by adding a dummy property or field that you never use in the LookupItem class. 
-        ''' If you're never assign a value to it, it will remain null and will not be serialized, but it will prevent your 
-        ''' class from being treated as simpleContent. I know it's a dirty workaround, but I see no other easy way...
+        ''' So I think you could make it work by adding a dummy property or field that you never 
+        ''' use in the ``LookupItem`` class. 
+        ''' If you're never assign a value to it, it will remain null and will not be serialized, 
+        ''' but it will prevent your class from being treated as simpleContent. I know it's a 
+        ''' dirty workaround, but I see no other easy way...
         ''' </remarks>
         <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
+
+        ''' <summary>
+        ''' Get dynamics property value.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Function ReadProperty(Of T)(name As String) As PropertyValue(Of T)
+            Return PropertyValue(Of T).Read(Me, name)
+        End Function
 
         ''' <summary>
         ''' Default is display the json value of the object class
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Serialization.GetJson(Me, [GetType])
+            Return JsonContract.GetJson(Me, [GetType])
         End Function
 
         ''' <summary>

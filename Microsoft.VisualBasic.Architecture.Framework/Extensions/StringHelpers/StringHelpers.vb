@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
@@ -114,17 +115,6 @@ Public Module StringHelpers
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property NonStrictCompares As StringComparison = StringComparison.OrdinalIgnoreCase
-
-    ''' <summary>
-    ''' Fill the number string with specific length of ZERO sequence to generates the fixed width string.
-    ''' </summary>
-    ''' <param name="n"></param>
-    ''' <param name="len"></param>
-    ''' <returns></returns>
-    <ExportAPI("ZeroFill")>
-    Public Function ZeroFill(n As String, len As Integer) As String
-        Return STDIO__.I_FormatProvider.d.ZeroFill(n, len)
-    End Function
 
     ''' <summary>
     ''' 
@@ -516,9 +506,11 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="__text"></param>
     ''' <returns></returns>
-    '''
+    ''' <param name="trim">
+    ''' Set <see cref="System.Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
+    ''' </param>
     <ExportAPI("lTokens")>
-    <Extension> Public Function lTokens(__text As String) As String()
+    <Extension> Public Function lTokens(__text As String, Optional trim As Boolean = True) As String()
         If String.IsNullOrEmpty(__text) Then
             Return New String() {}
         End If
@@ -531,7 +523,9 @@ Public Module StringHelpers
         End If
 
         If lf AndAlso cr Then
-            __text = __text.Replace(vbCr, "")
+            If trim Then  ' 假若将这个换行替换掉，在Csv文件读取模块会出现bug。。。。。不清楚是怎么回事
+                __text = __text.Replace(vbCr, "")
+            End If
             Return Text.Splitter.Split(__text, vbLf, True)
         End If
 

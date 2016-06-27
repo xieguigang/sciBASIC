@@ -1,33 +1,47 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Win32
 
+    Public Structure RECT
+        Dim Left As Integer
+        Dim Top As Integer
+        Dim right As Integer
+        Dim bottom As Integer
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public Shared Narrowing Operator CType(obj As RECT) As Rectangle
+            Dim pt As New Point(obj.Left, obj.Top)
+            Dim sz As New Size(obj.right - obj.Left, obj.bottom - obj.Top)
+            Return New Rectangle(pt, sz)
+        End Operator
+
+        Public Shared Narrowing Operator CType(obj As RECT) As RectangleF
+            Dim pt As New PointF(obj.Left, obj.Top)
+            Dim sz As New SizeF(obj.right - obj.Left, obj.bottom - obj.Top)
+            Return New RectangleF(pt, sz)
+        End Operator
+    End Structure
+
+    Public Structure C_BITMAP '14 bytes
+        Dim bmType As Integer
+        Dim bmWidth As Integer
+        Dim bmHeight As Integer
+        Dim bmWidthBytes As Integer
+        Dim bmPlanes As Integer
+        Dim bmBitsPixel As Integer
+        Dim bmBits As Integer
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Structure
+
     Public Module Win32API
-
-        Public Structure RECT
-            Dim Left As Integer
-            Dim Top As Integer
-            Dim right As Integer
-            Dim bottom As Integer
-
-            Public Shared Narrowing Operator CType(obj As RECT) As Rectangle
-                Return New Rectangle(New Point(obj.Left, obj.Top), New Size(obj.right - obj.Left, obj.bottom - obj.Top))
-            End Operator
-
-            Public Shared Narrowing Operator CType(obj As RECT) As RectangleF
-                Return New RectangleF(New PointF(obj.Left, obj.Top), New SizeF(obj.right - obj.Left, obj.bottom - obj.Top))
-            End Operator
-        End Structure
-
-        Public Structure C_BITMAP '14 bytes
-            Dim bmType As Integer
-            Dim bmWidth As Integer
-            Dim bmHeight As Integer
-            Dim bmWidthBytes As Integer
-            Dim bmPlanes As Integer
-            Dim bmBitsPixel As Integer
-            Dim bmBits As Integer
-        End Structure
 
         ' 通用
         Declare Function SendMessage Lib "user32" Alias "SendMessageA" (hwnd As Integer, wMsg As Integer, wParam As Integer, lParam As Object) As Integer

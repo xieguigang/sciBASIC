@@ -14,6 +14,9 @@ Namespace Terminal
             Call InnerThread.AddToQueue(task)
         End Sub
 
+        ''' <summary>
+        ''' Wait for all thread queue job done.(Needed if you are using multiThreaded queue)
+        ''' </summary>
         Public Sub WaitQueue()
             Call InnerThread.WaitQueue()
         End Sub

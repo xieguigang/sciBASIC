@@ -13,6 +13,7 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
 '                   _ooOoo_
 '                  o8888888o
@@ -45,6 +46,13 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
                   Publisher:="amethyst.asuka@gcmodeller.org",
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
+
+    Sub New()
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        _preDIR = App.StartupDirectory
+    End Sub
 
     ''' <summary>
     ''' Gets a path name pointing to the Desktop directory.
@@ -271,13 +279,6 @@ Public Module App
         End Get
     End Property
 
-    Sub New()
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
-        _preDIR = App.StartupDirectory
-    End Sub
-
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at location: %<see cref="App.LocalData"/>%/.logs/err/.
     ''' (简单日志记录，函数返回空值)
@@ -410,6 +411,8 @@ Public Module App
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
+        Call Terminal.InnerQueue.WaitQueue()
+
         Return state
     End Function
 
@@ -799,4 +802,10 @@ Public Module App
     End Sub
 #End Region
 
+    ''' <summary>
+    ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
+    ''' </summary>
+    Public Sub RunAsAdmin()
+        Call RestartElevated()
+    End Sub
 End Module

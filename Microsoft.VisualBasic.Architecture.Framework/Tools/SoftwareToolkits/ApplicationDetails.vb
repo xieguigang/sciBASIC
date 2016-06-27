@@ -2,6 +2,7 @@
 Imports System.Text
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SoftwareToolkits
 

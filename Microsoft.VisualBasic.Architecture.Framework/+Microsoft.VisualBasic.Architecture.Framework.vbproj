@@ -338,7 +338,7 @@
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
-    <Compile Include="ConsoleDevices\Pipeline.vb" />
+    <Compile Include="ConsoleDevices\PipelineCLI.vb" />
     <Compile Include="ConsoleDevices\InnerQueue.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ConsoleDevices\PrintAsTable.vb" />
@@ -353,6 +353,9 @@
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
+    <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
+    <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
+    <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
@@ -363,6 +366,23 @@
     <Compile Include="Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
+    <Compile Include="Scripting\Actives.vb" />
+    <Compile Include="Scripting\Where.vb" />
+    <Compile Include="Serialization\JSON\JsonFormatter.vb" />
+    <Compile Include="Serialization\JSON\Formatter\FormatterScopeState.vb" />
+    <Compile Include="Serialization\JSON\Formatter\ICharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\JsonFormatterInternal.vb" />
+    <Compile Include="Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CloseSquareBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
@@ -381,7 +401,7 @@
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
-    <Compile Include="Tools\Directory.vb" />
+    <Compile Include="Extensions\IO\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
@@ -393,6 +413,7 @@
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
+    <Compile Include="Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
@@ -559,7 +580,8 @@
     <Compile Include="Tools\Network\Tcp\PingUtility.vb" />
     <Compile Include="Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb" />
     <Compile Include="Tools\OSVersionInfo.vb" />
-    <Compile Include="Tools\SingleInstanceFormEntry.vb" />
+    <Compile Include="Tools\WinForm\MockForm.vb" />
+    <Compile Include="Tools\WinForm\SingleInstanceFormEntry.vb" />
     <Compile Include="Tools\SoftwareToolkits\Resources.vb" />
     <Compile Include="Tools\SoftwareToolkits\LanguageHelper\StringResources.vb" />
     <Compile Include="Tools\SoftwareToolkits\Ngen\Ngen.vb" />
@@ -628,7 +650,7 @@
     <Compile Include="ComponentModel\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attribute.vb" />
-    <Compile Include="CommandLine\Reflection\ParameterInfoCollection.vb" />
+    <Compile Include="CommandLine\Reflection\ParameterInfo.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />
@@ -642,7 +664,7 @@
     <Compile Include="MMFProtocol\ProcessLock.vb" />
     <Compile Include="ConsoleDevices\STDIO__\Shell.vb" />
     <Compile Include="ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\I_FormatProvider.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\CFormatProvider.vb" />
     <Compile Include="ConsoleDevices\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
@@ -706,11 +728,13 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
-    <None Include="README.txt" />
+    <Content Include="Serialization\JSON\Formatter\license.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Serialization\SchemaProvider\" />

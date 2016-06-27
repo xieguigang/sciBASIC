@@ -17,8 +17,10 @@ Namespace Parallel.Tasks
         ''' <returns></returns>
         Public ReadOnly Property Value As T
             Get
-                Call Start()
-                Call WaitForExit()
+                If Not TaskComplete Then
+                    Call Start()
+                    Call WaitForExit()
+                End If
                 Return __getValue
             End Get
         End Property
@@ -45,11 +47,14 @@ Namespace Parallel.Tasks
         ''' </summary>
         Public Sub Abort()
             Call _taskThread.Abort()
+            _TaskComplete = False
+            _RunningTask = False
         End Sub
 
         Public Function Start() As __backgroundTask(Of T)
             If Not TaskRunning Then
                 _taskThread.Start()
+                _TaskComplete = False
             End If
 
             Return Me

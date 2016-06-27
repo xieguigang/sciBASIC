@@ -5,6 +5,7 @@
 '
 
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
 
@@ -41,6 +42,10 @@ Namespace ComponentModel.Ranges
         Public Sub New(min As Double, max As Double)
             Me.Min = min
             Me.Max = max
+        End Sub
+
+        Sub New(data As Double())
+            Call Me.New(data.Min, data.Max)
         End Sub
 
         Public Overrides Function ToString() As String

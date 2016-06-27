@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataStructures
 
@@ -56,7 +58,7 @@ Namespace ComponentModel.DataStructures
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"{p} --> {String.Join(", ", Elements.ToArray(Function(obj) obj.ToString))}"
+            Return $"{p} --> {Elements.GetJson}"
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
@@ -92,17 +94,34 @@ Namespace ComponentModel.DataStructures
         <Extension> Public Function CreateSlideWindows(Of T)(
                                     data As IEnumerable(Of T),
                                     slideWindowSize As Integer,
-                                    Optional offset As Integer = 1,
-                                    Optional extTails As Boolean = False) As SlideWindowHandle(Of T)()
+                           Optional offset As Integer = 1,
+                           Optional extTails As Boolean = False) As SlideWindowHandle(Of T)()
+            Return data.SlideWindows(slideWindowSize, offset, extTails).ToArray
+        End Function
 
-            Dim n As Integer = data.Count
+        ''' <summary>
+        ''' Create a collection of slide Windows data for the target collection object.(创建一个滑窗集合)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="data"></param>
+        ''' <param name="slideWindowSize">The windows size of the created slide window.(窗口的大小)</param>
+        ''' <param name="offset">在序列之上移动的步长</param>
+        ''' <returns></returns>
+        ''' <param name="extTails">引用类型不建议打开这个参数</param>
+        ''' <remarks></remarks>
+        <Extension> Public Iterator Function SlideWindows(Of T)(
+                                    data As IEnumerable(Of T),
+                                    slideWindowSize As Integer,
+                           Optional offset As Integer = 1,
+                           Optional extTails As Boolean = False) As IEnumerable(Of SlideWindowHandle(Of T))
+
+            Dim tmp As List(Of T) = data.ToList
+            Dim n As Integer = tmp.Count
 
             If slideWindowSize >= n Then
-                Return {
-                    New SlideWindowHandle(Of T)() With {
-                        .Left = 0,
-                        .Elements = data.ToArray
-                    }
+                Yield New SlideWindowHandle(Of T)() With {
+                    .Left = 0,
+                    .Elements = tmp.ToArray
                 }
             End If
 
@@ -111,8 +130,6 @@ Namespace ComponentModel.DataStructures
                 offset = 1
             End If
 
-            Dim tmp As List(Of T) = data.ToList
-            Dim list As New List(Of SlideWindowHandle(Of T))
             Dim p As Integer = 0
 
             n = n - slideWindowSize - 1
@@ -120,7 +137,7 @@ Namespace ComponentModel.DataStructures
             For i As Integer = 0 To n Step offset
                 Dim buf As T() = tmp.Take(slideWindowSize).ToArray
 
-                list += New SlideWindowHandle(Of T)() With {
+                Yield New SlideWindowHandle(Of T)() With {
                     .Elements = buf,
                     .Left = i,
                     .p = p
@@ -135,44 +152,37 @@ Namespace ComponentModel.DataStructures
                 Dim left As Integer = n + 1
 
                 If extTails Then
-                    list += __extendTails(tmp, slideWindowSize, left, p)
+                    For Each x In __extendTails(tmp, slideWindowSize, left, p)
+                        Yield x
+                    Next
                 Else
-                    Dim last As New SlideWindowHandle(Of T)() With {
+                    Yield New SlideWindowHandle(Of T)() With {
                         .Left = left,
                         .Elements = tmp.ToArray,
                         .p = p
                     }
-                    Call list.Add(last)
                 End If
             End If
-
-            Return list.ToArray
         End Function
 
-        Private Function __extendTails(Of T)(lstTemp As List(Of T),
-                                             slideWindowSize As Integer,
-                                             left As Integer,
-                                             p As Integer) As SlideWindowHandle(Of T)()
-            ' Dim last As T = lstTemp.Last
-            Dim list As New List(Of SlideWindowHandle(Of T))
+        Private Iterator Function __extendTails(Of T)(
+                                  lstTemp As List(Of T),
+                                  slideWindowSize As Integer,
+                                  left As Integer,
+                                  p As Integer) As IEnumerable(Of SlideWindowHandle(Of T))
+
             Dim array As T() = lstTemp.ToArray
 
             For i As Integer = 0 To slideWindowSize - 1
-                Dim Tail As New SlideWindowHandle(Of T) With {
+                Yield New SlideWindowHandle(Of T) With {
                     .Left = left,
                     .p = p,
                     .Elements = array
                 }
 
-                Call list.Add(Tail)
-                ' Call lstTemp.RemoveAt(Scan0)
-                ' Call lstTemp.Add(last)
-
                 p += 1
                 left += 1
             Next
-
-            Return list.ToArray
         End Function
     End Module
 End Namespace

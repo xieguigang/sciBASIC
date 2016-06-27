@@ -245,6 +245,9 @@ Public Module ProgramPathSearchTool
         If fsObj.FileExists Then
             Return IO.Path.GetFileNameWithoutExtension(fsObj)
         Else
+            If String.IsNullOrEmpty(fsObj) Then
+                Throw New Exception(NameOf(fsObj) & " parameter is null!")
+            End If
             Return FileIO.FileSystem.GetDirectoryInfo(fsObj).Name
         End If
     End Function

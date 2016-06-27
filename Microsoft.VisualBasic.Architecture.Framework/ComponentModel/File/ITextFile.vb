@@ -2,6 +2,7 @@
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace ComponentModel
@@ -10,7 +11,7 @@ Namespace ComponentModel
     ''' Object model of the text file doucment.(文本文件的对象模型，这个文本文件对象在Disposed的时候会自动保存其中的数据)
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class ITextFile : Inherits BufferedStream
+    Public MustInherit Class ITextFile : Inherits ClassObject
         Implements IDisposable
         Implements ISaveHandle
 #If NET_40 = 0 Then
@@ -26,26 +27,16 @@ Namespace ComponentModel
         '''
 #If NET_40 = 0 Then
         <XmlIgnore> <ScriptIgnore>
-        Protected Friend Overridable Property FilePath As String Implements Settings.IProfile.FilePath
+        Public Overridable Property FilePath As String Implements Settings.IProfile.FilePath
 #Else
-        <XmlIgnore>
-             Protected Friend  Overridable Property FilePath As String
+        <XmlIgnore> <ScriptIgnore>
+        Public Overridable Property FilePath As String
 #End If
-            Get
-                If String.IsNullOrEmpty(FileName) Then
-                    Return ""
-                End If
-                Return FileIO.FileSystem.GetFileInfo(FileName).FullName.Replace("\", "/")
-            End Get
-            Set(value As String)
-                FileName = value
-            End Set
-        End Property
 
 #If NET_40 = 0 Then
-        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
+        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
 #Else
-        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
 #End If
 
         Public Overrides Function ToString() As String
@@ -59,11 +50,8 @@ Namespace ComponentModel
         End Function
 
         Protected Friend Sub CopyTo(Of T As ITextFile)(ByRef TextFile As T)
-            TextFile.__bufferSize = Me.__bufferSize
-            TextFile.__encoding = Me.__encoding
-            TextFile.__fileName = Me.FileName
-            TextFile.__innerBuffer = Me.__innerBuffer
-            TextFile.__innerStream = Me.__innerStream
+            TextFile.Extension = Extension
+            TextFile.FilePath = FilePath
         End Sub
 
         ''' <summary>
@@ -94,7 +82,7 @@ Namespace ComponentModel
             Return ""
         End Function
 
-        Protected Shared Function getEncoding(encoding As System.Text.Encoding) As System.Text.Encoding
+        Protected Shared Function getEncoding(encoding As Encoding) As System.Text.Encoding
             If encoding Is Nothing Then
                 Return System.Text.Encoding.Default
             Else
@@ -133,27 +121,6 @@ Namespace ComponentModel
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
-        Public Shared Function CreateObject(Of T As ITextFile)(innerData As String(), path As String) As T
-            Dim File As T = Activator.CreateInstance(Of T)
-            File.FilePath = path
-            File.__innerBuffer = innerData
-
-            Return File
-        End Function
-
-        Public Shared Function CreateObject(Of T As ITextFile)(pathOrTextContent As String) As T
-            If FileIO.FileSystem.FileExists(pathOrTextContent) Then
-                Try
-                    Dim FileObject As T = ITextFile.CreateObject(Of T)(System.IO.File.ReadAllLines(pathOrTextContent), path:=pathOrTextContent) 'New ITextFile With {.InternalFileData = , ._FilePath = Path}
-                    Return FileObject
-                Catch ex As Exception
-                    GoTo NULL
-                End Try
-            End If
-NULL:
-            Return ITextFile.CreateObject(Of T)({pathOrTextContent}, "") ' 字符串参数可能是文档的内容
-        End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(Path, encoding.GetEncodings)

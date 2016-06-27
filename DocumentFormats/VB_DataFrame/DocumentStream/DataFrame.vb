@@ -198,7 +198,7 @@ Namespace DocumentStream
             Try
                 Return __createObject(CsvDf)
             Catch ex As Exception
-                Call $"Error during read file from handle {CsvDf.FileName.ToFileURL}".__DEBUG_ECHO
+                Call $"Error during read file from handle {CsvDf.FilePath.ToFileURL}".__DEBUG_ECHO
                 Call ex.PrintException
                 Throw
             End Try
@@ -207,7 +207,7 @@ Namespace DocumentStream
         Private Shared Function __createObject(CsvDf As Csv.DocumentStream.File) As DataFrame
             Dim df As DataFrame = New DataFrame With {
                   ._innerTable = CsvDf._innerTable.Skip(1).ToList,
-                  .FilePath = CsvDf.FileName
+                  .FilePath = CsvDf.FilePath
             }
             df.__columnList = __getColumnList(CsvDf._innerTable)
             df._SchemaOridinal = __createSchemaOridinal(df)
@@ -289,7 +289,7 @@ Namespace DocumentStream
         ''' Reset the reading position in the data frame object.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Overrides Sub Reset()
+        Public Sub Reset()
             __currentPointer = -1
         End Sub
 
@@ -300,7 +300,7 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public Sub CopyFrom(source As File)
             _innerTable = source._innerTable.Skip(1).ToList
-            FilePath = source.FileName
+            FilePath = source.FilePath
             __columnList = source._innerTable.First.ToList
         End Sub
 
@@ -342,7 +342,7 @@ Namespace DocumentStream
 
             Return New DataFrame With {
                 .__columnList = ColumnList.ToList,
-                .FilePath = FileName,
+                .FilePath = FilePath,
                 ._innerTable = NewTable
             }
         End Function

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
 
@@ -37,7 +38,7 @@ Namespace ComponentModel.Collection
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Serialization.GetJson(Me.ToArray, GetType(T()))
+            Return JsonContract.GetJson(Me.ToArray, GetType(T()))
         End Function
 
         Public Overloads Shared Operator +(q As CapacityQueue(Of T), x As T) As CapacityQueue(Of T)

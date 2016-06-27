@@ -5,6 +5,7 @@
 '
 
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
 
@@ -41,6 +42,12 @@ Namespace ComponentModel.Ranges
         Public Sub New(min As Integer, max As Integer)
             Me.Min = min
             Me.Max = max
+        End Sub
+
+        Sub New(source As IEnumerable(Of Integer))
+            Dim array As Integer() = source.ToArray
+            Me.Min = array.Min
+            Me.Max = array.Max
         End Sub
 
         Sub New()

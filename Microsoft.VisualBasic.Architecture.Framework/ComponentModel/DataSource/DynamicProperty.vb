@@ -1,14 +1,149 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Reflection
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Linq
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel
 
+    ''' <summary>
+    ''' The <see cref="PropertyInfo"/> like definition of the extension property.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Class PropertyValue(Of T) : Inherits Value(Of T)
+
+        ReadOnly __get As Func(Of T)
+        ReadOnly __set As Action(Of T)
+
+        ''' <summary>
+        ''' The Extension property value.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Property Value As T
+            Get
+                Return __get()
+            End Get
+            Set(value As T)
+                MyBase.Value = value
+                If Not __set Is Nothing Then
+                    Call __set(value)  ' 因为在初始化的时候会对这个属性赋值，但是set没有被初始化，所以会出错，在这里加了一个if判断来避免空引用的错误
+                End If
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' The instance object for this extension property
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property obj As ClassObject
+
+        ''' <summary>
+        ''' Custom property value.(value generated based on the extension property host <see cref="obj"/>)
+        ''' </summary>
+        ''' <param name="[get]">请勿使用<see cref="GetValue"/></param>函数，否则会出现栈空间溢出
+        ''' <param name="[set]">请勿使用<see cref="SetValue"/></param>方法，否则会出现栈空间溢出
+        Sub New([get] As Func(Of T), [set] As Action(Of T))
+            __get = [get]
+            __set = [set]
+        End Sub
+
+        ''' <summary>
+        ''' Tag property value.(默认是将数据写入到基本类型的值之中)
+        ''' </summary>
+        Sub New()
+            __get = Function() MyBase.Value
+            __set = Sub(v) MyBase.Value = v
+        End Sub
+
+        ''' <summary>
+        ''' 这个主要是应用于Linq表达式之中，将属性值设置之后返回宿主对象实例
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function SetValue(value As T) As ClassObject
+            Call __set(value)
+            Return obj
+        End Function
+
+        ''' <summary>
+        ''' Property Get Value
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Narrowing Operator CType(x As PropertyValue(Of T)) As T
+            Return x.Value
+        End Operator
+
+        ''' <summary>
+        ''' <see cref="Value"/> -> <see cref="GetJson"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return Value.GetJson
+        End Function
+
+        Public Shared Function GetValue(Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+            Dim value As Object = x.Extension.DynamicHash(name)
+            Dim pv As PropertyValue(Of T) = DirectCast(value, PropertyValue(Of T))
+            Return pv
+        End Function
+
+        Public Shared Sub SetValue(Of Cls As ClassObject)(x As Cls, name As String, value As T)
+            Dim pvo As Object = x.Extension.DynamicHash(name)
+            Dim pv As PropertyValue(Of T) = DirectCast(pvo, PropertyValue(Of T))
+            pv.Value = value
+        End Sub
+
+        ''' <summary>
+        ''' Creates a new extension property for the target <see cref="ClassObject"/>
+        ''' </summary>
+        ''' <typeparam name="Cls"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Shared Function [New](Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+            Dim value As New PropertyValue(Of T)()
+            x.Extension.DynamicHash.Value(name) = value
+            value.obj = x
+            Return value
+        End Function
+
+        ''' <summary>
+        ''' Gets the tag property value from the <see cref="ClassObject"/>.(读取<see cref="ClassObject"/>对象之中的一个拓展属性)
+        ''' </summary>
+        ''' <typeparam name="Cls"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Shared Function Read(Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+            If x.Extension Is Nothing Then
+                x.Extension = New ExtendedProps
+            End If
+            Dim prop As Object = x.Extension.DynamicHash(name)
+            If prop Is Nothing Then
+                prop = PropertyValue(Of T).[New](Of Cls)(x, name)
+            End If
+            Return DirectCast(prop, PropertyValue(Of T))
+        End Function
+
+        Public Shared Function Read(Of Cls As ClassObject)(x As Cls, pm As MethodBase) As PropertyValue(Of T)
+            Return Read(Of Cls)(x, pm.Name)
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' Abstracts for the dynamics property.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Interface IDynamicMeta(Of T)
 
+        ''' <summary>
+        ''' Properties
+        ''' </summary>
+        ''' <returns></returns>
         Property Properties As Dictionary(Of String, T)
     End Interface
 
@@ -70,15 +205,29 @@ Namespace ComponentModel.DataSourceModel
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' New with a init property value
+        ''' </summary>
+        ''' <param name="initKey"></param>
+        ''' <param name="initValue"></param>
         Sub New(initKey As String, initValue As T)
             Call Properties.Add(initKey, initValue)
         End Sub
 
-        <ScriptIgnore> Public Property source As NamedValue(Of T)()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        <ScriptIgnore> Public Iterator Property source As IEnumerable(Of NamedValue(Of T))
             Get
-                Return Properties.ToArray(Function(x) New NamedValue(Of T) With {.Name = x.Key, .x = x.Value})
+                For Each x In Properties
+                    Yield New NamedValue(Of T) With {
+                        .Name = x.Key,
+                        .x = x.Value
+                    }
+                Next
             End Get
-            Set(value As NamedValue(Of T)())
+            Set(value As IEnumerable(Of NamedValue(Of T)))
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.x)
             End Set
         End Property
@@ -91,17 +240,22 @@ Namespace ComponentModel.DataSourceModel
     Public Structure NamedValue(Of T) : Implements sIdEnumerable
 
         ''' <summary>
-        ''' Identifier
+        ''' Identifier tag data. you can using this property value as a dictionary key.
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute>
         Public Property Name As String Implements sIdEnumerable.Identifier
+
         ''' <summary>
         ''' Object value
         ''' </summary>
         ''' <returns></returns>
         <XmlElement> Public Property x As T
 
+        ''' <summary>
+        ''' Does this object have value?
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore> Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return String.IsNullOrEmpty(Name) AndAlso x Is Nothing
@@ -118,6 +272,10 @@ Namespace ComponentModel.DataSourceModel
             Me.x = value
         End Sub
 
+        ''' <summary>
+        ''' View object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"{Name} --> {x.GetJson}"
         End Function

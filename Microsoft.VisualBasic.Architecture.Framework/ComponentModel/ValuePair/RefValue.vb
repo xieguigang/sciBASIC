@@ -10,7 +10,7 @@
         ''' The object value with a specific type define.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Value As T
+        Public Overridable Property Value As T
 
         Sub New(value As T)
             Me.Value = value

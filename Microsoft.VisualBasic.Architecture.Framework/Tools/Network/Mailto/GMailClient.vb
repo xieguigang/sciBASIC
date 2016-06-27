@@ -3,6 +3,7 @@ Imports System.Net.Mime
 Imports System.Xml.Serialization
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Net.Mailto
 

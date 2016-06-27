@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel
 
@@ -95,6 +96,10 @@ Namespace ComponentModel
 
         Dim l As Integer
 
+        ''' <summary>
+        ''' 当<see cref="EndRead"/>之后，这个函数将不会返回任何值
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function BufferProvider() As String()
             If EndRead Then
                 Return Nothing
@@ -115,10 +120,14 @@ Namespace ComponentModel
                     Call Array.ConstrainedCopy(lefts, Scan0, buffer, Scan0, lefts.Length)
 
                     Dim s As String = __encoding.GetString(buffer)
-                    Dim sbuf As String() = s.lTokens
+                    Dim sbuf As String() = s.lTokens()
 
                     If Not EndRead Then
                         Dim last As String = sbuf.Last
+                        Dim lch As Char = s.Last
+                        If lch = vbLf OrElse lch = vbCr Then
+                            last &= vbCrLf  ' 由于ltokens会替换掉换行符，可能会导致bug，所以在这里进行判断，尝试进行补齐操作
+                        End If
                         lefts = __encoding.GetBytes(last)
                         sbuf = sbuf.Take(sbuf.Length - 1).ToArray
                     End If

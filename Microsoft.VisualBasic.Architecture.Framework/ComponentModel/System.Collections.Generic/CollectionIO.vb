@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Collection IO extensions
@@ -19,11 +20,11 @@ Public Module CollectionIO
     Public Function ReadJSON(type As Type, path As String, encoding As Encoding) As IEnumerable
         Dim text As String = path.ReadAllText(encoding)
         type = type.MakeArrayType
-        Return DirectCast(Serialization.JsonContract.LoadObject(text, type), IEnumerable)
+        Return DirectCast(JsonContract.LoadObject(text, type), IEnumerable)
     End Function
 
     Public Function SaveJSON(obj As IEnumerable, path As String, encoding As Encoding) As Boolean
-        Return Serialization.GetJson(obj, obj.GetType).SaveTo(path, encoding)
+        Return GetJson(obj, obj.GetType).SaveTo(path, encoding)
     End Function
 
     Public Function SaveXml(obj As IEnumerable, path As String, encoding As Encoding) As Boolean

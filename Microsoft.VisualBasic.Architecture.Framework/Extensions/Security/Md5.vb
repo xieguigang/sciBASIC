@@ -30,7 +30,7 @@ Namespace SecurityString
         ''' <summary>
         ''' Gets the hashcode of the input string. (<paramref name="input"/> => <see cref="MD5Hash.GetMd5Hash"/> => <see cref="MD5Hash.ToLong(String)"/>)
         ''' </summary>
-        ''' <param name="input"></param>
+        ''' <param name="input">任意字符串</param>
         ''' <returns></returns>
         <ExportAPI("GetHashCode", Info:="Gets the hashcode of the input string.")>
         Public Function GetHashCode(input As String) As Long
