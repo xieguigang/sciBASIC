@@ -30,6 +30,7 @@ Namespace Language
     ''' The base class object in VisualBasic
     ''' </summary>
     Public Class ClassObject
+        Implements IClassObject
 
         ''' <summary>
         ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
@@ -46,7 +47,7 @@ Namespace Language
         ''' but it will prevent your class from being treated as simpleContent. I know it's a 
         ''' dirty workaround, but I see no other easy way...
         ''' </remarks>
-        <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps
+        <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps Implements IClassObject.Extension
 
         ''' <summary>
         ''' Get dynamics property value.

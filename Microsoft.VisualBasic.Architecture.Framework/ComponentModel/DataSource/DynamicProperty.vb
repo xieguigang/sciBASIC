@@ -38,7 +38,7 @@ Namespace ComponentModel.DataSourceModel
         ''' The instance object for this extension property
         ''' </summary>
         ''' <returns></returns>
-        Public Property obj As ClassObject
+        Public Property obj As IClassObject
 
         ''' <summary>
         ''' Custom property value.(value generated based on the extension property host <see cref="obj"/>)
@@ -63,7 +63,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function SetValue(value As T) As ClassObject
+        Public Function SetValue(value As T) As IClassObject
             Call __set(value)
             Return obj
         End Function
@@ -85,13 +85,13 @@ Namespace ComponentModel.DataSourceModel
             Return Value.GetJson
         End Function
 
-        Public Shared Function GetValue(Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+        Public Shared Function GetValue(Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
             Dim value As Object = x.Extension.DynamicHash(name)
             Dim pv As PropertyValue(Of T) = DirectCast(value, PropertyValue(Of T))
             Return pv
         End Function
 
-        Public Shared Sub SetValue(Of Cls As ClassObject)(x As Cls, name As String, value As T)
+        Public Shared Sub SetValue(Of Cls As IClassObject)(x As Cls, name As String, value As T)
             Dim pvo As Object = x.Extension.DynamicHash(name)
             Dim pv As PropertyValue(Of T) = DirectCast(pvo, PropertyValue(Of T))
             pv.Value = value
@@ -104,7 +104,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="x"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Shared Function [New](Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+        Public Shared Function [New](Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
             Dim value As New PropertyValue(Of T)()
             x.Extension.DynamicHash.Value(name) = value
             value.obj = x
@@ -118,7 +118,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="x"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Shared Function Read(Of Cls As ClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+        Public Shared Function Read(Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
             If x.Extension Is Nothing Then
                 x.Extension = New ExtendedProps
             End If
@@ -129,7 +129,7 @@ Namespace ComponentModel.DataSourceModel
             Return DirectCast(prop, PropertyValue(Of T))
         End Function
 
-        Public Shared Function Read(Of Cls As ClassObject)(x As Cls, pm As MethodBase) As PropertyValue(Of T)
+        Public Shared Function Read(Of Cls As IClassObject)(x As Cls, pm As MethodBase) As PropertyValue(Of T)
             Return Read(Of Cls)(x, pm.Name)
         End Function
     End Class
