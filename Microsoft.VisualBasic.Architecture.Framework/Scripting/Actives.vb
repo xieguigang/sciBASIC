@@ -46,13 +46,16 @@ Namespace Scripting
             If type.Equals(GetType(Date)) OrElse type.Equals(GetType(DateTime)) Then
                 Return Now
             End If
-            If ToStrings.ContainsKey(type) Then
-                Return 100.0R
+            If __examples.ContainsKey(type) Then
+                Return __examples(type)
             End If
             If type.IsInheritsFrom(GetType(Array)) Then
                 Dim e As Object = type.GetElementType.__active
-                Dim array As Array = System.Array.CreateInstance(type.GetElementType, 1)
-                array.SetValue(e, Scan0)
+                Dim array As Array =
+                    System.Array.CreateInstance(type.GetElementType, 1)
+
+                Call array.SetValue(e, Scan0)
+
                 Return array
             End If
 
@@ -75,5 +78,24 @@ Namespace Scripting
                 Return Nothing
             End Try
         End Function
+
+        ReadOnly __examples As IReadOnlyDictionary(Of Type, Object) =
+            New Dictionary(Of Type, Object) From {
+ _
+                {GetType(Double), 0R},
+                {GetType(Double?), 0R},
+                {GetType(Single), 0!},
+                {GetType(Single?), 0!},
+                {GetType(Integer), 0},
+                {GetType(Integer?), 0},
+                {GetType(Long), 0L},
+                {GetType(Long?), 0L},
+                {GetType(Short), 0S},
+                {GetType(Short?), 0S},
+                {GetType(Byte), 0},
+                {GetType(SByte), 0},
+                {GetType(Boolean), True},
+                {GetType(Decimal), 0@}
+        }
     End Module
 End Namespace
