@@ -14,16 +14,28 @@ Namespace Scripting
 
             Call sb.AppendLine($"**Decalre**:  _{type.FullName}_")
             Call sb.AppendLine("Example: ")
+            Call sb.AppendLine("```json")
             Call sb.AppendLine(Active(type))
+            Call sb.AppendLine("```")
 
             Return sb.ToString
         End Function
 
+        ''' <summary>
+        ''' Display the json of the target type its instance object.
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Public Function Active(type As Type) As String
             Dim obj As Object = type.__active
             Return GetJson(obj, type)
         End Function
 
+        ''' <summary>
+        ''' Creates the example instance object for the example
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension> Private Function __active(type As Type) As Object
             If type.Equals(GetType(String)) Then
                 Return type.FullName
@@ -35,7 +47,7 @@ Namespace Scripting
                 Return Now
             End If
             If ToStrings.ContainsKey(type) Then
-                Return Nothing
+                Return 100.0R
             End If
             If type.IsInheritsFrom(GetType(Array)) Then
                 Dim e As Object = type.GetElementType.__active
@@ -44,18 +56,24 @@ Namespace Scripting
                 Return array
             End If
 
-            Dim obj As Object = Activator.CreateInstance(type)
+            Try
+                Dim obj As Object = Activator.CreateInstance(type)
 
-            For Each prop As PropertyInfo In type.GetProperties.Where(
-                Function(x) x.CanWrite AndAlso
-                x.GetIndexParameters.IsNullOrEmpty)
+                For Each prop As PropertyInfo In type.GetProperties.Where(
+                    Function(x) x.CanWrite AndAlso
+                    x.GetIndexParameters.IsNullOrEmpty)
 
-                Dim value As Object = prop.PropertyType.__active
+                    Dim value As Object = prop.PropertyType.__active
 
-                Call prop.SetValue(obj, value)
-            Next
+                    Call prop.SetValue(obj, value)
+                Next
 
-            Return obj
+                Return obj
+            Catch ex As Exception
+                ex = New Exception(type.FullName, ex)
+                Call App.LogException(ex)
+                Return Nothing
+            End Try
         End Function
     End Module
 End Namespace

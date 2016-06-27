@@ -2,9 +2,11 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.SoftwareToolkits
 
@@ -67,6 +69,18 @@ Namespace CommandLine.Reflection
 
             For Each CmdlEntry As APIEntryPoint In App.Values
                 sb.AppendLine(CmdlEntry.HelpInformation(md:=True))
+
+                If CmdlEntry.ParameterInfo.Count > 0 Then
+                    Call sb.AppendLine("#### Accepted Types")
+
+                    For Each param As NamedValue(Of ParameterInfo) In CmdlEntry.ParameterInfo
+                        Call sb.AppendLine("##### " & param.Name)
+
+                        For Each pType As Type In param.x.AcceptTypes.SafeQuery
+                            Call sb.AppendLine(Actives.DisplType(pType))
+                        Next
+                    Next
+                End If
             Next
 
             Return sb.ToString
