@@ -4,13 +4,13 @@ Imports System.Runtime.InteropServices
 ' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
-<Assembly: AssemblyTitle("MUI.Themes.Symlinker")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("License Manager for VisualBasic source code")>
+<Assembly: AssemblyDescription("License Manager for VisualBasic source code")>
 <Assembly: AssemblyConfiguration("")>
-<Assembly: AssemblyCompany("Charles Milette")>
-<Assembly: AssemblyProduct("MUI.Themes.Symlinker")>
-<Assembly: AssemblyCopyright("Copyright ©  2015")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("VisualBasic")>
+<Assembly: AssemblyCopyright("Copyright © GPL3 2016")>
+<Assembly: AssemblyTrademark("VisualBasic")>
 <Assembly: AssemblyCulture("")>
 
 ' Setting ComVisible to false makes the types in this assembly not visible

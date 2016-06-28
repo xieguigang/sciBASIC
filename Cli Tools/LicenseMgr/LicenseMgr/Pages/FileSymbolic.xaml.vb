@@ -40,23 +40,20 @@ Namespace Pages
             If BrowsedFile.Text = "You haven't selected a source yet." Then
                 ModernDialog.ShowMessage("You didn't choose a source. Please do it.", "Oops!", MessageBoxButton.OK)
             Else
-                Dim CatchException As Boolean = False
                 Try
+                    Call SoftwareToolkits.LicenseMgr.Insert(BrowsedFile.Text, info)
+                    BrowsedFile.Text = "You haven't selected a source yet."
+                    ModernDialog.ShowMessage("License information applied success.", "Success!", MessageBoxButton.OK)
+                Catch ex As Exception
+                    ex = New Exception(BrowsedFile.Text, ex)
 
+                    Call Microsoft.VisualBasic.App.LogException(ex)
 
-
-                Catch generatedExceptionName As Exception
-                    CatchException = True
-                End Try
-                If CatchException = True Then
                     Dim OldColor As Color = AppearanceManager.Current.AccentColor
                     AppearanceManager.Current.AccentColor = Color.FromRgb(&HE5, &H14, &H0)
-                    ModernDialog.ShowMessage("There was an error creating the symbolic link! Probably because you are trying to create a symbolic link in an non-NTFS drive.", "Oops!", MessageBoxButton.OK)
+                    ModernDialog.ShowMessage(ex.ToString, "Oops!", MessageBoxButton.OK)
                     AppearanceManager.Current.AccentColor = OldColor
-                Else
-                    BrowsedFile.Text = "You haven't selected a source yet."
-                    ModernDialog.ShowMessage("The symbolic link was created with success.", "Success!", MessageBoxButton.OK)
-                End If
+                End Try
             End If
         End Sub
 

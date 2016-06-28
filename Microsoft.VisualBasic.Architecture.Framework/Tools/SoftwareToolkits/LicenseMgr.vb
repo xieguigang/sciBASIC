@@ -4,6 +4,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 
 Namespace SoftwareToolkits
 
@@ -107,7 +108,7 @@ THE SOFTWARE.",
             Call sb.AppendLine("    ' Author:")
             Call sb.AppendLine("    ' ")
 
-            For Each author As NamedValue(Of String) In info.Authors
+            For Each author As NamedValue(Of String) In info.Authors.SafeQuery
                 Call sb.AppendLine($"    '       {author.Name} ({author.x})")
             Next
             Call sb.AppendLine("    ' ")
