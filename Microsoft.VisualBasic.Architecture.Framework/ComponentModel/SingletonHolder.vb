@@ -44,6 +44,10 @@ Imports System.Collections
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' An Interface for the SingletonHolder Class.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class SingletonHolder(Of T As New)
 
         Shared m_instance As T
