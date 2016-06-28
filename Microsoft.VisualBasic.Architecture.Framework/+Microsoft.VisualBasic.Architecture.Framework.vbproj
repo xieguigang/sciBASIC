@@ -405,6 +405,7 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
