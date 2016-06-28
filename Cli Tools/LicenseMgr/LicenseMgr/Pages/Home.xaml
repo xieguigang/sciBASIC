@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Pages.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <StackPanel Orientation="Horizontal" x:Key="admin">
+            <Image Source="/Assets/admin.png" />
+            <TextBlock Text="    Restart as administrator" />
+        </StackPanel>
+    </UserControl.Resources>
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <mui:BBCodeBlock BBCode="This utility is inspired by [url=https://github.com/amd989/Symlinker]Symbolic Link Creator[/url] with the goal to obtain a better UI and no console window popping out. Symlinker was itself based on the idea of a GUI for mklink, Microsoft's tool for managing symbolink links, junction points and hardlinks." />
+                <TextBlock />
+                <TextBlock />
+                <TextBlock />
+                <TextBlock />
+                <mui:BBCodeBlock BBCode="Note: If you want to create symbolic links or/and write in a place you can't usually (Windows Folder, other user's folders, etc...), you need to restart the program as administrator." Name="UACNote" />
+                <TextBlock />
+                <Button Click="Admin_Rights" Name="UAC" Initialized="UAC_Initialized" HorizontalAlignment="Left" Content="{StaticResource admin}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

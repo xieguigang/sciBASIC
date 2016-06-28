@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Content.About"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <TextBlock Text="ABOUT" Style="{StaticResource Heading2}" />
+                <mui:BBCodeBlock BBCode="Based on [url=https://github.com/amd989/Symlinker]this project[/url]." />
+                <mui:BBCodeBlock BBCode="Using [url=https://github.com/charlesmilette/MUI.Themes]this template[/url]." />
+                <mui:BBCodeBlock BBCode="The icon comes from [url=https://github.com/alecive/FlatWoken]here[/url]." />
+                <mui:BBCodeBlock BBCode="You can go to the [url=https://github.com/charlesmilette/MUI.Themes.Symlinker]GitHub page[/url] to get the source code." />
+                <mui:BBCodeBlock BBCode="The junction point creator comes from [url=http://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET]here[/url]." />
+                <mui:BBCodeBlock BBCode="The symbolic link creator comes from [url=http://troyparsons.com/blog/2012/03/symbolic-links-in-c-sharp/]here[/url]." />
+                <mui:BBCodeBlock BBCode="The admin functions comes from [url=http://www.codeproject.com/Articles/18509/Add-a-UAC-shield-to-a-button-when-elevation-is-req]here[url]." />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
