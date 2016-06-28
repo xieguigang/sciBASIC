@@ -1,4 +1,31 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "ddbea86eb3c64f71f37ee77825b2a70d, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -103,35 +130,7 @@ THE SOFTWARE.",
         Public Function AddRegion(src As String, info As LicenseInfo, file As String) As String
             Dim sb As New StringBuilder
 
-            Call sb.AppendLine($"#Region ""{SecurityString.GetMd5Hash(src)}, {file}""")
-            Call sb.AppendLine()
-            Call sb.AppendLine("    ' Author:")
-            Call sb.AppendLine("    ' ")
-
-            For Each author As NamedValue(Of String) In info.Authors.SafeQuery
-                Call sb.AppendLine($"    '       {author.Name} ({author.x})")
-            Next
-            Call sb.AppendLine("    ' ")
-            Call sb.AppendLine("    ' " & info.Copyright)
-            Call sb.AppendLine("    ' ")
-            Call sb.AppendLine("    ' ")
-            Call sb.AppendLine("    ' " & info.Title)
-            Call sb.AppendLine("    ' ")
-
-            For Each line As String In info.Brief.lTokens
-                Call sb.AppendLine("    ' " & line)
-            Next
-
-            Call sb.AppendLine()
-            Call sb.AppendLine($"#End Region")
-            Call sb.AppendLine()
-
-            Call sb.AppendLine(src)
-
-            Return sb.ToString
-        End Function
-
-        Const Region As String = "#Region "".+?\.vb"".+?#End Region"
+            Call sb.AppendLine($""
 
         ''' <summary>
         ''' 
