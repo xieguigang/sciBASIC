@@ -11,7 +11,8 @@
             <StackPanel MinWidth="200">
                 <TextBlock Text="ABOUT" Style="{StaticResource Heading2}" />
                 <mui:BBCodeBlock BBCode="Source code license manager for Microsoft VisualBasic." />
-                <mui:BBCodeBlock BBCode="View on github: [url=https://github.com/xieguigang/VisualBasic_AppFramework]https://github.com/xieguigang/VisualBasic_AppFramework[/url]." />
+                <mui:BBCodeBlock BBCode="Author: asuka ([url=mailto://amethyst.asuka@gcmodeller.org]amethyst.asuka@gcmodeller.org[/url])" />
+                <mui:BBCodeBlock BBCode="View on github: [url=https://github.com/amethyst-asuka/VisualBasic_AppFramework]https://github.com/amethyst-asuka/VisualBasic_AppFramework[/url]." />
             </StackPanel>
         </ScrollViewer>
     </Grid>
