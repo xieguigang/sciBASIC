@@ -102,7 +102,7 @@ THE SOFTWARE.",
         Public Function AddRegion(src As String, info As LicenseInfo, file As String) As String
             Dim sb As New StringBuilder
 
-            Call sb.AppendLine($"#Region ""{file}""")
+            Call sb.AppendLine($"#Region ""{SecurityString.GetMd5Hash(src)}, {file}""")
             Call sb.AppendLine()
             Call sb.AppendLine("    ' Author:")
             Call sb.AppendLine("    ' ")
@@ -165,7 +165,7 @@ THE SOFTWARE.",
 
     ' Here is the example:
 
-#Region "./Tools/SoftwareToolkits/LicenseMgr.vb"
+#Region "b77a5c561934e089; ./Tools/SoftwareToolkits/LicenseMgr.vb"
 
     ' Author:                                                                         <-- authors
     '

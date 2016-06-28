@@ -18,6 +18,11 @@ Namespace SecurityString
 
         ReadOnly __hashProvider As New Md5HashProvider
 
+        ''' <summary>
+        ''' Calculate md5 hash value for the input string.
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
         <ExportAPI("Md5")>
         <Extension>
         Public Function GetMd5Hash(input As String) As String
