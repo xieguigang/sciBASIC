@@ -1,4 +1,4 @@
-﻿#Region "e76f1193d42e18e607c4db765e1532fc, ..\LicenseMgr\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::f1e33e0db01e39ee1a793c1ea437ad69, ..\Cli Tools\LicenseMgr\LicenseMgr\LicenseInfo.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Module LicenseInfo
     End Property
 
 End Module
-

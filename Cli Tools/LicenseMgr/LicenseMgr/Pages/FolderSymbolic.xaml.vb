@@ -1,4 +1,4 @@
-﻿#Region "7ff5c927c671846584b579c5c0dc7ac5, ..\LicenseMgr\Pages\FolderSymbolic.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::70162fae1baa774db6ade91960dc314a, ..\Cli Tools\LicenseMgr\LicenseMgr\Pages\FolderSymbolic.xaml.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Namespace Pages
         End Sub
     End Class
 End Namespace
-

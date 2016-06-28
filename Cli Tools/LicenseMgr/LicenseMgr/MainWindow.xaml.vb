@@ -1,4 +1,4 @@
-﻿#Region "f6d8e57a0c1003082f9ce893b1fb7c19, ..\LicenseMgr\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::00ba1cbad729a3e36eb485042bfc7cd9, ..\Cli Tools\LicenseMgr\LicenseMgr\MainWindow.xaml.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Partial Public Class MainWindow
         '  End If
     End Sub
 End Class
-

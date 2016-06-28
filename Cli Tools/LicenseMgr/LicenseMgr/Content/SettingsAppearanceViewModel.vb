@@ -1,4 +1,4 @@
-﻿#Region "e545936f918c57b7cb3f479b4feff4a6, ..\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
+﻿#Region "Microsoft.VisualBasic::a05f26bfc982a89c962372f5c49f3ced, ..\Cli Tools\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
 
     ' Author:
     ' 
@@ -235,4 +235,3 @@ Namespace Content
 		End Property
 	End Class
 End Namespace
-

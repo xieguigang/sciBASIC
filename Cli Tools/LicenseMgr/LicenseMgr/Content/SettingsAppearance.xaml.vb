@@ -1,4 +1,4 @@
-﻿#Region "81495ffdcf67c5df5a3457894ee0b231, ..\LicenseMgr\Content\SettingsAppearance.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::e15718872eca7d47151e4da3bb91d1c2, ..\Cli Tools\LicenseMgr\LicenseMgr\Content\SettingsAppearance.xaml.vb"
 
     ' Author:
     ' 
@@ -41,4 +41,3 @@ Namespace Content
         End Sub
     End Class
 End Namespace
-

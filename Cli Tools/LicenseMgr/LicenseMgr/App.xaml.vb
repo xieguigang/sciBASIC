@@ -1,4 +1,4 @@
-﻿#Region "88d0babf59e7ff0d4032da8d0bf5373d, ..\LicenseMgr\App.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::079f706ffa34e291531cf6e27e7f73c2, ..\Cli Tools\LicenseMgr\LicenseMgr\App.xaml.vb"
 
     ' Author:
     ' 
@@ -33,4 +33,3 @@ Imports System.Windows
 Public Partial Class App
 	Inherits Application
 End Class
-

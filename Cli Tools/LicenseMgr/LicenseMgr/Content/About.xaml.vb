@@ -1,4 +1,4 @@
-﻿#Region "2443c37f532fe7d23c10e7d7a2704f85, ..\LicenseMgr\Content\About.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::07604a532313f25e44bc1f81ef147c98, ..\Cli Tools\LicenseMgr\LicenseMgr\Content\About.xaml.vb"
 
     ' Author:
     ' 
@@ -38,4 +38,3 @@ Namespace Content
         End Sub
     End Class
 End Namespace
-

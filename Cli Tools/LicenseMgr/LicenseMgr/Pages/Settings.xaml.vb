@@ -1,4 +1,4 @@
-﻿#Region "6c177a9981293548340135e754ceff58, ..\LicenseMgr\Pages\Settings.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::2b1c7ee5630e29026cb8c58af5c4584f, ..\Cli Tools\LicenseMgr\LicenseMgr\Pages\Settings.xaml.vb"
 
     ' Author:
     ' 
@@ -38,4 +38,3 @@ Namespace Pages
 		End Sub
 	End Class
 End Namespace
-
