@@ -1,4 +1,4 @@
-﻿#Region "8968ddebb58dc3d3b88ce65a9bc59479, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\WindowsServices.vb"
+﻿#Region "0d9deedf8cb424cf5c384c61b491e6bb, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\WindowsServices.vb"
 
     ' Author:
     ' 

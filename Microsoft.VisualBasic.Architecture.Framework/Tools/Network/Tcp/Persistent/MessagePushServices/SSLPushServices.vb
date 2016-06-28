@@ -1,4 +1,4 @@
-﻿#Region "73c330af60b6ca6d6916085fe73995d9, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb"
+﻿#Region "04dff02171134f5a7069b687a7b067b5, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb"
 
     ' Author:
     ' 

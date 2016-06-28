@@ -1,4 +1,4 @@
-﻿#Region "20ae844c3f07a3ae7606da6e1f13b3ce, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
+﻿#Region "72343f554ecb817bdd5e7b9b49445317, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Scripting.TokenIcer
 

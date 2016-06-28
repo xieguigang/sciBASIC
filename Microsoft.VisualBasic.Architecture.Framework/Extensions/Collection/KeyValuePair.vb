@@ -1,4 +1,4 @@
-﻿#Region "c8c5fd72da28b75a6858bc2c21a1bd3a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "8dc93354405e16501acd0c37c8c4b5aa, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Public Module KeyValuePairExtensions
         Return list
     End Function
 End Module
-

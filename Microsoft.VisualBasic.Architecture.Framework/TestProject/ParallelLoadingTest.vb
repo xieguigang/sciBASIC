@@ -1,4 +1,4 @@
-﻿#Region "07b96f625f9b835b910ddc4fdf2bf140, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
+﻿#Region "a464b129e7eaf4962acfb515d1e1e1a9, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
 
 #End Region
 
-
 <Serializable>
 Public Class ParallelLoadingTest
 
@@ -38,4 +37,3 @@ Public Class ParallelLoadingTest
         Return {New ParallelLoadingTest With {.ddddd = RandomDouble(), .fffd = Now}}
     End Function
 End Class
-

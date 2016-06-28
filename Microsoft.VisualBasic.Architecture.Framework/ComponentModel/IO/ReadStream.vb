@@ -1,4 +1,4 @@
-﻿#Region "88d9d765f1a32c2bb7579870ec5d80b2, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\ReadStream.vb"
+﻿#Region "9f26531ddd9c78d3e984b007f6127b54, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\ReadStream.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "23f2c6efafac03c4a3828ccf1edf370c, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ModelBase.vb"
+﻿#Region "ab4ee86170442ba8475e7926c2a04009, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ModelBase.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace ComponentModel.Settings
 

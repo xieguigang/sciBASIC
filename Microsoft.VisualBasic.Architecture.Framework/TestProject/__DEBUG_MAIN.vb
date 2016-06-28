@@ -1,4 +1,4 @@
-﻿#Region "36bf2117b0ac4085d93487eb2ecb0c8b, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "d40a763ec63994703f7ee739b55ccac0, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,11 @@ Module __DEBUG_MAIN
     Function Main(args As String()) As Integer
 
         Dim iii = SoftwareToolkits.LicenseMgr.Template
-        iii.RootDIR = "C:\Users\ameth\Source\Repos\VisualBasic_AppFramework\Cli Tools\Cluster"
+        iii.RootDIR = "G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework"
+
+
+        Call SoftwareToolkits.LicenseMgr.Insert("G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb", iii)
+
         Dim fff = SoftwareToolkits.LicenseMgr.Inserts(iii)
 
         Call this.__DEBUG_ECHO
@@ -271,5 +275,3 @@ End Class
         <DumpNode> Public Property safsdfsdf As T3
         <DumpNode> Protected ffff As String = Now.ToString
     End Class
-
-

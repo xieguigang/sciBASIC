@@ -1,4 +1,4 @@
-﻿#Region "e6165da4e99913af66b99f85c24fe2d6, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpAsynchronousServicesSocket.vb"
+﻿#Region "3733e0d046def22732cca75e97803aad, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpAsynchronousServicesSocket.vb"
 
     ' Author:
     ' 
@@ -394,4 +394,3 @@ Namespace WrapperClassTools.Net
 
     End Class 'AsynchronousSocketListener
 End Namespace
-

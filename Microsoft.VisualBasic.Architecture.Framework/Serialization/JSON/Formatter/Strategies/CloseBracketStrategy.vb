@@ -1,4 +1,4 @@
-﻿#Region "b16edfca3349c8752e1c42199b2a1fa4, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
+﻿#Region "116051cd787bc31e0721e7b25ec52fde, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
         End Property
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "55242ebfcb804f2c18b7183f3c76dd10, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevExtensions.vb"
+﻿#Region "793ad88e567b4f8b825d81dabcbc270c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevExtensions.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Module LevExtensions
         Next
     End Sub
 End Module
-

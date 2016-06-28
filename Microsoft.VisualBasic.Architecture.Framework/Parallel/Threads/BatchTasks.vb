@@ -1,4 +1,4 @@
-﻿#Region "9a4314998b5656b696f5303fad5f0796, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
+﻿#Region "e0fe0c4e579e513075dfe3258ab26403, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
 
     ' Author:
     ' 

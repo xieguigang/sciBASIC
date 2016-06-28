@@ -1,4 +1,4 @@
-﻿#Region "687c418b9fefef4ea26a28415abb3177, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "c795d905d61799c11186b6811726e837, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Public Module LargeTextFile
         Return Merged
     End Function
 End Module
-

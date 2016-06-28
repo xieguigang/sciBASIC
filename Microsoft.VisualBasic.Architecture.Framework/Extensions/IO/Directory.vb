@@ -1,4 +1,4 @@
-﻿#Region "f358c61c028f5c216f0b413b2bf0fb14, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Directory.vb"
+﻿#Region "6a3dc7d89d5bbbaef0f55c481c6a27f2, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Directory.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace FileIO
 

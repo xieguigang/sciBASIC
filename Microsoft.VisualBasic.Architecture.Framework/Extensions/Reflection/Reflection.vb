@@ -1,4 +1,4 @@
-﻿#Region "17bb49333783c962df83b92d9a28a127, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "0969ae75b7c879f87f91b9188d91d2b7, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -571,4 +571,3 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 #End If
 End Module
-

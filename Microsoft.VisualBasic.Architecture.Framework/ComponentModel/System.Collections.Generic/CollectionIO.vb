@@ -1,4 +1,4 @@
-﻿#Region "3bfaf851ce8ebc10a04b5e64c9e25263, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\CollectionIO.vb"
+﻿#Region "9e5e92b3df10402c9e30fc179e68e169, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\CollectionIO.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Public Module CollectionIO
         Return cls
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "ddbea86eb3c64f71f37ee77825b2a70d, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb"
+﻿#Region "2ed868acee4cc0d70855e60f5af57823, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb"
 
     ' Author:
     ' 
@@ -117,7 +117,7 @@ THE SOFTWARE.",
         End Function
 
         Public Function RemoveRegion(src As String) As String
-            Dim region As String = Regex.Match(src, LicenseMgr.Region, RegexICSng).Value
+            Dim region As String = Regex.Match(src, LicenseMgr.Region, RegexOptions.Singleline).Value
 
             If Not String.IsNullOrEmpty(region) Then
                 src = src.Replace(region, "")
@@ -130,7 +130,35 @@ THE SOFTWARE.",
         Public Function AddRegion(src As String, info As LicenseInfo, file As String) As String
             Dim sb As New StringBuilder
 
-            Call sb.AppendLine($""
+            Call sb.AppendLine($"#Region ""{SecurityString.GetMd5Hash(src)}, {file}""")
+            Call sb.AppendLine()
+            Call sb.AppendLine("    ' Author:")
+            Call sb.AppendLine("    ' ")
+
+            For Each author As NamedValue(Of String) In info.Authors.SafeQuery
+                Call sb.AppendLine($"    '       {author.Name} ({author.x})")
+            Next
+            Call sb.AppendLine("    ' ")
+            Call sb.AppendLine("    ' " & info.Copyright)
+            Call sb.AppendLine("    ' ")
+            Call sb.AppendLine("    ' ")
+            Call sb.AppendLine("    ' " & info.Title)
+            Call sb.AppendLine("    ' ")
+
+            For Each line As String In info.Brief.lTokens
+                Call sb.AppendLine("    ' " & line)
+            Next
+
+            Call sb.AppendLine()
+            Call sb.AppendLine($"#End Region")
+            Call sb.AppendLine()
+
+            Call sb.AppendLine(src)
+
+            Return sb.ToString
+        End Function
+
+        Const Region As String = "^#Region "".+?\.vb"".+?#End Region"
 
         ''' <summary>
         ''' 

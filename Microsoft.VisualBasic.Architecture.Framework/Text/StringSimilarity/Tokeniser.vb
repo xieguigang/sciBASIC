@@ -1,4 +1,4 @@
-﻿#Region "19ed1258713d3eb569665fe92737ed7b, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Tokeniser.vb"
+﻿#Region "3dcbe810bd4d9673f2aeeac55b4407af, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Tokeniser.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "62157400e9e4b33b2ea38438f7737093, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Namespace.vb"
+﻿#Region "a47ecca4ceceaba3381b6b51d9b8184b, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Namespace.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "fe281475dfea92b4b00ba52a01899689, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
+﻿#Region "08e39f2928a78ca465bd81b1a83ed0ab, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,3 @@ Namespace Net.Protocols.ContentTypes
         End Sub
     End Module
 End Namespace
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "fe11c9c6f1b3e4eae256cf8228d90fab, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\ICharacterStrategy.vb"
+﻿#Region "e5a7ba64525ce64c0a225cea14e5f7d8, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\ICharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -33,4 +33,3 @@ Namespace Serialization.JSON.Formatter.Internals
         ReadOnly Property ForWhichCharacter() As Char
     End Interface
 End Namespace
-

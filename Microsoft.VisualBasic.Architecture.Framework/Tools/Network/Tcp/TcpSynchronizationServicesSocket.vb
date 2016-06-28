@@ -1,4 +1,4 @@
-﻿#Region "a87421ba32e333bf7849dd916c569118, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb"
+﻿#Region "1fb927e5b3c6bb935e954ce53c76e0a8, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
@@ -417,4 +417,3 @@ Namespace Net
 
     End Class
 End Namespace
-

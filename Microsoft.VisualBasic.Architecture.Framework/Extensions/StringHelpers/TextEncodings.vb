@@ -1,4 +1,4 @@
-﻿#Region "2833f6b5a1cedc97411266ee8384b2f8, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\TextEncodings.vb"
+﻿#Region "da07161ff931829ffb0cfd4188ab81b8, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Module TextEncodings
         Return tmp.SaveTo(path, encoding.GetEncodings)
     End Function
 End Module
-

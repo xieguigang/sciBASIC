@@ -1,4 +1,4 @@
-﻿#Region "97ca2704b56b30ee133d704e26676a56, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
+﻿#Region "5bbf92a90640a22d026eb7013b77ff1b, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -88,4 +88,3 @@ Public Module Base64Codec
         Return Base64Op
     End Function
 End Module
-

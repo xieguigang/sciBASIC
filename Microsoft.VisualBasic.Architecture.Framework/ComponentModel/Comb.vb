@@ -1,4 +1,4 @@
-﻿#Region "bdaafd9f7a060556fd6c97d9eb09b898, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Comb.vb"
+﻿#Region "0b69a6d8739a258f29a036d465c785f3, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Comb.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 

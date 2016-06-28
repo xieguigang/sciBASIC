@@ -1,4 +1,4 @@
-﻿#Region "6796bd4e1f19cef72fdfacc7b4e30dd6, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb"
+﻿#Region "d83ad9bdcff7d5c42646f19c3608ace8, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Namespace Terminal.STDIO__
         Function Read() As Integer
     End Interface
 End Namespace
-

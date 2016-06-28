@@ -1,4 +1,4 @@
-﻿#Region "6f850bd8ef422f0c6bf5ce77af309bf7, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb"
+﻿#Region "cdf4c954a9a64c89b7bceac052c991bd, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb"
 
     ' Author:
     ' 

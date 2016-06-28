@@ -1,4 +1,4 @@
-﻿#Region "5871a91459c115c959b88f23fa108ea5, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "19c73b16fe8cd5b911323a69c4285636, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 

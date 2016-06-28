@@ -1,4 +1,4 @@
-﻿#Region "bc719bdc98ef9bf8f0574d97b66f9b1d, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
+﻿#Region "5fc21762f647132d1d6f9df1ea161866, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Net.Http
 

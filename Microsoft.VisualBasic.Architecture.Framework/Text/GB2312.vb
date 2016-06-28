@@ -1,4 +1,4 @@
-﻿#Region "dd7a5d4a80dde73bb98ad50c587d9da9, ..\Microsoft.VisualBasic.Architecture.Framework\Text\GB2312.vb"
+﻿#Region "964cce72450aaf37094e053d9514ad04, ..\Microsoft.VisualBasic.Architecture.Framework\Text\GB2312.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ' http://www.tuicool.com/articles/3MbAJv
 ' C# 汉字转拼音(支持GB2312字符集中所有汉字)
@@ -1313,4 +1312,3 @@ Namespace Text
         End Function
     End Module
 End Namespace
-

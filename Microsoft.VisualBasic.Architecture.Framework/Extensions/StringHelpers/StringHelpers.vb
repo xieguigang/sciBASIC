@@ -1,4 +1,4 @@
-﻿#Region "3fceabcc19cee21481b43553cbae5203, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "f5b91455254db6e8f3918e0a345d4cbf, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -586,4 +586,3 @@ Public Module StringHelpers
         Return False
     End Function
 End Module
-

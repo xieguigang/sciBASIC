@@ -1,4 +1,4 @@
-﻿#Region "fdf44db2e8ce4cb17e261d7764670223, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\StackParser.vb"
+﻿#Region "db00f4d4152f244cd40df58e181097ae, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\StackParser.vb"
 
     ' Author:
     ' 
@@ -140,6 +140,3 @@ Namespace Scripting.TokenIcer
         End Sub
     End Module
 End Namespace
-
-
-

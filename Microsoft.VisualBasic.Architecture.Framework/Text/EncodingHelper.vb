@@ -1,4 +1,4 @@
-﻿#Region "f146eb409ac831c744a8808a2d6f5442, ..\Microsoft.VisualBasic.Architecture.Framework\Text\EncodingHelper.vb"
+﻿#Region "903417af861bd27830fee3a1ca4df537, ..\Microsoft.VisualBasic.Architecture.Framework\Text\EncodingHelper.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Namespace Text
         End Function
     End Class
 End Namespace
-

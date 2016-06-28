@@ -1,4 +1,4 @@
-﻿#Region "f26ba680d940df1ace4c57ecf30e619b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb"
+﻿#Region "c3fcc9a39fc606f3958191507f70b593, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Net
 Imports System.Net.Sockets

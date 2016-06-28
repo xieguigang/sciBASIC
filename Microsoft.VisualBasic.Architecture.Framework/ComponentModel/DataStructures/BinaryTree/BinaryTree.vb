@@ -1,4 +1,4 @@
-﻿#Region "aba976694f078e5a7af3c42a4948fb41, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\BinaryTree.vb"
+﻿#Region "9efafd88d4ec64175e9f4077b0181b97, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\BinaryTree.vb"
 
     ' Author:
     ' 
@@ -469,4 +469,3 @@ Namespace ComponentModel.DataStructures.BinaryTree
         End Function
     End Class
 End Namespace
-

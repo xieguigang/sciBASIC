@@ -1,4 +1,4 @@
-﻿#Region "7a554b084cad6faab7553e5029abde25, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
+﻿#Region "51cd44f234806b87e21bbcdce73fa16e, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
 
     ' Author:
     ' 
@@ -435,4 +435,3 @@ Public Module GZip
     '	End Sub
 End Module
 #End If
-

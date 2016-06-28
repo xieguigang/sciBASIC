@@ -1,4 +1,4 @@
-﻿#Region "c6f9be0a2da7a1cd6442c309d694d9ac, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Config.vb"
+﻿#Region "bed16b1e397ea631a1fd713523e4bbc1, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Config.vb"
 
     ' Author:
     ' 
@@ -69,6 +69,3 @@ Namespace Debugging
         End Function
     End Class
 End Namespace
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "ef794bf7c81b1795c772b03d5f8cd61b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
+﻿#Region "cb3a58e06d6f4da6c98c7f15c00c54a1, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System
 Imports System.Net

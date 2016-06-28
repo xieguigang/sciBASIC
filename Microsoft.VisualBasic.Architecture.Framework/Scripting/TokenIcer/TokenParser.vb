@@ -1,4 +1,4 @@
-﻿#Region "8701f6edbecf57c6622725185bb05d85, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\TokenParser.vb"
+﻿#Region "2a5167b91b96f68e56a93324a43e8db4, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\TokenParser.vb"
 
     ' Author:
     ' 
@@ -204,5 +204,3 @@ Namespace Scripting.TokenIcer
         End Function
     End Class
 End Namespace
-
-

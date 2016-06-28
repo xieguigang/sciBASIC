@@ -1,4 +1,4 @@
-﻿#Region "75369cb8c0993ecb788443d2f8cbd2e9, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\CBusyIndicator.vb"
+﻿#Region "553275ecb2953bb999ac550835684ae4, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\CBusyIndicator.vb"
 
     ' Author:
     ' 

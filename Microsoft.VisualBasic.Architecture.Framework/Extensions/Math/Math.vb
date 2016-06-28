@@ -1,4 +1,4 @@
-﻿#Region "004c21d37a9c8cfa25d89e9cdb337de3, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "983df9427684f7713c2ac96f72e8dcca, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -388,4 +388,3 @@ Public Module VBMathExtensions
         Return result
     End Function
 End Module
-

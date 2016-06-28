@@ -1,4 +1,4 @@
-﻿#Region "3cb6c45260d383f312c3741672ab5caa, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDeclaration.vb"
+﻿#Region "6d2d16b10a5c799f2cb940425076157c, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDeclaration.vb"
 
     ' Author:
     ' 

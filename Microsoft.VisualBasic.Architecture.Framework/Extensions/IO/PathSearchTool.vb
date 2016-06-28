@@ -1,4 +1,4 @@
-﻿#Region "b0790f26d034ecad33990c9e2ad32f9b, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "df6ec8597408a15c72583979f335da0b, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -824,4 +824,3 @@ Public Module ProgramPathSearchTool
         Return True
     End Function
 End Module
-

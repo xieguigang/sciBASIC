@@ -1,4 +1,4 @@
-﻿#Region "2e9ef2b5df29d4aa58c48dff4979a97a, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Invoke\InvokeHandler.vb"
+﻿#Region "6754968a35d790d85e4d1cae340e00bf, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Invoke\InvokeHandler.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 'Namespace CommandLine.InvokeEntry
 

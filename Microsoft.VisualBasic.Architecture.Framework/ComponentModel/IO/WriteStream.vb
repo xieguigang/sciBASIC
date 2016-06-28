@@ -1,4 +1,4 @@
-﻿#Region "bea891a36a69e22c25dac9ba470761d7, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\WriteStream.vb"
+﻿#Region "f7a9683b95b4da7c51aa8bca114ca26a, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\WriteStream.vb"
 
     ' Author:
     ' 

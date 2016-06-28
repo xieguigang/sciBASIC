@@ -1,4 +1,4 @@
-﻿#Region "1fcb4aef4d239de44380d52e0062661e, ..\Microsoft.VisualBasic.Architecture.Framework\Language\NET40_Compatible.vb"
+﻿#Region "ecc0a15c8157dbd43df6f7d31d041eca, ..\Microsoft.VisualBasic.Architecture.Framework\Language\NET40_Compatible.vb"
 
     ' Author:
     ' 

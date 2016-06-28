@@ -1,4 +1,4 @@
-﻿#Region "303b6ae834e3db3ba0c4e61e72fc2378, ..\Microsoft.VisualBasic.Architecture.Framework\LICENSE.vb"
+﻿#Region "e0b7e48e67fd5af4ff212c2a21aaab7e, ..\Microsoft.VisualBasic.Architecture.Framework\LICENSE.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Information about this VisualBasic App framework code module.
@@ -63,4 +62,3 @@ Public Module LICENSE
         Call System.Diagnostics.Process.Start("https://github.com/xieguigang/VisualBasic_AppFramework")
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "a796c5d6fab81bc2ee6badc8e1d6dc7b, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelTemplate.vb"
+﻿#Region "5f7806e3be017574758ccbbca8142932, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelTemplate.vb"
 
     ' Author:
     ' 
@@ -38,4 +38,3 @@ Module ParallelTemplate
         '   Call Socket.SendMessage(LoadResult.GetSerializeBuffer) '返回内存数据
     End Sub
 End Module
-

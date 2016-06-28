@@ -1,4 +1,4 @@
-﻿#Region "ae4ee08c61649210290afb2865a6c414, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\HashValue.vb"
+﻿#Region "d5170ee876e433f9c0a8511334ee641f, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\HashValue.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Structure HashValue : Implements sIdEnumerable
         Return hash
     End Operator
 End Structure
-

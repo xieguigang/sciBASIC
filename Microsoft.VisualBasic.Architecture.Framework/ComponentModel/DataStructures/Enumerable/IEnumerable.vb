@@ -1,4 +1,4 @@
-﻿#Region "84f72f3a9368b20fe7bb8a42e5fdfd87, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "2823789c34ac5d5be1dc933dfc244d8a, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Namespace ComponentModel.Collection.Generic
         ReadOnly Property Identity As String
     End Interface
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "0562534135ca09dc9c8df1fca8d927e3, ..\Microsoft.VisualBasic.Architecture.Framework\Text\UnbufferedStringReader.vb"
+﻿#Region "b79e4afc046df4d4e13ceb4c18f7d9f7, ..\Microsoft.VisualBasic.Architecture.Framework\Text\UnbufferedStringReader.vb"
 
     ' Author:
     ' 
@@ -194,4 +194,3 @@ Namespace Text
         End Property
     End Class
 End Namespace
-

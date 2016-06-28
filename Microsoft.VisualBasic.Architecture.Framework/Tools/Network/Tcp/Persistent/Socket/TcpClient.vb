@@ -1,4 +1,4 @@
-﻿#Region "2d60fcf479df04c0b3da5d84b1f32489, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Socket\TcpClient.vb"
+﻿#Region "d0326047897f507c9a27e0d5bfcda11f, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Socket\TcpClient.vb"
 
     ' Author:
     ' 
@@ -374,5 +374,3 @@ Namespace Net.Persistent.Socket
 
     End Class 'AsynchronousClient
 End Namespace
-
-

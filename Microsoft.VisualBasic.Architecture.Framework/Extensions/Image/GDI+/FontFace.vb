@@ -1,4 +1,4 @@
-﻿#Region "e4e4702773fece850ce529ba68957dc7, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "ce919a34e097f9d00f90cc674f0ca2f4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Imaging
 

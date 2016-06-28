@@ -1,4 +1,4 @@
-﻿#Region "c76637728f66607d60633fdf95618a12, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpClient.vb"
+﻿#Region "f1c0caa000c8f3e4892a1b1054f701c9, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpClient.vb"
 
     ' Author:
     ' 
@@ -233,5 +233,3 @@ EX_EXIT:            response = ""
         End Sub 'SendCallback
     End Class 'AsynchronousClient 
 End Namespace
-
-

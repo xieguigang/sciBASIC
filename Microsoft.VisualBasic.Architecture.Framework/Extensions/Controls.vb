@@ -1,4 +1,4 @@
-﻿#Region "1607ebb104b16a85c4ab5dacee9d02d9, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Controls.vb"
+﻿#Region "7002ff6109222f4cbbacb5f63026201e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Controls.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Public Class ExtendedProps : Inherits Dynamic.DynamicObject
         Return True
     End Function
 End Class
-

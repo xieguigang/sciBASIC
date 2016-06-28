@@ -1,4 +1,4 @@
-﻿#Region "05aac1c234a7fe2d96de63efe36224bf, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "f1d53c3ef9eef76ed163213437908bb4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -681,4 +681,3 @@ RETRY:      Return __downloadWebpage(url)
         Return ipResult
     End Function
 End Module
-

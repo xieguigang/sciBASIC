@@ -1,4 +1,4 @@
-﻿#Region "f749c9e3a0e076ede220e3233eb22f82, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
+﻿#Region "0cb0b5f3ac71dfe32b22c9539085ea71, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
 
     ' Author:
     ' 

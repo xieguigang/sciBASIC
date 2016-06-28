@@ -1,4 +1,4 @@
-﻿#Region "63e26c297409555ec1621b858b557f8f, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\wGetTools.vb"
+﻿#Region "3233674ce9a362af64f6394219df8a25, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\wGetTools.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.IO
 Imports System.Net

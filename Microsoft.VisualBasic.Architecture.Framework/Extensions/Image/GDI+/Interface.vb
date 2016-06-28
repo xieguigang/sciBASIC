@@ -1,4 +1,4 @@
-﻿#Region "59e2aa9d9717e51359db7348fa117a4c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "853ed348713d4f738ec7a45c4f8f129e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -4708,4 +4708,3 @@ Namespace Imaging
 
     End Class
 End Namespace
-

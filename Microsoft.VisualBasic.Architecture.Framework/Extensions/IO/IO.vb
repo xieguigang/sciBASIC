@@ -1,4 +1,4 @@
-﻿#Region "f109baabe64e3d96ab219a39531449ad, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "abef4298760d4110cb419167ca03e470, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Public Module IOExtensions
         Return rawStream.FlushStream(SavePath)
     End Function
 End Module
-

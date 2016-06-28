@@ -1,4 +1,4 @@
-﻿#Region "5afee1e5b51fa29cb3666c9ff66ba595, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
+﻿#Region "14b25fa7b7c72842c27891176396af38, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Function
     End Class
 End Namespace
-

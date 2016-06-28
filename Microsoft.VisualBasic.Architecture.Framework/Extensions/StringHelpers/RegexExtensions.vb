@@ -1,4 +1,4 @@
-﻿#Region "a7f86341067765b58540f9277ecee4f0, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "b0f81fd1d589d8cdf903b42bd4a28fec, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Public Module RegexExtensions
         Return LQuery
     End Function
 End Module
-

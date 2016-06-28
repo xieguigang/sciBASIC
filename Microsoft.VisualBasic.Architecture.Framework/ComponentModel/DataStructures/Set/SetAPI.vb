@@ -1,4 +1,4 @@
-﻿#Region "2f9e55945caf6bbdcb82b19a031737a4, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetAPI.vb"
+﻿#Region "dd9cd5c9bad8434945e09f46392fdac4, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetAPI.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Public Module SetAPI
         End Function
     End Structure
 End Module
-
