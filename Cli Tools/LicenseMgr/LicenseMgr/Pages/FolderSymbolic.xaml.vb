@@ -6,6 +6,7 @@ Imports System.Windows.Controls
 Imports System.Windows.Media
 'Imports Microsoft.VisualBasic.FileIO.SymLinker
 Imports Microsoft
+Imports Microsoft.VisualBasic.Serialization.JSON
 'Imports Microsoft.VisualBasic.Windows.Forms
 
 Namespace Pages
@@ -23,7 +24,7 @@ Namespace Pages
             BrowsedFolder.Text = "You haven't selected a source yet."
 
             Dim Browse As New System.Windows.Forms.FolderBrowserDialog()
-            Browse.Description = "Choose the original folder where the symbolic link will refer:"
+            Browse.Description = "Choose the original folder where to apply this license info:"
             Browse.RootFolder = System.Environment.SpecialFolder.Desktop
             Browse.ShowNewFolderButton = True
             Dim result As System.Windows.Forms.DialogResult = Browse.ShowDialog()
@@ -35,25 +36,32 @@ Namespace Pages
         Private Sub Symlink_Create(sender As Object, e As RoutedEventArgs)
             If BrowsedFolder.Text = "You haven't selected a source yet." Then
                 ModernDialog.ShowMessage("You didn't choose a source. Please do it.", "Oops!", MessageBoxButton.OK)
-
             Else
-                Dim CatchException As Boolean = False
                 Try
 
+                    info.RootDIR = BrowsedFolder.Text
 
+                    Dim failures = SoftwareToolkits.LicenseMgr.Inserts(info)
 
-                Catch generatedExceptionName As Exception
-                    CatchException = True
-                End Try
-                If CatchException = True Then
+                    If failures.Length > 0 Then
+                        Dim ex As New Exception("These files are write data failures!")
+                        ex = New Exception(failures.GetJson)
+                        Throw ex
+                    End If
+
+                    ModernDialog.ShowMessage("The source code license info applied success.", "Success!", MessageBoxButton.OK)
+                    BrowsedFolder.Text = "You haven't selected a source yet."
+
+                Catch ex As Exception
+
+                    ex = New Exception(BrowsedFolder.Text)
+                    Call Microsoft.VisualBasic.App.LogException(ex)
+
                     Dim OldColor As Color = AppearanceManager.Current.AccentColor
                     AppearanceManager.Current.AccentColor = Color.FromRgb(&HE5, &H14, &H0)
-                    ModernDialog.ShowMessage("There was an error creating the symbolic link! Probably because you are trying to create a symbolic link in an non-NTFS drive.", "Oops!", MessageBoxButton.OK)
+                    ModernDialog.ShowMessage(ex.ToString, "Oops!", MessageBoxButton.OK)
                     AppearanceManager.Current.AccentColor = OldColor
-                Else
-                    ModernDialog.ShowMessage("The symbolic link was created with success.", "Success!", MessageBoxButton.OK)
-                    BrowsedFolder.Text = "You haven't selected a source yet."
-                End If
+                End Try
             End If
         End Sub
 
