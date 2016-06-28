@@ -69,13 +69,6 @@ Public NotInheritable Class BingImage
     End Function
 
     Public Property UseBingImage As Boolean
-        Get
-
-        End Get
-        Set(value As Boolean)
-
-        End Set
-    End Property
 
     Public Shared Function GetUseBingImage(o As DependencyObject) As Boolean
 		Return CBool(o.GetValue(UseBingImageProperty))
