@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="489.248" Width="509.11">
     <UserControl.Resources>
         <StackPanel Orientation="Horizontal" x:Key="admin">
             <Image Source="/Assets/admin.png" />
@@ -15,15 +15,41 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <mui:BBCodeBlock BBCode="This utility is inspired by [url=https://github.com/amd989/Symlinker]Symbolic Link Creator[/url] with the goal to obtain a better UI and no console window popping out. Symlinker was itself based on the idea of a GUI for mklink, Microsoft's tool for managing symbolink links, junction points and hardlinks." />
+                <mui:BBCodeBlock BBCode="Microsoft VisualBasic source code license manager utility tool." />
                 <TextBlock />
                 <TextBlock />
+
+                <Canvas>
+                    <Label Content="Copyright:" Canvas.Left="17" Canvas.Top="5"/>
+                    <TextBox Name="copyright" Canvas.Left="89" Canvas.Top="5" Width="382"></TextBox>
+
+                    <Label Content="License Title:" Canvas.Left="5" Canvas.Top="32"/>
+                    <TextBox Name="license_title" Canvas.Left="89" Canvas.Top="32" Width="382"></TextBox>
+
+                    <Label Content="License Brief:" Canvas.Left="5" Canvas.Top="59"/>
+                    <TextBox Name="license_brief" Canvas.Left="5" Canvas.Top="80" TextWrapping="Wrap"
+  AcceptsReturn="True"
+  VerticalScrollBarVisibility="Visible" Width="466" Height="188" >
+
+
+
+
+
+                    </TextBox>
+                </Canvas>
+               
+
+                <!--<TextBlock />
+                
                 <TextBlock />
                 <TextBlock />
                 <mui:BBCodeBlock BBCode="Note: If you want to create symbolic links or/and write in a place you can't usually (Windows Folder, other user's folders, etc...), you need to restart the program as administrator." Name="UACNote" />
                 <TextBlock />
-                <Button Click="Admin_Rights" Name="UAC" Initialized="UAC_Initialized" HorizontalAlignment="Left" Content="{StaticResource admin}" />
+                <Button Click="Admin_Rights" Name="UAC" Initialized="UAC_Initialized" HorizontalAlignment="Left" Content="{StaticResource admin}" />-->
             </StackPanel>
+
+   
         </ScrollViewer>
+     
     </Grid>
 </UserControl>

@@ -17,19 +17,12 @@
             <StackPanel MinWidth="200">
                 <StackPanel Name="Admin">
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Original file:" Width="auto" HorizontalAlignment="Left" Click="Original_File" />
+                        <Button Content="Source file:" Width="auto" HorizontalAlignment="Left" Click="Original_File" />
                         <TextBlock Text="    " />
                         <TextBlock Text="You haven't selected a source yet." Name="BrowsedFile" Foreground="{DynamicResource WindowTextReadOnly}" VerticalAlignment="Center" />
                     </StackPanel>
                     <TextBlock />
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Symbolic link:" Width="auto" HorizontalAlignment="Left" Click="Symbolink_Link" />
-                        <TextBlock Text="    " />
-                        <TextBlock Text="You haven't selected a symbolic link yet." Name="Symbolink" Foreground="{DynamicResource WindowTextReadOnly}" VerticalAlignment="Center" />
-                    </StackPanel>
-                    <TextBlock />
-                    <TextBlock />
-                    <Button Content="Create an symbolic link" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
+                    <Button Content="Apply License" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
                 </StackPanel>
                 <StackPanel Name="NoAdmin" Visibility="Collapsed">
                     <mui:BBCodeBlock BBCode="You aren't running this program as admin. If you want to create an symbolic link, please " VerticalAlignment="Center" />

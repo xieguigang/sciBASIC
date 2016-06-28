@@ -22,9 +22,9 @@ Namespace Pages
 
         Private Sub Original_File(sender As Object, e As RoutedEventArgs)
             BrowsedFile.Text = "You haven't selected a source yet."
-            Symbolink.Text = "You haven't selected a symbolic link yet."
-            Dim Browse As New OpenFileDialog()
-            Browse.Title = "Browse..."
+
+            Dim Browse As New OpenFileDialog() With {.Filter = "Microsoft VisualBasic Source Code(*.vb)|*.vb"}
+            Browse.Title = "Browse for source file"
             Browse.InitialDirectory = "Desktop"
             Browse.CheckFileExists = True
             Browse.CheckPathExists = True
@@ -36,28 +36,15 @@ Namespace Pages
             End If
         End Sub
 
-        Private Sub Symbolink_Link(sender As Object, e As RoutedEventArgs)
-            Dim Save As New SaveFileDialog()
-            Save.CheckPathExists = True
-            Save.ValidateNames = True
-            Dim FileSelected As Nullable(Of Boolean) = Save.ShowDialog()
-            If FileSelected = True Then
-                Symbolink.Text = Save.FileName
-            End If
-        End Sub
-
         Private Sub Symlink_Create(sender As Object, e As RoutedEventArgs)
             If BrowsedFile.Text = "You haven't selected a source yet." Then
                 ModernDialog.ShowMessage("You didn't choose a source. Please do it.", "Oops!", MessageBoxButton.OK)
-            ElseIf Symbolink.Text = "You haven't selected a symbolic link yet." Then
-                ModernDialog.ShowMessage("You didn't choose a symbolic link. Please do it.", "Oops!", MessageBoxButton.OK)
             Else
                 Dim CatchException As Boolean = False
                 Try
-                    If File.Exists(Symbolink.Text) Then
-                        File.Delete(Symbolink.Text)
-                    End If
-                    '    CreateFileLink(Symbolink.Text, BrowsedFile.Text)
+
+
+
                 Catch generatedExceptionName As Exception
                     CatchException = True
                 End Try
@@ -68,7 +55,6 @@ Namespace Pages
                     AppearanceManager.Current.AccentColor = OldColor
                 Else
                     BrowsedFile.Text = "You haven't selected a source yet."
-                    Symbolink.Text = "You haven't selected a symbolic link yet."
                     ModernDialog.ShowMessage("The symbolic link was created with success.", "Success!", MessageBoxButton.OK)
                 End If
             End If

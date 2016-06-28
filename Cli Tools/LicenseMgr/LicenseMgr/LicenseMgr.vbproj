@@ -8,8 +8,8 @@
     <ProjectGuid>{BFC46975-4280-4FD4-A0FB-B9ADAF47EC3A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>File_Explorer</RootNamespace>
-    <AssemblyName>File-Explorer</AssemblyName>
+    <RootNamespace>LicenseMgr</RootNamespace>
+    <AssemblyName>LicenseMgr</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
@@ -60,7 +60,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>license.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -140,14 +140,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Pages\FileHard.xaml.vb">
-      <DependentUpon>FileHard.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="LicenseInfo.vb" />
     <Compile Include="Pages\FileSymbolic.xaml.vb">
       <DependentUpon>FileSymbolic.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\FolderJunction.xaml.vb">
-      <DependentUpon>FolderJunction.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\FolderSymbolic.xaml.vb">
       <DependentUpon>FolderSymbolic.xaml</DependentUpon>
@@ -211,15 +206,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\FileHard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\FileSymbolic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\FolderJunction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,7 +245,8 @@
     <Content Include="Assets\error.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Icon.ico" />
+    <Content Include="Assets\license.ico" />
+    <Content Include="license.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -293,6 +281,12 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
