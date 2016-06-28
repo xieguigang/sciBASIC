@@ -1,5 +1,6 @@
 Imports System.Windows
 Imports System.Windows.Controls
+
 'Imports Microsoft.VisualBasic.Windows.Forms
 
 Namespace Pages
@@ -34,6 +35,22 @@ Namespace Pages
 
         Private Sub copyright_TextChanged(sender As Object, e As TextChangedEventArgs) Handles copyright.TextChanged
             LicenseInfo.info.Copyright = copyright.Text
+        End Sub
+
+        Private Sub Load_Click(sender As Object, e As RoutedEventArgs) Handles Load.Click
+            Using file As New System.Windows.Forms.OpenFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
+                If file.ShowDialog = Forms.DialogResult.OK Then
+
+                End If
+            End Using
+        End Sub
+
+        Private Sub Save_Click(sender As Object, e As RoutedEventArgs) Handles Save.Click
+            Using file As New System.Windows.Forms.SaveFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
+                If file.ShowDialog = Forms.DialogResult.OK Then
+
+                End If
+            End Using
         End Sub
     End Class
 End Namespace

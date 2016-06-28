@@ -36,8 +36,10 @@
 
 
                     </TextBox>
+                    <Button Canvas.Left="5" Canvas.Top="281" Content="Save" FontWeight="Bold" Name="Save"></Button>
+                    <Button Canvas.Left="77" Canvas.Top="281" Content="Load" FontWeight="Bold" Name="Load" />
                 </Canvas>
-               
+
 
                 <!--<TextBlock />
                 
@@ -48,8 +50,8 @@
                 <Button Click="Admin_Rights" Name="UAC" Initialized="UAC_Initialized" HorizontalAlignment="Left" Content="{StaticResource admin}" />-->
             </StackPanel>
 
-   
+
         </ScrollViewer>
-     
+
     </Grid>
 </UserControl>

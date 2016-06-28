@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" Initialized="UserControl_Initialized">
+             d:DesignHeight="288.559" d:DesignWidth="399.153" Initialized="UserControl_Initialized">
     <UserControl.Resources>
         <StackPanel Orientation="Horizontal" x:Key="admin">
             <Image Source="../Assets/admin.png" />
@@ -22,15 +22,8 @@
                         <TextBlock Text="You haven't selected a source yet." Name="BrowsedFolder" Foreground="{DynamicResource WindowTextReadOnly}" VerticalAlignment="Center" />
                     </StackPanel>
                     <TextBlock />
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Symbolic link:" Width="auto" HorizontalAlignment="Left" Click="Symbolink_Link" />
-                        <TextBlock Text="    " />
-                        <TextBlock Text="You haven't selected a symbolic link yet." Name="Symbolink" Foreground="{DynamicResource WindowTextReadOnly}" VerticalAlignment="Center" />
-                    </StackPanel>
-                    <TextBlock />
-                    <TextBlock />
-                    <Button Content="Create an symbolic link" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
-                    <mui:BBCodeBlock Text="Warning: If you didn't selected an empty folder as symbolic link, it will overwrite the content. If you want to keep the content, please do a backup before." />
+                    <Button Content="Apply License Content To Source Files" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
+
                 </StackPanel>
                 <StackPanel Name="NoAdmin" Visibility="Collapsed">
                     <mui:BBCodeBlock BBCode="You aren't running this program as admin. If you want to create an symbolic link, please " VerticalAlignment="Center" />

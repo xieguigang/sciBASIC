@@ -21,7 +21,7 @@ Namespace Pages
 
         Private Sub Original_Folder(sender As Object, e As RoutedEventArgs)
             BrowsedFolder.Text = "You haven't selected a source yet."
-            Symbolink.Text = "You haven't selected a symbolic link yet."
+
             Dim Browse As New System.Windows.Forms.FolderBrowserDialog()
             Browse.Description = "Choose the original folder where the symbolic link will refer:"
             Browse.RootFolder = System.Environment.SpecialFolder.Desktop
@@ -32,29 +32,16 @@ Namespace Pages
             End If
         End Sub
 
-        Private Sub Symbolink_Link(sender As Object, e As RoutedEventArgs)
-            Dim Browse As New System.Windows.Forms.FolderBrowserDialog()
-            Browse.Description = "Choose where the symbolic link will be:"
-            Browse.RootFolder = System.Environment.SpecialFolder.Desktop
-            Browse.ShowNewFolderButton = True
-            Dim result As System.Windows.Forms.DialogResult = Browse.ShowDialog()
-            If result = System.Windows.Forms.DialogResult.OK Then
-                Symbolink.Text = Browse.SelectedPath
-            End If
-        End Sub
-
         Private Sub Symlink_Create(sender As Object, e As RoutedEventArgs)
             If BrowsedFolder.Text = "You haven't selected a source yet." Then
                 ModernDialog.ShowMessage("You didn't choose a source. Please do it.", "Oops!", MessageBoxButton.OK)
-            ElseIf Symbolink.Text = "You haven't selected a symbolic link yet." Then
-                ModernDialog.ShowMessage("You didn't choose a symbolic link. Please do it.", "Oops!", MessageBoxButton.OK)
+
             Else
                 Dim CatchException As Boolean = False
                 Try
-                    If Directory.Exists(Symbolink.Text) Then
-                        Directory.Delete(Symbolink.Text, True)
-                    End If
-                    '   CreateDirectoryLink(Symbolink.Text, BrowsedFolder.Text)
+
+
+
                 Catch generatedExceptionName As Exception
                     CatchException = True
                 End Try
@@ -66,7 +53,6 @@ Namespace Pages
                 Else
                     ModernDialog.ShowMessage("The symbolic link was created with success.", "Success!", MessageBoxButton.OK)
                     BrowsedFolder.Text = "You haven't selected a source yet."
-                    Symbolink.Text = "You haven't selected a symbolic link yet."
                 End If
             End If
         End Sub
