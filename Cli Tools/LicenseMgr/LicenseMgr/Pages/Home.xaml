@@ -13,7 +13,7 @@
         </StackPanel>
     </UserControl.Resources>
     <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
+        <ScrollViewer Margin="0,0,0,67">
             <StackPanel MinWidth="200">
                 <mui:BBCodeBlock BBCode="Microsoft VisualBasic source code license manager utility tool." />
                 <TextBlock />
@@ -38,6 +38,7 @@
                     </TextBox>
                     <Button Canvas.Left="5" Canvas.Top="281" Content="Save" FontWeight="Bold" Name="Save"></Button>
                     <Button Canvas.Left="77" Canvas.Top="281" Content="Load" FontWeight="Bold" Name="Load" />
+                    <Button Canvas.Left="371" Canvas.Top="281" Content="Add Author" FontWeight="Bold" x:Name="Add_Author" />
                 </Canvas>
 
 
@@ -52,6 +53,14 @@
 
 
         </ScrollViewer>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="57" Margin="0,378,0,0" VerticalAlignment="Top" Width="467">
+            <Canvas>
+                <TextBox x:Name="textBox" Height="23" TextWrapping="Wrap" Text="Author name here" Canvas.Left="0" Canvas.Top="5" Width="150"/>
+                <TextBox x:Name="textBox_Copy" Height="23" TextWrapping="Wrap" Text="Email address here" Canvas.Left="160" Canvas.Top="5" Width="300"/>
+            </Canvas>
+
+
+        </ListBox>
 
     </Grid>
 </UserControl>

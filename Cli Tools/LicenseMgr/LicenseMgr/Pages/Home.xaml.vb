@@ -1,5 +1,6 @@
 Imports System.Windows
 Imports System.Windows.Controls
+Imports Microsoft.VisualBasic.Linq
 
 'Imports Microsoft.VisualBasic.Windows.Forms
 
@@ -40,7 +41,26 @@ Namespace Pages
         Private Sub Load_Click(sender As Object, e As RoutedEventArgs) Handles Load.Click
             Using file As New System.Windows.Forms.OpenFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
                 If file.ShowDialog = Forms.DialogResult.OK Then
+                    LicenseInfo.info = file.FileName.LoadXml(Of SoftwareToolkits.LicenseInfo)
 
+                    copyright.Text = info.Copyright
+                    license_title.Text = info.Title
+                    license_brief.Text = info.Brief
+
+                    For Each author In info.Authors.SafeQuery
+                        Dim name As TextBox = Nothing
+                        Dim email As TextBox = Nothing
+
+                        Call AuthorAddCommon(name, email)
+
+                        If Not name Is Nothing Then
+                            name.Text = author.Name
+
+                        End If
+                        If Not email Is Nothing Then
+                            email.Text = author.x
+                        End If
+                    Next
                 End If
             End Using
         End Sub
@@ -48,9 +68,17 @@ Namespace Pages
         Private Sub Save_Click(sender As Object, e As RoutedEventArgs) Handles Save.Click
             Using file As New System.Windows.Forms.SaveFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
                 If file.ShowDialog = Forms.DialogResult.OK Then
-
+                    Call LicenseInfo.info.GetXml.SaveTo(file.FileName)
                 End If
             End Using
+        End Sub
+
+        Private Sub Add_Author_Click(sender As Object, e As RoutedEventArgs) Handles Add_Author.Click
+            Call AuthorAddCommon(Nothing, Nothing)
+        End Sub
+
+        Private Sub AuthorAddCommon(ByRef name As TextBox, ByRef email As TextBox)
+
         End Sub
     End Class
 End Namespace
