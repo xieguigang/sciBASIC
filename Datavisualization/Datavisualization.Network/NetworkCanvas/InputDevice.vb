@@ -1,4 +1,4 @@
-﻿#Region "60ac4015974fa4d88dea5f4f08ed5104, ..\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::91e741b9a5ea225bbf8f5270b846fb24, ..\Datavisualization.Network\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Public Class InputDevice : Implements IDisposable
     End Sub
 #End Region
 End Class
-

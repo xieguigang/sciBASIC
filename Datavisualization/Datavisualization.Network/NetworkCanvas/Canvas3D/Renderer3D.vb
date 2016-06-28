@@ -1,4 +1,4 @@
-﻿#Region "1df2bbaa9119debe198ffaf9065f0c8a, ..\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::80411bef400ebf3870673bf625f5ae8b, ..\Datavisualization.Network\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Public Class Renderer3D : Inherits Renderer
         End SyncLock
     End Sub
 End Class
-
