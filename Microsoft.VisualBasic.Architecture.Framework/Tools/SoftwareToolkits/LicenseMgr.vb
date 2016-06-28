@@ -12,15 +12,20 @@ Namespace SoftwareToolkits
     ''' </summary>
     Public Module LicenseMgr
 
-        Sub New()
-            Dim template As New LicenseInfo With {
-                .Authors = {
-                    New NamedValue(Of String) With {
-                        .Name = "asuka",
-                        .x = "amethyst.asuka@gcmodeller.org"
-                    }
-                },
-                .Brief = "Permission is hereby granted, free of charge, to any person obtaining a copy
+        ''' <summary>
+        ''' The license template example.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Template As LicenseInfo
+            Get
+                Return New LicenseInfo With {
+                    .Authors = {
+                        New NamedValue(Of String) With {
+                            .Name = "asuka",
+                            .x = "amethyst.asuka@gcmodeller.org"
+                        }
+                    },
+                    .Brief = "Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the ""Software""), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -37,12 +42,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.",
-                .Copyright = "Copyright (c) 2016 amethyst.asuka@gcmodeller.org",
-                .RootDIR = "./",
-                .Title = "The MIT License (MIT)"
+                    .Copyright = "Copyright (c) 2016 amethyst.asuka@gcmodeller.org",
+                    .RootDIR = "./",
+                    .Title = "The MIT License (MIT)"
             }
-
-            Call template.GetXml.SaveTo(App.HOME & "/License.Template.Xml")
+            End Get
+        End Property
+        Sub New()
+            Call Template.GetXml.SaveTo(App.HOME & "/License.Template.Xml")
         End Sub
 
         ''' <summary>
@@ -125,13 +132,12 @@ THE SOFTWARE.",
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="root">The root directory</param>
-        ''' <param name="info"></param>
+        ''' <param name="info">The root directory</param>
         ''' <returns></returns>
-        Public Function Inserts(root As String, info As LicenseInfo) As String()
+        Public Function Inserts(info As LicenseInfo) As String()
             Dim fails As New List(Of String)
 
-            For Each vb As String In ls - l - r - wildcards("*.vb") <= root
+            For Each vb As String In ls - l - r - wildcards("*.vb") <= info.RootDIR
                 Dim skip As Boolean = False
 
                 For Each ig As String In LicenseMgr.Ignores
