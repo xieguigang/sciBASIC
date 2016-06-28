@@ -38,7 +38,7 @@ Module __DEBUG_MAIN
     Function Main(args As String()) As Integer
 
         Dim iii = SoftwareToolkits.LicenseMgr.Template
-        iii.RootDIR = "C:\Users\ameth\Source\Repos\VisualBasic_AppFramework\Example\EasyDocument"
+        iii.RootDIR = "C:\Users\ameth\Source\Repos\VisualBasic_AppFramework\Cli Tools\Cluster"
         Dim fff = SoftwareToolkits.LicenseMgr.Inserts(iii)
 
         Call this.__DEBUG_ECHO

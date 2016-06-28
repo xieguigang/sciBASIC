@@ -93,6 +93,7 @@ THE SOFTWARE.",
 
             If Not String.IsNullOrEmpty(region) Then
                 src = src.Replace(region, "")
+                src = src.Trim(vbCr, vbLf)
             End If
 
             Return src
@@ -122,6 +123,8 @@ THE SOFTWARE.",
 
             Call sb.AppendLine()
             Call sb.AppendLine($"#End Region")
+            Call sb.AppendLine()
+
             Call sb.AppendLine(src)
 
             Return sb.ToString
@@ -202,7 +205,7 @@ THE SOFTWARE.",
         Public Property RootDIR As String
 
         Public Function GetRelativePath(src As String) As String
-            Return ProgramPathSearchTool.RelativePath(src, RootDIR)
+            Return ProgramPathSearchTool.RelativePath(RootDIR, src)
         End Function
     End Class
 End Namespace
