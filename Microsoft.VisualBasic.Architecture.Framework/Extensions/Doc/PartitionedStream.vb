@@ -1,4 +1,4 @@
-﻿#Region "5da7ddbf283c8d2c296086e261466b26, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\PartitionedStream.vb"
+﻿#Region "53511be2479f65de6285e094b226ed2d, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\PartitionedStream.vb"
 
     ' Author:
     ' 

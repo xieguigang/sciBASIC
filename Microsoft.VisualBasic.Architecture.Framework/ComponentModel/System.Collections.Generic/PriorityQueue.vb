@@ -1,4 +1,4 @@
-﻿#Region "dc3465ad623fc0c04b35ef428a34d00d, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\PriorityQueue.vb"
+﻿#Region "c4686235b9c0efdd4f52e308c97e2201, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\PriorityQueue.vb"
 
     ' Author:
     ' 
@@ -106,5 +106,3 @@ Public Class PriorityQueue(Of T As IComparable)
 		End Get
 	End Property
 End Class
-
-

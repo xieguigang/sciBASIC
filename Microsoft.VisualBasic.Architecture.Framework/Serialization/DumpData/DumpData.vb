@@ -1,4 +1,4 @@
-﻿#Region "92bddd3cd593d7916a1c62b84475a216, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
+﻿#Region "5cba97e977037d4bee3337e6291980a0, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
 
     ' Author:
     ' 
@@ -196,6 +196,3 @@ Public Module MemoryDump
         Return DumpBuilder.ToString
     End Function
 End Module
-
-
-

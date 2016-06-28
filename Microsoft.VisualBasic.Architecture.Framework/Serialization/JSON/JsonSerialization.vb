@@ -1,4 +1,4 @@
-﻿#Region "2a113893815b84b811ded3e34db1f2fc, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "a18bd0fe3155f2761d288c4d3ada81dc, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Namespace Serialization.JSON
         End Function
     End Module
 End Namespace
-

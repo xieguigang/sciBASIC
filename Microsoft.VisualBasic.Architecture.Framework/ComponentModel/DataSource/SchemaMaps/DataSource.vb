@@ -1,4 +1,4 @@
-﻿#Region "8d69a6ca33e720bfceca2c2cc4773b1e, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "54310639710c166e8666c3c8b63602a9, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -222,4 +222,3 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Protected MustOverride Function InitializeSchema(Of TEntityType As Class)() As TAttributeType()
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "576d25ab77b3aeac32c5b57e1939a6d7, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
+﻿#Region "dee324a533498108f2c27e70aeb7b620, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
     ' Author:
     ' 
@@ -356,4 +356,3 @@ Public Module Beta
         Return If(x >= 0.0, ans, 2.0 - ans)
     End Function
 End Module
-

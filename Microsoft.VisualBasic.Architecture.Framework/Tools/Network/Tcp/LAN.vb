@@ -1,4 +1,4 @@
-﻿#Region "6154efddb4011b6f310ca07b3e5806ca, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\LAN.vb"
+﻿#Region "6f4c293959bc11f735c0f8fb4e0dee63, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\LAN.vb"
 
     ' Author:
     ' 

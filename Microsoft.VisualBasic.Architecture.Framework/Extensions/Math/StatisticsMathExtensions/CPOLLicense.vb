@@ -1,4 +1,4 @@
-﻿#Region "7ef92e05dd2d2f436d554fcb9dea1ba9, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb"
+﻿#Region "0e3bde6797e9f61b8a5074a5f44e4653, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace StatisticsMathExtensions
 

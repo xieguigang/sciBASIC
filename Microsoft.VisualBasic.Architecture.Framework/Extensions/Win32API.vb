@@ -1,4 +1,4 @@
-﻿#Region "45a3cf1a6c1093cb8c488f1e1a3b9364, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Win32API.vb"
+﻿#Region "9a5c6a7d803876436fb185f2866448e8, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Win32API.vb"
 
     ' Author:
     ' 
@@ -218,4 +218,3 @@ Public Module Win32API
     Declare Function Rectangle Lib "gdi32" (hdc As Integer, X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer) As Integer
     Declare Function EqualRect Lib "user32" (lpRect1 As RECT, lpRect2 As RECT) As Integer
 End Module
-

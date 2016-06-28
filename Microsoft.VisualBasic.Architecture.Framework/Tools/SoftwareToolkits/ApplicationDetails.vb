@@ -1,4 +1,4 @@
-﻿#Region "8f1c24efa18a4b598e1406dc089bfdb8, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ApplicationDetails.vb"
+﻿#Region "22961cff3cac5b5f71b3875c3b03ec6d, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ApplicationDetails.vb"
 
     ' Author:
     ' 
@@ -198,6 +198,3 @@ Namespace SoftwareToolkits
         End Function
     End Class
 End Namespace
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "7bac1b9cf03b636678a7cb8697757a82, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\JunctionPoint.vb"
+﻿#Region "a0263259f674405a4fedec9c4e65ce60, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\JunctionPoint.vb"
 
     ' Author:
     ' 
@@ -409,4 +409,3 @@ Namespace FileIO.SymLinker
         End Sub
     End Module
 End Namespace
-

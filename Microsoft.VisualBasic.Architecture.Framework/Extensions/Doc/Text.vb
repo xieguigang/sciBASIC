@@ -1,4 +1,4 @@
-﻿#Region "e2ce269e6ae87c5dd430e4231f1fc79c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "99a71133c1240784a96476c6bdce8e23, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -206,4 +206,3 @@ Public Module TextDoc
         Return sBuilder.ToString.SaveTo(path, encoding)
     End Function
 End Module
-

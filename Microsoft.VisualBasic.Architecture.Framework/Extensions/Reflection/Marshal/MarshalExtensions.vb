@@ -1,4 +1,4 @@
-﻿#Region "91ed5264ef3b2303f310ce0cf7da44a5, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\MarshalExtensions.vb"
+﻿#Region "1e0316832318b22996740b2cafd2ffe2, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 

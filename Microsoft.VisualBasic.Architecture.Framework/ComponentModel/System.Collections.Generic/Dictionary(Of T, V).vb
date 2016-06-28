@@ -1,4 +1,4 @@
-﻿#Region "b07b1c3607e8c0368ce4cad781965e25, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "dc41d18ff12bc15d659d247eeb8de740, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -181,4 +181,3 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Return hash
     End Operator
 End Class
-

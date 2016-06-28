@@ -1,4 +1,4 @@
-﻿#Region "9873f002dc05368dbfa151de27f9c0f5, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
+﻿#Region "5d4a474e1d408e98191472c293a47eec, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Namespace ComponentModel
         End Function
     End Class
 End Namespace
-

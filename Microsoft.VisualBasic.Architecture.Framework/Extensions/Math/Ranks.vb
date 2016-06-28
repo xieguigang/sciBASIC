@@ -1,4 +1,4 @@
-﻿#Region "79df6347de16235af047974a0e297871, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
+﻿#Region "2a25f41b848bc980293eb36c5f973e9e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Public Module Ranks
     End Function
 
 End Module
-

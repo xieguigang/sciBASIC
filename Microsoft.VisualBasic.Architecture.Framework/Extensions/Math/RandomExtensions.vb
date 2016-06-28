@@ -1,4 +1,4 @@
-﻿#Region "daacd348b58d99eaf747baf4f51f017f, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\RandomExtensions.vb"
+﻿#Region "76ce3b873414ecdca94aa5466611cf81, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -154,4 +154,3 @@ Public Module RandomExtensions
         Return result.ToArray()
     End Function
 End Module
-

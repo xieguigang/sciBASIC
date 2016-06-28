@@ -1,4 +1,4 @@
-﻿#Region "4ab1d9df6b7d844807a97c2bbd54d843, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpServer.vb"
+﻿#Region "4bd2497e90587a365a2c5d134761ad82, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpServer.vb"
 
     ' Author:
     ' 
@@ -386,5 +386,3 @@ Namespace DotNET_Wrapper.Tools.TCPSocket
 
     End Class 'AsynchronousSocketListener 
 End Namespace
-
-

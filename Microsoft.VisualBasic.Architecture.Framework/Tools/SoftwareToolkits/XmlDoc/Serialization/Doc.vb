@@ -1,4 +1,4 @@
-﻿#Region "2e3baecb6687a5d920a2135901547567, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb"
+﻿#Region "180e17f207183196d23f7421a96887e8, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb"
 
     ' Author:
     ' 

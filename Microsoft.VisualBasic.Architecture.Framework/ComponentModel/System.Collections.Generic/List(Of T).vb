@@ -1,4 +1,4 @@
-﻿#Region "228e90db583ea01558cddbdbac8ec1c3, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
+﻿#Region "1a93998f456bf3133b18af7083455d00, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
 
     ' Author:
     ' 
@@ -249,4 +249,3 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Throw New NotImplementedException
     End Operator
 End Class
-

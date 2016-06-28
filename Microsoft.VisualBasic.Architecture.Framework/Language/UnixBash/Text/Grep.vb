@@ -1,4 +1,4 @@
-﻿#Region "085cb68af08962b1b1d79b69eb4ac9ae, ..\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Text\Grep.vb"
+﻿#Region "4b877693f9b732201eda3135bfd66cb6, ..\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Text\Grep.vb"
 
     ' Author:
     ' 
@@ -183,4 +183,3 @@ Namespace Language.UnixBash
         End Operator
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "5e94af0662809797fce57af94d998e88, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "500f1564a2da30525e7e1595ed7cec12, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -529,5 +529,3 @@ Public Module StrUtils
         Return table
     End Function
 End Module
-
-

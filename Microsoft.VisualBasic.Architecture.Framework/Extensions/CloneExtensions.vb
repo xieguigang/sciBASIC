@@ -1,4 +1,4 @@
-﻿#Region "8a86d8b26f5443c6eba420d0e30c39db, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
+﻿#Region "4841c5ad3800844326bc5f2fa2471ffd, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Public Module CloneExtensions
         Return New String(s.ToCharArray)
     End Function
 End Module
-

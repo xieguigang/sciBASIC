@@ -1,4 +1,4 @@
-﻿#Region "e66efc5ab51354d52983791f74d86c97, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "e867052510be20c32dbd681ce33c17eb, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Public Module VectorExtensions
         Next
     End Function
 End Module
-

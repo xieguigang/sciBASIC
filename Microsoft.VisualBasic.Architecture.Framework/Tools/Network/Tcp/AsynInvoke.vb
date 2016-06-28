@@ -1,4 +1,4 @@
-﻿#Region "6e7a8fb71b3044f6d74f3847edc1d060, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\AsynInvoke.vb"
+﻿#Region "afd2a61b13e2b4ac48853a3e98549543, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\AsynInvoke.vb"
 
     ' Author:
     ' 
@@ -478,5 +478,3 @@ EX_EXIT:            response = Nothing
 
     End Class 'AsynchronousClient
 End Namespace
-
-

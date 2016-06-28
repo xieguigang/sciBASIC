@@ -1,4 +1,4 @@
-﻿#Region "9eb7f6826b61edf0dc0d4b3446b5c2d6, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
+﻿#Region "849f888f227e015ec1e4d1743c44b129, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
         End Property
     End Class
 End Namespace
-

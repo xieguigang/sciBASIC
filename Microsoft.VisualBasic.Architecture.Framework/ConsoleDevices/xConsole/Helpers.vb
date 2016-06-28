@@ -1,4 +1,4 @@
-﻿#Region "f712d2bb6ad0083af6c6be351c116110, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\Helpers.vb"
+﻿#Region "67fedef44703b1edc201af2fb50c49f7, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\Helpers.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.InteropServices

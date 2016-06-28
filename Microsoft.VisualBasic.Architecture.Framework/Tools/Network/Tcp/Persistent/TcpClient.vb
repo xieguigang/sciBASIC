@@ -1,4 +1,4 @@
-﻿#Region "e85f39393281c795cac72fff88c1bbf0, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpClient.vb"
+﻿#Region "0c9a8418b92e76e1aaa0ccf3c1a31a92, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpClient.vb"
 
     ' Author:
     ' 
@@ -419,5 +419,3 @@ EX_EXIT:            response = ""
 
     End Class 'AsynchronousClient 
 End Namespace
-
-

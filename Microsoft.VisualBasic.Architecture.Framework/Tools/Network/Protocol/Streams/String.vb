@@ -1,4 +1,4 @@
-﻿#Region "c4ecd42177cff51e2bf0c99716324314, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\String.vb"
+﻿#Region "2621fd00e98a8aa1a909643797005457, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\String.vb"
 
     ' Author:
     ' 

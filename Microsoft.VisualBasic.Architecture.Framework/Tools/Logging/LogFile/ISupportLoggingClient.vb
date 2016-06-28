@@ -1,4 +1,4 @@
-﻿#Region "7a20566e73748360dced94e40916c499, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\ISupportLoggingClient.vb"
+﻿#Region "99d2552bfeb2017b5cdd72b661bd6761, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\ISupportLoggingClient.vb"
 
     ' Author:
     ' 

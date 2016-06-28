@@ -1,4 +1,4 @@
-﻿#Region "795b8c607a1720b960067ce32c7f9717, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
+﻿#Region "dd44a3367d639708591bb91498fbd6a0, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Public Module ListExtensions
         Return New List(Of T)(linq)
     End Function
 End Module
-

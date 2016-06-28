@@ -1,4 +1,4 @@
-﻿#Region "dd952ae327b00f1e3ad4171105cc5cd0, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Matrix.vb"
+﻿#Region "998abac82e2f8c50a3a696648e7b2ec3, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Public Module MatrixExtensions
         Next
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "cf9c9e324c33583ef9187444710f7845, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\BipartiteMatcher.vb"
+﻿#Region "acab08b1f08c89564e1b02dcb67ddde6, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\BipartiteMatcher.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Text.Similarity
 

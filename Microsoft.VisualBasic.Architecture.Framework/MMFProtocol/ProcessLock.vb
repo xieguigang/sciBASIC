@@ -1,4 +1,4 @@
-﻿#Region "2ac54342f350341867124b483b7329bc, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\ProcessLock.vb"
+﻿#Region "453c961f4ea07660dfd677cf3a49b5b0, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\ProcessLock.vb"
 
     ' Author:
     ' 
@@ -121,4 +121,3 @@ Namespace MMFProtocol
 #End Region
     End Class
 End Namespace
-

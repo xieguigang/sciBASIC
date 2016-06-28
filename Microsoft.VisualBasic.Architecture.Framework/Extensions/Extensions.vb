@@ -1,4 +1,4 @@
-﻿#Region "70c7b728985a139faeaf282c56f8d5ae, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "3b5386704fe54be25c4ac2f5fd88955a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -2291,4 +2291,3 @@ Public Module Extensions
         Return list
     End Function
 End Module
-

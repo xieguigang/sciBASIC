@@ -1,4 +1,4 @@
-﻿#Region "f14800185161fd1c351ca880dccd98b4, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\DataGroup.vb"
+﻿#Region "89741371dc2a8942d292d8ae3dcec5ad, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\DataGroup.vb"
 
     ' Author:
     ' 
@@ -140,4 +140,3 @@ Namespace Parallel
         End Function
     End Class
 End Namespace
-

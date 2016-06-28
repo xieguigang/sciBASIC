@@ -1,4 +1,4 @@
-﻿#Region "5c3fa4d24ff2bfcc64ccede29e46c552, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\VistaSecurity.vb"
+﻿#Region "75dbd928a384676d25866290c13380fc, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\VistaSecurity.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Namespace Windows.Forms
         End Sub
     End Module
 End Namespace
-

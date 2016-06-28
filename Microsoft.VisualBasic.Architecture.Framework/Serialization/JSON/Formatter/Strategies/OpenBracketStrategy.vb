@@ -1,4 +1,4 @@
-﻿#Region "78938e68c494df42884267535a19cc7e, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
+﻿#Region "1e8a0583a5c4bc55557a327987fff6e5, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
         End Property
     End Class
 End Namespace
-

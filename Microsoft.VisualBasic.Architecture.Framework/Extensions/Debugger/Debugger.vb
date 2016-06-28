@@ -1,4 +1,4 @@
-﻿#Region "6ab48e4fa9a4be210f4665c36a8a3298, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
+﻿#Region "b07289160c7e7855a94ab80b68d5f536, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
     ' Author:
     ' 
@@ -295,4 +295,3 @@ Public Module VBDebugger
         End If
     End Sub
 End Module
-

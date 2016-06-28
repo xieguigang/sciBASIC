@@ -1,4 +1,4 @@
-﻿#Region "e0e894fe0647325a287bbe5dc8fd983b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
+﻿#Region "485b480f90d5307ef0deb14cd940cf42, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Namespace Win32
         End Function
     End Module
 End Namespace
-

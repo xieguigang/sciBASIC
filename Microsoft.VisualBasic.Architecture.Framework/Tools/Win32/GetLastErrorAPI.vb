@@ -1,4 +1,4 @@
-﻿#Region "9e1f95338c96c7e8bf561eb868108ff9, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\GetLastErrorAPI.vb"
+﻿#Region "6a66b34c669f8d7bdd738d43ed28171e, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\GetLastErrorAPI.vb"
 
     ' Author:
     ' 

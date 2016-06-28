@@ -1,4 +1,4 @@
-﻿#Region "064cc0e3e816541fb9a69d59ae80ec37, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "612a97c2e0b586935abcf9ed7bd463a7, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -330,4 +330,3 @@ Public Module XmlExtensions
         Return xml
     End Function
 End Module
-

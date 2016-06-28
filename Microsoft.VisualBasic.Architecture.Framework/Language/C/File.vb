@@ -1,4 +1,4 @@
-﻿#Region "767c6494fdee4d39f5686f578694fada, ..\Microsoft.VisualBasic.Architecture.Framework\Language\C\File.vb"
+﻿#Region "e14418eff714e820b894f1461c7dce9c, ..\Microsoft.VisualBasic.Architecture.Framework\Language\C\File.vb"
 
     ' Author:
     ' 

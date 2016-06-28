@@ -1,4 +1,4 @@
-﻿#Region "5fabdcf92fe163a9b8eff4cd5bd91ce1, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\Win32File.vb"
+﻿#Region "d0734ca516af4aa5879f9cebd251761f, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\Win32File.vb"
 
     ' Author:
     ' 

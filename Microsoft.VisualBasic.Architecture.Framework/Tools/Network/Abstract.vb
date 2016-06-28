@@ -1,4 +1,4 @@
-﻿#Region "7a0ffd462bfa436506c6c029855d34ef, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Abstract.vb"
+﻿#Region "7d177df3a5c0c424dc2b78812b6aa34c, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Abstract.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Namespace Net.Abstract
         Property Responsehandler As Net.Abstract.DataRequestHandler
     End Interface
 End Namespace
-

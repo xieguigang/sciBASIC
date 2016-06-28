@@ -1,4 +1,4 @@
-﻿#Region "c4acc27d028ce248cfbc969a1d247bb0, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Webpage.vb"
+﻿#Region "74101dcd8da60518fc4846f26cd94c7c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Webpage.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Public Module Webpage
         Return str
     End Function
 End Module
-

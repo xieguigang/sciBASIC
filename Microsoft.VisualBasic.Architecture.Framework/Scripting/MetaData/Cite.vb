@@ -1,4 +1,4 @@
-﻿#Region "dd0f45e58b0da20292ee3908eede2804, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Cite.vb"
+﻿#Region "9370832f12e9b54b9d553c825b31d3d6, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Cite.vb"
 
     ' Author:
     ' 

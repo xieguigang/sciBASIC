@@ -1,4 +1,4 @@
-﻿#Region "0f8fe68afecc6e7cb0c648f0b589d4c2, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Splitter.vb"
+﻿#Region "f663f882ee374e66c69193b6809e73ac, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Splitter.vb"
 
     ' Author:
     ' 
@@ -166,4 +166,3 @@ Namespace Text
         End Function
     End Class
 End Namespace
-

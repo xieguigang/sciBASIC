@@ -1,4 +1,4 @@
-﻿#Region "1a56558f9e9e1993e6c7584143b95509, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "ac7f6da05823d9bcaa49ed0c93e6db30, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
     ' Author:
     ' 
@@ -836,4 +836,3 @@ Public Module App
         Call RestartElevated()
     End Sub
 End Module
-

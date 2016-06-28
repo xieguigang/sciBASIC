@@ -1,4 +1,4 @@
-﻿#Region "16641770a3a44c537102bc062a27e072, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\ConfigurationMappings.vb"
+﻿#Region "4f0fb987eb27147ebc602f2d57d18abd, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
     ' Author:
     ' 
@@ -174,5 +174,3 @@ Namespace Serialization
     End Module
 #End If
 End Namespace
-
-

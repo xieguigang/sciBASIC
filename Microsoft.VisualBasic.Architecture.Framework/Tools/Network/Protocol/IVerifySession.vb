@@ -1,4 +1,4 @@
-﻿#Region "5b32dfee69476e40543c71e3742dca5b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\IVerifySession.vb"
+﻿#Region "f979d143775c7143d953d8ddfe320c80, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\IVerifySession.vb"
 
     ' Author:
     ' 

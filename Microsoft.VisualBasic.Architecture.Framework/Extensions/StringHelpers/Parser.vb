@@ -1,4 +1,4 @@
-﻿#Region "8fa4a22eefd845e3d67fc365285dd1f4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
+﻿#Region "b3abe1c7088003748bd06d2f3e1f3a97, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Public Module Parser
         Return Date.Parse(Trim(s))
     End Function
 End Module
-

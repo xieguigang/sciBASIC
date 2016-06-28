@@ -1,4 +1,4 @@
-﻿#Region "4a5b7f8e80b7434a397c9fa61b0f7778, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb"
+﻿#Region "ef0ec9889ef600235a7944f20c9016be, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb"
 
     ' Author:
     ' 

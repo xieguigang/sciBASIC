@@ -1,4 +1,4 @@
-﻿#Region "31599c495b79dd015cdbe1954d8087a7, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
+﻿#Region "e4aa5f5591df30904d0077c161360ec7, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -198,4 +198,3 @@ Namespace Net
 
     End Module
 End Namespace
-

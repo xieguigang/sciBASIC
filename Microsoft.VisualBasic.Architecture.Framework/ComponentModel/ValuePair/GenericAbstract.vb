@@ -1,4 +1,4 @@
-﻿#Region "8fe9f00445ab000d32ac3fa2d343ebba, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\GenericAbstract.vb"
+﻿#Region "fe6bb2bd1a2b86401a27898276391dad, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\GenericAbstract.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace ComponentModel.Collection.Generic
 
@@ -128,4 +127,3 @@ Namespace ComponentModel.Collection.Generic
         Public Property DataObject As T
     End Class
 End Namespace
-

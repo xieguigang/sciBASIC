@@ -1,4 +1,4 @@
-﻿#Region "7803627c606dc2f90c26f330a704b7a3, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
+﻿#Region "4159e8df030afce5bb914a9f6463619b, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -180,4 +180,3 @@ Public Module ScaleMaps
         Return data.ToArray
     End Function
 End Module
-

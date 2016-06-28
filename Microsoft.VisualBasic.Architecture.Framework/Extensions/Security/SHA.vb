@@ -1,4 +1,4 @@
-﻿#Region "889b5d8bfc4f72bd99eeec2b8ac9ae06, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\SHA.vb"
+﻿#Region "1fc3cbc29a33691a304cc1d2e49eaa0c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 
@@ -305,4 +305,3 @@ Namespace SecurityString
         End Function
     End Class
 End Namespace
-
