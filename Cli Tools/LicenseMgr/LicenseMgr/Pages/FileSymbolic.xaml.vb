@@ -41,6 +41,7 @@ Namespace Pages
                 ModernDialog.ShowMessage("You didn't choose a source. Please do it.", "Oops!", MessageBoxButton.OK)
             Else
                 Try
+                    info.RootDIR = BrowsedFile.Text.ParentPath
                     Call SoftwareToolkits.LicenseMgr.Insert(BrowsedFile.Text, info)
                     BrowsedFile.Text = "You haven't selected a source yet."
                     ModernDialog.ShowMessage("License information applied success.", "Success!", MessageBoxButton.OK)
