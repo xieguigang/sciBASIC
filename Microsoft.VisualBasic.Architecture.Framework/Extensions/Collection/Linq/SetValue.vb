@@ -49,7 +49,7 @@ Namespace Linq
         Public Delegate Function IInvokeSetValue(x As T, value As Object) As T
 
         ''' <summary>
-        ''' 
+        ''' Public Delegate Function IInvokeSetValue(x As T, value As Object) As T
         ''' </summary>
         ''' <param name="name">Using NameOf</param>
         ''' <returns></returns>
@@ -60,6 +60,20 @@ Namespace Linq
                        Return x
                    End Function
         End Function
+
+        ''' <summary>
+        ''' <see cref="GetSet"/>
+        ''' </summary>
+        ''' <param name="setValue"></param>
+        ''' <param name="name">Using NameOf</param>
+        ''' <returns></returns>
+        Public Shared Operator <=(setValue As SetValue(Of T), name As String) As IInvokeSetValue
+            Return setValue.GetSet(name)
+        End Operator
+
+        Public Shared Operator >=(setValue As SetValue(Of T), name As String) As IInvokeSetValue
+            Throw New NotSupportedException
+        End Operator
 
         ''' <summary>
         ''' Assigning the value to the specific named property to the target object.
