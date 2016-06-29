@@ -1,4 +1,4 @@
-﻿#Region "a17608b3ce09060778d32c4014783d5b, ..\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::9f91116fddd59255b38e1be4490364bb, ..\Datavisualization.Network\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 
@@ -135,4 +135,3 @@ Public Module SVGExtensions
         Next
     End Sub
 End Module
-

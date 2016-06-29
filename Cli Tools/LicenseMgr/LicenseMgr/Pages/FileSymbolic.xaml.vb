@@ -1,27 +1,27 @@
-﻿#Region "2b91523f454c0b12091aa973da9d1505, ..\LicenseMgr\Pages\FileSymbolic.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::8ff4e746c1cf6464ee623c380e0e5fb1, ..\Cli Tools\LicenseMgr\LicenseMgr\Pages\FileSymbolic.xaml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -50,7 +50,9 @@ Namespace Pages
         Private Sub Original_File(sender As Object, e As RoutedEventArgs)
             BrowsedFile.Text = "You haven't selected a source yet."
 
-            Dim Browse As New OpenFileDialog() With {.Filter = "Microsoft VisualBasic Source Code(*.vb)|*.vb"}
+            Dim Browse As New OpenFileDialog() With {
+                .Filter = "Microsoft VisualBasic Source Code(*.vb)|*.vb"
+            }
             Browse.Title = "Browse for source file"
             Browse.InitialDirectory = "Desktop"
             Browse.CheckFileExists = True
@@ -97,4 +99,3 @@ Namespace Pages
         End Sub
     End Class
 End Namespace
-

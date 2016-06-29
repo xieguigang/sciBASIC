@@ -1,4 +1,4 @@
-﻿#Region "2ed868acee4cc0d70855e60f5af57823, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::2ed868acee4cc0d70855e60f5af57823, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb"
 
     ' Author:
     ' 
@@ -130,7 +130,7 @@ THE SOFTWARE.",
         Public Function AddRegion(src As String, info As LicenseInfo, file As String) As String
             Dim sb As New StringBuilder
 
-            Call sb.AppendLine($"#Region ""{SecurityString.GetMd5Hash(src)}, {file}""")
+            Call sb.AppendLine($"#Region ""Microsoft.VisualBasic::{SecurityString.GetMd5Hash(src)}, {file}""")
             Call sb.AppendLine()
             Call sb.AppendLine("    ' Author:")
             Call sb.AppendLine("    ' ")

@@ -1,32 +1,36 @@
-﻿#Region "d0f18c495c38e4bc4da385a58db95615, ..\LicenseMgr\Pages\Home.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::e299531c6c95591d349f723a13d0b878, ..\Cli Tools\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Collections.Generic
 Imports System.Windows
 Imports System.Windows.Controls
+Imports System.Linq
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 'Imports Microsoft.VisualBasic.Windows.Forms
@@ -38,19 +42,9 @@ Namespace Pages
     ''' </summary>
     Partial Public Class Home
         Inherits UserControl
+
         Public Sub New()
             InitializeComponent()
-        End Sub
-
-        Private Sub Admin_Rights(sender As Object, e As RoutedEventArgs)
-            '   VistaSecurity.RestartElevated()
-        End Sub
-
-        Private Sub UAC_Initialized(sender As Object, e As EventArgs)
-            'If VistaSecurity.IsAdmin() Then
-            '    UAC.Visibility = System.Windows.Visibility.Collapsed
-            '    UACNote.Visibility = System.Windows.Visibility.Collapsed
-            'End If
         End Sub
 
         Private Sub license_brief_TextChanged(sender As Object, e As TextChangedEventArgs) Handles license_brief.TextChanged
@@ -66,13 +60,19 @@ Namespace Pages
         End Sub
 
         Private Sub Load_Click(sender As Object, e As RoutedEventArgs) Handles Load.Click
-            Using file As New System.Windows.Forms.OpenFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
+            Using file As New System.Windows.Forms.OpenFileDialog With {
+                .Filter = "Xml Meta data(*.xml)|*.xml"
+            }
                 If file.ShowDialog = Forms.DialogResult.OK Then
                     LicenseInfo.info = file.FileName.LoadXml(Of SoftwareToolkits.LicenseInfo)
 
                     copyright.Text = info.Copyright
                     license_title.Text = info.Title
                     license_brief.Text = info.Brief
+
+                    Call authors.Clear()
+                    Call listBox.Items.Clear()
+                    lh = 0
 
                     For Each author In info.Authors.SafeQuery
                         Dim name As TextBox = Nothing
@@ -92,8 +92,12 @@ Namespace Pages
             End Using
         End Sub
 
+        Dim authors As New List(Of KeyValuePair(Of TextBox, TextBox))
+
         Private Sub Save_Click(sender As Object, e As RoutedEventArgs) Handles Save.Click
-            Using file As New System.Windows.Forms.SaveFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
+            Using file As New System.Windows.Forms.SaveFileDialog With {
+                .Filter = "Xml Meta data(*.xml)|*.xml"
+            }
                 If file.ShowDialog = Forms.DialogResult.OK Then
                     Call LicenseInfo.info.GetXml.SaveTo(file.FileName)
                 End If
@@ -104,9 +108,47 @@ Namespace Pages
             Call AuthorAddCommon(Nothing, Nothing)
         End Sub
 
-        Private Sub AuthorAddCommon(ByRef name As TextBox, ByRef email As TextBox)
+        Dim lh As Integer = 28
 
+        Private Sub AuthorAddCommon(ByRef name As TextBox, ByRef email As TextBox)
+            Dim canvas As New Canvas
+
+            Call listBox.Items.Add(canvas)
+
+            name = New TextBox With {.Width = 150, .Height = 23}
+            email = New TextBox With {.Width = 300, .Height = 23}
+
+            Call canvas.Children.Add(name)
+            Call canvas.Children.Add(email)
+
+            lh += 5
+
+            Canvas.SetTop(name, lh)
+            Canvas.SetTop(email, lh)
+            Canvas.SetLeft(name, 0)
+            Canvas.SetLeft(email, 160)
+
+            lh += 23
+
+            Call authors.Add(New KeyValuePair(Of TextBox, TextBox)(name, email))
+
+            AddHandler name.TextChanged, Sub() Call __update()
+            AddHandler email.TextChanged, Sub() Call __update()
+
+            Call __update()
+        End Sub
+
+        ''' <summary>
+        ''' 最后在这进行数据更新
+        ''' </summary>
+        Private Sub __update()
+            info.Authors =
+                LinqAPI.Exec(Of NamedValue(Of String)) <= From author As KeyValuePair(Of TextBox, TextBox)
+                                                          In Me.authors
+                                                          Select New NamedValue(Of String) With {
+                                                              .Name = author.Key.Text,
+                                                              .x = author.Value.Text
+                                                          }
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,31 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::991b3c036fb7b750eee2f5b28d5a8f3c, ..\Datavisualization.Network\Test\FormCanvas.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
 Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
@@ -52,3 +79,4 @@ Public Class FormCanvas
         canvas.SetRotate(TrackBar1.Value / 1000)
     End Sub
 End Class
+

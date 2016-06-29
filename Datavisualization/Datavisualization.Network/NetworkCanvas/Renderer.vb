@@ -1,4 +1,4 @@
-﻿#Region "64e95f47ce85319b029bae5e4d7f9746, ..\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::39a9f53cadde6ed98c95795425da759a, ..\Datavisualization.Network\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -160,4 +160,3 @@ Public Class Renderer
         End SyncLock
     End Sub
 End Class
-
