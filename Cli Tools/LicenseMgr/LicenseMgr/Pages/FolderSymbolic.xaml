@@ -22,7 +22,7 @@
                         <TextBlock Text="You haven't selected a source yet." Name="BrowsedFolder" Foreground="{DynamicResource WindowTextReadOnly}" VerticalAlignment="Center" />
                     </StackPanel>
                     <TextBlock />
-                    <Button Content="Apply License Content To Source Files" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
+                    <Button Content="Apply License info to source files" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
 
                 </StackPanel>
                 <StackPanel Name="NoAdmin" Visibility="Collapsed">

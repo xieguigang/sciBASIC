@@ -42,19 +42,9 @@ Namespace Pages
     ''' </summary>
     Partial Public Class Home
         Inherits UserControl
+
         Public Sub New()
             InitializeComponent()
-        End Sub
-
-        Private Sub Admin_Rights(sender As Object, e As RoutedEventArgs)
-            '   VistaSecurity.RestartElevated()
-        End Sub
-
-        Private Sub UAC_Initialized(sender As Object, e As EventArgs)
-            'If VistaSecurity.IsAdmin() Then
-            '    UAC.Visibility = System.Windows.Visibility.Collapsed
-            '    UACNote.Visibility = System.Windows.Visibility.Collapsed
-            'End If
         End Sub
 
         Private Sub license_brief_TextChanged(sender As Object, e As TextChangedEventArgs) Handles license_brief.TextChanged
@@ -70,7 +60,9 @@ Namespace Pages
         End Sub
 
         Private Sub Load_Click(sender As Object, e As RoutedEventArgs) Handles Load.Click
-            Using file As New System.Windows.Forms.OpenFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
+            Using file As New System.Windows.Forms.OpenFileDialog With {
+                .Filter = "Xml Meta data(*.xml)|*.xml"
+            }
                 If file.ShowDialog = Forms.DialogResult.OK Then
                     LicenseInfo.info = file.FileName.LoadXml(Of SoftwareToolkits.LicenseInfo)
 
@@ -103,7 +95,9 @@ Namespace Pages
         Dim authors As New List(Of KeyValuePair(Of TextBox, TextBox))
 
         Private Sub Save_Click(sender As Object, e As RoutedEventArgs) Handles Save.Click
-            Using file As New System.Windows.Forms.SaveFileDialog With {.Filter = "Xml Meta data(*.xml)|*.xml"}
+            Using file As New System.Windows.Forms.SaveFileDialog With {
+                .Filter = "Xml Meta data(*.xml)|*.xml"
+            }
                 If file.ShowDialog = Forms.DialogResult.OK Then
                     Call LicenseInfo.info.GetXml.SaveTo(file.FileName)
                 End If
