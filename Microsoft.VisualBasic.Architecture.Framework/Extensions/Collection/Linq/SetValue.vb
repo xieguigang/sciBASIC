@@ -1,8 +1,32 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Linq
+
+    Public Structure SetValuExtension(Of T)
+        Public schema As SetValue(Of T)
+        Public obj As T
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">Using NameOf</param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function InvokeSet(name As String, value As Object) As SetValuExtension(Of T)
+            Return schema.InvokeSetValue(obj, name, value)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return obj.GetJson
+        End Function
+
+        Public Shared Narrowing Operator CType(x As SetValuExtension(Of T)) As T
+            Return x.obj
+        End Operator
+    End Structure
 
     ''' <summary>
     ''' Set value linq expression helper
@@ -46,15 +70,19 @@ Namespace Linq
         ''' <param name="name">Using NameOf.(可以使用NameOf得到需要进行修改的属性名称)</param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function InvokeSetValue(x As T, name As String, value As Object) As T
+        Public Function InvokeSetValue(x As T, name As String, value As Object) As SetValuExtension(Of T)
             If __props.ContainsKey(name) Then
                 Dim setValue As PropertyInfo = __props(name)
                 Call setValue.SetValue(x, value)
-                Return x
             Else
                 Dim lstName As String = String.Join("; ", __props.Keys.ToArray)
                 VBDebugger.Warning($"Could Not found the target parameter which is named {name} // {lstName}")
             End If
+
+            Return New SetValuExtension(Of T) With {
+                .schema = Me,
+                .obj = x
+            }
         End Function
 
         Public Function InvokeSetValue(x As T, value As NamedValue(Of Object)) As T
