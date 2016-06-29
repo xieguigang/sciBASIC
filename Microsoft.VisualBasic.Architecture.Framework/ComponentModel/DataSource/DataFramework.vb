@@ -50,10 +50,10 @@ Namespace ComponentModel.DataSourceModel
     ''' <remarks></remarks>
     Public Module DataFramework
 
-        Public Enum PropertyAccessibilityControls
-            ReadWrite
-            Readable
-            Writeable
+        Public Enum PropertyAccessibilityControls As Byte
+            Readable = 2
+            Writeable = 4
+            ReadWrite = Readable And Writeable
         End Enum
 
         ''' <summary>
@@ -67,6 +67,12 @@ Namespace ComponentModel.DataSourceModel
                 {PropertyAccessibilityControls.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
                 {PropertyAccessibilityControls.Writeable, Function(p) p.CanWrite}
         }
+
+        Public Function Schema(Of T)(flag As PropertyAccessibilityControls) As Dictionary(Of String, PropertyInfo)
+            Dim props As PropertyInfo() =
+                GetType(T).GetProperties(bindingAttr:=BindingFlags.Public Or BindingFlags.Instance)
+            Return props.Where(Flags(flag)).ToDictionary(Function(x) x.Name)
+        End Function
 
 #If NET_40 = 0 Then
 
