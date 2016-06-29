@@ -59,9 +59,11 @@ Namespace Parallel
 
                 Dim __getChildPortal As New __getChildPortal
 
-                Call TempListen.InvokeSet(Of Net.Abstract.DataRequestHandler)(
-                    NameOf(TempListen.Responsehandler),
-                    AddressOf __getChildPortal.HandleRequest)
+                Call SetValue(Of Net.TcpSynchronizationServicesSocket) _
+                    .InvokeSet(Of Net.Abstract.DataRequestHandler)(
+                     TempListen,
+                     NameOf(TempListen.Responsehandler),
+                     AddressOf __getChildPortal.HandleRequest)
 
                 Call RunTask(AddressOf TempListen.Run)
                 Call TempListen.WaitForStart()

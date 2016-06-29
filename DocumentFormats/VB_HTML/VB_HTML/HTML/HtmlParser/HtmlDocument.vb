@@ -44,13 +44,13 @@ Namespace HTML
         ''' <param name="url"></param>
         ''' <returns></returns>
         Public Function LoadDocument(url As String) As HtmlDocument
-            Dim pageContent As String = url.GET.Replace(vbCr, "").Replace(vbLf, "") '是使用<br />标签来分行的
-            Dim List As List(Of InnerPlantText) = New List(Of InnerPlantText)
+            Dim html As String = url.GET.Replace(vbCr, "").Replace(vbLf, "") '是使用<br />标签来分行的
+            Dim List As New List(Of InnerPlantText)
 
-            pageContent = Regex.Replace(pageContent, "<!--.+?-->", "")
+            html = Regex.Replace(html, "<!--.+?-->", "")
 
-            Do While pageContent.Length > 0
-                Dim element As InnerPlantText = DocParserAPI.TextParse(pageContent)
+            Do While html.Length > 0
+                Dim element As InnerPlantText = DocParserAPI.TextParse(html)
                 If element Is Nothing Then
                     Exit Do
                 Else
@@ -60,7 +60,9 @@ Namespace HTML
                 End If
             Loop
 
-            Return Me.InvokeSet(NameOf(Tags), List.ToArray)
+            Me.Tags = List
+
+            Return Me
         End Function
 
         Public Shared Function Load(url As String) As HtmlDocument
