@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
-             d:DesignHeight="489.248" Width="509.11">
+             d:DesignHeight="905.938" Width="509.11">
     <UserControl.Resources>
         <StackPanel Orientation="Horizontal" x:Key="admin">
             <Image Source="/Assets/admin.png" />
@@ -53,7 +53,7 @@
 
 
         </ScrollViewer>
-        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="57" Margin="0,378,0,0" VerticalAlignment="Top" Width="467">
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="463" Margin="0,378,0,0" VerticalAlignment="Top" Width="467">
             <Canvas>
                 <TextBox x:Name="textBox" Height="23" TextWrapping="Wrap" Text="Author name here" Canvas.Left="0" Canvas.Top="5" Width="150"/>
                 <TextBox x:Name="textBox_Copy" Height="23" TextWrapping="Wrap" Text="Email address here" Canvas.Left="160" Canvas.Top="5" Width="300"/>
