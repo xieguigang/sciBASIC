@@ -167,6 +167,16 @@ Namespace ComponentModel
             End If
         End Function
 
+        Public Iterator Function ReadAllLines() As IEnumerable(Of String)
+            Call Reset()
+
+            Do While Not EndRead
+                For Each line As String In BufferProvider()
+                    Yield line
+                Next
+            Loop
+        End Function
+
         Public Shared Iterator Function LinesIterator(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
             Using read As New BufferedStream(path, encoding.GetEncodings)
                 Do While Not read.EndRead

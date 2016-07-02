@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module TestMain
 
@@ -38,7 +38,7 @@ Module TestMain
 
     Sub Main()
 
-
+        Dim schema = Microsoft.VisualBasic.DocumentFormat.Csv.Schema.GetSchema(Of SchemaParsingTest)
 
         Dim ddddddddd = CharsParser(<s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>)
 

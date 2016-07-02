@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
+Imports System.Reflection
 
 ''' <summary>
 ''' The schema project json file.
@@ -30,9 +31,28 @@ Public Class Schema : Inherits ClassObject
         End Set
     End Property
 
+    ''' <summary>
+    ''' <see cref="Members"/> As <see cref="Dictionary"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Tables As IReadOnlyDictionary(Of String, String)
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
+    End Function
+
+    Public Shared Function GetSchema(Of T As Class)() As Schema
+        Return GetSchema(GetType(T))
+    End Function
+
+    Public Shared Function GetSchema(type As Type) As Schema
+        Dim props = type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+        Dim members As New Dictionary(Of NamedValue(Of String))
+
+        For Each prop As PropertyInfo In props
+            If prop.PropertyType.IsPrimitive Then
+
+            End If
+        Next
     End Function
 End Class
