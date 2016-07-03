@@ -193,7 +193,13 @@ Namespace SecurityString
         ''' 
         <ExportAPI("File.Equals")>
         Public Function VerifyFile(query As String, subject As String) As Boolean
-            Return String.Equals(GetFileHashString(query), GetFileHashString(subject))
+            Dim md5 As New Md5HashProvider()
+            Dim a1 As Byte() = IO.File.ReadAllBytes(query)
+            Dim a2 As Byte() = IO.File.ReadAllBytes(subject)
+            Dim m1 As String = md5.GetMd5Hash(a1)
+            Dim m2 As String = md5.GetMd5Hash(a2)
+
+            Return String.Equals(m1, m2)
         End Function
 
         ''' <summary>
@@ -209,8 +215,8 @@ Namespace SecurityString
                 Return ""
             End If
 
-            Dim ChunkBuffer As Byte() = IO.File.ReadAllBytes(PathUri)
-            Return GetMd5Hash(ChunkBuffer)
+            Dim bufs As Byte() = IO.File.ReadAllBytes(PathUri)
+            Return GetMd5Hash(bufs)
         End Function
 
         ''' <summary>
