@@ -1,27 +1,27 @@
 ﻿#Region "08e39f2928a78ca465bd81b1a83ed0ab, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,8 +37,21 @@ Namespace Net.Protocols.ContentTypes
     ''' </summary>
     Public Module MIME
 
+        ''' <summary>
+        ''' 枚举出所有已知的文件拓展名列表
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ExtDict As IReadOnlyDictionary(Of String, ContentType)
+        ''' <summary>
+        ''' 根据类型来枚举
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ContentTypes As IReadOnlyDictionary(Of String, ContentType)
+
+        ''' <summary>
+        ''' .*（ 二进制流，不知道下载文件类型）
+        ''' </summary>
+        Public Const Unknown As String = "application/octet-stream"
 
         Sub New()
             Dim lines As String() = My.Resources.List_of_MIME_types___Internet_Media_Types_.lTokens
