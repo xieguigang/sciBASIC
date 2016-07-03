@@ -34,6 +34,9 @@ Imports Microsoft.VisualBasic.Imaging
 
 Namespace Scripting
 
+    ''' <summary>
+    ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
+    ''' </summary>
     Public Module Casting
 
         ''' <summary>
@@ -49,6 +52,11 @@ Namespace Scripting
             Return DirectCast(obj, T)
         End Function
 
+        ''' <summary>
+        ''' Will processing value NaN automatically and strip for the comma.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
         Private Function val(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
@@ -100,10 +108,20 @@ Namespace Scripting
             Return New StringBuilder(obj)
         End Function
 
+        ''' <summary>
+        ''' <see cref="CommandLine.TryParse"/>
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CastCommandLine(obj As String) As CommandLine.CommandLine
             Return CommandLine.TryParse(obj)
         End Function
 
+        ''' <summary>
+        ''' <see cref="LoadImage"/>
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Function CastImage(path As String) As Image
             Return LoadImage(path)
         End Function
