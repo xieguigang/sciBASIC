@@ -31,6 +31,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
+''' <summary>
+''' Tools API for encoded the image into a base64 string.
+''' </summary>
 Public Module Base64Codec
 
     ''' <summary>

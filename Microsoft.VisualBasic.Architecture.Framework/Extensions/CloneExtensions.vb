@@ -27,8 +27,18 @@
 
 Imports System.Runtime.CompilerServices
 
+''' <summary>
+''' Some extension for copy a collection object.
+''' </summary>
 Public Module CloneExtensions
 
+    ''' <summary>
+    ''' Creates a new dictionary
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="hash"></param>
+    ''' <returns></returns>
     <Extension> Public Function Clone(Of T, V)(hash As IDictionary(Of T, V)) As Dictionary(Of T, V)
         Return New Dictionary(Of T, V)(hash)
     End Function

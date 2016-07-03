@@ -55,6 +55,10 @@ Namespace Net.Http
         ''' <returns></returns>
         Public Property Update As String
 
+        ''' <summary>
+        ''' Returns the root domain name.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Site As String
             Get
                 Return Regex.Match(URL, "https?://(www.)?[^/]+").Value
