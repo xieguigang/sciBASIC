@@ -72,7 +72,7 @@ Namespace Serialization.JSON
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = True) As String
+        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False) As String
             Return GetJson(obj, GetType(T), indent)
         End Function
 

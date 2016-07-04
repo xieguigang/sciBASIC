@@ -123,7 +123,7 @@ Namespace Linq
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return Me.GetJson(False)
         End Function
 
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As T
