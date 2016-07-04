@@ -40,6 +40,10 @@ Module TestMain
 
         Dim schema = Microsoft.VisualBasic.DocumentFormat.Csv.Schema.GetSchema(Of SchemaParsingTest)
 
+        Call schema.GetJson.__DEBUG_ECHO
+        Call schema.GetJson.SaveTo("./test.json")
+        Pause()
+
         Dim ddddddddd = CharsParser(<s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>)
 
         Dim ssssssssss As String = <s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>
@@ -82,7 +86,7 @@ Module TestMain
         data = "./fgfgfgf.csv".LoadCsv(Of SchemaParsingTest).ToArray
 
 
-        Dim nn = "E:\Desktop\DESeq\colR\diffexpr-results.csv".LoadCsv(Of RTools.ResultData)(False)
+        Dim nn = "E:\Desktop\DESeq\colR\diffexpr-results.csv".LoadCsv(Of RTools.DESeq.ResultData)(False)
 
         Call nn.SaveTo(FileIO.FileSystem.GetTempFileName & ".csv", False)
 

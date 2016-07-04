@@ -65,11 +65,15 @@ Public Class Schema : Inherits ClassObject
         Dim pType As Type
         Dim elType As Type
 
+#If DEBUG Then
+        Call {type.FullName, parent, path}.GetJson.__DEBUG_ECHO
+#End If
+
         For Each prop As PropertyInfo In props
             pType = prop.PropertyType
 
             ' 假若是基本类型或者字符串，则会直接添加
-            If pType.IsPrimitive OrElse pType.Equals(GetType(String)) Then
+            If Primitive(pType) Then
                 members += New NamedValue(Of String) With {
                     .Name = $"{parent}::{prop.Name}",
                     .x = path
@@ -78,14 +82,14 @@ Public Class Schema : Inherits ClassObject
 
                 elType = pType.GetThisElement(False)
 
-                If elType Is Nothing Then
+                If elType Is Nothing OrElse elType.Equals(pType) Then
                     ' 不是集合类型
-                    Call __memberStack(members, prop.PropertyType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
-                ElseIf elType.IsPrimitive OrElse elType.Equals(GetType(String)) Then
+                    Call __memberStack(members, pType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
+                ElseIf Primitive(elType) Then
                     ' 基本类型
                     members += New NamedValue(Of String) With {
                         .Name = $"{parent}::{prop.Name}",
-                        .x = "#"
+                        .x = path
                     }
                 Else     ' 复杂类型
                     Call __memberStack(members, elType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
@@ -93,4 +97,10 @@ Public Class Schema : Inherits ClassObject
             End If
         Next
     End Sub
+
+    Public Shared Function Primitive(type As Type) As Boolean
+        Return type.IsPrimitive OrElse
+            type.Equals(GetType(String)) OrElse
+            type.Equals(GetType(Date))
+    End Function
 End Class

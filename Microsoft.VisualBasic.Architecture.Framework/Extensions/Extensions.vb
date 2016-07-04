@@ -1,27 +1,27 @@
 ﻿#Region "3b5386704fe54be25c4ac2f5fd88955a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Similarity
 
@@ -789,14 +790,15 @@ Public Module Extensions
     '''
     <ExportAPI("Pause", Info:="Pause the console program.")>
     Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
+        Call InnerQueue.WaitQueue()
         Call Console.WriteLine(Prompted)
         Call Console.Read()
     End Sub
 
-    Const _DOUBLE As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
+    Public Const RegexFloat As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
 
     ''' <summary>
-    ''' Parsing a real number from the expression text by using the regex expression <see cref="_DOUBLE"/>.
+    ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexFloat"/>.
     ''' (使用正则表达式解析目标字符串对象之中的一个实数)
     ''' </summary>
     ''' <param name="s"></param>
@@ -805,7 +807,7 @@ Public Module Extensions
     '''
     <ExportAPI("Double.Match")>
     <Extension> Public Function RegexParseDouble(s As String) As Double
-        Return Val(s.Match(_DOUBLE))
+        Return Val(s.Match(RegexFloat))
     End Function
 
     ''' <summary>
