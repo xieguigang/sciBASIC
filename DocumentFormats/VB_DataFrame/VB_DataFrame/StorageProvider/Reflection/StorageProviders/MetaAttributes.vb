@@ -40,6 +40,7 @@ Namespace StorageProvider.Reflection
             Dim attrEntry As Type = GetType(Reflection.MetaAttribute)
             Dim MetaAttr As ComponentModels.MetaAttribute =
                 LinqAPI.DefaultFirst(Of ComponentModels.MetaAttribute) <=
+ _
                     From prop As PropertyInfo
                     In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
                     Let attrs As Object() =
@@ -47,6 +48,7 @@ Namespace StorageProvider.Reflection
                     Where Not attrs.IsNullOrEmpty
                     Let mattr As MetaAttribute = DirectCast(attrs.First, Reflection.MetaAttribute)
                     Select New ComponentModels.MetaAttribute(mattr, prop)
+
             Return MetaAttr
         End Function
 

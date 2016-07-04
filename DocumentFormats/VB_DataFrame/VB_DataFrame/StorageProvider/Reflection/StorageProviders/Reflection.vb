@@ -176,31 +176,16 @@ Namespace StorageProvider.Reflection
             Return ChunkBuffer
         End Function
 
-        'Public ReadOnly Property FillObjectMethods As Dictionary(Of Reflection.ColumnAttribute.Type, System.Action(Of PropertyInfo, Object, String())) =
-        '    New Dictionary(Of ColumnAttribute.Type, Action(Of PropertyInfo, Object, String())) From {
-        '        {ColumnAttribute.Type.Bool, Sub(bindProperty As System.Reflection.PropertyInfo, FilledObject As Object, strValues As String()) _
-        '                                        Call bindProperty.SetValue(FilledObject, (From strData As String In strValues Select CType(strData, Boolean)).ToArray, Nothing)},
-        '        {ColumnAttribute.Type.DateTime, Sub(bindProperty As System.Reflection.PropertyInfo, FilledObject As Object, strValues As String()) _
-        '                                        Call bindProperty.SetValue(FilledObject, (From strData As String In strValues Select CType(strData, DateTime)).ToArray, Nothing)},
-        '        {ColumnAttribute.Type.Double, Sub(bindProperty As System.Reflection.PropertyInfo, FilledObject As Object, strValues As String()) _
-        '                                        Call bindProperty.SetValue(FilledObject, (From strData As String In strValues Select Val(strData)).ToArray, Nothing)},
-        '        {ColumnAttribute.Type.Integer, Sub(bindProperty As System.Reflection.PropertyInfo, FilledObject As Object, strValues As String()) _
-        '                                        Call bindProperty.SetValue(FilledObject, (From strData As String In strValues Select CType(strData, Integer)).ToArray, Nothing)},
-        '        {ColumnAttribute.Type.Long, Sub(bindProperty As System.Reflection.PropertyInfo, FilledObject As Object, strValues As String()) _
-        '                                        Call bindProperty.SetValue(FilledObject, (From strData As String In strValues Select CType(strData, Long)).ToArray, Nothing)},
-        '        {ColumnAttribute.Type.String, Sub(bindProperty As System.Reflection.PropertyInfo, FilledObject As Object, strValues As String()) _
-        '                                        Call bindProperty.SetValue(FilledObject, strValues, Nothing)}}
-
         ''' <summary>
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
-        ''' <param name="Collection"></param>
+        ''' <param name="source"></param>
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(Collection As Generic.IEnumerable(Of Object), Optional Explicit As Boolean = True) As DocumentStream.File
-            Dim Type As System.Type = Collection.First.GetType
-            Return __save(Collection, Type, Explicit)
+        Public Function Save(source As IEnumerable(Of Object), Optional Explicit As Boolean = True) As DocumentStream.File
+            Dim type As System.Type = source.First.GetType
+            Return __save(source, type, Explicit)
         End Function
 
         ''' <summary>
