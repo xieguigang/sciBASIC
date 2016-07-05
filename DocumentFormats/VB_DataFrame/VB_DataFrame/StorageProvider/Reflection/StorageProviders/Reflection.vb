@@ -213,8 +213,8 @@ Namespace StorageProvider.Reflection
                                                       RowWriter.ToRow(itmRow)
                                                   Select createdRow  '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
-            Dim title As RowObject = RowWriter.GetRowNames _
-                .Join(RowWriter.GetMetaTitles(source.FirstOrDefault))
+            Dim title As RowObject =
+                RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles)
             Dim dataFrame As New File(title + LQuery)
 
             Return dataFrame
