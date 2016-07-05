@@ -51,6 +51,9 @@ Module TestMain
 
     Sub Main()
 
+        Dim fsfsfsd = [Class].GetSchema(Of pp)
+
+
         Dim sssis = {New pp With {.x = New p1, .y = New p1}}
 
         Call sssis.SaveData("x:\test2")

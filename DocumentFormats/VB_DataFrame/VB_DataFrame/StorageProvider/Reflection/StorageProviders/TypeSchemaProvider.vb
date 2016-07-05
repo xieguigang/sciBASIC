@@ -58,16 +58,18 @@ Namespace StorageProvider.Reflection
                  In Properties
                  Let IAC = GetInterfaces([Property], Explicit)
                  Where Not IAC Is Nothing
-                 Select [Property], IAC).ToDictionary(Function(obj) obj.Property, elementSelector:=Function(obj) obj.IAC)
+                 Select [Property], IAC).ToDictionary(Function(obj) obj.Property, Function(obj) obj.IAC)
             Return hash
         End Function
 
         ''' <summary>
-        ''' 当目标属性上面没有任何自定义属性数据的时候，会检查是否为简单数据类型，假若是则会自动添加一个NullMask，假若不是，则会返回空集合，则说明这个属性不会被用于序列化和反序列化
+        ''' 当目标属性上面没有任何自定义属性数据的时候，会检查是否为简单数据类型，假若是则会自动添加一个NullMask，
+        ''' 假若不是，则会返回空集合，则说明这个属性不会被用于序列化和反序列化。
+        ''' 假若返回来的是空值，则说明是复杂类型
         ''' </summary>
         ''' <param name="[Property]">对于LINQ的Column属性也会接受的</param>
         ''' <returns></returns>
-        Private Function GetInterfaces([Property] As System.Reflection.PropertyInfo, Explicit As Boolean) As ComponentModels.StorageProvider
+        Public Function GetInterfaces([Property] As PropertyInfo, Explicit As Boolean, Optional forcePrimitive As Boolean = True) As ComponentModels.StorageProvider
             Dim attrs As Object() = [Property].GetCustomAttributes(
                 attributeType:=GetType(Reflection.CollectionAttribute),
                 inherit:=True)
@@ -89,17 +91,17 @@ Namespace StorageProvider.Reflection
 
             If Not attrs.IsNullOrEmpty Then
                 Dim attr = DirectCast(attrs(Scan0), Reflection.ColumnAttribute) '枚举和键值对可能会通过这个属性来取别名，所以这里还需要进行额外的处理
-                Return __generateMask([Property], [alias]:=attr.Name)
+                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
             End If  '请注意，由于这个属性之间有继承关系，座椅最基本的类型会放在最后以防止出现重复
 
             attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute), inherit:=True)
             If Not attrs.IsNullOrEmpty Then
                 Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)  '也可能是别名属性
-                Return __generateMask([Property], [alias]:=attr.Name)
+                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
             End If
 
             If Not Explicit Then
-                Return __generateMask([Property], "")
+                Return __generateMask([Property], "", forcePrimitive)
             Else
                 Return Nothing
             End If
@@ -111,7 +113,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="[Property]"></param>
         ''' <param name="[alias]"></param>
         ''' <returns></returns>
-        Private Function __generateMask([Property] As PropertyInfo, [alias] As String) As ComponentModels.StorageProvider
+        Private Function __generateMask([Property] As PropertyInfo, [alias] As String, forcePrimitive As Boolean) As ComponentModels.StorageProvider
             Dim _getName As String = If(String.IsNullOrEmpty([alias]), [Property].Name, [alias])
 
             If Scripting.IsPrimitive([Property].PropertyType) Then
@@ -120,12 +122,18 @@ Namespace StorageProvider.Reflection
             End If
 
             Dim valueType As Type = Nothing
-            Dim ElementType As Type = Nothing
+            Dim elType As Type = Nothing
 
             If Not GetMetaAttribute([Property].PropertyType).ShadowCopy(valueType) Is Nothing Then
-                Return New ComponentModels.MetaAttribute(New Reflection.MetaAttribute(valueType), [Property])
-            ElseIf Not GetThisElement([Property].PropertyType).ShadowCopy(ElementType).Equals(GetType(System.Void)) Then
-                Return ComponentModels.CollectionColumn.CreateObject(New Reflection.CollectionAttribute(_getName), [Property], ElementType)
+
+                Return New ComponentModels.MetaAttribute(
+                    New Reflection.MetaAttribute(valueType), [Property])
+            ElseIf Not (GetThisElement([Property].PropertyType, forcePrimitive) _
+                       .ShadowCopy(elType) Is Nothing OrElse
+                        elType.Equals(GetType(Void))) Then
+
+                Return ComponentModels.CollectionColumn.CreateObject(
+                    New CollectionAttribute(_getName), [Property], elType)
             ElseIf IsKeyValuePair([Property]) Then
                 Return ComponentModels.KeyValuePair.CreateObject(_getName, [Property])
             ElseIf IsEnum([Property]) Then

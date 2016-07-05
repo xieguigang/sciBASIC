@@ -85,6 +85,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Field.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Schema.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
