@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.Language
 
 Public Class p1
     Public Property a As String
@@ -50,6 +51,9 @@ Module TestMain
     ReadOnly sss As String = <cc>ssssss,"ss,sssss","ssss""sss","sss  """" sss",""""""""""""</cc>
 
     Sub Main()
+
+        Dim uuuuuuuuuuuuu As New Uid(500000000)
+
 
         Dim fsfsfsd = [Class].GetSchema(Of pp)
 

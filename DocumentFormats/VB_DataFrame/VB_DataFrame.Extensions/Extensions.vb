@@ -14,7 +14,7 @@ Public Module SchemasAPI
                      Group x By x.x Into Group).ToArray
 
         Dim type As Type = GetType(T)
-
+        Dim IO As [Class] = [Class].GetSchema(type)
 
         For Each obj As SeqValue(Of T) In source.SeqIterator
 

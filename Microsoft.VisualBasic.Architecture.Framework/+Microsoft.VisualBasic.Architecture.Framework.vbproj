@@ -357,6 +357,7 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Language\Uid.vb" />
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
