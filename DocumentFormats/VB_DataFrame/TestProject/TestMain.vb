@@ -35,14 +35,15 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Language
 
 Public Class p1
-    Public Property a As String
-    Public Property b As String
-    Public Property c As String
+    Public Property a As String = Now.ToString
+    Public Property b As String = Rnd()
+    Public Property c As String = RandomDouble()
 End Class
 
 Public Class pp
     Public Property x As p1
     Public Property y As p1
+    Public Property z As Double = RandomDouble()
 End Class
 
 
@@ -52,13 +53,19 @@ Module TestMain
 
     Sub Main()
 
-        Dim uuuuuuuuuuuuu As New Uid(500000000)
+        Dim uuuuuuuuuuuuu As New Uid(50)
 
 
         Dim fsfsfsd = [Class].GetSchema(Of pp)
 
 
-        Dim sssis = {New pp With {.x = New p1, .y = New p1}}
+        Dim sssis As New List(Of pp)
+
+        For i As Integer = 0 To 2000
+            sssis += {New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}}
+
+        Next
+
 
         Call sssis.SaveData("x:\test2")
 

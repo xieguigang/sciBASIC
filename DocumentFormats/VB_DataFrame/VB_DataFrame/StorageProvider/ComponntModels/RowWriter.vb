@@ -33,9 +33,12 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.ComponentModels
 
+    ''' <summary>
+    ''' 从.NET对象转换为Csv文件之中的行数据
+    ''' </summary>
     Public Class RowWriter
 
-        Public ReadOnly Property Columns As ComponentModels.StorageProvider()
+        Public ReadOnly Property Columns As StorageProvider()
         Public ReadOnly Property SchemaProvider As SchemaProvider
         Public ReadOnly Property MetaRow As MetaAttribute
 
