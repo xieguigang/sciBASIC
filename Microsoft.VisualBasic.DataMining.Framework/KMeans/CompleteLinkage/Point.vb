@@ -30,11 +30,9 @@ Namespace KMeans.CompleteLinkage
             Return New Point(unitsAsDouble)
         End Function
 
-        Public WriteOnly Property CompleteLinkageCluster As Integer
-            Set(___cluster As Integer)
-                mResultantClusterCompleteLinkage = ___cluster
-            End Set
-        End Property
+        Public Sub CompleteLinkageCluster(___cluster As Integer)
+            mResultantClusterCompleteLinkage = ___cluster
+        End Sub
 
         Public Function distanceToOtherPoint(otherPoint As Point) As Double
             Return DistanceBetweenPoints(otherPoint)
