@@ -11,11 +11,11 @@ Namespace KMeans.CompleteLinkage
         Private mResultantKMeansCluster As Integer = -1
         Private mResultantClusterCompleteLinkage As Integer = -1
 
-        Public Sub New(ParamArray units As Double())
+        Public Sub New(units As Double())
             Properties = units
         End Sub
 
-        Sub New()
+        Public Sub New()
         End Sub
 
         Public Shared Function fromStringArray(ParamArray unitsAsString As String()) As Point

@@ -2,6 +2,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.Framework.KMeans
+Imports Microsoft.VisualBasic.Linq
 
 Namespace KMeans.CompleteLinkage
 
@@ -16,8 +17,8 @@ Namespace KMeans.CompleteLinkage
         Friend _source As List(Of Point)
         Friend mNumDesiredClusters As Integer
 
-        Public Sub New(source As List(Of Point), numClusters As Integer)
-            _source = source
+        Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
+            _source = source.ToList
             mNumDesiredClusters = numClusters
         End Sub
 
@@ -28,6 +29,14 @@ Namespace KMeans.CompleteLinkage
                 Return _source
             End Get
         End Property
+
+        Protected Shared Sub __writeCluster(source As IEnumerable(Of Cluster(Of Point)))
+            For Each c In source.SeqIterator
+                For Each x As Point In c.obj._innerList
+                    Call x.CompleteLinkageCluster(c.i)
+                Next
+            Next
+        End Sub
     End Class
 
     Public Class LloydsMethodClustering : Inherits Clustering
@@ -42,7 +51,7 @@ Namespace KMeans.CompleteLinkage
             End Get
         End Property
 
-        Public Sub New(source As List(Of Point), numClusters As Integer)
+        Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
             Call MyBase.New(source, numClusters)
 
             mKMeansClusters = New List(Of KMeansCluster(Of Point))
@@ -124,7 +133,7 @@ Namespace KMeans.CompleteLinkage
 
         Friend _completeLinkageClusters As List(Of Cluster(Of Point))
 
-        Public Sub New(source As List(Of Point), numClusters As Integer)
+        Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
             Call MyBase.New(source, numClusters)
             _completeLinkageClusters = New List(Of Cluster(Of Point))
         End Sub
@@ -170,6 +179,8 @@ Namespace KMeans.CompleteLinkage
                 twoClosestClusters(0) = Nothing
                 twoClosestClusters(1) = Nothing
             Loop
+
+            Call __writeCluster(_completeLinkageClusters)
 
             Return Points
         End Function
