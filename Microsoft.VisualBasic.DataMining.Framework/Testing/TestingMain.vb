@@ -39,7 +39,7 @@ Module TestingMain
         'Catch e As Exception
         '    Console.WriteLine("Thread.sleep interrupted!")
         'End Try
-        Dim ddd As List(Of Double) = [TypeOf](Of Double)() << OpenHandle("./123.txt")
+        '    Dim ddd As List(Of Double) = [TypeOf](Of Double)() << OpenHandle("./123.txt")
 
 
 
@@ -61,9 +61,9 @@ Module TestingMain
 
 
         Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)
-        Dim net = source.TreeNET
+        '    Dim net = source.TreeNET
 
-        Call net.Save("./test_tree/", Encodings.ASCII)
+        '     Call net.Save("./test_tree/", Encodings.ASCII)
 
 
         Dim StudentA As New Student With {.Properties = New Double() {15, 32, 35.6}, .Name = "A"},
