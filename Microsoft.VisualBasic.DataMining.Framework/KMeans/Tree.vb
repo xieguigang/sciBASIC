@@ -142,7 +142,7 @@ Namespace KMeans
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
         Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer) As Entity()
-            Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of Entity()) =
                 New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), 1, [stop])).Run    ' cluster1
@@ -152,7 +152,7 @@ Namespace KMeans
             Return list.ToArray
         End Function
 
-        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.Cluster(Of T), id As String, [stop] As Integer) As Entity()
+        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer) As Entity()
             For Each x In cluster
                 x.uid &= ("." & id)
             Next
@@ -187,7 +187,7 @@ EXIT_:          Dim array = source.ToArray
             End If
 
             Dim list As New List(Of Entity)
-            Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
 
             ' 检查数据
             Dim b0 As Boolean = False ', b20 As Boolean = False

@@ -34,7 +34,7 @@ Namespace KMeans
 
             n = 1
 
-            For Each cluster As Cluster(Of Entity) In clusters
+            For Each cluster As KMeansCluster(Of Entity) In clusters
                 Dim values As EntityLDM() = cluster.ToArray(Function(x) x.ToLDM(maps))
 
                 For Each x In values
