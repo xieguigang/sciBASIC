@@ -11,13 +11,13 @@
 ''' </summary>
 Public Class DirichletDistribution
 
-    Public a1 As Single = 1.0F
-    Public a2 As Single = 1.0F
-    Public a3 As Single = 1.0F
+    Public a1 As Double = 1.0F
+    Public a2 As Double = 1.0F
+    Public a3 As Double = 1.0F
 
-    Public Function Probability(x1 As Single, x2 As Single, x3 As Single) As Single
-        Dim logCoef As Single = lgamma(a1 + a2 + a3) - lgamma(a1) - lgamma(a2) - lgamma(a3)
-        Dim logValue As Single = (a1 - 1.0F) * Math.Log(x1) + (a2 - 1.0F) * Math.Log(x2) + (a3 - 1.0F) * Math.Log(x3)
+    Public Function Probability(x1 As Double, x2 As Double, x3 As Double) As Double
+        Dim logCoef As Double = lgamma(a1 + a2 + a3) - lgamma(a1) - lgamma(a2) - lgamma(a3)
+        Dim logValue As Double = (a1 - 1.0F) * Math.Log(x1) + (a2 - 1.0F) * Math.Log(x2) + (a3 - 1.0F) * Math.Log(x3)
 
         Return Math.Exp(logCoef + logValue)
     End Function
@@ -27,9 +27,9 @@ Public Class DirichletDistribution
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
-    Public Shared Function lgamma(x As Single) As Single
-        Dim logterm As Single = Math.Log(x * (1.0F + x) * (2.0F + x))
-        Dim xp3 As Single = 3.0F + x
+    Public Shared Function lgamma(x As Double) As Double
+        Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))
+        Dim xp3 As Double = 3.0F + x
 
         Return -2.081061F - x + 0.0833333F / xp3 - logterm + (2.5F + x) * Math.Log(xp3)
     End Function

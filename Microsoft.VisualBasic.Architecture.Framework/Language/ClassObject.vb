@@ -91,7 +91,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return JsonContract.GetJson(Me, [GetType])
+            Return JsonContract.GetJson(Me, [GetType], False)
         End Function
 
         ''' <summary>
