@@ -202,6 +202,7 @@
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="BezierCurve.vb" />
+    <Compile Include="DirichletDistribution.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
