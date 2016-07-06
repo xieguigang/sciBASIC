@@ -224,6 +224,7 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="KMeans\Tree.vb" />
+    <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="NeuralNetwork\Models\ModelAPI.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />
