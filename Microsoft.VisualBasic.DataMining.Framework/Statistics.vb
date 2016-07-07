@@ -62,27 +62,25 @@ Public Module Statistics
     ''' <summary>
     ''' Calculate standard deviation.
     ''' </summary>
-    ''' 
     ''' <param name="values">Histogram array.</param>
-    ''' 
     ''' <returns>Returns value of standard deviation.</returns>
-    ''' 
-    ''' <remarks><para>The input array is treated as histogram, i.e. its
+    ''' <remarks>
+    ''' The input array is treated as histogram, i.e. its
     ''' indexes are treated as values of stochastic function, but
     ''' array values are treated as "probabilities" (total amount of
-    ''' hits).</para>
+    ''' hits).
     ''' 
-    ''' <para>Sample usage:</para>
-    ''' <code>
-    ''' // create histogram array
-    ''' int[] histogram = new int[] { 1, 1, 2, 3, 6, 8, 11, 12, 7, 3 };
-    ''' // calculate standard deviation value
-    ''' double stdDev = Statistics.StdDev( histogram );
-    ''' // output it (1.999)
-    ''' Console.WriteLine( "std.dev. = " + stdDev.ToString( "F3" ) );
-    ''' </code>
+    ''' Sample usage:
+    ''' 
+    ''' ```vbnet
+    ''' ' create histogram array
+    ''' Dim histogram As Integer() = New Integer() { 1, 1, 2, 3, 6, 8, 11, 12, 7, 3 }
+    ''' ' calculate standard deviation value
+    ''' Dim stdDev = Statistics.StdDev( histogram )
+    ''' '' output it (1.999)
+    ''' Console.WriteLine( "std.dev. = " &amp; stdDev.ToString( "F3" ) )
+    ''' ```
     ''' </remarks>
-    ''' 
     Public Function StdDev(values As Integer()) As Double
         Return StdDev(values, Mean(values))
     End Function

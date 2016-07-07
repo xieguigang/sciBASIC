@@ -351,6 +351,7 @@
     <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
+    <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
@@ -405,6 +406,7 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />

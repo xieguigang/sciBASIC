@@ -1,4 +1,31 @@
-﻿Imports System.ComponentModel
+﻿#Region "3b5386704fe54be25c4ac2f5fd88955a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.ComponentModel
 Imports System.Drawing
 Imports System.IO
 Imports System.Net
@@ -826,35 +853,6 @@ Public Module Extensions
     End Function
 
 #Region ""
-
-    ''' <summary>
-    ''' Assigning the value to the specific named property to the target object.
-    ''' (将<paramref name="value"/>参数之中的值赋值给目标对象<paramref name="obj"/>之中的指定的<paramref name="name"/>属性名称的属性，如果发生错误，则原有的对象<paramref name="obj"/>不会被修改)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <typeparam name="Tvalue"></typeparam>
-    ''' <param name="obj"></param>
-    ''' <param name="Name">可以使用NameOf得到需要进行修改的属性名称</param>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    <Extension> Public Function InvokeSet(Of T, Tvalue)(ByRef obj As T, Name As String, value As Tvalue) As T
-        Dim Type As Type = GetType(T)
-        Dim lstProp As PropertyInfo() =
-            Type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
-        Dim p As PropertyInfo = (From pInfo As PropertyInfo
-                                 In lstProp
-                                 Where String.Equals(Name, pInfo.Name)
-                                 Select pInfo).FirstOrDefault
-        If Not p Is Nothing Then
-            'Call Console.WriteLine(value.ToString)
-            Call p.SetValue(obj, value, Nothing)
-        Else
-            Dim lstName As String = String.Join("; ", (From pp In lstProp Select ss = pp.Name).ToArray)
-            VBDebugger.Warning($"Could Not found the target parameter which is named {Name} // {lstName}")
-        End If
-
-        Return obj
-    End Function
 
     <Extension> Public Function InvokeSet(Of T As Class, Tvalue)(obj As T, [Property] As PropertyInfo, value As Tvalue) As T
         Call [Property].SetValue(obj, value, Nothing)

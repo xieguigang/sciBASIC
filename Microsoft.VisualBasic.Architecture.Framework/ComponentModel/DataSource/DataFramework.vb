@@ -1,4 +1,31 @@
-﻿Imports System.Reflection
+﻿#Region "6e79e984db96cc84b4b435875f693c85, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
@@ -23,10 +50,10 @@ Namespace ComponentModel.DataSourceModel
     ''' <remarks></remarks>
     Public Module DataFramework
 
-        Public Enum PropertyAccessibilityControls
-            ReadWrite
-            Readable
-            Writeable
+        Public Enum PropertyAccessibilityControls As Byte
+            Readable = 2
+            Writeable = 4
+            ReadWrite = Readable And Writeable
         End Enum
 
         ''' <summary>
@@ -40,6 +67,12 @@ Namespace ComponentModel.DataSourceModel
                 {PropertyAccessibilityControls.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
                 {PropertyAccessibilityControls.Writeable, Function(p) p.CanWrite}
         }
+
+        Public Function Schema(Of T)(flag As PropertyAccessibilityControls) As Dictionary(Of String, PropertyInfo)
+            Dim props As PropertyInfo() =
+                GetType(T).GetProperties(bindingAttr:=BindingFlags.Public Or BindingFlags.Instance)
+            Return props.Where(Flags(flag)).ToDictionary(Function(x) x.Name)
+        End Function
 
 #If NET_40 = 0 Then
 

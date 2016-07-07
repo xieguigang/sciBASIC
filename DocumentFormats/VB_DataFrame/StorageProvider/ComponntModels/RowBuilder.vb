@@ -1,4 +1,33 @@
-﻿Imports Microsoft.VisualBasic.Linq.Extensions
+﻿#Region "Microsoft.VisualBasic::7743e67bf7ec3f4126b74c66bace44fc, ..\VB_DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace StorageProvider.ComponentModels
 
@@ -28,7 +57,8 @@ Namespace StorageProvider.ComponentModels
             SchemaProvider.KeyValuePairColumns.ToArray(Function(field) DirectCast(field, StorageProvider)),
             SchemaProvider.CollectionColumns.ToArray(Function(field) DirectCast(field, ComponentModels.StorageProvider)),
             New StorageProvider() {DirectCast(SchemaProvider.MetaAttributes, StorageProvider)}}).MatrixToVector
-            Me.Columns = (From field As StorageProvider In Me.Columns
+            Me.Columns = (From field As StorageProvider
+                          In Me.Columns
                           Where Not field Is Nothing
                           Select field).ToArray
             HaveMetaAttribute = Not SchemaProvider.MetaAttributes Is Nothing
@@ -39,16 +69,22 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="schema"></param>
         Public Sub Indexof(schema As ISchema)
-            Dim LQuery = (From field As StorageProvider In Columns
-                          Let ordinal As Integer = schema.GetOrdinal(field.Name)
-                          Select field.InvokeSet(NameOf(field.Ordinal), ordinal)).ToArray
-            _IndexedFields = (From field In LQuery Where field.Ordinal > -1 Select field).ToArray
-            Dim Indexed = IndexedFields.ToArray(Function(field) field.Name.ToLower)
+            Dim setValue = New SetValue(Of StorageProvider)() _
+                .GetSet(NameOf(StorageProvider.Ordinal))
+            Dim LQuery As StorageProvider() =
+                LinqAPI.Exec(Of StorageProvider) <= From field As StorageProvider
+                                                    In Columns
+                                                    Let ordinal As Integer =
+                                                        schema.GetOrdinal(field.Name)
+                                                    Select setValue(field, ordinal)
+            _IndexedFields = LQuery.Where(Function(field) field.Ordinal > -1).ToArray
+            Dim Indexed As String() = IndexedFields.ToArray(Function(field) field.Name.ToLower)
             '没有被建立索引的都可能会当作为字典数据
             _NonIndexed = (From colum As KeyValuePair(Of String, Integer)
                            In schema.SchemaOridinal
                            Where Array.IndexOf(Indexed, colum.Key.ToLower) = -1
-                           Select colum).ToDictionary(Function(field) field.Key, elementSelector:=Function(field) field.Value)
+                           Select colum).ToDictionary(Function(field) field.Key,
+                                                      Function(field) field.Value)
         End Sub
 
         Public Function FillData(Of T As Class)(row As DocumentStream.RowObject, obj As T) As T

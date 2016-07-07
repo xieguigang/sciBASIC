@@ -1,5 +1,33 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+﻿#Region "a8e91375b3b6e7f69b46f1c698628b0c, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\ActivityInst.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports System.Reflection
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 
 Namespace CommandLine
 
@@ -18,12 +46,15 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Sub New(obj As Object)
             Call MyBase.New(obj.GetType)
+
+            Dim setValue =
+                New SetValue(Of EntryPoints.APIEntryPoint)() _
+                    .GetSet(NameOf(EntryPoints.APIEntryPoint.InvokeOnObject))
+
             Call (From api As EntryPoints.APIEntryPoint
-                  In Me.__API_InfoHash.Values.AsParallel
+                  In Me.__API_InfoHash.Values
                   Where api.IsInstanceMethod  ' 只联系实例方法
-                  Let name As String =
-                      NameOf(EntryPoints.APIEntryPoint.InvokeOnObject)
-                  Select api.InvokeSet(Of Object)(name, api)).ToArray
+                  Select setValue(api, api)).ToArray
 
             Me._obj = obj
         End Sub

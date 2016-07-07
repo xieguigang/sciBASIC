@@ -1,4 +1,31 @@
-﻿Imports System.Reflection
+﻿#Region "3b7e4c7bac2c8317da7a0937a21ca612, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ServicesFolk.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
@@ -32,9 +59,11 @@ Namespace Parallel
 
                 Dim __getChildPortal As New __getChildPortal
 
-                Call TempListen.InvokeSet(Of Net.Abstract.DataRequestHandler)(
-                    NameOf(TempListen.Responsehandler),
-                    AddressOf __getChildPortal.HandleRequest)
+                Call SetValue(Of Net.TcpSynchronizationServicesSocket) _
+                    .InvokeSet(Of Net.Abstract.DataRequestHandler)(
+                     TempListen,
+                     NameOf(TempListen.Responsehandler),
+                     AddressOf __getChildPortal.HandleRequest)
 
                 Call RunTask(AddressOf TempListen.Run)
                 Call TempListen.WaitForStart()

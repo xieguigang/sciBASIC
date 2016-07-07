@@ -1,4 +1,31 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::a9690e0e0b198b8e39a72acd6b6c94b3, ..\VB_DataFrame\Extensions\DataSetHandler.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 
 Public Module DataSetHandler
@@ -21,3 +48,4 @@ Public Module DataSetHandler
         Return True
     End Function
 End Module
+
