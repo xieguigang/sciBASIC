@@ -76,7 +76,13 @@ Namespace StorageProvider.ComponentModels
         Public MustOverride ReadOnly Property ProviderId As Reflection.ProviderIds
 
         Public ReadOnly Property LoadMethod As Func(Of String, Object)
-        Public MustOverride Overloads Function ToString([object] As Object) As String
+
+        ''' <summary>
+        ''' By using this function that save the property value as a cell value string 
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public MustOverride Overloads Function ToString(obj As Object) As String
 
         Sub New(BindProperty As PropertyInfo)
             Call Me.New(BindProperty, BindProperty.PropertyType)
@@ -97,7 +103,7 @@ Namespace StorageProvider.ComponentModels
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[Dim {Name} As {BindProperty.PropertyType.FullName}] //{Me.GetType.Name}   --> {BindProperty.Name}"
+            Return $"[Dim {Name} As {BindProperty.PropertyType.FullName}] //{Me.GetType.Name} --> {BindProperty.Name}"
         End Function
     End Class
 End Namespace

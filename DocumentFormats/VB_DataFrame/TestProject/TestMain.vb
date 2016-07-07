@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::6dab863b9b504348b0c893e6f06e3a3b, ..\VB_DataFrame\TestProject\TestMain.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,21 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.Language
+
+Public Class p1
+    Public Property a As String = Now.ToString
+    Public Property b As String = Rnd()
+    Public Property c As String = RandomDouble()
+End Class
+
+Public Class pp
+    Public Property x As p1
+    Public Property y As p1
+    Public Property z As Double = RandomDouble()
+End Class
+
 
 Module TestMain
 
@@ -38,7 +53,27 @@ Module TestMain
 
     Sub Main()
 
-        Dim schema = Microsoft.VisualBasic.DocumentFormat.Csv.Schema.GetSchema(Of SchemaParsingTest)
+        Dim uuuuuuuuuuuuu As New Uid(50)
+
+
+        Dim fsfsfsd = [Class].GetSchema(Of pp)
+
+
+        Dim sssis As New List(Of pp)
+
+        For i As Integer = 0 To 2000
+            sssis += {New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}}
+
+        Next
+
+
+        Call sssis.SaveData("x:\test2")
+
+        '  Dim schdddema = Microsoft.VisualBasic.DocumentFormat.Csv.Schema.GetSchema(Of SchemaParsingTest)
+
+        '  Call schema.GetJson.__DEBUG_ECHO
+        '  Call schema.GetJson.SaveTo("./test.json")
+        Pause()
 
         Dim ddddddddd = CharsParser(<s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>)
 
@@ -82,7 +117,7 @@ Module TestMain
         data = "./fgfgfgf.csv".LoadCsv(Of SchemaParsingTest).ToArray
 
 
-        Dim nn = "E:\Desktop\DESeq\colR\diffexpr-results.csv".LoadCsv(Of RTools.ResultData)(False)
+        Dim nn = "E:\Desktop\DESeq\colR\diffexpr-results.csv".LoadCsv(Of RTools.DESeq.ResultData)(False)
 
         Call nn.SaveTo(FileIO.FileSystem.GetTempFileName & ".csv", False)
 

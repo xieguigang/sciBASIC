@@ -33,9 +33,12 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.ComponentModels
 
+    ''' <summary>
+    ''' 从.NET对象转换为Csv文件之中的行数据
+    ''' </summary>
     Public Class RowWriter
 
-        Public ReadOnly Property Columns As ComponentModels.StorageProvider()
+        Public ReadOnly Property Columns As StorageProvider()
         Public ReadOnly Property SchemaProvider As SchemaProvider
         Public ReadOnly Property MetaRow As MetaAttribute
 
@@ -53,6 +56,7 @@ Namespace StorageProvider.ComponentModels
                                                     Select field
             Me.MetaRow = SchemaProvider.MetaAttributes
             Me._metaBlank = metaBlank
+            Me.HaveMeta = Not MetaRow Is Nothing
 
             If Me.MetaRow Is Nothing Then
                 __buildRow = AddressOf __buildRowNullMeta
@@ -99,7 +103,23 @@ Namespace StorageProvider.ComponentModels
             Return New DocumentStream.RowObject(row)
         End Function
 
-        Dim __cachedIndex As String()
+        Friend __cachedIndex As String()
+
+        Public ReadOnly Property HaveMeta As Boolean
+
+        ''' <summary>
+        ''' Has the meta field indexed?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsMetaIndexed As Boolean
+            Get
+                If Not HaveMeta Then
+                    Return True
+                Else
+                    Return Not __cachedIndex Is Nothing
+                End If
+            End Get
+        End Property
 
         Public Function CacheIndex(source As IEnumerable(Of Object)) As RowWriter
             If MetaRow Is Nothing Then
@@ -141,7 +161,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 #End Region
 
-        Public Function GetMetaTitles(obj As Object) As String()
+        Public Function GetMetaTitles() As String()
             If MetaRow Is Nothing OrElse MetaRow.BindProperty Is Nothing Then
                 Return New String() {}
             Else

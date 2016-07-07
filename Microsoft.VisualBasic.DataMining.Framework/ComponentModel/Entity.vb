@@ -12,9 +12,9 @@ Namespace ComponentModel
     Public MustInherit Class EntityBase(Of T) : Inherits ClassObject
 
         <XmlAttribute("T")>
-        Public Property Properties As T()
+        Public Overridable Property Properties As T()
 
-        Public ReadOnly Property Length As Integer
+        Public Overridable ReadOnly Property Length As Integer
             Get
                 Return Properties.Length
             End Get

@@ -202,6 +202,7 @@
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="BezierCurve.vb" />
+    <Compile Include="DirichletDistribution.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
@@ -209,6 +210,9 @@
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\Extensions.vb" />
+    <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
+    <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />
+    <Compile Include="KMeans\CompleteLinkage\Point.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
     <Compile Include="KMeans\Entity.vb" />
@@ -220,6 +224,8 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="KMeans\Tree.vb" />
+    <Compile Include="MarginalLikelihoodAnalysis.vb" />
+    <Compile Include="Gamma.vb" />
     <Compile Include="NeuralNetwork\Models\ModelAPI.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />

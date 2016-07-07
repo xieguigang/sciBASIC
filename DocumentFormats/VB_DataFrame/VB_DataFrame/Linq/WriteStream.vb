@@ -60,7 +60,8 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="Explicit">Schema parsing of the object strictly?</param>
-        Sub New(path As String, Optional Explicit As Boolean = False, Optional metaBlank As String = "")
+        ''' <param name="metaKeys">预设的标题头部</param>
+        Sub New(path As String, Optional Explicit As Boolean = False, Optional metaBlank As String = "", Optional metaKeys As String() = Nothing)
             Dim typeDef As Type = GetType(T)
             Dim Schema = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim parent As String = path.ParentPath
@@ -70,14 +71,25 @@ Namespace DocumentStream.Linq
             RowWriter = New RowWriter(Schema, metaBlank)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
 
+            Call "".SaveTo(handle)
+
             Dim file As New FileStream(handle,
                                        FileMode.OpenOrCreate,
                                        FileAccess.ReadWrite,
                                        share:=FileShare.Read)
 
-            _fileIO = New IO.StreamWriter(file)
+            _fileIO = New IO.StreamWriter(file) With {
+                .AutoFlush = True,
+                .NewLine = vbLf
+            }
+            RowWriter.__cachedIndex = metaKeys
 
             Dim title As RowObject = RowWriter.GetRowNames
+
+            If Not metaKeys.IsNullOrEmpty Then
+                title = New RowObject(title.Join(metaKeys))
+            End If
+
             Dim sTitle As String = title.AsLine
             Call _fileIO.WriteLine(sTitle)
         End Sub
@@ -85,6 +97,16 @@ Namespace DocumentStream.Linq
         Public Overrides Function ToString() As String
             Return handle.ToFileURL
         End Function
+
+        ''' <summary>
+        ''' Has the meta field indexed?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsMetaIndexed As Boolean
+            Get
+                Return RowWriter.IsMetaIndexed
+            End Get
+        End Property
 
         ''' <summary>
         ''' Serialize the object data source into the csv document.
@@ -98,6 +120,7 @@ Namespace DocumentStream.Linq
             End If
 
             Dim LQuery As String() = LinqAPI.Exec(Of String) <=
+ _
                 From line As T
                 In source.AsParallel
                 Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行

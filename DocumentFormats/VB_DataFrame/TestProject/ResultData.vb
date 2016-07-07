@@ -31,7 +31,9 @@ Imports Microsoft.VisualBasic
 
 Namespace RTools
 
-    Partial Module DESeq
+    Public Class DESeq
+
+        Public Property eeeeeee As ResultData()
 
         Public Class ResultData
 
@@ -55,5 +57,5 @@ Namespace RTools
                 Return $"{Gene} ---> log2FoldChange  {log2FoldChange}"
             End Function
         End Class
-    End Module
+    End Class
 End Namespace

@@ -36,13 +36,16 @@ Namespace StorageProvider.ComponentModels
         Function GetOrdinal(name As String) As Integer
     End Interface
 
+    ''' <summary>
+    ''' 这个是用于将Csv文件之中的行数据转换为.NET对象的
+    ''' </summary>
     Public Class RowBuilder
 
         ''' <summary>
         ''' 总的列表
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Columns As ComponentModels.StorageProvider()
+        Public ReadOnly Property Columns As StorageProvider()
         Public ReadOnly Property SchemaProvider As SchemaProvider
 
         Public ReadOnly Property IndexedFields As StorageProvider()

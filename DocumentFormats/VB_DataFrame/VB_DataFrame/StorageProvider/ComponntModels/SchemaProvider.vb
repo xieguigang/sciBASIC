@@ -183,7 +183,11 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
-                .MetaAttributes = If(MetaAttributes IsNot Nothing AndAlso MetaAttributes.CanReadDataFromObject, MetaAttributes, Nothing)
+                .MetaAttributes =
+                    If(MetaAttributes IsNot Nothing AndAlso
+                       MetaAttributes.CanReadDataFromObject,
+                       MetaAttributes,
+                       Nothing)
             }
         End Function
 
@@ -196,8 +200,12 @@ Namespace StorageProvider.ComponentModels
                 .CollectionColumns = (From p In CollectionColumns Where p.CanWriteDataToObject Select p).ToArray,
                 .Columns = (From p In Columns Where p.CanWriteDataToObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanWriteDataToObject Select p).ToArray,
-                .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanWriteDataToObject Select p).ToArray,
-                .MetaAttributes = If(MetaAttributes IsNot Nothing AndAlso MetaAttributes.CanWriteDataToObject, MetaAttributes, Nothing)
+                .KeyValuePairColumns = KeyValuePairColumns.Where(Function(p) p.CanWriteDataToObject).ToArray,
+                .MetaAttributes =
+                    If(MetaAttributes IsNot Nothing AndAlso
+                       MetaAttributes.CanWriteDataToObject,
+                       MetaAttributes,
+                       Nothing)
             }
         End Function
 
@@ -229,18 +237,24 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Public Function ContainsField(Name As String) As Boolean
             Dim LQuery As StorageProvider =
-                LinqAPI.DefaultFirst(Of Column) <= From p As Column
-                                                   In Columns
-                                                   Where String.Equals(Name, p.Name)
-                                                   Select p
+                LinqAPI.DefaultFirst(Of Column) <=
+ _
+                From p As Column
+                In Columns
+                Where String.Equals(Name, p.Name)
+                Select p
+
             If Not LQuery Is Nothing Then
                 Return True
             End If
-            LQuery =
-                LinqAPI.DefaultFirst(Of CollectionColumn) <= From p As CollectionColumn
-                                                             In Me.CollectionColumns
-                                                             Where String.Equals(Name, p.Name)
-                                                             Select p
+
+            LQuery = LinqAPI.DefaultFirst(Of CollectionColumn) <=
+ _
+                From p As CollectionColumn
+                In Me.CollectionColumns
+                Where String.Equals(Name, p.Name)
+                Select p
+
             Return Not LQuery Is Nothing
         End Function
 
@@ -259,11 +273,14 @@ Namespace StorageProvider.ComponentModels
             If Not LQuery Is Nothing Then
                 Return True
             End If
-            LQuery =
-                LinqAPI.DefaultFirst(Of CollectionColumn) <= From p As CollectionColumn
-                                                             In Me.CollectionColumns
-                                                             Where [Property].Equals(p.BindProperty)
-                                                             Select p
+
+            LQuery = LinqAPI.DefaultFirst(Of CollectionColumn) <=
+ _
+                From p As CollectionColumn
+                In Me.CollectionColumns
+                Where [Property].Equals(p.BindProperty)
+                Select p
+
             Return Not LQuery Is Nothing
         End Function
 
@@ -290,8 +307,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Shared Function CreateObject(Of T As Class)(Explicit As Boolean) As SchemaProvider
-            Dim Type As Type = GetType(T)
-            Return CreateObject(Type, Explicit)
+            Return CreateObject(GetType(T), Explicit)
         End Function
 
         Private Shared Function GetKeyValuePairColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As KeyValuePair()
@@ -299,13 +315,16 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Shared Function __gets(Of T As StorageProvider)(
-                                 Properties As Dictionary(Of PropertyInfo, StorageProvider),
-                                 ProviderId As Func(Of Reflection.ProviderIds, Boolean)) As T()
-            Dim LQuery As T() =
-                LinqAPI.Exec(Of T) <= From [Property] As StorageProvider
-                                      In Properties.Values.AsParallel
-                                      Where ProviderId([Property].ProviderId) = True
-                                      Select DirectCast([Property], T)
+                                Properties As Dictionary(Of PropertyInfo, StorageProvider),
+                                ProviderId As Func(Of ProviderIds, Boolean)) As T()
+
+            Dim LQuery As T() = LinqAPI.Exec(Of T) <=
+ _
+                From [Property] As StorageProvider
+                In Properties.Values.AsParallel
+                Where ProviderId([Property].ProviderId) = True
+                Select DirectCast([Property], T)
+
             Return LQuery
         End Function
 
@@ -354,8 +373,12 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Shared Function GetColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As Column()
-            Return __gets(Of Column)(Properties,
-                                     Function(type) type = Reflection.ProviderIds.Column OrElse type = Reflection.ProviderIds.NullMask)
+            Return __gets(Of Column)(Properties, AddressOf __columnType)
+        End Function
+
+        Private Shared Function __columnType(type As ProviderIds) As Boolean
+            Return type = Reflection.ProviderIds.Column OrElse
+                type = Reflection.ProviderIds.NullMask
         End Function
     End Class
 End Namespace

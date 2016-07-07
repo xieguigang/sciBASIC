@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.DataMining.Framework.MathGamma
 
 Module TestingMain
 
@@ -27,6 +28,10 @@ Module TestingMain
 
     Sub Main()
 
+        Call 5.0R.Γ.__DEBUG_ECHO
+        Call 1.6R.Γ.__DEBUG_ECHO
+
+        Pause()
 
         Dim a() As Char = {"A"c, "B"c, "C"c, "B"c, "D"c, "A"c, "B"c}
         Dim b() As Char = {"B"c, "D"c, "C"c, "A"c, "B"c, "A"c}
@@ -39,7 +44,7 @@ Module TestingMain
         'Catch e As Exception
         '    Console.WriteLine("Thread.sleep interrupted!")
         'End Try
-        Dim ddd As List(Of Double) = [TypeOf](Of Double)() << OpenHandle("./123.txt")
+        '    Dim ddd As List(Of Double) = [TypeOf](Of Double)() << OpenHandle("./123.txt")
 
 
 
@@ -61,9 +66,9 @@ Module TestingMain
 
 
         Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)
-        Dim net = source.TreeNET
+        '    Dim net = source.TreeNET
 
-        Call net.Save("./test_tree/", Encodings.ASCII)
+        '     Call net.Save("./test_tree/", Encodings.ASCII)
 
 
         Dim StudentA As New Student With {.Properties = New Double() {15, 32, 35.6}, .Name = "A"},
