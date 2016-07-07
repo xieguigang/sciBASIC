@@ -161,7 +161,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\docs\</OutputPath>
+    <OutputPath>..\..\..\..\sdk\bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.Csv.xml</DocumentationFile>
     <Optimize>true</Optimize>
