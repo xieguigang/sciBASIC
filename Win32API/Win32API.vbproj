@@ -170,8 +170,9 @@
   <ItemGroup>
     <Compile Include="advapi32.vb" />
     <Compile Include="Gdi32.vb" />
-    <Compile Include="Kernel32.vb" />
+    <Compile Include="kernel32\Kernel32.vb" />
     <Compile Include="ComDlg32.vb" />
+    <Compile Include="kernel32\ErrorCodes.vb" />
     <Compile Include="lz32.vb" />
     <Compile Include="IMM32.vb" />
     <Compile Include="Version.vb" />
