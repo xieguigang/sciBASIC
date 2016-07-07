@@ -52,6 +52,7 @@ Namespace Net.Protocols.ContentTypes
         ''' .*（ 二进制流，不知道下载文件类型）
         ''' </summary>
         Public Const Unknown As String = "application/octet-stream"
+        Public Const MsDownload As String = "application/x-msdownload"
 
         Sub New()
             Dim lines As String() = My.Resources.List_of_MIME_types___Internet_Media_Types_.lTokens
