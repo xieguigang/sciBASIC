@@ -1,4 +1,4 @@
-﻿#Region "c96242d19aab2b35e82b563ee5e0f2bd, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Repository.vb"
+﻿#Region "Microsoft.VisualBasic::c96242d19aab2b35e82b563ee5e0f2bd, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Repository.vb"
 
     ' Author:
     ' 

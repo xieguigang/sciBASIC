@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce819b890b338c3ecd4308117aa272d5, ..\Win32API\IMM32.vb"
+﻿#Region "Microsoft.VisualBasic::ee24877514190ee868ba0aaa6215fd0c, ..\VisualBasic_AppFramework\Win32API\IMM32.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Public Module IMM32
     Public Declare Function ImmEnumRegisterWord Lib "imm32.dll" Alias "ImmEnumRegisterWordA" (hkl As Integer, RegisterWordEnumProc As Integer, lpszReading As String, dw As Integer, lpszRegister As String, ByRef lpv As Object) As Integer
 
 End Module
-

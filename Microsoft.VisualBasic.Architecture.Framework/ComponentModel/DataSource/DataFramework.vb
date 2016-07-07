@@ -1,4 +1,4 @@
-﻿#Region "6e79e984db96cc84b4b435875f693c85, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::a8de287b3cf38a511945b75925dd0e44, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 

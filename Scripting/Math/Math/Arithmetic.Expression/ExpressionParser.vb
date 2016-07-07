@@ -1,4 +1,4 @@
-﻿#Region "6da6e3fb9e5c8a5ec0ab38e86c5c7b03, ..\Math\Arithmetic.Expression\ExpressionParser.vb"
+﻿#Region "Microsoft.VisualBasic::6da6e3fb9e5c8a5ec0ab38e86c5c7b03, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\ExpressionParser.vb"
 
     ' Author:
     ' 

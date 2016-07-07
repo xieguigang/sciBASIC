@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e498f8e78a4b3cc2aa06f5c392cbd7, ..\VB_DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
+﻿#Region "Microsoft.VisualBasic::185dba82b719d05cb998862668a85e6d, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
 
     ' Author:
     ' 

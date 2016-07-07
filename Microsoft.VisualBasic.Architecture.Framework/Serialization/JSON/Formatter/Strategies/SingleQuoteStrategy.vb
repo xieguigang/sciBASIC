@@ -1,4 +1,4 @@
-﻿#Region "511fdcdf75715aba69c79d5c517d4bd7, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::511fdcdf75715aba69c79d5c517d4bd7, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
 
     ' Author:
     ' 

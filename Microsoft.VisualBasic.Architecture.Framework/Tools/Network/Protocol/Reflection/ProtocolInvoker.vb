@@ -1,4 +1,4 @@
-﻿#Region "b83e60d8a7e42bca10863507c36273ff, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Reflection\ProtocolInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::b83e60d8a7e42bca10863507c36273ff, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Reflection\ProtocolInvoker.vb"
 
     ' Author:
     ' 

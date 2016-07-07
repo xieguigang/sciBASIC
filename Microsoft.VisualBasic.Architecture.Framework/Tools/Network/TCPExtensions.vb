@@ -1,4 +1,4 @@
-﻿#Region "890f51a1aae88d67ef501b6014989b07, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::890f51a1aae88d67ef501b6014989b07, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TCPExtensions.vb"
 
     ' Author:
     ' 

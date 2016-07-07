@@ -1,4 +1,4 @@
-﻿#Region "14b25fa7b7c72842c27891176396af38, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
+﻿#Region "Microsoft.VisualBasic::14b25fa7b7c72842c27891176396af38, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "0787a5a4d54db90ca0661ce30e6768d3, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\LazyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::0787a5a4d54db90ca0661ce30e6768d3, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\LazyLoader.vb"
 
     ' Author:
     ' 

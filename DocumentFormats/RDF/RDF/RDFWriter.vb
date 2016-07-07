@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dd0998c472ff051f06ff26944bac0c7, ..\RDF\RDF\RDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::63d53eea8929a6585e2208a342f6399b, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\RDFWriter.vb"
 
     ' Author:
     ' 
@@ -34,4 +34,3 @@ Public Module RDFWriter
 
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "485b480f90d5307ef0deb14cd940cf42, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
+﻿#Region "Microsoft.VisualBasic::485b480f90d5307ef0deb14cd940cf42, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
 
     ' Author:
     ' 

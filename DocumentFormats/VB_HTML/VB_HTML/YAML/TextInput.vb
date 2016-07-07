@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8529c766eca5b23464bbabcd205d6803, ..\VB_HTML\VB_HTML\YAML\TextInput.vb"
+﻿#Region "Microsoft.VisualBasic::2658d47a893d4ff940e5614f1b7d1669, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\TextInput.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Namespace YAML.Grammar
         End Function
     End Class
 End Namespace
-

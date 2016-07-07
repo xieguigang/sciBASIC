@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d30ffa2d58b9956c82093435bcdb1d7, ..\VB_HTML\VB_HTML\YAML\Syntax\ShorthandTag.vb"
+﻿#Region "Microsoft.VisualBasic::1e0ad884bd755fc59188bf26fc9cec69, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\ShorthandTag.vb"
 
     ' Author:
     ' 
@@ -35,4 +35,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

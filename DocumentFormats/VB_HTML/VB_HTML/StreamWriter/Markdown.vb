@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::968f382395c37cb8794e927b842be18a, ..\VB_HTML\VB_HTML\StreamWriter\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::1e04e39afecfcf1c6acb938e90fa302f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\StreamWriter\Markdown.vb"
 
     ' Author:
     ' 
@@ -41,5 +41,3 @@ Namespace StreamWriter
         End Function
     End Module
 End Namespace
-
-

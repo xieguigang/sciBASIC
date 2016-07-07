@@ -1,4 +1,4 @@
-﻿#Region "21c7dddfa1e24f757ae228c9307ebc8c, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\IParallelTask.vb"
+﻿#Region "Microsoft.VisualBasic::21c7dddfa1e24f757ae228c9307ebc8c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\IParallelTask.vb"
 
     ' Author:
     ' 

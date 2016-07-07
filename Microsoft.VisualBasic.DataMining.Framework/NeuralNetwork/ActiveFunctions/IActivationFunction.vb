@@ -1,3 +1,30 @@
+﻿#Region "Microsoft.VisualBasic::8e239fe1d55a194c28c7649a2516c918, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 ' AForge Neural Net Library
 ' AForge.NET framework
 '
@@ -63,3 +90,4 @@ Namespace NeuralNetwork.IFuncs
         Function Derivative2(y As Double) As Double
     End Interface
 End Namespace
+

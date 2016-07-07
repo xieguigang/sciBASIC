@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ecdbc90770cbf68b6b638e8e83fd47b, ..\VB_HTML\VB_HTML\MarkDown\DocumentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e1755fe1f12efa2f154d6516e5158379, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\DocumentHelper.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Module DocumentHelper
         Return output.Append(vbLf & vbLf).ToString()
     End Function
 End Module
-

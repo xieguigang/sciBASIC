@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12ecb86f4f411a9ea2c60bc48b816500, ..\Datavisualization.Network\NetworkCanvas\Canvas3D\Input3D.vb"
+﻿#Region "Microsoft.VisualBasic::12ecb86f4f411a9ea2c60bc48b816500, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\Canvas3D\Input3D.vb"
 
     ' Author:
     ' 

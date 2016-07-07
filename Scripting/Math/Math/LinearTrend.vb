@@ -1,4 +1,4 @@
-﻿#Region "b7592aab52d113a3c087b8c20ef02670, ..\Math\LinearTrend.vb"
+﻿#Region "Microsoft.VisualBasic::b7592aab52d113a3c087b8c20ef02670, ..\VisualBasic_AppFramework\Scripting\Math\Math\LinearTrend.vb"
 
     ' Author:
     ' 

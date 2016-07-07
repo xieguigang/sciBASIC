@@ -1,4 +1,4 @@
-﻿#Region "3a46370fddef164420801a51daec6080, ..\Math\Arithmetic.Expression\FuncCaller.vb"
+﻿#Region "Microsoft.VisualBasic::3a46370fddef164420801a51daec6080, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\FuncCaller.vb"
 
     ' Author:
     ' 

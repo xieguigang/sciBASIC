@@ -1,4 +1,4 @@
-﻿#Region "4f47a6d9218376c6f86823ff8f6bac2d, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::4f47a6d9218376c6f86823ff8f6bac2d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 

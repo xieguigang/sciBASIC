@@ -1,4 +1,4 @@
-﻿#Region "63c2e831ee7ab479bac899328eaa357f, ..\Math\Matrix.NET\SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::63c2e831ee7ab479bac899328eaa357f, ..\VisualBasic_AppFramework\Scripting\Math\Math\Matrix.NET\SingularValueDecomposition.vb"
 
     ' Author:
     ' 

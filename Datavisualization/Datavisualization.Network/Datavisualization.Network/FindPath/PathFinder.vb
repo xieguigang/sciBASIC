@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f5fdf53e348abf2b0a141908d79d80a, ..\Datavisualization.Network\Datavisualization.Network\FindPath\PathFinder.vb"
+﻿#Region "Microsoft.VisualBasic::de19bacbb0a29a98cbe3e9f9221fae6b, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PathFinder.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Public Class PathFinder(Of NetworkNode As FileStream.NetworkEdge)
         Return LQuery
     End Function
 End Class
-

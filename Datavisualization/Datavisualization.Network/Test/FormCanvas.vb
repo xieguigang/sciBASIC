@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::991b3c036fb7b750eee2f5b28d5a8f3c, ..\Datavisualization.Network\Test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::7eddfa3520104f968e2221e311f526b1, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Test\FormCanvas.vb"
 
     ' Author:
     ' 
@@ -79,4 +79,3 @@ Public Class FormCanvas
         canvas.SetRotate(TrackBar1.Value / 1000)
     End Sub
 End Class
-

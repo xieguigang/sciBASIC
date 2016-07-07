@@ -1,4 +1,4 @@
-﻿#Region "d96c4daf89d163def8ca7372847995f2, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::d96c4daf89d163def8ca7372847995f2, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 

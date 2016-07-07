@@ -1,4 +1,4 @@
-﻿#Region "1d0dd20b085563550ea69e6c8d829673, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Triple.vb"
+﻿#Region "Microsoft.VisualBasic::1d0dd20b085563550ea69e6c8d829673, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Triple.vb"
 
     ' Author:
     ' 

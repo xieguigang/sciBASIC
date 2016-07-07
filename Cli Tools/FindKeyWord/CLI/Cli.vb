@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a264817e7de2d94406437c7948fcad2, ..\Cli Tools\FindKeyWord\FindKeyWord\CLI\Cli.vb"
+﻿#Region "Microsoft.VisualBasic::0ae0b34e672545e6909a94abe9f5293e, ..\VisualBasic_AppFramework\Cli Tools\FindKeyWord\CLI\Cli.vb"
 
     ' Author:
     ' 
@@ -246,4 +246,3 @@ Module CLI
         Return 0
     End Function
 End Module
-

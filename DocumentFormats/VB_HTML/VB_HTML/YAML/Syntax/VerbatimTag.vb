@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0eae594c98c3f9eec83bbca660b37e6, ..\VB_HTML\VB_HTML\YAML\Syntax\VerbatimTag.vb"
+﻿#Region "Microsoft.VisualBasic::fe2ed2e1cf5eb46c4d269a2d786d6b30, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\VerbatimTag.vb"
 
     ' Author:
     ' 
@@ -35,4 +35,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

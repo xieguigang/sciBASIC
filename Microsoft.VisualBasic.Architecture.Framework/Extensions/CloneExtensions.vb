@@ -1,4 +1,4 @@
-﻿#Region "4841c5ad3800844326bc5f2fa2471ffd, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5d6b72ff584335c64ebc472915b4838c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
 
     ' Author:
     ' 

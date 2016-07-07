@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::916874ef4ebaea145752172f54c5ec5e, ..\VB_HTML\VB_HTML\YAML\Syntax\GlobalTagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::8d900bfc6e4d719b8aabe87fa8c1d5a5, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\GlobalTagPrefix.vb"
 
     ' Author:
     ' 
@@ -33,4 +33,3 @@ Namespace YAML.Syntax
         Inherits TagPrefix
     End Class
 End Namespace
-

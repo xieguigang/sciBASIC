@@ -1,4 +1,4 @@
-﻿#Region "631ce32f54ac448bb476d27119fd7764, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::631ce32f54ac448bb476d27119fd7764, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevenshteinDistance.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "3a530be014ed87bf5f3f8d05e36a7afd, ..\Math\Helpers\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::ee027621fc8a4ed6ee864059abb64dec, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\MetaExpression.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' 
 ''' </summary>
@@ -48,4 +47,3 @@ Public Class MetaExpression(Of T, O)
         LEFT = x
     End Sub
 End Class
-

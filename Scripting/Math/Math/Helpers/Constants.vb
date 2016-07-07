@@ -1,4 +1,4 @@
-﻿#Region "ae0d42d9a820b6f54a1a214ef7ba4e9e, ..\Math\Helpers\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::3167d7c9153e606ed7033186873e28d0, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Constants.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Namespace Helpers
         End Sub
     End Class
 End Namespace
-

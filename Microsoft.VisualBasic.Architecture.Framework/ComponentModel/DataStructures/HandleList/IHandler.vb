@@ -1,4 +1,4 @@
-﻿#Region "d32663d246b27b06088d614d2bb43937, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\IHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d32663d246b27b06088d614d2bb43937, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\IHandler.vb"
 
     ' Author:
     ' 

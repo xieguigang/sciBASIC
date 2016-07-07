@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ced60bc5a1d1cdb82d00317f9ca3eb3, ..\VB_HTML\VB_HTML\YAML\ParserInput.vb"
+﻿#Region "Microsoft.VisualBasic::3492d48a79b1d41b456289399c3af2dd, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\ParserInput.vb"
 
     ' Author:
     ' 
@@ -41,4 +41,3 @@ Namespace YAML.Grammar
         Function FormErrorMessage(position As Integer, message As String) As String
     End Interface
 End Namespace
-

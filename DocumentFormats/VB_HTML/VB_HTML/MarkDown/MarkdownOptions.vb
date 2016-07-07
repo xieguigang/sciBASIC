@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adf3617ecf331ae835c716bb8997ed2c, ..\VB_HTML\VB_HTML\MarkDown\MarkdownOptions.vb"
+﻿#Region "Microsoft.VisualBasic::b488438977040addf6f90681b4652d1a, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\MarkdownOptions.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Public Class MarkdownOptions
         Return Me.GetJson
     End Function
 End Class
-

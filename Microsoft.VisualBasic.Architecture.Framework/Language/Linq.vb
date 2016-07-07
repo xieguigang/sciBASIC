@@ -1,4 +1,4 @@
-﻿#Region "ec240826c20e533620defc129b57953f, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::ec240826c20e533620defc129b57953f, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
 
     ' Author:
     ' 

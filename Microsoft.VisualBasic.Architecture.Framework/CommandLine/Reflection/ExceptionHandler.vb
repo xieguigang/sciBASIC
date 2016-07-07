@@ -1,4 +1,4 @@
-﻿#Region "14871a446cfc4cb5d99e3972c3f10034, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExceptionHandler.vb"
+﻿#Region "Microsoft.VisualBasic::14871a446cfc4cb5d99e3972c3f10034, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExceptionHandler.vb"
 
     ' Author:
     ' 

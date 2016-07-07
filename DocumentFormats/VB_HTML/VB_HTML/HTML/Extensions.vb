@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82dab1efbafb9869441295f946ef6076, ..\VB_HTML\VB_HTML\HTML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::82dab1efbafb9869441295f946ef6076, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\Extensions.vb"
 
     ' Author:
     ' 

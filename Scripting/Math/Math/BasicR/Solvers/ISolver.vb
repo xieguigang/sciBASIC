@@ -1,4 +1,4 @@
-﻿#Region "888553d256f2717b1796a9b420fa0dc1, ..\Math\BasicR\Solvers\ISolver.vb"
+﻿#Region "Microsoft.VisualBasic::a4047e7c642298a46df92695143941e4, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Solvers\ISolver.vb"
 
     ' Author:
     ' 

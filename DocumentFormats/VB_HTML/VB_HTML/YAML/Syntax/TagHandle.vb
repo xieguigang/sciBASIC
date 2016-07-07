@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07a76a2b24fd2f18602134bc102c3f82, ..\VB_HTML\VB_HTML\YAML\Syntax\TagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::6331cd315f2cda4aca7a97c1d60e4730, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\TagHandle.vb"
 
     ' Author:
     ' 
@@ -32,4 +32,3 @@ Namespace YAML.Syntax
     Public Class TagHandle
     End Class
 End Namespace
-

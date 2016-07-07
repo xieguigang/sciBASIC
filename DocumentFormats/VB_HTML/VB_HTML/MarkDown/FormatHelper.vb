@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f176e6d794da6d5dee05d0f2947d76c7, ..\VB_HTML\VB_HTML\MarkDown\FormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7c2727c61ce47ddfc0bea9f72f193c97, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\FormatHelper.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Module FormatHelper
         Return "<" & protocol & link & ">" & tail
     End Function
 End Module
-

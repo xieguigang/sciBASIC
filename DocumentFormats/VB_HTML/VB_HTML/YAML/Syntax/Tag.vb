@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80abca198c85c0cfce447f000a8ce2aa, ..\VB_HTML\VB_HTML\YAML\Syntax\Tag.vb"
+﻿#Region "Microsoft.VisualBasic::2ea4f5bb5a2c261bc1a5202e2b14ae40, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Tag.vb"
 
     ' Author:
     ' 
@@ -32,4 +32,3 @@ Namespace YAML.Syntax
     Public Class Tag
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3afeb9e3320f60c7acaf372c2744d0bd, ..\Win32API\Shell32.vb"
+﻿#Region "Microsoft.VisualBasic::f5981e0f2d2003edae2c00afc0374463, ..\VisualBasic_AppFramework\Win32API\Shell32.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Public Module Shell32
     Public Declare Function ExtractIcon Lib "shell32.dll" Alias "ExtractIconA" (hInst As Integer, lpszExeFileName As String, nIconIndex As Integer) As Integer
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "cfafb2cc1fc47e08126c15698dcdf55c, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\MockForm.vb"
+﻿#Region "Microsoft.VisualBasic::cfafb2cc1fc47e08126c15698dcdf55c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\MockForm.vb"
 
     ' Author:
     ' 

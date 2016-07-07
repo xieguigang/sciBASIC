@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f68a59eadf6d4baecb39f057ba8ff43f, ..\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\DijkstraAPI.vb"
+﻿#Region "Microsoft.VisualBasic::f68a59eadf6d4baecb39f057ba8ff43f, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\DijkstraAPI.vb"
 
     ' Author:
     ' 

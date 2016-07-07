@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85e3c24f6d7dc9e2c025688a11bb31b7, ..\VB_DataFrame\Excel\ExcelReader.vb"
+﻿#Region "Microsoft.VisualBasic::cad5e52335991b19a42fb0faaf86f567, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Excel\ExcelReader.vb"
 
     ' Author:
     ' 

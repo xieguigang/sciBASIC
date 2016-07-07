@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a424afd238dbd5d730ed95d56294c99f, ..\Win32API\winspool_drv.vb"
+﻿#Region "Microsoft.VisualBasic::96d23013a7fa589ebf1513b3a94e9d4f, ..\VisualBasic_AppFramework\Win32API\winspool_drv.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -122,4 +121,3 @@ Public Module winspool_drv
     Public Declare Function EnumPrinterPropertySheets Lib "winspool.drv" (ByRef hPrinter As Integer, ByRef hWnd As Integer, ByRef lpfnAdd As Integer, lParam As Integer) As Integer
 
 End Module
-
