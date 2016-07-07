@@ -27,6 +27,9 @@
 
 Namespace Win32
 
+    ''' <summary>
+    ''' Process priority class helper.
+    ''' </summary>
     Public Module PriorityClass
 
         ''' <summary>
@@ -50,7 +53,7 @@ Namespace Win32
         Public Const NORMAL_PRIORITY_CLASS = &H20
 
         ''' <summary>
-        ''' 
+        ''' Set Priority Class for current process.
         ''' </summary>
         ''' <param name="priority"><see cref="IDLE_PRIORITY_CLASS"/>, <see cref="HIGH_PRIORITY_CLASS"/>, <see cref="NORMAL_PRIORITY_CLASS"/></param>
         ''' <returns></returns>
