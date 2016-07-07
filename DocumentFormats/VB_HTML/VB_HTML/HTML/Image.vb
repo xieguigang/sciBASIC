@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69a3f056d7f1b7a7444312f64e319d90, ..\VB_HTML\VB_HTML\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::69a3f056d7f1b7a7444312f64e319d90, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\Image.vb"
 
     ' Author:
     ' 

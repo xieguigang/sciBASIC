@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11687345062e7a5d4a29b2549b6ecda4, ..\VB_HTML\VB_HTML\MarkDown\Articles.vb"
+﻿#Region "Microsoft.VisualBasic::9c2aeb3c017c3382398dd457d7cad52c, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Articles.vb"
 
     ' Author:
     ' 
@@ -64,4 +64,3 @@ Namespace MarkDown
         End Function
     End Module
 End Namespace
-

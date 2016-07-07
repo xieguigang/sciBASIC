@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e98129b560d935ce04dfc98ffec34ca, ..\Datavisualization.Network\EpForceDirectedGraphDemo\GridBox.vb"
+﻿#Region "Microsoft.VisualBasic::c46bf4eafc61cc5789516e2099b82d60, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\GridBox.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Namespace EpForceDirectedGraphDemo
 		End Sub
 	End Class
 End Namespace
-

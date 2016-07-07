@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dedb5323153c48066adc60c7c4d8bebe, ..\VB_DataFrame\Linq\BatchQueue.vb"
+﻿#Region "Microsoft.VisualBasic::5796556435ad9860bd98f1cf92a93869, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\BatchQueue.vb"
 
     ' Author:
     ' 

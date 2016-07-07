@@ -1,4 +1,4 @@
-﻿#Region "1e8a0583a5c4bc55557a327987fff6e5, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::1e8a0583a5c4bc55557a327987fff6e5, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
 
     ' Author:
     ' 

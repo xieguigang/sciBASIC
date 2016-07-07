@@ -1,4 +1,4 @@
-﻿#Region "d1080466140be726a5b79019f3a555c3, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::d1080466140be726a5b79019f3a555c3, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 

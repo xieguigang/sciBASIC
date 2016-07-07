@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a5f4c754ddb82ee825492bd8a294cad, ..\VB_HTML\VB_HTML\YAML\Syntax\ReservedDirective.vb"
+﻿#Region "Microsoft.VisualBasic::d116ce402ceb51fc89af267d326fd0a1, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\ReservedDirective.vb"
 
     ' Author:
     ' 
@@ -37,4 +37,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

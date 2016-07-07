@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::793b11e27e8e1bbb48dc3242193a76a6, ..\Cli Tools\ls\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::5b94e75c3eab1a26aebcc4976f50dd01, ..\VisualBasic_AppFramework\Cli Tools\ls\CLI.vb"
 
     ' Author:
     ' 
@@ -28,4 +28,3 @@
 Module CLI
 
 End Module
-

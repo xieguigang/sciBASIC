@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa19970d8dd8077d5f33557cc7cd2829, ..\VB_DataFrame\DocumentStream\Wrapper\FormCsv.vb"
+﻿#Region "Microsoft.VisualBasic::761788895afd7287ecf1aa7528fad384, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\Wrapper\FormCsv.vb"
 
     ' Author:
     ' 

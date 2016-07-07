@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fa70126a7fa26b032aca9aa82ffffb4, ..\VB_HTML\VB_HTML\MarkDown\Block.vb"
+﻿#Region "Microsoft.VisualBasic::4fa70126a7fa26b032aca9aa82ffffb4, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Block.vb"
 
     ' Author:
     ' 

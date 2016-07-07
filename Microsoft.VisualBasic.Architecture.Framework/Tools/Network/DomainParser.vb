@@ -1,4 +1,4 @@
-﻿#Region "ede45de25a4fdc8a05708406f907366a, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::ede45de25a4fdc8a05708406f907366a, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
 
     ' Author:
     ' 

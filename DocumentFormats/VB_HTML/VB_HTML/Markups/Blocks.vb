@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02f78e3cae82904e1b4b31c13df3995, ..\VB_HTML\VB_HTML\Markups\Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::c02f78e3cae82904e1b4b31c13df3995, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\Markups\Blocks.vb"
 
     ' Author:
     ' 

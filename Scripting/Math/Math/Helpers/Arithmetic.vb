@@ -1,4 +1,4 @@
-﻿#Region "c4f36a28c1b000d89e9f5dc7b76b9682, ..\Math\Helpers\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::5fc39cde3dd4da5adbe50c1f9bb470af, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Arithmetic.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Helpers
 

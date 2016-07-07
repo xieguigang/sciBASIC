@@ -1,4 +1,4 @@
-﻿#Region "abef4298760d4110cb419167ca03e470, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::abef4298760d4110cb419167ca03e470, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
     ' Author:
     ' 

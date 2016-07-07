@@ -1,4 +1,4 @@
-﻿#Region "52b46b9466033d47318c1a0ed73faf1a, ..\Math\Arithmetic.Expression\SimpleParser.vb"
+﻿#Region "Microsoft.VisualBasic::52ca24482ad0b20cd1af2d9a3a9277da, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\SimpleParser.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Public Module SimpleParser
         Return sBuilder.ToString
     End Function
 End Module
-

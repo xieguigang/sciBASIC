@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33b99ad4a17aab371e2a4a4b003943c8, ..\Cli Tools\FindKeyWord\FindKeyWord\Program.vb"
+﻿#Region "Microsoft.VisualBasic::ed2fba95603203b41d48e1e2469071f3, ..\VisualBasic_AppFramework\Cli Tools\FindKeyWord\Program.vb"
 
     ' Author:
     ' 
@@ -39,4 +39,3 @@ Module Program
         Return 0
     End Function
 End Module
-

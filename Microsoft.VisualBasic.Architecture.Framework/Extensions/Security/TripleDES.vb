@@ -1,4 +1,4 @@
-﻿#Region "b57610f1f3be7d201a1ab0aad00a2ea6, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\TripleDES.vb"
+﻿#Region "Microsoft.VisualBasic::b57610f1f3be7d201a1ab0aad00a2ea6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\TripleDES.vb"
 
     ' Author:
     ' 

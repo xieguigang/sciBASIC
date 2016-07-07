@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68ac2d775258e6df3c2de6a138b27666, ..\VB_DataFrame\DocumentStream\Wrapper\FormCustom.vb"
+﻿#Region "Microsoft.VisualBasic::df41985d5040d37b326bbf56f87cf137, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\Wrapper\FormCustom.vb"
 
     ' Author:
     ' 

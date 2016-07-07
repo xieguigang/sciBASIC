@@ -1,4 +1,4 @@
-﻿#Region "5cba97e977037d4bee3337e6291980a0, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
+﻿#Region "Microsoft.VisualBasic::5cba97e977037d4bee3337e6291980a0, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
 
     ' Author:
     ' 

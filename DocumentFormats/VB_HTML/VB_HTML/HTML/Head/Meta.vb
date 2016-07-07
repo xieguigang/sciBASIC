@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eec8cd6fdefc29fff98ff2d6d9f36b2b, ..\VB_HTML\VB_HTML\HTML\Head\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::7c9c474c26fb4e48d9651e5976b144f1, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\Head\Meta.vb"
 
     ' Author:
     ' 
@@ -198,5 +198,3 @@ Namespace HTML.Head
         End Function
     End Class
 End Namespace
-
-

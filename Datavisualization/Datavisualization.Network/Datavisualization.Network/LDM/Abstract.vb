@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ba19c3bc9711d5c3b6845d57e6b8be4, ..\Datavisualization.Network\Datavisualization.Network\LDM\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d2c7574b588deaffbcb6cfca17ddd36e, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\Abstract.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Namespace Abstract
         End Function
     End Module
 End Namespace
-

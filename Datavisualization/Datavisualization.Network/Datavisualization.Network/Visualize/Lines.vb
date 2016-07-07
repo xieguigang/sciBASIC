@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd5888630e7e92ecbcb5866fb4645ee5, ..\Datavisualization.Network\Datavisualization.Network\Visualize\Lines.vb"
+﻿#Region "Microsoft.VisualBasic::fd5888630e7e92ecbcb5866fb4645ee5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\Lines.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "0d8a9c10cc656a8176c6c8dca0ea9e9d, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\MatchString.vb"
+﻿#Region "Microsoft.VisualBasic::0d8a9c10cc656a8176c6c8dca0ea9e9d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\MatchString.vb"
 
     ' Author:
     ' 

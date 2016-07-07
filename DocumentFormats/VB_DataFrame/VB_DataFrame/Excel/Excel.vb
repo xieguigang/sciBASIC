@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb54c255de448d344cbe4a3352d8c7cf, ..\VB_DataFrame\Excel\Excel.vb"
+﻿#Region "Microsoft.VisualBasic::67769bbd5ce5a63087b3e86fb2692769, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Excel\Excel.vb"
 
     ' Author:
     ' 
@@ -126,4 +126,3 @@
 '        Return New Excel With {.XlsxDocument = spreadSheet, ._Path = Path}
 '    End Function
 'End Class
-

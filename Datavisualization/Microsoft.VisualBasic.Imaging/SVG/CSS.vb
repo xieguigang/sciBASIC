@@ -1,4 +1,4 @@
-﻿#Region "d856f24f977bdd9b7af6b8bcc16cc082, ..\Microsoft.VisualBasic.Imaging\SVG\CSS.vb"
+﻿#Region "Microsoft.VisualBasic::f8d29757c4e5a6485ce2ba7ce73a64f5, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\SVG\CSS.vb"
 
     ' Author:
     ' 

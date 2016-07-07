@@ -1,4 +1,4 @@
-﻿#Region "ac0d24c76f82443e055f915b171556a9, ..\Math\BasicR\Helpers\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::38c8fa6f90514213b5af7497892ba494, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Helpers\Constants.vb"
 
     ' Author:
     ' 
@@ -71,4 +71,3 @@
 '        End Sub
 '    End Class
 'End Namespace
-

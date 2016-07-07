@@ -1,4 +1,4 @@
-﻿#Region "cff0fb24329a114d0af50ad72f67cb24, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::cff0fb24329a114d0af50ad72f67cb24, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ed6502d1f55ff68738166e4be0d78e5, ..\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::3ed6502d1f55ff68738166e4be0d78e5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\PriorityQueue.vb"
 
     ' Author:
     ' 

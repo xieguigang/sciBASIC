@@ -1,4 +1,4 @@
-﻿#Region "6f49b1d039ea002f220332963e6f73fa, ..\Math\Arithmetic.Expression\Func.vb"
+﻿#Region "Microsoft.VisualBasic::36ab644b275a78e5bf887116b82e70db, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\Func.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Public Class Func
         Return $"{Name}({args}) {Expression}"
     End Function
 End Class
-

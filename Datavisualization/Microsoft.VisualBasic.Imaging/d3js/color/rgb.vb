@@ -1,4 +1,4 @@
-﻿#Region "5df018484553d33a5e70e59be5e4bbe0, ..\Microsoft.VisualBasic.Imaging\d3js\color\rgb.vb"
+﻿#Region "Microsoft.VisualBasic::54506628a6aa76d8fcc7bc8dcbb8b109, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\d3js\color\rgb.vb"
 
     ' Author:
     ' 

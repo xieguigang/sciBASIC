@@ -1,4 +1,4 @@
-﻿#Region "de699541b9d7f47ba027b5a3cde4b007, ..\Math\Helpers\MemoryCollection.vb"
+﻿#Region "Microsoft.VisualBasic::ae378f455623b62f84049fbc4cbe63c8, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\MemoryCollection.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public MustInherit Class MemoryCollection(Of T) : Implements IEnumerable(Of KeyV
         Yield GetEnumerator()
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::455d0a63e0de29cc16f2bd934da59d6a, ..\VB_HTML\VB_HTML\YAML\Syntax\NamedTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::81cd4785f6cade6f9c2e768169583430, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\NamedTagHandle.vb"
 
     ' Author:
     ' 
@@ -35,4 +35,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

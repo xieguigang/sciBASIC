@@ -1,4 +1,4 @@
-﻿#Region "b1bf8f934c233be3ae017bf784753feb, ..\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::b1bf8f934c233be3ae017bf784753feb, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\Triangle.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fa4668ca786b846481f10e435a3a3c5, ..\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector3.vb"
+﻿#Region "Microsoft.VisualBasic::0fa4668ca786b846481f10e435a3a3c5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector3.vb"
 
     ' Author:
     ' 

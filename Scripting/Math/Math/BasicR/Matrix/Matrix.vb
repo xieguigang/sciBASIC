@@ -1,4 +1,4 @@
-﻿#Region "64e89ff82cf0e6026e62737d4c70d019, ..\Math\BasicR\Matrix\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::c6e4399318607803ed06605774e24bb6, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Matrix\Matrix.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace BasicR
 
@@ -498,4 +497,3 @@ Namespace BasicR
         End Property
     End Class
 End Namespace
-

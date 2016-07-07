@@ -1,4 +1,4 @@
-﻿#Region "dae6f24d6fc49ba7b1da0bfc8fa0bbb4, ..\Math\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::b3d130f82285f3351a35b490058f9946, ..\VisualBasic_AppFramework\Scripting\Math\Math\ScriptEngine.vb"
 
     ' Author:
     ' 
@@ -73,4 +73,3 @@ Public Module ScriptEngine
         Call Expression.Constant.Add(Name, expr)
     End Sub
 End Module
-

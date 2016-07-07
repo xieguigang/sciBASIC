@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be34916bee34c57409cb89b79bc6465d, ..\VB_HTML\VB_HTML\YAML\Syntax\BlockScalarModifier.vb"
+﻿#Region "Microsoft.VisualBasic::e7dc530a044b1e26aa5644c79bc707e3, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\BlockScalarModifier.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Namespace YAML.Syntax
         End Function
     End Class
 End Namespace
-

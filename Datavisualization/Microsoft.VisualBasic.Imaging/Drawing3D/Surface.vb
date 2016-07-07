@@ -1,4 +1,4 @@
-﻿#Region "b97c7d0931a086d72dda2696f8c2530f, ..\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::a032ffe3db256e30ff2f69a03c92cf67, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Drawing3D
 

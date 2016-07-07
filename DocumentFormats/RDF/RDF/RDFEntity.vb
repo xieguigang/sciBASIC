@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3d8189aecc70b64893002b58f009bad, ..\RDF\RDF\RDFEntity.vb"
+﻿#Region "Microsoft.VisualBasic::d259dc7ea6cb6f2c15518157a5b3ba21, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\RDFEntity.vb"
 
     ' Author:
     ' 

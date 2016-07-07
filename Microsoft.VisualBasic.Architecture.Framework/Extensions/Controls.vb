@@ -1,4 +1,4 @@
-﻿#Region "7002ff6109222f4cbbacb5f63026201e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Controls.vb"
+﻿#Region "Microsoft.VisualBasic::7002ff6109222f4cbbacb5f63026201e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Controls.vb"
 
     ' Author:
     ' 

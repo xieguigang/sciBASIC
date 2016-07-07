@@ -1,4 +1,4 @@
-﻿#Region "14e1979726129fa702244d087c9119a5, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\PortMapping.vb"
+﻿#Region "Microsoft.VisualBasic::14e1979726129fa702244d087c9119a5, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\PortMapping.vb"
 
     ' Author:
     ' 

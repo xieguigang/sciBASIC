@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::355b916d0f46127afd49b871e2510f3f, ..\Win32API\mpr.vb"
+﻿#Region "Microsoft.VisualBasic::fe8129129ab1ca1c11b34fbf4428e631, ..\VisualBasic_AppFramework\Win32API\mpr.vb"
 
     ' Author:
     ' 
@@ -37,4 +37,3 @@ Public Module mpr
     Public Declare Function WNetOpenEnum Lib "mpr" Alias "WNetOpenEnumA" (dwScope As Integer, dwType As Integer, dwUsage As Integer, ByRef lpNetResource As NETRESOURCE, ByRef lphEnum As Integer) As Integer
 
 End Module
-

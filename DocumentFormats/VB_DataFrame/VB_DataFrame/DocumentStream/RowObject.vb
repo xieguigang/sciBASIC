@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a5d6f3e9c6a92483b80fdd23295c1df, ..\VB_DataFrame\DocumentStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::3435b2527cdf6a370dd53685d99e8415, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\RowObject.vb"
 
     ' Author:
     ' 

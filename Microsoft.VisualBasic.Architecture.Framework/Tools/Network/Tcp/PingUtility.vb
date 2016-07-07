@@ -1,4 +1,4 @@
-﻿#Region "60de79234aa9a3293f19bf5f13d1acd4, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\PingUtility.vb"
+﻿#Region "Microsoft.VisualBasic::60de79234aa9a3293f19bf5f13d1acd4, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\PingUtility.vb"
 
     ' Author:
     ' 

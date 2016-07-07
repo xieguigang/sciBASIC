@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7b54ad8da885fd4e64a9018ae8baeb0, ..\VB_HTML\VB_HTML\MarkDown\IExtensionInterface.vb"
+﻿#Region "Microsoft.VisualBasic::0bd6c9bd0b6c3df584a5a153a26df037, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\IExtensionInterface.vb"
 
     ' Author:
     ' 
@@ -41,4 +41,3 @@ Namespace MarkDown
     Public Delegate Function ExtensionTransform(text As String) As String
 
 End Namespace
-

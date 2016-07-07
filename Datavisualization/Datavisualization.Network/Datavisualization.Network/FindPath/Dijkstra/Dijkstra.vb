@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c5d8c98071c3453063c5a0f2dec80d1, ..\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\Dijkstra.vb"
+﻿#Region "Microsoft.VisualBasic::9299409a9082170c88b398da1e2a2332, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\Dijkstra.vb"
 
     ' Author:
     ' 
@@ -160,4 +160,3 @@ Namespace Dijkstra
 #End Region
     End Class
 End Namespace
-

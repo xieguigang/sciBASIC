@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85e3c24f6d7dc9e2c025688a11bb31b7, ..\VB_DataFrame\Excel\ExcelReader.vb"
+﻿#Region "Microsoft.VisualBasic::cad5e52335991b19a42fb0faaf86f567, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Excel\ExcelReader.vb"
 
     ' Author:
     ' 
@@ -26,14 +26,23 @@
 #End Region
 
 Imports System.Collections.Generic
-Imports System.Text
-
 Imports System.Data
 Imports System.Data.OleDb
+Imports System.Text
 
+''' <summary>
+''' Excel reader by using ADO.NET
+''' </summary>
 Public Class ExcelReader
 
-    Dim _Path, _StrConnection As String
+    ''' <summary>
+    ''' Excel file path
+    ''' </summary>
+    Dim _fileName As String
+    ''' <summary>
+    ''' ADO.NET connection string to the excel file <see cref="_fileName"/>
+    ''' </summary>
+    Dim _cnnExcel As String
 
     Public Sub New(path As String, hasHeaders As Boolean, hasMixedData As Boolean)
         Dim strBuilder As OleDbConnectionStringBuilder = New OleDbConnectionStringBuilder()
@@ -41,33 +50,40 @@ Public Class ExcelReader
         strBuilder.DataSource = path
         strBuilder.Add("Extended Properties", $"Excel 8.0;HDR={If(hasHeaders, "Yes", "No")};Imex={If(hasMixedData, "2", "0")};")
 
-        Me._Path = path
-        Me._StrConnection = strBuilder.ToString()
+        Me._fileName = path
+        Me._cnnExcel = strBuilder.ToString()
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return _cnnExcel
+    End Function
+
+    ''' <summary>
+    ''' Gets a list of work sheet name in the target excel file.
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetWorksheetList() As String()
-        Dim Connection As New OleDbConnection(_StrConnection)
-        Call Connection.Open()
+        Using Connection As New OleDbConnection(_cnnExcel)
+            Call Connection.Open()
 
-        Dim TableWorksheets As DataTable = Connection.GetSchema("Tables")
-        Call Connection.Close()
+            Dim TableWorksheets As DataTable = Connection.GetSchema("Tables")
+            Dim Worksheets As String() = New String(TableWorksheets.Rows.Count - 1) {}
 
-        Dim Worksheets As String() = New String(TableWorksheets.Rows.Count - 1) {}
-
-        For i As Integer = 0 To Worksheets.Length - 1
-            Worksheets(i) = DirectCast(TableWorksheets.Rows(i)("TABLE_NAME"), String)
-            Worksheets(i) = Worksheets(i).Remove(Worksheets(i).Length - 1).Trim(""""c, "'"c)
-            ' removes the trailing $ and other characters appended in the table name
-            While Worksheets(i).EndsWith("$")
+            For i As Integer = 0 To Worksheets.Length - 1
+                Worksheets(i) = DirectCast(TableWorksheets.Rows(i)("TABLE_NAME"), String)
                 Worksheets(i) = Worksheets(i).Remove(Worksheets(i).Length - 1).Trim(""""c, "'"c)
-            End While
-        Next
+                ' removes the trailing $ and other characters appended in the table name
+                While Worksheets(i).EndsWith("$")
+                    Worksheets(i) = Worksheets(i).Remove(Worksheets(i).Length - 1).Trim(""""c, "'"c)
+                End While
+            Next
 
-        Return Worksheets
+            Return Worksheets
+        End Using
     End Function
 
     Public Function GetColumnsList(worksheet As String) As String()
-        Dim connection As New OleDbConnection(_StrConnection)
+        Dim connection As New OleDbConnection(_cnnExcel)
         Call connection.Open()
 
         Dim tableColumns As DataTable = connection.GetSchema("Columns", New String() {Nothing, Nothing, worksheet & "$"c, Nothing})
@@ -83,7 +99,7 @@ Public Class ExcelReader
     End Function
 
     Public Function GetWorksheet(worksheet As String) As DataTable
-        Dim connection As New OleDbConnection(_StrConnection)
+        Dim connection As New OleDbConnection(_cnnExcel)
         Dim adaptor As New OleDbDataAdapter($"SELECT * FROM [{worksheet}$]", connection)
         Dim ws As DataTable = New DataTable(worksheet)
         adaptor.FillSchema(ws, SchemaType.Source)
@@ -98,7 +114,7 @@ Public Class ExcelReader
     Public Function GetWorkplace() As DataSet
         Dim workplace As DataSet
 
-        Dim connection As New OleDbConnection(_StrConnection)
+        Dim connection As New OleDbConnection(_cnnExcel)
         Dim adaptor As New OleDbDataAdapter("SELECT * FROM *", connection)
         workplace = New DataSet()
         adaptor.FillSchema(workplace, SchemaType.Source)

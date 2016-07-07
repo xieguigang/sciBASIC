@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46f0117d7ef8c1175b9c3ddb555822fb, ..\VB_HTML\VB_HTML\YAML\ParserCustom.vb"
+﻿#Region "Microsoft.VisualBasic::ee83dd4a1a99199a7c0d3644c8fd6d01, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\ParserCustom.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Namespace YAML.Grammar
         End Function
     End Class
 End Namespace
-

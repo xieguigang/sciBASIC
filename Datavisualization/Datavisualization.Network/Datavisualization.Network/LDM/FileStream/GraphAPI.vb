@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c5cea773600c01165bfbfe5a5f4ac2, ..\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\GraphAPI.vb"
+﻿#Region "Microsoft.VisualBasic::32c5cea773600c01165bfbfe5a5f4ac2, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\GraphAPI.vb"
 
     ' Author:
     ' 

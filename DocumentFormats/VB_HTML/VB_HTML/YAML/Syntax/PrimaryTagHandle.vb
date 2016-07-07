@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eae3d47837bc5d36dae02c6bbc0aa4b0, ..\VB_HTML\VB_HTML\YAML\Syntax\PrimaryTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::4ad5ebabe5b60e9945d54e6665292db1, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\PrimaryTagHandle.vb"
 
     ' Author:
     ' 
@@ -33,4 +33,3 @@ Namespace YAML.Syntax
         Inherits TagHandle
     End Class
 End Namespace
-

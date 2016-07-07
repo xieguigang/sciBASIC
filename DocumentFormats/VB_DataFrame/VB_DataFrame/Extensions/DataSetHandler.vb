@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9690e0e0b198b8e39a72acd6b6c94b3, ..\VB_DataFrame\Extensions\DataSetHandler.vb"
+﻿#Region "Microsoft.VisualBasic::8c4e090b4ebe40b8c6111c83d5e5b16e, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Extensions\DataSetHandler.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Module DataSetHandler
         Return True
     End Function
 End Module
-

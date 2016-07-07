@@ -1,4 +1,4 @@
-﻿#Region "dbdecb37578fe19fc63ae00266f30937, ..\Math\Matrix.NET\EigenvalueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::dbdecb37578fe19fc63ae00266f30937, ..\VisualBasic_AppFramework\Scripting\Math\Math\Matrix.NET\EigenvalueDecomposition.vb"
 
     ' Author:
     ' 

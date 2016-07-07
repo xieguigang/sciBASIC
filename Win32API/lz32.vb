@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::124a9054dec3c7bacf520368622b3d75, ..\Win32API\lz32.vb"
+﻿#Region "Microsoft.VisualBasic::88291e929693697ae1917f3fbe91dd47, ..\VisualBasic_AppFramework\Win32API\lz32.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("lz32.dll")>
@@ -46,4 +45,3 @@ Public Module lz32
     Public Declare Sub LZClose Lib "lz32.dll" (hfFile As Integer)
 
 End Module
-

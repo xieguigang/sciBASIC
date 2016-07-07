@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::524f347767ac3d0f019dbac3572ac991, ..\Cli Tools\LicenseMgr\LicenseMgr\My Project\MyExtensions\MyWpfExtension.vb"
+﻿#Region "Microsoft.VisualBasic::524f347767ac3d0f019dbac3572ac991, ..\VisualBasic_AppFramework\Cli Tools\LicenseMgr\LicenseMgr\My Project\MyExtensions\MyWpfExtension.vb"
 
     ' Author:
     ' 

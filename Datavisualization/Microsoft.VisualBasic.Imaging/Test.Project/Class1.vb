@@ -1,4 +1,4 @@
-﻿#Region "a5191e6a6a685a15c339d640081676fa, ..\Microsoft.VisualBasic.Imaging\Test.Project\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::13860f061e39bba1a422ecb3f85e6136, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Test.Project\Class1.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Public Class Class1 : Inherits GDIDevice
     End Sub
 
 End Class
-
