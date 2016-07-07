@@ -1,4 +1,4 @@
-﻿#Region "4f1e210c3822505b3567227142da3f5f, ..\Math\BasicR\VECTOR.vb"
+﻿#Region "Microsoft.VisualBasic::6d39267484e7244a085acd98e22465aa, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\VECTOR.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace BasicR
 

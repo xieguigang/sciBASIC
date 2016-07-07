@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdcd0486d1dff0a56daa9fa78a896192, ..\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::bdcd0486d1dff0a56daa9fa78a896192, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "9255349e602ff454266c9289db045fc5, ..\Math\Arithmetic.Expression\SimpleExpression.vb"
+﻿#Region "Microsoft.VisualBasic::9255349e602ff454266c9289db045fc5, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\SimpleExpression.vb"
 
     ' Author:
     ' 

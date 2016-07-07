@@ -1,4 +1,4 @@
-﻿#Region "4f9884e77be6afe424bb2831679e1cf9, ..\Math\Arithmetic.Expression\UnitExpression.vb"
+﻿#Region "Microsoft.VisualBasic::68dfec4b85fb50dee3f1a415b84251e9, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\UnitExpression.vb"
 
     ' Author:
     ' 

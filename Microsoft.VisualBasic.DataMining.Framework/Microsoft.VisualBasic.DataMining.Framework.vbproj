@@ -67,7 +67,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -76,7 +76,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\GCModeller\GCModeller-x64\</OutputPath>
+    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -147,7 +147,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>X:\SDK_docs\</OutputPath>
+    <OutputPath>..\..\sdk\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -202,6 +202,7 @@
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="BezierCurve.vb" />
+    <Compile Include="DirichletDistribution.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
@@ -209,6 +210,9 @@
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\Extensions.vb" />
+    <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
+    <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />
+    <Compile Include="KMeans\CompleteLinkage\Point.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
     <Compile Include="KMeans\Entity.vb" />
@@ -220,6 +224,8 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="KMeans\Tree.vb" />
+    <Compile Include="MarginalLikelihoodAnalysis.vb" />
+    <Compile Include="Gamma.vb" />
     <Compile Include="NeuralNetwork\Models\ModelAPI.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />
@@ -299,9 +305,9 @@
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Datavisualization.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DocumentFormats\VB_DataFrame\+VB_Tabular.DataFrame.vbproj">
+    <ProjectReference Include="..\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>+VB_Tabular.DataFrame</Name>
+      <Name>+VB_DataFrame</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>

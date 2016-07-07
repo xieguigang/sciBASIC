@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c97063ddcbb84bd773eba5c324d00297, ..\VB_HTML\VB_HTML\YAML\Syntax\YamlStream.vb"
+﻿#Region "Microsoft.VisualBasic::e546fcfa9f653b8ba0b6048f4c3f672e, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlStream.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Namespace YAML.Syntax
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebfc132f780e3dea9a5fa903faa2fc61, ..\VB_HTML\VB_HTML\YAML\Syntax\NonSpecificTag.vb"
+﻿#Region "Microsoft.VisualBasic::cf1e8c8a4cd67845d3cac8128fc9a70c, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\NonSpecificTag.vb"
 
     ' Author:
     ' 
@@ -33,4 +33,3 @@ Namespace YAML.Syntax
         Inherits Tag
     End Class
 End Namespace
-

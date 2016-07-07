@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dab863b9b504348b0c893e6f06e3a3b, ..\VB_DataFrame\TestProject\TestMain.vb"
+﻿#Region "Microsoft.VisualBasic::9e837a0dbd0dd62e4a808ca60d7aae24, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\TestProject\TestMain.vb"
 
     ' Author:
     ' 
@@ -30,7 +30,22 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.Language
+
+Public Class p1
+    Public Property a As String = Now.ToString
+    Public Property b As String = Rnd()
+    Public Property c As String = RandomDouble()
+End Class
+
+Public Class pp
+    Public Property x As p1
+    Public Property y As p1
+    Public Property z As Double = RandomDouble()
+End Class
+
 
 Module TestMain
 
@@ -38,7 +53,27 @@ Module TestMain
 
     Sub Main()
 
+        Dim uuuuuuuuuuuuu As New Uid(50)
 
+
+        Dim fsfsfsd = [Class].GetSchema(Of pp)
+
+
+        Dim sssis As New List(Of pp)
+
+        For i As Integer = 0 To 2000
+            sssis += {New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}, New pp With {.x = New p1, .y = New p1}}
+
+        Next
+
+
+        Call sssis.SaveData("x:\test2")
+
+        '  Dim schdddema = Microsoft.VisualBasic.DocumentFormat.Csv.Schema.GetSchema(Of SchemaParsingTest)
+
+        '  Call schema.GetJson.__DEBUG_ECHO
+        '  Call schema.GetJson.SaveTo("./test.json")
+        Pause()
 
         Dim ddddddddd = CharsParser(<s>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</s>)
 
@@ -82,7 +117,7 @@ Module TestMain
         data = "./fgfgfgf.csv".LoadCsv(Of SchemaParsingTest).ToArray
 
 
-        Dim nn = "E:\Desktop\DESeq\colR\diffexpr-results.csv".LoadCsv(Of RTools.ResultData)(False)
+        Dim nn = "E:\Desktop\DESeq\colR\diffexpr-results.csv".LoadCsv(Of RTools.DESeq.ResultData)(False)
 
         Call nn.SaveTo(FileIO.FileSystem.GetTempFileName & ".csv", False)
 
@@ -137,4 +172,3 @@ Module TestMain
         Public Property Tags As String()
     End Class
 End Module
-

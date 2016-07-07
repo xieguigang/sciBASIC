@@ -1,4 +1,4 @@
-﻿#Region "5bbf92a90640a22d026eb7013b77ff1b, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::e7a93ef11274bc7ba794de016c0aecaf, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
+''' <summary>
+''' Tools API for encoded the image into a base64 string.
+''' </summary>
 Public Module Base64Codec
 
     ''' <summary>

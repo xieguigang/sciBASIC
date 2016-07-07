@@ -1,4 +1,4 @@
-﻿#Region "8a09d9bf3316a28ef5d6968b8433d911, ..\Math\Arithmetic.Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::e995481e5007dac931f9a46bbbf0b108, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Class Expression
         Call Constant.Add(Name, val)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8f8c9192b7ba649ec68c5936eef87f6, ..\VB_HTML\VB_HTML\HTML\Xml\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::0010431126361ed8b309f59148d25711, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\Xml\Meta.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Namespace HTML.XmlMeta
         End Function
     End Class
 End Namespace
-

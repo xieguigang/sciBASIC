@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d78d89577fa8b89e15fbc98c005d6688, ..\Cli Tools\Regex\frmRegexTest.vb"
+﻿#Region "Microsoft.VisualBasic::3a967082e05b74080e30a2f376a994cc, ..\VisualBasic_AppFramework\Cli Tools\Regex\frmRegexTest.vb"
 
     ' Author:
     ' 
@@ -105,4 +105,3 @@ Public Class frmRegexTest
         Call __runRegex()
     End Sub
 End Class
-

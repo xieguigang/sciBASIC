@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7e2f467bfc34ed3ab2e836f02804fd2, ..\VB_HTML\VB_HTML\YAML\Syntax\TagDirective.vb"
+﻿#Region "Microsoft.VisualBasic::bc7a43f30f0de32fe40a1e670c77ec7f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\TagDirective.vb"
 
     ' Author:
     ' 
@@ -37,4 +37,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

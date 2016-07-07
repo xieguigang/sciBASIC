@@ -1,4 +1,4 @@
-﻿#Region "a6a0dd636982765dfccd702d020235df, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::dece5393f94451fa0669246ffd661a6b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataSample.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel
 
+    ''' <summary>
+    ''' Numeric value statics property.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Structure DataSample(Of T As IComparable)
 
         Public ReadOnly Property Min As T
@@ -39,6 +43,7 @@ Namespace ComponentModel.DataSourceModel
                 Return Ranges.Min
             End Get
         End Property
+
         Public ReadOnly Property Max As T
             Get
                 Return Ranges.Max

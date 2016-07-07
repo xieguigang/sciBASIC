@@ -1,4 +1,4 @@
-﻿#Region "8998733027377fa64e5aab66c3297b68, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\ConsolePasswordInput.vb"
+﻿#Region "Microsoft.VisualBasic::8998733027377fa64e5aab66c3297b68, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\ConsolePasswordInput.vb"
 
     ' Author:
     ' 

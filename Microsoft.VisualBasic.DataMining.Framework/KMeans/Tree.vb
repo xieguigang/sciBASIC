@@ -1,4 +1,31 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::38183a7b595cc2761002f69539eaf31e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\Tree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataVisualization.Network
 Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
@@ -142,7 +169,7 @@ Namespace KMeans
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
         Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer) As Entity()
-            Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of Entity()) =
                 New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), 1, [stop])).Run    ' cluster1
@@ -152,7 +179,7 @@ Namespace KMeans
             Return list.ToArray
         End Function
 
-        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.Cluster(Of T), id As String, [stop] As Integer) As Entity()
+        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer) As Entity()
             For Each x In cluster
                 x.uid &= ("." & id)
             Next
@@ -187,7 +214,7 @@ EXIT_:          Dim array = source.ToArray
             End If
 
             Dim list As New List(Of Entity)
-            Dim result As Cluster(Of T)() = ClusterDataSet(2, source).ToArray
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
 
             ' 检查数据
             Dim b0 As Boolean = False ', b20 As Boolean = False

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f538f35f9de40fe0e3927867303fad6, ..\VB_HTML\VB_HTML\YAML\Syntax\YamlVersion.vb"
+﻿#Region "Microsoft.VisualBasic::9b870fd734ff491e2e5f4c137a9a20d0, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlVersion.vb"
 
     ' Author:
     ' 
@@ -36,4 +36,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

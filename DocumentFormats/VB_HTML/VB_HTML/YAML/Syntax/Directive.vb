@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::038fc77b23578249550abb5a28e2d0ca, ..\VB_HTML\VB_HTML\YAML\Syntax\Directive.vb"
+﻿#Region "Microsoft.VisualBasic::12f2249a6186dabd2abc5b267bc1920d, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Directive.vb"
 
     ' Author:
     ' 
@@ -32,4 +32,3 @@ Namespace YAML.Syntax
     Public Class Directive
     End Class
 End Namespace
-

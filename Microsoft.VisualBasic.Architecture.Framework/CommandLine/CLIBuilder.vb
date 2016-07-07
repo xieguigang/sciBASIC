@@ -1,4 +1,4 @@
-﻿#Region "c1cff4b439a479a62391b3c69dd87cc9, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c1cff4b439a479a62391b3c69dd87cc9, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
 
     ' Author:
     ' 

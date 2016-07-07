@@ -1,4 +1,4 @@
-﻿#Region "9ef10ce49fef12e65b24b2ee859258ee, ..\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
+﻿#Region "Microsoft.VisualBasic::57efe25f05d77cae95af610fa2da986d, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Public Module TextureResourceLoader
         Return TextureResourceLoader.LoadTextureResource(My.Resources.DefaultTexture, New Size(27, 19), 6, 6)
     End Function
 End Module
-

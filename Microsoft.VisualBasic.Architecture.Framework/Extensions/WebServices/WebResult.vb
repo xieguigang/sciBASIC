@@ -1,4 +1,4 @@
-﻿#Region "eb3361fe1a70b801301a9bca42947281, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebResult.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,10 @@ Namespace Net.Http
         ''' <returns></returns>
         Public Property Update As String
 
+        ''' <summary>
+        ''' Returns the root domain name.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Site As String
             Get
                 Return Regex.Match(URL, "https?://(www.)?[^/]+").Value

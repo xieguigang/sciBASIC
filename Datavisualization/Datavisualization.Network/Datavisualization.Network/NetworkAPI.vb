@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a780d5b43526a797da09aee26d21ced, ..\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::3ea3c724c8787be49aef519284d620bd, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Public Module NetworkAPI
         Return LQuery
     End Function
 End Module
-

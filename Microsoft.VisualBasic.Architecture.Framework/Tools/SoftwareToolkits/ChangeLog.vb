@@ -1,4 +1,4 @@
-﻿#Region "28c5f98ac1b9d30a0be50776aec5114a, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
+﻿#Region "Microsoft.VisualBasic::28c5f98ac1b9d30a0be50776aec5114a, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
 
     ' Author:
     ' 

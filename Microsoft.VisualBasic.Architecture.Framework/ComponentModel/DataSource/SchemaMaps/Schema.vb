@@ -1,4 +1,4 @@
-﻿#Region "6beb5f9fba9324e1a7b0e5e73df08c5c, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::e2e7f0eff3e9d7a99b845d1206396416, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\Schema.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
+    ''' <summary>
+    ''' Schema for two dimension table.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Schema(Of T As Attribute)
 
         Public Property SchemaName As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0214337fcde22c06fc2c3ea4bb5f044, ..\VB_HTML\VB_HTML\YAML\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::1ede4d3d207a3af08c42655a18c6718f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Namespace YAML.Syntax
         End Function
     End Class
 End Namespace
-

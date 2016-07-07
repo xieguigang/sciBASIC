@@ -1,4 +1,4 @@
-﻿#Region "11411d2fbec95cd256120ed384120c1a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::855fa56a0459147c9a25fcd5ecfdbbf1, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -123,7 +123,7 @@ Namespace Linq
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return Me.GetJson(False)
         End Function
 
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As T

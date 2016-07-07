@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c0a3deabbdd5b540d3593dd86a30e01, ..\VB_HTML\VB_HTML\YAML\Syntax\DataItem.vb"
+﻿#Region "Microsoft.VisualBasic::33d61a74fe8730f8034d1fae9b66a32a, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\DataItem.vb"
 
     ' Author:
     ' 
@@ -36,4 +36,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

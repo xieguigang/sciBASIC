@@ -1,4 +1,4 @@
-﻿#Region "7b1e8b6a27401cfcb45ed0ab1bb314f9, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\PriorityClass.vb"
+﻿#Region "Microsoft.VisualBasic::7b1e8b6a27401cfcb45ed0ab1bb314f9, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\PriorityClass.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,9 @@
 
 Namespace Win32
 
+    ''' <summary>
+    ''' Process priority class helper.
+    ''' </summary>
     Public Module PriorityClass
 
         ''' <summary>
@@ -50,7 +53,7 @@ Namespace Win32
         Public Const NORMAL_PRIORITY_CLASS = &H20
 
         ''' <summary>
-        ''' 
+        ''' Set Priority Class for current process.
         ''' </summary>
         ''' <param name="priority"><see cref="IDLE_PRIORITY_CLASS"/>, <see cref="HIGH_PRIORITY_CLASS"/>, <see cref="NORMAL_PRIORITY_CLASS"/></param>
         ''' <returns></returns>

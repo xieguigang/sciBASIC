@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c56e3ac10447d5d76cd26d1ae6faa3c, ..\Win32API\advapi32.vb"
+﻿#Region "Microsoft.VisualBasic::949705b3154be9e5e89736e7d718295f, ..\VisualBasic_AppFramework\Win32API\advapi32.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -122,4 +121,3 @@ Public Module advapi32
     Public Declare Function AbortSystemShutdown Lib "advapi32.dll" Alias "AbortSystemShutdownA" (lpMachineName As String) As Integer
 
 End Module
-

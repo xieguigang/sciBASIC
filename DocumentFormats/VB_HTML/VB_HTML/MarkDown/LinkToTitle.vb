@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5180d7644cee2ab66eb3e4ce936e73, ..\VB_HTML\VB_HTML\MarkDown\LinkToTitle.vb"
+﻿#Region "Microsoft.VisualBasic::ddd0634a41ba1b71be70d04bd77edaf7, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\LinkToTitle.vb"
 
     ' Author:
     ' 
@@ -173,4 +173,3 @@ Namespace MarkDown
         End Function
     End Class
 End Namespace
-

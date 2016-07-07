@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bc9952cdd15672ae288a42ca7ec823f, ..\VB_HTML\VB_HTML\HTML\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::6bc9952cdd15672ae288a42ca7ec823f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\TextString.vb"
 
     ' Author:
     ' 

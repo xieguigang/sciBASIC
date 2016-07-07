@@ -1,4 +1,4 @@
-﻿#Region "3b5386704fe54be25c4ac2f5fd88955a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e199d040d951bcd677a5aa85c482cb98, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -47,6 +48,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Similarity
 
@@ -789,14 +791,15 @@ Public Module Extensions
     '''
     <ExportAPI("Pause", Info:="Pause the console program.")>
     Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
+        Call InnerQueue.WaitQueue()
         Call Console.WriteLine(Prompted)
         Call Console.Read()
     End Sub
 
-    Const _DOUBLE As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
+    Public Const RegexFloat As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
 
     ''' <summary>
-    ''' Parsing a real number from the expression text by using the regex expression <see cref="_DOUBLE"/>.
+    ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexFloat"/>.
     ''' (使用正则表达式解析目标字符串对象之中的一个实数)
     ''' </summary>
     ''' <param name="s"></param>
@@ -805,7 +808,7 @@ Public Module Extensions
     '''
     <ExportAPI("Double.Match")>
     <Extension> Public Function RegexParseDouble(s As String) As Double
-        Return Val(s.Match(_DOUBLE))
+        Return Val(s.Match(RegexFloat))
     End Function
 
     ''' <summary>
@@ -1991,9 +1994,9 @@ Public Module Extensions
     End Function
 
     <Extension> Public Function Takes(Of T)(source As T(), count As Integer) As T()
-        Dim ChunkBuffer As T() = New T(count - 1) {}
-        Call Array.ConstrainedCopy(source, Scan0, ChunkBuffer, Scan0, count)
-        Return ChunkBuffer
+        Dim bufs As T() = New T(count - 1) {}
+        Call Array.ConstrainedCopy(source, Scan0, bufs, Scan0, count)
+        Return bufs
     End Function
 
     ''' <summary>
@@ -2018,8 +2021,10 @@ Public Module Extensions
     ''' <param name="remoteDuplicates">当这个参数为False的时候，出现重复的键名会抛出错误，当为True的时候，有重复的键名存在的话，可能会丢失一部分的数据</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
-                                                              Optional remoteDuplicates As Boolean = False) As Dictionary(Of TKey, TValue)
+    <Extension> Public Function ToDictionary(Of TKey, TValue)(
+                                source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                       Optional remoteDuplicates As Boolean = False) As Dictionary(Of TKey, TValue)
+
         If remoteDuplicates Then
             Dim hash As Dictionary(Of TKey, TValue) = New Dictionary(Of TKey, TValue)
 
@@ -2034,7 +2039,7 @@ Public Module Extensions
             Return hash
         Else
             Dim Dictionary As Dictionary(Of TKey, TValue) =
-                source.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+                source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
             Return Dictionary
         End If
     End Function
@@ -2154,7 +2159,7 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function GetLength(Of T)(collect As Generic.IEnumerable(Of T)) As Integer
+    <Extension> Public Function GetLength(Of T)(collect As IEnumerable(Of T)) As Integer
         If collect Is Nothing Then
             Return 0
         Else
@@ -2166,32 +2171,33 @@ Public Module Extensions
     ''' <summary>
     ''' 执行一个命令行语句，并返回一个IO重定向对象，以获取被执行的目标命令的标准输出
     ''' </summary>
-    ''' <param name="CommandLine"></param>
+    ''' <param name="CLI"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Shell")>
-    <Extension> Public Function Shell(CommandLine As String) As Microsoft.VisualBasic.CommandLine.IORedirect
-        Return CType(CommandLine, Microsoft.VisualBasic.CommandLine.IORedirect)
+    <Extension> Public Function Shell(CLI As String) As IORedirect
+        Return CType(CLI, IORedirect)
     End Function
 #End If
 
     ''' <summary>
     ''' 获取一个实数集合中所有元素的积
     ''' </summary>
-    ''' <param name="Elements"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("PI")>
-    <Extension> Public Function π(Elements As Generic.IEnumerable(Of Double)) As Double
-        If Elements.IsNullOrEmpty Then
+    <Extension> Public Function π(source As IEnumerable(Of Double)) As Double
+        If source.IsNullOrEmpty Then
             Return 0
         End If
 
         Dim result As Double = 1
-        For i As Integer = 0 To Elements.Count - 1
-            result *= Elements(i)
+
+        For Each x As Double In source
+            result *= x
         Next
 
         Return result
@@ -2209,12 +2215,12 @@ Public Module Extensions
     ''' <param name="Image"></param>
     ''' <param name="FilledColor"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub FillBlank(ByRef Image As System.Drawing.Image, FilledColor As System.Drawing.Brush)
+    <Extension> Public Sub FillBlank(ByRef Image As Image, FilledColor As Brush)
         If Image Is Nothing Then
             Return
         End If
         Using gr As Graphics = Graphics.FromImage(Image)
-            Dim R As System.Drawing.Rectangle = New Rectangle(New Point, Image.Size)
+            Dim R As New Rectangle(New Point, Image.Size)
             Call gr.FillRectangle(FilledColor, R)
         End Using
     End Sub
@@ -2229,7 +2235,7 @@ Public Module Extensions
     ''' <param name="List"></param>
     ''' <param name="collection"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub Removes(Of T)(ByRef List As List(Of T), collection As Generic.IEnumerable(Of T))
+    <Extension> Public Sub Removes(Of T)(ByRef List As List(Of T), collection As IEnumerable(Of T))
         For Each obj In collection
             Call List.Remove(obj)
         Next

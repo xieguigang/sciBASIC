@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::682a446c3a9bdb4b1e43d0a25a3431e3, ..\RDF\RDF\Serializer\Serializer.vb"
+﻿#Region "Microsoft.VisualBasic::36da6d44f4edc19178e0d46ac989967e, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\Serializer\Serializer.vb"
 
     ' Author:
     ' 
@@ -217,4 +217,3 @@ Public Class Serializer(Of T As Class)
         Return DeSerialization(Stream)
     End Function
 End Class
-

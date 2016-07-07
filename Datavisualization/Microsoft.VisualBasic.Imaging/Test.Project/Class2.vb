@@ -1,4 +1,4 @@
-﻿#Region "8ed241b365fa5eb174446ec846980498, ..\Microsoft.VisualBasic.Imaging\Test.Project\Class2.vb"
+﻿#Region "Microsoft.VisualBasic::af21cabecff08fb9e72d4ea7c20a409e, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Test.Project\Class2.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Public Class CubeTest : Inherits GDIDevice
         Call view.UpdateGraphics(Gr.Graphics)
     End Sub
 End Class
-

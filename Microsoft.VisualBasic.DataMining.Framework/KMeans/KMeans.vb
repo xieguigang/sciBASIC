@@ -1,4 +1,31 @@
-﻿Imports System.Data
+﻿#Region "Microsoft.VisualBasic::e87eee9c9c81e60a2814a2408ab9eedd, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.Framework.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -104,7 +131,7 @@ Namespace KMeans
             Dim fieldCount As Integer = data(Scan0).Length
             Dim stableClustersCount As Integer = 0
             Dim iterationCount As Integer = 0
-            Dim cluster As Cluster(Of T) = Nothing
+            Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim clusterNumbers As New List(Of Integer)
             Dim Random As Random = New Random
@@ -117,7 +144,7 @@ Namespace KMeans
                 clusterNumber = Random.[Next](0, rowCount - 1)
 
                 If Not clusterNumbers.Contains(clusterNumber) Then
-                    cluster = New Cluster(Of T)
+                    cluster = New KMeansCluster(Of T)
                     clusterNumbers.Add(clusterNumber)
                     cluster.Add(data(clusterNumber))
                     clusters.Add(cluster)
@@ -132,8 +159,8 @@ Namespace KMeans
                 Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data)
 
                 For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
-                    Dim x As Cluster(Of T) = newClusters(clusterIndex)
-                    Dim y As Cluster(Of T) = clusters(clusterIndex)
+                    Dim x As KMeansCluster(Of T) = newClusters(clusterIndex)
+                    Dim y As KMeansCluster(Of T) = clusters(clusterIndex)
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
                         Continue For ' ??? 为什么有些聚类是0？？
@@ -172,7 +199,7 @@ Namespace KMeans
             Dim newClusters As New ClusterCollection(Of T)     ' create a new collection of clusters
 
             For count As Integer = 0 To clusters.NumOfCluster - 1
-                Dim newCluster As New Cluster(Of T)
+                Dim newCluster As New KMeansCluster(Of T)
                 newClusters.Add(newCluster)
             Next
 
@@ -185,7 +212,7 @@ Namespace KMeans
                 Dim dataPoint As T = data(row)
 
                 For cluster As Integer = 0 To clusters.NumOfCluster - 1
-                    Dim x As Cluster(Of T) = clusters(cluster)
+                    Dim x As KMeansCluster(Of T) = clusters(cluster)
                     If x.NumOfEntity = 0 Then
                         clusterMean = 0R.CopyVector(dataPoint.Length)
                     Else
@@ -247,3 +274,4 @@ Namespace KMeans
         End Function
     End Module
 End Namespace
+

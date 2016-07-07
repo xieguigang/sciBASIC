@@ -1,4 +1,4 @@
-﻿#Region "d6a0df570a1d1548930080a0027e13f2, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\SlideWindowHandle.vb"
+﻿#Region "Microsoft.VisualBasic::d6a0df570a1d1548930080a0027e13f2, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\SlideWindowHandle.vb"
 
     ' Author:
     ' 

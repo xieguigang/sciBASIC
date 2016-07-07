@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7532333976ae3a131bad4f2adc6dda2e, ..\VB_HTML\VB_HTML\YAML\Syntax\TagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::16cca17549a618d6cf2644502c07d096, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\TagPrefix.vb"
 
     ' Author:
     ' 
@@ -34,4 +34,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dae41b3b8d8305c662266ffa3682d51, ..\VB_HTML\VB_HTML\MarkDown\Span\LinksParser.vb"
+﻿#Region "Microsoft.VisualBasic::4a4653d898a398b46b2d25c613bd51dc, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Span\LinksParser.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b07b44d52b1c4f4c917c33f97e092f41, ..\Datavisualization.Network\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ae7d2bd8d15dd3e81542978a3f70a38e, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -105,4 +105,3 @@ Module Module1
         Return tokens
     End Function
 End Module
-

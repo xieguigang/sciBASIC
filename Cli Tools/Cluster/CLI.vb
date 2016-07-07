@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0cce5893014d4ddec6d19af3b8b7869, ..\Cli Tools\Cluster\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::c0cce5893014d4ddec6d19af3b8b7869, ..\VisualBasic_AppFramework\Cli Tools\Cluster\CLI.vb"
 
     ' Author:
     ' 

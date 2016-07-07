@@ -1,4 +1,4 @@
-﻿#Region "6754968a35d790d85e4d1cae340e00bf, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Invoke\InvokeHandler.vb"
+﻿#Region "Microsoft.VisualBasic::6754968a35d790d85e4d1cae340e00bf, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Invoke\InvokeHandler.vb"
 
     ' Author:
     ' 

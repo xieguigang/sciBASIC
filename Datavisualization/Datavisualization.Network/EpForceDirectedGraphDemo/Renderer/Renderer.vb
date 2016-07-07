@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5272022b6fffa84fa6f06b024736088, ..\Datavisualization.Network\EpForceDirectedGraphDemo\Renderer\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::6b50f6a370ea3cdd0885d2421d9d894e, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\Renderer\Renderer.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Namespace EpForceDirectedGraphDemo
 
     End Class
 End Namespace
-

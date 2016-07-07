@@ -1,4 +1,4 @@
-﻿#Region "5ac249545fadc8b3fb4eb92b84d02e64, ..\Math\Helpers\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::b8f5f67943b03104a0fd62618f86fd21, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Variable.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Namespace Helpers
         End Function
     End Class
 End Namespace
-

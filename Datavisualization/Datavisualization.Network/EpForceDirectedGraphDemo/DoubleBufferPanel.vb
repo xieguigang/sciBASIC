@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4cbe66a3a71c221dc092528fec258bc, ..\Datavisualization.Network\EpForceDirectedGraphDemo\DoubleBufferPanel.vb"
+﻿#Region "Microsoft.VisualBasic::57dc445f71767694511cb9c312d6aff5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\DoubleBufferPanel.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Namespace EpForceDirectedGraphDemo
 	End Class
 
 End Namespace
-

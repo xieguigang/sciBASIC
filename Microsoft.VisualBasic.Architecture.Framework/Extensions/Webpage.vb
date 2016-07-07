@@ -1,4 +1,4 @@
-﻿#Region "74101dcd8da60518fc4846f26cd94c7c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Webpage.vb"
+﻿#Region "Microsoft.VisualBasic::74101dcd8da60518fc4846f26cd94c7c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Webpage.vb"
 
     ' Author:
     ' 

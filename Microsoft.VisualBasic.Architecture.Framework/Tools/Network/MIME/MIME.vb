@@ -1,4 +1,4 @@
-﻿#Region "08e39f2928a78ca465bd81b1a83ed0ab, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::c63852c39529efdffe15149a54cc7323, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,22 @@ Namespace Net.Protocols.ContentTypes
     ''' </summary>
     Public Module MIME
 
+        ''' <summary>
+        ''' 枚举出所有已知的文件拓展名列表
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ExtDict As IReadOnlyDictionary(Of String, ContentType)
+        ''' <summary>
+        ''' 根据类型来枚举
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ContentTypes As IReadOnlyDictionary(Of String, ContentType)
+
+        ''' <summary>
+        ''' .*（ 二进制流，不知道下载文件类型）
+        ''' </summary>
+        Public Const Unknown As String = "application/octet-stream"
+        Public Const MsDownload As String = "application/x-msdownload"
 
         Sub New()
             Dim lines As String() = My.Resources.List_of_MIME_types___Internet_Media_Types_.lTokens

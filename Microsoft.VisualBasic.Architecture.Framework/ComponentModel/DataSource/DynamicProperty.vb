@@ -1,4 +1,4 @@
-﻿#Region "0ccb36f565706313142b8b694ee7b31b, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::0ccb36f565706313142b8b694ee7b31b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DynamicProperty.vb"
 
     ' Author:
     ' 

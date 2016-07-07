@@ -1,4 +1,4 @@
-﻿#Region "ae0cf5b0b9ad544dfb47aebf3547aeb9, ..\GithubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::bacbb0aed738f8fbe8ac68fb825d6b05, ..\VisualBasic_AppFramework\GithubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Public Module QueryBuilder
         End Function
     End Class
 End Module
-

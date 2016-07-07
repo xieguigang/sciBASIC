@@ -1,4 +1,4 @@
-﻿#Region "b798171bd953e83337887f352e181719, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::b798171bd953e83337887f352e181719, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\RequestStream.vb"
 
     ' Author:
     ' 

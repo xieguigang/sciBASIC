@@ -1,4 +1,4 @@
-﻿#Region "895d1a80d9ad0105bd0b55872acf7637, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::0fdc44e4ab3ecfb9697d2ea7af13d034, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -193,7 +193,13 @@ Namespace SecurityString
         ''' 
         <ExportAPI("File.Equals")>
         Public Function VerifyFile(query As String, subject As String) As Boolean
-            Return String.Equals(GetFileHashString(query), GetFileHashString(subject))
+            Dim md5 As New Md5HashProvider()
+            Dim a1 As Byte() = IO.File.ReadAllBytes(query)
+            Dim a2 As Byte() = IO.File.ReadAllBytes(subject)
+            Dim m1 As String = md5.GetMd5Hash(a1)
+            Dim m2 As String = md5.GetMd5Hash(a2)
+
+            Return String.Equals(m1, m2)
         End Function
 
         ''' <summary>
@@ -209,8 +215,8 @@ Namespace SecurityString
                 Return ""
             End If
 
-            Dim ChunkBuffer As Byte() = IO.File.ReadAllBytes(PathUri)
-            Return GetMd5Hash(ChunkBuffer)
+            Dim bufs As Byte() = IO.File.ReadAllBytes(PathUri)
+            Return GetMd5Hash(bufs)
         End Function
 
         ''' <summary>

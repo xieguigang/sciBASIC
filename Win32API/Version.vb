@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::047d5ba6694d645d60d368dc5a077ab6, ..\Win32API\Version.vb"
+﻿#Region "Microsoft.VisualBasic::3a11f7a856939a52b44ae59df669550e, ..\VisualBasic_AppFramework\Win32API\Version.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("version.dll")>
@@ -50,4 +49,3 @@ Public Module Version
     Public Declare Function GetFileVersionInfo Lib "version.dll" Alias "GetFileVersionInfoA" (lptstrFilename As String, dwHandle As Integer, dwLen As Integer, ByRef lpData As Object) As Integer
 
 End Module
-

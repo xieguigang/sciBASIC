@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::575dc5ebb6b52ecc117160ceeb2fb6ff, ..\VB_HTML\VB_HTML\HTML\HtmlParser\HtmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::d577ac6ac5c674bec5bff7264eac5099, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\HtmlParser\HtmlDocument.vb"
 
     ' Author:
     ' 

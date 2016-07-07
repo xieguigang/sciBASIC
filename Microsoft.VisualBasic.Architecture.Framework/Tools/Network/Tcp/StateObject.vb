@@ -1,4 +1,4 @@
-﻿#Region "2945b11a30a1fb56e4de27826f04adb2, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\StateObject.vb"
+﻿#Region "Microsoft.VisualBasic::2945b11a30a1fb56e4de27826f04adb2, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\StateObject.vb"
 
     ' Author:
     ' 

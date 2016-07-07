@@ -1,4 +1,4 @@
-﻿#Region "aed7a1e4341e9c14f46340abfec78527, ..\Math\BasicR\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::aed7a1e4341e9c14f46340abfec78527, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Parser.vb"
 
     ' Author:
     ' 
