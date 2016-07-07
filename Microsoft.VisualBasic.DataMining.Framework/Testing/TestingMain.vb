@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.DataMining.Framework.MathGamma
 
 Module TestingMain
 
@@ -27,6 +28,10 @@ Module TestingMain
 
     Sub Main()
 
+        Call 5.0R.Γ.__DEBUG_ECHO
+        Call 1.6R.Γ.__DEBUG_ECHO
+
+        Pause()
 
         Dim a() As Char = {"A"c, "B"c, "C"c, "B"c, "D"c, "A"c, "B"c}
         Dim b() As Char = {"B"c, "D"c, "C"c, "A"c, "B"c, "A"c}
