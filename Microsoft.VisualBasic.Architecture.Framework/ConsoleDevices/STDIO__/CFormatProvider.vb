@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::be6081f08afa959e314ffa650a32eb27, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\CFormatProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -291,6 +291,10 @@ Namespace Terminal.STDIO__
             Dim paddingCharacter As Char = " "c
             '#End Region
 
+            Format = Format.Replace("\\", "\/")
+            Format = Format.Replace("\n", vbLf)
+            Format = Format.Replace("\t", vbTab)
+
             ' find all format parameters in format string
             f.Append(Format)
             m = r.Match(f.ToString())
@@ -482,7 +486,7 @@ Namespace Terminal.STDIO__
                     Case "s"c
                         ' string
                         Dim t As String = "{0" & (If(fieldLength <> Integer.MinValue, "," & (If(flagLeft2Right, "-", String.Empty)) & fieldLength.ToString(), String.Empty)) & ":s}"
-                        w = o.ToString()
+                        w = Scripting.ToString(o)
                         If fieldPrecision >= 0 Then
                             w = w.Substring(0, fieldPrecision)
                         End If
@@ -573,8 +577,10 @@ Namespace Terminal.STDIO__
                 ' includes a format specifier
                 f.Remove(m.Index, m.Length)
                 f.Insert(m.Index, w)
-                m = r.Match(f.ToString(), m.Index + w.Length)
+                m = r.Match(f.ToString(), startat:=m.Index + w?.Length)
             End While
+
+            Call f.Replace("\/", "\")
 
             Return f.ToString()
         End Function

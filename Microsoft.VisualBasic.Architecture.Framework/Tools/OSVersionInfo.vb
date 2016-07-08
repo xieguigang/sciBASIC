@@ -728,8 +728,15 @@ Namespace SoftwareToolkits
 #End Region
 
 #Region "VERSION"
-        <DllImport("kernel32.dll")>
+        Public Declare Function GetVersion Lib "kernel32.dll" Alias "GetVersionEx" (ByRef osVersionInfo As OSVERSIONINFOEX) As Boolean
+
         Private Function GetVersionEx(ByRef osVersionInfo As OSVERSIONINFOEX) As Boolean
+            If Environment.OSVersion.Platform = PlatformID.Unix OrElse
+                Environment.OSVersion.Platform = PlatformID.MacOSX Then
+                Return False
+            Else
+                Return GetVersion(osVersionInfo)
+            End If
         End Function
 #End Region
 
@@ -753,7 +760,7 @@ Namespace SoftwareToolkits
 
 #Region "OSVERSIONINFOEX"
         <StructLayout(LayoutKind.Sequential)>
-        Private Structure OSVERSIONINFOEX
+        Public Structure OSVERSIONINFOEX
             Public dwOSVersionInfoSize As Integer
             Public dwMajorVersion As Integer
             Public dwMinorVersion As Integer
