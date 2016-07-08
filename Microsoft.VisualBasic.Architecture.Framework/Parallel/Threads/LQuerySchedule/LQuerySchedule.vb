@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::75c63db59e9b84290e35f10830493e2d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Parallel.Linq
 
@@ -93,30 +94,25 @@ Namespace Parallel.Linq
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="inputs"></param>
         ''' <param name="task"></param>
-        ''' <param name="timeout">单个数据分区的计算的超时的时间，单位是秒</param>
         ''' <returns></returns>
         Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
                                                     task As Func(Of T, TOut),
-                                                    timeout As Double,
                                                     Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
 
-            Call $"Start schedule task pool(timeout:={timeout}s) for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
+            Call $"Start schedule task pool for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
 
             Dim buf = TaskPartitions.Partitioning(inputs, parTokens, task)
             Dim LQueryInvoke = From part As Func(Of TOut())
                                In buf.AsParallel
-                               Select New TimeoutModel(Of TOut) With {
-                                   .timeout = timeout,
-                                   .task = part
-                               }.Invoke
+                               Select New AsyncHandle(Of TOut())(part).Run
 
-            For Each part As TOut() In LQueryInvoke
+            For Each part As AsyncHandle(Of TOut()) In LQueryInvoke
                 If part Is Nothing Then
                     Call VBDebugger.Warning("Parts of the data operation timeout!")
                     Continue For
                 End If
 
-                For Each x As TOut In part
+                For Each x As TOut In part.GetValue
                     Yield x
                 Next
             Next
