@@ -718,6 +718,13 @@ Public Module App
     Public ReadOnly Property ProductSharedTemp As String = App.ProductSharedDIR & "/tmp/"
 
     ''' <summary>
+    ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
+    ''' platform.
+    ''' </summary>
+    ''' <remarks>One of the System.PlatformID values.</remarks>
+    Public ReadOnly Property Platform As PlatformID = Environment.OSVersion.Platform
+
+    ''' <summary>
     ''' Self call this program itself for batch parallel task calculation.
     ''' (调用自身程序，这个通常是应用于批量的数据的计算任务的实现)
     ''' </summary>
@@ -725,9 +732,19 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("Folk.Self")>
-    Public Function SelfFolk(CLI As String) As IORedirectFile
-        Dim process As IORedirectFile = New IORedirectFile(App.ExecutablePath, CLI)
-        Return process
+    Public Function SelfFolk(CLI As String) As IIORedirectAbstract
+        If Platform = PlatformID.MacOSX OrElse
+            Platform = PlatformID.Unix Then
+
+            Dim process As New ProcessEx With {
+                .Bin = "mono",
+                .CLIArguments = App.ExecutablePath.CliPath & " " & CLI
+            }
+            Return process
+        Else
+            Dim process As New IORedirectFile(App.ExecutablePath, CLI)
+            Return process
+        End If
     End Function
 
     ''' <summary>
