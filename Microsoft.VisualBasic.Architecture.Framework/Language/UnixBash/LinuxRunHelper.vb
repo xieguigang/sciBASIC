@@ -64,7 +64,7 @@ system(""mono {cmd.CliPath} $cli"");
         Public Function BashRun() As String
             Dim cmd As String = Assembly.GetEntryAssembly.Location
             Dim bash As String =
-$"#!/bin/bash
+$"#!/bin/sh
 
 cli=""$@"";
 
