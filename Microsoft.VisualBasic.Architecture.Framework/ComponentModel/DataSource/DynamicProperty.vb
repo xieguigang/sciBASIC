@@ -279,6 +279,9 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         <XmlElement> Public Property x As T
 
+        <XmlAttribute>
+        Public Property Description As String
+
         ''' <summary>
         ''' Does this object have value?
         ''' </summary>
