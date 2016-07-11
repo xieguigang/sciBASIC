@@ -733,16 +733,26 @@ Public Module App
     '''
     <ExportAPI("Folk.Self")>
     Public Function SelfFolk(CLI As String) As IIORedirectAbstract
+        Return Shell(App.ExecutablePath, CLI)
+    End Function
+
+    ''' <summary>
+    ''' 请注意，这个函数只能够运行.NET程序, 假若是在Linux系统之上，还需要安装mono运行时环境
+    ''' </summary>
+    ''' <param name="app"></param>
+    ''' <param name="cli"></param>
+    ''' <returns></returns>
+    Public Function Shell(app As String, cli As String) As IIORedirectAbstract
         If Platform = PlatformID.MacOSX OrElse
             Platform = PlatformID.Unix Then
 
             Dim process As New ProcessEx With {
                 .Bin = "mono",
-                .CLIArguments = App.ExecutablePath.CliPath & " " & CLI
+                .CLIArguments = app.CliPath & " " & cli
             }
             Return process
         Else
-            Dim process As New IORedirectFile(App.ExecutablePath, CLI)
+            Dim process As New IORedirectFile(app, cli)
             Return process
         End If
     End Function

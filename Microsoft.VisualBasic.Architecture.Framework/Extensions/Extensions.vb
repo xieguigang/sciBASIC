@@ -2173,6 +2173,7 @@ Public Module Extensions
     End Function
 
 #If FRAMEWORD_CORE Then
+
     ''' <summary>
     ''' 执行一个命令行语句，并返回一个IO重定向对象，以获取被执行的目标命令的标准输出
     ''' </summary>
@@ -2181,7 +2182,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("Shell")>
-    <Extension> Public Function Shell(CLI As String) As IORedirect
+    <Extension> Public Function Shell(CLI As String) As IIORedirectAbstract
         Return CType(CLI, IORedirect)
     End Function
 #End If
