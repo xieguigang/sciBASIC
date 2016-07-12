@@ -185,5 +185,22 @@ Namespace Parallel.Linq
 
             Call $"Task job done!".__DEBUG_ECHO
         End Function
+
+        Public Iterator Function [Where](Of T)(source As IEnumerable(Of T),
+                                               test As Func(Of T, Boolean),
+                                               Optional parTokens As Integer = 20000) As IEnumerable(Of T())
+            Call $"Start schedule task pool for {GetType(T).FullName}".__DEBUG_ECHO
+
+            Dim buf As IEnumerable(Of Func(Of T())) = TaskPartitions.Partitions(source, parTokens, test)
+            Dim LQueryInvoke = From part As Func(Of T())
+                               In buf.AsParallel
+                               Select part()
+
+            For Each part As T() In LQueryInvoke
+                Yield part
+            Next
+
+            Call $"Task job done!".__DEBUG_ECHO
+        End Function
     End Module
 End Namespace
