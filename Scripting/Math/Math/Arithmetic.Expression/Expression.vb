@@ -40,6 +40,20 @@ Public Class Expression
     Public ReadOnly Property Functions As [Function]
 
     ''' <summary>
+    ''' Gets constant or variable value, but only sets variable value.
+    ''' </summary>
+    ''' <param name="var"></param>
+    ''' <returns></returns>
+    Default Public Property value(var As String) As Double
+        Get
+            Return GetValue(var)
+        End Get
+        Set(value As Double)
+            Call Variables.Set(var, value)
+        End Set
+    End Property
+
+    ''' <summary>
     ''' The default expression evaluation engine.
     ''' </summary>
     ''' <returns></returns>

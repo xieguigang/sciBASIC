@@ -147,6 +147,10 @@ Namespace Terminal
         Public ReadOnly Property Target As Integer
         Public ReadOnly Property Current As Integer
 
+        ''' <summary>
+        ''' 生成进度条的百分比值
+        ''' </summary>
+        ''' <param name="total"></param>
         Sub New(total As Integer)
             Target = total
         End Sub
@@ -160,6 +164,10 @@ Namespace Terminal
             Return Current / Target
         End Function
 
+        ''' <summary>
+        ''' 百分比进度，不需要再乘以100了
+        ''' </summary>
+        ''' <returns></returns>
         Public Function StepProgress() As Integer
             Return CInt([Step]() * 100)
         End Function
