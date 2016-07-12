@@ -106,7 +106,9 @@ Namespace Types
 
         ''' <summary>
         ''' Evaluate the specific simple expression class object.
-        ''' (计算一个特定的简单表达式对象的值) 
+        ''' (计算一个特定的简单表达式对象的值，这个简单表达是对象可以被重复利用的，
+        ''' 因为引用了变量或者函数的话<see cref="MetaExpression"/>会使用lambda表达式进行求值，
+        ''' 所以只需要改变引擎之中的环境就行了) 
         ''' </summary>
         ''' <returns>
         ''' Return the value of the specific simple expression object.
@@ -118,9 +120,9 @@ Namespace Types
                 Return 0R
             End If
 
-            Dim metaList As List(Of MetaExpression) = New List(Of MetaExpression)(Me.MetaList)
+            Dim metaList As New List(Of MetaExpression)(Me.MetaList)  ' 将数据隔绝开，这样子这个表达式对象可以被重复使用
 
-            If metaList.Count = 1 Then 'When the list object only contains one element, that means this class object only stands for a number, return this number directly. 
+            If metaList.Count = 1 Then ' When the list object only contains one element, that means this class object only stands for a number, return this number directly. 
                 Return metaList.First.LEFT
             Else
                 Calculator("^", metaList)
@@ -131,10 +133,10 @@ Namespace Types
             End If
         End Function
 
-        Private Shared Sub Calculator(OperatorList As String, ByRef metaList As List(Of MetaExpression))
+        Private Shared Sub Calculator(operators As String, ByRef metaList As List(Of MetaExpression))
             Dim ct As Integer = (From mep As MetaExpression
                                  In metaList
-                                 Where InStr(OperatorList, mep.Operator) > 0
+                                 Where InStr(operators, mep.Operator) > 0
                                  Select mep).Count  'Defines a LINQ query use for select the meta element that contains target operator..Count
             Dim M, mNext As MetaExpression
             Dim x As Double
@@ -142,7 +144,7 @@ Namespace Types
             For index As Integer = 0 To metaList.Count - 1  'Scan the expression object and do the calculation at the mean time
                 If ct = 0 OrElse metaList.Count = 1 Then
                     Return      'No more calculation could be done since there is only one number in the expression, break at this situation.
-                ElseIf OperatorList.IndexOf(metaList(index).Operator) <> -1 Then 'We find a meta expression element that contains target operator, then we do calculation on this element and the element next to it.  
+                ElseIf operators.IndexOf(metaList(index).Operator) <> -1 Then 'We find a meta expression element that contains target operator, then we do calculation on this element and the element next to it.  
                     M = metaList(index)  'Get current element and the element that next to him
                     mNext = metaList(index + 1)
                     x = Arithmetic.Evaluate(M.LEFT, mNext.LEFT, M.Operator)  'Do some calculation of type target operator 
