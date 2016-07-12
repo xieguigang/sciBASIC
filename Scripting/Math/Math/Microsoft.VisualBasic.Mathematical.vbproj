@@ -236,6 +236,10 @@
     <Compile Include="Matrix.NET\LUDecomposition.vb" />
     <Compile Include="Matrix.NET\QRDecomposition.vb" />
     <Compile Include="Matrix.NET\SingularValueDecomposition.vb" />
+    <Compile Include="Quantile\Extensions.vb" />
+    <Compile Include="Quantile\X.vb" />
+    <Compile Include="Quantile\Quantile.vb" />
+    <Compile Include="Quantile\QuantileEstimationGK.vb" />
     <Compile Include="ScriptEngine.vb" />
     <Compile Include="Helpers\Arithmetic.vb" />
     <Compile Include="Arithmetic.Expression\SimpleExpression.vb" />

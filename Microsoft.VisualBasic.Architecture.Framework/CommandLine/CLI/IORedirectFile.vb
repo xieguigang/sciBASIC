@@ -119,17 +119,19 @@ Namespace CommandLine
                 File = $"""{File}"""
             End If
 
-            Dim BATBuilder As StringBuilder = New StringBuilder(1024)
+            Dim BAT As New StringBuilder(1024)
 
             '切换工作目录至当前的进程所处的文件夹
-            Dim Drive As String = FileIO.FileSystem.GetDirectoryInfo(FileIO.FileSystem.CurrentDirectory).Root.Name.Replace("\", "").Replace("/", "")
+            Dim Drive As String =
+                FileIO.FileSystem.GetDirectoryInfo(FileIO.FileSystem.CurrentDirectory) _
+                .Root.Name.Replace("\", "").Replace("/", "")
 
-            Call BATBuilder.AppendLine(Drive)
-            Call BATBuilder.AppendLine("CD " & FileIO.FileSystem.CurrentDirectory.CliPath)
+            Call BAT.AppendLine(Drive)
+            Call BAT.AppendLine("CD " & FileIO.FileSystem.CurrentDirectory.CliPath)
 
             If Not environment.IsNullOrEmpty Then '写入临时的环境变量
                 For Each para As KeyValuePair(Of String, String) In environment
-                    Call BATBuilder.AppendLine($"set {para.Key}={para.Value }")
+                    Call BAT.AppendLine($"set {para.Key}={para.Value }")
                 Next
             End If
 
@@ -138,14 +140,15 @@ Namespace CommandLine
             'Process = New Process
             'Process.EnableRaisingEvents = True
             'Process.StartInfo = pInfo
-            Call BATBuilder.AppendLine()
+            Call BAT.AppendLine()
+
             If FolkNew Then
-                Call BATBuilder.AppendLine($"start {File} {argv}")   '在新的窗口打开
+                Call BAT.AppendLine($"start {File} {argv}")   '在新的窗口打开
             Else
-                Call BATBuilder.AppendLine($"{File} {argv}")  '生成IO重定向的命令行
+                Call BAT.AppendLine($"{File} {argv}")  '生成IO重定向的命令行
             End If
 
-            ProcessBAT = BATBuilder.ToString
+            ProcessBAT = BAT.ToString
             Bin = File
             CLIArguments = argv
 

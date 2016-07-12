@@ -81,6 +81,12 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Property Tokens As String()
 
+        Public ReadOnly Property ParameterList As NamedValue(Of String)()
+            Get
+                Return __lstParameter.ToArray
+            End Get
+        End Property
+
         ''' <summary>
         ''' The parameters in the commandline without the first token of the command name.
         ''' (将命令行解析为词元之后去掉命令的名称之后所剩下的所有的字符串列表)

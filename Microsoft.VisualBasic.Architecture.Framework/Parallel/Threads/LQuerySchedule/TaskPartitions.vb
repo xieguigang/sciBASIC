@@ -132,6 +132,20 @@ Namespace Parallel.Linq
             Next
         End Function
 
+        Public Iterator Function Partitions(Of T)(source As IEnumerable(Of T),
+                                                  parts As Integer,
+                                                  [where] As Func(Of T, Boolean)) As IEnumerable(Of Func(Of T()))
+
+            Dim buf As IEnumerable(Of T()) = source.SplitIterator(parts)
+
+            For Each part As T() In buf
+                Yield Function() LinqAPI.Exec(Of T) <= From x As T
+                                                       In part
+                                                       Where where(x) = True
+                                                       Select x
+            Next
+        End Function
+
         ''' <summary>
         ''' 因为在上一层调用之中使用了并行化，所以在这里不能够使用并行化拓展了
         ''' </summary>

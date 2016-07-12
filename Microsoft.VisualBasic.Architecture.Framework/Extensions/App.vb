@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::ac7f6da05823d9bcaa49ed0c93e6db30, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -207,6 +208,26 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
+
+    Public Function GetAppVariables() As NamedValue(Of String)()
+        Dim type As Type = GetType(App)
+        Dim pros = type.Schema(PropertyAccessibilityControls.Readable, BindingFlags.Public Or BindingFlags.Static)
+        Dim out As New List(Of NamedValue(Of String))
+
+        For Each prop As PropertyInfo
+            In pros.Values.Where(
+                Function(p) _
+                    p.PropertyType.Equals(GetType(String)) AndAlso
+                    p.GetIndexParameters.IsNullOrEmpty)
+
+            out += New NamedValue(Of String) With {
+                .Name = prop.Name,
+                .x = prop.GetValue(Nothing, Nothing)
+            }
+        Next
+
+        Return out.ToArray
+    End Function
 
     ''' <summary>
     ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件
@@ -718,6 +739,13 @@ Public Module App
     Public ReadOnly Property ProductSharedTemp As String = App.ProductSharedDIR & "/tmp/"
 
     ''' <summary>
+    ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
+    ''' platform.
+    ''' </summary>
+    ''' <remarks>One of the System.PlatformID values.</remarks>
+    Public ReadOnly Property Platform As PlatformID = Environment.OSVersion.Platform
+
+    ''' <summary>
     ''' Self call this program itself for batch parallel task calculation.
     ''' (调用自身程序，这个通常是应用于批量的数据的计算任务的实现)
     ''' </summary>
@@ -725,9 +753,29 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("Folk.Self")>
-    Public Function SelfFolk(CLI As String) As IORedirectFile
-        Dim process As IORedirectFile = New IORedirectFile(App.ExecutablePath, CLI)
-        Return process
+    Public Function SelfFolk(CLI As String) As IIORedirectAbstract
+        Return Shell(App.ExecutablePath, CLI)
+    End Function
+
+    ''' <summary>
+    ''' 请注意，这个函数只能够运行.NET程序, 假若是在Linux系统之上，还需要安装mono运行时环境
+    ''' </summary>
+    ''' <param name="app"></param>
+    ''' <param name="cli"></param>
+    ''' <returns></returns>
+    Public Function Shell(app As String, cli As String) As IIORedirectAbstract
+        If Platform = PlatformID.MacOSX OrElse
+            Platform = PlatformID.Unix Then
+
+            Dim process As New ProcessEx With {
+                .Bin = "mono",
+                .CLIArguments = app.CliPath & " " & cli
+            }
+            Return process
+        Else
+            Dim process As New IORedirectFile(app, cli)
+            Return process
+        End If
     End Function
 
     ''' <summary>
@@ -749,7 +797,7 @@ Public Module App
             Dim Tasks As Func(Of Integer)() =
                 LinqAPI.Exec(Of Func(Of Integer)) <= From args As String
                                                      In CLI
-                                                     Let io As IORedirectFile = App.SelfFolk(args)
+                                                     Let io As IIORedirectAbstract = App.SelfFolk(args)
                                                      Let task As Func(Of Integer) = AddressOf io.Run
                                                      Select task
             Call BatchTask(Of Integer)(Tasks, parallel)

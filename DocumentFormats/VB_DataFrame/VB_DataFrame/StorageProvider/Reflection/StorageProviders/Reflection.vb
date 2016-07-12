@@ -26,13 +26,14 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace StorageProvider.Reflection
 
@@ -183,9 +184,12 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(source As IEnumerable(Of Object), Optional Explicit As Boolean = True) As DocumentStream.File
-            Dim type As System.Type = source.First.GetType
-            Return __save(source, type, Explicit)
+        Public Function Save(source As IEnumerable(Of Object),
+                             Optional Explicit As Boolean = True,
+                             Optional maps As Dictionary(Of String, String) = Nothing,
+                             Optional parallel As Boolean = True) As DocumentStream.File
+            Dim type As Type = source.First.GetType
+            Return __save(source, type, Explicit, maps:=maps, parallel:=parallel)
         End Function
 
         ''' <summary>
@@ -198,23 +202,31 @@ Namespace StorageProvider.Reflection
         Public Function __save(___source As IEnumerable,
                                typeDef As Type,
                                Explicit As Boolean,
-                               Optional metaBlank As String = "") As DocumentStream.File
-            Dim source As Object() = (From x As Object
-                                      In ___source
-                                      Select x).ToArray
+                               Optional metaBlank As String = "",
+                               Optional maps As Dictionary(Of String, String) = Nothing,
+                               Optional parallel As Boolean = True) As DocumentStream.File
+
+            Dim source As Object() = ___source.ToVector
             Dim Schema As SchemaProvider =
                 SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
             Dim RowWriter As RowWriter = New RowWriter(Schema, metaBlank).CacheIndex(source)
-            Dim LQuery As List(Of RowObject) =
-                LinqAPI.MakeList(Of RowObject) <= From itmRow As Object
-                                                  In source.AsParallel
-                                                  Where Not itmRow Is Nothing
-                                                  Let createdRow As RowObject =
-                                                      RowWriter.ToRow(itmRow)
-                                                  Select createdRow  '为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
+            Dim LQuery As List(Of RowObject)
+            Dim array As IEnumerable(Of Object) =
+                If(parallel,
+                DirectCast(source.AsParallel, IEnumerable(Of Object)),
+                DirectCast(source, IEnumerable(Of Object)))
+
+            LQuery = LinqAPI.MakeList(Of RowObject) <=
+ _
+                From row As Object
+                In array
+                Where Not row Is Nothing
+                Let createdRow As RowObject =
+                    RowWriter.ToRow(row)
+                Select createdRow  ' 为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
             Dim title As RowObject =
-                RowWriter.GetRowNames.Join(RowWriter.GetMetaTitles)
+                RowWriter.GetRowNames(maps).Join(RowWriter.GetMetaTitles)
             Dim dataFrame As New File(title + LQuery)
 
             Return dataFrame
@@ -231,9 +243,12 @@ Namespace StorageProvider.Reflection
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Public Function Save(Of T)(source As IEnumerable(Of T),
                                    Optional explicit As Boolean = True,
-                                   Optional metaBlank As String = "") As DocumentStream.File
+                                   Optional metaBlank As String = "",
+                                   Optional maps As Dictionary(Of String, String) = Nothing,
+                                   Optional parallel As Boolean = True) As DocumentStream.File
             Dim Type As Type = GetType(T)
-            Dim doc As DocumentStream.File = __save(source, Type, explicit, metaBlank)
+            Dim doc As DocumentStream.File =
+                __save(source, Type, explicit, metaBlank, maps, parallel)
             Return doc
         End Function
 

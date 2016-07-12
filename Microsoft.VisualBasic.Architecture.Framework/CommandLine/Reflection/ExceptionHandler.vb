@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::14871a446cfc4cb5d99e3972c3f10034, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExceptionHandler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -34,11 +35,11 @@ Imports Microsoft.VisualBasic.Terminal
 
 Namespace CommandLine.Reflection
 
-    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
+    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public Class ExceptionHelp : Inherits Attribute
         Public Property Documentation As String
         Public Property Debugging As String
-        Public Property HelpsLink As String
+        Public Property EMailLink As String
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -123,23 +124,39 @@ Namespace CommandLine.Reflection
             Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
 
             If helps Is Nothing Then
+                helps = method.GetAttribute(Of ExceptionHelp)
+            End If
+
+            If helps Is Nothing Then
                 Call ex.PrintException
             Else
+                Call Console.WriteLine()
                 Call Console.WriteLine("Environment summary:")
-                Call Console.WriteLine("CLI:  " & App.Command)
-                Call Console.WriteLine("Program: " & App.ExecutablePath.ToFileURL)
-                Call Console.WriteLine("CWD: " & App.CurrentDirectory)
-                Call Console.WriteLine("Start From: " & App.StartupDirectory)
+                Call Console.WriteLine(ConfigEngine.Prints(App.GetAppVariables))
+                Call Console.WriteLine()
+                Call Console.WriteLine(App.CommandLine.GetJson(True))
                 Call Console.WriteLine("Exception: ")
                 Call STDIO.print(ex.Message, ConsoleColor.Red)
-                Call Console.WriteLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems")
+                Call Console.WriteLine()
+                Call Console.WriteLine()
+                Call Console.WriteLine("If you are having trouble debugging this Error, first read the best practices")
+                Call Console.WriteLine("tutorial for helpful tips that address many common problems")
                 Call STDIO.print(helps.Documentation, ConsoleColor.Blue)
-                Call Console.WriteLine("The debugging facility Is helpful To figure out what's happening under the hood")
+                Call Console.WriteLine()
+                Call Console.WriteLine()
+                Call Console.WriteLine("The debugging facility Is helpful To figure out what's happening under the")
+                Call Console.WriteLine("hood")
                 Call STDIO.print(helps.Debugging, ConsoleColor.Blue)
+                Call Console.WriteLine()
+                Call Console.WriteLine()
                 Call Console.WriteLine("If you're still stumped, you can try get help from author directly from E-mail:")
-                Call STDIO.print(helps.HelpsLink, ConsoleColor.Blue)
+                Call STDIO.print(helps.EMailLink, ConsoleColor.Blue)
+                Call Console.WriteLine()
+                Call Console.WriteLine()
                 Call Console.WriteLine("Stack trace : ")
                 Call STDIO.print(ex.ToString, ConsoleColor.Red)
+                Call Console.WriteLine()
+                Call Console.WriteLine()
             End If
         End Sub
     End Module

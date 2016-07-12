@@ -2,6 +2,8 @@
 
 ![(๑•̀ㅂ•́)و✧](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
+[![Github All Releases](https://img.shields.io/github/downloads/xieguigang/VisualBasic_AppFramework/total.svg?maxAge=2592000?style=flat-square)]()
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 
 ![Microsoft VisualBasic logo](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/logo.jpg)
 

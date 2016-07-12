@@ -38,7 +38,7 @@ Namespace ComponentModel.Settings
     Public Class SimpleConfig : Inherits Attribute
         Dim _ToLower As Boolean
 
-        Public Shared ReadOnly Property TypeInfo As System.Type = GetType(SimpleConfig)
+        Public Shared ReadOnly Property TypeInfo As Type = GetType(SimpleConfig)
         Public ReadOnly Property Name As String
 
         Sub New(Optional Name As String = "", Optional toLower As Boolean = True)
@@ -46,6 +46,10 @@ Namespace ComponentModel.Settings
             Me._ToLower = toLower
         End Sub
 
+        ''' <summary>
+        ''' Display <see cref="Name"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Name
         End Function
