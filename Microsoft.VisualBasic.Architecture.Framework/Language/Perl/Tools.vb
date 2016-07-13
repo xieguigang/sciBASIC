@@ -16,6 +16,10 @@ Namespace Language.Perl
     ''' 
     ''' **The Continue block, If any, Is Not executed**
     ''' (Perl里面的``last``关键词相当于vb里面的``Exit Do``或者``Exit For``)
+    ''' 
+    ''' 匹配：``m/&lt;regexp>/`` (还可以简写为 /&lt;regexp>/, 略去 m)
+    ''' 替换：``s/&lt;pattern>/&lt;replacement>/``
+    ''' 转化：``tr/&lt;pattern>/&lt;replacemnt>/``
     ''' </remarks>
     Public Module Functions
 

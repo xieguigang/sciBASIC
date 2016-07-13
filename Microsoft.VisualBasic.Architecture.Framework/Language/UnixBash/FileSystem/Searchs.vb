@@ -162,7 +162,7 @@ Namespace Language.UnixBash
             Dim wc As String() =
                 ls.wildcards.ToArray(Function(x) x.Replace(".", "\.").Replace("*", ".+"))
             Dim isMatch As Func(Of String, Boolean) =
-                AddressOf New wildcards With {
+                AddressOf New wildcardsCompatible With {
                     .regexp = wc
                 }.IsMatch
 
@@ -202,7 +202,7 @@ Namespace Language.UnixBash
     ''' <summary>
     ''' Using regular expression to find a match on the file name.
     ''' </summary>
-    Public Structure wildcards
+    Public Structure wildcardsCompatible
 
         Dim regexp As String()
 

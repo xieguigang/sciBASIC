@@ -302,7 +302,7 @@ Public Module Extensions
             Return array
         End If
 
-        If array.Length >= index Then
+        If array.Length - 1 >= index Then
             array(index) = value
         Else
             Dim copy As T() = New T(index) {}
