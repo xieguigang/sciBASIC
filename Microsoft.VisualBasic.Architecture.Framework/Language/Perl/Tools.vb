@@ -1,7 +1,21 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Array
 
 Namespace Language.Perl
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' ##### last
+    ''' 
+    ''' The ``last`` command Is Like the ``break`` statement In C (As used In loops); **it immediately exits the Loop In question**. 
+    ''' If the ``LABEL`` Is omitted, the command refers To the innermost enclosing Loop. The last EXPR form, available starting 
+    ''' In Perl 5.18.0, allows a label name To be computed at run time, And Is otherwise identical To last ``LABEL``. 
+    ''' 
+    ''' **The Continue block, If any, Is Not executed**
+    ''' (Perl里面的``last``关键词相当于vb里面的``Exit Do``或者``Exit For``)
+    ''' </remarks>
     Public Module Functions
 
         ''' <summary>
@@ -50,8 +64,8 @@ Namespace Language.Perl
             Dim source As T() = LIST.ToArray
             Dim tmp As T() = New T(array.Length + source.Length - 1) {}
 
-            Call System.Array.ConstrainedCopy(array, Scan0, tmp, Scan0, array.Length)
-            Call System.Array.ConstrainedCopy(source, Scan0, tmp, array.Length, source.Length)
+            Call ConstrainedCopy(array, Scan0, tmp, Scan0, array.Length)
+            Call ConstrainedCopy(source, Scan0, tmp, array.Length, source.Length)
 
             array = tmp
         End Sub
@@ -80,6 +94,10 @@ Namespace Language.Perl
 
             Dim last As T = array(array.Length - 1)
             ReDim Preserve array(array.Length - 1)
+        End Function
+
+        Public Function system(CLI As String) As Integer
+            Return Interaction.Shell(CLI, AppWinStyle.NormalFocus, True)
         End Function
     End Module
 End Namespace

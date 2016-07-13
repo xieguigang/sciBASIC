@@ -30,6 +30,14 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Module KeyValuePairExtensions
 
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Return From x As T
+               In source
+               Select x
+               Order By x Ascending
+    End Function
+
     ''' <summary>
     ''' Creates a <see cref="System.Collections.Generic.Dictionary"/>`2 from an <see cref="System.Collections.Generic.IEnumerable"/>`1
     ''' according to a specified key selector function.
