@@ -36,7 +36,8 @@ Imports Microsoft.VisualBasic.Language
 Namespace CommandLine
 
     ''' <summary>
-    ''' The class object which can interact with the target commandline program.(与目标命令行程序进行命令行交互的编程接口，本类型的对象的作用主要是生成命令行参数)
+    ''' The class object which can interact with the target commandline program.
+    ''' (与目标命令行程序进行命令行交互的编程接口，本类型的对象的作用主要是生成命令行参数)
     ''' </summary>
     ''' <remarks></remarks>
     Public MustInherit Class InteropService : Inherits CLIBuilder
@@ -56,6 +57,9 @@ Namespace CommandLine
         End Function
     End Class
 
+    ''' <summary>
+    ''' Default value
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Field, AllowMultiple:=False, Inherited:=True)>
     Public Class NullOrDefault : Inherits Attribute
 
@@ -122,8 +126,14 @@ Namespace CommandLine
             Return sBuilder.ToString.TrimEnd
         End Function
 
+        ''' <summary>
+        ''' Creates a command line string by using simply fills the name and parameter values
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
         Public Function SimpleBuilder(name As String, args As IEnumerable(Of KeyValuePair(Of String, String))) As String
-            Dim sbr As StringBuilder = New StringBuilder(name)
+            Dim sbr As New StringBuilder(name)
 
             For Each x In args
                 If String.IsNullOrEmpty(x.Value) Then
@@ -140,6 +150,9 @@ Namespace CommandLine
 
 #Region ""
 
+        ''' <summary>
+        ''' Converts the property value to a CLI token
+        ''' </summary>
         Private ReadOnly __getMethods As IReadOnlyDictionary(Of CLITypes, __getCLIToken) =
             New Dictionary(Of CLITypes, __getCLIToken) From {
  _
@@ -153,7 +166,7 @@ Namespace CommandLine
         Private Delegate Function __getCLIToken(value As Object, attr As [Optional], prop As PropertyInfo) As String
 
         ''' <summary>
-        ''' 
+        ''' The different between the String and Path is that applying <see cref="CliToken"/> or <see cref="CliPath"/>.
         ''' </summary>
         ''' <param name="value">只能是<see cref="System.String"/>类型的</param>
         ''' <param name="attr"></param>
@@ -215,6 +228,13 @@ rtvl:           Dim strValue As String = enumValue.Description
             End If
         End Function
 
+        ''' <summary>
+        ''' Property value to boolean flag in the CLI
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="attr"></param>
+        ''' <param name="prop"></param>
+        ''' <returns></returns>
         Private Function __booleanRule(value As Object, attr As [Optional], prop As PropertyInfo) As String
             Dim name As String = attr.Name
             Dim b As Boolean
@@ -235,7 +255,7 @@ rtvl:           Dim strValue As String = enumValue.Description
 #End Region
 
         ''' <summary>
-        ''' 
+        ''' Reset the CLI parameters property in the target class object.
         ''' </summary>
         ''' <typeparam name="TInteropService"></typeparam>
         ''' <param name="inst"></param>
