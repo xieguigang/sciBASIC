@@ -267,5 +267,34 @@ Namespace Terminal
             End If
             Return Asc(input.First) = Asc(compare)
         End Function
+
+        Public Delegate Function TryParseDelegate(Of T)(str As String, ByRef val As T) As Boolean
+
+        ''' <summary>
+        ''' Read Method with Generics &amp; Delegate
+        ''' 
+        ''' In a console application there is often the need to ask (and validate) some data from users. 
+        ''' For this reason I have created a function that make use of generics and delegates to 
+        ''' speed up programming.
+        ''' 
+        ''' > http://www.codeproject.com/Tips/1108772/Read-Method-with-Generics-Delegate
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="msg"></param>
+        ''' <param name="parser"></param>
+        ''' <param name="_default"></param>
+        ''' <returns></returns>
+        Public Function Read(Of T)(msg As String, parser As TryParseDelegate(Of T), Optional _default As T = Nothing) As T
+            Dim line As String
+            Dim value As T
+            Do
+                Console.Write(msg & ": ")
+                line = Console.ReadLine()
+                If String.IsNullOrWhiteSpace(line) Then
+                    line = _default?.ToString()
+                End If
+            Loop While Not parser(line, value)
+            Return value
+        End Function
     End Module
 End Namespace

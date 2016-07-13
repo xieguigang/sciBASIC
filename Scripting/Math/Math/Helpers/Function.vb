@@ -118,6 +118,15 @@ Namespace Helpers
         End Sub
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">函数名</param>
+        ''' <param name="expr">函数申明</param>
+        Public Overloads Sub Add(name As String, expr As String)
+
+        End Sub
+
+        ''' <summary>
         ''' This function return a random number, you can specific the boundary of the random number in the parameters. 
         ''' </summary>
         ''' <param name="UpBound">

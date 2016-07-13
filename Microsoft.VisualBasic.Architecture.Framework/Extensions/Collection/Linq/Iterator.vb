@@ -64,6 +64,15 @@ Namespace Linq
                 Yield New SeqValue(Of T1, T2)(i + offset, x(i), y.Get(i))
             Next
         End Function
+
+        <Extension>
+        Public Function [Next](Of T)(source As IEnumerator(Of T)) As T
+            If source.MoveNext() Then
+                Return source.Current
+            Else
+                Return Nothing
+            End If
+        End Function
     End Module
 
     Public Structure SeqValue(Of T1, T2) : Implements IAddressHandle

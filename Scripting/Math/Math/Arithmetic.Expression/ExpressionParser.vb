@@ -135,9 +135,20 @@ Public Module ExpressionParser
                 Case Mathematical.Tokens.Number
                     meta = New Types.MetaExpression(Val(e.Text))
                 Case Mathematical.Tokens.UNDEFINE
+
                     Dim x As String = e.Text
                     meta = New Types.MetaExpression(Function() getValue(x))
-                    pre = e ' probably is a function name
+
+                    If tokens.EndRead Then
+                        pre = Nothing
+                    Else
+                        If tokens.Current.TokenName = Mathematical.Tokens.Operator Then
+                            pre = Nothing
+                        Else
+                            pre = e ' probably is a function name
+                        End If
+                    End If
+
                 Case Mathematical.Tokens.Operator
                     If String.Equals(e.Text, "-") Then
 

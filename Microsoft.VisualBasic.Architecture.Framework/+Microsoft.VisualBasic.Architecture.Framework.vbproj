@@ -338,6 +338,7 @@
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\Shell.vb" />
     <Compile Include="ConsoleDevices\PipelineCLI.vb" />
     <Compile Include="ConsoleDevices\InnerQueue.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
@@ -357,6 +358,8 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Language\Perl\Tools.vb" />
+    <Compile Include="Language\Pointer.vb" />
     <Compile Include="Language\Java\JavaMath.vb" />
     <Compile Include="Language\Java\LogTricks.vb" />
     <Compile Include="Language\Java\MathUtils.vb" />
@@ -366,9 +369,11 @@
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
     <None Include="Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
+    <Compile Include="Language\UnixBash\PS1.vb" />
     <Compile Include="Parallel\Tasks\IParallelTask.vb" />
     <Compile Include="Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="Parallel\Threads\BatchTasks.vb" />
+    <Compile Include="Parallel\Threads\CodeThread.vb" />
     <Compile Include="Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
