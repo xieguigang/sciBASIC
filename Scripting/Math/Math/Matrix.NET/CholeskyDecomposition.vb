@@ -1,4 +1,4 @@
-﻿#Region "996eb243cbaf821d9677d9404d5f019f, ..\Math\Matrix.NET\CholeskyDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::996eb243cbaf821d9677d9404d5f019f, ..\VisualBasic_AppFramework\Scripting\Math\Math\Matrix.NET\CholeskyDecomposition.vb"
 
     ' Author:
     ' 

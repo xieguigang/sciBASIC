@@ -1,4 +1,4 @@
-﻿#Region "8cb246e90e164a052216fd40b107d4a1, ..\Math\Logical\FuzzyLogic\Models\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::8cb246e90e164a052216fd40b107d4a1, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\FuzzyLogic\Models\ModelAPI.vb"
 
     ' Author:
     ' 

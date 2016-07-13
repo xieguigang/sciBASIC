@@ -1,4 +1,4 @@
-﻿#Region "fc6e4d8f1d8621564400785eac726fd6, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\EventLog.vb"
+﻿#Region "Microsoft.VisualBasic::fc6e4d8f1d8621564400785eac726fd6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\EventLog.vb"
 
     ' Author:
     ' 

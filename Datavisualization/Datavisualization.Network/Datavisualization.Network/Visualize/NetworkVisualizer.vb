@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa995db37fbcf8615914e0bef32934a5, ..\Datavisualization.Network\Datavisualization.Network\Visualize\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::aa995db37fbcf8615914e0bef32934a5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\NetworkVisualizer.vb"
 
     ' Author:
     ' 

@@ -1,3 +1,30 @@
+ï»¿#Region "Microsoft.VisualBasic::b93e031c01f14588489261c98ba2b486, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\BezierCurve.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
@@ -110,10 +137,10 @@ Public Class BezierCurve
     ''' 
     ''' </summary>
     ''' <param name="data"></param>
-    ''' <param name="Parallel">²¢ÐÐ°æ±¾µÄ</param>
-    ''' <param name="WindowSize">Êý¾Ý²ÉÑùµÄ´°¿Ú´óÐ¡£¬Ä¬ÈÏ´óÐ¡ÊÇ<paramref name="data"></paramref>µÄ°Ù·ÖÖ®1</param>
+    ''' <param name="Parallel">ï¿½ï¿½ï¿½Ð°æ±¾ï¿½ï¿½</param>
+    ''' <param name="WindowSize">ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½Ú´ï¿½Ð¡ï¿½ï¿½Ä¬ï¿½Ï´ï¿½Ð¡ï¿½ï¿½<paramref name="data"></paramref>ï¿½Ä°Ù·ï¿½Ö®1</param>
     ''' <returns></returns>
-    ''' <remarks>ÏÈ¶ÔÊý¾Ý½øÐÐ²ÉÑù£¬È»ºó²åÖµ£¬×îºó·µ»Ø²åÖµºóµÄÆ½»¬ÇúÏßÊý¾ÝÒÔÓÃÓÚÏÂÒ»²½·ÖÎö</remarks>
+    ''' <remarks>ï¿½È¶ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ó·µ»Ø²ï¿½Öµï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</remarks>
     Public Shared Function BezierSmoothInterpolation(data As Double(),
                                                      Optional WindowSize As Integer = -1,
                                                      Optional iteration As Integer = 3,
@@ -123,7 +150,7 @@ Public Class BezierCurve
         End If
 
         If WindowSize < 3 Then
-            WindowSize = 3 '×îÉÙÐèÒª3¸öµã½øÐÐ²åÖµ
+            WindowSize = 3 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òª3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½Öµ
         End If
 
         Dim SlideWindows = data.CreateSlideWindows(WindowSize, offset:=WindowSize - 1)
@@ -167,3 +194,4 @@ Public Class BezierCurve
         Return Elements
     End Function
 End Class
+

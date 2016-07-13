@@ -1,4 +1,4 @@
-﻿#Region "421ae5f858e5cbca8a6c8e75646f1552, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevLDM.vb"
+﻿#Region "Microsoft.VisualBasic::421ae5f858e5cbca8a6c8e75646f1552, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevLDM.vb"
 
     ' Author:
     ' 

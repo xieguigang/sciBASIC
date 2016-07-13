@@ -1,4 +1,4 @@
-﻿#Region "ed0e6b14980b7c2c3a498fd259f2370e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5HashProvider.vb"
+﻿#Region "Microsoft.VisualBasic::ed0e6b14980b7c2c3a498fd259f2370e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5HashProvider.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::870edc404655390cbfa93e15d8124ded, ..\VB_HTML\VB_HTML\YAML\Syntax\NodeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c7eb2890e31060384cd1b95febbc54fc, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\NodeProperty.vb"
 
     ' Author:
     ' 
@@ -38,4 +38,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

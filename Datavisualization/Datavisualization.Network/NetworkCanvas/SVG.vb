@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f91116fddd59255b38e1be4490364bb, ..\Datavisualization.Network\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::9f91116fddd59255b38e1be4490364bb, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 

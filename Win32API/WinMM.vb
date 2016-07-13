@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50fb2343061444b861c98633ee1cd7a9, ..\Win32API\WinMM.vb"
+﻿#Region "Microsoft.VisualBasic::42a1601e13ce13437e93d4ffa4957a57, ..\VisualBasic_AppFramework\Win32API\WinMM.vb"
 
     ' Author:
     ' 
@@ -238,4 +238,3 @@ Public Module WinMM
     Public Declare Function mciExecute Lib "winmm.dll" (lpstrCommand As String) As Integer
 
 End Module
-

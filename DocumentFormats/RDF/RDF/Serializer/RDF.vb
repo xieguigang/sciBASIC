@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a99c07429a8a1556047ad0ce4fd7b670, ..\RDF\RDF\Serializer\RDF.vb"
+﻿#Region "Microsoft.VisualBasic::c6d63ad7b6086afec147be86aaf013a5, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\Serializer\RDF.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Serialization
 

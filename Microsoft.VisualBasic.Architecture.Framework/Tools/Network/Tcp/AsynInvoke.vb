@@ -1,4 +1,4 @@
-﻿#Region "afd2a61b13e2b4ac48853a3e98549543, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\AsynInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::afd2a61b13e2b4ac48853a3e98549543, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\AsynInvoke.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6954a42314c3147cc56cf03beb920f4d, ..\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\PQDijkstraProvider.vb"
+﻿#Region "Microsoft.VisualBasic::6954a42314c3147cc56cf03beb920f4d, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\PQDijkstraProvider.vb"
 
     ' Author:
     ' 

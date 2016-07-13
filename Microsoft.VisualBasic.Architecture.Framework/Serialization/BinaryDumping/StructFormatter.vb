@@ -1,4 +1,4 @@
-﻿#Region "bebb80e2ece0208f157f4ef527645194, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\StructFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::bebb80e2ece0208f157f4ef527645194, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\StructFormatter.vb"
 
     ' Author:
     ' 

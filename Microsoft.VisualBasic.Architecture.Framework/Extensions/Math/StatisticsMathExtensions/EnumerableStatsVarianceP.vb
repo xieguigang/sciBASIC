@@ -1,4 +1,4 @@
-﻿#Region "0b7354dc1ac20bb4dad08c90e91f6979, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsVarianceP.vb"
+﻿#Region "Microsoft.VisualBasic::0b7354dc1ac20bb4dad08c90e91f6979, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsVarianceP.vb"
 
     ' Author:
     ' 

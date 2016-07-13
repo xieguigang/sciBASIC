@@ -1,4 +1,4 @@
-﻿#Region "58b395dd0ceff15c943025904f237909, ..\Math\Arithmetic.Expression\FuncParser.vb"
+﻿#Region "Microsoft.VisualBasic::c7d903003001d929f64828e1cc78ff41, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\FuncParser.vb"
 
     ' Author:
     ' 
@@ -54,4 +54,3 @@ Public Module FuncParser
         }
     End Function
 End Module
-

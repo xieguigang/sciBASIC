@@ -1,4 +1,4 @@
-﻿#Region "5e7040c0a68cd4d8b97a6993e52ee912, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\RelayCommand.vb"
+﻿#Region "Microsoft.VisualBasic::5e7040c0a68cd4d8b97a6993e52ee912, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\RelayCommand.vb"
 
     ' Author:
     ' 

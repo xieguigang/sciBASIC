@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16e8083a55291c85cab3ae870a371122, ..\Win32API\Gdi32.vb"
+﻿#Region "Microsoft.VisualBasic::70d92d0c722a55868bc5e0d895a82986, ..\VisualBasic_AppFramework\Win32API\Gdi32.vb"
 
     ' Author:
     ' 
@@ -438,4 +438,3 @@ Public Module Gdi32
     Public Declare Function GdiGetBatchLimit Lib "gdi32" () As Integer
 
 End Module
-

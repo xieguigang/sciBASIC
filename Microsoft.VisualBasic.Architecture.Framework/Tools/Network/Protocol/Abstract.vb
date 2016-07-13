@@ -1,4 +1,4 @@
-﻿#Region "6925a27aafe797b55648f1419558a5a3, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::6925a27aafe797b55648f1419558a5a3, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Abstract.vb"
 
     ' Author:
     ' 

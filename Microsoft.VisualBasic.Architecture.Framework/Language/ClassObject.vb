@@ -1,4 +1,4 @@
-﻿#Region "b6af3b818b592abbf924534bc2be6b30, ..\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
+﻿#Region "Microsoft.VisualBasic::19dc295503d3ab66dc65fdc1285b4771, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
 
     ' Author:
     ' 
@@ -91,7 +91,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return JsonContract.GetJson(Me, [GetType])
+            Return JsonContract.GetJson(Me, [GetType], False)
         End Function
 
         ''' <summary>

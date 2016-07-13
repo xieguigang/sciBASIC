@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16f2cb9e54231f70f75c1f3717c70c0b, ..\Win32API\TypeDef.vb"
+﻿#Region "Microsoft.VisualBasic::fa48422cfb43378748697ff734736801, ..\VisualBasic_AppFramework\Win32API\TypeDef.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Win32 API type definitions

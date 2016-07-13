@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39b294c510d2eed039bbfb99a029ecc1, ..\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network.vb"
+﻿#Region "Microsoft.VisualBasic::39b294c510d2eed039bbfb99a029ecc1, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network.vb"
 
     ' Author:
     ' 

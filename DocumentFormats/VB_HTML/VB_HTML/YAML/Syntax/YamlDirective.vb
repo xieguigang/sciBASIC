@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6288f7505a41b86ba1f1bb275cceb3f, ..\VB_HTML\VB_HTML\YAML\Syntax\YamlDirective.vb"
+﻿#Region "Microsoft.VisualBasic::e84da21a637793fd85ff25fc85c42ced, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlDirective.vb"
 
     ' Author:
     ' 
@@ -35,4 +35,3 @@ Namespace YAML.Syntax
 
     End Class
 End Namespace
-

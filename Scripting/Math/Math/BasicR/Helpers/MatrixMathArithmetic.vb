@@ -1,4 +1,4 @@
-﻿#Region "3476ffee63b8a39279768c994bb9cc07, ..\Math\BasicR\Helpers\MatrixMathArithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::5c294a5146fff44ced18d6a422c8248c, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Helpers\MatrixMathArithmetic.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace BasicR.Helpers
 

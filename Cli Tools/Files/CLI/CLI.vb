@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07165a956ee0cf6d8aa87b01433a4f34, ..\Cli Tools\Files\CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::2b3548c0168a83e3547fc805ae4c7169, ..\VisualBasic_AppFramework\Cli Tools\Files\CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Module CLI
         Return copyToDIR & "/" & name
     End Function
 End Module
-

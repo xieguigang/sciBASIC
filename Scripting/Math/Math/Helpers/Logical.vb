@@ -1,4 +1,4 @@
-﻿#Region "876c19ee5d4b564877a3e40bf29c18de, ..\Math\Helpers\Logical.vb"
+﻿#Region "Microsoft.VisualBasic::42628b57a25c682c78f1376fb60343e1, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Logical.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Namespace Helpers
         End Function
     End Class
 End Namespace
-

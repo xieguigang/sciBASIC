@@ -1,4 +1,4 @@
-﻿#Region "505abb825744496f1a191fc7a76cba98, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::505abb825744496f1a191fc7a76cba98, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Wmf.vb"
 
     ' Author:
     ' 

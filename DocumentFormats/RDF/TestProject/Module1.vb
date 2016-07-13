@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4deb3d573ebf4cd19ed6ad12a38e2afc, ..\RDF\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b2d749f01506c88d078a05e62622c4d4, ..\VisualBasic_AppFramework\DocumentFormats\RDF\TestProject\Module1.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Class ee : Inherits RDFEntity
     Public Property author As String
     Public Property homepage As String
 End Class
-

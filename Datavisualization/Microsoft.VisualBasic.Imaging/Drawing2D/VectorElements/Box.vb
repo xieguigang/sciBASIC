@@ -1,4 +1,4 @@
-﻿#Region "acce0c56d8ecb55403c7754f39903a79, ..\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\Box.vb"
+﻿#Region "Microsoft.VisualBasic::acce0c56d8ecb55403c7754f39903a79, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\Box.vb"
 
     ' Author:
     ' 

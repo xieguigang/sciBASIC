@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9888404ff333996d8d197f52c6c41727, ..\Win32API\Kernel32.vb"
+﻿#Region "Microsoft.VisualBasic::de4682aabcc785a9e9f19f3ad2b06769, ..\VisualBasic_AppFramework\Win32API\Kernel32.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -237,4 +236,3 @@ Public Module Kernel32
     Public Declare Function GetProcAddress Lib "kernel32" (hModule As Integer, lpProcName As String) As Integer
 
 End Module
-

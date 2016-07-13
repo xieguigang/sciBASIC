@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75bfde9396ebfd4f906355977b8c30f3, ..\Win32API\ComDlg32.vb"
+﻿#Region "Microsoft.VisualBasic::26c0dbbe8cf5102b9b9ff3043a3d7bb5, ..\VisualBasic_AppFramework\Win32API\ComDlg32.vb"
 
     ' Author:
     ' 
@@ -249,4 +249,3 @@ Public Module ComDlg32
     <ImportsConstant> Public Const PDERR_SETUPFAILURE = &H1001
 
 End Module
-

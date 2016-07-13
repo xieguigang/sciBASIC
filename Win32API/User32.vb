@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54fc33830569f070cf41496d13bf1cb2, ..\Win32API\User32.vb"
+﻿#Region "Microsoft.VisualBasic::f70e4043ecf3fddcadc51d02809860c6, ..\VisualBasic_AppFramework\Win32API\User32.vb"
 
     ' Author:
     ' 
@@ -24,7 +24,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -344,4 +343,3 @@ Public Module User32
     Public Declare Function TrackPopupMenu Lib "user32" (hMenu As Integer, wFlags As Integer, X As Integer, Y As Integer, nReserved As Integer, hWnd As Integer, ByRef lprc As RECT) As Integer
 
 End Module
-

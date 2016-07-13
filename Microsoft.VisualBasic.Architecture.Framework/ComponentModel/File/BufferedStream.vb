@@ -1,4 +1,4 @@
-﻿#Region "039117425be4e527e927f32e66b1cf63, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
+﻿#Region "Microsoft.VisualBasic::72c7b43266c229b3fe40c8fc957437af, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
 
     ' Author:
     ' 
@@ -165,6 +165,16 @@ Namespace ComponentModel
                     Return DirectCast(__innerBuffer.Clone, String())
                 End If
             End If
+        End Function
+
+        Public Iterator Function ReadAllLines() As IEnumerable(Of String)
+            Call Reset()
+
+            Do While Not EndRead
+                For Each line As String In BufferProvider()
+                    Yield line
+                Next
+            Loop
         End Function
 
         Public Shared Iterator Function LinesIterator(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)

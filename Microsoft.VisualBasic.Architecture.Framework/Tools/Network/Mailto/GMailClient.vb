@@ -1,4 +1,4 @@
-﻿#Region "4ba0f75dfa7478eeff942c0250057611, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\GMailClient.vb"
+﻿#Region "Microsoft.VisualBasic::4ba0f75dfa7478eeff942c0250057611, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\GMailClient.vb"
 
     ' Author:
     ' 

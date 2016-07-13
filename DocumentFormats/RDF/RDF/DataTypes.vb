@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4dfa1a2328a5979feed5aaf136011c6, ..\RDF\RDF\DataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::326678b7d1ff4ca83b5f33d11c643d42, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\DataTypes.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Public Module DataTypes
             {GetType(Double), dtDouble}
     }
 End Module
-

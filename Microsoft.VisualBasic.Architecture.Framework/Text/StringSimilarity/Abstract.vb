@@ -1,4 +1,4 @@
-﻿#Region "23d1bdb2dbdeb520c5df853d573c2b72, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::23d1bdb2dbdeb520c5df853d573c2b72, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Abstract.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "8c414a5089a8f58612ff485c35371f78, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\StackTokens(Of Tokens).vb"
+﻿#Region "Microsoft.VisualBasic::8c414a5089a8f58612ff485c35371f78, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\StackTokens(Of Tokens).vb"
 
     ' Author:
     ' 

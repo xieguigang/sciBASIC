@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da3992c1d8a25459307a34ed388b3f7b, ..\RDF\RDF\DCMI.vb"
+﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\DCMI.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Class DCMI : Inherits RDFEntity
     ''' <returns></returns>
     Public Property Type As String
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "72343f554ecb817bdd5e7b9b49445317, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
+﻿#Region "Microsoft.VisualBasic::72343f554ecb817bdd5e7b9b49445317, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
 
     ' Author:
     ' 

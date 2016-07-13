@@ -1,4 +1,4 @@
-﻿#Region "b3748c98dd9650c894ad68ad71e926a0, ..\Math\BasicR\Solvers\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::cb1b058d6b99e1c37ba3567ae2008871, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Solvers\Module1.vb"
 
     ' Author:
     ' 
@@ -3516,4 +3516,3 @@ Loopexit:
         End While
     End Sub
 End Module
-

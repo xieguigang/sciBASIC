@@ -1,4 +1,4 @@
-﻿#Region "f6168e2defa856101e4c2e8546cc4199, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::04d3824f3f34d967465d44ca2aacfac2, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\ContentType.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,29 @@ Namespace Net.Protocols.ContentTypes
     ''' MIME types / Internet Media Types
     ''' </summary>
     Public Class ContentType
+
+        ''' <summary>
+        ''' Type name or brief info
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
+        ''' <summary>
+        ''' MIME Type / Internet Media Type
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="MIME Type / Internet Media Type")> Public Property MIMEType As String
+
+        ''' <summary>
+        ''' File Extension
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="File Extension")>
         Public Property FileExt As String
+
+        ''' <summary>
+        ''' More Details
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="More Details")> Public Property Details As String
 
         Public Overrides Function ToString() As String

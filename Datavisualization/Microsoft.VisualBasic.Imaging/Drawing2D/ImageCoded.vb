@@ -1,4 +1,4 @@
-﻿#Region "e22e47fc762e3559fd7e45f147d1b61c, ..\Microsoft.VisualBasic.Imaging\Drawing2D\ImageCoded.vb"
+﻿#Region "Microsoft.VisualBasic::721c45823a779b50ceba8f0f636f7060, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\ImageCoded.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Public Module ImageCoded
         Throw New NotImplementedException
     End Function
 End Module
-

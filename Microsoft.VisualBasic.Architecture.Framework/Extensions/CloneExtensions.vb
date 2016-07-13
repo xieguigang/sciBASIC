@@ -1,4 +1,4 @@
-﻿#Region "4841c5ad3800844326bc5f2fa2471ffd, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5d6b72ff584335c64ebc472915b4838c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
 
     ' Author:
     ' 
@@ -27,8 +27,18 @@
 
 Imports System.Runtime.CompilerServices
 
+''' <summary>
+''' Some extension for copy a collection object.
+''' </summary>
 Public Module CloneExtensions
 
+    ''' <summary>
+    ''' Creates a new dictionary
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="hash"></param>
+    ''' <returns></returns>
     <Extension> Public Function Clone(Of T, V)(hash As IDictionary(Of T, V)) As Dictionary(Of T, V)
         Return New Dictionary(Of T, V)(hash)
     End Function

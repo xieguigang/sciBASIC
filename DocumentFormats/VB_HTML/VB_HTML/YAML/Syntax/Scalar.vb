@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0084ccc9cd030be3044e46d54bd70595, ..\VB_HTML\VB_HTML\YAML\Syntax\Scalar.vb"
+﻿#Region "Microsoft.VisualBasic::37410089dca5d2be542a45e76110f179, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Scalar.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Namespace YAML.Syntax
         End Function
     End Class
 End Namespace
-

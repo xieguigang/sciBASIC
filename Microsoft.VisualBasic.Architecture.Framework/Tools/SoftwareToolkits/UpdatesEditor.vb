@@ -1,4 +1,4 @@
-﻿#Region "fdc7c70d99080de75c6807d8aeb3b5db, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\UpdatesEditor.vb"
+﻿#Region "Microsoft.VisualBasic::fdc7c70d99080de75c6807d8aeb3b5db, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\UpdatesEditor.vb"
 
     ' Author:
     ' 

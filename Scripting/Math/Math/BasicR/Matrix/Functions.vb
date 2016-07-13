@@ -1,4 +1,4 @@
-﻿#Region "2cde4ff5640490fab9c3e82bd3970101, ..\Math\BasicR\Matrix\Functions.vb"
+﻿#Region "Microsoft.VisualBasic::2cde4ff5640490fab9c3e82bd3970101, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Matrix\Functions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4acf635edd34298c1bece8c9b359cc3, ..\VB_DataFrame\TestProject\SchemaParsingTest.vb"
+﻿#Region "Microsoft.VisualBasic::9746862e0a7229fc658cc952d58ab615, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\TestProject\SchemaParsingTest.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,9 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports TestProject.RTools
 
 Public Class SchemaParsingTest
 
@@ -42,5 +44,6 @@ Public Class SchemaParsingTest
 
     <Linq.Mapping.Column(Name:="alias.linq")> Public ReadOnly Property LINQAlias As Date = Now
 
-End Class
+    Public Property ffssdfsd As NamedValue(Of DESeq)
 
+End Class
