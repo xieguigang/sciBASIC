@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::eb34f3aefa946446cf6d2876b64869fb, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\LogFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports System.IO
 
 Namespace Logging
 
@@ -43,7 +44,7 @@ Namespace Logging
         Implements IDisposable
         Implements I_ConsoleDeviceHandle
 
-        Dim _LogsEntry As New List(Of Logging.LogEntry)
+        Dim _LogsEntry As New List(Of LogEntry)
         Dim _RecordCounts As Long
 
         ''' <summary>
@@ -123,7 +124,7 @@ Namespace Logging
             Dim LogEntry As New LogEntry With {.Msg = Msg, .Object = [Object], .Time = Now, .Type = Type}
 
             If Me._autoFlush Then  '实时写入文件的，则不在内存之中记录数据了
-                Call __autoFlushQueue.Enqueue(LogEntry)
+                Call __pending(LogEntry)
             Else
                 Call Me._LogsEntry.Add(LogEntry)
             End If
@@ -131,24 +132,10 @@ Namespace Logging
             _RecordCounts += 1
         End Sub
 
-        Dim __autoFlushQueue As New Queue(Of LogEntry)
+        Dim __autoFlushQueue As New ThreadQueue
 
-        Private Sub __flushThread()
-            Do While Not Me.disposedValue
-
-                If Not __autoFlushQueue.IsNullOrEmpty Then
-                    Dim LogEntry = __autoFlushQueue.Peek
-                    Try
-RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntry.ToString, append:=True)
-                    Catch ex As Exception
-                        Call Threading.Thread.Sleep(10)
-                        GoTo RETRY
-                    End Try
-                    Call __autoFlushQueue.Dequeue()
-                End If
-
-                Call Threading.Thread.Sleep(10)
-            Loop
+        Private Sub __pending(x As LogEntry)
+            Call __autoFlushQueue.AddToQueue(Sub() Call _file.WriteLine(x.ToString))
         End Sub
 
         Private Sub __printLogs(Message As String, Type As MSG_TYPES)
@@ -183,6 +170,7 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Mute As Boolean
+
         Public Sub AutoFlush(state As Boolean)
             _autoFlush = state
 
@@ -192,6 +180,7 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
         End Sub
 
         Dim _autoFlush As Boolean
+        Dim _file As StreamWriter
 
         ''' <summary>
         ''' 
@@ -203,50 +192,26 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
             Me.FilePath = FileIO.FileSystem.GetFileInfo(Path).FullName
             Me._autoFlush = AutoFlush
 
-            Try
-                Dim Dir As String = FileIO.FileSystem.GetParentPath(FilePath)
-                Call FileIO.FileSystem.CreateDirectory(Dir)
-                Call FileIO.FileSystem.WriteAllText(FilePath,
-                                                    $"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" &
-                                                    vbCrLf & vbCrLf,
-                                                    append:=True)
-            Catch ex As Exception
+            If Not Path.FileExists Then
+                Call "".SaveTo(Path)
+            End If
 
-            End Try
+            Dim file As New FileStream(Path, FileMode.Append)
 
-            Call RunTask(AddressOf __flushThread)
+            _file = New StreamWriter(file)
+            _file.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
         End Sub
 
         ''' <summary>
-        ''' 在进行保存的时候会清空内存之中的现有日志数据
+        ''' 会自动拓展已经存在的日志数据
         ''' </summary>
-        ''' <param name="appendToLogFile">Append this log data into the target log file if the file is exists on the filesystem, default option is override the exists file.</param>
         ''' <remarks></remarks>
-        Public Function SaveLog(Optional appendToLogFile As Boolean = True) As Boolean
-            Dim Dir As String = FileIO.FileSystem.GetParentPath(FilePath)
-            Dim strBuffer As StringBuilder = New StringBuilder(GenerateDocument)
+        Public Function SaveLog() As Boolean
+            Dim bufs As New StringBuilder(GenerateDocument)
 
-            If appendToLogFile Then
-                Call strBuffer.AppendLine(vbCrLf & $"//{vbTab}{New String("=", 25)}  END OF LOG FILE  {New String("=", 25)}")
-                Call strBuffer.AppendLine(vbCrLf)
-            End If
-
-            Call FileIO.FileSystem.CreateDirectory(Dir)
-
-            Dim logData As String = strBuffer.ToString
-
-            Try
-                Call FileIO.FileSystem.WriteAllText(FilePath, logData, appendToLogFile)
-            Catch ex As Exception
-                Call Console.WriteLine("Exception occur while trying save the logfile into location: {0}", FilePath.ToFileURL)
-                Call Console.WriteLine("   ---------------->")
-                Call Console.WriteLine(ex.ToString)
-                Try
-                    Call FileIO.FileSystem.WriteAllText($"{Dir}/{IO.Path.GetFileNameWithoutExtension(FilePath)}_altRedirect.log", logData, appendToLogFile)
-                Catch exc As Exception
-
-                End Try
-            End Try
+            Call bufs.AppendLine(vbCrLf & $"//{vbTab}{New String("=", 25)}  END OF LOG FILE  {New String("=", 25)}")
+            Call bufs.AppendLine(vbCrLf)
+            Call __autoFlushQueue.AddToQueue(Sub() _file.WriteLine(bufs.ToString))
 
             Return True
         End Function
@@ -298,7 +263,7 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
         ''' <remarks></remarks>
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
             FilePath = getPath(FilePath)
-            Return SaveLog(appendToLogFile:=True)
+            Return SaveLog()
         End Function
 
         ''' <summary>
@@ -326,5 +291,12 @@ RETRY:                  Call FileIO.FileSystem.WriteAllText(Me.FilePath, LogEntr
         Protected Overrides Function __getDefaultPath() As String
             Return FilePath
         End Function
+
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            Call __autoFlushQueue.WaitQueue()
+            Call _file.Dispose()
+
+            MyBase.Dispose(disposing)
+        End Sub
     End Class
 End Namespace

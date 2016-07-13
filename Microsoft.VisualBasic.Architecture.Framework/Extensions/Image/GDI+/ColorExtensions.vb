@@ -65,7 +65,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property AllDotNetPrefixColors As Color()
             Get
-                Return __allDotNETPrefixColors.Values.Randomize
+                Return __allDotNETPrefixColors.Values.Shuffles
             End Get
         End Property
 #End If

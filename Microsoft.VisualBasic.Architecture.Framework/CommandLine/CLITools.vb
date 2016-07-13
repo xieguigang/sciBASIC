@@ -255,6 +255,10 @@ Namespace CommandLine
             If IsNumeric(obj) Then
                 Return False
             End If
+            If obj.Count("/"c) > 1 Then
+                Return False ' Linux上面全路径总是从/，即根目录开始的
+            End If
+
             Return obj.StartsWith("-") OrElse
                 obj.StartsWith("/") OrElse
                 obj.StartsWith("\")

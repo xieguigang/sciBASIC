@@ -132,15 +132,21 @@ Namespace ComponentModel
         ''' Creates the completely combination of the elements in the target input collection source.
         ''' (创建完完全全的两两配对)
         ''' </summary>
-        ''' <param name="Collection"></param>
+        ''' <param name="source"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function CreateCompleteObjectPairs(Collection As Generic.IEnumerable(Of T)) As KeyValuePair(Of T, T)()()
-            Dim LQuery = (From i As Integer In Collection.Sequence
-                          Select (From j As Integer
-                                  In Collection.Sequence
-                                  Select New KeyValuePair(Of T, T)(Collection(i), Collection(j))).ToArray).ToArray
-            Return LQuery
+        Public Shared Iterator Function CreateCompleteObjectPairs(source As IEnumerable(Of T)) As IEnumerable(Of KeyValuePair(Of T, T)())
+            Dim array As T() = source.ToArray
+
+            For Each i As T In array
+                Dim tmp As New List(Of KeyValuePair(Of T, T))
+
+                For Each j As T In array
+                    tmp += New KeyValuePair(Of T, T)(i, j)
+                Next
+
+                Yield tmp.ToArray
+            Next
         End Function
     End Class
 
@@ -150,22 +156,21 @@ Namespace ComponentModel
     ''' <remarks></remarks>
     Public Module Comb
 
-        Public Function CreateCombos(Of TA, TB)(sourceA As Generic.IEnumerable(Of TA), sourceB As Generic.IEnumerable(Of TB)) As KeyValuePair(Of TA, TB)()
-            Dim List As New List(Of KeyValuePair(Of TA, TB))
+        <Extension>
+        Public Iterator Function CreateCombos(Of TA, TB)(sourceA As IEnumerable(Of TA), sourceB As IEnumerable(Of TB)) As IEnumerable(Of KeyValuePair(Of TA, TB))
+            Dim b As TB() = sourceB.ToArray
 
-            For Each ItemA In sourceA
-                For Each itemB In sourceB
-                    Call List.Add(New KeyValuePair(Of TA, TB)(ItemA, itemB))
+            For Each i As TA In sourceA
+                For Each j As TB In b
+                    Yield New KeyValuePair(Of TA, TB)(i, j)
                 Next
             Next
-
-            Return List.ToArray
         End Function
 
         <Extension> Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
             Dim first As T() = source.First
 
-            If source.Length = 2 Then '只剩下两个的时候，会退出递归操作
+            If source.Length = 2 Then ' 只剩下两个的时候，会退出递归操作
                 Dim last As T() = source.Last
 
                 For Each x As T In first

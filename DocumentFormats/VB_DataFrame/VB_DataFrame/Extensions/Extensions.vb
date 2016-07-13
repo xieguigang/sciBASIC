@@ -252,21 +252,33 @@ Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ..............
     ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ColumnAttribute"></see>
     ''' </param>
     ''' <param name="encoding"></param>
+    ''' <param name="maps">{meta_define -> custom}</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
                                              path As String,
                                              Optional explicit As Boolean = False,
                                              Optional encoding As Encoding = Nothing,
-                                             Optional metaBlank As String = "") As Boolean
+                                             Optional metaBlank As String = "",
+                                             Optional nonParallel As Boolean = False,
+                                             Optional maps As Dictionary(Of String, String) = Nothing) As Boolean
 
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
         Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
 
-        Dim df As DocumentStream.File = Reflector.Save(source, explicit, metaBlank)
-        Dim lazy As Boolean = source.Count > 20000
+        Dim df As DocumentStream.File =
+            Reflector.Save(source,
+                           explicit,
+                           metaBlank,
+                           maps,
+                           Not nonParallel)
+        Dim lazy As Boolean = df.RowNumbers > 20000
+
+        If nonParallel Then
+            lazy = False
+        End If
 
         Call df.Save(path, LazySaved:=lazy, encoding:=encoding)
         Call "CSV saved!".__DEBUG_ECHO

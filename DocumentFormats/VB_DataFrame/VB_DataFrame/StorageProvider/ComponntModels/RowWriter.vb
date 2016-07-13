@@ -65,8 +65,14 @@ Namespace StorageProvider.ComponentModels
             End If
         End Sub
 
-        Public Function GetRowNames() As DocumentStream.RowObject
-            Return New DocumentStream.RowObject(Columns.ToArray(Function(field) field.Name))
+        Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As DocumentStream.RowObject
+            If maps Is Nothing Then
+                Return New DocumentStream.RowObject(Columns.Select(Function(field) field.Name))
+            Else
+                Dim __get As Func(Of StorageProvider, String) =
+                    Function(x) If(maps.ContainsKey(x.Name), maps(x.Name), x.Name)
+                Return New DocumentStream.RowObject(Columns.Select(__get))
+            End If
         End Function
 
         ReadOnly __buildRow As IRowBuilder

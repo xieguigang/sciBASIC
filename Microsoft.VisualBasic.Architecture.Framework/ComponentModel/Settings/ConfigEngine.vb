@@ -1,33 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::c5c8a30fdf6850e7a38664d99b1fad73, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\ConfigEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Settings
 
@@ -71,52 +74,72 @@ Namespace ComponentModel.Settings
 
         Sub New(obj As IProfile)
             _SettingsData = obj
-            ProfileItemCollection = ConfigEngine.Load(Of IProfile)(obj.GetType, TargetData:=_SettingsData).ToDictionary
+            ProfileItemCollection =
+                ConfigEngine.Load(Of IProfile)(
+                    obj.GetType,
+                    obj:=_SettingsData).ToDictionary(Function(x) x.Name,
+                                                     Function(x) x.x)
         End Sub
 
         Protected Sub New()
         End Sub
 
-        Protected Friend Shared Function Load(Of EntityType)(Type As System.Type, TargetData As EntityType) As KeyValuePair(Of String, BindMapping)()
-            Dim LQuery = From [Property] As PropertyInfo In Type.GetProperties
-                         Let attributes = [Property].GetCustomAttributes(attributeType:=ProfileItemType, inherit:=False)
-                         Where attributes.Length > 0
-                         Let attr = DirectCast(attributes(0), ProfileItem)
-                         Select BindMapping.Initialize(attr, [Property], TargetData) '
-            Dim LoadLQuery = (From ProfileItem As BindMapping
-                              In LQuery
-                              Select New KeyValuePair(Of String, BindMapping)(GetName(ProfileItem, ProfileItem.BindProperty), ProfileItem)).ToList
+        Protected Friend Shared Function Load(Of EntityType)(type As Type, obj As EntityType) As NamedValue(Of BindMapping)()
+            Dim LQuery As IEnumerable(Of BindMapping) =
+ _
+                From [Property] As PropertyInfo
+                In type.GetProperties
+                Let attributes = [Property].GetCustomAttributes(attributeType:=ProfileItemType, inherit:=False)
+                Where attributes.Length > 0
+                Let attr = DirectCast(attributes(0), ProfileItem)
+                Select BindMapping.Initialize(attr, [Property], obj) '
 
-            Dim Nodes = From [property] As PropertyInfo In Type.GetProperties
+            Dim out As List(Of NamedValue(Of BindMapping)) =
+                LinqAPI.MakeList(Of NamedValue(Of BindMapping)) <=
+ _
+                    From ProfileItem As BindMapping
+                    In LQuery
+                    Let name As String = GetName(ProfileItem, ProfileItem.BindProperty)
+                    Select New NamedValue(Of BindMapping) With {
+                        .Name = name,
+                        .x = ProfileItem
+                    }
+
+            Dim Nodes = From [property] As PropertyInfo
+                        In type.GetProperties
                         Let attributes = [property].GetCustomAttributes(attributeType:=ProfileItemNode, inherit:=False)
                         Where attributes.Length = 1
                         Select New With {
                             .[Property] = [property],
-                            .Entity = [property].GetValue(TargetData, Nothing)} ' 在这里是用匿名类型而不是直接使用Linq的匿名类型的原因是在后面还需要进行赋值操作，而Linq的匿名类型的属性是ReadOnly的
+                            .Entity = [property].GetValue(obj, Nothing)
+                        } ' 在这里是用匿名类型而不是直接使用Linq的匿名类型的原因是在后面还需要进行赋值操作，而Linq的匿名类型的属性是ReadOnly的
 
-            Dim lstNodes = Nodes.ToArray
+            Dim innerNodes = Nodes.ToArray
 
-            If lstNodes.Length > 0 Then
-                Dim List As List(Of KeyValuePair(Of String, BindMapping)) = LoadLQuery
+            If innerNodes.Length > 0 Then
+                For Each x In innerNodes
 
-                For Each Item In lstNodes
-                    If Item.Entity Is Nothing Then
+                    If x.Entity Is Nothing Then
                         Try
-                            Item.Entity = Activator.CreateInstance(type:=Item.[Property].PropertyType)
+                            x.Entity = Activator.CreateInstance(type:=x.[Property].PropertyType)
                         Catch ex As Exception
-                            ex = New Exception($"{Item.Property.Name} As {Item.Property.PropertyType.FullName}", ex)
+                            Dim view As String =
+                                $"{x.Property.Name} As {x.Property.PropertyType.FullName}"
+                            ex = New Exception(view, ex)
+
                             Throw ex
                         Finally
-                            Call Item.Property.SetValue(TargetData, Item.Entity, Nothing)
+                            Call x.Property.SetValue(obj, x.Entity, Nothing)
                         End Try
                     End If
-                    Call List.AddRange(Load(Item.[Property].PropertyType, Item.Entity))
+
+                    out += Load(x.[Property].PropertyType, x.Entity)
                 Next
 
-                Return List.ToArray
+                Return out.ToArray
             End If
 
-            Return LoadLQuery.ToArray
+            Return out.ToArray
         End Function
 
         Protected Shared Function GetName(ProfileItem As ProfileItem, [Property] As PropertyInfo) As String
@@ -188,23 +211,42 @@ Namespace ComponentModel.Settings
 
         <ExportAPI("Prints")>
         Public Shared Function Prints(data As IEnumerable(Of BindMapping)) As String
-            Dim Keys As String() = (From nodeItem As BindMapping In data Select nodeItem.Name).ToArray
-            Dim MaxLength As Integer = (From str As String In Keys Select Len(str)).Max
-            Dim sBuilder As StringBuilder = New StringBuilder(New String("-"c, 120))
+            Dim source As NamedValue(Of String)() =
+                LinqAPI.Exec(Of NamedValue(Of String)) <=
+ _
+                From x As BindMapping
+                In data
+                Let value As String =
+                    If(String.IsNullOrEmpty(x.Value), "null", x.Value)
+                Select New NamedValue(Of String) With {
+                    .Name = x.Name,
+                    .x = value,
+                    .Description = x.Description
+                }
 
-            Call sBuilder.AppendLine()
+            Return Prints(source)
+        End Function
 
-            For Each line As BindMapping In data
-                Dim blank As String = New String(" "c, MaxLength - Len(line.Name) + 2)
-                Dim value As String = If(String.IsNullOrEmpty(line.Value), "null", line.Value)
-                Dim str As String = String.Format("  {0}{1}  = {2}", line.Name, blank, value)
+        <ExportAPI("Prints")>
+        Public Shared Function Prints(data As IEnumerable(Of NamedValue(Of String))) As String
+            Dim keys As String() = data.ToArray(Function(x) x.Name)
+            Dim maxLen As Integer = keys.Select(AddressOf Len).Max
+            Dim sb As New StringBuilder(New String("-"c, 120))
+
+            Call sb.AppendLine()
+
+            For Each line As NamedValue(Of String) In data
+                Dim blank As String = New String(" "c, maxLen - Len(line.Name) + 2)
+                Dim str As String = String.Format("  {0}{1}  = {2}", line.Name, blank, line.x)
+
                 If Not String.IsNullOrEmpty(line.Description) Then
                     str &= "     // " & line.Description
                 End If
-                Call sBuilder.AppendLine(str)
+
+                Call sb.AppendLine(str)
             Next
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
         ''' <summary>

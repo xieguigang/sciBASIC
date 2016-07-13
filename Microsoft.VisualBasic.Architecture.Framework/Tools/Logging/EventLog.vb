@@ -197,11 +197,11 @@ Namespace Logging
             End If
 
 #If NET_40 = 0 Then
-                        Dim MSG_DATA As New List(Of String) From {
+            Dim MSG_DATA As New List(Of String) From {
                 "Exception: " & Scripting.InputHandler.ToString(ex.Message),
                 "InnerException: " & Scripting.InputHandler.ToString(ex.InnerException),
-                "HelpLink: " & Scripting.InputHandler.ToString(ex.HelpLink),              
-                "Handle: " & Scripting.InputHandler.ToString(ex.HResult),             
+                "HelpLink: " & Scripting.InputHandler.ToString(ex.HelpLink),
+                "Handle: " & Scripting.InputHandler.ToString(ex.HResult),
                 "Source: " & Scripting.InputHandler.ToString(ex.Source)
             }
 #Else

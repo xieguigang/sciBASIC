@@ -64,6 +64,9 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
+        Call New Shell(PS1.Fedora12, AddressOf System.Console.WriteLine).Run()
+
+
         Dim iii = SoftwareToolkits.LicenseMgr.Template
         iii.RootDIR = "G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework"
 

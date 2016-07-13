@@ -778,9 +778,14 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimFileExt(file As String) As String
-        Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
-        Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
-        Return $"{fileInfo.Directory.FullName}/{Name}"
+        Try
+            Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
+            Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
+            Return $"{fileInfo.Directory.FullName}/{Name}"
+        Catch ex As Exception
+            ex = New Exception($"{NameOf(file)} --> {file}", ex)
+            Throw ex
+        End Try
     End Function
 
     ''' <summary>

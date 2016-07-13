@@ -50,6 +50,10 @@ Namespace Parallel.Tasks
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a new background task from a function handle.
+        ''' </summary>
+        ''' <param name="Task"></param>
         Sub New(Task As Func(Of TOut))
             Me.Task = Task
         End Sub
