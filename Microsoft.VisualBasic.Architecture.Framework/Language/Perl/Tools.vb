@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Array
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Language.Perl
 
@@ -96,8 +97,109 @@ Namespace Language.Perl
             ReDim Preserve array(array.Length - 1)
         End Function
 
+        ''' <summary>
+        ''' Does exactly the same thing as exec, except that a fork is done first and the parent process waits for the 
+        ''' child process to exit. Note that argument processing varies depending on the number of arguments. If there 
+        ''' is more than one argument in LIST, or if LIST is an array with more than one value, starts the program 
+        ''' given by the first element of the list with arguments given by the rest of the list. If there is only one 
+        ''' scalar argument, the argument is checked for shell metacharacters, and if there are any, the entire argument 
+        ''' is passed to the system's command shell for parsing (this is /bin/sh -c on Unix platforms, but varies on 
+        ''' other platforms). If there are no shell metacharacters in the argument, it is split into words and passed 
+        ''' directly to execvp , which is more efficient. On Windows, only the system PROGRAM LIST syntax will reliably 
+        ''' avoid using the shell; system LIST , even with more than one element, will fall back to the shell if the 
+        ''' first spawn fails.
+        ''' Perl will attempt To flush all files opened For output before any operation that may Do a fork, but this 
+        ''' may Not be supported On some platforms (see perlport). To be safe, you may need To Set $ ($AUTOFLUSH In 
+        ''' English) Or Call the autoflush method Of IO:Handle on any open handles.
+        ''' The return value Is the exit status of the program as returned by the wait call. To get the actual exit 
+        ''' value, shift right by eight (see below). See also exec. This Is Not what you want to use to capture the 
+        ''' output from a command; for that you should use merely backticks Or qx//, as described in `STRING` in perlop. 
+        ''' Return value of -1 indicates a failure to start the program Or an error of the wait(2) system call 
+        ''' (inspect $! for the reason).
+        ''' If you 'd like to make system (and many other bits of Perl) die on error, have a look at the autodie pragma.
+        ''' Like exec, system allows you to lie to a program about its name if you use the system PROGRAM LIST syntax. 
+        ''' Again, see exec.
+        ''' </summary>
+        ''' <param name="CLI"></param>
+        ''' <returns></returns>
         Public Function system(CLI As String) As Integer
             Return Interaction.Shell(CLI, AppWinStyle.NormalFocus, True)
         End Function
+
+        ''' <summary>
+        ''' This safer version of chop removes any trailing string that corresponds to the current value of ``$/`` 
+        ''' (also known as ``$INPUT_RECORD_SEPARATOR`` in the English module). It returns the total number of characters 
+        ''' removed from all its arguments. It's often used to remove the newline from the end of an input record 
+        ''' when you're worried that the final record may be missing its newline. When in paragraph mode (``$/ = ''`` ), 
+        ''' it removes all trailing newlines from the string. When in slurp mode (``$/ = undef`` ) or fixed-length 
+        ''' record mode (``$/`` is a reference to an integer or the like; see perlvar), chomp won't remove anything.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function chomp(ByRef s As String) As String
+            s = s.Trim(vbCr, vbLf)
+            s = s.Trim(vbTab, " "c)
+
+            Return s
+        End Function
+
+        ''' <summary>
+        ''' If you chomp a ``list`` or ``array``, each element is chomped, and the total number of characters removed is returned.
+        ''' </summary>
+        ''' <param name="source"></param>
+        <Extension>
+        Public Sub chomp(ByRef source As IEnumerable(Of String))
+            Dim array As String() = source.ToArray
+
+            For i As Integer = 0 To array.Length - 1
+                array(i).chomp
+            Next
+
+            source = array
+        End Sub
+
+        ''' <summary>
+        ''' If ``VARIABLE`` is a hash, it chomps the hash's values, but not its keys, resetting the each iterator 
+        ''' in the process.
+        ''' 
+        ''' You can actually chomp anything that's an ``lvalue``, including an assignment:
+        ''' 
+        ''' ```perl
+        ''' chomp(my $cwd = `pwd`);
+        ''' chomp(my $answer = &lt;STDIN>);
+        ''' ```
+        ''' </summary>
+        ''' <param name="hash"></param>
+        <Extension>
+        Public Sub chomp(ByRef hash As Dictionary(Of String, String))
+            For Each key As String In hash.Keys
+                hash(key) = hash(key).chomp
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' If ``VARIABLE`` is a hash, it chomps the hash's values, but not its keys, resetting the each iterator 
+        ''' in the process.
+        ''' 
+        ''' You can actually chomp anything that's an ``lvalue``, including an assignment:
+        ''' 
+        ''' ```perl
+        ''' chomp(my $cwd = `pwd`);
+        ''' chomp(my $answer = &lt;STDIN>);
+        ''' ```
+        ''' </summary>
+        ''' <param name="hash"></param>
+        <Extension>
+        Public Sub chomp(ByRef hash As Dictionary(Of NamedValue(Of String)))
+            For Each key As String In hash.Keys
+                Dim x As NamedValue(Of String) = hash(key)
+                hash(key) = New NamedValue(Of String) With {
+                    .Name = key,
+                    .x = x.x.chomp,
+                    .Description = x.Description
+                }
+            Next
+        End Sub
     End Module
 End Namespace
