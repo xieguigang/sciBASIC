@@ -373,6 +373,7 @@
     <Compile Include="Parallel\Tasks\IParallelTask.vb" />
     <Compile Include="Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="Parallel\Threads\BatchTasks.vb" />
+    <Compile Include="Parallel\Threads\CodeThread.vb" />
     <Compile Include="Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />

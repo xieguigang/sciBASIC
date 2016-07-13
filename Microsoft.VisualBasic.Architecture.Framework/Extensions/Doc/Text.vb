@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::99a71133c1240784a96476c6bdce8e23, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -29,6 +29,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
@@ -192,12 +193,21 @@ Public Module TextDoc
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(array As IEnumerable(Of String), path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(array As IEnumerable(Of String),
+                                       path As String,
+                                       Optional encoding As Encoding = Nothing) As Boolean
+
         If String.IsNullOrEmpty(path) Then Return False
-        If encoding Is Nothing Then encoding = System.Text.Encoding.Default
-        Dim DIR = FileIO.FileSystem.GetParentPath(path)
-        Call FileIO.FileSystem.CreateDirectory(DIR)
-        Call IO.File.WriteAllLines(path, array, encoding)
+        If encoding Is Nothing Then encoding = Encoding.Default
+
+        Call "".SaveTo(path)
+
+        Using file As New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding)
+            For Each line As String In array.SafeQuery
+                Call file.WriteLine(line)
+            Next
+        End Using
+
         Return True
     End Function
 
