@@ -358,6 +358,7 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Text\ASCII.vb" />
     <Compile Include="Language\Perl\Tools.vb" />
     <Compile Include="Language\Pointer.vb" />
     <Compile Include="Language\Java\JavaMath.vb" />
