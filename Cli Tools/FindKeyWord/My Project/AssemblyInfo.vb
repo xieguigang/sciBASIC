@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FindKeyWord")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("FindKeyWord")>
-<Assembly: AssemblyCopyright("Copyright ©  2015")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("File Utils tool")>
+<Assembly: AssemblyDescription("File Utils tool")>
+<Assembly: AssemblyCompany("xieguigang")>
+<Assembly: AssemblyProduct("File")>
+<Assembly: AssemblyCopyright("Copyright © GPL3 2015")>
+<Assembly: AssemblyTrademark("VisualBasic")>
 
 <Assembly: ComVisible(False)>
 

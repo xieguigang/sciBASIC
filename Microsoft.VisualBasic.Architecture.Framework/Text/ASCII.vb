@@ -143,5 +143,56 @@
         ''' 0111 1111	127	7F	DEL	删除
         ''' </summary>
         Public Const DEL As Char = Chr(127)
+
+        ''' <summary>
+        ''' 非打印字符也可以是正则表达式的组成部分。下表列出了表示非打印字符的转义序列：
+        ''' 
+        ''' ##### 转义序列
+        ''' 
+        ''' |字符|含义|
+        ''' |---|----|
+        ''' |\cx|匹配 x 指示的控制字符。例如，\cM 匹配 Control-M 或回车符。x 的值必须在 A-Z 或 a-z 之间。如果不是这样，则假定 c 就是“c”字符本身。|
+        ''' |\f|换页符匹配。等效于 \x0c 和 \cL。|
+        ''' |\n|换行符匹配。等效于 \x0a 和 \cJ。|
+        ''' |\r|匹配一个回车符。等效于 \x0d 和 \cM。|
+        ''' |\s|匹配任何空白字符，包括空格、制表符、换页符等。与 [\f\n\r\t\v] 等效。|
+        ''' |\S|匹配任何非空白字符。与 [^ \f\n\r\t\v] 等效。|
+        ''' |\t|制表符匹配。与 \x09 和 \cI 等效。|
+        ''' |\v|垂直制表符匹配。与 \x0b 和 \cK 等效。|
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property Nonprintings As Char() = {
+            ASCII.ACK,
+            ASCII.BEL,
+            ASCII.BS,
+            ASCII.CAN,
+            ASCII.DC1,
+            ASCII.DC2,
+            ASCII.DC3,
+            ASCII.DC4,
+            ASCII.DEL,
+            ASCII.DLE,
+            ASCII.EM,
+            ASCII.ENQ,
+            ASCII.EOT,
+            ASCII.ESC,
+            ASCII.ETB,
+            ASCII.ETX,
+            ASCII.FF,
+            ASCII.FS,
+            ASCII.GS,
+            ASCII.HT,
+            ASCII.NAK,
+            ASCII.NUL,
+            ASCII.RS,
+            ASCII.SI,
+            ASCII.SO,
+            ASCII.SOH,
+            ASCII.STX,
+            ASCII.SUB,
+            ASCII.SYN,
+            ASCII.US,
+            ASCII.VT
+        }
     End Class
 End Namespace
