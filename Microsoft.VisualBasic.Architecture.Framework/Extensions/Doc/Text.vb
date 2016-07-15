@@ -36,6 +36,18 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module TextDoc
 
     ''' <summary>
+    ''' Open text file writer, this function will auto handle all things.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
+        Call "".SaveTo(path)
+        Return New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding.GetEncodings)
+    End Function
+
+    ''' <summary>
     ''' 通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作
     ''' </summary>
     ''' <param name="path"></param>
