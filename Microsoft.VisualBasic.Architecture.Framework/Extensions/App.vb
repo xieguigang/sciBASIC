@@ -109,8 +109,20 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="System.Diagnostics.Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine =
-        Microsoft.VisualBasic.CommandLine.TryParse(Environment.GetCommandLineArgs.Skip(1).ToArray)
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
+
+    Const gitBash As String = "C:/Program Files/Git"
+
+    ''' <summary>
+    ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function __CLI() As CommandLine.CommandLine
+        Dim tokens As String() = ' 第一个参数为应用程序的文件路径，不需要
+            Environment.GetCommandLineArgs.Skip(1).ToArray
+        Dim CLI As String = String.Join(" ", tokens).Replace(gitBash, "")
+        Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
+    End Function
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or

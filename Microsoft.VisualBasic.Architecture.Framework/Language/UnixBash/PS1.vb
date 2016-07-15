@@ -7,7 +7,7 @@ Namespace Language.UnixBash
     ''' <summary>
     ''' PS (Prompt Sign)
     ''' </summary>
-    Public Class PS1
+    Public Class PS1 : Inherits ClassObject
 
         ''' <summary>
         ''' ``\H`` 完整的主机名称
@@ -64,7 +64,7 @@ Namespace Language.UnixBash
         End Sub
 
         ''' <summary>
-        ''' ``[\u@\h \w \A #\#]\$ ``
+        ''' Fedora 12 PS1 variable of the bash shell: ``[\u@\h \w \A #\#]\$ ``
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function Fedora12() As PS1

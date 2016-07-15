@@ -180,7 +180,12 @@ Namespace CommandLine
 
             ElseIf "??vars".TextEquals(commandName) Then
                 Dim vars = App.GetAppVariables
+
+                Call Console.WriteLine()
+                Call Console.WriteLine(PS1.Fedora12.ToString)
+                Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
                 Call Console.WriteLine(ConfigEngine.Prints(vars))
+
                 Return 0
 
             Else
@@ -210,9 +215,14 @@ Namespace CommandLine
                     Dim lst As String() = Me.ListPossible(commandName)
 
                     If lst.IsNullOrEmpty Then
-                        Console.WriteLine(BAD_COMMAND_NAME, commandName)
+
+                        Call Console.WriteLine(BAD_COMMAND_NAME, commandName)
+                        Call Console.WriteLine()
+                        Call Console.WriteLine(PS1.Fedora12.ToString & " " & DirectCast(argvs(Scan0), CommandLine).ToString)
+
                     Else
                         Call Console.WriteLine(BAD_COMMAND_MAN, commandName)
+
                         For Each name As String In lst
                             Call Console.WriteLine("    " & name)
                         Next
@@ -295,6 +305,8 @@ Namespace CommandLine
 
                     If lst.IsNullOrEmpty Then
                         Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", ? for command list.")
+                        Call Console.WriteLine()
+                        Call Console.WriteLine(PS1.Fedora12.ToString & " ?" & CommandName)
                     Else
                         Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
                         For Each name As String In lst

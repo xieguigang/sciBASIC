@@ -45,7 +45,8 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Implements ICollection(Of NamedValue(Of String))
+    Public Class CommandLine : Inherits ClassObject
+        Implements ICollection(Of NamedValue(Of String))
         Implements sIdEnumerable
 
         Friend __lstParameter As New List(Of NamedValue(Of String))
