@@ -35,6 +35,20 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
 
+    <Extension>
+    Public Iterator Function ForEachChar(path As String) As IEnumerable(Of Char)
+        Using file As New FileStream(path, FileMode.Open)
+            Using reader As New IO.BinaryReader(file)
+                Dim bs As Stream = reader.BaseStream
+                Dim l As Long = bs.Length
+
+                Do While bs.Position < l
+                    Yield reader.ReadChar
+                Loop
+            End Using
+        End Using
+    End Function
+
     ''' <summary>
     ''' Open text file writer, this function will auto handle all things.
     ''' </summary>
