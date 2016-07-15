@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6b6043644e3d52fd69dfa20af01fe7b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\OSVersionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::4baa77dbc280e1f5a3140aa85580527a, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\OSVersionInfo.vb"
 
     ' Author:
     ' 

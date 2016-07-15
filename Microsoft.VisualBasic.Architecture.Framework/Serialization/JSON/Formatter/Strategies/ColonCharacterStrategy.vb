@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31b24a8eb8eded42e1e2ba7aff72b431, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::31b24a8eb8eded42e1e2ba7aff72b431, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb"
 
     ' Author:
     ' 

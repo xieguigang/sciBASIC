@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb7fd08a23a089fb500219d44f495755, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7e6f6fd6dfe94044d9582f83aee27c07, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 

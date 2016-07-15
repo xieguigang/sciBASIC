@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50d02f66dd29aa0234d1e529680d063c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\RSACrypto.vb"
+﻿#Region "Microsoft.VisualBasic::50d02f66dd29aa0234d1e529680d063c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\RSACrypto.vb"
 
     ' Author:
     ' 

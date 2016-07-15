@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dece5393f94451fa0669246ffd661a6b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::dece5393f94451fa0669246ffd661a6b, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataSample.vb"
 
     ' Author:
     ' 

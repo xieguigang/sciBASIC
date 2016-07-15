@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::951b1efe70132d8b71a119d70f9f5f5e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::951b1efe70132d8b71a119d70f9f5f5e, ..\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 

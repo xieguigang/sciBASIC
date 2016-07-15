@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a1e4c05213423a68e5da956711f870, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ToolkitAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e4a1e4c05213423a68e5da956711f870, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ToolkitAPI.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f639573b0dfec878b3707d7c649fa9c4, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\HardLink.vb"
+﻿#Region "Microsoft.VisualBasic::f639573b0dfec878b3707d7c649fa9c4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\HardLink.vb"
 
     ' Author:
     ' 

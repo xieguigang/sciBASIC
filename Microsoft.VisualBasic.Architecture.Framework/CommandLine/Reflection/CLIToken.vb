@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d09ca8c2de71d46452c8b1c80afe127, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::4d09ca8c2de71d46452c8b1c80afe127, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
