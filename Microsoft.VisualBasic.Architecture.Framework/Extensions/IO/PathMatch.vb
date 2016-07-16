@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::1f9eb9076bbe9c4e511b408ed8adde84, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathMatch.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -69,12 +69,12 @@ Public Structure PathMatch
         For Each path As String In paths1
             Dim q As String = process(path.BaseName)
 
-            For Each s In pls
-                If InStr(q, s.name, CompareMethod.Text) = 1 OrElse
-                    InStr(s.name, q, CompareMethod.Text) = 1 Then
+            For Each S In pls
+                If InStr(q, S.name, CompareMethod.Text) = 1 OrElse
+                    InStr(S.name, q, CompareMethod.Text) = 1 Then
                     Yield New PathMatch With {
                         .Pair1 = path,
-                        .Pair2 = s.p
+                        .Pair2 = S.p
                     }
                     Exit For
                 End If
@@ -100,11 +100,11 @@ Public Module PathMatches
             Dim result As New Dictionary(Of String, String) From {{primary.Name, path}}
 
             For Each otherpath In others
-                For Each s In otherpath.pls
-                    If InStr(q, s.pName, CompareMethod.Text) = 1 OrElse
-                        InStr(s.pName, q, CompareMethod.Text) = 1 Then
+                For Each S In otherpath.pls
+                    If InStr(q, S.pName, CompareMethod.Text) = 1 OrElse
+                        InStr(S.pName, q, CompareMethod.Text) = 1 Then
 
-                        result.Add(otherpath.Name, s.p)
+                        result.Add(otherpath.Name, S.p)
                         Exit For
                     End If
                 Next

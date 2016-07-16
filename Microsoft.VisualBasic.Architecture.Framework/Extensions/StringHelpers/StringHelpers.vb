@@ -41,6 +41,11 @@ Imports Microsoft.VisualBasic.ComponentModel
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <Extension>
+    Public Function CharString(chs As IEnumerable(Of Char)) As String
+        Return New String(chs.ToArray)
+    End Function
+
     '
     ' Summary:
     '     Replaces the format item in a specified string with the string representation
