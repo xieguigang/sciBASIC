@@ -41,6 +41,43 @@ Imports Microsoft.VisualBasic.ComponentModel
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    '
+    ' Summary:
+    '     Replaces the format item in a specified string with the string representation
+    '     of a corresponding object in a specified array.
+    '
+    ' Parameters:
+    '   format:
+    '     A composite format string.
+    '
+    '   args:
+    '     An object array that contains zero or more objects to format.
+    '
+    ' Returns:
+    '     A copy of format in which the format items have been replaced by the string representation
+    '     of the corresponding objects in args.
+    '
+    ' Exceptions:
+    '   T:System.ArgumentNullException:
+    '     format or args is null.
+    '
+    '   T:System.FormatException:
+    '     format is invalid.-or- The index of a format item is less than zero, or greater
+    '     than or equal to the length of the args array.
+
+    ''' <summary>
+    ''' Replaces the format item in a specified string with the string representation
+    ''' of a corresponding object in a specified array.
+    ''' </summary>
+    ''' <param name="s">A composite format string.</param>
+    ''' <param name="args">An object array that contains zero or more objects to format.</param>
+    ''' <returns>A copy of format in which the format items have been replaced by the string representation
+    ''' of the corresponding objects in args.</returns>
+    <Extension>
+    Public Function sFormat(s As String, ParamArray args As Object()) As String
+        Return String.Format(s, args)
+    End Function
+
     ''' <summary>
     ''' this is to emulate what's evailable in PHP
     ''' </summary>

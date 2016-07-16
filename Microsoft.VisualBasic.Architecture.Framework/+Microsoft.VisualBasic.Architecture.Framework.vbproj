@@ -396,6 +396,7 @@
     <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
     <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
+    <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />
