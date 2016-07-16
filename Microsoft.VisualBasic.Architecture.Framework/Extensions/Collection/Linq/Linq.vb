@@ -429,6 +429,13 @@ Namespace Linq
             Return LQuery
         End Function
 
+        ''' <summary>
+        ''' Convert the iterator source <see cref="IEnumerable"/> to a specific type array.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
         Public Function ToArray(Of T)(source As IEnumerable) As T()
             Return ToVector(source).ToArray(Function(x) If(x Is Nothing, Nothing, DirectCast(x, T)))
         End Function
