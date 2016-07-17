@@ -74,12 +74,14 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension>
     Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
-        Dim fs As New FileStream(path, FileMode.Open)
-        Dim reader As New StreamReader(fs)
+        Using fs As New FileStream(path, FileMode.Open)
+            Using reader As New StreamReader(fs)
 
-        Do While Not reader.EndOfStream
-            Yield reader.ReadLine
-        Loop
+                Do While Not reader.EndOfStream
+                    Yield reader.ReadLine
+                Loop
+            End Using
+        End Using
     End Function
 
     ''' <summary>
@@ -150,8 +152,13 @@ Public Module TextDoc
                                        <Parameter("Path")> path As String,
                                        <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing) As Boolean
 
-        If String.IsNullOrEmpty(path) Then Return False
-        If encoding Is Nothing Then encoding = Encoding.Default
+        If String.IsNullOrEmpty(path) Then
+            Return False
+        End If
+
+        If encoding Is Nothing Then
+            encoding = Encoding.Default
+        End If
 
         Dim DIR As String
 
