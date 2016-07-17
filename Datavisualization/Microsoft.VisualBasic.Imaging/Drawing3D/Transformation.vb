@@ -63,6 +63,13 @@ Namespace Drawing3D
             Return New Point(X, Y)
         End Function
 
+        ''' <summary>
+        ''' Project of the 3D point to 2D point
+        ''' </summary>
+        ''' <param name="pt3D"></param>
+        ''' <param name="xRotate"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
         <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Double, offset As Point) As Point
             Dim X As Double = Math.Cos(xRotate) * pt3D.X + pt3D.Y + offset.X

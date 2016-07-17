@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::cee71cd243701898c0b74795d745cfbf, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
@@ -51,6 +52,10 @@ Namespace Drawing3D
         Public Property X As Double
         Public Property Y As Double
         Public Property Z As Double
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
         Public Function RotateX(angle As Integer) As Point3D
             Dim rad As Double, cosa As Double, sina As Double, yn As Double, zn As Double
@@ -86,6 +91,14 @@ Namespace Drawing3D
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
 
+        ''' <summary>
+        ''' 将3D投影为2D，所以只需要取结果之中的<see cref="X"/>和<see cref="Y"/>就行了
+        ''' </summary>
+        ''' <param name="viewWidth"></param>
+        ''' <param name="viewHeight"></param>
+        ''' <param name="fov">256默认值</param>
+        ''' <param name="viewDistance"></param>
+        ''' <returns></returns>
         Public Function Project(viewWidth As Integer, viewHeight As Integer, fov As Integer, viewDistance As Integer) As Point3D
             Dim factor As Double, Xn As Double, Yn As Double
             factor = fov / (viewDistance + Me.Z)
