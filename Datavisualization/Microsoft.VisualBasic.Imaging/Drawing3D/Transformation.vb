@@ -41,6 +41,16 @@ Namespace Drawing3D
                       Description:="3D coordinate transformation tools.")>
     Public Module Transformation
 
+        <Extension>
+        Public Function Center(model As IEnumerable(Of Point3D)) As Point3D
+            Dim array As Point3D() = model.ToArray
+            Dim x As Double = array.Select(Function(p) p.X).Sum / array.Length
+            Dim y As Double = array.Select(Function(p) p.Y).Sum / array.Length
+            Dim z As Double = array.Select(Function(p) p.Z).Sum / array.Length
+
+            Return New Point3D(x, y, z)
+        End Function
+
         ''' <summary>
         ''' Transform point 3D into point 2D
         ''' </summary>
