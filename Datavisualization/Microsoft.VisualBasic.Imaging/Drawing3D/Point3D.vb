@@ -57,7 +57,12 @@ Namespace Drawing3D
             Return Me.GetJson
         End Function
 
-        Public Function RotateX(angle As Integer) As Point3D
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="angle">度，函数里面会自动转换为三角函数所需要的弧度的</param>
+        ''' <returns></returns>
+        Public Function RotateX(angle As Double) As Point3D
             Dim rad As Double, cosa As Double, sina As Double, yn As Double, zn As Double
 
             rad = angle * Math.PI / 180
@@ -68,7 +73,7 @@ Namespace Drawing3D
             Return New Point3D(Me.X, yn, zn)
         End Function
 
-        Public Function RotateY(angle As Integer) As Point3D
+        Public Function RotateY(angle As Double) As Point3D
             Dim rad As Double, cosa As Double, sina As Double, Xn As Double, Zn As Double
 
             rad = angle * Math.PI / 180
@@ -80,7 +85,7 @@ Namespace Drawing3D
             Return New Point3D(Xn, Me.Y, Zn)
         End Function
 
-        Public Function RotateZ(angle As Integer) As Point3D
+        Public Function RotateZ(angle As Double) As Point3D
             Dim rad As Double, cosa As Double, sina As Double, Xn As Double, Yn As Double
 
             rad = angle * Math.PI / 180
