@@ -86,6 +86,12 @@ Namespace Language
             Return New Pointer(n.__index + x.__index)
         End Operator
 
+        ''' <summary>
+        ''' ``<see cref="__index"/> &lt; <paramref name="n"/>``
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator <(x As Pointer, n As Integer) As Boolean
             Return x.__index < n
         End Operator
