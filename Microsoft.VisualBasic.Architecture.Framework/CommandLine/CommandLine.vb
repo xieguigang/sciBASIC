@@ -168,6 +168,24 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">parameter name</param>
+        ''' <returns></returns>
+        Public Function GetFullDIRPath(name As String) As String
+            Return FileIO.FileSystem.GetDirectoryInfo(Me(name)).FullName
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">parameter name</param>
+        ''' <returns></returns>
+        Public Function GetFullFilePath(name As String) As String
+            Return FileIO.FileSystem.GetFileInfo(Me(name)).FullName
+        End Function
+
+        ''' <summary>
         ''' Gets the brief summary information of current cli command line object.(获取当前的命令行对象的参数摘要信息)
         ''' </summary>
         ''' <returns></returns>

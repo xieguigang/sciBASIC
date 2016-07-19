@@ -38,6 +38,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
@@ -121,7 +122,9 @@ Public Module App
     Private Function __CLI() As CommandLine.CommandLine
         Dim tokens As String() = ' 第一个参数为应用程序的文件路径，不需要
             Environment.GetCommandLineArgs.Skip(1).ToArray
-        Dim CLI As String = String.Join(" ", tokens).Replace(gitBash, "")
+        Dim CLI As String = String _
+            .Join(" ", tokens.ToArray(Function(s) s.CliToken)) _
+            .Replace(gitBash, "")
         Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
     End Function
 

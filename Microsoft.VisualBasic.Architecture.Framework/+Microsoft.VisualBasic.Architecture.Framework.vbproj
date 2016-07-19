@@ -296,6 +296,7 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
+    <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
