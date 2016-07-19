@@ -32,8 +32,16 @@ Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
+''' <summary>
+''' Controls for view the network model.
+''' </summary>
 Public Class Canvas
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="space">Is 3D network viewer canvas</param>
+    ''' <returns></returns>
     Public Property Graph(Optional space As Boolean = False) As NetworkGraph
         Get
             If net Is Nothing Then
