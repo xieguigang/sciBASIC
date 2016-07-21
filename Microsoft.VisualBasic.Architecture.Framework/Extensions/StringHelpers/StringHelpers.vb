@@ -101,15 +101,22 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="delimiter"></param>
+    ''' <param name="trim">Needs Removes all leading and trailing white-space characters from 
+    ''' the current <see cref="System.String"/> object.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetTagValue(s As String, Optional delimiter As String = " ") As NamedValue(Of String)
+    Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False) As NamedValue(Of String)
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
         If p = 0 Then
             Return New NamedValue(Of String)("", s)
         Else
             Dim key As String = Mid(s, 1, p - delimiter.Length)
             Dim value As String = Mid(s, p + delimiter.Length)
+
+            If trim Then
+                value = value.Trim
+            End If
+
             Return New NamedValue(Of String)(key, value)
         End If
     End Function
@@ -481,6 +488,10 @@ Public Module StringHelpers
                 Call list.Add(line)
             End If
         Next
+
+        If list.Count > 0 Then
+            Yield list.ToArray
+        End If
     End Function
 
     ''' <summary>

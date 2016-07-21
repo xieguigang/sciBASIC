@@ -43,6 +43,7 @@ Public Module IOExtensions
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
+        Call FileIO.FileSystem.CreateDirectory(path.ParentPath)
         Return IO.File.Open(path, mode)
     End Function
 

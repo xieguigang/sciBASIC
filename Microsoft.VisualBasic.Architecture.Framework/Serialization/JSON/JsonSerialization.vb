@@ -65,6 +65,22 @@ Namespace Serialization.JSON
         End Function
 
         ''' <summary>
+        ''' 将目标对象保存为json文件
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="obj"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function WriteLargeJson(Of T)(obj As T, path As String) As Boolean
+            Using ms As FileStream = path.Open
+                Dim jsonSer As New DataContractJsonSerializer(GetType(T))
+                Call jsonSer.WriteObject(ms, obj)
+                Return True
+            End Using
+        End Function
+
+        ''' <summary>
         ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
         ''' can be used for block the property which is will not serialize to the text.
         ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
