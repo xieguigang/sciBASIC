@@ -838,9 +838,12 @@ Public Module App
     ''' <param name="state"></param>
     ''' <returns></returns>
     Private Function __completeCLI(state As Integer) As Integer
+        App._Running = False
+
         If _CLIAutoClean Then
             Call StopGC()
         End If
+
         Return state
     End Function
 
