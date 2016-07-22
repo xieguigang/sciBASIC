@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\GCModeller-x64\</OutputPath>
+    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
     <DefineConstants>_MYFORMS=True</DefineConstants>
     <DocumentationFile>Molk+.xml</DocumentationFile>
     <Optimize>true</Optimize>

@@ -73,6 +73,8 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <Extension>
         Public Function WriteLargeJson(Of T)(obj As T, path As String) As Boolean
+            Call "".SaveTo(path)
+
             Using ms As FileStream = path.Open
                 Dim jsonSer As New DataContractJsonSerializer(GetType(T))
                 Call jsonSer.WriteObject(ms, obj)
