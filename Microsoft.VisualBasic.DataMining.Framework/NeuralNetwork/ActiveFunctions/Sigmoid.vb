@@ -28,6 +28,9 @@
 
 Namespace NeuralNetwork.IFuncs
 
+    ''' <summary>
+    ''' https://github.com/trentsartain/Neural-Network/blob/master/NeuralNetwork/NeuralNetwork/Network/Sigmoid.cs
+    ''' </summary>
     Public NotInheritable Class Sigmoid
         Implements IActivationFunction
         Implements ICloneable

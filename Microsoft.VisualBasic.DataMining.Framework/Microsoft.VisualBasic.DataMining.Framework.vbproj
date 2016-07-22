@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.DataMining.Framework</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.DataMining</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.DataMining.Framework</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -223,10 +223,8 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\Rule.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
-    <Compile Include="KMeans\Tree.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Gamma.vb" />
-    <Compile Include="NeuralNetwork\Models\ModelAPI.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />
     <Compile Include="NeuralNetwork\Helpers.vb" />
@@ -301,10 +299,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Datavisualization\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Datavisualization.Network</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>

@@ -359,6 +359,7 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Language\Value.vb" />
     <Compile Include="Language\Python\Collection.vb" />
     <Compile Include="Language\Python\NamedTuple.vb" />
     <Compile Include="Text\ASCII.vb" />
@@ -427,6 +428,7 @@
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
+    <Compile Include="Tools\Win32\HardwareInfo.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
