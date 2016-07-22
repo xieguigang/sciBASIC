@@ -27,6 +27,10 @@
 
 Public Module ScriptEngine
 
+    ''' <summary>
+    ''' The default expression engine.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Expression As Expression =
         Mathematical.Expression.DefaultEngine
 
@@ -65,10 +69,20 @@ Public Module ScriptEngine
         End If
     End Function
 
+    ''' <summary>
+    ''' Set variable value
+    ''' </summary>
+    ''' <param name="Name"></param>
+    ''' <param name="expr"></param>
     Public Sub SetVariable(Name As String, expr As String)
         Call Expression.Variables.Set(Name, expr)
     End Sub
 
+    ''' <summary>
+    ''' Add constant object
+    ''' </summary>
+    ''' <param name="Name"></param>
+    ''' <param name="expr"></param>
     Public Sub AddConstant(Name As String, expr As String)
         Call Expression.Constant.Add(Name, expr)
     End Sub
