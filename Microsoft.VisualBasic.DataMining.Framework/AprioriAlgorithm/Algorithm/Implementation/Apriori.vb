@@ -29,7 +29,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.ComponentModel.Composition
 Imports System.Text
-Imports Microsoft.VisualBasic.DataMining.Framework.AprioriAlgorithm.Entities
+Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions

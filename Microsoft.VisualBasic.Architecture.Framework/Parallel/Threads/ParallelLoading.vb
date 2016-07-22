@@ -352,7 +352,7 @@ Namespace Parallel
             Call invoke.Statements.Add(LocalsInit(Port, GetType(Integer), PortValue))
             Call invoke.Statements.Add([Call](GetType(Extensions), NameOf(__DEBUG_ECHO),
                                               {
-                                                [Call](GetType(String), NameOf(String.Format), {Value("Load stream from url:={0}, port:={1}..."), LocalVariable(LoadFile), LocalVariable(Port)})
+                                                [Call](GetType(String), NameOf(String.Format), {CodeDOMExpressions.Value("Load stream from url:={0}, port:={1}..."), LocalVariable(LoadFile), LocalVariable(Port)})
                                               }))
             Call invoke.Statements.Add([Call](GetType(Extensions), NameOf(__DEBUG_ECHO), {"Start to loading data..."}))
             ' Dim LoadResult = ParallelLoadingTest.Load(File)  '数据加载
