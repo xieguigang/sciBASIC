@@ -28,7 +28,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataMining.Framework.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 
 Namespace KMeans.CompleteLinkage
 
