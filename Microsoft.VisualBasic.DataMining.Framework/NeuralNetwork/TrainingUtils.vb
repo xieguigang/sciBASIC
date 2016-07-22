@@ -79,7 +79,8 @@ Namespace NeuralNetwork
         ''' <param name="convertedResults">The error outputs</param>
         ''' <param name="expectedResults">The corrects output</param>
         Public Sub Corrects(input As Double(), convertedResults As Double(), expectedResults As Double(), Optional train As Boolean = True)
-            Dim offendingDataSet As DataSet = _dataSets.FirstOrDefault(Function(x) x.Values.SequenceEqual(input) AndAlso x.Targets.SequenceEqual(convertedResults))
+            Dim offendingDataSet As DataSet = _dataSets.FirstOrDefault(
+                Function(x) x.Values.SequenceEqual(input) AndAlso x.Targets.SequenceEqual(convertedResults))
             _dataSets.Remove(offendingDataSet)
 
             If Not _dataSets.Exists(Function(x) x.Values.SequenceEqual(input) AndAlso x.Targets.SequenceEqual(expectedResults)) Then
