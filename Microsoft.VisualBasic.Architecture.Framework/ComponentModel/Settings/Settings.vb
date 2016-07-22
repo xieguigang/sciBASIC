@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac73e54e48433546ba3d2a6fed48376f, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::ac73e54e48433546ba3d2a6fed48376f, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 

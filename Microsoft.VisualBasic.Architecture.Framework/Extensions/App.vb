@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac7f6da05823d9bcaa49ed0c93e6db30, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "Microsoft.VisualBasic::f2dc02e51ecd461bf88ac15fc7349847, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
 ' Author:
 ' 
@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Security
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -37,6 +38,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
@@ -109,14 +111,28 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="System.Diagnostics.Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine =
-        Microsoft.VisualBasic.CommandLine.TryParse(Environment.GetCommandLineArgs.Skip(1).ToArray)
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
+
+    Const gitBash As String = "C:/Program Files/Git"
+
+    ''' <summary>
+    ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function __CLI() As CommandLine.CommandLine
+        Dim tokens As String() = ' 第一个参数为应用程序的文件路径，不需要
+            Environment.GetCommandLineArgs.Skip(1).ToArray
+        Dim CLI As String = String _
+            .Join(" ", tokens.ToArray(Function(s) s.CliToken)) _
+            .Replace(gitBash, "")
+        Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
+    End Function
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or
     ''' an executable program developed with Visual Basic. The My feature provides greater
     ''' productivity and performance than the <see cref="microsoft.VisualBasic.Interaction.Command"/> function. For more information,
-    ''' see <see cref="Microsoft.VisualBasic.ApplicationServices.ConsoleApplicationBase.CommandLineArgs"/>.
+    ''' see <see cref="ConsoleApplicationBase.CommandLineArgs"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property Command As String =
@@ -822,9 +838,12 @@ Public Module App
     ''' <param name="state"></param>
     ''' <returns></returns>
     Private Function __completeCLI(state As Integer) As Integer
+        App._Running = False
+
         If _CLIAutoClean Then
             Call StopGC()
         End If
+
         Return state
     End Function
 

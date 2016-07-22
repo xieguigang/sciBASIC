@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Abstract.vb"
 
     ' Author:
     ' 

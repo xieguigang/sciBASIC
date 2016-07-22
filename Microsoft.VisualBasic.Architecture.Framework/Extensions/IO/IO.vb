@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abef4298760d4110cb419167ca03e470, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::abef4298760d4110cb419167ca03e470, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@ Public Module IOExtensions
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
+        Call FileIO.FileSystem.CreateDirectory(path.ParentPath)
         Return IO.File.Open(path, mode)
     End Function
 

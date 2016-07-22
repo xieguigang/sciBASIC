@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c652bc0eb7945add88233f87c7fe9385, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::c652bc0eb7945add88233f87c7fe9385, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PrintAsTable.vb"
 
     ' Author:
     ' 

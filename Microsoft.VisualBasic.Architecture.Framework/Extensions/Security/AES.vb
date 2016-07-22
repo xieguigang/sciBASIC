@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a70d7ae3b720d9faaf1624a12531f761, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\AES.vb"
+﻿#Region "Microsoft.VisualBasic::a70d7ae3b720d9faaf1624a12531f761, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\AES.vb"
 
     ' Author:
     ' 

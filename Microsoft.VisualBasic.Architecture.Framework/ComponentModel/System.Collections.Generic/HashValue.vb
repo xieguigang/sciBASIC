@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5170ee876e433f9c0a8511334ee641f, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\HashValue.vb"
+﻿#Region "Microsoft.VisualBasic::d5170ee876e433f9c0a8511334ee641f, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\HashValue.vb"
 
     ' Author:
     ' 

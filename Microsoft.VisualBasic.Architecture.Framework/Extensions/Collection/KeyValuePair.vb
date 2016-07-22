@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dc93354405e16501acd0c37c8c4b5aa, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::e6488ce274fb452a74a1ab012e972b66, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,14 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Module KeyValuePairExtensions
+
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Return From x As T
+               In source
+               Select x
+               Order By x Ascending
+    End Function
 
     ''' <summary>
     ''' Creates a <see cref="System.Collections.Generic.Dictionary"/>`2 from an <see cref="System.Collections.Generic.IEnumerable"/>`1

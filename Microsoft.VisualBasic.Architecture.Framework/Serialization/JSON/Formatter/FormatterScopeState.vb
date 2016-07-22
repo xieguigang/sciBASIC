@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::825a83ffbbe8dddcddc7c2dc18f51d86, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\FormatterScopeState.vb"
+﻿#Region "Microsoft.VisualBasic::825a83ffbbe8dddcddc7c2dc18f51d86, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\FormatterScopeState.vb"
 
     ' Author:
     ' 

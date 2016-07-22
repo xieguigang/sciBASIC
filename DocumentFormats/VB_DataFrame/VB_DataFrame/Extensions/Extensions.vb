@@ -218,12 +218,12 @@ Public Module Extensions
                                                        Optional maps As Dictionary(Of String, String) = Nothing) As List(Of T)
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
-        Dim ChunkBuffer = Reflector.Load(Of T)(Path, explicit, encoding, fast, maps)
+        Dim bufs = Reflector.Load(Of T)(Path, explicit, encoding, fast, maps)
         Dim ms As Long = st.ElapsedMilliseconds
         Dim fs As String = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
         Call $"[CSV.Reflector::{GetType(T).FullName}]
-Load {ChunkBuffer.Count} lines of data from ""{Path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO
-        Return ChunkBuffer
+Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO
+        Return bufs
     End Function
 
     ''' <summary>

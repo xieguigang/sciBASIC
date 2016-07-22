@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a417e573943e6c4e794f7f20c3d7e3c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::3a417e573943e6c4e794f7f20c3d7e3c, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
     ' Author:
     ' 

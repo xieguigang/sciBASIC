@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e199d040d951bcd677a5aa85c482cb98, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::43fed1768efc2e53dbf698f2701612fa, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -302,7 +302,7 @@ Public Module Extensions
             Return array
         End If
 
-        If array.Length >= index Then
+        If array.Length - 1 >= index Then
             array(index) = value
         Else
             Dim copy As T() = New T(index) {}

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::105b50bef44a6809f82e1414b790630e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::105b50bef44a6809f82e1414b790630e, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 

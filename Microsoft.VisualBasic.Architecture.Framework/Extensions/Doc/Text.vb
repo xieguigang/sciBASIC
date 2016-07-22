@@ -1,27 +1,27 @@
-﻿#Region "Microsoft.VisualBasic::99a71133c1240784a96476c6bdce8e23, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::29c41421f871e7f9dbc8c132b004d471, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,18 +36,52 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module TextDoc
 
     ''' <summary>
+    ''' Enumerate all of the chars in the target text file.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ForEachChar(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of Char)
+        Using file As New FileStream(path, FileMode.Open)
+            Using reader As New IO.BinaryReader(file, encoding.GetEncodings)
+                Dim bs As Stream = reader.BaseStream
+                Dim l As Long = bs.Length
+
+                Do While bs.Position < l
+                    Yield reader.ReadChar
+                Loop
+            End Using
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' Open text file writer, this function will auto handle all things.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
+        Call "".SaveTo(path)
+        Return New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding.GetEncodings)
+    End Function
+
+    ''' <summary>
     ''' 通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
     Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
-        Dim fs As New FileStream(path, FileMode.Open)
-        Dim reader As New StreamReader(fs)
+        Using fs As New FileStream(path, FileMode.Open)
+            Using reader As New StreamReader(fs)
 
-        Do While Not reader.EndOfStream
-            Yield reader.ReadLine
-        Loop
+                Do While Not reader.EndOfStream
+                    Yield reader.ReadLine
+                Loop
+            End Using
+        End Using
     End Function
 
     ''' <summary>
@@ -118,8 +152,13 @@ Public Module TextDoc
                                        <Parameter("Path")> path As String,
                                        <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing) As Boolean
 
-        If String.IsNullOrEmpty(path) Then Return False
-        If encoding Is Nothing Then encoding = Encoding.Default
+        If String.IsNullOrEmpty(path) Then
+            Return False
+        End If
+
+        If encoding Is Nothing Then
+            encoding = Encoding.Default
+        End If
 
         Dim DIR As String
 

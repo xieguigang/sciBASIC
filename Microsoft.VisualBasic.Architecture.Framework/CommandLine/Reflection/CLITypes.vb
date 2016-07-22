@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::893c485ad218c3bf8a43a47dcf180981, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLITypes.vb"
+﻿#Region "Microsoft.VisualBasic::893c485ad218c3bf8a43a47dcf180981, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLITypes.vb"
 
     ' Author:
     ' 
