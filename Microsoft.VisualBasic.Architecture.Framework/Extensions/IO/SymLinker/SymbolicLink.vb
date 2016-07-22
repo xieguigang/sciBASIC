@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9df2d7ccf09d84c2a224a63d00899d0, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\SymbolicLink.vb"
+﻿#Region "Microsoft.VisualBasic::d9df2d7ccf09d84c2a224a63d00899d0, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\SymbolicLink.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d328d8a4b1d7e23ac8d99c1d43a920a9, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::d328d8a4b1d7e23ac8d99c1d43a920a9, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 

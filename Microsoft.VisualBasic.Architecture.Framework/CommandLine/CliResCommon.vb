@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a35ac6ec5094a662c893198d6059382d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CliResCommon.vb"
+﻿#Region "Microsoft.VisualBasic::a35ac6ec5094a662c893198d6059382d, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CliResCommon.vb"
 
     ' Author:
     ' 

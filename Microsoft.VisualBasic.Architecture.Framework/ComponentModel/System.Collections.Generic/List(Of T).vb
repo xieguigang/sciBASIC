@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a93998f456bf3133b18af7083455d00, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::1a93998f456bf3133b18af7083455d00, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
 
     ' Author:
     ' 

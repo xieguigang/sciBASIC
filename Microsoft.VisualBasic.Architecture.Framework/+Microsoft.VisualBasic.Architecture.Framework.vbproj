@@ -296,6 +296,7 @@
     <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
+    <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
@@ -358,6 +359,9 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Language\Python\Collection.vb" />
+    <Compile Include="Language\Python\NamedTuple.vb" />
+    <Compile Include="Text\ASCII.vb" />
     <Compile Include="Language\Perl\Tools.vb" />
     <Compile Include="Language\Pointer.vb" />
     <Compile Include="Language\Java\JavaMath.vb" />
@@ -395,6 +399,7 @@
     <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
     <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
+    <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />

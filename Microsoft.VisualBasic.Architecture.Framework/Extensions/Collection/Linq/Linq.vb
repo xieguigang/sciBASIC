@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb7fd08a23a089fb500219d44f495755, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7e6f6fd6dfe94044d9582f83aee27c07, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -429,6 +429,13 @@ Namespace Linq
             Return LQuery
         End Function
 
+        ''' <summary>
+        ''' Convert the iterator source <see cref="IEnumerable"/> to a specific type array.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
         Public Function ToArray(Of T)(source As IEnumerable) As T()
             Return ToVector(source).ToArray(Function(x) If(x Is Nothing, Nothing, DirectCast(x, T)))
         End Function

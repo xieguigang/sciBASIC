@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67fedef44703b1edc201af2fb50c49f7, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::67fedef44703b1edc201af2fb50c49f7, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\Helpers.vb"
 
     ' Author:
     ' 

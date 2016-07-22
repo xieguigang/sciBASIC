@@ -1,27 +1,27 @@
-﻿#Region "Microsoft.VisualBasic::54310639710c166e8666c3c8b63602a9, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::54310639710c166e8666c3c8b63602a9, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -132,7 +132,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Function
 
         ''' <summary>
-        ''' 没有名称属性的映射使用属性名来表述
+        ''' 没有名称属性的映射使用属性名来表述，请注意，字典的Key是属性的名称
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
@@ -194,8 +194,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             If Not mapsAll Then
                 For Each x In From pInfo As PropertyInfo
                               In props
-                              Let attrs As Object() =
-                                  pInfo.GetCustomAttributes(GetType(DataFrameColumnAttribute), True)
+                              Let attrs As Object() = __attrs(pInfo)
                               Where Not attrs.IsNullOrEmpty
                               Let attr = DirectCast(attrs.First, DataFrameColumnAttribute)
                               Select New KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)(attr, pInfo)
@@ -204,11 +203,27 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Else
                 For Each x In From pInfo As PropertyInfo
                               In props
-                              Let attr = New DataFrameColumnAttribute
+                              Let attr = __attrsAll(pInfo)
                               Select New KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)(attr, pInfo)
                     Yield x
                 Next
             End If
+        End Function
+
+        Private Shared Function __attrsAll(pp As PropertyInfo) As DataFrameColumnAttribute
+            Dim attrs As Object() = __attrs(pp)
+            If attrs.IsNullOrEmpty Then
+                Return New DataFrameColumnAttribute
+            Else
+                Return DirectCast(attrs(Scan0), DataFrameColumnAttribute)
+            End If
+        End Function
+
+        Private Shared Function __attrs(pp As PropertyInfo) As Object()
+            Dim df As New List(Of DataFrameColumnAttribute)(
+                pp.GetCustomAttributes(GetType(DataFrameColumnAttribute), True))
+            Return df ' + pp.GetCustomAttributes(GetType(Field), True) _
+            ' .Select(Function(x) DirectCast(x, DataFrameColumnAttribute))
         End Function
     End Class
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f54f9093678af34f6433f2f020fb867, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::2b72baed20e894b2d8d6ad739e16d3d5, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -167,18 +167,18 @@ Namespace CommandLine
             End If
 
             Dim SingleValue As String = ""
-            Dim CommandLine As CommandLine = New CommandLine With {
+            Dim CLI As New CommandLine With {
                 .Name = args(Scan0).ToLower,
                 .Tokens = args.ToArray,
                 .BoolFlags = GetLogicSWs(args.Skip(1).ToArray, SingleValue),
                 ._CLICommandArgvs = Join(args)
             }
 
-            CommandLine.SingleValue = SingleValue
+            CLI.SingleValue = SingleValue
 
             If args.Count > 1 Then
-                CommandLine.__lstParameter = CreateParameterValues(args.Skip(1).ToArray, False)
-                Dim Dk As String() = __checkKeyDuplicated(CommandLine.__lstParameter)
+                CLI.__lstParameter = CreateParameterValues(args.Skip(1).ToArray, False)
+                Dim Dk As String() = __checkKeyDuplicated(CLI.__lstParameter)
                 If Not DuplicatedAllowed AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key As String = String.Join(", ", Dk)
                     Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", args.Skip(1).ToArray))
@@ -187,7 +187,7 @@ Namespace CommandLine
                 End If
             End If
 
-            Return CommandLine
+            Return CLI
         End Function
 
         Const EX_KEY_DUPLICATED As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
@@ -331,15 +331,17 @@ Namespace CommandLine
                 CLI = CLI.Trim
             End If
 
-            If Not Environment.OSVersion.Platform = PlatformID.Win32NT Then
-                'LINUX下面的命令行会将程序集的完整路径也传递进来
-                Dim l As Integer = Len(Application.ExecutablePath)
-                CLI = Mid(CLI, l + 2).Trim
+            ' 由于在前面App位置已经将应用程序的路径去除了，所以这里已经不需要了，只需要直接解析即可
 
-                If String.IsNullOrEmpty(CLI) Then  '在linux下面没有传递进来任何参数，则返回空集合
-                    Return New String() {""}
-                End If
-            End If
+            'If Not Environment.OSVersion.Platform = PlatformID.Win32NT Then
+            '    'LINUX下面的命令行会将程序集的完整路径也传递进来
+            '    Dim l As Integer = Len(Application.ExecutablePath)
+            '    CLI = Mid(CLI, l + 2).Trim
+
+            '    If String.IsNullOrEmpty(CLI) Then  '在linux下面没有传递进来任何参数，则返回空集合
+            '        Return New String() {""}
+            '    End If
+            'End If
 
             Dim Tokens = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
             Tokens = Tokens.TakeWhile(Function(Token) Not String.IsNullOrEmpty(Token.Trim)).ToArray

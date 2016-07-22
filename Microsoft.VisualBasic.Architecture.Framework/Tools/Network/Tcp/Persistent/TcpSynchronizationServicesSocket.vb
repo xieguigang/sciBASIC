@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb3a58e06d6f4da6c98c7f15c00c54a1, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::cb3a58e06d6f4da6c98c7f15c00c54a1, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 

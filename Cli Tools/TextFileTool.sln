@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25402.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FindKeyWord", "FindKeyWord\FindKeyWord.vbproj", "{0A0CF412-967F-4BE4-BE5C-B093501C7606}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "File", "FindKeyWord\File.vbproj", "{0A0CF412-967F-4BE4-BE5C-B093501C7606}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject

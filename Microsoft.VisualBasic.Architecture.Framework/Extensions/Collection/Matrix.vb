@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::998abac82e2f8c50a3a696648e7b2ec3, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::998abac82e2f8c50a3a696648e7b2ec3, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 

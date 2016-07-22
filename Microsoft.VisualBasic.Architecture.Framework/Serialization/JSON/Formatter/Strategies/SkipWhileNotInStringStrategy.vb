@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39f8d85e2b9e003e83601b9849d357a5, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::39f8d85e2b9e003e83601b9849d357a5, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb"
 
     ' Author:
     ' 

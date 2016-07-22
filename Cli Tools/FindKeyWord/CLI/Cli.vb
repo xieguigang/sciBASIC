@@ -1,33 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::0ae0b34e672545e6909a94abe9f5293e, ..\VisualBasic_AppFramework\Cli Tools\FindKeyWord\CLI\Cli.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.IO
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 <PackageNamespace("TextFile.Utilities", Category:=APICategories.CLI_MAN,
                   Url:="",
@@ -36,7 +40,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Module CLI
 
     <ExportAPI("Peeks", Usage:="Peeks /in <input.txt> [/length 1024 /out <out.txt>]")>
-    Public Function Peeks(args As CommandLine.CommandLine) As Integer
+    Public Function Peeks(args As CommandLine) As Integer
         Dim Input As String = args("/in")
         Dim Out As String = args("/out")
         Dim Len As Integer = args.GetValue("/length", 1024)
@@ -58,7 +62,7 @@ Module CLI
                    Description:="The directory which the files searches for, if this parameter is not presented, then the current work directory will be used.")>
     <ParameterInfo("--key", False,
                    Description:="The keyword or regular expression that using for the text search.")>
-    Public Function Found(argvs As CommandLine.CommandLine) As Integer
+    Public Function Found(argvs As CommandLine) As Integer
         Dim Key As String = argvs("--key")
         Dim DIR As String = argvs.GetValue("--dir", App.CurrentDirectory)
         Dim Ext As String = argvs("--ext")
@@ -230,7 +234,7 @@ Module CLI
     End Sub
 
     <ExportAPI("/Tails", Usage:="/Tails /in <in.txt> [/len 1024 /out <out.txt>]")>
-    Public Function Tails(args As CommandLine.CommandLine) As Integer
+    Public Function Tails(args As CommandLine) As Integer
         Dim inFile As String = args("/in")
         Dim out As String = args("/out")
         Dim len As Integer = args.GetValue("/len", 1024)
@@ -244,5 +248,23 @@ Module CLI
         End If
 
         Return 0
+    End Function
+
+    <ExportAPI("/Trim", Usage:="/Trim /in <in.txt> [/out <out.txt>]")>
+    Public Function Trim(args As CommandLine) As Integer
+        Dim [in] As String = args - "/in"
+        Dim out As String = args.GetValue("/out", [in].TrimFileExt & "-TextTrim.txt")
+
+        Using writer As StreamWriter = out.OpenWriter
+            Dim array As New List(Of Char)(ASCII.Nonprintings)
+
+            For Each c As Char In [in].ForEachChar
+                If array.IndexOf(c) = -1 Then
+                    Call writer.Write(c)
+                End If
+            Next
+
+            Return 0
+        End Using
     End Function
 End Module

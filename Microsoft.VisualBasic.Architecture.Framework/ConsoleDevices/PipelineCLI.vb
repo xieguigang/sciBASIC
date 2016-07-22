@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b748df6c60adc10ddb9a5981b9ab679, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::1b748df6c60adc10ddb9a5981b9ab679, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PipelineCLI.vb"
 
     ' Author:
     ' 

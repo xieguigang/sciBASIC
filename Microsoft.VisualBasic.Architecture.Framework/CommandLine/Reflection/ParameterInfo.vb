@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::463d00435e7fb6d8189aa41ae89a264d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ParameterInfo.vb"
+﻿#Region "Microsoft.VisualBasic::463d00435e7fb6d8189aa41ae89a264d, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ParameterInfo.vb"
 
     ' Author:
     ' 

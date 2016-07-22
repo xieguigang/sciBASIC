@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a36197264f10fbe0c6fd473822510672, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\RefValue.vb"
+﻿#Region "Microsoft.VisualBasic::a36197264f10fbe0c6fd473822510672, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\RefValue.vb"
 
     ' Author:
     ' 
