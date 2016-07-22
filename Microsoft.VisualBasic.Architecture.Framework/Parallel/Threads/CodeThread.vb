@@ -49,11 +49,15 @@ Namespace Parallel.Threads
         End Sub
 
         Public Shared Sub Pause(x As CodeThread)
+#Disable Warning
             Call x.__thread.Suspend()
+#Enable Warning
         End Sub
 
         Public Shared Sub [Resume](x As CodeThread)
+#Disable Warning
             Call x.__thread.Resume()
+#Enable Warning
         End Sub
     End Class
 End Namespace
