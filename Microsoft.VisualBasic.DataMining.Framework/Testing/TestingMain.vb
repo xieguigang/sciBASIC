@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::f61b060e61cd26432b0d0ecbeb89ac3e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Testing\TestingMain.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.DataMining.MathGamma
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
 
 Module TestingMain
 
@@ -54,6 +56,31 @@ Module TestingMain
     End Class
 
     Sub Main()
+
+        Dim ann As New NeuralNetwork.Network(5, 50, 1, 0.01, , New IFuncs.SigmoidFunction)
+        Dim learn As New NeuralNetwork.TrainingUtils(ann)
+
+        learn.Add({10, 20, 15, 33, 65}, {1})
+        learn.Add({10, 20, 15, 33, 65}, {1})
+        learn.Add({10, 20, 15, 33, 65}, {1})
+        learn.Add({10, 20, 15, 33, 65}, {1})
+        learn.Add({10, 20, 15, 33, 65}, {1})
+        learn.Add({10, 20, 0, 33, 65}, {0})
+        learn.Add({10, 20, 0, 33, 65}, {0})
+        learn.Add({10, 20, 0, 33, 65}, {0})
+        learn.Add({10, 20, 0, 33, 65}, {0})
+        learn.Add({10, 20, 0, 33, 65}, {0})
+        learn.Add({10, 20, 0, 33, 0}, {0.5})
+        learn.Add({3, 20, 0, 3, 0}, {0.75})
+
+        learn.Train()
+
+        learn.NeuronNetwork.Compute({10, 20, 15, 33, 65}).GetJson.__DEBUG_ECHO
+        learn.NeuronNetwork.Compute({10, 20, 0, 33, 65}).GetJson.__DEBUG_ECHO
+        learn.NeuronNetwork.Compute({10, 20, 0, 33, 0}).GetJson.__DEBUG_ECHO
+        learn.NeuronNetwork.Compute({3, 20, 0, 3, 0.9}).GetJson.__DEBUG_ECHO
+
+        Pause()
 
         Call 5.0R.Γ.__DEBUG_ECHO
         Call 1.6R.Γ.__DEBUG_ECHO
