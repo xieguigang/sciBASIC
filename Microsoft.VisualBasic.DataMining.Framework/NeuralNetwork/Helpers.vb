@@ -70,6 +70,18 @@ Namespace NeuralNetwork
 
         Dim maps As New Dictionary(Of T, Double)
 
+        Default Public Property item(x As T) As Double
+            Get
+                If maps.ContainsKey(x) Then
+                    Return maps(x)
+                End If
+                Return Nothing
+            End Get
+            Set(value As Double)
+                maps(x) = value
+            End Set
+        End Property
+
         Public Sub AddMap(x As T, value As Double)
             Call maps.Add(x, value)
         End Sub

@@ -59,26 +59,36 @@ Module TestingMain
 
         Dim ann As New NeuralNetwork.Network(5, 50, 1, 0.01, , New IFuncs.SigmoidFunction)
         Dim learn As New NeuralNetwork.TrainingUtils(ann)
+        Dim map As New Encoder(Of Char)
 
-        learn.Add({10, 20, 15, 33, 65}, {1})
-        learn.Add({10, 20, 15, 33, 65}, {1})
-        learn.Add({10, 20, 15, 33, 65}, {1})
-        learn.Add({10, 20, 15, 33, 65}, {1})
-        learn.Add({10, 20, 15, 33, 65}, {1})
-        learn.Add({10, 20, 0, 33, 65}, {0})
-        learn.Add({10, 20, 0, 33, 65}, {0})
-        learn.Add({10, 20, 0, 33, 65}, {0})
-        learn.Add({10, 20, 0, 33, 65}, {0})
-        learn.Add({10, 20, 0, 33, 65}, {0})
-        learn.Add({10, 20, 0, 33, 0}, {0.5})
-        learn.Add({3, 20, 0, 3, 0}, {0.75})
+        Call map.AddMap("A", 0)
+        Call map.AddMap("B", 0.15)
+        Call map.AddMap("C", 0.2)
+        Call map.AddMap("D", 0.3)
+        Call map.AddMap("E", 0.6)
+        Call map.AddMap("F", 0.7)
+        Call map.AddMap("G", 0.9)
+        Call map.AddMap("Z", 1)
+
+        learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        learn.Add({10, 20, 0, 33, 0}, {map("D")})
+        learn.Add({3, 20, 0, 3, 0}, {map("F")})
 
         learn.Train()
 
-        learn.NeuronNetwork.Compute({10, 20, 15, 33, 65}).GetJson.__DEBUG_ECHO
-        learn.NeuronNetwork.Compute({10, 20, 0, 33, 65}).GetJson.__DEBUG_ECHO
-        learn.NeuronNetwork.Compute({10, 20, 0, 33, 0}).GetJson.__DEBUG_ECHO
-        learn.NeuronNetwork.Compute({3, 20, 0, 3, 0.9}).GetJson.__DEBUG_ECHO
+        map.Decode(learn.NeuronNetwork.Compute({10, 20, 15, 33, 65}).First).GetJson.__DEBUG_ECHO
+        map.Decode(learn.NeuronNetwork.Compute({10, 20, 0, 33, 65}).First).GetJson.__DEBUG_ECHO
+        map.Decode(learn.NeuronNetwork.Compute({10, 20, 0, 33, 0}).First).GetJson.__DEBUG_ECHO
+        map.Decode(learn.NeuronNetwork.Compute({3, 20, 0, 3, 0.2}).First).GetJson.__DEBUG_ECHO
 
         Pause()
 
