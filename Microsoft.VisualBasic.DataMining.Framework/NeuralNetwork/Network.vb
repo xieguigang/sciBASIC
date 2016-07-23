@@ -55,7 +55,7 @@ Namespace NeuralNetwork
                        Optional momentum__2 As Double = Nothing,
                        Optional active As IFuncs.IActivationFunction = Nothing)
 
-            LearnRate = If(learnRate__1 = 0R, 0.4, learnRate__1)
+            LearnRate = If(learnRate__1 = 0R, 0.1, learnRate__1)
             Momentum = If(momentum__2 = 0R, 0.9, momentum__2)
             InputLayer = New List(Of Neuron)()
             HiddenLayer = New List(Of Neuron)()
@@ -121,7 +121,8 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' Compute result output for the neuron network <paramref name="inputs"/>
+        ''' Compute result output for the neuron network <paramref name="inputs"/>.
+        ''' (请注意ANN的输出值是在0-1之间的，所以还需要进行额外的编码和解码)
         ''' </summary>
         ''' <param name="inputs"></param>
         ''' <returns></returns>
