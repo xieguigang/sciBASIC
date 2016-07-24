@@ -52,6 +52,14 @@
             Return o
         End Operator
 
+        Public Shared Narrowing Operator CType(x As Value(Of T)) As T
+            Return x.value
+        End Operator
+
+        Public Shared Widening Operator CType(x As T) As Value(Of T)
+            Return New Value(Of T)(x)
+        End Operator
+
         ''' <summary>
         ''' Value assignment
         ''' </summary>
