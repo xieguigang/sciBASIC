@@ -529,7 +529,10 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type,
+                                       args As CommandLine.CommandLine,
+                                       executeEmpty As __ExecuteEmptyCLI,
+                                       <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.CLICommandArgvs.__DEBUG_ECHO
 #End If
@@ -635,7 +638,10 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, executeFile As __ExecuteFile, <CallerMemberName> Optional caller As String = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type,
+                                       args As CommandLine.CommandLine,
+                                       executeFile As __ExecuteFile,
+                                       <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
@@ -668,7 +674,8 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine,
+    <Extension> Public Function RunCLI(Interpreter As Type,
+                                       args As CommandLine.CommandLine,
                                        executeFile As __ExecuteFile,
                                        executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
 #If DEBUG Then
