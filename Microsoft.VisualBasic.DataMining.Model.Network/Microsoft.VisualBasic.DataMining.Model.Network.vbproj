@@ -71,9 +71,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <OutputPath>bin\docs\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <OutputPath>..\..\sdk\bin\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -66,9 +66,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <OutputPath>bin\docs\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.Csv.Extensions.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <OutputPath>..\..\..\..\sdk\bin\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DocumentFormat.Csv.Extensions.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

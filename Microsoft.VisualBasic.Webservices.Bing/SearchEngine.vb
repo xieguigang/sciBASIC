@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.HtmlParser
 
 ''' <summary>
-''' Interface wrapper of Microsoft bing.com search engine.
+''' VisualBasic interface wrapper of Microsoft bing.com search engine.
 ''' </summary>
 <[PackageNamespace]("Bing",
                     Publisher:="",
@@ -45,6 +45,11 @@ Public Module SearchEngineProvider
     Const TotalCount As String = "<span class=""sb_count"">\d+ results</span>"
     Const TranslateThisPage As String = "Translate this page"
 
+    ''' <summary>
+    ''' Generate search url
+    ''' </summary>
+    ''' <param name="keyword"></param>
+    ''' <returns></returns>
     Public Function URLProvider(keyword As String) As String
         Dim Url As String = String.Format(BingURL, WebServiceUtils.UrlEncode(keyword))
         Return Url
@@ -98,6 +103,11 @@ Public Module SearchEngineProvider
 
     Const NextPage As String = "<a href=""/search\?q=.*?"" class=""sb_pagN"" title=""Next """
 
+    ''' <summary>
+    ''' Download next page
+    ''' </summary>
+    ''' <param name="html"></param>
+    ''' <returns></returns>
     Private Function __getNextPageLink(html As String) As String
         Dim link As String = Regex.Match(html, NextPage, RegexICSng).Value
         link = Regex.Matches(link, "<a href=""/search\?q=.*?""", RegexICSng).ToArray.LastOrDefault
