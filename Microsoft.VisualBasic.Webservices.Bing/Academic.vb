@@ -27,6 +27,9 @@
 
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
+''' <summary>
+''' Bing Academic web API for VisualBasic
+''' </summary>
 <PackageNamespace("Bing.Academic",
                   Url:="http://cn.bing.com/academic/?FORM=Z9LH2",
                   Description:="",

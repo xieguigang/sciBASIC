@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54d0a37b54bdb885181a39e16dff7392, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\StatementMatches.vb"
+﻿#Region "Microsoft.VisualBasic::54d0a37b54bdb885181a39e16dff7392, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\StatementMatches.vb"
 
     ' Author:
     ' 

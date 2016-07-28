@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc408c3a1d39e0422425bef6dc74258, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::9dc408c3a1d39e0422425bef6dc74258, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\HtmlParser\Table.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,8 @@ Namespace HtmlParser
         ''' </summary>
         ''' <param name="html"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function GetTablesHTML(html As String) As String()
             Dim tbls As String() = Regex.Matches(html, "<table.+?</table>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
             Return tbls
@@ -51,6 +53,8 @@ Namespace HtmlParser
         ''' </summary>
         ''' <param name="table"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function GetRowsHTML(table As String) As String()
             Dim rows As String() = Regex.Matches(table, "<tr.+?</tr>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
             Return rows
@@ -61,6 +65,8 @@ Namespace HtmlParser
         ''' </summary>
         ''' <param name="row"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function GetColumnsHTML(row As String) As String()
             Dim cols As String() = Regex.Matches(row, "<td.+?</td>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
             cols = cols.ToArray(Function(s) s.GetValue)

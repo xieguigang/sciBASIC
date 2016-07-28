@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa6c61aa82f218b336af6ab4e6d61934, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::aa6c61aa82f218b336af6ab4e6d61934, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\AnimatedBar.vb"
 
     ' Author:
     ' 

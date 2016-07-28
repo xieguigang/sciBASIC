@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9695026be14bfe0a4a345bcb28c8ece2, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\Win32API.vb"
+﻿#Region "Microsoft.VisualBasic::9695026be14bfe0a4a345bcb28c8ece2, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\Win32API.vb"
 
     ' Author:
     ' 
@@ -176,7 +176,7 @@ Namespace Win32
         Declare Function CreateCompatibleBitmap Lib "gdi32" (hdc As Integer, nWidth As Integer, nHeight As Integer) As Integer
         Declare Function CreateBitmapIndirect Lib "gdi32" (lpBitmap As C_BITMAP) As Integer
         '
-        Declare Function GetObject Lib "gdi32" Alias "GetObjectA" (hObject As Integer, nCount As Integer, lpObject As Object) As Integer
+        Declare Function GetObjectA Lib "gdi32" Alias "GetObjectA" (hObject As Integer, nCount As Integer, lpObject As Object) As Integer
         Declare Function SelectObject Lib "gdi32" (hdc As Integer, hObject As Integer) As Integer
         Declare Function DeleteObject Lib "gdi32" (hObject As Integer) As Integer
         '

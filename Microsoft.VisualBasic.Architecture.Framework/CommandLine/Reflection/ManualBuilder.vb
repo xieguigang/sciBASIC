@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2db428dd99b74d049d68a17a53b76f9c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::2db428dd99b74d049d68a17a53b76f9c, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ManualBuilder.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,11 @@ Namespace CommandLine.Reflection
             Dim fore As ConsoleColor = Console.ForegroundColor
 
             Console.ForegroundColor = ConsoleColor.Cyan
-            Call Console.Write(App.ExecutablePath & " ")
+            Call Console.Write(
+                If(App.Platform = PlatformID.Unix OrElse
+                App.Platform = PlatformID.MacOSX,
+                App.ExecutablePath.TrimSuffix,
+                App.ExecutablePath) & " ")
             Console.ForegroundColor = ConsoleColor.Green
             Call Console.WriteLine(api.Usage)
             Console.ForegroundColor = fore

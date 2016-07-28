@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3353f5306f80ed29b77ac6672b7e09db, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::3353f5306f80ed29b77ac6672b7e09db, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
 
     ' Author:
     ' 

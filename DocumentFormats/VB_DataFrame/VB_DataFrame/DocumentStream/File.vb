@@ -395,9 +395,9 @@ Namespace DocumentStream
 
             Dim CsvFile As File = New File
             CsvFile += New RowObject({If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
-            CsvFile += (From token As KeyValuePair(Of String, Integer)
-                        In TokensGroup.AsParallel
-                        Select New RowObject(New String() {token.Key, CStr(token.Value)})).ToArray
+            CsvFile += From token As KeyValuePair(Of String, Integer)
+                       In TokensGroup.AsParallel
+                       Select New RowObject({token.Key, CStr(token.Value)})
             Return CsvFile
         End Function
 

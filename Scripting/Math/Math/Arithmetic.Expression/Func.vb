@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::36ab644b275a78e5bf887116b82e70db, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\Func.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.Mathematical.Types
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' User define function.(用户自定义函数)
@@ -84,7 +85,7 @@ Public Class Func
 
         Public Function getValue(name As String) As Double
             If __args.ContainsKey(name.ToLower.ShadowCopy(name)) Then
-                Return __args(name).Value
+                Return __args(name).value
             Else
                 Return __engine.GetValue(name)
             End If
@@ -94,7 +95,7 @@ Public Class Func
 
         Public Function Evaluate(args As Double()) As Double
             For Each x As SeqValue(Of Double) In args.SeqIterator  ' 对lambda表达式设置环境变量
-                __args(__names(x.i)).Value = x.obj
+                __args(__names(x.i)).value = x.obj
             Next
 
             Return __expr.Evaluate

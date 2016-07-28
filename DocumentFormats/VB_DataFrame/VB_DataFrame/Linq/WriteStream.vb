@@ -55,6 +55,12 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ReadOnly RowWriter As RowWriter
 
+        Public ReadOnly Property BaseStream As StreamWriter
+            Get
+                Return _fileIO
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -114,7 +120,7 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Public Function Flush(source As IEnumerable(Of T)) As Boolean
+        Public Function Flush(source As IEnumerable(Of T), Optional join As Boolean = True) As Boolean
             If source.IsNullOrEmpty Then
                 Return True  ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
             End If
@@ -128,7 +134,13 @@ Namespace DocumentStream.Linq
                     RowWriter.ToRow(line)
                 Select CreatedRow.AsLine  ' 对象到数据的投影
 
-            Call _fileIO.WriteLine(String.Join(vbCrLf, LQuery))
+            If join Then
+                Call _fileIO.WriteLine(String.Join(_fileIO.NewLine, LQuery))
+            Else
+                For Each line As String In LQuery
+                    Call _fileIO.WriteLine(line)
+                Next
+            End If
 
             Return True
         End Function

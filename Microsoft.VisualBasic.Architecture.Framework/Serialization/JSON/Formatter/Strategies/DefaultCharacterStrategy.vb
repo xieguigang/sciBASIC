@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f90df1e5d53cf78c06ea586e9bad228, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5f90df1e5d53cf78c06ea586e9bad228, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb"
 
     ' Author:
     ' 

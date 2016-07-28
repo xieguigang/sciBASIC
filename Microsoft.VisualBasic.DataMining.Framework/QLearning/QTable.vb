@@ -28,7 +28,7 @@
 Imports System
 Imports System.Collections
 Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.DataMining.Framework.QLearning.DataModel
+Imports Microsoft.VisualBasic.DataMining.QLearning.DataModel
 Imports Microsoft.VisualBasic
 
 Namespace QLearning

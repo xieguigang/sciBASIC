@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7178e0c61bb93c4017537d1ebbba1410, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::df1e5c96903ca3c77ef1504fe040db1e, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,8 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Implements ICollection(Of NamedValue(Of String))
+    Public Class CommandLine : Inherits ClassObject
+        Implements ICollection(Of NamedValue(Of String))
         Implements sIdEnumerable
 
         Friend __lstParameter As New List(Of NamedValue(Of String))
@@ -164,6 +165,24 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Overrides Function ToString() As String
             Return CLICommandArgvs
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">parameter name</param>
+        ''' <returns></returns>
+        Public Function GetFullDIRPath(name As String) As String
+            Return FileIO.FileSystem.GetDirectoryInfo(Me(name)).FullName
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">parameter name</param>
+        ''' <returns></returns>
+        Public Function GetFullFilePath(name As String) As String
+            Return FileIO.FileSystem.GetFileInfo(Me(name)).FullName
         End Function
 
         ''' <summary>

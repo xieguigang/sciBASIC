@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::964cce72450aaf37094e053d9514ad04, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Text\GB2312.vb"
+﻿#Region "Microsoft.VisualBasic::964cce72450aaf37094e053d9514ad04, ..\Microsoft.VisualBasic.Architecture.Framework\Text\GB2312.vb"
 
     ' Author:
     ' 

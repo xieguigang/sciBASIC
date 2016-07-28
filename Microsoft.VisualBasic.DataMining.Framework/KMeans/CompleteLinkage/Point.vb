@@ -28,7 +28,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Text
-Imports Microsoft.VisualBasic.DataMining.Framework.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans.CompleteLinkage

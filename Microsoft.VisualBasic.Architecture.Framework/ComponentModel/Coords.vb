@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dbfda88c0d39c71fa41fbbc5e99319b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Coords.vb"
+﻿#Region "Microsoft.VisualBasic::6dbfda88c0d39c71fa41fbbc5e99319b, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Coords.vb"
 
     ' Author:
     ' 

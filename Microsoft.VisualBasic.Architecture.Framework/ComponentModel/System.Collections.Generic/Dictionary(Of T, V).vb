@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc41d18ff12bc15d659d247eeb8de740, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::dc41d18ff12bc15d659d247eeb8de740, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -179,5 +179,17 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     Public Shared Operator -(hash As Dictionary(Of V), id As String) As Dictionary(Of V)
         Call hash.Remove(id)
         Return hash
+    End Operator
+
+    Public Shared Widening Operator CType(source As System.Collections.Generic.List(Of V)) As Dictionary(Of V)
+        Return source.ToDictionary
+    End Operator
+
+    Public Shared Widening Operator CType(source As V()) As Dictionary(Of V)
+        Return source.ToDictionary
+    End Operator
+
+    Public Shared Narrowing Operator CType(source As Dictionary(Of V)) As List(Of V)
+        Return New List(Of V)(source.Values)
     End Operator
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99a71133c1240784a96476c6bdce8e23, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::29c41421f871e7f9dbc8c132b004d471, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -29,10 +29,52 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
+
+    ''' <summary>
+    ''' Enumerate all of the chars in the target text file.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ForEachChar(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of Char)
+        Using file As New FileStream(path, FileMode.Open)
+            Using reader As New IO.BinaryReader(file, encoding.GetEncodings)
+                Dim bs As Stream = reader.BaseStream
+                Dim l As Long = bs.Length
+
+                Do While bs.Position < l
+                    Yield reader.ReadChar
+                Loop
+            End Using
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' Open text file writer, this function will auto handle all things.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
+        Call "".SaveTo(path)
+
+        Dim file As New FileStream(path, FileMode.OpenOrCreate)
+        Dim writer As New StreamWriter(file, encoding.GetEncodings) With {
+            .NewLine =
+            If(newLine Is Nothing OrElse newLine.Length = 0,
+            vbLf,
+            newLine)
+        }
+
+        Return writer
+    End Function
 
     ''' <summary>
     ''' 通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作
@@ -41,12 +83,14 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension>
     Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
-        Dim fs As New FileStream(path, FileMode.Open)
-        Dim reader As New StreamReader(fs)
+        Using fs As New FileStream(path, FileMode.Open)
+            Using reader As New StreamReader(fs)
 
-        Do While Not reader.EndOfStream
-            Yield reader.ReadLine
-        Loop
+                Do While Not reader.EndOfStream
+                    Yield reader.ReadLine
+                Loop
+            End Using
+        End Using
     End Function
 
     ''' <summary>
@@ -117,8 +161,13 @@ Public Module TextDoc
                                        <Parameter("Path")> path As String,
                                        <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing) As Boolean
 
-        If String.IsNullOrEmpty(path) Then Return False
-        If encoding Is Nothing Then encoding = Encoding.Default
+        If String.IsNullOrEmpty(path) Then
+            Return False
+        End If
+
+        If encoding Is Nothing Then
+            encoding = Encoding.Default
+        End If
 
         Dim DIR As String
 
@@ -192,12 +241,21 @@ Public Module TextDoc
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(array As IEnumerable(Of String), path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(array As IEnumerable(Of String),
+                                       path As String,
+                                       Optional encoding As Encoding = Nothing) As Boolean
+
         If String.IsNullOrEmpty(path) Then Return False
-        If encoding Is Nothing Then encoding = System.Text.Encoding.Default
-        Dim DIR = FileIO.FileSystem.GetParentPath(path)
-        Call FileIO.FileSystem.CreateDirectory(DIR)
-        Call IO.File.WriteAllLines(path, array, encoding)
+        If encoding Is Nothing Then encoding = Encoding.Default
+
+        Call "".SaveTo(path)
+
+        Using file As New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding)
+            For Each line As String In array.SafeQuery
+                Call file.WriteLine(line)
+            Next
+        End Using
+
         Return True
     End Function
 

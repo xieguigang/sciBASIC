@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21d70a6abd9dc838c9f83b14db95177c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::21d70a6abd9dc838c9f83b14db95177c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ColorCube.vb"
 
     ' Author:
     ' 

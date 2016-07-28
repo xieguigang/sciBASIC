@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20cf225fe10c5cd36fc3a426a1153fee, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::20cf225fe10c5cd36fc3a426a1153fee, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Parameter.vb"
 
     ' Author:
     ' 

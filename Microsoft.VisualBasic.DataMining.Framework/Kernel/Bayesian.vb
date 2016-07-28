@@ -26,7 +26,7 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.DataMining.Framework.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Extensions
 Imports Microsoft.VisualBasic.Linq.Extensions
 

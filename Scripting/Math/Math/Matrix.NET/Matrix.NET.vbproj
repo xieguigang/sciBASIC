@@ -92,7 +92,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\..\GCModeller\GCModeller-x64\</OutputPath>
+    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
     <BaseAddress>285212672</BaseAddress>
     <DocumentationFile>Docs\GeneralMatrix.xml</DocumentationFile>
     <Optimize>true</Optimize>

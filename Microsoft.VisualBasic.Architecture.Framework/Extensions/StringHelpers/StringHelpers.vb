@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5b91455254db6e8f3918e0a345d4cbf, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::f5b91455254db6e8f3918e0a345d4cbf, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,48 @@ Imports Microsoft.VisualBasic.ComponentModel
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <Extension>
+    Public Function CharString(chs As IEnumerable(Of Char)) As String
+        Return New String(chs.ToArray)
+    End Function
+
+    '
+    ' Summary:
+    '     Replaces the format item in a specified string with the string representation
+    '     of a corresponding object in a specified array.
+    '
+    ' Parameters:
+    '   format:
+    '     A composite format string.
+    '
+    '   args:
+    '     An object array that contains zero or more objects to format.
+    '
+    ' Returns:
+    '     A copy of format in which the format items have been replaced by the string representation
+    '     of the corresponding objects in args.
+    '
+    ' Exceptions:
+    '   T:System.ArgumentNullException:
+    '     format or args is null.
+    '
+    '   T:System.FormatException:
+    '     format is invalid.-or- The index of a format item is less than zero, or greater
+    '     than or equal to the length of the args array.
+
+    ''' <summary>
+    ''' Replaces the format item in a specified string with the string representation
+    ''' of a corresponding object in a specified array.
+    ''' </summary>
+    ''' <param name="s">A composite format string.</param>
+    ''' <param name="args">An object array that contains zero or more objects to format.</param>
+    ''' <returns>A copy of format in which the format items have been replaced by the string representation
+    ''' of the corresponding objects in args.</returns>
+    <Extension>
+    Public Function sFormat(s As String, ParamArray args As Object()) As String
+        Return String.Format(s, args)
+    End Function
+
     ''' <summary>
     ''' this is to emulate what's evailable in PHP
     ''' </summary>
@@ -59,15 +101,22 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="delimiter"></param>
+    ''' <param name="trim">Needs Removes all leading and trailing white-space characters from 
+    ''' the current <see cref="System.String"/> object.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetTagValue(s As String, Optional delimiter As String = " ") As NamedValue(Of String)
+    Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False) As NamedValue(Of String)
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
         If p = 0 Then
             Return New NamedValue(Of String)("", s)
         Else
             Dim key As String = Mid(s, 1, p - delimiter.Length)
             Dim value As String = Mid(s, p + delimiter.Length)
+
+            If trim Then
+                value = value.Trim
+            End If
+
             Return New NamedValue(Of String)(key, value)
         End If
     End Function
@@ -439,6 +488,10 @@ Public Module StringHelpers
                 Call list.Add(line)
             End If
         Next
+
+        If list.Count > 0 Then
+            Yield list.ToArray
+        End If
     End Function
 
     ''' <summary>

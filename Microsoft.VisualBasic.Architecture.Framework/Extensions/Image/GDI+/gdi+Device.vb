@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::926938aead5510b7feec8736e1af9102, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\gdi+Device.vb"
+﻿#Region "Microsoft.VisualBasic::926938aead5510b7feec8736e1af9102, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\gdi+Device.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df6ec8597408a15c72583979f335da0b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::d51d6e9d6c27ebfecf7c78a5af7c5105, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Public Module ProgramPathSearchTool
         If path.DirectoryExists Then
             Return path.ParentPath & "/" & path.BaseName & addTag
         Else
-            Return path.TrimFileExt & addTag
+            Return path.TrimSuffix & addTag
         End If
     End Function
 
@@ -777,7 +777,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="file"></param>
     ''' <returns></returns>
     <ExportAPI("File.Ext.Trim")>
-    <Extension> Public Function TrimFileExt(file As String) As String
+    <Extension> Public Function TrimSuffix(file As String) As String
         Try
             Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
             Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)

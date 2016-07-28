@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87dea54246337eb946adf9e48cc9972d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::87dea54246337eb946adf9e48cc9972d, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@ Namespace CommandLine.Reflection
 
     Module SDKManual
 
-        Public ReadOnly Property DocPath As String = $"{App.ExecutablePath.TrimFileExt}.md"
+        Public ReadOnly Property DocPath As String = $"{App.ExecutablePath.TrimSuffix}.md"
 
         ''' <summary>
         ''' 这个是用于在终端上面显示的无格式的文本输出

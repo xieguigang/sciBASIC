@@ -65,4 +65,49 @@ Namespace NeuralNetwork
         ''' </summary>
         MinimumError
     End Enum
+
+    Public Class Encoder(Of T)
+
+        Dim maps As New Dictionary(Of T, Double)
+
+        Default Public Property item(x As T) As Double
+            Get
+                If maps.ContainsKey(x) Then
+                    Return maps(x)
+                End If
+                Return Nothing
+            End Get
+            Set(value As Double)
+                maps(x) = value
+            End Set
+        End Property
+
+        Public Sub AddMap(x As T, value As Double)
+            Call maps.Add(x, value)
+        End Sub
+
+        Public Function Encode(x As T) As Double
+            Return maps(x)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="out">神经网络的输出值</param>
+        ''' <returns></returns>
+        Public Function Decode(out As Double) As T
+            Dim minX As T, minD As Double = 9999
+
+            For Each x In maps
+                Dim d As Double = Math.Abs(x.Value - out)
+
+                If d < minD Then
+                    minD = d
+                    minX = x.Key
+                End If
+            Next
+
+            Return minX
+        End Function
+    End Class
 End Namespace
