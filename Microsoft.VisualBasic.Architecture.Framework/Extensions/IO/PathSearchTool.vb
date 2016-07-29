@@ -46,6 +46,11 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
                     Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 
+    <Extension>
+    Public Function UnixPath(path As String) As String
+        Return FileIO.FileSystem.GetFileInfo(path).FullName.Replace("\", "/")
+    End Function
+
     ''' <summary>
     ''' Make directory
     ''' </summary>
