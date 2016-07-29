@@ -39,9 +39,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     ''' A namespace within a project -- typically a collection of related types.  Equates to a .net Namespace.
     ''' </summary>
     Public Class ProjectNamespace
-        Private project As Project
 
-        Private m_types As Dictionary(Of String, ProjectType)
+        Dim project As Project
+        Dim m_types As Dictionary(Of String, ProjectType)
 
         Public Property Path() As String
 
@@ -94,7 +94,6 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             If hexoPublish Then
                 text = $"---
 title: {Me.Path}
-date: {Now.ToString}
 ---"
                 text = text & vbCrLf & vbCrLf & typeList.ToString
             Else
