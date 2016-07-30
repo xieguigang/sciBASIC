@@ -52,7 +52,11 @@ Namespace CommandLine.Reflection
             Dim fore As ConsoleColor = Console.ForegroundColor
 
             Console.ForegroundColor = ConsoleColor.Cyan
-            Call Console.Write(App.ExecutablePath & " ")
+            Call Console.Write(
+                If(App.Platform = PlatformID.Unix OrElse
+                App.Platform = PlatformID.MacOSX,
+                App.ExecutablePath.TrimSuffix,
+                App.ExecutablePath) & " ")
             Console.ForegroundColor = ConsoleColor.Green
             Call Console.WriteLine(api.Usage)
             Console.ForegroundColor = fore

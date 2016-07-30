@@ -1,37 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::259b9220c31f9c9141d8d5c13a388c4c, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports System.Reflection
 Imports System.Text
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
-Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Terminal
 
 Namespace DocumentStream
 
@@ -61,14 +62,15 @@ Namespace DocumentStream
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
 
         ''' <summary>
-        ''' 
+        ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
         ''' </summary>
         ''' <param name="MappingData">{oldFieldName, newFieldName}</param>
         ''' <remarks></remarks>
         Public Sub ChangeMapping(MappingData As Dictionary(Of String, String))
             For Each ColumnName As KeyValuePair(Of String, String) In MappingData
                 Dim p As Integer = __columnList.IndexOf(ColumnName.Key)
-                If Not p = -1 Then '由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
+
+                If Not p = -1 Then ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
                     __columnList(p) = ColumnName.Value
                     _SchemaOridinal.Remove(ColumnName.Key)
                     _SchemaOridinal.Add(ColumnName.Value, p)

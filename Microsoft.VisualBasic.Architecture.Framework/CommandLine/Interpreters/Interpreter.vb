@@ -298,8 +298,10 @@ Namespace CommandLine
             If String.IsNullOrEmpty(CommandName) Then 'List all commands.
                 Call Console.WriteLine(HelpSummary(False))
             Else
-                If __API_InfoHash.ContainsKey(CommandName.ToLower.ShadowCopy(CommandName)) Then
-                    Call __API_InfoHash(CommandName).PrintHelp
+                Dim name As New Value(Of String)
+
+                If __API_InfoHash.ContainsKey(name = CommandName.ToLower) Then
+                    Call __API_InfoHash(name).PrintHelp
                 Else
                     Dim lst As String() = Me.ListPossible(CommandName)
 
@@ -309,8 +311,9 @@ Namespace CommandLine
                         Call Console.WriteLine(PS1.Fedora12.ToString & " ?" & CommandName)
                     Else
                         Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
-                        For Each name As String In lst
-                            Call Console.WriteLine("    " & name)
+
+                        For Each cName As String In lst
+                            Call Console.WriteLine("    " & cName)
                         Next
                     End If
 
