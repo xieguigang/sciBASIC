@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::0f9b79c1629e123a691665430122af08, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Protocols\UserAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Protocols
 
@@ -60,7 +61,7 @@ Namespace Protocols
         Public Function InitUser(remote As IPEndPoint, uid As String) As InitPOSTBack
             Dim req = RequestStream.CreateProtocol(ProtocolEntry, Protocols.InitUser, uid)
             Dim rep = New AsynInvoke(remote).SendMessage(req)
-            Dim args = rep.LoadObject(AddressOf Serialization.LoadObject(Of InitPOSTBack))
+            Dim args = rep.LoadObject(AddressOf JSON.LoadObject(Of InitPOSTBack))
             args.Portal.IPAddress = remote.IPAddress ' 服务器端偷懒了
             Return args
         End Function

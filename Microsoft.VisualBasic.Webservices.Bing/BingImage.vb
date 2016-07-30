@@ -77,6 +77,10 @@ Public Module BingImage
         End If
     End Sub
 
+    ''' <summary>
+    ''' Get today bing image url as wpf resource data source.
+    ''' </summary>
+    ''' <returns></returns>
     Private Async Function GetCurrentBingImageUrl() As Task(Of Uri)
         Try
             Dim client = New HttpClient()

@@ -260,8 +260,7 @@ Namespace CommandLine
             End If
 
             Return obj.StartsWith("-") OrElse
-                obj.StartsWith("/") OrElse
-                obj.StartsWith("\")
+                obj.StartsWith("/")
         End Function
 
         ''' <summary>
