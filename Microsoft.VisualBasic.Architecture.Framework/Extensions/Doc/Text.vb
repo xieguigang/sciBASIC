@@ -62,9 +62,18 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
+    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
         Call "".SaveTo(path)
-        Return New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding.GetEncodings)
+
+        Dim file As New FileStream(path, FileMode.OpenOrCreate)
+        Dim writer As New StreamWriter(file, encoding.GetEncodings) With {
+            .NewLine =
+            If(newLine Is Nothing OrElse newLine.Length = 0,
+            vbLf,
+            newLine)
+        }
+
+        Return writer
     End Function
 
     ''' <summary>

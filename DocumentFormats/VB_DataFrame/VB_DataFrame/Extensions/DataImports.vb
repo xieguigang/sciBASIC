@@ -27,12 +27,13 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic
 
 ''' <summary>
-''' Module provides the csv data imports operation of the csv document creates from a text file.(模块提供了从文本文档之中导入数据的方法)
+''' Module provides the csv data imports operation of the csv document creates from a text file.
+''' (模块提供了从文本文档之中导入数据的方法)
 ''' </summary>
 ''' <remarks></remarks>
 ''' 
@@ -67,6 +68,14 @@ Public Module DataImports
         Return Csv
     End Function
 
+    ''' <summary>
+    ''' Imports data source by using specific delimiter
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path"></param>
+    ''' <param name="delimiter"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension> Public Function [Imports](Of T As Class)(path As String, Optional delimiter As String = ",", Optional encoding As System.Text.Encoding = Nothing) As T()
         Dim source As DocumentStream.File = [Imports](path, delimiter, encoding)
         If source.RowNumbers = 0 Then

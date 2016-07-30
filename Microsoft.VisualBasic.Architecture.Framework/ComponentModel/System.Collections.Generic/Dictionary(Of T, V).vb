@@ -180,4 +180,16 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Call hash.Remove(id)
         Return hash
     End Operator
+
+    Public Shared Widening Operator CType(source As System.Collections.Generic.List(Of V)) As Dictionary(Of V)
+        Return source.ToDictionary
+    End Operator
+
+    Public Shared Widening Operator CType(source As V()) As Dictionary(Of V)
+        Return source.ToDictionary
+    End Operator
+
+    Public Shared Narrowing Operator CType(source As Dictionary(Of V)) As List(Of V)
+        Return New List(Of V)(source.Values)
+    End Operator
 End Class

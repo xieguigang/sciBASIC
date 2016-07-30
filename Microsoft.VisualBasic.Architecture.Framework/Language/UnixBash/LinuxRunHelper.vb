@@ -80,7 +80,7 @@ mono ""{cmd}"" $cli
         ''' </summary>
         ''' <returns></returns>
         Public Function BashShell() As Integer
-            Dim path As String = Assembly.GetEntryAssembly.Location.TrimFileExt
+            Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix
             Return BashRun.SaveTo(path)
         End Function
 
@@ -89,7 +89,7 @@ mono ""{cmd}"" $cli
         ''' </summary>
         ''' <returns></returns>
         Public Function PerlShell() As Integer
-            Dim path As String = Assembly.GetEntryAssembly.Location.TrimFileExt & ".pl"
+            Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix & ".pl"
             Return ScriptMe.SaveTo(path)
         End Function
 
