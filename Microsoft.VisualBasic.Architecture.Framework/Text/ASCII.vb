@@ -221,5 +221,10 @@ Namespace Text
             ASCII.US,
             ASCII.VT
         }
+
+        ''' <summary>
+        ''' <see cref="vbTab"/>
+        ''' </summary>
+        Public Const TAB As Char = CChar(vbTab)
     End Class
 End Namespace
