@@ -474,7 +474,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="delimiter">
-    ''' Using String.Equals function to determined this delimiter 
+    ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String, Optional regex As Boolean = False) As IEnumerable(Of String())
@@ -483,7 +483,7 @@ Public Module StringHelpers
 
         If regex Then
             Dim regexp As New Regex(delimiter, RegexOptions.Singleline)
-            delimiterTest = Function(line) regexp.Match(line).Success
+            delimiterTest = Function(line) regexp.Match(line).Value = line
         Else
             delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
         End If
