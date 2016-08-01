@@ -236,6 +236,12 @@ Public Module WebServiceUtils
         End If
     End Function
 
+    ''' <summary>
+    ''' 在服务器端对URL进行解码还原
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension> <ExportAPI("URL.Decode")>
     Public Function UrlDecode(s As String, Optional encoding As Encoding = Nothing) As String
         If encoding IsNot Nothing Then
@@ -252,6 +258,12 @@ Public Module WebServiceUtils
         End If
     End Sub
 
+    ''' <summary>
+    ''' 进行url编码，将特殊字符进行转码
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <ExportAPI("URL.Encode")>
     <Extension>
     Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing) As String

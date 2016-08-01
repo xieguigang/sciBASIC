@@ -157,11 +157,11 @@ Namespace Language
     ''' <summary>
     ''' Alias of <see cref="Int32"/>
     ''' </summary>
-    Public Structure Int : Implements IComparable
+    Public Class Int : Implements IComparable
 
         Dim value As Integer
 
-        Sub New(x As Integer)
+        Sub New(Optional x As Integer = Scan0)
             value = x
         End Sub
 
@@ -221,6 +221,12 @@ Namespace Language
             Return n.value
         End Operator
 
+        Public Shared Operator +(x As Int) As Integer
+            Dim i As Integer = x.value
+            x.value += 1
+            Return i
+        End Operator
+
         Public Shared Operator >(source As IEnumerable, handle As Int) As Boolean
             Dim file As FileHandle = FileHandles.__getHandle(handle.value)
             Return CollectionIO.DefaultHandle()(source, file.FileName, file.encoding)
@@ -229,7 +235,7 @@ Namespace Language
         Public Shared Operator <(source As IEnumerable, handle As Int) As Boolean
             Throw New NotSupportedException
         End Operator
-    End Structure
+    End Class
 
     Public Structure Float
         Implements IComparable
