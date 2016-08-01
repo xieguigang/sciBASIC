@@ -127,6 +127,15 @@ Namespace ComponentModel.DataSourceModel
         }
 
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
+
+        ''' <summary>
+        ''' Is one of the primitive type in the hash <see cref="ToStrings"/>?
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Function IsPrimitive(type As Type) As Boolean
+            Return ToStrings.ContainsKey(type)
+        End Function
 #End If
 
         ''' <summary>
