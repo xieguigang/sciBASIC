@@ -59,12 +59,14 @@ Public Module QueryBuilder
             Call value.Add(QueryBuilder.Term.Key, s)
         End If
 
-        For Each prop In DataFrameColumnAttribute.LoadMapping(type, igs, True)
-            o = prop.Value.GetValue(args)
+        For Each prop In DataFrameColumnAttribute.LoadMapping(type, igs, True).Values
+            o = prop.GetValue(args)
 
             If Not o Is Nothing Then
-                s = Scripting.ToString(o)
-                Call value.Add(prop.Key, s)
+                s = If(prop.Property.PropertyType.IsEnum,
+                    DirectCast(o, [Enum]).Description,
+                    Scripting.ToString(o))
+                value.Add(prop.Field.Name, s)
             End If
         Next
 
