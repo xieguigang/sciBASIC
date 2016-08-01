@@ -39,10 +39,13 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Implements sIdEnumerable
 
         ''' <summary>
-        ''' The property object that bind with its custom attribute <see cref="Column"/> of type <typeparamref name="T"/>
+        ''' The property object that bind with its custom attribute <see cref="Field"/> of type <typeparamref name="T"/>
         ''' </summary>
         Dim [Property] As PropertyInfo
-        Dim Column As T
+        ''' <summary>
+        ''' The flag for this field binding.
+        ''' </summary>
+        Dim Field As T
 
         ''' <summary>
         ''' Gets the type of this property.
@@ -70,7 +73,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Public ReadOnly Property IsNull As Boolean
             Get
-                Return [Property] Is Nothing OrElse Column Is Nothing
+                Return [Property] Is Nothing OrElse Field Is Nothing
             End Get
         End Property
 
@@ -98,7 +101,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Property
 
         Sub New(attr As T, prop As PropertyInfo)
-            Column = attr
+            Field = attr
             [Property] = prop
         End Sub
 
@@ -180,7 +183,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
         Public Shared Function FromHash(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
             Return New BindProperty(Of T) With {
-                .Column = x.Key,
+                .Field = x.Key,
                 .Property = x.Value
             }
         End Function

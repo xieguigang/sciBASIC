@@ -234,9 +234,7 @@ Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{f
     ''' <param name="source"></param>
     ''' <param name="explicit"></param>
     ''' <returns></returns>
-    <Extension> Public Function LoadStream(Of T As Class)(
-                                              source As IEnumerable(Of String),
-                                              Optional explicit As Boolean = True) As T()
+    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True) As T()
         Dim dataFrame As DocumentStream.File =
             DocumentStream.File.Load(source.ToArray)
         Dim buf As T() = dataFrame.AsDataSource(Of T)(explicit)

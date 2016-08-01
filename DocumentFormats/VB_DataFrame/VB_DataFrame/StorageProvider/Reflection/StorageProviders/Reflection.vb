@@ -197,6 +197,7 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <param name="___source"></param>
         ''' <param name="Explicit"></param>
+        ''' <param name="schemaOut">请注意，Key是Csv文件之中的标题，不是属性名称了</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Public Function __save(___source As IEnumerable,
@@ -204,7 +205,8 @@ Namespace StorageProvider.Reflection
                                Explicit As Boolean,
                                Optional metaBlank As String = "",
                                Optional maps As Dictionary(Of String, String) = Nothing,
-                               Optional parallel As Boolean = True) As DocumentStream.File
+                               Optional parallel As Boolean = True,
+                               Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As DocumentStream.File
 
             Dim source As Object() = ___source.ToVector
             Dim Schema As SchemaProvider =
@@ -216,6 +218,9 @@ Namespace StorageProvider.Reflection
                 DirectCast(source.AsParallel, IEnumerable(Of Object)),
                 DirectCast(source, IEnumerable(Of Object)))
 
+            schemaOut = RowWriter.Columns.ToDictionary(
+                Function(x) x.Name,
+                Function(x) x.BindProperty.PropertyType)
             LQuery = LinqAPI.MakeList(Of RowObject) <=
  _
                 From row As Object
@@ -229,6 +234,14 @@ Namespace StorageProvider.Reflection
                 RowWriter.GetRowNames(maps).Join(RowWriter.GetMetaTitles)
             Dim dataFrame As New File(title + LQuery)
 
+            If Not RowWriter.MetaRow Is Nothing Then
+                Dim valueType As Type =
+                    RowWriter.MetaRow.Dictionary.GenericTypeArguments.Last
+                For Each key As String In RowWriter.GetMetaTitles
+                    Call schemaOut.Add(key, valueType)
+                Next
+            End If
+
             Return dataFrame
         End Function
 
@@ -239,17 +252,18 @@ Namespace StorageProvider.Reflection
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="explicit"></param>
+        ''' <param name="schemaOut">``ByRef``反向输出的Schema参数</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Public Function Save(Of T)(source As IEnumerable(Of T),
                                    Optional explicit As Boolean = True,
                                    Optional metaBlank As String = "",
                                    Optional maps As Dictionary(Of String, String) = Nothing,
-                                   Optional parallel As Boolean = True) As DocumentStream.File
-            Dim Type As Type = GetType(T)
-            Dim doc As DocumentStream.File =
-                __save(source, Type, explicit, metaBlank, maps, parallel)
-            Return doc
+                                   Optional parallel As Boolean = True,
+                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As DocumentStream.File
+            Dim type As Type = GetType(T)
+            Dim file As File = __save(source, type, explicit, metaBlank, maps, parallel, schemaOut)
+            Return file
         End Function
 
         ''' <summary>
