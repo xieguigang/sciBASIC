@@ -1,31 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b428a64a3615933e0417e4d15d9ff63f, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOMExpressions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.CodeDom
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace CodeDOM_VBC
 
@@ -37,10 +39,10 @@ Namespace CodeDOM_VBC
         ''' <returns></returns>
         Public ReadOnly Property EntryPoint As CodeDom.CodeMemberMethod
             Get
-                Dim Func = New System.CodeDom.CodeMemberMethod With {
+                Dim Func As New CodeMemberMethod With {
                     .Name = "Main",
                     .ReturnType = Type(Of Integer)(),
-                    .Attributes = System.CodeDom.MemberAttributes.Public Or System.CodeDom.MemberAttributes.Static
+                    .Attributes = MemberAttributes.Public Or MemberAttributes.Static
                 }
 
                 Func.Parameters.Add(Argument(Of String())("Argvs"))
@@ -48,6 +50,18 @@ Namespace CodeDOM_VBC
                 Return Func
             End Get
         End Property
+
+        ''' <summary>
+        ''' ```
+        ''' Public Shared Function xxx() As T
+        ''' Public Shared Property XXX As T
+        ''' ```
+        ''' 
+        ''' Or declare a method in a standard Module type.
+        ''' </summary>
+        Public Const PublicShared As MemberAttributes =
+            CodeDom.MemberAttributes.Public Or
+            CodeDom.MemberAttributes.Static
 
         ''' <summary>
         ''' 声明一个函数
@@ -58,9 +72,7 @@ Namespace CodeDOM_VBC
         ''' <param name="control"></param>
         ''' <returns></returns>
         Public Function DeclareFunc(name As String, args As Dictionary(Of String, Type), returns As Type,
-                                    Optional control As CodeDom.MemberAttributes =
-                                    CodeDom.MemberAttributes.Public Or
-                                    CodeDom.MemberAttributes.Static) As CodeDom.CodeMemberMethod
+                                    Optional control As CodeDom.MemberAttributes = PublicShared) As CodeDom.CodeMemberMethod
             Dim Func As New CodeDom.CodeMemberMethod With {
                 .Name = name,
                 .ReturnType = returns.TypeRef,
@@ -76,12 +88,22 @@ Namespace CodeDOM_VBC
             Return Func
         End Function
 
+        ''' <summary>
+        ''' ```
+        ''' Dim Name As &lt;Type>
+        ''' ```
+        ''' 
+        ''' Declare a field in the type
+        ''' </summary>
+        ''' <param name="Name"></param>
+        ''' <param name="Type"></param>
+        ''' <returns></returns>
         Public Function Field(Name As String, Type As Type) As CodeDom.CodeMemberField
             Return New CodeDom.CodeMemberField(name:=Name, type:=New CodeDom.CodeTypeReference(Type))
         End Function
 
         ''' <summary>
-        ''' Reference of Me.Field
+        ''' Reference of ``Me.Field``
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <returns></returns>
@@ -122,12 +144,17 @@ Namespace CodeDOM_VBC
             If parameters.IsNullOrEmpty Then
                 Return [New](GetType(T), {})
             Else
-                Return [New](GetType(T), (From obj In parameters Select New CodeDom.CodePrimitiveExpression(obj)).ToArray)
+                Dim args As CodePrimitiveExpression() = LinqAPI.Exec(Of CodePrimitiveExpression) <=
+                    From obj As Object
+                    In parameters
+                    Select New CodePrimitiveExpression(obj)
+
+                Return [New](GetType(T), args)
             End If
         End Function
 
         Public Function [New](typeRef As String, parameters As CodeDom.CodeExpression()) As CodeDom.CodeObjectCreateExpression
-            Dim objectType = New CodeDom.CodeTypeReference(typeRef)
+            Dim objectType As New CodeDom.CodeTypeReference(typeRef)
             If parameters Is Nothing Then
                 parameters = New CodeDom.CodeExpression() {}
             End If
@@ -143,11 +170,11 @@ Namespace CodeDOM_VBC
         ''' <param name="initExpression"></param>
         ''' <returns></returns>
         Public Function LocalsInit(Name As String, Type As System.Type, Optional initExpression As CodeDom.CodeExpression = Nothing) As CodeDom.CodeVariableDeclarationStatement
-            Dim Expr = New CodeDom.CodeVariableDeclarationStatement(New CodeDom.CodeTypeReference(Type), Name)
+            Dim expr As New CodeDom.CodeVariableDeclarationStatement(New CodeDom.CodeTypeReference(Type), Name)
             If Not initExpression Is Nothing Then
-                Expr.InitExpression = initExpression
+                expr.InitExpression = initExpression
             End If
-            Return Expr
+            Return expr
         End Function
 
         Public Function LocalsInit(Name As String, Type As String, Optional initExpression As CodeDom.CodeExpression = Nothing) As CodeDom.CodeVariableDeclarationStatement

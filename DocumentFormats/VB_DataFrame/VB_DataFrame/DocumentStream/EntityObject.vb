@@ -39,6 +39,17 @@ Namespace DocumentStream
         ''' <returns></returns>
         Public Property Identifier As String Implements sIdEnumerable.Identifier
 
+        ''' <summary>
+        ''' Copy prop[erty value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overloads Function Copy() As EntityObject
+            Return New EntityObject With {
+                .Identifier = Identifier,
+                .Properties = New Dictionary(Of String, String)(Properties)
+            }
+        End Function
+
         Public Shared Iterator Function LoadDataSet(path As String, uidMap As String) As IEnumerable(Of EntityObject)
             Dim map As New Dictionary(Of String, String) From {{uidMap, NameOf(EntityObject.Identifier)}}
             For Each x As EntityObject In path.LoadCsv(Of EntityObject)(explicit:=False, maps:=map)
@@ -51,6 +62,17 @@ Namespace DocumentStream
         Implements sIdEnumerable
 
         Public Property Identifier As String Implements sIdEnumerable.Identifier
+
+        ''' <summary>
+        ''' Copy prop[erty value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overloads Function Copy() As DataSet
+            Return New DataSet With {
+                .Identifier = Identifier,
+                .Properties = New Dictionary(Of String, Double)(Properties)
+            }
+        End Function
 
         Public Shared Iterator Function LoadDataSet(path As String, uidMap As String) As IEnumerable(Of DataSet)
             Dim map As New Dictionary(Of String, String) From {{uidMap, NameOf(DataSet.Identifier)}}

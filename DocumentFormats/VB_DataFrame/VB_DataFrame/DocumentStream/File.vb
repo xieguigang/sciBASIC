@@ -580,11 +580,19 @@ Namespace DocumentStream
             Return Load(lines)
         End Function
 
+        ''' <summary>
+        ''' 排序操作在这里会不会大幅度的影响性能？
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <returns></returns>
         Public Shared Function Load(buf As String()) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0))
-            Dim rows As List(Of RowObject) = (From s As String
-                                              In buf.Skip(1).AsParallel
-                                              Select New RowObject(s)).ToList
+            Dim rows As List(Of RowObject) = (From s As SeqValue(Of String)
+                                              In buf.Skip(1).SeqIterator.AsParallel
+                                              Select row = New RowObject(s.obj),
+                                                  i = s.i
+                                              Order By i Ascending) _
+                                                   .ToList(Function(x) x.row)
             Return first + rows
         End Function
 #End Region
