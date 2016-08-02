@@ -216,6 +216,7 @@
     <Compile Include="DocumentStream\RowObject.vb" />
     <Compile Include="DocumentStream\StreamIO.vb" />
     <Compile Include="DocumentStream\Tokenizer.vb" />
+    <Compile Include="Excel\Coordinates.vb" />
     <Compile Include="Excel\Excel.vb" />
     <Compile Include="Excel\ExcelReader.vb" />
     <Compile Include="Extensions\DocumentExtensions.vb" />
@@ -280,6 +281,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Excel\Functions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
