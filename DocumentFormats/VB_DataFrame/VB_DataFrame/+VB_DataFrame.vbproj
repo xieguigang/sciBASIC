@@ -219,6 +219,7 @@
     <Compile Include="Excel\Coordinates.vb" />
     <Compile Include="Excel\Excel.vb" />
     <Compile Include="Excel\ExcelReader.vb" />
+    <Compile Include="Excel\Functions\Numerics.vb" />
     <Compile Include="Extensions\DocumentExtensions.vb" />
     <Compile Include="Extensions\ProfileStreams.vb" />
     <Compile Include="Extensions\DataImports.vb" />
@@ -282,9 +283,7 @@
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Excel\Functions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
