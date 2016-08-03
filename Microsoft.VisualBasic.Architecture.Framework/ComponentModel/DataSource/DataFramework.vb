@@ -152,7 +152,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Friend Function __toStringInternal(obj As Object, null As String) As String
+        Friend Function __toStringInternal(obj As Object, Optional null As String = "") As String
             If obj Is Nothing Then
                 Return null
             Else
