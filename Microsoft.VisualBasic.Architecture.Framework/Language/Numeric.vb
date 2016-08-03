@@ -159,7 +159,7 @@ Namespace Language
     ''' </summary>
     Public Class Int : Implements IComparable
 
-        Dim value As Integer
+        Public Property value As Integer
 
         Sub New(Optional x As Integer = Scan0)
             value = x
