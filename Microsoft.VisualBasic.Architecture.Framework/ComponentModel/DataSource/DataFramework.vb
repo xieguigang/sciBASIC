@@ -152,15 +152,15 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Friend Function __toStringInternal(obj As Object) As String
+        Friend Function __toStringInternal(obj As Object, Optional null As String = "") As String
             If obj Is Nothing Then
-                Return ""
+                Return null
             Else
                 Try
                     Return obj.ToString
                 Catch ex As Exception
                     Call App.LogException(ex)
-                    Return ""
+                    Return null
                 End Try
             End If
         End Function
