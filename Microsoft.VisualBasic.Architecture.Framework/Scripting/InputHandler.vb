@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Scripting
@@ -232,8 +233,8 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Public Function ToString(obj As Object) As String
-            Return ComponentModel.DataSourceModel.__toStringInternal(obj)
+        Public Function ToString(obj As Object, Optional null As String = "") As String
+            Return __toStringInternal(obj, null)
         End Function
 
         ''' <summary>
