@@ -305,7 +305,7 @@ Public Module StringHelpers
     End Function
 
     <ExportAPI("FormatZero")>
-    <Extension> Public Function FormatZero(n As Integer, Optional fill As String = "00") As String
+    <Extension> Public Function FormatZero(Of T)(n As T, Optional fill As String = "00") As String
         Dim s = n.ToString
         Dim d = Len(fill) - Len(s)
 
