@@ -50,11 +50,15 @@ Namespace DocumentStream
             }
         End Function
 
-        Public Shared Iterator Function LoadDataSet(path As String, uidMap As String) As IEnumerable(Of EntityObject)
-            Dim map As New Dictionary(Of String, String) From {{uidMap, NameOf(EntityObject.Identifier)}}
-            For Each x As EntityObject In path.LoadCsv(Of EntityObject)(explicit:=False, maps:=map)
-                Yield x
-            Next
+        Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of EntityObject)
+            If uidMap Is Nothing Then
+                Dim first As New RowObject(path.ReadFirstLine)
+                uidMap = first.First
+            End If
+            Dim map As New Dictionary(Of String, String) From {
+                {uidMap, NameOf(EntityObject.Identifier)}
+            }
+            Return path.LoadCsv(Of EntityObject)(explicit:=False, maps:=map)
         End Function
     End Class
 
@@ -74,11 +78,15 @@ Namespace DocumentStream
             }
         End Function
 
-        Public Shared Iterator Function LoadDataSet(path As String, uidMap As String) As IEnumerable(Of DataSet)
-            Dim map As New Dictionary(Of String, String) From {{uidMap, NameOf(DataSet.Identifier)}}
-            For Each x As DataSet In path.LoadCsv(Of DataSet)(explicit:=False, maps:=map)
-                Yield x
-            Next
+        Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of DataSet)
+            If uidMap Is Nothing Then
+                Dim first As New RowObject(path.ReadFirstLine)
+                uidMap = first.First
+            End If
+            Dim map As New Dictionary(Of String, String) From {
+                {uidMap, NameOf(DataSet.Identifier)}
+            }
+            Return path.LoadCsv(Of DataSet)(explicit:=False, maps:=map)
         End Function
     End Class
 End Namespace

@@ -31,7 +31,9 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
 Namespace DocumentStream
@@ -89,18 +91,28 @@ Namespace DocumentStream
             End If
         End Function
 
+        Const DuplicatedKeys As String = "There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!"
+
+        ''' <summary>
+        ''' Indexing the column headers
+        ''' </summary>
+        ''' <param name="df"></param>
+        ''' <returns></returns>
         Private Shared Function __createSchemaOridinal(df As DataFrame) As Dictionary(Of String, Integer)
             Dim arrayCache As String() = df.__columnList.ToArray
 
             Try
-                Return arrayCache.Sequence _
-                    .ToDictionary(Function(oridinal) arrayCache(oridinal),
-                                  Function(oridinal) oridinal)
+
+                Return arrayCache _
+                    .SeqIterator _
+                    .ToDictionary(Function(i) i.obj, Function(i) i.i)
+
             Catch ex As Exception
-                Dim sb As New StringBuilder("There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!")
+                Dim sb As New StringBuilder(DuplicatedKeys)
+
                 Call sb.AppendLine("Here is the column header keys in you data: ")
                 Call sb.AppendLine()
-                Call sb.AppendLine("   " & String.Join(vbTab, arrayCache.ToArray(Of String)(Function(s) "[" & s & "]").ToArray))
+                Call sb.AppendLine("   " & arrayCache.GetJson)
 
                 Throw New DataException(sb.ToString, ex)
             End Try
@@ -112,34 +124,39 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateDataSource() As DynamicObjectLoader()
-            Dim LQuery As DynamicObjectLoader() =
-                LinqAPI.Exec(Of DynamicObjectLoader) <= From i As Integer
-                                                        In Me.RowNumbers.Sequence.AsParallel
-                                                        Let Line As DocumentStream.RowObject =
-                                                            Me._innerTable(i)  '已经去掉了首行标题行了的
-                                                        Select row = New DynamicObjectLoader With {
-                                                            .LineNumber = i,
-                                                            .RowData = Line,
-                                                            .Schema = Me.SchemaOridinal,
-                                                            ._innerDataFrame = Me
-                                                        }
-                                                        Order By row.LineNumber Ascending
+            Dim LQuery As DynamicObjectLoader() = LinqAPI.Exec(Of DynamicObjectLoader) <=
+ _
+                From i As Integer
+                In RowNumbers.Sequence.AsParallel
+                Let line As RowObject = _innerTable(i)  ' 已经去掉了首行标题行了的
+                Select row = New DynamicObjectLoader With {
+                    .LineNumber = i,
+                    .RowData = line,
+                    .Schema = Me.SchemaOridinal,
+                    ._innerDataFrame = Me
+                }
+                Order By row.LineNumber Ascending
+
             Return LQuery
         End Function
 
+        ''' <summary>
+        ''' The column headers in the csv file first row.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property HeadTitles As String()
             Get
                 Return __columnList.ToArray
             End Get
         End Property
 
-        Public ReadOnly Property Depth As Integer Implements IDataReader.Depth
+        Private ReadOnly Property Depth As Integer Implements IDataReader.Depth
             Get
                 Return 0
             End Get
         End Property
 
-        Public ReadOnly Property IsClosed As Boolean Implements IDataReader.IsClosed
+        Private ReadOnly Property IsClosed As Boolean Implements IDataReader.IsClosed
             Get
                 Return False
             End Get
@@ -282,9 +299,12 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
         Public Function GetOrdinalSchema(ColumnList As String()) As Integer()
-            Dim LQuery As Integer() = (From column As String
-                                       In ColumnList
-                                       Select Me.__columnList.IndexOf(column)).ToArray
+            Dim LQuery As Integer() = LinqAPI.Exec(Of Integer) <=
+ _
+                From cName As String
+                In ColumnList
+                Select Me.__columnList.IndexOf(cName)
+
             Return LQuery
         End Function
 
@@ -398,15 +418,15 @@ Namespace DocumentStream
         ''' <summary>
         ''' Closes the <see cref="System.Data.IDataReader"/>:<see cref="DataFrame"/> Object.  
         ''' </summary>
-        Public Sub Close() Implements IDataReader.Close
-            Throw New NotImplementedException()
+        Private Sub Close() Implements IDataReader.Close
+            ' Do Nothing
         End Sub
 
         ''' <summary>
         ''' Returns a System.Data.DataTable that describes the column metadata of the System.Data.IDataReader.
         ''' </summary>
         ''' <returns>A System.Data.DataTable that describes the column metadata.</returns>
-        Public Function GetSchemaTable() As DataTable Implements IDataReader.GetSchemaTable
+        Private Function GetSchemaTable() As DataTable Implements IDataReader.GetSchemaTable
             Throw New NotImplementedException()
         End Function
 
