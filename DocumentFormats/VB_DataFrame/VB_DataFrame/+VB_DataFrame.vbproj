@@ -216,6 +216,7 @@
     <Compile Include="DocumentStream\RowObject.vb" />
     <Compile Include="DocumentStream\StreamIO.vb" />
     <Compile Include="DocumentStream\Tokenizer.vb" />
+    <Compile Include="Excel\Extensions.vb" />
     <Compile Include="Excel\Coordinates.vb" />
     <Compile Include="Excel\Excel.vb" />
     <Compile Include="Excel\ExcelReader.vb" />
