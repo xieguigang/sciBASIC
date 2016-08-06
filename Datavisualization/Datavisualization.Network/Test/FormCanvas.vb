@@ -76,6 +76,6 @@ Public Class FormCanvas
     End Sub
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
-        canvas.SetRotate(TrackBar1.Value / 1000)
+        canvas.SetRotate(TrackBar1.Value / 100)
     End Sub
 End Class

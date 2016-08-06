@@ -1,36 +1,39 @@
 ﻿#Region "Microsoft.VisualBasic::80411bef400ebf3870673bf625f5ae8b, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Transformation
 
 Public Class Renderer3D : Inherits Renderer
+
+    Public Property ViewDistance As Double = -120
 
     ''' <summary>
     ''' 
@@ -46,10 +49,18 @@ Public Class Renderer3D : Inherits Renderer
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = __regionProvider()
-        Dim pos1 As Point = SpaceToGrid(iPosition1.x, iPosition1.y, iPosition1.z, rotate)
-        pos1 = GraphToScreen(pos1, rect)
-        Dim pos2 As Point = SpaceToGrid(iPosition2.x, iPosition2.y, iPosition2.z, rotate)
-        pos2 = GraphToScreen(pos2, rect)
+        Dim pos1 As Point = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
+            .RotateX(rotate) _
+            .RotateY(rotate) _
+            .RotateZ(rotate) _
+            .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
+        '   pos1 = GraphToScreen(pos1, rect)
+        Dim pos2 As Point = New Point3D(iPosition2.x, iPosition2.y, iPosition2.z) _
+            .RotateX(rotate) _
+            .RotateY(rotate) _
+            .RotateZ(rotate) _
+            .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
+        '   pos2 = GraphToScreen(pos2, rect)
         Dim canvas As Graphics = __graphicsProvider()
 
         SyncLock canvas
@@ -66,10 +77,15 @@ Public Class Renderer3D : Inherits Renderer
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim pos As Point = SpaceToGrid(iPosition.x, iPosition.y, iPosition.z, rotate)
+        Dim client As Rectangle = __regionProvider()
+        Dim pos As Point = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
+            .RotateX(rotate) _
+            .RotateY(rotate) _
+            .RotateZ(rotate) _
+            .Project(client.Width, client.Height, 256, ViewDistance).PointXY
         Dim canvas As Graphics = __graphicsProvider()
 
-        pos = GraphToScreen(pos, __regionProvider())
+        '   pos = GraphToScreen(pos, __regionProvider())
 
         SyncLock canvas
             Dim r As Single = radiushash(n)
