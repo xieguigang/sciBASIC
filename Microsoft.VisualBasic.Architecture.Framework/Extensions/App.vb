@@ -381,13 +381,10 @@ Public Module App
 
     ' tmp2A10.tmp
 
-    Dim _tmpHash As Long = Long.MinValue
+    Dim _tmpHash As New Uid
 
     Private Function __getTEMPhash() As String
-        If _tmpHash = Long.MaxValue Then
-            _tmpHash = Long.MinValue
-        End If
-        Return CStr(Threading.Interlocked.Increment(_tmpHash))
+        Return FormatZero(++_tmpHash, "00000")
     End Function
 
     ''' <summary>
@@ -395,8 +392,18 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function __getTEMP() As String
-        Return $"tmp{App.StartTime}_{App.__getTEMPhash}"
+        Return $"tmp{App.__getTEMPhash}"
     End Function
+
+    ''' <summary>
+    ''' 是名称，不是文件路径
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property NextTempName As String
+        Get
+            Return __getTEMP()
+        End Get
+    End Property
 
     ''' <summary>
     ''' Error default log fie location from function <see cref="App.LogException(Exception, String)"/>.(存放自动存储的错误日志的文件夹)

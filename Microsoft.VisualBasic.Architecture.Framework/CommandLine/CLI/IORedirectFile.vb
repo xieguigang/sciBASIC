@@ -48,7 +48,7 @@ Namespace CommandLine
         ''' 重定向的临时文件
         ''' </summary>
         ''' <remarks>当使用.tmp拓展名的时候会由于APP框架里面的GC线程里面的自动临时文件清理而产生冲突，所以这里需要其他的文件拓展名来避免这个冲突</remarks>
-        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_STDOUT")
+        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_STDOUT", App.Process.Id)
 
         ''' <summary>
         ''' shell文件接口
@@ -164,7 +164,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
-            Dim tmpBAT As String = App.GetAppSysTempFile(".bat")
+            Dim tmpBAT As String = App.GetAppSysTempFile(".bat", App.Process.Id)
             Call ProcessBAT.SaveTo(tmpBAT)
             Dim ExitCode As Integer = Interaction.Shell(tmpBAT, AppWinStyle.Hide, Wait:=True)
 

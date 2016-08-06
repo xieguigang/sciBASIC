@@ -48,6 +48,9 @@ Namespace Language
             chars = New List(Of Integer)(i.chars)
         End Sub
 
+        ''' <summary>
+        ''' ZERO
+        ''' </summary>
         Sub New()
             Call Me.New(Scan0)
         End Sub

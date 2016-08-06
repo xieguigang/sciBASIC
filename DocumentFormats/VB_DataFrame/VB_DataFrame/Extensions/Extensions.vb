@@ -139,20 +139,20 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Row.Parsing")>
-    <Extension> Public Function ToCsvRow(data As Generic.IEnumerable(Of String)) As RowObject
+    <Extension> Public Function ToCsvRow(data As IEnumerable(Of String)) As RowObject
         Return CType(data.ToList, Csv.DocumentStream.RowObject)
     End Function
 
     ''' <summary>
     ''' Create a dynamics data frame object from a csv document object.(从Csv文件之中创建一个数据框容器)
     ''' </summary>
-    ''' <param name="CsvData"></param>
+    ''' <param name="data"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
-    <Extension> Public Function DataFrame(CsvData As Csv.DocumentStream.File) As Csv.DocumentStream.DataFrame
-        Return Csv.DocumentStream.DataFrame.CreateObject(CsvData)
+    <Extension> Public Function DataFrame(data As Csv.DocumentStream.File) As DataFrame
+        Return DocumentStream.DataFrame.CreateObject(data)
     End Function
 
     ''' <summary>
@@ -163,10 +163,28 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As DocumentStream.File, Optional explicit As Boolean = False) As T()
-        Dim dataFrame As DataFrame =
-            DocumentStream.DataFrame.CreateObject(dataSet)
-        Dim source As T() = Reflector.Convert(Of T)(dataFrame, explicit).ToArray
+    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As DocumentStream.File,
+                                                            Optional explicit As Boolean = False,
+                                                            Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Dim df As DataFrame = DocumentStream.DataFrame.CreateObject(dataSet)
+        Return df.AsDataSource(Of T)(explicit, maps)
+    End Function
+
+    ''' <summary>
+    ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="df"></param>
+    ''' <param name="explicit"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension> Public Function AsDataSource(Of T As Class)(df As DataFrame,
+                                                            Optional explicit As Boolean = False,
+                                                            Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        If Not maps Is Nothing Then
+            Call df.ChangeMapping(maps)
+        End If
+        Dim source As T() = Reflector.Convert(Of T)(df, explicit).ToArray
         Return source
     End Function
 
@@ -262,7 +280,11 @@ Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{f
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing) As Boolean
 
-        path = FileIO.FileSystem.GetFileInfo(path).FullName
+        Try
+            path = FileIO.FileSystem.GetFileInfo(path).FullName
+        Catch ex As Exception
+            Throw New Exception(path, ex)
+        End Try
 
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
         Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
