@@ -28,6 +28,7 @@ Partial Class FormCanvas
         Me.RefreshParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+        Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -43,7 +44,7 @@ Partial Class FormCanvas
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveAsSVGToolStripMenuItem, Me.RefreshParametersToolStripMenuItem, Me.DToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveAsSVGToolStripMenuItem, Me.RefreshParametersToolStripMenuItem, Me.DToolStripMenuItem, Me.AutoRotateToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -75,7 +76,14 @@ Partial Class FormCanvas
         Me.TrackBar1.Size = New System.Drawing.Size(139, 45)
         Me.TrackBar1.TabIndex = 1
         '
-        'Form1
+        'AutoRotateToolStripMenuItem
+        '
+        Me.AutoRotateToolStripMenuItem.CheckOnClick = True
+        Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
+        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
+        '
+        'FormCanvas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -83,7 +91,7 @@ Partial Class FormCanvas
         Me.Controls.Add(Me.TrackBar1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Name = "Form1"
+        Me.Name = "FormCanvas"
         Me.Text = "Network Canvas"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
@@ -99,4 +107,5 @@ Partial Class FormCanvas
     Friend WithEvents RefreshParametersToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents DToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents TrackBar1 As Windows.Forms.TrackBar
+    Friend WithEvents AutoRotateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

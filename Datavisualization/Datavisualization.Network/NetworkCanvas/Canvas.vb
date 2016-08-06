@@ -130,8 +130,16 @@ Public Class Canvas
     ''' </summary>
     Dim paper As Graphics
 
+    Public Property AutoRotate As Boolean = True
+
     Private Sub __invokePaint()
         Call Me.Invoke(Sub() Call Invalidate())
+
+        If _AutoRotate Then
+            Static r As Double = -100.0R
+            r += 0.4
+            Call SetRotate(r)
+        End If
     End Sub
 
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
