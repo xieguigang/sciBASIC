@@ -47,7 +47,7 @@ Public Class FormCanvas
         TrackBar1.Maximum = Math.PI * 2 * 1000
 
         DToolStripMenuItem.Checked = True
-        ShowLabelsToolStripMenuItem.Checked = True
+        ShowLabelsToolStripMenuItem.Checked = False
         AutoRotateToolStripMenuItem.Checked = True
     End Sub
 

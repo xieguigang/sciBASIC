@@ -66,7 +66,7 @@ Namespace Drawing3D
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="angle">度，函数里面会自动转换为三角函数所需要的弧度的</param>
+        ''' <param name="angle">Degree.(度，函数里面会自动转换为三角函数所需要的弧度的)</param>
         ''' <returns></returns>
         Public Function RotateX(angle As Double) As Point3D
             Dim rad As Double, cosa As Double, sina As Double, yn As Double, zn As Double
@@ -125,7 +125,6 @@ Namespace Drawing3D
                                   viewHeight As Integer,
                                   fov As Integer,
                                   viewDistance As Integer)
-
             Dim factor As Double
 
             factor = fov / (viewDistance + z)
