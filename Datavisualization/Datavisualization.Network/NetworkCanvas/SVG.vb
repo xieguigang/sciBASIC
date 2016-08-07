@@ -28,13 +28,13 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 
 ''' <summary>
 ''' <see cref="NetworkGraph"/> to svg doc

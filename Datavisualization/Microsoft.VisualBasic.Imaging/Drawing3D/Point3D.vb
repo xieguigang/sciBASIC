@@ -39,6 +39,12 @@ Namespace Drawing3D
     ''' </summary>
     Public Structure Point3D
 
+        Public ReadOnly Property PointXY As Point
+            Get
+                Return New Point(X, Y)
+            End Get
+        End Property
+
         Public Sub New(x As Double, y As Double, Optional z As Double = 0)
             Me.X = x
             Me.Y = y

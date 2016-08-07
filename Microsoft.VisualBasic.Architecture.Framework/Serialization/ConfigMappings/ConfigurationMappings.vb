@@ -63,7 +63,7 @@ Namespace Serialization
 
             For Each Node In Mappings '读取数据
                 Dim value As Object = Node.Source.GetValue(source)
-                Dim str As String = DataFramework.__toStringInternal(value)
+                Dim str As String = DataFramework.__toStringInternal(value, "")
                 value = Node.SourceToMappingCasting(str)
                 Call Node.Mapping.SetValue(DataModel, value)
             Next

@@ -1482,21 +1482,21 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function Description(e As [Enum]) As String
 #End If
-        Dim Type As Type = value.GetType()
-        Dim s_Value As String = value.ToString
-        Dim MemInfos As MemberInfo() = Type.GetMember(name:=s_Value)
+        Dim type As Type = value.GetType()
+        Dim s As String = value.ToString
+        Dim memInfos As MemberInfo() = type.GetMember(name:=s)
 
-        If MemInfos.IsNullOrEmpty Then
-            Return s_Value
+        If memInfos.IsNullOrEmpty Then
+            Return s
         End If
 
-        Dim CustomAttrs As Object() =
-            MemInfos(Scan0).GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
+        Dim customAttrs As Object() =
+            memInfos(Scan0).GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
-        If Not CustomAttrs.IsNullOrEmpty Then
-            Return CType(CustomAttrs(Scan0), DescriptionAttribute).Description
+        If Not customAttrs.IsNullOrEmpty Then
+            Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
         Else
-            Return s_Value
+            Return s
         End If
     End Function
 

@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::6a4cea0c4a4405c57f8f4736162a4d26, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\VBC.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,10 +31,13 @@ Imports System.Text
 
 Namespace CodeDOM_VBC
 
+    ''' <summary>
+    ''' Extension wrappers for VisualBasic compiler
+    ''' </summary>
     Public Module VBC
 
         ''' <summary>
-        ''' Construct of the vbc.exe compiler parameters.
+        ''' Construct of the ``vbc.exe`` compiler parameters <see cref="CompilerParameters"/>.
         ''' </summary>
         ''' <param name="ref"></param>
         ''' <param name="SDK"></param>
@@ -64,6 +67,7 @@ Namespace CodeDOM_VBC
         ''' 
         ''' </summary>
         ''' <param name="code">VisualBasic源代码</param>
+        ''' <param name="output">The output ``*.exe`` file.</param>
         ''' <returns></returns>
         Public Function CompileCode(code As String, output As String, Optional ByRef errInfo As String = "") As Assembly
             Dim params As New CompilerParameters()
@@ -75,10 +79,10 @@ Namespace CodeDOM_VBC
         End Function
 
         ''' <summary>
-        ''' 
+        ''' If the code compile failure, then this function will returns nothing.
         ''' </summary>
         ''' <param name="code">VisualBasic源代码</param>
-        ''' <returns></returns>
+        ''' <returns><see cref="Assembly"/> from the source <paramref name="code"/></returns>
         Public Function CompileCode(code As String, args As CompilerParameters, Optional ByRef errInfo As String = "") As Assembly
             Dim codeProvider As New VBCodeProvider()
 #Disable Warning
@@ -86,24 +90,24 @@ Namespace CodeDOM_VBC
 #Enable Warning
             Dim results As CompilerResults = icc.CompileAssemblyFromSource(args, code)
 
-            If results.Errors.Count > 0 Then            'There were compiler errors
-                Dim Err As StringBuilder = New StringBuilder("There were compiler errors:")
-                Call Err.AppendLine()
-                Call Err.AppendLine()
+            If results.Errors.Count > 0 Then   ' There were compiler errors
+                Dim err As New StringBuilder("There were compiler errors:")
+                Call err.AppendLine()
+                Call err.AppendLine()
 
                 For Each CompErr As CompilerError In results.Errors
                     Dim errDetail As String = "Line number " & CompErr.Line &
                 ", Error Number: " & CompErr.ErrorNumber &
                 ", '" & CompErr.ErrorText & ";"
-                    Call Err.AppendLine(errDetail)
-                    Call Err.AppendLine()
+                    Call err.AppendLine(errDetail)
+                    Call err.AppendLine()
                 Next
 
-                errInfo = Err.ToString
+                errInfo = err.ToString
 
                 Return Nothing
             Else
-                'Successful Compile
+                ' Successful Compile
                 Return results.CompiledAssembly
             End If
         End Function

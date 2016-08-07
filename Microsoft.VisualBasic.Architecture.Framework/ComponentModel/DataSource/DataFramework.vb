@@ -127,6 +127,15 @@ Namespace ComponentModel.DataSourceModel
         }
 
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
+
+        ''' <summary>
+        ''' Is one of the primitive type in the hash <see cref="ToStrings"/>?
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Function IsPrimitive(type As Type) As Boolean
+            Return ToStrings.ContainsKey(type)
+        End Function
 #End If
 
         ''' <summary>
@@ -143,15 +152,15 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Friend Function __toStringInternal(obj As Object) As String
+        Friend Function __toStringInternal(obj As Object, Optional null As String = "") As String
             If obj Is Nothing Then
-                Return ""
+                Return null
             Else
                 Try
                     Return obj.ToString
                 Catch ex As Exception
                     Call App.LogException(ex)
-                    Return ""
+                    Return null
                 End Try
             End If
         End Function
