@@ -1,39 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::39a9f53cadde6ed98c95795425da759a, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\Renderer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Imaging
 
-Public Class Renderer
-    Inherits AbstractRenderer
+Public Class Renderer : Inherits AbstractRenderer
+    Implements IGraphicsEngine
 
     ''' <summary>
     ''' Gets the graphics source
@@ -49,6 +51,8 @@ Public Class Renderer
             Return __regionProvider()
         End Get
     End Property
+
+    Public Property ShowLabels As Boolean Implements IGraphicsEngine.ShowLabels
 
     ''' <summary>
     ''' 这个构造函数会生成一些静态数据的缓存
@@ -147,6 +151,8 @@ Public Class Renderer
         End SyncLock
     End Sub
 
+    Public Property Font As Font = New Font(FontFace.SegoeUI, 6, FontStyle.Regular)
+
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
         Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2), __regionProvider())
         Dim canvas As Graphics = __graphicsProvider()
@@ -157,6 +163,13 @@ Public Class Renderer
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
             Call canvas.FillPie(n.Data.Color, rect, 0, 360)
+
+            If ShowLabels Then
+                Dim center As Point = rect.Center
+                Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
+                center = New Point(center.X - sz.Width / 2, center.Y - sz.Height / 2)
+                Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
+            End If
         End SyncLock
     End Sub
 End Class

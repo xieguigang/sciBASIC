@@ -165,6 +165,7 @@
   <ItemGroup>
     <Compile Include="Canvas3D\Renderer3D.vb" />
     <Compile Include="Canvas3D\Input3D.vb" />
+    <Compile Include="IGraphicsEngine.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="InputDevice.vb" />
     <Compile Include="SVG.vb" />

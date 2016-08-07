@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Transformation
 
 Public Class Renderer3D : Inherits Renderer
+    Implements IGraphicsEngine
 
     Public Property ViewDistance As Double = -120
 
@@ -47,7 +48,6 @@ Public Class Renderer3D : Inherits Renderer
     End Sub
 
     Public Property rotate As Double = Math.PI / 3
-    Public Property showName As Boolean = True
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = __regionProvider()
@@ -78,8 +78,6 @@ Public Class Renderer3D : Inherits Renderer
         End SyncLock
     End Sub
 
-    Public Property Font As Font = New Font(FontFace.SegoeUI, 6, FontStyle.Regular)
-
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
         Dim client As Rectangle = __regionProvider()
         Dim pos As Point = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
@@ -98,7 +96,7 @@ Public Class Renderer3D : Inherits Renderer
 
             Call canvas.FillPie(n.Data.Color, rect, 0, 360)
 
-            If showName Then
+            If ShowLabels Then
                 Dim center As Point = rect.Center
                 Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
                 center = New Point(center.X - sz.Width / 2, center.Y - sz.Height / 2)
