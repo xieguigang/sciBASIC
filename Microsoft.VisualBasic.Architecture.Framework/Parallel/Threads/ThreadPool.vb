@@ -26,6 +26,11 @@ Namespace Parallel.Threads
             Me.New(LQuerySchedule.Recommended_NUM_THREADS)
         End Sub
 
+        ''' <summary>
+        ''' 使用线程池里面的空闲线程来执行任务
+        ''' </summary>
+        ''' <param name="task"></param>
+        ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
         Public Sub RunTask(task As Action, Optional callback As Action(Of Long) = Nothing)
             Dim h As Func(Of Long) = Function() Time(work:=task)
             Call GetAvaliableThread.Enqueue(h, callback)
