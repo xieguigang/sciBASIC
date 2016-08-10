@@ -365,6 +365,7 @@
     <Compile Include="Language\Value.vb" />
     <Compile Include="Language\Python\Collection.vb" />
     <Compile Include="Language\Python\NamedTuple.vb" />
+    <Compile Include="Parallel\Threads\ThreadPool.vb" />
     <Compile Include="Text\ASCII.vb" />
     <Compile Include="Language\Perl\Tools.vb" />
     <Compile Include="Language\Pointer.vb" />
