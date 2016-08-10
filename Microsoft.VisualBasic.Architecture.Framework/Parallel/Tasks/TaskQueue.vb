@@ -59,6 +59,8 @@ Namespace Parallel.Tasks
 
         ''' <summary>
         ''' 函数会被插入一个队列之中，之后线程会被阻塞在这里直到函数执行完毕，这个主要是用来控制服务器上面的任务并发的
+        ''' 一般情况下不会使用这个方法，这个方法主要是控制服务器资源的利用程序的，当线程处于忙碌的状态的时候，
+        ''' 当前线程会被一直阻塞，直到线程空闲
         ''' </summary>
         ''' <param name="handle"></param>
         ''' <returns>假若本对象已经开始Dispose了，则为完成的任务都会返回Nothing</returns>
@@ -114,7 +116,9 @@ Namespace Parallel.Tasks
                     Dim task As __task = __tasks.Dequeue
                     _RunningTask = True
                     Call task.Run()
-                    Call task.receiveDone.Set()
+                    If Not task.receiveDone Is Nothing Then
+                        Call task.receiveDone.Set()
+                    End If
                     _RunningTask = False
                 Else
                     Call Thread.Sleep(1) ' 当前的线程处于空闲的状态
