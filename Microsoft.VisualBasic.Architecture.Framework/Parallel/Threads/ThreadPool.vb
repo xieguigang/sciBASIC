@@ -19,6 +19,16 @@ Namespace Parallel.Threads
         ''' </summary>
         ReadOnly __pendings As New Queue(Of KeyValuePair(Of Action, Action(Of Long)))
 
+        ''' <summary>
+        ''' 线程池之中的线程数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property NumOfThreads As Integer
+            Get
+                Return __threads.Length
+            End Get
+        End Property
+
         Sub New(maxThread As Integer)
             __threads = New TaskQueue(Of Long)(maxThread) {}
 
