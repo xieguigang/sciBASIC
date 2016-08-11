@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Module KeyValuePairExtensions
 
+
     <Extension>
     Public Function ToDictionary(nc As NameValueCollection) As Dictionary(Of String, String)
         Dim hash As New Dictionary(Of String, String)

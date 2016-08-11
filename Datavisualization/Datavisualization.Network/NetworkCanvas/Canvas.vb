@@ -78,7 +78,7 @@ Public Class Canvas
             fdgRenderer = New Renderer3D(
                 Function() paper,
                 Function() New Rectangle(New Point, Size),
-                fdgPhysics)
+                fdgPhysics, DynamicsRadius)
             inputs = New Input3D(Me)
         Else
             fdgPhysics = New ForceDirected2D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
@@ -135,6 +135,7 @@ Public Class Canvas
     Dim paper As Graphics
 
     Public Property AutoRotate As Boolean = True
+    Public Property DynamicsRadius As Boolean = False
 
     <DefaultValue(True)>
     Public Property ShowLabel As Boolean

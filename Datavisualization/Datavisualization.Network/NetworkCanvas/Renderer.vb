@@ -89,6 +89,21 @@ Public Class Renderer : Inherits AbstractRenderer
         radiushash = nr
     End Sub
 
+    Public Property ZeroFilter As Boolean = True
+
+    Public Overrides Sub DirectDraw()
+        forceDirected.EachEdge(AddressOf __invokeEdgeDraw)
+        forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
+    End Sub
+
+    Private Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
+        If ZeroFilter AndAlso (edge.Source.Data.radius < 0.6 OrElse edge.Target.Data.radius < 0.6) Then
+            Return
+        End If
+
+        Call drawEdge(edge, spring.point1.position, spring.point2.position)
+    End Sub
+
     Public Overrides Sub Clear()
 
     End Sub

@@ -33,6 +33,10 @@
             Value = Nothing
         End Sub
 
+        Public Function IsNothing() As Boolean
+            Return value Is Nothing
+        End Function
+
         Public Overrides Function ToString() As String
             Return Scripting.InputHandler.ToString(Value)
         End Function
