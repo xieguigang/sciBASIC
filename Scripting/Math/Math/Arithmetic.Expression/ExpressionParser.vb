@@ -27,16 +27,20 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.Expression
+Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Mathematical.Types
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
-Imports Microsoft.VisualBasic.Mathematical.Expression
-Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Parser for complex expressions
 ''' </summary>
 Public Module ExpressionParser
+
+    Public Function GetTokens(s As String) As List(Of Token(Of Tokens))
+        Return TokenIcer.TryParse(s.ClearOverlapOperator)
+    End Function
 
     ''' <summary>
     ''' Using defaul engine
@@ -73,7 +77,8 @@ Public Module ExpressionParser
     ''' </summary>
     ''' <returns></returns>
     <Extension> Public Function TryParse(s As String, getValue As GetValue, evaluate As IFuncEvaluate) As SimpleExpression
-        Dim tokens = TokenIcer.TryParse(s.ClearOverlapOperator) 'Get all of the number that appears in this expression including factoral operator.
+        Dim tokens As List(Of Token(Of Tokens)) =        ' Get all of the number that appears in this
+            TokenIcer.TryParse(s.ClearOverlapOperator)   ' expression including factoral operator.
 
         If tokens.Count = 1 Then
             Dim token As Token(Of Tokens) = tokens.First
