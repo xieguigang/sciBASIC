@@ -89,7 +89,12 @@ Public Module ExpressionParser
                 Throw New SyntaxErrorException(s)
             End If
         Else
-            Return New Pointer(Of Token(Of Tokens))(tokens).TryParse(getValue, evaluate, False)
+            Try
+                Return New Pointer(Of Token(Of Tokens))(tokens).TryParse(getValue, evaluate, False)
+            Catch ex As Exception
+                ex = New Exception(s, ex)
+                Throw ex
+            End Try
         End If
     End Function
 

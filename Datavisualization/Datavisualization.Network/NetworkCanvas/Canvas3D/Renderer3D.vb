@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Transformation
 Public Class Renderer3D : Inherits Renderer
     Implements IGraphicsEngine
 
-    Public Property ViewDistance As Double = -120
+    Public Property ViewDistance As Double = -220
 
     Dim dynamicsRadius As Boolean
 
@@ -88,7 +88,7 @@ Public Class Renderer3D : Inherits Renderer
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
         Dim r As Single = If(dynamicsRadius, n.Data.radius, radiushash(n))
 
-        If r < 0.6 Then
+        If r < 0.6 OrElse Single.IsNaN(r) Then
             Return
         End If
 
