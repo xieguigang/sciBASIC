@@ -52,7 +52,11 @@ Namespace Terminal
             Me.y = Y
             AddHandler TerminalEvents.Resize, AddressOf __resize
 
-            Call __resize(Nothing, Nothing)
+            Try
+                Call __resize(Nothing, Nothing)
+            Catch ex As Exception
+
+            End Try
         End Sub
 
         Private Sub __resize(size As Size, old As Size)

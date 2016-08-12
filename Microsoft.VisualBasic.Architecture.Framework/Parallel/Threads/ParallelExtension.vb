@@ -41,5 +41,9 @@ Namespace Parallel
             Call Thread.Start()
             Return Thread
         End Function
+
+        Public Function AsyncTask(start As Threading.ThreadStart) As IAsyncResult
+            Return start.BeginInvoke(Nothing, Nothing)
+        End Function
     End Module
 End Namespace

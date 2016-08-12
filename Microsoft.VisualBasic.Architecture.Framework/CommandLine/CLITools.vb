@@ -175,6 +175,10 @@ Namespace CommandLine
             }
 
             CLI.SingleValue = SingleValue
+            If CLI.Parameters.Length = 1 AndAlso
+                String.IsNullOrEmpty(CLI.SingleValue) Then
+                CLI.SingleValue = CLI.Parameters(0)
+            End If
 
             If args.Count > 1 Then
                 CLI.__lstParameter = CreateParameterValues(args.Skip(1).ToArray, False)

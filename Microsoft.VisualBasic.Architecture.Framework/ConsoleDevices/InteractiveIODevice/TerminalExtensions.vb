@@ -56,6 +56,8 @@ Namespace Terminal
             Loop
         End Sub
 
+        Public ReadOnly Property ConsoleHandleInvalid As Boolean = False
+
         ''' <summary>
         ''' Terminal resize event for [<see cref="Console.WindowWidth"/>, <see cref="Console.WindowHeight"/>]
         ''' </summary>
@@ -66,9 +68,14 @@ Namespace Terminal
                 End If
 
                 If _eventThread Is Nothing Then
-                    _old = New Size(Console.WindowWidth, Console.WindowHeight)
-                    _eventThread = New Thread(AddressOf __detects)
-                    _eventThread.Start()
+                    Try
+                        _old = New Size(Console.WindowWidth, Console.WindowHeight)
+                        _eventThread = New Thread(AddressOf __detects)
+                        _eventThread.Start()
+                    Catch ex As Exception  ' 可能是WindowsForm应用，则在这里就忽略掉这个错误了
+                        Call App.LogException(ex)
+                        _ConsoleHandleInvalid = True
+                    End Try
                 End If
             End AddHandler
             RemoveHandler(value As ResizeEventHandle)
