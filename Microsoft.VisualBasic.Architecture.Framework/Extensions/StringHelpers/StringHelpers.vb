@@ -29,11 +29,11 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Terminal
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
@@ -122,7 +122,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Shortcuts for method <see cref="String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
+    ''' Shortcuts for method <see cref="System.String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
     ''' </summary>
     ''' <param name="s1"></param>
     ''' <param name="s2"></param>
@@ -143,7 +143,7 @@ Public Module StringHelpers
     Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Multiline
 
     ''' <summary>
-    ''' <paramref name="s"/> Is Nothing, <see cref="String.IsNullOrEmpty"/>, <see cref="String.IsNullOrWhiteSpace"/>
+    ''' <paramref name="s"/> Is Nothing, <see cref="System.String.IsNullOrEmpty"/>, <see cref="System.String.IsNullOrWhiteSpace"/>
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
@@ -421,13 +421,12 @@ Public Module StringHelpers
         End If
 
         Dim Uniques = (From s As String
-                       In (From strValue As String In source Select strValue Distinct).ToArray
+                       In source.Distinct
                        Let data As String = s
                        Select UNIQUE_KEY = s.ToLower, data
                        Group By UNIQUE_KEY Into Group).ToArray
-        Dim ChunkList As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))
-
-        Dim LQuery = (From ustr In Uniques
+        Dim LQuery = (From ustr
+                      In Uniques
                       Let s As String = ustr.UNIQUE_KEY
                       Let Count As Integer = (From str As String In source Where String.Equals(str, s, StringComparison.OrdinalIgnoreCase) Select 1).Count
                       Let original As String() = (From nn In ustr.Group Select nn.data).ToArray

@@ -77,7 +77,25 @@ Namespace MathApp
             Return Me.GetJson
         End Function
 
-        ''' <summary>Calculates the trendline</summary>
+        ''' <summary>
+        ''' Calculates the trendline.(使用这个方法来计算趋势曲线拟合)
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="convert">用于数据点的构造函数参数，将目标类型<typeparamref name="T"/>求值</param>
+        ''' <param name="toX">用于数据点的构造函数参数，将数值转换为目标类型<typeparamref name="T"/></param>
+        ''' <returns></returns>
+        Public Shared Function Calculate(data As IEnumerable(Of ValueItem(Of T)), convert As Func(Of T, Double), toX As Func(Of Double, T)) As LinearTrend(Of T)
+            Return Calculate(data.ToList, Function() New ValueItem(Of T)(convert, toX))
+        End Function
+
+        ''' <summary>
+        ''' Calculates the trendline.(使用这个方法来计算趋势曲线拟合)
+        ''' </summary>
+        ''' <param name="data">原始数据</param>
+        ''' <param name="newTrendItem">
+        ''' 生成新的数据点的方法，这个函数其实主要是为数据点对象的构造函数提供lambda表达式参数
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function Calculate(data As List(Of ValueItem(Of T)), newTrendItem As Func(Of ValueItem(Of T))) As LinearTrend(Of T)
             Dim slopeNumerator As Double
             Dim slopeDenominator As Double
@@ -104,7 +122,7 @@ Namespace MathApp
 
             ' Calculate correlation
             Dim correlDenominator As Double =
-            Math.Sqrt(
+                Math.Sqrt(
                 data.Sum(Function(x) System.Math.Pow(x.ConvertedX - averageX, 2)) *
                 data.Sum(Function(x) System.Math.Pow(x.Y - averageY, 2)))
 
@@ -123,25 +141,23 @@ Namespace MathApp
 
             ' Calculate r-squared value
             r2Numerator = data.Sum(
-            Function(dataItem) _
-                Math.Pow(dataItem.Y - trendItems.Where(
+                Function(dataItem) Math.Pow(dataItem.Y - trendItems.Where(
                 Function(calcItem) calcItem.ConvertedX = dataItem.ConvertedX).First().Y, 2))
 
             r2Denominator = data.Sum(
-            Function(dataItem) _
-                Math.Pow(dataItem.Y, 2)) - (Math.Pow(data.Sum(
+                Function(dataItem) Math.Pow(dataItem.Y, 2)) - (Math.Pow(data.Sum(
                 Function(dataItem) dataItem.Y), 2) / data.Count)
 
             Dim R2 As Double = 1 - (r2Numerator / r2Denominator)
 
             Return New LinearTrend(Of T) With {
-            .Correl = Correl,
-            .DataItems = data.ToArray,
-            .Intercept = Intercept,
-            .R2 = R2,
-            .Slope = Slope,
-            .TrendItems = trendItems.ToArray
-        }
+                .Correl = Correl,
+                .DataItems = data.ToArray,
+                .Intercept = Intercept,
+                .R2 = R2,
+                .Slope = Slope,
+                .TrendItems = trendItems.ToArray
+            }
         End Function
     End Class
 
