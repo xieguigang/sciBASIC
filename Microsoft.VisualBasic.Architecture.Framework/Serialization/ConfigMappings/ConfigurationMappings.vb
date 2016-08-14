@@ -1,34 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::4f0fb987eb27147ebc602f2d57d18abd, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-
-
+Imports Microsoft.VisualBasic.Language
 
 Namespace Serialization
 
@@ -53,13 +52,13 @@ Namespace Serialization
         ''' <summary>
         ''' 从源江基本的值类型映射到数据模型，以将配置数据读取出来并进行加载
         ''' </summary>
-        ''' <typeparam name="T_Entity">数据模型</typeparam>
-        ''' <typeparam name="T_Mapping">源</typeparam>
+        ''' <typeparam name="T">数据模型</typeparam>
+        ''' <typeparam name="TMaps">源</typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function LoadMapping(Of T_Entity As Class, T_Mapping As Class)(source As T_Mapping) As T_Entity
-            Dim Mappings = GetNodeMapping(Of T_Entity, T_Mapping)(source)
-            Dim DataModel As T_Entity = Activator.CreateInstance(Of T_Entity)()
+        Public Function LoadMapping(Of T As Class, TMaps As Class)(source As TMaps) As T
+            Dim Mappings = GetNodeMapping(Of T, TMaps)(source)
+            Dim DataModel As T = Activator.CreateInstance(Of T)()
 
             For Each Node In Mappings '读取数据
                 Dim value As Object = Node.Source.GetValue(source)
@@ -71,8 +70,8 @@ Namespace Serialization
             Return DataModel
         End Function
 
-        Public Function WriteMapping(Of T_Entity As Class, T_Mapping As Class)(Model As T_Entity, ByRef WriteToSource As T_Mapping) As T_Mapping
-            Dim Mappings = GetNodeMapping(Of T_Entity, T_Mapping)(Nothing)
+        Public Function WriteMapping(Of T As Class, TMaps As Class)(Model As T, ByRef WriteToSource As TMaps) As TMaps
+            Dim Mappings = GetNodeMapping(Of T, TMaps)(Nothing)
 
             For Each Node In Mappings '写数据
                 If Node.MappingToSourceCasting Is Nothing Then
@@ -90,14 +89,14 @@ Namespace Serialization
         ''' <summary>
         ''' 从数据模型将值类型数据映射回源，以将配置数据写入文件
         ''' </summary>
-        ''' <typeparam name="T_Entity">数据模型</typeparam>
-        ''' <typeparam name="T_Mapping">源</typeparam>
+        ''' <typeparam name="T">数据模型</typeparam>
+        ''' <typeparam name="TMaps">源</typeparam>
         ''' <param name="Model"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function WriteMapping(Of T_Entity As Class, T_Mapping As Class)(Model As T_Entity) As T_Mapping
-            Dim Source As T_Mapping = Activator.CreateInstance(Of T_Mapping)()
-            Return WriteMapping(Of T_Entity, T_Mapping)(Model, WriteToSource:=Source)
+        Public Function WriteMapping(Of T As Class, TMaps As Class)(Model As T) As TMaps
+            Dim Source As TMaps = Activator.CreateInstance(Of TMaps)()
+            Return WriteMapping(Of T, TMaps)(Model, WriteToSource:=Source)
         End Function
 
         Private Function __knowsIsIgnored(p As PropertyInfo) As Boolean
@@ -108,49 +107,60 @@ Namespace Serialization
         ''' <summary>
         ''' 获取从源映射至数据模型的映射过程
         ''' </summary>
-        ''' <typeparam name="T_Entity">数据模型</typeparam>
-        ''' <typeparam name="T_Mapping">源</typeparam>
+        ''' <typeparam name="T">数据模型</typeparam>
+        ''' <typeparam name="TMaps">源</typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetNodeMapping(Of T_Entity As Class, T_Mapping As Class)(obj_source As Object) As NodeMapping()
-            Dim LQuery As PropertyInfo() = (From p In GetType(T_Mapping).GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-                                            Where Not __knowsIsIgnored(p) AndAlso
-                                           DataFramework.PrimitiveFromString.ContainsKey(p.PropertyType)
-                                            Select p).ToArray  '获取所有的数据源之中的映射
-            Dim T_EntityType As Type = GetType(T_Entity)
-            Dim CustomMappings As MethodInfo() = (From entry In GetType(T_Mapping).GetMethods()
-                                                  Where entry.ReturnType <> GetType(System.Void) AndAlso
-                                                  entry.GetParameters.Length = 1
-                                                  Select entry).ToArray
-            Dim Mappings = (From p As PropertyInfo
-                        In T_EntityType.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-                            Let p_Collection = (From prop As PropertyInfo In LQuery
-                                                Where String.Equals(prop.Name, p.Name, StringComparison.OrdinalIgnoreCase)
-                                                Select prop).FirstOrDefault
-                            Where Not p_Collection Is Nothing AndAlso
-                            Not __knowsIsIgnored(p)
-                            Select source = p_Collection,
-                            MappingToModel = p).ToArray          '获取数据模型之中的同名的映射属性
-            Dim Mappings_LQuery = (From mapping In Mappings
-                                   Let sourceMapping = __getReads_MappingHandle(mapping.source, mapping.MappingToModel, CustomMappings, obj_source)
-                                   Let model2Mapping = __getWrite_MappingHandle(mapping.source, mapping.MappingToModel, CustomMappings)
-                                   Select mapping.source, mapping.MappingToModel, sourceMapping, model2Mapping).ToArray    '获取具体的映射过程
-            Return (From map In Mappings_LQuery
-                    Where Not (map.sourceMapping Is Nothing)
-                    Let nodeMap As NodeMapping = New NodeMapping With {
+        Public Function GetNodeMapping(Of T As Class, TMaps As Class)(obj_source As Object) As NodeMapping()
+            Dim LQuery As PropertyInfo() = LinqAPI.Exec(Of PropertyInfo) <=
+                From p As PropertyInfo
+                In GetType(TMaps).GetProperties(BindingFlags.Instance Or BindingFlags.Public)
+                Where Not __knowsIsIgnored(p) AndAlso
+                    DataFramework.PrimitiveFromString.ContainsKey(p.PropertyType)
+                Select p '获取所有的数据源之中的映射
+            Dim T_EntityType As Type = GetType(T)
+            Dim CustomMappings As MethodInfo() = LinqAPI.Exec(Of MethodInfo) <=
+                From entry As MethodInfo
+                In GetType(TMaps).GetMethods()
+                Where entry.ReturnType <> GetType(System.Void) AndAlso
+                    entry.GetParameters.Length = 1
+                Select entry
+
+            Dim Mappings = From p As PropertyInfo
+                           In T_EntityType.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
+                           Let array As PropertyInfo =
+                               LQuery.Where(Function(prop) String.Equals(prop.Name, p.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault
+                           Where Not array Is Nothing AndAlso
+                               Not __knowsIsIgnored(p)
+                           Select source = array,
+                               MappingToModel = p         ' 获取数据模型之中的同名的映射属性
+            Dim out = From mapping
+                      In Mappings
+                      Let sourceMapping = __getReads_MappingHandle(mapping.source, mapping.MappingToModel, CustomMappings, obj_source)
+                      Let model2Mapping = __getWrite_MappingHandle(mapping.source, mapping.MappingToModel, CustomMappings)
+                      Select mapping.source, mapping.MappingToModel, sourceMapping, model2Mapping    ' 获取具体的映射过程
+            Return LinqAPI.Exec(Of NodeMapping) <=
+ _
+                From map
+                In out
+                Where Not (map.sourceMapping Is Nothing)
+                Let nodeMap As NodeMapping = New NodeMapping With {
                     .Source = map.source,
                     .Mapping = map.MappingToModel,
                     .SourceToMappingCasting = map.sourceMapping,
                     .MappingToSourceCasting = map.model2Mapping
                 }
-                    Select nodeMap).ToArray      '返回映射句柄，为了简化程序设计，数据模型至源文件的映射可以不必定义。但是当需要使用本模块进行配置文件的写操作的时候，映射至源文件的方法则非常有必要要进行定义了
+                Select nodeMap     ' 返回映射句柄，为了简化程序设计，数据模型至源文件的映射可以不必定义。但是当需要使用本模块进行配置文件的写操作的时候，映射至源文件的方法则非常有必要要进行定义了
         End Function
 
         Private Function __getWrite_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo()) As __LDMStringTypeCastHandler
             If DataFramework.ToStrings.ContainsKey(Model.PropertyType) Then
                 Return DataFramework.ToStrings(Model.PropertyType)
             Else
-                Dim Method = __getCustomMapping(p_Type:=Model.PropertyType, ReturnedType:=source.PropertyType, Methods:=Methods)
+                Dim Method As MethodInfo = __getCustomMapping(
+                    p_Type:=Model.PropertyType,
+                    ReturnedType:=source.PropertyType,
+                    Methods:=Methods)
                 Return Function(obj As Object) DirectCast(Method.Invoke(Nothing, {obj}), String)
             End If
         End Function
@@ -159,16 +169,22 @@ Namespace Serialization
             If DataFramework.PrimitiveFromString.ContainsKey(Model.PropertyType) Then
                 Return DataFramework.PrimitiveFromString(Model.PropertyType)
             Else
-                Dim Method = __getCustomMapping(p_Type:=source.PropertyType, ReturnedType:=Model.PropertyType, Methods:=Methods)
+                Dim Method As MethodInfo = __getCustomMapping(
+                    p_Type:=source.PropertyType,
+                    ReturnedType:=Model.PropertyType,
+                    Methods:=Methods)
                 Return Function(s As String) Method.Invoke(obj_source, {s})
             End If
         End Function
 
         Private Function __getCustomMapping(p_Type As Type, ReturnedType As Type, Methods As MethodInfo()) As MethodInfo
-            Dim LQuery = (From entryPoint As MethodInfo In Methods
-                          Where entryPoint.GetParameters.First.ParameterType = p_Type AndAlso
-                          entryPoint.ReturnType = ReturnedType
-                          Select entryPoint).FirstOrDefault
+            Dim LQuery As MethodInfo = LinqAPI.DefaultFirst(Of MethodInfo) <=
+                From entryPoint As MethodInfo
+                In Methods
+                Where entryPoint.GetParameters.First.ParameterType = p_Type AndAlso
+                    entryPoint.ReturnType = ReturnedType
+                Select entryPoint
+
             Return LQuery
         End Function
     End Module
