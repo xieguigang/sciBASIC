@@ -137,6 +137,21 @@ Public Class Canvas
     Public Property AutoRotate As Boolean = True
     Public Property DynamicsRadius As Boolean = False
 
+    Public Property ViewDistance As Double
+        Get
+            If Not space3D Then
+                Return 0
+            Else
+                Return DirectCast(fdgRenderer, Renderer3D).ViewDistance
+            End If
+        End Get
+        Set(value As Double)
+            If space3D Then
+                DirectCast(fdgRenderer, Renderer3D).ViewDistance = value
+            End If
+        End Set
+    End Property
+
     <DefaultValue(True)>
     Public Property ShowLabel As Boolean
         Get
