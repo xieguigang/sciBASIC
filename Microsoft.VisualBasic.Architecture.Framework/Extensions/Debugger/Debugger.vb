@@ -130,8 +130,8 @@ Public Module VBDebugger
     ''' <returns></returns>
     <Extension>
     Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = $"[ERROR {Now.ToString}] @{memberName}::{msg}"
-        Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red)
+        Dim exMsg As String = $"[ERROR {Now.ToString}] <{memberName}>::{msg}"
+        Call Terminal.AddToQueue(Sub() Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red))
         Return False
     End Function
 
