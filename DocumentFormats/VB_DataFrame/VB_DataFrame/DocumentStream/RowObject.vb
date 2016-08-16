@@ -37,14 +37,14 @@ Namespace DocumentStream
     ''' A line of data in the csv file.(Csv表格文件之中的一行)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class RowObject : Implements Generic.IEnumerable(Of String)
-        Implements IList(Of System.String)
+    Public Class RowObject : Implements IEnumerable(Of String)
+        Implements IList(Of String)
 
         ''' <summary>
         ''' 本行对象中的所有的单元格的数据集合
         ''' </summary>
         ''' <remarks></remarks>
-        Protected Friend _innerColumns As List(Of String) = New List(Of String)
+        Protected Friend _innerColumns As New List(Of String)
 
         Sub New(Optional Columns As IEnumerable(Of String) = Nothing)
             If Not Columns Is Nothing Then

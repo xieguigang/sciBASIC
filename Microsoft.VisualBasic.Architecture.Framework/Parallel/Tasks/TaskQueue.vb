@@ -34,24 +34,40 @@ Namespace Parallel.Tasks
     End Interface
 
     ''' <summary>
-    ''' 
+    ''' 这个只有一条线程来执行
     ''' </summary>
     Public Class TaskQueue(Of T) : Implements IDisposable
 
         ReadOnly __tasks As New Queue(Of __task)
 
+        ''' <summary>
+        ''' 返回当前的任务池之中的任务数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Tasks As Integer
+            Get
+                Return __tasks.Count
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 会单独启动一条新的线程来用来执行任务队列
+        ''' </summary>
         Sub New()
             Call RunTask(AddressOf __taskQueueEXEC)
         End Sub
 
         ''' <summary>
         ''' 函数会被插入一个队列之中，之后线程会被阻塞在这里直到函数执行完毕，这个主要是用来控制服务器上面的任务并发的
+        ''' 一般情况下不会使用这个方法，这个方法主要是控制服务器资源的利用程序的，当线程处于忙碌的状态的时候，
+        ''' 当前线程会被一直阻塞，直到线程空闲
         ''' </summary>
         ''' <param name="handle"></param>
         ''' <returns>假若本对象已经开始Dispose了，则为完成的任务都会返回Nothing</returns>
         Public Function Join(handle As Func(Of T)) As T
             Dim task As New __task With {
-                .handle = handle
+                .handle = handle,
+                .receiveDone = New ManualResetEvent(False)
             }
             Call __tasks.Enqueue(task)
             Call task.receiveDone.WaitOne()
@@ -78,33 +94,43 @@ Namespace Parallel.Tasks
                 .callback = callback
             }
             Call __tasks.Enqueue(task)
-
-            If Not callback Is Nothing Then
-                Call RunTask(AddressOf task.TriggerCallback)
-            End If
         End Sub
 
+        ''' <summary>
+        ''' 当这个属性为False的时候说明没有任务在执行，此时为空闲状态
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RunningTask As Boolean
+        Public ReadOnly Property uid As Integer
+            Get
+                Return Me.GetHashCode
+            End Get
+        End Property
 
+        ''' <summary>
+        ''' 有一条线程单独执行这个任务队列
+        ''' </summary>
         Private Sub __taskQueueEXEC()
             Do While Not disposedValue
                 If Not __tasks.Count = 0 Then
                     Dim task As __task = __tasks.Dequeue
                     _RunningTask = True
                     Call task.Run()
-                    Call task.receiveDone.Set()
+                    If Not task.receiveDone Is Nothing Then
+                        Call task.receiveDone.Set()
+                    End If
                     _RunningTask = False
                 Else
-                    Call Thread.Sleep(1)
+                    Call Thread.Sleep(1) ' 当前的线程处于空闲的状态
                 End If
             Loop
         End Sub
 
-        Private Class __task
+        Private Structure __task
 
             Public callback As Action(Of T)
             Public handle As Func(Of T)
-            Public receiveDone As New ManualResetEvent(False)
+            Public receiveDone As ManualResetEvent
 
             Public ReadOnly Property Value As T
 
@@ -115,14 +141,12 @@ Namespace Parallel.Tasks
                     Call App.LogException(ex)
                     Call ex.PrintException
                 End Try
-            End Sub
 
-            Sub TriggerCallback()
-                Call receiveDone.WaitOne()
-                Call receiveDone.Reset()
-                Call callback(Value)
+                If Not callback Is Nothing Then
+                    Call callback(Value)
+                End If
             End Sub
-        End Class
+        End Structure
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls

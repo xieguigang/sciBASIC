@@ -88,13 +88,17 @@ Namespace Graph
             Pinned = False
         End Sub
 
+        Sub New()
+            Call Me.New(Nothing, Nothing)
+        End Sub
+
         ''' <summary>
         ''' The unique id of this node
         ''' </summary>
         ''' <returns></returns>
-        Public Property ID() As String Implements sIdEnumerable.Identifier
-        Public Property Data() As NodeData
-        Public Property Pinned() As Boolean
+        Public Property ID As String Implements sIdEnumerable.Identifier
+        Public Property Data As NodeData
+        Public Property Pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
             Return ID.GetHashCode()

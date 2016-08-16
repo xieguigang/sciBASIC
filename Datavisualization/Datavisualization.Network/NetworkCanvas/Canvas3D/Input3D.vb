@@ -52,7 +52,7 @@ Public Class Input3D : Inherits InputDevice
             Return
         End If
 
-        renderer.rotate = renderer.rotate + (-usrCursor.X + e.X) / 1000
+        renderer.rotate = renderer.rotate + (-usrCursor.X + e.X) / 100
     End Sub
 
     Protected Overrides Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs)

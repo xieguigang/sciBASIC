@@ -1,40 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::9f91116fddd59255b38e1be4490364bb, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\SVG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
 Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
+Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.MarkupLanguage.HTML
 
 ''' <summary>
 ''' <see cref="NetworkGraph"/> to svg doc
@@ -53,7 +54,8 @@ Public Module SVGExtensions
                 .strokeOpacity = "0.8",
                 .stroke = "#FFF",
                 .opacity = "0.85"
-            }
+            },
+            .text = New Font
         }
     End Function
 
@@ -65,18 +67,28 @@ Public Module SVGExtensions
     ''' <param name="size">The export canvas size</param>
     ''' <returns></returns>
     <Extension>
-    Public Function ToSVG(graph As NetworkGraph, size As Size, Optional style As CSS.DirectedForceGraph = Nothing) As SVGXml
+    Public Function ToSVG(graph As NetworkGraph,
+                          size As Size,
+                          Optional style As CSS.DirectedForceGraph = Nothing,
+                          Optional is3D As Boolean = False,
+                          Optional viewDistance As Integer = -120) As SVGXml
+
         Dim rect As New Rectangle(New Point, size)
+        Dim getPoint As IGetPoint = If(
+            is3D,
+            New IGetPoint(AddressOf Get3DPoint),
+            New IGetPoint(AddressOf Get2DPoint))
         Dim nodes As SVG.circle() =
             LinqAPI.Exec(Of SVG.circle) <= From n As Graph.Node
                                            In graph.nodes
-                                           Let pos As Point = Renderer.GraphToScreen(TryCast(n.Data.initialPostion, FDGVector2), rect)
+                                           Let pos As Point = getPoint(n, rect, viewDistance)
                                            Let c As Color = If(
                                                TypeOf n.Data.Color Is SolidBrush,
                                                DirectCast(n.Data.Color, SolidBrush).Color,
                                                Color.Black)
                                            Let r As Single = n.__getRadius
-                                           Let pt = New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
+                                           Let pt As Point =
+                                               New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
                                            Select New circle With {
                                                .class = "node",
                                                .cx = pt.X,
@@ -89,8 +101,8 @@ Public Module SVGExtensions
                                      In graph.edges
                                      Let source As Graph.Node = edge.Source
                                      Let target As Graph.Node = edge.Target
-                                     Let pts As Point = Renderer.GraphToScreen(TryCast(source.Data.initialPostion, FDGVector2), rect)
-                                     Let ptt As Point = Renderer.GraphToScreen(TryCast(target.Data.initialPostion, FDGVector2), rect)
+                                     Let pts As Point = getPoint(source, rect, viewDistance)
+                                     Let ptt As Point = getPoint(target, rect, viewDistance)
                                      Let rs As Single = source.__getRadius / 2,
                                          rt As Single = target.__getRadius / 2
                                      Select New line With {
@@ -100,6 +112,17 @@ Public Module SVGExtensions
                                          .y1 = pts.Y - rs,
                                          .y2 = ptt.Y - rt
                                      }
+        Dim labels As SVG.text() = LinqAPI.Exec(Of SVG.text) <=
+ _
+            From n As Graph.Node
+            In graph.nodes
+            Let pos As Point = getPoint(n, rect, viewDistance)
+            Select New SVG.text With {
+                .x = pos.X,
+                .y = pos.Y,
+                .value = n.ID,
+                .class = "text"
+            }
         Dim svg As New SVGXml With {
             .defs = New CSSStyles With {
                 .styles = {
@@ -112,10 +135,25 @@ Public Module SVGExtensions
             .height = size.Height & "px",
             .lines = links,
             .circles = nodes,
+            .texts = labels,
             .fill = "#dbf3ff"
         }
 
         Return svg
+    End Function
+
+    Public Delegate Function IGetPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
+
+    <Extension>
+    Public Function Get2DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
+        Return Renderer.GraphToScreen(TryCast(node.Data.initialPostion, FDGVector2), rect)
+    End Function
+
+    <Extension>
+    Public Function Get3DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
+        Dim d3 As FDGVector3 = TryCast(node.Data.initialPostion, FDGVector3)
+        Dim pt3 As New Point3D(d3.x, d3.y, d3.z)
+        Return pt3.Project(rect.Width, rect.Height, 256, viewDistance).PointXY
     End Function
 
     <Extension>
@@ -127,11 +165,24 @@ Public Module SVGExtensions
         Return r2
     End Function
 
+    ''' <summary>
+    ''' Write the node layout position into its extensions data, for generates the svg graphics.
+    ''' </summary>
+    ''' <param name="graph"></param>
+    ''' <param name="engine"></param>
     <Extension>
     Public Sub WriteLayouts(ByRef graph As NetworkGraph, engine As IForceDirected)
-        For Each node As Graph.Node In graph.nodes
-            node.Data.initialPostion =
-                New FDGVector2(engine.GetPoint(node).position.Point2D)
-        Next
+        If TypeOf engine Is ForceDirected2D Then
+            For Each node As Graph.Node In graph.nodes
+                node.Data.initialPostion =
+                    New FDGVector2(engine.GetPoint(node).position.Point2D)
+            Next
+        ElseIf TypeOf engine Is ForceDirected3D Then
+            For Each node As Graph.Node In graph.nodes
+                Dim pos = engine.GetPoint(node).position
+                node.Data.initialPostion =
+                    New FDGVector3(pos.x, pos.y, pos.z)
+            Next
+        End If
     End Sub
 End Module

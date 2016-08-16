@@ -59,19 +59,33 @@ Namespace Types
             End Set
         End Property
 
+        ''' <summary>
+        ''' Does the expression value is a constant.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsNumber As Boolean
             Get
                 Return __left Is Nothing
             End Get
         End Property
 
+        ''' <summary>
+        ''' Does the expression Value comes from a lambda expression?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsExpression As Boolean
             Get
                 Return Not __left Is Nothing
             End Get
         End Property
 
+        ''' <summary>
+        ''' Value is a constant.
+        ''' </summary>
         Dim _left As Double
+        ''' <summary>
+        ''' Value comes from a lambda expression
+        ''' </summary>
         Dim __left As Func(Of Double)
 
         Sub New()

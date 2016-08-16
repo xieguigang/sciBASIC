@@ -82,6 +82,10 @@ Namespace Graph
             Directed = False
         End Sub
 
+        Sub New()
+            Call Me.New(Nothing, Nothing, Nothing, Nothing)
+        End Sub
+
         Public Property ID() As String
         Public Property Data() As EdgeData
         Public Property Source() As Node

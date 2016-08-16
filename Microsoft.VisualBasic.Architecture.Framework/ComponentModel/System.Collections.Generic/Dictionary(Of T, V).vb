@@ -192,4 +192,22 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     Public Shared Narrowing Operator CType(source As Dictionary(Of V)) As List(Of V)
         Return New List(Of V)(source.Values)
     End Operator
+
+    ''' <summary>
+    ''' Get value by key.
+    ''' </summary>
+    ''' <param name="hash"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    Public Shared Operator <=(hash As Dictionary(Of V), key As String) As V
+        Return hash(key)
+    End Operator
+
+    Public Shared Operator >=(hash As Dictionary(Of V), null As String) As V
+        Throw New NotSupportedException
+    End Operator
+
+    Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
+        Return hash.ContainsKey(null)
+    End Operator
 End Class
