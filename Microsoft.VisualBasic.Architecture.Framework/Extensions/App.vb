@@ -227,7 +227,7 @@ Public Module App
 
     Public Function GetAppVariables() As NamedValue(Of String)()
         Dim type As Type = GetType(App)
-        Dim pros = type.Schema(PropertyAccessibilityControls.Readable, BindingFlags.Public Or BindingFlags.Static)
+        Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
         Dim out As New List(Of NamedValue(Of String))
 
         For Each prop As PropertyInfo
