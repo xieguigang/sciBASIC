@@ -199,11 +199,11 @@ Namespace Net
                 If _threadEndAccept Then
                     _threadEndAccept = False
 
-                    Dim Callback As AsyncCallback = New AsyncCallback(AddressOf AcceptCallback)
+                    Dim callback As New AsyncCallback(AddressOf AcceptCallback)
                     Try
-                        Call _servicesSocket.BeginAccept(Callback, _servicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
+                        Call _servicesSocket.BeginAccept(callback, _servicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
                     Catch ex As Exception
-                        Exit While
+                        Call App.LogException(ex)
                     End Try
                 End If
 
