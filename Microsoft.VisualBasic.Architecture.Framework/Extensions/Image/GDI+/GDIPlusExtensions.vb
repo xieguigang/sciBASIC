@@ -49,8 +49,21 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
 
-        Public Function Distance(a As Point, b As Point) As Double
-            Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
+        <Extension>
+        Public Function InRegion(x As Point, rect As Rectangle) As Boolean
+            Return New PointF(x.X, x.Y).InRegion(rect)
+        End Function
+
+        <Extension>
+        Public Function InRegion(x As PointF, rect As Rectangle) As Boolean
+            If x.X < rect.Left OrElse x.X > rect.Right Then
+                Return False
+            End If
+            If x.Y < rect.Top OrElse x.Y > rect.Bottom Then
+                Return False
+            End If
+
+            Return True
         End Function
 
         <Extension> Public Function GetCenter(size As Size) As Point
