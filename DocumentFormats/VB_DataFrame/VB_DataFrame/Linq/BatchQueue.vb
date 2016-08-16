@@ -51,13 +51,15 @@ Namespace DocumentStream.Linq
 
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim encode As Encoding = encoding.GetEncodings
-            Dim IO As IEnumerable(Of NamedValue(Of String())) = From path As String
-                                                                In files.AsParallel
-                                                                Let echoIni As String = $"{path.ToFileURL} init start...".__DEBUG_ECHO
-                                                                Let buf As String() = path.ReadAllLines(encode)
-                                                                Let echo As String = $"{path.ToFileURL} I/O read done!".__DEBUG_ECHO
-                                                                Let name As String = path.BaseName
-                                                                Select New NamedValue(Of String())(name, buf) ' 不清楚为什么服务器上面有时候的IO会非常慢，则在这里可以一次性的先读完所有数据，然后再返回数据
+            Dim IO As IEnumerable(Of NamedValue(Of String())) =
+ _
+                From path As String
+                In files.AsParallel
+                Let echoIni As String = $"{path.ToFileURL} init start...".__DEBUG_ECHO
+                Let buf As String() = path.ReadAllLines(encode)
+                Let echo As String = $"{path.ToFileURL} I/O read done!".__DEBUG_ECHO
+                Let name As String = path.BaseName
+                Select New NamedValue(Of String())(name, buf) ' 不清楚为什么服务器上面有时候的IO会非常慢，则在这里可以一次性的先读完所有数据，然后再返回数据
 
             Call $"All I/O queue job done!   {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
 
@@ -74,6 +76,13 @@ Namespace DocumentStream.Linq
             Call GC.SuppressFinalize(IO)
         End Function
 
+        ''' <summary>
+        ''' Reads all data in the directory as a single data source.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="files">Csv files list</param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function IteratesAll(Of T As Class)(
                                  files As IEnumerable(Of String),
@@ -109,5 +118,6 @@ Namespace DocumentStream.Linq
         '    Next
         ' End Function
 #End Region
+
     End Module
 End Namespace

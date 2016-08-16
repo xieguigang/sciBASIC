@@ -35,6 +35,11 @@ Imports Microsoft.VisualBasic.Parallel.Linq
 
 Namespace DocumentStream.Linq
 
+    ''' <summary>
+    ''' 获取列在当前的数据集之中的编号
+    ''' </summary>
+    ''' <param name="Column"></param>
+    ''' <returns></returns>
     Public Delegate Function GetOrdinal(Column As String) As Integer
 
     ''' <summary>
@@ -44,7 +49,13 @@ Namespace DocumentStream.Linq
         Implements ISchema
         Implements IDisposable
 
+        ''' <summary>
+        ''' The columns and their index order
+        ''' </summary>
         ReadOnly _schema As Dictionary(Of String, Integer)
+        ''' <summary>
+        ''' The title row, which is the mapping source of the class property name.
+        ''' </summary>
         ReadOnly _title As RowObject
 
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
@@ -157,14 +168,18 @@ Namespace DocumentStream.Linq
                     TaskPartitions.SplitIterator(BufferProvider(), blockSize)
 
                 For Each block As String() In chunks
-                    Dim LQuery As RowObject() = (From line As String
-                                                 In block.AsParallel
-                                                 Select RowObject.TryParse(line)).ToArray
-                    Dim values As T() =
-                        LinqAPI.Exec(Of T) <= From row As RowObject
-                                              In LQuery.AsParallel
-                                              Let obj As T = Activator.CreateInstance(Of T)
-                                              Select RowBuilder.FillData(row, obj)
+                    Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
+ _
+                        From line As String
+                        In block.AsParallel
+                        Select RowObject.TryParse(line)
+
+                    Dim values As T() = LinqAPI.Exec(Of T) <=
+ _
+                        From row As RowObject
+                        In LQuery.AsParallel
+                        Let obj As T = Activator.CreateInstance(Of T)
+                        Select RowBuilder.FillData(row, obj)
 
                     Call "Start processing block...".__DEBUG_ECHO
                     Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
