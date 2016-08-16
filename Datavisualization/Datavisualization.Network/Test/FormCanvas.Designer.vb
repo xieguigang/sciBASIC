@@ -28,8 +28,8 @@ Partial Class FormCanvas
         Me.RefreshParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.ShowLabelsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -78,14 +78,6 @@ Partial Class FormCanvas
         Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
         '
-        'TrackBar1
-        '
-        Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TrackBar1.Location = New System.Drawing.Point(537, 422)
-        Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(139, 45)
-        Me.TrackBar1.TabIndex = 1
-        '
         'ShowLabelsToolStripMenuItem
         '
         Me.ShowLabelsToolStripMenuItem.Checked = True
@@ -94,6 +86,16 @@ Partial Class FormCanvas
         Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
         Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
+        '
+        'TrackBar1
+        '
+        Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar1.Location = New System.Drawing.Point(537, 422)
+        Me.TrackBar1.Maximum = 0
+        Me.TrackBar1.Minimum = -60
+        Me.TrackBar1.Name = "TrackBar1"
+        Me.TrackBar1.Size = New System.Drawing.Size(139, 45)
+        Me.TrackBar1.TabIndex = 1
         '
         'FormCanvas
         '

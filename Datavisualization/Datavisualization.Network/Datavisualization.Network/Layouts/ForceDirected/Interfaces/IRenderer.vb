@@ -72,6 +72,6 @@ Namespace Layouts.Interfaces
     Public Interface IRenderer
 
         Sub Clear()
-        Sub Draw(iTimeStep As Single)
+        Sub Draw(iTimeStep As Single, Optional physicsUpdate As Boolean = True)
     End Interface
 End Namespace
