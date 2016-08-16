@@ -61,6 +61,11 @@ Imports System.Text.RegularExpressions
 
 Public Module StrUtils
 
+    ''' <summary>
+    ''' <see cref="CultureInfo.InvariantCulture"/>, Gets the System.Globalization.CultureInfo object that is culture-independent
+    ''' (invariant).
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property InvariantCulture As CultureInfo = CultureInfo.InvariantCulture
 
     Public Function StartsWith(str1 As String, str2 As String) As Boolean
@@ -203,14 +208,14 @@ Public Module StrUtils
         For Each ch As Char In text
             Select Case ch
                 Case ControlChars.Cr
-                    Exit Select
+
                 Case ControlChars.Lf
                     lines.Add(line.ToString())
                     line.Length = 0
-                    Exit Select
+
                 Case Else
                     line.Append(ch)
-                    Exit Select
+
             End Select
         Next
         If line.Length > 0 Then
@@ -472,7 +477,6 @@ Public Module StrUtils
     ''' <returns></returns>
     Public Function GetWords(text As String) As String()
         Dim tokens As New List(Of String)()
-
         Dim token As New List(Of Char)()
 
         For Each ch As Char In text
@@ -482,16 +486,15 @@ Public Module StrUtils
                         tokens.Add(New String(token.ToArray()))
                         token.Clear()
                     End If
-                    Exit Select
                 Case Else
                     token.Add(ch)
-                    Exit Select
-
             End Select
         Next
+
         If token.Count > 0 Then
             tokens.Add(New String(token.ToArray()))
         End If
+
         Return tokens.ToArray()
     End Function
 

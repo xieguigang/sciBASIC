@@ -66,7 +66,7 @@ Namespace Drawing3D
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="angle">度，函数里面会自动转换为三角函数所需要的弧度的</param>
+        ''' <param name="angle">Degree.(度，函数里面会自动转换为三角函数所需要的弧度的)</param>
         ''' <returns></returns>
         Public Function RotateX(angle As Double) As Point3D
             Dim rad As Double, cosa As Double, sina As Double, yn As Double, zn As Double
@@ -103,14 +103,20 @@ Namespace Drawing3D
         End Function
 
         ''' <summary>
-        ''' 将3D投影为2D，所以只需要取结果之中的<see cref="X"/>和<see cref="Y"/>就行了
+        ''' Project the 3D point to the 2D screen. By using the projection result, 
+        ''' just read the property <see cref="PointXY"/>.
+        ''' (将3D投影为2D，所以只需要取结果之中的<see cref="X"/>和<see cref="Y"/>就行了)
         ''' </summary>
         ''' <param name="viewWidth"></param>
         ''' <param name="viewHeight"></param>
         ''' <param name="fov">256默认值</param>
         ''' <param name="viewDistance"></param>
         ''' <returns></returns>
-        Public Function Project(viewWidth As Integer, viewHeight As Integer, fov As Integer, viewDistance As Integer) As Point3D
+        Public Function Project(viewWidth As Integer,
+                                viewHeight As Integer,
+                                fov As Integer,
+                                viewDistance As Integer) As Point3D
+
             Dim factor As Double, Xn As Double, Yn As Double
             factor = fov / (viewDistance + Me.Z)
             Xn = Me.X * factor + viewWidth / 2
@@ -125,7 +131,6 @@ Namespace Drawing3D
                                   viewHeight As Integer,
                                   fov As Integer,
                                   viewDistance As Integer)
-
             Dim factor As Double
 
             factor = fov / (viewDistance + z)

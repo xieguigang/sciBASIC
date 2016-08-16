@@ -70,10 +70,47 @@ Namespace ComponentModel.Triggers
         End Function
     End Class
 
+    ''' <summary>
+    ''' 这个只会比较时和分，每天都会触发
+    ''' </summary>
+    Public Class DailyTimerTrigger : Inherits TimerTrigger
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="time">只需要赋值小时和分钟即可</param>
+        ''' <param name="task"></param>
+        ''' <param name="interval"></param>
+        Public Sub New(time As Date, task As Action, Optional interval As Integer = 100)
+            MyBase.New(time, task, interval)
+        End Sub
+
+        Sub New(hh As Integer, mm As Integer, task As Action, Optional interval As Integer = 100)
+            MyBase.New(New Date(Now.Year, Now.Month, Now.Day, hh, mm, 0), task, interval)
+        End Sub
+
+        Protected Overrides Function __test() As Boolean
+            Dim d As Date = Now
+
+            If d.Hour <> Time.Hour OrElse d.Minute <> Time.Minute Then
+                Return False
+            Else
+                Return True
+            End If
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' 在指定的日期和时间呗触发，因此这个触发器只会运行一次
+    ''' </summary>
     Public Class TimerTrigger : Inherits ITrigger
         Implements IObjectModel_Driver
         Implements ITimer
 
+        ''' <summary>
+        ''' 当判定到达这个指定的时间之后就会触发动作
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Time As Date
 
         ''' <summary>
@@ -94,15 +131,15 @@ Namespace ComponentModel.Triggers
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="time"></param>
+        ''' <param name="time">只精确到分，不会比较秒数</param>
         ''' <param name="task"></param>
         ''' <param name="interval">ms</param>
         Sub New(time As Date, task As Action, Optional interval As Integer = 100)
             Call MyBase.New(task)
 
-            Me.Time = time
-            Me.Interval = interval
             Me.__timer = New UpdateThread(interval, AddressOf TestRun)
+            Me.Time = time
+            Me.Interval = interval  ' 由于会在Interval属性进行赋值，所以这里要先初始化timer对象再赋值interval
         End Sub
 
         ''' <summary>
@@ -122,13 +159,17 @@ Namespace ComponentModel.Triggers
                 Return False
             ElseIf d.Minute <> Time.Minute Then
                 Return False
-            ElseIf d.Second <> Time.Second Then
-                Return False
+                ' ElseIf d.Second <> Time.Second Then
+                ' Return False
             Else
                 Return True
             End If
         End Function
 
+        ''' <summary>
+        ''' 启动计时器线程，这个方法不会阻塞当前的线程
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Start() As Integer Implements IObjectModel_Driver.Run
             Return __timer.Start
         End Function

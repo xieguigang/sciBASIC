@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::f1d53c3ef9eef76ed163213437908bb4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.HtmlParser
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.Utility
@@ -501,16 +502,17 @@ Public Module WebServiceUtils
     ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件)
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
-    ''' <param name="RequestTimeOut">发生错误的时候的重试的次数</param>
+    ''' <param name="timeout">发生错误的时候的重试的次数</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
-                                      <Parameter("Request.TimeOut")>
-                                      Optional RequestTimeOut As UInteger = 20,
-                                      <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
-                                      Optional FileSystemUrl As Boolean = False) As String
+                       <Parameter("Request.TimeOut")>
+                       Optional timeout As UInteger = 20,
+                       <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
+                       Optional isFileUrl As Boolean = False,
+                       Optional headers As Dictionary(Of String, String) = Nothing) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -522,32 +524,32 @@ Public Module WebServiceUtils
     '''
     <Extension> Public Function Get_PageContent(url As String, Optional RequestTimeOut As UInteger = 20, Optional FileSystemUrl As Boolean = False) As String
 #End If
-        Call $"Request data from: {If(FileSystemUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        Call $"Request data from: {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
 
         If FileIO.FileSystem.FileExists(url) Then
             Call "[Job DONE!]".__DEBUG_ECHO
             Return FileIO.FileSystem.ReadAllText(url)
         Else
-            If FileSystemUrl Then
+            If isFileUrl Then
                 Call $"url {url.ToFileURL} can not be solved on your filesystem!".__DEBUG_ECHO
                 Return ""
             End If
         End If
 
 #If FRAMEWORD_CORE Then
-        Using Process As CBusyIndicator = New CBusyIndicator(_start:=True)
+        Using Process As New CBusyIndicator(_start:=True)
 #End If
-            Return __downloadWebpage(url, RequestTimeOut)
+            Return __downloadWebpage(url, timeout, headers)
 #If FRAMEWORD_CORE Then
         End Using
 #End If
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger) As String
+    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String)) As String
         Dim RequestTime As Integer = 0
         Try
-RETRY:      Return __downloadWebpage(url)
+RETRY:      Return __downloadWebpage(url, headers)
         Catch ex As Exception
             ex = New Exception(url, ex)
             Call ex.PrintException
@@ -570,18 +572,24 @@ RETRY:      Return __downloadWebpage(url)
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String) As String
+    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String)) As String
         Call "Waiting for the server reply..".__DEBUG_ECHO
 
         Dim Timer As Stopwatch = Stopwatch.StartNew
-        Dim WebRequest As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create(url)
+        Dim WebRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
         WebRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        WebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240"
+        WebRequest.UserAgent = UserAgent.GoogleChrome
+
+        If Not headers.IsNullOrEmpty Then
+            For Each x In headers
+                WebRequest.Headers(x.Key) = x.Value
+            Next
+        End If
 
         Dim WebResponse As WebResponse = WebRequest.GetResponse
 
-        Using respStream As Stream = WebResponse.GetResponseStream, ioStream As StreamReader = New StreamReader(respStream)
+        Using respStream As Stream = WebResponse.GetResponseStream, ioStream As New StreamReader(respStream)
             Dim html As String = ioStream.ReadToEnd
             Dim title As String = html.HTMLtitle
 

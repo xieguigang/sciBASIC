@@ -138,19 +138,26 @@ Public Module XmlExtensions
     ''' <summary>
     ''' Serialization the target object type into a XML document.(将一个类对象序列化为XML文档)
     ''' </summary>
-    ''' <typeparam name="T">The type of the target object data should be a class object.(目标对象类型必须为一个Class)</typeparam>
+    ''' <typeparam name="T">
+    ''' The type of the target object data should be a class object.(目标对象类型必须为一个Class)
+    ''' </typeparam>
     ''' <param name="obj"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function GetXml(Of T As Class)(obj As T,
-                                                      Optional ThrowEx As Boolean = True,
-                                                      Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+    <Extension> Public Function GetXml(Of T)(
+                                    obj As T,
+                       Optional ThrowEx As Boolean = True,
+                       Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+
         Return GetXml(obj, GetType(T), ThrowEx, xmlEncoding)
     End Function
 
-    Public Function GetXml(obj As Object, type As Type,
-                           Optional throwEx As Boolean = True,
-                           Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+    Public Function GetXml(
+                        obj As Object,
+                       type As Type,
+           Optional throwEx As Boolean = True,
+           Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+
         Try
 
             If xmlEncoding = XmlEncodings.UTF8 Then
@@ -203,10 +210,13 @@ Public Module XmlExtensions
     ''' <param name="throwEx"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function SaveAsXml(Of T As Class)(obj As T, saveXml As String,
-                                                         Optional throwEx As Boolean = True,
-                                                         Optional encoding As Encoding = Nothing,
-                                                         <CallerMemberName> Optional caller As String = "") As Boolean
+    <Extension> Public Function SaveAsXml(Of T As Class)(
+                                    obj As T,
+                                saveXml As String,
+                       Optional throwEx As Boolean = True,
+                       Optional encoding As Encoding = Nothing,
+    <CallerMemberName> Optional caller As String = "") As Boolean
+
         Dim xmlDoc As String = obj.GetXml(throwEx)
         Try
             Return xmlDoc.SaveTo(saveXml, encoding)

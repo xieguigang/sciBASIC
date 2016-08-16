@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::7eddfa3520104f968e2221e311f526b1, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Test\FormCanvas.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -47,6 +47,8 @@ Public Class FormCanvas
         TrackBar1.Maximum = Math.PI * 2 * 1000
 
         DToolStripMenuItem.Checked = True
+        ShowLabelsToolStripMenuItem.Checked = False
+        AutoRotateToolStripMenuItem.Checked = True
     End Sub
 
     Private Sub SaveAsSVGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsSVGToolStripMenuItem.Click
@@ -55,7 +57,7 @@ Public Class FormCanvas
 
             If file.ShowDialog = DialogResult.OK Then
                 Call canvas.WriteLayout()
-                Call canvas.Graph.ToSVG(New Size(1920, 1200)).SaveAsXml(file.FileName)
+                Call canvas.Graph.ToSVG(New Size(1920, 1200),, DToolStripMenuItem.Checked).SaveAsXml(file.FileName)
             End If
 
             Call canvas.Run()
@@ -81,5 +83,9 @@ Public Class FormCanvas
 
     Private Sub AutoRotateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoRotateToolStripMenuItem.Click
         canvas.AutoRotate = AutoRotateToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub ShowLabelsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLabelsToolStripMenuItem.Click
+        canvas.ShowLabel = ShowLabelsToolStripMenuItem.Checked
     End Sub
 End Class

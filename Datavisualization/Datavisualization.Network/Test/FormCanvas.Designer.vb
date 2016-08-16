@@ -27,8 +27,9 @@ Partial Class FormCanvas
         Me.SaveAsSVGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RefreshParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+        Me.ShowLabelsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -44,7 +45,7 @@ Partial Class FormCanvas
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveAsSVGToolStripMenuItem, Me.RefreshParametersToolStripMenuItem, Me.DToolStripMenuItem, Me.AutoRotateToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveAsSVGToolStripMenuItem, Me.RefreshParametersToolStripMenuItem, Me.DToolStripMenuItem, Me.AutoRotateToolStripMenuItem, Me.ShowLabelsToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -68,6 +69,15 @@ Partial Class FormCanvas
         Me.DToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.DToolStripMenuItem.Text = "3D"
         '
+        'AutoRotateToolStripMenuItem
+        '
+        Me.AutoRotateToolStripMenuItem.Checked = True
+        Me.AutoRotateToolStripMenuItem.CheckOnClick = True
+        Me.AutoRotateToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
+        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
+        '
         'TrackBar1
         '
         Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -76,12 +86,14 @@ Partial Class FormCanvas
         Me.TrackBar1.Size = New System.Drawing.Size(139, 45)
         Me.TrackBar1.TabIndex = 1
         '
-        'AutoRotateToolStripMenuItem
+        'ShowLabelsToolStripMenuItem
         '
-        Me.AutoRotateToolStripMenuItem.CheckOnClick = True
-        Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
-        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
+        Me.ShowLabelsToolStripMenuItem.Checked = True
+        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
+        Me.ShowLabelsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
+        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
         '
         'FormCanvas
         '
@@ -108,4 +120,5 @@ Partial Class FormCanvas
     Friend WithEvents DToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents TrackBar1 As Windows.Forms.TrackBar
     Friend WithEvents AutoRotateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ShowLabelsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

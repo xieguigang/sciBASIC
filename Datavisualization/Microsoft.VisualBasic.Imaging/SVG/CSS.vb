@@ -38,6 +38,7 @@ Namespace SVG.CSS
     Public Class DirectedForceGraph
         Public Property node As CssValue
         Public Property link As CssValue
+        Public Property text As Font
 
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder
@@ -48,6 +49,32 @@ Namespace SVG.CSS
             Call sb.AppendLine(".link {")
             Call sb.AppendLine(link.ToString)
             Call sb.AppendLine("}")
+            Call sb.AppendLine(".text {")
+            Call sb.AppendLine(text.ToString)
+            Call sb.AppendLine("}")
+
+            Return sb.ToString
+        End Function
+    End Class
+
+    Public Class Font
+
+        Public Property font As String = MicrosoftYaHei
+        Public Property color As String = "gray"
+        <Field("font-size")> Public Property font_size As Integer = 10
+
+        Public Overrides Function ToString() As String
+            Dim sb As New StringBuilder
+
+            If Not String.IsNullOrEmpty(font) Then
+                sb.AppendLine("font: " & font)
+            End If
+            If Not String.IsNullOrEmpty(color) Then
+                sb.AppendLine("color: " & color)
+            End If
+            If font_size <> 0 Then
+                sb.AppendLine("font-size: " & font_size)
+            End If
 
             Return sb.ToString
         End Function
