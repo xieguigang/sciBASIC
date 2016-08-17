@@ -143,6 +143,11 @@ Namespace Linq
             Return x.i
         End Operator
 
+        Public Shared Operator +(list As System.Collections.Generic.List(Of T), x As SeqValue(Of T)) As System.Collections.Generic.List(Of T)
+            Call list.Add(x.obj)
+            Return list
+        End Operator
+
         Public Sub Dispose() Implements IDisposable.Dispose
         End Sub
     End Structure
