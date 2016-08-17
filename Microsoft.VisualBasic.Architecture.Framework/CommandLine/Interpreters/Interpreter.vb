@@ -183,6 +183,7 @@ Namespace CommandLine
 
                 Call Console.WriteLine()
                 Call Console.WriteLine(PS1.Fedora12.ToString)
+                Call Console.WriteLine()
                 Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
                 Call Console.WriteLine(ConfigEngine.Prints(vars))
 

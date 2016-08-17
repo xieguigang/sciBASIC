@@ -118,6 +118,13 @@ Namespace Parallel.Tasks
             Return $"[{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
         End Function
 
+        Public Shared Function GetTicks(hh As Integer, mm As Integer) As Integer
+            Dim hhss As Integer = hh * 60 * 60 ' 小时的秒数
+            Dim mmss As Integer = mm * 60
+            Dim ticks As Integer = (hhss + mmss) * 1000
+            Return ticks
+        End Function
+
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
 

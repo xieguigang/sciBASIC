@@ -296,5 +296,31 @@ Namespace Terminal
             Loop While Not parser(line, value)
             Return value
         End Function
+
+        ''' <summary>
+        ''' Writes the text representation of the specified object to the standard output
+        ''' stream.
+        ''' </summary>
+        ''' <param name="o">The value to write, or null.</param>
+        Public Sub Write(o As Object)
+            If VBDebugger.ForceSTDError Then
+                Call Console.Error.Write(o)
+            Else
+                Call Console.Write(o)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Writes the text representation of the specified object, followed by the current
+        ''' line terminator, to the standard output stream.
+        ''' </summary>
+        ''' <param name="o">The value to write.</param>
+        Public Sub WriteLine(Optional o As Object = Nothing)
+            If VBDebugger.ForceSTDError Then
+                Call Console.Error.WriteLine(o)
+            Else
+                Call Console.WriteLine(o)
+            End If
+        End Sub
     End Module
 End Namespace

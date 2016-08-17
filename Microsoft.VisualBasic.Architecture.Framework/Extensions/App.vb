@@ -225,10 +225,16 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
 
+    Dim __joinedVariables As New List(Of NamedValue(Of String))
+
+    Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
+        __joinedVariables.Add(vars)
+    End Sub
+
     Public Function GetAppVariables() As NamedValue(Of String)()
         Dim type As Type = GetType(App)
         Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
-        Dim out As New List(Of NamedValue(Of String))
+        Dim out As New List(Of NamedValue(Of String))(__joinedVariables)
 
         For Each prop As PropertyInfo
             In pros.Values.Where(
@@ -479,10 +485,10 @@ Public Module App
     <SecuritySafeCritical> Public Function [Exit](Optional state As Integer = 0) As Integer
         App._Running = False
 
+        Call Terminal.InnerQueue.WaitQueue()
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
-        Call Terminal.InnerQueue.WaitQueue()
 
         Return state
     End Function
