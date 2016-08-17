@@ -106,7 +106,7 @@ Public Module WebServiceUtils
     ''' <remarks></remarks>
     '''
     <ExportAPI("Html.Href")>
-    <Extension> Public Function Get_href(<Parameter("HTML",
+    <Extension> Public Function href(<Parameter("HTML",
                                                     "A string that contains the url string pattern like: href=""url_text""")>
                                          html As String) As String
         If String.IsNullOrEmpty(html) Then
