@@ -39,7 +39,7 @@ Public Class WebResult : Inherits Http.WebResult
     Public Shared Function TryParse(html As String) As WebResult
         Dim tokens As String() = Strings.Split(html, "</h2>", -1, CompareMethod.Text)
         Dim Title As String = tokens(Scan0)
-        Dim URL As String = Title.Get_href
+        Dim URL As String = Title.href
         Title = Regex.Match(Title, """>.+</a>").Value
         Title = Title.GetValue.Trim
         html = tokens(1)

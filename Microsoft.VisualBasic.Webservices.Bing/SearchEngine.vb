@@ -111,7 +111,7 @@ Public Module SearchEngineProvider
     Private Function __getNextPageLink(html As String) As String
         Dim link As String = Regex.Match(html, NextPage, RegexICSng).Value
         link = Regex.Matches(link, "<a href=""/search\?q=.*?""", RegexICSng).ToArray.LastOrDefault
-        link = link.Get_href
+        link = link.href
         link = link.Replace("amp;", "")
 
         If String.IsNullOrEmpty(link) Then
