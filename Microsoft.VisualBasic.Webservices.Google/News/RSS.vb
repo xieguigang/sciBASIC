@@ -2,6 +2,8 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+' http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&as_maxm=11&q=allintitle:+zika&as_qdr=a&as_drrb=q&as_mind=26&as_minm=10&cf=all&as_maxd=25&scoring=n&output=rss
+
 ''' <summary>
 ''' URL Example:
 ''' 
@@ -23,6 +25,11 @@ Public Class RSS : Inherits ClassObject
         Dim xml As String = url.GET
         Dim value As RSS = xml.CreateObjectFromXml(Of RSS)
         Return value
+    End Function
+
+    Public Shared Function GetCurrent(query As String) As RSS
+        Dim url As String = $"https://news.google.com/news?q={query.Replace(" ", "+")}&output=rss"
+        Return Fetch(url)
     End Function
 End Class
 
