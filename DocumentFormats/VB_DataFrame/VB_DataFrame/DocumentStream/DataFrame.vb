@@ -240,22 +240,27 @@ Namespace DocumentStream
         Const FailureWarning As String =
             "[CSV::Reflector::Warning] The Column header ""{0}"" end with the space character value, this may caused the GetOrder() function execute failure!"
 
-        Public Overloads Shared Function CreateObject(CsvDf As Csv.DocumentStream.File) As DataFrame
+        ''' <summary>
+        ''' Creates the data frame object from the csv docs.
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Function CreateObject(file As File) As DataFrame
             Try
-                Return __createObject(CsvDf)
+                Return __createObject(file)
             Catch ex As Exception
-                Call $"Error during read file from handle {CsvDf.FilePath.ToFileURL}".__DEBUG_ECHO
+                Call $"Error during read file from handle {file.FilePath.ToFileURL}".__DEBUG_ECHO
                 Call ex.PrintException
                 Throw
             End Try
         End Function
 
-        Private Shared Function __createObject(CsvDf As Csv.DocumentStream.File) As DataFrame
+        Private Shared Function __createObject(file As File) As DataFrame
             Dim df As DataFrame = New DataFrame With {
-                  ._innerTable = CsvDf._innerTable.Skip(1).ToList,
-                  .FilePath = CsvDf.FilePath
+                  ._innerTable = file._innerTable.Skip(1).ToList,
+                  .FilePath = file.FilePath
             }
-            df.__columnList = __getColumnList(CsvDf._innerTable)
+            df.__columnList = __getColumnList(file._innerTable)
             df._SchemaOridinal = __createSchemaOridinal(df)
 
             Return df
@@ -295,14 +300,14 @@ Namespace DocumentStream
         ''' Gets the order list of the specific column list, -1 value will be returned when it is not exists in the table.
         ''' (获取列集合的位置列表，不存在的列则返回-1)
         ''' </summary>
-        ''' <param name="ColumnList"></param>
+        ''' <param name="columns"></param>
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
-        Public Function GetOrdinalSchema(ColumnList As String()) As Integer()
+        Public Function GetOrdinalSchema(columns As String()) As Integer()
             Dim LQuery As Integer() = LinqAPI.Exec(Of Integer) <=
  _
                 From cName As String
-                In ColumnList
+                In columns
                 Select Me.__columnList.IndexOf(cName)
 
             Return LQuery

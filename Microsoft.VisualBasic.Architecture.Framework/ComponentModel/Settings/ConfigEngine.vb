@@ -179,6 +179,10 @@ Namespace ComponentModel.Settings
             Return True
         End Function
 
+        Public Function [Set](var As NamedValue(Of String)) As Boolean
+            Return [Set](var.Name, var.x)
+        End Function
+
         <ExportAPI("GetValue")>
         Public Overridable Function GetSettings(Name As String) As String
             Dim keyFind As String = Name.ToLower
