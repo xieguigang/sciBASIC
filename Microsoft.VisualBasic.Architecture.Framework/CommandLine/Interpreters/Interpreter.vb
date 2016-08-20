@@ -173,7 +173,7 @@ Namespace CommandLine
                     ' 只会写文件而不会在终端打开帮助窗口
                 End If
 
-                Return doc.SaveTo(DocPath).CLICode
+                Return doc.SaveTo(DocPath, Encoding.UTF8).CLICode
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
