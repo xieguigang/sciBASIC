@@ -50,11 +50,13 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         <Extension>
         Public Function LaunchManual(CLI As Interpreter) As Integer
-            Dim assm As New ApplicationDetails
+            Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(CLI.Type)
             Dim title As String = $"{Application.ProductName} [version {Application.ProductVersion}]" & vbCrLf &
-                assm.ProductTitle & vbCrLf &
-                assm.ProductDescription & vbCrLf &
-                assm.CompanyName & vbCrLf &
+                vbCrLf &
+                "## " & assm.ProductTitle & vbCrLf &
+                vbCrLf &
+                "Description: " & assm.ProductDescription & vbCrLf &
+                "Company:     " & assm.CompanyName & vbCrLf &
                 assm.CopyRightsDetail
 
             Dim sb As New StringBuilder

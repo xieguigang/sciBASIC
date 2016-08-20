@@ -60,6 +60,10 @@ Namespace SoftwareToolkits
             Call Me.New(GetType(ApplicationDetails).Assembly)
         End Sub
 
+        Public Shared Function FromTypeModule(type As Type) As ApplicationDetails
+            Return New ApplicationDetails(type.Assembly)
+        End Function
+
         Public Shared Function GetCompanyName(assm As Assembly) As String
             If assm IsNot Nothing Then
                 Dim companyName As String = ""

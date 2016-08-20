@@ -360,6 +360,10 @@ Namespace CommandLine
             Me._Type = type
         End Sub
 
+        ''' <summary>
+        ''' 申明这个解释器的命令行API容器类型
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Type As Type
 
         ''' <summary>
