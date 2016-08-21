@@ -86,6 +86,11 @@ Namespace Layouts.Interfaces
         ' NOT Using
         ReadOnly Property WithinThreashold() As Boolean
         Sub Clear()
+
+        ''' <summary>
+        ''' Calculates the physics updates.
+        ''' </summary>
+        ''' <param name="iTimeStep"></param>
         Sub Calculate(iTimeStep As Single)
         Sub EachEdge(del As EdgeAction)
         Sub SetPhysics(Stiffness As Single, Repulsion As Single, Damping As Single)

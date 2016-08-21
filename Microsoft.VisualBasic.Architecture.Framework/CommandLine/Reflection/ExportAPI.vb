@@ -60,7 +60,9 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
-        ''' A example that to useing this command.(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值)
+        ''' A example that to useing this command.
+        ''' (对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值，
+        ''' 在编写帮助示例的时候，需要编写出包括命令开关名称的完整的例子)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>

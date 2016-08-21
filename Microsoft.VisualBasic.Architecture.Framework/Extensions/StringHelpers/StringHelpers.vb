@@ -360,7 +360,7 @@ Public Module StringHelpers
             Next
         Next
 
-        Return union.ToArray
+        Return union.ToArray  ' 剩下的元素都是在所有的序列之中都存在的，既交集元素
     End Function
 
     ''' <summary>
@@ -514,8 +514,8 @@ Public Module StringHelpers
     <ExportAPI("Located", Info:="String compares using String.Equals")>
     <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
         Dim Method = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim Len As Integer = collection.Count - 1
-        Dim array = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
+        Dim array As String() = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
+        Dim Len As Integer = array.Length - 1
 
         For i As Integer = 0 To Len
             If String.Equals(array(i), Text, Method) Then

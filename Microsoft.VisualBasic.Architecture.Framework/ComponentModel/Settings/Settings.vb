@@ -86,6 +86,11 @@ Namespace ComponentModel.Settings
             Return Load(Data:=FileObject)
         End Function
 
+        ''' <summary>
+        ''' 使用<see cref="ProfileItem"/>来标记想要作为变量的属性
+        ''' </summary>
+        ''' <param name="Data"></param>
+        ''' <returns></returns>
         Public Overloads Shared Function Load(Data As T) As Settings(Of T)
             Return New ComponentModel.Settings.Settings(Of T)(Data)
         End Function

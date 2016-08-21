@@ -51,31 +51,31 @@ Namespace ComponentModel.DataSourceModel
     ''' <remarks></remarks>
     Public Module DataFramework
 
-        Public Enum PropertyAccessibilityControls As Byte
+        Public Enum PropertyAccess As Byte
             Readable = 2
             Writeable = 4
             ReadWrite = Readable And Writeable
         End Enum
 
         ''' <summary>
-        ''' Controls for <see cref="PropertyAccessibilityControls"/> on <see cref="PropertyInfo"/>
+        ''' Controls for <see cref="PropertyAccess"/> on <see cref="PropertyInfo"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccessibilityControls, Func(Of PropertyInfo, Boolean)) =
-            New Dictionary(Of PropertyAccessibilityControls, Func(Of PropertyInfo, Boolean)) From {
+        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Func(Of PropertyInfo, Boolean)) =
+            New Dictionary(Of PropertyAccess, Func(Of PropertyInfo, Boolean)) From {
  _
-                {PropertyAccessibilityControls.Readable, Function(p) p.CanRead},
-                {PropertyAccessibilityControls.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
-                {PropertyAccessibilityControls.Writeable, Function(p) p.CanWrite}
+                {PropertyAccess.Readable, Function(p) p.CanRead},
+                {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
+                {PropertyAccess.Writeable, Function(p) p.CanWrite}
         }
 
-        Public Function Schema(Of T)(flag As PropertyAccessibilityControls) As Dictionary(Of String, PropertyInfo)
+        Public Function Schema(Of T)(flag As PropertyAccess) As Dictionary(Of String, PropertyInfo)
             Return GetType(T).Schema(flag)
         End Function
 
         <Extension>
         Public Function Schema(type As Type,
-                               flag As PropertyAccessibilityControls,
+                               flag As PropertyAccess,
                                Optional binds As BindingFlags =
                                BindingFlags.Public Or BindingFlags.Instance) As Dictionary(Of String, PropertyInfo)
             Dim props As PropertyInfo() =

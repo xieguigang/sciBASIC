@@ -71,6 +71,12 @@ Public Module VBDebugger
         End Set
     End Property
 
+    ''' <summary>
+    ''' Force the app debugging output redirect into the std_error device.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ForceSTDError As Boolean = False
+
     ReadOnly _Indent As String() = {
         "",
         New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
@@ -100,15 +106,19 @@ Public Module VBDebugger
     End Function
 
     Private Sub __print(head As String, str As String, msgColor As ConsoleColor)
-        Dim cl As ConsoleColor = Console.ForegroundColor
+        If ForceSTDError Then
+            Call Console.Error.WriteLine($"[{head}]{str}")
+        Else
+            Dim cl As ConsoleColor = Console.ForegroundColor
 
-        Call Console.Write("[")
-        Console.ForegroundColor = DebuggerTagColor
-        Call Console.Write(head)
-        Console.ForegroundColor = cl
-        Call Console.Write("]")
+            Call Console.Write("[")
+            Console.ForegroundColor = DebuggerTagColor
+            Call Console.Write(head)
+            Console.ForegroundColor = cl
+            Call Console.Write("]")
 
-        Call WriteLine(str, msgColor)
+            Call WriteLine(str, msgColor)
+        End If
     End Sub
 
     ''' <summary>
@@ -165,7 +175,7 @@ Public Module VBDebugger
         If Not Mute Then
             Dim head As String = $"WARN@{calls} {Now.ToString}"
 
-            Call Terminal.AddToQueue(Sub() Call __print(head, msg, ConsoleColor.Yellow))
+            Call Terminal.AddToQueue(Sub() Call __print(head, " " & msg, ConsoleColor.Yellow))
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
 #End If
