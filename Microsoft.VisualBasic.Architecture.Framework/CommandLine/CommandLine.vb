@@ -295,16 +295,29 @@ Namespace CommandLine
 
 #Region "Pipeline"
 
-        ''' <summary>
+        ''' <summary>About <paramref name="s"/>:
+        ''' 
+        ''' + If the file path is not a value path, then is the value is not null, the argument value will be returned from this parameter. 
+        ''' + If the value is nothing, then this function will open the standard input as input.
+        ''' + If the file path is valid as input file, then a local file system pointer will be returned.
+        ''' 
         ''' [管道函数] 假若参数名存在并且所指向的文件也存在，则返回本地文件的文件指针，否则返回标准输入的指针
         ''' </summary>
         ''' <param name="param"></param>
+        ''' <param name="s">
+        ''' + If the file path is not a value path, then is the value is not null, the argument value will be returned from this parameter. 
+        ''' + If the value is nothing, then this function will open the standard input as input.
+        ''' + If the file path is valid as input file, then a local file system pointer will be returned.
+        ''' </param>
         ''' <returns></returns>
-        Public Function OpenStreamInput(param As String) As StreamReader
+        Public Function OpenStreamInput(param As String, Optional ByRef s As String = Nothing) As StreamReader
             Dim path As String = Me(param)
 
             If path.FileExists Then
                 Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
+            ElseIf Not String.IsNullOrEmpty(path) Then
+                s = path
+                Return Nothing
             Else
                 Return New StreamReader(Console.OpenStandardInput)
             End If

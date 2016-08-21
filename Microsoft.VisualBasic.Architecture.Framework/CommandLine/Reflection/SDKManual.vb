@@ -93,6 +93,9 @@ Namespace CommandLine.Reflection
             Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(App.Type)
 
             Call sb.AppendLine()
+            Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.lTokens.JoinBy(vbCrLf & "> "))
+            Call sb.AppendLine()
+            Call sb.AppendLine("<!--more-->")
             Call sb.AppendLine()
             Call sb.AppendLine($"**{assm.ProductTitle}**")
             Call sb.AppendLine($"_{assm.ProductDescription}_")
@@ -102,7 +105,6 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}")
             Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``")
             Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary(True))
-            Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.lTokens.JoinBy(vbCrLf & "> "))
             Call sb.AppendLine()
             Call sb.AppendLine("## CLI API list")
             Call sb.AppendLine("--------------------------")
