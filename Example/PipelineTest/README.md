@@ -1,6 +1,6 @@
 # VisualBasic CLI Pipeline
 
-CLI pipeline is the most important language programming feature of the data analysis industry as it providing the basically of the analysis workflow automation and language hybrids feature.
+CLI pipeline is the most important language programming feature of the data analysis industry/or server technique as it providing the basically of the analysis workflow automation and language hybrids feature. Almost all of the Linux server tools supports this pipeline feature as nearly all of the management automation on the Linux server is based on the bash scripting.
 
 Here is the pipeline API that provided in VisualBasic language server runtime: ``Microsoft.VisualBasic.CommandLine.CommandLine``, and it makes this CLI pipeline more simple.
 
