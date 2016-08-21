@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 ''' <typeparam name="T">The type of elements in the list.</typeparam>
 Public Class List(Of T) : Inherits Generic.List(Of T)
+    ' Implements IEnumerable(Of Value(Of T))
 
     Dim __index As Pointer
 
@@ -248,4 +249,13 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     Public Shared Operator <(source As List(Of T), path As String) As Boolean
         Throw New NotImplementedException
     End Operator
+
+    Public Iterator Function ValuesEnumerator() As IEnumerable(Of Value(Of T))
+        Dim o As New Value(Of T)
+
+        For Each x As T In Me
+            o.value = x
+            Yield o
+        Next
+    End Function
 End Class
