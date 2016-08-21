@@ -66,7 +66,7 @@ Namespace Linq
         Sub New()
             __props = New SortedDictionary(Of String, PropertyInfo)(
                 DataFramework.Schema(Of T)(
-                PropertyAccessibilityControls.Writeable))
+                PropertyAccess.Writeable))
         End Sub
 
         Public Overrides Function ToString() As String

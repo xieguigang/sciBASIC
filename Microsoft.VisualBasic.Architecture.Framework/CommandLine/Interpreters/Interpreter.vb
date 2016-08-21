@@ -173,7 +173,7 @@ Namespace CommandLine
                     ' 只会写文件而不会在终端打开帮助窗口
                 End If
 
-                Return doc.SaveTo(DocPath).CLICode
+                Return doc.SaveTo(DocPath, Encoding.UTF8).CLICode
 
             ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
@@ -183,6 +183,7 @@ Namespace CommandLine
 
                 Call Console.WriteLine()
                 Call Console.WriteLine(PS1.Fedora12.ToString)
+                Call Console.WriteLine()
                 Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
                 Call Console.WriteLine(ConfigEngine.Prints(vars))
 
@@ -359,6 +360,10 @@ Namespace CommandLine
             Me._Type = type
         End Sub
 
+        ''' <summary>
+        ''' 申明这个解释器的命令行API容器类型
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Type As Type
 
         ''' <summary>

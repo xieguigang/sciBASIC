@@ -52,6 +52,20 @@ Namespace Parallel.Threads
             Call __pendings.Enqueue(New KeyValuePair(Of Action, Action(Of Long))(task, callback))
         End Sub
 
+        Public Sub OperationTimeOut(task As Action, timeout As Integer)
+            Dim done As Boolean = False
+
+            Call RunTask(task, Sub() done = True)
+
+            For i As Integer = 0 To timeout
+                If done Then
+                    Exit For
+                Else
+                    Thread.Sleep(1)
+                End If
+            Next
+        End Sub
+
         Private Sub __allocate()
             Do While Not Me.disposedValue
                 If __pendings.Count > 0 Then

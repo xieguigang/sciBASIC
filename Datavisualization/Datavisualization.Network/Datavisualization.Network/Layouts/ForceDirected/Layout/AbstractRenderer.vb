@@ -75,11 +75,11 @@ Namespace Layouts
     Public MustInherit Class AbstractRenderer
         Implements IRenderer
 
-        ''' <summary>
-        ''' Running the drawing task in another thread?
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Asynchronous As Boolean = False
+        Public ReadOnly Property PhysicsEngine As IForceDirected
+            Get
+                Return forceDirected
+            End Get
+        End Property
 
         Protected forceDirected As IForceDirected
 
@@ -87,17 +87,18 @@ Namespace Layouts
             forceDirected = iForceDirected
         End Sub
 
-        Dim taskQueue As New ThreadQueue
-
-        Public Sub Draw(iTimeStep As Single) Implements IRenderer.Draw
-            Call forceDirected.Calculate(iTimeStep)   '  计算力的变化
-            Call Clear()    ' 清理画板
-
-            If Asynchronous Then
-                Call taskQueue.AddToQueue(AddressOf DirectDraw)
-            Else
-                Call DirectDraw()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="iTimeStep"><see cref="IForceDirected.Calculate(Single)"/></param>
+        ''' <param name="physicsUpdate"></param>
+        Public Sub Draw(iTimeStep As Single, Optional physicsUpdate As Boolean = True) Implements IRenderer.Draw
+            If physicsUpdate Then
+                Call forceDirected.Calculate(iTimeStep)   '  计算力的变化
             End If
+
+            Call Clear()    ' 清理画板
+            Call DirectDraw()
         End Sub
 
         ''' <summary>

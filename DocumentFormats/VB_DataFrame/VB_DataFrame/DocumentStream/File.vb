@@ -50,13 +50,24 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Protected Friend _innerTable As List(Of RowObject) = New List(Of RowObject)
 
+        ''' <summary>
+        ''' Creates an empty csv docs object.
+        ''' </summary>
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates csv file object from the rows data.
+        ''' </summary>
+        ''' <param name="data"></param>
         Sub New(data As IEnumerable(Of RowObject))
             _innerTable = data.ToList
         End Sub
 
+        ''' <summary>
+        ''' Load document from path
+        ''' </summary>
+        ''' <param name="path"></param>
         Sub New(path As String)
             FilePath = path
             _innerTable = __loads(path, Encoding.Default)
@@ -67,6 +78,12 @@ Namespace DocumentStream
             FilePath = path
         End Sub
 
+        ''' <summary>
+        ''' Gets or sets the specific cell's data
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(x As Integer, y As Integer) As String
             Get
                 Dim row As RowObject = Me(x)

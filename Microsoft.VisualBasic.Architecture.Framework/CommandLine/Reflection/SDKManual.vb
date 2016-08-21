@@ -1,27 +1,27 @@
 ﻿#Region "Microsoft.VisualBasic::87dea54246337eb946adf9e48cc9972d, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.SoftwareToolkits
+Imports Microsoft.VisualBasic.Terminal.Utility
 
 Namespace CommandLine.Reflection
 
@@ -50,11 +51,13 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         <Extension>
         Public Function LaunchManual(CLI As Interpreter) As Integer
-            Dim assm As New ApplicationDetails
+            Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(CLI.Type)
             Dim title As String = $"{Application.ProductName} [version {Application.ProductVersion}]" & vbCrLf &
-                assm.ProductTitle & vbCrLf &
-                assm.ProductDescription & vbCrLf &
-                assm.CompanyName & vbCrLf &
+                vbCrLf &
+                "## " & assm.ProductTitle & vbCrLf &
+                vbCrLf &
+                "Description: " & assm.ProductDescription & vbCrLf &
+                "Company:     " & assm.CompanyName & vbCrLf &
                 assm.CopyRightsDetail
 
             Dim sb As New StringBuilder
@@ -64,15 +67,16 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine(vbCrLf & vbCrLf & CLI.HelpSummary(False))
 
             Dim firstPage As String = sb.ToString
-            Dim pages As String() =
-                DebuggerArgs.DebuggerHelps +
-               (LinqAPI.MakeList(Of String) <= From api As SeqValue(Of APIEntryPoint)
-                                               In CLI.Values.SeqIterator(offset:=1)
-                                               Let index As String = api.i & ".   "
-                                               Select index & api.obj.HelpInformation)
-            Dim manual As New Terminal.Utility.IndexedManual(pages, title)
+            Dim pages As String() = {DebuggerArgs.DebuggerHelps, CLI.Type.NamespaceEntry.Description}
 
-            Call manual.ShowManual()
+            pages += LinqAPI.MakeList(Of String) <=
+ _
+                From api As SeqValue(Of APIEntryPoint)
+                In CLI.Values.SeqIterator(offset:=1)
+                Let index As String = api.i & ".   "
+                Select index & api.obj.HelpInformation
+
+            Call New IndexedManual(pages, title).ShowManual()
 
             Return 0
         End Function
@@ -86,22 +90,37 @@ Namespace CommandLine.Reflection
         Public Function MarkdownDoc(App As Interpreter) As String
             Dim sb As New StringBuilder($"# {Application.ProductName} [version {Application.ProductVersion}]")
             Dim type As Type = App.Type
+            Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(App.Type)
 
             Call sb.AppendLine()
+            Call sb.AppendLine()
+            Call sb.AppendLine($"**{assm.ProductTitle}**")
+            Call sb.AppendLine($"_{assm.ProductDescription}_")
+            Call sb.AppendLine(assm.CopyRightsDetail)
+            Call sb.AppendLine()
+
             Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}")
-            Call sb.AppendLine("**Root namespace**: " & App.Type.FullName)
+            Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``")
             Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary(True))
-            Call sb.AppendLine("## Commands")
+            Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.lTokens.JoinBy(vbCrLf & "> "))
+            Call sb.AppendLine()
+            Call sb.AppendLine("## CLI API list")
             Call sb.AppendLine("--------------------------")
 
-            For Each CmdlEntry As APIEntryPoint In App.Values
-                sb.AppendLine(CmdlEntry.HelpInformation(md:=True))
+            For Each i As SeqValue(Of APIEntryPoint) In App.Values.SeqIterator
+                Dim api As APIEntryPoint = i.obj
 
-                If CmdlEntry.ParameterInfo.Count > 0 Then
-                    Call sb.AppendLine("#### Accepted Types")
+                Call sb.Append($"<h3 id=""{api.Name}""> {i.i + 1}. ")
+                Call sb.AppendLine(api.HelpInformation(md:=True) _
+                    .lTokens _
+                    .Select(Function(s) s.Trim) _
+                    .JoinBy(vbCrLf))
 
-                    For Each param As NamedValue(Of ParameterInfo) In CmdlEntry.ParameterInfo
-                        Call sb.AppendLine("##### " & param.Name)
+                If api.ParameterInfo.Count > 0 Then
+                    Call sb.AppendLine("##### Accepted Types")
+
+                    For Each param As NamedValue(Of ParameterInfo) In api.ParameterInfo
+                        Call sb.AppendLine("###### " & param.Name)
 
                         For Each pType As Type In param.x.AcceptTypes.SafeQuery
                             Call sb.AppendLine(Actives.DisplType(pType))
@@ -142,7 +161,7 @@ Namespace CommandLine.Reflection
 
                     Call sb.AppendLine(line)
                 Else
-                    Call sb.AppendLine($"|{commandInfo.Name}|{commandInfo.Info}|")
+                    Call sb.AppendLine($"|[{commandInfo.Name}](#{commandInfo.Name})|{commandInfo.Info}|")
                 End If
             Next
 

@@ -68,6 +68,24 @@ Namespace Imaging
                 Return __allDotNETPrefixColors.Values.Shuffles
             End Get
         End Property
+
+        ''' <summary>
+        ''' 经过人工筛选的颜色，不会出现过白或者过黑，过度相似的情况
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ChartColors As Color() = {
+            Color.AliceBlue, Color.Aquamarine, Color.BlueViolet, Color.BurlyWood,
+            Color.CadetBlue, Color.Chartreuse, Color.Chocolate, Color.Coral,
+            Color.CornflowerBlue, Color.Crimson, Color.Cyan, Color.DarkBlue,
+            Color.DarkCyan, Color.DarkGoldenrod, Color.DarkGray, Color.DarkMagenta,
+            Color.DarkOliveGreen, Color.DarkOrchid, Color.DarkSeaGreen, Color.DarkSlateBlue,
+            Color.DarkSlateGray, Color.DeepPink, Color.DeepSkyBlue, Color.DodgerBlue,
+            Color.GreenYellow, Color.ForestGreen, Color.Firebrick, Color.Gold, Color.Indigo,
+            Color.LightSeaGreen, Color.LightSkyBlue, Color.LimeGreen, Color.MediumSeaGreen,
+            Color.MediumTurquoise, Color.MidnightBlue, Color.Orchid, Color.OrangeRed, Color.Red,
+            Color.RoyalBlue, Color.SeaGreen, Color.SpringGreen, Color.SteelBlue, Color.Teal,
+            Color.YellowGreen
+        }
 #End If
         ''' <summary>
         ''' 解析颜色表达式里面的RGB的正则表达式
