@@ -260,12 +260,15 @@ Public Module StringHelpers
             Return 0
         End If
 
-        Dim LQuery = (From chr As Char In str Where ch = chr Select 1).ToArray
-        Return LQuery.Length
+        Dim LQuery As Integer = (From chr As Char
+                                 In str
+                                 Where ch = chr
+                                 Select 1).Count
+        Return LQuery
     End Function
 
     ''' <summary>
-    ''' 获取""或者其他字符所包围的字符串的值
+    ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，字符串将不会进行任何处理
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="wrapper"></param>
