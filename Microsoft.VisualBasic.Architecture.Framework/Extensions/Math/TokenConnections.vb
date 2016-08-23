@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::eb72453c4331cf51aa14b88243d08fc3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\TokenConnections.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 
@@ -126,5 +127,29 @@ Namespace Mathematical.Analysis
                 Next
             Next
         End Sub
+
+        ''' <summary>
+        ''' 枚举出在<paramref name="start"/>到<paramref name="ends"/>这个时间窗里面的所有日期
+        ''' </summary>
+        ''' <param name="start"></param>
+        ''' <param name="ends"></param>
+        ''' <returns>返回值里面包含有起始和结束的日期</returns>
+        Public Iterator Function DateSeq(start As Date, ends As Date) As IEnumerable(Of Date)
+            Do While start <= ends
+                ' Yield $"{start.Year}-{If(start.Month < 10, "0" & start.Month, start.Month)}-{If(start.Day < 10, "0" & start.Day, start.Day)}"
+                Yield start
+                start = start.AddDays(1)
+            Loop
+        End Function
+
+        ''' <summary>
+        ''' yyyy-mm-dd
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function YYMMDD(x As Date) As String
+            Return $"{x.Year}-{If(x.Month < 10, "0" & x.Month, x.Month)}-{If(x.Day < 10, "0" & x.Day, x.Day)}"
+        End Function
     End Module
 End Namespace
