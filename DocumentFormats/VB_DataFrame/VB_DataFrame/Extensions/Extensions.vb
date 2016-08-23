@@ -322,8 +322,11 @@ Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{f
     ''' <param name="explicit">默认导出所有的可用属性</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToCsvDoc(Of T As Class)(source As IEnumerable(Of T), Optional explicit As Boolean = False) As DocumentStream.File
-        Return Reflector.Save(source, explicit)
+    <Extension> Public Function ToCsvDoc(Of T As Class)(source As IEnumerable(Of T),
+                                               Optional explicit As Boolean = False,
+                                               Optional maps As Dictionary(Of String, String) = Nothing,
+                                               Optional metaBlank As String = "") As DocumentStream.File
+        Return Reflector.Save(source, explicit, maps:=maps, metaBlank:=metaBlank)
     End Function
 
     ''' <summary>
