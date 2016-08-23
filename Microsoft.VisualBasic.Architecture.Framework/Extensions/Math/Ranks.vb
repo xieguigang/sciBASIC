@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2a25f41b848bc980293eb36c5f973e9e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::2a25f41b848bc980293eb36c5f973e9e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

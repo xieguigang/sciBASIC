@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::82ac86e10e7a443f0000fbba19acd79a, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\StreamWriter\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::fadc2696f7cf0d853bd093e9d3376353, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\StreamWriter\HTMLWriter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

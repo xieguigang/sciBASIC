@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5fc21762f647132d1d6f9df1ea161866, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
+﻿#Region "Microsoft.VisualBasic::5fc21762f647132d1d6f9df1ea161866, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

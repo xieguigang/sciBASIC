@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::08a44be37ecb694d4aea07cc3952ded2, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\StreamAPI.vb"
+﻿#Region "Microsoft.VisualBasic::08a44be37ecb694d4aea07cc3952ded2, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\StreamAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

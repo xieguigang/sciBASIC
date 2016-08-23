@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::916db8e6cbe526d257a7d161a3ec77f1, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Java\MersenneTwisterFast.vb"
+﻿#Region "Microsoft.VisualBasic::916db8e6cbe526d257a7d161a3ec77f1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Java\MersenneTwisterFast.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

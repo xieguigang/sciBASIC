@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8fe479babd95f6417fc3e54062cf37ea, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Solvers\GaussianElimination.vb"
+﻿#Region "Microsoft.VisualBasic::8fe479babd95f6417fc3e54062cf37ea, ..\visualbasic_App\Scripting\Math\Math\BasicR\Solvers\GaussianElimination.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

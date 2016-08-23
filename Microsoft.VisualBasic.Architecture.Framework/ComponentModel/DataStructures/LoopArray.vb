@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::73e254a58e36e13a1a045ff26379774a, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::73e254a58e36e13a1a045ff26379774a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\LoopArray.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

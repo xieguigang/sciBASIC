@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6c089df00d1865fac5d0d9e21307d106, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb"
+﻿#Region "Microsoft.VisualBasic::6c089df00d1865fac5d0d9e21307d106, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

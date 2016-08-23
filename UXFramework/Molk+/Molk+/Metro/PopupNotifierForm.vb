@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a36773141546286db941ff3edd90e265, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\PopupNotifierForm.vb"
+﻿#Region "Microsoft.VisualBasic::bc7a906cb2fc4791f0641c1f6ed2d685, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\PopupNotifierForm.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -465,4 +466,3 @@ Friend Class PopupNotifierForm : Inherits Microsoft.VisualBasic.MolkPlusTheme.Wi
         MyBase.Dispose(disposing)
     End Sub
 End Class
-

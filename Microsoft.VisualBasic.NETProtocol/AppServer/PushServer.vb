@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3a65f1cba879e86c769afb5e4510ca9e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\AppServer\PushServer.vb"
+﻿#Region "Microsoft.VisualBasic::0f9221753ba43657d8df673e809c03a3, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\AppServer\PushServer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -151,4 +152,3 @@ Public Class PushServer : Implements IDisposable
     End Sub
 #End Region
 End Class
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0ad6ff359543e0cc438c3aaa89e0814c, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::d21dedd37f6d9fbac259aa07dbc7ca9e, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Gamma.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 
@@ -137,4 +137,3 @@ Public Module MathGamma
         End If
     End Function
 End Module
-

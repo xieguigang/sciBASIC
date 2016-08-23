@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b8f5f67943b03104a0fd62618f86fd21, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::b8f5f67943b03104a0fd62618f86fd21, ..\visualbasic_App\Scripting\Math\Math\Helpers\Variable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

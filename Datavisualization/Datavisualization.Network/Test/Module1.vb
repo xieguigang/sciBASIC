@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ae7d2bd8d15dd3e81542978a3f70a38e, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ef1392b85e8e63e4d1a8d81359233372, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Test\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

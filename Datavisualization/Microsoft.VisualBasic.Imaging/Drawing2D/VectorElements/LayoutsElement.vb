@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d3c0f7e59dc858a76753e67ef244f1c8, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\LayoutsElement.vb"
+﻿#Region "Microsoft.VisualBasic::d3c0f7e59dc858a76753e67ef244f1c8, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\LayoutsElement.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

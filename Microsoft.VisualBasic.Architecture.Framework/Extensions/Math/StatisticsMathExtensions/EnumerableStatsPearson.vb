@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8de3e7ea5506cb96a9610125154cbaca, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsPearson.vb"
+﻿#Region "Microsoft.VisualBasic::8de3e7ea5506cb96a9610125154cbaca, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsPearson.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

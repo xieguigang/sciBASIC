@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::184d7fe2a501b25e36cf412d979c1b79, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::184d7fe2a501b25e36cf412d979c1b79, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

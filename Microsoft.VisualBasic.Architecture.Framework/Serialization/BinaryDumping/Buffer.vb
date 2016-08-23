@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6befda25570a7ed9ac5dda1f642282df, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::6befda25570a7ed9ac5dda1f642282df, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

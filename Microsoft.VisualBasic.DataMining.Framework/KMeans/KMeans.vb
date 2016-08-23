@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e87eee9c9c81e60a2814a2408ab9eedd, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::1e7b2c414a326380266bddaed9dc328a, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -274,4 +275,3 @@ Namespace KMeans
         End Function
     End Module
 End Namespace
-

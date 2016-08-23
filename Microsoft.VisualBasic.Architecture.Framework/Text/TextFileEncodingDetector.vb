@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dfdc9368b4c869c33500459387280708, ..\Microsoft.VisualBasic.Architecture.Framework\Text\TextFileEncodingDetector.vb"
+﻿#Region "Microsoft.VisualBasic::dfdc9368b4c869c33500459387280708, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextFileEncodingDetector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

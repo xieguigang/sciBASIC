@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cabf9120e06ef9e0c4b58c902c400c5a, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Spring.vb"
+﻿#Region "Microsoft.VisualBasic::5612713b011daa7ef16574a00f60a798, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Spring.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

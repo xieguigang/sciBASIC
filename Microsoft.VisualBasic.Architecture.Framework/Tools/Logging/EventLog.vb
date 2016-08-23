@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::99b926a3a0325fc2a7efbeff2c25e182, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\EventLog.vb"
+﻿#Region "Microsoft.VisualBasic::99b926a3a0325fc2a7efbeff2c25e182, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\EventLog.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

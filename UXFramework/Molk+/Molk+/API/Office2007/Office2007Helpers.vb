@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7a02c1683a12a281ac82838547c4e681, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\Office2007\Office2007Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::fa71afff2e70862f7eed029cd72e9b74, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\Office2007\Office2007Helpers.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -161,5 +162,3 @@ Public Class UseClipping
 	End Sub
 	#End Region
 End Class
-
-

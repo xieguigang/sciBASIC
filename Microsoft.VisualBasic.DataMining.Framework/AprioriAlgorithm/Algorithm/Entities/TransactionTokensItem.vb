@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7873194e2e2f374539f1e4236ce63c52, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb"
+﻿#Region "Microsoft.VisualBasic::4550ade7aa6c5c3dcdf53252565d120e, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

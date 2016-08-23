@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5fc39cde3dd4da5adbe50c1f9bb470af, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::5fc39cde3dd4da5adbe50c1f9bb470af, ..\visualbasic_App\Scripting\Math\Math\Helpers\Arithmetic.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

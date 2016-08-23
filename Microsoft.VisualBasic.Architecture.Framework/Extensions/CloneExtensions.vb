@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5d6b72ff584335c64ebc472915b4838c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5d6b72ff584335c64ebc472915b4838c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

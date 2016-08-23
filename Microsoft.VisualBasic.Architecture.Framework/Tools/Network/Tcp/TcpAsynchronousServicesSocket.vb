@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3733e0d046def22732cca75e97803aad, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpAsynchronousServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::3733e0d046def22732cca75e97803aad, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpAsynchronousServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

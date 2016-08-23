@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c6649073129a2a36d43cdb9e9a35c731, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\HTMLGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::915a66a0a3c0a2ade1215b3860d424d5, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\HTMLGenerator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

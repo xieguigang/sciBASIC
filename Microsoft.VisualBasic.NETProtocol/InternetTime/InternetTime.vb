@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e248f0a8bddd63c17abae01e775dd959, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
+﻿#Region "Microsoft.VisualBasic::d968b83e3a9b334b8c1a7f0d7d34db3f, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

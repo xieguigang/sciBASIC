@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cebd8ad86aecf4c85fb63711b84b34c3, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\CustomColorPicker.vb"
+﻿#Region "Microsoft.VisualBasic::64ebf96b77b33f6cb584edfd8f3c0501, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\CustomColorPicker.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -760,4 +761,3 @@ Namespace Unity3.Controls
 		End Sub
 	End Class
 End Namespace
-

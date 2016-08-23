@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c398a6f52c8a576693287a14ae9a4418, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Reflection\ProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::c398a6f52c8a576693287a14ae9a4418, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Reflection\ProtocolHandler.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

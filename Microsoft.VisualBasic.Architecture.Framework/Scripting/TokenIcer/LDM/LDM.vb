@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3c5828f9cda7273bf2bd1557c857d4f4, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::3c5828f9cda7273bf2bd1557c857d4f4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\LDM.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

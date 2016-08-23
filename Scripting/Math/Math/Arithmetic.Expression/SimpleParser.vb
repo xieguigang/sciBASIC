@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::52ca24482ad0b20cd1af2d9a3a9277da, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\SimpleParser.vb"
+﻿#Region "Microsoft.VisualBasic::52ca24482ad0b20cd1af2d9a3a9277da, ..\visualbasic_App\Scripting\Math\Math\Arithmetic.Expression\SimpleParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

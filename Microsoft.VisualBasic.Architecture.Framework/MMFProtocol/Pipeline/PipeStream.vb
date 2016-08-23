@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::70d86b2e6ca06a7009cc4ecf15180939, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::70d86b2e6ca06a7009cc4ecf15180939, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\PipeStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

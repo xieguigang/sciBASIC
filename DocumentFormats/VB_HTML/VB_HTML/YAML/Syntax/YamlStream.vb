@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e546fcfa9f653b8ba0b6048f4c3f672e, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlStream.vb"
+﻿#Region "Microsoft.VisualBasic::ac23a4e92e2d0b250903950d69236b9e, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

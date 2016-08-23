@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4bd2497e90587a365a2c5d134761ad82, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpServer.vb"
+﻿#Region "Microsoft.VisualBasic::4bd2497e90587a365a2c5d134761ad82, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpServer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

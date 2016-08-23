@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5cba97e977037d4bee3337e6291980a0, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
+﻿#Region "Microsoft.VisualBasic::5cba97e977037d4bee3337e6291980a0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

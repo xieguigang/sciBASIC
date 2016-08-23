@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::326678b7d1ff4ca83b5f33d11c643d42, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\DataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::1b45d893d19e3fea1bdb1943a77361ea, ..\visualbasic_App\DocumentFormats\RDF\RDF\DataTypes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

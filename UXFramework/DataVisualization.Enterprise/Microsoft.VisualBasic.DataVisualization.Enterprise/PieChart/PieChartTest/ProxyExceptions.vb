@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3003751ce3527192214042d3c2a86913, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\ProxyExceptions.vb"
+﻿#Region "Microsoft.VisualBasic::a7b2a0e421250677fd56e8587b11d09b, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\ProxyExceptions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -47,4 +48,3 @@ Namespace Nexus.Reflection
 		Inherits ProxyException
 	End Class
 End Namespace
-

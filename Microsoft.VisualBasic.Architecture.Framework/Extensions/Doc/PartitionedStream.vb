@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::53511be2479f65de6285e094b226ed2d, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\PartitionedStream.vb"
+﻿#Region "Microsoft.VisualBasic::53511be2479f65de6285e094b226ed2d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\PartitionedStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

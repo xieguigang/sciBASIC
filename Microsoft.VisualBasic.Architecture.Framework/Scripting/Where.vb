@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9397ce883be6708792aa475cf6f88fa6, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\Where.vb"
+﻿#Region "Microsoft.VisualBasic::9397ce883be6708792aa475cf6f88fa6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\Where.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

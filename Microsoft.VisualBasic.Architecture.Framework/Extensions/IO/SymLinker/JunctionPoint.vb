@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a0263259f674405a4fedec9c4e65ce60, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\JunctionPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a0263259f674405a4fedec9c4e65ce60, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\JunctionPoint.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

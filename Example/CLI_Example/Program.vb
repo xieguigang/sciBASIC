@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::15888fd702100b29303dca213c2e19ed, ..\VisualBasic_AppFramework\Example\CLI_Example\Program.vb"
+﻿#Region "Microsoft.VisualBasic::df7f165593ba845f79b349b03fa0ab23, ..\visualbasic_App\Example\CLI_Example\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

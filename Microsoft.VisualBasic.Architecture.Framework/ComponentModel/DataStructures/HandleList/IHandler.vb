@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d32663d246b27b06088d614d2bb43937, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\IHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d32663d246b27b06088d614d2bb43937, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\IHandler.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

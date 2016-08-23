@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c96242d19aab2b35e82b563ee5e0f2bd, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Repository.vb"
+﻿#Region "Microsoft.VisualBasic::c96242d19aab2b35e82b563ee5e0f2bd, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Repository.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

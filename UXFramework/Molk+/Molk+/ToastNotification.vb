@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::787dd39231193229c85df9cdfbd46fe8, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\ToastNotification.vb"
+﻿#Region "Microsoft.VisualBasic::4b9ba96096be027c3f5a11b6b373fbf4, ..\visualbasic_App\UXFramework\Molk+\Molk+\ToastNotification.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -86,4 +87,3 @@ Public Class ToastNotification
         End Try
     End Sub
 End Class
-

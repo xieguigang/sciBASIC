@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::47c35c111590cbaeb22fd3cd5fa16303, ..\VisualBasic_AppFramework\UXFramework\Molk+\WindowsApplication1\MessageBubble.vb"
+﻿#Region "Microsoft.VisualBasic::da41531cb5c98c45fc965cf4ec48c798, ..\visualbasic_App\UXFramework\Molk+\WindowsApplication1\MessageBubble.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -62,4 +63,3 @@ Public Class MessageBubble
         Call e.Graphics.FillPath(brush, path:=Path)
     End Sub
 End Class
-

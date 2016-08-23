@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e7dc530a044b1e26aa5644c79bc707e3, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\BlockScalarModifier.vb"
+﻿#Region "Microsoft.VisualBasic::3558b867f82b1efec6d88a832e6266ec, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\BlockScalarModifier.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

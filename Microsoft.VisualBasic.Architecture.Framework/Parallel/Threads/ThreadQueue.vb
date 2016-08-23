@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9447afb929f073f9bb2d9f2b65fc9237, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ThreadQueue.vb"
+﻿#Region "Microsoft.VisualBasic::9447afb929f073f9bb2d9f2b65fc9237, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ThreadQueue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

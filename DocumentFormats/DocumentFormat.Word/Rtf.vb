@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::90e3f017fdf916b0e2fc573baf05ebc9, ..\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Word\Rtf.vb"
+﻿#Region "Microsoft.VisualBasic::90e3f017fdf916b0e2fc573baf05ebc9, ..\visualbasic_App\DocumentFormats\DocumentFormat.Word\Rtf.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

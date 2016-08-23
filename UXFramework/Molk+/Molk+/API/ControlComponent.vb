@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::22c3771550c91cc80a922d96e4acacc8, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\ControlComponent.vb"
+﻿#Region "Microsoft.VisualBasic::679aef2947f847067d335a68da1368fb, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\ControlComponent.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -51,4 +52,3 @@ Public Module ControlComponent
 End Module
 
 Public Delegate Sub InvokeHandle()
-

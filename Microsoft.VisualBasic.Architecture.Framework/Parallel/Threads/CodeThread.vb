@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8da6bd1694314b4caa3ae5a5067e0dca, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::de89b345581fae1e00c3cc4b12cb98e2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\CodeThread.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3ae87769668b3f1734ad78b3a7cb60bf, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\ListControlItem.vb"
+﻿#Region "Microsoft.VisualBasic::419d7f3ccdb3ca94fbc7d52c78545778, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\ListControlItem.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -351,4 +352,3 @@ Public Class ListControlItem
 #End Region
 
 End Class
-

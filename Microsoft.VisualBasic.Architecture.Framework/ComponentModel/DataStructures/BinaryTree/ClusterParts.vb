@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4818d87448b914b362f13d48ef126133, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\ClusterParts.vb"
+﻿#Region "Microsoft.VisualBasic::4818d87448b914b362f13d48ef126133, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\ClusterParts.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

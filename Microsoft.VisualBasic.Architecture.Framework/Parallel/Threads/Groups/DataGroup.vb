@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::89741371dc2a8942d292d8ae3dcec5ad, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\DataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::89741371dc2a8942d292d8ae3dcec5ad, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\DataGroup.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

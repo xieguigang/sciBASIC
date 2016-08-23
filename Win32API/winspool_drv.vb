@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::96d23013a7fa589ebf1513b3a94e9d4f, ..\VisualBasic_AppFramework\Win32API\winspool_drv.vb"
+﻿#Region "Microsoft.VisualBasic::e7d1e905f7977be9096e900181347238, ..\visualbasic_App\Win32API\winspool_drv.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

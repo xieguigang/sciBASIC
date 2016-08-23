@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c4c036100820a3bb75de4d1580023e26, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::c4c036100820a3bb75de4d1580023e26, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1acb37b0ccf6029eea8367429307c3cc, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\GetLastErrorAPI.vb"
+﻿#Region "Microsoft.VisualBasic::1acb37b0ccf6029eea8367429307c3cc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\GetLastErrorAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

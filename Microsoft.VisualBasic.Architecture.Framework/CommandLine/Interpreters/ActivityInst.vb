@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d51b997cdbb2ff608ee0c953a851e53e, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\ActivityInst.vb"
+﻿#Region "Microsoft.VisualBasic::d51b997cdbb2ff608ee0c953a851e53e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\ActivityInst.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

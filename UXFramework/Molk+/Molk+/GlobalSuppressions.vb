@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::473c6cc35a52cea7d918ef7e62f8936e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\GlobalSuppressions.vb"
+﻿#Region "Microsoft.VisualBasic::473c6cc35a52cea7d918ef7e62f8936e, ..\visualbasic_App\UXFramework\Molk+\Molk+\GlobalSuppressions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

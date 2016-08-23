@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5f90df1e5d53cf78c06ea586e9bad228, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5f90df1e5d53cf78c06ea586e9bad228, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

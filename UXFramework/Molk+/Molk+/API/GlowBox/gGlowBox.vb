@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e40e03d7459f6c756c7850e000dc414b, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\GlowBox\gGlowBox.vb"
+﻿#Region "Microsoft.VisualBasic::bfc7c2b4bcac6391821fce12f7247127, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\GlowBox\gGlowBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -214,5 +215,3 @@ Public Class gGlowBox
 #End Region
 
 End Class
-
-

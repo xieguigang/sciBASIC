@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1ede4d3d207a3af08c42655a18c6718f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::8677ecbef30dfb21d8372248803c2735, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

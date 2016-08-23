@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9821730fa57922b5f346520af9abb7ff, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\ActionStatus.vb"
+﻿#Region "Microsoft.VisualBasic::e87f834e097bd2dc3125dbda773b494c, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\ActionStatus.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -35,4 +36,3 @@ Public Enum ActionStatus As Integer
     Drag
 
 End Enum
-

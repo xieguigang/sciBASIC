@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::16d199abb7e89be8e5fb7e080d3d538c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\VerticalColorSlider.vb"
+﻿#Region "Microsoft.VisualBasic::7b7d84e65be6c52f8308ea8ecfcc1aaa, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\VerticalColorSlider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -716,4 +717,3 @@ Namespace Unity3.Controls
 		#End Region
 	End Class
 End Namespace
-

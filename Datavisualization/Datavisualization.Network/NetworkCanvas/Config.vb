@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c0592b931ae7ea2fa8d114407fcd4d92, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\Config.vb"
+﻿#Region "Microsoft.VisualBasic::c0592b931ae7ea2fa8d114407fcd4d92, ..\visualbasic_App\Datavisualization\Datavisualization.Network\NetworkCanvas\Config.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::93315d148bebd7649dac3b35353ed43f, ..\VisualBasic_AppFramework\UXFramework\Molk+\TestProject\Form5.vb"
+﻿#Region "Microsoft.VisualBasic::90a4be83ff3507370509704d651a8a80, ..\visualbasic_App\UXFramework\Molk+\TestProject\Form5.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

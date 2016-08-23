@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::893c485ad218c3bf8a43a47dcf180981, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLITypes.vb"
+﻿#Region "Microsoft.VisualBasic::893c485ad218c3bf8a43a47dcf180981, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLITypes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

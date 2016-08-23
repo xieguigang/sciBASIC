@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::21d70a6abd9dc838c9f83b14db95177c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::21d70a6abd9dc838c9f83b14db95177c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ColorCube.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

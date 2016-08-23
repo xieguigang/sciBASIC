@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::30d60eff5b0d4ba3994f40a380ed9cd6, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\WindowsVista\WindowsVistaColorTable.vb"
+﻿#Region "Microsoft.VisualBasic::f670e7b0aae96b896c75027ff35cd808, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\WindowsVista\WindowsVistaColorTable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -458,4 +459,3 @@ Public Class WindowsVistaColorTable
 
 	#End Region
 End Class
-

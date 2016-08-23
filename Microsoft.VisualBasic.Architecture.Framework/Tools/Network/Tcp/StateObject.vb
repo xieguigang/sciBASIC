@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2945b11a30a1fb56e4de27826f04adb2, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\StateObject.vb"
+﻿#Region "Microsoft.VisualBasic::2945b11a30a1fb56e4de27826f04adb2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\StateObject.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

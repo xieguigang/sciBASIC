@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d79ea429d940b6f87c3f0d45f72f1d06, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\QLearning\Action.vb"
+﻿#Region "Microsoft.VisualBasic::d79ea429d940b6f87c3f0d45f72f1d06, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\QLearning\Action.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

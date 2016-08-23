@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c8ac9f44bdf0fb11fbe3c27365d31593, ..\VisualBasic_AppFramework\UXFramework\Molk+\TestProject\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::582837a7585bc86e80e6cabba68edd13, ..\visualbasic_App\UXFramework\Molk+\TestProject\Form1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -69,4 +70,3 @@ Public Class Form1
                                    End Sub, New Point)
     End Sub
 End Class
-

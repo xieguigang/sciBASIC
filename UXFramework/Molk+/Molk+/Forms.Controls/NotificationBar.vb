@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b4e1dd63dd58d016430b5237c01a75b6, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\NotificationBar.vb"
+﻿#Region "Microsoft.VisualBasic::b5edf7c18091acc65875bb2d1cb928a6, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\NotificationBar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -309,4 +310,3 @@ Public Class NotificationBar : Inherits Control
     End Sub
 #End Region
 End Class
-

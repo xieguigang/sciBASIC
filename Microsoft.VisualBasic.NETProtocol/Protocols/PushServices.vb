@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1cc2e5b3cc91abf61bdbea083c1a9a9a, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Protocols\PushServices.vb"
+﻿#Region "Microsoft.VisualBasic::b2e4f5ab03225f2d7f74807aa0f64317, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Protocols\PushServices.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -25,11 +26,9 @@
 
 #End Region
 
-
 Namespace Protocols
 
     Module PushServices
 
     End Module
 End Namespace
-

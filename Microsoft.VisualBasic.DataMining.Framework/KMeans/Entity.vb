@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a252593337166009fb0a725fc5a76892, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::a4df46b937de237393cc373c17e8c74e, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\KMeans\Entity.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

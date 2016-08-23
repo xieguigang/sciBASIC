@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::32cb29f29c37b7f58b37a1d1169818be, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\GDI_API.vb"
+﻿#Region "Microsoft.VisualBasic::e86f59284a69e66c4fcf46a060f26c1f, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\GDI_API.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -77,4 +78,3 @@ Module GDI_API
         Return GetScreenshot(Screen.PrimaryScreen.Bounds)
     End Function
 End Module
-

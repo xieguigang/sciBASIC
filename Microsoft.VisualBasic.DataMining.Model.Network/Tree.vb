@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::38183a7b595cc2761002f69539eaf31e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::776092fef7ffbff156f4c8d4c06b457e, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Model.Network\Tree.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

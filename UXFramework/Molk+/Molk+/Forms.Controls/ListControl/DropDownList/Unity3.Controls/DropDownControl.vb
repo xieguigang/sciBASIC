@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8b8c7c5fd49a24ef52237e4fa85a522c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\DropDownControl.vb"
+﻿#Region "Microsoft.VisualBasic::4f67d8653b320b5ad7bff9f1c0b29fa5, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\DropDownControl.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -424,4 +425,3 @@ Namespace Unity3.Controls
         End Sub
     End Class
 End Namespace
-

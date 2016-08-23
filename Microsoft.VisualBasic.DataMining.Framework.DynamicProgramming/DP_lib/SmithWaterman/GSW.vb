@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fc2c0f822b0d16b8cb18aa75f62d5824, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::b641729ebb664f67c284637822316c01, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -463,4 +464,3 @@ Public Class GSW(Of T)
         Return (From x As Match In matchList Select x Order By x.Score Descending).ToArray
     End Function
 End Class
-

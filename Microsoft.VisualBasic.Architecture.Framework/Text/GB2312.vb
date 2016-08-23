@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::964cce72450aaf37094e053d9514ad04, ..\Microsoft.VisualBasic.Architecture.Framework\Text\GB2312.vb"
+﻿#Region "Microsoft.VisualBasic::964cce72450aaf37094e053d9514ad04, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\GB2312.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

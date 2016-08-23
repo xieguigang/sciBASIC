@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2b72baed20e894b2d8d6ad739e16d3d5, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::9ce00dee2e3e21837f3bb31efbe20ebc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

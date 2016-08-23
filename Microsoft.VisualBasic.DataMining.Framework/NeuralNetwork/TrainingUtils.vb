@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8fb6a63d190a752c1c40c106f6f7ed32, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::adef3810f6b30717c2cf9c84896a3b65, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\TrainingUtils.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

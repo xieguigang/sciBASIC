@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d03f765bb0c716d8e52e6baab2bb8a08, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\LocalTagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::698951f0223a6e997b4573f4ccdbf7e7, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\LocalTagPrefix.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

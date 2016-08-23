@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::38e07044fd29035735508fb6f68822ab, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\DropDownList.vb"
+﻿#Region "Microsoft.VisualBasic::916965b003dcac0a296613435a58e4ab, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\DropDownList.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -34,4 +35,3 @@ Public Class DropDownList : Inherits DropDownControl
     End Sub
 
 End Class
-

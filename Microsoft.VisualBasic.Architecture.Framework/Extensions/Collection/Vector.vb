@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e867052510be20c32dbd681ce33c17eb, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::91a7164520c9d6ee39e72b04e6c607f0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

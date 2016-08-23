@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::524f347767ac3d0f019dbac3572ac991, ..\VisualBasic_AppFramework\Cli Tools\LicenseMgr\LicenseMgr\My Project\MyExtensions\MyWpfExtension.vb"
+﻿#Region "Microsoft.VisualBasic::524f347767ac3d0f019dbac3572ac991, ..\visualbasic_App\Cli Tools\LicenseMgr\LicenseMgr\My Project\MyExtensions\MyWpfExtension.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

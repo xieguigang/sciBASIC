@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b8843eabd9800bc2942a53a8ba26781c, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\GridLine.vb"
+﻿#Region "Microsoft.VisualBasic::b485536a933318e1414c83f2ae2afe1f, ..\visualbasic_App\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\GridLine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

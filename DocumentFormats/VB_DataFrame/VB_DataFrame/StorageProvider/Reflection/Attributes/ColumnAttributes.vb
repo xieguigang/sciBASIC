@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cb4d03ae3d9df43b866eb0745a0fa120, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\Attributes\ColumnAttributes.vb"
+﻿#Region "Microsoft.VisualBasic::cb4d03ae3d9df43b866eb0745a0fa120, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\Attributes\ColumnAttributes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

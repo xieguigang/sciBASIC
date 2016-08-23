@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5796556435ad9860bd98f1cf92a93869, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\BatchQueue.vb"
+﻿#Region "Microsoft.VisualBasic::6dface6b8dc8ae70199f63c7074eca55, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\BatchQueue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

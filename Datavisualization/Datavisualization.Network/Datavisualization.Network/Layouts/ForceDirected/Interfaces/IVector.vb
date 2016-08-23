@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bc5ccabd214545668bc349bde15dd225, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IVector.vb"
+﻿#Region "Microsoft.VisualBasic::1c80a317ff91572c67d6d5f3adef9936, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IVector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d328d8a4b1d7e23ac8d99c1d43a920a9, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::d328d8a4b1d7e23ac8d99c1d43a920a9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

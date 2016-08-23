@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::453c961f4ea07660dfd677cf3a49b5b0, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\ProcessLock.vb"
+﻿#Region "Microsoft.VisualBasic::453c961f4ea07660dfd677cf3a49b5b0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\ProcessLock.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

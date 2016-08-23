@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
+﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

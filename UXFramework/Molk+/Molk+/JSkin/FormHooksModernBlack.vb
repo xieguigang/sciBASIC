@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6a9e2bcbe38caade7a5e78a0dda6a2c5, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\JSkin\FormHooksModernBlack.vb"
+﻿#Region "Microsoft.VisualBasic::1f858ddf8b6d4dbe00e275badc912d77, ..\visualbasic_App\UXFramework\Molk+\Molk+\JSkin\FormHooksModernBlack.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -553,4 +554,3 @@ Partial Public Class FormHooksModernBlack
 #End Region
 
 End Class
-

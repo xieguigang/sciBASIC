@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::193c95f7d5584b8dc1b8107d7134164f, ..\VisualBasic_AppFramework\GithubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::193c95f7d5584b8dc1b8107d7134164f, ..\visualbasic_App\GithubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

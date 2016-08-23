@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ed2fba95603203b41d48e1e2469071f3, ..\VisualBasic_AppFramework\Cli Tools\FindKeyWord\Program.vb"
+﻿#Region "Microsoft.VisualBasic::ed2fba95603203b41d48e1e2469071f3, ..\visualbasic_App\Cli Tools\FindKeyWord\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

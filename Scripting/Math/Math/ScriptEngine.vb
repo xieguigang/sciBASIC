@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b3d130f82285f3351a35b490058f9946, ..\VisualBasic_AppFramework\Scripting\Math\Math\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::c3adae39788d3fb7b8d5f6c03c22f0f0, ..\visualbasic_App\Scripting\Math\Math\ScriptEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

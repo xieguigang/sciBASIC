@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9db4496c54d7a56ac01516f0dc171af4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::9db4496c54d7a56ac01516f0dc171af4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hBitmap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

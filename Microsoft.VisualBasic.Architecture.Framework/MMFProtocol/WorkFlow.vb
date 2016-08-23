@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ec2fbdf09074e4d6bc770b607c399456, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\WorkFlow.vb"
+﻿#Region "Microsoft.VisualBasic::ec2fbdf09074e4d6bc770b607c399456, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\WorkFlow.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

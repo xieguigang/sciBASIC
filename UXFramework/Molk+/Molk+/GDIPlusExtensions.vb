@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0815a4b748781aedb1c1ee31fcb70230, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\GDIPlusExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2bd011d174371989f0b9a0ac2829cfa6, ..\visualbasic_App\UXFramework\Molk+\Molk+\GDIPlusExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -300,4 +301,3 @@ Public Module GDIPlusExtensions
         Return Gr.ImageResource
     End Function
 End Module
-

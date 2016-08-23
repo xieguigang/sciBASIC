@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cf32b93bb36bcbaebff1fa49a5f7961e, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::105fb307860ebbbebd5f4588c90d94d9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExportAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

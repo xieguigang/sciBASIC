@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::004f135c197b14821b3741e1d92a1e7b, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::004f135c197b14821b3741e1d92a1e7b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DynamicProperty.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

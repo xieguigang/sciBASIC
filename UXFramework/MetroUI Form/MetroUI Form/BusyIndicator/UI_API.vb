@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1800e21437c0cb4f6982eaad2bb61246, ..\VisualBasic_AppFramework\UXFramework\MetroUI Form\MetroUI Form\BusyIndicator\UI_API.vb"
+﻿#Region "Microsoft.VisualBasic::e2827c89b5e740e5d5dfad3f2e1270f2, ..\visualbasic_App\UXFramework\MetroUI Form\MetroUI Form\BusyIndicator\UI_API.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -112,4 +113,3 @@ Public Module UI_API
         Return bLoader.ShowDialog
     End Function
 End Module
-

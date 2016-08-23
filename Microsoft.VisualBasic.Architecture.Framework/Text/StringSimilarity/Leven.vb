@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c0997c9f1981bd30b7a2bff7b5aad99c, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Leven.vb"
+﻿#Region "Microsoft.VisualBasic::c0997c9f1981bd30b7a2bff7b5aad99c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Leven.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

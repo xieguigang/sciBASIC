@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::eabb6bd6a5ef9e1ff9a5450d03caa1af, ..\VisualBasic_AppFramework\UXFramework\UWP\UWP\Navigation.vb"
+﻿#Region "Microsoft.VisualBasic::5b862cb00ab3e43378d852ed3309f622, ..\visualbasic_App\UXFramework\UWP\UWP\Navigation.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 <AttributeUsage(AttributeTargets.Event, AllowMultiple:=False, Inherited:=True)>
 Public Class Navigation : Inherits Attribute

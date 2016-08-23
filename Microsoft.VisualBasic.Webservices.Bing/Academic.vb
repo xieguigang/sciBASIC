@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2e665c2d729422d40bccb0539cc86869, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Webservices.Bing\Academic.vb"
+﻿#Region "Microsoft.VisualBasic::18311c49606cdfaa510547423832c07b, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Bing\Academic.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -38,4 +39,3 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Public Module Academic
 
 End Module
-

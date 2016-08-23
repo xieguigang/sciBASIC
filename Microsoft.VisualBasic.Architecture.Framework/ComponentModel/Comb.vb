@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d646e5ee71bc2d0beda230b6ab8a55d8, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::d646e5ee71bc2d0beda230b6ab8a55d8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Comb.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

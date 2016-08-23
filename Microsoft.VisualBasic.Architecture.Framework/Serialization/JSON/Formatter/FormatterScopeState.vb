@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::825a83ffbbe8dddcddc7c2dc18f51d86, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\FormatterScopeState.vb"
+﻿#Region "Microsoft.VisualBasic::825a83ffbbe8dddcddc7c2dc18f51d86, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\FormatterScopeState.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cc7181383a9102cc49d1d2f7fc6fbdff, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Java\LogTricks.vb"
+﻿#Region "Microsoft.VisualBasic::cc7181383a9102cc49d1d2f7fc6fbdff, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Java\LogTricks.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

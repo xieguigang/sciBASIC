@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1901f6186f85f9adbf29b1fbed68e0e6, ..\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Cowsay.vb"
+﻿#Region "Microsoft.VisualBasic::1901f6186f85f9adbf29b1fbed68e0e6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Cowsay.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

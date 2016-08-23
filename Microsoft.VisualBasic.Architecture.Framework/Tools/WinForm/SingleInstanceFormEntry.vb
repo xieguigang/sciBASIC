@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::58121e73a5058f2ddbd5185a674d3c6c, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\SingleInstanceFormEntry.vb"
+﻿#Region "Microsoft.VisualBasic::58121e73a5058f2ddbd5185a674d3c6c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\SingleInstanceFormEntry.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

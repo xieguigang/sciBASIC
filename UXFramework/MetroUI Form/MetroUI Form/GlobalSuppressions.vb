@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9496494e6845db280eb94f6568ecc2ab, ..\VisualBasic_AppFramework\UXFramework\MetroUI Form\MetroUI Form\GlobalSuppressions.vb"
+﻿#Region "Microsoft.VisualBasic::9496494e6845db280eb94f6568ecc2ab, ..\visualbasic_App\UXFramework\MetroUI Form\MetroUI Form\GlobalSuppressions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

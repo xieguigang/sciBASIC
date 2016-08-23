@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5fbc979ef8b9e909c7b4b959331270ea, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\HeatMap3D\AltitudeMap.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::550568968bd4d1349ca4f1e8bfe33942, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\HeatMap3D\AltitudeMap.xaml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -845,4 +846,3 @@ Namespace Gradiant3D
         End Function
     End Class
 End Namespace
-

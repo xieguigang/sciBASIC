@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::10a817703b91cbd01af065c6f0957838, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\FuzzyLogic\Models\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::10a817703b91cbd01af065c6f0957838, ..\visualbasic_App\Scripting\Math\Math\Logical\FuzzyLogic\Models\LDM.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

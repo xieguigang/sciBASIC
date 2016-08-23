@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::789e7a5a62127d0b229c32070386008d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Protocols\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::c7851f8a02ff14ad534b74fad5efcf51, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Protocols\InvokeAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -57,4 +58,3 @@ Namespace Protocols
         End Sub
     End Module
 End Namespace
-

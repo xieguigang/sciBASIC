@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7284639d4acfa0288a580f785401f97b, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::5396fbece37c8f2fbf9bdc9af9c622cf, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Statistics.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -375,4 +376,3 @@ Public Module Statistics
         Return mode__1
     End Function
 End Module
-
