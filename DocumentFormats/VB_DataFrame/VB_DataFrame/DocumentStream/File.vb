@@ -1,39 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::6dedb76af2e1cbff3d1015d483a395f2, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace DocumentStream
 
@@ -348,7 +349,9 @@ Namespace DocumentStream
         End Function
 
         Public Function GetAllStringTokens() As String()
-            Return (From row In Me._innerTable Select row.ToArray).MatrixToVector
+            Return LinqAPI.Exec(Of String) <= From row As RowObject
+                                              In Me._innerTable
+                                              Select row.ToArray
         End Function
 
         ''' <summary>
@@ -388,35 +391,52 @@ Namespace DocumentStream
         Public Function TokenCounts(ColumnIndex As Integer,
                                     Optional FirstLineTitle As Boolean = True,
                                     Optional IgnoreBlanks As Boolean = True,
-                                    Optional IgnoreCase As Boolean = False) As File
+                                    Optional ignoreCase As Boolean = False) As File
 
             Dim source = If(FirstLineTitle, _innerTable.Skip(1), _innerTable)
-            Dim Values As String() = (From row As RowObject
-                                      In source.AsParallel
-                                      Select row.Column(ColumnIndex)).ToArray ' 选择出该特定的列对象之中的数据
-            Dim GroupInit = (From str As String In Values Select str, lower = Strings.LCase(str)).ToArray
+            Dim Values As String() = LinqAPI.Exec(Of String) <=
+                From row As RowObject
+                In source.AsParallel
+                Select row.Column(ColumnIndex) ' 选择出该特定的列对象之中的数据
+
+            Dim gData = (From str As String In Values Select str, lower = Strings.LCase(str)).ToArray
 
             If IgnoreBlanks Then
-                GroupInit = (From strData In GroupInit Where Not String.IsNullOrEmpty(strData.str) Select strData).ToArray
+                gData = gData.Where(Function(s) Not String.IsNullOrEmpty(s.str)).ToArray
             End If
 
-            Dim TokensGroup As KeyValuePair(Of String, Integer)()
-            If IgnoreCase Then
-                TokensGroup = (From item In GroupInit
-                               Select item
-                               Group item By item.lower Into Group).ToArray(Function(obj) New KeyValuePair(Of String, Integer)(obj.Group.First.str, obj.Group.Count))
+            Dim tokensGroup As NamedValue(Of Integer)()
+
+            If ignoreCase Then
+                Dim counts = From x In gData
+                             Select x
+                             Group x By x.lower Into Group
+                tokensGroup = LinqAPI.Exec(Of NamedValue(Of Integer)) <=
+                    From x
+                    In counts
+                    Select New NamedValue(Of Integer) With {
+                        .Name = x.Group.First.str,
+                        .x = x.Group.Count
+                    }
             Else
-                TokensGroup = (From item In GroupInit
-                               Select item
-                               Group item By item.str Into Group).ToArray(Function(obj) New KeyValuePair(Of String, Integer)(obj.str, obj.Group.Count))
+                Dim counts = From x In gData
+                             Select x
+                             Group x By x.str Into Group
+                tokensGroup = LinqAPI.Exec(Of NamedValue(Of Integer)) <=
+                    From x
+                    In counts
+                    Select New NamedValue(Of Integer) With {
+                        .Name = x.str,
+                        .x = x.Group.Count
+                    }
             End If
 
-            Dim CsvFile As File = New File
-            CsvFile += New RowObject({If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
-            CsvFile += From token As KeyValuePair(Of String, Integer)
-                       In TokensGroup.AsParallel
-                       Select New RowObject({token.Key, CStr(token.Value)})
-            Return CsvFile
+            Dim stats As New File
+            stats += New RowObject({If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
+            stats += From token As NamedValue(Of Integer)
+                     In tokensGroup
+                     Select New RowObject({token.Name, CStr(token.x)})
+            Return stats
         End Function
 
 #Region "List Operations"
@@ -697,14 +717,25 @@ Namespace DocumentStream
         End Function
 
         Public Shared Function RemoveSubRow(df As File) As File
-            Dim Query = From row In df.AsParallel Select row Order By row.NotNullColumns.Count Descending '
-            df._innerTable = Query.ToList
-            For i As Integer = 0 To df.Count - 1
-                Dim MRow = df(i)
-                Dim RQuery = From row In df.Skip(i + 1).AsParallel Where MRow.Contains(row) Select row '
-                Call df.RemoveRange(RQuery.ToArray)
+            Dim innerTable = LinqAPI.MakeList(Of RowObject) <=
+                From row As RowObject
+                In df
+                Select row
+                Order By row.NotNullColumns.Count Descending '
+
+            For Each mrow As SeqValue(Of RowObject) In innerTable.ToArray.SeqIterator
+                Dim LQuery As IEnumerable(Of RowObject) =
+                    From row As RowObject
+                    In innerTable.Skip(mrow.i + 1).AsParallel
+                    Where mrow.obj.Contains(row)
+                    Select row '
+
+                For Each x In LQuery
+                    Call innerTable.Remove(x)
+                Next
             Next
-            Return df
+
+            Return New File(innerTable)
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of RowObject) Implements IEnumerable(Of RowObject).GetEnumerator

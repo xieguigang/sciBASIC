@@ -341,6 +341,21 @@ Namespace CommandLine
                 Return New StreamWriter(fs)
             End If
         End Function
+
+        ''' <summary>
+        ''' Read all of the text input from the file or ``std_in``
+        ''' </summary>
+        ''' <param name="param"></param>
+        ''' <returns></returns>
+        Public Function ReadInput(param As String) As String
+            Dim s As String = Nothing
+            Dim read As StreamReader = OpenStreamInput(param, s)
+            If read Is Nothing Then
+                Return s
+            Else
+                Return read.ReadToEnd
+            End If
+        End Function
 #End Region
 
 #Region "IDataRecord Methods"
