@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6e35b865935610332543a9fc6189dccf, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Href.vb"
+﻿#Region "Microsoft.VisualBasic::6e35b865935610332543a9fc6189dccf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Href.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

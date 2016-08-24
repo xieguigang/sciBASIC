@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a4047e7c642298a46df92695143941e4, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Solvers\ISolver.vb"
+﻿#Region "Microsoft.VisualBasic::a4047e7c642298a46df92695143941e4, ..\visualbasic_App\Scripting\Math\Math\BasicR\Solvers\ISolver.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

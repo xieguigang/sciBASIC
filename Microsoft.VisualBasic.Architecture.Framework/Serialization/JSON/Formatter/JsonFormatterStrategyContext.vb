@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f99adc89c5dd6da4545b9a3904732d2f, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb"
+﻿#Region "Microsoft.VisualBasic::f99adc89c5dd6da4545b9a3904732d2f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2ea4f5bb5a2c261bc1a5202e2b14ae40, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Tag.vb"
+﻿#Region "Microsoft.VisualBasic::ca45a9b9a5394a1f6159cfe4e41a8b2a, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Tag.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

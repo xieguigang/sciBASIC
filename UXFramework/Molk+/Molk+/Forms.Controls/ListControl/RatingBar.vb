@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cfe2769b77ea0e3e95bbdb73cbec251c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\RatingBar.vb"
+﻿#Region "Microsoft.VisualBasic::c9c5aae796189ca9d64833d6b7f7cf44, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\RatingBar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -78,4 +79,3 @@ Public Class RatingBar
     End Sub
 #End Region
 End Class
-

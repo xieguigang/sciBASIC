@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f4da4fc670ddea4df40fa7eed387e6d2, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\WindowsVista\GraphicsTools.vb"
+﻿#Region "Microsoft.VisualBasic::29ce320c5c22898d35db94e42f2f71fe, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\WindowsVista\GraphicsTools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -139,4 +140,3 @@ Public Module GraphicsTools
         Return path
     End Function
 End Module
-

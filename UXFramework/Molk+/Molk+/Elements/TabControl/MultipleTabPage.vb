@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6efc9cc6626cb76244ae8a20de3bb209, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Elements\TabControl\MultipleTabPage.vb"
+﻿#Region "Microsoft.VisualBasic::b6b0a09f6e4d64dec3b8e70b6c0312a3, ..\visualbasic_App\UXFramework\Molk+\Molk+\Elements\TabControl\MultipleTabPage.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

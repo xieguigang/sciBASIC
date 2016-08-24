@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e297157e30f3dbb1f7a68554319f95cb, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\common.vb"
+﻿#Region "Microsoft.VisualBasic::4f1564cdf5c6cdd28be20cdd15ad49a3, ..\visualbasic_App\UXFramework\Molk+\Molk+\common.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -37,4 +38,3 @@ Module Common
         Return String.Format(s.Value, args)
     End Function
 End Module
-

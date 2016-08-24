@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::392e64d0df4c87d335d78b1ac9501553, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::392e64d0df4c87d335d78b1ac9501553, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

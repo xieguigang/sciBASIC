@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::982a3814c5687d46f9d1a17d52cd705e, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
+﻿#Region "Microsoft.VisualBasic::70d9dfed052186f147d69f5fa86da7aa, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -91,4 +92,3 @@ Namespace DynamicProgramming
         End Sub
     End Module
 End Namespace
-

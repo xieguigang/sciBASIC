@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a11615f874cf8141f7ecef3bd079fab7, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::387ad2f5d6de15246ce7071c19ec945b, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlDocument.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

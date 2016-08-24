@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b42b31926641d07255dd6ab61693c06d, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\DrawingString.vb"
+﻿#Region "Microsoft.VisualBasic::b42b31926641d07255dd6ab61693c06d, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\DrawingString.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0ea038169b50166a425486ead29585d0, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::cbc43804ed01ac954863e6aa748e7050, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

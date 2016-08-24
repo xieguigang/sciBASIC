@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dc48d78535faad64bd6feb9cdce27f73, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\Button.vb"
+﻿#Region "Microsoft.VisualBasic::dc48d78535faad64bd6feb9cdce27f73, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\Button.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

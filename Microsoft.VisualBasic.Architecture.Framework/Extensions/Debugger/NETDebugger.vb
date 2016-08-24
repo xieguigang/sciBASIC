@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1bd4eda8e71442a51c914fc4c4c26f8b, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\NETDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::1bd4eda8e71442a51c914fc4c4c26f8b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\NETDebugger.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

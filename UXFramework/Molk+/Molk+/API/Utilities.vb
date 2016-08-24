@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f211e4af21f32d1dc7f73f0d3d49a5f3, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\Utilities.vb"
+﻿#Region "Microsoft.VisualBasic::5336b5b8e10827ac466b1b1201485794, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\Utilities.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -183,4 +184,3 @@ Public Module ImageRotationUtilities
         Return rotatedBmp
     End Function
 End Module
-

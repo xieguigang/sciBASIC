@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b2d749f01506c88d078a05e62622c4d4, ..\VisualBasic_AppFramework\DocumentFormats\RDF\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::8fcb281c6d29f2b94afd0e90fc6c65c7, ..\visualbasic_App\DocumentFormats\RDF\TestProject\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

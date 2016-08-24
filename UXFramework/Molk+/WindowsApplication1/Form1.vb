@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3c9611a7215799de573391ee5158d775, ..\VisualBasic_AppFramework\UXFramework\Molk+\WindowsApplication1\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::e526d3b66317c36119b0e7f75f588cbe, ..\visualbasic_App\UXFramework\Molk+\WindowsApplication1\Form1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -36,4 +37,3 @@ Public Class Form1
 
 
 End Class
-

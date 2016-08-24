@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::33d02b4cf12dde1a571d7f82a040c6db, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
+﻿#Region "Microsoft.VisualBasic::33d02b4cf12dde1a571d7f82a040c6db, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

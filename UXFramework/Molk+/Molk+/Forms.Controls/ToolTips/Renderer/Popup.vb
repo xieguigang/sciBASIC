@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ffaa3c7e4668c733638defc1d6471ed1, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\Popup.vb"
+﻿#Region "Microsoft.VisualBasic::4daaeb79e27c29fa894f495c8194f1be, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\Popup.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

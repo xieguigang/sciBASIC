@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::72343f554ecb817bdd5e7b9b49445317, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
+﻿#Region "Microsoft.VisualBasic::72343f554ecb817bdd5e7b9b49445317, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

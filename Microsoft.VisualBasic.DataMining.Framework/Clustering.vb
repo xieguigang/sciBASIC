@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4daee949ac479422a3ecbe321d705133, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::350f26730ecbb96b5e5ccdc7fb8f6e3d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Clustering.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -199,4 +200,3 @@ Namespace Clustering
         End Function
     End Module
 End Namespace
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7692a6ae3a06274eb68cbccbe80e6895, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\Common.vb"
+﻿#Region "Microsoft.VisualBasic::825d1c3f4fcc3d62dfb1eba787c438a4, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\Common.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

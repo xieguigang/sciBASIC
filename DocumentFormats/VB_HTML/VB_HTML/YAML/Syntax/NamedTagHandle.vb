@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::81cd4785f6cade6f9c2e768169583430, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\NamedTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::c670bc42dffc6bb276c729b5b64c6fbd, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\NamedTagHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

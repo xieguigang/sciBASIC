@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0dfd516e94f362955de1738ca32a2ced, ..\VisualBasic_AppFramework\GithubAPI\Class\Repositories.vb"
+﻿#Region "Microsoft.VisualBasic::0dfd516e94f362955de1738ca32a2ced, ..\visualbasic_App\GithubAPI\Class\Repositories.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

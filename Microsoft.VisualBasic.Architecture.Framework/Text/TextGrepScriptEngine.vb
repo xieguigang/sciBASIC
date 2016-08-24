@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::951b1efe70132d8b71a119d70f9f5f5e, ..\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::ca93bcdd35d40c216de02a9840affa25, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a750acba118e280e3f5c2f8030fc28da, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Data\DataPager.vb"
+﻿#Region "Microsoft.VisualBasic::22f34a46bc78dcf2d7bc809afa90ea5a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Data\DataPager.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -154,4 +155,3 @@ Public Class DataPager(Of T) : Implements IEnumerable(Of T())
         End If
     End Function
 End Class
-

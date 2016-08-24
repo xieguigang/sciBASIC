@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0d5ad3b1088f3aa9774fd713aaff3e5e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\UI_API.vb"
+﻿#Region "Microsoft.VisualBasic::6c10930df9f8431cec7993ed774bd2d9, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\UI_API.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -85,4 +86,3 @@ Public Module UI_API
         Return bLoader.ShowDialog
     End Function
 End Module
-

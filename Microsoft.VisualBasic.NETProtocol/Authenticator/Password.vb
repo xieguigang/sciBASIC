@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6b8c03d45adcaceb22e6d2c1bfeeeae1, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.vb"
+﻿#Region "Microsoft.VisualBasic::f32a054a099ef8d4f93fbe330ede831e, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -30,4 +31,3 @@ Public Class Password
 
     End Sub
 End Class
-

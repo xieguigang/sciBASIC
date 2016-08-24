@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bacbb0aed738f8fbe8ac68fb825d6b05, ..\VisualBasic_AppFramework\GithubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9c8b4684af815707ba6e3ec76c1520d8, ..\visualbasic_App\GithubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

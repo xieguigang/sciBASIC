@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a47ecca4ceceaba3381b6b51d9b8184b, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Namespace.vb"
+﻿#Region "Microsoft.VisualBasic::a47ecca4ceceaba3381b6b51d9b8184b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Namespace.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

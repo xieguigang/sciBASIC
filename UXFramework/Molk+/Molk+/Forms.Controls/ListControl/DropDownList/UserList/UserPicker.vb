@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dae946ef516d5365eb32202d1e1e1d4e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\UserPicker.vb"
+﻿#Region "Microsoft.VisualBasic::2721734a856bf7c560565c7cdda04b40, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\UserPicker.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -124,4 +125,3 @@ Partial Public Class UserPicker
 
     End Sub
 End Class
-

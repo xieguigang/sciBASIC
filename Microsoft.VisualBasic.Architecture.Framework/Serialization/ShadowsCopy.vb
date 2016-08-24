@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3136465967721e482b2cf4582386b2ef, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
+﻿#Region "Microsoft.VisualBasic::3136465967721e482b2cf4582386b2ef, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

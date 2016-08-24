@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5a5dbcb7b1f31773d3ccca064f5b3dba, ..\VisualBasic_AppFramework\Datavisualization\OpenGL\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::7e1b6aa182a2cf1dbe34171ed73afe49, ..\visualbasic_App\Datavisualization\OpenGL\Camera.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -70,4 +71,3 @@ Public Class Camera
         _Position.X -= delta * Math.Sin(MathHelper.DegreesToRadians(Yaw))
     End Sub
 End Class
-

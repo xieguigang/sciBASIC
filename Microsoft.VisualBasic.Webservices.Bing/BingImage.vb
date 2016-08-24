@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ce8e8a52397800c012fd750024b654f4, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Webservices.Bing\BingImage.vb"
+﻿#Region "Microsoft.VisualBasic::2f4f129078fc8e1d79fbb8e67a214ea7, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Bing\BingImage.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -107,4 +108,3 @@ Public Module BingImage
         o.SetValue(UseBingImageProperty, value)
     End Sub
 End Module
-

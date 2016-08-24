@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c55b84bc2b2bd1756ad3ad9baabbe692, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\BindMapping.vb"
+﻿#Region "Microsoft.VisualBasic::c55b84bc2b2bd1756ad3ad9baabbe692, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\BindMapping.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

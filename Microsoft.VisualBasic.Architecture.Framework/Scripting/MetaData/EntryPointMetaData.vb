@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::19c73b16fe8cd5b911323a69c4285636, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::19c73b16fe8cd5b911323a69c4285636, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

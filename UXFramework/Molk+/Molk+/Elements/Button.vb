@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b40fff33d6a85d751a1b5ea0eeb0d601, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Elements\Button.vb"
+﻿#Region "Microsoft.VisualBasic::c629c49531bd7481b6f3f64a4504b92a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Elements\Button.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging
 
@@ -276,4 +276,3 @@ Namespace Visualise.Elements
         Public ColorSchema As Drawing.Brush = Brushes.AliceBlue
     End Class
 End Namespace
-

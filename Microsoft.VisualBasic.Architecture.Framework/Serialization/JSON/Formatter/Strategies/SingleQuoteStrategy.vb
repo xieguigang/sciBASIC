@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::511fdcdf75715aba69c79d5c517d4bd7, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::511fdcdf75715aba69c79d5c517d4bd7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

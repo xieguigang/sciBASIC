@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5ef5c38d501483111892b6ee538df7fa, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\BinaryNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::15f6262633e258d0193ec575059e2918, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\BinaryNeuron.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Kernel.GeneticAlgorithm
 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0995664ec558a09ec15eb902eb8a8d2d, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Java\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::0995664ec558a09ec15eb902eb8a8d2d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Java\MathUtils.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

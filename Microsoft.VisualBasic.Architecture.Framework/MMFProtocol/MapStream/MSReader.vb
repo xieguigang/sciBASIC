@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3aab7875f3bae520365cb84d84b3f622, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\MapStream\MSReader.vb"
+﻿#Region "Microsoft.VisualBasic::3aab7875f3bae520365cb84d84b3f622, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\MapStream\MSReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

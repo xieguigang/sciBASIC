@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\FuzzyLogic\FuzzyRuleCollection.vb"
+﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, ..\visualbasic_App\Scripting\Math\Math\Logical\FuzzyLogic\FuzzyRuleCollection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

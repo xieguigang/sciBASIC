@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fdf26f8c70dbbd9c7462ddc702d48142, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::fdf26f8c70dbbd9c7462ddc702d48142, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

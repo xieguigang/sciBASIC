@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::679471ffaa65aadb598ed81ffb2d42f5, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::27379d54d08dca7d11cea2cf94d495b4, ..\visualbasic_App\Scripting\Math\Math\Arithmetic.Expression\MetaExpression.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::74b136ead327862e99ae3bf1465b2bdc, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\ParserValue.vb"
+﻿#Region "Microsoft.VisualBasic::74b136ead327862e99ae3bf1465b2bdc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\ParserValue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

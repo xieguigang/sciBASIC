@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cdf4c954a9a64c89b7bceac052c991bd, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb"
+﻿#Region "Microsoft.VisualBasic::6f41b5359ec501222fb4f049d7d20ecf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

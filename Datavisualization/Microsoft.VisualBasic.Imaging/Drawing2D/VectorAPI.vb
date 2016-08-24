@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cb5c3dd95e98fb947265188213234b0e, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cb5c3dd95e98fb947265188213234b0e, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

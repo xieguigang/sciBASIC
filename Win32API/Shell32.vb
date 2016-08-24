@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f5981e0f2d2003edae2c00afc0374463, ..\VisualBasic_AppFramework\Win32API\Shell32.vb"
+﻿#Region "Microsoft.VisualBasic::b3aed17454baf88ec652d3c79f62a08d, ..\visualbasic_App\Win32API\Shell32.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

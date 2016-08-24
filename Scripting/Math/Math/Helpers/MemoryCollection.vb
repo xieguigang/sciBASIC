@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ae378f455623b62f84049fbc4cbe63c8, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\MemoryCollection.vb"
+﻿#Region "Microsoft.VisualBasic::ae378f455623b62f84049fbc4cbe63c8, ..\visualbasic_App\Scripting\Math\Math\Helpers\MemoryCollection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

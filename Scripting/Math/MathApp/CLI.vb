@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e4a6cd2133dd806c8cf36ec1b2840046, ..\VisualBasic_AppFramework\Scripting\Math\MathApp\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::dc46f0a2124bce1808ed4a9e16a766ad, ..\visualbasic_App\Scripting\Math\MathApp\CLI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -43,4 +44,3 @@ Module CLI
         Return n
     End Function
 End Module
-

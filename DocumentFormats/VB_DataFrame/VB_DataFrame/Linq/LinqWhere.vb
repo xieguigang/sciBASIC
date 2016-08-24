@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dd0e8842a5f104c33b42f72dc1f0695b, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::dd0e8842a5f104c33b42f72dc1f0695b, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

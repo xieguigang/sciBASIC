@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4e09822d358af8f30948a5efb9199d81, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Data\JumpNavigator.vb"
+﻿#Region "Microsoft.VisualBasic::d5e017798bbad72595e508960a0902b2, ..\visualbasic_App\UXFramework\Molk+\Molk+\Data\JumpNavigator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -86,4 +87,3 @@ Public Class JumpNavigator
     End Sub
 
 End Class
-

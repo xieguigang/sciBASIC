@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::721c45823a779b50ceba8f0f636f7060, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\ImageCoded.vb"
+﻿#Region "Microsoft.VisualBasic::721c45823a779b50ceba8f0f636f7060, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\ImageCoded.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ede45de25a4fdc8a05708406f907366a, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::05f4acebc280376f9a0fd6af09c1bdd8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

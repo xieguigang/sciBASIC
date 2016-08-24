@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bc7a43f30f0de32fe40a1e670c77ec7f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\TagDirective.vb"
+﻿#Region "Microsoft.VisualBasic::8954560b64299c1c40448d84cb0add13, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\TagDirective.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::90ea1ea505a3376088920b77f22c754e, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\ComponntModels\AttrBridges.vb"
+﻿#Region "Microsoft.VisualBasic::90ea1ea505a3376088920b77f22c754e, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\ComponntModels\AttrBridges.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1c5e34da11053dea0febce6065a7f494, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\DFT.vb"
+﻿#Region "Microsoft.VisualBasic::effc1245ef4f3ee96eacd478ef59c981, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\DFT.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Quick Fourier Transformation. 
@@ -155,4 +155,3 @@ Public Class TFftAlgorithm
         Next
     End Sub
 End Class
-

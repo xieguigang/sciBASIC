@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3534e3080d35ba04404117556395994a, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
+﻿#Region "Microsoft.VisualBasic::3534e3080d35ba04404117556395994a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

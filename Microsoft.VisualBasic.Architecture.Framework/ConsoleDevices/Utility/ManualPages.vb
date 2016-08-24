@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a1bb0af9d37b5f313a1d6e99447ad18b, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\ManualPages.vb"
+﻿#Region "Microsoft.VisualBasic::a1bb0af9d37b5f313a1d6e99447ad18b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\ManualPages.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

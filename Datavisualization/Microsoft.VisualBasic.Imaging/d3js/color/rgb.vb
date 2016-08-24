@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::54506628a6aa76d8fcc7bc8dcbb8b109, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\d3js\color\rgb.vb"
+﻿#Region "Microsoft.VisualBasic::54506628a6aa76d8fcc7bc8dcbb8b109, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\d3js\color\rgb.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::30e4fa813947a3675da8059a7e3d12e0, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\HeatMap3D\BitmapCreator.vb"
+﻿#Region "Microsoft.VisualBasic::7af2ec82340ec24a8c2d0e7060dd6767, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\HeatMap3D\BitmapCreator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -123,4 +124,3 @@ Namespace Gradiant3D
 		End Function
 	End Class
 End Namespace
-

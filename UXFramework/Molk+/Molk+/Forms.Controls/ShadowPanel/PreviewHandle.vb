@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4c03780f1b90c14b25f3c33fd423f304, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ShadowPanel\PreviewHandle.vb"
+﻿#Region "Microsoft.VisualBasic::4d3d53d8bb570e74d7ac6ee6673f1e24, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ShadowPanel\PreviewHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -214,4 +215,3 @@ Public Class PreviewHandle
     End Sub
 
 End Class
-

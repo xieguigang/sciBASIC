@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fcd20baf03dd337e82932d2a4105183c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ShadowPanel\ShadowPanel.vb"
+﻿#Region "Microsoft.VisualBasic::19c5ac3f45b9c0c7d9af5aa0e00ba3e8, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ShadowPanel\ShadowPanel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -146,4 +147,3 @@ Public Class ShadowPanel : Inherits Panel
         Call MyBase.OnResize(e)
     End Sub
 End Class
-

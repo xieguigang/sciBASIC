@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b8d9ccc5c26ec90c259b52fd69c64476, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOM.vb"
+﻿#Region "Microsoft.VisualBasic::b8d9ccc5c26ec90c259b52fd69c64476, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOM.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

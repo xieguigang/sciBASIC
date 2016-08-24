@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fffe6d4292b80ccc80503548e3a8d0d9, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::4849037d5fce61434f8bc44cd76c651a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

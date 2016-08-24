@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b9bbb21d3c8aa50a18ca7f068bbeab82, ..\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::b9bbb21d3c8aa50a18ca7f068bbeab82, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\PS1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

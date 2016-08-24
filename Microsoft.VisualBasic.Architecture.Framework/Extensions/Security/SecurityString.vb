@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::83c95f589d1abbd6cb9676d948dcf4e2, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\SecurityString.vb"
+﻿#Region "Microsoft.VisualBasic::83c95f589d1abbd6cb9676d948dcf4e2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\SecurityString.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3babe2225e436cd75b164c3b58a59048, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\HeatMap3D\PointC.vb"
+﻿#Region "Microsoft.VisualBasic::f59132f30b668e1df068995de5c67f77, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\HeatMap3D\PointC.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -53,4 +54,3 @@ Namespace Gradiant3D
 		End Sub
 	End Class
 End Namespace
-

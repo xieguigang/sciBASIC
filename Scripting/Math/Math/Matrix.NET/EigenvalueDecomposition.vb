@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dbdecb37578fe19fc63ae00266f30937, ..\VisualBasic_AppFramework\Scripting\Math\Math\Matrix.NET\EigenvalueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::dbdecb37578fe19fc63ae00266f30937, ..\visualbasic_App\Scripting\Math\Math\Matrix.NET\EigenvalueDecomposition.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

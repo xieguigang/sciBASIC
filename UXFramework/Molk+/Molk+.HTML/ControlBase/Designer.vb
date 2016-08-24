@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9d57cf5b553c481f1e23cdf8fac1487e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+.HTML\ControlBase\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b5322d8342181e02abbaf1bf42d522c9, ..\visualbasic_App\UXFramework\Molk+\Molk+.HTML\ControlBase\Designer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Descripts the control appearances using html document and trigger event handler entry point.

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::99d2552bfeb2017b5cdd72b661bd6761, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\ISupportLoggingClient.vb"
+﻿#Region "Microsoft.VisualBasic::99d2552bfeb2017b5cdd72b661bd6761, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\ISupportLoggingClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

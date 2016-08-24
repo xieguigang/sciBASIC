@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9dd42a22af2c168e56cdc689fe6538e9, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\MailContents.vb"
+﻿#Region "Microsoft.VisualBasic::9dd42a22af2c168e56cdc689fe6538e9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\MailContents.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

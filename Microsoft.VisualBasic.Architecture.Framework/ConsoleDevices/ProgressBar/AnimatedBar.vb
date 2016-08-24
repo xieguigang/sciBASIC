@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::aa6c61aa82f218b336af6ab4e6d61934, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::aa6c61aa82f218b336af6ab4e6d61934, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\AnimatedBar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

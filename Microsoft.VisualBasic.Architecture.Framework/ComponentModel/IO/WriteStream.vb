@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f7a9683b95b4da7c51aa8bca114ca26a, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::f7a9683b95b4da7c51aa8bca114ca26a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\WriteStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

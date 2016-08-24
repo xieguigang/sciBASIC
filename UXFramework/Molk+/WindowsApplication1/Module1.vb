@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::729ffa262a8fd30d96c242dcca4b955f, ..\VisualBasic_AppFramework\UXFramework\Molk+\WindowsApplication1\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::9cd07e462b4286eca866c05acc91a348, ..\visualbasic_App\UXFramework\Molk+\WindowsApplication1\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -31,4 +32,3 @@ Module Module1
         doc = Microsoft.VisualBasic.DocumentFormat.HTML.HtmlDocument.Load("G:\Microsoft.VisualBasic_Framework\UXFramework\Molk+\WindowsApplication1\bin\Debug\Microsoft.VisualBasic.DocumentFormat.HTML.xml")
     End Sub
 End Module
-

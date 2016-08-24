@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c43a221415499caefb34603dbaa33ff2, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::c43a221415499caefb34603dbaa33ff2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ColorMap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

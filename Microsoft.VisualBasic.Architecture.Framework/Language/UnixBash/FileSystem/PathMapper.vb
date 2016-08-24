@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1b5078f205ab645d48869358400a364c, ..\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\PathMapper.vb"
+﻿#Region "Microsoft.VisualBasic::1b5078f205ab645d48869358400a364c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\PathMapper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

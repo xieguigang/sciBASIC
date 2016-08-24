@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2de53f6e157f32d6d01802900d5b404a, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::ab6508f36050f870b4ce02d7d0407b32, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Synapse.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -53,4 +54,3 @@ Namespace NeuralNetwork
 
     End Class
 End Namespace
-

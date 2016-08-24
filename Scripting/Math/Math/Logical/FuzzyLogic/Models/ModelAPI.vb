@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8cb246e90e164a052216fd40b107d4a1, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\FuzzyLogic\Models\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::8cb246e90e164a052216fd40b107d4a1, ..\visualbasic_App\Scripting\Math\Math\Logical\FuzzyLogic\Models\ModelAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

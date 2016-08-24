@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::19dbf17afd329170e78ad0527204575f, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a10b52c9a148505518a65d9194872ab7, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -47,4 +48,3 @@ NotInheritable Class Program
 		Application.Run(New Form1())
 	End Sub
 End Class
-

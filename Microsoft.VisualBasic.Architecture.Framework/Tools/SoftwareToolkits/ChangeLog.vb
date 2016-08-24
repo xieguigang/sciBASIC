@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::28c5f98ac1b9d30a0be50776aec5114a, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
+﻿#Region "Microsoft.VisualBasic::28c5f98ac1b9d30a0be50776aec5114a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

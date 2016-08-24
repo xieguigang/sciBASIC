@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1a93998f456bf3133b18af7083455d00, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::edca73b87cc379fc6b046e1aead44adb, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

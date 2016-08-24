@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1426d0576106690256e975422c591c9d, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\BasicHeap.vb"
+﻿#Region "Microsoft.VisualBasic::72c7480c578c76b959d3d30cc0cb5eb3, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\BasicHeap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

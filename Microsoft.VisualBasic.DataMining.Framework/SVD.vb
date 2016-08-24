@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c8bd630676abdde209a4a9653457b389, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\SVD.vb"
+﻿#Region "Microsoft.VisualBasic::f4c58d3bc03e883bb89a853356f2cac4, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\SVD.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -381,4 +382,3 @@ Public Module SVD
         Return result
     End Function
 End Module
-

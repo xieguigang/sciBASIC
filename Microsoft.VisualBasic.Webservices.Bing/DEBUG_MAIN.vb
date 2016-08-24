@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ba6bc464f1fbc585197fa5b96b207cc0, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Webservices.Bing\DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::7479cd7ae4d43e6440a0116d908ce063, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Bing\DEBUG_MAIN.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -31,4 +32,3 @@ Module DEBUG_MAIN
         Dim n = Bing.SearchEngineProvider.Search("D-fructuronate: C6H9O7 kegg")
     End Sub
 End Module
-

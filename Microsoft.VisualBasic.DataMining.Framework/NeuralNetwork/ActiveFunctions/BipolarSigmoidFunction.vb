@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8585097a4370e8203aaa0f3449550a72, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::f67c591313220d5d647ab274dba4873d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -158,4 +159,3 @@ Namespace NeuralNetwork.IFuncs
         End Function
     End Class
 End Namespace
-

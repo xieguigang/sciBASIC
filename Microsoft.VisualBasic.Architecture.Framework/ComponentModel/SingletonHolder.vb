@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3353f5306f80ed29b77ac6672b7e09db, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::3353f5306f80ed29b77ac6672b7e09db, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c8e61874a260bcf2315f620776751bb1, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BNInfer.vb"
+﻿#Region "Microsoft.VisualBasic::412bbc53c58d88841b99f5660caac2fe, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BNInfer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

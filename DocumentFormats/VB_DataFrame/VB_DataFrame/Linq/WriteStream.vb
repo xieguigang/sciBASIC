@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::96a7a0600d4d7c088a911fe10f49a68d, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::c6cd61d06262d197bec5422ba0f845a7, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

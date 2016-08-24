@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9f5627e0ca4c74d1f9890bb2bfbce2ae, ..\VisualBasic_AppFramework\Scripting\Math\MathApp\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7de82d1461d01ce3652a8108a85e9d1b, ..\visualbasic_App\Scripting\Math\MathApp\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -56,4 +57,3 @@ Module Program
         Return 0
     End Function
 End Module
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ecc0a15c8157dbd43df6f7d31d041eca, ..\Microsoft.VisualBasic.Architecture.Framework\Language\NET40_Compatible.vb"
+﻿#Region "Microsoft.VisualBasic::ecc0a15c8157dbd43df6f7d31d041eca, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\NET40_Compatible.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

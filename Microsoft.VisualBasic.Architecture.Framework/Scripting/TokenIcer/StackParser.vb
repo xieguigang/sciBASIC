@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::db00f4d4152f244cd40df58e181097ae, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\StackParser.vb"
+﻿#Region "Microsoft.VisualBasic::db00f4d4152f244cd40df58e181097ae, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\StackParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

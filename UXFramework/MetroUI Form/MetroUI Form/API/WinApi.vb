@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::495563d1c29abcc12acbbc6ac47d677d, ..\VisualBasic_AppFramework\UXFramework\MetroUI Form\MetroUI Form\API\WinApi.vb"
+﻿#Region "Microsoft.VisualBasic::fb6785e5f565241e142b066b2248a2dd, ..\visualbasic_App\UXFramework\MetroUI Form\MetroUI Form\API\WinApi.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

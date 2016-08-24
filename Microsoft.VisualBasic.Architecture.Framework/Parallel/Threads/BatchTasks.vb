@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e0fe0c4e579e513075dfe3258ab26403, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::e0fe0c4e579e513075dfe3258ab26403, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

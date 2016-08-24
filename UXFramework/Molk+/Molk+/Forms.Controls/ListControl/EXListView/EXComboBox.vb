@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::006354270887277d435be5b29e6e1d62, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\EXListView\EXComboBox.vb"
+﻿#Region "Microsoft.VisualBasic::905e0922185484560d3dcef5c0a1f48f, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\EXListView\EXComboBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -214,4 +215,3 @@ Namespace Windows.Forms.Controls.ListControl
     End Class
 
 End Namespace
-

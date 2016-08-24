@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2621fd00e98a8aa1a909643797005457, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\String.vb"
+﻿#Region "Microsoft.VisualBasic::2621fd00e98a8aa1a909643797005457, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\String.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

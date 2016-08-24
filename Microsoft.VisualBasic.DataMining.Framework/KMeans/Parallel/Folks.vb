@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c6c13a09b7f56c2be0b94f47ba9466b6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\Folks.vb"
+﻿#Region "Microsoft.VisualBasic::c6c13a09b7f56c2be0b94f47ba9466b6, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\Folks.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

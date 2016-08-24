@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::60e82549a03bb84d80110c31e5525d82, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\IColorPicker.vb"
+﻿#Region "Microsoft.VisualBasic::387431b27f99e2c99c325740aaeec7e0, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\IColorPicker.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -34,4 +35,3 @@ Namespace Unity3.Controls
 		Property Color() As Color
 	End Interface
 End Namespace
-

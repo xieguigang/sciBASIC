@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b3abe1c7088003748bd06d2f3e1f3a97, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::b3abe1c7088003748bd06d2f3e1f3a97, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

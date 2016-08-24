@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6804f31094e5d7db93fee489363f157c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\GtkSkinEngine.vb"
+﻿#Region "Microsoft.VisualBasic::e10d7871a6e6dc82ac6743fc2b2a43c9, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\GtkSkinEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

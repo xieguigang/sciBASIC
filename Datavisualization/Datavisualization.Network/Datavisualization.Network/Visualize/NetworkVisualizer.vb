@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::aa995db37fbcf8615914e0bef32934a5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::02e288c6c26881a04e347dda0c0c6d43, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\NetworkVisualizer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

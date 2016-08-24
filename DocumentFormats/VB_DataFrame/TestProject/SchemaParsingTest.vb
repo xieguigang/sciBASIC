@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9746862e0a7229fc658cc952d58ab615, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\TestProject\SchemaParsingTest.vb"
+﻿#Region "Microsoft.VisualBasic::9746862e0a7229fc658cc952d58ab615, ..\visualbasic_App\DocumentFormats\VB_DataFrame\TestProject\SchemaParsingTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

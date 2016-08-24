@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ed9e3f3c6de08c0a55e3812dc6f23654, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ProcessingBar.vb"
+﻿#Region "Microsoft.VisualBasic::4c46a8b2b03ff16436f5b06d49f63b31, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ProcessingBar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -118,4 +119,3 @@ Public Class ProcessingBar
         Me.BackgroundImage = Gr.ImageResource
     End Sub
 End Class
-

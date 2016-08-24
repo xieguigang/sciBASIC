@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fb7a2374a5caefd9818b4294a2aef9d6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::1dddc93501f483054fbae2c643581ee3, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Vector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

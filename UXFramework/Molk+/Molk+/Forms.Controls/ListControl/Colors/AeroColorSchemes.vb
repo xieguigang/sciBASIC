@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1d2ed27a1a38e1524cd32dc5032e423a, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\Colors\AeroColorSchemes.vb"
+﻿#Region "Microsoft.VisualBasic::5c39ea19154d222dfbb1a42d3a7ec0fb, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\Colors\AeroColorSchemes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -97,4 +98,3 @@ Module AeroColorSchemes
 #End Region
 
 End Module
-

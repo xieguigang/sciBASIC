@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8be43c166fc3ba818396295855695772, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Config.vb"
+﻿#Region "Microsoft.VisualBasic::8be43c166fc3ba818396295855695772, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Config.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

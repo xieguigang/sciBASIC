@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dcb74389796f4146d77e67f33a1f14c6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\ThresholdFunction.vb"
+﻿#Region "Microsoft.VisualBasic::6554acae71280bcbf7b6d9fb0964db0b, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\ThresholdFunction.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -120,4 +121,3 @@ Namespace NeuralNetwork.IFuncs
         End Function
     End Class
 End Namespace
-

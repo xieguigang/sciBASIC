@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::89de4840c0ae1b44304762b7cbe41c62, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorBox.vb"
+﻿#Region "Microsoft.VisualBasic::a2ee9d6d2b90861b56e80ef6d8b4b4da, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -947,4 +948,3 @@ Namespace Unity3.Controls
 		#End Region
 	End Class
 End Namespace
-

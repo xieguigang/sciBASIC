@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a26bb9b34cc63093443bd3a992cb1523, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
+﻿#Region "Microsoft.VisualBasic::a26bb9b34cc63093443bd3a992cb1523, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

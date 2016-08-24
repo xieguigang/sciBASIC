@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3db9184873c7efdd620cf0f2b02675f8, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Uid.vb"
+﻿#Region "Microsoft.VisualBasic::855d50551bbe6d8d74793d20b9890b7c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Uid.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

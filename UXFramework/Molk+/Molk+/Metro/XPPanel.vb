@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c28a992568bbc9ecdf8eb3e26a8a6c0c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\XPPanel.vb"
+﻿#Region "Microsoft.VisualBasic::91be7ebc10509cfb6b9c536af1e7aab1, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\XPPanel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

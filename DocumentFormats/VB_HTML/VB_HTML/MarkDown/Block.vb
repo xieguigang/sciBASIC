@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4fa70126a7fa26b032aca9aa82ffffb4, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Block.vb"
+﻿#Region "Microsoft.VisualBasic::78b4276353f977de9e0dda0b82fe9e10, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Block.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

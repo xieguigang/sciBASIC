@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::98492ed71bff20e4991e504709d27fbd, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::98492ed71bff20e4991e504709d27fbd, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Resources.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9df9f6c84fab11bf4cb9193eb5fa65be, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::9df9f6c84fab11bf4cb9193eb5fa65be, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

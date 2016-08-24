@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7c9c474c26fb4e48d9651e5976b144f1, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\Head\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::48b0cec594b5b5cf646042a4540c704c, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\Head\Meta.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::73a7511dbbfde106f31961d1e03c23ce, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::9ba94aa64dea60269e0dd3608fa3d49e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

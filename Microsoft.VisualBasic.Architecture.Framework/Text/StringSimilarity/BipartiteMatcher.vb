@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::acab08b1f08c89564e1b02dcb67ddde6, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\BipartiteMatcher.vb"
+﻿#Region "Microsoft.VisualBasic::acab08b1f08c89564e1b02dcb67ddde6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\BipartiteMatcher.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1f62b2aebef067706de1fa97a0ae85c3, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\ItemCollectionProxy.vb"
+﻿#Region "Microsoft.VisualBasic::52782dd921180049be55a4693a31a158, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\ItemCollectionProxy.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -75,4 +76,3 @@ Public Class ItemCollectionProxy
 		End Set
 	End Property
 End Class
-

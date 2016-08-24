@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a70d7ae3b720d9faaf1624a12531f761, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\AES.vb"
+﻿#Region "Microsoft.VisualBasic::a70d7ae3b720d9faaf1624a12531f761, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\AES.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4dbb23f37e7420ec92cb5878e5135fed, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Java\JavaMath.vb"
+﻿#Region "Microsoft.VisualBasic::4dbb23f37e7420ec92cb5878e5135fed, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Java\JavaMath.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

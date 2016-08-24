@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::07eac9041acd0affd114526569bc979f, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractVector.vb"
+﻿#Region "Microsoft.VisualBasic::b4a8f7c388c111ee8031c2d2b4aca9a0, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractVector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

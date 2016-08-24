@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::951ae1846cc015546dd783569ec809e3, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\KMeans\CompleteLinkage\Point.vb"
+﻿#Region "Microsoft.VisualBasic::392dc62846c772c9ae0dc43b41689cb5, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\KMeans\CompleteLinkage\Point.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

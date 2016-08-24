@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6d2d16b10a5c799f2cb940425076157c, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDeclaration.vb"
+﻿#Region "Microsoft.VisualBasic::6d2d16b10a5c799f2cb940425076157c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDeclaration.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

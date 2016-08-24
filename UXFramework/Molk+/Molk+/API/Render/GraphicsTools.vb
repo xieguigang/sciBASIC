@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::93f1d98949c43d668edef694255add0e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\Render\GraphicsTools.vb"
+﻿#Region "Microsoft.VisualBasic::03e8ae70b1fe69d82e6065fed280550d, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\Render\GraphicsTools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -140,4 +141,3 @@ Friend NotInheritable Class GraphicsTools
 		Return path
 	End Function
 End Class
-

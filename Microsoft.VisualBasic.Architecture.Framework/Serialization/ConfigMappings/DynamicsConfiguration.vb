@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::32a8da7f23d0a7b3ab13321641a04bb7, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\DynamicsConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::32a8da7f23d0a7b3ab13321641a04bb7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\DynamicsConfiguration.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

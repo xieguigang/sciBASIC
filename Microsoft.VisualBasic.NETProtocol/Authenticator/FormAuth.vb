@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::60d26912e230664ed81e5292d3ba60bf, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.vb"
+﻿#Region "Microsoft.VisualBasic::efd5952c1358648984db348369d7fc41, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -33,4 +34,3 @@ Public Class FormAuth
         Call New Microsoft.VisualBasic.Net.NETProtocol.Captcha().CaptchaImage.SaveAs("./captcha.png", ImageFormats.Png)
     End Sub
 End Class
-

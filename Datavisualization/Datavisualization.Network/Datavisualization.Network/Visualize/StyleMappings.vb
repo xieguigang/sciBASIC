@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0bd7afce377c01d880b2e4ebe159985a, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::cf0a9cafdac7021126ec901623696e5c, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\StyleMappings.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

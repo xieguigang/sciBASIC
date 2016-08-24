@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::287e0fcc6a46c80234e78e9a65308301, ..\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::f190444a8b4c56e4d6750e70293cdb57, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\LinuxRunHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -26,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Language.UnixBash
@@ -81,7 +83,7 @@ mono ""{cmd}"" $cli
         ''' <returns></returns>
         Public Function BashShell() As Integer
             Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix
-            Return BashRun.SaveTo(path)
+            Return BashRun.SaveTo(path, Encoding.ASCII)
         End Function
 
         ''' <summary>

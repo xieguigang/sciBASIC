@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::07ccaab436ee12595e1ab394eb424505, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\ControlMoverOrResizer.vb"
+﻿#Region "Microsoft.VisualBasic::97f79b5060fb3cf7703069273bafa85d, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\ControlMoverOrResizer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -214,4 +215,3 @@ Namespace API
         End Sub
     End Class
 End Namespace
-

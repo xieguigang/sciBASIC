@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b7592aab52d113a3c087b8c20ef02670, ..\VisualBasic_AppFramework\Scripting\Math\Math\LinearTrend.vb"
+﻿#Region "Microsoft.VisualBasic::73399cccbcd44dd4f1e5fb92b98ea149, ..\visualbasic_App\Scripting\Math\Math\LinearTrend.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
