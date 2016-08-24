@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3a000d5a252b23e7e366807c268c5b60, ..\Microsoft.VisualBasic.Architecture.Framework\Text\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::3a000d5a252b23e7e366807c268c5b60, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\LogFile.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c652bc0eb7945add88233f87c7fe9385, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::c652bc0eb7945add88233f87c7fe9385, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PrintAsTable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

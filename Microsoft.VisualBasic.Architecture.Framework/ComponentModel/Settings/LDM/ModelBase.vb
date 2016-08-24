@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ab4ee86170442ba8475e7926c2a04009, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ModelBase.vb"
+﻿#Region "Microsoft.VisualBasic::ab4ee86170442ba8475e7926c2a04009, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ModelBase.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

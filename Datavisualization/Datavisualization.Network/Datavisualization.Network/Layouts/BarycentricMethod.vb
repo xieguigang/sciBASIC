@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5a2dc4ab9d60b30a66b13d56171a9f08, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\BarycentricMethod.vb"
+﻿#Region "Microsoft.VisualBasic::0a162acbda551e5c0f5358a392581aaa, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\BarycentricMethod.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

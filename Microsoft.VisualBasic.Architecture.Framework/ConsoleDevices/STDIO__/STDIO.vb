@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4f8834ed4afa21047c972b371c34d90a, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::8121b0734fb0ac171015b7fdbb22534e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\STDIO.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

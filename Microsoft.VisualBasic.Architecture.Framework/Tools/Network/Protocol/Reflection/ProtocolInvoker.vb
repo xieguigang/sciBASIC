@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b83e60d8a7e42bca10863507c36273ff, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Reflection\ProtocolInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::b83e60d8a7e42bca10863507c36273ff, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Reflection\ProtocolInvoker.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

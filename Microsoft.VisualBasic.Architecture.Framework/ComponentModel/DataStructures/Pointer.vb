@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ab48d1aa28d8e7e99aad21f8e143ea14, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ab48d1aa28d8e7e99aad21f8e143ea14, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Pointer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ddd0634a41ba1b71be70d04bd77edaf7, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\LinkToTitle.vb"
+﻿#Region "Microsoft.VisualBasic::df528657f30b2bebe542500c5724f043, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\LinkToTitle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

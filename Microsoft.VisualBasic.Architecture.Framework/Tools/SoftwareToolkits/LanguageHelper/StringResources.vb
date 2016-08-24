@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f6a81359d16aed151489f0c35ed8db3f, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LanguageHelper\StringResources.vb"
+﻿#Region "Microsoft.VisualBasic::f6a81359d16aed151489f0c35ed8db3f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LanguageHelper\StringResources.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

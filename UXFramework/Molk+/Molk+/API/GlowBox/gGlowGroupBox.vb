@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::30d33cc926d94a563ebdfb769b183ef9, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\GlowBox\gGlowGroupBox.vb"
+﻿#Region "Microsoft.VisualBasic::3ff49b0c1fc3a093f2f76860971bb733, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\GlowBox\gGlowGroupBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

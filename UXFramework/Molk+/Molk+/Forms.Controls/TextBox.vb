@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::098ebd6c79cd55481857fc40d4e00914, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\TextBox.vb"
+﻿#Region "Microsoft.VisualBasic::3469fad5f3245ae043aef1d632187703, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\TextBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -274,4 +275,3 @@ Namespace Windows.Forms.Controls
 #End Region
     End Class
 End Namespace
-

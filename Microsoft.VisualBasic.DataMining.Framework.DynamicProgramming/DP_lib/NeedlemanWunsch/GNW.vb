@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c7e30cdcaad553f03d80fa6c9b87ec20, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::c7e30cdcaad553f03d80fa6c9b87ec20, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

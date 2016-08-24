@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cad5e52335991b19a42fb0faaf86f567, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Excel\ExcelReader.vb"
+﻿#Region "Microsoft.VisualBasic::ca00b29220eb2c9b846fa72003c3c9d6, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Excel\ExcelReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

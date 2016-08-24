@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5562a782f521ecb5fe129ddea6222acf, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\QLearning\Maze-Q-Learning\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5562a782f521ecb5fe129ddea6222acf, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\QLearning\Maze-Q-Learning\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

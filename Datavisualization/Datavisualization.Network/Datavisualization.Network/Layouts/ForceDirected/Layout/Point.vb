@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7835be9fc9baa633142d12cceb5ede53, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::ce5bec2ab21152d68ed8978d4dcb3756, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

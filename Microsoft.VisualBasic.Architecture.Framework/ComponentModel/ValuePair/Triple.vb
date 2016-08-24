@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1d0dd20b085563550ea69e6c8d829673, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Triple.vb"
+﻿#Region "Microsoft.VisualBasic::1d0dd20b085563550ea69e6c8d829673, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Triple.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

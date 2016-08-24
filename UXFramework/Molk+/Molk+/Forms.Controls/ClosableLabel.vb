@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fbb830d339c35861486090017904e2f0, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ClosableLabel.vb"
+﻿#Region "Microsoft.VisualBasic::e9778a708715d824137f03893b897fb6, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ClosableLabel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -55,4 +56,3 @@ Public Class ClosableLabel
     Public Event CloseInvoke()
 
 End Class
-

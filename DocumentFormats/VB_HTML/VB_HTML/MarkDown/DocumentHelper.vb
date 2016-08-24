@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e1755fe1f12efa2f154d6516e5158379, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\DocumentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::ab64ed17c01409b3d9b4721531305e71, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\DocumentHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

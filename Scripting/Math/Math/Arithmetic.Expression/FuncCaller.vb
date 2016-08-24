@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3a46370fddef164420801a51daec6080, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\FuncCaller.vb"
+﻿#Region "Microsoft.VisualBasic::3a46370fddef164420801a51daec6080, ..\visualbasic_App\Scripting\Math\Math\Arithmetic.Expression\FuncCaller.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

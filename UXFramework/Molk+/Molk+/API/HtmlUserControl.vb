@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6d518117ba84a3814ea3e6944f300f3c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\HtmlUserControl.vb"
+﻿#Region "Microsoft.VisualBasic::1e08cda73efef64e2f3fa61d8196e5c8, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\HtmlUserControl.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

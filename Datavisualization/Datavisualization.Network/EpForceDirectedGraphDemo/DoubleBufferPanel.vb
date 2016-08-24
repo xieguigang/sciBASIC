@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::57dc445f71767694511cb9c312d6aff5, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\DoubleBufferPanel.vb"
+﻿#Region "Microsoft.VisualBasic::e9e66a2dc619e44d89c2a309d93ae89e, ..\visualbasic_App\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\DoubleBufferPanel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

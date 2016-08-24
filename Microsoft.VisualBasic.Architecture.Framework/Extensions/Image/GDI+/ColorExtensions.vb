@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::40ddb795a361bce4e9dad03d52a3a5b3, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\ColorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b256986b4379b9419adc73c9b3ff03e8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\ColorExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

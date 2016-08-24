@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3dcbe810bd4d9673f2aeeac55b4407af, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Tokeniser.vb"
+﻿#Region "Microsoft.VisualBasic::3dcbe810bd4d9673f2aeeac55b4407af, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Tokeniser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

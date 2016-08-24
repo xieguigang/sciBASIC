@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::37410089dca5d2be542a45e76110f179, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Scalar.vb"
+﻿#Region "Microsoft.VisualBasic::03f7cb3e5d1db6f77a1dcb40c3e4357c, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Scalar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0972d3f144f3fb6c1f92fb1512f0a08c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0972d3f144f3fb6c1f92fb1512f0a08c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

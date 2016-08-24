@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bebb80e2ece0208f157f4ef527645194, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\StructFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::bebb80e2ece0208f157f4ef527645194, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\StructFormatter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

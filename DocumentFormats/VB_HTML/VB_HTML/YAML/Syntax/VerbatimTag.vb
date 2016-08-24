@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fe2ed2e1cf5eb46c4d269a2d786d6b30, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\VerbatimTag.vb"
+﻿#Region "Microsoft.VisualBasic::18abd70938bdbe2fb9ad46ea9577f83e, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\VerbatimTag.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

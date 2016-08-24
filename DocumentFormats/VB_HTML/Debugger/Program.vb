@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::145d4d795588081570b4981d40f48f2f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\Debugger\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7f15698eb8e8c7788132e021167f7ca2, ..\visualbasic_App\DocumentFormats\VB_HTML\Debugger\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

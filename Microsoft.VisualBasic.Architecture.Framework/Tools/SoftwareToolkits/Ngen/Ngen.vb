@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6949f89385231967d37555438ba894cc, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Ngen\Ngen.vb"
+﻿#Region "Microsoft.VisualBasic::6949f89385231967d37555438ba894cc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Ngen\Ngen.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

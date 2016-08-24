@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3233674ce9a362af64f6394219df8a25, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\wGetTools.vb"
+﻿#Region "Microsoft.VisualBasic::3233674ce9a362af64f6394219df8a25, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\wGetTools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

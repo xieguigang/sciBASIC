@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fa1b11fc2b572940fea5a71aa92014a0, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorPanel.vb"
+﻿#Region "Microsoft.VisualBasic::cfca4f819ea07b74a83d1b67a96bf77f, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorPanel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -105,4 +106,3 @@ Namespace Unity3.Controls
 
 	End Class
 End Namespace
-

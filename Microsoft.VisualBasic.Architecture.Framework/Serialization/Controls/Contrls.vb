@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\Controls\Contrls.vb"
+﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\Controls\Contrls.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

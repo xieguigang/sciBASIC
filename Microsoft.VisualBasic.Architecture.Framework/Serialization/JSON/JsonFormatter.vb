@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::38dd01be908590112ac1b54cccc181b4, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::38dd01be908590112ac1b54cccc181b4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonFormatter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

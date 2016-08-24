@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d129fa65a96159ea234bd9d3be6decc8, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\GMailClient.vb"
+﻿#Region "Microsoft.VisualBasic::d129fa65a96159ea234bd9d3be6decc8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\GMailClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

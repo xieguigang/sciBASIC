@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::aafaf67594e2d6fe940605ec8869d3a8, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\LogicalEvaluate.vb"
+﻿#Region "Microsoft.VisualBasic::aafaf67594e2d6fe940605ec8869d3a8, ..\visualbasic_App\Scripting\Math\Math\Logical\LogicalEvaluate.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

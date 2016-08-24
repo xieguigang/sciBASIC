@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f979d143775c7143d953d8ddfe320c80, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\IVerifySession.vb"
+﻿#Region "Microsoft.VisualBasic::f979d143775c7143d953d8ddfe320c80, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\IVerifySession.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

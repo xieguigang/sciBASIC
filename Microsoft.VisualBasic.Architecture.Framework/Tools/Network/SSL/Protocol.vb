@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c143a9b4ec352912719cad03404449ab, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::c143a9b4ec352912719cad03404449ab, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Protocol.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

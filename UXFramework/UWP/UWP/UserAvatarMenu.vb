@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4218c42ec07aeefd968ea4e7285637cd, ..\VisualBasic_AppFramework\UXFramework\UWP\UWP\UserAvatarMenu.vb"
+﻿#Region "Microsoft.VisualBasic::17bcc0ebafcb3768ec3344b92262c9e2, ..\visualbasic_App\UXFramework\UWP\UWP\UserAvatarMenu.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -76,4 +77,3 @@ Public Class UserAvatarMenu
         Call RePositionMenu()
     End Sub
 End Class
-

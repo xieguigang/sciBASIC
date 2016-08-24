@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e1fb2a1c4a8cfceafd461d841f96f43f, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\BusyLoader\FormBusyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::5252e051c78ec485d64a594ff3386333, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\BusyLoader\FormBusyLoader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

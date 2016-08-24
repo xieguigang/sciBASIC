@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c6e4399318607803ed06605774e24bb6, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Matrix\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::c6e4399318607803ed06605774e24bb6, ..\visualbasic_App\Scripting\Math\Math\BasicR\Matrix\Matrix.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

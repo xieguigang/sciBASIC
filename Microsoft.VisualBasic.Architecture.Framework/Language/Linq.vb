@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bfa09a365e524dfd161374c1f7e6a177, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::bfa09a365e524dfd161374c1f7e6a177, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a0cba07c1052ca2383315f97f19e63cb, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::2fec28dbd49c066ec2c8cef0b7ad50e9, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

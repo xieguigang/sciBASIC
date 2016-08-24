@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::750501e9990a0f0f770be28e636392ff, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\Form\API.vb"
+﻿#Region "Microsoft.VisualBasic::e0cad7360c9fa01694e7a972f163bfb7, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\Form\API.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

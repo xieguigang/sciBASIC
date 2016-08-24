@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b229d5e2161664afee7f832ebe4e4ebd, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::b229d5e2161664afee7f832ebe4e4ebd, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\ContentType.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

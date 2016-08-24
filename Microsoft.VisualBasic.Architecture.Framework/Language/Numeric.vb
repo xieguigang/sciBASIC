@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9f35f1e14b28467231073996c83b6bdf, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::40096691d3aba60411e91f03f7971883, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2d05e3ac476198fd85854bf6d7828ba8, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Trigger.vb"
+﻿#Region "Microsoft.VisualBasic::6da0c24535eb0a054673520cc72a65bc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Trigger.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::02fabfbe3c72106d698eb36c9ca95f6b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::02fabfbe3c72106d698eb36c9ca95f6b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2a5167b91b96f68e56a93324a43e8db4, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\TokenParser.vb"
+﻿#Region "Microsoft.VisualBasic::2a5167b91b96f68e56a93324a43e8db4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\TokenParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

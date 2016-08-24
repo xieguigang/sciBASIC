@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::597235af8b409518e74ca802377592ba, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\Caption.vb"
+﻿#Region "Microsoft.VisualBasic::597235af8b409518e74ca802377592ba, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\Caption.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

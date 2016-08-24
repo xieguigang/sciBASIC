@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4ba0f75dfa7478eeff942c0250057611, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\GMailClient.vb"
+﻿#Region "Microsoft.VisualBasic::4ba0f75dfa7478eeff942c0250057611, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\GMailClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

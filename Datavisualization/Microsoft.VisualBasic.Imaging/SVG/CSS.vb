@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f8d29757c4e5a6485ce2ba7ce73a64f5, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\SVG\CSS.vb"
+﻿#Region "Microsoft.VisualBasic::7caa5aed7445819a8ec8d8933edb0e42, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\SVG\CSS.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c56fe3bf739669906bd75068dbe03c80, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c56fe3bf739669906bd75068dbe03c80, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6bc9952cdd15672ae288a42ca7ec823f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::8ea72ff8c042712ae86cc614a42c26dc, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\TextString.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

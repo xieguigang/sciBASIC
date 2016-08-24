@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::82db232c2b98a7d9d007e145ff631756, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ab787a6c262c729d299513ea74b46534, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Pointer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -161,5 +162,3 @@ Namespace Language
         End Operator
     End Class
 End Namespace
-
-

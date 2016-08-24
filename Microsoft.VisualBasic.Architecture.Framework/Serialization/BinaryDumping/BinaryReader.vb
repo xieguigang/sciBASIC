@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9d0273ac0fd20a9d581d665b55411aa7, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::9d0273ac0fd20a9d581d665b55411aa7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\BinaryReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d0734ca516af4aa5879f9cebd251761f, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\Win32File.vb"
+﻿#Region "Microsoft.VisualBasic::d0734ca516af4aa5879f9cebd251761f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\Win32File.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

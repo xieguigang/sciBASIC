@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::45b8ba9562d6890ec62c58eea564e575, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::d8d5722f3393e6e6abd2a48d10825b3b, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\Form1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -207,4 +208,3 @@ Public Partial Class Form1
         Me.Close()
     End Sub
 End Class
-

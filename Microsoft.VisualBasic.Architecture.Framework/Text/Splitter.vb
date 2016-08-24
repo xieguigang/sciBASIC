@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f663f882ee374e66c69193b6809e73ac, ..\Microsoft.VisualBasic.Architecture.Framework\Text\Splitter.vb"
+﻿#Region "Microsoft.VisualBasic::f663f882ee374e66c69193b6809e73ac, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\Splitter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

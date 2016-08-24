@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6dbfda88c0d39c71fa41fbbc5e99319b, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Coords.vb"
+﻿#Region "Microsoft.VisualBasic::6dbfda88c0d39c71fa41fbbc5e99319b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Coords.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

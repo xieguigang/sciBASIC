@@ -359,6 +359,7 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Extensions\Math\TokenConnections.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
     <Compile Include="Extensions\StringHelpers\DateParser.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />

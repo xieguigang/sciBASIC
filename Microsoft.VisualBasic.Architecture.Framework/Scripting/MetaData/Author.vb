@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::37f11a21943863c7212365f664ff2c9a, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
+﻿#Region "Microsoft.VisualBasic::37f11a21943863c7212365f664ff2c9a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

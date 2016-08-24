@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b6b0002f6a8cd58393904b76ef8c740c, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::b6b0002f6a8cd58393904b76ef8c740c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPEndPoint.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

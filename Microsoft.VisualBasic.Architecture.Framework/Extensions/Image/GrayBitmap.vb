@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bc2850cc0919229d1a464b7964da0be4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GrayBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::bc2850cc0919229d1a464b7964da0be4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GrayBitmap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a19cf66821aec0606720270fa8c5bf12, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\ListControl.vb"
+﻿#Region "Microsoft.VisualBasic::22e2a331ac17ac6e9b883c0a5ba6c8fc, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\ListControl.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Copyright © Faraz's Creationz 2012
@@ -211,4 +211,3 @@ Public Class ListControl
     End Sub
 
 End Class
-

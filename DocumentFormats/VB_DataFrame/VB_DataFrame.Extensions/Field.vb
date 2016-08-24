@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::147cee868ddb3bd494a062b1867e99e0, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::ceff5ef024371fcb219a208829b23938, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

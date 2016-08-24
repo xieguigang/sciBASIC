@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::463d00435e7fb6d8189aa41ae89a264d, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ParameterInfo.vb"
+﻿#Region "Microsoft.VisualBasic::463d00435e7fb6d8189aa41ae89a264d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ParameterInfo.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

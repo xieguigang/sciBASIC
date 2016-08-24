@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d2c7574b588deaffbcb6cfca17ddd36e, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::b253203af88e21b742bc469a3fe86c65, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\Abstract.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

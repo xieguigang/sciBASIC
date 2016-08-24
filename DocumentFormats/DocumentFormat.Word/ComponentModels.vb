@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::120415fe25d454d93cfba047220ef8ca, ..\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Word\ComponentModels.vb"
+﻿#Region "Microsoft.VisualBasic::d04019e6e14acda4d7c3460c42a24ff4, ..\visualbasic_App\DocumentFormats\DocumentFormat.Word\ComponentModels.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -38,4 +39,3 @@ Namespace ComponentModels
 
     End Class
 End Namespace
-

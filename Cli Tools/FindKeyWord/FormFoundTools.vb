@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9d12d771f8052c5a3b5132c1915b3a83, ..\VisualBasic_AppFramework\Cli Tools\FindKeyWord\FormFoundTools.vb"
+﻿#Region "Microsoft.VisualBasic::9d12d771f8052c5a3b5132c1915b3a83, ..\visualbasic_App\Cli Tools\FindKeyWord\FormFoundTools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

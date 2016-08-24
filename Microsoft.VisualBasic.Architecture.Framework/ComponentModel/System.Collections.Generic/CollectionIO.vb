@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9e5e92b3df10402c9e30fc179e68e169, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\CollectionIO.vb"
+﻿#Region "Microsoft.VisualBasic::9e5e92b3df10402c9e30fc179e68e169, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\CollectionIO.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

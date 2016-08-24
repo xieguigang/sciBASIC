@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d427bb66c249090273e01d5694a5c4a1, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartControls\PieChartControl.PieChartStyle.vb"
+﻿#Region "Microsoft.VisualBasic::ff4c29496a7ba99565d7bc0ff563c45f, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartControls\PieChartControl.PieChartStyle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

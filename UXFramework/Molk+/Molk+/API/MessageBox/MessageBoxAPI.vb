@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::63740e7f55cc79d723c80fa420d1c3b4, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\MessageBox\MessageBoxAPI.vb"
+﻿#Region "Microsoft.VisualBasic::2d64c24da60b21dfce33365510b9e71c, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\MessageBox\MessageBoxAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -81,5 +82,3 @@ Public Module MessageBox
     End Function
 
 End Module
-
-

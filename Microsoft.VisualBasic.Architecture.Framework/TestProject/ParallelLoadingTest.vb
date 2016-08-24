@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a464b129e7eaf4962acfb515d1e1e1a9, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::a464b129e7eaf4962acfb515d1e1e1a9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

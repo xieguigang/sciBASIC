@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6909c1f462c269734224ecc22d03a5a8, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::81abb8759651697498c458b9f224fedd, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -121,4 +122,3 @@ Public Module SearchEngineProvider
         End If
     End Function
 End Module
-

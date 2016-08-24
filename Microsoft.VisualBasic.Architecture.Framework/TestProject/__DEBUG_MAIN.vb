@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::de9a141b17421c8e48ef70e5c7a0219b, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::de9a141b17421c8e48ef70e5c7a0219b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

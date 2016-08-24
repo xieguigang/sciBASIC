@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Abstract.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f68a59eadf6d4baecb39f057ba8ff43f, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\DijkstraAPI.vb"
+﻿#Region "Microsoft.VisualBasic::5ae94efe4e0fcd75200985a65d0a3d84, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\DijkstraAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

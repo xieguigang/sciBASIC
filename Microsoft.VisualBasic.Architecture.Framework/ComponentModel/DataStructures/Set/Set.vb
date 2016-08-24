@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ff80886adbb0599d7ea98431e0ed2636, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\Set.vb"
+﻿#Region "Microsoft.VisualBasic::ff80886adbb0599d7ea98431e0ed2636, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\Set.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

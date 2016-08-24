@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f7773b7ee9596be6e4c438fec1d086ba, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\PopupNotifier.vb"
+﻿#Region "Microsoft.VisualBasic::724efeffc70c71b37dc6241881861793, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\PopupNotifier.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -1004,4 +1005,3 @@ Public Class PopupNotifier : Inherits Component
         MyBase.Dispose(disposing)
     End Sub
 End Class
-

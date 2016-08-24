@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::401490be6dd1716bff1d0c954351db51, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\MarginalLikelihoodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::4010cf71e1aea71c9c3ec47b1a103053, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\MarginalLikelihoodAnalysis.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -283,4 +284,3 @@ Public Class MarginalLikelihoodAnalysis
         Return Pdata
     End Function
 End Class
-

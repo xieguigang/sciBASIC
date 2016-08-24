@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::04dff02171134f5a7069b687a7b067b5, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb"
+﻿#Region "Microsoft.VisualBasic::04dff02171134f5a7069b687a7b067b5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

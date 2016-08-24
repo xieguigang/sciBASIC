@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d83ad9bdcff7d5c42646f19c3608ace8, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb"
+﻿#Region "Microsoft.VisualBasic::d83ad9bdcff7d5c42646f19c3608ace8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

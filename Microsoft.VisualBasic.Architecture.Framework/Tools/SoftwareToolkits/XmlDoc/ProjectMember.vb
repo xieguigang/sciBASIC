@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::281a2352846a615cd534beb13c6851ba, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb"
+﻿#Region "Microsoft.VisualBasic::281a2352846a615cd534beb13c6851ba, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

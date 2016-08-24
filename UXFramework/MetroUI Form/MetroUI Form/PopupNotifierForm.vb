@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e08bc6dd4900d378360c3560ebedae38, ..\VisualBasic_AppFramework\UXFramework\MetroUI Form\MetroUI Form\PopupNotifierForm.vb"
+﻿#Region "Microsoft.VisualBasic::59ea10586fcbceaa66120606c12f7a7e, ..\visualbasic_App\UXFramework\MetroUI Form\MetroUI Form\PopupNotifierForm.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -465,4 +466,3 @@ Friend Class PopupNotifierForm : Inherits Microsoft.VisualBasic.Forms.MetroUI.Fo
         MyBase.Dispose(disposing)
     End Sub
 End Class
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::340ec83c9b335e42c3dfb73e45ead265, ..\VisualBasic_AppFramework\Cli Tools\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
+﻿#Region "Microsoft.VisualBasic::438e58d9a9be129cf4ac9a61e511a447, ..\visualbasic_App\Cli Tools\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

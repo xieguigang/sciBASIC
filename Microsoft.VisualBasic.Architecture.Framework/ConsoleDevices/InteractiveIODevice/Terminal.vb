@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cff0fb24329a114d0af50ad72f67cb24, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::cff0fb24329a114d0af50ad72f67cb24, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

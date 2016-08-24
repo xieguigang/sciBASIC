@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::30fb7c579c5cb7a2ffcef8bcfc2c7e02, ..\VisualBasic_AppFramework\UXFramework\ChromeUI\ChromeUI\UI\ChromeUIRender.vb"
+﻿#Region "Microsoft.VisualBasic::532922c503977132167e17fa48b820fa, ..\visualbasic_App\UXFramework\ChromeUI\ChromeUI\UI\ChromeUIRender.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -54,8 +55,3 @@ Public Class ChromeUIRender : Inherits ToolStripSystemRenderer
         e.Graphics.DrawLine(__chromeSeperator, New Point(0, h), New Point(e.ToolStrip.Width, h))
     End Sub
 End Class
-
-
-
-
-

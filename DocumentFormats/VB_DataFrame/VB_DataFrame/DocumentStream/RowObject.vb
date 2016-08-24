@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3435b2527cdf6a370dd53685d99e8415, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::bd13d4e8b8479517298b19207321c0ae, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\RowObject.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

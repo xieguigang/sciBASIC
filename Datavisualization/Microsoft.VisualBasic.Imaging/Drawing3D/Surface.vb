@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a032ffe3db256e30ff2f69a03c92cf67, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::a032ffe3db256e30ff2f69a03c92cf67, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

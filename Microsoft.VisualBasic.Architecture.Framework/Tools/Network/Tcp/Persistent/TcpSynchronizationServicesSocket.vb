@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cb3a58e06d6f4da6c98c7f15c00c54a1, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::cb3a58e06d6f4da6c98c7f15c00c54a1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

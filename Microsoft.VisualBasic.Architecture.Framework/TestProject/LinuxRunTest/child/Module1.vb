@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cad64572a1181bca413434f0d9aa6f3b, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\LinuxRunTest\child\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\LinuxRunTest\child\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -42,4 +43,3 @@ Module Module1
     End Sub
 
 End Module
-

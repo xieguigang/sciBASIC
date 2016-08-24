@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6268af9bbaec25be188256a614ad42bb, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\MarkDown\MarkdownParser.vb"
+﻿#Region "Microsoft.VisualBasic::e2d8974210251e0fdc9beab846b05c58, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\MarkdownParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

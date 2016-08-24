@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f3ace4fbbac0fe03ef0525c84d2067b6, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\BusyIndicator.vb"
+﻿#Region "Microsoft.VisualBasic::4fff56342c592aa87f2ce80dfefd075e, ..\visualbasic_App\UXFramework\Molk+\Molk+\BusyIndicator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -92,4 +93,3 @@ Friend Class BusyIndicator
         res = Device.ImageResource.Clone
     End Sub
 End Class
-

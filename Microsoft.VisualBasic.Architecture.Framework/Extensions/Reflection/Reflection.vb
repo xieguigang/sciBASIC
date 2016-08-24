@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0969ae75b7c879f87f91b9188d91d2b7, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::0969ae75b7c879f87f91b9188d91d2b7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

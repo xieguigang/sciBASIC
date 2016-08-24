@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashDictionary.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

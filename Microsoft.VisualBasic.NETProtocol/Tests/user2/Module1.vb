@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::75222b97b2dbbe871f83164727cbddb6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\Tests\user2\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::101ee968f9cdc4161724ea01d84d4ec0, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Tests\user2\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -45,4 +46,3 @@ Module Module1
     End Sub
 
 End Module
-

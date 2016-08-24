@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bef70603d10d39666c954cc6c5ee4752, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorChooser.vb"
+﻿#Region "Microsoft.VisualBasic::b2511b7c7dc51df916b20a9f84f98209, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorChooser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -55,4 +56,3 @@ Namespace Unity3.Controls
 		End Sub
 	End Class
 End Namespace
-

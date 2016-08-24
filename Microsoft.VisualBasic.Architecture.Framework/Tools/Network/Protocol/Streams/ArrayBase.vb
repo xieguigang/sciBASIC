@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0a7abc4a1ff5328f17900baf9a924371, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\ArrayBase.vb"
+﻿#Region "Microsoft.VisualBasic::0a7abc4a1ff5328f17900baf9a924371, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\ArrayBase.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

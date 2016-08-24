@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0cb14b35413196d04634cbeb887b9907, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\CallbackTask.vb"
+﻿#Region "Microsoft.VisualBasic::0cb14b35413196d04634cbeb887b9907, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\CallbackTask.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

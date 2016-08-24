@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a758986f516e5ae3b33b51bef3d8b8b3, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\Column.vb"
+﻿#Region "Microsoft.VisualBasic::2913db2c3780a0eac431c3493e22515a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\Column.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

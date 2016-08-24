@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4fa4f4220ab64260918f8b4a05198aac, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\FormAnimation.vb"
+﻿#Region "Microsoft.VisualBasic::0dd8372fd841b77c8a46ee7a2f8ec96f, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\FormAnimation.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

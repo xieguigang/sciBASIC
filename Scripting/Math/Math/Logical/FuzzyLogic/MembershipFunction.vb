@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b58b061c9580fd0a87cf5acd649694e1, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\FuzzyLogic\MembershipFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b58b061c9580fd0a87cf5acd649694e1, ..\visualbasic_App\Scripting\Math\Math\Logical\FuzzyLogic\MembershipFunction.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

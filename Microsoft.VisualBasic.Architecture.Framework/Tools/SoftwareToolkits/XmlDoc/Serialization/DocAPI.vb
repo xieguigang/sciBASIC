@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3436a7a701b35c62e05744d231145a88, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
+﻿#Region "Microsoft.VisualBasic::3436a7a701b35c62e05744d231145a88, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

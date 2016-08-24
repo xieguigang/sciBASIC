@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2decd1a93acc1fa435c90b58259633af, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IRanges.vb"
+﻿#Region "Microsoft.VisualBasic::2decd1a93acc1fa435c90b58259633af, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IRanges.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

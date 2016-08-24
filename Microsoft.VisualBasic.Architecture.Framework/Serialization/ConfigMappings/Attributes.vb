@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a25506835639b05362ac05e8a3a04f70, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\Attributes.vb"
+﻿#Region "Microsoft.VisualBasic::a25506835639b05362ac05e8a3a04f70, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\Attributes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

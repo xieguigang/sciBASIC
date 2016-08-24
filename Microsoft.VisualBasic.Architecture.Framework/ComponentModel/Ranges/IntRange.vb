@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::150bd0a4c2bfbecb423759b35b84c4f5, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::150bd0a4c2bfbecb423759b35b84c4f5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

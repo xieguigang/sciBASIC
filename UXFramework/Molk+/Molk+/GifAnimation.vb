@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f66743e2f8e2d87a262bebf52dac9cce, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\GifAnimation.vb"
+﻿#Region "Microsoft.VisualBasic::f66743e2f8e2d87a262bebf52dac9cce, ..\visualbasic_App\UXFramework\Molk+\Molk+\GifAnimation.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

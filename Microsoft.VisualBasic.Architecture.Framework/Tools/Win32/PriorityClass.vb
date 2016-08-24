@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::35a8281e0de8377da98110bd8d2a6177, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\PriorityClass.vb"
+﻿#Region "Microsoft.VisualBasic::35a8281e0de8377da98110bd8d2a6177, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\PriorityClass.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

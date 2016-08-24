@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d1e9c71ba1232dfa35af206202b04671, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\TabControls\TabLabel\TabLabel.vb"
+﻿#Region "Microsoft.VisualBasic::327a59f24ddb29d01a6c6afd9ac3bfa4, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\TabControls\TabLabel\TabLabel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

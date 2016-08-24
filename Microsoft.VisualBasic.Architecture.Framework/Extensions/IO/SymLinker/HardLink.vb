@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f639573b0dfec878b3707d7c649fa9c4, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\HardLink.vb"
+﻿#Region "Microsoft.VisualBasic::f639573b0dfec878b3707d7c649fa9c4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\HardLink.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

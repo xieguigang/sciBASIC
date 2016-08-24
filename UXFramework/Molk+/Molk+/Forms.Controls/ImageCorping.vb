@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a2192f6245d5fa0811733ad1eb4754da, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ImageCorping.vb"
+﻿#Region "Microsoft.VisualBasic::bd8e5133fb8dca597cfce9ff9c4dee54, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ImageCorping.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -160,4 +161,3 @@ Public Class ImageCorping
         Return cropBitmap
     End Function
 End Class
-

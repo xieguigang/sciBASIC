@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c08379cb5411504470252b88b8aa1e32, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::c08379cb5411504470252b88b8aa1e32, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

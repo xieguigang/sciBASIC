@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1ac0a2f658932b9061e26c4e882a7105, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\General\Triple.vb"
+﻿#Region "Microsoft.VisualBasic::efcc68cc276f17c0611839fd8dd6305a, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\General\Triple.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

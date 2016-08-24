@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fe831b2e35a955c175751be200e64844, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::fe831b2e35a955c175751be200e64844, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

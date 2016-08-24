@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5f89302a985ec997a9eb24e60a05649e, ..\VisualBasic_AppFramework\UXFramework\MetroUI Form\MetroUI Form\Image.vb"
+﻿#Region "Microsoft.VisualBasic::dd09d89d7b90f5f2848d905e779a8073, ..\visualbasic_App\UXFramework\MetroUI Form\MetroUI Form\Image.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -165,4 +166,3 @@ Public Class Image : Inherits System.Windows.Forms.PictureBox
         pe.Graphics.DrawImage(BitmapBack, 0, 0, [_Bitmap].Width, [_Bitmap].Height)
     End Sub
 End Class
-

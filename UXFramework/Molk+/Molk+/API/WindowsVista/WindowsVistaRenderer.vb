@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8350780846524d556644e58be44046d8, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\WindowsVista\WindowsVistaRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::3af6945ecf9effa98cff76632b671c07, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\WindowsVista\WindowsVistaRenderer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -657,4 +658,3 @@ Public Class WindowsVistaRenderer
 		MyBase.OnRenderArrow(e)
 	End Sub
 End Class
-

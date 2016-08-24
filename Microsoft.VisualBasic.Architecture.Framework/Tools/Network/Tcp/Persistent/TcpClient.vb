@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0c9a8418b92e76e1aaa0ccf3c1a31a92, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::0c9a8418b92e76e1aaa0ccf3c1a31a92, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\TcpClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

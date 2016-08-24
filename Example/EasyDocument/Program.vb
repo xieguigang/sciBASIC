@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::17fc730d562d125c412a484c6ab23cb8, ..\VisualBasic_AppFramework\Example\EasyDocument\Program.vb"
+﻿#Region "Microsoft.VisualBasic::17fc730d562d125c412a484c6ab23cb8, ..\visualbasic_App\Example\EasyDocument\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

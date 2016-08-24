@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::94391c881448f98dc019d9e9737dbd58, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\AppServer\PushAPI\APIBase.vb"
+﻿#Region "Microsoft.VisualBasic::c13b750cc22e0455a7759e1450816c13, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\AppServer\PushAPI\APIBase.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

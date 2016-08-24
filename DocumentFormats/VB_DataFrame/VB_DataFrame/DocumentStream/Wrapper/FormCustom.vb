@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::df41985d5040d37b326bbf56f87cf137, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\Wrapper\FormCustom.vb"
+﻿#Region "Microsoft.VisualBasic::df41985d5040d37b326bbf56f87cf137, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\Wrapper\FormCustom.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

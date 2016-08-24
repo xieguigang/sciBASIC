@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1b748df6c60adc10ddb9a5981b9ab679, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::1b748df6c60adc10ddb9a5981b9ab679, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\PipelineCLI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

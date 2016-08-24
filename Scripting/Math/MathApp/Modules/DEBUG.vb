@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1d24cf52ab70437ebb39c013c22472d9, ..\VisualBasic_AppFramework\Scripting\Math\MathApp\Modules\DEBUG.vb"
+﻿#Region "Microsoft.VisualBasic::4e4ef6d8832b17b9ca3facc0acc20e21, ..\visualbasic_App\Scripting\Math\MathApp\Modules\DEBUG.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -201,4 +202,3 @@ End Module
 '        Return Console.Read()
 '    End Function
 'End Module
-

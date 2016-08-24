@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5348c906a27b2ef98852b4e700349f55, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\NetStream\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::5348c906a27b2ef98852b4e700349f55, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\NetStream\StreamHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::886b8ccb89c0cabd61a8191b7641055f, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\DropDownMenu.vb"
+﻿#Region "Microsoft.VisualBasic::ff6bf0127caaee421420f28a483cabca, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\DropDownMenu.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -32,4 +33,3 @@ Public Class DropDownMenu : Inherits DropDownControl
 
 
 End Class
-

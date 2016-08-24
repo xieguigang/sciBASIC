@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::60f7f2843ec47c27206b1855bbd4e583, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\QLearning\Maze-Q-Learning\Maze.vb"
+﻿#Region "Microsoft.VisualBasic::3099073fc5ba9e9b48a3ab3f501c8f2b, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\QLearning\Maze-Q-Learning\Maze.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -156,4 +157,3 @@ Public Class Maze : Inherits QLearning(Of Char())
         Call dump.Save(App.HOME & "/QTable.Csv")
     End Sub
 End Class
-

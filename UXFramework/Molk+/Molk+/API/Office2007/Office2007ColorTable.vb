@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d34e8fb78d1d220642bb9ccba2e2b41b, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\Office2007\Office2007ColorTable.vb"
+﻿#Region "Microsoft.VisualBasic::b376aa6e42a0de75db38f6c1a798ba72, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\Office2007\Office2007ColorTable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -456,4 +457,3 @@ Public Class Office2007ColorTable
 	End Property
 	#End Region
 End Class
-

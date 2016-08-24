@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::13a3d01e7f6460bc4f01f4980f4c0219, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
+﻿#Region "Microsoft.VisualBasic::13a3d01e7f6460bc4f01f4980f4c0219, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

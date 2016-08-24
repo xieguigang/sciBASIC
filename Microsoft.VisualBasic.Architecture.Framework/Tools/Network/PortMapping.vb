@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::14e1979726129fa702244d087c9119a5, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\PortMapping.vb"
+﻿#Region "Microsoft.VisualBasic::14e1979726129fa702244d087c9119a5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\PortMapping.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

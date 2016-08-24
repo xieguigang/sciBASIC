@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d9df2d7ccf09d84c2a224a63d00899d0, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\SymbolicLink.vb"
+﻿#Region "Microsoft.VisualBasic::d9df2d7ccf09d84c2a224a63d00899d0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\SymbolicLink.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

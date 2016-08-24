@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e74e140739914fc7f085013d87fd58fe, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\EXListView\EXListView.vb"
+﻿#Region "Microsoft.VisualBasic::d0f2ef09b2c80afc50945da43f581005, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\EXListView\EXListView.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -1021,4 +1022,3 @@ Namespace Windows.Forms.Controls.ListControl
     End Class
 
 End Namespace
-

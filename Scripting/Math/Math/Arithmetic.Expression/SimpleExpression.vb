@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9255349e602ff454266c9289db045fc5, ..\VisualBasic_AppFramework\Scripting\Math\Math\Arithmetic.Expression\SimpleExpression.vb"
+﻿#Region "Microsoft.VisualBasic::7261bb68669608068535e6e3961c2f64, ..\visualbasic_App\Scripting\Math\Math\Arithmetic.Expression\SimpleExpression.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

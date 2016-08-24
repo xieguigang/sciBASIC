@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c072f5a9c94605f6cd6c529cb7cd0385, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::fab4efb93e8aacebabe8d3a5cab0735d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b14208351f17858cf6223a888537f4b4, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\CheckBox.vb"
+﻿#Region "Microsoft.VisualBasic::e08ab68863238e88afb5ee7d5b8284b1, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\CheckBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

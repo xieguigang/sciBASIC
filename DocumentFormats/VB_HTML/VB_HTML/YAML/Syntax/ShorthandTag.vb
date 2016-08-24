@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1e0ad884bd755fc59188bf26fc9cec69, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\ShorthandTag.vb"
+﻿#Region "Microsoft.VisualBasic::a82eb11944141950521f47c88ecbbcca, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\ShorthandTag.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

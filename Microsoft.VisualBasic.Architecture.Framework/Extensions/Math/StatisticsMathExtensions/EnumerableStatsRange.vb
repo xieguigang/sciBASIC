@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6479cb0f43c3215f6276bc9f431c1602, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsRange.vb"
+﻿#Region "Microsoft.VisualBasic::6479cb0f43c3215f6276bc9f431c1602, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsRange.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

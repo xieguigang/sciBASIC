@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fb2fa9acf639a00b835debb3ee7c1cdf, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::fb2fa9acf639a00b835debb3ee7c1cdf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

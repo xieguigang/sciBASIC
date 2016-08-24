@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::996eb243cbaf821d9677d9404d5f019f, ..\VisualBasic_AppFramework\Scripting\Math\Math\Matrix.NET\CholeskyDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::996eb243cbaf821d9677d9404d5f019f, ..\visualbasic_App\Scripting\Math\Math\Matrix.NET\CholeskyDecomposition.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

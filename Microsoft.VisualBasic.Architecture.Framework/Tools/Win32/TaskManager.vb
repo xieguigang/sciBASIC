@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::485b480f90d5307ef0deb14cd940cf42, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
+﻿#Region "Microsoft.VisualBasic::485b480f90d5307ef0deb14cd940cf42, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

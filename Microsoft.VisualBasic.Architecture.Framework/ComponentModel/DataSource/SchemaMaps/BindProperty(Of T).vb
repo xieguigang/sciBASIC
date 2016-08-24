@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::105b50bef44a6809f82e1414b790630e, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::62a1c81e6f923bd76d424b88fb48fc65, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
