@@ -90,10 +90,10 @@ Namespace Imaging
         ''' <summary>
         ''' 解析颜色表达式里面的RGB的正则表达式
         ''' </summary>
-        Const RGB_EXPRESSION As String = "\d+,\d+,\d+"
+        Const RGB_EXPRESSION As String = "\d+,\d+,\d+(,\d+)?"
 
         ''' <summary>
-        ''' 
+        ''' <see cref="Color"/>.Name, rgb(a,r,g,b)
         ''' </summary>
         ''' <param name="str">颜色表达式或者名称</param>
         ''' <returns></returns>
@@ -116,11 +116,23 @@ Namespace Imaging
                 End If
             Else
                 Dim tokens As String() = s.Split(","c)
-                Dim R As Integer = CInt(Val(tokens(0)))
-                Dim G As Integer = CInt(Val(tokens(1)))
-                Dim B As Integer = CInt(Val(tokens(2)))
 
-                Return Color.FromArgb(R, G, B)
+                If tokens.Length = 3 Then
+                    Dim R As Integer = CInt(Val(tokens(0)))
+                    Dim G As Integer = CInt(Val(tokens(1)))
+                    Dim B As Integer = CInt(Val(tokens(2)))
+
+                    Return Color.FromArgb(R, G, B)
+                ElseIf tokens.Length = 4 Then
+                    Dim A As Integer = CInt(Val(tokens(0)))
+                    Dim R As Integer = CInt(Val(tokens(1)))
+                    Dim G As Integer = CInt(Val(tokens(2)))
+                    Dim B As Integer = CInt(Val(tokens(3)))
+
+                    Return Color.FromArgb(A, R, G, B)
+                Else
+                    Throw New Exception(str)
+                End If
             End If
 #Else
             Throw New NotSupportedException
