@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::49922bb572a6412da70ee516aa4d34f7, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\Task.vb"
+﻿#Region "Microsoft.VisualBasic::49922bb572a6412da70ee516aa4d34f7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\Task.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

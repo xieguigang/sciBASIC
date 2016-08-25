@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::21b8c9bdeb60255a4c5812c844ef3f52, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
+﻿#Region "Microsoft.VisualBasic::21b8c9bdeb60255a4c5812c844ef3f52, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

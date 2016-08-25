@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ede219b53e44506403e1e14323a41e7f, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\EXListView\MyForms.vb"
+﻿#Region "Microsoft.VisualBasic::2d804593f3aa023176bc2b10128f267b, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\EXListView\MyForms.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -238,4 +239,3 @@
 '	End Sub
 
 'End Class
-

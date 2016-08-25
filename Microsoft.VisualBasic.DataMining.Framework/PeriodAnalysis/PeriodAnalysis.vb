@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fc6e014fed920fe41f9b2c091a0a9d96, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::0f5ca985063733fc5bab5a550d86aead, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

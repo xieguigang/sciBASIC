@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2823789c34ac5d5be1dc933dfc244d8a, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::2823789c34ac5d5be1dc933dfc244d8a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::553275ecb2953bb999ac550835684ae4, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\CBusyIndicator.vb"
+﻿#Region "Microsoft.VisualBasic::c316c4e1a6c4602954a518ffb9acb249, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\CBusyIndicator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -26,26 +27,30 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Terminal.Utility
 
-    Public Class CBusyIndicator : Implements System.IDisposable
+    ''' <summary>
+    ''' The console BusyIndicator
+    ''' </summary>
+    Public Class CBusyIndicator : Implements IDisposable
 
-        Dim _IndicatorStyle As Char
+        Dim _indicatorStyle As Char
         Dim _OnRunningState As Boolean = False
         Dim _TicksCount As Integer
 
         Sub New(Optional IndicatorStyle As Char = "."c, Optional _start As Boolean = False, Optional Ticks As Integer = -1)
-            _IndicatorStyle = IndicatorStyle
+            _indicatorStyle = IndicatorStyle
             If _start Then Call Start(Ticks)
         End Sub
 
         Private Sub DoEvents()
-
             Do While _OnRunningState = True
 
-                Call System.Threading.Thread.Sleep(1000)
-                Call Console.Write(_IndicatorStyle)
+                Call Thread.Sleep(1000)
+                Call STDIO.Write(_indicatorStyle)
 
                 If _TicksCount > 0 Then
                     _TicksCount -= 1
@@ -69,7 +74,8 @@ Namespace Terminal.Utility
 
             _TicksCount = Ticks
             _OnRunningState = True
-            Call New System.Threading.Thread(AddressOf DoEvents).Start()
+
+            Call RunTask(AddressOf DoEvents)
         End Sub
 
         Public Sub [Stop]()

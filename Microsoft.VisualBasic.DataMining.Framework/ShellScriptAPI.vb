@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f58c8c5ce23ef0b2149f71a995b5fdcd, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\ShellScriptAPI.vb"
+﻿#Region "Microsoft.VisualBasic::9bcd31c448daed1d114029cfdd00af33, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\ShellScriptAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -36,4 +37,3 @@ Public Module ShellScriptAPI
         Return data.SaveTo(saveTo, False)
     End Function
 End Module
-

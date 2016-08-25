@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::54d0a37b54bdb885181a39e16dff7392, ..\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\StatementMatches.vb"
+﻿#Region "Microsoft.VisualBasic::54d0a37b54bdb885181a39e16dff7392, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\StatementMatches.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

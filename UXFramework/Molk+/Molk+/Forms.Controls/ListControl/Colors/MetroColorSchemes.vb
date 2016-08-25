@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bf2c26ad34523913b64236081b2072ae, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\Colors\MetroColorSchemes.vb"
+﻿#Region "Microsoft.VisualBasic::42a5df21a23b666cd5e1c64405cae47b, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\Colors\MetroColorSchemes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -141,4 +142,3 @@ Public Class QQFlatColorSchema : Inherits MetroColorSchemes
     End Sub
 
 End Class
-

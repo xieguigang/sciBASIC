@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::180e17f207183196d23f7421a96887e8, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb"
+﻿#Region "Microsoft.VisualBasic::180e17f207183196d23f7421a96887e8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

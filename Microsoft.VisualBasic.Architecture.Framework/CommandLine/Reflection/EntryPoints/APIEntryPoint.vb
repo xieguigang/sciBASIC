@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::24ddce4983913c7a84f91190f93953fa, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::8176055a03f66d33eb2ded1b938866c2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -126,23 +127,28 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overrides Function HelpInformation(Optional md As Boolean = False) As String
-            Dim sBuilder As StringBuilder = New StringBuilder(MyBase.HelpInformation(md))
+            Dim sb As New StringBuilder(MyBase.HelpInformation(md))
 
-            If Not _ParameterInfo.IsNullOrEmpty Then
-                Call sBuilder.AppendLine(vbCrLf & vbCrLf)
-                Call sBuilder.AppendLine("  Parameters information:")
+            If Not ParameterInfo.IsNullOrEmpty Then
+                Call sb.AppendLine(vbCrLf & vbCrLf)
+                Call sb.AppendLine("#### Parameters information:")
+
                 If Not md Then
-                    Call sBuilder.AppendLine(vbCrLf & "   ---------------------------------------")
+                    Call sb.AppendLine(vbCrLf & "   ---------------------------------------")
+                    Call sb.AppendLine("    " & ParameterInfo.ToString)
                 Else
-                    Call sBuilder.AppendLine("```")
-                End If
-                Call sBuilder.AppendLine("    " & _ParameterInfo.ToString)
-                If md Then
-                    Call sBuilder.AppendLine("```")
+                    For Each param In ParameterInfo
+                        Call sb.AppendLine("##### " & If(param.x.Optional, $"[{param.Name}]", param.Name))
+                        Call sb.AppendLine(param.x.Description)
+                        Call sb.AppendLine("###### Example")
+                        Call sb.AppendLine("```bash")
+                        Call sb.AppendLine(param.x.Example)
+                        Call sb.AppendLine("```")
+                    Next
                 End If
             End If
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
         ''' <summary>

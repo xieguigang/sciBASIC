@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9dc408c3a1d39e0422425bef6dc74258, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::c66b47cf26389f9af613543d42a05088, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\HtmlParser\Table.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

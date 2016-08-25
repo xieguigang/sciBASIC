@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1fb927e5b3c6bb935e954ce53c76e0a8, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::d61ce2c193845c3a6b5cf50cceaea939, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -199,11 +200,11 @@ Namespace Net
                 If _threadEndAccept Then
                     _threadEndAccept = False
 
-                    Dim Callback As AsyncCallback = New AsyncCallback(AddressOf AcceptCallback)
+                    Dim callback As New AsyncCallback(AddressOf AcceptCallback)
                     Try
-                        Call _servicesSocket.BeginAccept(Callback, _servicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
+                        Call _servicesSocket.BeginAccept(callback, _servicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
                     Catch ex As Exception
-                        Exit While
+                        Call App.LogException(ex)
                     End Try
                 End If
 

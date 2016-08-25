@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f6cde7ac14dcffb5efcac952cd140a09, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\DifferenceInfo.vb"
+﻿#Region "Microsoft.VisualBasic::bc5a41fcf22e20f784108b52e1eb10c6, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\DifferenceInfo.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

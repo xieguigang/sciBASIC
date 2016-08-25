@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6925a27aafe797b55648f1419558a5a3, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::6925a27aafe797b55648f1419558a5a3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Abstract.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

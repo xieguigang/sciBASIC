@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::94c41eff31baf0c16ed64abadce63f8b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::94c41eff31baf0c16ed64abadce63f8b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

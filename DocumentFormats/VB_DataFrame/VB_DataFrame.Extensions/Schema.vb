@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5cf6ed8576cbe9cb18d0ecc1e67bdd11, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::a37a4f8f16a7752004ae8d4a8e76534d, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Schema.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -131,4 +132,3 @@ Public Class Schema : Inherits ClassObject
             type.Equals(GetType(Date))
     End Function
 End Class
-

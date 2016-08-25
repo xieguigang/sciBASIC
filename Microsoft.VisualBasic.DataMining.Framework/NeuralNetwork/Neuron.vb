@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::933c660327f90237f57416cd6132f2ea, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::bdbe6c70f8b934645b196760633f7306, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Neuron.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -104,4 +105,3 @@ Namespace NeuralNetwork
 #End Region
     End Class
 End Namespace
-

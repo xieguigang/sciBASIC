@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::71b393a956ee5f2d2af328c0b1db2faf, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Helpers\MatrixArithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::71b393a956ee5f2d2af328c0b1db2faf, ..\visualbasic_App\Scripting\Math\Math\BasicR\Helpers\MatrixArithmetic.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

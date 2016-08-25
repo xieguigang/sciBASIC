@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::72c7b43266c229b3fe40c8fc957437af, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
+﻿#Region "Microsoft.VisualBasic::72c7b43266c229b3fe40c8fc957437af, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

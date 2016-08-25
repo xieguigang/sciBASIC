@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebResult.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

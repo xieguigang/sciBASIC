@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ac73e54e48433546ba3d2a6fed48376f, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::5de7ec5f384c143877ea3241f3088e93, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -86,6 +87,11 @@ Namespace ComponentModel.Settings
             Return Load(Data:=FileObject)
         End Function
 
+        ''' <summary>
+        ''' 使用<see cref="ProfileItem"/>来标记想要作为变量的属性
+        ''' </summary>
+        ''' <param name="Data"></param>
+        ''' <returns></returns>
         Public Overloads Shared Function Load(Data As T) As Settings(Of T)
             Return New ComponentModel.Settings.Settings(Of T)(Data)
         End Function

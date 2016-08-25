@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::927c893d830ec38428d452776dd3508b, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\MoveScreen.vb"
+﻿#Region "Microsoft.VisualBasic::f74cc0d492df0880d4f0b417d0e692f0, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\MoveScreen.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

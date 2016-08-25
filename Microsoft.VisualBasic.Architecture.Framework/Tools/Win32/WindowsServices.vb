@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c19b12bfbc56ea41b45b32a97453c14e, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\WindowsServices.vb"
+﻿#Region "Microsoft.VisualBasic::c19b12bfbc56ea41b45b32a97453c14e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\WindowsServices.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

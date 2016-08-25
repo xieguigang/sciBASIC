@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::379cd29b00463926c59ca7e942bd3b55, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\TestProject\ResultData.vb"
+﻿#Region "Microsoft.VisualBasic::379cd29b00463926c59ca7e942bd3b55, ..\visualbasic_App\DocumentFormats\VB_DataFrame\TestProject\ResultData.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

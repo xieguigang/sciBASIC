@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0f6c7ddf58eee790a859d8b027b111ef, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\DocFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::4906b1563eda0f6b80ed724506b09c7b, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\DocFormatter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

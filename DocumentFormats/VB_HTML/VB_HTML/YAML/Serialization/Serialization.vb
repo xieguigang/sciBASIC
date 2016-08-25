@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0eca89cb9a5c02903c9fa70ad3e8ee2c, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Serialization\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::3dc27b6723d35dccac94c3cfb99c3963, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Serialization\Serialization.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

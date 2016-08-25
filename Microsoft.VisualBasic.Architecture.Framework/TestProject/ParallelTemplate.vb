@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelTemplate.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

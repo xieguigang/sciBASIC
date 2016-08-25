@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5d3e75cf39798a18bf57cde46d9cb7f8, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\INeuron.vb"
+﻿#Region "Microsoft.VisualBasic::b408509cf2332ab4172cad5fd961b300, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\INeuron.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

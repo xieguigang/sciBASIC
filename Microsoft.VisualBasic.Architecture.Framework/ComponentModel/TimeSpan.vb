@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0cb0b5f3ac71dfe32b22c9539085ea71, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::0cb0b5f3ac71dfe32b22c9539085ea71, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

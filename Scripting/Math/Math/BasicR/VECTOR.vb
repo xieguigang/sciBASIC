@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6d39267484e7244a085acd98e22465aa, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\VECTOR.vb"
+﻿#Region "Microsoft.VisualBasic::6d39267484e7244a085acd98e22465aa, ..\visualbasic_App\Scripting\Math\Math\BasicR\VECTOR.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

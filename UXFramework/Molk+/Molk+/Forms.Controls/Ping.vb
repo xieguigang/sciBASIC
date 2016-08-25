@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4124e2ca83349d4339393fb7204a5069, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\Ping.vb"
+﻿#Region "Microsoft.VisualBasic::596ba5df1e552508068e2d1a5066ab7a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\Ping.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -218,4 +219,3 @@ Public Class Ping
         Call Invoke()
     End Sub
 End Class
-

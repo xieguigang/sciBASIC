@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3c9bd56f05d466507109eac6cef96920, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::fcee18b402645aa8fc7342c25dfdae22, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -85,27 +86,35 @@ Namespace CommandLine.Reflection.EntryPoints
         End Sub
 
         Public Overridable Function HelpInformation(Optional md As Boolean = False) As String
-            Dim sBuilder As StringBuilder = New StringBuilder(1024)
+            Dim sb As New StringBuilder(1024)
 
             If md Then
-                Call sBuilder.Append("##### ")
+                sb.AppendLine($"{Name}</h3>")
+            Else
+                sb.AppendLine($"Help for command ""{Name}"":")
             End If
 
-            sBuilder.AppendLine(String.Format("Help for command '{0}':", Name))
-            sBuilder.AppendLine()
+            Call sb.AppendLine()
+
             If md Then
-                Call sBuilder.AppendLine("**Prototype**: " & _metaData.Target.GetFullName)
-                Call sBuilder.AppendLine()
-                Call sBuilder.AppendLine("```")
-            End If
-            sBuilder.AppendLine(String.Format("  Information:  {0}", Info))
-            sBuilder.AppendLine(String.Format("  Usage:        {0} {1}", Application.ExecutablePath, Usage))
-            sBuilder.AppendLine(String.Format("  Example:      {0} {1} {2}", IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath), Name, Example))
-            If md Then
-                Call sBuilder.AppendLine("```")
+                Call sb.AppendLine(Info)
+                Call sb.AppendLine($"**Prototype**: ``{_metaData.Target.GetFullName}``")
+                Call sb.AppendLine()
+                Call sb.AppendLine("###### Usage")
+                Call sb.AppendLine("```bash")
+                Call sb.AppendLine($"{App.AssemblyName} {Usage}")
+                Call sb.AppendLine("```")
+                Call sb.AppendLine("###### Example")
+                Call sb.AppendLine("```bash")
+                Call sb.AppendLine($"{App.AssemblyName} {Example}")
+                Call sb.AppendLine("```")
+            Else
+                sb.AppendLine(String.Format("  Information:  {0}", Info))
+                sb.AppendLine(String.Format("  Usage:        {0} {1}", Application.ExecutablePath, Usage))
+                sb.AppendLine(String.Format("  Example:      {0} {1}", IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath), Example))
             End If
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
         ''' <summary>

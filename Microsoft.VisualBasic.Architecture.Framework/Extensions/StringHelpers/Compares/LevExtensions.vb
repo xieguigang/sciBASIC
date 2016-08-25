@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::793ad88e567b4f8b825d81dabcbc270c, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::793ad88e567b4f8b825d81dabcbc270c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

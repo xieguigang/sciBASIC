@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::aec3b0b1d3975874a028014dfc6c06b8, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::6155a879353a888b4de56db4f6658549, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\Sigmoid.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace NeuralNetwork.IFuncs
 
@@ -52,4 +52,3 @@ Namespace NeuralNetwork.IFuncs
         End Function
     End Class
 End Namespace
-

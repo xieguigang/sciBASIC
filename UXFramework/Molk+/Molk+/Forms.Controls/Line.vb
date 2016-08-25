@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0f41bbe988161935c6305f4077ea3ec9, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\Line.vb"
+﻿#Region "Microsoft.VisualBasic::e7f7d4602552e116b1446d6b0e050e38, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\Line.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -81,4 +82,3 @@ Public Class Line
         End Set
     End Property
 End Class
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7002ff6109222f4cbbacb5f63026201e, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Controls.vb"
+﻿#Region "Microsoft.VisualBasic::7002ff6109222f4cbbacb5f63026201e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Controls.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

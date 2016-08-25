@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cfb5214173c998d9880aaa457d82f81e, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::9cbe50696b483755b392c3c06b88620b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

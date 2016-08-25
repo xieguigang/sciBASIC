@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::86ccedd7f10981da2e62a542d0c8ad11, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Elements\TabControl\MarginBlue.vb"
+﻿#Region "Microsoft.VisualBasic::86ccedd7f10981da2e62a542d0c8ad11, ..\visualbasic_App\UXFramework\Molk+\Molk+\Elements\TabControl\MarginBlue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

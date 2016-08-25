@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::dc483448008c804ebdded0465bd14208, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\WaveletTransform.vb"
+﻿#Region "Microsoft.VisualBasic::7b2ae30c7bf7f7c7566a7024cc48747a, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\WaveletTransform.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' 小波变换工具
@@ -213,4 +213,3 @@ Public Module WaveletTransform
     End Sub
 
 End Module
-

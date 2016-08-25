@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4d09ca8c2de71d46452c8b1c80afe127, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::4d09ca8c2de71d46452c8b1c80afe127, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

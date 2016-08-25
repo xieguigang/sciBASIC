@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::60de79234aa9a3293f19bf5f13d1acd4, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\PingUtility.vb"
+﻿#Region "Microsoft.VisualBasic::60de79234aa9a3293f19bf5f13d1acd4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\PingUtility.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

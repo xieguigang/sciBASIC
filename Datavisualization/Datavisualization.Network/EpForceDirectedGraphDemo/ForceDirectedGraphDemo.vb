@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5bac38890160abce301d5c862c4db2bf, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\ForceDirectedGraphDemo.vb"
+﻿#Region "Microsoft.VisualBasic::307145070550e2744957f445e346214a, ..\visualbasic_App\Datavisualization\Datavisualization.Network\EpForceDirectedGraphDemo\ForceDirectedGraphDemo.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

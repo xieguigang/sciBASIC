@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::983df9427684f7713c2ac96f72e8dcca, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::983df9427684f7713c2ac96f72e8dcca, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

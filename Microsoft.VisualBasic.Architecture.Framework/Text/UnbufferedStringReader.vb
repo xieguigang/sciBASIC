@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, ..\Microsoft.VisualBasic.Architecture.Framework\Text\UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\UnbufferedStringReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

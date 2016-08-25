@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::19dc295503d3ab66dc65fdc1285b4771, ..\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
+﻿#Region "Microsoft.VisualBasic::19dc295503d3ab66dc65fdc1285b4771, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

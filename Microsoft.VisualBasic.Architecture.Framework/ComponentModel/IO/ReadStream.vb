@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9f26531ddd9c78d3e984b007f6127b54, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\ReadStream.vb"
+﻿#Region "Microsoft.VisualBasic::9f26531ddd9c78d3e984b007f6127b54, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\IO\ReadStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

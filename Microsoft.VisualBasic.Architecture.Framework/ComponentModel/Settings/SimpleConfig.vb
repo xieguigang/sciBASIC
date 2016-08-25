@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c838614802ca5dfa485d96ae6f45504f, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::8bd7371e78f2591b8b5c848204f147db, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

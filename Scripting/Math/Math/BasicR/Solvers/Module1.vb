@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cb1b058d6b99e1c37ba3567ae2008871, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Solvers\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::cb1b058d6b99e1c37ba3567ae2008871, ..\visualbasic_App\Scripting\Math\Math\BasicR\Solvers\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

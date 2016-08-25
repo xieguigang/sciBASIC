@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ee83dd4a1a99199a7c0d3644c8fd6d01, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\ParserCustom.vb"
+﻿#Region "Microsoft.VisualBasic::ff12c15bebafeee195e120bd4c6e4b43, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\ParserCustom.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

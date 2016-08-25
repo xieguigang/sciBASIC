@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::91e741b9a5ea225bbf8f5270b846fb24, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::91e741b9a5ea225bbf8f5270b846fb24, ..\visualbasic_App\Datavisualization\Datavisualization.Network\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

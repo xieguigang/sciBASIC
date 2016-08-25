@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f9ce3d18ba15a5ce5f798dee080d6efc, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\UserInputControl.vb"
+﻿#Region "Microsoft.VisualBasic::fd90245704c381faba903c58438c96de, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\UserInputControl.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -81,4 +82,3 @@ Friend Class UserInputControl
         TextBox1.Size = New Size(Width - btnCancel.Width - btnOK.Width - 10, Height)
     End Sub
 End Class
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ede45de25a4fdc8a05708406f907366a, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::05f4acebc280376f9a0fd6af09c1bdd8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -69,9 +70,9 @@ Namespace Net
         ''' </summary>
         ''' <param name="url"></param>
         ''' <returns></returns>
-        Public Function TryParse(url As String) As String
+        Public Function TryParse(url As String, Optional preserveSubdomain As Boolean = False) As String
             url = Trim(url)
-            url = TrimPathAndQuery(url)
+            url = TrimPathAndQuery(url, preserveSubdomain)
             Return url
         End Function
 
@@ -84,25 +85,38 @@ Namespace Net
             Return True
         End Function
 
-        Private Function TrimPathAndQuery(url As String) As String
+        Private Function TrimPathAndQuery(url As String, preserveSubdomain As Boolean) As String
             url = url.Split(CChar("/")).First
-            Dim Tokens = url.Split(CChar("."))
-            If Tokens.Length = 2 Then
-                Return url
-            ElseIf Tokens.Length = 1 Then
-                Return ""
-            ElseIf Tokens.Length = 3 Then
-                Dim tld2 As String = Tokens(1)
 
-                If InStr("com|org|net|edu", tld2, CompareMethod.Text) > 0 Then
-                    Return url
-                End If
-            Else
-                Dim d As Integer = Tokens.Length - 2
-                Tokens = Tokens.Skip(d).ToArray
+            If preserveSubdomain Then
+                Return url
             End If
 
-            Return $"{Tokens(0)}.{Tokens(1)}"
+            Dim tokens As New List(Of String)(url.Split(CChar(".")))
+
+            If tokens.Count = 2 Then
+                Return url
+            ElseIf tokens.Count = 1 Then
+                Return ""
+            End If
+
+            ' 剩下的这些事token数量大于等于3的情况
+            Dim tld2 As String = tokens(tokens.Count - 2)  ' 处理类似于.com.cn这种情况
+
+            ' .com.cn
+            ' .co.uk
+            ' .ac.cn
+            If InStr("co|ac|com|org|net|edu", tld2, CompareMethod.Text) > 0 Then  ' .com.cn,,..co.uk的情况，则直接返回
+                ' 取最后的三个token
+                If tokens.Count > 3 Then
+                    tokens = New List(Of String)(tokens.GetRange(tokens.Count - 3, 3))
+                End If
+                url = String.Join(".", tokens.ToArray)
+            Else
+                url = $"{tokens(tokens.Count - 2)}.{tokens(tokens.Count - 1)}"
+            End If
+
+            Return url
         End Function
 
         Private Function Trim(url As String) As String

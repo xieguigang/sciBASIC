@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::43365623df58d6c54b553d22c5c6e66d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\AlgorithmInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::937faaaa8e62a9a1aab16fcc790b690d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\AlgorithmInvoker.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

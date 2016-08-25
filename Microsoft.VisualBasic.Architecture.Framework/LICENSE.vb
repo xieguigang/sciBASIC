@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e0b7e48e67fd5af4ff212c2a21aaab7e, ..\Microsoft.VisualBasic.Architecture.Framework\LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::e0b7e48e67fd5af4ff212c2a21aaab7e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\LICENSE.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

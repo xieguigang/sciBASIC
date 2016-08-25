@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\DCMI.vb"
+﻿#Region "Microsoft.VisualBasic::d464aa07e529df6c53bb6704101cdcaa, ..\visualbasic_App\DocumentFormats\RDF\RDF\DCMI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8ebf39e8b7a77bb3f9a58d9bb322f5e6, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::8ebf39e8b7a77bb3f9a58d9bb322f5e6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

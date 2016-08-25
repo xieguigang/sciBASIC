@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::be3208f839b2635b993fde3b655415cb, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\AsyncHandle.vb"
+﻿#Region "Microsoft.VisualBasic::be3208f839b2635b993fde3b655415cb, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\AsyncHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

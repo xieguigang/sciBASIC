@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::179e6a619fb6d31c933e40577de3ab64, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorGrid.vb"
+﻿#Region "Microsoft.VisualBasic::30c901fa73db160c3df0e4437dc60a5a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorGrid.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -370,4 +371,3 @@ Namespace Unity3.Controls
 		End Function
 	End Structure
 End Namespace
-

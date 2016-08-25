@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f9b8b6f83934a5c6af0f10a66fde2316, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\Extensions\ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::f9b8b6f83934a5c6af0f10a66fde2316, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

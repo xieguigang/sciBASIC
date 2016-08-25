@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::39f8d85e2b9e003e83601b9849d357a5, ..\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::39f8d85e2b9e003e83601b9849d357a5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

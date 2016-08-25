@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::bbcc7f3d94c273c9f90b2982c3d24f59, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::bbcc7f3d94c273c9f90b2982c3d24f59, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

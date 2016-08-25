@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::be742b08ec5ee6acbd6de90b1dc2c322, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\ProcExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::be742b08ec5ee6acbd6de90b1dc2c322, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\ProcExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

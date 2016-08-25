@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::87743f9d7e2f082ab1c70c9d194d19da, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\newickParser.vb"
+﻿#Region "Microsoft.VisualBasic::87743f9d7e2f082ab1c70c9d194d19da, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\newickParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8c26088974abe58e993c19726c4da7d1, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\CFormatProvider.vb"
+﻿#Region "Microsoft.VisualBasic::8c26088974abe58e993c19726c4da7d1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\CFormatProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::61d5620d4571bebef27451d42148c473, ..\Microsoft.VisualBasic.Architecture.Framework\TestProject\caller\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::532761f83fc4f6e6e888b5a96d75fd5b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\caller\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -35,4 +36,3 @@ Module Module1
     End Sub
 
 End Module
-

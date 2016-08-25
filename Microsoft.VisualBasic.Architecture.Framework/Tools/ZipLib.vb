@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::51cd44f234806b87e21bbcdce73fa16e, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::51cd44f234806b87e21bbcdce73fa16e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

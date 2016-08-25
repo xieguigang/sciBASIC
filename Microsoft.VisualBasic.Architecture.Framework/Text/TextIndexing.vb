@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3cb2e9a955bd9dbfc2a5b428e000397b, ..\Microsoft.VisualBasic.Architecture.Framework\Text\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::3cb2e9a955bd9dbfc2a5b428e000397b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextIndexing.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

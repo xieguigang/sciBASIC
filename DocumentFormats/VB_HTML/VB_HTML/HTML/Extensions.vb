@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::82dab1efbafb9869441295f946ef6076, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\HTML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a6f9343a102be474347070c10cadde72, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

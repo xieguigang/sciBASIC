@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5f47456fca864fe6a0194291ef4eb00e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::45bcb377cac3f893bcfe3bc12b19e0dd, ..\visualbasic_App\UXFramework\Molk+\Molk+\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -1896,4 +1897,3 @@ RETRY:      Call Console.WriteLine("Waiting for the server reply..")
         End Try
     End Function
 End Module
-

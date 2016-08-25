@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4c29fc859b35418c50ad333cdf136a53, ..\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\MetaAPI.vb"
+﻿#Region "Microsoft.VisualBasic::4c29fc859b35418c50ad333cdf136a53, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\MetaAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

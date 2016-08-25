@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fad17f9aa7cd5a0a145c2d5903304c1d, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::fad17f9aa7cd5a0a145c2d5903304c1d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

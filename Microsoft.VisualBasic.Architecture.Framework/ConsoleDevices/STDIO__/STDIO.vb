@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4f8834ed4afa21047c972b371c34d90a, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::8121b0734fb0ac171015b7fdbb22534e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\STDIO.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -296,5 +297,31 @@ Namespace Terminal
             Loop While Not parser(line, value)
             Return value
         End Function
+
+        ''' <summary>
+        ''' Writes the text representation of the specified object to the standard output
+        ''' stream.
+        ''' </summary>
+        ''' <param name="o">The value to write, or null.</param>
+        Public Sub Write(o As Object)
+            If VBDebugger.ForceSTDError Then
+                Call Console.Error.Write(o)
+            Else
+                Call Console.Write(o)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Writes the text representation of the specified object, followed by the current
+        ''' line terminator, to the standard output stream.
+        ''' </summary>
+        ''' <param name="o">The value to write.</param>
+        Public Sub WriteLine(Optional o As Object = Nothing)
+            If VBDebugger.ForceSTDError Then
+                Call Console.Error.WriteLine(o)
+            Else
+                Call Console.WriteLine(o)
+            End If
+        End Sub
     End Module
 End Namespace

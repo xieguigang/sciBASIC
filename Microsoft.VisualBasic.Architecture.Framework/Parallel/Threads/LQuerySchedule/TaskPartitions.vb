@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5d7d768ca4c7e7b156fce7a458f61b85, ..\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
+﻿#Region "Microsoft.VisualBasic::5d7d768ca4c7e7b156fce7a458f61b85, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

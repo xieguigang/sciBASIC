@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a0a5e71cbf80a02311634e2f583f31a8, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\TreeAPI\TREE.vb"
+﻿#Region "Microsoft.VisualBasic::9c906dfaf2d8141be306e0fdc8b3ef92, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\TreeAPI\TREE.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

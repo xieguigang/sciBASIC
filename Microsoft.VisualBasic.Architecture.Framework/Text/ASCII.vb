@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e710d349f79351aee40f6af5c17db8c5, ..\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::725d1209697ed44f9acabb155cc30998, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

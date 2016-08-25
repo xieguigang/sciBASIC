@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::593f06e0b65c55c477ed1349b7739d23, ..\VisualBasic_AppFramework\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\ProxyInterface.vb"
+﻿#Region "Microsoft.VisualBasic::edc58333ddb8a060ca24c6efe01f1bb5, ..\visualbasic_App\UXFramework\DataVisualization.Enterprise\Microsoft.VisualBasic.DataVisualization.Enterprise\PieChart\PieChartTest\ProxyInterface.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -229,4 +230,3 @@ Namespace Nexus.Reflection
 		#End Region
 	End Class
 End Namespace
-

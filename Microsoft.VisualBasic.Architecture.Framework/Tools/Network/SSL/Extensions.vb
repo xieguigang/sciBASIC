@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::684b0b62a717929ca1123ca139351092, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::684b0b62a717929ca1123ca139351092, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

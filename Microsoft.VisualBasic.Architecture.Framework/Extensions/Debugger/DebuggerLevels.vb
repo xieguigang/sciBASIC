@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6cb5e1b5aa3e0f39bd35d2acb3ebc42a, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\DebuggerLevels.vb"
+﻿#Region "Microsoft.VisualBasic::6cb5e1b5aa3e0f39bd35d2acb3ebc42a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\DebuggerLevels.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

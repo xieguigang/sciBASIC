@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::926938aead5510b7feec8736e1af9102, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\gdi+Device.vb"
+﻿#Region "Microsoft.VisualBasic::926938aead5510b7feec8736e1af9102, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\gdi+Device.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

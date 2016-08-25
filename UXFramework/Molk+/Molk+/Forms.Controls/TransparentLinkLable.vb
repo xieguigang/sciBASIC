@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e5ac100f26cec5acfb602ef88c46d4ee, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\TransparentLinkLable.vb"
+﻿#Region "Microsoft.VisualBasic::54fa168fe37d75ea64ef29ac6e94959e, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\TransparentLinkLable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -104,4 +105,3 @@ Public Class TransparentLinkLable
         Call Update()
     End Sub
 End Class
-

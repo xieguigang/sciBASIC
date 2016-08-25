@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::938c1221b2b40024076eca7303c01923, ..\VisualBasic_AppFramework\Scripting\Math\Math\Matrix.NET\QRDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::938c1221b2b40024076eca7303c01923, ..\visualbasic_App\Scripting\Math\Math\Matrix.NET\QRDecomposition.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

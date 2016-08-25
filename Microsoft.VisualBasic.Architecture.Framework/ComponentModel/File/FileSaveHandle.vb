@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::42d82a3fc8faaee112903d583eea786c, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::42d82a3fc8faaee112903d583eea786c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

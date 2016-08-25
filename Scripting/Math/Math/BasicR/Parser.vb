@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::aed7a1e4341e9c14f46340abfec78527, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::aed7a1e4341e9c14f46340abfec78527, ..\visualbasic_App\Scripting\Math\Math\BasicR\Parser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

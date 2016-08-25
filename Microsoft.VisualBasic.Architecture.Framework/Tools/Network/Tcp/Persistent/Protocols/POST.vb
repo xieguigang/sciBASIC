@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::ee2a1e8b1ed39cfccedbc41f23eb8d4b, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::ee2a1e8b1ed39cfccedbc41f23eb8d4b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\POST.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

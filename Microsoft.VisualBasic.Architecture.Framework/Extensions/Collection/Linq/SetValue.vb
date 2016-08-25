@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::687d9312285b62041c0a001600a4a7b6, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::8f5011bf27f0ad5d61b21da50f34bd25, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -66,7 +67,7 @@ Namespace Linq
         Sub New()
             __props = New SortedDictionary(Of String, PropertyInfo)(
                 DataFramework.Schema(Of T)(
-                PropertyAccessibilityControls.Writeable))
+                PropertyAccess.Writeable))
         End Sub
 
         Public Overrides Function ToString() As String

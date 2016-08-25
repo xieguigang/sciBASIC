@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::42246cedc1c9dfdf20257a117892dc69, ..\VisualBasic_AppFramework\Cli Tools\rundll32\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7967979a6e272cae13917790536cad94, ..\visualbasic_App\Cli Tools\rundll32\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

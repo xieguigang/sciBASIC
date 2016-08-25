@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::095d013c489c058076ead01c98adb5e2, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::aaa77e2cb18c57d95a694e3f2c66bb8d, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\DocumentStream\EntityObject.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

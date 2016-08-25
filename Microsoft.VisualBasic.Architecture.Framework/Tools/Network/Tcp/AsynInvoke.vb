@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::afd2a61b13e2b4ac48853a3e98549543, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\AsynInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::afd2a61b13e2b4ac48853a3e98549543, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\AsynInvoke.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1e2905e28a19522c7bf4e1945ebbe01c, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExceptionHandler.vb"
+﻿#Region "Microsoft.VisualBasic::1e2905e28a19522c7bf4e1945ebbe01c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExceptionHandler.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cf32b93bb36bcbaebff1fa49a5f7961e, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::105fb307860ebbbebd5f4588c90d94d9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExportAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -60,7 +61,9 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
-        ''' A example that to useing this command.(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值)
+        ''' A example that to useing this command.
+        ''' (对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值，
+        ''' 在编写帮助示例的时候，需要编写出包括命令开关名称的完整的例子)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>

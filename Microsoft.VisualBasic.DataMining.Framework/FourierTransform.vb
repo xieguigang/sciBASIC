@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::40c3752cb61f1cbbe19827b004a71efb, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::68c0ac06323b35ec2aacc5fccb0dcb23, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\FourierTransform.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -360,4 +361,3 @@ Public Module FourierTransform
     End Sub
 #End Region
 End Module
-

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6160bd5584f4029afd9c9c793f9af6c0, ..\VisualBasic_AppFramework\UXFramework\UWP\UWP\FormWin10.vb"
+﻿#Region "Microsoft.VisualBasic::bca1de4a8cc35024d7037354971223e0, ..\visualbasic_App\UXFramework\UWP\UWP\FormWin10.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -118,4 +119,3 @@ Public Class FormWin10 : Inherits Microsoft.VisualBasic.MolkPlusTheme.Windows.Fo
         Call Me.UserAvatarMenu1.RePositionMenu()
     End Sub
 End Class
-

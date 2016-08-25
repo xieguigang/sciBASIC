@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::631ce32f54ac448bb476d27119fd7764, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::631ce32f54ac448bb476d27119fd7764, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Compares\LevenshteinDistance.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

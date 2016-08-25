@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::fdc7c70d99080de75c6807d8aeb3b5db, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\UpdatesEditor.vb"
+﻿#Region "Microsoft.VisualBasic::fdc7c70d99080de75c6807d8aeb3b5db, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\UpdatesEditor.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

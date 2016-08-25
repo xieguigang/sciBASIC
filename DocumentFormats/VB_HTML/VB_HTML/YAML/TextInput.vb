@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::2658d47a893d4ff940e5614f1b7d1669, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\TextInput.vb"
+﻿#Region "Microsoft.VisualBasic::89bb96e50874a5bb9c909646cf1e4945, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\TextInput.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

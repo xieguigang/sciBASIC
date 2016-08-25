@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::417e65257d46bec8e4c8f47ded23661c, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::eef75bb575ac67f3ec75cf5486b334d1, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\Unity3.Controls\ColorManager.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 
@@ -432,4 +432,3 @@ Namespace Unity3.Controls
 		#End Region
 	End Class
 End Namespace
-

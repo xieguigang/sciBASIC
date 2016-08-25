@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Microsoft VisualBasic enterprise system framework runtime")>
-<Assembly: AssemblyDescription("Enterprise system application runtime framework for VisualBasic(企业级应用程序快速建模工具)")>
+<Assembly: AssemblyDescription("Enterprise system application runtime framework for VisualBasic(企业应用程序快速建模工具)")>
 <Assembly: AssemblyCompany("xie.guigang@live.com")>
 <Assembly: AssemblyProduct("Microsoft.VisualBasic")>
 <Assembly: AssemblyCopyright("Copyright © GPL3 Licensed 2016")>

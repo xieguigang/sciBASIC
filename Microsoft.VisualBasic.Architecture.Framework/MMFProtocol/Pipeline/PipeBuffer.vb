@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5346f193b2b48625eaf6e07c182feb81, ..\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\PipeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::5346f193b2b48625eaf6e07c182feb81, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\PipeBuffer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

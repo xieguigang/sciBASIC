@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::3167d7c9153e606ed7033186873e28d0, ..\VisualBasic_AppFramework\Scripting\Math\Math\Helpers\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::3167d7c9153e606ed7033186873e28d0, ..\visualbasic_App\Scripting\Math\Math\Helpers\Constants.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

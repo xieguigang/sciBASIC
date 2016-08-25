@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::110312ca7e28c12d0004603eff732ba4, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\SongeListItem.vb"
+﻿#Region "Microsoft.VisualBasic::dc5252ecf6f2bb70c9cea68e7a42baaa, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\SongeListItem.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -153,4 +154,3 @@
 '    End Sub
 
 'End Class
-

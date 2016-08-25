@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::cf337ae7efad20e4bb3ba92a6c19dfe3, ..\VisualBasic_AppFramework\Cli Tools\FindKeyWord\CLI\FuzzySearch.vb"
+﻿#Region "Microsoft.VisualBasic::cf337ae7efad20e4bb3ba92a6c19dfe3, ..\visualbasic_App\Cli Tools\FindKeyWord\CLI\FuzzySearch.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

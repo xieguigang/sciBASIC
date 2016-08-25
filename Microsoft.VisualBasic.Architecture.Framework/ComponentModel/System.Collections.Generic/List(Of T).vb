@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1a93998f456bf3133b18af7083455d00, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::edca73b87cc379fc6b046e1aead44adb, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\List(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -39,6 +40,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 ''' <typeparam name="T">The type of elements in the list.</typeparam>
 Public Class List(Of T) : Inherits Generic.List(Of T)
+    ' Implements IEnumerable(Of Value(Of T))
 
     Dim __index As Pointer
 
@@ -248,4 +250,13 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
     Public Shared Operator <(source As List(Of T), path As String) As Boolean
         Throw New NotImplementedException
     End Operator
+
+    Public Iterator Function ValuesEnumerator() As IEnumerable(Of Value(Of T))
+        Dim o As New Value(Of T)
+
+        For Each x As T In Me
+            o.value = x
+            Yield o
+        Next
+    End Function
 End Class

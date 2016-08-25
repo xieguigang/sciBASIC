@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f5b91455254db6e8f3918e0a345d4cbf, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::f991dc5e8c0e7a9f9f7d8566be9e75ff, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -260,12 +261,15 @@ Public Module StringHelpers
             Return 0
         End If
 
-        Dim LQuery = (From chr As Char In str Where ch = chr Select 1).ToArray
-        Return LQuery.Length
+        Dim LQuery As Integer = (From chr As Char
+                                 In str
+                                 Where ch = chr
+                                 Select 1).Count
+        Return LQuery
     End Function
 
     ''' <summary>
-    ''' 获取""或者其他字符所包围的字符串的值
+    ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，字符串将不会进行任何处理
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="wrapper"></param>
@@ -357,7 +361,7 @@ Public Module StringHelpers
             Next
         Next
 
-        Return union.ToArray
+        Return union.ToArray  ' 剩下的元素都是在所有的序列之中都存在的，既交集元素
     End Function
 
     ''' <summary>
@@ -511,8 +515,8 @@ Public Module StringHelpers
     <ExportAPI("Located", Info:="String compares using String.Equals")>
     <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
         Dim Method = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim Len As Integer = collection.Count - 1
-        Dim array = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
+        Dim array As String() = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
+        Dim Len As Integer = array.Length - 1
 
         For i As Integer = 0 To Len
             If String.Equals(array(i), Text, Method) Then

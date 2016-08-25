@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9efafd88d4ec64175e9f4077b0181b97, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::9efafd88d4ec64175e9f4077b0181b97, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\BinaryTree.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

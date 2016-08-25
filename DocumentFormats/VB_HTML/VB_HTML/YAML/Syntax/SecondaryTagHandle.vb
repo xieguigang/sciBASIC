@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::746f061fc0b077d01ee247eee2be8e0f, ..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\SecondaryTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::626514dcf0b9fbff218c0177802fa54a, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\SecondaryTagHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

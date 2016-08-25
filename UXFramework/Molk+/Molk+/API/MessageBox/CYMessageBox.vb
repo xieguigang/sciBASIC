@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::58f26074cec101aa0da9bc9e423d37c4, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\MessageBox\CYMessageBox.vb"
+﻿#Region "Microsoft.VisualBasic::41e1fd5c3911f731e70ecf49358f975a, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\MessageBox\CYMessageBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

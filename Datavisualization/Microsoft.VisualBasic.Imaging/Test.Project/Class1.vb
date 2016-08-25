@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::13860f061e39bba1a422ecb3f85e6136, ..\VisualBasic_AppFramework\Datavisualization\Microsoft.VisualBasic.Imaging\Test.Project\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::13860f061e39bba1a422ecb3f85e6136, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Test.Project\Class1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

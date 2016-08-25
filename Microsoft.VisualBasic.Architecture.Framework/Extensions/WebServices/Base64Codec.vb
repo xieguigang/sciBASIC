@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e7a93ef11274bc7ba794de016c0aecaf, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::e7a93ef11274bc7ba794de016c0aecaf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

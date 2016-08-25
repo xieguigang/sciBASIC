@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::05fa4e46e1892c1125f0b812394ef585, ..\VisualBasic_AppFramework\DocumentFormats\RDF\RDF\Serializer\DynamicCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::c6d09d601e039377a2115d8aa8d1672a, ..\visualbasic_App\DocumentFormats\RDF\RDF\Serializer\DynamicCompiler.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

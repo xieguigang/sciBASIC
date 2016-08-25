@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::38239d7c9f0544b90f14b09abf01fa77, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::8d9184c1011022656bb2537bed815ce8, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b7fd7df701b82359ffc258a4ddea26f0, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\GroupGridItem.vb"
+﻿#Region "Microsoft.VisualBasic::8f590f135b7ec40e62613cd01179e273, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\GroupGridItem.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -113,4 +114,3 @@ Public Class GroupGridItem : Inherits ListControlItem
         Call LayoutControls()
     End Sub
 End Class
-

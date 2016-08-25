@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8e239fe1d55a194c28c7649a2516c918, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::46b733603ebbb96fe4795d69442d6458, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -90,4 +91,3 @@ Namespace NeuralNetwork.IFuncs
         Function Derivative2(y As Double) As Double
     End Interface
 End Namespace
-

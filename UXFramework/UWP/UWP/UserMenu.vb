@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::28075e6249a032d864107efd543769f5, ..\VisualBasic_AppFramework\UXFramework\UWP\UWP\UserMenu.vb"
+﻿#Region "Microsoft.VisualBasic::fb1dcfadde9f2c6fdf07e990170d162e, ..\visualbasic_App\UXFramework\UWP\UWP\UserMenu.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -30,4 +31,3 @@ Public Class UserMenu
         Visible = False
     End Sub
 End Class
-

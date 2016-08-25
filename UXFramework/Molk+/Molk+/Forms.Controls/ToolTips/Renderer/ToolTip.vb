@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::58232db30110b3b1988e7dfcf5f6b420, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\ToolTip.vb"
+﻿#Region "Microsoft.VisualBasic::41184493dcf94938b56ea13a475fb5a4, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ToolTips\Renderer\ToolTip.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

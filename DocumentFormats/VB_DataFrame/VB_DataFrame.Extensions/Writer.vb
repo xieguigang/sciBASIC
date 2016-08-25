@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::82700c1e5885ef6dfd99eddd822d9c81, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::04a697a0b703b1f2f8f7e1ce64d57b2b, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Writer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.IO
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream

@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d74776ac9c522d8067ba749e08e25a74, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d74776ac9c522d8067ba749e08e25a74, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

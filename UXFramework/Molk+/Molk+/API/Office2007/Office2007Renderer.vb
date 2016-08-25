@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::61d355424c147367470851584b3c0b1e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\API\Office2007\Office2007Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::c65fb3b6f3267fee2192dbb3cc2c9646, ..\visualbasic_App\UXFramework\Molk+\Molk+\API\Office2007\Office2007Renderer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -1125,4 +1126,3 @@ Public Class Office2007Renderer
 	End Function
 	#End Region
 End Class
-

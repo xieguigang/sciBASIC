@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e0e2cf93d81299346352017d962f1e61, ..\Microsoft.VisualBasic.Architecture.Framework\Language\Perl\Tools.vb"
+﻿#Region "Microsoft.VisualBasic::e0e2cf93d81299346352017d962f1e61, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Perl\Tools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

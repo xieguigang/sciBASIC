@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::91c589e17a6e0e44f7f412338700623d, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Program.vb"
+﻿#Region "Microsoft.VisualBasic::0e70c342e660754818246ec64c8bf625, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -376,4 +377,3 @@ Friend Class Program
 	End Sub
 	#End Region
 End Class
-

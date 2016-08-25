@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e4aa5f5591df30904d0077c161360ec7, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e4aa5f5591df30904d0077c161360ec7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

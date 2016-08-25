@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::884502716def045fbf3a249f990e6a9f, ..\VisualBasic_AppFramework\Scripting\Math\Math\Logical\FuzzyLogic\LinguisticVariableCollection.vb"
+﻿#Region "Microsoft.VisualBasic::884502716def045fbf3a249f990e6a9f, ..\visualbasic_App\Scripting\Math\Math\Logical\FuzzyLogic\LinguisticVariableCollection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

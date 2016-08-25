@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::f1c0caa000c8f3e4892a1b1054f701c9, ..\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::f1c0caa000c8f3e4892a1b1054f701c9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

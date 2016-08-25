@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b93e031c01f14588489261c98ba2b486, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::7cb6d65b94dff368cb051c29fe2dbe4d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\BezierCurve.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -194,4 +195,3 @@ Public Class BezierCurve
         Return Elements
     End Function
 End Class
-

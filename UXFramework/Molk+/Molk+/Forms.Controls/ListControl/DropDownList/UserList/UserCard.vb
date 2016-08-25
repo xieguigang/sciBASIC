@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::d584171284a49062d630cd2db4f627ae, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\UserCard.vb"
+﻿#Region "Microsoft.VisualBasic::32a170135b9dcd49b50092ed92e3709a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\ListControl\DropDownList\UserList\UserCard.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.ComponentModel
 Imports System.Drawing
@@ -90,4 +90,3 @@ Public Class UserCard : Inherits ListControlItem
         Selected = True
     End Sub
 End Class
-

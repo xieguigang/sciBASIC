@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::984f32dc8aa650bbf682f79c367e81fc, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\Variables.vb"
+﻿#Region "Microsoft.VisualBasic::370982190e1480cc36c128c787f4a969, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\Variables.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -95,4 +96,3 @@ Namespace Serials.PeriodAnalysis
         Public Property TSerials As TimePoint()
     End Class
 End Namespace
-

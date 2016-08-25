@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::4f774b32faa3cb73850ff38a0650a1c7, ..\VisualBasic_AppFramework\UXFramework\ChromeUI\WindowsApplication1\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::3a29c4c2c9cb97c321ae8403cd65ebf4, ..\visualbasic_App\UXFramework\ChromeUI\WindowsApplication1\Form1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -30,4 +31,3 @@ Public Class Form1
         ToolStripManager.Renderer = New ChromeUI.ChromeUIRender
     End Sub
 End Class
-

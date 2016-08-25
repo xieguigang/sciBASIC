@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5586e1caec19019c158942a1586cc03e, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Forms.Controls\Image\TransparentImage.vb"
+﻿#Region "Microsoft.VisualBasic::43c7925769ad56682983913e3c791553, ..\visualbasic_App\UXFramework\Molk+\Molk+\Forms.Controls\Image\TransparentImage.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -24,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging
 ''' <summary>
@@ -105,4 +105,3 @@ Public Class TransparentImage
         Call Update()
     End Sub
 End Class
-

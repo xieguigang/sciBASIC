@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::a6d0d58b3b32aee8758092d4f5d42533, ..\VisualBasic_AppFramework\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::a6d0d58b3b32aee8758092d4f5d42533, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

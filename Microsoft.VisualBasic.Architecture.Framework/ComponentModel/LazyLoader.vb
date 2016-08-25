@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::0787a5a4d54db90ca0661ce30e6768d3, ..\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\LazyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::0787a5a4d54db90ca0661ce30e6768d3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\LazyLoader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

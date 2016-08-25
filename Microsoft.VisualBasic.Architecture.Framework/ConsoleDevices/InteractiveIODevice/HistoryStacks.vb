@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::9d2ca62e024f6d5595a7e0488f5a583c, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::9d2ca62e024f6d5595a7e0488f5a583c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

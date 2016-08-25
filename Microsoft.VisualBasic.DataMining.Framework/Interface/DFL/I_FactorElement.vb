@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::55d92b384a8b6c09dfc6ccadc2a9af90, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::dc0949094b9f3ec8920d2c7187e626ae, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

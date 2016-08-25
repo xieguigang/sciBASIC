@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c795d905d61799c11186b6811726e837, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::c795d905d61799c11186b6811726e837, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

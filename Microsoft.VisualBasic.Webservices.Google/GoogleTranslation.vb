@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::16f938216146f07f1b9978a63a05c092, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Webservices.Google\GoogleTranslation.vb"
+﻿#Region "Microsoft.VisualBasic::9659732a7ba982962d126bdcec3eba71, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Google\GoogleTranslation.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -115,4 +116,3 @@ Public Class GoogleTranslation
         Return ""
     End Function
 End Class
-

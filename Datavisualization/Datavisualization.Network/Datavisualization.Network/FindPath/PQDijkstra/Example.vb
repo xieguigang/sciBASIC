@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::30e5c911930e258ea4058e0de5192ced, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\Example.vb"
+﻿#Region "Microsoft.VisualBasic::93adfba91d581116b612acefc52cd2c2, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\Example.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

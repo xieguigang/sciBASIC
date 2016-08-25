@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::33a4586562ece93435fef5861b0279cb, ..\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::33a4586562ece93435fef5861b0279cb, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\EventProc.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

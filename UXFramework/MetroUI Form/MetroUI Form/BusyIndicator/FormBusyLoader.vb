@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6478468cdc460659279fea5bde796280, ..\VisualBasic_AppFramework\UXFramework\MetroUI Form\MetroUI Form\BusyIndicator\FormBusyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::f3e3a0b5ca05887f9fdd0cd98ce2d27e, ..\visualbasic_App\UXFramework\MetroUI Form\MetroUI Form\BusyIndicator\FormBusyLoader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

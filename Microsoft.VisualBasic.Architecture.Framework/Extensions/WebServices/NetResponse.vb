@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::81ea4e8bc9ad9472fa415e88abef22a2, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\NetResponse.vb"
+﻿#Region "Microsoft.VisualBasic::81ea4e8bc9ad9472fa415e88abef22a2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\NetResponse.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

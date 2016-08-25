@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::df1e5c96903ca3c77ef1504fe040db1e, ..\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::1e810361b03dde82f3a36f3caf7e9dc6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -295,16 +296,29 @@ Namespace CommandLine
 
 #Region "Pipeline"
 
-        ''' <summary>
+        ''' <summary>About <paramref name="s"/>:
+        ''' 
+        ''' + If the file path is not a value path, then is the value is not null, the argument value will be returned from this parameter. 
+        ''' + If the value is nothing, then this function will open the standard input as input.
+        ''' + If the file path is valid as input file, then a local file system pointer will be returned.
+        ''' 
         ''' [管道函数] 假若参数名存在并且所指向的文件也存在，则返回本地文件的文件指针，否则返回标准输入的指针
         ''' </summary>
         ''' <param name="param"></param>
+        ''' <param name="s">
+        ''' + If the file path is not a value path, then is the value is not null, the argument value will be returned from this parameter. 
+        ''' + If the value is nothing, then this function will open the standard input as input.
+        ''' + If the file path is valid as input file, then a local file system pointer will be returned.
+        ''' </param>
         ''' <returns></returns>
-        Public Function OpenStreamInput(param As String) As StreamReader
+        Public Function OpenStreamInput(param As String, Optional ByRef s As String = Nothing) As StreamReader
             Dim path As String = Me(param)
 
             If path.FileExists Then
                 Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
+            ElseIf Not String.IsNullOrEmpty(path) Then
+                s = path
+                Return Nothing
             Else
                 Return New StreamReader(Console.OpenStandardInput)
             End If
@@ -325,6 +339,21 @@ Namespace CommandLine
 
                 Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
                 Return New StreamWriter(fs)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Read all of the text input from the file or ``std_in``
+        ''' </summary>
+        ''' <param name="param"></param>
+        ''' <returns></returns>
+        Public Function ReadInput(param As String) As String
+            Dim s As String = Nothing
+            Dim read As StreamReader = OpenStreamInput(param, s)
+            If read Is Nothing Then
+                Return s
+            Else
+                Return read.ReadToEnd
             End If
         End Function
 #End Region

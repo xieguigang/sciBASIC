@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7aa0f2f143297880fdc0872374d593bb, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\Kernel\Bayesian.vb"
+﻿#Region "Microsoft.VisualBasic::94ac01ceddeef2b5a3ffba3c9871b2b4, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\Bayesian.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

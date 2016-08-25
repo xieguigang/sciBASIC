@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::c52c2fab0dc8d5b91bd16d91719e9293, ..\VisualBasic_AppFramework\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::490c656bbaef2e68a12613e0f7213a8f, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Edge.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

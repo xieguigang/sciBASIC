@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::7f3b390bb33128a56b5642d141e399a4, ..\VisualBasic_AppFramework\UXFramework\Molk+\Molk+\Metro\BusyLoader\AjaxLoaderSquaresCircles.vb"
+﻿#Region "Microsoft.VisualBasic::16d5c8abf379d852a3e72fb84f01914a, ..\visualbasic_App\UXFramework\Molk+\Molk+\Metro\BusyLoader\AjaxLoaderSquaresCircles.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -88,4 +89,3 @@ Public Class AjaxLoaderSquaresCircles
         Me.PictureBox1.BackgroundImage = InternalGetResource()
     End Sub
 End Class
-

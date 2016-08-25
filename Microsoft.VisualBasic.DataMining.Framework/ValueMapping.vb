@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::89bc3cb9faf654e227e493ef038dd3e6, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.DataMining.Framework\ValueMapping.vb"
+﻿#Region "Microsoft.VisualBasic::87cb2cb076b299972d41edf9d0f22cac, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\ValueMapping.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -51,4 +52,3 @@ Public Module ValueMapping
         Return Mdn
     End Function
 End Module
-

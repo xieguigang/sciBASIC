@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::67d90912c74e994fa7dd0bd46b090ed0, ..\VisualBasic_AppFramework\UXFramework\Molk+\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::8a82b70a1afc873c3b4ae8be313ddd1b, ..\visualbasic_App\UXFramework\Molk+\TestProject\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -32,4 +33,3 @@ Module Module1
         Call New Form4().ShowDialog()
     End Sub
 End Module
-

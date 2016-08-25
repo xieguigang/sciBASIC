@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::e867052510be20c32dbd681ce33c17eb, ..\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::91a7164520c9d6ee39e72b04e6c607f0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -29,6 +30,40 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' 取出在x元素之后的所有元素
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function After(Of T)(source As IEnumerable(Of T), x As T) As IEnumerable(Of T)
+        Return source.After(Function(o) x.Equals(o))
+    End Function
+
+    ''' <summary>
+    ''' 取出在判定条件成立的元素之后的所有元素
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="predicate"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function After(Of T)(source As IEnumerable(Of T), predicate As Predicate(Of T)) As IEnumerable(Of T)
+        Dim isAfter As Boolean = False
+
+        For Each x As T In source
+            If isAfter Then
+                Yield x
+            Else
+                If predicate(x) Then
+                    isAfter = True
+                End If
+            End If
+        Next
+    End Function
 
     <Extension>
     Public Sub Memset(Of T)(ByRef array As T(), o As T, len As Integer)

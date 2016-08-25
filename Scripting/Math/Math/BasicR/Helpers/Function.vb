@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::365386d384738ea8dad173865d834349, ..\VisualBasic_AppFramework\Scripting\Math\Math\BasicR\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::365386d384738ea8dad173865d834349, ..\visualbasic_App\Scripting\Math\Math\BasicR\Helpers\Function.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 

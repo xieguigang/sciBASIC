@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6909c1f462c269734224ecc22d03a5a8, ..\VisualBasic_AppFramework\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::81abb8759651697498c458b9f224fedd, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
@@ -111,7 +112,7 @@ Public Module SearchEngineProvider
     Private Function __getNextPageLink(html As String) As String
         Dim link As String = Regex.Match(html, NextPage, RegexICSng).Value
         link = Regex.Matches(link, "<a href=""/search\?q=.*?""", RegexICSng).ToArray.LastOrDefault
-        link = link.Get_href
+        link = link.href
         link = link.Replace("amp;", "")
 
         If String.IsNullOrEmpty(link) Then
@@ -121,4 +122,3 @@ Public Module SearchEngineProvider
         End If
     End Function
 End Module
-
