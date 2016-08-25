@@ -112,7 +112,9 @@ Public Class Renderer3D : Inherits Renderer
             If ShowLabels Then
                 Dim center As Point = rect.Center
                 Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
-                center = New Point(center.X - sz.Width / 2, center.Y - sz.Height / 2)
+                center = New Point(
+                    CInt(center.X - sz.Width / 2),
+                    CInt(center.Y - sz.Height / 2))
                 Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
             End If
         End SyncLock

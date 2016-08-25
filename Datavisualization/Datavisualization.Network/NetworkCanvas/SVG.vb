@@ -119,8 +119,8 @@ Public Module SVGExtensions
             In graph.nodes
             Let pos As Point = getPoint(n, rect, viewDistance)
             Select New SVG.text With {
-                .x = pos.X,
-                .y = pos.Y,
+                .x = CStr(pos.X),
+                .y = CStr(pos.Y),
                 .value = n.ID,
                 .class = "text"
             }
