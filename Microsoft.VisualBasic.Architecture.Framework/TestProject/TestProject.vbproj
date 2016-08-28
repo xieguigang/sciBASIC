@@ -113,6 +113,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Webservices.Google\Microsoft.VisualBasic.Webservices.Google.vbproj">
+      <Project>{27d73520-1698-45b0-b35b-32b5af0334f0}</Project>
+      <Name>Microsoft.VisualBasic.Webservices.Google</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -49,15 +49,21 @@ Public Class RSS : Inherits ClassObject
         Return Me.GetJson
     End Function
 
-    Public Shared Function Fetch(url As String) As RSS
-        Dim xml As String = url.GET
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="proxy">Some region required of proxy server for visit google.</param>
+    ''' <returns></returns>
+    Public Shared Function Fetch(url As String, Optional proxy As String = Nothing) As RSS
+        Dim xml As String = url.GET(proxy:=proxy)
         Dim value As RSS = xml.CreateObjectFromXml(Of RSS)
         Return value
     End Function
 
-    Public Shared Function GetCurrent(query As String) As RSS
+    Public Shared Function GetCurrent(query As String, Optional proxy As String = Nothing) As RSS
         Dim url As String = $"https://news.google.com/news?q={query.Replace(" ", "+")}&output=rss"
-        Return Fetch(url)
+        Return Fetch(url, proxy)
     End Function
 End Class
 
