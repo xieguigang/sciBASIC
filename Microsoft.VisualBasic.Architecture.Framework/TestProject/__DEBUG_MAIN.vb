@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Webservices
 
 Module __DEBUG_MAIN
 
@@ -65,7 +66,9 @@ Module __DEBUG_MAIN
 
 
     Function Main(args As String()) As Integer
-        Call Microsoft.VisualBasic.Webservices.Google.RSS.GetCurrent("zika", "http://127.0.0.1:8087").GetJson.__DEBUG_ECHO
+        Dim rss = Google.News.RSS.GetCurrent("zika", "http://127.0.0.1:8087")
+
+        Call rss.GetXml.__DEBUG_ECHO
 
         Pause()
 
