@@ -57,6 +57,34 @@ Namespace Parallel.Threads
             End Get
         End Property
 
+        ''' <summary>
+        ''' 返回当前正在处于工作状态的线程数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property WorkingThreads As Integer
+            Get
+                Dim n As Integer
+
+                For Each t In __threads
+                    If t.Tasks > 0 Then
+                        n += 1
+                    End If
+                Next
+
+                Return n
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 是否所有的线程都是处于工作状态的
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property FullCapacity As Boolean
+            Get
+                Return WorkingThreads = __threads.Length
+            End Get
+        End Property
+
         Sub New(maxThread As Integer)
             __threads = New TaskQueue(Of Long)(maxThread) {}
 
