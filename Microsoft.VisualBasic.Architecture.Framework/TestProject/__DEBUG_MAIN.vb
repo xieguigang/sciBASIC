@@ -64,8 +64,26 @@ Module __DEBUG_MAIN
         Call RunApp("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\TestProject\Test2\bin\Debug\Test2.exe", cs:=True)
     End Sub
 
+    Public Function tt() As Tuple
+        Return New Tuple <= New With {
+            .FirstName = 123,
+            .Middle = 222,
+            .LastName = "12313"
+        }
+    End Function
+
+
+    '  Public Sub ttttt(p As (x  as integer , y As Integer))
+
+    '  End Sub
 
     Function Main(args As String()) As Integer
+
+        Dim t As Object = tt()
+        '  Dim vars As Value(Of Object) = New With {.dsada = 4444}
+
+        Call $"{t.FirstName}, ".__DEBUG_ECHO
+
         Dim rss = Google.News.RSS.GetCurrent("zika", "http://127.0.0.1:8087")
 
         Call rss.GetXml.__DEBUG_ECHO
