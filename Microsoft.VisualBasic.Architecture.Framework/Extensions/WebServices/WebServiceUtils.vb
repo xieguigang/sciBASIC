@@ -513,7 +513,8 @@ Public Module WebServiceUtils
                        Optional timeout As UInteger = 20,
                        <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
                        Optional isFileUrl As Boolean = False,
-                       Optional headers As Dictionary(Of String, String) = Nothing) As String
+                       Optional headers As Dictionary(Of String, String) = Nothing,
+                       Optional proxy As String = Nothing) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -540,17 +541,17 @@ Public Module WebServiceUtils
 #If FRAMEWORD_CORE Then
         Using Process As New CBusyIndicator(_start:=True)
 #End If
-            Return __downloadWebpage(url, timeout, headers)
+            Return __downloadWebpage(url, timeout, headers, proxy)
 #If FRAMEWORD_CORE Then
         End Using
 #End If
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String)) As String
+    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String), proxy As String) As String
         Dim RequestTime As Integer = 0
         Try
-RETRY:      Return __downloadWebpage(url, headers)
+RETRY:      Return __downloadWebpage(url, headers, proxy)
         Catch ex As Exception
             ex = New Exception(url, ex)
             Call ex.PrintException
@@ -573,7 +574,7 @@ RETRY:      Return __downloadWebpage(url, headers)
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String)) As String
+    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String), proxy As String) As String
         Call "Waiting for the server reply..".__DEBUG_ECHO
 
         Dim Timer As Stopwatch = Stopwatch.StartNew
@@ -586,6 +587,12 @@ RETRY:      Return __downloadWebpage(url, headers)
             For Each x In headers
                 WebRequest.Headers(x.Key) = x.Value
             Next
+        End If
+        If Not String.IsNullOrEmpty(proxy) Then
+            Dim prox As New WebProxy
+            prox.Address = New Uri(proxy)
+            prox.Credentials = New NetworkCredential()
+            WebRequest.Proxy = prox
         End If
 
         Dim WebResponse As WebResponse = WebRequest.GetResponse

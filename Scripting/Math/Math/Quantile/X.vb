@@ -44,6 +44,9 @@
 
 Namespace Quantile
 
+    ''' <summary>
+    ''' Data variables
+    ''' </summary>
     Public Class X
 
         Public ReadOnly Property value As Long

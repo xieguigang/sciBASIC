@@ -21,6 +21,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "NetworkCanvas", "Datavisual
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming", "Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.vbproj", "{A903B744-C08D-4869-BC35-3DD25E36AA16}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestProject", "Microsoft.VisualBasic.Architecture.Framework\TestProject\TestProject.vbproj", "{066C1C60-28CF-4A04-94B0-0CDD161482AB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\DP_lib.projitems*{a903b744-c08d-4869-bc35-3dd25e36aa16}*SharedItemsImports = 4
@@ -256,6 +258,30 @@ Global
 		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x64.Build.0 = Release|x64
 		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x86.ActiveCfg = Release|x86
 		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x86.Build.0 = Release|x86
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Debug|x64.Build.0 = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.docs|x64.ActiveCfg = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.docs|x64.Build.0 = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.docs|x86.ActiveCfg = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.docs|x86.Build.0 = Debug|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Publish|x64.ActiveCfg = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Publish|x64.Build.0 = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Publish|x86.ActiveCfg = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Publish|x86.Build.0 = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Release|x64.ActiveCfg = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Release|x64.Build.0 = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{066C1C60-28CF-4A04-94B0-0CDD161482AB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
