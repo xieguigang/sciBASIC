@@ -2,6 +2,9 @@
 
 Namespace Language.Python
 
+    ''' <summary>
+    ''' ``re`` module in the python language.
+    ''' </summary>
     Public Module Regexp
 
         ''' <summary>
