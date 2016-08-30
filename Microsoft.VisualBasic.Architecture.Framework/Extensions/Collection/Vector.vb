@@ -32,6 +32,18 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Public Module VectorExtensions
 
     ''' <summary>
+    ''' 从后往前访问集合之中的元素，请注意请不要使用Linq查询表达式，尽量使用``list``或者``array``
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source">请不要使用Linq查询表达式，尽量使用``list``或者``array``</param>
+    ''' <param name="index"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Last(Of T)(source As IEnumerable(Of T), index As Integer) As T
+        Return source(source.Count - index)
+    End Function
+
+    ''' <summary>
     ''' 取出在x元素之后的所有元素
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

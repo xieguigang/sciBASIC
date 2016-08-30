@@ -42,15 +42,29 @@ Namespace Language
         Public Function xFormat(s As String) As FormatHelper
             Return New FormatHelper With {.source = s}
         End Function
+
+        <Extension>
+        Public Function xFormat(args As String()) As FormatHelper
+            Return New FormatHelper With {.args = args}
+        End Function
     End Module
 
     Public Structure FormatHelper
 
         Dim source As String
+        Dim args As String()
 
         Public Overrides Function ToString() As String
             Return source
         End Function
+
+        Public Shared Operator <=(pattern As String, format As FormatHelper) As String
+            Return sprintf(pattern, format.args)
+        End Operator
+
+        Public Shared Operator >=(pattern As String, format As FormatHelper) As String
+            Throw New NotSupportedException
+        End Operator
 
         Public Shared Operator <=(format As FormatHelper, args As String()) As String
             Return sprintf(format.source, args)
