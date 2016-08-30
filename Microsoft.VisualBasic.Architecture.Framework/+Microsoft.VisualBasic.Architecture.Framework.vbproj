@@ -366,6 +366,7 @@
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
     <Compile Include="Language\LanguageExtensions.vb" />
     <Compile Include="Language\Tuple.vb" />
+    <Compile Include="Language\Python\Regexp.vb" />
     <Compile Include="Language\Value.vb" />
     <Compile Include="Language\Python\Collection.vb" />
     <Compile Include="Language\Python\NamedTuple.vb" />
