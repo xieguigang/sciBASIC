@@ -50,12 +50,13 @@ Namespace ComponentModel.DataSourceModel
         ''' The Extension property value.
         ''' </summary>
         ''' <returns></returns>
-        Public Overrides Property Value As T
+        Public Overrides Property value As T
             Get
                 Return __get()
             End Get
             Set(value As T)
-                MyBase.Value = value
+                MyBase.value = value
+
                 If Not __set Is Nothing Then
                     Call __set(value)  ' 因为在初始化的时候会对这个属性赋值，但是set没有被初始化，所以会出错，在这里加了一个if判断来避免空引用的错误
                 End If

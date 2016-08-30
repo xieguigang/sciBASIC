@@ -101,7 +101,10 @@ Namespace Parallel.Tasks
         End Sub
 
         Private Sub __invoke()
-            Try
+#If DEBUG Then
+            Call _execute()
+#Else
+  Try
                 Call _execute()
             Catch ex As Exception
                 If Not ErrHandle Is Nothing Then
@@ -112,6 +115,7 @@ Namespace Parallel.Tasks
             Finally
                 Call Threading.Thread.Sleep(Periods)
             End Try
+#End If
         End Sub
 
         Public Overrides Function ToString() As String
