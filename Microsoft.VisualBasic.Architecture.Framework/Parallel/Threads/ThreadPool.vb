@@ -45,7 +45,7 @@ Namespace Parallel.Threads
         ''' <summary>
         ''' 临时的句柄缓存
         ''' </summary>
-        ReadOnly __pendings As New Queue(Of KeyValuePair(Of Action, Action(Of Long)))
+        ReadOnly __pendings As New Queue(Of KeyValuePair(Of Action, Action(Of Long)))(capacity:=10240)
 
         ''' <summary>
         ''' 线程池之中的线程数量
@@ -105,7 +105,11 @@ Namespace Parallel.Threads
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
         Public Sub RunTask(task As Action, Optional callback As Action(Of Long) = Nothing)
-            Call __pendings.Enqueue(New KeyValuePair(Of Action, Action(Of Long))(task, callback))
+            Dim pends As New KeyValuePair(Of Action, Action(Of Long))(task, callback)
+
+            SyncLock __pendings
+                Call __pendings.Enqueue(pends)
+            End SyncLock
         End Sub
 
         Public Sub OperationTimeOut(task As Action, timeout As Integer)

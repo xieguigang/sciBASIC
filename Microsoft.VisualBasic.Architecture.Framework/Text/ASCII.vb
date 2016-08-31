@@ -227,5 +227,147 @@ Namespace Text
         ''' <see cref="vbTab"/>
         ''' </summary>
         Public Const TAB As Char = CChar(vbTab)
+
+        Public Class [Byte]
+
+            ''' <summary>
+            ''' 0000 0000	0	00	NUL	空字符（Null）
+            ''' </summary>
+            Public Const NUL As Integer = 0
+            ''' <summary>
+            ''' 0000 0001	1	01	SOH	标题开始
+            ''' </summary>
+            Public Const SOH As Integer = 1
+            ''' <summary>
+            ''' 0000 0010	2	02	STX	本文开始
+            ''' </summary>
+            Public Const STX As Integer = 2
+            ''' <summary>
+            ''' 0000 0011	3	03	ETX	本文结束
+            ''' </summary>
+            Public Const ETX As Integer = 3
+            ''' <summary>
+            ''' 0000 0100	4	04	EOT	传输结束
+            ''' </summary>
+            Public Const EOT As Integer = 4
+            ''' <summary>
+            ''' 0000 0101	5	05	ENQ	请求
+            ''' </summary>
+            Public Const ENQ As Integer = 5
+            ''' <summary>
+            ''' 0000 0110	6	06	ACK	确认回应
+            ''' </summary>
+            Public Const ACK As Integer = 6
+            ''' <summary>
+            ''' 0000 0111	7	07	BEL	响铃
+            ''' </summary>
+            Public Const BEL As Integer = 7
+            ''' <summary>
+            ''' 0000 1000	8	08	BS	退格
+            ''' </summary>
+            Public Const BS As Integer = 8
+            ''' <summary>
+            ''' 0000 1001	9	09	HT	水平定位符号
+            ''' </summary>
+            Public Const HT As Integer = 9
+            ''' <summary>
+            ''' 0000 1010	10	0A	LF	换行键
+            ''' </summary>
+            Public Const LF As Integer = 10
+            ''' <summary>
+            ''' 0000 1011	11	0B	VT	垂直定位符号
+            ''' </summary>
+            Public Const VT As Integer = 11
+            ''' <summary>
+            ''' 0000 1100	12	0C	FF	换页键
+            ''' </summary>
+            Public Const FF As Integer = 12
+            ''' <summary>
+            ''' 0000 1101	13	0D	CR	归位键
+            ''' </summary>
+            Public Const CR As Integer = 13
+            ''' <summary>
+            ''' 0000 1110	14	0E	SO	取消变换（Shift out）
+            ''' </summary>
+            Public Const SO As Integer = 14
+            ''' <summary>
+            ''' 0000 1111	15	0F	SI	启用变换（Shift in）
+            ''' </summary>
+            Public Const SI As Integer = 15
+            ''' <summary>
+            ''' 0001 0000	16	10	DLE	跳出数据通讯
+            ''' </summary>
+            Public Const DLE As Integer = 16
+            ''' <summary>
+            ''' 0001 0001	17	11	DC1	设备控制一（XON 启用软件速度控制）
+            ''' </summary>
+            Public Const DC1 As Integer = 17
+            ''' <summary>
+            ''' 0001 0010	18	12	DC2	设备控制二
+            ''' </summary>
+            Public Const DC2 As Integer = 18
+            ''' <summary>
+            ''' 0001 0011	19	13	DC3	设备控制三（XOFF 停用软件速度控制）
+            ''' </summary>
+            Public Const DC3 As Integer = 19
+            ''' <summary>
+            ''' 0001 0100	20	14	DC4	设备控制四
+            ''' </summary>
+            Public Const DC4 As Integer = 20
+            ''' <summary>
+            ''' 0001 0101	21	15	NAK	确认失败回应
+            ''' </summary>
+            Public Const NAK As Integer = 21
+            ''' <summary>
+            ''' 0001 0110	22	16	SYN	同步用暂停
+            ''' </summary>
+            Public Const SYN As Integer = 22
+            ''' <summary>
+            ''' 0001 0111	23	17	ETB	区块传输结束
+            ''' </summary>
+            Public Const ETB As Integer = 23
+            ''' <summary>
+            ''' 0001 1000	24	18	CAN	取消
+            ''' </summary>
+            Public Const CAN As Integer = 24
+            ''' <summary>
+            ''' 0001 1001	25	19	EM	连接介质中断
+            ''' </summary>
+            Public Const EM As Integer = 25
+            ''' <summary>
+            ''' 0001 1010	26	1A	SUB	替换
+            ''' </summary>
+            Public Const [SUB] As Integer = 26
+            ''' <summary>
+            ''' 0001 1011	27	1B	ESC	跳出
+            ''' </summary>
+            Public Const ESC As Integer = 27
+            ''' <summary>
+            ''' 0001 1100	28	1C	FS	文件分割符
+            ''' </summary>
+            Public Const FS As Integer = 28
+            ''' <summary>
+            ''' 0001 1101	29	1D	GS	组群分隔符
+            ''' </summary>
+            Public Const GS As Integer = 29
+            ''' <summary>
+            ''' 0001 1110	30	1E	RS	记录分隔符
+            ''' </summary>
+            Public Const RS As Integer = 30
+            ''' <summary>
+            ''' 0001 1111	31	1F	US	单元分隔符
+            ''' </summary>
+            Public Const US As Integer = 31
+            ''' <summary>
+            ''' 0111 1111	127	7F	DEL	删除
+            ''' </summary>
+            Public Const DEL As Integer = 127
+
+            ''' <summary>
+            ''' <see cref="vbTab"/>
+            ''' </summary>
+            Public Const TAB As Integer = Asc(vbTab)
+
+        End Class
     End Class
 End Namespace
