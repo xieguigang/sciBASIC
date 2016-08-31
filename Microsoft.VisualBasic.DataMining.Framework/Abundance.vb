@@ -32,6 +32,12 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Abundance
 
+    ''' <summary>
+    ''' x除以最大的值就是相对丰度
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function RelativeAbundances(Of T As ISample)(source As IEnumerable(Of T)) As IEnumerable(Of T)
         Dim array As T() = source.ToArray
