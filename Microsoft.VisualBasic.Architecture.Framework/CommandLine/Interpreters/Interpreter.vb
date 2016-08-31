@@ -604,16 +604,18 @@ Namespace CommandLine
             End Set
         End Property
 
-        Public Function GetPossibleCommand(name As String) As EntryPoints.APIEntryPoint
-            If Me.__API_InfoHash.ContainsKey(name.ToLower.ShadowCopy(name)) Then
-                Return __API_InfoHash(name)
+        Public Function GetPossibleCommand(name As Value(Of String)) As EntryPoints.APIEntryPoint
+            If Me.__API_InfoHash.ContainsKey(name = (+name).ToLower) Then
+                Return __API_InfoHash(+name)
             Else
-                Dim LQuery = (From x As KeyValuePair(Of String, EntryPoints.APIEntryPoint)
+                Dim LQuery = (From x As KeyValuePair(Of String, APIEntryPoint)
                               In __API_InfoHash
                               Let similarity = LevenshteinDistance.ComputeDistance(x.Key, name)
                               Where Not similarity Is Nothing
-                              Select similarity.Score, x.Value
+                              Select similarity.Score,
+                                  x.Value
                               Order By Score Descending).ToArray
+
                 If LQuery.IsNullOrEmpty Then
                     Return Nothing
                 Else
@@ -634,8 +636,10 @@ Namespace CommandLine
                          Let lev = LevenshteinDistance.ComputeDistance(x, key)
                          Where Not lev Is Nothing AndAlso
                               lev.Score > 0.3
-                         Select lev.Score, x
+                         Select lev.Score,
+                             x
                          Order By Score Descending
+
             Return LQuery.ToArray(Function(x) x.x)
         End Function
 

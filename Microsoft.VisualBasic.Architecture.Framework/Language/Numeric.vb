@@ -158,9 +158,8 @@ Namespace Language
     ''' <summary>
     ''' Alias of <see cref="Int32"/>
     ''' </summary>
-    Public Class Int : Implements IComparable
-
-        Public Property value As Integer
+    Public Class int : Inherits Value(Of Integer)
+        Implements IComparable
 
         Sub New(Optional x As Integer = Scan0)
             value = x
@@ -180,10 +179,10 @@ Namespace Language
 
             If type.Equals(GetType(Integer)) Then
                 Return value.CompareTo(DirectCast(obj, Integer))
-            ElseIf type.Equals(GetType(Int)) Then
-                Return value.CompareTo(DirectCast(obj, Int).value)
+            ElseIf type.Equals(GetType(int)) Then
+                Return value.CompareTo(DirectCast(obj, int).value)
             Else
-                Throw New Exception($"Miss-match of type:  {GetType(Int).FullName} --> {type.FullName}")
+                Throw New Exception($"Miss-match of type:  {GetType(int).FullName} --> {type.FullName}")
             End If
         End Function
 
@@ -194,47 +193,76 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <(n As Integer, x As Int) As Int
+        Public Shared Operator <(n As Integer, x As int) As int
             If n >= x.value Then
-                Return New Int(Integer.MaxValue)
+                Return New int(Integer.MaxValue)
             Else
                 Return x
             End If
         End Operator
 
-        Public Shared Operator <=(x As Int, n As Integer) As Boolean
+        ''' <summary>
+        ''' ``x.value &lt; n``
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(x As int, n As Integer) As Boolean
+            Return x.value < n
+        End Operator
+
+        ''' <summary>
+        ''' ``x.value > n``
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Operator >(x As int, n As Integer) As Boolean
+            Return x.value > n
+        End Operator
+
+        Public Overloads Shared Operator <=(x As int, n As Integer) As Boolean
             Return x.value <= n
         End Operator
 
-        Public Shared Operator >=(x As Int, n As Integer) As Boolean
+        Public Overloads Shared Operator >=(x As int, n As Integer) As Boolean
             Return x.value >= n
         End Operator
 
-        Public Shared Operator >(n As Integer, x As Int) As Int
+        Public Shared Operator >(n As Integer, x As int) As int
             Return x
         End Operator
 
-        Public Shared Widening Operator CType(n As Integer) As Int
-            Return New Int(n)
-        End Operator
-
-        Public Shared Narrowing Operator CType(n As Int) As Integer
-            Return n.value
-        End Operator
-
-        Public Shared Operator +(x As Int) As Integer
+        ''' <summary>
+        ''' 自增1然后返回之前的值
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(x As int) As Integer
             Dim i As Integer = x.value
             x.value += 1
             Return i
         End Operator
 
-        Public Shared Operator >(source As IEnumerable, handle As Int) As Boolean
+        Public Shared Operator >(source As IEnumerable, handle As int) As Boolean
             Dim file As FileHandle = FileHandles.__getHandle(handle.value)
             Return CollectionIO.DefaultHandle()(source, file.FileName, file.encoding)
         End Operator
 
-        Public Shared Operator <(source As IEnumerable, handle As Int) As Boolean
+        Public Shared Operator <(source As IEnumerable, handle As int) As Boolean
             Throw New NotSupportedException
+        End Operator
+
+        ''' <summary>
+        ''' p的值增加x，然后返回之前的值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Shared Operator <<(p As int, x As Integer) As Integer
+            Dim i As Integer = p.value
+            p.value += x
+            Return i
         End Operator
     End Class
 

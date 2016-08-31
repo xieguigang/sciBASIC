@@ -88,7 +88,9 @@ Namespace DocumentStream.Linq
         End Sub
 
         Public Function GetOrdinal(Name As String) As Integer Implements ISchema.GetOrdinal
-            If _schema.ContainsKey(Name.ToLower.ShadowCopy(Name)) Then
+            Name = Name.ToLower
+
+            If _schema.ContainsKey(Name) Then
                 Return _schema(Name)
             Else
                 Return -1

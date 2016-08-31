@@ -122,19 +122,18 @@ Namespace StorageProvider.Reflection
                 Return New ComponentModels.Column(column, [Property])
             End If
 
-            Dim valueType As Type = Nothing
-            Dim elType As Type = Nothing
+            Dim valueType As New Value(Of Type)
+            Dim elType As New Value(Of Type)
 
-            If Not GetMetaAttribute([Property].PropertyType).ShadowCopy(valueType) Is Nothing Then
+            If Not (valueType = GetMetaAttribute([Property].PropertyType)) Is Nothing Then
 
                 Return New ComponentModels.MetaAttribute(
-                    New Reflection.MetaAttribute(valueType), [Property])
-            ElseIf Not (GetThisElement([Property].PropertyType, forcePrimitive) _
-                       .ShadowCopy(elType) Is Nothing OrElse
-                        elType.Equals(GetType(Void))) Then
+                    New Reflection.MetaAttribute(valueType.value), [Property])
+            ElseIf Not (elType = (GetThisElement([Property].PropertyType, forcePrimitive)) Is Nothing OrElse
+                        elType.value.Equals(GetType(Void))) Then
 
                 Return ComponentModels.CollectionColumn.CreateObject(
-                    New CollectionAttribute(_getName), [Property], elType)
+                    New CollectionAttribute(_getName), [Property], elType.value)
             ElseIf IsKeyValuePair([Property]) Then
                 Return ComponentModels.KeyValuePair.CreateObject(_getName, [Property])
             ElseIf IsEnum([Property]) Then
