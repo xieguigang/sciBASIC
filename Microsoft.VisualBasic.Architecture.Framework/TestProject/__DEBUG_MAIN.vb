@@ -79,6 +79,13 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
+        Try
+            Throw New NotSupportedException
+        Catch ex As Exception
+            Call App.LogException(ex)
+        End Try
+        Pause()
+
         Dim t As Object = tt()
         '  Dim vars As Value(Of Object) = New With {.dsada = 4444}
 
