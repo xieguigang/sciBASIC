@@ -128,14 +128,16 @@ Namespace Parallel.Threads
 
         Private Sub __allocate()
             Do While Not Me.disposedValue
-                If __pendings.Count > 0 Then
-                    Dim task = __pendings.Dequeue
-                    Dim h As Func(Of Long) = Function() Time(work:=task.Key)
-                    Dim callback = task.Value
-                    Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
-                Else
-                    Call Thread.Sleep(1)
-                End If
+                SyncLock __pendings
+                    If __pendings.Count > 0 Then
+                        Dim task = __pendings.Dequeue
+                        Dim h As Func(Of Long) = Function() Time(work:=task.Key)
+                        Dim callback = task.Value
+                        Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
+                    Else
+                        Call Thread.Sleep(1)
+                    End If
+                End SyncLock
             Loop
         End Sub
 
