@@ -878,19 +878,6 @@ Public Module Extensions
 
     ''' <summary>
     ''' Copy the source value directly to the target variable and then return the source value.
-    ''' (与函数<see cref="InvokeSet(Of T)(ByRef T, T)"/>)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="CopyTo"><paramref name="source"/> ==> <paramref name="CopyTo"/> target.</param>
-    ''' <returns></returns>
-    <Extension> Public Function ShadowCopy(Of T)(source As T, ByRef CopyTo As T) As T
-        CopyTo = source
-        Return CopyTo
-    End Function
-
-    ''' <summary>
-    ''' Copy the source value directly to the target variable and then return the source value.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
