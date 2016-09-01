@@ -170,7 +170,7 @@ Namespace Language.UnixBash
             Next
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
-                    .regexp = wc
+                    .regexp = If(wc.Length = 0, {".+"}, wc)
                 }.IsMatch
 
             If ls.__opts.ContainsKey(SearchOpt.Options.Directory) Then
