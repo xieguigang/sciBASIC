@@ -105,6 +105,7 @@
     <Compile Include="InternetTime\Constant.vb" />
     <Compile Include="InternetTime\InternetTime.vb" />
     <Compile Include="InternetTime\SynchronizingTime.vb" />
+    <Compile Include="IP\CIDR.vb" />
     <Compile Include="Protocols\POST.vb" />
     <Compile Include="Protocols\PushServices.vb" />
     <Compile Include="Protocols\InvokeAPI.vb" />
