@@ -1,8 +1,31 @@
-﻿
+﻿Imports System.Runtime.CompilerServices
+
 Public Module IPUtils
 
     ''' <summary>
-    ''' 
+    ''' ``\A(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}\z``
+    ''' </summary>
+    Const RegexIPAddress As String = "\A(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}\z"
+
+    <Extension>
+    Public Function ValidateIPAddress(IPAddress As String) As Boolean
+        If IPAddress.StartsWith("0") Then
+            Return False
+        End If
+
+        If IPAddress.Length = 0 Then
+            Return False
+        End If
+
+        If IPAddress.Matches(RegexIPAddress) Then
+            Return True
+        End If
+
+        Return False
+    End Function
+
+    ''' <summary>
+    ''' IPv4 address to long
     ''' </summary>
     ''' <param name="IPAddress"></param>
     ''' <returns></returns>

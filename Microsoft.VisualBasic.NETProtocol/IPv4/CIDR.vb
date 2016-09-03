@@ -1,76 +1,48 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Text
 
 Public Class IPv4
 
-    Friend baseIPnumeric As Integer = 0
-    Friend netmaskNumeric As Integer = 0
+    ReadOnly _baseIPnumeric As Integer
+    ReadOnly _netmaskNumeric As Integer
 
     ''' <summary>
-    ''' Specify IP address and netmask like: new IPv4("10.1.0.25","255.255.255.16")
+    ''' Specify IP address and netmask like: ``Dim ip As New IPv4("10.1.0.25","255.255.255.16")``
     ''' </summary>
     ''' <param name="symbolicIP"> </param>
     ''' <param name="netmask"> </param>
     Public Sub New(symbolicIP As String, netmask As String)
-        Dim Tokens As String() = StringSplit(symbolicIP, "\.", True)
+        Call IPNumeric(symbolicIP, _baseIPnumeric)
+        Call NetMaskNumeric(netmask, _netmaskNumeric)
+        Call __checkNetMask()
 
-        If Tokens.Length <> 4 Then
-            Throw New Exception("Invalid IP address: " & symbolicIP)
-        End If
+        ' 反向计算来检查结果是否正确
+        Me.IPAddress = NumericIpToSymbolic(_baseIPnumeric)
+        Me.Netmask = NumericNetmaskToSymbolic(_netmaskNumeric)
+        Me.CIDR = GetCIDR(_baseIPnumeric, _netmaskNumeric)
+        Me.hostAddressRange = GetHostAddressRange(_baseIPnumeric, _netmaskNumeric)
+        Me.numberOfHosts = GetNumberOfHosts(_netmaskNumeric)
+        Me.WildcardMask = GetWildcardMask(_netmaskNumeric)
+        Me.netmaskInBinary = GetBinary(_netmaskNumeric)
+        Me.BroadcastAddress = GetBroadcastAddress(_baseIPnumeric, _netmaskNumeric)
+    End Sub
 
-        Dim i As Integer = 24
-
-        For n As Integer = 0 To Tokens.Length - 1
-            Dim value As Integer = Convert.ToInt32(Tokens(n))
-
-            If value <> (value And &HFF) Then
-                Throw New Exception("Invalid IP address: " & symbolicIP)
-            End If
-
-            baseIPnumeric += value << i
-            i -= 8
-        Next
-
-        ' Netmask 
-        Tokens = StringSplit(netmask, "\.", True)
-
-        If Tokens.Length <> 4 Then
-            Throw New Exception("Invalid netmask address: " & netmask)
-        End If
-
-        i = 24
-
-        If Convert.ToInt32(Tokens(0)) < 255 Then
-            Throw New Exception("The first byte of netmask can not be less than 255")
-        End If
-
-        For n As Integer = 0 To Tokens.Length - 1
-            Dim value As Integer = Convert.ToInt32(Tokens(n))
-
-            If value <> (value And &HFF) Then
-                Throw New Exception("Invalid netmask address: " & netmask)
-            End If
-
-            netmaskNumeric += value << i
-
-            i -= 8
-        Next
-
-        '
-        '	* see if there are zeroes inside netmask, like: 1111111101111 This is
-        '	* illegal, throw exception if encountered. Netmask should always have
-        '	* only ones, then only zeroes, like: 11111111110000
-        '	
-
+    ''' <summary>
+    ''' See if there are zeroes inside netmask, like: ``1111111101111`` 
+    ''' this Is illegal, throw exception if encountered. 
+    ''' Netmask should always have only ones, then only zeroes, 
+    ''' like: ``11111111110000``
+    ''' </summary>
+    Private Sub __checkNetMask()
         Dim encounteredOne As Boolean = False
         Dim ourMaskBitPattern As Integer = 1
 
         For i = 0 To 31
-            If (netmaskNumeric And ourMaskBitPattern) <> 0 Then
+            If (_netmaskNumeric And ourMaskBitPattern) <> 0 Then
                 encounteredOne = True  ' the bit is 1
             Else
                 If encounteredOne = True Then  ' the bit is 0
-                    Throw New Exception($"Invalid netmask: {netmask} (bit {i + 1})")
+                    Throw New Exception($"Invalid netmask: {Netmask} (bit {i + 1})")
                 End If
             End If
 
@@ -79,17 +51,81 @@ Public Class IPv4
     End Sub
 
     ''' <summary>
+    ''' The first byte of netmask can not be less than 255
+    ''' </summary>
+    Const InvalidNetmaskInitial As String = "The first byte of netmask can not be less than 255"
+
+    Public Shared Sub NetMaskNumeric(netmask As String, ByRef netmaskNumeric As Integer)
+        Dim tokens As String() = StringSplit(netmask, "\.", True)
+
+        If tokens.Length <> 4 Then
+            Throw __invalidNetMask(netmask)
+        End If
+
+        If Convert.ToInt32(tokens(0)) < 255 Then
+            Throw New InvalidExpressionException(InvalidNetmaskInitial)
+        End If
+
+        Dim i As Integer = 24
+
+        For n As Integer = 0 To tokens.Length - 1
+            Dim value As Integer = Convert.ToInt32(tokens(n))
+
+            If value <> (value And &HFF) Then
+                Throw __invalidNetMask(netmask)
+            End If
+
+            netmaskNumeric += value << i
+
+            i -= 8
+        Next
+    End Sub
+
+    Public Shared Sub IPNumeric(symbolicIP As String, ByRef baseIPnumeric As Integer)
+        Dim tokens As String() = StringSplit(symbolicIP, "\.", True)
+
+        If tokens.Length <> 4 Then
+            Throw __invalidIPAddress(symbolicIP)
+        End If
+
+        Dim i As Integer = 24
+
+        For n As Integer = 0 To tokens.Length - 1
+            Dim value As Integer = Convert.ToInt32(tokens(n))
+
+            If value <> (value And &HFF) Then
+                Throw __invalidIPAddress(symbolicIP)
+            End If
+
+            baseIPnumeric += value << i
+            i -= 8
+        Next
+    End Sub
+
+#Region "Throw Exceptions"
+
+    Private Shared Function __invalidNetMask(netmask As String) As Exception
+        Return New Exception("Invalid netmask address: " & netmask)
+    End Function
+
+    Private Shared Function __invalidIPAddress(symbolicIP As String) As Exception
+        Return New Exception("Invalid IP address: " & symbolicIP)
+    End Function
+#End Region
+
+    ''' <summary>
     ''' Get the IP in symbolic form, i.e. xxx.xxx.xxx.xxx
     ''' 
     ''' @return
     ''' </summary>
-    Public Overridable ReadOnly Property IPAddress() As String
-        Get
-            Return convertNumericIpToSymbolic(baseIPnumeric)
-        End Get
-    End Property
+    Public ReadOnly Property IPAddress() As String
 
-    Private Function convertNumericIpToSymbolic(ip As System.Nullable(Of Integer)) As String
+    ''' <summary>
+    ''' Get the IP in symbolic form, i.e. ``xxx.xxx.xxx.xxx``
+    ''' </summary>
+    ''' <param name="ip"></param>
+    ''' <returns></returns>
+    Public Shared Function NumericIpToSymbolic(ip As Integer?) As String
         Dim sb As New StringBuilder(15)
 
         For shift As Integer = 24 To 1 Step -8
@@ -104,51 +140,55 @@ Public Class IPv4
     End Function
 
     ''' <summary>
-    ''' Get the net mask in symbolic form, i.e. xxx.xxx.xxx.xxx
+    ''' Get the net mask in symbolic form, i.e. ``xxx.xxx.xxx.xxx``
+    ''' </summary>
+    ''' <param name="netMaskNumeric"></param>
+    ''' <returns></returns>
+    Public Shared Function NumericNetmaskToSymbolic(netMaskNumeric As Integer) As String
+        Dim sb As New StringBuilder(15)
+
+        For shift As Integer = 24 To 1 Step -8
+
+            ' process 3 bytes, from high order byte down.
+            sb.Append(Convert.ToString(CInt(CUInt(netMaskNumeric) >> shift) And &HFF))
+            sb.Append("."c)
+        Next
+        sb.Append(Convert.ToString(netMaskNumeric And &HFF))
+
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>
+    ''' Get the net mask in symbolic form, i.e. ``xxx.xxx.xxx.xxx``
     ''' 
     ''' @return
     ''' </summary>
+    Public ReadOnly Property Netmask() As String
 
-    Public Overridable ReadOnly Property Netmask() As String
-        Get
-            Dim sb As New StringBuilder(15)
+    ''' <summary>
+    ''' Get the IP and netmask in CIDR form, i.e. ``xxx.xxx.xxx.xxx/xx``
+    ''' </summary>
+    ''' <param name="baseIPnumeric"></param>
+    ''' <param name="netmaskNumeric"></param>
+    ''' <returns></returns>
+    Public Shared Function GetCIDR(baseIPnumeric As Integer, netmaskNumeric As Integer) As String
+        Dim i As Integer
 
-            For shift As Integer = 24 To 1 Step -8
+        For i = 0 To 31
+            If (netmaskNumeric << i) = 0 Then
+                Exit For
+            End If
+        Next
 
-                ' process 3 bytes, from high order byte down.
-                sb.Append(Convert.ToString(CInt(CUInt(netmaskNumeric) >> shift) And &HFF))
-
-                sb.Append("."c)
-            Next
-            sb.Append(Convert.ToString(netmaskNumeric And &HFF))
-
-            Return sb.ToString()
-        End Get
-    End Property
+        Return NumericIpToSymbolic(baseIPnumeric And netmaskNumeric) & "/" & i
+    End Function
 
     ''' <summary>
     ''' Get the IP and netmask in CIDR form, i.e. xxx.xxx.xxx.xxx/xx
     ''' 
     ''' @return
     ''' </summary>
-
-    Public Overridable ReadOnly Property CIDR() As String
-        Get
-            Try
-                Dim i As Integer
-                For i = 0 To 31
-
-                    If (netmaskNumeric << i) = 0 Then
-                        Exit For
-
-                    End If
-                Next
-                Return convertNumericIpToSymbolic(baseIPnumeric And netmaskNumeric) & "/" & i
-            Catch ex As Exception
-                Return ""
-            End Try
-        End Get
-    End Property
+    Public ReadOnly Property CIDR() As String
 
     ''' <summary>
     ''' Get an arry of all the IP addresses available for the IP and netmask/CIDR
@@ -156,153 +196,148 @@ Public Class IPv4
     ''' 
     ''' @return
     ''' </summary>
-    Public ReadOnly Property AvailableIPs(numberofIPs__1 As System.Nullable(Of Integer)) As IList(Of String)
-        Get
-            Dim result As New List(Of String)()
-            Dim numberOfBits As Integer
+    Public Function GetAvailableIPs(numberofIPs__1 As Integer?) As List(Of String)
+        Dim result As New List(Of String)()
+        Dim numberOfBits As Integer
 
-            For numberOfBits = 0 To 31
+        For numberOfBits = 0 To 31
+            If (_netmaskNumeric << numberOfBits) = 0 Then
+                Exit For
+            End If
+        Next
 
-                If (netmaskNumeric << numberOfBits) = 0 Then
-                    Exit For
-                End If
-            Next
-            Dim numberOfIPs__2 As System.Nullable(Of Integer) = 0
-            For n As Integer = 0 To (32 - numberOfBits) - 1
+        Dim numberOfIPs__2 As Integer? = 0
 
-                numberOfIPs__2 = numberOfIPs__2 << 1
-                numberOfIPs__2 = numberOfIPs__2 Or &H1
-            Next
+        For n As Integer = 0 To (32 - numberOfBits) - 1
 
-            Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netmaskNumeric
+            numberOfIPs__2 = numberOfIPs__2 << 1
+            numberOfIPs__2 = numberOfIPs__2 Or &H1
+        Next
 
-            Dim i As Integer = 1
-            While i < (numberOfIPs__2) AndAlso i < numberofIPs__1
+        Dim baseIP As Integer? = _baseIPnumeric And _netmaskNumeric
+        Dim i As Integer = 1
 
-                Dim ourIP As System.Nullable(Of Integer) = baseIP + i
+        While i < (numberOfIPs__2) AndAlso i < numberofIPs__1
+            Dim ourIP As Integer? = baseIP + i
+            Dim ip As String = NumericIpToSymbolic(ourIP)
 
-                Dim ip As String = convertNumericIpToSymbolic(ourIP)
+            result.Add(ip)
+            i += 1
+        End While
 
-                result.Add(ip)
-                i += 1
-            End While
-            Return result
-        End Get
-    End Property
+        Return result
+    End Function
+
+    Public Shared Function GetHostAddressRange(baseIPnumeric As Integer, netmaskNumeric As Integer) As String
+        Dim numberOfBits As Integer
+        For numberOfBits = 0 To 31
+
+            If (netmaskNumeric << numberOfBits) = 0 Then
+                Exit For
+            End If
+        Next
+
+        Dim numberOfIPs As System.Nullable(Of Integer) = 0
+        For n As Integer = 0 To (32 - numberOfBits) - 1
+
+            numberOfIPs = numberOfIPs << 1
+            numberOfIPs = numberOfIPs Or &H1
+        Next
+
+        Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netmaskNumeric
+        Dim firstIP As String = NumericIpToSymbolic(baseIP + 1)
+        Dim lastIP As String = NumericIpToSymbolic(baseIP + numberOfIPs - 1)
+
+        Return firstIP & " - " & lastIP
+    End Function
 
     ''' <summary>
     ''' Range of hosts
     ''' 
     ''' @return
     ''' </summary>
-    Public Overridable ReadOnly Property hostAddressRange() As String
-        Get
+    Public ReadOnly Property hostAddressRange() As String
 
-            Dim numberOfBits As Integer
-            For numberOfBits = 0 To 31
+    Public Shared Function GetNumberOfHosts(NetMaskNumeric As Integer) As Long
+        Dim numberOfBits As Integer
 
-                If (netmaskNumeric << numberOfBits) = 0 Then
-                    Exit For
-                End If
-            Next
-            Dim numberOfIPs As System.Nullable(Of Integer) = 0
-            For n As Integer = 0 To (32 - numberOfBits) - 1
+        For numberOfBits = 0 To 31
+            If (NetMaskNumeric << numberOfBits) = 0 Then
+                Exit For
+            End If
+        Next
 
-                numberOfIPs = numberOfIPs << 1
-                numberOfIPs = numberOfIPs Or &H1
-            Next
+        Dim x As Double = Math.Pow(2, (32 - numberOfBits))
 
-            Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netmaskNumeric
-            Dim firstIP As String = convertNumericIpToSymbolic(baseIP + 1)
-            Dim lastIP As String = convertNumericIpToSymbolic(baseIP + numberOfIPs - 1)
-            Return firstIP & " - " & lastIP
-        End Get
-    End Property
+        If x = -1 Then
+            x = 1.0
+        End If
+
+        Return CLng(x)
+    End Function
 
     ''' <summary>
     ''' Returns number of hosts available in given range
     ''' </summary>
     ''' <returns> number of hosts </returns>
-    Public Overridable ReadOnly Property numberOfHosts() As System.Nullable(Of Long)
-        Get
-            Dim numberOfBits As Integer
+    Public ReadOnly Property numberOfHosts() As Long
 
-            For numberOfBits = 0 To 31
+    Public Shared Function GetWildcardMask(netMaskNumeric As Integer) As String
+        Dim wildcardMask As Integer = netMaskNumeric Xor &HFFFFFFFFUI
 
-                If (netmaskNumeric << numberOfBits) = 0 Then
-                    Exit For
-                End If
-            Next
+        Dim sb As New StringBuilder(15)
+        For shift As Integer = 24 To 1 Step -8
 
-            Dim x As System.Nullable(Of Double) = Math.Pow(2, (32 - numberOfBits))
+            ' process 3 bytes, from high order byte down.
+            sb.Append(Convert.ToString(CInt(CUInt(wildcardMask) >> shift) And &HFF))
 
-            If x = -1 Then
-                x = 1.0
-            End If
+            sb.Append("."c)
+        Next
+        sb.Append(Convert.ToString(wildcardMask And &HFF))
 
-            Return CLng(x)
-        End Get
-    End Property
+        Return sb.ToString()
+    End Function
 
     ''' <summary>
     ''' The XOR of the netmask
     ''' </summary>
     ''' <returns> wildcard mask in text form, i.e. 0.0.15.255 </returns>
+    Public ReadOnly Property WildcardMask() As String
 
-    Public Overridable ReadOnly Property WildcardMask() As String
-        Get
-            Dim _wildcardMask As System.Nullable(Of Integer) = netmaskNumeric Xor &HFFFFFFFFUI
+    Public Shared Function GetBroadcastAddress(baseIPnumeric As Integer, netMaskNumeric As Integer) As String
+        If netMaskNumeric = &HFFFFFFFFUI Then
+            Return "0.0.0.0"
+        End If
 
-            Dim sb As New StringBuilder(15)
-            For shift As Integer = 24 To 1 Step -8
+        Dim numberOfBits As Integer
 
-                ' process 3 bytes, from high order byte down.
-                sb.Append(Convert.ToString(CInt(CUInt(_wildcardMask) >> shift) And &HFF))
+        For numberOfBits = 0 To 31
+            If (netMaskNumeric << numberOfBits) = 0 Then
+                Exit For
+            End If
+        Next
 
-                sb.Append("."c)
-            Next
-            sb.Append(Convert.ToString(_wildcardMask And &HFF))
+        Dim numberOfIPs As System.Nullable(Of Integer) = 0
 
-            Return sb.ToString()
-        End Get
-    End Property
+        For n As Integer = 0 To (32 - numberOfBits) - 1
+            numberOfIPs = numberOfIPs << 1
+            numberOfIPs = numberOfIPs Or &H1
+        Next
+
+        Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netMaskNumeric
+        Dim ourIP As System.Nullable(Of Integer) = baseIP + numberOfIPs
+        Dim ip As String = NumericIpToSymbolic(ourIP)
+
+        Return ip
+    End Function
 
     Public Overridable ReadOnly Property BroadcastAddress() As String
-        Get
 
-            If netmaskNumeric = &HFFFFFFFFUI Then
-                Return "0.0.0.0"
-            End If
-
-            Dim numberOfBits As Integer
-            For numberOfBits = 0 To 31
-
-                If (netmaskNumeric << numberOfBits) = 0 Then
-                    Exit For
-                End If
-            Next
-            Dim numberOfIPs As System.Nullable(Of Integer) = 0
-            For n As Integer = 0 To (32 - numberOfBits) - 1
-
-                numberOfIPs = numberOfIPs << 1
-                numberOfIPs = numberOfIPs Or &H1
-            Next
-
-            Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netmaskNumeric
-            Dim ourIP As System.Nullable(Of Integer) = baseIP + numberOfIPs
-
-            Dim ip As String = convertNumericIpToSymbolic(ourIP)
-
-            Return ip
-        End Get
-    End Property
-
-    Private Function getBinary(number As System.Nullable(Of Integer)) As String
+    Public Shared Function GetBinary(number As Integer) As String
         Dim result As String = ""
+        Dim ourMaskBitPattern As Integer = 1
 
-        Dim ourMaskBitPattern As System.Nullable(Of Integer) = 1
         For i As Integer = 1 To 32
-
             If (number And ourMaskBitPattern) <> 0 Then
 
                 ' the bit is 1
@@ -319,23 +354,18 @@ Public Class IPv4
 
             ourMaskBitPattern = ourMaskBitPattern << 1
         Next
+
         Return result
     End Function
 
-    Public Overridable ReadOnly Property netmaskInBinary() As String
-        Get
-
-            Return getBinary(netmaskNumeric)
-        End Get
-    End Property
+    Public ReadOnly Property netmaskInBinary() As String
 
     ''' <summary>
     ''' Checks if the given IP address contains in subnet
     ''' </summary>
     ''' <param name="IPaddress">
     ''' @return </param>
-    Public Overridable Function contains(IPaddress As String) As Boolean
-
+    Public Function contains(IPaddress As String) As Boolean
         Dim checkingIP As System.Nullable(Of Integer) = 0
         Dim st As String() = StringSplit(IPaddress, "\.", True)
 
@@ -344,6 +374,7 @@ Public Class IPv4
         End If
 
         Dim i As Integer = 24
+
         For n As Integer = 0 To st.Length - 1
 
             Dim value As Integer = Convert.ToInt32(st(n))
@@ -357,48 +388,28 @@ Public Class IPv4
             i -= 8
         Next
 
-        If (baseIPnumeric And netmaskNumeric) = (checkingIP And netmaskNumeric) Then
-
+        If (_baseIPnumeric And _netmaskNumeric) = (checkingIP And _netmaskNumeric) Then
             Return True
         Else
             Return False
         End If
     End Function
 
-    Public Overridable Function contains(child As IPv4) As Boolean
+    ''' <summary>
+    ''' Does this IP range contains the specific child?
+    ''' </summary>
+    ''' <param name="child"></param>
+    ''' <returns></returns>
+    Public Function Contains(child As IPv4) As Boolean
+        Dim subnetID As Integer = child._baseIPnumeric
+        Dim subnetMask As Integer = child._netmaskNumeric
 
-        Dim subnetID As System.Nullable(Of Integer) = child.baseIPnumeric
-
-        Dim subnetMask As System.Nullable(Of Integer) = child.netmaskNumeric
-
-        If (subnetID And Me.netmaskNumeric) = (Me.baseIPnumeric And Me.netmaskNumeric) Then
-
-            If (Me.netmaskNumeric < subnetMask) = True AndAlso Me.baseIPnumeric <= subnetID Then
-
+        If (subnetID And _netmaskNumeric) = (_baseIPnumeric And _netmaskNumeric) Then
+            If (_netmaskNumeric < subnetMask) AndAlso (_baseIPnumeric <= subnetID) Then
                 Return True
-
             End If
         End If
-        Return False
-    End Function
 
-    Public Overridable Function validateIPAddress() As Boolean
-        Dim IPAddress As String = Me.IPAddress
-
-        If IPAddress.StartsWith("0") Then
-
-            Return False
-        End If
-
-        If IPAddress.Length = 0 Then
-
-            Return False
-        End If
-
-        If IPAddress.Matches("\A(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}\z") Then
-
-            Return True
-        End If
         Return False
     End Function
 
