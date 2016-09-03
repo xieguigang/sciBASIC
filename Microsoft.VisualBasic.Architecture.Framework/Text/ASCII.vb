@@ -1,30 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::725d1209697ed44f9acabb155cc30998, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Namespace Text
 
@@ -227,6 +230,28 @@ Namespace Text
         ''' <see cref="vbTab"/>
         ''' </summary>
         Public Const TAB As Char = CChar(vbTab)
+
+        Public Const Quot As Char = Chr(34)
+        Public Shared ReadOnly QuotBegin_ZHCN As Char = Convert.ToChar(8220)
+        Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
+        Public Const QuotUnknown As Char = "″"c
+
+        ''' <summary>
+        ''' 分别替换英文双引号，中文双引号为指定的字符串
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="replace"></param>
+        ''' <returns></returns>
+        Public Shared Function ReplaceQuot(s As String, Optional replace As String = "'") As String
+            Dim sb As New StringBuilder(s)
+
+            Call sb.Replace(ASCII.Quot, replace)
+            Call sb.Replace(ASCII.QuotBegin_ZHCN, replace)
+            Call sb.Replace(ASCII.QuotEnds_ZHCN, replace)
+            Call sb.Replace(ASCII.QuotUnknown, replace)
+
+            Return sb.ToString
+        End Function
 
         Public Class [Byte]
 

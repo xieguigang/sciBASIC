@@ -87,5 +87,14 @@ Public Module DateParser
             Return MonthList(mon)
         End If
     End Function
+
+    ''' <summary>
+    ''' 00
+    ''' </summary>
+    ''' <param name="d"></param>
+    ''' <returns></returns>
+    Public Function FillDateZero(d As Integer) As String
+        Return If(d > 10, d, "0" & d)
+    End Function
 End Module
 
