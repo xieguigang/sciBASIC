@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
-Namespace PushAPI
+Namespace NETProtocol.PushAPI
 
     Public MustInherit Class APIBase
 
