@@ -125,22 +125,23 @@ Namespace DocumentStream.Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="invoke"></param>
         Public Sub ForEach(Of T As Class)(invoke As Action(Of T))
-            Dim line As String = ""
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+            Dim schema As SchemaProvider =
+                SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
 
             Call RowBuilder.Indexof(Me)
 
             Do While True
                 Dim buffer As String() = BufferProvider()
-                Dim p As Integer = 0
 
-                Do While Not buffer.Read(p, out:=line) Is Nothing
+                For Each line As String In buffer
                     Dim row As RowObject = RowObject.TryParse(line)
                     Dim obj As T = Activator.CreateInstance(Of T)
+
                     obj = RowBuilder.FillData(Of T)(row, obj)
+
                     Call invoke(obj)
-                Loop
+                Next
 
                 If EndRead Then
                     Exit Do
