@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Language
 ''' </summary>
 ''' <typeparam name="V"></typeparam>
 Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of String, V)
+    ' Implements IEnumerable(Of V)
 
     Sub New()
         Call MyBase.New
@@ -216,4 +217,11 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
         Return hash.ContainsKey(null)
     End Operator
+
+    ' 实现这个集合接口会和字典的集合接口出现冲突
+    'Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator(Of V) Implements IEnumerable(Of V).GetEnumerator
+    '    For Each x In MyBase.Values
+    '        Yield x
+    '    Next
+    'End Function
 End Class

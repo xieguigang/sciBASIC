@@ -75,7 +75,7 @@ Namespace Imaging
         ReadOnly __default As ColorMap = New ColorMap(64)
 
         <ExportAPI("Color.Sequence")>
-        Public Function ColorSequence(min As Integer, Optional name As String = "Jet") As Color()
+        Public Function ColorSequence(Optional min As Integer = 0, Optional name As String = "Jet") As Color()
             Dim maps As MapsFunc = ColorMapsExtensions.__default.GetMaps(name)
             Return ColorMapsExtensions.ColorSequence(maps, __default, min)
         End Function

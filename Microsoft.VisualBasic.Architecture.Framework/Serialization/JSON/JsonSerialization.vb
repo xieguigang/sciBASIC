@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::47ce25e01b5add6a244f7dee1000e83b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,6 +35,7 @@ Imports System.Text
 Imports System.Web
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Serialization.JSON
@@ -127,6 +128,23 @@ Namespace Serialization.JSON
         Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing) As T
             Dim json As String = IO.File.ReadAllText(file, If(encoding Is Nothing, Encoding.Default, encoding))
             Return json.LoadObject(Of T)
+        End Function
+
+        <Extension>
+        Public Function NamedProperty(Of T)(name As String, value As T) As String
+            Dim json As String = value.GetJson
+            Return $"""{name}"": " & json
+        End Function
+
+        ''' <summary>
+        ''' 生成Json之中的动态属性
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function NamedProperty(Of T)(x As NamedValue(Of T)) As String
+            Return x.Name.NamedProperty(Of T)(x.x)
         End Function
     End Module
 End Namespace
