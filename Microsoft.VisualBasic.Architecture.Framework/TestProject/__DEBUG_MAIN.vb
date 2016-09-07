@@ -79,6 +79,31 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
+
+        Dim jsSchema As New Microsoft.VisualBasic.Serialization.JSON.Schema With {
+            .title = "Example Schema",
+            .type = "object",
+            .properties = {
+                New [Property] With {
+                    .name = "firstName",
+                    .type = "string"
+                },
+                New [Property] With {
+                    .name = "lastName",
+                    .type = "string"
+                },
+                New [Property] With {
+                    .name = "age",
+                    .type = "integer",
+                    .description = "Age in years"
+                }
+            },
+            .required = {"firstName", "lastName"}
+        }
+
+
+        Call jsSchema.ToString.__DEBUG_ECHO
+
         Try
             Throw New NotSupportedException
         Catch ex As Exception

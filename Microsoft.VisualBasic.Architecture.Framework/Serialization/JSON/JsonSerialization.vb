@@ -54,9 +54,12 @@ Namespace Serialization.JSON
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("Get.Json")>
-        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True) As String
+        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True, Optional simpleDict As Boolean = False) As String
             Using ms As New MemoryStream()
-                Dim jsonSer As New DataContractJsonSerializer(type)
+                Dim settings As New DataContractJsonSerializerSettings With {
+                    .UseSimpleDictionaryFormat = True
+                }
+                Dim jsonSer As New DataContractJsonSerializer(type, settings)
                 Call jsonSer.WriteObject(ms, obj)
                 Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
                 If indent Then
@@ -92,8 +95,8 @@ Namespace Serialization.JSON
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False) As String
-            Return GetJson(obj, GetType(T), indent)
+        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False, Optional simpleDict As Boolean = False) As String
+            Return GetJson(obj, GetType(T), indent, simpleDict)
         End Function
 
         ''' <summary>

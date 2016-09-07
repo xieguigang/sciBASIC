@@ -371,6 +371,9 @@
     <Compile Include="Language\Python\Collection.vb" />
     <Compile Include="Language\Python\NamedTuple.vb" />
     <Compile Include="Parallel\Threads\ThreadPool.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\Markdown.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\Extensions.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\VisualBasicCode.vb" />
     <Compile Include="Serialization\JSON\SchemaProvider\Schema.vb" />
     <Compile Include="Text\ASCII.vb" />
     <Compile Include="Language\Perl\Tools.vb" />
