@@ -26,23 +26,29 @@ Namespace Serialization.JSON
     ''' }
     ''' ```
     ''' </summary>
-    Public Class Schema
+    Public Class Schema : Inherits SchemaProvider
 
         Public Property title As String
-        Public Property type As String
-        Public Property properties As Dictionary(Of [Property])
-        Public Property required As String()
 
         Public Overrides Function ToString() As String
             Return Me.GetJson(simpleDict:=True)
         End Function
     End Class
 
-    Public Class [Property] : Implements sIdEnumerable
+    Public MustInherit Class SchemaProvider
+        Public Property description As String
+        Public Property type As String
+        Public Property properties As Dictionary(Of [Property])
+        Public Property required As String()
+    End Class
+
+    Public Class [Property] : Inherits SchemaProvider
+        Implements sIdEnumerable
 
         Public Property name As String Implements sIdEnumerable.Identifier
-        Public Property type As String
-        Public Property description As String
+        Public Property minimum As Integer
+        Public Property exclusiveMinimum As Boolean
+        Public Property ref As String
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
