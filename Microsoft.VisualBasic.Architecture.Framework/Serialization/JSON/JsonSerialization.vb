@@ -116,6 +116,15 @@ Namespace Serialization.JSON
             End Using
         End Function
 
+        <Extension>
+        Public Function LoadJSONObject(jsonStream As Stream, type As Type)
+            If jsonStream Is Nothing Then
+                Return Nothing
+            Else
+                Return New DataContractJsonSerializer(type).ReadObject(jsonStream)
+            End If
+        End Function
+
         ''' <summary>
         ''' JSON反序列化
         ''' </summary>
