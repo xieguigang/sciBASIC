@@ -34,7 +34,7 @@ Namespace Serialization.JSON
         Public Property required As String()
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return Me.GetJson(simpleDict:=True)
         End Function
     End Class
 

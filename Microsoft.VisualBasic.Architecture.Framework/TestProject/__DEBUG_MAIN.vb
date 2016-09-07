@@ -102,7 +102,9 @@ Module __DEBUG_MAIN
         }
 
 
-        Call jsSchema.ToString.__DEBUG_ECHO
+        Dim jsons = jsSchema.ToString
+
+        Dim schemasss = jsons.LoadObject(Of Schema)()
 
         Try
             Throw New NotSupportedException
