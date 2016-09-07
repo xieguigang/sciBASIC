@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2e4f5ab03225f2d7f74807aa0f64317, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Protocols\PushServices.vb"
+﻿#Region "Microsoft.VisualBasic::21a53b122e8d09e724cfdc3160bfc6d0, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\User\UserProtocols.vb"
 
     ' Author:
     ' 
@@ -26,9 +26,29 @@
 
 #End Region
 
-Namespace Protocols
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
-    Module PushServices
+Namespace NETProtocol
+
+    Module UserProtocols
+
+        Public Enum Protocols As Long
+            PushInit
+        End Enum
+
+        Public ReadOnly Property ProtocolEntry As Long =
+        New Protocol(GetType(Protocols)).EntryPoint
+
+        Public Function NullMsg() As RequestStream
+            Return New RequestStream(HTTP_RFC.RFC_NO_CONTENT, HTTP_RFC.RFC_OK, "")
+        End Function
+
+        <Extension> Public Function IsNull(msg As RequestStream) As Boolean
+            Return msg.ProtocolCategory = HTTP_RFC.RFC_NO_CONTENT
+        End Function
 
     End Module
 End Namespace

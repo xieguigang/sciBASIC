@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21a53b122e8d09e724cfdc3160bfc6d0, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\User\UserProtocols.vb"
+﻿#Region "Microsoft.VisualBasic::d2e58d14917c72d4b8534280abba739d, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Protocols\POST.vb"
 
     ' Author:
     ' 
@@ -26,26 +26,28 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Module UserProtocols
+Namespace NETProtocol.Protocols
 
-    Public Enum Protocols As Long
-        PushInit
-    End Enum
+    Public Class InitPOSTBack
+        ''' <summary>
+        ''' 长连接socket的端口终点
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Portal As IPEndPoint
+        Public Property uid As Long
+    End Class
 
-    Public ReadOnly Property ProtocolEntry As Long =
-        New Protocol(GetType(Protocols)).EntryPoint
+    Public Class UserId
+        Public Property uid As Long
+        Public Property sId As String
 
-    Public Function NullMsg() As RequestStream
-        Return New RequestStream(HTTP_RFC.RFC_NO_CONTENT, HTTP_RFC.RFC_OK, "")
-    End Function
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-    <Extension> Public Function IsNull(msg As RequestStream) As Boolean
-        Return msg.ProtocolCategory = HTTP_RFC.RFC_NO_CONTENT
-    End Function
 
-End Module
+End Namespace

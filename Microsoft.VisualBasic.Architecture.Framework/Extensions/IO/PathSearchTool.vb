@@ -314,8 +314,10 @@ Public Module ProgramPathSearchTool
     ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI(NameOf(ParentPath))>
     <Extension> Public Function ParentPath(file As String, Optional full As Boolean = True) As String
+        file = file.Replace("\", "/")
+
         Dim Parent As String = ""
-        Dim Tokens As String() = file.Replace("\", "/").ShadowCopy(file).Split("/"c)
+        Dim Tokens As String() = file.Split("/"c)
 
         If full Then
             If InStr(file, "../") = 1 Then

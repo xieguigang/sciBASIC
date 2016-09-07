@@ -72,14 +72,29 @@ Public Module DateParser
     ''' <summary>
     ''' 从全称或者简称解析出月份的数字
     ''' </summary>
-    ''' <param name="mon"></param>
+    ''' <param name="mon">大小写不敏感</param>
     ''' <returns></returns>
     Public Function GetMonthInteger(mon As String) As Integer
         If Not MonthList.ContainsKey(mon) Then
+            For Each k As String In MonthList.Keys
+                If String.Equals(mon, k, StringComparison.OrdinalIgnoreCase) Then
+                    Return MonthList(k)
+                End If
+            Next
+
             Return -1
         Else
             Return MonthList(mon)
         End If
+    End Function
+
+    ''' <summary>
+    ''' 00
+    ''' </summary>
+    ''' <param name="d"></param>
+    ''' <returns></returns>
+    Public Function FillDateZero(d As Integer) As String
+        Return If(d > 10, d, "0" & d)
     End Function
 End Module
 

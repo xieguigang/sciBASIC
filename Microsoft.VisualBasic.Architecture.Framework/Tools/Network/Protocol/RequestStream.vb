@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b798171bd953e83337887f352e181719, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\RequestStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -274,19 +275,19 @@ Namespace Net.Protocols
             Dim BufferLength As Byte() = BitConverter.GetBytes(Me.BufferLength)
             Dim uid As Byte() = BitConverter.GetBytes(Me.uid)
 
-            Dim ChunkBuffer As Byte() = New Byte(TotalBytes - 1) {}
-            Dim p As Long = Scan0
-            Dim l As Long
+            Dim bufs As Byte() = New Byte(TotalBytes - 1) {}
+            Dim p As int = Scan0
+            Dim l As New int
 
-            Call Array.ConstrainedCopy(ProtocolCategory, Scan0, ChunkBuffer, p.Move(ProtocolCategory.Length.ShadowCopy(l)), l)
-            Call Array.ConstrainedCopy(___offset, Scan0, ChunkBuffer, p.MoveNext, 1)
-            Call Array.ConstrainedCopy(Protocol, Scan0, ChunkBuffer, p.Move(Protocol.Length.ShadowCopy(l)), l)
-            Call Array.ConstrainedCopy(___offset, Scan0, ChunkBuffer, p.MoveNext, 1)
-            Call Array.ConstrainedCopy(BufferLength, Scan0, ChunkBuffer, p.Move(BufferLength.Length.ShadowCopy(l)), l)
-            Call Array.ConstrainedCopy(Me.ChunkBuffer, Scan0, ChunkBuffer, p.Move(Me.BufferLength.ShadowCopy(l)), l)
-            Call Array.ConstrainedCopy(uid, Scan0, ChunkBuffer, p.Move(uid.Length.ShadowCopy(l)), l)
+            Call Array.ConstrainedCopy(ProtocolCategory, Scan0, bufs, p << (l = ProtocolCategory.Length), l)
+            Call Array.ConstrainedCopy(___offset, Scan0, bufs, ++p, 1)
+            Call Array.ConstrainedCopy(Protocol, Scan0, bufs, p << (l = Protocol.Length), l)
+            Call Array.ConstrainedCopy(___offset, Scan0, bufs, ++p, 1)
+            Call Array.ConstrainedCopy(BufferLength, Scan0, bufs, p << (l = BufferLength.Length), l)
+            Call Array.ConstrainedCopy(Me.ChunkBuffer, Scan0, bufs, p << (l = Me.BufferLength), l)
+            Call Array.ConstrainedCopy(uid, Scan0, bufs, p << (l = uid.Length), l)
 
-            Return ChunkBuffer
+            Return bufs
         End Function
 
         ''' <summary>

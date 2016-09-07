@@ -222,6 +222,7 @@
     <Compile Include="Excel\ExcelReader.vb" />
     <Compile Include="Excel\Functions\Numerics.vb" />
     <Compile Include="Extensions\DocumentExtensions.vb" />
+    <Compile Include="Extensions\PipeStream.vb" />
     <Compile Include="Extensions\ProfileStreams.vb" />
     <Compile Include="Extensions\DataImports.vb" />
     <Compile Include="Extensions\DataSetHandler.vb" />

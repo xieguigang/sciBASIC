@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A60240D1-E78B-4B96-85E3-45256571C2CB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.Net.NETProtocol</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Net</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.NETProtocol</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -95,22 +95,24 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppServer\PushAPI\APIBase.vb" />
-    <Compile Include="AppServer\PushAPI\UserMsgPool.vb" />
-    <Compile Include="AppServer\PushAPI\UserAPI.vb" />
-    <Compile Include="AppServer\PushAPI\InvokeAPI.vb" />
-    <Compile Include="AppServer\PushServer.vb" />
+    <Compile Include="NETProtocol\AppServer\PushAPI\APIBase.vb" />
+    <Compile Include="NETProtocol\AppServer\PushAPI\UserMsgPool.vb" />
+    <Compile Include="NETProtocol\AppServer\PushAPI\UserAPI.vb" />
+    <Compile Include="NETProtocol\AppServer\PushAPI\InvokeAPI.vb" />
+    <Compile Include="NETProtocol\AppServer\PushServer.vb" />
     <Compile Include="Captcha.vb" />
     <Compile Include="InternetTime\WinAPI.vb" />
     <Compile Include="InternetTime\Constant.vb" />
     <Compile Include="InternetTime\InternetTime.vb" />
     <Compile Include="InternetTime\SynchronizingTime.vb" />
-    <Compile Include="Protocols\POST.vb" />
-    <Compile Include="Protocols\PushServices.vb" />
-    <Compile Include="Protocols\InvokeAPI.vb" />
-    <Compile Include="Protocols\UserAPI.vb" />
-    <Compile Include="User\UserProtocols.vb" />
-    <Compile Include="User\User.vb" />
+    <Compile Include="IPv4\CIDR.vb" />
+    <Compile Include="IPv4\IPUtils.vb" />
+    <Compile Include="NETProtocol\Protocols\POST.vb" />
+    <Compile Include="NETProtocol\Protocols\PushServices.vb" />
+    <Compile Include="NETProtocol\Protocols\InvokeAPI.vb" />
+    <Compile Include="NETProtocol\Protocols\UserAPI.vb" />
+    <Compile Include="NETProtocol\User\UserProtocols.vb" />
+    <Compile Include="NETProtocol\User\User.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
