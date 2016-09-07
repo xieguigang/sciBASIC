@@ -118,8 +118,8 @@ Public Module ScaleMaps
         ' 将等级映射到log2的y轴上面
         Dim lgMax As Double = log2Data.Max
         priMaps = priMaps.ToArray(Function(d) lgMax * d) ' lgMax * %
-        Dim Maps As Long() = priMaps.ToArray(Function(d) CLng(2 ^ d))  ' 找到x坐标的位置 0-100
-        Return Maps
+        '  Dim Maps As Long() = priMaps.ToArray(Function(d) CLng(2 ^ d))  ' 找到x坐标的位置 0-100
+        Return priMaps.ToArray(Function(x) CLng(x))
     End Function
 
     'Public Function SquareMaps(data As Generic.IEnumerable(Of Double), Optional level As Integer = 100) As Integer()
@@ -129,12 +129,12 @@ Public Module ScaleMaps
 
     <ExportAPI("Ranks.Log2")>
     <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Integer), Optional Level As Integer = 10) As Long()
-        Return data.ToArray(Function(d) CDbl(d)).Log2Ranks
+        Return data.Select(Function(d) CDbl(d)).Log2Ranks
     End Function
 
     <ExportAPI("Ranks.Log2")>
     <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Long), Optional Level As Integer = 10) As Long()
-        Return data.ToArray(Function(d) CDbl(d)).Log2Ranks
+        Return data.Select(Function(d) CDbl(d)).Log2Ranks
     End Function
 
     ''' <summary>

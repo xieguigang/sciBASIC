@@ -85,7 +85,9 @@ Public Class Func
         End Sub
 
         Public Function getValue(name As String) As Double
-            If __args.ContainsKey(name.ToLower.ShadowCopy(name)) Then
+            name = name.ToLower
+
+            If __args.ContainsKey(name.ToLower) Then
                 Return __args(name).value
             Else
                 Return __engine.GetValue(name)

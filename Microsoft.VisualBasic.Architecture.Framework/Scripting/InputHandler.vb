@@ -139,10 +139,13 @@ Namespace Scripting
                 Call CasterString.Remove(stringConvertType)
             End If
             Call CasterString.Add(stringConvertType, cast)
-            If Types.ContainsKey(briefName.ToLower.ShadowCopy(briefName)) Then
-                Call Types.Remove(briefName)
+
+            Dim key As String = briefName.ToLower
+
+            If Types.ContainsKey(key) Then
+                Call Types.Remove(key)
             End If
-            Call Types.Add(briefName, stringConvertType)
+            Call Types.Add(key, stringConvertType)
         End Sub
 
         ''' <summary>
