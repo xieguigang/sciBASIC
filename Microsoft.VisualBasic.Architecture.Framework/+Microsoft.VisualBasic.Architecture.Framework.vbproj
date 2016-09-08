@@ -361,6 +361,8 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\TokenConnections.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
+    <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
+    <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\StringHelpers\DateParser.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
@@ -386,6 +388,7 @@
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
+    <None Include="Extensions\Reflection\Delegate\README.md" />
     <None Include="Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
     <Compile Include="Language\UnixBash\PS1.vb" />
     <Compile Include="Parallel\Tasks\IParallelTask.vb" />
