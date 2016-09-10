@@ -112,7 +112,8 @@ Public Class ODE
     Public Property y As Double()
 
     ''' <summary>
-    ''' 从这里传递自定义的函数指针
+    ''' Public Delegate Function df(x As Double, y As Double) As Double
+    ''' (从这里传递自定义的函数指针)
     ''' </summary>
     ''' <returns></returns>
     Public Property df As ODESolver.df

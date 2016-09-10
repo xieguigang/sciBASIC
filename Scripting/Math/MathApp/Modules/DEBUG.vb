@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports ODE
 
 Module DEBUG
 
@@ -53,6 +54,9 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
+
+        Dim ode As New ODE.ODE With {.df = Function(x, y) Math.Cos(x)}
+        Call ode.RK2(10, 1, 1, 0, 0)
 
         Dim water As New LinguisticVariable("Water")
         water.MembershipFunctionCollection.Add(New MembershipFunction("Cold", 0, 0, 20, 40))

@@ -42,6 +42,7 @@ Module Program
         Dim e As Microsoft.VisualBasic.Mathematical.Types.SimpleExpression = SimpleParser.TryParse(sExpression)
 
         Console.WriteLine("> {0} = {1}", sExpression, e.Evaluate)
+        Call DEBUG.Main()
 #End If
         '(log(max(sinh(((1-2-3+4+5+6+7+8+9)-20)^0.5)+5,rnd(-10, 100)))!%5)^3!
 
