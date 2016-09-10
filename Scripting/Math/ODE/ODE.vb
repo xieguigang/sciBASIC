@@ -1,6 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>http://www.oschina.net/code/snippet_76_4433</remarks>
 Public Module ODESolver
 
     ''' <summary>
@@ -21,12 +25,7 @@ Public Module ODESolver
     ''' <param name="y0"></param>
     ''' 
     <Extension>
-    Public Sub Eluer(ByRef df As ODE,
-                          n As Integer,
-                          a As Double,
-                          b As Double,
-                          x0 As Double,
-                          y0 As Double)
+    Public Sub Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double, x0 As Double, y0 As Double)
         Dim h As Double = (b - a) / n
 
         df.x = New Double(n - 1) {}

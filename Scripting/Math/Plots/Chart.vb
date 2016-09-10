@@ -4,6 +4,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Public Module Chart
 
@@ -24,15 +26,17 @@ Public Module Chart
             margin = New Size(100, 100)
         End If
 
+        Dim array As Serials() = c.ToArray
         Dim bmp As New Bitmap(size.Width, size.Height)
         Dim bgColor As Color = bg.ToColor(onFailure:=Color.White)
+        Dim mapper As New Scaling(array)
 
         Using g As Graphics = Graphics.FromImage(bmp)
             Dim rect As New Rectangle(New Point, size)
 
             Call g.FillRectangle(New SolidBrush(bgColor), rect)
 
-            For Each line As Serials In c
+            For Each line As Serials In mapper.ForEach(size, margin)
                 Dim pts = line.pts.SlideWindows(1)
                 Dim pen As New Pen(color:=line.color, width:=line.width) With {
                     .DashStyle = line.lineType
@@ -51,6 +55,19 @@ Public Module Chart
         End Using
 
         Return bmp
+    End Function
+
+    <Extension>
+    Public Function Plot(ode As ODE.ODE, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
+        Dim c = {
+            New Serials With {
+                .title = ode.df.ToString,
+                .pts = LinqAPI.Exec(Of PointF) <= From x As SeqValue(Of Double)
+                                                  In ode.x.SeqIterator
+                                                  Select New PointF(x.obj, ode.y(x.i))
+            }
+        }
+        Return c.Plot(size, margin, bg)
     End Function
 End Module
 
