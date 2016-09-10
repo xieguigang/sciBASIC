@@ -1,7 +1,12 @@
 ![](./2016-05-15.png)
 
 If you are running on Linux platform, try start by mono:
+
 > mono ./vbmath.exe
+
+Or if you are running Ubuntu system, just using .NET application directly typing:
+
+> ./vbmath.exe
 
 If you are running on Windows, just double click on the program and then application running
 
