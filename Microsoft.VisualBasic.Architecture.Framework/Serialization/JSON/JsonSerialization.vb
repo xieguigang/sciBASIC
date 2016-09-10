@@ -54,9 +54,12 @@ Namespace Serialization.JSON
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("Get.Json")>
-        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True) As String
+        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True, Optional simpleDict As Boolean = True) As String
             Using ms As New MemoryStream()
-                Dim jsonSer As New DataContractJsonSerializer(type)
+                Dim settings As New DataContractJsonSerializerSettings With {
+                    .UseSimpleDictionaryFormat = True
+                }
+                Dim jsonSer As New DataContractJsonSerializer(type, settings)
                 Call jsonSer.WriteObject(ms, obj)
                 Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
                 If indent Then
@@ -74,11 +77,14 @@ Namespace Serialization.JSON
         ''' <param name="path"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function WriteLargeJson(Of T)(obj As T, path As String) As Boolean
+        Public Function WriteLargeJson(Of T)(obj As T, path As String, Optional simpleDict As Boolean = True) As Boolean
             Call "".SaveTo(path)
 
             Using ms As FileStream = path.Open
-                Dim jsonSer As New DataContractJsonSerializer(GetType(T))
+                Dim settings As New DataContractJsonSerializerSettings With {
+                    .UseSimpleDictionaryFormat = simpleDict
+                }
+                Dim jsonSer As New DataContractJsonSerializer(GetType(T), settings)
                 Call jsonSer.WriteObject(ms, obj)
                 Return True
             End Using
@@ -92,8 +98,8 @@ Namespace Serialization.JSON
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False) As String
-            Return GetJson(obj, GetType(T), indent)
+        <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False, Optional simpleDict As Boolean = True) As String
+            Return GetJson(obj, GetType(T), indent, simpleDict)
         End Function
 
         ''' <summary>
@@ -104,30 +110,46 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <ExportAPI("LoadObject")>
         <Extension>
-        Public Function LoadObject(json As String, type As Type) As Object
+        Public Function LoadObject(json As String, type As Type, Optional simpleDict As Boolean = True) As Object
             If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
                 Return Nothing
             End If
 
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
-                Dim ser As New DataContractJsonSerializer(type)
+                Dim settings As New DataContractJsonSerializerSettings With {
+                    .UseSimpleDictionaryFormat = simpleDict
+                }
+                Dim ser As New DataContractJsonSerializer(type, settings)
                 Dim obj As Object = ser.ReadObject(MS)
                 Return obj
             End Using
         End Function
 
+        <Extension>
+        Public Function LoadJSONObject(jsonStream As Stream, type As Type, Optional simpleDict As Boolean = True)
+            If jsonStream Is Nothing Then
+                Return Nothing
+            Else
+                Dim settings As New DataContractJsonSerializerSettings With {
+                    .UseSimpleDictionaryFormat = simpleDict
+                }
+                Return New DataContractJsonSerializer(type, settings) _
+                    .ReadObject(jsonStream)
+            End If
+        End Function
+
         ''' <summary>
         ''' JSON反序列化
         ''' </summary>
-        <Extension> Public Function LoadObject(Of T)(json As String) As T
-            Dim value As Object = LoadObject(json, GetType(T))
+        <Extension> Public Function LoadObject(Of T)(json As String, Optional simpleDict As Boolean = True) As T
+            Dim value As Object = LoadObject(json, GetType(T), simpleDict)
             Dim obj As T = DirectCast(value, T)
             Return obj
         End Function
 
-        Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing) As T
+        Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
             Dim json As String = IO.File.ReadAllText(file, If(encoding Is Nothing, Encoding.Default, encoding))
-            Return json.LoadObject(Of T)
+            Return json.LoadObject(Of T)(simpleDict)
         End Function
 
         <Extension>

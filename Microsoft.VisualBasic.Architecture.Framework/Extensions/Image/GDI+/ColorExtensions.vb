@@ -103,7 +103,7 @@ Namespace Imaging
         ''' <param name="str">颜色表达式或者名称</param>
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
-        <Extension> Public Function ToColor(str As String) As Color
+        <Extension> Public Function ToColor(str As String, Optional onFailure As Color = Nothing) As Color
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
                 Return Color.Black
@@ -136,7 +136,11 @@ Namespace Imaging
 
                     Return Color.FromArgb(A, R, G, B)
                 Else
-                    Throw New Exception(str)
+                    If Not onFailure.IsEmpty Then
+                        Return onFailure
+                    Else
+                        Throw New Exception(str)
+                    End If
                 End If
             End If
 #Else
