@@ -21,21 +21,20 @@ Public Module ODESolver
     ''' <param name="n"></param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
-    ''' <param name="x0"></param>
     ''' <param name="y0"></param>
     ''' 
     <Extension>
-    Public Sub Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double, x0 As Double, y0 As Double)
+    Public Sub Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double, y0 As Double)
         Dim h As Double = (b - a) / n
 
         df.x = New Double(n - 1) {}
         df.y = New Double(n - 1) {}
-        df.x(Scan0) = x0
+        df.x(Scan0) = a
         df.y(Scan0) = y0
 
         Dim x = df.x, y = df.y
 
-        For i As Integer = 1 To n
+        For i As Integer = 1 To n - 1
             x(i) = a + h * i
             y(i) = x(i - 1) + h * df(x(i - 1), y(i - 1))
         Next
@@ -49,15 +48,14 @@ Public Module ODESolver
     ''' <param name="n"></param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
-    ''' <param name="x0"></param>
     ''' <param name="y0"></param>
     <Extension>
-    Public Sub RK2(ByRef df As ODE, n As Integer, a As Double, b As Double, x0 As Double, y0 As Double)
+    Public Sub RK2(ByRef df As ODE, n As Integer, a As Double, b As Double, y0 As Double)
         Dim h As Double = (b - a) / n
 
         df.x = New Double(n - 1) {}
         df.y = New Double(n - 1) {}
-        df.x(Scan0) = x0
+        df.x(Scan0) = a
         df.y(Scan0) = y0
 
         Dim x = df.x, y = df.y
@@ -79,16 +77,15 @@ Public Module ODESolver
     ''' <param name="n"></param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
-    ''' <param name="x0"></param>
     ''' <param name="y0"></param>
     ''' 
     <Extension>
-    Public Sub RK4(ByRef df As ODE, n As Integer, a As Double, b As Double, x0 As Double, y0 As Double)
+    Public Sub RK4(ByRef df As ODE, n As Integer, a As Double, b As Double, y0 As Double)
         Dim h As Double = (b - a) / n
 
         df.x = New Double(n - 1) {}
         df.y = New Double(n - 1) {}
-        df.x(Scan0) = x0
+        df.x(Scan0) = a
         df.y(Scan0) = y0
 
         Dim x = df.x, y = df.y

@@ -57,7 +57,7 @@ Module DEBUG
     Public Function Main() As Integer
 
         Dim ode As New ODE.ODE With {.df = Function(x, y) Math.Cos(x)}
-        Call ode.RK2(100, 1, 10, 0, 0)
+        Call ode.RK2(100, 1, 10, 0.540302)
         Call Plots.Chart.Plot(ode).SaveAs("x:/cos.png")
 
         Dim water As New LinguisticVariable("Water")

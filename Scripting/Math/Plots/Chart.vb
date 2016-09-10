@@ -37,7 +37,7 @@ Public Module Chart
             Call g.FillRectangle(New SolidBrush(bgColor), rect)
 
             For Each line As Serials In mapper.ForEach(size, margin)
-                Dim pts = line.pts.SlideWindows(1)
+                Dim pts = line.pts.SlideWindows(2)
                 Dim pen As New Pen(color:=line.color, width:=line.width) With {
                     .DashStyle = line.lineType
                 }
