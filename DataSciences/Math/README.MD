@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Scripting/Math/2016-05-15.png)
+![](./2016-05-15.png)
 
 If you are running on Linux platform, try start by mono:
 > mono ./vbmath.exe
