@@ -33,6 +33,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
+''' <summary>
+''' IO函数拓展
+''' </summary>
 <PackageNamespace("IO")>
 Public Module IOExtensions
 
@@ -41,6 +44,12 @@ Public Module IOExtensions
         Return IO.File.ReadAllLines(path).ToArray(Function(x) CDbl(x))
     End Function
 
+    ''' <summary>
+    ''' 打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹
+    ''' </summary>
+    ''' <param name="path">文件的路径</param>
+    ''' <param name="mode">文件指针的打开模式</param>
+    ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
