@@ -106,10 +106,15 @@ Public Module StringHelpers
     ''' the current <see cref="System.String"/> object.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False) As NamedValue(Of String)
+    Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
+
         If p = 0 Then
-            Return New NamedValue(Of String)("", s)
+            If failureNoName Then
+                Return New NamedValue(Of String)("", s)
+            Else
+                Return New NamedValue(Of String)(s, "")
+            End If
         Else
             Dim key As String = Mid(s, 1, p - delimiter.Length)
             Dim value As String = Mid(s, p + delimiter.Length)
