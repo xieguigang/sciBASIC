@@ -56,6 +56,7 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
+        Call ODEsTest.test()
 
         Dim ode As New ODE With {
             .df = Function(x, y) Math.Cos(x),
