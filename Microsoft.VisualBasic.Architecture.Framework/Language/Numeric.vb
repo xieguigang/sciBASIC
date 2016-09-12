@@ -275,10 +275,11 @@ Namespace Language
         End Operator
     End Class
 
-    Public Structure Float
+    ''' <summary>
+    ''' Double
+    ''' </summary>
+    Public Class Float : Inherits Value(Of Double)
         Implements IComparable
-
-        Dim value As Double
 
         Sub New(x As Double)
             value = x
@@ -315,16 +316,20 @@ Namespace Language
             End If
         End Operator
 
-        Public Shared Operator <=(x As Float, n As Double) As Boolean
+        Public Overloads Shared Widening Operator CType(x As Double) As Float
+            Return New Float(x)
+        End Operator
+
+        Public Overloads Shared Operator <=(x As Float, n As Double) As Boolean
             Return x.value <= n
         End Operator
 
-        Public Shared Operator >=(x As Float, n As Double) As Boolean
+        Public Overloads Shared Operator >=(x As Float, n As Double) As Boolean
             Return x.value >= n
         End Operator
 
         Public Shared Operator >(n As Double, x As Float) As Float
             Return x
         End Operator
-    End Structure
+    End Class
 End Namespace

@@ -156,9 +156,9 @@ Namespace KMeans
 
         Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False) As Entity()
             If parallel Then
-                Return __firstCluster(source, [stop]:=source.Count / 2)
+                Return __firstCluster(source, [stop]:=CInt(source.Count / 2))
             Else
-                Return __treeCluster(source, Scan0, source.Count / 2)
+                Return __treeCluster(source, Scan0, CInt(source.Count / 2))
             End If
         End Function
 
@@ -173,8 +173,8 @@ Namespace KMeans
             Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of Entity()) =
-                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), 1, [stop])).Run    ' cluster1
-            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), 2, [stop]) ' cluster2
+                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop])).Run    ' cluster1
+            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), "2", [stop]) ' cluster2
             list += cluster1.GetValue
 
             Return list.ToArray
@@ -300,7 +300,7 @@ EXIT_:          Dim array = source.ToArray
                 .NodeType = "ROOT"
             }
 
-            Dim edges = __buildNET(array, nodes ^ Function(x) String.Equals(x.nodetype, "ROOT"), Scan0, nodes)
+            Dim edges = __buildNET(array, nodes ^ Function(x As Node) String.Equals(x.NodeType, "ROOT"), Scan0, nodes)
 
             Return New FileStream.Network With {
                 .Edges = edges,
