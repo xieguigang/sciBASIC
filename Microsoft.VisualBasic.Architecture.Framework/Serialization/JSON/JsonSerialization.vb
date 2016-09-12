@@ -57,10 +57,16 @@ Namespace Serialization.JSON
         Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True, Optional simpleDict As Boolean = True) As String
             Using ms As New MemoryStream()
                 Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = True
+                    .UseSimpleDictionaryFormat = True,
+                    .SerializeReadOnlyTypes = True
                 }
-                Dim jsonSer As New DataContractJsonSerializer(type, settings)
+                Dim jsonSer As DataContractJsonSerializer = If(
+                    simpleDict,
+                    New DataContractJsonSerializer(type, settings),
+                    New DataContractJsonSerializer(type))
+
                 Call jsonSer.WriteObject(ms, obj)
+
                 Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
                 If indent Then
                     json = Formatter.Format(json)
@@ -82,9 +88,13 @@ Namespace Serialization.JSON
 
             Using ms As FileStream = path.Open
                 Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = simpleDict
+                    .UseSimpleDictionaryFormat = simpleDict,
+                    .SerializeReadOnlyTypes = True
                 }
-                Dim jsonSer As New DataContractJsonSerializer(GetType(T), settings)
+                Dim jsonSer As DataContractJsonSerializer = If(
+                    simpleDict,
+                    New DataContractJsonSerializer(GetType(T), settings),
+                    New DataContractJsonSerializer(GetType(T)))
                 Call jsonSer.WriteObject(ms, obj)
                 Return True
             End Using
@@ -117,7 +127,8 @@ Namespace Serialization.JSON
 
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
                 Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = simpleDict
+                    .UseSimpleDictionaryFormat = simpleDict,
+                    .SerializeReadOnlyTypes = True
                 }
                 Dim ser As New DataContractJsonSerializer(type, settings)
                 Dim obj As Object = ser.ReadObject(MS)
@@ -131,7 +142,8 @@ Namespace Serialization.JSON
                 Return Nothing
             Else
                 Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = simpleDict
+                    .UseSimpleDictionaryFormat = simpleDict,
+                    .SerializeReadOnlyTypes = True
                 }
                 Return New DataContractJsonSerializer(type, settings) _
                     .ReadObject(jsonStream)
