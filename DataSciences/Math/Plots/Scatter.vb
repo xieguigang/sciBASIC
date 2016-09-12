@@ -65,7 +65,7 @@ Public Module Scatter
                 .title = ode.df.ToString,
                 .pts = LinqAPI.Exec(Of PointF) <= From x As SeqValue(Of Double)
                                                   In ode.x.SeqIterator
-                                                  Select New PointF(x.obj, ode.y(x.i))
+                                                  Select New PointF(CSng(x.obj), CSng(ode.y(x.i)))
             }
         }
         Return c.Plot(size, margin, bg)
@@ -80,7 +80,7 @@ Public Class Serials
     ''' <summary>
     ''' 点的半径大小
     ''' </summary>
-    Public PointSize As Double = 1
+    Public PointSize As Single = 1
     Public color As Color = Color.Black
     Public width As Single = 1
 
