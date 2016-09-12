@@ -2220,7 +2220,10 @@ Public Module Extensions
     End Sub
 #End If
 
-    Public Const Null As Object = Nothing
+    ''' <summary>
+    ''' Nothing
+    ''' </summary>
+    Friend Const null As Object = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>
