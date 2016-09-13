@@ -137,13 +137,14 @@ Namespace DocumentStream
         End Function
 
         ''' <summary>
-        ''' 是否等于,,,,,,,,,
+        ''' 是否等于``,,,,,,,,,``
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
         <Extension>
         Public Function IsEmptyRow(s As String, del As Char) As Boolean
             Dim l As Integer = Len(s)
+
             If l = 0 Then
                 Return True
             End If
