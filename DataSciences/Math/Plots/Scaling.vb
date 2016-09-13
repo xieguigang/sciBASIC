@@ -9,10 +9,20 @@ Public Class Scaling
 
     ReadOnly serials As Serials()
 
+    Public ReadOnly type As Type
+
     Sub New(array As Serials())
         dx = Scaling(array, Function(p) p.X, xmin)
         dy = Scaling(array, Function(p) p.Y, ymin)
         serials = array
+        type = GetType(Scatter)
+    End Sub
+
+    Sub New(hist As HistogramGroup)
+        Dim h As List(Of Double) = hist.Samples.Select(Function(s) s.data).MatrixToList
+        ymin = h.Min
+        dy = h.Max - ymin
+        type = GetType(Histogram)
     End Sub
 
     ''' <summary>

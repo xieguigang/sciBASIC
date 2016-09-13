@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
+Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports ODE
@@ -64,6 +65,8 @@ Module DEBUG
         }
         Call ode.RK2(100, 1, 10)
         Call Plots.Scatter.Plot(ode).SaveAs("x:/test/cos.png")
+
+        Call ode.y.FromData.Plot().SaveAs("x:/test/cos.hist.png")
 
         Pause()
 

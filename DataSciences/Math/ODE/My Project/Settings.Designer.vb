@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.Microsoft.VisualBasic.Mathematical.Calculus.My.MySettings
+        Friend ReadOnly Property Settings() As Global.Microsoft.VisualBasic.Mathematical.diffEq.My.MySettings
             Get
-                Return Global.Microsoft.VisualBasic.Mathematical.Calculus.My.MySettings.Default
+                Return Global.Microsoft.VisualBasic.Mathematical.diffEq.My.MySettings.Default
             End Get
         End Property
     End Module

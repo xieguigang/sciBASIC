@@ -32,22 +32,28 @@ Module Axis
         pen = New Pen(Color.Black, 3)
 
         For i As Integer = 0 To 9
-            Dim label = dx * (i + 1)
-            Dim x = sx(label + scaler.xmin)
-            Dim axisX As New PointF(x, o.Y)
-            Dim sz = g.MeasureString(label.ToString, fontLarge)
+            Dim label As Single = dx * (i + 1)
+            Dim sz As SizeF
 
-            Call g.DrawLine(pen, axisX, New PointF(x, o.Y + margin.Height * 0.2))
-            Call g.DrawString(label, fontLarge, Brushes.Black, New Point(x - sz.Width / 2, o.Y + margin.Height * 0.3))
+            If scaler.type <> GetType(Histogram) Then
+                Dim x = sx(label + scaler.xmin)
+                Dim axisX As New PointF(x, o.Y)
 
-            If showGrid Then
-                Call g.DrawLine(gridPenX, axisX, New PointF(x, margin.Height))
+                sz = g.MeasureString(label.ToString, fontLarge)
+
+                Call g.DrawLine(pen, axisX, New PointF(x, o.Y + margin.Height * 0.2))
+                Call g.DrawString(label, fontLarge, Brushes.Black, New Point(x - sz.Width / 2, o.Y + margin.Height * 0.3))
+
+                If showGrid Then
+                    Call g.DrawLine(gridPenX, axisX, New PointF(x, margin.Height))
+                End If
             End If
 
             label = Math.Round(dy * (i + 1), 3)
 
             Dim y = sy(label + scaler.ymin)
             Dim axisY As New PointF(o.X, y)
+
             Call g.DrawLine(pen, axisY, New PointF(o.X - margin.Width * 0.1, y))
 
             sz = g.MeasureString(label, fontSmall)

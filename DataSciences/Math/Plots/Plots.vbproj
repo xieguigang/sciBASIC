@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Axis.vb" />
     <Compile Include="g.vb" />
+    <Compile Include="Histogram.vb" />
     <Compile Include="Scatter.vb" />
     <Compile Include="Scaling.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -140,9 +141,9 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ODE\Calculus.vbproj">
+    <ProjectReference Include="..\ODE\diffEq.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
-      <Name>Calculus</Name>
+      <Name>diffEq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
