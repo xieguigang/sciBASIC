@@ -160,7 +160,8 @@ Public Module TextDoc
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
                                        <Parameter("Path")> path As String,
-                                       <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing) As Boolean
+                                       <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing,
+                                       Optional append As Boolean = False) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
@@ -176,8 +177,8 @@ Public Module TextDoc
             path = ProgramPathSearchTool.Long2Short(path)
             DIR = FileIO.FileSystem.GetParentPath(path)
         Catch ex As Exception
-            Dim MSG As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
-            Throw New Exception(MSG, ex)
+            Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
+            Throw New Exception(msg, ex)
         End Try
 
         If String.IsNullOrEmpty(DIR) Then
@@ -186,7 +187,7 @@ Public Module TextDoc
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
-            Call FileIO.FileSystem.WriteAllText(path, text, append:=False, encoding:=encoding)
+            Call FileIO.FileSystem.WriteAllText(path, text, append:=append, encoding:=encoding)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
