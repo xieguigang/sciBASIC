@@ -19,9 +19,14 @@ Public Module Scatter
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(c As IEnumerable(Of Serials), Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
+    Public Function Plot(c As IEnumerable(Of Serials),
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional bg As String = "white",
+                         Optional showGrid As Boolean = True) As Bitmap
+
         If size.IsEmpty Then
-            size = New Size(4000, 3000)
+            size = New Size(4300, 2000)
         End If
         If margin.IsEmpty Then
             margin = New Size(100, 100)
@@ -36,6 +41,7 @@ Public Module Scatter
             Dim rect As New Rectangle(New Point, size)
 
             Call g.FillRectangle(New SolidBrush(bgColor), rect)
+            Call g.DrawAxis(size, margin, mapper, showGrid)
 
             For Each line As Serials In mapper.ForEach(size, margin)
                 Dim pts = line.pts.SlideWindows(2)
@@ -43,14 +49,15 @@ Public Module Scatter
                     .DashStyle = line.lineType
                 }
                 Dim br As New SolidBrush(line.color)
-                Dim r As Single = line.PointSize
+                Dim d = line.PointSize
+                Dim r As Single = line.PointSize / 2
 
                 For Each pt In pts
                     Dim a = pt.First
                     Dim b = pt.Last
                     Call g.DrawLine(pen, a, b)
-                    Call g.FillPie(br, a.X, a.Y, r, r, 0, 360)
-                    Call g.FillPie(br, b.X, b.Y, r, r, 0, 360)
+                    Call g.FillPie(br, a.X - r, a.Y - r, d, d, 0, 360)
+                    Call g.FillPie(br, b.X - r, b.Y - r, d, d, 0, 360)
                 Next
             Next
         End Using
@@ -63,6 +70,10 @@ Public Module Scatter
         Dim c = {
             New Serials With {
                 .title = ode.df.ToString,
+                .color = Color.DarkCyan,
+                .lineType = DashStyle.Dash,
+                .PointSize = 50,
+                .width = 5,
                 .pts = LinqAPI.Exec(Of PointF) <= From x As SeqValue(Of Double)
                                                   In ode.x.SeqIterator
                                                   Select New PointF(CSng(x.obj), CSng(ode.y(x.i)))

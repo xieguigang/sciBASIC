@@ -56,14 +56,16 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
-        Call ODEsTest.test()
+        '        Call ODEsTest.test()
 
         Dim ode As New ODE With {
             .df = Function(x, y) Math.Cos(x),
             .y0 = 0.540302
         }
         Call ode.RK2(100, 1, 10)
-        Call Plots.Scatter.Plot(ode).SaveAs("x:/cos.png")
+        Call Plots.Scatter.Plot(ode).SaveAs("x:/test/cos.png")
+
+        Pause()
 
         Dim water As New LinguisticVariable("Water")
         water.MembershipFunctionCollection.Add(New MembershipFunction("Cold", 0, 0, 20, 40))
