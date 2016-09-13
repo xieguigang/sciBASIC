@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Histogram
@@ -72,6 +73,31 @@ Public Module Histogram
                     .data = {n.obj},
                     .Tag = n.i
                 }
+        }
+    End Function
+
+    Public Function FromODE(ParamArray odes As ODE()) As HistogramGroup
+        Dim colors = Imaging.ChartColors.Shuffles
+        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
+ _
+            From x As SeqValue(Of ODE)
+            In odes.SeqIterator
+            Select New NamedValue(Of Color) With {
+                .Name = x.obj.df.ToString,
+                .x = colors(x.i)
+            }
+        Dim samples = LinqAPI.Exec(Of HistogramSample) <=
+ _
+            From i As Integer
+            In odes.First.y.Sequence
+            Select New HistogramSample With {
+                .Tag = i,
+                .data = odes.ToArray(Function(x) x.y(i))
+            }
+
+        Return New HistogramGroup With {
+            .Samples = samples,
+            .Serials = serials
         }
     End Function
 End Module

@@ -44,9 +44,20 @@ Dim ode As New ODE With {
     .df = Function(x, y) Math.Cos(x),
     .y0 = 0.540302
 }
+Dim ode2 As New ODE With {
+    .df = Function(x, y) Math.Sin(x),
+    .y0 = Math.Sin(0)
+}
 Call ode.RK4(50, 1, 10)
-Call Scatter.Plot(ode).SaveAs("./cos.png")
-Call Histogram.Plot(ode.y.FromData).SaveAs("./cos.hist.png")
+Call ode2.RK4(50, 1, 10)
+
+Dim serials = {
+    ode.FromODE("red"),
+    ode2.FromODE("lime", DashStyle.Solid)
+}
+
+Call Scatter.Plot(serials).SaveAs("./cos.png")
+Call Histogram.Plot(Histogram.FromODE(ode, ode2)).SaveAs("./cos.hist.png")
 ```
 
 ![](./images/cos.png)

@@ -54,19 +54,25 @@ Public Module Scatter
 
     <Extension>
     Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
-        Dim c = {
-            New Serials With {
-                .title = ode.df.ToString,
-                .color = Color.DarkCyan,
-                .lineType = DashStyle.Dash,
-                .PointSize = 50,
-                .width = 5,
-                .pts = LinqAPI.Exec(Of PointF) <= From x As SeqValue(Of Double)
-                                                  In ode.x.SeqIterator
-                                                  Select New PointF(CSng(x.obj), CSng(ode.y(x.i)))
-            }
+        Return {ode.FromODE("cyan")}.Plot(size, margin, bg)
+    End Function
+
+    <Extension>
+    Public Function FromODE(ode As ODE, color As String,
+                            Optional dash As DashStyle = DashStyle.Dash,
+                            Optional ptSize As Integer = 30,
+                            Optional width As Single = 5) As Serials
+
+        Return New Serials With {
+            .title = ode.df.ToString,
+            .color = color.ToColor,
+            .lineType = dash,
+            .PointSize = ptSize,
+            .width = width,
+            .pts = LinqAPI.Exec(Of PointF) <= From x As SeqValue(Of Double)
+                                              In ode.x.SeqIterator
+                                              Select New PointF(CSng(x.obj), CSng(ode.y(x.i)))
         }
-        Return c.Plot(size, margin, bg)
     End Function
 End Module
 
