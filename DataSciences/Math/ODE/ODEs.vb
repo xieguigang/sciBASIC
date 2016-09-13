@@ -1,6 +1,6 @@
 ﻿Public Class ODEs
 
-    Public Class ODE : Inherits Calculus.ODE
+    Public Class ODE : Inherits diffEq.ODE
 
         Public SetY As Action(Of Double)
     End Class

@@ -29,12 +29,11 @@
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports ODE
 
 Module DEBUG
 
@@ -63,10 +62,9 @@ Module DEBUG
             .df = Function(x, y) Math.Cos(x),
             .y0 = 0.540302
         }
-        Call ode.RK2(100, 1, 10)
-        Call Plots.Scatter.Plot(ode).SaveAs("x:/test/cos.png")
-
-        Call ode.y.FromData.Plot().SaveAs("x:/test/cos.hist.png")
+        Call ode.RK4(50, 1, 10)
+        Call Scatter.Plot(ode).SaveAs("./cos.png")
+        Call Histogram.Plot(ode.y.FromData).SaveAs("./cos.hist.png")
 
         Pause()
 
