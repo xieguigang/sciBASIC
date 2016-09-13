@@ -2,7 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
 
-Module g
+Public Module g
 
     Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg As String, plot As Action(Of Graphics)) As Bitmap
         If size.IsEmpty Then
