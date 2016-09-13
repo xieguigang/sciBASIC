@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Axis.vb" />
+    <Compile Include="g.vb" />
     <Compile Include="Scatter.vb" />
     <Compile Include="Scaling.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -25,44 +25,31 @@ Public Module Scatter
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True) As Bitmap
 
-        If size.IsEmpty Then
-            size = New Size(4300, 2000)
-        End If
-        If margin.IsEmpty Then
-            margin = New Size(100, 100)
-        End If
+        Return GraphicsPlots(
+            size, margin, bg,
+            Sub(g)
+                Dim mapper As New Scaling(c.ToArray)
 
-        Dim array As Serials() = c.ToArray
-        Dim bmp As New Bitmap(size.Width, size.Height)
-        Dim bgColor As Color = bg.ToColor(onFailure:=Color.White)
-        Dim mapper As New Scaling(array)
+                Call g.DrawAxis(size, margin, mapper, showGrid)
 
-        Using g As Graphics = Graphics.FromImage(bmp)
-            Dim rect As New Rectangle(New Point, size)
+                For Each line As Serials In mapper.ForEach(size, margin)
+                    Dim pts = line.pts.SlideWindows(2)
+                    Dim pen As New Pen(color:=line.color, width:=line.width) With {
+                        .DashStyle = line.lineType
+                    }
+                    Dim br As New SolidBrush(line.color)
+                    Dim d = line.PointSize
+                    Dim r As Single = line.PointSize / 2
 
-            Call g.FillRectangle(New SolidBrush(bgColor), rect)
-            Call g.DrawAxis(size, margin, mapper, showGrid)
-
-            For Each line As Serials In mapper.ForEach(size, margin)
-                Dim pts = line.pts.SlideWindows(2)
-                Dim pen As New Pen(color:=line.color, width:=line.width) With {
-                    .DashStyle = line.lineType
-                }
-                Dim br As New SolidBrush(line.color)
-                Dim d = line.PointSize
-                Dim r As Single = line.PointSize / 2
-
-                For Each pt In pts
-                    Dim a = pt.First
-                    Dim b = pt.Last
-                    Call g.DrawLine(pen, a, b)
-                    Call g.FillPie(br, a.X - r, a.Y - r, d, d, 0, 360)
-                    Call g.FillPie(br, b.X - r, b.Y - r, d, d, 0, 360)
+                    For Each pt In pts
+                        Dim a = pt.First
+                        Dim b = pt.Last
+                        Call g.DrawLine(pen, a, b)
+                        Call g.FillPie(br, a.X - r, a.Y - r, d, d, 0, 360)
+                        Call g.FillPie(br, b.X - r, b.Y - r, d, d, 0, 360)
+                    Next
                 Next
-            Next
-        End Using
-
-        Return bmp
+            End Sub)
     End Function
 
     <Extension>

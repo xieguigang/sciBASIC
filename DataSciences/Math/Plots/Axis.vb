@@ -14,8 +14,9 @@ Module Axis
         Call g.DrawLine(pen, o, right)
         Call g.DrawLine(pen, o, top)
 
-        Dim fontLarge As New Font(FontFace.MicrosoftYaHei, 14, FontStyle.Regular)
-        Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(o.X - 30, o.Y + 10))
+        Dim fontLarge As New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Regular)
+        Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(o.X + 10, o.Y + 10))
+        Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
 
         Dim dx As Single = scaler.dx / 10 '+ scaler.xmin
         Dim dy As Single = scaler.dy / 10 '+ scaler.ymin
@@ -31,21 +32,29 @@ Module Axis
         pen = New Pen(Color.Black, 3)
 
         For i As Integer = 0 To 9
-            Dim x = sx(dx * (i + 1) + scaler.xmin)
+            Dim label = dx * (i + 1)
+            Dim x = sx(label + scaler.xmin)
             Dim axisX As New PointF(x, o.Y)
+            Dim sz = g.MeasureString(label.ToString, fontLarge)
 
-            Call g.DrawLine(pen, axisX, New PointF(x, o.Y + 10))
+            Call g.DrawLine(pen, axisX, New PointF(x, o.Y + margin.Height * 0.2))
+            Call g.DrawString(label, fontLarge, Brushes.Black, New Point(x - sz.Width / 2, o.Y + margin.Height * 0.3))
 
             If showGrid Then
-                Call g.DrawLine(gridPenX, axisX, New Point(x, margin.Height))
+                Call g.DrawLine(gridPenX, axisX, New PointF(x, margin.Height))
             End If
 
-            Dim y = sy(dy * (i + 1) + scaler.ymin)
+            label = Math.Round(dy * (i + 1), 3)
+
+            Dim y = sy(label + scaler.ymin)
             Dim axisY As New PointF(o.X, y)
-            Call g.DrawLine(pen, axisY, New PointF(o.X - 10, y))
+            Call g.DrawLine(pen, axisY, New PointF(o.X - margin.Width * 0.1, y))
+
+            sz = g.MeasureString(label, fontSmall)
+            g.DrawString(label, fontSmall, Brushes.Black, New Point(o.X - margin.Width * 0.1 - sz.Width, y - sz.Height / 2))
 
             If showGrid Then
-                Call g.DrawLine(gridPenY, axisY, New Point(size.Width - margin.Width, y))
+                Call g.DrawLine(gridPenY, axisY, New PointF(size.Width - margin.Width, y))
             End If
         Next
     End Sub
