@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
@@ -58,6 +59,16 @@ Module DEBUG
 
     Public Function Main() As Integer
         '        Call ODEsTest.test()
+
+
+        Call {
+            New NamedValue(Of Integer)("s1", 123),
+            New NamedValue(Of Integer)("s2", 235),
+            New NamedValue(Of Integer)("s3", 99),
+            New NamedValue(Of Integer)("s4", 499),
+            New NamedValue(Of Integer)("s5", 499)
+        }.FromData().Plot().SaveAs("./pie_chart.png")
+
 
         Dim ode As New ODE With {
             .df = Function(x, y) Math.Cos(x),

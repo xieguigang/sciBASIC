@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
 Public Module g
@@ -26,4 +27,23 @@ Public Module g
 
         Return bmp
     End Function
+
+    <Extension>
+    Public Sub DrawLegend(Of T)(g As Graphics,
+                                data As T(),
+                                getName As Func(Of T, String),
+                                getColor As Func(Of T, Color),
+                                top As Single,
+                                left As Single,
+                                font As Font)
+
+        Dim rl = 200, rh = g.MeasureString("123", font).Height, d = 10
+
+        For Each x In data
+            Call g.FillRectangle(New SolidBrush(getColor(x)), New Rectangle(left - rl - 20, top, rl, rh))
+            Call g.DrawString(getName(x), font, Brushes.Black, New Point(left, top))
+
+            top += rh + d
+        Next
+    End Sub
 End Module
