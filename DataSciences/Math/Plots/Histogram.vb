@@ -13,17 +13,23 @@ Public Module Histogram
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
-                         Optional showGrid As Boolean = True) As Bitmap
+                         Optional showGrid As Boolean = True,
+                         Optional stacked As Boolean = False) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
             Sub(g)
-                Dim mapper As New Scaling(data)
-                Dim n = data.Samples.Sum(Function(x) x.data.Length)
-                Dim dx = (size.Width - 2 * margin.Width - 2 * margin.Width) / n
-                Dim interval = 2 * margin.Width / n
+                Dim mapper As New Scaling(data, stacked)
+                Dim n As Integer = If(
+                    stacked,
+                    data.Samples.Length,
+                    data.Samples.Sum(Function(x) x.data.Length))
+                Dim dx As Double =
+                    (size.Width - 2 * margin.Width - 2 * margin.Width) / n
+                Dim interval As Double = 2 * margin.Width / n
                 Dim left As Single = margin.Width
-                Dim sy = mapper.YScaler(size, margin)
+                Dim sy As Func(Of Single, Single) =
+                    mapper.YScaler(size, margin)
                 Dim bottom = size.Height - margin.Height
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
@@ -31,20 +37,36 @@ Public Module Histogram
                 For Each sample In data.Samples.SeqIterator
                     Dim x = left + interval
 
-                    For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                    If stacked Then ' 改变Y
                         Dim right = x + dx
-                        Dim top = sy(val.obj)
-                        Dim rect As Rectangle = Rectangle(top, x, right, size.Height - margin.Height)
+                        Dim top = sy(sample.obj.StackedSum)
+                        Dim canvasHeight = size.Height - (margin.Height * 2)
 
-                        Call g.DrawRectangle(Pens.Black, rect)
-                        Call g.FillRectangle(
-                            New SolidBrush(data.Serials(val.i).x),
-                            Rectangle(top + 1,
-                                      x + 1,
-                                      right - 1,
-                                      size.Height - margin.Height - 1))
+                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                            Dim rect As Rectangle = Rectangle(top, x, right, bottom)
+
+                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).x), rect)
+
+                            top += ((val.obj - mapper.ymin) / mapper.dy) * canvasHeight
+                        Next
+
                         x += dx
-                    Next
+                    Else ' 改变X
+                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                            Dim right = x + dx
+                            Dim top = sy(val.obj)
+                            Dim rect As Rectangle = Rectangle(top, x, right, size.Height - margin.Height)
+
+                            Call g.DrawRectangle(Pens.Black, rect)
+                            Call g.FillRectangle(
+                                New SolidBrush(data.Serials(val.i).x),
+                                Rectangle(top + 1,
+                                          x + 1,
+                                          right - 1,
+                                          size.Height - margin.Height - 1))
+                            x += dx
+                        Next
+                    End If
 
                     left = x
                 Next
@@ -106,6 +128,12 @@ Public Class HistogramSample
 
     Public Property Tag As String
     Public Property data As Double()
+
+    Public ReadOnly Property StackedSum As Double
+        Get
+            Return data.Sum
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return Me.GetJson

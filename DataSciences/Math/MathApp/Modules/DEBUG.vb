@@ -72,32 +72,32 @@ Module DEBUG
     End Sub
 
     Public Function Main() As Integer
-        Call bubblePlots()
+        '  Call bubblePlots()
 
-        Pause()
+        ' Pause()
 
         '        Call ODEsTest.test()
-        Dim odes As New ODEsTest
-        Dim test_out = odes.Solve(100, 0, 100)
+        ' Dim odes As New ODEsTest
+        ' Dim test_out = odes.Solve(100, 0, 100)
 
-        Call New ODEsTest().Solve(300, 0, 500).Plot.SaveAs("./ODEs.png")
+        '  Call New ODEsTest().Solve(300, 0, 500).Plot.SaveAs("./ODEs.png")
 
-        Dim P As New var(NameOf(P))
-        Dim C As New var(NameOf(C))
+        ' Dim P As New var(NameOf(P))
+        ' Dim C As New var(NameOf(C))
 
-        Call New GenericODEs(P = 2, C = 1) With {
-            .df = Sub(dx, ByRef dy)
-                      dy(P) = 0.1 * P - 0.1 * C * P
-                      dy(C) = 0.1 * P * C - 0.1 * C
-                  End Sub
-        }.Solve(10000, 0, 500).Plot(,,, 8, 6).SaveAs("./ODEs_test2.png")
+        ' Call New GenericODEs(P = 2, C = 1) With {
+        '.df = Sub(dx, ByRef dy)
+        'dy(P) = 0.1 * P - 0.1 * C * P
+        'dy(C) = 0.1 * P * C - 0.1 * C
+        'End Sub
+        '}.Solve(10000, 0, 500).Plot(,,, 8, 6).SaveAs("./ODEs_test2.png")
 
-        Call New GenericODEs(P = 2, C = 1) With {
-            .df = Sub(dx, ByRef dy)
-                      dy(P) = 0.1 * P - 0.1 * C * P
-                      dy(C) = 0.1 * P * C - 0.1 * C
-                  End Sub
-        }.Solve(100000, 0, 500).Plot(,,, 8, 6).SaveAs("./ODEs_test3.png")
+        'Call New GenericODEs(P = 2, C = 1) With {
+        '.df = Sub(dx, ByRef dy)
+        'dy(P) = 0.1 * P - 0.1 * C * P
+        'dy(C) = 0.1 * P * C - 0.1 * C
+        'End Sub
+        '}.Solve(100000, 0, 500).Plot(,,, 8, 6).SaveAs("./ODEs_test3.png")
 
         Call {
             New NamedValue(Of Integer)("s1", 123),
@@ -122,7 +122,7 @@ Module DEBUG
         Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
 
         Call Scatter.Plot(serials).SaveAs("./cos.png")
-        Call Histogram.Plot(Histogram.FromODE(ode, ode2)).SaveAs("./cos.hist.png")
+        Call Histogram.Plot(Histogram.FromODE(ode, ode2), stacked:=False).SaveAs("./cos.hist.png")
 
         Pause()
 

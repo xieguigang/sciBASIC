@@ -18,8 +18,11 @@ Public Class Scaling
         type = GetType(Scatter)
     End Sub
 
-    Sub New(hist As HistogramGroup)
-        Dim h As List(Of Double) = hist.Samples.Select(Function(s) s.data).MatrixToList
+    Sub New(hist As HistogramGroup, stacked As Boolean)
+        Dim h As List(Of Double) = If(
+            stacked,
+            New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
+            hist.Samples.Select(Function(s) s.data).MatrixToList)
         ymin = h.Min
         dy = h.Max - ymin
         type = GetType(Histogram)
