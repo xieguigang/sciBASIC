@@ -60,7 +60,7 @@ Module DEBUG
     Public Function Main() As Integer
         '        Call ODEsTest.test()
         Dim odes As New ODEsTest
-        Dim test_out = odes.Solve(100, 0, 2)
+        Dim test_out = odes.Solve(100, 0, 100)
 
 
         Call {

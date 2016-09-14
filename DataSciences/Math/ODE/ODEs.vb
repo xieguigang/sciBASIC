@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Solving ODEs in R language, as example for test this class:
@@ -75,7 +76,7 @@ Public MustInherit Class ODEs
     ''' <returns></returns>
     Protected MustOverride Function y0() As var()
 
-    Public Function Solve(n As Integer, a As Double, b As Double) As NamedValue(Of Double())()
+    Public Function Solve(n As Integer, a As Double, b As Double) As out
         Dim dh As Double = (b - a) / n  ' 步长
         Dim dx As Double = a
         Dim y0 As Double() = Me.y0 _
@@ -112,9 +113,12 @@ Public MustInherit Class ODEs
                 .Name = var.Name,
                 .x = y(var)
             }
-        Return out + New NamedValue(Of Double()) With {
+
+        Return New out With {
             .x = x,
-            .Name = NameOf(x)
+            .y = out.ToDictionary(
+                Function(o) o.Name,
+                Function(o) o.x)
         }
     End Function
 
@@ -123,15 +127,28 @@ Public MustInherit Class ODEs
     ''' </summary>
     ''' <param name="dx"></param>
     ''' <param name="dy"></param>
-    Protected MustOverride Sub __odes(dx As Double, ByRef dy As Vector)
+    Protected MustOverride Sub func(dx As Double, ByRef dy As Vector)
 
     Private Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
         For Each x In vars       ' 更新设置y的值
             x.value = y(x.Index)
         Next
 
-        Call __odes(dx, dy:=k)
+        Call func(dx, dy:=k)
     End Sub
+End Class
+
+''' <summary>
+''' ODEs output
+''' </summary>
+Public Class out
+
+    Public Property x As Double()
+    Public Property y As Dictionary(Of String, Double())
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class
 
 Public Delegate Sub [Function](dx As Double, y As Vector, ByRef k As Vector)
