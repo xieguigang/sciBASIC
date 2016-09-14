@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -30,7 +31,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public MustInherit Class ODEs
 
     Dim K1, K2, K3, K4 As Vector
-    Dim vars As var()
+    Friend vars As var()
 
     Sub New()
         Dim type As TypeInfo = Me.GetType
@@ -52,7 +53,7 @@ Public MustInherit Class ODEs
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' RK4
     ''' </summary>
     ''' <param name="dxn">x初值</param>
     ''' <param name="dyn">初值y(n)</param>
@@ -149,4 +150,25 @@ Public Class out
     End Function
 End Class
 
-Public Delegate Sub [Function](dx As Double, y As Vector, ByRef k As Vector)
+Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
+
+Public Class GenericODEs : Inherits ODEs
+
+    Public Property df As [Function]
+
+    Sub New(ParamArray vars As var())
+        Me.vars = vars
+
+        For Each x In vars.SeqIterator
+            x.obj.Index = x.i
+        Next
+    End Sub
+
+    Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+        Call _df(dx, dy)
+    End Sub
+
+    Protected Overrides Function y0() As var()
+        Return vars
+    End Function
+End Class

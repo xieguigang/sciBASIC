@@ -62,7 +62,17 @@ Module DEBUG
         Dim odes As New ODEsTest
         Dim test_out = odes.Solve(100, 0, 100)
 
-        Call New ODEsTest().Solve(300, 0, 100).Plot.SaveAs("./ODEs.png")
+        Call New ODEsTest().Solve(300, 0, 500).Plot.SaveAs("./ODEs.png")
+
+        Dim P As New var(NameOf(P))
+        Dim C As New var(NameOf(C))
+
+        Call New GenericODEs(P = 2, C = 1) With {
+            .df = Sub(dx, ByRef dy)
+                      dy(P) = 0.1 * P - 0.1 * C * P
+                      dy(C) = 0.1 * P * C - 0.1 * C
+                  End Sub
+        }.Solve(300, 0, 500).Plot().SaveAs("./ODEs_test2.png")
 
         Call {
             New NamedValue(Of Integer)("s1", 123),

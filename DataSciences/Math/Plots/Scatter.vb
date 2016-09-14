@@ -25,12 +25,15 @@ Public Module Scatter
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
-                         Optional showGrid As Boolean = True) As Bitmap
+                         Optional showGrid As Boolean = True,
+                         Optional showLegend As Boolean = True,
+                         Optional legendPosition As Point = Nothing) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
             Sub(g)
-                Dim mapper As New Scaling(c.ToArray)
+                Dim array = c.ToArray
+                Dim mapper As New Scaling(array)
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
 
@@ -50,6 +53,20 @@ Public Module Scatter
                         Call g.FillPie(br, a.X - r, a.Y - r, d, d, 0, 360)
                         Call g.FillPie(br, b.X - r, b.Y - r, d, d, 0, 360)
                     Next
+
+                    If showLegend Then
+                        If legendPosition.IsEmpty Then
+                            legendPosition = New Point(size.Width * 0.8, margin.Height)
+                        End If
+
+                        Call g.DrawLegend(Of SerialData)(
+                            array,
+                            Function(x) x.title,
+                            Function(x) x.color,
+                            legendPosition.Y,
+                            legendPosition.X,
+                            New Font(FontFace.MicrosoftYaHei, 20))
+                    End If
                 Next
             End Sub)
     End Function

@@ -7,6 +7,13 @@ Public Class var : Inherits float
 
     Public Shared ReadOnly type As Type = GetType(var)
 
+    Sub New()
+    End Sub
+
+    Sub New(name As String)
+        Me.Name = name
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{Index}] {Name} As System.Double = {value}"
     End Function

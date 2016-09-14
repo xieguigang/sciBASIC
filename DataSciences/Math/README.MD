@@ -76,3 +76,63 @@ Call {
 ```
 
 ![](./images/pie_chart.png)
+
+### Solving ODEs
+
+Try solving the ODEs example below:
+
+```
+Const a = b = c = 0.1
+
+P' = a*P-b*C*P
+C' = b*P*C-c*C
+```
+
+Here is two method that can solving this ODEs problems in VisualBasic, these two method output the same mathematics result:
+
+###### Example 1
+
+```vbnet
+Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.diffEq
+
+Public Class ODEsTest : Inherits ODEs
+
+    Const a = 0.1, b = 0.1, c = 0.1
+
+    Dim yC As var
+    Dim P As var
+
+    Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+        dy(P) = a * P - b * yC * P
+        dy(yC) = b * P * yC - c * yC
+    End Sub
+
+    Protected Overrides Function y0() As var()
+        Return {P = 2, yC = 1}
+    End Function
+End Class
+```
+
+Solving:
+```vbnet
+Call New ODEsTest().Solve(300, 0, 500).Plot.SaveAs("./ODEs.png")
+```
+
+![](./images/ODEs.png)
+
+###### Example 2
+
+```vbnet
+Dim P As New var(NameOf(P))
+Dim C As New var(NameOf(C))
+
+Call New GenericODEs(P = 2, C = 1) With {
+     .df = Sub(dx, ByRef dy)
+               dy(P) = 0.1 * P - 0.1 * C * P
+               dy(C) = 0.1 * P * C - 0.1 * C
+           End Sub
+}.Solve(300, 0, 500).Plot().SaveAs("./ODEs_test2.png")
+```
+
+![](./images/ODEs_test2.png)

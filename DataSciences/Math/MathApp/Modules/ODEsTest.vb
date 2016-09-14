@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 
-Class ODEsTest : Inherits ODEs
+Public Class ODEsTest : Inherits ODEs
 
     Const a = 0.1, b = 0.1, c = 0.1
 
