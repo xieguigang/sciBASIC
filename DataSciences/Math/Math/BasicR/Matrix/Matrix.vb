@@ -433,10 +433,10 @@ Namespace BasicR
             Dim b As New Vector(m)
 
             For i As Integer = 0 To m - 1
-                b.Ele(i) = 0.0
+                b(i) = 0.0
 
                 For k As Integer = 0 To n - 1
-                    b.Ele(i) = b.Ele(i) + A.Ele(i, k) * x.Ele(k)
+                    b(i) = b(i) + A.Ele(i, k) * x(k)
                 Next
             Next
 
