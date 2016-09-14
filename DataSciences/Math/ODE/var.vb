@@ -1,9 +1,13 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical.diffEq
 
 Public Class var : Inherits float
+    Implements Ivar
 
     Public Property Index As Integer
-    Public Property Name As String
+    Public Property Name As String Implements sIdEnumerable.Identifier
+    Public Overrides Property value As Double Implements Ivar.value
 
     Public Shared ReadOnly type As Type = GetType(var)
 
@@ -31,3 +35,8 @@ Public Class var : Inherits float
         Throw New NotSupportedException
     End Operator
 End Class
+
+Public Interface Ivar : Inherits sIdEnumerable
+
+    Property value As Double
+End Interface
