@@ -43,10 +43,22 @@ Namespace BasicR
         End Property
 
         Public Sub New(m As Integer)
+            Call Me.New(0R, m)
+        End Sub
+
+        Sub New(data As IEnumerable(Of Double))
+            Call Me.New(0)
+
+            For Each x As Double In data
+                Add(x)
+            Next
+        End Sub
+
+        Sub New(init As Double, m As Integer)
             Call MyBase.New(capacity:=m)
 
             For i As Integer = 0 To m - 1
-                Add(0R)
+                Add(init)
             Next
         End Sub
 

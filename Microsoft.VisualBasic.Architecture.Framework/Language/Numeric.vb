@@ -276,13 +276,17 @@ Namespace Language
     End Class
 
     ''' <summary>
-    ''' Double
+    ''' <see cref="System.Double"/>
     ''' </summary>
-    Public Class Float : Inherits Value(Of Double)
+    Public Class float : Inherits Value(Of Double)
         Implements IComparable
 
         Sub New(x As Double)
             value = x
+        End Sub
+
+        Sub New()
+            Me.New(0R)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -294,10 +298,10 @@ Namespace Language
 
             If type.Equals(GetType(Double)) Then
                 Return value.CompareTo(DirectCast(obj, Double))
-            ElseIf type.Equals(GetType(Float)) Then
-                Return value.CompareTo(DirectCast(obj, Float).value)
+            ElseIf type.Equals(GetType(float)) Then
+                Return value.CompareTo(DirectCast(obj, float).value)
             Else
-                Throw New Exception($"Miss-match of type:  {GetType(Float).FullName} --> {type.FullName}")
+                Throw New Exception($"Miss-match of type:  {GetType(float).FullName} --> {type.FullName}")
             End If
         End Function
 
@@ -308,27 +312,31 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <(n As Double, x As Float) As Float
+        Public Shared Operator <(n As Double, x As float) As float
             If n >= x.value Then
-                Return New Float(Double.MaxValue)
+                Return New float(Double.MaxValue)
             Else
                 Return x
             End If
         End Operator
 
-        Public Overloads Shared Widening Operator CType(x As Double) As Float
-            Return New Float(x)
+        Public Shared Operator *(n As Double, x As float) As Double
+            Return n * x.value
         End Operator
 
-        Public Overloads Shared Operator <=(x As Float, n As Double) As Boolean
+        Public Overloads Shared Widening Operator CType(x As Double) As float
+            Return New float(x)
+        End Operator
+
+        Public Overloads Shared Operator <=(x As float, n As Double) As Boolean
             Return x.value <= n
         End Operator
 
-        Public Overloads Shared Operator >=(x As Float, n As Double) As Boolean
+        Public Overloads Shared Operator >=(x As float, n As Double) As Boolean
             Return x.value >= n
         End Operator
 
-        Public Shared Operator >(n As Double, x As Float) As Float
+        Public Shared Operator >(n As Double, x As float) As float
             Return x
         End Operator
     End Class

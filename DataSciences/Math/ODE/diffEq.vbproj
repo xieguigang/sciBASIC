@@ -91,6 +91,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="var.vb" />
     <Compile Include="ODEs.vb" />
     <Compile Include="ODE.vb" />
     <Compile Include="Solver.vb" />
