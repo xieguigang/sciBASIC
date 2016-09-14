@@ -62,3 +62,17 @@ Call Histogram.Plot(Histogram.FromODE(ode, ode2)).SaveAs("./cos.hist.png")
 
 ![](./images/cos.png)
 ![](./images/cos.hist.png)
+
+### Simple PieChart
+
+```vbnet
+Call {
+    New NamedValue(Of Integer)("s1", 123),
+    New NamedValue(Of Integer)("s2", 235),
+    New NamedValue(Of Integer)("s3", 99),
+    New NamedValue(Of Integer)("s4", 499),
+    New NamedValue(Of Integer)("s5", 499)
+}.FromData().Plot().SaveAs("./pie_chart.png")
+```
+
+![](./images/pie_chart.png)
