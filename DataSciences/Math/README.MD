@@ -88,6 +88,29 @@ P' = a*P-b*C*P
 C' = b*P*C-c*C
 ```
 
+Solving in R language
+
+```R
+require(deSolve)
+
+func <- function(t, x, parms) {
+   with(as.list(c(parms, x)), {
+
+      dP  <- a * P      - b * C * P
+      dC  <- b * P * C  - c * C
+
+      list(c(dP, dC))
+   })
+}
+
+y0    <- c(P = 2, C = 1)
+parms <- c(a = 0.1, b = 0.1, c = 0.1)
+out   <- ode(y = y0, times = 0:500, func, parms = parms)
+
+head(out)
+plot(out)
+```
+
 Here is two method that can solving this ODEs problems in VisualBasic, these two method output the same mathematics result:
 
 ###### Example 1
