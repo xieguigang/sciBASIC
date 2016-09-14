@@ -68,10 +68,6 @@ Namespace Scripting
             Return Conversion.Val(s)
         End Function
 
-        Public Function CastString(obj As String) As String
-            Return obj
-        End Function
-
         Public Function CastChar(obj As String) As Char
             Return If(String.IsNullOrEmpty(obj), NIL, obj.First)
         End Function
@@ -85,16 +81,8 @@ Namespace Scripting
             Return CInt(val(obj))
         End Function
 
-        Public Function CastDouble(obj As String) As Double
-            Return val(obj)
-        End Function
-
         Public Function CastLong(obj As String) As Long
             Return CLng(val(obj))
-        End Function
-
-        Public Function CastBoolean(obj As String) As Boolean
-            Return obj.getBoolean
         End Function
 
         Public Function CastCharArray(obj As String) As Char()
@@ -135,10 +123,6 @@ Namespace Scripting
             Return GDIPlusDeviceHandleFromImageFile(path)
         End Function
 
-        Public Function CastColor(rgb As String) As Color
-            Return rgb.ToColor
-        End Function
-
         Public Function CastFont(face As String) As Font
             Return New Font(face, 10)
         End Function
@@ -153,6 +137,10 @@ Namespace Scripting
 
         Public Function CastProcess(exe As String) As Process
             Return Process.Start(exe)
+        End Function
+
+        Public Function CastSingle(n As String) As Single
+            Return CSng(val(n))
         End Function
 
         Public Function CastRegexOptions(name As String) As RegexOptions

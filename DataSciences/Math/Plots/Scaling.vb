@@ -34,14 +34,19 @@ Public Class Scaling
         Dim width As Integer = size.Width - margin.Width * 2
         Dim height As Integer = size.Height - margin.Height * 2
 
-        For Each s In serials
+        For Each s As SerialData In serials
             Dim pts = LinqAPI.Exec(Of PointData) <=
  _
                 From p As PointData
                 In s.pts
                 Let px As Single = margin.Width + width * (p.pt.X - xmin) / dx
                 Let py As Single = bottom - height * (p.pt.Y - ymin) / dy
-                Select New PointData(px, py)
+                Select New PointData(px, py) With {
+                    .errMinus = p.errMinus,
+                    .errPlus = p.errPlus,
+                    .Tag = p.Tag,
+                    .value = p.value
+                }
 
             Yield New SerialData With {
                 .color = s.color,

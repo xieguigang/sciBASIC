@@ -36,6 +36,8 @@ Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
 
 Module DEBUG
 
@@ -57,7 +59,23 @@ Module DEBUG
         Yield New [Integer](3)
     End Function
 
+    Sub bubblePlots()
+        ' Dim test As New List(Of csv.SerialData)
+        ' Dim rnd As New Random
+
+        'For i = 0 To 300
+        '    test += New csv.SerialData With {.value = rnd.[Next](10, 100), .serial = rnd.Next(1, 10), .X = rnd.Next(1, 4000), .Y = rnd.Next(1, 3000)}
+        ' Next
+
+        '  Call test.SaveTo("./BubbleTest.csv")
+        Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv")).SaveAs("./Bubble.png")
+    End Sub
+
     Public Function Main() As Integer
+        Call bubblePlots()
+
+        Pause()
+
         '        Call ODEsTest.test()
         Dim odes As New ODEsTest
         Dim test_out = odes.Solve(100, 0, 100)
