@@ -33,6 +33,16 @@ Have a try of some test:
 
 ### VisualBasic Data Science plot system
 
+##### Bubble Plot
+
+```vbnet
+Call Bubble.Plot(csv.SerialData.GetData("./images/BubbleTest.csv"), legend:=False).SaveAs("./images/Bubble.png")
+```
+
+![](./images/Bubble.png)
+
+##### Scatter & Histogram Plot
+
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -63,7 +73,7 @@ Call Histogram.Plot(Histogram.FromODE(ode, ode2)).SaveAs("./cos.hist.png")
 ![](./images/cos.png)
 ![](./images/cos.hist.png)
 
-### Simple PieChart
+##### Simple PieChart
 
 ```vbnet
 Call {
@@ -77,7 +87,7 @@ Call {
 
 ![](./images/pie_chart.png)
 
-### Solving ODEs
+##### Solving ODEs
 
 Try solving the ODEs example below:
 

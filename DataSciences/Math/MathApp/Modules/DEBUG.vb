@@ -27,7 +27,9 @@
 #End Region
 
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
@@ -36,8 +38,6 @@ Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.DocumentFormat.Csv
 
 Module DEBUG
 
@@ -60,15 +60,15 @@ Module DEBUG
     End Function
 
     Sub bubblePlots()
-        ' Dim test As New List(Of csv.SerialData)
-        ' Dim rnd As New Random
+        Dim test As New List(Of csv.SerialData)
+        Dim rnd As New Random
 
-        'For i = 0 To 300
-        '    test += New csv.SerialData With {.value = rnd.[Next](10, 100), .serial = rnd.Next(1, 10), .X = rnd.Next(1, 4000), .Y = rnd.Next(1, 3000)}
-        ' Next
+        For i = 0 To 300
+            test += New csv.SerialData With {.value = rnd.[Next](10, 100), .serial = rnd.Next(1, 10), .X = rnd.Next(1, 4000), .Y = rnd.Next(1, 3000)}
+        Next
 
-        '  Call test.SaveTo("./BubbleTest.csv")
-        Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv")).SaveAs("./Bubble.png")
+        Call test.SaveTo("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv")
+        Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv"), legend:=False).SaveAs("./Bubble.png")
     End Sub
 
     Public Function Main() As Integer
