@@ -1,15 +1,15 @@
 ### VisualBasic Mathematics expression evaluation
 ![](./images/2016-05-15.png)
 
-If you are running on Linux platform, try start by mono:
+If you are running on Linux/macOS platform, try start by mono:
 
 > mono ./vbmath.exe
 
-Or if you are running Ubuntu system, just using .NET application directly typing:
+Or if you are running Windows/Ubuntu system, just using .NET application directly by typing:
 
 > ./vbmath.exe
 
-If you are running on Windows, just double click on the program and then application running
+If you are running on Windows, just double click on the program and then application running.
 
 Have a try of some test:
 
@@ -29,6 +29,34 @@ Have a try of some test:
 > E
 > E^3
 > 2.7^3
+```
+
+##### Using the math expression engine
+
+First, create the object instance of the math expression engine, and makes some configuration:
+```vbnet
+Imports Microsoft.VisualBasic.Mathematical
+
+Dim engine As New Expression
+
+' Add variable
+Call engine.Variables.Set(Name, expr)
+' Add Constant
+' But please notices that, unlike the variable its value can be updated, the constant value can not be updated after it was assigned the initial value.
+Call engine.Constant.Add(Name, expr)
+' Add user define function
+Call engine.Functions.Add(Name, def)
+```
+
+And then you can evaluate any of the math expression that its syntax match the VisualBasic language syntax:
+
+```vbnet
+Dim value = engine.Evaluation(expr)
+
+' For example
+value = engine.Evaluation("1+1")
+value = engine.Evaluation("sin(PI)")
+value = engine.Evaluation("cos(PI)+sin(PI/5)+6%3")
 ```
 
 ### VisualBasic Data Science plot system
