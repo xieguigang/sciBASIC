@@ -28,7 +28,7 @@
 
 Namespace BasicR
 
-    Public Class VEC
+    Public Class VEC ' : Inherits Double()
 
         ''' <summary>
         ''' 向量维数
@@ -53,7 +53,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v3 As New VEC(N0)
 
@@ -74,7 +74,7 @@ Namespace BasicR
         Public Shared Operator -(v1 As VEC, v2 As VEC) As VEC
             Dim N0 As Integer
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v3 As New VEC(N0)
 
@@ -97,7 +97,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v3 As New VEC(N0)
 
@@ -119,7 +119,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v3 As New VEC(N0)
 
@@ -142,7 +142,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
@@ -165,7 +165,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
@@ -187,7 +187,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
@@ -209,7 +209,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
@@ -232,7 +232,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
@@ -255,7 +255,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
@@ -299,9 +299,9 @@ Namespace BasicR
             Dim N0 As Integer, M0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
-            M0 = v2.[dim]
+            M0 = v2.[Dim]
 
             If N0 <> M0 Then
                 System.Console.WriteLine("Inner vector dimensions must agree！")
@@ -329,9 +329,9 @@ Namespace BasicR
             Dim N0 As Integer, M0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
-            M0 = v2.[dim]
+            M0 = v2.[Dim]
 
             If N0 <> M0 Then
                 System.Console.WriteLine("Inner vector dimensions must agree！")
@@ -361,7 +361,7 @@ Namespace BasicR
             Dim N0 As Integer
 
             '获取变量维数
-            N0 = v1.[dim]
+            N0 = v1.[Dim]
 
             Dim sum As Double
             sum = 0.0
@@ -380,7 +380,7 @@ Namespace BasicR
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator -(v1 As VEC) As VEC
-            Dim N0 As Integer = v1.[dim]
+            Dim N0 As Integer = v1.[Dim]
 
             Dim v2 As New VEC(N0)
 
