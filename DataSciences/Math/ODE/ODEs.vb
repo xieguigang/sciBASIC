@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public MustInherit Class ODEs
 
     Dim K1, K2, K3, K4 As Vector
+
     Friend vars As var()
 
     Sub New()
@@ -77,6 +78,13 @@ Public MustInherit Class ODEs
     ''' <returns></returns>
     Protected MustOverride Function y0() As var()
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="n">A larger value of this parameter, will makes your result more precise.</param>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
     Public Function Solve(n As Integer, a As Double, b As Double) As out
         Dim dh As Double = (b - a) / n  ' 步长
         Dim dx As Double = a

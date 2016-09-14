@@ -159,3 +159,7 @@ Call New GenericODEs(P = 2, C = 1) With {
 ```
 
 ![](./images/ODEs_test2.png)
+
+Set value ``n=100000`` or larger value will makes the calculated result more precise:
+
+![](./images/ODEs_test3.png)

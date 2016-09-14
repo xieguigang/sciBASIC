@@ -77,8 +77,13 @@ Public Module Scatter
     End Function
 
     <Extension>
-    Public Function Plot(ode As out, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
-        Return ode.FromODEs.Plot(size, margin, bg)
+    Public Function Plot(ode As out,
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional bg As String = "white",
+                         Optional ptSize As Single = 30,
+                         Optional width As Single = 5) As Bitmap
+        Return ode.FromODEs(, ptSize, width).Plot(size, margin, bg)
     End Function
 
     <Extension>

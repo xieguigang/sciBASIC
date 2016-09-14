@@ -340,4 +340,9 @@ Namespace Language
             Return x
         End Operator
     End Class
+
+    Public Class Precise : Inherits Value(Of Decimal)
+
+
+    End Class
 End Namespace

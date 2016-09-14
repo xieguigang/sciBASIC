@@ -72,7 +72,14 @@ Module DEBUG
                       dy(P) = 0.1 * P - 0.1 * C * P
                       dy(C) = 0.1 * P * C - 0.1 * C
                   End Sub
-        }.Solve(300, 0, 500).Plot().SaveAs("./ODEs_test2.png")
+        }.Solve(10000, 0, 500).Plot(,,, 8, 6).SaveAs("./ODEs_test2.png")
+
+        Call New GenericODEs(P = 2, C = 1) With {
+            .df = Sub(dx, ByRef dy)
+                      dy(P) = 0.1 * P - 0.1 * C * P
+                      dy(C) = 0.1 * P * C - 0.1 * C
+                  End Sub
+        }.Solve(100000, 0, 500).Plot(,,, 8, 6).SaveAs("./ODEs_test3.png")
 
         Call {
             New NamedValue(Of Integer)("s1", 123),
