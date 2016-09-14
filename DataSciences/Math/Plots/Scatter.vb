@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Scatter
@@ -49,9 +50,9 @@ Public Module Scatter
                     For Each pt In pts
                         Dim a = pt.First
                         Dim b = pt.Last
-                        Call g.DrawLine(pen, a, b)
-                        Call g.FillPie(br, a.X - r, a.Y - r, d, d, 0, 360)
-                        Call g.FillPie(br, b.X - r, b.Y - r, d, d, 0, 360)
+                        Call g.DrawLine(pen, a.pt, b.pt)
+                        Call g.FillPie(br, a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
+                        Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
                     Next
 
                     If showLegend Then
@@ -98,9 +99,10 @@ Public Module Scatter
             .lineType = dash,
             .PointSize = ptSize,
             .width = width,
-            .pts = LinqAPI.Exec(Of PointF) <= From x As SeqValue(Of Double)
-                                              In ode.x.SeqIterator
-                                              Select New PointF(CSng(x.obj), CSng(ode.y(x.i)))
+            .pts = LinqAPI.Exec(Of PointData) <=
+                From x As SeqValue(Of Double)
+                In ode.x.SeqIterator
+                Select New PointData(CSng(x.obj), CSng(ode.y(x.i)))
         }
     End Function
 
@@ -122,14 +124,15 @@ Public Module Scatter
                 .PointSize = ptSize,
                 .title = y.obj.Name,
                 .width = width,
-                .pts = odes.x.SeqIterator.ToArray(Function(x) New PointF(x.obj, y.obj.x(x.i)))
+                .pts = odes.x.SeqIterator.ToArray(Function(x) New PointData(x.obj, y.obj.x(x.i)))
             }
     End Function
 End Module
 
 Public Class SerialData : Implements sIdEnumerable
+    Implements IEnumerable(Of PointData)
 
-    Public pts As PointF()
+    Public pts As PointData()
     Public lineType As DashStyle = DashStyle.Solid
     Public Property title As String Implements sIdEnumerable.Identifier
 
@@ -143,4 +146,30 @@ Public Class SerialData : Implements sIdEnumerable
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of PointData) Implements IEnumerable(Of PointData).GetEnumerator
+        For Each x In pts
+            Yield x
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
+    End Function
 End Class
+
+Public Structure PointData
+    Public pt As PointF
+    Public errPlus As Double
+    Public errMinus As Double
+    Public Tag As String
+    Public value As Double
+
+    Sub New(x As Single, y As Single)
+        pt = New PointF(x, y)
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+End Structure

@@ -12,8 +12,8 @@ Public Class Scaling
     Public ReadOnly type As Type
 
     Sub New(array As SerialData())
-        dx = Scaling(array, Function(p) p.X, xmin)
-        dy = Scaling(array, Function(p) p.Y, ymin)
+        dx = Scaling(array, Function(p) p.pt.X, xmin)
+        dy = Scaling(array, Function(p) p.pt.Y, ymin)
         serials = array
         type = GetType(Scatter)
     End Sub
@@ -35,11 +35,14 @@ Public Class Scaling
         Dim height As Integer = size.Height - margin.Height * 2
 
         For Each s In serials
-            Dim pts = LinqAPI.Exec(Of PointF) <= From p As PointF
-                                                 In s.pts
-                                                 Let px As Single = margin.Width + width * (p.X - xmin) / dx
-                                                 Let py As Single = bottom - height * (p.Y - ymin) / dy
-                                                 Select New PointF(px, py)
+            Dim pts = LinqAPI.Exec(Of PointData) <=
+ _
+                From p As PointData
+                In s.pts
+                Let px As Single = margin.Width + width * (p.pt.X - xmin) / dx
+                Let py As Single = bottom - height * (p.pt.Y - ymin) / dy
+                Select New PointData(px, py)
+
             Yield New SerialData With {
                 .color = s.color,
                 .lineType = s.lineType,
@@ -71,7 +74,7 @@ Public Class Scaling
     ''' 返回dx或者dy
     ''' </summary>
     ''' <returns></returns>
-    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointF, Single), ByRef min As Single) As Single
+    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), ByRef min As Single) As Single
         Dim array As Single() = data.Select(Function(s) s.pts).MatrixAsIterator.ToArray([get])
         Dim max = array.Max : min = array.Min
         Dim d As Single = max - min
