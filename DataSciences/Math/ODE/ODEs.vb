@@ -116,9 +116,7 @@ Public MustInherit Class ODEs
 
         Return New out With {
             .x = x,
-            .y = out.ToDictionary(
-                Function(o) o.Name,
-                Function(o) o.x)
+            .y = out.ToDictionary
         }
     End Function
 
@@ -144,7 +142,7 @@ End Class
 Public Class out
 
     Public Property x As Double()
-    Public Property y As Dictionary(Of String, Double())
+    Public Property y As Dictionary(Of NamedValue(Of Double()))
 
     Public Overrides Function ToString() As String
         Return Me.GetJson

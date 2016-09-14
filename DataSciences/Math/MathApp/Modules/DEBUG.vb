@@ -62,6 +62,7 @@ Module DEBUG
         Dim odes As New ODEsTest
         Dim test_out = odes.Solve(100, 0, 100)
 
+        Call New ODEsTest().Solve(300, 0, 100).Plot.SaveAs("./ODEs.png")
 
         Call {
             New NamedValue(Of Integer)("s1", 123),
