@@ -31,8 +31,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace SyntaxAPI.Vectors
 
-    Public Class GenericVector(Of T) : Implements IEnumerable(Of T)
-        Implements System.IDisposable
+    Public Class GenericVector(Of T) : Inherits List(Of T)
+        Implements IEnumerable(Of T)
+        Implements IDisposable
 
         ''' <summary>
         ''' 向量维数
@@ -40,33 +41,39 @@ Namespace SyntaxAPI.Vectors
         ''' <remarks></remarks>
         Public ReadOnly Property [Dim] As Integer
             Get
-                Return Elements.Length
+                Return Count
             End Get
         End Property
 
-        Public Property Elements As T()
+        Sub New()
+            MyBase.New
+        End Sub
 
-        Default Public Overloads Property ElementWhere(conditions As BooleanVector) As T()
+        Sub New(data As IEnumerable(Of T))
+            MyBase.New(data)
+        End Sub
+
+        Public Overloads Property SelectWhere(conditions As BooleanVector) As T()
             Get
                 Dim LQuery As T() = LinqAPI.Exec(Of T) <=
                     From i As SeqValue(Of Boolean)
                     In conditions.SeqIterator
                     Where i.obj = True
-                    Select _Elements(i.i)
+                    Select MyBase.Item(i.i)
 
                 Return LQuery
             End Get
             Set(value As T())
                 For i As Integer = 0 To conditions.Count - 1
-                    If conditions._Elements(i) Then
-                        _Elements(i) = value(i)
+                    If conditions(i) Then
+                        Me(i) = value(i)
                     End If
                 Next
             End Set
         End Property
 
         Public Sub Factor(value As Integer)
-            ReDim Preserve _Elements(value - 1)
+            ' ReDim Preserve _Elements(value - 1)
         End Sub
 
         ''' <summary>
@@ -79,16 +86,16 @@ Namespace SyntaxAPI.Vectors
         ''' <remarks></remarks>
         Public Overloads Property [GET](a As Vector, b As Vector) As T()
             Get
-                Dim x As Integer = a.Elements(0), y As Integer = b.Elements(0)
+                Dim x As Integer = a(0), y As Integer = b(0)
                 Dim ChunkBuffer As T() = New T(y - x - 1) {}
-                Call Array.ConstrainedCopy(Elements, x, ChunkBuffer, 0, ChunkBuffer.Length)
+                Call Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
                 Return ChunkBuffer
             End Get
             Set(value As T())
-                Dim x As Integer = a.Elements(0), y As Integer = b.Elements(0)
+                Dim x As Integer = a(0), y As Integer = b(0)
                 Dim idx As Integer = 0
                 For i As Integer = x To y
-                    _Elements(i) = value(idx)
+                    Me(i) = value(idx)
                     idx += 1
                 Next
             End Set
@@ -103,18 +110,14 @@ Namespace SyntaxAPI.Vectors
             End Set
         End Property
 
-#Region "Implements Generic.IEnumerable(Of T)"
+        Public Shared Operator <>(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
+            Dim LQuery = (From i In x.SeqIterator Select Not i.obj.Equals(y(i.i))).ToArray
+            Return New BooleanVector(LQuery)
+        End Operator
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In Elements
-                Yield x
-            Next
-        End Function
-
-        Public Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
-        End Function
-#End Region
+        Public Shared Operator =(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
+            Return Not (x <> y)
+        End Operator
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls

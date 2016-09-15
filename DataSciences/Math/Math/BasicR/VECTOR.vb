@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BasicR
@@ -34,6 +36,24 @@ Namespace BasicR
     ''' <see cref="List(Of Double)"/>
     ''' </summary>
     Public Class Vector : Inherits List(Of Double) ' : Inherits Double()
+
+        Public Shared ReadOnly Property NAN As Vector
+            Get
+                Return New Vector({Double.NaN})
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property Inf As Vector
+            Get
+                Return New Vector({Double.PositiveInfinity})
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property Zero As Vector
+            Get
+                Return New Vector({0})
+            End Get
+        End Property
 
         ''' <summary>
         ''' 向量维数
@@ -365,5 +385,33 @@ Namespace BasicR
         Public Overrides Function ToString() As String
             Return Me.ToArray.GetJson
         End Function
+
+        Public Shared Operator =(x As Vector, n As Integer) As BooleanVector
+            Return New BooleanVector(From d As Double In x Select d = n)
+        End Operator
+
+        Public Shared Operator <>(x As Vector, n As Integer) As BooleanVector
+            Return New BooleanVector(From d As Double In x Select d <> n)
+        End Operator
+
+        Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
+            Return New Vector(From d As Double In v Select d ^ n)
+        End Operator
+
+        Public Overloads Shared Operator >(x As Vector, n As Double) As BooleanVector
+            Return New BooleanVector(From d As Double In x Select d > n)
+        End Operator
+
+        Public Overloads Shared Operator <(x As Vector, n As Double) As BooleanVector
+            Return New BooleanVector(From d As Double In x Select d < n)
+        End Operator
+
+        Public Shared Operator >=(x As Vector, n As Double) As BooleanVector
+            Return New BooleanVector(From d As Double In x Select d >= n)
+        End Operator
+
+        Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
+            Return New BooleanVector(From d As Double In x Select d <= n)
+        End Operator
     End Class
 End Namespace

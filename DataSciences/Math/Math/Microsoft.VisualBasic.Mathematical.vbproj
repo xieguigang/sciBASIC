@@ -215,7 +215,6 @@
     <Compile Include="BasicR\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
     <Compile Include="BasicR\RSyntax\Vectors\BooleanVector.vb" />
     <Compile Include="BasicR\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
-    <Compile Include="BasicR\RSyntax\Vectors\VECTOR.vb" />
     <Compile Include="BasicR\Solvers\SOR.vb" />
     <Compile Include="BasicR\Solvers\GaussianElimination.vb" />
     <Compile Include="BasicR\Solvers\ISolver.vb" />
