@@ -30,6 +30,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BasicR
 
+    ''' <summary>
+    ''' <see cref="List(Of Double)"/>
+    ''' </summary>
     Public Class Vector : Inherits List(Of Double) ' : Inherits Double()
 
         ''' <summary>
@@ -42,10 +45,18 @@ Namespace BasicR
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates vector with m element and init value set to zero
+        ''' </summary>
+        ''' <param name="m"></param>
         Public Sub New(m As Integer)
             Call Me.New(0R, m)
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence.
+        ''' </summary>
+        ''' <param name="data"></param>
         Sub New(data As IEnumerable(Of Double))
             Call Me.New(0)
 
@@ -54,6 +65,11 @@ Namespace BasicR
             Next
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with m element and init value specific by init parameter.
+        ''' </summary>
+        ''' <param name="init"></param>
+        ''' <param name="m"></param>
         Sub New(init As Double, m As Integer)
             Call MyBase.New(capacity:=m)
 
@@ -342,6 +358,10 @@ Namespace BasicR
             Return v2
         End Operator
 
+        ''' <summary>
+        ''' Display member's data as json array
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Me.ToArray.GetJson
         End Function
