@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::2fec28dbd49c066ec2c8cef0b7ad50e9, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
@@ -46,72 +47,63 @@ Namespace StorageProvider.Reflection
 
 #If NET_40 = 0 Then
 
-        <Extension> Public Function GetDataFrameworkTypeSchema(TypeInfo As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
-            Dim Schema As SchemaProvider = SchemaProvider.CreateObject(TypeInfo, Explicit).CopyReadDataFromObject
-            Dim ColumnSchema = (From columAttr As Column
-                                In Schema.Columns
-                                Select columAttr.Name,
-                                    columAttr.BindProperty.PropertyType).ToArray
-            Dim ArrayColumnSchema = (From columnItem As CollectionColumn
-                                     In Schema.CollectionColumns
-                                     Select columnItem.Name,
-                                         columnItem.BindProperty.PropertyType).ToArray
-            Dim ChunkData = ColumnSchema.Join(ArrayColumnSchema)
-            Dim DictData As Dictionary(Of String, Type) =
-                ChunkData.ToDictionary(Function(item) item.Name, elementSelector:=Function(item) item.PropertyType)
-            Return DictData
+        ''' <summary>
+        ''' Returns the type schema as ``{columnName, type}``, using for the cytoscape software
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="Explicit"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
+            Dim Schema As SchemaProvider = SchemaProvider.CreateObject(type, Explicit).CopyReadDataFromObject
+            Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) <=
+                From columAttr As Column
+                In Schema.Columns
+                Select New NamedValue(Of Type) With {
+                    .Name = columAttr.Name,
+                    .x = columAttr.BindProperty.PropertyType
+                }
+            Dim array = From columnItem As CollectionColumn
+                        In Schema.CollectionColumns
+                        Select New NamedValue(Of Type) With {
+                            .Name = columnItem.Name,
+                            .x = columnItem.BindProperty.PropertyType
+                        }
+            Dim hash As Dictionary(Of String, Type) =
+                cols.Join(array).ToDictionary(Function(x) x.Name,
+                                              Function(x) x.x)
+            Return hash
         End Function
 #End If
 
         ''' <summary>
         ''' 将Csv文件加载至一个目标集合之中以完成数据从文件之中的读取操作
         ''' </summary>
-        ''' <param name="CsvData"></param>
-        ''' <param name="TypeInfo"></param>
+        ''' <param name="csv"></param>
+        ''' <param name="type"></param>
         ''' <param name="explicit"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function LoadDataToObject(CsvData As Csv.DocumentStream.DataFrame, TypeInfo As System.Type, Optional explicit As Boolean = True) As Object()
-            'Dim NewTable As New List(Of Object)
-            'Dim Ordinal As Integer = 0
-            'Dim Schema = Csv.StorageProvider.ComponentModels.SchemaProvider.CreateObject(TypeInfo, explicit).CopyWriteDataToObject
-            'Dim ColumnSchema = (From columnItem As ComponentModels.Column In Schema.Columns
-            '                    Let p = CsvData.GetOrdinal(columnItem.Name)
-            '                    Where Not p < 0
-            '                    Select handle = p, columnItem).ToArray
-            'Dim ArrayColumnSchema = (From columnItem As Csv.StorageProvider.ComponentModels.CollectionColumn In Schema.CollectionColumns
-            '                         Let p = CsvData.GetOrdinal(columnItem.Name)
-            '                         Where Not p < 0
-            '                         Select handle = p, columnItem).ToArray
-            'While CsvData.Read
+        ''' 
+        <Extension>
+        Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
+            Dim schema As SchemaProvider = SchemaProvider.CreateObject(type, explicit).CopyWriteDataToObject
+            Dim rowBuilder As New RowBuilder(schema)
+            Dim buf = From line As SeqValue(Of RowObject)
+                      In csv._innerTable.SeqIterator.AsParallel
+                      Select LineNumber = line.i,
+                          FilledObject = Activator.CreateInstance(type),
+                          row = line.obj
 
-            '    Dim FilledObject As Object = Activator.CreateInstance(TypeInfo)
+            Call rowBuilder.Indexof(csv)
 
-            '    For Each Column In ColumnSchema
-            '        Ordinal = Column.handle
-            '        If Ordinal >= 0 Then
-            '            Dim value = CsvData.GetValue(Ordinal)
-            '            Dim objectValue = Column.columnItem.ColumnDefine.Convert(value)
-            '            Column.columnItem.BindProperty.SetValue(FilledObject, objectValue, Nothing)
-            '        End If
-            '    Next
+            Dim LQuery = From item
+                         In buf.AsParallel
+                         Select item.LineNumber,
+                             item.row,
+                             Data = rowBuilder.FillData(item.row, item.FilledObject)
+                         Order By LineNumber Ascending  ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
 
-            '    For Each Column In ArrayColumnSchema
-            '        Ordinal = Column.handle
-            '        If Ordinal >= 0 Then
-            '            Dim value As String = CsvData.GetValue(Ordinal)
-            '            Dim objectValue = Column.columnItem.CollectionColumn.CreateObject(value)
-            '            Dim valueArray = objectValue.ToArray(Function(str) Scripting.CTypeDynamic(str, Column.columnItem.CollectionColumn.ReflectedType))
-
-            '            Call Column.columnItem.BindProperty.SetValue(FilledObject, objectValue)
-            '        End If
-            '    Next
-
-            '    Call NewTable.Add(FilledObject)
-            'End While
-
-            'Return NewTable.ToArray
-            Throw New NotImplementedException
+            Return LQuery.Select(Function(x) x.Data)
         End Function
 
         ''' <summary>
@@ -124,27 +116,8 @@ Namespace StorageProvider.Reflection
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         Public Function Convert(Of ItemType As Class)(DataFrame As DataFrame, Optional explicit As Boolean = True) As List(Of ItemType)
             Dim type As Type = GetType(ItemType)
-            Dim schema As SchemaProvider =
-                SchemaProvider.CreateObject(Of ItemType)(explicit).CopyWriteDataToObject
-            Dim rowBuilder As New RowBuilder(schema)
-            Dim CreateObjects = (From LineNumber As Integer
-                                 In DataFrame._innerTable.Sequence.AsParallel
-                                 Select LineNumber,
-                                     FilledObject = Activator.CreateInstance(Of ItemType))
-            Dim buf = (From line In CreateObjects
-                       Select LineNumber = line.LineNumber,
-                           row = DataFrame._innerTable(line.LineNumber),
-                           line.FilledObject).ToArray
-
-            Call rowBuilder.Indexof(DataFrame)
-
-            Dim LQuery = (From item In buf.AsParallel
-                          Select item.LineNumber,
-                              item.row,
-                              Data = rowBuilder.FillData(Of ItemType)(item.row, item.FilledObject)
-                          Order By LineNumber Ascending)
-            Dim Table = (From row In LQuery Select row.Data).ToList
-            Return Table '顺序需要一一对应
+            Return DataFrame.LoadDataToObject(type, explicit) _
+                .ToList(Function(x) DirectCast(x, ItemType))
         End Function
 
         ''' <summary>
@@ -160,10 +133,11 @@ Namespace StorageProvider.Reflection
                                                    Optional encoding As System.Text.Encoding = Nothing,
                                                    Optional fast As Boolean = False,
                                                    Optional maps As Dictionary(Of String, String) = Nothing) As List(Of ItemType)
-            Call "Load data from filestream....".__DEBUG_ECHO
             If Not path.FileExists Then '空文件
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".__DEBUG_ECHO
                 Return New List(Of ItemType)
+            Else
+                Call "Load data from filestream....".__DEBUG_ECHO
             End If
 
             Dim reader As DataFrame = DocumentStream.DataFrame.Load(path, encoding, fast)  ' read csv data
@@ -173,9 +147,9 @@ Namespace StorageProvider.Reflection
             End If
 
             Call $"Reflector load data into type {GetType(ItemType).FullName}".__DEBUG_ECHO
-            Dim ChunkBuffer As List(Of ItemType) = Reflection.Reflector.Convert(Of ItemType)(reader, Explicit)
+            Dim bufs As List(Of ItemType) = Reflector.Convert(Of ItemType)(reader, Explicit)
             Call "[Job Done!]".__DEBUG_ECHO
-            Return ChunkBuffer
+            Return bufs
         End Function
 
         ''' <summary>
