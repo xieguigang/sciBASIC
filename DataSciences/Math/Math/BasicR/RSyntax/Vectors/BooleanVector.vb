@@ -39,8 +39,14 @@ Namespace SyntaxAPI.Vectors
             End Get
         End Property
 
-        Sub New(Elements As IEnumerable(Of Boolean))
-            Me.Elements = Elements.ToArray
+        Public Shared ReadOnly Property [False] As BooleanVector
+            Get
+                Return New BooleanVector({False})
+            End Get
+        End Property
+
+        Sub New(b As IEnumerable(Of Boolean))
+            MyBase.New(b)
         End Sub
 
         Public Shared Operator &(x As Boolean, y As BooleanVector) As BooleanVector
@@ -48,15 +54,15 @@ Namespace SyntaxAPI.Vectors
         End Operator
 
         Public Shared Operator &(x As BooleanVector, y As BooleanVector) As BooleanVector
-            Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.obj AndAlso y.Elements(i))
+            Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.obj AndAlso y(i))
         End Operator
 
         Public Shared Operator Not(x As BooleanVector) As BooleanVector
             Return New BooleanVector((From b As Boolean In x Select Not b).ToArray)
         End Operator
 
-        Public Shared Narrowing Operator CType(x As BooleanVector) As Boolean
-            Return x.Elements(0)
+        Public Overloads Shared Narrowing Operator CType(x As BooleanVector) As Boolean
+            Return x(0)
         End Operator
 
         Public Shared Widening Operator CType(b As Boolean()) As BooleanVector
@@ -64,15 +70,15 @@ Namespace SyntaxAPI.Vectors
         End Operator
 
         Public Shared Operator Or(x As BooleanVector, y As Boolean()) As BooleanVector
-            Return New BooleanVector((From i As Integer In x.Elements.Sequence Select x.Elements(i) Or y(i)).ToArray)
+            Return New BooleanVector(From i In x.SeqIterator Select i.obj OrElse y(i))
         End Operator
 
         Public Shared Operator Or(x As BooleanVector, y As BooleanVector) As BooleanVector
-            Return x Or y.Elements
+            Return x Or y.ToArray
         End Operator
 
-        Public Shared Narrowing Operator CType(x As BooleanVector) As Boolean()
-            Return x.Elements
+        Public Overloads Shared Narrowing Operator CType(x As BooleanVector) As Boolean()
+            Return x.ToArray
         End Operator
     End Class
 End Namespace

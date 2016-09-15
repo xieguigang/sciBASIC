@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -45,7 +46,7 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Sqrt")>
         Public Function Sqrt(x As Vector) As Vector
-            Return New Vector((From n In x.Elements Select Math.Sqrt(n)).ToArray)
+            Return New Vector(From n In x Select Math.Sqrt(n))
         End Function
 
         ''' <summary>
@@ -62,7 +63,7 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Exp")>
         Public Function Exp(x As Vector) As Vector
-            Return New Vector((From n As Double In x.Elements Select Math.Exp(n)).ToArray)
+            Return New Vector(From n As Double In x Select Math.Exp(n))
         End Function
 
         ''' <summary>
@@ -75,17 +76,17 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Log")>
         Public Function Log(x As Vector, Optional base As Double = Math.E) As Vector
-            Return New Vector((From n As Double In x.Elements Select Math.Log(n, base)).ToArray)
+            Return New Vector(From n As Double In x Select Math.Log(n, base))
         End Function
 
         <ExportAPI("Max")>
         Public Function Max(x As Vector) As Double
-            Return x.Elements.Max
+            Return x.Max
         End Function
 
         <ExportAPI("Min")>
         Public Function Min(x As Vector) As Double
-            Return x.Elements.Min
+            Return x.Min
         End Function
 
         ''' <summary>
@@ -102,7 +103,7 @@ Namespace SyntaxAPI.MathExtension
 
         <ExportAPI("Abs")>
         Public Function Abs(x As Vector) As Vector
-            Return New Vector((From d As Double In x.Elements Select Math.Abs(d)).ToArray)
+            Return New Vector(From d As Double In x Select Math.Abs(d))
         End Function
 
         ''' <summary>
@@ -149,12 +150,12 @@ Namespace SyntaxAPI.MathExtension
 
         <ExportAPI("Sum")>
         Public Function Sum(x As Vector, Optional NaRM As Boolean = False) As Vector
-            Return New Vector({x.Elements.Sum})
+            Return New Vector({x.Sum})
         End Function
 
         <ExportAPI("Sum")>
         Public Function Sum(x As BooleanVector, Optional NaRM As Boolean = False) As Vector
-            Dim data = (From b As Boolean In x.Elements Select If(b, 1, 0)).ToArray
+            Dim data = (From b As Boolean In x Select If(b, 1, 0)).ToArray
             Return New Vector({data.Sum})
         End Function
 
