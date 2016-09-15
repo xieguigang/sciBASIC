@@ -57,12 +57,12 @@ Namespace Scripting
         ''' <remarks></remarks>
         Public ReadOnly Property CasterString As Dictionary(Of Type, Func(Of String, Object)) =
             New Dictionary(Of Type, Func(Of String, Object)) From {
-                {GetType(String), AddressOf Casting.CastString},
+                {GetType(String), Function(s) s},
                 {GetType(Char), AddressOf Casting.CastChar},
                 {GetType(Integer), AddressOf Casting.CastInteger},
-                {GetType(Double), AddressOf Casting.CastDouble},
+                {GetType(Double), AddressOf Val},
                 {GetType(Long), AddressOf Casting.CastLong},
-                {GetType(Boolean), AddressOf Casting.CastBoolean},
+                {GetType(Boolean), AddressOf getBoolean},
                 {GetType(Char()), AddressOf Casting.CastCharArray},
                 {GetType(Date), AddressOf Casting.CastDate},
                 {GetType(StringBuilder), AddressOf Casting.CastStringBuilder},
@@ -70,12 +70,14 @@ Namespace Scripting
                 {GetType(Image), AddressOf Casting.CastImage},
                 {GetType(FileInfo), AddressOf Casting.CastFileInfo},
                 {GetType(GDIPlusDeviceHandle), AddressOf Casting.CastGDIPlusDeviceHandle},
-                {GetType(Color), AddressOf Casting.CastColor},
+                {GetType(Color), AddressOf ToColor},
                 {GetType(Font), AddressOf Casting.CastFont},
                 {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
                 {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
                 {GetType(Process), AddressOf Casting.CastProcess},
-                {GetType(RegexOptions), AddressOf Casting.CastRegexOptions}
+                {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
+                {GetType(Single), AddressOf Casting.CastSingle},
+                {GetType(Decimal), Function(x) CDec(x)}
         }
 
         ''' <summary>

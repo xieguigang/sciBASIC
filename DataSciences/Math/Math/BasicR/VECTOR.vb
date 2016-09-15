@@ -1,45 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::6d39267484e7244a085acd98e22465aa, ..\visualbasic_App\Scripting\Math\Math\BasicR\VECTOR.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace BasicR
 
-    Public Class VEC
+    Public Class Vector : Inherits List(Of Double) ' : Inherits Double()
 
         ''' <summary>
         ''' 向量维数
         ''' </summary>
         ''' <remarks></remarks>
-        Public [Dim] As Integer
-        Public Ele As Double()
+        Public ReadOnly Property [Dim] As Integer
+            Get
+                Return Count
+            End Get
+        End Property
 
         Public Sub New(m As Integer)
-            [Dim] = m
-            Ele = New Double([Dim] - 1) {}
+            Call Me.New(0R, m)
+        End Sub
+
+        Sub New(data As IEnumerable(Of Double))
+            Call Me.New(0)
+
+            For Each x As Double In data
+                Add(x)
+            Next
+        End Sub
+
+        Sub New(init As Double, m As Integer)
+            Call MyBase.New(capacity:=m)
+
+            For i As Integer = 0 To m - 1
+                Add(init)
+            Next
         End Sub
 
         ''' <summary>
@@ -49,18 +69,14 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator +(v1 As VEC, v2 As VEC) As VEC
-            Dim N0 As Integer
+        Public Overloads Shared Operator +(v1 As Vector, v2 As Vector) As Vector
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
+            Dim v3 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v3 As New VEC(N0)
-
-            Dim j As Integer
-            For j = 0 To N0 - 1
-                v3.Ele(j) = v1.Ele(j) + v2.Ele(j)
+            For j As Integer = 0 To N0 - 1
+                v3(j) = v1(j) + v2(j)
             Next
+
             Return v3
         End Operator
 
@@ -71,16 +87,12 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator -(v1 As VEC, v2 As VEC) As VEC
-            Dim N0 As Integer
-            '获取变量维数
-            N0 = v1.[dim]
+        Public Overloads Shared Operator -(v1 As Vector, v2 As Vector) As Vector
+            Dim N0 As Integer = v1.[Dim]    ' 获取变量维数
+            Dim v3 As New Vector(N0)
 
-            Dim v3 As New VEC(N0)
-
-            Dim j As Integer
-            For j = 0 To N0 - 1
-                v3.Ele(j) = v1.Ele(j) - v2.Ele(j)
+            For j As Integer = 0 To N0 - 1
+                v3(j) = v1(j) - v2(j)
             Next
             Return v3
         End Operator
@@ -92,18 +104,12 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(v1 As VEC, v2 As VEC) As VEC
+        Public Shared Operator *(v1 As Vector, v2 As Vector) As Vector
+            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim v3 As New Vector(N0)
 
-            Dim N0 As Integer
-
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v3 As New VEC(N0)
-
-            Dim j As Integer
-            For j = 0 To N0 - 1
-                v3.Ele(j) = v1.Ele(j) * v2.Ele(j)
+            For j As Integer = 0 To N0 - 1
+                v3(j) = v1(j) * v2(j)
             Next
             Return v3
         End Operator
@@ -115,17 +121,12 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator /(v1 As VEC, v2 As VEC) As VEC
-            Dim N0 As Integer
+        Public Shared Operator /(v1 As Vector, v2 As Vector) As Vector
+            Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
+            Dim v3 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v3 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v3.Ele(j) = v1.Ele(j) / v2.Ele(j)
+                v3(j) = v1(j) / v2(j)
             Next
             Return v3
         End Operator
@@ -137,18 +138,13 @@ Namespace BasicR
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator +(v1 As VEC, a As Double) As VEC
+        Public Overloads Shared Operator +(v1 As Vector, a As Double) As Vector
             '向量数加算符重载
-            Dim N0 As Integer
+            Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) + a
+                v2(j) = v1(j) + a
             Next
             Return v2
         End Operator
@@ -160,18 +156,13 @@ Namespace BasicR
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator -(v1 As VEC, a As Double) As VEC
+        Public Overloads Shared Operator -(v1 As Vector, a As Double) As Vector
             '向量数加算符重载
-            Dim N0 As Integer
+            Dim N0 As Integer = v1.[Dim]           '获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) - a
+                v2(j) = v1(j) - a
             Next
             Return v2
         End Operator
@@ -183,17 +174,12 @@ Namespace BasicR
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(v1 As VEC, a As Double) As VEC
-            Dim N0 As Integer
+        Public Shared Operator *(v1 As Vector, a As Double) As Vector
+            Dim N0 As Integer = v1.[Dim]            '获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
-            For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) * a
+            For j As Integer = 0 To N0 - 1
+                v2(j) = v1(j) * a
             Next
             Return v2
         End Operator
@@ -205,17 +191,12 @@ Namespace BasicR
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator /(v1 As VEC, a As Double) As VEC
-            Dim N0 As Integer
+        Public Shared Operator /(v1 As Vector, a As Double) As Vector
+            Dim N0 As Integer = v1.[Dim]         '获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) / a
+                v2(j) = v1(j) / a
             Next
             Return v2
         End Operator
@@ -227,18 +208,13 @@ Namespace BasicR
         ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator +(a As Double, v1 As VEC) As VEC
+        Public Overloads Shared Operator +(a As Double, v1 As Vector) As Vector
             '向量数加算符重载
-            Dim N0 As Integer
+            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) + a
+                v2(j) = v1(j) + a
             Next
             Return v2
         End Operator
@@ -250,18 +226,13 @@ Namespace BasicR
         ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator -(a As Double, v1 As VEC) As VEC
+        Public Overloads Shared Operator -(a As Double, v1 As Vector) As Vector
             '向量数加算符重载
-            Dim N0 As Integer
+            Dim N0 As Integer = v1.[Dim]         '获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) - a
+                v2(j) = v1(j) - a
             Next
             Return v2
         End Operator
@@ -273,17 +244,12 @@ Namespace BasicR
         ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(a As Double, v1 As VEC) As VEC
-            Dim N0 As Integer
+        Public Shared Operator *(a As Double, v1 As Vector) As Vector
+            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim v2 As New Vector(N0)
 
-            '获取变量维数
-            N0 = v1.[Dim]
-
-            Dim v2 As New VEC(N0)
-
-            Dim j As Integer
             For j = 0 To N0 - 1
-                v2.Ele(j) = v1.Ele(j) * a
+                v2(j) = v1(j) * a
             Next
             Return v2
         End Operator
@@ -295,25 +261,20 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Or(v1 As VEC, v2 As VEC) As Double
-            Dim N0 As Integer, M0 As Integer
-
+        Public Shared Operator Or(v1 As Vector, v2 As Vector) As Double
             '获取变量维数
-            N0 = v1.[dim]
-
-            M0 = v2.[dim]
+            Dim N0 = v1.[Dim]
+            Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
-                System.Console.WriteLine("Inner vector dimensions must agree！")
+                Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
             '如果向量维数不匹配，给出告警信息
 
             Dim sum As Double
-            sum = 0.0
 
-            Dim j As Integer
             For j = 0 To N0 - 1
-                sum = sum + v1.Ele(j) * v2.Ele(j)
+                sum = sum + v1(j) * v2(j)
             Next
             Return sum
         End Operator
@@ -325,16 +286,13 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Xor(v1 As VEC, v2 As VEC) As MATRIX
-            Dim N0 As Integer, M0 As Integer
-
+        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As MATRIX
             '获取变量维数
-            N0 = v1.[dim]
-
-            M0 = v2.[dim]
+            Dim N0 = v1.[Dim]
+            Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
-                System.Console.WriteLine("Inner vector dimensions must agree！")
+                Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
             '如果向量维数不匹配，给出告警信息
 
@@ -347,7 +305,6 @@ Namespace BasicR
             Next
 
             '返回外积矩阵
-
             Return vvmat
         End Operator
 
@@ -357,18 +314,13 @@ Namespace BasicR
         ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Not(v1 As VEC) As Double
-            Dim N0 As Integer
-
+        Public Shared Operator Not(v1 As Vector) As Double
             '获取变量维数
-            N0 = v1.[dim]
-
+            Dim N0 = v1.[Dim]
             Dim sum As Double
-            sum = 0.0
 
-            Dim j As Integer
             For j = 0 To N0 - 1
-                sum = sum + v1.Ele(j) * v1.Ele(j)
+                sum = sum + v1(j) * v1(j)
             Next
             Return sum
         End Operator
@@ -379,25 +331,19 @@ Namespace BasicR
         ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator -(v1 As VEC) As VEC
-            Dim N0 As Integer = v1.[dim]
-
-            Dim v2 As New VEC(N0)
+        Public Shared Operator -(v1 As Vector) As Vector
+            Dim N0 As Integer = v1.[Dim]
+            Dim v2 As New Vector(N0)
 
             For i As Integer = 0 To N0 - 1
-                v2.Ele(i) = -v1.Ele(i)
+                v2(i) = -v1(i)
             Next
 
             Return v2
         End Operator
 
-        Default Public Property Item(index As Integer) As Double
-            Get
-                Return Ele(index)
-            End Get
-            Set(value As Double)
-                Ele(index) = value
-            End Set
-        End Property
+        Public Overrides Function ToString() As String
+            Return Me.ToArray.GetJson
+        End Function
     End Class
 End Namespace

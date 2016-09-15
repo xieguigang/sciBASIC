@@ -418,7 +418,7 @@ Namespace BasicR
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Or(A As MATRIX, x As VEC) As VEC
+        Public Shared Operator Or(A As MATRIX, x As Vector) As Vector
             Dim m As Integer, n As Integer, p As Integer
             m = A.Dim1
             n = A.Dim2
@@ -430,13 +430,13 @@ Namespace BasicR
             End If
             '如果矩阵维数不匹配，给出告警信息
 
-            Dim b As New VEC(m)
+            Dim b As New Vector(m)
 
             For i As Integer = 0 To m - 1
-                b.Ele(i) = 0.0
+                b(i) = 0.0
 
                 For k As Integer = 0 To n - 1
-                    b.Ele(i) = b.Ele(i) + A.Ele(i, k) * x.Ele(k)
+                    b(i) = b(i) + A.Ele(i, k) * x(k)
                 Next
             Next
 
