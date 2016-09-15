@@ -631,14 +631,18 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="data"></param>
+    ''' <param name="target"></param>
     ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As IEnumerable(Of T)) As List(Of T)
+    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
         Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.ToList)
-        If Not data.IsNullOrEmpty Then
-            Call srcList.AddRange(data)
+        If Not target.IsNullOrEmpty Then
+            Call srcList.AddRange(target)
         End If
         Return srcList
+    End Function
+
+    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), ParamArray data As T()) As List(Of T)
+        Return source.Join(target:=data)
     End Function
 
     ''' <summary>
@@ -874,19 +878,6 @@ Public Module Extensions
     <Extension> Public Function InvokeSet(Of T)(ByRef var As T, value As T) As T
         var = value
         Return value
-    End Function
-
-    ''' <summary>
-    ''' Copy the source value directly to the target variable and then return the source value.
-    ''' (与函数<see cref="InvokeSet(Of T)(ByRef T, T)"/>)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="CopyTo"><paramref name="source"/> ==> <paramref name="CopyTo"/> target.</param>
-    ''' <returns></returns>
-    <Extension> Public Function ShadowCopy(Of T)(source As T, ByRef CopyTo As T) As T
-        CopyTo = source
-        Return CopyTo
     End Function
 
     ''' <summary>
@@ -2233,7 +2224,10 @@ Public Module Extensions
     End Sub
 #End If
 
-    Public Const Null As Object = Nothing
+    ''' <summary>
+    ''' Nothing
+    ''' </summary>
+    Friend Const null As Object = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>

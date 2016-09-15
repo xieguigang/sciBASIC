@@ -116,7 +116,7 @@ Namespace Drawing3D
         Public Function Project(viewWidth As Integer,
                                 viewHeight As Integer,
                                 fov As Integer,
-                                viewDistance As Integer) As Point3D
+                                viewDistance As Double) As Point3D
 
             Dim factor As Double, Xn As Double, Yn As Double
             factor = fov / (viewDistance + Me.Z)

@@ -239,6 +239,22 @@ Namespace Linq
             Return List
         End Function
 
+        ''' <summary>
+        ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
+        ''' </summary>
+        ''' <param name="From">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
+        ''' <param name="To">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
+        ''' <param name="By">number: increment of the sequence</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Iterator Function seq([from] As Value(Of Double), [to] As Double, Optional by As Double = 1) As IEnumerable(Of Double)
+            Yield from
+
+            Do While (from = from.value + by) <= [to]
+                Yield from
+            Loop
+        End Function
+
         <Extension>
         Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
             If n < 0 Then

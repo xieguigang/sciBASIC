@@ -60,15 +60,19 @@ Namespace Text.Similarity
         <ExportAPI("Equals")>
         Public Function Equals(string1 As String, string2 As String, Optional exactly As Boolean = False, Optional cut As Double = 0.8) As Boolean
             If exactly Then
-                If String.Equals(string1.Trim.ShadowCopy(string1),  ' 由于是fuzzy，所以即使是exactly，也会将空格去除
-                                 string2.Trim.ShadowCopy(string2),
+                string1 = string1.Trim
+                string2 = string2.Trim
+
+                If String.Equals(string1,  ' 由于是fuzzy，所以即使是exactly，也会将空格去除
+                                 string2,
                                  StringComparison.OrdinalIgnoreCase) Then
                     Return True
                 End If
             Else
-                If String.Equals(string1.Trim.ToUpper.ShadowCopy(string1),
-                                 string2.Trim.ToUpper.ShadowCopy(string2),
-                                 StringComparison.Ordinal) Then
+                string1 = string1.Trim.ToUpper
+                string2 = string2.Trim.ToUpper
+
+                If String.Equals(string1, string2, StringComparison.Ordinal) Then
                     Return True
                 End If
             End If

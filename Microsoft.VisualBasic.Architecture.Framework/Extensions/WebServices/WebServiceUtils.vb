@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::89dd886373af9921539aa45ff6a9433e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.HtmlParser
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting
@@ -340,9 +341,9 @@ Public Module WebServiceUtils
 
         Dim stmMemory As MemoryStream = New MemoryStream()
         Dim buffer As Byte() = New Byte(64 * 1024) {}
-        Dim i As Integer
-        Do While stream.Read(buffer, 0, buffer.Length).ShadowCopy(i) > 0
-            Call stmMemory.Write(buffer, 0, i)
+        Dim i As New Value(Of Integer)
+        Do While i = stream.Read(buffer, 0, buffer.Length) > 0
+            Call stmMemory.Write(buffer, 0, +i)
         Loop
         buffer = stmMemory.ToArray()
         Call stmMemory.Close()
@@ -513,7 +514,8 @@ Public Module WebServiceUtils
                        Optional timeout As UInteger = 20,
                        <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
                        Optional isFileUrl As Boolean = False,
-                       Optional headers As Dictionary(Of String, String) = Nothing) As String
+                       Optional headers As Dictionary(Of String, String) = Nothing,
+                       Optional proxy As String = Nothing) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -540,17 +542,17 @@ Public Module WebServiceUtils
 #If FRAMEWORD_CORE Then
         Using Process As New CBusyIndicator(_start:=True)
 #End If
-            Return __downloadWebpage(url, timeout, headers)
+            Return __downloadWebpage(url, timeout, headers, proxy)
 #If FRAMEWORD_CORE Then
         End Using
 #End If
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String)) As String
+    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String), proxy As String) As String
         Dim RequestTime As Integer = 0
         Try
-RETRY:      Return __downloadWebpage(url, headers)
+RETRY:      Return __downloadWebpage(url, headers, proxy)
         Catch ex As Exception
             ex = New Exception(url, ex)
             Call ex.PrintException
@@ -573,7 +575,7 @@ RETRY:      Return __downloadWebpage(url, headers)
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String)) As String
+    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String), proxy As String) As String
         Call "Waiting for the server reply..".__DEBUG_ECHO
 
         Dim Timer As Stopwatch = Stopwatch.StartNew
@@ -586,6 +588,12 @@ RETRY:      Return __downloadWebpage(url, headers)
             For Each x In headers
                 WebRequest.Headers(x.Key) = x.Value
             Next
+        End If
+        If Not String.IsNullOrEmpty(proxy) Then
+            Dim prox As New WebProxy
+            prox.Address = New Uri(proxy)
+            prox.Credentials = New NetworkCredential()
+            WebRequest.Proxy = prox
         End If
 
         Dim WebResponse As WebResponse = WebRequest.GetResponse

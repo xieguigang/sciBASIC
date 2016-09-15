@@ -62,10 +62,13 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' The map name or the <see cref="PropertyInfo.Name"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
+        Public Property Identity As String Implements IReadOnlyId.Identity, sIdEnumerable.Identifier
             Get
                 Return [Property].Name
             End Get
+            Set(value As String)
+                ' DO NOTHING
+            End Set
         End Property
 
         ''' <summary>
@@ -86,19 +89,6 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Get
                 Return Scripting.IsPrimitive([Property].PropertyType)
             End Get
-        End Property
-
-        ''' <summary>
-        ''' Just enable readonly
-        ''' </summary>
-        ''' <returns></returns>
-        Private Property Identifier As String Implements sIdEnumerable.Identifier
-            Get
-                Return [Property].Name
-            End Get
-            Set(value As String)
-                Throw New NotSupportedException
-            End Set
         End Property
 
         Sub New(attr As T, prop As PropertyInfo)

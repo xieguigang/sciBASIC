@@ -45,7 +45,7 @@ Namespace Parallel.Threads
         ''' <summary>
         ''' 临时的句柄缓存
         ''' </summary>
-        ReadOnly __pendings As New Queue(Of KeyValuePair(Of Action, Action(Of Long)))
+        ReadOnly __pendings As New Queue(Of KeyValuePair(Of Action, Action(Of Long)))(capacity:=10240)
 
         ''' <summary>
         ''' 线程池之中的线程数量
@@ -54,6 +54,34 @@ Namespace Parallel.Threads
         Public ReadOnly Property NumOfThreads As Integer
             Get
                 Return __threads.Length
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 返回当前正在处于工作状态的线程数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property WorkingThreads As Integer
+            Get
+                Dim n As Integer
+
+                For Each t In __threads
+                    If t.Tasks > 0 Then
+                        n += 1
+                    End If
+                Next
+
+                Return n
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 是否所有的线程都是处于工作状态的
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property FullCapacity As Boolean
+            Get
+                Return WorkingThreads = __threads.Length
             End Get
         End Property
 
@@ -77,7 +105,11 @@ Namespace Parallel.Threads
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
         Public Sub RunTask(task As Action, Optional callback As Action(Of Long) = Nothing)
-            Call __pendings.Enqueue(New KeyValuePair(Of Action, Action(Of Long))(task, callback))
+            Dim pends As New KeyValuePair(Of Action, Action(Of Long))(task, callback)
+
+            SyncLock __pendings
+                Call __pendings.Enqueue(pends)
+            End SyncLock
         End Sub
 
         Public Sub OperationTimeOut(task As Action, timeout As Integer)
@@ -96,14 +128,16 @@ Namespace Parallel.Threads
 
         Private Sub __allocate()
             Do While Not Me.disposedValue
-                If __pendings.Count > 0 Then
-                    Dim task = __pendings.Dequeue
-                    Dim h As Func(Of Long) = Function() Time(work:=task.Key)
-                    Dim callback = task.Value
-                    Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
-                Else
-                    Call Thread.Sleep(1)
-                End If
+                SyncLock __pendings
+                    If __pendings.Count > 0 Then
+                        Dim task = __pendings.Dequeue
+                        Dim h As Func(Of Long) = Function() Time(work:=task.Key)
+                        Dim callback = task.Value
+                        Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
+                    Else
+                        Call Thread.Sleep(1)
+                    End If
+                End SyncLock
             Loop
         End Sub
 

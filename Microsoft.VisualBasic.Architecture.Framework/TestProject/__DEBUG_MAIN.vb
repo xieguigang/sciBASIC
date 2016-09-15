@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::de9a141b17421c8e48ef70e5c7a0219b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -41,7 +41,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MemoryDump
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Webservices
 
 Module __DEBUG_MAIN
 
@@ -53,7 +55,7 @@ Module __DEBUG_MAIN
         Call n.__DEBUG_ECHO
 
         ' Assign value to this extension property
-        x.Uid.Value = RandomDouble() * 1000000000000L
+        x.Uid.value = RandomDouble() * 1000000000000L
 
         ' display the extension property value
         Call x.Uid.__DEBUG_ECHO
@@ -62,8 +64,77 @@ Module __DEBUG_MAIN
         Call RunApp("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\TestProject\Test2\bin\Debug\Test2.exe", cs:=True)
     End Sub
 
+    Public Function tt() As Tuple
+        Return New Tuple <= New With {
+            .FirstName = 123,
+            .Middle = 222,
+            .LastName = "12313"
+        }
+    End Function
+
+
+    '  Public Sub ttttt(p As (x  as integer , y As Integer))
+
+    '  End Sub
 
     Function Main(args As String()) As Integer
+
+
+        Dim jsSchema As New Microsoft.VisualBasic.Serialization.JSON.Schema With {
+            .title = "Example Schema",
+            .type = "object",
+            .properties = {
+                New [Property] With {
+                    .name = "firstName",
+                    .type = "string"
+                },
+                New [Property] With {
+                    .name = "lastName",
+                    .type = "string"
+                },
+                New [Property] With {
+                    .name = "age",
+                    .type = "integer",
+                    .description = "Age in years"
+                }
+            },
+            .required = {"firstName", "lastName"}
+        }
+
+
+        Dim jsons = jsSchema.ToString
+
+        Dim schemasss = jsons.LoadObject(Of Schema)()
+
+        Try
+            Throw New NotSupportedException
+        Catch ex As Exception
+            Call App.LogException(ex)
+        End Try
+        Pause()
+
+        Dim t As Object = tt()
+        '  Dim vars As Value(Of Object) = New With {.dsada = 4444}
+
+        Call $"{t.FirstName}, ".__DEBUG_ECHO
+
+        Dim rss = Google.News.RSS.GetCurrent("zika", "http://127.0.0.1:8087")
+
+        Call rss.GetXml.__DEBUG_ECHO
+
+        Pause()
+
+        Dim prox As New System.Net.WebProxy
+        prox.Address = New Uri("http://127.0.0.1:8087")
+        prox.Credentials = New System.Net.NetworkCredential()
+
+        Dim str As New System.Net.WebClient
+        str.Proxy = prox
+        Dim Coder As String = str.DownloadString("http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&as_maxm=11&q=allintitle:+zika&as_qdr=a&as_drrb=q&as_mind=26&as_minm=10&cf=all&as_maxd=25&scoring=n&output=rss")
+
+        Coder.__DEBUG_ECHO
+
+
 
         Call New Shell(PS1.Fedora12, AddressOf System.Console.WriteLine).Run()
 
@@ -234,48 +305,48 @@ End Class
 
 
 <IniMapIO("~/test.ini")>
-    Public Class dddddFile
+Public Class dddddFile
     Public Property a As ssfsfs
 
     Public Property nnn As Date
     Public Property ddddddd As Test
 
 End Class
-    Public Class Test
-        <DumpNode> Private ArrayData As String() = New String() {"23234", "!!!!!!!!", "aaaaaaaaaaaa", "*&$^$%^#$%@#$%$#@$@"}
-        <DumpNode> Private dded As KeyValuePair(Of Integer, Integer) = New KeyValuePair(Of Integer, Integer)(41, 23)
-        <DumpNode> Private ddeddd As KeyValuePair(Of Integer, Integer)() = New KeyValuePair(Of Integer, Integer)() {New KeyValuePair(Of Integer, Integer)(-41, -7723)}
-        <DumpNode> Public Property nnn As Integer = 3456
-        <DumpNode> Protected Friend fieldsssss As Double = 342342.23443
-        <DumpNode> Dim aaaa As Integer()() = New Integer()() {New Integer() {1, 2, 3, 4}, New Integer() {5, 4, 3, 3333}}
-        <DumpNode> Dim sdfsdfsd As dddd() = New dddd() {New dddd, New dddd}
-        <DumpNode> Public Property axfsdfsdfsd As Double() = New Double() {21343332, 365.9, 21312.333}
-        <DumpNode> Public Property sdfsdfsdfsdfs As dddd = New dddd
-        <DumpNode> Public Property listExample As List(Of Double) = New List(Of Double) From {1, 2, 3, 4, 5.0R}
-        <DumpNode> Public Property asdsadasdada As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{"24234,", -36}, {3344.24323, "xsfsfsfsdf"}}
-        <DumpNode> Public Property zzzz As qqq() = New qqq() {qqq.c, qqq.c, qqq.c}
-    End Class
+Public Class Test
+    <DumpNode> Private ArrayData As String() = New String() {"23234", "!!!!!!!!", "aaaaaaaaaaaa", "*&$^$%^#$%@#$%$#@$@"}
+    <DumpNode> Private dded As KeyValuePair(Of Integer, Integer) = New KeyValuePair(Of Integer, Integer)(41, 23)
+    <DumpNode> Private ddeddd As KeyValuePair(Of Integer, Integer)() = New KeyValuePair(Of Integer, Integer)() {New KeyValuePair(Of Integer, Integer)(-41, -7723)}
+    <DumpNode> Public Property nnn As Integer = 3456
+    <DumpNode> Protected Friend fieldsssss As Double = 342342.23443
+    <DumpNode> Dim aaaa As Integer()() = New Integer()() {New Integer() {1, 2, 3, 4}, New Integer() {5, 4, 3, 3333}}
+    <DumpNode> Dim sdfsdfsd As dddd() = New dddd() {New dddd, New dddd}
+    <DumpNode> Public Property axfsdfsdfsd As Double() = New Double() {21343332, 365.9, 21312.333}
+    <DumpNode> Public Property sdfsdfsdfsdfs As dddd = New dddd
+    <DumpNode> Public Property listExample As List(Of Double) = New List(Of Double) From {1, 2, 3, 4, 5.0R}
+    <DumpNode> Public Property asdsadasdada As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{"24234,", -36}, {3344.24323, "xsfsfsfsdf"}}
+    <DumpNode> Public Property zzzz As qqq() = New qqq() {qqq.c, qqq.c, qqq.c}
+End Class
 
-    Public Class dddd
-        <DumpNode> Dim sdfsd As String = "4353453453werwfsdfsdfsdfds"
-        <DumpNode> Private ArEEEEEEEEEEEEEEEEEEE As String() = New String() {"23234", "!!!!!!!!", "aaaaaaaaaaaa", "*&$^$%^#$%@#$%$#@$@"}
-        <DumpNode> Public Property dsdfsd As String = Now.ToString
-        <DumpNode> Public Property axfsdfsdfsd As Double() = New Double() {21342, 365.9, 21312.333}
-        <DumpNode> Dim sfsdddddddddd As List(Of sdfsd(Of Double, Double)) = New List(Of sdfsd(Of Double, Double)) From {New sdfsd(Of Double, Double) With {.dsadas = 3534, .safsdfsdf = 45555},
-                                                                                                                        New sdfsd(Of Double, Double) With {.dsadas = 3444534, .safsdfsdf = 45555},
-                                                                                                                        New sdfsd(Of Double, Double) With {.dsadas = -83534, .safsdfsdf = -145555}}
-    End Class
+Public Class dddd
+    <DumpNode> Dim sdfsd As String = "4353453453werwfsdfsdfsdfds"
+    <DumpNode> Private ArEEEEEEEEEEEEEEEEEEE As String() = New String() {"23234", "!!!!!!!!", "aaaaaaaaaaaa", "*&$^$%^#$%@#$%$#@$@"}
+    <DumpNode> Public Property dsdfsd As String = Now.ToString
+    <DumpNode> Public Property axfsdfsdfsd As Double() = New Double() {21342, 365.9, 21312.333}
+    <DumpNode> Dim sfsdddddddddd As List(Of sdfsd(Of Double, Double)) = New List(Of sdfsd(Of Double, Double)) From {New sdfsd(Of Double, Double) With {.dsadas = 3534, .safsdfsdf = 45555},
+                                                                                                                    New sdfsd(Of Double, Double) With {.dsadas = 3444534, .safsdfsdf = 45555},
+                                                                                                                    New sdfsd(Of Double, Double) With {.dsadas = -83534, .safsdfsdf = -145555}}
+End Class
 
-    Public Class qqq : Inherits sdfsd(Of Integer, String)
-        <DumpNode> Dim ddddddd As Integer = -10
+Public Class qqq : Inherits sdfsd(Of Integer, String)
+    <DumpNode> Dim ddddddd As Integer = -10
 
-        Public Shared Function c() As qqq
-            Return New qqq With {.dsadas = 4234, .safsdfsdf = "sajksfhskjfs"}
-        End Function
-    End Class
+    Public Shared Function c() As qqq
+        Return New qqq With {.dsadas = 4234, .safsdfsdf = "sajksfhskjfs"}
+    End Function
+End Class
 
-    Public Class sdfsd(Of T1, T3)
-        <DumpNode> Public Property dsadas As T1
-        <DumpNode> Public Property safsdfsdf As T3
-        <DumpNode> Protected ffff As String = Now.ToString
-    End Class
+Public Class sdfsd(Of T1, T3)
+    <DumpNode> Public Property dsadas As T1
+    <DumpNode> Public Property safsdfsdf As T3
+    <DumpNode> Protected ffff As String = Now.ToString
+End Class

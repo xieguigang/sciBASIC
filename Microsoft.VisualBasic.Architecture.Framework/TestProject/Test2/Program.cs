@@ -23,12 +23,12 @@ namespace Test2
         static void Main(string[] args)
         {
             var x = new ClassObject();
-            long n = x.myId().Value; // The init value is ZERO
+            long n = x.myId().value; // The init value is ZERO
 
-            x.myId().Value = 55;     // Extension property set value
+            x.myId().value = 55;     // Extension property set value
 
             n = -100;
-            n = x.myId().Value;      // Extension property get value, value should be 55 not -100
+            n = x.myId().value;      // Extension property get value, value should be 55 not -100
             n.__DEBUG_ECHO();        // display the value
 
             Pause();

@@ -85,14 +85,25 @@ Namespace Language
             Me.value = value
         End Sub
 
+        ''' <summary>
+        ''' Value is Nothing
+        ''' </summary>
         Sub New()
             value = Nothing
         End Sub
 
+        ''' <summary>
+        ''' Is the value is nothing.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function IsNothing() As Boolean
             Return value Is Nothing
         End Function
 
+        ''' <summary>
+        ''' Display <see cref="value"/> ``ToString()`` function value.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Scripting.InputHandler.ToString(value)
         End Function
@@ -130,7 +141,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Value assignment
+        ''' Value assignment: ``Dim s As String = Value(Of String) = var``
         ''' </summary>
         ''' <param name="value"></param>
         ''' <param name="o"></param>

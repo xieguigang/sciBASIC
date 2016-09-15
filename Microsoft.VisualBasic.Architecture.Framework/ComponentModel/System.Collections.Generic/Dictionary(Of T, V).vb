@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::91eec5ba99a712c811a6ce5075400008, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' Represents a collection of keys and values.To browse the .NET Framework source
@@ -34,6 +35,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' </summary>
 ''' <typeparam name="V"></typeparam>
 Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of String, V)
+    ' Implements IEnumerable(Of V)
 
     Sub New()
         Call MyBase.New
@@ -96,9 +98,11 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         If MyBase.ContainsKey(name) Then
             Return Me(name)
         Else
-            If Me.ContainsKey(name.ToLower.ShadowCopy(name)) Then
+            Dim key As New Value(Of String)
+
+            If Me.ContainsKey(key = name.ToLower) Then
                 Return Me(name)
-            ElseIf Me.ContainsKey(name.ToUpper.ShadowCopy(name)) Then
+            ElseIf Me.ContainsKey(key = name.ToUpper) Then
                 Return Me(name)
             Else
                 Return Nothing
@@ -118,7 +122,9 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
                                  Optional ByRef success As Boolean = False) As V
         Dim x As V = Nothing
 
-        If MyBase.TryGetValue(name, x).ShadowCopy(success) Then
+        success = MyBase.TryGetValue(name, x)
+
+        If success Then
             Return x
         Else
             Return [default]
@@ -211,4 +217,11 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
         Return hash.ContainsKey(null)
     End Operator
+
+    ' 实现这个集合接口会和字典的集合接口出现冲突
+    'Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator(Of V) Implements IEnumerable(Of V).GetEnumerator
+    '    For Each x In MyBase.Values
+    '        Yield x
+    '    Next
+    'End Function
 End Class

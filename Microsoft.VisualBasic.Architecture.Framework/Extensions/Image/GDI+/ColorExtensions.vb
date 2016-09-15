@@ -39,6 +39,10 @@ Namespace Imaging
 
 #If NET_40 = 0 Then
 
+        ''' <summary>
+        ''' Reads all of the color property from <see cref="Color"/> and then creates the color dictionary based on the property name.
+        ''' </summary>
+        ''' <returns></returns>
         Private Function __getColorHash() As Dictionary(Of String, Color)
             Dim props As IEnumerable(Of PropertyInfo) =
                 GetType(Color).GetProperties(BindingFlags.Public Or BindingFlags.Static)
@@ -89,7 +93,7 @@ Namespace Imaging
         }
 #End If
         ''' <summary>
-        ''' 解析颜色表达式里面的RGB的正则表达式
+        ''' Regex expression for parsing the rgb(a,r,g,b) expression of the color.(解析颜色表达式里面的RGB的正则表达式)
         ''' </summary>
         Const RGB_EXPRESSION As String = "\d+,\d+,\d+(,\d+)?"
 
@@ -99,7 +103,7 @@ Namespace Imaging
         ''' <param name="str">颜色表达式或者名称</param>
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
-        <Extension> Public Function ToColor(str As String) As Color
+        <Extension> Public Function ToColor(str As String, Optional onFailure As Color = Nothing) As Color
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
                 Return Color.Black
@@ -107,7 +111,7 @@ Namespace Imaging
 
             Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
 
-            If String.IsNullOrEmpty(s) Then
+            If String.IsNullOrEmpty(s) Then ' Color from name/known color
                 Dim key As String = str.ToLower
 
                 If __allDotNETPrefixColors.ContainsKey(key) Then
@@ -118,13 +122,13 @@ Namespace Imaging
             Else
                 Dim tokens As String() = s.Split(","c)
 
-                If tokens.Length = 3 Then
+                If tokens.Length = 3 Then  ' rgb
                     Dim R As Integer = CInt(Val(tokens(0)))
                     Dim G As Integer = CInt(Val(tokens(1)))
                     Dim B As Integer = CInt(Val(tokens(2)))
 
                     Return Color.FromArgb(R, G, B)
-                ElseIf tokens.Length = 4 Then
+                ElseIf tokens.Length = 4 Then ' argb
                     Dim A As Integer = CInt(Val(tokens(0)))
                     Dim R As Integer = CInt(Val(tokens(1)))
                     Dim G As Integer = CInt(Val(tokens(2)))
@@ -132,7 +136,11 @@ Namespace Imaging
 
                     Return Color.FromArgb(A, R, G, B)
                 Else
-                    Throw New Exception(str)
+                    If Not onFailure.IsEmpty Then
+                        Return onFailure
+                    Else
+                        Throw New Exception(str)
+                    End If
                 End If
             End If
 #Else
@@ -149,6 +157,12 @@ Namespace Imaging
             Return Color = Nothing OrElse Color.IsEmpty
         End Function
 
+        ''' <summary>
+        ''' 分别比较A,R,G,B这些属性值来判断这样个颜色对象值是否相等
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension> Public Function Equals(a As Color, b As Color) As Boolean
             If a.A <> b.A Then
                 Return False
