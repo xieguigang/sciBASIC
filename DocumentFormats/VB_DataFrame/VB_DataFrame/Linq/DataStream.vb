@@ -128,6 +128,7 @@ Namespace DocumentStream.Linq
             Dim schema As SchemaProvider =
                 SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
+            Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
 
@@ -136,11 +137,11 @@ Namespace DocumentStream.Linq
 
                 For Each line As String In buffer
                     Dim row As RowObject = RowObject.TryParse(line)
-                    Dim obj As T = Activator.CreateInstance(Of T)
+                    Dim obj As Object = Activator.CreateInstance(type)
 
-                    obj = RowBuilder.FillData(Of T)(row, obj)
+                    obj = RowBuilder.FillData(row, obj)
 
-                    Call invoke(obj)
+                    Call invoke(DirectCast(obj, T))
                 Next
 
                 If EndRead Then
@@ -164,6 +165,7 @@ Namespace DocumentStream.Linq
             Dim schema As SchemaProvider =
                 SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型
             Dim RowBuilder As New RowBuilder(schema)
+            Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
 
@@ -172,18 +174,20 @@ Namespace DocumentStream.Linq
                     TaskPartitions.SplitIterator(BufferProvider(), blockSize)
 
                 For Each block As String() In chunks
-                    Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
+                    Dim LQuery As RowObject() =
+                        LinqAPI.Exec(Of RowObject) <=
  _
-                        From line As String
-                        In block.AsParallel
-                        Select RowObject.TryParse(line)
+                            From line As String
+                            In block.AsParallel
+                            Select RowObject.TryParse(line)
 
                     Dim values As T() = LinqAPI.Exec(Of T) <=
  _
                         From row As RowObject
                         In LQuery.AsParallel
-                        Let obj As T = Activator.CreateInstance(Of T)
-                        Select RowBuilder.FillData(row, obj)
+                        Let obj As Object = Activator.CreateInstance(type)
+                        Let data = RowBuilder.FillData(row, obj)
+                        Select DirectCast(data, T)
 
                     Call "Start processing block...".__DEBUG_ECHO
                     Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
@@ -191,7 +195,6 @@ Namespace DocumentStream.Linq
                 Next
 
                 If EndRead Then
-
                     Exit Do
                 Else
                     Call Console.WriteLine("Process next block....")
@@ -234,6 +237,7 @@ Namespace DocumentStream.Linq
         Public Iterator Function AsLinq(Of T As Class)() As IEnumerable(Of T)
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
+            Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
 
@@ -241,8 +245,9 @@ Namespace DocumentStream.Linq
                 Dim LQuery As IEnumerable(Of T) = From line As String
                                                   In BufferProvider()
                                                   Let row As RowObject = RowObject.TryParse(line)
-                                                  Let obj As T = Activator.CreateInstance(Of T)
-                                                  Select RowBuilder.FillData(row, obj)
+                                                  Let obj As Object = Activator.CreateInstance(type)
+                                                  Let data As Object = RowBuilder.FillData(row, obj)
+                                                  Select DirectCast(data, T)
                 For Each x As T In LQuery
                     Yield x
                 Next

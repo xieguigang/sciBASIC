@@ -307,6 +307,12 @@ Namespace StorageProvider.ComponentModels
             Return Schema
         End Function
 
+        ''' <summary>
+        ''' ``CreateObject(GetType(T), Explicit)``
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="Explicit"></param>
+        ''' <returns></returns>
         Public Shared Function CreateObject(Of T As Class)(Explicit As Boolean) As SchemaProvider
             Return CreateObject(GetType(T), Explicit)
         End Function

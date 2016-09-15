@@ -54,17 +54,28 @@ Namespace StorageProvider.ComponentModels
         Public ReadOnly Property HaveMetaAttribute As Boolean
 
         Sub New(SchemaProvider As SchemaProvider)
+            Dim M = {
+                SchemaProvider.Columns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)),
+                SchemaProvider.EnumColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)),
+                SchemaProvider.KeyValuePairColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)),
+                SchemaProvider.CollectionColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider))
+            }
+
             Me.SchemaProvider = SchemaProvider
-            Me.Columns = ({
-            SchemaProvider.Columns.ToArray(Function(field) DirectCast(field, StorageProvider)),
-            SchemaProvider.EnumColumns.ToArray(Function(field) DirectCast(field, StorageProvider)),
-            SchemaProvider.KeyValuePairColumns.ToArray(Function(field) DirectCast(field, StorageProvider)),
-            SchemaProvider.CollectionColumns.ToArray(Function(field) DirectCast(field, ComponentModels.StorageProvider)),
-            New StorageProvider() {DirectCast(SchemaProvider.MetaAttributes, StorageProvider)}}).MatrixToVector
-            Me.Columns = (From field As StorageProvider
-                          In Me.Columns
-                          Where Not field Is Nothing
-                          Select field).ToArray
+            Me.Columns = M.MatrixAsIterator _
+                .Join(DirectCast(SchemaProvider.MetaAttributes, StorageProvider)) _
+                .ToArray
+            Me.Columns = LinqAPI.Exec(Of StorageProvider) <=
+ _
+                From field As StorageProvider
+                In Me.Columns
+                Where Not field Is Nothing
+                Select field
+
             HaveMetaAttribute = Not SchemaProvider.MetaAttributes Is Nothing
         End Sub
 
@@ -91,14 +102,15 @@ Namespace StorageProvider.ComponentModels
                                                       Function(field) field.Value)
         End Sub
 
-        Public Function FillData(Of T As Class)(row As DocumentStream.RowObject, obj As T) As T
-            obj = __tryFill(Of T)(row, obj)
+        Public Function FillData(row As DocumentStream.RowObject, obj As Object) As Object
+            obj = __tryFill(row, obj)
 
             If HaveMetaAttribute Then
-                Dim values = (From field As KeyValuePair(Of String, Integer)
-                              In NonIndexed
-                              Select name = field.Key,
-                                  value = SchemaProvider.MetaAttributes.LoadMethod(row.DirectGet(field.Value))).ToArray
+                Dim values = From field As KeyValuePair(Of String, Integer)
+                             In NonIndexed
+                             Let s = row.DirectGet(field.Value)
+                             Select name = field.Key,
+                                  value = SchemaProvider.MetaAttributes.LoadMethod(s)
                 Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
 
                 For Each x In values
@@ -111,7 +123,7 @@ Namespace StorageProvider.ComponentModels
             Return obj
         End Function
 
-        Private Function __tryFill(Of T As Class)(row As DocumentStream.RowObject, obj As T) As T
+        Private Function __tryFill(row As DocumentStream.RowObject, obj As Object) As Object
             Dim i As Integer, column As StorageProvider = Nothing
 
             For i = 0 To IndexedFields.Length - 1

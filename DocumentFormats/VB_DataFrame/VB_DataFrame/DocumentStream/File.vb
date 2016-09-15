@@ -774,7 +774,7 @@ Namespace DocumentStream
         End Function
 
         Public Shared Operator <=(df As File, type As Type) As Object()
-            Return Reflector.LoadDataToObject(Extensions.DataFrame(df), type, False)
+            Return Reflector.LoadDataToObject(Extensions.DataFrame(df), type, False).ToArray
         End Operator
 
         Public Shared Operator >=(df As File, TypeInfo As System.Type) As Object()
