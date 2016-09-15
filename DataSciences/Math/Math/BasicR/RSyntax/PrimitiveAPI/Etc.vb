@@ -29,6 +29,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Mathematical.BasicR
 
 Namespace SyntaxAPI
 
@@ -44,12 +45,12 @@ Namespace SyntaxAPI
         ''' 
         <ExportAPI("is.finite")>
         Public Function Finite(x As Vector) As BooleanVector
-            Return New BooleanVector((From n In x Select Not Double.IsInfinity(n)).ToArray)
+            Return New BooleanVector(From n In x Select Not Double.IsInfinity(n))
         End Function
 
         <ExportAPI("is.NAN")>
         Public Function NAN(x As Vector) As BooleanVector
-            Return New BooleanVector((From n In x Select Double.IsNaN(x)).ToArray)
+            Return New BooleanVector(From n In x Select Double.IsNaN(n))
         End Function
 
     End Module

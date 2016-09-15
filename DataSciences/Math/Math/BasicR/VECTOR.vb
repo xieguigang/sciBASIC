@@ -35,7 +35,7 @@ Namespace BasicR
     ''' <summary>
     ''' <see cref="List(Of Double)"/>
     ''' </summary>
-    Public Class Vector : Inherits List(Of Double) ' : Inherits Double()
+    Public Class Vector : Inherits GenericVector(Of Double)
 
         Public Shared ReadOnly Property NAN As Vector
             Get
@@ -52,16 +52,6 @@ Namespace BasicR
         Public Shared ReadOnly Property Zero As Vector
             Get
                 Return New Vector({0})
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' 向量维数
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public ReadOnly Property [Dim] As Integer
-            Get
-                Return Count
             End Get
         End Property
 
@@ -386,11 +376,11 @@ Namespace BasicR
             Return Me.ToArray.GetJson
         End Function
 
-        Public Shared Operator =(x As Vector, n As Integer) As BooleanVector
+        Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d = n)
         End Operator
 
-        Public Shared Operator <>(x As Vector, n As Integer) As BooleanVector
+        Public Overloads Shared Operator <>(x As Vector, n As Integer) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <> n)
         End Operator
 
@@ -412,6 +402,10 @@ Namespace BasicR
 
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <= n)
+        End Operator
+
+        Public Shared Widening Operator CType(v As Double()) As Vector
+            Return New Vector(v)
         End Operator
     End Class
 End Namespace
