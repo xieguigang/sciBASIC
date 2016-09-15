@@ -70,9 +70,12 @@ Namespace DocumentStream
         ''' Load document from path
         ''' </summary>
         ''' <param name="path"></param>
-        Sub New(path As String)
+        Sub New(path As String,
+                Optional encoding As Encodings = Encodings.Default,
+                Optional trimBlanks As Boolean = False)
+
             FilePath = path
-            _innerTable = __loads(path, Encoding.Default)
+            _innerTable = __loads(path, encoding.GetEncodings, trimBlanks)
         End Sub
 
         Sub New(source As IEnumerable(Of RowObject), path As String)
@@ -105,7 +108,9 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
             Get
-                Dim LQuery = From row In _innerTable.AsParallel Select row.NumbersOfColumn '
+                Dim LQuery = From row As RowObject
+                             In _innerTable.AsParallel
+                             Select row.NumbersOfColumn '
                 Return LQuery.Max
             End Get
         End Property
@@ -595,11 +600,11 @@ Namespace DocumentStream
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Load(Path As String, Optional encoding As System.Text.Encoding = Nothing) As File
+        Public Shared Function Load(Path As String, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
             If encoding Is Nothing Then
                 encoding = Encoding.Default
             End If
-            Dim buf As List(Of RowObject) = __loads(Path, encoding)
+            Dim buf As List(Of RowObject) = __loads(Path, encoding, trimBlanks)
             Dim Csv As New File With {
                 .FilePath = Path,
                 ._innerTable = buf
@@ -613,20 +618,30 @@ Namespace DocumentStream
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function __loads(path As String, encoding As Encoding) As List(Of RowObject)
+        Private Shared Function __loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
             Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
-            Return Load(lines)
+            Return Load(lines, trimBlanks)
         End Function
 
         ''' <summary>
         ''' 排序操作在这里会不会大幅度的影响性能？
         ''' </summary>
         ''' <param name="buf"></param>
+        ''' <param name="trimBlanks">如果这个选项为真，则会移除所有全部都是逗号分隔符``,,,,,,,,,``的空白行</param>
         ''' <returns></returns>
-        Public Shared Function Load(buf As String()) As List(Of RowObject)
+        Public Shared Function Load(buf As String(), trimBlanks As Boolean) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0))
+            Dim __test As Func(Of String, Boolean)
+
+            If trimBlanks Then
+                __test = Function(s) Not s.IsEmptyRow(","c)
+            Else
+                __test = Function(s) True
+            End If
+
             Dim rows As List(Of RowObject) = (From s As SeqValue(Of String)
                                               In buf.Skip(1).SeqIterator.AsParallel
+                                              Where __test(s.obj)
                                               Select row = New RowObject(s.obj),
                                                   i = s.i
                                               Order By i Ascending) _

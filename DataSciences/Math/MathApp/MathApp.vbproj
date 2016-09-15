@@ -235,9 +235,9 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ODE\Calculus.vbproj">
+    <ProjectReference Include="..\ODE\diffEq.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
-      <Name>Calculus</Name>
+      <Name>diffEq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
