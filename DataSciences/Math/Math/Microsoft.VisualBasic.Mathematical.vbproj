@@ -208,6 +208,14 @@
     <Compile Include="BasicR\Matrix\MATRIX.vb" />
     <Compile Include="BasicR\Parser.vb" />
     <Compile Include="BasicR\Matrix\Functions.vb" />
+    <Compile Include="BasicR\RSyntax\Math\Math.vb" />
+    <Compile Include="BasicR\RSyntax\Math\Poisson.vb" />
+    <Compile Include="BasicR\RSyntax\Math\Skellam.vb" />
+    <Compile Include="BasicR\RSyntax\PrimitiveAPI\Etc.vb" />
+    <Compile Include="BasicR\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
+    <Compile Include="BasicR\RSyntax\Vectors\BooleanVector.vb" />
+    <Compile Include="BasicR\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
+    <Compile Include="BasicR\RSyntax\Vectors\VECTOR.vb" />
     <Compile Include="BasicR\Solvers\SOR.vb" />
     <Compile Include="BasicR\Solvers\GaussianElimination.vb" />
     <Compile Include="BasicR\Solvers\ISolver.vb" />
@@ -288,6 +296,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BasicR\RSyntax\README.txt" />
     <Content Include="Icon\Terminal.ico" />
   </ItemGroup>
   <ItemGroup>
