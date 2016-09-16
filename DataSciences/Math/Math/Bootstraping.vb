@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
 
 Public Module Bootstraping
 
@@ -73,11 +74,11 @@ Public Module Bootstraping
     ''' <returns></returns>
     ''' <remarks>https://github.com/mpadge/tnorm</remarks>
     Public Function TruncNDist(len As Integer, sd As Double) As Vector
-        Dim eps As New Vector(len) ' Set up truncated normal distribution
+        Dim eps As Vector ' Set up truncated normal distribution
         Dim z As New List(Of Double)()
 
         While z.Count < len
-            eps = Rcpp.rnorm(len, 1.0, sd)
+            eps = Normal.rnorm(len, 1.0, sd)
             For Each it As Double In eps
                 If it >= 0.0 AndAlso it <= 2.0 Then
                     z.Add(it)
@@ -89,6 +90,11 @@ Public Module Bootstraping
         Return New Vector(z)
     End Function
 
+    ''' <summary>
+    ''' 标准正态分布, delta = 1, u = 0
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
     Public Function StandardDistribution(x As Double) As Double
         Dim answer As Double = 1 / ((Math.Sqrt(2 * Math.PI)))
         Dim exp1 As Double = Math.Pow(x, 2) / 2
@@ -97,6 +103,13 @@ Public Module Bootstraping
         Return answer
     End Function
 
+    ''' <summary>
+    ''' Normal Distribution.(正态分布)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="m">Mean</param>
+    ''' <param name="sd"></param>
+    ''' <returns></returns>
     Public Function ProbabilityDensity(x As Double, m As Double, sd As Double) As Double
         Dim answer As Double = 1 / (sd * (Math.Sqrt(2 * Math.PI)))
         Dim exp As Double = Math.Pow((x - m), 2.0)

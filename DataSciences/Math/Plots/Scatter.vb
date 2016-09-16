@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -28,7 +29,8 @@ Public Module Scatter
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
-                         Optional legendPosition As Point = Nothing) As Bitmap
+                         Optional legendPosition As Point = Nothing,
+                         Optional drawLine As Boolean = True) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -48,9 +50,13 @@ Public Module Scatter
                     Dim r As Single = line.PointSize / 2
 
                     For Each pt In pts
-                        Dim a = pt.First
-                        Dim b = pt.Last
-                        Call g.DrawLine(pen, a.pt, b.pt)
+                        Dim a As PointData = pt.First
+                        Dim b As PointData = pt.Last
+
+                        If drawLine Then
+                            Call g.DrawLine(pen, a.pt, b.pt)
+                        End If
+
                         Call g.FillPie(br, a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
                         Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
                     Next
@@ -85,6 +91,36 @@ Public Module Scatter
                          Optional ptSize As Single = 30,
                          Optional width As Single = 5) As Bitmap
         Return ode.FromODEs(, ptSize, width).Plot(size, margin, bg)
+    End Function
+
+    Public Function Plot(x As Vector,
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional bg As String = "white",
+                         Optional ptSize As Single = 15,
+                         Optional width As Single = 5,
+                         Optional drawLine As Boolean = False) As Bitmap
+        Return {FromVector(x,,, ptSize, width)}.Plot(size, margin, bg, True, False, , drawLine)
+    End Function
+
+    Public Function FromVector(x As Vector,
+                               Optional color As String = "black",
+                               Optional dash As DashStyle = DashStyle.Dash,
+                               Optional ptSize As Integer = 30,
+                               Optional width As Single = 5) As SerialData
+        Return New SerialData With {
+            .color = color.ToColor,
+            .lineType = dash,
+            .PointSize = ptSize,
+            .title = "Vector Plot",
+            .width = width,
+            .pts = LinqAPI.Exec(Of PointData) <=
+                From o As SeqValue(Of Double)
+                In x.SeqIterator
+                Select New PointData With {
+                    .pt = New PointF(o.i, o.obj)
+                }
+                    }
     End Function
 
     <Extension>

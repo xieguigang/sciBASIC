@@ -74,7 +74,11 @@ Module DEBUG
     Public Function Main() As Integer
         '  Call bubblePlots()
 
-        ' Pause()
+        Dim xxxx = Mathematical.SyntaxAPI.MathExtension.Normal.rnorm(130, 0, 1)
+
+        Call Scatter.Plot(xxxx).SaveAs("x:\dddd.png")
+
+        Pause()
 
         '        Call ODEsTest.test()
         ' Dim odes As New ODEsTest
