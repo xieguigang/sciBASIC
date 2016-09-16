@@ -338,6 +338,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
+    <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
     <Compile Include="ConsoleDevices\InteractiveIODevice\Shell.vb" />
     <Compile Include="ConsoleDevices\PipelineCLI.vb" />

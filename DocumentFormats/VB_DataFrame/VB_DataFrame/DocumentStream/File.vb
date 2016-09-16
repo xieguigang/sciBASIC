@@ -702,32 +702,26 @@ Namespace DocumentStream
         ''' <param name="Asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Distinct(Csv As File, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
-            Dim Query As Generic.IEnumerable(Of String)
+        Public Shared Function Distinct(csv As File, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
+            Dim LQuery As IEnumerable(Of String) =
+                From row As RowObject
+                In csv
+                Let Line As String = row.AsLine
+                Select Line
+                Distinct '
+            Dim dRows = LQuery.Select(AddressOf RowObject.TryParse)
 
             If OrderBy >= 0 Then
                 If Asc Then
-                    Query = From row In Csv
-                            Let Line As String = row.AsLine
-                            Select Line
-                            Distinct
-                            Order By CType(Line, RowObject).Column(OrderBy) Ascending  '
+                    dRows = dRows.OrderBy(Function(r) r.Column(OrderBy))
                 Else
-                    Query = From row In Csv
-                            Let Line As String = row.AsLine
-                            Select Line
-                            Distinct
-                            Order By CType(Line, RowObject).Column(OrderBy) Descending  '
+                    dRows = dRows.OrderByDescending(Function(r) r.Column(OrderBy))
                 End If
-            Else '仅去重
-                Query = From row In Csv
-                        Let Line As String = row.AsLine
-                        Select Line Distinct '
             End If
 
             Return New File With {
-                ._innerTable = (From Line As String In Query.ToArray Select CType(Line, RowObject)).ToList,
-                .FilePath = Csv.FilePath
+                ._innerTable = New List(Of RowObject)(dRows),
+                .FilePath = csv.FilePath
             }
         End Function
 
