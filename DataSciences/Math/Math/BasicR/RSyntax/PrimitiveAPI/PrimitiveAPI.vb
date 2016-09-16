@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -124,16 +125,16 @@ Namespace SyntaxAPI
         End Function
 
         Public Function C(Of T)(ParamArray argvs As GenericVector(Of T)()) As GenericVector(Of T)
-            Dim ChunkBuffer = argvs(0).Elements.ToList
+            Dim ChunkBuffer = argvs(0).ToList
             For Each Vector As GenericVector(Of T) In argvs.Skip(1)
                 Call ChunkBuffer.AddRange(Vector)
             Next
-            Return New GenericVector(Of T) With {.Elements = ChunkBuffer.ToArray}
+            Return New GenericVector(Of T)(ChunkBuffer)
         End Function
 
         <ExportAPI("c")>
         Public Function C(ParamArray argvs As Vector()) As Vector
-            Dim ChunkBuffer = argvs(0).Elements.ToList
+            Dim ChunkBuffer = argvs(0).ToList
             For Each Vector As Vector In argvs.Skip(1)
                 Call ChunkBuffer.AddRange(Vector)
             Next
@@ -231,9 +232,10 @@ Namespace SyntaxAPI
         '''
         <ExportAPI("Rep")>
         Public Function Rep(x As Vector,
-                        <MetaData.Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As Vector
+                            <Parameter("length.out", "non-negative integer: the desired length of the output vector.")>
+                            Optional LengthOut As Integer = 0) As Vector
 
-            Dim data As Double() = DirectCast(x.Elements.Clone, Double())
+            Dim data As Double() = x.ToArray
 
             If LengthOut > 0 Then
                 ReDim Preserve data(LengthOut - 1)
@@ -254,7 +256,7 @@ Namespace SyntaxAPI
         Public Function Rep(x As BooleanVector,
                         <MetaData.Parameter("length.out", "non-negative integer: the desired length of the output vector.")> Optional LengthOut As Integer = 0) As BooleanVector
 
-            Dim data As Boolean() = DirectCast(x.Elements.Clone, Boolean())
+            Dim data As Boolean() = x.ToArray
 
             If LengthOut > 0 Then
                 ReDim Preserve data(LengthOut - 1)
@@ -309,7 +311,7 @@ Namespace SyntaxAPI
         ''' <remarks>If yes or no are too short, their elements are recycled. yes will be evaluated if and only if any element of test is true, and analogously for no.
         ''' Missing values in test give missing values in the result.</remarks>
         Public Function IfElse(Of T)(test As BooleanVector, yes As GenericVector(Of T), no As GenericVector(Of T)) As T()
-            Dim LQuery = (From i As Integer In test.Sequence Select If(test.Elements(i), yes.Elements(i), no.Elements(i))).ToArray
+            Dim LQuery = (From i As Integer In test.Sequence Select If(test(i), yes(i), no(i))).ToArray
             Return LQuery
         End Function
 
