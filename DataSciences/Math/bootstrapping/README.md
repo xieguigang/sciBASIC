@@ -6,7 +6,7 @@ The [R program](./bootstrap.R) (as a text file) for the code on this page.
 In order to see more than just the results from the computations of the functions (i.e. if you want to see the functions echoed back in console as they are processed) use the ``echo=T`` option in the source function when running the program.
 
 ```R
-source("d:/stat/bootstrap.txt", echo=T)
+source("./bootstrap.R", echo=T)
 ```
 
 ## Introduction
