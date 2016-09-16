@@ -77,8 +77,8 @@ Namespace SyntaxAPI
             Return x Is Nothing
         End Function
 
-        <ExportAPI("Stop")>
-        Public Function [Stop](ex As String)
+        <ExportAPI("stop")>
+        Public Function [stop](ex As String)
             Throw New Exception(ex)
         End Function
 
@@ -109,17 +109,17 @@ Namespace SyntaxAPI
         ''' </remarks>
         '''
         <ExportAPI("Warning")>
-        Public Function warning(args As Generic.IEnumerable(Of Object),
-                            <MetaData.Parameter("call.", "logical, indicating if the call should become part of the warning message.")> Optional [Call] As Boolean = True,
-                            <MetaData.Parameter("immediate.", "logical, indicating if the call should be output immediately, even if getOption(""warn"") <= 0.")> Optional immediate As Boolean = False,
-                            <MetaData.Parameter("noBreaks.", "logical, indicating as far as possible the message should be output as a single line when options(warn = 1).")> Optional noBreaks As Boolean = False,
-                            <MetaData.Parameter("domain", "see gettext. If NA, messages will not be translated, see also the note in stop.")> Optional domain As Object = NULL) As String
+        Public Function warning(args As IEnumerable(Of Object),
+                                <Parameter("call.", "logical, indicating if the call should become part of the warning message.")> Optional [Call] As Boolean = True,
+                                <Parameter("immediate.", "logical, indicating if the call should be output immediately, even if getOption(""warn"") <= 0.")> Optional immediate As Boolean = False,
+                                <Parameter("noBreaks.", "logical, indicating as far as possible the message should be output as a single line when options(warn = 1).")> Optional noBreaks As Boolean = False,
+                                <Parameter("domain", "see gettext. If NA, messages will not be translated, see also the note in stop.")> Optional domain As Object = NULL) As String
             Throw New NotImplementedException
         End Function
 
         Public Const NA As Object = Nothing
 
-        <ExportAPI("Warning")>
+        <ExportAPI("warning")>
         Public Function warning(args As String, Optional Domain As Object = NA) As String
             Throw New NotImplementedException
         End Function
@@ -134,11 +134,11 @@ Namespace SyntaxAPI
 
         <ExportAPI("c")>
         Public Function C(ParamArray argvs As Vector()) As Vector
-            Dim ChunkBuffer = argvs(0).ToList
-            For Each Vector As Vector In argvs.Skip(1)
-                Call ChunkBuffer.AddRange(Vector)
+            Dim vec As New List(Of Double)(argvs(0))
+            For Each x As Vector In argvs.Skip(1)
+                Call vec.AddRange(x)
             Next
-            Return New Vector(ChunkBuffer.ToArray)
+            Return New Vector(vec.ToArray)
         End Function
 
         <ExportAPI("c")>
