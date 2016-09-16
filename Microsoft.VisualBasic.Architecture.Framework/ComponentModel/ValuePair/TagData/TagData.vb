@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Language
 
-Namespace ComponentModel
+Namespace ComponentModel.TagData
 
     Public Class TagData(Of T, V) : Inherits Value(Of V)
 
