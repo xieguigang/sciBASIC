@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Imaging
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Mathematical
 
 Namespace FileStream
 
