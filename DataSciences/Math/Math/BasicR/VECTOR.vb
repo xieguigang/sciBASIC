@@ -76,6 +76,15 @@ Namespace BasicR
         End Sub
 
         ''' <summary>
+        ''' Init with transform
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="apply"></param>
+        Sub New(x As IEnumerable(Of Double), apply As Func(Of Double, Double))
+            Me.New(x.Select(apply))
+        End Sub
+
+        ''' <summary>
         ''' Creates vector with m element and init value specific by init parameter.
         ''' </summary>
         ''' <param name="init"></param>
