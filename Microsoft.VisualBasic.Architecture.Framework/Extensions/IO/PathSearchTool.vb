@@ -127,18 +127,18 @@ Public Module ProgramPathSearchTool
 
     <ExportAPI("NormalizePathString")>
     <Extension> Public Function NormalizePathString(str As String, normAs As String, Optional onlyASCII As Boolean = True) As String
-        Dim sBuilder As StringBuilder = New StringBuilder(str)
+        Dim sb As New StringBuilder(str)
         For Each ch As Char In ILLEGAL_FILENAME_CHARACTERS
-            Call sBuilder.Replace(ch, normAs)
+            Call sb.Replace(ch, normAs)
         Next
 
         If onlyASCII Then
             For Each ch As Char In "()[]+-~!@#$%^&=;',"
-                Call sBuilder.Replace(ch, normAs)
+                Call sb.Replace(ch, normAs)
             Next
         End If
 
-        Return sBuilder.ToString
+        Return sb.ToString
     End Function
 
     Const PathTooLongException =
@@ -377,6 +377,11 @@ Public Module ProgramPathSearchTool
         Return LQuery.MatrixAsIterator.Distinct.ToArray
     End Function
 
+    ''' <summary>
+    ''' 这个方法没得卵用
+    ''' </summary>
+    ''' <param name="DIR"></param>
+    ''' <returns></returns>
     <ExportAPI("Md5.Renamed")>
     Public Function BatchMd5Renamed(DIR As String) As Boolean
         DIR = FileIO.FileSystem.GetDirectoryInfo(DIR).FullName
@@ -424,23 +429,23 @@ Public Module ProgramPathSearchTool
                                          In ext
                                          Select value.Split(CChar(".")).Last.ToLower
 
-        Dim Dict As Dictionary(Of String, String) =
+        Dim res As Dictionary(Of String, String) =
             LQuery.ToDictionary(Function(x) x.ID,
                                 Function(x) LinqAPI.DefaultFirst(Of String) <= From path
                                                                                In x.Group
                                                                                Let extValue As String = path.path.Split("."c).Last.ToLower
                                                                                Where Array.IndexOf(ext, extValue) > -1
                                                                                Select path.path)
-        Dict = (From Entry
-                In Dict
-                Where Not String.IsNullOrEmpty(Entry.Value)
-                Select Entry) _
+        res = (From entry
+               In res
+               Where Not String.IsNullOrEmpty(entry.Value)
+               Select entry) _
                     .ToDictionary(Function(x) x.Key,
                                   Function(x) x.Value)
 
-        Call $"{NameOf(ProgramPathSearchTool)} load {Dict.Count} source entry...".__DEBUG_ECHO
+        Call $"{NameOf(ProgramPathSearchTool)} load {res.Count} source entry...".__DEBUG_ECHO
 
-        Return Dict
+        Return res
     End Function
 
     ''' <summary>
@@ -456,11 +461,11 @@ Public Module ProgramPathSearchTool
             Return New Dictionary(Of String, String)
         End If
 
-        Dim LQuery = (From path As String
-                      In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
-                      Select ID = IO.Path.GetFileNameWithoutExtension(path),
+        Dim LQuery = From path As String
+                     In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
+                     Select ID = IO.Path.GetFileNameWithoutExtension(path),
                           path
-                      Group By ID Into Group)
+                     Group By ID Into Group
         Dim dict As Dictionary(Of String, String) =
             LQuery.ToDictionary(Function(x) x.ID,
                                 Function(x) x.Group.First.path)
@@ -487,13 +492,15 @@ Public Module ProgramPathSearchTool
     <ExportAPI("Load.ResourceEntry", Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
     <Extension>
     Public Function LoadSourceEntryList(source As IEnumerable(Of String)) As Dictionary(Of String, String)
-        Dim LQuery = (From path As String
-                      In source
-                      Select ID = IO.Path.GetFileNameWithoutExtension(path), path
-                      Group By ID Into Group)
-        Dim PathDict As Dictionary(Of String, String) =
-            LQuery.ToDictionary(Function(x) x.ID, Function(x) x.Group.First.path)
-        Return PathDict
+        Dim LQuery = From path As String
+                     In source
+                     Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                         path
+                     Group By ID Into Group
+        Dim res As Dictionary(Of String, String) =
+            LQuery.ToDictionary(Function(x) x.ID,
+                                Function(x) x.Group.First.path)
+        Return res
     End Function
 
     ''' <summary>
@@ -506,18 +513,18 @@ Public Module ProgramPathSearchTool
     <ExportAPI("Source.Copy",
                Info:="Copy the file in the source list into the copyto directory, function returns the failed operation list.")>
     Public Function SourceCopy(source As IEnumerable(Of String), CopyTo As String, Optional [Overrides] As Boolean = False) As String()
-        Dim FailedList As List(Of String) = New List(Of String)
+        Dim failedList As New List(Of String)
 
-        For Each File As String In source
+        For Each file As String In source
             Try
-                Call FileIO.FileSystem.CopyFile(File, CopyTo & "/" & FileIO.FileSystem.GetFileInfo(File).Name, [Overrides])
+                Call FileIO.FileSystem.CopyFile(file, CopyTo & "/" & FileIO.FileSystem.GetFileInfo(file).Name, [Overrides])
             Catch ex As Exception
-                Call FailedList.Add(File)
-                Call App.LogException(New Exception(File, ex))
+                Call failedList.Add(file)
+                Call App.LogException(New Exception(file, ex))
             End Try
         Next
 
-        Return FailedList.ToArray
+        Return failedList.ToArray
     End Function
 
     <ExportAPI("Get.FrequentPath",
@@ -527,9 +534,9 @@ Public Module ProgramPathSearchTool
             Return ""
         End If
 
-        Dim LQuery = (From strPath As String
-                      In files
-                      Select FileIO.FileSystem.GetParentPath(strPath)).ToArray
+        Dim LQuery = From strPath As String
+                     In files
+                     Select FileIO.FileSystem.GetParentPath(strPath)
         Return LQuery _
             .CountTokens(IgnoreCase:=True) _
             .OrderByDescending(Function(x) x.Value) _
@@ -552,13 +559,19 @@ Public Module ProgramPathSearchTool
         Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
         Dim binDIR As String = String.Format("{0}/bin/", DIR)
         Dim ProgramDIR As String = String.Format("{0}/Program", DIR)
-        Dim buffer As List(Of String) = New List(Of String)
+        Dim buffer As New List(Of String)
 
         If FileIO.FileSystem.DirectoryExists(binDIR) Then
-            buffer += FileIO.FileSystem.GetFiles(binDIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
+            buffer += FileIO.FileSystem.GetFiles(
+                binDIR,
+                FileIO.SearchOption.SearchTopLevelOnly,
+                ExeNameRule, DllNameRule)
         End If
         If FileIO.FileSystem.DirectoryExists(ProgramDIR) Then
-            buffer += FileIO.FileSystem.GetFiles(ProgramDIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
+            buffer += FileIO.FileSystem.GetFiles(
+                ProgramDIR,
+                FileIO.SearchOption.SearchTopLevelOnly,
+                ExeNameRule, DllNameRule)
         End If
 
         buffer += Files
@@ -593,7 +606,8 @@ Public Module ProgramPathSearchTool
         If String.IsNullOrEmpty(withExtension) Then
             Return LinqAPI.Exec(Of String) <= From strPath As String
                                               In fileList
-                                              Where String.IsNullOrEmpty(FileIO.FileSystem.GetFileInfo(strPath).Extension)
+                                              Let ext As String = FileIO.FileSystem.GetFileInfo(strPath).Extension
+                                              Where String.IsNullOrEmpty(ext)
                                               Select strPath
         Else
             Return fileList.ToArray
@@ -607,9 +621,10 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Dir.Search.Program_Directory", Info:="Search for the directories which its name was matched the keyword pattern.")>
+    <ExportAPI("DIR.Search.Program_Directory",
+               Info:="Search for the directories which its name was matched the keyword pattern.")>
     Public Function SearchDirectory(Keyword As String, SpecificDrive As String) As String()
-        Dim Drives As ObjectModel.ReadOnlyCollection(Of DriveInfo) =
+        Dim Drives As ReadOnlyCollection(Of DriveInfo) =
             If(String.IsNullOrEmpty(SpecificDrive),
                FileIO.FileSystem.Drives,
                New ReadOnlyCollection(Of IO.DriveInfo)(
@@ -624,25 +639,25 @@ Public Module ProgramPathSearchTool
     End Function
 
     <Extension>
-    Private Function SearchDrive(Drive As IO.DriveInfo, Keyword As String) As String()
+    Private Function SearchDrive(Drive As DriveInfo, keyword As String) As String()
         If Not Drive.IsReady Then
             Return New String() {}
         End If
 
-        Dim DriveRoot = FileIO.FileSystem.GetDirectories(Drive.RootDirectory.FullName, FileIO.SearchOption.SearchTopLevelOnly, Keyword)
+        Dim DriveRoot = FileIO.FileSystem.GetDirectories(Drive.RootDirectory.FullName, FileIO.SearchOption.SearchTopLevelOnly, keyword)
         Dim files As New List(Of String)
 
         Dim ProgramFiles As String = String.Format("{0}/Program Files", Drive.RootDirectory.FullName)
         If FileIO.FileSystem.DirectoryExists(ProgramFiles) Then
-            Call files.AddRange(BranchRule(ProgramFiles, Keyword))
+            Call files.AddRange(BranchRule(ProgramFiles, keyword))
         End If
 
         Dim ProgramFilesX86 = String.Format("{0}/Program Files(x86)", Drive.RootDirectory.FullName)
         If FileIO.FileSystem.DirectoryExists(ProgramFilesX86) Then
-            Call files.AddRange(BranchRule(ProgramFilesX86, Keyword))
+            Call files.AddRange(BranchRule(ProgramFilesX86, keyword))
         End If
         Call files.AddRange(DriveRoot)
-        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, Keyword)).MatrixToList)
+        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).MatrixToList)
 
         Return files.ToArray
     End Function
@@ -655,15 +670,19 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     ''' <remarks></remarks>
     Private Function BranchRule(ProgramFiles As String, Keyword As String) As String()
-        Dim ProgramFiles_Directories = FileIO.FileSystem.GetDirectories(ProgramFiles, FileIO.SearchOption.SearchTopLevelOnly, Keyword)
-        Dim ChunkList As List(Of String) = New List(Of String)
+        Dim ProgramFiles_Directories = FileIO.FileSystem.GetDirectories(
+            ProgramFiles,
+            FileIO.SearchOption.SearchTopLevelOnly,
+            Keyword)
+        Dim fsObjs As New List(Of String)
 
         For Each Dir As String In ProgramFiles_Directories
-            Call ChunkList.AddRange(FileIO.FileSystem.GetDirectories(Dir, FileIO.SearchOption.SearchTopLevelOnly))
+            fsObjs += FileIO.FileSystem.GetDirectories(
+                Dir, FileIO.SearchOption.SearchTopLevelOnly)
         Next
-        Call ChunkList.AddRange(ProgramFiles_Directories)
+        Call fsObjs.Add(ProgramFiles_Directories.ToArray)
 
-        If ChunkList.Count = 0 Then
+        If fsObjs.Count = 0 Then
             ' 这个应用程序的安装文件夹可能是带有版本号标记的
             Dim Dirs = FileIO.FileSystem.GetDirectories(ProgramFiles, FileIO.SearchOption.SearchTopLevelOnly)
             Dim version As String = Keyword & ProgramPathSearchTool.VERSION
@@ -673,10 +692,10 @@ Public Module ProgramPathSearchTool
                                            Let name As String = FileIO.FileSystem.GetDirectoryInfo(DIR).Name
                                            Where Regex.Match(name, version, RegexOptions.IgnoreCase).Success
                                            Select DIR
-            Call ChunkList.Add(Patterns)
+            Call fsObjs.Add(Patterns)
         End If
 
-        Return ChunkList.ToArray
+        Return fsObjs.ToArray
     End Function
 
     Const VERSION As String = "[-_`~.]\d+(\.\d+)*"
@@ -703,9 +722,7 @@ Public Module ProgramPathSearchTool
     '''
     <ExportAPI(NameOf(RelativePath),
                Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
-    Public Function RelativePath(pcFrom As String, pcTo As String) _
-        As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
-
+    Public Function RelativePath(pcFrom As String, pcTo As String) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
         Dim lcRelativePath As String = Nothing
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
@@ -830,7 +847,8 @@ Public Module ProgramPathSearchTool
             Dim buf As Byte() = IO.File.ReadAllBytes(source)
             Call buf.FlushStream(copyTo)
         Catch ex As Exception
-            Call App.LogException(New Exception($"{source.ToFileURL} ===> {copyTo.ToFileURL}", ex))
+            Dim pt As String = $"{source.ToFileURL} ===> {copyTo.ToFileURL}"
+            Call App.LogException(New Exception(pt, ex))
             Return False
         End Try
 
