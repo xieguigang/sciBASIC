@@ -143,14 +143,14 @@ Namespace Mathematical
         ''' Runs in O(k^2) time.
         ''' </summary>
         ''' <param name="rand"></param>
-        ''' <param name="n">Maximum number possible.</param>
-        ''' <param name="k">How many numbers to return.</param>
+        ''' <param name="n">Maximum number possible.(最大值)</param>
+        ''' <param name="k">How many numbers to return.(返回的数据的数目)</param>
         ''' <returns></returns>
         ''' 
         <ExportAPI("Permutation")>
         <Extension> Public Function Permutation(rand As Random, n As Integer, k As Integer) As Integer()
-            Dim result = New List(Of Integer)()
-            Dim sorted = New SortedSet(Of Integer)()
+            Dim result As New List(Of Integer)()
+            Dim sorted As New SortedSet(Of Integer)()
 
             For i As Integer = 0 To k - 1
                 Dim r = rand.[Next](1, n + 1 - i)

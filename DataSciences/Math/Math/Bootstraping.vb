@@ -2,8 +2,14 @@
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
+Imports Microsoft.VisualBasic.Linq
 
 Public Module Bootstraping
+
+    Public Function Sample(x As Integer) As Vector
+        Dim xvec As Integer() = New Random(Now.Millisecond).Permutation(x, x)
+        Return New Vector(xvec.Select(Function(n) CDbl(n)))
+    End Function
 
     ''' <summary>
     ''' bootstrap是一种非参数估计方法，它用到蒙特卡洛方法。bootstrap算法如下：
@@ -29,7 +35,7 @@ Public Module Bootstraping
         For i As Integer = 0 To B
             Dim ls As New List(Of T)
 
-            For k As Integer = 0 To N
+            For k As Integer = 0 To N - 1
                 ls += array(rnd.Next(array.Length))
             Next
 
