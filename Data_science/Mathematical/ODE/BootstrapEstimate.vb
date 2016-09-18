@@ -21,7 +21,8 @@ Public Module BootstrapEstimate
                                               k As Integer,
                                               n As Integer,
                                               a As Integer,
-                                              b As Integer) As IEnumerable(Of out)
+                                              b As Integer,
+                                           Optional trimNaN As Boolean = True) As IEnumerable(Of out)
 
         Dim params As NamedValue(Of DoubleRange)() = vars.ToArray
         Dim y0 As NamedValue(Of DoubleRange)() = yinit.ToArray
@@ -32,7 +33,10 @@ Public Module BootstrapEstimate
 
         For Each x As out In From it As Integer ' 进行n次并行的采样计算
                              In k.Sequence.AsParallel
-                             Select params.iterate(Of T)(y0, ps, n, a, b)
+                             Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                             Let isNaNResult As Boolean = odes_Out.HaveNaN
+                             Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
+                             Select odes_Out
             Yield x
         Next
     End Function

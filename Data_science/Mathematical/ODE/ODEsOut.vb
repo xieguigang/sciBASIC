@@ -12,6 +12,28 @@ Public Class out
     Public Property x As Double()
     Public Property y As Dictionary(Of NamedValue(Of Double()))
 
+    ''' <summary>
+    ''' Is there NAN value in the function value <see cref="y"/> ???
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property HaveNaN As Boolean
+        Get
+            For Each val As NamedValue(Of Double()) In y.Values
+                For Each x As Double In val.x
+                    If Double.IsNaN(x) OrElse
+                        Double.IsInfinity(x) OrElse
+                        Double.IsNegativeInfinity(x) OrElse
+                        Double.IsPositiveInfinity(x) Then
+
+                        Return True
+                    End If
+                Next
+            Next
+
+            Return False
+        End Get
+    End Property
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function
