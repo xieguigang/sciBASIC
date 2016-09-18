@@ -183,7 +183,7 @@
       <Project>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\DocumentFormats\VB_HTML\VB_HTML\MarkupLanguage.vbproj">
+    <ProjectReference Include="..\..\..\DocumentFormats\html\MarkupLanguage.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MarkupLanguage</Name>
     </ProjectReference>
