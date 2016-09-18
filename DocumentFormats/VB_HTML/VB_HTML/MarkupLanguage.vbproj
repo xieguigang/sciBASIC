@@ -176,6 +176,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTML\CSS\FontStyle.vb" />
     <Compile Include="HTML\HtmlParser\DocParserAPI.vb" />
     <Compile Include="HTML\TextString.vb" />
     <Compile Include="HTML\Head\Meta.vb" />

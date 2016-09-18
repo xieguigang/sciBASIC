@@ -221,6 +221,7 @@
     <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
     <Compile Include="BasicR\Vector.vb" />
     <Compile Include="Bootstraping.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="Helpers\MetaExpression.vb" />
     <Compile Include="Helpers\MemoryCollection.vb" />
     <Compile Include="Helpers\Logical.vb" />

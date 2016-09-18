@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
@@ -74,7 +75,13 @@ Module DEBUG
     Public Function Main() As Integer
         '  Call bubblePlots()
 
-        ' Pause()
+        Dim xxxx = Mathematical.SyntaxAPI.MathExtension.Normal.rnorm(130, 0, 1)
+
+        Call Scatter.Plot(xxxx).SaveAs("x:\dddd.png")
+
+        xxxx = New Vector(Sample(20).OrderBy(Function(ddd) ddd))
+
+        Pause()
 
         '        Call ODEsTest.test()
         ' Dim odes As New ODEsTest

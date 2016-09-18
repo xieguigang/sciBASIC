@@ -98,7 +98,7 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Trunc")>
         Public Function Trunc(x As Vector) As Vector
-            Return x
+            Return New Vector(x.Select(AddressOf Math.Truncate))
         End Function
 
         <ExportAPI("Abs")>
@@ -118,29 +118,29 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Besseli")>
         Public Function BesselI(x As Vector, nu As Vector,
-                            <MetaData.Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
-                            Optional ExponScaled As Boolean = False) As Vector
+                                <Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
+                                Optional ExponScaled As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function
 
         <ExportAPI("Floor")>
         Public Function floor(x As Vector) As Vector
-            Throw New NotImplementedException
+            Return New Vector(x.Select(AddressOf Math.Floor))
         End Function
 
         <ExportAPI("Round")>
-        Public Function round(x As Vector) As Vector
-            Throw New NotImplementedException
+        Public Function round(x As Vector, Optional digits As Integer = 4) As Vector
+            Return New Vector(x.Select(Function(n) Math.Round(n, digits)))
         End Function
 
         <ExportAPI("Sinh")>
         Public Function Sinh(x As Vector) As Vector
-            Throw New NotImplementedException
+            Return New Vector(x.Select(AddressOf Math.Sinh))
         End Function
 
         <ExportAPI("Sign")>
         Public Function Sign(x As Vector) As Vector
-            Throw New NotImplementedException
+            Return New Vector(x.Select(AddressOf Math.Sign))
         End Function
 
         <ExportAPI("pchisq")>
@@ -168,7 +168,10 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Sort")>
         Public Function Sort(x As Vector, Optional decreasing As Boolean = False) As Vector
-            Throw New NotImplementedException
+            Return If(
+                Not decreasing,
+                New Vector(x.OrderBy(Function(n) n)),
+                New Vector(x.OrderByDescending(Function(n) n)))
         End Function
 
         ''' <summary>
@@ -181,7 +184,6 @@ Namespace SyntaxAPI.MathExtension
         Public Function Order(x As Vector, Optional nalast As Boolean = True, Optional decreasing As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function
-
     End Module
 End Namespace
 

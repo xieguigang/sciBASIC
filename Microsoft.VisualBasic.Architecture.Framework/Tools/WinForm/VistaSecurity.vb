@@ -68,11 +68,12 @@ Namespace Windows.Forms
         ''' <summary>
         ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
         ''' </summary>
-        Public Sub RestartElevated()
+        Public Sub RestartElevated(Optional args As String = "")
             Dim startInfo As New ProcessStartInfo()
             startInfo.UseShellExecute = True
             startInfo.WorkingDirectory = Environment.CurrentDirectory
             startInfo.FileName = Application.ExecutablePath
+            startInfo.Arguments = args
             startInfo.Verb = "runas"
             Try
                 Dim p As Process = Process.Start(startInfo)
