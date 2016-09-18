@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Mathematical.diffEq
 
 Public Class ODEsTest : Inherits ODEs
 
-    Const a = 0.1, b = 0.1, c = 0.1
+    Dim a As Double = 0.1, b As Double = 0.1, c As Double = 0.1
 
     Dim yC As var
     Dim P As var

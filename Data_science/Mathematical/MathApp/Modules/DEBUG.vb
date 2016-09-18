@@ -29,6 +29,7 @@
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -73,6 +74,19 @@ Module DEBUG
     End Sub
 
     Public Function Main() As Integer
+
+        Dim vars = {
+            New NamedValue(Of DoubleRange) With {.Name = "a", .x = New DoubleRange(-1, 1)},
+            New NamedValue(Of DoubleRange) With {.Name = "b", .x = New DoubleRange(-1, 1)},
+            New NamedValue(Of DoubleRange) With {.Name = "c", .x = New DoubleRange(-1, 1)}
+        }
+
+        Dim ysssss = {New NamedValue(Of DoubleRange) With {.Name = "P", .x = New DoubleRange(-10, 10)},
+            New NamedValue(Of DoubleRange) With {.Name = "yC", .x = New DoubleRange(-10, 10)}}
+
+        Dim mcTest = BootstrapEstimate.Bootstrapping(Of ODEsTest)(vars, ysssss, 1, 100, 0, 100).ToArray
+
+
         '  Call bubblePlots()
 
         Dim xxxx = Mathematical.SyntaxAPI.MathExtension.Normal.rnorm(130, 0, 1)
