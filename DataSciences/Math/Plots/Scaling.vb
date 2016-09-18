@@ -2,6 +2,9 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' 将数据坐标转换为绘图坐标
+''' </summary>
 Public Class Scaling
 
     Public ReadOnly dx, dy As Single
@@ -70,12 +73,37 @@ Public Class Scaling
         Return Function(x) margin.Width + width * (x - xmin) / dx
     End Function
 
-    Public Function YScaler(size As Size, margin As Size) As Func(Of Single, Single)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="avg">当这个参数值是一个有效的数字的时候，返回的Y将会以这个平均值为零点</param>
+    ''' <returns></returns>
+    Public Function YScaler(size As Size, margin As Size, Optional avg As Double = Double.NaN) As Func(Of Single, Single)
         Dim bottom As Integer = size.Height - margin.Height
-        Dim width As Integer = size.Width - margin.Width * 2
-        Dim height As Integer = size.Height - margin.Height * 2
+        Dim height As Integer = size.Height - margin.Height * 2   ' 绘图区域的高度
 
-        Return Function(y) bottom - height * (y - ymin) / dy
+        If Double.IsNaN(avg) Then
+            Return Function(y) bottom - height * (y - ymin) / dy
+        Else
+            Dim half As Single = height / 2
+            Dim middle As Single = bottom - half
+
+            Return Function(y) As Single
+                       Dim d = y - avg
+
+                       If d >= 0 Then  ' 在上面
+                           Return middle - half * (y - avg) / dy
+                       Else
+                           Return middle + half * (avg - y) / dy
+                       End If
+                   End Function
+        End If
+    End Function
+
+    Public Shared Function Average(hist As HistogramGroup) As Double
+        Return hist.Samples.Select(Function(x) x.data).MatrixAsIterator.Average()
     End Function
 
     ''' <summary>
