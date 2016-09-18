@@ -302,7 +302,7 @@ Namespace CommandLine
                        Optional disp_STDOUT As Boolean = True,
                        Optional _disp_debug As Boolean = False)
 
-            Dim pInfo As ProcessStartInfo = New ProcessStartInfo(Exe.GetString(""""c), args)
+            Dim pInfo As New ProcessStartInfo(Exe.GetString(""""c), args)
 
             _IORedirect = IORedirect
             pInfo.UseShellExecute = False
