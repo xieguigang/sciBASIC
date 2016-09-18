@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Mathematical
 
 ''' <summary>
 ''' Needleman-Wunsch Algorithm

@@ -37,21 +37,43 @@ Namespace BasicR
     ''' </summary>
     Public Class Vector : Inherits GenericVector(Of Double)
 
+        ''' <summary>
+        ''' <see cref="System.Double.NaN"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property NAN As Vector
             Get
                 Return New Vector({Double.NaN})
             End Get
         End Property
 
+        ''' <summary>
+        ''' <see cref="System.Double.PositiveInfinity"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property Inf As Vector
             Get
                 Return New Vector({Double.PositiveInfinity})
             End Get
         End Property
 
+        ''' <summary>
+        ''' Only one number in the vector and its value is ZERO
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property Zero As Vector
             Get
                 Return New Vector({0})
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' <see cref="[Dim]"/>为1?即当前的向量对象是否是只包含有一个数字？
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsNumeric As Boolean
+            Get
+                Return [Dim] = 1
             End Get
         End Property
 
@@ -73,6 +95,15 @@ Namespace BasicR
             For Each x As Double In data
                 Add(x)
             Next
+        End Sub
+
+        ''' <summary>
+        ''' Init with transform
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="apply"></param>
+        Sub New(x As IEnumerable(Of Double), apply As Func(Of Double, Double))
+            Me.New(x.Select(apply))
         End Sub
 
         ''' <summary>

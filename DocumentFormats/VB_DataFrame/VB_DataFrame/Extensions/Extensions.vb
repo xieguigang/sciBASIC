@@ -302,10 +302,13 @@ Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{f
             lazy = False
         End If
 
-        Call df.Save(path, LazySaved:=lazy, encoding:=encoding)
-        Call "CSV saved!".__DEBUG_ECHO
+        Dim success As Boolean =
+            df.Save(path, LazySaved:=lazy, encoding:=encoding)
+        If success Then
+            Call "CSV saved!".__DEBUG_ECHO
+        End If
 
-        Return True
+        Return success
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),

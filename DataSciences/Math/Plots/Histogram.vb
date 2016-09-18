@@ -34,7 +34,7 @@ Public Module Histogram
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
 
-                For Each sample In data.Samples.SeqIterator
+                For Each sample As SeqValue(Of HistogramSample) In data.Samples.SeqIterator
                     Dim x = left + interval
 
                     If stacked Then ' 改变Y
