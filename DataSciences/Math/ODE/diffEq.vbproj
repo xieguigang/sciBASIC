@@ -128,6 +128,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BootstrapEstimate.vb" />
     <Compile Include="var.vb" />
     <Compile Include="ODEs.vb" />
     <Compile Include="ODE.vb" />
