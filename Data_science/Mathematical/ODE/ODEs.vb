@@ -163,4 +163,18 @@ Public MustInherit Class ODEs
 
         Call func(dx, dy:=k)
     End Sub
+
+    Public Shared Function GetParameters(Of T As ODEs)() As IEnumerable(Of String)
+        Dim fields = GetType(T) _
+            .GetFields(BindingFlags.Instance) _
+            .Where(Function(f) f.FieldType.Equals(GetType(Double)))
+        Return fields.Select(Function(f) f.Name)
+    End Function
+
+    Public Shared Function GetVariables(Of T As ODEs)() As IEnumerable(Of String)
+        Dim fields = GetType(T) _
+          .GetFields(BindingFlags.Instance) _
+          .Where(Function(f) f.FieldType.Equals(GetType(var)))
+        Return fields.Select(Function(f) f.Name)
+    End Function
 End Class
