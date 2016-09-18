@@ -16,8 +16,9 @@ A language feature runtime library for server side CLI application. This framewo
 > + https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/
 
 
-+ Install this framework via nuget package:
-https://www.nuget.org/packages/VB_AppFramework/
+##### Install this framework via nuget package
+
++ https://www.nuget.org/packages/VB_AppFramework/
 
 >  PM> Install-Package VB_AppFramework
 
@@ -25,6 +26,88 @@ https://www.nuget.org/packages/VB_AppFramework/
 https://www.nuget.org/packages/VB_AppFramework_40/
 
 >  PM> Install-Package VB_AppFramework_40
+
+## Microsoft VisualBasic Mathematics System for Data Science
+
++ \>>>>>> **[Mathematics System](./Data_science/Mathematical)** <<<<<<
++ \>>>>>> **[DataFrame System for VisualBasic Data Science](./DocumentFormats/VB_DataFrame)** <<<<<<
++ \>>>>>> **[Network Visualization Interface](./Datavisualization/Datavisualization.Network)** <<<<<<
+
+##### Plots System
+```vbnet
+Imports Microsoft.VisualBasic.Mathematical.Plots
+```
+
+![](./Data_science/Mathematical/images/Bubble.png)
+![](./Data_science/Mathematical/images/37_number_of_observation_on_barplot.png)
+
+## What's new of VisualBasic language Syntax from this runtime library?
+
+###### 1. Inline value assign
+
+Old:
+
+```vbnet
+Dim s As String = ""
+
+Do While Not s Is Nothing
+   s = blablabla
+
+   ' Do other staff
+Loop
+```
+
+New:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim s As New Value(Of String)
+
+Do While Not (s = blablabla) Is Nothing
+   ' Do other staff
+Loop
+```
+
+###### 2. List(Of )
+
+Old:
+
+```vbnet
+Dim l As New List(Of String)
+
+Call l.Add("123")
+Call l.AddRange(From x In 100.Sequence Select CStr(x))
+```
+
+New:
+
+```vbnet
+Imports Microsoft.VisualBasic
+
+Dim l As New List(Of String)
+
+l += "123"
+l += From x As Integer
+     In 100.Sequence
+     Select CStr(x)
+```
+
+###### int Type
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim min As int = 1
+Dim max As int = 200
+Dim x As Integer = 199
+
+Console.WriteLine(min <= x < max) ' True
+x += 10 ' 209
+Console.WriteLine(min <= x < max) ' False
+x = -1
+Console.WriteLine(min <= x < max) ' False
+```
 
 ## Framework Gallery
 ![](./Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
@@ -43,7 +126,7 @@ Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./Datavisualization/Micros
 > 4. Memory pepline services between two client program
 > 5. VisualBasic language Feature:  Unix bash command supports in under development which parts of the API is available at namespace Microsoft.VisualBasic.Language
 
-####### Image fast binarization using VisualBasic extension API:
+###### Image fast binarization using VisualBasic extension API
 [``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
 
 |Normal|Binary|
