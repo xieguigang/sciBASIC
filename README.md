@@ -33,6 +33,8 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 + \>>>>>> **[DataFrame System for VisualBasic Data Science](./DocumentFormats/VB_DataFrame)** <<<<<<
 + \>>>>>> **[Network Visualization Interface](./Datavisualization/Datavisualization.Network)** <<<<<<
 
+![](./Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
+
 ##### Plots System
 ```vbnet
 Imports Microsoft.VisualBasic.Mathematical.Plots
@@ -110,11 +112,13 @@ Console.WriteLine(min <= x < max) ' False
 ```
 
 ## Framework Gallery
-![](./Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
-
 Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./Datavisualization/Microsoft.VisualBasic.Imaging) 3D engine.
 
 ![](./Datavisualization/d3.png)
+
+Chart plot system
+
+![](./Data_science/Mathematical/images/pie_chart.png)
 
 =========================
 
