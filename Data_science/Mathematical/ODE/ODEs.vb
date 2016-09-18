@@ -34,7 +34,14 @@ Public MustInherit Class ODEs
 
     Dim K1, K2, K3, K4 As Vector
 
+    ReadOnly __vars As Dictionary(Of var)
     Friend vars As var()
+
+    Default Public ReadOnly Property GetVar(Name As String) As var
+        Get
+            Return __vars(Name)
+        End Get
+    End Property
 
     Sub New()
         Dim type As TypeInfo = Me.GetType
@@ -53,6 +60,8 @@ Public MustInherit Class ODEs
 
             Call f.obj.SetValue(Me, x)
         Next
+
+        __vars = New Dictionary(Of var)(vars)
     End Sub
 
     ''' <summary>
@@ -83,17 +92,26 @@ Public MustInherit Class ODEs
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <param name="incept">是否是为蒙特卡洛实验设计的？</param>
+    ''' <returns></returns>
+    Private Function __getY0(incept As Boolean) As Double()
+        Return If(incept, Me.vars, Me.y0) _
+            .OrderBy(Function(o) o.Index) _
+            .Select(Function(o) o.value) _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
     ''' <param name="n">A larger value of this parameter, will makes your result more precise.</param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     ''' <returns></returns>
-    Public Function Solve(n As Integer, a As Double, b As Double) As out
+    Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As out
         Dim dh As Double = (b - a) / n  ' 步长
         Dim dx As Double = a
-        Dim y0 As Double() = Me.y0 _
-            .OrderBy(Function(o) o.Index) _
-            .Select(Function(o) o.value) _
-            .ToArray
+        Dim y0 As Double() = __getY0(incept)
         Dim darrayn As New Vector(y0)
         Dim darraynext As New Vector(y0.Length) ' //下一步的值,最好初始化
 
@@ -145,54 +163,4 @@ Public MustInherit Class ODEs
 
         Call func(dx, dy:=k)
     End Sub
-End Class
-
-''' <summary>
-''' ODEs output
-''' </summary>
-Public Class out
-
-    Public Property x As Double()
-    Public Property y As Dictionary(Of NamedValue(Of Double()))
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-
-    Public Function DataFrame(Optional xDisp As String = "X") As DocumentStream.File
-        Dim ly = y.Values.ToArray
-        Dim file As New DocumentStream.File
-        Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
-
-        file += head
-
-        For Each x As SeqValue(Of Double) In Me.x.SeqIterator
-            file += (x.obj.ToString + ly.ToList(Function(n) n.x(x.i).ToString))
-        Next
-
-        Return file
-    End Function
-End Class
-
-Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
-
-Public Class GenericODEs : Inherits ODEs
-
-    Public Property df As [Function]
-
-    Sub New(ParamArray vars As var())
-        Me.vars = vars
-
-        For Each x In vars.SeqIterator
-            x.obj.Index = x.i
-        Next
-    End Sub
-
-    Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-        Call _df(dx, dy)
-    End Sub
-
-    Protected Overrides Function y0() As var()
-        Return vars
-    End Function
 End Class

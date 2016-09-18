@@ -52,7 +52,21 @@ Namespace Mathematical
 
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
-            Return rng.Length * __randomSeeds.NextDouble + rng.Min
+            SyncLock __randomSeeds
+                Return __randomSeeds.NextDouble(range:=rng)
+            End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to min of the range,
+        ''' and less than the max of the range.
+        ''' </summary>
+        ''' <param name="rnd"></param>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function NextDouble(rnd As Random, range As DoubleRange) As Double
+            Return range.Length * rnd.NextDouble + range.Min
         End Function
 
         <Extension>

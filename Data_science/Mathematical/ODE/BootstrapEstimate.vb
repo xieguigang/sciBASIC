@@ -3,11 +3,12 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 
 Public Module BootstrapEstimate
 
     ''' <summary>
-    ''' 
+    ''' Bootstrapping 参数估计分析，这个函数用于生成基本的采样数据
     ''' </summary>
     ''' <param name="vars">各个参数的变化范围</param>
     ''' <typeparam name="T">具体的求解方程组</typeparam>>
@@ -45,10 +46,19 @@ Public Module BootstrapEstimate
                                                b As Integer) As out
 
         Dim odes As TODEs = Activator.CreateInstance(Of TODEs)
+        Dim rnd As New Random(Now.Millisecond)
 
+        For Each x In vars
+            Dim value As Double = rnd.NextDouble(range:=x.x)
+            Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
+        Next
 
+        For Each y In yinis
+            Dim value As Double = rnd.NextDouble(range:=y.x)
+            odes(y.Name).value = value
+        Next
 
-        Return odes.Solve(n, a, b)
+        Return odes.Solve(n, a, b, incept:=True)
     End Function
 
     <Extension>
