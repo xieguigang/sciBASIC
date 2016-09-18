@@ -1,23 +1,24 @@
 # Microsoft VisualBasic App Runtime
 
-![(๑•̀ㅂ•́)و✧](./charge.svg)
+![(๑•̀ㅂ•́)و✧](./etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
 [![Github All Releases](https://img.shields.io/github/downloads/xieguigang/VisualBasic_AppFramework/total.svg?maxAge=2592000?style=flat-square)]()
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 
-![Microsoft VisualBasic logo](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/logo.jpg)
+![Microsoft VisualBasic logo](./logo.jpg)
 
 A language feature runtime library for server side CLI application. This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the VisualBasic programming language syntax and the utility code function. Makes the VisualBasic programming style more modernization by using this runtime library framework.
 
->Abount VisualBasic code style guidelines:
+> Abount VisualBasic code style guidelines:
 > + https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
 
->Guides for using this framework, you can found the document and content index at the [README.md](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/README.md)(This guidelines document is currently compiling for users):
+> Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
 > + https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/
 
 
-+ Install this framework via nuget package:
-https://www.nuget.org/packages/VB_AppFramework/
+##### Install this framework via nuget package
+
++ https://www.nuget.org/packages/VB_AppFramework/
 
 >  PM> Install-Package VB_AppFramework
 
@@ -26,33 +27,112 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 
 >  PM> Install-Package VB_AppFramework_40
 
-##Framework Gallery
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
-![](https://github.com/xieguigang/VisualBasic_AppFramework/raw/master/Datavisualization/Datavisualization.Network/3d_demo.gif)
+## Microsoft VisualBasic Mathematics System for Data Science
 
-Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Microsoft.VisualBasic.Imaging) 3D engine.
++ \>>>>>> **[Mathematics System](./Data_science/Mathematical)** <<<<<<
++ \>>>>>> **[DataFrame System for VisualBasic Data Science](./DocumentFormats/VB_DataFrame)** <<<<<<
++ \>>>>>> **[Network Visualization Interface](./Datavisualization/Datavisualization.Network)** <<<<<<
 
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/2016-04-30.png)
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/2016-04-30%20(2).png)
+![](./Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
+
+##### Plots System
+```vbnet
+Imports Microsoft.VisualBasic.Mathematical.Plots
+```
+
+![](./Data_science/Mathematical/images/Bubble.png)
+![](./Data_science/Mathematical/images/37_number_of_observation_on_barplot.png)
+
+## What's new of VisualBasic language Syntax from this runtime library?
+
+###### 1. Inline value assign
+
+Old:
+
+```vbnet
+Dim s As String = ""
+
+Do While Not s Is Nothing
+   s = blablabla
+
+   ' Do other staff
+Loop
+```
+
+New:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim s As New Value(Of String)
+
+Do While Not (s = blablabla) Is Nothing
+   ' Do other staff
+Loop
+```
+
+###### 2. List(Of )
+
+Old:
+
+```vbnet
+Dim l As New List(Of String)
+
+Call l.Add("123")
+Call l.AddRange(From x In 100.Sequence Select CStr(x))
+```
+
+New:
+
+```vbnet
+Imports Microsoft.VisualBasic
+
+Dim l As New List(Of String)
+
+l += "123"
+l += From x As Integer
+     In 100.Sequence
+     Select CStr(x)
+```
+
+###### int Type
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim min As int = 1
+Dim max As int = 200
+Dim x As Integer = 199
+
+Console.WriteLine(min <= x < max) ' True
+x += 10 ' 209
+Console.WriteLine(min <= x < max) ' False
+x = -1
+Console.WriteLine(min <= x < max) ' False
+```
+
+## Framework Gallery
+Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./Datavisualization/Microsoft.VisualBasic.Imaging) 3D engine.
+
+![](./Datavisualization/d3.png)
+
+Chart plot system
+
+![](./Data_science/Mathematical/images/pie_chart.png)
 
 =========================
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/20160426133200.jpg)
 
-This project is the low Level App framework and runtime environment that i used for the programming in GCModeller.
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/ConsoleDevices/ProgressBar/ProgressBar.png)
-Console ProgressBar
+###### Modules that Includes in this Framework:
 
-Modules that Includes in this Framework:
+> 1. A document library of read and write Csv document for facility the data exchanges between the GCModeller and R program.
+> 2. A distribution computing framework available at repository: https://github.com/xieguigang/Microsoft.VisualBasic.Parallel
+> 3. Microsoft VisualBasic Application Framework codes
+> 4. Memory pepline services between two client program
+> 5. VisualBasic language Feature:  Unix bash command supports in under development which parts of the API is available at namespace Microsoft.VisualBasic.Language
 
->
-1. A document library of read and write Csv document for facility the data exchanges between the GCModeller and R program.
-2. A distribution computing framework available at repository: https://github.com/xieguigang/Microsoft.VisualBasic.Parallel
-3. Microsoft VisualBasic Application Framework codes
-4. Memory pepline services between two client program
-5. VisualBasic language Feature:  Unix bash command supports in under development which parts of the API is available at namespace Microsoft.VisualBasic.Language
+###### Image fast binarization using VisualBasic extension API
+[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
 
-Image fast binarization using VisualBasic extension API:
-https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/hcBitmap.vb
-
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg)![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/lena.binary.jpg)
-
+|Normal|Binary|
+|------|------|
+|<img src="./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=250 height=250 />|<img src="./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/lena.binary.jpg" />|

@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Linq.Expressions
 Imports System.Reflection
@@ -216,11 +216,15 @@ Namespace Emit.Delegates
 
         <Extension>
         Public Function FieldSet(Of TProperty)(source As Type, fieldName As String) As Action(Of Object, TProperty)
-            Dim fieldInfo = GetFieldInfo(source, fieldName)
+            Dim fieldInfo As FieldInfo = GetFieldInfo(source, fieldName)
             If fieldInfo IsNot Nothing AndAlso Not fieldInfo.IsInitOnly Then
-                Dim sourceParam = Expression.Parameter(GetType(Object))
-                Dim valueParam = Expression.Parameter(GetType(TProperty))
-                Dim te = Expression.Lambda(GetType(Action(Of Object, TProperty)), Expression.Assign(Expression.Field(Expression.Convert(sourceParam, source), fieldInfo), valueParam), sourceParam, valueParam)
+                Dim sourceParam = Expression.Parameter(GetType(Object))  ' args1 参数
+                Dim valueParam = Expression.Parameter(GetType(TProperty)) ' args2 参数
+                Dim target = Expression.Convert(sourceParam, source)  ' args1 As <source Type>
+                Dim fieldRef = Expression.Field(target, fieldInfo)  ' args1.Field
+                Dim setValue = Expression.Assign(fieldRef, valueParam) ' args1.Field = args2
+                Dim delgType As Type = GetType(Action(Of Object, TProperty))
+                Dim te = Expression.Lambda(delgType, setValue, sourceParam, valueParam)
                 Return DirectCast(te.Compile(), Action(Of Object, TProperty))
             End If
             Return Nothing
