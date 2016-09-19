@@ -98,22 +98,28 @@ Public Module Extensions
     ''' <summary>
     ''' Convert a database table into a dynamics dataframe in VisualBasic.(将数据库之中所读取出来的数据表转换为表格对象)
     ''' </summary>
-    ''' <param name="DataSource"></param>
+    ''' <param name="reader"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame),
                Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
-    <Extension> Public Function DataFrame(DataSource As DbDataReader) As DataFrame
-        Dim File As DocumentStream.File = New DocumentStream.File
-        Dim Fields As Integer() = DataSource.FieldCount.Sequence
-        Call File.AppendLine((From i As Integer In Fields Select DataSource.GetName(i)).ToArray)
+    <Extension> Public Function DataFrame(reader As DbDataReader) As DataFrame
+        Dim csv As New DocumentStream.File
+        Dim fields As Integer() = reader.FieldCount.Sequence.ToArray
 
-        Do While DataSource.Read
-            Call File.AppendLine((From i As Integer In Fields Select s = DataSource.GetValue(i).ToString).ToArray)
+        csv += From i As Integer
+               In fields
+               Select reader.GetName(i)
+
+        Do While reader.Read
+            csv += From i As Integer
+                   In fields
+                   Let val As Object = reader.GetValue(i)
+                   Select s = Scripting.ToString(val)
         Loop
 
-        Return DataFrame.CreateObject(File)
+        Return DataFrame.CreateObject(csv)
     End Function
 
     <ExportAPI("Write.Csv")>

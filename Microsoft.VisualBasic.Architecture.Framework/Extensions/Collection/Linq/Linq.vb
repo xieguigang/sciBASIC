@@ -225,18 +225,15 @@ Namespace Linq
         ''' <remarks></remarks>
         '''
         <ExportAPI("Sequence")>
-        <Extension> Public Function Sequence(n As Integer) As Integer()
-
+        <Extension> Public Iterator Function Sequence(n As Integer) As IEnumerable(Of Integer)
             If n < 0 Then
                 Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
                 Throw New Exception(ex)
             End If
 
-            Dim List(n - 1) As Integer
             For i As Integer = 0 To n - 1
-                List(i) = i
+                Yield i
             Next
-            Return List
         End Function
 
         ''' <summary>
@@ -263,6 +260,24 @@ Namespace Linq
             End If
 
             For i As Integer = 0 To n - 1
+                Yield (i + offset)
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 假若数量已经超过了数组的容量，则需要使用这个函数来产生序列
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function SeqIterator(n As Long, Optional offset As Integer = 0) As IEnumerable(Of Long)
+            If n < 0 Then
+                Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
+                Throw New Exception(ex)
+            End If
+
+            For i As Long = 0 To n - 1
                 Yield (i + offset)
             Next
         End Function
