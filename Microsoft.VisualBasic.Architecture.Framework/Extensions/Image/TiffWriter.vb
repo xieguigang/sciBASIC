@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::0972d3f144f3fb6c1f92fb1512f0a08c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports System.Drawing.Imaging
 Imports System.Runtime.InteropServices
 Imports System.Runtime.InteropServices.Marshal
 Imports System.IO
+Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
@@ -96,17 +97,19 @@ Namespace Imaging
             Return False
         End Function
 
-        Private Shared Function __bitmaps(bmp As Generic.IEnumerable(Of Image)) As Image()
-            Return (From image As Image
-                In bmp
-                    Where Not image Is Nothing
-                    Select DirectCast(ConvertToBitonal(DirectCast(image, Bitmap)), Image)).ToArray
+        Private Shared Function __bitmaps(bmps As IEnumerable(Of Image)) As Image()
+            Return LinqAPI.Exec(Of Image) <=
+                From image As Image
+                In bmps
+                Where Not image Is Nothing
+                Let bitonal = ConvertToBitonal(DirectCast(image, Bitmap))
+                Select DirectCast(bitonal, Image)
         End Function
 
         Private Shared Sub __saveMultipage(bmp As Image(), location As String, type As String)
             Dim codecInfo As ImageCodecInfo = GetCodec(type)
 
-            If bmp.Count = 1 Then
+            If bmp.Length = 1 Then
 
                 Dim iparams As New EncoderParameters(1)
                 Dim iparam As Encoder = Encoder.Compression
@@ -115,7 +118,7 @@ Namespace Imaging
 
                 Call bmp(0).Save(location, codecInfo, iparams)
 
-            ElseIf bmp.Count > 1 Then
+            ElseIf bmp.Length > 1 Then
 
                 Dim saveEncoder As Encoder = Encoder.SaveFlag
                 Dim compressionEncoder As Encoder = Encoder.Compression
@@ -132,7 +135,7 @@ Namespace Imaging
                 Call IO.File.Delete(location)
                 Call bmp(0).Save(location, codecInfo, EncoderParams)
 
-                For i As Integer = 1 To bmp.Count - 1
+                For i As Integer = 1 To bmp.Length - 1
                     SaveEncodeParam = New EncoderParameter(saveEncoder, CLng(EncoderValue.FrameDimensionPage))
                     CompressionEncodeParam = New EncoderParameter(compressionEncoder, CLng(EncoderValue.CompressionCCITT4))
                     EncoderParams.Param(0) = CompressionEncodeParam
@@ -304,7 +307,10 @@ Namespace Imaging
             End If
 
             ' Lock source bitmap in memory
-            Dim sourceData As BitmapData = source.LockBits(New Rectangle(0, 0, source.Width, source.Height), ImageLockMode.[ReadOnly], PixelFormat.Format32bppArgb)
+            Dim sourceData As BitmapData = source.LockBits(
+                New Rectangle(0, 0, source.Width, source.Height),
+                ImageLockMode.[ReadOnly],
+                PixelFormat.Format32bppArgb)
 
             ' Copy image data to binary array
             Dim imageSize As Integer = sourceData.Stride * sourceData.Height

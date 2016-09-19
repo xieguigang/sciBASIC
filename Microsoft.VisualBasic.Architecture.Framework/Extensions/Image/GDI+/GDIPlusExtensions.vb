@@ -50,6 +50,17 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
 
+        ''' <summary>
+        ''' 返回整个图像的区域
+        ''' </summary>
+        ''' <param name="img"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function EntireImage(img As Image) As Rectangle
+            Dim size As Size = img.Size
+            Return New Rectangle(New Point, size)
+        End Function
+
         <Extension>
         Public Function InRegion(x As Point, rect As Rectangle) As Boolean
             Return New PointF(x.X, x.Y).InRegion(rect)
