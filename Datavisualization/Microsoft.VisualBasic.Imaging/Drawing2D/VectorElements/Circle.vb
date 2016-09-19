@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::632a68ae133c4260c92b3a5e993a9576, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\Circle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Drawing2D.VectorElements
@@ -66,5 +67,41 @@ Namespace Drawing2D.VectorElements
                 Return _Size
             End Get
         End Property
+
+        ''' <summary>
+        ''' 绘制圆
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="center"></param>
+        ''' <param name="radius"></param>
+        ''' <param name="br"></param>
+        Public Shared Sub Draw(ByRef g As Graphics,
+                               center As Point,
+                               radius As Single,
+                               Optional br As Brush = Nothing,
+                               Optional borderWidth As Single = 0,
+                               Optional borderColor As Color = Nothing,
+                               Optional borderDash As DashStyle = DashStyle.Solid)
+
+            Dim rect As New Rectangle(
+                New Point(center.X - radius, center.Y - radius),
+                New Size(radius * 2, radius * 2))
+            Call g.FillPie(
+                If(br Is Nothing, Brushes.Black, br), rect, 0, 360)
+
+            If borderWidth > 0 Then
+                rect = New Rectangle(
+                    center.X - radius - borderWidth,
+                    center.Y - radius - borderWidth,
+                    radius * 2 + 1,
+                    radius * 2 + 1)
+                borderColor = If(borderColor.IsEmpty, Color.Black, borderColor)
+
+                Dim pen As New Pen(borderColor, borderWidth) With {
+                    .DashStyle = borderDash
+                }
+                Call g.DrawPie(pen, rect, 0, 360)
+            End If
+        End Sub
     End Class
 End Namespace
