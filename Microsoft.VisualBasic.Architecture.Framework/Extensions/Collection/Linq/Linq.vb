@@ -264,6 +264,24 @@ Namespace Linq
             Next
         End Function
 
+        ''' <summary>
+        ''' 假若数量已经超过了数组的容量，则需要使用这个函数来产生序列
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function SeqIterator(n As Long, Optional offset As Integer = 0) As IEnumerable(Of Long)
+            If n < 0 Then
+                Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
+                Throw New Exception(ex)
+            End If
+
+            For i As Long = 0 To n - 1
+                Yield (i + offset)
+            Next
+        End Function
+
         <Extension, ExportAPI("Sequence")>
         Public Function Sequence(n As Integer, offset As Integer) As Integer()
             Dim array As Integer() = n.Sequence
