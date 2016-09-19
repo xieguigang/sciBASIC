@@ -24,11 +24,13 @@ Public Class Legend
 End Class
 
 Public Enum LegendStyles
-    Bar
+    Rectangle
     Circle
     SolidLine
     DashLine
     Diamond
+    Triangle
+    Hexagon
 End Enum
 
 Public Module LegendPlotExtensions

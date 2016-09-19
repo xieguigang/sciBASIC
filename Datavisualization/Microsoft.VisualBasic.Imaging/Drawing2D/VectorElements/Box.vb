@@ -30,8 +30,29 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D.VectorElements
+
+    ''' <summary>
+    ''' 边对象
+    ''' </summary>
+    Public Class Border
+
+        Public Property width As Single
+        Public Property color As Color
+        Public Property style As DashStyle
+
+        Public Function GetPen() As Pen
+            Return New Pen(color, width) With {
+                .DashStyle = style
+            }
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
     Public Class Box : Inherits LayoutsElement
 
@@ -48,6 +69,19 @@ Namespace Drawing2D.VectorElements
 
             End Get
         End Property
+
+        Public Shared Sub DrawRectangle(ByRef g As Graphics,
+                                        topLeft As Point,
+                                        size As Size,
+                                        Optional br As Brush = Nothing,
+                                        Optional border As Border = Nothing)
+
+            Call g.FillRectangle(If(br Is Nothing, Brushes.Black, br), New Rectangle(topLeft, size))
+
+            If Not border Is Nothing Then
+                Call g.DrawRectangle(border.GetPen, New Rectangle(topLeft, size))
+            End If
+        End Sub
     End Class
 
     ''' <summary>
