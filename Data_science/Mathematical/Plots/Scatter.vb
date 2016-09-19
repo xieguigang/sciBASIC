@@ -84,7 +84,7 @@ Public Module Scatter
     End Function
 
     <Extension>
-    Public Function Plot(ode As out,
+    Public Function Plot(ode As ODEsOut,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
@@ -143,7 +143,7 @@ Public Module Scatter
     End Function
 
     <Extension>
-    Public Function FromODEs(odes As out,
+    Public Function FromODEs(odes As ODEsOut,
                              Optional colors As IEnumerable(Of String) = Nothing,
                              Optional ptSize As Integer = 30,
                              Optional width As Single = 5) As SerialData()

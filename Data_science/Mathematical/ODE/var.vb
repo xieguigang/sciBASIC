@@ -2,6 +2,9 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 
+''' <summary>
+''' Y variable in the ODE
+''' </summary>
 Public Class var : Inherits float
     Implements Ivar
 
