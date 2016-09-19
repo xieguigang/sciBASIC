@@ -29,6 +29,7 @@ Public Enum LegendStyles
     SolidLine
     DashLine
     Diamond
+    Triangle
 End Enum
 
 Public Module LegendPlotExtensions
