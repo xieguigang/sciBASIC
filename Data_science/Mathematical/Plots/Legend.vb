@@ -35,6 +35,10 @@ Public Enum LegendStyles
     Diamond
     Triangle
     Hexagon
+    ''' <summary>
+    ''' 五角星
+    ''' </summary>
+    Pentacle
 End Enum
 
 Public Module LegendPlotExtensions
@@ -115,6 +119,10 @@ Public Module LegendPlotExtensions
                                          pos.Y + (graphicsSize.Height - d) / 2)
 
                 Call Triangle.Draw(g, topLeft, New Size(d, d), New SolidBrush(l.color.ToColor), border)
+
+            Case LegendStyles.Pentacle
+
+                Call Pentacle.Draw(g, pos, graphicsSize, New SolidBrush(l.color.ToColor), border)
 
             Case Else
                 Throw New NotSupportedException(

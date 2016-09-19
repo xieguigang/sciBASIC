@@ -83,7 +83,8 @@ Module DEBUG
              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = LegendStyles.Triangle, .title = "asdasdasda"},
               New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.Circle, .title = "asdasdasda"},
                  New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = LegendStyles.DashLine, .title = "asdasdasda"},
-              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.SolidLine, .title = "asdasdasda"}}
+              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.SolidLine, .title = "asdasdasda"},
+               New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = LegendStyles.Pentacle, .title = "asdasdasda"}}
         Dim bbb As New Bitmap(1000, 1000)
 
         Using g = Graphics.FromImage(bbb)
