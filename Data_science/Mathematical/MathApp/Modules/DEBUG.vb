@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -33,6 +34,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MarkupLanguage.CSS
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
@@ -74,6 +76,21 @@ Module DEBUG
     End Sub
 
     Public Function Main() As Integer
+
+        Dim lllll = {New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "red", .style = LegendStyles.Hexagon, .title = "asdasdasda"},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "blue", .style = LegendStyles.Rectangle, .title = "asdasdasda"},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "lime", .style = LegendStyles.Diamond, .title = "asdasdasda"},
+             New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = LegendStyles.Triangle, .title = "asdasdasda"},
+              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.Circle, .title = "asdasdasda"},
+                 New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = LegendStyles.DashLine, .title = "asdasdasda"},
+              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.SolidLine, .title = "asdasdasda"}}
+        Dim bbb As New Bitmap(1000, 1000)
+
+        Using g = Graphics.FromImage(bbb)
+            Call LegendPlotExtensions.DrawLegends(g, New Point(200, 200), lllll, New SizeF(200, 40),)
+        End Using
+
+        Call bbb.SaveAs("x:/asdasda.png")
 
         Dim vars = {
             New NamedValue(Of DoubleRange) With {.Name = "a", .x = New DoubleRange(-1, 1)},

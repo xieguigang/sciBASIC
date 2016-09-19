@@ -61,8 +61,9 @@ Public Module LegendPlotExtensions
 
             Case LegendStyles.DashLine
 
-                Dim a As New Point(pos.X, pos.Y + graphicsSize.Height / 2)
-                Dim b As New Point(pos.X + graphicsSize.Width, a.Y)
+                Dim d As Integer = graphicsSize.Width * 0.2
+                Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
+                Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
                 Dim pen As New Pen(l.color.ToColor, 3) With {
                     .DashStyle = DashStyle.Dash
                 }
@@ -83,19 +84,24 @@ Public Module LegendPlotExtensions
                 Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
                                          pos.Y + (graphicsSize.Height - d) / 2)
 
-                Call Hexagon.Draw(g, topLeft, New Size(d, d), New SolidBrush(l.color.ToColor), border)
+                Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), New SolidBrush(l.color.ToColor), border)
 
             Case LegendStyles.Rectangle
 
+                Dim dw As Integer = graphicsSize.Width * 0.1
+                Dim dh As Integer = graphicsSize.Height * 0.2
+
                 Call Box.DrawRectangle(
-                    g, pos,
-                    New Size(graphicsSize.Width, graphicsSize.Height),
+                    g, New Point(pos.X + dw, pos.Y + dh),
+                    New Size(graphicsSize.Width - dw * 2,
+                             graphicsSize.Height - dh * 2),
                     New SolidBrush(l.color.ToColor), border)
 
             Case LegendStyles.SolidLine
 
-                Dim a As New Point(pos.X, pos.Y + graphicsSize.Height / 2)
-                Dim b As New Point(pos.X + graphicsSize.Width, a.Y)
+                Dim d As Integer = graphicsSize.Width * 0.2
+                Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
+                Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
                 Dim pen As New Pen(l.color.ToColor, 3) With {
                     .DashStyle = DashStyle.Solid
                 }
@@ -119,7 +125,7 @@ Public Module LegendPlotExtensions
                           font,
                           Brushes.Black,
                           New Point(pos.X + graphicsSize.Width + 5,
-                                    pos.Y + (fSize.Height - graphicsSize.Height) / 2))
+                                    pos.Y + (graphicsSize.Height - fSize.Height) / 2))
 
         If fSize.Height > graphicsSize.Height Then
             Return fSize

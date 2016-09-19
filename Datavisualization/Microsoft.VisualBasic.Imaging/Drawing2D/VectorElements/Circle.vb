@@ -87,7 +87,7 @@ Namespace Drawing2D.VectorElements
             Call g.FillPie(
                 If(br Is Nothing, Brushes.Black, br), rect, 0, 360)
 
-            If Not border Is Nothing > 0 Then
+            If Not border Is Nothing Then
                 rect = New Rectangle(
                     center.X - radius - border.width,
                     center.Y - radius - border.width,
