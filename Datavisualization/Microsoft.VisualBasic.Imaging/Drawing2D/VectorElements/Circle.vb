@@ -79,9 +79,7 @@ Namespace Drawing2D.VectorElements
                                center As Point,
                                radius As Single,
                                Optional br As Brush = Nothing,
-                               Optional borderWidth As Single = 0,
-                               Optional borderColor As Color = Nothing,
-                               Optional borderDash As DashStyle = DashStyle.Solid)
+                               Optional border As Border = Nothing)
 
             Dim rect As New Rectangle(
                 New Point(center.X - radius, center.Y - radius),
@@ -89,18 +87,15 @@ Namespace Drawing2D.VectorElements
             Call g.FillPie(
                 If(br Is Nothing, Brushes.Black, br), rect, 0, 360)
 
-            If borderWidth > 0 Then
+            If Not border Is Nothing > 0 Then
                 rect = New Rectangle(
-                    center.X - radius - borderWidth,
-                    center.Y - radius - borderWidth,
+                    center.X - radius - border.width,
+                    center.Y - radius - border.width,
                     radius * 2 + 1,
                     radius * 2 + 1)
-                borderColor = If(borderColor.IsEmpty, Color.Black, borderColor)
+                border.color = If(border.color.IsEmpty, Color.Black, border.color)
 
-                Dim pen As New Pen(borderColor, borderWidth) With {
-                    .DashStyle = borderDash
-                }
-                Call g.DrawPie(pen, rect, 0, 360)
+                Call g.DrawPie(border.GetPen, rect, 0, 360)
             End If
         End Sub
     End Class
