@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
 
-Namespace Drawing2D.VectorElements
+Namespace Drawing2D.Vector.Shapes
 
     ''' <summary>
     ''' 六边形
