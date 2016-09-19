@@ -63,5 +63,7 @@ Namespace Drawing2D.VectorElements
                 Throw New NotImplementedException
             End Get
         End Property
+
+
     End Class
 End Namespace
