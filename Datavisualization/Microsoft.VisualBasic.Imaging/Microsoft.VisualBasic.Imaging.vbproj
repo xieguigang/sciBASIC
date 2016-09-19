@@ -171,8 +171,9 @@
   <ItemGroup>
     <Compile Include="d3js\color\rgb.vb" />
     <Compile Include="d3js\interpolate\rgb.vb" />
+    <Compile Include="Drawing2D\VectorElements\Hexagon.vb" />
+    <Compile Include="Drawing2D\VectorElements\Diamond.vb" />
     <Compile Include="Drawing2D\VectorObject.vb" />
-    <Compile Include="Drawing2D\ImageCoded.vb" />
     <Compile Include="Drawing2D\VectorAPI.vb" />
     <Compile Include="Drawing2D\Vectogram.vb" />
     <Compile Include="Drawing2D\VectorElements\Circle.vb" />

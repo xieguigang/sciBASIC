@@ -18,7 +18,7 @@ Public Module BootstrapEstimate
     Public Iterator Function Bootstrapping(Of T As ODEs)(
                                            vars As IEnumerable(Of NamedValue(Of DoubleRange)),
                                           yinit As IEnumerable(Of NamedValue(Of DoubleRange)),
-                                              k As Integer,
+                                              k As Long,
                                               n As Integer,
                                               a As Integer,
                                               b As Integer,
@@ -31,8 +31,8 @@ Public Module BootstrapEstimate
             .Select(Function(x) x.Name) _
             .SetParameters(Of T)
 
-        For Each x As out In From it As Integer ' 进行n次并行的采样计算
-                             In k.Sequence.AsParallel
+        For Each x As out In From it As Long ' 进行n次并行的采样计算
+                             In k.SeqIterator.AsParallel
                              Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
                              Let isNaNResult As Boolean = odes_Out.HaveNaN
                              Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
