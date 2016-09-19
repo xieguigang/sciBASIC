@@ -3,7 +3,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.VectorElements
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MarkupLanguage.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
