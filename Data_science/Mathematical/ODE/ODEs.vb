@@ -108,7 +108,7 @@ Public MustInherit Class ODEs
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     ''' <returns></returns>
-    Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As out
+    Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
         Dim dh As Double = (b - a) / n  ' 步长
         Dim dx As Double = a
         Dim y0 As Double() = __getY0(incept)
@@ -122,6 +122,11 @@ Public MustInherit Class ODEs
 
         Dim y As List(Of Double)() = New List(Of Double)(vars.Length - 1) {}
         Dim x As New List(Of Double)
+        Dim yinit As New Dictionary(Of String, Double)
+
+        For Each var As var In vars ' 记录y0
+            yinit(var.Name) = darrayn(var.Index)
+        Next
 
         For i As Integer = 0 To n
             __rungeKutta(dx, darrayn, dh, darraynext)
@@ -129,7 +134,7 @@ Public MustInherit Class ODEs
             dx += dh
             darrayn = darraynext
 
-            For Each var In vars
+            For Each var In vars ' y
                 y(var) += darrayn(var.Index)
             Next
         Next
@@ -143,9 +148,11 @@ Public MustInherit Class ODEs
                 .x = y(var)
             }
 
-        Return New out With {
+        Return New ODEsOut With {
             .x = x,
-            .y = out.ToDictionary
+            .y = out.ToDictionary,
+            .y0 = yinit,
+            .params = Parameters
         }
     End Function
 
@@ -164,16 +171,39 @@ Public MustInherit Class ODEs
         Call func(dx, dy:=k)
     End Sub
 
+    Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
+        Get
+            Dim type As TypeInfo = Me.GetType
+            Dim fields As IEnumerable(Of FieldInfo) =
+                type _
+                .DeclaredFields _
+                .Where(Function(f) f.FieldType.Equals(GetType(Double)))
+            Return fields.ToDictionary(
+                Function(x) x.Name,
+                Function(x) DirectCast(x.GetValue(Me), Double))
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Get function parameters
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
     Public Shared Function GetParameters(Of T As ODEs)() As IEnumerable(Of String)
-        Dim fields = GetType(T) _
-            .GetFields(BindingFlags.Instance) _
+        Dim fields = CType(GetType(T), TypeInfo) _
+            .DeclaredFields _
             .Where(Function(f) f.FieldType.Equals(GetType(Double)))
         Return fields.Select(Function(f) f.Name)
     End Function
 
+    ''' <summary>
+    ''' Get Y
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
     Public Shared Function GetVariables(Of T As ODEs)() As IEnumerable(Of String)
-        Dim fields = GetType(T) _
-          .GetFields(BindingFlags.Instance) _
+        Dim fields = CType(GetType(T), TypeInfo) _
+          .DeclaredFields _
           .Where(Function(f) f.FieldType.Equals(GetType(var)))
         Return fields.Select(Function(f) f.Name)
     End Function
