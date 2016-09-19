@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module BootstrapEstimate
 
@@ -51,16 +52,28 @@ Public Module BootstrapEstimate
 
         Dim odes As TODEs = Activator.CreateInstance(Of TODEs)
         Dim rnd As New Random(Now.Millisecond)
+        Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
             Dim value As Double = rnd.NextDouble(range:=x.x)
             Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
+
+            debug += New NamedValue(Of Double) With {
+                .Name = x.Name,
+                .x = value
+            }
         Next
 
         For Each y In yinis
             Dim value As Double = rnd.NextDouble(range:=y.x)
             odes(y.Name).value = value
+            debug += New NamedValue(Of Double) With {
+                .Name = y.Name,
+                .x = value
+            }
         Next
+
+        Call debug.GetJson.__DEBUG_ECHO
 
         Return odes.Solve(n, a, b, incept:=True)
     End Function
