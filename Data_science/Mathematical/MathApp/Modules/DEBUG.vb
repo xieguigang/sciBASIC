@@ -77,21 +77,23 @@ Module DEBUG
 
     Public Function Main() As Integer
 
-        Dim lllll = {New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "red", .style = LegendStyles.Hexagon, .title = "asdasdasda"},
-            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "blue", .style = LegendStyles.Rectangle, .title = "asdasdasda"},
-            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "lime", .style = LegendStyles.Diamond, .title = "asdasdasda"},
-             New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = LegendStyles.Triangle, .title = "asdasdasda"},
-              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.Circle, .title = "asdasdasda"},
-                 New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = LegendStyles.DashLine, .title = "asdasdasda"},
-              New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = LegendStyles.SolidLine, .title = "asdasdasda"},
-               New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = LegendStyles.Pentacle, .title = "asdasdasda"}}
-        Dim bbb As New Bitmap(1000, 1000)
+        Dim type As New Value(Of LegendStyles)
+        Dim legends As Legend() = {
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "red", .style = type = LegendStyles.Hexagon, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "blue", .style = type = LegendStyles.Rectangle, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "lime", .style = type = LegendStyles.Diamond, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.Triangle, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.Circle, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.DashLine, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.SolidLine, .title = type.ToString},
+            New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
+        }
 
-        Using g = Graphics.FromImage(bbb)
-            Call LegendPlotExtensions.DrawLegends(g, New Point(200, 200), lllll, New SizeF(200, 40),)
-        End Using
-
-        Call bbb.SaveAs("x:/asdasda.png")
+        Call g.GraphicsPlots(
+            New Size(350, 600), New Size, "white",
+            Sub(g)
+                Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
+            End Sub).SaveAs("./legends_test.png")
 
         Dim vars = {
             New NamedValue(Of DoubleRange) With {.Name = "a", .x = New DoubleRange(-1, 1)},
