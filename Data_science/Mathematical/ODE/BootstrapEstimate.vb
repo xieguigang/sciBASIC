@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module BootstrapEstimate
 
@@ -16,22 +17,22 @@ Public Module BootstrapEstimate
     ''' <param name="yinit">``Y0``初值</param>
     ''' <returns></returns>
     Public Iterator Function Bootstrapping(Of T As ODEs)(
-                                           vars As IEnumerable(Of NamedValue(Of DoubleRange)),
-                                          yinit As IEnumerable(Of NamedValue(Of DoubleRange)),
+                                           vars As IEnumerable(Of NamedValue(Of PreciseRandom)),
+                                          yinit As IEnumerable(Of NamedValue(Of PreciseRandom)),
                                               k As Long,
                                               n As Integer,
                                               a As Integer,
                                               b As Integer,
-                                           Optional trimNaN As Boolean = True) As IEnumerable(Of out)
+                                           Optional trimNaN As Boolean = True) As IEnumerable(Of ODEsOut)
 
-        Dim params As NamedValue(Of DoubleRange)() = vars.ToArray
-        Dim y0 As NamedValue(Of DoubleRange)() = yinit.ToArray
+        Dim params As NamedValue(Of PreciseRandom)() = vars.ToArray
+        Dim y0 As NamedValue(Of PreciseRandom)() = yinit.ToArray
         Dim ps As Dictionary(Of String, Action(Of Object, Double)) =
             params _
             .Select(Function(x) x.Name) _
             .SetParameters(Of T)
 
-        For Each x As out In From it As Long ' 进行n次并行的采样计算
+        For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
                              In k.SeqIterator.AsParallel
                              Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
                              Let isNaNResult As Boolean = odes_Out.HaveNaN
@@ -42,25 +43,36 @@ Public Module BootstrapEstimate
     End Function
 
     <Extension>
-    Private Function iterate(Of TODEs As ODEs)(vars As NamedValue(Of DoubleRange)(),
-                                               yinis As NamedValue(Of DoubleRange)(),
-                                               ps As Dictionary(Of String, Action(Of Object, Double)),
-                                               n As Integer,
-                                               a As Integer,
-                                               b As Integer) As out
+    Public Function iterate(Of TODEs As ODEs)(vars As NamedValue(Of PreciseRandom)(),
+                                              yinis As NamedValue(Of PreciseRandom)(),
+                                              ps As Dictionary(Of String, Action(Of Object, Double)),
+                                              n As Integer,
+                                              a As Integer,
+                                              b As Integer) As ODEsOut
 
         Dim odes As TODEs = Activator.CreateInstance(Of TODEs)
-        Dim rnd As New Random(Now.Millisecond)
+        Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
-            Dim value As Double = rnd.NextDouble(range:=x.x)
+            Dim value As Double = x.x.NextNumber
             Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
+
+            debug += New NamedValue(Of Double) With {
+                .Name = x.Name,
+                .x = value
+            }
         Next
 
         For Each y In yinis
-            Dim value As Double = rnd.NextDouble(range:=y.x)
+            Dim value As Double = y.x.NextNumber
             odes(y.Name).value = value
+            debug += New NamedValue(Of Double) With {
+                .Name = y.Name,
+                .x = value
+            }
         Next
+
+        Call debug.GetJson.__DEBUG_ECHO
 
         Return odes.Solve(n, a, b, incept:=True)
     End Function

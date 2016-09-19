@@ -7,10 +7,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' ODEs output
 ''' </summary>
-Public Class out
+Public Class ODEsOut
 
     Public Property x As Double()
     Public Property y As Dictionary(Of NamedValue(Of Double()))
+    Public Property y0 As Dictionary(Of String, Double)
+    Public Property params As Dictionary(Of String, Double)
 
     ''' <summary>
     ''' Is there NAN value in the function value <see cref="y"/> ???
@@ -47,6 +49,16 @@ Public Class out
 
         For Each x As SeqValue(Of Double) In Me.x.SeqIterator
             file += (x.obj.ToString + ly.ToList(Function(n) n.x(x.i).ToString))
+        Next
+
+        Dim skips As Integer = ly.Length + 2
+
+        For Each v In y0.SafeQuery.JoinAsIterator(params).SeqIterator
+            Dim row As RowObject = file(v.i)
+            Dim var = v.obj
+
+            row(skips) = var.Key
+            row(skips + 1) = var.Value
         Next
 
         Return file
