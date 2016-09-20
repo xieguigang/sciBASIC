@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DocumentFormat.Csv
 Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq
 
 Namespace KMeans
 
@@ -109,14 +110,20 @@ Namespace KMeans
         Public Function ToLDM() As EntityLDM
             Return New EntityLDM With {
                 .Name = uid,
-                .Properties = Properties.ToArray(Function(x, i) New With {.i = i, .x = x}).ToDictionary(Function(x) CStr(x.i), Function(x) x.x)
+                .Properties = Properties _
+                    .SeqIterator _
+                    .ToDictionary(Function(x) CStr(x.i),
+                                  Function(x) x.obj)
             }
         End Function
 
         Public Function ToLDM(maps As String()) As EntityLDM
             Return New EntityLDM With {
                 .Name = uid,
-                .Properties = Properties.ToArray(Function(x, i) New With {.i = i, .x = x}).ToDictionary(Function(x) maps(x.i), Function(x) x.x)
+                .Properties = Properties _
+                    .SeqIterator _
+                    .ToDictionary(Function(x) maps(x.i),
+                                  Function(x) x.obj)
             }
         End Function
     End Class
