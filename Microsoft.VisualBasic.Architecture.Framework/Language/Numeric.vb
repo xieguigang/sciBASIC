@@ -233,6 +233,11 @@ Namespace Language
             Return x
         End Operator
 
+        Public Overloads Shared Operator -(x As int, n As Integer) As int
+            x.value -= n
+            Return x
+        End Operator
+
         ''' <summary>
         ''' 必须要overloads这个方法，否则会出现无法将Value(Of Integer)转换为int的错误
         ''' </summary>
