@@ -34,26 +34,42 @@ Namespace Language
 
         Dim chars As List(Of Integer)
 
-        ReadOnly __chars As Char() = "0123456789abcdefghijklmnopqrstuvwxyzZBCDEFGHIJKLMNOPQRSTUVWXYZ"
+        ReadOnly __chars As Char() = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ReadOnly __upbound As Integer = __chars.Length - 1
 
-        Sub New(n As Integer)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="caseSensitive">
+        ''' 假若是使用这个uid对象来生成临时文件名的话，由于Windows的文件系统是不区分大小写的，所以Aa的情况会出现同名的情况，
+        ''' 所以在这里就需要设置为False了，大小写重名的情况在Linux或者Mac上面没有影响
+        ''' </param>
+        Sub New(n As Integer, Optional caseSensitive As Boolean = True)
             chars += -1
+
+            If Not caseSensitive Then
+                __upbound -= 26    ' 则只有小写字母
+            End If
 
             For i As Integer = 0 To n - 1
                 Call __plus(chars.Count - 1)
             Next
         End Sub
 
-        Sub New(i As Uid)
+        Sub New(i As Uid, Optional caseSensitive As Boolean = True)
             chars = New List(Of Integer)(i.chars)
+
+            If Not caseSensitive Then
+                __upbound -= 26    ' 则只有小写字母
+            End If
         End Sub
 
         ''' <summary>
         ''' ZERO
         ''' </summary>
-        Sub New()
-            Call Me.New(Scan0)
+        Sub New(Optional caseSensitive As Boolean = True)
+            Call Me.New(Scan0, caseSensitive)
         End Sub
 
         Private Function __plus(l As Integer) As Integer

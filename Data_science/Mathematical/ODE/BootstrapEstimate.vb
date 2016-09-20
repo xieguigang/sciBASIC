@@ -33,15 +33,27 @@ Public Module BootstrapEstimate
             .SetParameters(Of T)
 
         For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
-                             In k.SeqIterator.AsParallel
-                             Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
-                             Let isNaNResult As Boolean = odes_Out.HaveNaN
-                             Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
-                             Select odes_Out
+                                 In k.SeqIterator.AsParallel
+                                 Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                                 Let isNaNResult As Boolean = odes_Out.HaveNaN
+                                 Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
+                                 Select odes_Out
             Yield x
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TODEs"></typeparam>
+    ''' <param name="vars"></param>
+    ''' <param name="yinis"></param>
+    ''' <param name="ps"></param>
+    ''' <param name="n"></param>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    ''' <remarks>在Linux服务器上面有内存泄漏的危险</remarks>
     <Extension>
     Public Function iterate(Of TODEs As ODEs)(vars As NamedValue(Of PreciseRandom)(),
                                               yinis As NamedValue(Of PreciseRandom)(),
