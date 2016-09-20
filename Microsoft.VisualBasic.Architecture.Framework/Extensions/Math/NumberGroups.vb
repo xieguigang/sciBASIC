@@ -36,6 +36,12 @@ Namespace Mathematical
     ''' </summary>
     Public Module NumberGroups
 
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Groups(source As IEnumerable(Of Integer), offset As Integer) As List(Of Integer())
             Dim list As New List(Of Integer())

@@ -98,6 +98,11 @@ Public Module StringHelpers
         Return sb.ToString()
     End Function
 
+    <Extension>
+    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter As String) As String
+        Return String.Join(delimiter, data.ToArray(AddressOf Scripting.ToString))
+    End Function
+
     ''' <summary>
     ''' tagName{<paramref name="delimiter"/>}value
     ''' </summary>

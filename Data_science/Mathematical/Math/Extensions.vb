@@ -47,6 +47,13 @@ Public Module Extensions
         Return -1 ' 没有找到符合条件的点
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="n"></param>
+    ''' <param name="offset">距离目标数据点<paramref name="n"/>的正负偏移量</param>
+    ''' <returns></returns>
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
         For Each x In data.SeqIterator
