@@ -414,7 +414,7 @@ Public Module App
 
     Private Function __getTEMPhash() As String
         SyncLock _tmpHash
-            Return FormatZero(++_tmpHash, "00000")
+            Return FormatZero(+_tmpHash, "00000")
         End SyncLock
     End Function
 
