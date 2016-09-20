@@ -62,6 +62,12 @@ Namespace Serialization
         Public Shared Function ToDictionary(Of T)(Optional onlyPrimitive As Boolean = True) As Func(Of T, Dictionary(Of String, String))
             Dim ps = Schema(Of T)(PropertyAccess.Readable)
 
+            For Each p As String In ps.Keys.ToArray
+                If Not ps(p).GetIndexParameters.IsNullOrEmpty Then
+                    Call ps.Remove(p)
+                End If
+            Next
+
             Return Function(o)
                        Dim out As New Dictionary(Of String, String)
                        For Each p As PropertyInfo In ps.Values
