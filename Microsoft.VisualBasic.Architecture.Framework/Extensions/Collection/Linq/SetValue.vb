@@ -60,6 +60,7 @@ Namespace Linq
     ''' Set value linq expression helper
     ''' </summary>
     Public Class SetValue(Of T)
+        Implements IEnumerable(Of PropertyInfo)
 
         ReadOnly __type As Type = GetType(T)
         ReadOnly __props As SortedDictionary(Of String, PropertyInfo)
@@ -164,6 +165,16 @@ Namespace Linq
             End If
 
             Return obj
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of PropertyInfo) Implements IEnumerable(Of PropertyInfo).GetEnumerator
+            For Each x In __props.Values
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

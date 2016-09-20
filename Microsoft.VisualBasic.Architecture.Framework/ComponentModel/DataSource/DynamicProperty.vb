@@ -107,7 +107,7 @@ Namespace ComponentModel.DataSourceModel
         End Operator
 
         ''' <summary>
-        ''' <see cref="Value"/> -> <see cref="GetJson"/>
+        ''' <see cref="Value"/> -> <see cref="GetObjectJson"/>
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
