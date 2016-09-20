@@ -33,15 +33,27 @@ Public Module BootstrapEstimate
             .SetParameters(Of T)
 
         For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
-                             In k.SeqIterator.AsParallel
-                             Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
-                             Let isNaNResult As Boolean = odes_Out.HaveNaN
-                             Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
-                             Select odes_Out
+                                 In k.SeqIterator.AsParallel
+                                 Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                                 Let isNaNResult As Boolean = odes_Out.HaveNaN
+                                 Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
+                                 Select odes_Out
             Yield x
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TODEs"></typeparam>
+    ''' <param name="vars"></param>
+    ''' <param name="yinis"></param>
+    ''' <param name="ps"></param>
+    ''' <param name="n"></param>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    ''' <remarks>在Linux服务器上面有内存泄漏的危险</remarks>
     <Extension>
     Public Function iterate(Of TODEs As ODEs)(vars As NamedValue(Of PreciseRandom)(),
                                               yinis As NamedValue(Of PreciseRandom)(),
@@ -51,28 +63,28 @@ Public Module BootstrapEstimate
                                               b As Integer) As ODEsOut
 
         Dim odes As TODEs = Activator.CreateInstance(Of TODEs)
-        Dim debug As New List(Of NamedValue(Of Double))
+        ' Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
             Dim value As Double = x.x.NextNumber
             Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
 
-            debug += New NamedValue(Of Double) With {
-                .Name = x.Name,
-                .x = value
-            }
+            'debug += New NamedValue(Of Double) With {
+            '    .Name = x.Name,
+            '    .x = value
+            '}
         Next
 
         For Each y In yinis
             Dim value As Double = y.x.NextNumber
             odes(y.Name).value = value
-            debug += New NamedValue(Of Double) With {
-                .Name = y.Name,
-                .x = value
-            }
+            'debug += New NamedValue(Of Double) With {
+            '    .Name = y.Name,
+            '    .x = value
+            '}
         Next
 
-        Call debug.GetJson.__DEBUG_ECHO
+        ' Call debug.GetJson.__DEBUG_ECHO
 
         Return odes.Solve(n, a, b, incept:=True)
     End Function

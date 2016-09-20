@@ -391,13 +391,30 @@ Public Module App
         Return log
     End Function
 
-    ' tmp2A10.tmp
+    ''' <summary>
+    ''' 是否是运行于微软的操作系统平台？
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property IsMicrosoftPlatform As Boolean
+        Get
+            Dim pt As PlatformID = Platform
 
-    Dim _tmpHash As New Uid
+            Return pt = PlatformID.Win32NT OrElse
+                pt = PlatformID.Win32S OrElse
+                pt = PlatformID.Win32Windows OrElse
+                pt = PlatformID.WinCE OrElse
+                pt = PlatformID.Xbox
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Example: ``tmp2A10.tmp``
+    ''' </summary>
+    Dim _tmpHash As New Uid(Not IsMicrosoftPlatform)
 
     Private Function __getTEMPhash() As String
         SyncLock _tmpHash
-            Return FormatZero(++_tmpHash, "00000")
+            Return FormatZero(+_tmpHash, "00000")
         End SyncLock
     End Function
 
