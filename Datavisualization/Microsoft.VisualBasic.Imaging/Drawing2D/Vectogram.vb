@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a26bb9b34cc63093443bd3a992cb1523, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,8 +30,8 @@ Imports System.Drawing
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.VectorElements
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vectors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 
 Namespace Drawing2D
 
@@ -41,9 +41,9 @@ Namespace Drawing2D
     ''' <remarks></remarks>
     Public Class Vectogram : Implements ISaveHandle
         Implements IDisposable
-        Implements IEnumerable(Of LayoutsElement)
+        Implements IEnumerable(Of Shape)
 
-        Dim _lstElements As List(Of LayoutsElement) = New List(Of LayoutsElement)
+        Dim _lstElements As List(Of Shape) = New List(Of Shape)
 
         Public ReadOnly Property GDIDevice As GDIPlusDeviceHandle
 
@@ -72,13 +72,13 @@ Namespace Drawing2D
         End Sub
 #End Region
 
-        Public Function AddDrawingElement(Element As LayoutsElement) As Integer
+        Public Function AddDrawingElement(Element As Shape) As Integer
             Call Me._lstElements.Add(Element)
             Return Me._lstElements.Count
         End Function
 
-        Public Function AddTextElement(str As String, Font As Font, Color As Color, Location As Point) As DrawingString
-            Dim strElement As New DrawingString(str, Font, New Rectangle(Location, New Size)) With {
+        Public Function AddTextElement(str As String, Font As Font, Color As Color, Location As Point) As [String]
+            Dim strElement As New [String](str, Font, New Rectangle(Location, New Size)) With {
                 .Pen = New SolidBrush(Color)
             }
             '   Call Me._lstElements.Add(strElement)
@@ -92,7 +92,7 @@ Namespace Drawing2D
         End Function
 
         Public Function ToImage() As Image
-            For Each Element As LayoutsElement In Me._lstElements
+            For Each Element As Shape In Me._lstElements
                 Call Element.InvokeDrawing()
             Next
 
@@ -136,7 +136,7 @@ Namespace Drawing2D
         End Sub
 #End Region
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of LayoutsElement) Implements IEnumerable(Of LayoutsElement).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Shape) Implements IEnumerable(Of Shape).GetEnumerator
             For Each DrawingElement In Me._lstElements
                 Yield DrawingElement
             Next

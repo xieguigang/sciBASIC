@@ -201,3 +201,29 @@ Call New GenericODEs(P = 2, C = 1) With {
 Set value ``n=100000`` or larger value will makes the calculated result more precise:
 
 ![](./images/ODEs_test3.png)
+
+##### Legend Shapes
+
+```vbnet
+Dim type As New Value(Of LegendStyles)
+Dim legends As Legend() = {
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "red", .style = type = LegendStyles.Hexagon, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "blue", .style = type = LegendStyles.Rectangle, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "lime", .style = type = LegendStyles.Diamond, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.Triangle, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.Circle, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.DashLine, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.SolidLine, .title = type.ToString},
+    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
+}
+
+Call g.GraphicsPlots(
+    New Size(350, 600), New Size, "white",
+    Sub(g)
+        Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
+    End Sub).SaveAs("./legends_test.png")
+```
+
+###### Image output
+
+![](./images/legends_test.png)

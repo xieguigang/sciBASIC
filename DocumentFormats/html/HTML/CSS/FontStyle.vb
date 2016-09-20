@@ -23,6 +23,9 @@ Namespace CSS
     ''' </summary>
     Public Class CSSFont
 
+        Public Const Win7Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win10Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
+
         ''' <summary>
         ''' The System.Drawing.FontStyle of the new font.
         ''' </summary>
