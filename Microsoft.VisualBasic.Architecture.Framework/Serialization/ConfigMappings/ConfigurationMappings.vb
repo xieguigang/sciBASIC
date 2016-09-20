@@ -139,7 +139,11 @@ Namespace Serialization
                       In Mappings
                       Let sourceMapping = __getReads_MappingHandle(mapping.source, mapping.MappingToModel, CustomMappings, obj_source)
                       Let model2Mapping = __getWrite_MappingHandle(mapping.source, mapping.MappingToModel, CustomMappings)
-                      Select mapping.source, mapping.MappingToModel, sourceMapping, model2Mapping    ' 获取具体的映射过程
+                      Select mapping.source,
+                          mapping.MappingToModel,
+                          sourceMapping,
+                          model2Mapping    ' 获取具体的映射过程
+
             Return LinqAPI.Exec(Of NodeMapping) <=
  _
                 From map

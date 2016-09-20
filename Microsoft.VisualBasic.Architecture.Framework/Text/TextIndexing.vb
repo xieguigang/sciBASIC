@@ -232,11 +232,13 @@ Namespace Text
                                   cutoff As Double)
             Call Console.Write(".")
 
-            Dim LQuery = (From piece As TextSegment
-                          In part'.AsParallel
-                          Let lev As DistResult = LevenshteinDistance.ComputeDistance(piece.Array, keyword)
-                          Where Not lev Is Nothing AndAlso lev.Score >= cutoff
-                          Select piece, lev).ToArray
+            Dim LQuery = From piece As TextSegment
+                         In part'.AsParallel
+                         Let lev As DistResult =
+                             LevenshteinDistance.ComputeDistance(piece.Array, keyword)
+                         Where Not lev Is Nothing AndAlso
+                             lev.Score >= cutoff
+                         Select piece, lev
 
             For Each x In LQuery
                 Call resultSet.Add(x.piece, x.lev)
@@ -246,9 +248,9 @@ Namespace Text
 
         <ExportAPI("Index.Fuzzy")>
         Public Shared Function FuzzyIndex(text As String, keyword As String,
-                                      Optional cutoff As Double = 0.6,
-                                      Optional min As Integer = 3,
-                                      Optional max As Integer = 20) As Dictionary(Of TextSegment, DistResult)
+                                          Optional cutoff As Double = 0.6,
+                                          Optional min As Integer = 3,
+                                          Optional max As Integer = 20) As Dictionary(Of TextSegment, DistResult)
             Dim indexr As New TextIndexing(text, min, max)
             Dim searchs = indexr.Found(keyword, cutoff)
             Return searchs

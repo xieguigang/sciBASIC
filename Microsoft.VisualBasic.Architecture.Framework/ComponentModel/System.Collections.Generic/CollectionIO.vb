@@ -52,7 +52,7 @@ Public Module CollectionIO
     End Function
 
     Public Function SaveJSON(obj As IEnumerable, path As String, encoding As Encoding) As Boolean
-        Return GetJson(obj, obj.GetType).SaveTo(path, encoding)
+        Return GetObjectJson(obj, obj.GetType).SaveTo(path, encoding)
     End Function
 
     Public Function SaveXml(obj As IEnumerable, path As String, encoding As Encoding) As Boolean

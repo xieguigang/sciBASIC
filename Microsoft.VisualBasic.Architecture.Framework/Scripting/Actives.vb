@@ -56,7 +56,7 @@ Namespace Scripting
         ''' <returns></returns>
         Public Function Active(type As Type) As String
             Dim obj As Object = type.__active
-            Return GetJson(obj, type)
+            Return GetObjectJson(obj, type)
         End Function
 
         ''' <summary>
