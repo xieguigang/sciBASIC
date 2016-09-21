@@ -29,10 +29,10 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
-Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
-Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 
 Public Class Renderer : Inherits AbstractRenderer
