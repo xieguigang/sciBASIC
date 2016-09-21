@@ -28,7 +28,7 @@
 
 Imports System.Collections.Generic
 Imports System.Text
-Imports Microsoft.VisualBasic.MarkupLanguage.YAML.Syntax
+Imports Microsoft.VisualBasic.MIME.Markup.YAML.Syntax
 
 Namespace YAML.Grammar
 

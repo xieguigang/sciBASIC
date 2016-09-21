@@ -27,7 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MarkupLanguage
+Imports Microsoft.VisualBasic.MIME.Markup
 Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>

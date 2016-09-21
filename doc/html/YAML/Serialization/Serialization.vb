@@ -29,8 +29,8 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.MarkupLanguage.YAML.Grammar
-Imports Microsoft.VisualBasic.MarkupLanguage.YAML.Syntax
+Imports Microsoft.VisualBasic.MIME.Markup.YAML.Grammar
+Imports Microsoft.VisualBasic.MIME.Markup.YAML.Syntax
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace YAML

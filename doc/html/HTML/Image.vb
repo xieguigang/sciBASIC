@@ -37,7 +37,7 @@ Namespace HTML
         Public Property Border As String
         Public Property HSpace As String
         Public Property Alt As String
-        Public Property Source As String
+        Public Property source As String
         Public Property Align As String
 
         Public Overrides Function ToString() As String
@@ -46,7 +46,7 @@ Namespace HTML
             If Not String.IsNullOrEmpty(Border) Then Call attrs.Append($"{NameOf(Border)}=""{Border}"" ")
             If Not String.IsNullOrEmpty(HSpace) Then Call attrs.Append($"{NameOf(HSpace)}=""{HSpace}"" ")
             If Not String.IsNullOrEmpty(Alt) Then Call attrs.Append($"{NameOf(Alt)}=""{Alt}"" ")
-            If Not String.IsNullOrEmpty(Source) Then Call attrs.Append($"src=""{Source}"" ")
+            If Not String.IsNullOrEmpty(source) Then Call attrs.Append($"src=""{source}"" ")
             If Not String.IsNullOrEmpty(Align) Then Call attrs.Append($"{NameOf(Align)}=""{Align}"" ")
 
             Return $"<img {attrs.ToString} />"
@@ -67,9 +67,9 @@ Namespace HTML
             Dim src As String = img.ImageSource
 
             Return New Image With {
-            ._Text = img,
-            .Source = src
-        }
+                ._Text = img,
+                .source = src
+            }
         End Function
 
         Public Shared Function GetImages(html As String) As Image()
@@ -77,6 +77,5 @@ Namespace HTML
             Dim res As Image() = data.ToArray(Function(tag) Image.ResParser(tag))
             Return res
         End Function
-
     End Class
 End Namespace

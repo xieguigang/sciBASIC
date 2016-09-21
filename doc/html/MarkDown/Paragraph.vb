@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.MarkupLanguage.MarkDown.Span
+Imports Microsoft.VisualBasic.MIME.Markup.MarkDown.Span
 Imports Microsoft.VisualBasic.Text
 
 Namespace MarkDown
@@ -40,7 +40,6 @@ Namespace MarkDown
             Dim bolds = BoldFormats(s).ToArray
 
             nodes += links.Select(Function(x) x.value)
-
 
             Dim p As New ParagraphText With {
                 .Nodes = nodes,

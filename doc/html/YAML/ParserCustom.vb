@@ -29,7 +29,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 Imports System.IO
-Imports Microsoft.VisualBasic.MarkupLanguage.YAML.Syntax
+Imports Microsoft.VisualBasic.MIME.Markup.YAML.Syntax
 
 Namespace YAML.Grammar
     Partial Public Class YamlParser

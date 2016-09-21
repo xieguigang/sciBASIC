@@ -28,121 +28,128 @@
 
 Imports System.Text.RegularExpressions
 
-Module FormatHelper
+Namespace MarkDown
 
-    Public ReadOnly _escapeTable As Dictionary(Of String, String)
-    Public ReadOnly _invertedEscapeTable As Dictionary(Of String, String)
-    Public ReadOnly _backslashEscapeTable As Dictionary(Of String, String)
+    Module FormatHelper
 
-    Public _unescapes As New Regex(ChrW(26) & "E\d+E", RegexOptions.Compiled)
+        Public ReadOnly _escapeTable As Dictionary(Of String, String)
+        Public ReadOnly _invertedEscapeTable As Dictionary(Of String, String)
+        Public ReadOnly _backslashEscapeTable As Dictionary(Of String, String)
 
-    Public _backslashEscapes As Regex
+        Public _unescapes As New Regex(ChrW(26) & "E\d+E", RegexOptions.Compiled)
 
-    ' temporarily replaces "://" where auto-linking shouldn't happen
+        Public _backslashEscapes As Regex
 
-    ''' <summary>
-    ''' In the static constuctor we'll initialize what stays the same across all transforms.
-    ''' </summary>
-    Sub New()
-        ' Table of hash values for escaped characters:
-        _escapeTable = New Dictionary(Of String, String)()
-        _invertedEscapeTable = New Dictionary(Of String, String)()
-        ' Table of hash value for backslash escaped characters:
-        _backslashEscapeTable = New Dictionary(Of String, String)()
+        ' temporarily replaces "://" where auto-linking shouldn't happen
 
-        Dim backslashPattern As String = ""
+        ''' <summary>
+        ''' In the static constuctor we'll initialize what stays the same across all transforms.
+        ''' </summary>
+        Sub New()
+            ' Table of hash values for escaped characters:
+            _escapeTable = New Dictionary(Of String, String)()
+            _invertedEscapeTable = New Dictionary(Of String, String)()
+            ' Table of hash value for backslash escaped characters:
+            _backslashEscapeTable = New Dictionary(Of String, String)()
 
-        For Each c As Char In "\`*_{}[]()>#+-.!/:"
-            Dim key As String = c.ToString()
-            Dim hash As String = GetHashKey(key, isHtmlBlock:=False)
-            _escapeTable.Add(key, hash)
-            _invertedEscapeTable.Add(hash, key)
-            _backslashEscapeTable.Add("\" & key, hash)
-            backslashPattern += Regex.Escape("\" & key) & "|"
-        Next
+            Dim backslashPattern As String = ""
 
-        _backslashEscapes = New Regex(backslashPattern.Substring(0, backslashPattern.Length - 1), RegexOptions.Compiled)
-    End Sub
+            For Each c As Char In "\`*_{}[]()>#+-.!/:"
+                Dim key As String = c.ToString()
+                Dim hash As String = GetHashKey(key, isHtmlBlock:=False)
+                _escapeTable.Add(key, hash)
+                _invertedEscapeTable.Add(hash, key)
+                _backslashEscapeTable.Add("\" & key, hash)
+                backslashPattern += Regex.Escape("\" & key) & "|"
+            Next
 
-    ''' <summary>
-    ''' Tabs are automatically converted to spaces as part of the transform  
-    ''' this constant determines how "wide" those tabs become in spaces  
-    ''' </summary>
-    Public Const _tabWidth As Integer = 4
+            _backslashEscapes = New Regex(backslashPattern.Substring(0, backslashPattern.Length - 1), RegexOptions.Compiled)
+        End Sub
 
-    Dim _outDent As New Regex("^[ ]{1," & _tabWidth & "}", RegexOptions.Multiline Or RegexOptions.Compiled)
+        ''' <summary>
+        ''' Tabs are automatically converted to spaces as part of the transform  
+        ''' this constant determines how "wide" those tabs become in spaces  
+        ''' </summary>
+        Public Const _tabWidth As Integer = 4
 
-    ''' <summary>
-    ''' Remove one level of line-leading spaces
-    ''' </summary>
-    Public Function Outdent(block As String) As String
-        Return _outDent.Replace(block, "")
-    End Function
+        Dim _outDent As New Regex("^[ ]{1," & _tabWidth & "}", RegexOptions.Multiline Or RegexOptions.Compiled)
 
-    Public Function GetHashKey(s As String, isHtmlBlock As Boolean) As String
-        Dim delim = If(isHtmlBlock, "H"c, "E"c)
-        Return ChrW(26) & delim & Math.Abs(s.GetHashCode()).ToString() & delim
-    End Function
+        ''' <summary>
+        ''' Remove one level of line-leading spaces
+        ''' </summary>
+        Public Function Outdent(block As String) As String
+            Return _outDent.Replace(block, "")
+        End Function
 
-    Public Function AttributeEncode(s As String) As String
-        Return s.Replace(">", "&gt;").Replace("<", "&lt;").Replace("""", "&quot;").Replace("'", "&#39;")
-    End Function
+        Public Function GetHashKey(s As String, isHtmlBlock As Boolean) As String
+            Dim delim = If(isHtmlBlock, "H"c, "E"c)
+            Return ChrW(26) & delim & Math.Abs(s.GetHashCode()).ToString() & delim
+        End Function
 
-    Public Function AttributeSafeUrl(s As String) As String
-        s = AttributeEncode(s)
-        For Each c As Char In "*_:()[]"
-            s = s.Replace(c.ToString(), _escapeTable(c.ToString()))
-        Next
-        Return s
-    End Function
+        Public Function AttributeEncode(s As String) As String
+            Return s.Replace(">", "&gt;").Replace("<", "&lt;").Replace("""", "&quot;").Replace("'", "&#39;")
+        End Function
 
-    Public Const _charInsideUrl As String = "[-A-Z0-9+&@#/%?=~_|\[\]\(\)!:,\.;" & ChrW(26) & "]"
-    Public Const _charEndingUrl As String = "[-A-Z0-9+&@#/%=~_|\[\])]"
+        Public Function AttributeSafeUrl(s As String) As String
+            s = AttributeEncode(s)
+            For Each c As Char In "*_:()[]"
+                s = s.Replace(c.ToString(), _escapeTable(c.ToString()))
+            Next
+            Return s
+        End Function
 
-    Dim _endCharRegex As New Regex(_charEndingUrl, RegexOptions.IgnoreCase Or RegexOptions.Compiled)
+        Public Const _charInsideUrl As String = "[-A-Z0-9+&@#/%?=~_|\[\]\(\)!:,\.;" & ChrW(26) & "]"
+        Public Const _charEndingUrl As String = "[-A-Z0-9+&@#/%=~_|\[\])]"
 
-    Public Function handleTrailingParens(match As Match) As String
-        ' The first group is essentially a negative lookbehind -- if there's a < or a =", we don't touch this.
-        ' We're not using a *real* lookbehind, because of links with in links, like <a href="http://web.archive.org/web/20121130000728/http://www.google.com/">
-        ' With a real lookbehind, the full link would never be matched, and thus the http://www.google.com *would* be matched.
-        ' With the simulated lookbehind, the full link *is* matched (just not handled, because of this early return), causing
-        ' the google link to not be matched again.
-        If match.Groups(1).Success Then
-            Return match.Value
-        End If
+        Dim _endCharRegex As New Regex(_charEndingUrl, RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
-        Dim protocol = match.Groups(2).Value
-        Dim link = match.Groups(3).Value
-        If Not link.EndsWith(")") Then
-            Return "<" & protocol & link & ">"
-        End If
-        Dim level = 0
-        For Each c As Match In Regex.Matches(link, "[()]")
-            If c.Value = "(" Then
-                If level <= 0 Then
-                    level = 1
+        ''' <summary>
+        ''' The first group is essentially a negative lookbehind -- if there's a &lt; or a =", we don't touch this.
+        ''' We're not using a *real* lookbehind, because of links with in links, like 
+        ''' &lt;a href="http://web.archive.org/web/20121130000728/http://www.google.com/">
+        ''' With a real lookbehind, the full link would never be matched, and thus the http://www.google.com *would* be matched.
+        ''' With the simulated lookbehind, the full link *is* matched (just not handled, because of this early return), causing
+        ''' the google link to not be matched again.
+        ''' </summary>
+        ''' <param name="match"></param>
+        ''' <returns></returns>
+        Public Function handleTrailingParens(match As Match) As String
+            If match.Groups(1).Success Then
+                Return match.Value
+            End If
+
+            Dim protocol = match.Groups(2).Value
+            Dim link = match.Groups(3).Value
+            If Not link.EndsWith(")") Then
+                Return "<" & protocol & link & ">"
+            End If
+            Dim level = 0
+            For Each c As Match In Regex.Matches(link, "[()]")
+                If c.Value = "(" Then
+                    If level <= 0 Then
+                        level = 1
+                    Else
+                        level += 1
+                    End If
                 Else
-                    level += 1
+                    level -= 1
                 End If
-            Else
-                level -= 1
+            Next
+            Dim tail = ""
+            If level < 0 Then
+                link = Regex.Replace(link, "\){1," & (-level) & "}$", Function(m)
+                                                                          tail = m.Value
+                                                                          Return ""
+                                                                      End Function)
             End If
-        Next
-        Dim tail = ""
-        If level < 0 Then
-            link = Regex.Replace(link, "\){1," & (-level) & "}$", Function(m)
-                                                                      tail = m.Value
-                                                                      Return ""
-
-                                                                  End Function)
-        End If
-        If tail.Length > 0 Then
-            Dim lastChar = link(link.Length - 1)
-            If Not _endCharRegex.IsMatch(lastChar.ToString()) Then
-                tail = lastChar & tail
-                link = link.Substring(0, link.Length - 1)
+            If tail.Length > 0 Then
+                Dim lastChar = link(link.Length - 1)
+                If Not _endCharRegex.IsMatch(lastChar.ToString()) Then
+                    tail = lastChar & tail
+                    link = link.Substring(0, link.Length - 1)
+                End If
             End If
-        End If
-        Return "<" & protocol & link & ">" & tail
-    End Function
-End Module
+            Return "<" & protocol & link & ">" & tail
+        End Function
+    End Module
+End Namespace

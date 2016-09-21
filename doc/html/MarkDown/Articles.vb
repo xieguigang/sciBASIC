@@ -37,6 +37,7 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 
 Namespace MarkDown
+
     ''' <summary>
     ''' Create short link for https://wikipedia.org
     ''' ex: https://en.wikipedia.org/wiki/Southern_Ontario => en_wiki://Southern_Ontario

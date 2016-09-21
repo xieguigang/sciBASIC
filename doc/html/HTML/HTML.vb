@@ -30,7 +30,7 @@ Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.MarkupLanguage.StreamWriter
+Imports Microsoft.VisualBasic.MIME.Markup.StreamWriter
 
 Namespace HTML.DDM
 
@@ -77,16 +77,15 @@ Namespace HTML.DDM
             End If
 
             Dim backColor As New KeyValuePair With {
-            .Key = "background-color",
-            .Value = color
-        }
+                .Key = "background-color",
+                .Value = color
+            }
             Dim cssElement = New CSSElement With {
-            .Name = "body",
-            .Properties = New List(Of KeyValuePair)({backColor})
-        }
+                .Name = "body",
+                .Properties = New List(Of KeyValuePair)({backColor})
+            }
             Call CSS.Add(cssElement)
         End Sub
-
     End Class
 
     Public Class CSS : Inherits HtmlElement

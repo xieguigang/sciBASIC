@@ -2,7 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 
-Namespace CSS
+Namespace HTML.CSS
 
     ''' <summary>
     ''' ```CSS

@@ -29,7 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.MarkupLanguage.HTML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
 Namespace StreamWriter
 
