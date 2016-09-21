@@ -29,8 +29,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.DataVisualization.Network
-Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData

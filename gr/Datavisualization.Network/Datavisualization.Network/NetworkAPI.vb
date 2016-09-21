@@ -28,11 +28,12 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
+Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports ______NETWORK__ = Microsoft.VisualBasic.DataVisualization.Network.FileStream.Network(Of
-    Microsoft.VisualBasic.DataVisualization.Network.FileStream.Node,
-    Microsoft.VisualBasic.DataVisualization.Network.FileStream.NetworkEdge)
+Imports ______NETWORK__ =
+    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network(Of
+    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
+    Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
 
 <[PackageNamespace]("DataVisualization.Network", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkAPI

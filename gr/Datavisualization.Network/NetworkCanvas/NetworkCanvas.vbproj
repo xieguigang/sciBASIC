@@ -8,8 +8,8 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
-    <RootNamespace>Microsoft.VisualBasic.DataVisualization.Network.Canvas</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.DataVisualization.Network.Canvas</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network.Canvas</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -23,7 +23,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +33,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -53,7 +53,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -63,7 +63,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -73,19 +73,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -94,7 +94,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -104,12 +104,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <OutputPath>X:\nuget_publish\VB_APP\x86\</OutputPath>
     <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\docs\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -119,7 +119,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\sdk\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -130,7 +130,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\docs\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataVisualization.Network.Canvas.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -216,11 +216,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DocumentFormats\html\MarkupLanguage.vbproj">
+    <ProjectReference Include="..\..\..\doc\html\MarkupLanguage.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MarkupLanguage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
+    <ProjectReference Include="..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>

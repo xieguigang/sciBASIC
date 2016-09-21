@@ -68,8 +68,8 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Timers
-Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 
 Namespace Layouts
 

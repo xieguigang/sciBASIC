@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::fab4efb93e8aacebabe8d3a5cab0735d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Text
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 
 Namespace Kernel.Classifier
 
@@ -98,7 +99,7 @@ Namespace Kernel.Classifier
             ''' <param name="row">第一个元素为分类，其余元素为属性</param>
             ''' <returns></returns>
             ''' <remarks></remarks>
-            Public Shared Function CastTo(row As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.RowObject) As Entity
+            Public Shared Function CastTo(row As RowObject) As Entity
                 Dim LQuery = From s As String In row.Skip(1) Select Val(s) '
                 Return New Entity With {.Y = Val(row.First), .Properties = LQuery.ToArray}
             End Function

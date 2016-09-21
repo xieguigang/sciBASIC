@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataVisualization.Network.Abstract
+Imports Microsoft.VisualBasic.Data.visualize.Network.Abstract
 
 Namespace Graph
 
