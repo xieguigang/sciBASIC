@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.DocumentFormat.Csv
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON

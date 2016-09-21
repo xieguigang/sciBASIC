@@ -312,6 +312,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\DataFrame\+VB_DataFrame.vbproj">
+      <Project>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</Project>
+      <Name>+VB_DataFrame</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>

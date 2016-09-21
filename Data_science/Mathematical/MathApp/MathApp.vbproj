@@ -223,21 +223,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Datavisualization\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
-      <Project>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</Project>
-      <Name>Microsoft.VisualBasic.Imaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\DocumentFormats\html\MarkupLanguage.vbproj">
-      <Project>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</Project>
-      <Name>MarkupLanguage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\DocumentFormats\VB_DataFrame\VB_DataFrame\+VB_DataFrame.vbproj">
+    <ProjectReference Include="..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\doc\html\MarkupLanguage.vbproj">
+      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
+      <Name>MarkupLanguage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
+      <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
+      <Name>Microsoft.VisualBasic.Imaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Bootstrapping\Bootstrapping.vbproj">
+      <Project>{B21B924A-D67F-4554-8946-A154563394B2}</Project>
+      <Name>Bootstrapping</Name>
     </ProjectReference>
     <ProjectReference Include="..\Math\Microsoft.VisualBasic.Mathematical.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
