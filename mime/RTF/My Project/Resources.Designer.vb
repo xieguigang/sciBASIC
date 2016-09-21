@@ -39,7 +39,7 @@ Namespace My.Resources
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Microsoft.VisualBasic.DocumentFormat.Word.Resources", GetType(Resources).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Microsoft.VisualBasic.MIME.RTF.Resources", GetType(Resources).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -74,7 +74,7 @@ Namespace My.Resources
         '''software and other kinds of works.
         '''
         '''  The licenses for most software and other practical works are designed
-        '''to take away yo [rest of string was truncated]&quot;;.
+        '''to [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property gpl() As String
             Get

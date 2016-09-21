@@ -1,58 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::6c9ec8efd9109b539557bd1f4b53591b, ..\visualbasic_App\DocumentFormats\DocumentFormat.Word\DocHtml.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-#End Region
-
-Imports System.Text
+﻿Imports System.Text
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Omml
 
-    ''' <summary>
-    ''' Omml: office microsoft word xml
-    ''' </summary>
-    ''' <remarks></remarks>
-    <XmlRoot("html", namespace:="http://www.w3.org/TR/REC-html40")>
-    Public Class DocHtml
-
-        Public Const WORD_XML_NAMESPACE As String = "xmlns:v=""urn:schemas-microsoft-com:vml"" xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:w=""urn:schemas-microsoft-com:office:word"" xmlns:m=""http://schemas.microsoft.com/office/2004/12/omml"""
-
-        Public Property Head As Head
-
-        Public Function SaveDocument(path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
-            Throw New NotImplementedException
-        End Function
-
-        Private Function InternalCreateDocument() As String
-            Throw New NotImplementedException
-        End Function
-    End Class
-
-    <XmlType("head")>
-    Public Class Head
+    <XmlType("head")> Public Class Head
 
         Public Const WORD_XML_METADATA As String = ""
 
@@ -62,7 +14,7 @@ Namespace Omml
 
     <XmlType("xml")>
     Public Class DocumentXmlProperty
-        Public Property DocumentProperties As DocumentFormat.Word.Omml.DocumentProperties
+        Public Property DocumentProperties As Omml.DocumentProperties
         Public Property OfficeDocumentSettings As OfficeDocumentSettings
     End Class
 
@@ -80,6 +32,10 @@ Namespace Omml
         Public Property Paragraphs As Integer
         Public Property CharactersWithSpaces As Long
         Public Property Version As String
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 
     Public Class OfficeDocumentSettings
@@ -171,7 +127,7 @@ Namespace Omml
         End Function
     End Class
 
-    Public Class Font : Inherits ComponentModels.Font
+    Public Class Font : Inherits Models.Font
 
     End Class
 
@@ -186,18 +142,18 @@ Namespace Omml
         Public Property MsoPaddingAlt As String
 
         Public Overrides Function ToString() As String
-            Dim Value As StringBuilder = New StringBuilder(1024)
-            Dim InternalBuild = Sub(Name As String, svalue As String) If Not String.IsNullOrEmpty(svalue) Then Call Value.Append(Name & ":" & svalue & ";")
+            Dim value As New StringBuilder(1024)
+            Dim build = Sub(Name As String, svalue As String) If Not String.IsNullOrEmpty(svalue) Then Call value.Append(Name & ":" & svalue & ";")
 
-            Call InternalBuild("border", Me.Border)
-            Call InternalBuild("mso-border-bottom-alt", Me.MsoBorderBottomAlt)
-            Call InternalBuild("mso-layout-grid-align", Me.MsoLayoutGridAlign)
-            Call InternalBuild("mso-padding-alt", Me.MsoPaddingAlt)
-            Call InternalBuild("padding", Me.Padding)
-            Call InternalBuild("text-align", Me.TextAlign)
-            Call InternalBuild("text-autospace", Me.TextAutospace)
+            Call build("border", Me.Border)
+            Call build("mso-border-bottom-alt", Me.MsoBorderBottomAlt)
+            Call build("mso-layout-grid-align", Me.MsoLayoutGridAlign)
+            Call build("mso-padding-alt", Me.MsoPaddingAlt)
+            Call build("padding", Me.Padding)
+            Call build("text-align", Me.TextAlign)
+            Call build("text-autospace", Me.TextAutospace)
 
-            Return Value.ToString
+            Return value.ToString
         End Function
     End Class
 End Namespace
