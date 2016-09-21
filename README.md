@@ -11,6 +11,8 @@
 
 #### Directory Structure
 
+###### 1. source projects
+
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
 + **[/Data](./Data/)** : VisualBasic data framework system for data science
 + **[/Data_science](./Data_science/)** : VBMath system
@@ -20,7 +22,7 @@
 + **[/win32_api](./win32_api/)** : Win32 API collection
 + **[/www](./www/)** : Web related codes
 
-###### docs for User
+###### 2. docs for User
 
 + **[/guides](./guides/)**
 + **[/vb_codestyle](./vb_codestyle/)**
