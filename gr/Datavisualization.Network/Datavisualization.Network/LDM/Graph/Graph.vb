@@ -67,8 +67,8 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
 
 Namespace Graph

@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
-Imports Microsoft.VisualBasic.DataVisualization.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Linq
 
 Namespace NeuralNetwork.Models
