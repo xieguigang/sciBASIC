@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.DocumentFormat.RDF.Serialization
+Imports Microsoft.VisualBasic.MIME.RDF.Serialization
 
 Public Class Schema
     Public Property ImportsNamespaces As Serialization.RDFNamespaceImports()
@@ -48,7 +48,7 @@ Public Class Schema
 
         If RootTypeInfo.IsArray Then
             Dim ElementType = RootTypeInfo.GetElementType
-            Dim RDFType = DocumentFormat.RDF.Serialization.RDFType.GetTypeDefine(ElementType)
+            Dim RDFType = Serialization.RDFType.GetTypeDefine(ElementType)
 
             If Not ElementType.IsValueType Then
                 RDFRootType._BindElementTypeInfo = [GetType](RDFType)
@@ -63,7 +63,7 @@ Public Class Schema
 
             For Each [Property] In PropertyCollection '如果不是基本数据类型则进行向下递归操作
                 Dim PropertyTypeInfo = [Property]._bindProperty.PropertyType
-                Dim RDFType = DocumentFormat.RDF.Serialization.RDFType.GetTypeDefine(PropertyTypeInfo)
+                Dim RDFType = Serialization.RDFType.GetTypeDefine(PropertyTypeInfo)
 
                 If PropertyTypeInfo.IsValueType OrElse PropertyTypeInfo = GetType(String) Then
                     [Property]._valueType = PropertyTypeInfo
@@ -143,7 +143,7 @@ Public Class Serializer(Of T As Class)
         Dim Namespaces = (From attr As Object
                           In TypeInfo.GetCustomAttributes(RDFNamespaceImports.TypeInfo, True)
                           Select DirectCast(attr, Serialization.RDFNamespaceImports)).ToArray
-        Dim RDFRootType = DocumentFormat.RDF.Serialization.RDFType.GetTypeDefine(TypeInfo)
+        Dim RDFRootType = Serialization.RDFType.GetTypeDefine(TypeInfo)
         RDFRootType.TypeName = "rdf_RDF"
         Dim Schema As Schema = New Schema With {
             .ImportsNamespaces = Namespaces,

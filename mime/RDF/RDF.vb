@@ -29,7 +29,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.DocumentFormat.RDF.DocumentStream
+Imports Microsoft.VisualBasic.MIME.RDF.DocumentStream
 
 ''' <summary>
 ''' 做序列化的时候请务必要添加一个自定义的属性：&lt;XmlType(RDF.RDF_PREFIX &amp; "RDF")>
