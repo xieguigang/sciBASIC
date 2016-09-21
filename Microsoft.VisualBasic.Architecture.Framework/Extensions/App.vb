@@ -166,7 +166,7 @@ Public Module App
     ''' Getting the path of the home directory
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property userHOME As String = PathMapper.HOME
+    Public ReadOnly Property UserHOME As String = PathMapper.HOME
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
@@ -391,12 +391,31 @@ Public Module App
         Return log
     End Function
 
-    ' tmp2A10.tmp
+    ''' <summary>
+    ''' 是否是运行于微软的操作系统平台？
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property IsMicrosoftPlatform As Boolean
+        Get
+            Dim pt As PlatformID = Platform
 
-    Dim _tmpHash As New Uid
+            Return pt = PlatformID.Win32NT OrElse
+                pt = PlatformID.Win32S OrElse
+                pt = PlatformID.Win32Windows OrElse
+                pt = PlatformID.WinCE OrElse
+                pt = PlatformID.Xbox
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Example: ``tmp2A10.tmp``
+    ''' </summary>
+    Dim _tmpHash As New Uid(Not IsMicrosoftPlatform)
 
     Private Function __getTEMPhash() As String
-        Return FormatZero(++_tmpHash, "00000")
+        SyncLock _tmpHash
+            Return FormatZero(+_tmpHash, "00000")
+        End SyncLock
     End Function
 
     ''' <summary>
@@ -809,8 +828,10 @@ Public Module App
     ''' </summary>
     ''' <param name="app"></param>
     ''' <param name="cli"></param>
+    ''' <param name="CLR">是否为.NET程序?</param>
     ''' <returns></returns>
-    Public Function Shell(app As String, cli As String) As IIORedirectAbstract
+    ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
+    Public Function Shell(app As String, cli As String, Optional CLR As Boolean = False) As IIORedirectAbstract
         If Platform = PlatformID.MacOSX OrElse
             Platform = PlatformID.Unix Then
 
@@ -820,8 +841,12 @@ Public Module App
             }
             Return process
         Else
-            Dim process As New IORedirectFile(app, cli)
-            Return process
+            If CLR Then
+                Return New IORedirect(app, cli) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+            Else
+                Dim process As New IORedirectFile(app, cli)
+                Return Process
+            End If
         End If
     End Function
 
@@ -849,7 +874,7 @@ Public Module App
                 Let task As Func(Of Integer) = AddressOf io.Run
                 Select task
 
-            Call BatchTask(Of Integer)(Tasks, parallel)
+            Call BatchTask(Of Integer)(Tasks, parallel, TimeInterval:=10)
         End If
 
         Return sw.ElapsedMilliseconds
@@ -932,7 +957,7 @@ Public Module App
     ''' <summary>
     ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
     ''' </summary>
-    Public Sub RunAsAdmin()
-        Call RestartElevated()
+    Public Sub RunAsAdmin(Optional args As String = "")
+        Call RestartElevated(args)
     End Sub
 End Module

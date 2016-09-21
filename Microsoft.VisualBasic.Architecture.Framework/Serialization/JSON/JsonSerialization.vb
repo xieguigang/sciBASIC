@@ -54,7 +54,7 @@ Namespace Serialization.JSON
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("Get.Json")>
-        Public Function GetJson(obj As Object, type As Type, Optional indent As Boolean = True, Optional simpleDict As Boolean = True) As String
+        Public Function GetObjectJson(obj As Object, type As Type, Optional indent As Boolean = True, Optional simpleDict As Boolean = True) As String
             Using ms As New MemoryStream()
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = True,
@@ -109,7 +109,7 @@ Namespace Serialization.JSON
         ''' <param name="obj"></param>
         ''' <returns></returns>
         <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False, Optional simpleDict As Boolean = True) As String
-            Return GetJson(obj, GetType(T), indent, simpleDict)
+            Return GetObjectJson(obj, GetType(T), indent, simpleDict)
         End Function
 
         ''' <summary>

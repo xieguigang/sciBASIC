@@ -557,7 +557,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
                 Activator.CreateInstance(GetType(T), args)
             Return DirectCast(obj, T)
         Catch ex As Exception
-            Dim params As String() = args.ToArray(Function(x) x.GetType.FullName & " ==> " & GetJson(x, x.GetType))
+            Dim params As String() = args.ToArray(Function(x) x.GetType.FullName & " ==> " & GetObjectJson(x, x.GetType))
             ex = New Exception(String.Join(vbCrLf, params), ex)
             ex = New Exception("@" & caller, ex)
 

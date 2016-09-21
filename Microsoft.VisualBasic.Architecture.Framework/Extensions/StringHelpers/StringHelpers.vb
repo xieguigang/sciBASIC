@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f991dc5e8c0e7a9f9f7d8566be9e75ff, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
 ''' <summary>
@@ -95,6 +96,11 @@ Public Module StringHelpers
             Call sb.Append(text)
         Next
         Return sb.ToString()
+    End Function
+
+    <Extension>
+    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter As String) As String
+        Return String.Join(delimiter, data.ToArray(AddressOf Scripting.ToString))
     End Function
 
     ''' <summary>
@@ -313,10 +319,17 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' 在字符串前面填充指定长度的00序列，假若输入的字符串长度大于fill的长度，则不再进行填充
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="n"></param>
+    ''' <param name="fill"></param>
+    ''' <returns></returns>
     <ExportAPI("FormatZero")>
     <Extension> Public Function FormatZero(Of T)(n As T, Optional fill As String = "00") As String
-        Dim s = n.ToString
-        Dim d = Len(fill) - Len(s)
+        Dim s As String = n.ToString
+        Dim d As Integer = Len(fill) - Len(s)
 
         If d < 0 Then
             Return s
@@ -380,6 +393,12 @@ Public Module StringHelpers
         Return values.Intersection
     End Function
 
+    ''' <summary>
+    ''' Does this input string is matched by the specific regex expression?
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <param name="regex"></param>
+    ''' <returns></returns>
     <ExportAPI("Matched?")>
     <Extension> Public Function Matches(str As String, regex As String) As Boolean
         Return RegularExpressions.Regex.Match(str, regex).Success
@@ -399,16 +418,36 @@ Public Module StringHelpers
         Return Regex.Match(input, pattern, options).Value
     End Function
 
+    ''' <summary>
+    ''' Get regex match value from the target input string.
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <param name="pattern"></param>
+    ''' <param name="options"></param>
+    ''' <returns></returns>
     <ExportAPI("Match")>
     <Extension> Public Function Match(input As Match, pattern As String, Optional options As RegexOptions = RegexOptions.Multiline) As String
         Return Regex.Match(input.Value, pattern, options).Value
     End Function
 
+    ''' <summary>
+    ''' Save this string dictionary object as json file.
+    ''' </summary>
+    ''' <param name="dict"></param>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <Extension>
     <ExportAPI("Write.Dictionary")>
     Public Function SaveTo(dict As IDictionary(Of String, String), path As String) As Boolean
-        Dim values As String() = dict.ToArray(Function(x) x.Key & vbTab & x.Value)
-        Return values.SaveTo(path)
+        ' 在这里不能够将接口类型进行json序列化，所以进行字符串的序列化然后拼接出json数据
+        Dim lines As String() = dict.ToArray(AddressOf __json)
+        Return "{" &
+            vbTab & String.Join("," & vbCrLf & vbTab, lines) &
+        "}"
+    End Function
+
+    Private Function __json(x As KeyValuePair(Of String, String)) As String
+        Return x.Key.GetJson & ": " & x.Value.GetJson
     End Function
 
     ''' <summary>

@@ -149,6 +149,10 @@ Namespace Linq
             Return list
         End Operator
 
+        Public Shared Operator +(x As SeqValue(Of T)) As T
+            Return x.obj
+        End Operator
+
         Public Sub Dispose() Implements IDisposable.Dispose
         End Sub
     End Structure

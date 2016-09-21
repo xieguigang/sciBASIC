@@ -1,0 +1,138 @@
+﻿#Region "Microsoft.VisualBasic::ab64ed17c01409b3d9b4721531305e71, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\DocumentHelper.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Text
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
+
+Namespace MarkDown
+
+    Module DocumentHelper
+
+        ''' <summary>
+        ''' maximum nested depth of [] and () supported by the transform; implementation detail
+        ''' </summary>
+        Public Const _nestDepth As Integer = 6
+
+        Dim _htmlTokens As New Regex(vbCr & vbLf & "            (<!--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)-->)|        # match <!-- foo -->" & vbCr & vbLf & "            (<\?.*?\?>)|                 # match <?foo?> " & RepeatString(" " & vbCr & vbLf & "            (<[A-Za-z\/!$](?:[^<>]|", _nestDepth) & RepeatString(")*>)", _nestDepth) & " # match <tag> and </tag>", RegexOptions.Multiline Or RegexOptions.Singleline Or RegexOptions.ExplicitCapture Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+
+        Public Enum TokenType
+            Text
+            Tag
+        End Enum
+
+        ''' <summary>
+        ''' returns an array of HTML tokens comprising the input string. Each token is 
+        ''' either a tag (possibly with nested, tags contained therein, such 
+        ''' as &lt;a href="&lt;MTFoo&gt;"&gt;, or a run of text between tags. Each element of the 
+        ''' array is a two-element array; the first is either 'tag' or 'text'; the second is 
+        ''' the actual value.
+        ''' </summary>
+        Public Function TokenizeHTML(text As String) As List(Of Token(Of TokenType))
+            Dim pos As Integer = 0
+            Dim tagStart As Integer = 0
+            Dim tokens As New List(Of Token(Of TokenType))()
+
+            ' this regex is derived from the _tokenize() subroutine in Brad Choate's MTRegex plugin.
+            ' http://www.bradchoate.com/past/mtregex.php
+            For Each m As Match In _htmlTokens.Matches(text)
+                tagStart = m.Index
+
+                If pos < tagStart Then
+                    tokens += New Token(Of TokenType)(TokenType.Text, text.Substring(pos, tagStart - pos))
+                End If
+
+                tokens += New Token(Of TokenType)(TokenType.Tag, m.Value)
+                pos = tagStart + m.Length
+            Next
+
+            If pos < text.Length Then
+                tokens += New Token(Of TokenType)(TokenType.Text, text.Substring(pos, text.Length - pos))
+            End If
+
+            Return tokens
+        End Function
+
+        ''' <summary>
+        ''' convert all tabs to _tabWidth spaces; 
+        ''' standardizes line endings from DOS (CR LF) or Mac (CR) to UNIX (LF); 
+        ''' makes sure text ends with a couple of newlines; 
+        ''' removes any blank lines (only spaces) in the text
+        ''' </summary>
+        Public Function Normalize(text As String) As String
+            Dim output = New StringBuilder(text.Length)
+            Dim line = New StringBuilder()
+            Dim valid As Boolean = False
+
+            For i As Integer = 0 To text.Length - 1
+                Select Case text(i)
+                    Case ControlChars.Lf
+                        If valid Then
+                            output.Append(line)
+                        End If
+                        output.Append(ControlChars.Lf)
+                        line.Length = 0
+                        valid = False
+                        Exit Select
+                    Case ControlChars.Cr
+                        If (i < text.Length - 1) AndAlso (text(i + 1) <> ControlChars.Lf) Then
+                            If valid Then
+                                output.Append(line)
+                            End If
+                            output.Append(ControlChars.Lf)
+                            line.Length = 0
+                            valid = False
+                        End If
+                        Exit Select
+                    Case ControlChars.Tab
+                        Dim width As Integer = (_tabWidth - line.Length Mod _tabWidth)
+                        For k As Integer = 0 To width - 1
+                            line.Append(" "c)
+                        Next
+                        Exit Select
+                    Case ChrW(26)
+                        Exit Select
+                    Case Else
+                        If Not valid AndAlso text(i) <> " "c Then
+                            valid = True
+                        End If
+                        line.Append(text(i))
+                        Exit Select
+                End Select
+            Next
+
+            If valid Then
+                output.Append(line)
+            End If
+            output.Append(ControlChars.Lf)
+
+            ' add two newlines to the end before return
+            Return output.Append(vbLf & vbLf).ToString()
+        End Function
+    End Module
+End Namespace

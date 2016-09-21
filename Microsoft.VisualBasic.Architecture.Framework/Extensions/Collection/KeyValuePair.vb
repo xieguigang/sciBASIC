@@ -32,6 +32,17 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' Data exists and not nothing
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="d"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function HaveData(Of T)(d As Dictionary(Of T, String), key As T) As Boolean
+        Return d.ContainsKey(key) AndAlso Not String.IsNullOrEmpty(d(key))
+    End Function
 
     <Extension>
     Public Function ToDictionary(nc As NameValueCollection) As Dictionary(Of String, String)

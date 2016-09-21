@@ -30,11 +30,9 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-Namespace StatisticsMathExtensions
+Namespace Mathematical.StatisticsMathExtensions
 
     Public Module EnumerableStatsVariance
-
-        Private Property d As Integer
 
         '
         ' Summary:

@@ -70,6 +70,12 @@ Namespace ComponentModel.DataSourceModel
                 {PropertyAccess.Writeable, Function(p) p.CanWrite}
         }
 
+        ''' <summary>
+        ''' 获取类型之中的属性列表
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="flag"></param>
+        ''' <returns></returns>
         Public Function Schema(Of T)(flag As PropertyAccess) As Dictionary(Of String, PropertyInfo)
             Return GetType(T).Schema(flag)
         End Function
