@@ -345,12 +345,12 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overridable Function Generate() As String
-            Dim sBuilder As StringBuilder = New StringBuilder(2048)
+            Dim sb As New StringBuilder(2048)
             For Each Row As RowObject In _innerTable
-                Call sBuilder.AppendLine(Row.AsLine)
+                Call sb.AppendLine(Row.AsLine)
             Next
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
         Public Function GetAllStringTokens() As String()
@@ -650,23 +650,28 @@ Namespace DocumentStream
         End Function
 #End Region
 
-        Public Shared Function Join(CsvList As File()) As File
-            CsvList = (From Csv In CsvList Select Csv Order By Csv.Count Descending).ToArray
-            Dim CsvFile As File = New File
+        Public Shared Function Join(ParamArray list As File()) As File
+            Dim csv As New File
 
-            For RowId As Integer = 0 To CsvList.First.Count - 1
+            list = LinqAPI.Exec(Of File) <=
+                From file As File
+                In list
+                Select file
+                Order By csv.Count Descending
+
+            For RowId As Integer = 0 To list.First.Count - 1
                 Dim Row As RowObject = New RowObject
-                Row.AddRange(CsvList.First()(RowId))
-                For i As Integer = 1 To CsvList.Count - 1
-                    If RowId < CsvList(i).Count Then
-                        Row.AddRange(CsvList(i)(RowId))
+                Row.AddRange(list.First()(RowId))
+                For i As Integer = 1 To list.Count - 1
+                    If RowId < list(i).Count Then
+                        Row.AddRange(list(i)(RowId))
                     End If
                 Next
 
-                CsvFile._innerTable.Add(Row)
+                csv._innerTable.Add(Row)
             Next
 
-            Return CsvFile
+            Return csv
         End Function
 
         ''' <summary>
@@ -678,7 +683,7 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function Distinct(File As String, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
-            Dim Csv As Csv.DocumentStream.File = Load(File)
+            Dim csv As File = Load(File)
             Return Distinct(Csv, OrderBy, Asc)
         End Function
 
