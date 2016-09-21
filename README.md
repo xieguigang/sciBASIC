@@ -5,7 +5,28 @@
 [![Github All Releases](https://img.shields.io/github/downloads/xieguigang/VisualBasic_AppFramework/total.svg?maxAge=2592000?style=flat-square)]()
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 
+###### [WARNING] This project is a work in progress and is not recommended for production use.
+
 ![Microsoft VisualBasic logo](./logo.jpg)
+
+#### Directory Structure
+
++ **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
++ **[/Data](./Data/)** : VisualBasic data framework system for data science
++ **[/Data_science](./Data_science/)** : VBMath system
++ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
++ **[/doc](./doc/)** : VisualBasic doc parsers
++ **[/gr](./gr/)** : VisualBasic data graphics system
++ **[/win32_api](./win32_api/)** : Win32 API collection
++ **[/www](./www/)** : Web related codes
+
+###### docs for User
+
++ **[/guides](./guides/)**
++ **[/vb_codestyle](./vb_codestyle/)**
+
+
+---------------------------------------------------------------------------------------------------------------
 
 A language feature runtime library for server side CLI application. This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the VisualBasic programming language syntax and the utility code function. Makes the VisualBasic programming style more modernization by using this runtime library framework.
 
@@ -29,11 +50,11 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 
 ## Microsoft VisualBasic Mathematics System for Data Science
 
-+ \>>>>>> **[Mathematics System](./Data_science/Mathematical)** <<<<<<
-+ \>>>>>> **[DataFrame System for VisualBasic Data Science](./DocumentFormats/VB_DataFrame)** <<<<<<
-+ \>>>>>> **[Network Visualization Interface](./Datavisualization/Datavisualization.Network)** <<<<<<
++ **[Mathematics System](./Data_science/Mathematical)** <<<
++ **[DataFrame System for VisualBasic Data Science](./DocumentFormats/VB_DataFrame)** <<<
++ **[Network Visualization Interface](./Datavisualization/Datavisualization.Network)** <<<
 
-![](./Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
+![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
 ##### Plots System
 ```vbnet
@@ -112,9 +133,9 @@ Console.WriteLine(min <= x < max) ' False
 ```
 
 ## Framework Gallery
-Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./Datavisualization/Microsoft.VisualBasic.Imaging) 3D engine.
+Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic.Imaging) 3D engine.
 
-![](./Datavisualization/d3.png)
+![](./gr/d3.png)
 
 Chart plot system
 
