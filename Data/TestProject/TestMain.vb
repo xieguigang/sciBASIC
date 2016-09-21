@@ -27,12 +27,12 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.Extensions
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.csv.Extensions
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.DocumentFormat.Csv
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 
 Public Class p1
@@ -70,7 +70,7 @@ Module TestMain
 
         Call sssis.SaveData("x:\test2")
 
-        '  Dim schdddema = Microsoft.VisualBasic.DocumentFormat.Csv.Schema.GetSchema(Of SchemaParsingTest)
+        '  Dim schdddema = Microsoft.VisualBasic.Data.csv.Schema.GetSchema(Of SchemaParsingTest)
 
         '  Call schema.GetJson.__DEBUG_ECHO
         '  Call schema.GetJson.SaveTo("./test.json")
@@ -95,9 +95,9 @@ Module TestMain
         Call $"regex={rp.Average}ms,    chars={cp.Average}ms".__DEBUG_ECHO
 
         Dim firstddd As String = "F:\VisualBasic_AppFramework\DocumentFormats\DocumentFormat.Csv\TestProject\parser_TEST.csv".ReadAllLines()(2)
-        Dim row = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(firstddd)
+        Dim row = Microsoft.VisualBasic.Data.csv.DocumentStream.CharsParser(firstddd)
 
-        Dim stream As New DocumentFormat.Csv.DocumentStream.Linq.DataStream("G:\3.29\CP000050\CP000050-SiteMASTScan-Motif_PWM-RegPrecise-Pfam-A.Pfam-String_vs_xcb.PfamA.Pfam-String-virtualFootprints.Csv")
+        Dim stream As New DocumentStream.Linq.DataStream("G:\3.29\CP000050\CP000050-SiteMASTScan-Motif_PWM-RegPrecise-Pfam-A.Pfam-String_vs_xcb.PfamA.Pfam-String-virtualFootprints.Csv")
 
         Call stream.ForEachBlock(Of [Property](Of String))(Sub(array)
                                                                For Each x In array
@@ -107,10 +107,10 @@ Module TestMain
 
 
         Dim ssss As String = sss
-        Dim ttttt = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.CharsParser(ssss)
+        Dim ttttt = Microsoft.VisualBasic.Data.csv.DocumentStream.CharsParser(ssss)
 
 
-        Dim typeschema = Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels.SchemaProvider.CreateObject(Of SchemaParsingTest)(False)
+        Dim typeschema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider.CreateObject(Of SchemaParsingTest)(False)
         Dim data = {New SchemaParsingTest, New SchemaParsingTest}
         Call data.SaveTo("./fgfgfgf.csv")
 
@@ -139,7 +139,7 @@ Module TestMain
         DataCollection = Nothing
         DataCollection = CsvPath.LoadCsv(Of ExampleExperimentData)(explicit:=False).ToArray
 
-        Dim File = Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Reflector.Save(Of ExampleExperimentData)(DataCollection, explicit:=False)
+        Dim File = Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.Save(Of ExampleExperimentData)(DataCollection, explicit:=False)
         For Each rowD As RowObject In File
             Call Console.WriteLine(rowD.ToString)
         Next
@@ -167,9 +167,9 @@ Module TestMain
 
     Public Class ExampleExperimentData
         Public Property Id As String
-        <Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ColumnAttribute("RPKM")>
+        <Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.ColumnAttribute("RPKM")>
         Public Property ExpressionRPKM As Double
-        <Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.Collection("tags")>
+        <Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Collection("tags")>
         Public Property Tags As String()
     End Class
 End Module

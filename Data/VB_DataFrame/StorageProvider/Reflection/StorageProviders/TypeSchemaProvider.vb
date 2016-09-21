@@ -29,7 +29,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
+Imports Microsoft.VisualBasic.Data.csv.DataImports
 Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.Reflection

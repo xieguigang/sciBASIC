@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 
 ''' <summary>
 ''' <see cref="Writer.Dispose"/>的时候会自动保存Csv文件的数据

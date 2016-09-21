@@ -125,7 +125,7 @@ Public Module DataImports
     <ExportAPI("Imports.FixLength", Info:="Imports the data in a well formatted text file using the fix length as the data separate method.")>
     Public Function FixLengthImports(txtPath As String,
                                      <Parameter("Length", "The string length width of the data row.")> Optional length As Integer = 10,
-                                     Optional encoding As System.Text.Encoding = Nothing) As Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File
+                                     Optional encoding As System.Text.Encoding = Nothing) As Microsoft.VisualBasic.Data.csv.DocumentStream.File
         If encoding Is Nothing Then
             encoding = System.Text.Encoding.Default
         End If

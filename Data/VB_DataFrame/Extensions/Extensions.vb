@@ -39,10 +39,10 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.Linq
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream.Linq
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.InputHandler
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -205,9 +205,9 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(ImportsFile As String, Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
-        Dim Wrapper = DocumentFormat.Csv.DocumentStream.DataFrame.CreateObject([Imports](ImportsFile, Delimiter))
-        Dim DataCollection As T() = Reflector.Convert(Of T)(Wrapper, explicit).ToArray
-        Return DataCollection
+        Dim df As DataFrame = DocumentStream.DataFrame.CreateObject([Imports](ImportsFile, Delimiter))
+        Dim data As T() = Reflector.Convert(Of T)(df, explicit).ToArray
+        Return data
     End Function
 
     ''' <summary>
@@ -222,7 +222,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
-        Dim Expression As String = String.Format(DocumentFormat.Csv.DataImports.SplitRegxExpression, Delimiter)
+        Dim Expression As String = String.Format(DataImports.SplitRegxExpression, Delimiter)
         Dim LQuery = (From line As String In strDataLines Select RowParsing(line, Expression)).ToArray
         Return CType(LQuery, Csv.DocumentStream.File).AsDataSource(Of T)(explicit)
     End Function
@@ -273,7 +273,7 @@ Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{f
     ''' <param name="source"></param>
     ''' <param name="path"></param>
     ''' <param name="explicit">If true then all of the simple data type property its value will be save to the data file,
-    ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.Reflection.ColumnAttribute"></see>
+    ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.ColumnAttribute"></see>
     ''' </param>
     ''' <param name="encoding"></param>
     ''' <param name="maps">{meta_define -> custom}</param>

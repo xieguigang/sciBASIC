@@ -27,9 +27,9 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.DataImports
+Imports Microsoft.VisualBasic.Data.csv.DataImports
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DocumentFormat.Csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
