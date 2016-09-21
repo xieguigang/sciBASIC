@@ -17,7 +17,7 @@
 + **[/Data](./Data/)** : VisualBasic data framework system for data science
 + **[/Data_science](./Data_science/)** : VBMath system
 + **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
-+ **[/doc](./doc/)** : VisualBasic doc parsers
++ **[/mime](./mime/)** : VisualBasic various mime-types doc parsers
 + **[/gr](./gr/)** : VisualBasic data graphics system
 + **[/win32_api](./win32_api/)** : Win32 API collection
 + **[/www](./www/)** : Web related codes
@@ -30,7 +30,7 @@
 
 ---------------------------------------------------------------------------------------------------------------
 
-A language feature runtime library for server side CLI application. This framework project includes a lot of utility tools for the enterprises system programming for VisualBasic, and extends the VisualBasic programming language syntax and the utility code function. Makes the VisualBasic programming style more modernization by using this runtime library framework.
+A language feature runtime library for CLI architecture applications. This framework project includes a lot of utility tools and the utility code extension functions for the data sciences programming for VisualBasic, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernization by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:
 > + https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
@@ -143,15 +143,15 @@ Chart plot system
 
 ![](./Data_science/Mathematical/images/pie_chart.png)
 
-=========================
+===================================================================
 
 ###### Modules that Includes in this Framework:
 
-> 1. A document library of read and write Csv document for facility the data exchanges between the GCModeller and R program.
-> 2. A distribution computing framework available at repository: https://github.com/xieguigang/Microsoft.VisualBasic.Parallel
-> 3. Microsoft VisualBasic Application Framework codes
-> 4. Memory pepline services between two client program
-> 5. VisualBasic language Feature:  Unix bash command supports in under development which parts of the API is available at namespace Microsoft.VisualBasic.Language
+> 1. A data frame system for read/write csv data more easily.
+> 2. ODEs solver system and data plots system
+> 3. Various linq extensions for the data science programming on large amount data processing
+> 4. VisualBasic language Feature: Unix bash command supports in under development which parts of the API is available at namespace ``Microsoft.VisualBasic.Language``
+> 5. Image graphics system in namespace ``Microsoft.VisualBasic.Imaging``
 
 ###### Image fast binarization using VisualBasic extension API
 [``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)

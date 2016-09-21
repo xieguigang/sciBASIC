@@ -293,7 +293,7 @@ Namespace Language
             End Sub
 
             ''' <summary>
-            ''' Exec ToArray
+            ''' Exec <see cref="IEnumerable(Of T)"/>.DefaultFirst extension method.
             ''' </summary>
             ''' <param name="cls"></param>
             ''' <param name="linq"></param>
