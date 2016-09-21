@@ -169,13 +169,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DocumentFormats\VB_HTML\VB_HTML\DocumentFormat.MarkupLanguage.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>DocumentFormat.MarkupLanguage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>Microsoft.VisualBasic.Architecture.Framework</Name>
+      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>

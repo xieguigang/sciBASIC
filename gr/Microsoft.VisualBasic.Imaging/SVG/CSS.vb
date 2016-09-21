@@ -29,7 +29,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MarkupLanguage.HTML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
 Namespace SVG.CSS
 
