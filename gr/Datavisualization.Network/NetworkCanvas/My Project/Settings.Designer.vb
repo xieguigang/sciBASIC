@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.Microsoft.VisualBasic.DataVisualization.Network.Canvas.My.MySettings
+        Friend ReadOnly Property Settings() As Global.Microsoft.VisualBasic.Data.visualize.Network.Canvas.My.MySettings
             Get
-                Return Global.Microsoft.VisualBasic.DataVisualization.Network.Canvas.My.MySettings.Default
+                Return Global.Microsoft.VisualBasic.Data.visualize.Network.Canvas.My.MySettings.Default
             End Get
         End Property
     End Module
