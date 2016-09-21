@@ -68,7 +68,7 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Linq
 Imports System.Text
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
