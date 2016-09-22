@@ -78,10 +78,18 @@ Module DEBUG
 
 
     Private Sub ShowCharacterData()
+
+        Console.WriteLine(Atn(1))
+        Console.WriteLine(Atn(3.14))
+        Console.WriteLine(Atn(999))
+
+        Pause()
+
         Dim result = ODEsOut.LoadFromDataFrame("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\bootstrapping\test\Kinetics_of_influenza_A_virus_infection_in_humans.csv")
-        Dim i = GetAnalysis("I")(result.y("I").x)
-        Dim t = GetAnalysis("T")(result.y("T").x)
-        Dim v = GetAnalysis("V")(result.y("V").x)
+        Dim analysis = GetAnalysis(result)
+        Dim i = analysis("I")(result.y("I").x)
+        Dim t = analysis("T")(result.y("T").x)
+        Dim v = analysis("V")(result.y("V").x)
     End Sub
 
     ''' <summary>

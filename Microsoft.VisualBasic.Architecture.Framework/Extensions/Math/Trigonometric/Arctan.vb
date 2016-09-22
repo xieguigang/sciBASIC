@@ -3,17 +3,17 @@
     Partial Module Trigonometric
 
         Const HalfPi = Math.PI / 2
-        Const K As Integer = 8
-        Const N As Integer = 400
         Const n1 = 1.0R
         Const n05 = 0.5R
 
         ''' <summary>
-        ''' Taylor Atn
+        ''' Taylor Atan
         ''' </summary>
         ''' <param name="x"></param>
+        ''' <param name="precise">通过这个参数来控制计算精度，这个参数值越大，计算精度越高</param>
         ''' <returns></returns>
-        Public Function Atn(x As Double) As Double
+        ''' <remarks>Atan测试没有问题</remarks>>
+        Public Function Atn(x As Double, Optional precise As Integer = 500) As Double
             If x = 1.0 Then
                 Return Math.PI / 4
             End If
@@ -27,9 +27,9 @@
                 Return Atn(n1) + Atn((x - n1) / (1 + x))
             Else
                 Dim xPow2 = x * x
-                Dim n__1 = N
+                Dim n__1 = precise
                 Dim y = 1 / (2 * n__1 + 1)
-                Dim i As Integer = N
+                Dim i As Integer = precise
 
                 While i > 0
                     y = (1 / (2 * n__1 - 1)) - (xPow2 * y)

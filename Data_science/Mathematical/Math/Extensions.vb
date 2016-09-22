@@ -42,7 +42,11 @@ Public Module Extensions
         For Each x In data.Skip(1).SeqIterator(offset:=1)
             Dim dy = (x.obj - pre) ' 对边
             Dim tanX As Double = dy / dx
-            Dim alpha As Double = Math.Tan
+            Dim a As Double = Atn(tanX)
+
+            If a >= alpha Then
+                Return x.i
+            End If
         Next
 
         Return -1 ' 没有找到符合条件的点
