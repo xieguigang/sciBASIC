@@ -28,6 +28,24 @@ Namespace KMeans
         Public Property uids As String()
         Public Property members As EntityLDM()
 
+        Public ReadOnly Property PropertyMeans As Double()
+            Get
+                Dim pVector As New Dictionary(Of String, List(Of Double))
+
+                For Each key As String In members.First.Properties.Keys
+                    pVector(key) = New List(Of Double)
+                Next
+
+                For Each member As EntityLDM In members
+                    For Each key As String In pVector.Keys.ToArray
+                        pVector(key) += member.Properties(key)
+                    Next
+                Next
+
+                Return pVector.Keys.ToArray(Function(k) pVector(k).Average)
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

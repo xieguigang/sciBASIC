@@ -55,7 +55,7 @@ Namespace KMeans
         ''' <param name="depth">将会以最短的聚类作为数据分区的深度</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1) As List(Of Partition)
+        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(Of Partition)
             Dim list As New List(Of EntityLDM)(cluster)
 
             If depth <= 0 Then
@@ -109,11 +109,16 @@ Namespace KMeans
                 }
             End If
 
+            If trim Then
+                partitions = New List(Of Partition)(
+                    partitions.Where(Function(x) x.NumOfEntity > 0))
+            End If
+
             Return partitions
         End Function
 
         ''' <summary>
-        ''' 二叉树树形聚类
+        ''' 二叉树树形聚类，请注意，所输入的数据的名字不可以一样，不然无法正确生成cluster标记
         ''' </summary>
         ''' <param name="resultSet"></param>
         ''' <returns></returns>

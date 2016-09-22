@@ -37,7 +37,7 @@ Imports System.Text
 Namespace SoftwareToolkits
 
     ''' <summary>
-    ''' Provides detailed information about the host operating system.
+    ''' Provides detailed information about the host operating system.(用于判断操作系统的具体版本信息的工具)
     ''' </summary>
     Public Module OSVersionInfo
 

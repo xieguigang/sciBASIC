@@ -109,7 +109,7 @@ Public Module EigenvectorBootstrapping
     ''' <param name="data"><see cref="LoadData"/>的输出数据</param>
     ''' <returns></returns>
     <Extension>
-    Public Function BinaryKMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))) As Dictionary(Of Double(), Dictionary(Of String, Double)())
+    Public Function BinaryKMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), partitionDepth As Integer) As Dictionary(Of NamedValue(Of Double()), Dictionary(Of String, Double)())
         Dim strTags As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))() =
             LinqAPI.Exec(Of NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))) <=
  _
@@ -120,30 +120,34 @@ Public Module EigenvectorBootstrapping
                 .x = x
             }
 
+        Dim uid As New Uid
         Dim datasets As EntityLDM() = strTags.ToArray(
             Function(x) New EntityLDM With {
-                .Name = "boot",
+                .Name = "boot" & uid.Plus,
                 .Properties = x.x.Tag _
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
                                   Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
         })
         Dim clusters As EntityLDM() = datasets.TreeCluster(parallel:=True)
-        Dim out As New Dictionary(Of Double(), Dictionary(Of String, Double)())
+        Dim out As New Dictionary(Of NamedValue(Of Double()), Dictionary(Of String, Double)())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags
                    Select x
                    Group x By x.Name Into Group) _
                         .ToDictionary(Function(x) x.Name,
                                       Function(x) x.Group.ToArray)
-        Dim treeParts = clusters.Partitioning
+        Dim treeParts = clusters.Partitioning(partitionDepth)
 
         For Each cluster As Partition In treeParts
-            Dim key As Double() = cluster.ClusterMean  ' out之中的key
+            Dim key As New NamedValue(Of Double()) With {
+                .Name = cluster.Tag,
+                .x = cluster.PropertyMeans
+            } ' out之中的key
             Dim tmp As New List(Of Dictionary(Of String, Double))   ' out之中的value
 
-            For Each x As Entity In cluster
-                Dim rawKey As String = x.Properties.GetJson
+            For Each x As EntityLDM In cluster.members
+                Dim rawKey As String = x.Properties.Values.ToArray.GetJson
                 Dim rawParams = raw(rawKey).ToArray(Function(o) o.x.value)
 
                 tmp += rawParams
