@@ -22,6 +22,7 @@ Public Structure Annotation
     ''' Size region for <see cref="Legend"/> Drawing
     ''' </summary>
     Public size As SizeF
+    Public color As String
 
     ''' <summary>
     ''' The target annotation data point is null!
@@ -46,13 +47,13 @@ Public Structure Annotation
         point = New PointF(point.X - size.Width / 2, point.Y - size.Height / 2)
 
         Dim legend As New Legend With {
-            .color = $"rgb({s.color.R},{s.color.G},{s.color.B})",
+            .color = If(String.IsNullOrEmpty(color), $"rgb({s.color.R},{s.color.G},{s.color.B})", color),
             .fontstyle = Font,
             .style = Me.Legend,
             .title = Text
         }
         Dim border As New Border With {
-            .color = Color.Black,
+            .color = Drawing.Color.Black,
             .style = DashStyle.Solid,
             .width = 3
         }
