@@ -169,4 +169,4 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 |Normal|Binary|Gray|
 |------|------|----|
-|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=120 height=120 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|
+|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=250 height=250 />|<img src="./etc/lena/lena.gray.png" width=250 height=250 />|
