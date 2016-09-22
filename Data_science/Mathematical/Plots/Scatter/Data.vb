@@ -22,6 +22,16 @@ Public Class SerialData : Implements sIdEnumerable
     Public color As Color = Color.Black
     Public width As Single = 1
 
+    Public Function GetPointByX(x As Single) As PointData
+        For Each pt As PointData In pts
+            If pt.pt.X = x Then
+                Return pt
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function
@@ -54,8 +64,21 @@ Public Structure Annotation
     ''' </summary>
     Public size As Size
 
+    ''' <summary>
+    ''' The target annotation data point is null!
+    ''' </summary>
+    Const PointNull As String = "The target annotation data point is null!"
+
     Public Sub Draw(ByRef g As Graphics, scaler As Scaling, s As SerialData)
         Dim font As Font = Me.Font.GDIObject
+        Dim pt As PointData = s.GetPointByX(X)
+
+        If pt.pt.IsEmpty Then
+            Call PointNull.PrintException
+            Return
+        End If
+
+        ' 得到转换坐标
 
     End Sub
 

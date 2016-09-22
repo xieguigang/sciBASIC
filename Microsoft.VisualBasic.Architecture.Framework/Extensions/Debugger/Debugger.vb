@@ -152,11 +152,15 @@ Public Module VBDebugger
             Return
         End If
 
-        Dim cl As ConsoleColor = Console.ForegroundColor
+        If ForceSTDError Then
+            Console.Error.WriteLine(msg)
+        Else
+            Dim cl As ConsoleColor = Console.ForegroundColor
 
-        Console.ForegroundColor = color
-        Console.WriteLine(msg)
-        Console.ForegroundColor = cl
+            Console.ForegroundColor = color
+            Console.WriteLine(msg)
+            Console.ForegroundColor = cl
+        End If
 
 #If DEBUG Then
         Call Debug.WriteLine(msg)
