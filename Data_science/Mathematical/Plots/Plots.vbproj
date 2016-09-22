@@ -137,7 +137,8 @@
     <Compile Include="PlotTypes.vb" />
     <Compile Include="g.vb" />
     <Compile Include="Histogram.vb" />
-    <Compile Include="Scatter.vb" />
+    <Compile Include="Scatter\Data.vb" />
+    <Compile Include="Scatter\Scatter.vb" />
     <Compile Include="Scaling.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
