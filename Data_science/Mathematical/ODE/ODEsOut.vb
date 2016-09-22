@@ -15,6 +15,12 @@ Public Class ODEsOut
     Public Property y0 As Dictionary(Of String, Double)
     Public Property params As Dictionary(Of String, Double)
 
+    Public ReadOnly Property dx As Double
+        Get
+            Return x(2) - x(1)
+        End Get
+    End Property
+
     ''' <summary>
     ''' Is there NAN value in the function value <see cref="y"/> ???
     ''' </summary>

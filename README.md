@@ -52,9 +52,9 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 
 ## Microsoft VisualBasic Mathematics System for Data Science
 
-+ **[Mathematics System](./Data_science/Mathematical)** <<<
-+ **[DataFrame System for VisualBasic Data Science](./DocumentFormats/VB_DataFrame)** <<<
-+ **[Network Visualization Interface](./Datavisualization/Datavisualization.Network)** <<<
++ **[Mathematics System](./Data_science/Mathematical/)** <<<
++ **[DataFrame System for VisualBasic Data Science](./Data/DataFrame/)** <<<
++ **[Network Visualization Interface](./gr/Datavisualization.Network/)** <<<
 
 ![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
@@ -156,6 +156,17 @@ Chart plot system
 ###### Image fast binarization using VisualBasic extension API
 [``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
 
-|Normal|Binary|
-|------|------|
-|<img src="./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=250 height=250 />|<img src="./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/lena.binary.jpg" />|
+```vbnet
+Imports Microsoft.VisualBasic.Imaging
+
+Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+
+Call bitmap.GetBinaryBitmap
+     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
+     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
+```
+
+|Normal|Binary|Gray|
+|------|------|----|
+|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=250 height=250 />|<img src="./etc/lena/lena.gray.png" width=250 height=250 />|

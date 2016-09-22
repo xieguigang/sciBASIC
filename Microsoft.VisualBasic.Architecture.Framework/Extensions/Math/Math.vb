@@ -36,6 +36,16 @@ Namespace Mathematical
     Public Module VBMathExtensions
 
         ''' <summary>
+        ''' 以 N 为底的对数 ``LogN(X) = Log(X) / Log(N)`` 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="N"></param>
+        ''' <returns></returns>
+        Public Function LogN(x As Double, N As Double) As Double
+            Return Math.Log(x) / Math.Log(N)
+        End Function
+
+        ''' <summary>
         ''' return the maximum of a, b and c </summary>
         ''' <param name="a"> </param>
         ''' <param name="b"> </param>

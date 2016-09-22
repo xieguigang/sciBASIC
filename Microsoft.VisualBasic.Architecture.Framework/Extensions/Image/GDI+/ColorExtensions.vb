@@ -37,6 +37,26 @@ Namespace Imaging
 
     Public Module ColorExtensions
 
+        ''' <summary>
+        ''' ``rgb(r,g,b)``
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RGBExpression(c As Color) As String
+            Return $"rgb({c.R},{c.G},{c.B})"
+        End Function
+
+        ''' <summary>
+        ''' ``rgb(a,r,g,b)``
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ARGBExpression(c As Color) As String
+            Return $"rgb({c.A},{c.R},{c.G},{c.B})"
+        End Function
+
 #If NET_40 = 0 Then
 
         ''' <summary>
