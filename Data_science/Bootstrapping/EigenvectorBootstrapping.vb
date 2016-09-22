@@ -72,12 +72,17 @@ Public Module EigenvectorBootstrapping
                 .x = x
             }
 
+        Call "Load data complete!".__DEBUG_ECHO
+
         Dim datasets As Entity() = strTags.ToArray(
             Function(x) New Entity With {
                 .uid = x.Name,
                 .Properties = x.x.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
         })
-        Dim clusters = ClusterDataSet(n, datasets)
+
+        Call "Creates dataset complete!".__DEBUG_ECHO
+
+        Dim clusters = ClusterDataSet(n, datasets, debug:=True)
         Dim out As New Dictionary(Of Double(), Dictionary(Of String, Double)())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags
@@ -120,6 +125,8 @@ Public Module EigenvectorBootstrapping
                 .x = x
             }
 
+        Call "Load data complete!".__DEBUG_ECHO
+
         Dim uid As New Uid
         Dim datasets As EntityLDM() = strTags.ToArray(
             Function(x) New EntityLDM With {
@@ -128,7 +135,10 @@ Public Module EigenvectorBootstrapping
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
                                   Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
-        })
+        }, Parallel:=True)
+
+        Call "Creates dataset complete!".__DEBUG_ECHO
+
         Dim clusters As EntityLDM() = datasets.TreeCluster(parallel:=True)
         Dim out As New Dictionary(Of NamedValue(Of Double()), Dictionary(Of String, Double)())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
