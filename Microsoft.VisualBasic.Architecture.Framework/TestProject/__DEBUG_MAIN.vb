@@ -38,12 +38,13 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MemoryDump
+'Imports Microsoft.VisualBasic.MemoryDump
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Webservices
+'Imports Microsoft.VisualBasic.Webservices
 
 Module __DEBUG_MAIN
 
@@ -79,7 +80,12 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
-
+        Dim bitmap As Image = Image.FromFile("G:\GCModeller\src\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+        Dim binbitmap = bitmap.GetBinaryBitmap
+        Call binbitmap.SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\lena.binary.png", ImageFormats.Jpeg)
+        binbitmap = bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
+        Call binbitmap.SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\lena.gray.png", ImageFormats.Jpeg)
+        Pause()
         Dim jsSchema As New Microsoft.VisualBasic.Serialization.JSON.Schema With {
             .title = "Example Schema",
             .type = "object",
@@ -118,9 +124,9 @@ Module __DEBUG_MAIN
 
         Call $"{t.FirstName}, ".__DEBUG_ECHO
 
-        Dim rss = Google.News.RSS.GetCurrent("zika", "http://127.0.0.1:8087")
+        '   Dim rss = Google.News.RSS.GetCurrent("zika", "http://127.0.0.1:8087")
 
-        Call rss.GetXml.__DEBUG_ECHO
+        '   Call rss.GetXml.__DEBUG_ECHO
 
         Pause()
 
@@ -179,10 +185,6 @@ Module __DEBUG_MAIN
             n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(RandomDouble))
             Threading.Thread.Sleep(1000)
         Loop
-
-        Dim bitmap As Image = Image.FromFile("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
-        bitmap = bitmap.GetBinaryBitmap
-        Call bitmap.Save("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\lena.binary.jpg")
 
         Dim shell As New ExternalCall("C:\Perl64\bin\perl.exe")
 

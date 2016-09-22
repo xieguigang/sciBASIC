@@ -7,64 +7,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class Legend
-
-    Public Property style As LegendStyles
-    Public Property title As String
-    Public Property color As String
-    ''' <summary>
-    ''' CSS expression, which can be parsing by <see cref="CSSFont"/> 
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property fontstyle As String
-
-    Public Function GetFont() As Font
-        Return CSSFont.TryParse(fontstyle).GDIObject
-    End Function
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
-
-''' <summary>
-''' Vector shapes that drawing of this legend.
-''' </summary>
-Public Enum LegendStyles
-    ''' <summary>
-    ''' 矩形
-    ''' </summary>
-    Rectangle
-    ''' <summary>
-    ''' 圆形
-    ''' </summary>
-    Circle
-    ''' <summary>
-    ''' 实线
-    ''' </summary>
-    SolidLine
-    ''' <summary>
-    ''' 虚线
-    ''' </summary>
-    DashLine
-    ''' <summary>
-    ''' 菱形
-    ''' </summary>
-    Diamond
-    ''' <summary>
-    ''' 三角形
-    ''' </summary>
-    Triangle
-    ''' <summary>
-    ''' 六边形
-    ''' </summary>
-    Hexagon
-    ''' <summary>
-    ''' 五角星
-    ''' </summary>
-    Pentacle
-End Enum
-
 Public Module LegendPlotExtensions
 
     ''' <summary>
@@ -80,6 +22,7 @@ Public Module LegendPlotExtensions
         Dim fSize As SizeF = g.MeasureString(l.title, font)
 
         Select Case l.style
+
             Case LegendStyles.Circle
                 Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width) / 2
                 Dim c As New Point(pos.X + graphicsSize.Width / 2,

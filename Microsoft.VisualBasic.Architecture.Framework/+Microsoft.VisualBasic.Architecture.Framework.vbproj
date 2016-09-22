@@ -362,6 +362,8 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
     <Compile Include="Extensions\Math\TokenConnections.vb" />
+    <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
+    <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
     <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />

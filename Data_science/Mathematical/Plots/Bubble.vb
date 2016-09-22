@@ -1,6 +1,9 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Bubble
 
@@ -19,7 +22,8 @@ Public Module Bubble
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
                          Optional legend As Boolean = True,
-                         Optional logR As Boolean = False) As Bitmap
+                         Optional logR As Boolean = False,
+                         Optional legendBorder As Border = Nothing) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -46,13 +50,20 @@ Public Module Bubble
                 Next
 
                 If legend Then
-                    Call g.DrawLegend(Of SerialData)(
-                        array,
-                        Function(x) x.title,
-                        Function(x) x.color,
-                        margin.Height,
-                        size.Width * 0.8,
-                        New Font(FontFace.MicrosoftYaHei, 20))
+
+                    Dim topLeft As New Point(size.Width * 0.8, margin.Height)
+                    Dim legends = LinqAPI.Exec(Of Legend) <=
+ _
+                        From x As SerialData
+                        In array
+                        Select New Legend With {
+                            .color = x.color.RGBExpression,
+                            .fontstyle = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 20),
+                            .style = LegendStyles.Circle,
+                            .title = x.title
+                        }
+
+                    Call g.DrawLegends(topLeft, legends,,, legendBorder)
                 End If
             End Sub)
     End Function

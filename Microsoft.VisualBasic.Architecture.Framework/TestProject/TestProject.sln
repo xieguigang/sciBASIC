@@ -9,8 +9,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Arch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test2", "Test2\Test2.csproj", "{411CAC43-6338-4347-AEB6-7B644D7C4082}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Webservices.Google", "..\..\Microsoft.VisualBasic.Webservices.Google\Microsoft.VisualBasic.Webservices.Google.vbproj", "{27D73520-1698-45B0-B35B-32B5AF0334F0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,30 +97,6 @@ Global
 		{411CAC43-6338-4347-AEB6-7B644D7C4082}.Release|x64.Build.0 = Release|Any CPU
 		{411CAC43-6338-4347-AEB6-7B644D7C4082}.Release|x86.ActiveCfg = Release|Any CPU
 		{411CAC43-6338-4347-AEB6-7B644D7C4082}.Release|x86.Build.0 = Release|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Debug|x64.ActiveCfg = Debug|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Debug|x64.Build.0 = Debug|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Debug|x86.Build.0 = Debug|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.docs|Any CPU.ActiveCfg = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.docs|Any CPU.Build.0 = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.docs|x64.ActiveCfg = docs|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.docs|x64.Build.0 = docs|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.docs|x86.ActiveCfg = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.docs|x86.Build.0 = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Publish|Any CPU.ActiveCfg = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Publish|Any CPU.Build.0 = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Publish|x64.ActiveCfg = docs|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Publish|x64.Build.0 = docs|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Publish|x86.ActiveCfg = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Publish|x86.Build.0 = docs|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Release|x64.ActiveCfg = Release|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Release|x64.Build.0 = Release|x64
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Release|x86.ActiveCfg = Release|Any CPU
-		{27D73520-1698-45B0-B35B-32B5AF0334F0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

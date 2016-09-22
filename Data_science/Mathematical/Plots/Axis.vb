@@ -4,6 +4,14 @@ Imports Microsoft.VisualBasic.Imaging
 
 Module Axis
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="scaler">Drawing Point data auto scaler</param>
+    ''' <param name="showGrid">Show axis grid on the plot region?</param>
     <Extension>
     Public Sub DrawAxis(ByRef g As Graphics, size As Size, margin As Size, scaler As Scaling, showGrid As Boolean)
         Dim o As New Point(margin.Width, size.Height - margin.Height)
