@@ -127,6 +127,12 @@ Public Module EigenvectorBootstrapping
             }
         Next
 
+        out.x = out.y.Values _
+            .First.x _
+            .Sequence _
+            .Select(Function(x) CDbl(x)) _
+            .ToArray
+
         Return out
     End Function
 End Module
