@@ -76,7 +76,46 @@ Module DEBUG
         Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv"), legend:=False).SaveAs("./Bubble.png")
     End Sub
 
+
+    Private Sub ShowCharacterData()
+        Dim result = ODEsOut.LoadFromDataFrame("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\bootstrapping\test\Kinetics_of_influenza_A_virus_infection_in_humans.csv")
+        Dim i = GetAnalysis("I")(result.y("I").x)
+        Dim t = GetAnalysis("T")(result.y("T").x)
+        Dim v = GetAnalysis("V")(result.y("V").x)
+    End Sub
+
+    ''' <summary>
+    ''' 通过数据特征来分析结果
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetAnalysis(odes As ODEsOut) As Dictionary(Of String, GetPoints)
+        Dim dx As Double = odes.dx
+        Dim I As GetPoints = Function(data)
+                                 Dim a = data.FirstIncrease(dx)
+                                 Dim iMax = data.MaxIndex
+                                 Dim z = data.Skip(iMax).Reach(data.First) + iMax
+                                 Return {a, iMax, z}
+                             End Function
+        Dim T As GetPoints = Function(data)
+                                 Dim a = data.FirstDecrease
+                                 Dim b = data.Reach(data.First * 0.01)
+                                 Return {a, b}
+                             End Function
+        Dim V As GetPoints = Function(data)
+                                 Dim a = data.FirstIncrease(dx)
+                                 Dim b = data.MaxIndex
+                                 Return {a, b}
+                             End Function
+
+        Return New Dictionary(Of String, GetPoints) From {
+            {NameOf(I), I},
+            {NameOf(T), T},
+            {NameOf(V), V}
+        }
+    End Function
+
     Public Function Main() As Integer
+        Call ShowCharacterData()
 
         Dim type As New Value(Of LegendStyles)
         Dim legends As Legend() = {
