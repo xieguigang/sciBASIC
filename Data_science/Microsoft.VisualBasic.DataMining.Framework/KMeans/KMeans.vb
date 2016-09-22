@@ -125,7 +125,7 @@ Namespace KMeans
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
         ''' <param name="source">An array containing data that will be clustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T)) As ClusterCollection(Of T)
+        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T), Optional debug As Boolean = False, Optional [stop] As Integer = -1) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
@@ -152,7 +152,9 @@ Namespace KMeans
                 End If
             End While
 
-            Dim _stop As Integer = clusterCount * rowCount
+            If [stop] <= 0 Then
+                [stop] = clusterCount * rowCount
+            End If
 
             While stableClustersCount <> clusters.NumOfCluster
                 stableClustersCount = 0
@@ -164,6 +166,11 @@ Namespace KMeans
                     Dim y As KMeansCluster(Of T) = clusters(clusterIndex)
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
+
+                        If debug Then
+                            Call "If (x.NumOfEntity = 0 OrElse y.NumOfEntity = 0) Is True".__DEBUG_ECHO
+                        End If
+
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
@@ -175,8 +182,12 @@ Namespace KMeans
                 iterationCount += 1
                 clusters = newClusters
 
-                If iterationCount > _stop Then
+                If iterationCount > [stop] Then
                     Exit While
+                Else
+                    If debug Then
+                        Call $"[{iterationCount}/{[stop]}] stableClustersCount <> clusters.NumOfCluster => {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".__DEBUG_ECHO
+                    End If
                 End If
             End While
 
