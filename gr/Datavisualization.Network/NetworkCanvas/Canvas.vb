@@ -29,9 +29,9 @@
 Imports System.ComponentModel
 Imports System.Timers
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
-Imports Microsoft.VisualBasic.DataVisualization.Network.Graph
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts
-Imports Microsoft.VisualBasic.DataVisualization.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 ''' <summary>
