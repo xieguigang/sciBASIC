@@ -23,6 +23,12 @@ Public Class SerialData : Implements sIdEnumerable
     Public color As Color = Color.Black
     Public width As Single = 1
 
+    ''' <summary>
+    ''' 对一系列特定的数据点的注释数据
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property annotations As Annotation()
+
     Public Function GetPointByX(x As Single) As PointData
         For Each pt As PointData In pts
             If pt.pt.X = x Then

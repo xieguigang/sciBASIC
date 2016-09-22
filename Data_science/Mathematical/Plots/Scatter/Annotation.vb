@@ -21,7 +21,7 @@ Public Structure Annotation
     ''' <summary>
     ''' Size region for <see cref="Legend"/> Drawing
     ''' </summary>
-    Public size As Size
+    Public size As SizeF
 
     ''' <summary>
     ''' The target annotation data point is null!
@@ -34,6 +34,10 @@ Public Structure Annotation
         If pt.pt.IsEmpty Then
             Call PointNull.PrintException
             Return
+        Else
+            If size.IsEmpty Then
+                size = New SizeF(120, 45)
+            End If
         End If
 
         ' 得到转换坐标
@@ -56,7 +60,7 @@ Public Structure Annotation
         Call DrawLegend(
             g,
             New Point(point.X, point.Y),
-            New SizeF(size.Width, size.Height),
+            size,
             legend,
             border)
     End Sub

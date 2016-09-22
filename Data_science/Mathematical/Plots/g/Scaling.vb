@@ -60,7 +60,8 @@ Public Class Scaling
                 .PointSize = s.PointSize,
                 .pts = pts,
                 .title = s.title,
-                .width = s.width
+                .width = s.width,
+                .annotations = s.annotations
             }
         Next
     End Function

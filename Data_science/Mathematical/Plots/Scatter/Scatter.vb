@@ -37,7 +37,7 @@ Public Module Scatter
 
         Return GraphicsPlots(
             size, margin, bg,
-            Sub(g)
+            Sub(g, grect)
                 Dim array As SerialData() = c.ToArray
                 Dim mapper As New Scaling(array)
 
@@ -63,6 +63,14 @@ Public Module Scatter
                         Call g.FillPie(br, a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
                         Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
                     Next
+
+                    If Not line.annotations.IsNullOrEmpty Then
+                        Dim raw = array.Where(Function(s) s.title = line.title).First
+
+                        For Each annotation As Annotation In line.annotations
+                            Call annotation.Draw(g, mapper, raw, grect)
+                        Next
+                    End If
 
                     If showLegend Then
                         Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=

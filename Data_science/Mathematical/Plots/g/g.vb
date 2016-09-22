@@ -9,6 +9,13 @@ Imports Microsoft.VisualBasic.Imaging
 Public Module g
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="g">GDI+设备</param>
+    ''' <param name="grct">绘图区域的大小</param>
+    Public Delegate Sub IPlot(g As Graphics, grct As GraphicsRegion)
+
+    ''' <summary>
     ''' Data plots graphics engine.
     ''' </summary>
     ''' <param name="size"></param>
@@ -16,7 +23,7 @@ Public Module g
     ''' <param name="bg"></param>
     ''' <param name="plot"></param>
     ''' <returns></returns>
-    Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg As String, plot As Action(Of Graphics)) As Bitmap
+    Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg As String, plot As IPlot) As Bitmap
         If size.IsEmpty Then
             size = New Size(4300, 2000)
         End If
@@ -33,10 +40,25 @@ Public Module g
             g.FillRectangle(New SolidBrush(bgColor), rect)
             g.CompositingQuality = CompositingQuality.HighQuality
 
-            Call plot(g)
+            Call plot(g, New GraphicsRegion With {
+                .Size = size,
+                .Margin = margin
+            })
         End Using
 
         Return bmp
+    End Function
+
+    ''' <summary>
+    ''' Data plots graphics engine.
+    ''' </summary>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="plot"></param>
+    ''' <returns></returns>
+    Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg As String, plot As Action(Of Graphics)) As Bitmap
+        Return GraphicsPlots(size, margin, bg, Sub(g, rect) Call plot(g))
     End Function
 
     '<Extension>
