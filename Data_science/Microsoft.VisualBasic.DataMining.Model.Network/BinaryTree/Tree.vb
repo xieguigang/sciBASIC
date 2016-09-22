@@ -121,17 +121,18 @@ Namespace KMeans
         ''' 二叉树树形聚类，请注意，所输入的数据的名字不可以一样，不然无法正确生成cluster标记
         ''' </summary>
         ''' <param name="resultSet"></param>
+        ''' <param name="stop">Max iteration number for the kmeans kernel</param>
         ''' <returns></returns>
         '''
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False) As EntityLDM()
+        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As EntityLDM()
             Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray   ' 得到所有属性的名称
             Dim ds As Entity() = resultSet.ToArray(
                 Function(x) New KMeans.Entity With {
                     .uid = x.Name,
                     .Properties = mapNames.ToArray(Function(s) x.Properties(s))
                 })  ' 在这里生成计算模型
-            Dim tree As KMeans.Entity() = TreeCluster(ds, parallel)   ' 二叉树聚类操作
+            Dim tree As KMeans.Entity() = TreeCluster(ds, parallel, [stop])   ' 二叉树聚类操作
             Dim saveResult As EntityLDM() = tree.ToArray(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In resultSet.ToArray(Function(x) x.Name)
@@ -152,17 +153,18 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="parallel"></param>
+        ''' <param name="stop">Max iteration number for the kmeans kernel</param>
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False) As Entity()
-            Return TreeCluster(Of Entity)(source, parallel)
+        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As Entity()
+            Return TreeCluster(Of Entity)(source, parallel, [stop])
         End Function
 
-        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False) As Entity()
+        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As Entity()
             If parallel Then
-                Return __firstCluster(source, [stop]:=CInt(source.Count / 2))
+                Return __firstCluster(source, [stop]:=CInt(source.Count / 2), kmeansStop:=[stop])
             Else
-                Return __treeCluster(source, Scan0, CInt(source.Count / 2))
+                Return __treeCluster(source, Scan0, CInt(source.Count / 2), kmeansStop:=[stop])
             End If
         End Function
 
@@ -173,18 +175,18 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
-        Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer) As Entity()
-            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
+        Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer, kmeansStop As Integer) As Entity()
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source, debug:=True, [stop]:=kmeansStop).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of Entity()) =
-                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop])).Run    ' cluster1
-            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), "2", [stop]) ' cluster2
+                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop], kmeansStop)).Run    ' cluster1
+            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), "2", [stop], kmeansStop) ' cluster2
             list += cluster1.GetValue
 
             Return list.ToArray
         End Function
 
-        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer) As Entity()
+        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer, kmeansStop As Integer) As Entity()
             For Each x In cluster
                 x.uid &= ("." & id)
             Next
@@ -192,11 +194,11 @@ Namespace KMeans
             If cluster.NumOfEntity <= 1 Then
                 Return cluster.ToArray
             Else
-                Return __treeCluster(cluster.ToArray, Scan0, [stop])  ' 递归聚类分解
+                Return __treeCluster(cluster.ToArray, Scan0, [stop], kmeansStop)  ' 递归聚类分解
             End If
         End Function
 
-        Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer) As Entity()
+        Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer, kmeansStop As Integer) As Entity()
             If source.Count = 2 Then
 EXIT_:          Dim array = source.ToArray
                 For i As Integer = 0 To array.Length - 1
@@ -219,7 +221,7 @@ EXIT_:          Dim array = source.ToArray
             End If
 
             Dim list As New List(Of Entity)
-            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source,, [stop]:=kmeansStop).ToArray
 
             ' 检查数据
             Dim b0 As Boolean = False ', b20 As Boolean = False
@@ -244,7 +246,7 @@ EXIT_:          Dim array = source.ToArray
 
                 'Call list.Add(cluster)
                 Call Console.Write(">")
-                Call list.Add(__treeCluster(result.MatrixToList, depth, [stop]))  ' 递归聚类分解
+                Call list.Add(__treeCluster(result.MatrixToList, depth, [stop], kmeansStop))  ' 递归聚类分解
             Else
                 For i As Integer = 0 To result.Length - 1
                     Dim cluster = result(i)
@@ -260,7 +262,7 @@ EXIT_:          Dim array = source.ToArray
                         '  不可以取消这可分支，否则会死循环
                     Else
                         Call Console.Write(">")
-                        Call list.Add(__treeCluster(cluster.ToArray, depth, [stop]))  ' 递归聚类分解
+                        Call list.Add(__treeCluster(cluster.ToArray, depth, [stop], kmeansStop))  ' 递归聚类分解
                     End If
                 Next
             End If

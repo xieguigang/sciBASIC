@@ -11,14 +11,15 @@ Module Program
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
-    <ExportAPI("/Build.Zone", Usage:="/Build.Zone /imports <odes_out.DIR> [/part.N 10 /cluster.N 10 /out <outDIR>]")>
+    <ExportAPI("/Build.Zone", Usage:="/Build.Zone /imports <odes_out.DIR> [/part.N 10 /cluster.N 10 /out <outDIR> /max.it -1]")>
     Public Function BootstrappingExport(args As CommandLine) As Integer
         Dim [in] As String = args("/imports")
         Dim partN As Integer = args.GetValue("/part.N", 10)
         Dim clusterN As Integer = args.GetValue("/cluster.N", 10)
+        Dim maxIt As Integer = args.GetValue("/max.it", -1)
         Dim binary As Boolean = args.GetBoolean("/binary")
         Dim vec = DefaultEigenvector([in])
-        Dim out = [in].LoadData(vec, partN).KMeans(clusterN)
+        Dim out = [in].LoadData(vec, partN).KMeans(clusterN, [stop]:=maxIt)
         Dim EXPORT As String = args.GetValue(
             "/out",
             [in].TrimDIR & $".partN={partN},.clusterN={clusterN}{If(binary, "-binaryTree", "")}/")
@@ -35,13 +36,14 @@ Module Program
         Return 0
     End Function
 
-    <ExportAPI("/Build.Zone.Binary", Usage:="/Build.Zone.Binary /imports <odes_out.DIR> [/depth 4 /part.N 10 /out <outDIR>]")>
+    <ExportAPI("/Build.Zone.Binary", Usage:="/Build.Zone.Binary /imports <odes_out.DIR> [/depth 4 /part.N 10 /out <outDIR> /max.it -1]")>
     Public Function BootstrappingExportBinary(args As CommandLine) As Integer
         Dim [in] As String = args("/imports")
         Dim partN As Integer = args.GetValue("/part.N", 10)
         Dim vec = DefaultEigenvector([in])
         Dim depth As Integer = args.GetValue("/depth", 4)
-        Dim out = [in].LoadData(vec, partN).BinaryKMeans(depth)
+        Dim maxIt As Integer = args.GetValue("/max.it", -1)
+        Dim out = [in].LoadData(vec, partN).BinaryKMeans(depth, [stop]:=maxIt)
         Dim EXPORT As String = args.GetValue(
             "/out",
             [in].TrimDIR & $".partN={partN}-binaryTree/")
