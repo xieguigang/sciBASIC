@@ -26,4 +26,8 @@ Namespace ComponentModel.TagData
     Public Class DateTagged(Of T) : Inherits TagData(Of Date, T)
 
     End Class
+
+    Public Class VectorTagged(Of T) : Inherits TagData(Of Double(), T)
+
+    End Class
 End Namespace

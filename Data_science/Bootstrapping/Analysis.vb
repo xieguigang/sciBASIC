@@ -9,6 +9,9 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' 这个方法的结果可能结果不是太好
+''' </summary>
 Public Module Analysis
 
     Public Delegate Function GetPoints(vals As Double()) As Integer()
