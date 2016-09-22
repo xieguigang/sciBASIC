@@ -16,9 +16,34 @@ Module Program
         Dim [in] As String = args("/imports")
         Dim partN As Integer = args.GetValue("/part.N", 10)
         Dim clusterN As Integer = args.GetValue("/cluster.N", 10)
+        Dim binary As Boolean = args.GetBoolean("/binary")
         Dim vec = DefaultEigenvector([in])
         Dim out = [in].LoadData(vec, partN).KMeans(clusterN)
-        Dim EXPORT As String = args.GetValue("/out", [in].TrimDIR & $".partN={partN},.clusterN={clusterN}/")
+        Dim EXPORT As String = args.GetValue(
+            "/out",
+            [in].TrimDIR & $".partN={partN},.clusterN={clusterN}{If(binary, "-binaryTree", "")}/")
+        Dim uid As New Uid(False)
+
+        For Each cluster In out
+            Dim Eigenvector As ODEsOut = cluster.Key.GetSample(vec, partN)
+            Dim DIR As String = EXPORT & "/" & FormatZero(uid.Plus, "0000")
+
+            Call Eigenvector.DataFrame.Save(DIR & "/Eigenvector.Sample.csv", Encodings.ASCII)
+            Call cluster.Value.Select(Function(x) New With {.params = x}).ToArray.SaveTo(DIR & "/Eigenvector.paramZone.csv")
+        Next
+
+        Return 0
+    End Function
+
+    <ExportAPI("/Build.Zone.Binary", Usage:="/Build.Zone.Binary /imports <odes_out.DIR> [/part.N 10 /out <outDIR>]")>
+    Public Function BootstrappingExportBinary(args As CommandLine) As Integer
+        Dim [in] As String = args("/imports")
+        Dim partN As Integer = args.GetValue("/part.N", 10)
+        Dim vec = DefaultEigenvector([in])
+        Dim out = [in].LoadData(vec, partN).BinaryKMeans()
+        Dim EXPORT As String = args.GetValue(
+            "/out",
+            [in].TrimDIR & $".partN={partN}-binaryTree/")
         Dim uid As New Uid(False)
 
         For Each cluster In out

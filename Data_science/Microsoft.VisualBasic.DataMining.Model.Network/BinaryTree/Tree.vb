@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::776092fef7ffbff156f4c8d4c06b457e, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Model.Network\Tree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -39,26 +40,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
 
-    Public Class Partition : Implements sIdEnumerable
-
-        Public Property Tag As String Implements sIdEnumerable.Identifier
-        Public ReadOnly Property NumOfEntity As Integer
-            Get
-                If uids Is Nothing Then
-                    Return 0
-                Else
-                    Return uids.Length
-                End If
-            End Get
-        End Property
-
-        Public Property uids As String()
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-    End Class
-
+    ''' <summary>
+    ''' KMeans.Tree.NET
+    ''' </summary>
     <PackageNamespace("KMeans.Tree.NET",
                       Category:=APICategories.ResearchTools,
                       Publisher:="smrucc@gcmodeller.org")>
@@ -75,7 +59,10 @@ Namespace KMeans
             Dim list As New List(Of EntityLDM)(cluster)
 
             If depth <= 0 Then
-                depth = (From x In list Select l = x.Cluster Order By l.Length Ascending).First.Split("."c).Length
+                depth = (From x As EntityLDM
+                         In list
+                         Select l = x.Cluster
+                         Order By l.Length Ascending).First.Split("."c).Length
             End If
 
             Dim clusters As New List(Of String)({""})
@@ -98,21 +85,27 @@ Namespace KMeans
             Dim partitions As New List(Of Partition)
 
             For Each tag As String In clusters
-                Dim LQuery As EntityLDM() = (From x As EntityLDM
-                                             In list.AsParallel
-                                             Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
-                                             Select x).ToArray
+                Dim LQuery As EntityLDM() =
+                    LinqAPI.Exec(Of EntityLDM) <=
+ _
+                    From x As EntityLDM
+                    In list.AsParallel
+                    Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
+                    Select x
+
                 list -= LQuery
                 partitions += New Partition With {
                     .Tag = tag,
-                    .uids = LQuery.ToArray(Function(x) x.Name)
+                    .uids = LQuery.ToArray(Function(x) x.Name),
+                    .members = LQuery
                 }
             Next
 
             If Not list.IsNullOrEmpty Then
                 partitions += New Partition With {
                     .Tag = "Unclass",
-                    .uids = list.ToArray(Function(x) x.Name)
+                    .uids = list.ToArray(Function(x) x.Name),
+                    .members = list.ToArray
                 }
             End If
 
@@ -120,7 +113,7 @@ Namespace KMeans
         End Function
 
         ''' <summary>
-        ''' 树形聚类
+        ''' 二叉树树形聚类
         ''' </summary>
         ''' <param name="resultSet"></param>
         ''' <returns></returns>
@@ -149,6 +142,12 @@ Namespace KMeans
             Return saveResult
         End Function
 
+        ''' <summary>
+        ''' 二叉树聚类的路径会在<see cref="Entity.uid"/>上面出现
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="parallel"></param>
+        ''' <returns></returns>
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False) As Entity()
             Return TreeCluster(Of Entity)(source, parallel)

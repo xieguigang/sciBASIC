@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 
 Public Module EigenvectorBootstrapping
 
@@ -103,6 +104,58 @@ Public Module EigenvectorBootstrapping
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"><see cref="LoadData"/>的输出数据</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function BinaryKMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))) As Dictionary(Of Double(), Dictionary(Of String, Double)())
+        Dim strTags As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))() =
+            LinqAPI.Exec(Of NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))) <=
+ _
+            From x As VectorTagged(Of Dictionary(Of String, Double))
+            In data.AsParallel
+            Select New NamedValue(Of VectorTagged(Of Dictionary(Of String, Double))) With {
+                .Name = x.Tag.GetJson,
+                .x = x
+            }
+
+        Dim datasets As EntityLDM() = strTags.ToArray(
+            Function(x) New EntityLDM With {
+                .Name = "boot",
+                .Properties = x.x.Tag _
+                    .SeqIterator _
+                    .ToDictionary(Function(o) CStr(o.i),
+                                  Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
+        })
+        Dim clusters As EntityLDM() = datasets.TreeCluster(parallel:=True)
+        Dim out As New Dictionary(Of Double(), Dictionary(Of String, Double)())
+        Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
+                   In strTags
+                   Select x
+                   Group x By x.Name Into Group) _
+                        .ToDictionary(Function(x) x.Name,
+                                      Function(x) x.Group.ToArray)
+        Dim treeParts = clusters.Partitioning
+
+        For Each cluster As Partition In treeParts
+            Dim key As Double() = cluster.ClusterMean  ' out之中的key
+            Dim tmp As New List(Of Dictionary(Of String, Double))   ' out之中的value
+
+            For Each x As Entity In cluster
+                Dim rawKey As String = x.Properties.GetJson
+                Dim rawParams = raw(rawKey).ToArray(Function(o) o.x.value)
+
+                tmp += rawParams
+            Next
+
+            out(key) = tmp.ToArray
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>
     ''' 默认的特征向量: ``{data.Average, data.StdError}``
     ''' </summary>
     ''' <param name="data"></param>
@@ -123,7 +176,7 @@ Public Module EigenvectorBootstrapping
         For Each key As SeqValue(Of String) In eig.Keys.SeqIterator
             out.y(key) = New NamedValue(Of Double()) With {
                 .Name = key,
-                .x = serials(key.i)
+                .x = serials(key.i).Split(2).ToArray(Function(o) o(0))
             }
         Next
 
