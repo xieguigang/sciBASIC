@@ -3,8 +3,19 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
+''' <summary>
+''' Data plots graphics engine common abstract.
+''' </summary>
 Public Module g
 
+    ''' <summary>
+    ''' Data plots graphics engine.
+    ''' </summary>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="plot"></param>
+    ''' <returns></returns>
     Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg As String, plot As Action(Of Graphics)) As Bitmap
         If size.IsEmpty Then
             size = New Size(4300, 2000)
