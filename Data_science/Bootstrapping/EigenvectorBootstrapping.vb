@@ -61,7 +61,7 @@ Public Module EigenvectorBootstrapping
     ''' <param name="n">所期望的Kmeans集合的数量</param>
     ''' <returns></returns>
     <Extension>
-    Public Function KMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), n As Integer) As Dictionary(Of Double(), Dictionary(Of String, Double)())
+    Public Function KMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), n As Integer, Optional [stop] As Integer = -1) As Dictionary(Of Double(), Dictionary(Of String, Double)())
         Dim strTags As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))() =
             LinqAPI.Exec(Of NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))) <=
  _
@@ -82,7 +82,7 @@ Public Module EigenvectorBootstrapping
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
-        Dim clusters = ClusterDataSet(n, datasets, debug:=True)
+        Dim clusters = ClusterDataSet(n, datasets, debug:=True, [stop]:=[stop])
         Dim out As New Dictionary(Of Double(), Dictionary(Of String, Double)())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags
@@ -114,7 +114,7 @@ Public Module EigenvectorBootstrapping
     ''' <param name="data"><see cref="LoadData"/>的输出数据</param>
     ''' <returns></returns>
     <Extension>
-    Public Function BinaryKMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), partitionDepth As Integer) As Dictionary(Of NamedValue(Of Double()), Dictionary(Of String, Double)())
+    Public Function BinaryKMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), partitionDepth As Integer, Optional [stop] As Integer = -1) As Dictionary(Of NamedValue(Of Double()), Dictionary(Of String, Double)())
         Dim strTags As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))() =
             LinqAPI.Exec(Of NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))) <=
  _
@@ -135,11 +135,11 @@ Public Module EigenvectorBootstrapping
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
                                   Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
-        }, Parallel:=True)
+        })
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
-        Dim clusters As EntityLDM() = datasets.TreeCluster(parallel:=True)
+        Dim clusters As EntityLDM() = datasets.TreeCluster(parallel:=True, [stop]:=[stop])
         Dim out As New Dictionary(Of NamedValue(Of Double()), Dictionary(Of String, Double)())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags
