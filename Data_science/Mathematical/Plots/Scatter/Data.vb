@@ -2,6 +2,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -46,46 +47,6 @@ Public Class SerialData : Implements sIdEnumerable
         Yield GetEnumerator()
     End Function
 End Class
-
-Public Structure Annotation
-
-    ''' <summary>
-    ''' [<see cref="PointF.X"/>] from <see cref="SerialData.pts"/>::<see cref="PointData.pt"/>
-    ''' </summary>
-    Public X As Single
-    Public Text As String
-    ''' <summary>
-    ''' Font style for <see cref="Text"/>
-    ''' </summary>
-    Public Font As CSSFont
-    Public Legend As LegendStyles
-    ''' <summary>
-    ''' Size region for <see cref="Legend"/> Drawing
-    ''' </summary>
-    Public size As Size
-
-    ''' <summary>
-    ''' The target annotation data point is null!
-    ''' </summary>
-    Const PointNull As String = "The target annotation data point is null!"
-
-    Public Sub Draw(ByRef g As Graphics, scaler As Scaling, s As SerialData)
-        Dim font As Font = Me.Font.GDIObject
-        Dim pt As PointData = s.GetPointByX(X)
-
-        If pt.pt.IsEmpty Then
-            Call PointNull.PrintException
-            Return
-        End If
-
-        ' 得到转换坐标
-
-    End Sub
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Structure
 
 ''' <summary>
 ''' 绘图的点的数据

@@ -50,7 +50,24 @@ Namespace HTML.CSS
             End Get
         End Property
 
-        Public Overloads Shared Function ToString(style As Drawing.FontStyle) As String
+        Sub New()
+        End Sub
+
+        Sub New(font As Font)
+            family = font.Name
+            style = font.Style
+            size = font.Size
+        End Sub
+
+        Public Shared Function GetFontStyle(family As String, style As FontStyle, size As Single) As String
+            Return $"font-style: {ToString(style)}; font-size: {size}; font-family: {family};"
+        End Function
+
+        Public Shared Function GetFontStyle(font As Font) As String
+            Return GetFontStyle(font.Name, font.Style, font.Size)
+        End Function
+
+        Public Overloads Shared Function ToString(style As FontStyle) As String
             Select Case style
                 Case Drawing.FontStyle.Bold
                     Return strong
@@ -139,5 +156,12 @@ Namespace HTML.CSS
         Public Const strikeout = "strikeout"
         Public Const underline = "underline"
 
+        Public Shared Widening Operator CType(font As Font) As CSSFont
+            Return New CSSFont(font)
+        End Operator
+
+        Public Shared Narrowing Operator CType(font As CSSFont) As Font
+            Return font.GDIObject
+        End Operator
     End Class
 End Namespace

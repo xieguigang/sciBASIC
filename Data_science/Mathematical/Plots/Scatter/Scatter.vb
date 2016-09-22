@@ -5,11 +5,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Scatter
@@ -30,12 +32,13 @@ Public Module Scatter
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
-                         Optional drawLine As Boolean = True) As Bitmap
+                         Optional drawLine As Boolean = True,
+                         Optional legendBorder As Border = Nothing) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
             Sub(g)
-                Dim array = c.ToArray
+                Dim array As SerialData() = c.ToArray
                 Dim mapper As New Scaling(array)
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
@@ -62,17 +65,25 @@ Public Module Scatter
                     Next
 
                     If showLegend Then
+                        Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+ _
+                            From x As SerialData
+                            In array
+                            Select New Legend With {
+                                .color = x.color.RGBExpression,
+                                .fontstyle = CSSFont.GetFontStyle(
+                                    FontFace.MicrosoftYaHei,
+                                    FontStyle.Regular,
+                                    20),
+                                .style = LegendStyles.Circle,
+                                .title = x.title
+                            }
+
                         If legendPosition.IsEmpty Then
                             legendPosition = New Point(size.Width * 0.8, margin.Height)
                         End If
 
-                        Call g.DrawLegend(Of SerialData)(
-                            array,
-                            Function(x) x.title,
-                            Function(x) x.color,
-                            legendPosition.Y,
-                            legendPosition.X,
-                            New Font(FontFace.MicrosoftYaHei, 20))
+                        Call g.DrawLegends(legendPosition, legends,,, legendBorder)
                     End If
                 Next
             End Sub)
