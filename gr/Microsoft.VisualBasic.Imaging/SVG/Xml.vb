@@ -51,6 +51,7 @@ Namespace SVG
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property [class] As String
+        <XmlAttribute> Public Property id As String
 
         Public Overrides Function ToString() As String
             Return MyClass.GetJson
@@ -68,6 +69,9 @@ Namespace SVG
         Public Property title As title
     End Class
 
+    ''' <summary>
+    ''' SVG graphics unit
+    ''' </summary>
     Public Class g : Inherits node
         <XmlAttribute> Public Property transform As String
         <XmlElement("text")> Public Property texts As text()
@@ -122,6 +126,7 @@ Namespace SVG
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property version As String
+        <XmlAttribute> Public Property viewBox As Double()
 #End Region
 
         ''' <summary>
@@ -137,6 +142,12 @@ Namespace SVG
             width = size.Width & "px"
             height = size.Height & "px"
         End Sub
+
+        Public Shared Function TryLoad(xml As String) As SVGXml
+            Dim xmlDoc As New XmlDoc(xml)
+            xmlDoc.xmlns.xmlns = ""
+            Return xmlDoc.ToString.LoadFromXml(Of SVGXml)(throwEx:=True)
+        End Function
 
         ''' <summary>
         ''' Save this svg document object into the file system.

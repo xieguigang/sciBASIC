@@ -94,6 +94,13 @@ Public Module DataImports
         Return New DocumentStream.File(LQuery)
     End Function
 
+    <Extension>
+    Public Function ImportsData(Of T As Class)(sData As String,
+                                               Optional delimiter As String = ",",
+                                               Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(sData.lTokens, delimiter).AsDataSource(Of T)(maps:=maps)
+    End Function
+
     ''' <summary>
     ''' Row parsing its column tokens
     ''' </summary>
