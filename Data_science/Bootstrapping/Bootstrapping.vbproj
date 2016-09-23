@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="BootstrapEstimate.vb" />
     <Compile Include="Analysis.vb" />
+    <Compile Include="EigenvectorBootstrapping.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
