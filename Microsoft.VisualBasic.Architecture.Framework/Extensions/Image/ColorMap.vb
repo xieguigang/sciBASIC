@@ -157,14 +157,26 @@ Namespace Imaging
         ''' </summary>
         Public Const PatternWinter As String = "Winter"
 
-        Public Function GetMaps(name As String) As MapsFunc
+        ''' <summary>
+        ''' If failure, then this function will returns <see cref="Jet"/> by default, 
+        ''' or nothing if parameter <paramref name="noDefault"/> is set True.
+        ''' </summary>
+        ''' <param name="name">大小写不敏感</param>
+        ''' <returns></returns>
+        Public Function GetMaps(name As String, Optional noDefault As Boolean = False) As MapsFunc
             Static key As New Value(Of String)
 
             SyncLock key
-                If ColorMaps.ContainsKey(key = name.ToLower) Then
-                    Return ColorMaps(+key)
+                If Not name Is Nothing AndAlso
+                    ColorMaps.ContainsKey(key = name.ToLower) Then
+
+                    Return ColorMaps(key)
                 Else
-                    Return AddressOf Jet
+                    If noDefault Then
+                        Return Nothing
+                    Else
+                        Return AddressOf Jet
+                    End If
                 End If
             End SyncLock
         End Function
