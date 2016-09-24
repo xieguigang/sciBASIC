@@ -2,8 +2,8 @@
 
 ### Color Sequence
 
-+ ``[Microsoft.VisualBasic.Imaging.ColorMap](../Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/ColorMap.vb)``
-+ ``Microsoft.VisualBasic.Imaging.ColorMapsExtensions.ColorSequence(Microsoft.VisualBasic.Imaging.ColorMapsExtensions.MapsFunc, Microsoft.VisualBasic.Imaging.ColorMap, Integer) As System.Drawing.Color()``
++ **[Microsoft.VisualBasic.Imaging.ColorMap](../Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/ColorMap.vb)**
++ **[Microsoft.VisualBasic.Imaging.ColorMap](../Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/)**.**[ColorMapsExtensions](../Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/ColorMap.vb)**.``ColorSequence(Microsoft.VisualBasic.Imaging.ColorMapsExtensions.MapsFunc, Microsoft.VisualBasic.Imaging.ColorMap, Integer) As System.Drawing.Color()``
 
 
 > ![](../etc/scales.png)
