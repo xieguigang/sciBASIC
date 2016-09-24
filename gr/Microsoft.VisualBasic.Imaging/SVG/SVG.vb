@@ -41,7 +41,9 @@ Namespace SVG
         Public Shared Function TryLoad(xml As String) As SVGXml
             Dim xmlDoc As New XmlDoc(xml)
             xmlDoc.xmlns.xmlns = ""
-            Return xmlDoc.ToString.LoadFromXml(Of SVGXml)(throwEx:=True)
+            Dim sb As New StringBuilder(xmlDoc.ToString)
+            Call sb.Replace("xlink:href=""", "image.data=""")
+            Return sb.ToString.LoadFromXml(Of SVGXml)(throwEx:=True)
         End Function
 
         ''' <summary>
@@ -51,7 +53,10 @@ Namespace SVG
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         Private Function SaveAsXml(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-            Dim xml As New XmlDoc(Me.GetXml)
+            Dim sb As New StringBuilder(Me.GetXml)
+            Call sb.Replace("image.data=""", "xlink:href=""")
+
+            Dim xml As New XmlDoc(sb.ToString)
             xml.encoding = XmlEncodings.UTF8
             xml.standalone = False
             xml.xmlns.Set("xlink", "http://www.w3.org/1999/xlink")

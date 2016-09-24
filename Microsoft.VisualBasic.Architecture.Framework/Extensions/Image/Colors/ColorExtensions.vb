@@ -127,6 +127,8 @@ Namespace Imaging
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
                 Return Color.Black
+            ElseIf str.TextEquals("transparent") Then
+                Return Color.Transparent
             End If
 
             Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
