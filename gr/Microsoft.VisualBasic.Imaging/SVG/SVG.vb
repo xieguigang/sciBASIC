@@ -31,6 +31,7 @@ Namespace SVG
         ''' <returns></returns>
         Public Property defs As CSSStyles
         <XmlElement("style")> Public Property styles As XmlMeta.CSS()
+        <XmlElement("image")> Public Property images As Image()
 
         Public Sub SetSize(size As Size)
             width = size.Width & "px"
