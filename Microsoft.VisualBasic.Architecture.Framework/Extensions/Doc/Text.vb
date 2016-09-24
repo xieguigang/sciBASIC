@@ -113,12 +113,13 @@ Public Module TextDoc
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding">Default value is UTF8</param>
+    ''' <param name="suppress">Suppress error message??</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Read.TXT")>
     <Extension>
-    Public Function ReadAllText(path As String, Optional encoding As Encoding = Nothing, Optional throwEx As Boolean = True) As String
+    Public Function ReadAllText(path As String, Optional encoding As Encoding = Nothing, Optional throwEx As Boolean = True, Optional suppress As Boolean = False) As String
         If encoding Is Nothing Then
             encoding = Encoding.UTF8
         End If
@@ -130,7 +131,10 @@ Public Module TextDoc
                 Throw ex
             Else
                 Call App.LogException(ex)
-                Call ex.PrintException
+
+                If Not suppress Then
+                    Call ex.PrintException
+                End If
             End If
         End Try
 
