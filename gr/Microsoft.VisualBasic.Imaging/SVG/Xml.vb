@@ -82,6 +82,7 @@ Namespace SVG
         <XmlElement("line")> Public Property lines As line()
         <XmlElement("circle")> Public Property circles As circle()
         <XmlAttribute> Public Property fill As String
+        <XmlElement> Public Property title As String
     End Class
 
     Public Class polygon : Inherits node
@@ -137,6 +138,7 @@ Namespace SVG
         ''' </summary>
         ''' <returns></returns>
         Public Property defs As CSSStyles
+        <XmlElement("style")> Public Property styles As XmlMeta.CSS()
 
         Public Sub SetSize(size As Size)
             width = size.Width & "px"
@@ -178,5 +180,6 @@ Namespace SVG
 
     Public Class CSSStyles
         <XmlElement("style")> Public Property styles As XmlMeta.CSS()
+        <XmlAttribute> Public Property id As String
     End Class
 End Namespace

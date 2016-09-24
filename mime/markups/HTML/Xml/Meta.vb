@@ -43,6 +43,7 @@ Namespace HTML.XmlMeta
             End Set
         End Property
 
+        <XmlAttribute> Public Property id As String
         <XmlText> Public Property style As String
 
         Public Overrides Function ToString() As String
