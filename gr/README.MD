@@ -12,13 +12,25 @@ From left to right, the map names are:
 
 ```vbnet
 ''' <summary>
+''' Spring
+''' </summary>
+Public Const PatternSpring As String = "Spring"
+''' <summary>
+''' Summer
+''' </summary>
+Public Const PatternSummer As String = "Summer"
+''' <summary>
 ''' Autumn
 ''' </summary>
 Public Const PatternAutumn As String = "Autumn"
 ''' <summary>
-''' Cool
+''' Winter
 ''' </summary>
-Public Const PatternCool As String = "Cool"
+Public Const PatternWinter As String = "Winter"
+''' <summary>
+''' Jet
+''' </summary>
+Public Const PatternJet As String = "Jet"
 ''' <summary>
 ''' Gray
 ''' </summary>
@@ -28,21 +40,9 @@ Public Const PatternGray As String = "Gray"
 ''' </summary>
 Public Const PatternHot As String = "Hot"
 ''' <summary>
-''' Jet
+''' Cool
 ''' </summary>
-Public Const PatternJet As String = "Jet"
-''' <summary>
-''' Spring
-''' </summary>
-Public Const PatternSpring As String = "Spring"
-''' <summary>
-''' Summer
-''' </summary>
-Public Const PatternSummer As String = "Summer"
-''' <summary>
-''' Winter
-''' </summary>
-Public Const PatternWinter As String = "Winter"
+Public Const PatternCool As String = "Cool"
 ```
 
 ###### Usage

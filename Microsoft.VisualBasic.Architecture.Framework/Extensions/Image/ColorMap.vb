@@ -125,13 +125,25 @@ Namespace Imaging
         }
 
         ''' <summary>
+        ''' Spring
+        ''' </summary>
+        Public Const PatternSpring As String = "Spring"
+        ''' <summary>
+        ''' Summer
+        ''' </summary>
+        Public Const PatternSummer As String = "Summer"
+        ''' <summary>
         ''' Autumn
         ''' </summary>
         Public Const PatternAutumn As String = "Autumn"
         ''' <summary>
-        ''' Cool
+        ''' Winter
         ''' </summary>
-        Public Const PatternCool As String = "Cool"
+        Public Const PatternWinter As String = "Winter"
+        ''' <summary>
+        ''' Jet
+        ''' </summary>
+        Public Const PatternJet As String = "Jet"
         ''' <summary>
         ''' Gray
         ''' </summary>
@@ -141,21 +153,9 @@ Namespace Imaging
         ''' </summary>
         Public Const PatternHot As String = "Hot"
         ''' <summary>
-        ''' Jet
+        ''' Cool
         ''' </summary>
-        Public Const PatternJet As String = "Jet"
-        ''' <summary>
-        ''' Spring
-        ''' </summary>
-        Public Const PatternSpring As String = "Spring"
-        ''' <summary>
-        ''' Summer
-        ''' </summary>
-        Public Const PatternSummer As String = "Summer"
-        ''' <summary>
-        ''' Winter
-        ''' </summary>
-        Public Const PatternWinter As String = "Winter"
+        Public Const PatternCool As String = "Cool"
 
         ''' <summary>
         ''' If failure, then this function will returns <see cref="Jet"/> by default, 
@@ -180,6 +180,8 @@ Namespace Imaging
                 End If
             End SyncLock
         End Function
+
+#Region "Color Patterns"
 
         Public Function Spring() As Integer(,)
             Dim cmap As Integer(,) = New Integer(ColorMapLength - 1, 3) {}
@@ -355,5 +357,6 @@ Namespace Imaging
             Next
             Return cmap
         End Function
+#End Region
     End Class
 End Namespace
