@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 

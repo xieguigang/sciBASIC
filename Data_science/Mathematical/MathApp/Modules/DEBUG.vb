@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Module DEBUG
 
@@ -150,7 +151,7 @@ Module DEBUG
             New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
         }
 
-        Call g.GraphicsPlots(
+        Call GraphicsPlots(
             New Size(350, 600), New Size, "white",
             Sub(g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
