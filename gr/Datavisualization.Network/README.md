@@ -5,10 +5,10 @@ date: 2016.06.06
 ---
 
 > [Downloads the demo example](https://github.com/xieguigang/VisualBasic_AppFramework/releases/tag/v0.16-update)<br />
-> [Downloads the latest source code from github](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Datavisualization.Network)
+> [Downloads the latest source code from github](#)
 
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/Previews.gif)
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/net_test/xcb-main.png)
+![](./Previews.gif)
+![](./net_test/xcb-main.png)
 
 ## Introduction and background
 In my recent work on the GCModeller, I want to developing a module for the biological network data visualization.
@@ -18,7 +18,7 @@ The [Cytoscape](http://cytoscape.org/) software is doing the best in the network
 
 Here is my most favorite project from Mr. whichlight's work: a project for visualize the reddit discussion network by using d3js.
 
->![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)<br />
+>![](./tumblr_inline_mqvdlydGCp1qz4rgp.png)<br />
 >[_Reddit Discussion Network Visualization_](https://github.com/whichlight/reddit-network-vis)
 
 And the d3js is my first choice in this work. And here is the force directed graphic engine that I write with d3js hybrid programming with VB.NET (whole source cdoe and example can be download from [here](https://github.com/SMRUCC/GCModeller.Workbench/tree/master/d3js/Force-Directed%20Graph/js)):
@@ -91,22 +91,22 @@ And after search on the github, I found a solution for this interactive network 
 
 <!--more-->
 
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/canvas_screenshot.png)
+![](./canvas_screenshot.png)
 
 This network canvas library is majority based on the work of [Mr. Woong Gyu La](http://www.codeproject.com/Articles/833043/EpForceDirectedGraph-cs-A-D-D-force-directed-gra)
 
 ### Overviews
 This canvas library is consist with 4 parts majority:
 
-1. [Force Directed layout engine](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Datavisualization/Datavisualization.Network/Datavisualization.Network/Layouts/ForceDirected/Layout/ForceDirected.vb)
-2. [Canvas control for WinForm](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Datavisualization/Datavisualization.Network/NetworkCanvas/Canvas.vb)
-3. [InputDevice for user mouse events](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Datavisualization/Datavisualization.Network/NetworkCanvas/InputDevice.vb)
-4. [Renderer for the graphics rendering of the network data](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Datavisualization/Datavisualization.Network/NetworkCanvas/Renderer.vb)
+1. [Force Directed layout engine](./Datavisualization.Network/Layouts/ForceDirected/Layout/ForceDirected.vb)
+2. [Canvas control for WinForm](./NetworkCanvas/Canvas.vb)
+3. [InputDevice for user mouse events](./NetworkCanvas/InputDevice.vb)
+4. [Renderer for the graphics rendering of the network data](./NetworkCanvas/Renderer.vb)
 
 ### Code in details
 
 ##### Force Directed layout engine
-The force directed network layout engine which is available at type [**Microsoft.VisualBasic.DataVisualization.Network.Layouts.ForceDirected2D**](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Datavisualization/Datavisualization.Network/Datavisualization.Network/Layouts/ForceDirected/Layout/ForceDirected.vb)
+The force directed network layout engine which is available at type [**Microsoft.VisualBasic.DataVisualization.Network.Layouts.ForceDirected2D**](./Datavisualization.Network/Layouts/ForceDirected/Layout/ForceDirected.vb)
 The introduction for this layout provider is available at Mr. Woong Gyu La's article: ["EpForceDirectedGraph.cs- A 2D/3D force directed graph algorithm in C#"](http://www.codeproject.com/Articles/833043/EpForceDirectedGraph-cs-A-D-D-force-directed-gra)
 
 ##### Canvas control for WinForm
@@ -389,5 +389,5 @@ Both VisualBasic and C# have the performance issue of the gdi+ graphics on large
 Planning changes the graphics engine from gdi+ to Microsoft Win2D or OpenGL in the future work.
 
 ### Running the Test
-The testing project source code can be download from the [github](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Datavisualization/Datavisualization.Network/Test) and here is the [example release program](https://github.com/xieguigang/VisualBasic_AppFramework/releases/tag/v0.16-update).
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/Datavisualization/Datavisualization.Network/canvas_screenshot.png)
+The testing project source code can be download from the [github](./Test) and here is the [example release program](https://github.com/xieguigang/VisualBasic_AppFramework/releases/tag/v0.16-update).
+![](./canvas_screenshot.png)
