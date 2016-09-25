@@ -39,5 +39,9 @@ Namespace MonteCarlo
             Dim model As Model = DirectCast(obj, Model)
             Return model.params
         End Function
+
+        Public Function Run(dll As String, k As Long, n As Integer, a As Integer, b As Integer)
+
+        End Function
     End Module
 End Namespace
