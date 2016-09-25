@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Net.Http.Base64Codec
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.FileIO
 
 Namespace SVG
@@ -18,11 +18,20 @@ Namespace SVG
         <XmlAttribute> Public Property height As String
         <XmlAttribute("image.data")> Public Property data As String
 
+        ''' <summary>
+        ''' ``data:image/png;base64,...``
+        ''' </summary>
+        Const base64Header As String = "data:image/png;base64,"
+
+        Public Function GetGDIObject() As Bitmap
+            Return Base64Codec.GetImage(Mid(data, base64Header.Length + 1))
+        End Function
+
         Sub New()
         End Sub
 
         Sub New(image As Bitmap, Optional size As Size = Nothing)
-            data = "data:image/png;base64," & image.ToBase64String
+            data = base64Header & image.ToBase64String
             If size.IsEmpty Then
                 size = image.Size
             End If
@@ -36,6 +45,10 @@ Namespace SVG
 
         Public Overrides Function ToString() As String
             Return $"<image x=""{x}"" y=""{y}"" width=""{width}"" height=""{height}"" xlink:href=""{data}"">"
+        End Function
+
+        Public Function SaveAs(fileName As String, Optional format As ImageFormats = ImageFormats.Png) As Boolean
+            Return GetGDIObject.SaveAs(fileName, format)
         End Function
     End Class
 End Namespace

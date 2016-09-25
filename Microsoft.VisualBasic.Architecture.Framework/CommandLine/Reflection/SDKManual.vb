@@ -59,7 +59,7 @@ Namespace CommandLine.Reflection
                 vbCrLf &
                 "Description: " & assm.ProductDescription & vbCrLf &
                 "Company:     " & assm.CompanyName & vbCrLf &
-                assm.CopyRightsDetail
+                assm.CopyRightsDetail  ' 首页
 
             Dim sb As New StringBuilder
 
@@ -105,6 +105,24 @@ Namespace CommandLine.Reflection
 
             Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}")
             Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``")
+
+            Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
+
+            Call sb.AppendLine()
+            Call sb.AppendLine("------------------------------------------------------------")
+            Call sb.AppendLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems:")
+            Call sb.AppendLine("> " & helps.Documentation)
+            Call sb.AppendLine()
+            Call sb.AppendLine()
+            Call sb.AppendLine("The debugging facility Is helpful To figure out what's happening under the hood:")
+            Call sb.AppendLine("> " & helps.Debugging)
+            Call sb.AppendLine()
+            Call sb.AppendLine()
+            Call sb.AppendLine("If you're still stumped, you can try get help from author directly from E-mail:")
+            Call sb.AppendLine("> " & helps.EMailLink)
+            Call sb.AppendLine()
+
+
             Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary(True))
             Call sb.AppendLine()
             Call sb.AppendLine("## CLI API list")
