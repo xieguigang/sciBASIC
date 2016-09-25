@@ -243,6 +243,10 @@ Namespace SoftwareToolkits
             Call Me.New(Assembly.GetExecutingAssembly)
         End Sub
 
+        ''' <summary>
+        ''' Load external resource data from current module's satellite assembly.
+        ''' </summary>
+        ''' <param name="type"></param>
         Sub New(type As Type)
             Call Me.New(type.Assembly)
         End Sub
