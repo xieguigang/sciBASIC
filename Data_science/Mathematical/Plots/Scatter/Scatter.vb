@@ -5,11 +5,14 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Scatter
@@ -30,12 +33,13 @@ Public Module Scatter
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
-                         Optional drawLine As Boolean = True) As Bitmap
+                         Optional drawLine As Boolean = True,
+                         Optional legendBorder As Border = Nothing) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
-            Sub(g)
-                Dim array = c.ToArray
+            Sub(g, grect)
+                Dim array As SerialData() = c.ToArray
                 Dim mapper As New Scaling(array)
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
@@ -61,18 +65,34 @@ Public Module Scatter
                         Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
                     Next
 
+                    If Not line.annotations.IsNullOrEmpty Then
+                        Dim raw = array.Where(Function(s) s.title = line.title).First
+
+                        For Each annotation As Annotation In line.annotations
+                            Call annotation.Draw(g, mapper, raw, grect)
+                        Next
+                    End If
+
                     If showLegend Then
+                        Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+ _
+                            From x As SerialData
+                            In array
+                            Select New Legend With {
+                                .color = x.color.RGBExpression,
+                                .fontstyle = CSSFont.GetFontStyle(
+                                    FontFace.MicrosoftYaHei,
+                                    FontStyle.Regular,
+                                    20),
+                                .style = LegendStyles.Circle,
+                                .title = x.title
+                            }
+
                         If legendPosition.IsEmpty Then
                             legendPosition = New Point(size.Width * 0.8, margin.Height)
                         End If
 
-                        Call g.DrawLegend(Of SerialData)(
-                            array,
-                            Function(x) x.title,
-                            Function(x) x.color,
-                            legendPosition.Y,
-                            legendPosition.X,
-                            New Font(FontFace.MicrosoftYaHei, 20))
+                        Call g.DrawLegends(legendPosition, legends,,, legendBorder)
                     End If
                 Next
             End Sub)
@@ -164,48 +184,3 @@ Public Module Scatter
             }
     End Function
 End Module
-
-Public Class SerialData : Implements sIdEnumerable
-    Implements IEnumerable(Of PointData)
-
-    Public pts As PointData()
-    Public lineType As DashStyle = DashStyle.Solid
-    Public Property title As String Implements sIdEnumerable.Identifier
-
-    ''' <summary>
-    ''' 点的半径大小
-    ''' </summary>
-    Public PointSize As Single = 1
-    Public color As Color = Color.Black
-    Public width As Single = 1
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-
-    Public Iterator Function GetEnumerator() As IEnumerator(Of PointData) Implements IEnumerable(Of PointData).GetEnumerator
-        For Each x In pts
-            Yield x
-        Next
-    End Function
-
-    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Yield GetEnumerator()
-    End Function
-End Class
-
-Public Structure PointData
-    Public pt As PointF
-    Public errPlus As Double
-    Public errMinus As Double
-    Public Tag As String
-    Public value As Double
-
-    Sub New(x As Single, y As Single)
-        pt = New PointF(x, y)
-    End Sub
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Structure

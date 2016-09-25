@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::776092fef7ffbff156f4c8d4c06b457e, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Model.Network\Tree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -39,26 +40,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
 
-    Public Class Partition : Implements sIdEnumerable
-
-        Public Property Tag As String Implements sIdEnumerable.Identifier
-        Public ReadOnly Property NumOfEntity As Integer
-            Get
-                If uids Is Nothing Then
-                    Return 0
-                Else
-                    Return uids.Length
-                End If
-            End Get
-        End Property
-
-        Public Property uids As String()
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-    End Class
-
+    ''' <summary>
+    ''' KMeans.Tree.NET
+    ''' </summary>
     <PackageNamespace("KMeans.Tree.NET",
                       Category:=APICategories.ResearchTools,
                       Publisher:="smrucc@gcmodeller.org")>
@@ -71,11 +55,14 @@ Namespace KMeans
         ''' <param name="depth">将会以最短的聚类作为数据分区的深度</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1) As List(Of Partition)
+        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(Of Partition)
             Dim list As New List(Of EntityLDM)(cluster)
 
             If depth <= 0 Then
-                depth = (From x In list Select l = x.Cluster Order By l.Length Ascending).First.Split("."c).Length
+                depth = (From x As EntityLDM
+                         In list
+                         Select l = x.Cluster
+                         Order By l.Length Ascending).First.Split("."c).Length
             End If
 
             Dim clusters As New List(Of String)({""})
@@ -98,42 +85,54 @@ Namespace KMeans
             Dim partitions As New List(Of Partition)
 
             For Each tag As String In clusters
-                Dim LQuery As EntityLDM() = (From x As EntityLDM
-                                             In list.AsParallel
-                                             Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
-                                             Select x).ToArray
+                Dim LQuery As EntityLDM() =
+                    LinqAPI.Exec(Of EntityLDM) <=
+ _
+                    From x As EntityLDM
+                    In list.AsParallel
+                    Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
+                    Select x
+
                 list -= LQuery
                 partitions += New Partition With {
                     .Tag = tag,
-                    .uids = LQuery.ToArray(Function(x) x.Name)
+                    .uids = LQuery.ToArray(Function(x) x.Name),
+                    .members = LQuery
                 }
             Next
 
             If Not list.IsNullOrEmpty Then
                 partitions += New Partition With {
                     .Tag = "Unclass",
-                    .uids = list.ToArray(Function(x) x.Name)
+                    .uids = list.ToArray(Function(x) x.Name),
+                    .members = list.ToArray
                 }
+            End If
+
+            If trim Then
+                partitions = New List(Of Partition)(
+                    partitions.Where(Function(x) x.NumOfEntity > 0))
             End If
 
             Return partitions
         End Function
 
         ''' <summary>
-        ''' 树形聚类
+        ''' 二叉树树形聚类，请注意，所输入的数据的名字不可以一样，不然无法正确生成cluster标记
         ''' </summary>
         ''' <param name="resultSet"></param>
+        ''' <param name="stop">Max iteration number for the kmeans kernel</param>
         ''' <returns></returns>
         '''
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False) As EntityLDM()
+        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As EntityLDM()
             Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray   ' 得到所有属性的名称
             Dim ds As Entity() = resultSet.ToArray(
                 Function(x) New KMeans.Entity With {
                     .uid = x.Name,
                     .Properties = mapNames.ToArray(Function(s) x.Properties(s))
                 })  ' 在这里生成计算模型
-            Dim tree As KMeans.Entity() = TreeCluster(ds, parallel)   ' 二叉树聚类操作
+            Dim tree As KMeans.Entity() = TreeCluster(ds, parallel, [stop])   ' 二叉树聚类操作
             Dim saveResult As EntityLDM() = tree.ToArray(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In resultSet.ToArray(Function(x) x.Name)
@@ -149,16 +148,23 @@ Namespace KMeans
             Return saveResult
         End Function
 
+        ''' <summary>
+        ''' 二叉树聚类的路径会在<see cref="Entity.uid"/>上面出现
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="stop">Max iteration number for the kmeans kernel</param>
+        ''' <returns></returns>
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False) As Entity()
-            Return TreeCluster(Of Entity)(source, parallel)
+        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As Entity()
+            Return TreeCluster(Of Entity)(source, parallel, [stop])
         End Function
 
-        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False) As Entity()
+        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As Entity()
             If parallel Then
-                Return __firstCluster(source, [stop]:=CInt(source.Count / 2))
+                Return __firstCluster(source, [stop]:=CInt(source.Count / 2), kmeansStop:=[stop])
             Else
-                Return __treeCluster(source, Scan0, CInt(source.Count / 2))
+                Return __treeCluster(source, Scan0, CInt(source.Count / 2), kmeansStop:=[stop])
             End If
         End Function
 
@@ -169,18 +175,18 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
-        Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer) As Entity()
-            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
+        Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer, kmeansStop As Integer) As Entity()
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source, debug:=True, [stop]:=kmeansStop).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of Entity()) =
-                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop])).Run    ' cluster1
-            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), "2", [stop]) ' cluster2
+                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop], kmeansStop)).Run    ' cluster1
+            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), "2", [stop], kmeansStop) ' cluster2
             list += cluster1.GetValue
 
             Return list.ToArray
         End Function
 
-        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer) As Entity()
+        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer, kmeansStop As Integer) As Entity()
             For Each x In cluster
                 x.uid &= ("." & id)
             Next
@@ -188,11 +194,11 @@ Namespace KMeans
             If cluster.NumOfEntity <= 1 Then
                 Return cluster.ToArray
             Else
-                Return __treeCluster(cluster.ToArray, Scan0, [stop])  ' 递归聚类分解
+                Return __treeCluster(cluster.ToArray, Scan0, [stop], kmeansStop)  ' 递归聚类分解
             End If
         End Function
 
-        Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer) As Entity()
+        Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer, kmeansStop As Integer) As Entity()
             If source.Count = 2 Then
 EXIT_:          Dim array = source.ToArray
                 For i As Integer = 0 To array.Length - 1
@@ -215,7 +221,7 @@ EXIT_:          Dim array = source.ToArray
             End If
 
             Dim list As New List(Of Entity)
-            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source).ToArray
+            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source,, [stop]:=kmeansStop).ToArray
 
             ' 检查数据
             Dim b0 As Boolean = False ', b20 As Boolean = False
@@ -240,7 +246,7 @@ EXIT_:          Dim array = source.ToArray
 
                 'Call list.Add(cluster)
                 Call Console.Write(">")
-                Call list.Add(__treeCluster(result.MatrixToList, depth, [stop]))  ' 递归聚类分解
+                Call list.Add(__treeCluster(result.MatrixToList, depth, [stop], kmeansStop))  ' 递归聚类分解
             Else
                 For i As Integer = 0 To result.Length - 1
                     Dim cluster = result(i)
@@ -256,7 +262,7 @@ EXIT_:          Dim array = source.ToArray
                         '  不可以取消这可分支，否则会死循环
                     Else
                         Call Console.Write(">")
-                        Call list.Add(__treeCluster(cluster.ToArray, depth, [stop]))  ' 递归聚类分解
+                        Call list.Add(__treeCluster(cluster.ToArray, depth, [stop], kmeansStop))  ' 递归聚类分解
                     End If
                 Next
             End If

@@ -35,14 +35,15 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MarkupLanguage.CSS
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Module DEBUG
 
@@ -76,7 +77,67 @@ Module DEBUG
         Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv"), legend:=False).SaveAs("./Bubble.png")
     End Sub
 
+
+    Private Sub ShowCharacterData()
+        Dim result = ODEsOut.LoadFromDataFrame("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\bootstrapping\test\Kinetics_of_influenza_A_virus_infection_in_humans.csv")
+        Dim analysis = GetAnalysis(result)
+        Dim i = analysis("I")(result.y("I").x)
+        Dim t = analysis("T")(result.y("T").x)
+        Dim v = analysis("V")(result.y("V").x)
+    End Sub
+
+    ''' <summary>
+    ''' 通过数据特征来分析结果
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetAnalysis(odes As ODEsOut) As Dictionary(Of String, GetPoints)
+        Dim dx As Double = odes.dx
+        Dim I As GetPoints = Function(data)
+                                 Dim a = data.FirstIncrease(dx)
+                                 Dim iMax = data.MaxIndex
+                                 Dim z = data.Skip(iMax).Reach(data.First) + iMax
+                                 Return {a, iMax, z}
+                             End Function
+        Dim T As GetPoints = Function(data)
+                                 Dim a = data.FirstDecrease
+                                 Dim b = data.Reach(data.First * 0.01)
+                                 Return {a, b}
+                             End Function
+        Dim V As GetPoints = Function(data)
+                                 Dim a = data.FirstIncrease(dx)
+                                 Dim b = data.MaxIndex
+                                 Return {a, b}
+                             End Function
+
+        Return New Dictionary(Of String, GetPoints) From {
+            {NameOf(I), I},
+            {NameOf(T), T},
+            {NameOf(V), V}
+        }
+    End Function
+
+    Public Sub scatterWithAnnotation()
+        Dim s As New SerialData With {
+            .color = Color.LightSkyBlue,
+            .lineType = DashStyle.Dot,
+            .PointSize = 1,
+            .title = "223 - legend",
+            .width = 3,
+            .pts = {New PointData With {.pt = New PointF(-10.1, 32)}, New PointData With {.pt = New PointF(0.1, 2)}, New PointData With {.pt = New PointF(2, 20)}, New PointData With {.pt = New PointF(5, 12)}},
+            .annotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
+        }
+
+        Call Scatter.Plot({s}).SaveAs("x:\ffff.png")
+
+    End Sub
+
     Public Function Main() As Integer
+
+
+        Call scatterWithAnnotation()
+
+
+        Call ShowCharacterData()
 
         Dim type As New Value(Of LegendStyles)
         Dim legends As Legend() = {
@@ -90,9 +151,9 @@ Module DEBUG
             New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
         }
 
-        Call g.GraphicsPlots(
+        Call GraphicsPlots(
             New Size(350, 600), New Size, "white",
-            Sub(g)
+            Sub(g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
             End Sub).SaveAs("./legends_test.png")
 

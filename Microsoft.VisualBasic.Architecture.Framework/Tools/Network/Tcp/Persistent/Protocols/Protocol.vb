@@ -64,7 +64,7 @@ Namespace Net.Persistent.Application.Protocols
         End Function
 
         Public Function GetLogOnUSER(request As String, ByRef USER_ID As Long, ByRef Socket As String) As Boolean
-            Dim post As LogonPOST = request.CreateObjectFromXml(Of LogonPOST)(False)
+            Dim post As LogonPOST = request.LoadFromXml(Of LogonPOST)(False)
 
             If post Is Nothing Then
                 Return False

@@ -12,7 +12,12 @@ Namespace Mathematical
         ReadOnly __digits As IntRange
 
         ''' <summary>
-        ''' 
+        ''' 4.94065645841247E-324
+        ''' </summary>
+        Public Const Epsilon As Double = Double.Epsilon
+
+        ''' <summary>
+        ''' 最小的精度为``<see cref="System.Double.Epsilon"/>=4.94065645841247E-324``
         ''' </summary>
         ''' <param name="digitMin">``10^?``</param>
         ''' <param name="digitMax">``10^?``</param>
@@ -20,6 +25,11 @@ Namespace Mathematical
             __digits = New IntRange(digitMin, digitMax + 1)  ' 假若max是1e10的话，则最高的位数是10，这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="from">最小的精度为<see cref="System.Double.Epsilon"/></param>
+        ''' <param name="[to]"></param>
         Sub New(from As Double, [to] As Double)
             Call Me.New(
                 CInt(If(from = 0R, 0, Math.Log10(from))), ' 避免出现log(0)的情况

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1e7b2c414a326380266bddaed9dc328a, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -125,7 +125,7 @@ Namespace KMeans
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
         ''' <param name="source">An array containing data that will be clustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T)) As ClusterCollection(Of T)
+        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T), Optional debug As Boolean = False, Optional [stop] As Integer = -1) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
@@ -152,7 +152,9 @@ Namespace KMeans
                 End If
             End While
 
-            Dim _stop As Integer = clusterCount * rowCount
+            If [stop] <= 0 Then
+                [stop] = clusterCount * rowCount
+            End If
 
             While stableClustersCount <> clusters.NumOfCluster
                 stableClustersCount = 0
@@ -164,6 +166,11 @@ Namespace KMeans
                     Dim y As KMeansCluster(Of T) = clusters(clusterIndex)
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
+
+                        If debug Then
+                            Call "If (x.NumOfEntity = 0 OrElse y.NumOfEntity = 0) Is True".__DEBUG_ECHO
+                        End If
+
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
@@ -175,8 +182,12 @@ Namespace KMeans
                 iterationCount += 1
                 clusters = newClusters
 
-                If iterationCount > _stop Then
+                If iterationCount > [stop] Then
                     Exit While
+                Else
+                    If debug Then
+                        Call $"[{iterationCount}/{[stop]}] stableClustersCount <> clusters.NumOfCluster => {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".__DEBUG_ECHO
+                    End If
                 End If
             End While
 

@@ -143,11 +143,11 @@ Namespace Text.Xml
                 End If
             Next
 
-            If Not String.IsNullOrEmpty(xmlns) Then
-                If Not String.IsNullOrEmpty(root.xmlns) Then
-                    Call ns.Replace($"xmlns=""{root.xmlns}""", "")
-                End If
+            If Not String.IsNullOrEmpty(root.xmlns) Then
+                Call ns.Replace($"xmlns=""{root.xmlns}""", "")
+            End If
 
+            If Not String.IsNullOrEmpty(xmlns) Then  ' 当前的xmlns值不为空值 ，则设置xmlns
                 Call ns.Replace(">", $" xmlns=""{xmlns}"">")
             End If
 

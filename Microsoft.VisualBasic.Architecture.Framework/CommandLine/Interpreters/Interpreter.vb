@@ -149,12 +149,16 @@ Namespace CommandLine
             If __API_InfoHash.ContainsKey(commandName) Then _
                 Return __API_InfoHash(commandName).Execute(argvs)
 
-            If String.Equals(commandName, "?") Then
+            If String.Equals(commandName, "?") OrElse commandName = "??" Then
                 If help_argvs.IsNullOrEmpty Then
                     Return Help("")
                 Else
                     Return Help(help_argvs.First)
                 End If
+
+            ElseIf InStr(commandName, "??") = 1 Then  ' 支持类似于R语言里面的 ??帮助命令
+                commandName = Mid(commandName, 3)
+                Return Help(commandName)
 
             ElseIf String.Equals(commandName, "~") Then  ' 打印出应用程序的位置，linux里面的HOME
                 Call Console.WriteLine(App.ExecutablePath)

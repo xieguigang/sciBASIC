@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -60,9 +61,33 @@ Public Class Scaling
                 .PointSize = s.PointSize,
                 .pts = pts,
                 .title = s.title,
-                .width = s.width
+                .width = s.width,
+                .annotations = s.annotations
             }
         Next
+    End Function
+
+    Public Function PointScaler(size As Size, margin As Size) As Func(Of PointF, PointF)
+        Dim bottom As Integer = size.Height - margin.Height
+        Dim width As Integer = size.Width - margin.Width * 2
+        Dim height As Integer = size.Height - margin.Height * 2
+
+        Return Function(pt)
+                   Dim px As Single = margin.Width + width * (pt.X - xmin) / dx
+                   Dim py As Single = bottom - height * (pt.Y - ymin) / dy
+
+                   Return New PointF(px, py)
+               End Function
+    End Function
+
+    Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
+        Dim bottom As Integer = r.Size.Height - r.Margin.Height
+        Dim width As Integer = r.Size.Width - r.Margin.Width * 2
+        Dim height As Integer = r.Size.Height - r.Margin.Height * 2
+        Dim px As Single = r.Margin.Width + width * (pt.X - xmin) / dx
+        Dim py As Single = bottom - height * (pt.Y - ymin) / dy
+
+        Return New PointF(px, py)
     End Function
 
     Public Function XScaler(size As Size, margin As Size) As Func(Of Single, Single)

@@ -28,19 +28,24 @@ Public Module Extensions
         Return -1 ' 没有找到符合条件的点
     End Function
 
+    ''' <summary>
+    ''' 只对单调递增的那一部分曲线有效
+    ''' </summary>
+    ''' <param name="data">y值</param>
+    ''' <param name="alpha"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function FirstIncrease(data As IEnumerable(Of Double), Optional ratio As Double = 10) As Integer
+    Public Function FirstIncrease(data As IEnumerable(Of Double), dx As Double, Optional alpha As Double = 30) As Integer
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.SeqIterator
-            Dim d = (x.obj - pre)
+        For Each x In data.Skip(1).SeqIterator(offset:=1)
+            Dim dy = (x.obj - pre) ' 对边
+            Dim tanX As Double = dy / dx
+            Dim a As Double = Atn(tanX)
 
-            If d / pr > ratio Then
+            If a >= alpha Then
                 Return x.i
-            Else
-                pr = d
-                pre = x.obj
             End If
         Next
 

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::4159e8df030afce5bb914a9f6463619b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 Namespace Mathematical
 
@@ -85,29 +86,28 @@ Namespace Mathematical
         ''' <param name="data"></param>
         ''' <returns></returns>
         ''' <remarks>为了要保持顺序，不能够使用并行拓展</remarks>
-        ''' 
+        ''' <param name="offset">
+        ''' 默认是 [1, <paramref name="Level"></paramref>]，
+        ''' 当offset的值为0的时候，则为[0, <paramref name="Level"></paramref>-1]，
+        ''' 当然这个参数也可以使其他的值
+        ''' </param>
         <ExportAPI("Ranks.Mapping")>
-        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10) As Integer()
-            Dim MinValue As Double = data.Min
-            Dim MaxValue As Double = data.Max
-            Dim d As Double = (MaxValue - MinValue) / Level
+        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10, Optional offset As Integer = 1) As Integer()
+            Dim array As Double() = data.ToArray
+            Dim MinValue As Double = array.Min
+            Dim MaxValue As Double = array.Max
+            Dim d As Double = MaxValue - MinValue
 
-            If d = 0R Then
-                Return (From n As Double In data Select 1).ToArray  '所有的值都是一样的，则都是同等级的
+            If d = 0R Then ' 所有的值都是一样的，则都是同等级的
+                Return 1.CopyVector(array.Length)
             End If
 
-            Dim chunkBuf As Integer() = New Integer(data.Count - 1) {}
-            Dim i As Integer = 0
+            Dim chunkBuf As Integer() = New Integer(array.Length - 1) {}
+            Dim i As New int
 
-            Level -= 1
-
-            For Each x As Double In data
-                Dim lv As Integer = CInt((x - MinValue) / d + 1)
-                If lv > Level Then
-                    lv = Level
-                End If
-                chunkBuf(i) = lv
-                i += 1
+            For Each x As Double In array
+                Dim lv As Integer = CInt(Level * (x - MinValue) / d)
+                chunkBuf(++i) = lv + offset
             Next
 
             Return chunkBuf

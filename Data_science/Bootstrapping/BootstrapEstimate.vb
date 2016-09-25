@@ -11,12 +11,45 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module BootstrapEstimate
 
     ''' <summary>
+    ''' 这个更加适合没有任何参数信息的时候的情况
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="range"></param>
+    ''' <param name="vars"></param>
+    ''' <param name="yinit"></param>
+    ''' <param name="k"></param>
+    ''' <param name="n"></param>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <param name="trimNaN"></param>
+    ''' <param name="parallel">并行计算模式有极大的内存泄漏的危险</param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function Bootstrapping(Of T As ODEs)(
+                                          range As PreciseRandom,
+                                           vars As IEnumerable(Of String),
+                                          yinit As IEnumerable(Of String),
+                                              k As Long,
+                                              n As Integer,
+                                              a As Integer,
+                                              b As Integer,
+                                           Optional trimNaN As Boolean = True,
+                                           Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
+
+        Dim varList = vars.Select(Function(x) New NamedValue(Of PreciseRandom)(x, range))
+        Dim y0 = yinit.Select(Function(x) New NamedValue(Of PreciseRandom)(x, range))
+        Return Bootstrapping(Of T)(varList, y0, k, n, a, b, trimNaN, parallel)
+    End Function
+
+    ''' <summary>
     ''' Bootstrapping 参数估计分析，这个函数用于生成基本的采样数据
     ''' </summary>
     ''' <param name="vars">各个参数的变化范围</param>
     ''' <typeparam name="T">具体的求解方程组</typeparam>>
     ''' <param name="k">重复的次数</param>
     ''' <param name="yinit">``Y0``初值</param>
+    ''' <param name="parallel">并行计算模式有极大的内存泄漏的危险</param>
     ''' <returns></returns>
     Public Iterator Function Bootstrapping(Of T As ODEs)(
                                            vars As IEnumerable(Of NamedValue(Of PreciseRandom)),
@@ -25,7 +58,8 @@ Public Module BootstrapEstimate
                                               n As Integer,
                                               a As Integer,
                                               b As Integer,
-                                           Optional trimNaN As Boolean = True) As IEnumerable(Of ODEsOut)
+                                           Optional trimNaN As Boolean = True,
+                                           Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
 
         Dim params As NamedValue(Of PreciseRandom)() = vars.ToArray
         Dim y0 As NamedValue(Of PreciseRandom)() = yinit.ToArray
@@ -34,14 +68,24 @@ Public Module BootstrapEstimate
             .Select(Function(x) x.Name) _
             .SetParameters(Of T)
 
-        For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
-                                 In k.SeqIterator.AsParallel
-                                 Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
-                                 Let isNaNResult As Boolean = odes_Out.HaveNaN
-                                 Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
-                                 Select odes_Out
-            Yield x
-        Next
+        If parallel Then
+            For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
+                                     In k.SeqIterator.AsParallel
+                                     Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                                     Let isNaNResult As Boolean = odes_Out.HaveNaN
+                                     Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
+                                     Select odes_Out
+                Yield x
+            Next
+        Else
+            For Each it As Long In k.SeqIterator
+                Dim odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                Dim isNaNResult As Boolean = odes_Out.HaveNaN
+                If If(trimNaN, Not isNaNResult, True) Then ' 假若不需要trim，则总是True，即返回所有数据
+                    Yield odes_Out
+                End If
+            Next
+        End If
     End Function
 
     ''' <summary>

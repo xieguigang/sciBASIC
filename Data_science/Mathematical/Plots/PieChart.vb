@@ -5,12 +5,21 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Public Module PieChart
 
     <Extension>
-    Public Function Plot(data As IEnumerable(Of Pie), Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white", Optional legend As Boolean = True) As Bitmap
-        Return g.GraphicsPlots(size, margin, bg,
+    Public Function Plot(data As IEnumerable(Of Pie),
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional bg As String = "white",
+                         Optional legend As Boolean = True,
+                         Optional legendBorder As Border = Nothing) As Bitmap
+
+        Return GraphicsPlots(size, margin, bg,
                  Sub(g)
                      Dim r = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2
                      Dim topLeft = New Point(size.Width / 2 - r, size.Height / 2 - r)
@@ -29,8 +38,18 @@ Public Module PieChart
                          Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
                          Dim left = size.Width - (margin.Width * 2) - maxL
                          Dim top = margin.Height
+                         Dim legends As New List(Of Legend)
 
-                         Call g.DrawLegend(data.ToArray, Function(x) x.Name, Function(x) x.Color, top, left, font)
+                         For Each x As Pie In data
+                             legends += New Legend With {
+                                .color = x.Color.RGBExpression,
+                                .style = LegendStyles.Rectangle,
+                                .title = x.Name,
+                                .fontstyle = CSSFont.GetFontStyle(font.Name, font.Style, font.Size)
+                             }
+                         Next
+
+                         Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
                      End If
                  End Sub)
     End Function
