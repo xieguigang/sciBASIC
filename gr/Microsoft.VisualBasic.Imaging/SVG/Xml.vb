@@ -42,7 +42,7 @@ Namespace SVG
     Public MustInherit Class node
 
         ''' <summary>
-        ''' CSS style definition
+        ''' CSS style definition.(请注意，假若是SVG对象则赋值这个属性无效)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property style As String

@@ -19,7 +19,7 @@ Namespace SVG
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property version As String
-        <XmlAttribute> Public Property viewBox As Double()
+        <XmlAttribute> Public Property viewBox As String()
 #End Region
 
         ''' <summary>
@@ -30,7 +30,11 @@ Namespace SVG
         ''' </summary>
         ''' <returns></returns>
         Public Property defs As CSSStyles
-        <XmlElement("style")> Public Property styles As XmlMeta.CSS()
+        ''' <summary>
+        ''' SVG对象也会在这里面定义CSS
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlElement("style")> Public Shadows Property style As XmlMeta.CSS
         <XmlElement("image")> Public Property images As Image()
 
         Public Sub SetSize(size As Size)
