@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efd5952c1358648984db348369d7fc41, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.vb"
+﻿#Region "Microsoft.VisualBasic::efd5952c1358648984db348369d7fc41, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.vb"
 
     ' Author:
     ' 

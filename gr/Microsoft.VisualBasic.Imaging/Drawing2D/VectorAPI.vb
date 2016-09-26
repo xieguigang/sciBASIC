@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb5c3dd95e98fb947265188213234b0e, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cb5c3dd95e98fb947265188213234b0e, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\VectorAPI.vb"
 
     ' Author:
     ' 

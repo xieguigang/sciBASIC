@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15f6262633e258d0193ec575059e2918, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\BinaryNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::15f6262633e258d0193ec575059e2918, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\BinaryNeuron.vb"
 
     ' Author:
     ' 

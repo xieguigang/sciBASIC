@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cb2e9a955bd9dbfc2a5b428e000397b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::195b0474221e4ba911a1d11f4f5bb9f3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextIndexing.vb"
 
     ' Author:
     ' 

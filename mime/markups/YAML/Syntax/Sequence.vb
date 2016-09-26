@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d783c4225eb11f563d142a67242c3bf, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::3d783c4225eb11f563d142a67242c3bf, ..\visualbasic_App\mime\Markups\YAML\Syntax\Sequence.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::825d1c3f4fcc3d62dfb1eba787c438a4, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\Common.vb"
+﻿#Region "Microsoft.VisualBasic::825d1c3f4fcc3d62dfb1eba787c438a4, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\Common.vb"
 
     ' Author:
     ' 

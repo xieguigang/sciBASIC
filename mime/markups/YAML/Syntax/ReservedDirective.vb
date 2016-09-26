@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d9024573140142f23a155fd936754e9, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\ReservedDirective.vb"
+﻿#Region "Microsoft.VisualBasic::3d9024573140142f23a155fd936754e9, ..\visualbasic_App\mime\Markups\YAML\Syntax\ReservedDirective.vb"
 
     ' Author:
     ' 

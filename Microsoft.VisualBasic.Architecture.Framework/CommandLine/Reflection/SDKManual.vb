@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7a0187af4bf6012ce70827623cdf0d7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::a2f9b71ee6fd4e72b2abc8001bf45576, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
     ' Author:
     ' 

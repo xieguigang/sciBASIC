@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29b8202f2fe07a2746ac05299f277127, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::5388ac83a55aff66a8b4cdabbcf0c647, ..\visualbasic_App\mime\Markups\MarkDown\Paragraph.vb"
 
     ' Author:
     ' 

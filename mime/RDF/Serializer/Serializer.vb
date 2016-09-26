@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::503dc0d2f43af44b4103b2ea7eb767b7, ..\visualbasic_App\DocumentFormats\RDF\RDF\Serializer\Serializer.vb"
+﻿#Region "Microsoft.VisualBasic::9f286d022511b24b46150284d9506e84, ..\visualbasic_App\mime\RDF\Serializer\Serializer.vb"
 
     ' Author:
     ' 

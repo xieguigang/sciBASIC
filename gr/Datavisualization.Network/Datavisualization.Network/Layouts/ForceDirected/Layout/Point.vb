@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce5bec2ab21152d68ed8978d4dcb3756, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::0bcc0e1964f7d47c74b73f746b1bbf79, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
 
     ' Author:
     ' 

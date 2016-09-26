@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efcc68cc276f17c0611839fd8dd6305a, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\General\Triple.vb"
+﻿#Region "Microsoft.VisualBasic::efcc68cc276f17c0611839fd8dd6305a, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\General\Triple.vb"
 
     ' Author:
     ' 

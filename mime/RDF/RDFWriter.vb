@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be0598501f7282dd48e1c263848eccd5, ..\visualbasic_App\DocumentFormats\RDF\RDF\RDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::be0598501f7282dd48e1c263848eccd5, ..\visualbasic_App\mime\RDF\RDFWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8977b70a3fe92ccd88cc609fae6823f4, ..\visualbasic_App\Win32API\kernel32\ErrorCodes.vb"
+﻿#Region "Microsoft.VisualBasic::7ddc71022ed663fcf0b920ab98ae60a2, ..\visualbasic_App\win32_api\kernel32\ErrorCodes.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' #### Win32 API error code definitions
@@ -2284,4 +2283,3 @@ Public Module ErrorCodes
     Public Const ERROR_NO_BROWSER_SERVERS_FOUND As Short = 6118
 
 End Module
-

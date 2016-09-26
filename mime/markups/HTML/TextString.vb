@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ea72ff8c042712ae86cc614a42c26dc, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::8ea72ff8c042712ae86cc614a42c26dc, ..\visualbasic_App\mime\Markups\HTML\TextString.vb"
 
     ' Author:
     ' 

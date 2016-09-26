@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b614d8fe517eb7e2835d744da4e7a7be, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\d3js\interpolate\rgb.vb"
+﻿#Region "Microsoft.VisualBasic::b614d8fe517eb7e2835d744da4e7a7be, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\d3js\interpolate\rgb.vb"
 
     ' Author:
     ' 

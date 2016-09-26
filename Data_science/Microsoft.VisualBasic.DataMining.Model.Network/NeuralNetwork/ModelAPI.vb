@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1482c01954f64ad45674a380466623b5, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e16966c6b248d1c3950328283685f840, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
 
     ' Author:
     ' 

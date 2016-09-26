@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d160f692e4d06a84c2fa953b0e3ec4d4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::3a80674d094570ba60d297ee74e23f2e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 

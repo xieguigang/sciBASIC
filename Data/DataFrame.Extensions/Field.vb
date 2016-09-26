@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ceff5ef024371fcb219a208829b23938, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::aa95cdc9af804006fbf3aae2430b8cf2, ..\visualbasic_App\Data\DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 

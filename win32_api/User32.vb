@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a092a12ef94629342776c316fbce9d39, ..\visualbasic_App\Win32API\User32.vb"
+﻿#Region "Microsoft.VisualBasic::f70e4043ecf3fddcadc51d02809860c6, ..\visualbasic_App\win32_api\User32.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc46f0a2124bce1808ed4a9e16a766ad, ..\visualbasic_App\Scripting\Math\MathApp\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::dc46f0a2124bce1808ed4a9e16a766ad, ..\visualbasic_App\Data_science\Mathematical\MathApp\CLI.vb"
 
     ' Author:
     ' 

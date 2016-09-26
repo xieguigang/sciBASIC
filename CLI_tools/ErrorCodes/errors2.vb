@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f653276e26ed547e6154dc5fd282357a, ..\CLI_tools\ErrorCodes\errors2.vb"
+﻿#Region "Microsoft.VisualBasic::f653276e26ed547e6154dc5fd282357a, ..\visualbasic_App\CLI_tools\ErrorCodes\errors2.vb"
 
     ' Author:
     ' 
