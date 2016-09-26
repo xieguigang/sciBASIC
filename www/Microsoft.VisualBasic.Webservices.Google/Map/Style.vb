@@ -5,10 +5,36 @@ Public Class Style
     <XmlAttribute> Public Property id As String
     Public Property IconStyle As IconStyle
     Public Property LabelStyle As LabelStyle
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+End Class
+
+Public Class StyleMap
+    <XmlAttribute> Public Property id As String
+    <XmlElement("Pair")> Public Property Pairs As Pair()
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+End Class
+
+Public Class Pair
+    Public Property key As String
+    Public Property styleUrl As String
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class
 
 Public Class LabelStyle
     Public Property scale As Double
+
+    Public Overrides Function ToString() As String
+        Return scale
+    End Function
 End Class
 
 Public Class IconStyle

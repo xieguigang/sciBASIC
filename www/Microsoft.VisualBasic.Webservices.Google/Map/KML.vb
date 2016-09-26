@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 <XmlRoot("kml")> Public Class KML
 
@@ -16,7 +17,13 @@ End Class
 Public Class Document : Inherits node
 
     Public Property description As String
+    Public Property Folder As Folder
+    <XmlElement("Style")> Public Property Styles As Style()
+    <XmlElement("StyleMap")> Public Property StyleMaps As StyleMap()
 
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class
 
 Public Class Folder : Inherits node
