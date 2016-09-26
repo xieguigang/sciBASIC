@@ -356,6 +356,7 @@
     <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
+    <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
@@ -427,7 +428,7 @@
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
-    <Compile Include="Extensions\Image\GDI+\ColorExtensions.vb" />
+    <Compile Include="Extensions\Image\Colors\ColorExtensions.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
@@ -479,8 +480,8 @@
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
     <Compile Include="Extensions\Doc\XmlExtensions.vb" />
-    <Compile Include="Extensions\Image\ColorCube.vb" />
-    <Compile Include="Extensions\Image\ColorMap.vb" />
+    <Compile Include="Extensions\Image\Colors\ColorCube.vb" />
+    <Compile Include="Extensions\Image\Colors\ColorMap.vb" />
     <Compile Include="Extensions\Image\GDI+\gdi+Device.vb" />
     <Compile Include="Extensions\Image\GDI+\GDITransform.vb" />
     <Compile Include="Extensions\Image\Wmf.vb" />

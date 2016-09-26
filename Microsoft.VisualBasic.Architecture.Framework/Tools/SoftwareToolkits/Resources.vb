@@ -175,6 +175,11 @@ Namespace SoftwareToolkits
             Return Resources.GetStream(name, culture)
         End Function
 
+        Public Function GetString(name As String, encoding As Encodings) As String
+            Dim stream As New StreamReader(GetStream(name), encoding.GetEncodings)
+            Return stream.ReadToEnd
+        End Function
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     The name parameter is null.
@@ -238,6 +243,10 @@ Namespace SoftwareToolkits
             Call Me.New(Assembly.GetExecutingAssembly)
         End Sub
 
+        ''' <summary>
+        ''' Load external resource data from current module's satellite assembly.
+        ''' </summary>
+        ''' <param name="type"></param>
         Sub New(type As Type)
             Call Me.New(type.Assembly)
         End Sub

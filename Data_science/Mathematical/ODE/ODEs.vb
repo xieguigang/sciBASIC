@@ -187,10 +187,9 @@ Public MustInherit Class ODEs
     ''' <summary>
     ''' Get function parameters
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Shared Function GetParameters(Of T As ODEs)() As IEnumerable(Of String)
-        Dim fields = CType(GetType(T), TypeInfo) _
+    Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
+        Dim fields = CType(model, TypeInfo) _
             .DeclaredFields _
             .Where(Function(f) f.FieldType.Equals(GetType(Double)))
         Return fields.Select(Function(f) f.Name)
@@ -199,10 +198,9 @@ Public MustInherit Class ODEs
     ''' <summary>
     ''' Get Y
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Shared Function GetVariables(Of T As ODEs)() As IEnumerable(Of String)
-        Dim fields = CType(GetType(T), TypeInfo) _
+    Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)
+        Dim fields = CType(model, TypeInfo) _
           .DeclaredFields _
           .Where(Function(f) f.FieldType.Equals(GetType(var)))
         Return fields.Select(Function(f) f.Name)

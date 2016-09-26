@@ -141,7 +141,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Value assignment: ``Dim s As String = Value(Of String) = var``
+        ''' Inline value assignment: ``Dim s As String = Value(Of String) = var``
         ''' </summary>
         ''' <param name="value"></param>
         ''' <param name="o"></param>

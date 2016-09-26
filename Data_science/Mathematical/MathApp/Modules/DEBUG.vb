@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Module DEBUG
 
@@ -150,7 +151,7 @@ Module DEBUG
             New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
         }
 
-        Call g.GraphicsPlots(
+        Call GraphicsPlots(
             New Size(350, 600), New Size, "white",
             Sub(g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
@@ -165,7 +166,7 @@ Module DEBUG
         Dim ysssss = {New NamedValue(Of DoubleRange) With {.Name = "P", .x = New DoubleRange(-10, 10)},
             New NamedValue(Of DoubleRange) With {.Name = "yC", .x = New DoubleRange(-10, 10)}}
 
-        Dim mcTest = BootstrapEstimate.Bootstrapping(Of ODEsTest)(vars, ysssss, 1, 100, 0, 100).ToArray
+        '   Dim mcTest = BootstrapIterator.Bootstrapping(Of ODEsTest)(vars, ysssss, 1, 100, 0, 100).ToArray
 
 
         '  Call bubblePlots()

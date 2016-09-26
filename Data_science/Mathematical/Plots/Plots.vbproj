@@ -131,7 +131,6 @@
   <ItemGroup>
     <Compile Include="Axis.vb" />
     <Compile Include="Bubble.vb" />
-    <Compile Include="g\GraphicsRegion.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
     <Compile Include="g\Legends\Legend.vb" />
     <Compile Include="csv\SerialData.vb" />
@@ -139,7 +138,6 @@
     <Compile Include="Heatmap.vb" />
     <Compile Include="PieChart.vb" />
     <Compile Include="PlotTypes.vb" />
-    <Compile Include="g\g.vb" />
     <Compile Include="Histogram.vb" />
     <Compile Include="Scatter\Annotation.vb" />
     <Compile Include="Scatter\Data.vb" />

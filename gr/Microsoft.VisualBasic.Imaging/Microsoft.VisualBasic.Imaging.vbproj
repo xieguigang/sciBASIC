@@ -27,7 +27,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\GCModeller\GCModeller\</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -171,6 +171,8 @@
   <ItemGroup>
     <Compile Include="d3js\color\rgb.vb" />
     <Compile Include="d3js\interpolate\rgb.vb" />
+    <Compile Include="Drawing2D\g.vb" />
+    <Compile Include="Drawing2D\GraphicsRegion.vb" />
     <Compile Include="Drawing2D\Shapes\Arrow.vb" />
     <Compile Include="Drawing2D\Shapes\Border.vb" />
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
@@ -209,6 +211,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SVG\g.vb" />
+    <Compile Include="SVG\Image.vb" />
+    <Compile Include="SVG\SVG.vb" />
     <Compile Include="SVG\CSS.vb" />
     <Compile Include="SVG\Xml.vb" />
     <Compile Include="TextureResourceLoader.vb" />
@@ -248,7 +253,6 @@
       <Name>Markups</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

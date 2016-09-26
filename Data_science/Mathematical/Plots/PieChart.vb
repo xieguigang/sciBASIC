@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Public Module PieChart
 
@@ -18,7 +19,7 @@ Public Module PieChart
                          Optional legend As Boolean = True,
                          Optional legendBorder As Border = Nothing) As Bitmap
 
-        Return g.GraphicsPlots(size, margin, bg,
+        Return GraphicsPlots(size, margin, bg,
                  Sub(g)
                      Dim r = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2
                      Dim topLeft = New Point(size.Width / 2 - r, size.Height / 2 - r)
