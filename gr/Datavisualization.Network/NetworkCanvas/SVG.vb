@@ -136,8 +136,7 @@ Public Module SVGExtensions
             .height = size.Height & "px",
             .lines = links,
             .circles = nodes,
-            .texts = labels,
-            .fill = "#dbf3ff"
+            .texts = labels
         }
 
         Return svg
