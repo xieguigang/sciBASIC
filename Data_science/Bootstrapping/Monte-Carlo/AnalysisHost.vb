@@ -40,8 +40,28 @@ Namespace MonteCarlo
             Return model.params
         End Function
 
-        Public Function Run(dll As String, k As Long, n As Integer, a As Integer, b As Integer)
+        <Extension>
+        Public Function GetEigenvector(def As Type) As Dictionary(Of String, Eigenvector)
+            Dim obj As Object = Activator.CreateInstance(def)
+            Dim model As Model = DirectCast(obj, Model)
+            Return model.eigenvector
+        End Function
 
+        ''' <summary>
+        ''' 加载目标dll之中的计算模型然后提供计算数据
+        ''' </summary>
+        ''' <param name="dll"></param>
+        ''' <param name="k"></param>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Run(dll As String, k As Long, n As Integer, a As Integer, b As Integer) As IEnumerable(Of ODEsOut)
+            Dim model As Type = DllParser(dll)
+            Dim y0 = model.Gety0
+            Dim parms = model.GetRandomParameters
+            Return model.Bootstrapping(parms, y0, k, n, a, b,,)
         End Function
     End Module
 End Namespace

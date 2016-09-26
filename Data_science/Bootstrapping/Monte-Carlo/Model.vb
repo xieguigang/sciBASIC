@@ -16,6 +16,7 @@ Namespace MonteCarlo
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride Function params() As NamedValue(Of PreciseRandom)()
+        Public MustOverride Function eigenvector() As Dictionary(Of String, Eigenvector)
 
         Protected NotOverridable Overrides Function y0() As var()
             Return {}

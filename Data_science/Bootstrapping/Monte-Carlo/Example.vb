@@ -34,5 +34,9 @@ Namespace MonteCarlo
                 New NamedValue(Of PreciseRandom)(NameOf(sin), New PreciseRandom(-1, 2))
             }
         End Function
+
+        Public Overrides Function eigenvector() As Dictionary(Of String, Eigenvector)
+            Return Nothing
+        End Function
     End Class
 End Namespace

@@ -85,7 +85,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BootstrapEstimate.vb" />
+    <Compile Include="BootstrapIterator.vb" />
     <Compile Include="Analysis.vb" />
     <Compile Include="Monte-Carlo\AnalysisHost.vb" />
     <Compile Include="EigenvectorBootstrapping.vb" />

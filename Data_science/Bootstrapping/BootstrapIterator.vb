@@ -8,7 +8,10 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Module BootstrapEstimate
+''' <summary>
+''' 参数估计的过程之中的迭代器
+''' </summary>
+Public Module BootstrapIterator
 
     ''' <summary>
     ''' 这个更加适合没有任何参数信息的时候的情况
