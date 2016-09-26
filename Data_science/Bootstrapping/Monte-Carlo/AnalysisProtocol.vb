@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 
@@ -41,11 +42,24 @@ Namespace MonteCarlo
             Return model.params
         End Function
 
+        ''' <summary>
+        ''' 假若模型定义之中没有定义这个特征向量的构建方法的话，则使用默认的方法：平均数+标准差
+        ''' </summary>
+        ''' <param name="def"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetEigenvector(def As Type) As Dictionary(Of String, Eigenvector)
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
-            Return model.eigenvector
+            Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.eigenvector
+
+            If eigenvectors Is Nothing Then
+                Dim vars = Model.GetVariables(def)
+                Dim ys = Model.GetParameters(def)
+                eigenvectors = vars.Join(ys).DefaultEigenvector
+            End If
+
+            Return eigenvectors
         End Function
 
         ''' <summary>
@@ -105,8 +119,76 @@ Namespace MonteCarlo
             }
         End Function
 
-        Public Sub Iterations(dll As String, k As Long, n As Integer, a As Integer, b As Integer, expected As Integer, Optional [stop] As Integer = -1)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dll"></param>
+        ''' <param name="observation">实验观察里面只需要y值列表就足够了，不需要参数信息</param>
+        ''' <param name="k"></param>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="expected"></param>
+        ''' <param name="[stop]"></param>
+        ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
+        Public Sub Iterations(dll As String,
+                              observation As ODEsOut,
+                              k As Long,
+                              n As Integer,
+                              a As Integer,
+                              b As Integer,
+                              expected As Integer,
+                              Optional [stop] As Integer = -1,
+                              Optional partN As Integer = 20,
+                              Optional cut As Double = 0.3,
+                              Optional work As String = Nothing)
 
+            Dim model As Type = DllParser(dll)
+            Dim y0 = model.Gety0
+            Dim parms = model.GetRandomParameters
+            Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector
+
+            If work Is Nothing Then
+                work = dll.TrimSuffix & $"-MonteCarlo-{App.PID}/"
+            End If
+
+            Do While True
+                Dim randSamples = observation _
+                    .Join(model.Bootstrapping(parms, y0, k, n, a, b,, )) _
+                    .Sampling(eigenvectors, partN)
+                Dim kmeansResult As Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())()) =
+                    randSamples.KMeans(expected, [stop])
+                Dim required As VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) = Nothing
+
+                For Each cluster In kmeansResult
+                    For Each x In cluster.Value
+                        If Not String.IsNullOrEmpty(x.Name) Then
+                            required = New VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) With {
+                                .Tag = cluster.Key,
+                                .value = cluster.Value
+                            }
+                            Exit For
+                        End If
+                    Next
+
+                    If Not required Is Nothing Then
+                        Exit For
+                    End If
+                Next
+
+                Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
+                Dim requires As Integer = GetEntityNumbers(required)
+
+                If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
+
+                End If
+            Loop
         End Sub
+
+        Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer
+            Dim array = data.MatrixAsIterator.Select(Function(x) x.x).MatrixAsIterator
+            Dim value As Integer = array.Count
+            Return value
+        End Function
     End Module
 End Namespace

@@ -33,8 +33,13 @@ Public Module EigenvectorBootstrapping
     End Function
 
     Public Function DefaultEigenvector(DIR As String) As Dictionary(Of String, Eigenvector)
+        Return GetVars(DIR).DefaultEigenvector
+    End Function
+
+    <Extension>
+    Public Function DefaultEigenvector(vars As IEnumerable(Of String)) As Dictionary(Of String, Eigenvector)
         Dim vec As New Dictionary(Of String, Eigenvector)
-        For Each var As String In GetVars(DIR)
+        For Each var As String In vars
             vec(var) = AddressOf DefaultEigenvector
         Next
         Return vec
@@ -47,7 +52,11 @@ Public Module EigenvectorBootstrapping
     ''' <param name="n">所期望的Kmeans集合的数量</param>
     ''' <returns></returns>
     <Extension>
-    Public Function KMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), n As Integer, Optional [stop] As Integer = -1) As Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())())
+    Public Function KMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))),
+                              n As Integer,
+                Optional [stop] As Integer = -1) _
+                                As Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())())
+
         Dim strTags As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))() =
             LinqAPI.Exec(Of NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))) <=
  _
