@@ -144,8 +144,8 @@ Namespace MonteCarlo
                               Optional work As String = Nothing)
 
             Dim model As Type = DllParser(dll)
-            Dim y0 = model.Gety0
-            Dim parms = model.GetRandomParameters
+            Dim y0 As New Dictionary(Of NamedValue(Of PreciseRandom))(model.Gety0)
+            Dim parms As New Dictionary(Of NamedValue(Of PreciseRandom))(model.GetRandomParameters)
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector
 
             If work Is Nothing Then
@@ -184,6 +184,28 @@ Namespace MonteCarlo
 
                 If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
 
+                Else
+                    ' 调整y0和参数列表
+                    Dim output = required.value _
+                        .Select(Function(x) x.x) _
+                        .MatrixAsIterator _
+                        .MatrixAsIterator _
+                        .GroupBy(Function(x) x.Key).ToDictionary(
+                            Function(x) x.Key,
+                            Function(x) x.ToArray(
+                            Function(o) o.Value))
+
+                    For Each y In y0
+                        Dim values As Double() = output(y.Key)
+                        Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
+                        y0(y.Key) = New NamedValue(Of PreciseRandom)(y.Key, range)
+                    Next
+                    For Each parm In parms
+                        Dim values As Double() = output(parm.Key)
+                        Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
+                        parms(parm.Key) =
+                            New NamedValue(Of PreciseRandom)(parm.Key, range)
+                    Next
                 End If
             Loop
         End Sub
