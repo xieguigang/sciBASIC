@@ -35,7 +35,7 @@ Imports System.Text
 ''' http://www.codeproject.com/Tips/851790/Using-Google-Translation-without-Developer-Account?msg=4960428#xx4960428xx
 ''' </summary>
 ''' <remarks></remarks>
-Public Class GoogleTranslation
+Public Class Translation
 
     Dim wb As New WebBrowser With {
         .ScriptErrorsSuppressed = True
