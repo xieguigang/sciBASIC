@@ -152,10 +152,13 @@ Namespace MonteCarlo
                 work = dll.TrimSuffix & $"-MonteCarlo-{App.PID}/"
             End If
 
+            Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
+                observation.Sampling(eigenvectors, partN, AnalysisProtocol.Observation)
+
             Do While True
-                Dim randSamples = observation _
-                    .Join(model.Bootstrapping(parms, y0, k, n, a, b,, )) _
-                    .Sampling(eigenvectors, partN)
+                Dim randSamples = experimentObservation.Join(
+                    model.Bootstrapping(parms, y0, k, n, a, b,, ) _
+                    .Sampling(eigenvectors, partN))
                 Dim kmeansResult As Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())()) =
                     randSamples.KMeans(expected, [stop])
                 Dim required As VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) = Nothing
