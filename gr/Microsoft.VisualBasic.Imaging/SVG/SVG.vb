@@ -11,13 +11,15 @@ Namespace SVG
     ''' <summary>
     ''' The svg vector graphics in Xml document format.
     ''' </summary>
-    <XmlType("svg")> Public Class SVGXml : Inherits g
+    <XmlType("svg")> Public Class SVGXml
         Implements ISaveHandle
+        Implements ICanvas
 
 #Region "xml root property"
 
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
+        <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property version As String
         <XmlAttribute> Public Property viewBox As String()
 #End Region
@@ -36,6 +38,16 @@ Namespace SVG
         ''' <returns></returns>
         <XmlElement("style")> Public Shadows Property style As XmlMeta.CSS
         <XmlElement("image")> Public Property images As Image()
+
+        <XmlAttribute> Public Property transform As String Implements ICanvas.transform
+        <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
+        <XmlElement("g")> Public Property gs As g() Implements ICanvas.gs
+        <XmlElement> Public Property path As path() Implements ICanvas.path
+        <XmlElement> Public Property rect As rect() Implements ICanvas.rect
+        <XmlElement> Public Property polygon As polygon() Implements ICanvas.polygon
+        <XmlElement("line")> Public Property lines As line() Implements ICanvas.lines
+        <XmlElement("circle")> Public Property circles As circle() Implements ICanvas.circles
+        <XmlElement> Public Property title As String Implements ICanvas.title
 
         Public Sub SetSize(size As Size)
             width = size.Width & "px"

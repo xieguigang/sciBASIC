@@ -211,6 +211,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SVG\g.vb" />
     <Compile Include="SVG\Image.vb" />
     <Compile Include="SVG\SVG.vb" />
     <Compile Include="SVG\CSS.vb" />

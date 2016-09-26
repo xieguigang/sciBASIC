@@ -69,22 +69,6 @@ Namespace SVG
         Public Property title As title
     End Class
 
-    ''' <summary>
-    ''' SVG graphics unit
-    ''' </summary>
-    Public Class g : Inherits node
-        <XmlAttribute> Public Property transform As String
-        <XmlElement("text")> Public Property texts As text()
-        <XmlElement("g")> Public Property gs As g()
-        <XmlElement> Public Property path As path()
-        <XmlElement> Public Property rect As rect()
-        <XmlElement> Public Property polygon As polygon()
-        <XmlElement("line")> Public Property lines As line()
-        <XmlElement("circle")> Public Property circles As circle()
-        <XmlAttribute> Public Property fill As String
-        <XmlElement> Public Property title As String
-    End Class
-
     Public Class polygon : Inherits node
         <XmlAttribute> Public Property points As String()
     End Class
