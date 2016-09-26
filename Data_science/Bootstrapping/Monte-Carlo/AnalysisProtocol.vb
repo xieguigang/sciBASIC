@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Mathematical.diffEq
 
 Namespace MonteCarlo
 
-    Public Module AnalysisHost
+    Public Module AnalysisProtocol
 
         ''' <summary>
         ''' 加载dll文件之中的计算模型
@@ -66,12 +66,27 @@ Namespace MonteCarlo
         End Function
 
         <Extension>
-        Public Function Sampling(data As IEnumerable(Of ODEsOut), eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
+        Public Function Sampling(data As IEnumerable(Of ODEsOut),
+                                 eigenvector As Dictionary(Of String, Eigenvector),
+                                 Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
             Return data.Select(Function(x) x.Sampling(eigenvector, partN))
         End Function
 
+        Public Const Observation As String = NameOf(Observation)
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="eigenvector"></param>
+        ''' <param name="partN"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Sampling(x As ODEsOut, eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As VectorTagged(Of Dictionary(Of String, Double))
+        Public Function Sampling(x As ODEsOut,
+                                 eigenvector As Dictionary(Of String, Eigenvector),
+                                 Optional partN As Integer = 20,
+                                 Optional tag As String = Nothing) As VectorTagged(Of Dictionary(Of String, Double))
+
             Dim vector As New List(Of Double)
 
             For Each var As String In eigenvector.Keys
@@ -85,8 +100,13 @@ Namespace MonteCarlo
 
             Return New VectorTagged(Of Dictionary(Of String, Double)) With {
                 .Tag = vector.ToArray,   ' 所提取采样出来的特征向量
-                .value = x.params  ' 生成原始数据的参数列表
+                .value = x.params,       ' 生成原始数据的参数列表
+                .TagStr = tag
             }
         End Function
+
+        Public Sub Iterations(dll As String, k As Long, n As Integer, a As Integer, b As Integer, expected As Integer, Optional [stop] As Integer = -1)
+
+        End Sub
     End Module
 End Namespace

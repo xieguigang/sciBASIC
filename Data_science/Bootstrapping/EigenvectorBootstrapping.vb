@@ -47,7 +47,7 @@ Public Module EigenvectorBootstrapping
     ''' <param name="n">所期望的Kmeans集合的数量</param>
     ''' <returns></returns>
     <Extension>
-    Public Function KMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), n As Integer, Optional [stop] As Integer = -1) As Dictionary(Of Double(), Dictionary(Of String, Double)())
+    Public Function KMeans(data As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double))), n As Integer, Optional [stop] As Integer = -1) As Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())())
         Dim strTags As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))() =
             LinqAPI.Exec(Of NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))) <=
  _
@@ -55,21 +55,22 @@ Public Module EigenvectorBootstrapping
             In data.AsParallel
             Select New NamedValue(Of VectorTagged(Of Dictionary(Of String, Double))) With {
                 .Name = x.Tag.GetJson,
-                .x = x
+                .x = x,
+                .Description = x.TagStr
             }
 
         Call "Load data complete!".__DEBUG_ECHO
 
         Dim datasets As Entity() = strTags.ToArray(
             Function(x) New Entity With {
-                .uid = x.Name,
+                .uid = x.Description,
                 .Properties = x.x.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
         })
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
         Dim clusters = ClusterDataSet(n, datasets, debug:=True, [stop]:=[stop])
-        Dim out As New Dictionary(Of Double(), Dictionary(Of String, Double)())
+        Dim out As New Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags
                    Select x
@@ -79,13 +80,17 @@ Public Module EigenvectorBootstrapping
 
         For Each cluster As KMeansCluster(Of Entity) In clusters
             Dim key As Double() = cluster.ClusterMean  ' out之中的key
-            Dim tmp As New List(Of Dictionary(Of String, Double))   ' out之中的value
+            Dim tmp As New List(Of NamedValue(Of Dictionary(Of String, Double)()))   ' out之中的value
 
             For Each x As Entity In cluster
                 Dim rawKey As String = x.Properties.GetJson
-                Dim rawParams = raw(rawKey).ToArray(Function(o) o.x.value)
+                Dim rawParams =
+                    raw(rawKey).ToArray(Function(o) o.x.value)
 
-                tmp += rawParams
+                tmp += New NamedValue(Of Dictionary(Of String, Double)()) With {
+                    .Name = x.uid,
+                    .x = rawParams
+                }
             Next
 
             out(key) = tmp.ToArray
