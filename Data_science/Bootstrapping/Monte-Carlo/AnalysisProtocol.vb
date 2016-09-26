@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
 
@@ -131,17 +132,17 @@ Namespace MonteCarlo
         ''' <param name="expected"></param>
         ''' <param name="[stop]"></param>
         ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
-        Public Sub Iterations(dll As String,
-                              observation As ODEsOut,
-                              k As Long,
-                              n As Integer,
-                              a As Integer,
-                              b As Integer,
-                              expected As Integer,
-                              Optional [stop] As Integer = -1,
-                              Optional partN As Integer = 20,
-                              Optional cut As Double = 0.3,
-                              Optional work As String = Nothing)
+        Public Function Iterations(dll As String,
+                                   observation As ODEsOut,
+                                   k As Long,
+                                   n As Integer,
+                                   a As Integer,
+                                   b As Integer,
+                                   expected As Integer,
+                                   Optional [stop] As Integer = -1,
+                                   Optional partN As Integer = 20,
+                                   Optional cut As Double = 0.3,
+                                   Optional work As String = Nothing) As Dictionary(Of String, Double())
 
             Dim model As Type = DllParser(dll)
             Dim y0 As New Dictionary(Of NamedValue(Of PreciseRandom))(model.Gety0)
@@ -154,6 +155,7 @@ Namespace MonteCarlo
 
             Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
                 observation.Sampling(eigenvectors, partN, AnalysisProtocol.Observation)
+            Dim i As int = 0
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
@@ -181,20 +183,20 @@ Namespace MonteCarlo
 
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
                 Dim requires As Integer = GetEntityNumbers(required)
+                Dim output As Dictionary(Of String, Double()) =
+                    required.value _
+                    .Select(Function(x) x.x) _
+                    .MatrixAsIterator _
+                    .MatrixAsIterator _
+                    .GroupBy(Function(x) x.Key).ToDictionary(
+                        Function(x) x.Key,
+                        Function(x) x.ToArray(
+                        Function(o) o.Value))
 
                 If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
-
+                    Return output
                 Else
                     ' 调整y0和参数列表
-                    Dim output = required.value _
-                        .Select(Function(x) x.x) _
-                        .MatrixAsIterator _
-                        .MatrixAsIterator _
-                        .GroupBy(Function(x) x.Key).ToDictionary(
-                            Function(x) x.Key,
-                            Function(x) x.ToArray(
-                            Function(o) o.Value))
-
                     For Each y In y0
                         Dim values As Double() = output(y.Key)
                         Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
@@ -203,12 +205,21 @@ Namespace MonteCarlo
                     For Each parm In parms
                         Dim values As Double() = output(parm.Key)
                         Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
-                        parms(parm.Key) =
-                            New NamedValue(Of PreciseRandom)(parm.Key, range)
+
+                        parms(parm.Key) = New NamedValue(Of PreciseRandom) With {
+                            .Name = parm.Key,
+                            .x = range
+                        }
                     Next
+
+                    ' 保存临时数据到工作区间
+                    Call output.GetJson _
+                        .SaveTo(work & $"/{FormatZero(++i, "00000")}.json")
                 End If
             Loop
-        End Sub
+
+            Return Nothing
+        End Function
 
         Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer
             Dim array = data.MatrixAsIterator.Select(Function(x) x.x).MatrixAsIterator
