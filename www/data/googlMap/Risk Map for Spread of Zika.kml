@@ -1,0 +1,3490 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Risk Map for Spread of Zika </name>
+		<description><![CDATA[The pointers depict the top 100 cities to which Zika may be imported from current infected regions of Latin America and which have suitable habitat for Ae. aegypti or Ae albopictus in the surrounding region. The risk values are the estimated relative risk (ranging between 0-1) posed to the destination. The relative risk if the spread driven by Ae. aegypti presence alone is denoted as "Ae. Aegypti risk", while relative risk if the spread driven by both species is denoted as "composite risk". Darker shading is indicative of higher risk. <br><br>This map was created by Lauren Gardner at UNSW Australia in collaboration with Sahotra Sarkar at the University of Texas Austin.]]></description>
+		<Folder>
+			<name>Relative risk of Zika importation and establishment</name>
+			<Placemark>
+				<name>Miami</name>
+				<description><![CDATA[Destinatio: MIA<br>Latitude: 25.79325<br>Longitude: -80.290556<br>Airport: Miami Intl<br>Country: United States<br>Composite Risk: 1<br>Ae. Aegypti Risk: 0.31177106]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MIA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>25.79325</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-80.290556</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Miami Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>1.0</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.31177106</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-80.290556,25.79325,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Buenos Aires</name>
+				<description><![CDATA[Destinatio: EZE<br>Latitude: -34.822222<br>Longitude: -58.535833<br>Airport: Ministro Pistarini<br>Country: Argentina<br>Composite Risk: 0.447<br>Ae. Aegypti Risk: 0.126975746]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>EZE</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-34.822222</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-58.535833</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Ministro Pistarini</value>
+					</Data>
+					<Data name='Country'>
+						<value>Argentina</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.446570238</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.126975746</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-58.535833,-34.822222,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Orlando</name>
+				<description><![CDATA[Destinatio: MCO<br>Latitude: 28.429394<br>Longitude: -81.308994<br>Airport: Orlando Intl<br>Country: United States<br>Composite Risk: 0.381<br>Ae. Aegypti Risk: 0.090912762]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MCO</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>28.429394</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-81.308994</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Orlando Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.381386779</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.090912762</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-81.308994,28.429394,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Fort Lauderdale</name>
+				<description><![CDATA[Destinatio: FLL<br>Latitude: 26.072583<br>Longitude: -80.15275<br>Airport: Fort Lauderdale Hollywood Intl<br>Country: United States<br>Composite Risk: 0.267<br>Ae. Aegypti Risk: 0.101018129]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>FLL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>26.072583</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-80.15275</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Fort Lauderdale Hollywood Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.266916675</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.101018129</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-80.15275,26.072583,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Buenos Aires</name>
+				<description><![CDATA[Destinatio: AEP<br>Latitude: -34.559175<br>Longitude: -58.415606<br>Airport: Aeroparque Jorge Newbery<br>Country: Argentina<br>Composite Risk: 0.266<br>Ae. Aegypti Risk: 0.054271614]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>AEP</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-34.559175</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-58.415606</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Aeroparque Jorge Newbery</value>
+					</Data>
+					<Data name='Country'>
+						<value>Argentina</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.265715705</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.054271614</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-58.415606,-34.559175,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>New York</name>
+				<description><![CDATA[Destinatio: JFK<br>Latitude: 40.639751<br>Longitude: -73.778925<br>Airport: John F Kennedy Intl<br>Country: United States<br>Composite Risk: 0.247<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>JFK</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>40.639751</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-73.778925</value>
+					</Data>
+					<Data name='Airport'>
+						<value>John F Kennedy Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.246549326</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-73.778925,40.639751,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Gustavia</name>
+				<description><![CDATA[Destinatio: SBH<br>Latitude: 17.9023<br>Longitude: -62.8324<br>Airport: Saint Barthelemy<br>Country: France<br>Composite Risk: 0.122<br>Ae. Aegypti Risk: 0.104003577]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SBH</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>17.9023</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-62.8324</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Saint Barthelemy</value>
+					</Data>
+					<Data name='Country'>
+						<value>France</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.121610295</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.104003577</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-62.8324,17.9023,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Oranjestad</name>
+				<description><![CDATA[Destinatio: AUA<br>Latitude: 12.501389<br>Longitude: -70.015221<br>Airport: Reina Beatrix Intl<br>Country: Aruba<br>Composite Risk: 0.112<br>Ae. Aegypti Risk: 0.053235161]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>AUA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>12.501389</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-70.015221</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Reina Beatrix Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Aruba</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.112058381</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.053235161</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-70.015221,12.501389,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Houston</name>
+				<description><![CDATA[Destinatio: IAH<br>Latitude: 29.984433<br>Longitude: -95.341442<br>Airport: George Bush Intercontinental<br>Country: United States<br>Composite Risk: 0.112<br>Ae. Aegypti Risk: 0.059664102]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>IAH</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>29.984433</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-95.341442</value>
+					</Data>
+					<Data name='Airport'>
+						<value>George Bush Intercontinental</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.111995426</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.059664102</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-95.341442,29.984433000000003,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Havana</name>
+				<description><![CDATA[Destinatio: HAV<br>Latitude: 22.989153<br>Longitude: -82.409086<br>Airport: Jose Marti Intl<br>Country: Cuba<br>Composite Risk: 0.096<br>Ae. Aegypti Risk: 0.051532195]]></description>
+				<styleUrl>#icon-503-750000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>HAV</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>22.989153</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-82.409086</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Jose Marti Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Cuba</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.09613349</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.051532195</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-82.409086,22.989153,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Montevideo</name>
+				<description><![CDATA[Destinatio: MVD<br>Latitude: -34.838417<br>Longitude: -56.030806<br>Airport: Carrasco Intl<br>Country: Uruguay<br>Composite Risk: 0.096<br>Ae. Aegypti Risk: 0.011956316]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MVD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-34.838417</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-56.030806</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Carrasco Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Uruguay</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.095994643</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.011956316</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-56.030806,-34.838417,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Port-of-spain</name>
+				<description><![CDATA[Destinatio: POS<br>Latitude: 10.595369<br>Longitude: -61.337242<br>Airport: Piarco<br>Country: Trinidad and Tobago<br>Composite Risk: 0.083<br>Ae. Aegypti Risk: 0.047655766]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>POS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>10.595369</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-61.337242</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Piarco</value>
+					</Data>
+					<Data name='Country'>
+						<value>Trinidad and Tobago</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.082901757</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.047655766</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-61.337241999999996,10.595369,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Paris</name>
+				<description><![CDATA[Destinatio: ORY<br>Latitude: 48.725278<br>Longitude: 2.359444<br>Airport: Orly<br>Country: France<br>Composite Risk: 0.072<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ORY</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>48.725278</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>2.359444</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Orly</value>
+					</Data>
+					<Data name='Country'>
+						<value>France</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.072184673</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>2.359444,48.725278,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Amsterdam</name>
+				<description><![CDATA[Destinatio: AMS<br>Latitude: 52.308613<br>Longitude: 4.763889<br>Airport: Schiphol<br>Country: Netherlands<br>Composite Risk: 0.072<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>AMS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>52.308613</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>4.763889</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Schiphol</value>
+					</Data>
+					<Data name='Country'>
+						<value>Netherlands</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.071829623</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>4.763889,52.308613,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Lisbon</name>
+				<description><![CDATA[Destinatio: LIS<br>Latitude: 38.781311<br>Longitude: -9.135919<br>Airport: Lisboa<br>Country: Portugal<br>Composite Risk: 0.065<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LIS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>38.781311</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-9.135919</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Lisboa</value>
+					</Data>
+					<Data name='Country'>
+						<value>Portugal</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.065025751</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-9.135919,38.781311,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Newark</name>
+				<description><![CDATA[Destinatio: EWR<br>Latitude: 40.6925<br>Longitude: -74.168667<br>Airport: Newark Liberty Intl<br>Country: United States<br>Composite Risk: 0.063<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>EWR</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>40.6925</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-74.168667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Newark Liberty Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.062606943</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-74.168667,40.6925,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Los Angeles</name>
+				<description><![CDATA[Destinatio: LAX<br>Latitude: 33.942536<br>Longitude: -118.408075<br>Airport: Los Angeles Intl<br>Country: United States<br>Composite Risk: 0.062<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LAX</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>33.942536</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-118.408075</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Los Angeles Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.06188462</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-118.40807500000001,33.942536,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Tampa</name>
+				<description><![CDATA[Destinatio: TPA<br>Latitude: 27.975472<br>Longitude: -82.53325<br>Airport: Tampa Intl<br>Country: United States<br>Composite Risk: 0.057<br>Ae. Aegypti Risk: 0.014659628]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>TPA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>27.975472</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-82.53325</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Tampa Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.057423124</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.014659628</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-82.53325,27.975472,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Philadelphia</name>
+				<description><![CDATA[Destinatio: PHL<br>Latitude: 39.871944<br>Longitude: -75.241139<br>Airport: Philadelphia Intl<br>Country: United States<br>Composite Risk: 0.048<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>PHL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>39.871944</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-75.241139</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Philadelphia Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.047600331</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-75.241139,39.871944,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Tortola</name>
+				<description><![CDATA[Destinatio: EIS<br>Latitude: 18.444834<br>Longitude: -64.542975<br>Airport: Terrance B Lettsome Intl<br>Country: British Virgin Islands<br>Composite Risk: 0.047<br>Ae. Aegypti Risk: 0.016231923]]></description>
+				<styleUrl>#icon-503-9E0000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>EIS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>18.444834</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-64.542975</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Terrance B Lettsome Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>British Virgin Islands</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.046751603</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.016231923</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-64.542975,18.444834,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Rome</name>
+				<description><![CDATA[Destinatio: FCO<br>Latitude: 41.804475<br>Longitude: 12.250797<br>Airport: Fiumicino<br>Country: Italy<br>Composite Risk: 0.046<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>FCO</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>41.804475</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>12.250797</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Fiumicino</value>
+					</Data>
+					<Data name='Country'>
+						<value>Italy</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.045949024</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>12.250797,41.804475,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>San Francisco</name>
+				<description><![CDATA[Destinatio: SFO<br>Latitude: 37.618972<br>Longitude: -122.374889<br>Airport: San Francisco Intl<br>Country: United States<br>Composite Risk: 0.043<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SFO</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>37.618972</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-122.374889</value>
+					</Data>
+					<Data name='Airport'>
+						<value>San Francisco Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.042970365</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-122.374889,37.618972,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Santiago</name>
+				<description><![CDATA[Destinatio: SCL<br>Latitude: -33.392975<br>Longitude: -70.785803<br>Airport: Arturo Merino Benitez Intl<br>Country: Chile<br>Composite Risk: 0.04<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SCL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-33.392975</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-70.785803</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Arturo Merino Benitez Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Chile</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.040344722</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-70.785803,-33.392975,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Castries</name>
+				<description><![CDATA[Destinatio: SLU<br>Latitude: 14.020228<br>Longitude: -60.992936<br>Airport: George F L Charles<br>Country: Saint Lucia<br>Composite Risk: 0.035<br>Ae. Aegypti Risk: 0.024178986]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SLU</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>14.020228</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-60.992936</value>
+					</Data>
+					<Data name='Airport'>
+						<value>George F L Charles</value>
+					</Data>
+					<Data name='Country'>
+						<value>Saint Lucia</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.035288351</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.024178986</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-60.99293600000001,14.020228,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>London</name>
+				<description><![CDATA[Destinatio: LGW<br>Latitude: 51.148056<br>Longitude: -0.190278<br>Airport: Gatwick<br>Country: United Kingdom<br>Composite Risk: 0.035<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LGW</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>51.148056</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-0.190278</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Gatwick</value>
+					</Data>
+					<Data name='Country'>
+						<value>United Kingdom</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.034542218</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-0.19027800000000003,51.148056,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Antigua</name>
+				<description><![CDATA[Destinatio: ANU<br>Latitude: 17.136749<br>Longitude: -61.792667<br>Airport: V C Bird Intl<br>Country: Antigua and Barbuda<br>Composite Risk: 0.034<br>Ae. Aegypti Risk: 0.020959704]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ANU</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>17.136749</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-61.792667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>V C Bird Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Antigua and Barbuda</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.033978203</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.020959704</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-61.792666999999994,17.136749,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Boston</name>
+				<description><![CDATA[Destinatio: BOS<br>Latitude: 42.364347<br>Longitude: -71.005181<br>Airport: General Edward Lawrence Logan Intl<br>Country: United States<br>Composite Risk: 0.034<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BOS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>42.364347</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-71.005181</value>
+					</Data>
+					<Data name='Airport'>
+						<value>General Edward Lawrence Logan Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.033948661</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-71.005181,42.364347,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Auckland</name>
+				<description><![CDATA[Destinatio: AKL<br>Latitude: -37.008056<br>Longitude: 174.791667<br>Airport: Auckland Intl<br>Country: New Zealand<br>Composite Risk: 0.032<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>AKL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-37.008056</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>174.791667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Auckland Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>New Zealand</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.032473417</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>174.791667,-37.008056,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Seattle</name>
+				<description><![CDATA[Destinatio: SEA<br>Latitude: 47.449<br>Longitude: -122.309306<br>Airport: Seattle Tacoma Intl<br>Country: United States<br>Composite Risk: 0.032<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SEA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>47.449</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-122.309306</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Seattle Tacoma Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.032328827</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-122.309306,47.449,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Paris</name>
+				<description><![CDATA[Destinatio: CDG<br>Latitude: 49.012779<br>Longitude: 2.55<br>Airport: Charles De Gaulle<br>Country: France<br>Composite Risk: 0.032<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-C70000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>CDG</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>49.012779</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>2.55</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Charles De Gaulle</value>
+					</Data>
+					<Data name='Country'>
+						<value>France</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.031610346</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>2.55,49.012779,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Vancouver</name>
+				<description><![CDATA[Destinatio: YVR<br>Latitude: 49.193889<br>Longitude: -123.184444<br>Airport: Vancouver Intl<br>Country: Canada<br>Composite Risk: 0.031<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>YVR</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>49.193889</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-123.184444</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Vancouver Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Canada</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.03139004</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-123.18444400000001,49.193889000000006,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Luanda</name>
+				<description><![CDATA[Destinatio: LAD<br>Latitude: -8.858375<br>Longitude: 13.231178<br>Airport: Luanda 4 De Fevereiro<br>Country: Angola<br>Composite Risk: 0.027<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LAD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-8.858375</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>13.231178</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Luanda 4 De Fevereiro</value>
+					</Data>
+					<Data name='Country'>
+						<value>Angola</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.02670686</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>13.231178,-8.858375,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>New Orleans</name>
+				<description><![CDATA[Destinatio: MSY<br>Latitude: 29.993389<br>Longitude: -90.258028<br>Airport: Louis Armstrong New Orleans Intl<br>Country: United States<br>Composite Risk: 0.026<br>Ae. Aegypti Risk: 0.007646175]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MSY</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>29.993389</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-90.258028</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Louis Armstrong New Orleans Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.025697095</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.007646175</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-90.258028,29.993389,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Atlanta</name>
+				<description><![CDATA[Destinatio: ATL<br>Latitude: 33.636719<br>Longitude: -84.428067<br>Airport: Hartsfield Jackson Atlanta Intl<br>Country: United States<br>Composite Risk: 0.025<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ATL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>33.636719</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-84.428067</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Hartsfield Jackson Atlanta Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.025124575</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-84.428067,33.636719,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Barcelona</name>
+				<description><![CDATA[Destinatio: BCN<br>Latitude: 41.297078<br>Longitude: 2.078464<br>Airport: Barcelona<br>Country: Spain<br>Composite Risk: 0.024<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BCN</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>41.297078</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>2.078464</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Barcelona</value>
+					</Data>
+					<Data name='Country'>
+						<value>Spain</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.024398972</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>2.078464,41.297078,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Nassau</name>
+				<description><![CDATA[Destinatio: NAS<br>Latitude: 25.038958<br>Longitude: -77.466231<br>Airport: Lynden Pindling Intl<br>Country: Bahamas<br>Composite Risk: 0.022<br>Ae. Aegypti Risk: 0.014041579]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>NAS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>25.038958</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-77.466231</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Lynden Pindling Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Bahamas</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.022428491</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.014041579</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-77.466231,25.038958000000004,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Madrid</name>
+				<description><![CDATA[Destinatio: MAD<br>Latitude: 40.493556<br>Longitude: -3.566764<br>Airport: Barajas<br>Country: Spain<br>Composite Risk: 0.022<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MAD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>40.493556</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-3.566764</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Barajas</value>
+					</Data>
+					<Data name='Country'>
+						<value>Spain</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.022152264</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-3.566764,40.493556,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Washington</name>
+				<description><![CDATA[Destinatio: IAD<br>Latitude: 38.944533<br>Longitude: -77.455811<br>Airport: Washington Dulles Intl<br>Country: United States<br>Composite Risk: 0.022<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>IAD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>38.944533</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-77.455811</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Washington Dulles Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.022043484</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-77.45581100000001,38.944533,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Belize City</name>
+				<description><![CDATA[Destinatio: BZE<br>Latitude: 17.539144<br>Longitude: -88.308203<br>Airport: Philip S W Goldson Intl<br>Country: Belize<br>Composite Risk: 0.021<br>Ae. Aegypti Risk: 0.007617174]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BZE</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>17.539144</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-88.308203</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Philip S W Goldson Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Belize</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.021217538</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.007617174</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-88.308203,17.539144,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Porto</name>
+				<description><![CDATA[Destinatio: OPO<br>Latitude: 41.248055<br>Longitude: -8.681389<br>Airport: Porto<br>Country: Portugal<br>Composite Risk: 0.021<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-F00000</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>OPO</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>41.248055</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-8.681389</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Porto</value>
+					</Data>
+					<Data name='Country'>
+						<value>Portugal</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.02104412</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-8.681389,41.248055,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>London</name>
+				<description><![CDATA[Destinatio: LHR<br>Latitude: 51.4775<br>Longitude: -0.461389<br>Airport: Heathrow<br>Country: United Kingdom<br>Composite Risk: 0.021<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LHR</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>51.4775</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-0.461389</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Heathrow</value>
+					</Data>
+					<Data name='Country'>
+						<value>United Kingdom</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.021006093</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-0.461389,51.4775,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Georgetown</name>
+				<description><![CDATA[Destinatio: GCM<br>Latitude: 19.292778<br>Longitude: -81.35775<br>Airport: Owen Roberts Intl<br>Country: Cayman Islands<br>Composite Risk: 0.021<br>Ae. Aegypti Risk: 0.012645072]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>GCM</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>19.292778</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-81.35775</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Owen Roberts Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Cayman Islands</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.020905956</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.012645072</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-81.35775,19.292778,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Point Salines</name>
+				<description><![CDATA[Destinatio: GND<br>Latitude: 12.004247<br>Longitude: -61.786192<br>Airport: Point Salines Intl<br>Country: Grenada<br>Composite Risk: 0.021<br>Ae. Aegypti Risk: 0.015366413]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>GND</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>12.004247</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-61.786192</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Point Salines Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Grenada</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.020847177</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.015366413</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-61.78619200000001,12.004247,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Basse Terre</name>
+				<description><![CDATA[Destinatio: SKB<br>Latitude: 17.311194<br>Longitude: -62.718667<br>Airport: Robert L Bradshaw<br>Country: Saint Kitts and Nevis<br>Composite Risk: 0.019<br>Ae. Aegypti Risk: 0.01361389]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SKB</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>17.311194</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-62.718667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Robert L Bradshaw</value>
+					</Data>
+					<Data name='Country'>
+						<value>Saint Kitts and Nevis</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.01877913</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.01361389</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-62.718667,17.311194,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Toronto</name>
+				<description><![CDATA[Destinatio: YYZ<br>Latitude: 43.677223<br>Longitude: -79.630556<br>Airport: Lester B Pearson Intl<br>Country: Canada<br>Composite Risk: 0.019<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>YYZ</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>43.677223</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-79.630556</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Lester B Pearson Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Canada</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.01856137</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-79.63055600000001,43.677223,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Baltimore</name>
+				<description><![CDATA[Destinatio: BWI<br>Latitude: 39.175361<br>Longitude: -76.668333<br>Airport: Baltimore Washington Intl<br>Country: United States<br>Composite Risk: 0.017<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BWI</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>39.175361</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-76.668333</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Baltimore Washington Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.017201512</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-76.668333,39.175361,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Cordoba</name>
+				<description><![CDATA[Destinatio: COR<br>Latitude: -31.323619<br>Longitude: -64.207953<br>Airport: Ambrosio L V Taravella<br>Country: Argentina<br>Composite Risk: 0.017<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>COR</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-31.323619</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-64.207953</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Ambrosio L V Taravella</value>
+					</Data>
+					<Data name='Country'>
+						<value>Argentina</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.016655182</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-64.207953,-31.323619,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Tokyo</name>
+				<description><![CDATA[Destinatio: NRT<br>Latitude: 35.764722<br>Longitude: 140.386389<br>Airport: Narita Intl<br>Country: Japan<br>Composite Risk: 0.016<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>NRT</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>35.764722</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>140.386389</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Narita Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Japan</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.01648383</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>140.386389,35.764722,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Chicago</name>
+				<description><![CDATA[Destinatio: ORD<br>Latitude: 41.978603<br>Longitude: -87.904842<br>Airport: Chicago Ohare Intl<br>Country: United States<br>Composite Risk: 0.016<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ORD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>41.978603</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-87.904842</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Chicago Ohare Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.016232511</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-87.904842,41.978603,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Washington</name>
+				<description><![CDATA[Destinatio: DCA<br>Latitude: 38.852083<br>Longitude: -77.037722<br>Airport: Ronald Reagan Washington Natl<br>Country: United States<br>Composite Risk: 0.016<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF1A1A</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>DCA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>38.852083</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-77.037722</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Ronald Reagan Washington Natl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.016164645</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-77.037722,38.852083,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Sydney</name>
+				<description><![CDATA[Destinatio: SYD<br>Latitude: -33.946111<br>Longitude: 151.177222<br>Airport: Sydney Intl<br>Country: Australia<br>Composite Risk: 0.015<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SYD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-33.946111</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>151.177222</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Sydney Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Australia</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.015383141</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>151.177222,-33.946111,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Hong Kong</name>
+				<description><![CDATA[Destinatio: HKG<br>Latitude: 22.308919<br>Longitude: 113.914603<br>Airport: Hong Kong Intl<br>Country: Hong Kong<br>Composite Risk: 0.015<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>HKG</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>22.308919</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>113.914603</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Hong Kong Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Hong Kong</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.014981495</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>113.914603,22.308919,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>New York</name>
+				<description><![CDATA[Destinatio: LGA<br>Latitude: 40.777245<br>Longitude: -73.872608<br>Airport: La Guardia<br>Country: United States<br>Composite Risk: 0.015<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LGA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>40.777245</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-73.872608</value>
+					</Data>
+					<Data name='Airport'>
+						<value>La Guardia</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.014694404</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-73.872608,40.777245,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Frankfurt</name>
+				<description><![CDATA[Destinatio: FRA<br>Latitude: 50.026421<br>Longitude: 8.543125<br>Airport: Frankfurt Main<br>Country: Germany<br>Composite Risk: 0.014<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>FRA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>50.026421</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>8.543125</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Frankfurt Main</value>
+					</Data>
+					<Data name='Country'>
+						<value>Germany</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.014216015</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>8.543125,50.026421,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Jacksonville</name>
+				<description><![CDATA[Destinatio: JAX<br>Latitude: 30.494056<br>Longitude: -81.687861<br>Airport: Jacksonville Intl<br>Country: United States<br>Composite Risk: 0.013<br>Ae. Aegypti Risk: 0.005458765]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>JAX</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>30.494056</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-81.687861</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Jacksonville Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.012994491</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.005458765</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-81.687861,30.494056,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Dallas-Fort Worth</name>
+				<description><![CDATA[Destinatio: DFW<br>Latitude: 32.896828<br>Longitude: -97.037997<br>Airport: Dallas Fort Worth Intl<br>Country: United States<br>Composite Risk: 0.012<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>DFW</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>32.896828</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-97.037997</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Dallas Fort Worth Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011852418</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-97.037997,32.896828,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Lima</name>
+				<description><![CDATA[Destinatio: LIM<br>Latitude: -12.021889<br>Longitude: -77.114319<br>Airport: Jorge Chavez Intl<br>Country: Peru<br>Composite Risk: 0.012<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>LIM</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-12.021889</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-77.114319</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Jorge Chavez Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Peru</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011847501</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-77.114319,-12.021889,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Honolulu</name>
+				<description><![CDATA[Destinatio: HNL<br>Latitude: 21.318681<br>Longitude: -157.922428<br>Airport: Honolulu Intl<br>Country: United States<br>Composite Risk: 0.012<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>HNL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>21.318681</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-157.922428</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Honolulu Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011790031</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-157.922428,21.318681,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Dominica</name>
+				<description><![CDATA[Destinatio: DOM<br>Latitude: 15.547028<br>Longitude: -61.3<br>Airport: Melville Hall<br>Country: Dominica<br>Composite Risk: 0.012<br>Ae. Aegypti Risk: 0.007913098]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>DOM</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>15.547028</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-61.3</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Melville Hall</value>
+					</Data>
+					<Data name='Country'>
+						<value>Dominica</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011730957</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.007913098</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-61.300000000000004,15.547028000000001,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Milano</name>
+				<description><![CDATA[Destinatio: MXP<br>Latitude: 45.630606<br>Longitude: 8.728111<br>Airport: Malpensa<br>Country: Italy<br>Composite Risk: 0.011<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF4242</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MXP</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>45.630606</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>8.728111</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Malpensa</value>
+					</Data>
+					<Data name='Country'>
+						<value>Italy</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011488047</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>8.728111,45.630606,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Portland</name>
+				<description><![CDATA[Destinatio: PDX<br>Latitude: 45.588722<br>Longitude: -122.5975<br>Airport: Portland Intl<br>Country: United States<br>Composite Risk: 0.011<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>PDX</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>45.588722</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-122.5975</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Portland Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011378874</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-122.5975,45.588722,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Nantes</name>
+				<description><![CDATA[Destinatio: NTE<br>Latitude: 47.153189<br>Longitude: -1.610725<br>Airport: Nantes Atlantique<br>Country: France<br>Composite Risk: 0.011<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>NTE</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>47.153189</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-1.610725</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Nantes Atlantique</value>
+					</Data>
+					<Data name='Country'>
+						<value>France</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.011085493</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-1.610725,47.153189000000005,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Providenciales</name>
+				<description><![CDATA[Destinatio: PLS<br>Latitude: 21.773625<br>Longitude: -72.265886<br>Airport: Providenciales<br>Country: Turks and Caicos Islands<br>Composite Risk: 0.011<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>PLS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>21.773625</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-72.265886</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Providenciales</value>
+					</Data>
+					<Data name='Country'>
+						<value>Turks and Caicos Islands</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.010767543</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-72.265886,21.773625,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Guangzhou</name>
+				<description><![CDATA[Destinatio: CAN<br>Latitude: 23.392436<br>Longitude: 113.298786<br>Airport: Baiyun Intl<br>Country: China<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>CAN</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>23.392436</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>113.298786</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Baiyun Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>China</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.010274109</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>113.298786,23.392436,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>San Luis</name>
+				<description><![CDATA[Destinatio: SPB<br>Latitude: 45.771028<br>Longitude: -122.861833<br>Airport: Scappoose Industrial Airpark<br>Country: United States<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SPB</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>45.771028</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-122.861833</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Scappoose Industrial Airpark</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.010123233</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-122.86183300000002,45.771028,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Kingstown</name>
+				<description><![CDATA[Destinatio: SVD<br>Latitude: 13.144306<br>Longitude: -61.210861<br>Airport: E T Joshua<br>Country: Saint Vincent and the Grenadines<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: 0.007562848]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SVD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>13.144306</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-61.210861</value>
+					</Data>
+					<Data name='Airport'>
+						<value>E T Joshua</value>
+					</Data>
+					<Data name='Country'>
+						<value>Saint Vincent and the Grenadines</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.010115852</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.007562848</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-61.210861,13.144306,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>San Diego</name>
+				<description><![CDATA[Destinatio: SAN<br>Latitude: 32.733556<br>Longitude: -117.189667<br>Airport: San Diego Intl<br>Country: United States<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SAN</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>32.733556</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-117.189667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>San Diego Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.010108514</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-117.189667,32.733556,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Montreal</name>
+				<description><![CDATA[Destinatio: YUL<br>Latitude: 45.470556<br>Longitude: -73.740833<br>Airport: Pierre Elliott Trudeau Intl<br>Country: Canada<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>YUL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>45.470556</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-73.740833</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Pierre Elliott Trudeau Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Canada</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.009860437</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-73.740833,45.470556,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Brussels</name>
+				<description><![CDATA[Destinatio: BRU<br>Latitude: 50.901389<br>Longitude: 4.484444<br>Airport: Brussels Natl<br>Country: Belgium<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BRU</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>50.901389</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>4.484444</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Brussels Natl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Belgium</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.009786792</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>4.484444,50.901389,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Charlotte</name>
+				<description><![CDATA[Destinatio: CLT<br>Latitude: 35.214<br>Longitude: -80.943139<br>Airport: Charlotte Douglas Intl<br>Country: United States<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF6B6B</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>CLT</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>35.214</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-80.943139</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Charlotte Douglas Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.009693007</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-80.943139,35.214,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Venice</name>
+				<description><![CDATA[Destinatio: VCE<br>Latitude: 45.505278<br>Longitude: 12.351944<br>Airport: Venezia Tessera<br>Country: Italy<br>Composite Risk: 0.01<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>VCE</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>45.505278</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>12.351944</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Venezia Tessera</value>
+					</Data>
+					<Data name='Country'>
+						<value>Italy</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.009644196</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>12.351944,45.505278,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>The Valley</name>
+				<description><![CDATA[Destinatio: AXA<br>Latitude: 18.204834<br>Longitude: -63.055084<br>Airport: Wallblake<br>Country: Anguilla<br>Composite Risk: 0.009<br>Ae. Aegypti Risk: 0.005007294]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>AXA</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>18.204834</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-63.055084</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Wallblake</value>
+					</Data>
+					<Data name='Country'>
+						<value>Anguilla</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.00852991</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>0.005007294</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-63.055084,18.204834,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Seoul</name>
+				<description><![CDATA[Destinatio: ICN<br>Latitude: 37.469075<br>Longitude: 126.450517<br>Airport: Incheon Intl<br>Country: South Korea<br>Composite Risk: 0.009<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ICN</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>37.469075</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>126.450517</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Incheon Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>South Korea</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.008529238</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>126.450517,37.469075,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Charlestown</name>
+				<description><![CDATA[Destinatio: NEV<br>Latitude: 17.205678<br>Longitude: -62.589869<br>Airport: Vance Winkworth Amory International Airport<br>Country: Saint Kitts and Nevis<br>Composite Risk: 0.009<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>NEV</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>17.205678</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-62.589869</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Vance Winkworth Amory International Airport</value>
+					</Data>
+					<Data name='Country'>
+						<value>Saint Kitts and Nevis</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.008521939</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-62.589869,17.205678,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Shanghai</name>
+				<description><![CDATA[Destinatio: PVG<br>Latitude: 31.143378<br>Longitude: 121.805214<br>Airport: Pudong<br>Country: China<br>Composite Risk: 0.008<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>PVG</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>31.143378</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>121.805214</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Pudong</value>
+					</Data>
+					<Data name='Country'>
+						<value>China</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.008267395</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>121.805214,31.143378000000002,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Charleston</name>
+				<description><![CDATA[Destinatio: CHS<br>Latitude: 32.898647<br>Longitude: -80.040528<br>Airport: Charleston Afb Intl<br>Country: United States<br>Composite Risk: 0.008<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>CHS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>32.898647</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-80.040528</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Charleston Afb Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.008158666</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-80.040528,32.898647,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Norfolk</name>
+				<description><![CDATA[Destinatio: ORF<br>Latitude: 36.894611<br>Longitude: -76.201222<br>Airport: Norfolk Intl<br>Country: United States<br>Composite Risk: 0.008<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ORF</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>36.894611</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-76.201222</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Norfolk Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007997616</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-76.201222,36.894611,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Manila</name>
+				<description><![CDATA[Destinatio: MNL<br>Latitude: 14.508647<br>Longitude: 121.019581<br>Airport: Ninoy Aquino Intl<br>Country: Philippines<br>Composite Risk: 0.008<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MNL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>14.508647</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>121.019581</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Ninoy Aquino Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Philippines</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007718206</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>121.019581,14.508647,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Rosario</name>
+				<description><![CDATA[Destinatio: ROS<br>Latitude: -32.903611<br>Longitude: -60.785<br>Airport: Rosario<br>Country: Argentina<br>Composite Risk: 0.008<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ROS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-32.903611</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-60.785</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Rosario</value>
+					</Data>
+					<Data name='Country'>
+						<value>Argentina</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007621379</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-60.785,-32.903611,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Detroit</name>
+				<description><![CDATA[Destinatio: DTW<br>Latitude: 42.212444<br>Longitude: -83.353389<br>Airport: Detroit Metro Wayne Co<br>Country: United States<br>Composite Risk: 0.008<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FF9494</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>DTW</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>42.212444</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-83.353389</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Detroit Metro Wayne Co</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007588698</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-83.353389,42.212444,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Tucson</name>
+				<description><![CDATA[Destinatio: TUS<br>Latitude: 32.116083<br>Longitude: -110.941028<br>Airport: Tucson Intl<br>Country: United States<br>Composite Risk: 0.007<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>TUS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>32.116083</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-110.941028</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Tucson Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007366802</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-110.941028,32.116083,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Minneapolis</name>
+				<description><![CDATA[Destinatio: MSP<br>Latitude: 44.881956<br>Longitude: -93.221767<br>Airport: Minneapolis St Paul Intl<br>Country: United States<br>Composite Risk: 0.007<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>MSP</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>44.881956</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-93.221767</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Minneapolis St Paul Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007346514</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-93.221767,44.88195600000001,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Savannah</name>
+				<description><![CDATA[Destinatio: SAV<br>Latitude: 32.127583<br>Longitude: -81.202139<br>Airport: Savannah Hilton Head Intl<br>Country: United States<br>Composite Risk: 0.007<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SAV</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>32.127583</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-81.202139</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Savannah Hilton Head Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.007343462</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-81.20213900000002,32.127583,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Nandi</name>
+				<description><![CDATA[Destinatio: NAN<br>Latitude: -17.755392<br>Longitude: 177.443378<br>Airport: Nadi Intl<br>Country: Fiji<br>Composite Risk: 0.007<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>NAN</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-17.755392</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>177.443378</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Nadi Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Fiji</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.006874568</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>177.443378,-17.755392,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Istanbul</name>
+				<description><![CDATA[Destinatio: IST<br>Latitude: 40.976922<br>Longitude: 28.814606<br>Airport: Ataturk<br>Country: Turkey<br>Composite Risk: 0.007<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>IST</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>40.976922</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>28.814606</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Ataturk</value>
+					</Data>
+					<Data name='Country'>
+						<value>Turkey</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.006850684</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>28.814606,40.976922,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Zurich</name>
+				<description><![CDATA[Destinatio: ZRH<br>Latitude: 47.464722<br>Longitude: 8.549167<br>Airport: Zurich<br>Country: Switzerland<br>Composite Risk: 0.007<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>ZRH</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>47.464722</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>8.549167</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Zurich</value>
+					</Data>
+					<Data name='Country'>
+						<value>Switzerland</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.006663352</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>8.549167,47.464722,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Brisbane</name>
+				<description><![CDATA[Destinatio: BNE<br>Latitude: -27.384167<br>Longitude: 153.1175<br>Airport: Brisbane Intl<br>Country: Australia<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BNE</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>-27.384167</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>153.1175</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Brisbane Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Australia</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.006184968</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>153.1175,-27.384167,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Duesseldorf</name>
+				<description><![CDATA[Destinatio: DUS<br>Latitude: 51.289453<br>Longitude: 6.766775<br>Airport: Dusseldorf<br>Country: Germany<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>DUS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>51.289453</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>6.766775</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Dusseldorf</value>
+					</Data>
+					<Data name='Country'>
+						<value>Germany</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.00607811</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>6.766775,51.289453,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Fort Myers</name>
+				<description><![CDATA[Destinatio: RSW<br>Latitude: 26.536167<br>Longitude: -81.755167<br>Airport: Southwest Florida Intl<br>Country: United States<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>RSW</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>26.536167</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-81.755167</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Southwest Florida Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.006010651</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-81.755167,26.536167,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Raleigh-durham</name>
+				<description><![CDATA[Destinatio: RDU<br>Latitude: 35.877639<br>Longitude: -78.787472<br>Airport: Raleigh Durham Intl<br>Country: United States<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFBDBD</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>RDU</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>35.877639</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-78.787472</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Raleigh Durham Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005969375</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-78.78747200000001,35.877639,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Phoenix</name>
+				<description><![CDATA[Destinatio: PHX<br>Latitude: 33.434278<br>Longitude: -112.011583<br>Airport: Phoenix Sky Harbor Intl<br>Country: United States<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>PHX</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>33.434278</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-112.011583</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Phoenix Sky Harbor Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005951199</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-112.011583,33.434278,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Mumbai</name>
+				<description><![CDATA[Destinatio: BOM<br>Latitude: 19.088686<br>Longitude: 72.867919<br>Airport: Chhatrapati Shivaji Intl<br>Country: India<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BOM</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>19.088686</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>72.867919</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Chhatrapati Shivaji Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>India</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005941429</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>72.867919,19.088686,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>San Antonio</name>
+				<description><![CDATA[Destinatio: SAT<br>Latitude: 29.533694<br>Longitude: -98.469778<br>Airport: San Antonio Intl<br>Country: United States<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>SAT</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>29.533694</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-98.469778</value>
+					</Data>
+					<Data name='Airport'>
+						<value>San Antonio Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005922434</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-98.469778,29.533694000000004,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Austin</name>
+				<description><![CDATA[Destinatio: AUS<br>Latitude: 30.194528<br>Longitude: -97.669889<br>Airport: Austin Bergstrom Intl<br>Country: United States<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>AUS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>30.194528</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-97.669889</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Austin Bergstrom Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005796388</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-97.669889,30.194527999999995,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Tel-aviv</name>
+				<description><![CDATA[Destinatio: TLV<br>Latitude: 32.011389<br>Longitude: 34.886667<br>Airport: Ben Gurion<br>Country: Israel<br>Composite Risk: 0.006<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>TLV</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>32.011389</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>34.886667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Ben Gurion</value>
+					</Data>
+					<Data name='Country'>
+						<value>Israel</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005640498</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>34.886667,32.011389,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bologna</name>
+				<description><![CDATA[Destinatio: BLQ<br>Latitude: 44.535444<br>Longitude: 11.288667<br>Airport: Bologna<br>Country: Italy<br>Composite Risk: 0.005<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BLQ</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>44.535444</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>11.288667</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Bologna</value>
+					</Data>
+					<Data name='Country'>
+						<value>Italy</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005307815</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>11.288667,44.535444,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>St. Louis</name>
+				<description><![CDATA[Destinatio: STL<br>Latitude: 38.748697<br>Longitude: -90.370028<br>Airport: Lambert St Louis Intl<br>Country: United States<br>Composite Risk: 0.005<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>STL</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>38.748697</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-90.370028</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Lambert St Louis Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005306078</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-90.370028,38.748697,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bordeaux</name>
+				<description><![CDATA[Destinatio: BOD<br>Latitude: 44.828335<br>Longitude: -0.715556<br>Airport: Merignac<br>Country: France<br>Composite Risk: 0.005<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BOD</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>44.828335</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-0.715556</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Merignac</value>
+					</Data>
+					<Data name='Country'>
+						<value>France</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005196984</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-0.715556,44.828335,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Pensacola</name>
+				<description><![CDATA[Destinatio: PNS<br>Latitude: 30.473425<br>Longitude: -87.186611<br>Airport: Pensacola Rgnl<br>Country: United States<br>Composite Risk: 0.005<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>PNS</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>30.473425</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>-87.186611</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Pensacola Rgnl</value>
+					</Data>
+					<Data name='Country'>
+						<value>United States</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.005118254</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>-87.186611,30.473425,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bangkok</name>
+				<description><![CDATA[Destinatio: BKK<br>Latitude: 13.681108<br>Longitude: 100.747283<br>Airport: Suvarnabhumi Intl<br>Country: Thailand<br>Composite Risk: 0.005<br>Ae. Aegypti Risk: #N/A]]></description>
+				<styleUrl>#icon-503-FFE5E5</styleUrl>
+				<ExtendedData>
+					<Data name='Destinatio'>
+						<value>BKK</value>
+					</Data>
+					<Data name='Latitude'>
+						<value>13.681108</value>
+					</Data>
+					<Data name='Longitude'>
+						<value>100.747283</value>
+					</Data>
+					<Data name='Airport'>
+						<value>Suvarnabhumi Intl</value>
+					</Data>
+					<Data name='Country'>
+						<value>Thailand</value>
+					</Data>
+					<Data name='Composite Risk'>
+						<value>0.004975527</value>
+					</Data>
+					<Data name='Ae. Aegypti Risk'>
+						<value>#N/A</value>
+					</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>100.747283,13.681108,0.0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Style id='icon-503-750000-normal'>
+			<IconStyle>
+				<color>ff000075</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-750000-highlight'>
+			<IconStyle>
+				<color>ff000075</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-750000'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-750000-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-750000-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-9E0000-normal'>
+			<IconStyle>
+				<color>ff00009E</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-9E0000-highlight'>
+			<IconStyle>
+				<color>ff00009E</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-9E0000'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-9E0000-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-9E0000-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-C70000-normal'>
+			<IconStyle>
+				<color>ff0000C7</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-C70000-highlight'>
+			<IconStyle>
+				<color>ff0000C7</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-C70000'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-C70000-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-C70000-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-F00000-normal'>
+			<IconStyle>
+				<color>ff0000F0</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-F00000-highlight'>
+			<IconStyle>
+				<color>ff0000F0</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-F00000'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-F00000-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-F00000-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-FF1A1A-normal'>
+			<IconStyle>
+				<color>ff1A1AFF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-FF1A1A-highlight'>
+			<IconStyle>
+				<color>ff1A1AFF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-FF1A1A'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-FF1A1A-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-FF1A1A-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-FF4242-normal'>
+			<IconStyle>
+				<color>ff4242FF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-FF4242-highlight'>
+			<IconStyle>
+				<color>ff4242FF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-FF4242'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-FF4242-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-FF4242-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-FF6B6B-normal'>
+			<IconStyle>
+				<color>ff6B6BFF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-FF6B6B-highlight'>
+			<IconStyle>
+				<color>ff6B6BFF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-FF6B6B'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-FF6B6B-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-FF6B6B-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-FF9494-normal'>
+			<IconStyle>
+				<color>ff9494FF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-FF9494-highlight'>
+			<IconStyle>
+				<color>ff9494FF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-FF9494'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-FF9494-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-FF9494-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-FFBDBD-normal'>
+			<IconStyle>
+				<color>ffBDBDFF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-FFBDBD-highlight'>
+			<IconStyle>
+				<color>ffBDBDFF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-FFBDBD'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-FFBDBD-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-FFBDBD-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-503-FFE5E5-normal'>
+			<IconStyle>
+				<color>ffE5E5FF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-503-FFE5E5-highlight'>
+			<IconStyle>
+				<color>ffE5E5FF</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-503-FFE5E5'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-FFE5E5-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-FFE5E5-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>
