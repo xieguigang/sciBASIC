@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
-''' 参数估计的过程之中的迭代器
+''' 参数估计的过程之中的迭代器，这个模块内的函数主要是用来产生数据源的
 ''' </summary>
 Public Module BootstrapIterator
 
@@ -74,6 +74,8 @@ Public Module BootstrapIterator
             .SetParameters(model)
 
         If parallel Then
+            ' memory leaks on linux
+
             For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
                                      In k.SeqIterator.AsParallel
                                      Let odes_Out = params.iterate(model, y0, ps, n, a, b)

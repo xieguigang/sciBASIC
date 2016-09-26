@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 
 Public Module EigenvectorBootstrapping
 
@@ -20,25 +21,10 @@ Public Module EigenvectorBootstrapping
     ''' <param name="partN">将原始数据分解为多少个数据块来抽取特征向量从而进行数据采样</param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function LoadData(DIR As String, eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
-        For Each file As String In ls - l - r - wildcards("*.csv") <= DIR
-            Dim outData As ODEsOut = ODEsOut.LoadFromDataFrame(file)
-            Dim vector As New List(Of Double)
-
-            For Each var As String In eigenvector.Keys
-                Dim y As Double() = outData.y(var).x
-                Dim n As Integer = y.Length / partN
-
-                For Each block As Double() In Parallel.Linq.SplitIterator(y, n)
-                    vector += eigenvector(var)(block)
-                Next
-            Next
-
-            Yield New VectorTagged(Of Dictionary(Of String, Double)) With {
-                .Tag = vector.ToArray,   ' 所提取采样出来的特征向量
-                .value = outData.params  ' 生成原始数据的参数列表
-            }
-        Next
+    Public Function LoadData(DIR As String, eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
+        Return (ls - l - r - wildcards("*.csv") <= DIR) _
+            .Select(AddressOf ODEsOut.LoadFromDataFrame) _
+            .Sampling(eigenvector, partN)
     End Function
 
     Public Function GetVars(DIR As String) As String()

@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
@@ -62,6 +63,30 @@ Namespace MonteCarlo
             Dim y0 = model.Gety0
             Dim parms = model.GetRandomParameters
             Return model.Bootstrapping(parms, y0, k, n, a, b,,)
+        End Function
+
+        <Extension>
+        Public Function Sampling(data As IEnumerable(Of ODEsOut), eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
+            Return data.Select(Function(x) x.Sampling(eigenvector, partN))
+        End Function
+
+        <Extension>
+        Public Function Sampling(x As ODEsOut, eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As VectorTagged(Of Dictionary(Of String, Double))
+            Dim vector As New List(Of Double)
+
+            For Each var As String In eigenvector.Keys
+                Dim y As Double() = x.y(var).x
+                Dim n As Integer = y.Length / partN
+
+                For Each block As Double() In Parallel.Linq.SplitIterator(y, n)
+                    vector += eigenvector(var)(block)
+                Next
+            Next
+
+            Return New VectorTagged(Of Dictionary(Of String, Double)) With {
+                .Tag = vector.ToArray,   ' 所提取采样出来的特征向量
+                .value = x.params  ' 生成原始数据的参数列表
+            }
         End Function
     End Module
 End Namespace
