@@ -18,7 +18,7 @@ Public Module Histogram
 
         Return GraphicsPlots(
             size, margin, bg,
-            Sub(g)
+            Sub(g, grect)
                 Dim mapper As New Scaling(data, stacked)
                 Dim n As Integer = If(
                     stacked,

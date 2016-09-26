@@ -27,7 +27,7 @@ Public Module Bubble
 
         Return GraphicsPlots(
             size, margin, bg,
-            Sub(g)
+            Sub(g, grect)
                 Dim array As SerialData() = data.ToArray
                 Dim mapper As New Scaling(array)
                 Dim scale As Func(Of Double, Double) =

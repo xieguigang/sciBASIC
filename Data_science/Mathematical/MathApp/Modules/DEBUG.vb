@@ -78,13 +78,6 @@ Module DEBUG
 
 
     Private Sub ShowCharacterData()
-
-        Console.WriteLine(Atn(1))
-        Console.WriteLine(Atn(3.14))
-        Console.WriteLine(Atn(999))
-
-        Pause()
-
         Dim result = ODEsOut.LoadFromDataFrame("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\bootstrapping\test\Kinetics_of_influenza_A_virus_infection_in_humans.csv")
         Dim analysis = GetAnalysis(result)
         Dim i = analysis("I")(result.y("I").x)
@@ -122,7 +115,27 @@ Module DEBUG
         }
     End Function
 
+    Public Sub scatterWithAnnotation()
+        Dim s As New SerialData With {
+            .color = Color.LightSkyBlue,
+            .lineType = DashStyle.Dot,
+            .PointSize = 1,
+            .title = "223 - legend",
+            .width = 3,
+            .pts = {New PointData With {.pt = New PointF(-10.1, 32)}, New PointData With {.pt = New PointF(0.1, 2)}, New PointData With {.pt = New PointF(2, 20)}, New PointData With {.pt = New PointF(5, 12)}},
+            .annotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
+        }
+
+        Call Scatter.Plot({s}).SaveAs("x:\ffff.png")
+
+    End Sub
+
     Public Function Main() As Integer
+
+
+        Call scatterWithAnnotation()
+
+
         Call ShowCharacterData()
 
         Dim type As New Value(Of LegendStyles)
@@ -139,7 +152,7 @@ Module DEBUG
 
         Call g.GraphicsPlots(
             New Size(350, 600), New Size, "white",
-            Sub(g)
+            Sub(g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
             End Sub).SaveAs("./legends_test.png")
 

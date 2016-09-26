@@ -21,7 +21,8 @@ Public Structure Annotation
     ''' <summary>
     ''' Size region for <see cref="Legend"/> Drawing
     ''' </summary>
-    Public size As Size
+    Public size As SizeF
+    Public color As String
 
     ''' <summary>
     ''' The target annotation data point is null!
@@ -34,6 +35,10 @@ Public Structure Annotation
         If pt.pt.IsEmpty Then
             Call PointNull.PrintException
             Return
+        Else
+            If size.IsEmpty Then
+                size = New SizeF(120, 45)
+            End If
         End If
 
         ' 得到转换坐标
@@ -42,13 +47,13 @@ Public Structure Annotation
         point = New PointF(point.X - size.Width / 2, point.Y - size.Height / 2)
 
         Dim legend As New Legend With {
-            .color = $"rgb({s.color.R},{s.color.G},{s.color.B})",
+            .color = If(String.IsNullOrEmpty(color), $"rgb({s.color.R},{s.color.G},{s.color.B})", color),
             .fontstyle = Font,
             .style = Me.Legend,
             .title = Text
         }
         Dim border As New Border With {
-            .color = Color.Black,
+            .color = Drawing.Color.Black,
             .style = DashStyle.Solid,
             .width = 3
         }
@@ -56,7 +61,7 @@ Public Structure Annotation
         Call DrawLegend(
             g,
             New Point(point.X, point.Y),
-            New SizeF(size.Width, size.Height),
+            size,
             legend,
             border)
     End Sub
