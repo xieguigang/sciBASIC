@@ -149,7 +149,18 @@ Namespace CommandLine
             If __API_InfoHash.ContainsKey(commandName) Then _
                 Return __API_InfoHash(commandName).Execute(argvs)
 
-            If String.Equals(commandName, "?") OrElse commandName = "??" Then
+            If "??vars".TextEquals(commandName) Then
+                Dim vars = App.GetAppVariables
+
+                Call Console.WriteLine()
+                Call Console.WriteLine(PS1.Fedora12.ToString)
+                Call Console.WriteLine()
+                Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
+                Call Console.WriteLine(ConfigEngine.Prints(vars))
+
+                Return 0
+
+            ElseIf String.Equals(commandName, "?") OrElse commandName = "??" OrElse commandName.TextEquals("--help") Then
                 If help_argvs.IsNullOrEmpty Then
                     Return Help("")
                 Else
@@ -180,19 +191,8 @@ Namespace CommandLine
 
                 Return doc.SaveTo(DocPath, Encoding.UTF8).CLICode
 
-            ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
-
-            ElseIf "??vars".TextEquals(commandName) Then
-                Dim vars = App.GetAppVariables
-
-                Call Console.WriteLine()
-                Call Console.WriteLine(PS1.Fedora12.ToString)
-                Call Console.WriteLine()
-                Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
-                Call Console.WriteLine(ConfigEngine.Prints(vars))
-
-                Return 0
 
             Else
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄

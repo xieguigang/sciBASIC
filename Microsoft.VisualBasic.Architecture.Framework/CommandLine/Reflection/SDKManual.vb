@@ -68,7 +68,10 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine(vbCrLf & vbCrLf & CLI.HelpSummary(False))
 
             Dim firstPage As String = sb.ToString
-            Dim pages As String() = {DebuggerArgs.DebuggerHelps, CLI.Type.NamespaceEntry.Description}
+            Dim pages As String() = {
+                DebuggerArgs.DebuggerHelps,
+                CLI.Type.NamespaceEntry.Description
+            }
 
             pages += LinqAPI.MakeList(Of String) <=
  _

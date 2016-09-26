@@ -92,6 +92,8 @@ Namespace Debugging
     [/auto-paused] This boolean flag will makes the program paused after the command is executed done. and print a message on the console:
                        ""Press any key to continute..."" 
 
+
+    ** Additionally, you can using ""/linux-bash"" command for generates the bash shortcuts on linux system.
 "
         Public ReadOnly Property AutoPaused As Boolean
 
