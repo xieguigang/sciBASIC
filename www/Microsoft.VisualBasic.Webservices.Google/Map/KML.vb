@@ -1,52 +1,60 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-<XmlRoot("kml")> Public Class KML
+Namespace Map
 
-    Public Const xmlns As String = "http://www.opengis.net/kml/2.2"
+    <XmlRoot("kml")> Public Class KML
 
-    <XmlElement("Document")>
-    Public Property Documents As Document()
+        Public Const xmlns As String = "http://www.opengis.net/kml/2.2"
 
-End Class
+        <XmlElement("Document")>
+        Public Property Documents As Document()
 
-Public MustInherit Class node
-    Public Property name As String
-End Class
+    End Class
 
-Public Class Document : Inherits node
+    Public MustInherit Class node
+        Public Property name As String
+    End Class
 
-    Public Property description As String
-    Public Property Folder As Folder
-    <XmlElement("Style")> Public Property Styles As Style()
-    <XmlElement("StyleMap")> Public Property StyleMaps As StyleMap()
+    Public Class Document : Inherits node
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        Public Property description As String
+        Public Property Folder As Folder
+        <XmlElement("Style")> Public Property Styles As Style()
+        <XmlElement("StyleMap")> Public Property StyleMaps As StyleMap()
+        Public Property NetworkLink As NetworkLink
 
-Public Class Folder : Inherits node
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-    <XmlElement("Placemark")> Public Property marks As Placemark()
-End Class
+    Public Class NetworkLink : Inherits node
+        Public Property Link As Link
+    End Class
 
-Public Class Placemark : Inherits node
-    Public Property description As String
-    Public Property styleUrl As String
-    Public Property ExtendedData As ExtendedData
-    Public Property Point As Point
-End Class
+    Public Class Folder : Inherits node
 
-Public Class Point
-    Public Property coordinates As String
-End Class
+        <XmlElement("Placemark")> Public Property marks As Placemark()
+    End Class
 
-Public Class ExtendedData
-    <XmlElement("Data")> Public Property data As Data()
-End Class
+    Public Class Placemark : Inherits node
+        Public Property description As String
+        Public Property styleUrl As String
+        Public Property ExtendedData As ExtendedData
+        Public Property Point As Point
+    End Class
 
-Public Class Data
-    <XmlAttribute> Public Property name As String
-    Public Property value As String
-End Class
+    Public Class Point
+        Public Property coordinates As String
+    End Class
+
+    Public Class ExtendedData
+        <XmlElement("Data")> Public Property data As Data()
+    End Class
+
+    Public Class Data
+        <XmlAttribute> Public Property name As String
+        Public Property value As String
+    End Class
+End Namespace
