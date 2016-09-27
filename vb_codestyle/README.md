@@ -89,7 +89,7 @@ Where in this CLI, token **App.exe** is the executable file name of your applica
 ```vb.net
 Module App
     Public Function API1(test As Boolean, 
-    			 msg As String, 
+                         msg As String, 
     			 test2Enable As Boolean, 
     			 test3Enable As Boolean) As Integer
 End Module
@@ -103,10 +103,14 @@ Dim code As Integer = App.API1(True, "Hello World!!!", True, True)
 
 **_NOTE:_ There is no order of the VisualBasic CLI arguments**, so that all of these CLI examples are equals to each other:
 
-    App.exe /API1 /msg "Hello World!!!" /test2-enable /test3-enable /test
-    App.exe /API1 /msg "Hello World!!!" /test /test2-enable /test3-enable
-    App.exe /API1 /test /test2-enable /test3-enable /msg "Hello World!!!"
-    App.exe /API1 /test2-enable /test /test3-enable /msg "Hello World!!!"
+```bash
+#!/bin/bash
+
+App.exe /API1 /msg "Hello World!!!" /test2-enable /test3-enable /test
+App.exe /API1 /msg "Hello World!!!" /test /test2-enable /test3-enable
+App.exe /API1 /test /test2-enable /test3-enable /msg "Hello World!!!"
+App.exe /API1 /test2-enable /test /test3-enable /msg "Hello World!!!"
+```
 
 Simple Example of VisualBasic CLI application(Example source code at [here](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Example/CLI_Example)):
 
@@ -272,7 +276,7 @@ Here is some function name examples(Example picked from [here](https://github.co
 ```vb.net
 ' Private
 Private Function __worker(Of T As I_GeneBrief)(
-	                genome As IGenomicsContextProvider(Of T),
+                        genome As IGenomicsContextProvider(Of T),
                          getTF As Func(Of Strands, T()),
                     getRelated As Func(Of T, T(), Integer, T()),
                       numTotal As Integer,
@@ -295,7 +299,9 @@ At last, for improves of the code readable, try _**Make your identifier name sho
 ![Code standard overview example](./codeStandard.png)
 
 ##String manipulate
-######1. String.Format
+
+###### 1. String.Format
+
 For formatted a string output, then recommended used **String.Format** function or string interpolate syntax in VisualBasic language.
 And by using the **String.Format** function, then format control string is recommended puts in a constant variable instead of directly used in the format function:
 
@@ -305,7 +311,8 @@ Const OutMsg As String = "Hello world, {0}, Right?"
 Dim msg As String = String.Format(OutMsg, name)
 ```
 
-######2. String contacts
+###### 2. String contacts
+
 For contacts a large amount of string tokens, the **StringBuilder** is recommended used for this job, **not recommend directly using _& operator_ to contacts a large string collection due to the reason of performance issue**.
 
 ```vb.net
@@ -355,12 +362,13 @@ Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
 
 So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
-####Linq Expression
+#### Linq Expression
 All of the Linq Expression is recommended execute using [**LinqAPI**](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Language/Linq.vb) if the output type of the expression is a known type:
 
-![](/LinqStyle.png)
+![](./LinqStyle.png)
 
-####Instantiation 
+#### Instantiation
+
 For define a new object, a short format is recommended:
 
 ```vb.net
@@ -368,6 +376,7 @@ Dim x As New <Type>
 ```
 
 If the type you want to create object instance can be initialize from its property, then the With keyword is recommended to used:
+
 ```vb.net
 Dim MyvaCog As MyvaCOG() = LinqAPI.Exec(Of MyvaCOG) <= 
 _
@@ -380,11 +389,11 @@ _
         }
 ```
 
-##Appendix
+## Appendix
 
 Here are tables of names that i used in my programming, and continues updated....
 
->1.Some common used name for common types
+###### 1.Some common used name for common types
 <table>
 	<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
 	<tr><td>System.Text.StringBuilder</td>
@@ -420,7 +429,7 @@ Dim value As Object</pre>
 	</tr>
 </table>
 
-2.Name for some meaning
+###### 2.Name for some meaning
 
 <table>
    <tr><td>Meaning</td><td>Recommend Name</td><td>Example</td></tr>
