@@ -278,6 +278,9 @@ Namespace MonteCarlo
                     ' 保存临时数据到工作区间
                     Call output.ToDictionary(
                         Function(x) x.Key,
+                        Function(x) x.Value.Average).GetJson.__DEBUG_ECHO
+                    Call output.ToDictionary(
+                        Function(x) x.Key,
                         Function(x) New DoubleTagged(Of Double()) With {
                             .Tag = x.Value.Average,
                             .value = x.Value
