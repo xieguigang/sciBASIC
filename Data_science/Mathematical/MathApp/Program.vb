@@ -31,6 +31,13 @@ Imports Microsoft.VisualBasic.Mathematical
 Module Program
 
     Public Function Main() As Integer
+        Try
+            Call DEBUG.Main()
+        Catch ex As Exception
+            Call App.LogException(ex)
+            MsgBox(ex.ToString)
+        End Try
+
         Return GetType(CLI).RunCLI(App.CommandLine, AddressOf __calc, AddressOf CLI.CalcImplicit)
     End Function
 

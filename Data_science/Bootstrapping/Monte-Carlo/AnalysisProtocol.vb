@@ -156,7 +156,7 @@ Namespace MonteCarlo
                 Dim y As Double() = x.y(var).x
                 Dim n As Integer = y.Length / partN
 
-                For Each block As Double() In Parallel.Linq.SplitIterator(y, n)
+                For Each block As Double() In Parallel.Linq.SplitIterator(y, n, echo:=False)
                     vector += eigenvector(var)(block)
                 Next
             Next

@@ -173,9 +173,9 @@ Module DEBUG
         Next
 
         Dim result = Iterations(
-            "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\MathApp\bin\Debug\Microsoft.VisualBasic.Data.Bootstrapping.dll",
+            "./Microsoft.VisualBasic.Data.Bootstrapping.dll",
             trueData,
-            1000, 5,,,, "x:\asdfasdasdasdasd" & App.PID)
+            1000, 5,,,, )
 
         Pause()
 
