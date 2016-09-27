@@ -148,7 +148,8 @@ Example CLI is:
 |CommandLine.Item(String) As String|Default readonly property for read string value of a specific parameter|Dim path As String = args("/file")|
 
 -------------------------------------
-##List(Of T) operation in VisualBasic
+## List(Of T) operation in VisualBasic
+
 For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
 
 ```vb.net
@@ -217,9 +218,25 @@ genomes.Add(New GenomeBrief With {
 })
 ```
 
-##VisualBasic identifer names
+## The VisualBasic inline assign syntax
 
-####1. Directory type
+Like other C family language, VB is also have the inline assign operation syntax, here is how to enable this language syntax in VB:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim line As New Value(Of String)
+
+Do While Not (line = reader.ReadLine) Is Nothing
+    ' blablabla
+Loop
+```
+
+Enable this language syntax just very easy, wrapping your variable object type with ``Value(Of T)`` in VB language.
+
+## VisualBasic identifer names
+
+#### 1. Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
 
 ```vb.net
@@ -283,9 +300,9 @@ For formatted a string output, then recommended used **String.Format** function 
 And by using the **String.Format** function, then format control string is recommended puts in a constant variable instead of directly used in the format function:
 
 ```vb.net
-	Const OutMsg As String = "Hello world, {0}, Right?"
-	' blablabla.......
-	Dim msg As String = String.Format(OutMsg, name)
+Const OutMsg As String = "Hello world, {0}, Right?"
+' blablabla.......
+Dim msg As String = String.Format(OutMsg, name)
 ```
 
 ######2. String contacts
