@@ -270,21 +270,21 @@ For **_Public_** member function, the function name is recommended in formats **
 
 Here is some function name examples(Example picked from [here](https://github.com/SMRUCC/GCModeller.Core/Bio.Assembly/GenomicsContext/TFDensity.vb)):
 ```vb.net
-	' Private
-	Private Function __worker(Of T As I_GeneBrief)(
-	                        genome As IGenomicsContextProvider(Of T),
-                               	getTF As Func(Of Strands, T()),
-                             	getRelated As Func(Of T, T(), Integer, T()),
-                              	numTotal As Integer,
-                               	ranges As Integer) As Density()
-	' Public
-	Public Function DensityCis(Of T As I_GeneBrief)(
-                              	genome As IGenomicsContextProvider(Of T),
-                              	TF As IEnumerable(Of String),
-                              	Optional ranges As Integer = 10000) As Density()
+' Private
+Private Function __worker(Of T As I_GeneBrief)(
+	                genome As IGenomicsContextProvider(Of T),
+                         getTF As Func(Of Strands, T()),
+                    getRelated As Func(Of T, T(), Integer, T()),
+                      numTotal As Integer,
+                        ranges As Integer) As Density()
+' Public
+Public Function DensityCis(Of T As I_GeneBrief)(
+                         genome As IGenomicsContextProvider(Of T),
+                             TF As IEnumerable(Of String),
+                Optional ranges As Integer = 10000) As Density()
 ```
 
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/FunctionNames.png)
+![](./FunctionNames.png)
 
 + Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
 + Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
@@ -292,7 +292,7 @@ Here is some function name examples(Example picked from [here](https://github.co
 At last, for improves of the code readable, try _**Make your identifier name short enough as possible**_
 
 
-![Code standard overview example](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/codeStandard.png)
+![Code standard overview example](./codeStandard.png)
 
 ##String manipulate
 ######1. String.Format
@@ -358,7 +358,7 @@ So, using this syntax feature makes your code very easy for reading and understa
 ####Linq Expression
 All of the Linq Expression is recommended execute using [**LinqAPI**](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Language/Linq.vb) if the output type of the expression is a known type:
 
-![](https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/vb_codestyle/LinqStyle.png)
+![](/LinqStyle.png)
 
 ####Instantiation 
 For define a new object, a short format is recommended:
@@ -369,14 +369,15 @@ Dim x As New <Type>
 
 If the type you want to create object instance can be initialize from its property, then the With keyword is recommended to used:
 ```vb.net
-Dim MyvaCog As MyvaCOG() = 
-    LinqAPI.Exec(Of MyvaCOG) <= From gene As GeneDumpInfo
-                                In GenomeBrief
-                                Select New MyvaCOG With {
-                                    .COG = gene.COG,
-                                    .QueryName = gene.LocusID,
-                                    .QueryLength = gene.Length
-                                }
+Dim MyvaCog As MyvaCOG() = LinqAPI.Exec(Of MyvaCOG) <= 
+_
+	From gene As GeneDumpInfo
+        In GenomeBrief
+        Select New MyvaCOG With {
+            .COG = gene.COG,
+            .QueryName = gene.LocusID,
+            .QueryLength = gene.Length
+        }
 ```
 
 ##Appendix
