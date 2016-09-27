@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94c41eff31baf0c16ed64abadce63f8b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::fb49037657d709dd2161672df0f71814, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Namespace Net.Persistent.Application.Protocols
         End Function
 
         Public Function GetLogOnUSER(request As String, ByRef USER_ID As Long, ByRef Socket As String) As Boolean
-            Dim post As LogonPOST = request.CreateObjectFromXml(Of LogonPOST)(False)
+            Dim post As LogonPOST = request.LoadFromXml(Of LogonPOST)(False)
 
             If post Is Nothing Then
                 Return False

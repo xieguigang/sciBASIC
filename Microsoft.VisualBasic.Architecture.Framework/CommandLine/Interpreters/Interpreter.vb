@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44bd25b3e26263eef9561c4f43bbf8e4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::57b8f33d34fa5e56df626822b4936899, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -149,12 +149,27 @@ Namespace CommandLine
             If __API_InfoHash.ContainsKey(commandName) Then _
                 Return __API_InfoHash(commandName).Execute(argvs)
 
-            If String.Equals(commandName, "?") Then
+            If "??vars".TextEquals(commandName) Then
+                Dim vars = App.GetAppVariables
+
+                Call Console.WriteLine()
+                Call Console.WriteLine(PS1.Fedora12.ToString)
+                Call Console.WriteLine()
+                Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
+                Call Console.WriteLine(ConfigEngine.Prints(vars))
+
+                Return 0
+
+            ElseIf String.Equals(commandName, "?") OrElse commandName = "??" OrElse commandName.TextEquals("--help") Then
                 If help_argvs.IsNullOrEmpty Then
                     Return Help("")
                 Else
                     Return Help(help_argvs.First)
                 End If
+
+            ElseIf InStr(commandName, "??") = 1 Then  ' 支持类似于R语言里面的 ??帮助命令
+                commandName = Mid(commandName, 3)
+                Return Help(commandName)
 
             ElseIf String.Equals(commandName, "~") Then  ' 打印出应用程序的位置，linux里面的HOME
                 Call Console.WriteLine(App.ExecutablePath)
@@ -176,19 +191,8 @@ Namespace CommandLine
 
                 Return doc.SaveTo(DocPath, Encoding.UTF8).CLICode
 
-            ElseIf String.Equals(commandName, "linux-shell", StringComparison.OrdinalIgnoreCase) Then
+            ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
-
-            ElseIf "??vars".TextEquals(commandName) Then
-                Dim vars = App.GetAppVariables
-
-                Call Console.WriteLine()
-                Call Console.WriteLine(PS1.Fedora12.ToString)
-                Call Console.WriteLine()
-                Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
-                Call Console.WriteLine(ConfigEngine.Prints(vars))
-
-                Return 0
 
             Else
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄

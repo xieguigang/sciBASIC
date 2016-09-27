@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc0949094b9f3ec8920d2c7187e626ae, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::dc0949094b9f3ec8920d2c7187e626ae, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::793acef5a203fce9ca44890c32f662e9, ..\visualbasic_App\Cli Tools\Man\Program.vb"
+﻿#Region "Microsoft.VisualBasic::793acef5a203fce9ca44890c32f662e9, ..\visualbasic_App\CLI_tools\Man\Program.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6380b96d1243d6af80909d2a1dd1bf84, ..\visualbasic_App\Cli Tools\LicenseMgr\LicenseMgr\BingImage.vb"
+﻿#Region "Microsoft.VisualBasic::6380b96d1243d6af80909d2a1dd1bf84, ..\visualbasic_App\CLI_tools\LicenseMgr\LicenseMgr\BingImage.vb"
 
     ' Author:
     ' 

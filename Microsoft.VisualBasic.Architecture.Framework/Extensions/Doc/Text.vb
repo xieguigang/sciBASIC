@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84da8f7bf09fed05cf2ba90cc9967030, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::51c614a4391e385e53096d81dcdebfe8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -111,18 +111,34 @@ Public Module TextDoc
     ''' <summary>
     ''' 这个函数只建议读取小文本文件的时候使用
     ''' </summary>
-    ''' <param name="FilePath"></param>
-    ''' <param name="Encoding">Default value is UTF8</param>
+    ''' <param name="path"></param>
+    ''' <param name="encoding">Default value is UTF8</param>
+    ''' <param name="suppress">Suppress error message??</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Read.TXT")>
     <Extension>
-    Public Function ReadAllText(FilePath As String, Optional Encoding As Encoding = Nothing) As String
-        If Encoding Is Nothing Then
-            Encoding = System.Text.Encoding.UTF8
+    Public Function ReadAllText(path As String, Optional encoding As Encoding = Nothing, Optional throwEx As Boolean = True, Optional suppress As Boolean = False) As String
+        If encoding Is Nothing Then
+            encoding = Encoding.UTF8
         End If
-        Return FileIO.FileSystem.ReadAllText(FilePath, encoding:=Encoding)
+        Try
+            Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding)
+        Catch ex As Exception
+            ex = New Exception(path.ToFileURL, ex)
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+
+                If Not suppress Then
+                    Call ex.PrintException
+                End If
+            End If
+        End Try
+
+        Return Nothing
     End Function
 
     ''' <summary>

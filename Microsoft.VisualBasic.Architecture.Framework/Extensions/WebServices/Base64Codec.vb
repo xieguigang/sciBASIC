@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7a93ef11274bc7ba794de016c0aecaf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::17b968357faf5c82a34668e83990f17c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -32,63 +32,74 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
-''' <summary>
-''' Tools API for encoded the image into a base64 string.
-''' </summary>
-Public Module Base64Codec
+Namespace Net.Http
 
     ''' <summary>
-    ''' Function to Get Image from Base64 Encoded String
+    ''' Tools API for encoded the image into a base64 string.
     ''' </summary>
-    ''' <param name="Base64String"></param>
-    ''' <param name="format"></param>
-    ''' <returns></returns>
-    <Extension> Public Function GetImage(Base64String As String, Optional format As ImageFormats = ImageFormats.Png) As Bitmap
-        Try
-            If String.IsNullOrEmpty(Base64String) Then Return Nothing  ''Checking The Base64 string validity
-            Return __getImageFromBase64(Base64String, GetFormat(format))
-        Catch ex As Exception
-            Call ex.PrintException
-            Return Nothing
-        End Try
-    End Function
+    Public Module Base64Codec
 
-    ''' <summary>
-    ''' Function to Get Image from Base64 Encoded String
-    ''' </summary>
-    ''' <param name="Base64String"></param>
-    ''' <param name="format"></param>
-    ''' <returns></returns>
-    Private Function __getImageFromBase64(Base64String As String, format As ImageFormat) As Bitmap
-        Dim bytData As Byte(), streamImage As Bitmap
+        ''' <summary>
+        ''' Function to Get Image from Base64 Encoded String
+        ''' </summary>
+        ''' <param name="Base64String"></param>
+        ''' <param name="format"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetImage(Base64String As String, Optional format As ImageFormats = ImageFormats.Png) As Bitmap
+            Try
+                If String.IsNullOrEmpty(Base64String) Then Return Nothing  ''Checking The Base64 string validity
+                Return __getImageFromBase64(Base64String, GetFormat(format))
+            Catch ex As Exception
+                Call ex.PrintException
+                Return Nothing
+            End Try
+        End Function
 
-        bytData = Convert.FromBase64String(Base64String) ''Convert Base64 to Byte Array
+        ''' <summary>
+        ''' Function to Get Image from Base64 Encoded String
+        ''' </summary>
+        ''' <param name="Base64String"></param>
+        ''' <param name="format"></param>
+        ''' <returns></returns>
+        Private Function __getImageFromBase64(Base64String As String, format As ImageFormat) As Bitmap
+            Dim bytData As Byte(), streamImage As Bitmap
 
-        Using ms As New MemoryStream(bytData) ''Using Memory stream to save image
-            streamImage = Image.FromStream(ms) ''Converting image from Memory stream
-        End Using
+            bytData = Convert.FromBase64String(Base64String) ''Convert Base64 to Byte Array
 
-        Return streamImage
-    End Function
+            Using ms As New MemoryStream(bytData) ''Using Memory stream to save image
+                streamImage = Image.FromStream(ms) ''Converting image from Memory stream
+            End Using
 
-    ''' <summary>
-    ''' Convert the Image from Input to Base64 Encoded String
-    ''' </summary>
-    ''' <param name="ImageInput"></param>
-    ''' <returns></returns>
-    <Extension> Public Function ToBase64String(ImageInput As Image, Optional format As ImageFormats = ImageFormats.Png) As String
-        Try
-            Return __toBase64String(ImageInput, GetFormat(format))
-        Catch ex As Exception
-            Call ex.PrintException
-            Return ""
-        End Try
-    End Function
+            Return streamImage
+        End Function
 
-    Private Function __toBase64String(image As Image, format As ImageFormat) As String
-        Dim ms As MemoryStream = New MemoryStream()
-        image.Save(ms, format)
-        Dim Base64Op As String = Convert.ToBase64String(ms.ToArray())
-        Return Base64Op
-    End Function
-End Module
+        ''' <summary>
+        ''' Convert the Image from Input to Base64 Encoded String
+        ''' </summary>
+        ''' <param name="ImageInput"></param>
+        ''' <returns></returns>
+        <Extension> Public Function ToBase64String(ImageInput As Image, Optional format As ImageFormats = ImageFormats.Png) As String
+            Try
+                Return __toBase64String(ImageInput, GetFormat(format))
+            Catch ex As Exception
+                Call ex.PrintException
+                Return ""
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' Convert the Image from Input to Base64 Encoded String
+        ''' </summary>
+        ''' <returns></returns>
+        <Extension> Public Function ToBase64String(bmp As Bitmap, Optional format As ImageFormats = ImageFormats.Png) As String
+            Return ToBase64String(ImageInput:=bmp, format:=format)
+        End Function
+
+        Private Function __toBase64String(image As Image, format As ImageFormat) As String
+            Dim ms As MemoryStream = New MemoryStream()
+            image.Save(ms, format)
+            Dim Base64Op As String = Convert.ToBase64String(ms.ToArray())
+            Return Base64Op
+        End Function
+    End Module
+End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63eebd49f30d1d7bf450a22efcd1a292, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb"
+﻿#Region "Microsoft.VisualBasic::9775907689a6ecdbe66612f02b2809cd, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb"
 
     ' Author:
     ' 

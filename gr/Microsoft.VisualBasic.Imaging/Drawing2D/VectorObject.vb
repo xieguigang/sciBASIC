@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2acbf11bdd0155bff2dede994182f84, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorObject.vb"
+﻿#Region "Microsoft.VisualBasic::c2acbf11bdd0155bff2dede994182f84, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\VectorObject.vb"
 
     ' Author:
     ' 

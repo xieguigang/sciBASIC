@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68c0ac06323b35ec2aacc5fccb0dcb23, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::cd87b9335158990dfda127b1dc21c297, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\FourierTransform.vb"
 
     ' Author:
     ' 

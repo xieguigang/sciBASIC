@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544d2784b2f96ae5858757095ffdb0cd, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::127b37bc07a6209ddf75f8891b9991a1, ..\visualbasic_App\mime\Markups\HTML\Image.vb"
 
     ' Author:
     ' 
@@ -28,17 +28,18 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace HTML
 
     Public Class Image
 
-        Public Property Border As String
-        Public Property HSpace As String
-        Public Property Alt As String
-        Public Property source As String
-        Public Property Align As String
+        <XmlAttribute> Public Property Border As String
+        <XmlAttribute> Public Property HSpace As String
+        <XmlAttribute> Public Property Alt As String
+        <XmlAttribute> Public Property source As String
+        <XmlAttribute> Public Property Align As String
 
         Public Overrides Function ToString() As String
             Dim attrs As StringBuilder = New StringBuilder(1024)

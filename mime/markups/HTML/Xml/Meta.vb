@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb5c20f3c9b7930b65d2ce7786ad4393, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\Xml\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::f2faec4b8dfbe933a46dc0020e9a16e5, ..\visualbasic_App\mime\Markups\HTML\Xml\Meta.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,9 @@
 
 #End Region
 
+Imports System.Text
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -43,10 +45,23 @@ Namespace HTML.XmlMeta
             End Set
         End Property
 
+        <XmlAttribute> Public Property id As String
         <XmlText> Public Property style As String
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        Public Shared Function Generator(classId As IEnumerable(Of String), attrs As Dictionary(Of String, String)) As String
+            Dim sb As New StringBuilder(String.Join(", ", classId.ToArray(Function(s) "." & s)))
+
+            Call sb.AppendLine("{")
+            For Each attr In attrs
+                Call sb.AppendLine($"   {attr.Key}: {attr.Value};")
+            Next
+            Call sb.AppendLine("}")
+
+            Return sb.ToString
         End Function
     End Class
 End Namespace

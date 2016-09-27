@@ -1,4 +1,32 @@
-﻿Imports System.Reflection
+﻿#Region "Microsoft.VisualBasic::8a22a4054a3ae98593e6f635d1260ae0, ..\visualbasic_App\Data_science\Mathematical\ODE\ODEs.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
@@ -187,10 +215,9 @@ Public MustInherit Class ODEs
     ''' <summary>
     ''' Get function parameters
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Shared Function GetParameters(Of T As ODEs)() As IEnumerable(Of String)
-        Dim fields = CType(GetType(T), TypeInfo) _
+    Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
+        Dim fields = CType(model, TypeInfo) _
             .DeclaredFields _
             .Where(Function(f) f.FieldType.Equals(GetType(Double)))
         Return fields.Select(Function(f) f.Name)
@@ -199,10 +226,9 @@ Public MustInherit Class ODEs
     ''' <summary>
     ''' Get Y
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Shared Function GetVariables(Of T As ODEs)() As IEnumerable(Of String)
-        Dim fields = CType(GetType(T), TypeInfo) _
+    Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)
+        Dim fields = CType(model, TypeInfo) _
           .DeclaredFields _
           .Where(Function(f) f.FieldType.Equals(GetType(var)))
         Return fields.Select(Function(f) f.Name)

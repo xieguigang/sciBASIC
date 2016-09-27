@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef1392b85e8e63e4d1a8d81359233372, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ef1392b85e8e63e4d1a8d81359233372, ..\visualbasic_App\gr\Datavisualization.Network\Test\Module1.vb"
 
     ' Author:
     ' 

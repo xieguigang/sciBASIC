@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cb6d65b94dff368cb051c29fe2dbe4d, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::7cb6d65b94dff368cb051c29fe2dbe4d, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\BezierCurve.vb"
 
     ' Author:
     ' 

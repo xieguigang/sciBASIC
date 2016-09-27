@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::251707da58147b071500678b016029cd, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\SVG\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::ca935957a9106657ecad350580fc8fe4, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\SVG\Xml.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@ Namespace SVG
     Public MustInherit Class node
 
         ''' <summary>
-        ''' CSS style definition
+        ''' CSS style definition.(请注意，假若是SVG对象则赋值这个属性无效)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property style As String
@@ -51,6 +51,7 @@ Namespace SVG
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property [class] As String
+        <XmlAttribute> Public Property id As String
 
         Public Overrides Function ToString() As String
             Return MyClass.GetJson
@@ -66,18 +67,6 @@ Namespace SVG
         <XmlAttribute> Public Property cx As Double
         <XmlAttribute> Public Property r As Double
         Public Property title As title
-    End Class
-
-    Public Class g : Inherits node
-        <XmlAttribute> Public Property transform As String
-        <XmlElement("text")> Public Property texts As text()
-        <XmlElement("g")> Public Property gs As g()
-        <XmlElement> Public Property path As path()
-        <XmlElement> Public Property rect As rect()
-        <XmlElement> Public Property polygon As polygon()
-        <XmlElement("line")> Public Property lines As line()
-        <XmlElement("circle")> Public Property circles As circle()
-        <XmlAttribute> Public Property fill As String
     End Class
 
     Public Class polygon : Inherits node
@@ -111,61 +100,8 @@ Namespace SVG
         <XmlAttribute> Public Property x As String
     End Class
 
-    ''' <summary>
-    ''' The svg vector graphics in Xml document format.
-    ''' </summary>
-    <XmlType("svg")> Public Class SVGXml : Inherits g
-        Implements ISaveHandle
-
-#Region "xml root property"
-
-        <XmlAttribute> Public Property width As String
-        <XmlAttribute> Public Property height As String
-        <XmlAttribute> Public Property version As String
-#End Region
-
-        ''' <summary>
-        ''' Style definition of the xml node in this svg document. 
-        ''' you can define the style by using css and set the class 
-        ''' attribute for the specific node to controls the 
-        ''' visualize style.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property defs As CSSStyles
-
-        Public Sub SetSize(size As Size)
-            width = size.Width & "px"
-            height = size.Height & "px"
-        End Sub
-
-        ''' <summary>
-        ''' Save this svg document object into the file system.
-        ''' </summary>
-        ''' <param name="Path"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
-        Private Function SaveAsXml(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-            Dim xml As New XmlDoc(Me.GetXml)
-            xml.encoding = XmlEncodings.UTF8
-            xml.standalone = False
-            xml.xmlns.Set("xlink", "http://www.w3.org/1999/xlink")
-            xml.xmlns.xmlns = "http://www.w3.org/2000/svg"
-
-            Return xml.SaveTo(Path, encoding)
-        End Function
-
-        ''' <summary>
-        ''' Save this svg document object into the file system.
-        ''' </summary>
-        ''' <param name="Path"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
-        Public Function SaveAsXml(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return SaveAsXml(Path, encoding.GetEncodings)
-        End Function
-    End Class
-
     Public Class CSSStyles
         <XmlElement("style")> Public Property styles As XmlMeta.CSS()
+        <XmlAttribute> Public Property id As String
     End Class
 End Namespace

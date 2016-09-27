@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcc4c1d479ef5e650174439fe8573c64, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\InternetTime\WinAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e7683d13f411374dff211a96cc4c2f6e, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\InternetTime\WinAPI.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b256986b4379b9419adc73c9b3ff03e8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\ColorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::fc50bd813f469ce97816e21ca5ed6821, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorExtensions.vb"
 
     ' Author:
     ' 
@@ -127,6 +127,8 @@ Namespace Imaging
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
                 Return Color.Black
+            ElseIf str.TextEquals("transparent") Then
+                Return Color.Transparent
             End If
 
             Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value

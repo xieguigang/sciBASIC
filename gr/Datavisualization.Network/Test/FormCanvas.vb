@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16720c7e1cd6f5288a04ed40192a62c0, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::16720c7e1cd6f5288a04ed40192a62c0, ..\visualbasic_App\gr\Datavisualization.Network\Test\FormCanvas.vb"
 
     ' Author:
     ' 

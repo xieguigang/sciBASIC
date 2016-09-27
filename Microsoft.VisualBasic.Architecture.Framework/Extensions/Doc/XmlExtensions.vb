@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f09d671790c87c8be15e5d5d2a1fe12, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6262d07a93d20159af24ca2395c31cfc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -250,12 +250,12 @@ Public Module XmlExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
-    ''' <param name="ThrowEx">Should this program throw the exception when the xml deserialization error happens?
+    ''' <param name="throwEx">Should this program throw the exception when the xml deserialization error happens?
     ''' if False then this function will returns a null value instead of throw exception.
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function CreateObjectFromXml(Of T As Class)(Xml As String, Optional ThrowEx As Boolean = True) As T
+    <Extension> Public Function LoadFromXml(Of T As Class)(Xml As String, Optional throwEx As Boolean = True) As T
         Using Stream As New StringReader(s:=Xml)
             Try
                 Dim type As Type = GetType(T)
@@ -266,7 +266,7 @@ Public Module XmlExtensions
                 ex = New Exception(Xml, ex)
                 App.LogException(ex, curMethod)
 
-                If ThrowEx Then
+                If throwEx Then
                     Throw ex
                 Else
                     Return Nothing

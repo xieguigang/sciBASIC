@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7479cd7ae4d43e6440a0116d908ce063, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Bing\DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::f5ee6aaa5daaacd72f0e477bddc2b367, ..\visualbasic_App\www\Microsoft.VisualBasic.Webservices.Bing\DEBUG_MAIN.vb"
 
     ' Author:
     ' 

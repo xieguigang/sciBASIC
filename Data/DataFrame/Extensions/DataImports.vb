@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::529e23d01fa7ba7be9550f83c4e02c91, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::cef2cc6d63d25d3cdb8f29a0baaea17f, ..\visualbasic_App\Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -92,6 +92,13 @@ Public Module DataImports
         Dim Expression As String = String.Format(SplitRegxExpression, delimiter)
         Dim LQuery = (From line As String In s_Data Select RowParsing(line, Expression)).ToArray
         Return New DocumentStream.File(LQuery)
+    End Function
+
+    <Extension>
+    Public Function ImportsData(Of T As Class)(sData As String,
+                                               Optional delimiter As String = ",",
+                                               Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(sData.lTokens, delimiter).AsDataSource(Of T)(maps:=maps)
     End Function
 
     ''' <summary>

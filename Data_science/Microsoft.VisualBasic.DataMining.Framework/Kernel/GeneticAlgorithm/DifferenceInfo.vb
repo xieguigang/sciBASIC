@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5a41fcf22e20f784108b52e1eb10c6, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\DifferenceInfo.vb"
+﻿#Region "Microsoft.VisualBasic::bc5a41fcf22e20f784108b52e1eb10c6, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\DifferenceInfo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3558b867f82b1efec6d88a832e6266ec, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\BlockScalarModifier.vb"
+﻿#Region "Microsoft.VisualBasic::d5f369f933294ba7c5f4f2ad940d1623, ..\visualbasic_App\mime\Markups\YAML\Syntax\BlockScalarModifier.vb"
 
     ' Author:
     ' 

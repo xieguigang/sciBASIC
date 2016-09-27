@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ea1ea505a3376088920b77f22c754e, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\ComponntModels\AttrBridges.vb"
+﻿#Region "Microsoft.VisualBasic::932016faa0e4811b52413256ceacef56, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\AttrBridges.vb"
 
     ' Author:
     ' 

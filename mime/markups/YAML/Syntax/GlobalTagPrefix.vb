@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4391b96e21bd5576eb56fe58b41aefe, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\GlobalTagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::a4391b96e21bd5576eb56fe58b41aefe, ..\visualbasic_App\mime\Markups\YAML\Syntax\GlobalTagPrefix.vb"
 
     ' Author:
     ' 

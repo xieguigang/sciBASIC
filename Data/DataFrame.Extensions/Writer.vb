@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04a697a0b703b1f2f8f7e1ce64d57b2b, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame.Extensions\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::c4d90a5711b242a4e53988d36549912e, ..\visualbasic_App\Data\DataFrame.Extensions\Writer.vb"
 
     ' Author:
     ' 

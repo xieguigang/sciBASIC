@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d09d601e039377a2115d8aa8d1672a, ..\visualbasic_App\DocumentFormats\RDF\RDF\Serializer\DynamicCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::c6d09d601e039377a2115d8aa8d1672a, ..\visualbasic_App\mime\RDF\Serializer\DynamicCompiler.vb"
 
     ' Author:
     ' 
