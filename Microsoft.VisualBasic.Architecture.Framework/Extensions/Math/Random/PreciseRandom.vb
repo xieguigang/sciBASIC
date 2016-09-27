@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace Mathematical
 
     ''' <summary>
-    ''' 主要针对的是非常小的小数
+    ''' 主要针对的是非常小的小数（仅适用于Positive Number）
     ''' </summary>
     Public Class PreciseRandom
 
