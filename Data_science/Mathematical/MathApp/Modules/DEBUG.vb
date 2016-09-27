@@ -136,12 +136,23 @@ Module DEBUG
     End Sub
 
     Private Sub randdddTest()
-        Call RandomRange.Testing(-100, 20).GetJson.__DEBUG_ECHO
-        Call RandomRange.Testing(-1000, -20).GetJson.__DEBUG_ECHO
-        Call RandomRange.Testing(-100, -3.0E-20).GetJson.__DEBUG_ECHO
-        Call RandomRange.Testing(-5.0E-100, 200).GetJson.__DEBUG_ECHO
-        Call RandomRange.Testing(3, 200).GetJson.__DEBUG_ECHO
-        Call RandomRange.Testing(3.0E-99, 1.0E+21).GetJson.__DEBUG_ECHO
+        Dim rrr As New Random
+        Dim ll As New List(Of Double)
+
+        For i = 0 To 10000
+            ll += Math.Log10(rrr.NextDouble)
+        Next
+
+        Call ll.GetJson.SaveTo("x:\sfdsfds.json")
+        '   MsgBox(ll.Min)
+
+        Call RandomRange.Testing(-1.0E+101, -1.22E-18).GetJson.SaveTo("x:\@\-1.0E+101, -1.22E-18.json")
+        Call RandomRange.Testing(-100, 20).GetJson.SaveTo("x:\@\-100, 20.json")
+        Call RandomRange.Testing(-1000, -20).GetJson.SaveTo("x:\@\-1000, -20.json")
+        Call RandomRange.Testing(-100, -3.0E-20).GetJson.SaveTo("x:\@\-100, -3.0E-20.json")
+        Call RandomRange.Testing(-5.0E-100, 200).GetJson.SaveTo("x:\@\-5.0E-100, 200.json")
+        Call RandomRange.Testing(3, 200).GetJson.SaveTo("x:\@\3, 200.json")
+        Call RandomRange.Testing(3.0E-99, 1.0E+21).GetJson.SaveTo("x:\@\3.0E-99, 1.0E+21.json")
 
         Pause()
     End Sub
