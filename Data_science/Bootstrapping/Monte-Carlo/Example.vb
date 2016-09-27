@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 
-Namespace MonteCarlo
+Namespace MonteCarlo.Example
 
     ''' <summary>
     ''' 计算步骤
@@ -65,6 +65,21 @@ Namespace MonteCarlo
 
         Public Overrides Function eigenvector() As Dictionary(Of String, Eigenvector)
             Return Nothing
+        End Function
+    End Class
+
+    Public Class TestObservation : Inherits ODEs
+
+        Dim sin As var
+        Dim a As Double = 10
+        Dim f As Double = -9.3
+
+        Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+            dy(sin) = a * Math.Sin(dx) + f
+        End Sub
+
+        Protected Overrides Function y0() As var()
+            Return {sin = f}
         End Function
     End Class
 End Namespace
