@@ -240,6 +240,23 @@ Loop
 
 Enable this language syntax just very easy, wrapping your variable object type with ``Value(Of T)`` in VB language.
 
+## The Unix bash syntax for listing files
+
+Here is how to using this bash syntax that you can used for listing files/folders in VisualBasic language:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language.UnixBash
+
+Return (ls - l - r - wildcards("*.csv") <= DIR) _
+      .Select(AddressOf ODEsOut.LoadFromDataFrame) _
+      .Sampling(eigenvector, partN)
+      
+' Or used in For Loop
+For Each file As String In ls - l - r - wildcards("*.csv") <= DIR
+    ' blablabla
+Next
+```
+
 ## VisualBasic identifer names
 
 #### 1. Directory type
