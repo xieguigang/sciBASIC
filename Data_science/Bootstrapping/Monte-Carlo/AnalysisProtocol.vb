@@ -49,11 +49,12 @@ Namespace MonteCarlo
         Public Function DllParser(dll As String) As Type
             Dim assem As Assembly = Assembly.LoadFile(dll.GetFullPath)
             Dim types As Type() = assem.GetTypes
+            Dim model As Type = GetType(Model)
 
             Return LinqAPI.DefaultFirst(Of Type) <= From type As Type
                                                     In types
-                                                    Where type.IsInheritsFrom(GetType(Model)) AndAlso
-                                                    Not type.IsAbstract
+                                                    Where (type.IsInheritsFrom(model, strict:=False) AndAlso
+                                                        Not type.IsAbstract)  ' a bug???
                                                     Select type
         End Function
 
@@ -173,6 +174,13 @@ Namespace MonteCarlo
                                    Optional work As String = Nothing) As Dictionary(Of String, Double())
 
             Dim model As Type = DllParser(dll)
+
+            If model Is Nothing Then  ' 没有从目标程序集之中查找到计算模型的定义
+                Dim msg As String =
+                    $"Unable found model from assembly {dll}, a calculation model should inherits from type <see cref=""{GetType(Model).FullName}""/>."
+                Throw New NotImplementedException(msg)
+            End If
+
             Dim y0 As New Dictionary(Of NamedValue(Of PreciseRandom))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of PreciseRandom))(model.GetRandomParameters)
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector

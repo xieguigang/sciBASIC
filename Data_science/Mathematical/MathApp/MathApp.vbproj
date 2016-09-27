@@ -240,7 +240,7 @@
       <Name>Markups</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Bootstrapping\Bootstrapping.vbproj">
-      <Project>{B21B924A-D67F-4554-8946-A154563394B2}</Project>
+      <Project>{b21b924a-d67f-4554-8946-a154563394b2}</Project>
       <Name>Bootstrapping</Name>
     </ProjectReference>
     <ProjectReference Include="..\Math\Microsoft.VisualBasic.Mathematical.vbproj">

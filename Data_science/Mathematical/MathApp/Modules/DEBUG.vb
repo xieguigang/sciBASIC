@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.AnalysisProtocol
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Example
 Imports Microsoft.VisualBasic.Data.csv
@@ -135,9 +136,16 @@ Module DEBUG
 
     Public Function Main() As Integer
 
+        Dim ttttdsfsd = GetType(Example)
+        Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(Model)) AndAlso Not ttttdsfsd.IsAbstract)
+
         Dim trueData As ODEsOut = New TestObservation().Solve(10, 0, 10)
+        For Each yasdas In trueData.y0
+            trueData.params.Add(yasdas.Key, yasdas.Value)
+        Next
+
         Dim result = Iterations(
-            "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Bootstrapping\bin\Debug\Microsoft.VisualBasic.Data.Bootstrapping.dll",
+            "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\MathApp\bin\Debug\Microsoft.VisualBasic.Data.Bootstrapping.dll",
             trueData,
             10, 10, 0, 10, 10,,,, )
 
