@@ -98,7 +98,7 @@ End Module
 You call your CLI command in the console terminal is just like call a function in the VisualBasic Code:
 
 ```vb.net
-    Dim code As Integer = App.API1(True, "Hello World!!!", True, True)
+Dim code As Integer = App.API1(True, "Hello World!!!", True, True)
 ```
 
 **_NOTE:_ There is no order of the VisualBasic CLI arguments**, so that all of these CLI examples are equals to each other:
@@ -152,76 +152,79 @@ Example CLI is:
 For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
 
 ```vb.net
-	Dim source As IEnumerable(Of <Type>)
-	Dim list As New List(of <Type>)(source)
+Dim source As IEnumerable(Of <Type>)
+Dim list As New List(of <Type>)(source)
 ```
 
 For Add a new instance
 
 ```vb.net
-	list += New <Type> With {
-    	.Property1 = value1,
-        .Property2 = value2
-    }
+list += New <Type> With {
+    .Property1 = value1,
+    .Property2 = value2
+}
 ```
 
 For Add a sequence of new elements
 ```vb.net
-	list += From x As T
-    		In source
-    		Where True = <test>
-            Select New <Type> With {
-            	.Property1 = <expression>,
-                .Property2 = <expression>
-            }
+list += From x As T
+    	In source
+    	Where True = <test>
+        Select New <Type> With {
+            .Property1 = <expression>,
+            .Property2 = <expression>
+        }
 ```
 
 if want to removes a specific element in the list
+
 ```vb.net
-	list -= x
+list -= x
 ```
 Or batch removes elements:
 ```vb.net
-	list -= From x As T
-    		In source
-            Where True = <test>
-            Select x
+list -= From x As T
+    	In source
+        Where True = <test>
+        Select x
 ```
 
 Here is some example of the list **+** operator
 ```vb.net
-    ' This add operation makes the code more easily to read and understand:
-    ' This function returns a list of RfamHit element and it also merge a
-    ' list of uncertainly elements into the result list at the same time
-    Public Function GetDataFrame() As RfamHit() Implements IRfamHits.GetDataFrame
-        Return hits.ToList(Function(x) New RfamHit(x, Me)) + From x As Hit
-                                                             In Uncertain
-                                                             Select New RfamHit(x, Me)
-    End Function
+' This add operation makes the code more easily to read and understand:
+' This function returns a list of RfamHit element and it also merge a
+' list of uncertainly elements into the result list at the same time
+Public Function GetDataFrame() As RfamHit() Implements IRfamHits.GetDataFrame
+    Return hits.ToList(Function(x) New RfamHit(x, Me)) + From x As Hit
+                                                         In Uncertain
+                                                         Select New RfamHit(x, Me)
+End Function
 ```
 And using the **+** operator for add a new object into the list, this syntax can makes the code more readable instead of the poorly readable code from by using method **List(of T).Add**:
-```vb.net
-    genomes += New GenomeBrief With {
-        .Name = title,
-        .Size = last.Size,
-        .Y = h1
-    }
 
-    ' Using the + operator to instead of this poorly readable function code
-    genomes.Add(New GenomeBrief With {
-            .Name = title,
-            .Size = last.Size,
-            .Y = h1
-        })
+```vb.net
+genomes += New GenomeBrief With {
+    .Name = title,
+    .Size = last.Size,
+    .Y = h1
+}
+
+' Using the + operator to instead of this poorly readable function code
+genomes.Add(New GenomeBrief With {
+    .Name = title,
+    .Size = last.Size,
+    .Y = h1
+})
 ```
 
 ##VisualBasic identifer names
 
 ####1. Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
+
 ```vb.net
-	Dim DIR As String = "/home/xieguigang/Downloads"
-	Dim EXPORT As String = "/usr/lib/GCModeller/"
+Dim DIR As String = "/home/xieguigang/Downloads"
+Dim EXPORT As String = "/usr/lib/GCModeller/"
 ```
 
 ####2. Module variable
@@ -229,14 +232,15 @@ If possible, then all of the directory path variable can be **UPCASE**, such as:
 + But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
 
 Here is some example:
-```vb.net
-	' Private
-	Dim _fileName As String
-	Dim _inDIR As Directory
 
-	' Public
-	Public ReadOnly Property FileName As String
-	Public ReadOnly Property InDIR As Directory
+```vb.net
+' Private
+Dim _fileName As String
+Dim _inDIR As Directory
+
+' Public
+Public ReadOnly Property FileName As String
+Public ReadOnly Property InDIR As Directory
 ```
 
 ####3. Local varaible and function parameter
@@ -250,11 +254,12 @@ For **_Public_** member function, the function name is recommended in formats **
 Here is some function name examples(Example picked from [here](https://github.com/SMRUCC/GCModeller.Core/Bio.Assembly/GenomicsContext/TFDensity.vb)):
 ```vb.net
 	' Private
-	Private Function __worker(Of T As I_GeneBrief)(genome As IGenomicsContextProvider(Of T),
-                                               	getTF As Func(Of Strands, T()),
-                                               	getRelated As Func(Of T, T(), Integer, T()),
-                                               	numTotal As Integer,
-                                               	ranges As Integer) As Density()
+	Private Function __worker(Of T As I_GeneBrief)(
+	                        genome As IGenomicsContextProvider(Of T),
+                               	getTF As Func(Of Strands, T()),
+                             	getRelated As Func(Of T, T(), Integer, T()),
+                              	numTotal As Integer,
+                               	ranges As Integer) As Density()
 	' Public
 	Public Function DensityCis(Of T As I_GeneBrief)(
                               	genome As IGenomicsContextProvider(Of T),
@@ -285,47 +290,52 @@ And by using the **String.Format** function, then format control string is recom
 
 ######2. String contacts
 For contacts a large amount of string tokens, the **StringBuilder** is recommended used for this job, **not recommend directly using _& operator_ to contacts a large string collection due to the reason of performance issue**.
+
 ```vb.net
-	' Convert the input string to a byte array and compute the hash.
-	Dim data As Byte() = md5Hash.ComputeHash(input)
+' Convert the input string to a byte array and compute the hash.
+Dim data As Byte() = md5Hash.ComputeHash(input)
 
-    ' Create a new Stringbuilder to collect the bytes
-    ' and create a string.
-    Dim sBuilder As New StringBuilder()
+' Create a new Stringbuilder to collect the bytes
+' and create a string.
+Dim sBuilder As New StringBuilder()
 
-    ' Loop through each byte of the hashed data
-    ' and format each one as a hexadecimal string.
-    For i As Integer = 0 To data.Length - 1
-    	sBuilder.Append(data(i).ToString("x2"))
-    Next i
+' Loop through each byte of the hashed data
+' and format each one as a hexadecimal string.
+For i As Integer = 0 To data.Length - 1
+	sBuilder.Append(data(i).ToString("x2"))
+Next i
 
-    Return sBuilder.ToString() ' Return the hexadecimal string.
+Return sBuilder.ToString() ' Return the hexadecimal string.
 ```
 
 If you just want to contact the string, then a shared method **String.Join** is recommended used.
 If the string tokens will be join by a specific delimiter, then using **String.Join** instead of **StringBuilder.Append**
-```vb.net
-	Dim tokens As String()
-	Dim sb As New StringBuilder
 
-	For Each s As String In tokens
-		Call sb.Append(s & " ")
-	Next
-	Call sb.Remove(sb.Length -1)
+```vb.net
+Dim tokens As String()
+Dim sb As New StringBuilder
+
+For Each s As String In tokens
+	Call sb.Append(s & " ")
+Next
+Call sb.Remove(sb.Length -1)
 ```
 
 Or just use **String.Join**, this method is more clean and readable than **StringBuilder.Append**:
+
 ```vb.net
-	Dim tokens As String()
-	Dim out As String = String.Join(" ", tokens)
+Dim tokens As String()
+Dim out As String = String.Join(" ", tokens)
 ```
 
-######3. String interpolate
+###### 3. String interpolate
 The string interpolate syntax in VisualBasic language is recommended used for **build _SQL_ statement and _CLI_ arguments as this syntax is very easily for understand and code readable**:
+
 ```vb.net
-	Dim SQL As String = $"SELECT * FROM table WHERE id='{id}' AND ppi>{ppi}"
-	Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
+Dim SQL As String = $"SELECT * FROM table WHERE id='{id}' AND ppi>{ppi}"
+Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
 ```
+
 So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
 ####Linq Expression
@@ -335,13 +345,14 @@ All of the Linq Expression is recommended execute using [**LinqAPI**](https://gi
 
 ####Instantiation 
 For define a new object, a short format is recommended:
+
 ```vb.net
 Dim x As New <Type>
 ```
 
 If the type you want to create object instance can be initialize from its property, then the With keyword is recommended to used:
 ```vb.net
-Dim MyvaCog As MyvaCOG = 
+Dim MyvaCog As MyvaCOG() = 
     LinqAPI.Exec(Of MyvaCOG) <= From gene As GeneDumpInfo
                                 In GenomeBrief
                                 Select New MyvaCOG With {
