@@ -147,7 +147,7 @@ Module DEBUG
         Dim result = Iterations(
             "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\MathApp\bin\Debug\Microsoft.VisualBasic.Data.Bootstrapping.dll",
             trueData,
-            10, 10, 0, 10, 10,,,, )
+            10, 10, 0, 10, 5,,,, )
 
 
 

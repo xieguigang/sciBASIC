@@ -47,7 +47,7 @@ Namespace MonteCarlo
         ''' <param name="dll"></param>
         ''' <returns></returns>
         Public Function DllParser(dll As String) As Type
-            Dim assem As Assembly = Assembly.LoadFile(dll.GetFullPath)
+            Dim assem As Assembly = Assembly.LoadFrom(dll.GetFullPath)
             Dim types As Type() = assem.GetTypes
             Dim model As Type = GetType(Model)
 
@@ -73,7 +73,7 @@ Namespace MonteCarlo
         End Function
 
         ''' <summary>
-        ''' 假若模型定义之中没有定义这个特征向量的构建方法的话，则使用默认的方法：平均数+标准差
+        ''' Sampling method of the y output values.(假若模型定义之中没有定义这个特征向量的构建方法的话，则使用默认的方法：平均数+标准差)
         ''' </summary>
         ''' <param name="def"></param>
         ''' <returns></returns>
@@ -84,9 +84,9 @@ Namespace MonteCarlo
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.eigenvector
 
             If eigenvectors Is Nothing Then
-                Dim vars = Model.GetVariables(def)
-                Dim ys = Model.GetParameters(def)
-                eigenvectors = vars.Join(ys).DefaultEigenvector
+                eigenvectors = Model _
+                    .GetVariables(def) _
+                    .DefaultEigenvector
             End If
 
             Return eigenvectors
@@ -109,11 +109,30 @@ Namespace MonteCarlo
             Return model.Bootstrapping(parms, y0, k, n, a, b,,)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="eigenvector"></param>
+        ''' <param name="partN"></param>
+        ''' <param name="merge">
+        ''' + 假若是从文件之中加在的数据，则这个默认参数值不需要进行设置
+        ''' + 假若是直接赋值，则需要设置本参数为True进行y0和参数的合并操作
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Sampling(data As IEnumerable(Of ODEsOut),
-                                 eigenvector As Dictionary(Of String, Eigenvector),
-                                 Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
-            Return data.Select(Function(x) x.Sampling(eigenvector, partN))
+        Public Iterator Function Sampling(data As IEnumerable(Of ODEsOut),
+                                          eigenvector As Dictionary(Of String, Eigenvector),
+                                          Optional partN As Integer = 20,
+                                          Optional merge As Boolean = False) _
+                                                         As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
+            For Each x As ODEsOut In data
+                If merge Then
+                    Call x.Join()
+                End If
+
+                Yield x.Sampling(eigenvector, partN)
+            Next
         End Function
 
         Public Const Observation As String = NameOf(Observation)
@@ -195,8 +214,10 @@ Namespace MonteCarlo
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
-                    model.Bootstrapping(parms, y0, k, n, a, b,, ) _
-                    .Sampling(eigenvectors, partN))
+                    model.Bootstrapping(parms.Values, y0.Values, k, n, a, b,, ) _
+                    .Sampling(eigenvectors,
+                              partN,
+                              merge:=True))
                 Dim kmeansResult As Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())()) =
                     randSamples.KMeans(expected, [stop])
                 Dim required As VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) = Nothing
@@ -217,6 +238,12 @@ Namespace MonteCarlo
                     End If
                 Next
 
+                If required.value.Length = 1 Then
+                    ' 只有一个元素的时候，就只是实验观察数据本身，则不修改范围，直接下一次迭代
+                    Call "Current iteration is not valid: Required output just one element(observation itself)!".Warning
+                    Continue Do
+                End If
+
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
                 Dim requires As Integer = GetEntityNumbers(required)
                 Dim output As Dictionary(Of String, Double()) =
@@ -235,12 +262,12 @@ Namespace MonteCarlo
                     ' 调整y0和参数列表
                     For Each y In y0
                         Dim values As Double() = output(y.Key)
-                        Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
-                        y0(y.Key) = New NamedValue(Of PreciseRandom)(y.Key, range)
+                        Dim range As PreciseRandom = values.__getRanges
+                        y0(y.Key) = New NamedValue(Of PreciseRandom)(y.Key, Range)
                     Next
                     For Each parm In parms
                         Dim values As Double() = output(parm.Key)
-                        Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
+                        Dim range As PreciseRandom = values.__getRanges
 
                         parms(parm.Key) = New NamedValue(Of PreciseRandom) With {
                             .Name = parm.Key,
@@ -255,6 +282,14 @@ Namespace MonteCarlo
             Loop
 
             Return Nothing
+        End Function
+
+        <Extension>
+        Private Function __getRanges(values As Double()) As PreciseRandom
+            Dim low As Double = values.Min, high As Double = values.Max
+
+            Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
+            Return range
         End Function
 
         Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer
