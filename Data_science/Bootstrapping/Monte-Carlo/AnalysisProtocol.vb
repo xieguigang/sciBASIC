@@ -276,8 +276,13 @@ Namespace MonteCarlo
                     Next
 
                     ' 保存临时数据到工作区间
-                    Call output.GetJson _
-                        .SaveTo(work & $"/{FormatZero(++i, "00000")}.json")
+                    Call output.ToDictionary(
+                        Function(x) x.Key,
+                        Function(x) New DoubleTagged(Of Double()) With {
+                            .Tag = x.Value.Average,
+                            .value = x.Value
+                        }).GetJson _
+                          .SaveTo(work & $"/{FormatZero(++i, "00000")}.json")
                 End If
             Loop
 
