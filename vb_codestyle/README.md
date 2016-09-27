@@ -371,42 +371,33 @@ Here are tables of names that i used in my programming, and continues updated...
 	<tr><td>System.Type</td><td>Recommend Name</td><td>Example</td></tr>
 	<tr><td>System.Text.StringBuilder</td>
     	<td>sb</td>
-        <td>
-
-    Dim sb As New StringBuilder
+        <td><pre>Dim sb As New StringBuilder</pre>
 </td>
     </tr>
 	<tr><td>System.String</td>
     	<td>s, str, name, sId, id, x</td>
         <td>
-        
-    Dim s As String
-    Dim str As String
-    Dim name As String
-    Dim sId As String
-    Dim id As String
-    Dim x As String
-
+<pre>        
+Dim s As String
+Dim str As String
+Dim name As String
+Dim sId As String
+Dim id As String
+Dim x As String</pre>
 </tr>
 	<tr><td>System.Integer, System.Long</td>
     	<td>i, j, n, x</td>
-        <td>
-
-    Dim i As Integer
-    Dim j As Integer
-    Dim n As Integer
-    Dim x As Integer
-
+        <td><pre>Dim i As Integer
+Dim j As Integer
+Dim n As Integer
+Dim x As Integer</pre>
 </tr>
 	<tr><td>System.Object</td>
     	<td>x, o, obj, value</td>
-        <td>
-
-    Dim x As Object
-    Dim o As Object
-    Dim obj As Object
-    Dim value As Object
-
+        <td><pre>Dim x As Object
+Dim o As Object
+Dim obj As Object
+Dim value As Object</pre>
 </td>
 	</tr>
 </table>
@@ -446,7 +437,8 @@ Loop</pre>
 </td>
     </tr>
     <tr><td>Linq query expression</td><td>LQuery</td><td>
-<pre>Dim LQuery = From path As String
+<pre>
+Dim LQuery = From path As String
              In ls -l -r -wildcards("*.Xml") <= DIR
              Where InStr(path.BaseName, "xcb") = 1
              Select path.LoadXml(Of KEGG.DBGET.Module)</pre>
@@ -454,19 +446,21 @@ Loop</pre>
 </tr>
     <tr>
     	<td>Query Result/Function Returns</td><td>result, rtvl</td><td>
-<pre>Dim result As [Module] = 
-    LinqAPI.Exec(Of [Module]) <= 
-          From path As String
-          In ls -l -r -wildcards("*.Xml") <= DIR
-          Where InStr(path.BaseName, "xcb") = 1
-          Select path.LoadXml(Of KEGG.DBGET.Module)
+<pre>
+Dim result As [Module]() = LinqAPI.Exec(Of [Module]) <= 
+_
+    From path As String
+    In ls -l -r -wildcards("*.Xml") <= DIR
+    Where InStr(path.BaseName, "xcb") = 1
+    Select path.LoadXml(Of KEGG.DBGET.Module)
         
 Return result</pre>
 </td>
 </tr>
     <tr><td>Directory</td><td>DIR, out, inDIR</td><td>
 <pre>Dim files As IEnumerable(Of String) = 
-    ls -l -r -wildcards("*.Xml") <= DIR</pre>
+    ls -l -r -wildcards("*.Xml") <= DIR
+</pre>
 </td>
 </tr>
     <tr><td>json</td><td>json, JSON</td><td>
