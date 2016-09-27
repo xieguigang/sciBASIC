@@ -59,14 +59,14 @@ Namespace MonteCarlo
         End Function
 
         <Extension>
-        Public Function Gety0(def As Type) As NamedValue(Of PreciseRandom)()
+        Public Function Gety0(def As Type) As NamedValue(Of INextRandomNumber)()
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
             Return model.yinit
         End Function
 
         <Extension>
-        Public Function GetRandomParameters(def As Type) As NamedValue(Of PreciseRandom)()
+        Public Function GetRandomParameters(def As Type) As NamedValue(Of INextRandomNumber)()
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
             Return model.params
@@ -169,7 +169,7 @@ Namespace MonteCarlo
         End Function
 
         ''' <summary>
-        ''' 
+        ''' k是采样的次数， n,a,b 是进行ODEs计算的参数，<paramref name="expected"/>是期望的cluster数量
         ''' </summary>
         ''' <param name="dll"></param>
         ''' <param name="observation">实验观察里面只需要y值列表就足够了，不需要参数信息</param>
@@ -200,8 +200,8 @@ Namespace MonteCarlo
                 Throw New NotImplementedException(msg)
             End If
 
-            Dim y0 As New Dictionary(Of NamedValue(Of PreciseRandom))(model.Gety0)
-            Dim parms As New Dictionary(Of NamedValue(Of PreciseRandom))(model.GetRandomParameters)
+            Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
+            Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector
 
             If work Is Nothing Then
@@ -211,6 +211,8 @@ Namespace MonteCarlo
             Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
                 observation.Sampling(eigenvectors, partN, AnalysisProtocol.Observation)
             Dim i As int = 0
+
+            Call observation.params.GetJson.__DEBUG_ECHO
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
@@ -246,8 +248,9 @@ Namespace MonteCarlo
 
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
                 Dim requires As Integer = GetEntityNumbers(required)
-                Dim output As Dictionary(Of String, Double()) =
+                Dim output As Dictionary(Of String, Double()) =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
                     required.value _
+                    .Where(Function(x) Not x.Name = AnalysisProtocol.Observation) _
                     .Select(Function(x) x.x) _
                     .MatrixAsIterator _
                     .MatrixAsIterator _
@@ -262,14 +265,14 @@ Namespace MonteCarlo
                     ' 调整y0和参数列表
                     For Each y In y0
                         Dim values As Double() = output(y.Key)
-                        Dim range As PreciseRandom = values.__getRanges
-                        y0(y.Key) = New NamedValue(Of PreciseRandom)(y.Key, Range)
+                        Dim range As INextRandomNumber = values.__getRanges
+                        y0(y.Key) = New NamedValue(Of INextRandomNumber)(y.Key, range)
                     Next
                     For Each parm In parms
                         Dim values As Double() = output(parm.Key)
-                        Dim range As PreciseRandom = values.__getRanges
+                        Dim range As INextRandomNumber = values.__getRanges
 
-                        parms(parm.Key) = New NamedValue(Of PreciseRandom) With {
+                        parms(parm.Key) = New NamedValue(Of INextRandomNumber) With {
                             .Name = parm.Key,
                             .x = range
                         }
@@ -285,11 +288,9 @@ Namespace MonteCarlo
         End Function
 
         <Extension>
-        Private Function __getRanges(values As Double()) As PreciseRandom
+        Private Function __getRanges(values As Double()) As INextRandomNumber
             Dim low As Double = values.Min, high As Double = values.Max
-
-            Dim range As New PreciseRandom(from:=values.Min, [to]:=values.Max)
-            Return range
+            Return RandomRange.GetRandom(low, high)
         End Function
 
         Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer

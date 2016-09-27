@@ -73,6 +73,27 @@ Public Module BootstrapIterator
         Return GetType(T).Bootstrapping(varList, y0, k, n, a, b, trimNaN, parallel)
     End Function
 
+    Public Function Bootstrapping(model As Type,
+                                   vars As IEnumerable(Of NamedValue(Of PreciseRandom)),
+                                  yinit As IEnumerable(Of NamedValue(Of PreciseRandom)),
+                                      k As Long,
+                                      n As Integer,
+                                      a As Integer,
+                                      b As Integer,
+                                  Optional trimNaN As Boolean = True,
+                                  Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
+        Return model.Bootstrapping(
+            vars.Select(Function(x) New NamedValue(Of INextRandomNumber) With {
+                .Name = x.Name,
+                .x = AddressOf x.x.NextNumber
+            }),
+            yinit.Select(Function(x) New NamedValue(Of INextRandomNumber) With {
+                .Name = x.Name,
+                .x = AddressOf x.x.NextNumber
+            }),
+            k, n, a, b, trimNaN, parallel)
+    End Function
+
     ''' <summary>
     ''' Bootstrapping 参数估计分析，这个函数用于生成基本的采样数据
     ''' </summary>
@@ -85,8 +106,8 @@ Public Module BootstrapIterator
     ''' 
     <Extension>
     Public Iterator Function Bootstrapping(model As Type,
-                                           vars As IEnumerable(Of NamedValue(Of PreciseRandom)),
-                                          yinit As IEnumerable(Of NamedValue(Of PreciseRandom)),
+                                           vars As IEnumerable(Of NamedValue(Of INextRandomNumber)),
+                                          yinit As IEnumerable(Of NamedValue(Of INextRandomNumber)),
                                               k As Long,
                                               n As Integer,
                                               a As Integer,
@@ -94,8 +115,8 @@ Public Module BootstrapIterator
                                            Optional trimNaN As Boolean = True,
                                            Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
 
-        Dim params As NamedValue(Of PreciseRandom)() = vars.ToArray
-        Dim y0 As NamedValue(Of PreciseRandom)() = yinit.ToArray
+        Dim params As NamedValue(Of INextRandomNumber)() = vars.ToArray
+        Dim y0 As NamedValue(Of INextRandomNumber)() = yinit.ToArray
         Dim ps As Dictionary(Of String, Action(Of Object, Double)) =
             params _
             .Select(Function(x) x.Name) _
@@ -135,9 +156,9 @@ Public Module BootstrapIterator
     ''' <returns></returns>
     ''' <remarks>在Linux服务器上面有内存泄漏的危险</remarks>
     <Extension>
-    Public Function iterate(vars As NamedValue(Of PreciseRandom)(),
+    Public Function iterate(vars As NamedValue(Of INextRandomNumber)(),
                             model As Type,
-                            yinis As NamedValue(Of PreciseRandom)(),
+                            yinis As NamedValue(Of INextRandomNumber)(),
                             ps As Dictionary(Of String, Action(Of Object, Double)),
                             n As Integer,
                             a As Integer,
@@ -147,7 +168,7 @@ Public Module BootstrapIterator
         ' Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
-            Dim value As Double = x.x.NextNumber
+            Dim value As Double = x.x()()
             Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
 
             'debug += New NamedValue(Of Double) With {
@@ -157,7 +178,7 @@ Public Module BootstrapIterator
         Next
 
         For Each y In yinis
-            Dim value As Double = y.x.NextNumber
+            Dim value As Double = y.x()()
             odes(y.Name).value = value
             'debug += New NamedValue(Of Double) With {
             '    .Name = y.Name,

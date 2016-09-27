@@ -50,16 +50,16 @@ Namespace MonteCarlo.Example
             dy(sin) = a * Math.Sin(dx) + f
         End Sub
 
-        Public Overrides Function params() As NamedValue(Of PreciseRandom)()
+        Public Overrides Function params() As NamedValue(Of INextRandomNumber)()
             Return {
-                New NamedValue(Of PreciseRandom)(NameOf(a), New PreciseRandom(-1, 1)),
-                New NamedValue(Of PreciseRandom)(NameOf(f), New PreciseRandom(-1, 1))
+                New NamedValue(Of INextRandomNumber)(NameOf(a), AddressOf New PreciseRandom(-1, 1).NextNumber),
+                New NamedValue(Of INextRandomNumber)(NameOf(f), AddressOf New PreciseRandom(-1, 1).NextNumber)
             }
         End Function
 
-        Public Overrides Function yinit() As NamedValue(Of PreciseRandom)()
+        Public Overrides Function yinit() As NamedValue(Of INextRandomNumber)()
             Return {
-                New NamedValue(Of PreciseRandom)(NameOf(sin), New PreciseRandom(-1, 2))
+                New NamedValue(Of INextRandomNumber)(NameOf(sin), AddressOf New PreciseRandom(-1, 2).NextNumber)
             }
         End Function
 
