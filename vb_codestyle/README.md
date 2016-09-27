@@ -23,9 +23,9 @@ End Module
 By using a **Integer** _Function_ instead of _Sub_ in VisualBasic, this makes your code style is more standard compare with the main function from C++.
 
 ```c
-	int main(int argc, char *argv[]) {
-		// blablabla...
-	}
+int main(int argc, char *argv[]) {
+	// blablabla...
+}
 ```
 
 Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in **CLI** module.
@@ -141,11 +141,11 @@ Example CLI is:
 
 |Function|Usage|Example|
 |--------|-----|-------|
-|CommandLine.GetBoolean(String) As Boolean|Get a boolean flag argument from the CLI|Dim b As Boolean = args.GetBoolean("/b")|
-|CommandLine.GetInt32(String) As Integer|Get a parameter value as Integer|Dim n As Integer = args.GetInt32("/n")|
-|CommandLine.GetObject(Of T)(String, System.Func(Of String, T)) As T|Get a parameter string value and then apply a string parser on it for load an .NET object|Dim x As T = args.GetObject(of T)("/xml", AddressOf LoadXml)|
-|CommandLine.GetValue(Of T)(String, T, System.Func(Of String, T)) As T|Get a parameter value, if the parameter is not exist, then default value will be returns, this method is usually used on optional value|Dim n As Long = args.GetValue("/num_threads", 100L)|
-|CommandLine.Item(String) As String|Default readonly property for read string value of a specific parameter|Dim path As String = args("/file")|
+|``GetBoolean(String) As Boolean``|Get a boolean flag argument from the CLI|``Dim b As Boolean = args.GetBoolean("/b")``|
+|``GetInt32(String) As Integer``|Get a parameter value as Integer|``Dim n As Integer = args.GetInt32("/n")``|
+|``GetObject(Of T)(String, System.Func(Of String, T)) As T``|Get a parameter string value and then apply a string parser on it for load an .NET object|``Dim x As T = args.GetObject(of T)("/xml", AddressOf LoadXml)``|
+|``GetValue(Of T)(String, T, System.Func(Of String, T)) As T``|Get a parameter value, if the parameter is not exist, then default value will be returns, this method is usually used on optional value|``Dim n As Long = args.GetValue("/num_threads", 100L)``|
+|``Item(String) As String``|Default readonly property for read string value of a specific parameter|``Dim path As String = args("/file")``|
 
 -------------------------------------
 ## List(Of T) operation in VisualBasic
