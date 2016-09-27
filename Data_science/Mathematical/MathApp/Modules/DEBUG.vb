@@ -168,6 +168,13 @@ Module DEBUG
 
         Dim ttttdsfsd = GetType(Example)
         Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(Model)) AndAlso Not ttttdsfsd.IsAbstract)
+        Dim iiisddsfd = 1
+        For Each sfsdfsds In TestObservation.Compares(100, 0, 10, New Dictionary(Of String, Double) From {{"a", 18.689678431519159}, {"f", 1.0614939771775227}, {"sin", -56.777710793912966}})
+            Call sfsdfsds.Plot().SaveAs($"x:\{iiisddsfd}.png")
+            iiisddsfd += 1
+        Next
+
+        Pause()
 
         Dim trueData As ODEsOut = New TestObservation().Solve(100, 0, 10)
         For Each yasdas In trueData.y0

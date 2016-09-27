@@ -74,12 +74,31 @@ Namespace MonteCarlo.Example
         Dim a As Double = 10
         Dim f As Double = -9.3
 
+        Dim compare As Boolean = False
+
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
             dy(sin) = a * Math.Sin(dx) + f
         End Sub
 
         Protected Overrides Function y0() As var()
-            Return {sin = f}
+            If compare Then
+                Return {sin}
+            Else
+                Return {sin = f}
+            End If
+        End Function
+
+        Public Shared Iterator Function Compares(n As Integer, a As Integer, b As Integer, parms As Dictionary(Of String, Double)) As IEnumerable(Of ODEsOut)
+            Yield New TestObservation().Solve(n, a, b)
+            Yield New TestObservation With {
+                .a = parms(NameOf(a)),
+                .compare = True,
+                .f = parms(NameOf(f)),
+                .sin = New var With {
+                    .Name = NameOf(sin),
+                    .value = parms(NameOf(sin))
+                }
+            }.Solve(n, a, b)
         End Function
     End Class
 End Namespace

@@ -295,7 +295,7 @@ Namespace MonteCarlo
         <Extension>
         Private Function __getRanges(values As Double()) As INextRandomNumber
             Dim low As Double = values.Min, high As Double = values.Max
-            Return RandomRange.GetRandom(low, high)
+            Return RandomRange.GetRandom(low, high,, forceInit:=True)
         End Function
 
         Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer

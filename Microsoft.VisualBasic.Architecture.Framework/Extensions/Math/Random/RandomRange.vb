@@ -27,7 +27,17 @@ Namespace Mathematical
             Return 0
         End Function
 
-        Public Function GetRandom(from As Double, [to] As Double, Optional INF As Integer = 5) As INextRandomNumber
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="from"></param>
+        ''' <param name="[to]"></param>
+        ''' <param name="INF"></param>
+        ''' <param name="forceInit">
+        ''' True的时候会通过牺牲性能来强制重新实例化随机数发生器来获取足够的随机
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetRandom(from As Double, [to] As Double, Optional INF As Integer = 5, Optional forceInit As Boolean = False) As INextRandomNumber
             Dim pf As Single = Log(from, INF)
             Dim pt As Single = Log([to], INF)
 
@@ -40,10 +50,14 @@ Namespace Mathematical
                             Return AddressOf New PreciseRandom(CSng(Math.Log10(from)), pt).NextNumber
                         Else
                             ' to 也是常数
-                            Dim rnd As New Random
                             Dim range As New DoubleRange(from, [to])
 
-                            Return Function() rnd.NextDouble(range)  ' 假若二者都是常数，则返回常数随机区间
+                            If forceInit Then
+                                Return Function() New Random(Now.Millisecond).NextDouble(range)  ' 想要通过牺牲性能来强制获取足够的随机
+                            Else
+                                Dim rnd As New Random
+                                Return Function() rnd.NextDouble(range)  ' 假若二者都是常数，则返回常数随机区间
+                            End If
                         End If
                     End If
                 Else
@@ -62,19 +76,33 @@ Namespace Mathematical
                         c = {0F, pt}
                         Dim rt As New PreciseRandom(c.Min, c.Max)
                         Dim ppf = Math.Abs(pf) / (Math.Abs(pf) + Math.Abs(pt))
-                        Dim rnd As New Random
 
-                        Return Function()
-                                   If rnd.NextDouble < ppf Then
-                                       Return -1 * rf.NextNumber
-                                   Else
-                                       Return rt.NextNumber
-                                   End If
-                               End Function
+                        If forceInit Then
+                            Return Function()
+                                       If New Random(Now.Millisecond).NextDouble < ppf Then
+                                           Return -1 * rf.NextNumber
+                                       Else
+                                           Return rt.NextNumber
+                                       End If
+                                   End Function
+                        Else
+                            Dim rnd As New Random
+                            Return Function()
+                                       If rnd.NextDouble < ppf Then
+                                           Return -1 * rf.NextNumber
+                                       Else
+                                           Return rt.NextNumber
+                                       End If
+                                   End Function
+                        End If
                     Else
                         Dim range As New DoubleRange(from, [to])
-                        Dim rnd As New Random
-                        Return Function() rnd.NextDouble(range)
+                        If forceInit Then
+                            Return Function() New Random(Now.Millisecond).NextDouble(range)
+                        Else
+                            Dim rnd As New Random
+                            Return Function() rnd.NextDouble(range)
+                        End If
                     End If
                 Else  ' to 同样也是负数的情况
                     If pf <> 0F OrElse pt <> 0F Then ' 两个都是极值数
@@ -87,8 +115,12 @@ Namespace Mathematical
                         Return Function() -1 * rnd.NextNumber
                     Else  ' from 和 to 都是负实数
                         Dim range As New DoubleRange(from, [to])
-                        Dim rnd As New Random
-                        Return Function() rnd.NextDouble(range)
+                        If forceInit Then
+                            Return Function() New Random(Now.Millisecond).NextDouble(range)
+                        Else
+                            Dim rnd As New Random
+                            Return Function() rnd.NextDouble(range)
+                        End If
                     End If
                 End If
             End If
