@@ -162,6 +162,8 @@ Module DEBUG
         '   Call randdddTest()
 
 
+        Call RandomRange.Testing(-1000, 1000).GetJson.__DEBUG_ECHO
+
 
 
         Dim ttttdsfsd = GetType(Example)
