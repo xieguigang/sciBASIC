@@ -1,4 +1,6 @@
-﻿Namespace Mathematical
+﻿Imports Microsoft.VisualBasic.Linq
+
+Namespace Mathematical
 
     ''' <summary>
     ''' 针对负数到正数的range随机数
@@ -51,6 +53,17 @@
 
         Public Function GetHandle() As INextRandomNumber
             Return AddressOf NextNumber
+        End Function
+
+        Public Shared Function Testing(from As Double, [to] As String) As Double()
+            Dim rnd As New RandomRange(from, [to])
+            Dim bufs As New List(Of Double)
+
+            For Each i As Integer In 25.Sequence
+                bufs += rnd.NextNumber
+            Next
+
+            Return bufs
         End Function
     End Class
 End Namespace

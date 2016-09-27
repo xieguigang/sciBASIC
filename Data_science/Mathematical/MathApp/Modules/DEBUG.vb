@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module DEBUG
 
@@ -134,7 +135,23 @@ Module DEBUG
 
     End Sub
 
+    Private Sub randdddTest()
+        Call RandomRange.Testing(-100, 20).GetJson.__DEBUG_ECHO
+        Call RandomRange.Testing(-1000, -20).GetJson.__DEBUG_ECHO
+        Call RandomRange.Testing(-100, -3.0E-20).GetJson.__DEBUG_ECHO
+        Call RandomRange.Testing(-5.0E-100, 200).GetJson.__DEBUG_ECHO
+        Call RandomRange.Testing(3, 200).GetJson.__DEBUG_ECHO
+        Call RandomRange.Testing(3.0E-99, 1.0E+21).GetJson.__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
     Public Function Main() As Integer
+
+        Call randdddTest()
+
+
+
 
         Dim ttttdsfsd = GetType(Example)
         Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(Model)) AndAlso Not ttttdsfsd.IsAbstract)
