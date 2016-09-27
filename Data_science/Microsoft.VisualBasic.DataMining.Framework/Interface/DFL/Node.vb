@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b9aadccd9148de2335bb07924df868f, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\Node.vb"
+﻿#Region "Microsoft.VisualBasic::0b9aadccd9148de2335bb07924df868f, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\Node.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3c0f7e59dc858a76753e67ef244f1c8, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\LayoutsElement.vb"
+﻿#Region "Microsoft.VisualBasic::2a3d8028c6f408cd2b1b959d3d0e43e8, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Shape.vb"
 
     ' Author:
     ' 

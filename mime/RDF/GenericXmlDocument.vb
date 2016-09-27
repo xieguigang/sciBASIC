@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6eb8a32f157bdcee89fcd67fc79065b2, ..\visualbasic_App\DocumentFormats\RDF\RDF\GenericXmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::6eb8a32f157bdcee89fcd67fc79065b2, ..\visualbasic_App\mime\RDF\GenericXmlDocument.vb"
 
     ' Author:
     ' 

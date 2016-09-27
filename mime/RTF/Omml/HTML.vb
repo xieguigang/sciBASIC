@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c9ec8efd9109b539557bd1f4b53591b, ..\visualbasic_App\DocumentFormats\DocumentFormat.Word\DocHtml.vb"
+﻿#Region "Microsoft.VisualBasic::e450d11abc1741cb30d64466ce445822, ..\visualbasic_App\mime\RTF\Omml\HTML.vb"
 
     ' Author:
     ' 

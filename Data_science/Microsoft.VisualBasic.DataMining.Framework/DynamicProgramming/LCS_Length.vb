@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d9dfed052186f147d69f5fa86da7aa, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
+﻿#Region "Microsoft.VisualBasic::70d9dfed052186f147d69f5fa86da7aa, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
 
     ' Author:
     ' 

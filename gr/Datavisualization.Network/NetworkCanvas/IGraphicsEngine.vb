@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::336c64c2f61e7d1c47ab95318e35f100, ..\visualbasic_App\Datavisualization\Datavisualization.Network\NetworkCanvas\IGraphicsEngine.vb"
+﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, ..\visualbasic_App\gr\Datavisualization.Network\NetworkCanvas\IGraphicsEngine.vb"
 
     ' Author:
     ' 
@@ -30,4 +30,3 @@ Public Interface IGraphicsEngine
 
     Property ShowLabels As Boolean
 End Interface
-

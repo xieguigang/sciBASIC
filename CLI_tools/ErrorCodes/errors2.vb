@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f43318412e619fca70c3e87440e7985, ..\visualbasic_App\Cli Tools\ErrorCodes\errors2.vb"
+﻿#Region "Microsoft.VisualBasic::f653276e26ed547e6154dc5fd282357a, ..\visualbasic_App\CLI_tools\ErrorCodes\errors2.vb"
 
     ' Author:
     ' 
@@ -2224,4 +2224,3 @@ ERROR_RPL_NOT_ALLOWED = 4006L
 ERROR_NO_BROWSER_SERVERS_FOUND = 6118L
 
 End Enum
-

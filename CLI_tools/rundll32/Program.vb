@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7967979a6e272cae13917790536cad94, ..\visualbasic_App\Cli Tools\rundll32\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7967979a6e272cae13917790536cad94, ..\visualbasic_App\CLI_tools\rundll32\Program.vb"
 
     ' Author:
     ' 

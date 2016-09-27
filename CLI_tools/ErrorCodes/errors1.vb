@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfe38849e0217b5cfc870b0930f2dbf3, ..\visualbasic_App\Cli Tools\ErrorCodes\errors1.vb"
+﻿#Region "Microsoft.VisualBasic::b3204269f08ba2e01ebd1f6d561b2613, ..\visualbasic_App\CLI_tools\ErrorCodes\errors1.vb"
 
     ' Author:
     ' 
@@ -2251,4 +2251,3 @@ ERROR_ALREADY_INITIALIZED = 1247L
 ERROR_NO_MORE_DEVICES = 1248L
 
 End Enum
-

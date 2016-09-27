@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b42b31926641d07255dd6ab61693c06d, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\Drawing2D\VectorElements\DrawingString.vb"
+﻿#Region "Microsoft.VisualBasic::88b4c3070681b1f02b3f49f41409a948, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\String.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3acdcf18d34f7590a335107f066b0a1a, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\MarkDown\Span\LinksParser.vb"
+﻿#Region "Microsoft.VisualBasic::3acdcf18d34f7590a335107f066b0a1a, ..\visualbasic_App\mime\Markups\MarkDown\Span\LinksParser.vb"
 
     ' Author:
     ' 

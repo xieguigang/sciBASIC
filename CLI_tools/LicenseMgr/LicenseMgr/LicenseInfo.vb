@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1e33e0db01e39ee1a793c1ea437ad69, ..\visualbasic_App\Cli Tools\LicenseMgr\LicenseMgr\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::f1e33e0db01e39ee1a793c1ea437ad69, ..\visualbasic_App\CLI_tools\LicenseMgr\LicenseMgr\LicenseInfo.vb"
 
     ' Author:
     ' 

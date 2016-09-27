@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57efe25f05d77cae95af610fa2da986d, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
+﻿#Region "Microsoft.VisualBasic::57efe25f05d77cae95af610fa2da986d, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
 
     ' Author:
     ' 

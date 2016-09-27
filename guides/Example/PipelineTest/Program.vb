@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82748c98eee2236eb731005f2e562995, ..\visualbasic_App\Example\PipelineTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4ea800f3fe95e2883ca33dcbdd679aac, ..\visualbasic_App\guides\Example\PipelineTest\Program.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Module Program
         Return 0
     End Function
 End Module
-

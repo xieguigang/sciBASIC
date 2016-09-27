@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91a7164520c9d6ee39e72b04e6c607f0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::fa436e8b579ec3538879cea44bc4e4c8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 

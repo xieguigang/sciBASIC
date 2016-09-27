@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9746862e0a7229fc658cc952d58ab615, ..\visualbasic_App\DocumentFormats\VB_DataFrame\TestProject\SchemaParsingTest.vb"
+﻿#Region "Microsoft.VisualBasic::a6a75db4183e05f2a50c54cd05c77036, ..\visualbasic_App\Data\TestProject\SchemaParsingTest.vb"
 
     ' Author:
     ' 
