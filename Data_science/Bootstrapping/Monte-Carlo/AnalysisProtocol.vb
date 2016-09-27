@@ -169,23 +169,17 @@ Namespace MonteCarlo
         End Function
 
         ''' <summary>
-        ''' k是采样的次数， n,a,b 是进行ODEs计算的参数，<paramref name="expected"/>是期望的cluster数量
+        ''' k是采样的次数， n,a,b 是进行ODEs计算的参数，可以直接从观测数据之中提取出来，<paramref name="expected"/>是期望的cluster数量
         ''' </summary>
         ''' <param name="dll"></param>
         ''' <param name="observation">实验观察里面只需要y值列表就足够了，不需要参数信息</param>
         ''' <param name="k"></param>
-        ''' <param name="n"></param>
-        ''' <param name="a"></param>
-        ''' <param name="b"></param>
         ''' <param name="expected"></param>
         ''' <param name="[stop]"></param>
         ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
         Public Function Iterations(dll As String,
                                    observation As ODEsOut,
                                    k As Long,
-                                   n As Integer,
-                                   a As Integer,
-                                   b As Integer,
                                    expected As Integer,
                                    Optional [stop] As Integer = -1,
                                    Optional partN As Integer = 20,
@@ -203,6 +197,9 @@ Namespace MonteCarlo
             Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector
+            Dim n As Integer = observation.x.Length
+            Dim a As Integer = observation.x.Min
+            Dim b As Integer = observation.x.Max
 
             If work Is Nothing Then
                 work = dll.TrimSuffix & $"-MonteCarlo-{App.PID}/"
@@ -216,7 +213,7 @@ Namespace MonteCarlo
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
-                    model.Bootstrapping(parms.Values, y0.Values, k, n, a, b,, ) _
+                    model.Bootstrapping(parms.Values, y0.Values, k, n, A, b,, ) _
                     .Sampling(eigenvectors,
                               partN,
                               merge:=True))
@@ -263,17 +260,17 @@ Namespace MonteCarlo
                     Return output
                 Else
                     ' 调整y0和参数列表
-                    For Each y In y0
-                        Dim values As Double() = output(y.Key)
+                    For Each y In y0.Keys.ToArray
+                        Dim values As Double() = output(y)
                         Dim range As INextRandomNumber = values.__getRanges
-                        y0(y.Key) = New NamedValue(Of INextRandomNumber)(y.Key, range)
+                        y0(y) = New NamedValue(Of INextRandomNumber)(y, range)
                     Next
-                    For Each parm In parms
-                        Dim values As Double() = output(parm.Key)
+                    For Each parm In parms.Keys.ToArray
+                        Dim values As Double() = output(parm)
                         Dim range As INextRandomNumber = values.__getRanges
 
-                        parms(parm.Key) = New NamedValue(Of INextRandomNumber) With {
-                            .Name = parm.Key,
+                        parms(parm) = New NamedValue(Of INextRandomNumber) With {
+                            .Name = parm,
                             .x = range
                         }
                     Next

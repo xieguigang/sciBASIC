@@ -52,14 +52,14 @@ Namespace MonteCarlo.Example
 
         Public Overrides Function params() As NamedValue(Of INextRandomNumber)()
             Return {
-                New NamedValue(Of INextRandomNumber)(NameOf(a), AddressOf New PreciseRandom(-1, 1).NextNumber),
-                New NamedValue(Of INextRandomNumber)(NameOf(f), AddressOf New PreciseRandom(-1, 1).NextNumber)
+                New NamedValue(Of INextRandomNumber)(NameOf(a), GetRandom(-1000, 1000)),
+                New NamedValue(Of INextRandomNumber)(NameOf(f), GetRandom(-1000, 1000))
             }
         End Function
 
         Public Overrides Function yinit() As NamedValue(Of INextRandomNumber)()
             Return {
-                New NamedValue(Of INextRandomNumber)(NameOf(sin), AddressOf New PreciseRandom(-1, 2).NextNumber)
+                New NamedValue(Of INextRandomNumber)(NameOf(sin), GetRandom(-1000, 1000))
             }
         End Function
 
