@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9659732a7ba982962d126bdcec3eba71, ..\visualbasic_App\Microsoft.VisualBasic.Webservices.Google\GoogleTranslation.vb"
+﻿#Region "Microsoft.VisualBasic::2c7f56400723b7e0016d915d6fd6a333, ..\visualbasic_App\www\WWW.Google\Translation.vb"
 
     ' Author:
     ' 
@@ -35,15 +35,17 @@ Imports System.Text
 ''' http://www.codeproject.com/Tips/851790/Using-Google-Translation-without-Developer-Account?msg=4960428#xx4960428xx
 ''' </summary>
 ''' <remarks></remarks>
-Public Class GoogleTranslation
+Public Class Translation
 
-    Dim wb As New WebBrowser With {.ScriptErrorsSuppressed = True}
+    Dim wb As New WebBrowser With {
+        .ScriptErrorsSuppressed = True
+    }
     Dim _src_language, _sbj_language As String
 
     Const GOOGLE_TRANSLATION_URL As String = "https://translate.google.com/#{0}/{1}/{2}"
     Const TEXTBOX_SEPERATORS_TAG As String = "<SPAN id=result_box lang={0} class=short_text"
 
-    Private Function get_Seperator() As String
+    Private Function __seperator() As String
         Return String.Format(TEXTBOX_SEPERATORS_TAG, _sbj_language)
     End Function
 
@@ -75,10 +77,10 @@ Public Class GoogleTranslation
     ''' </remarks>
     Public Function Translate(MyString As String) As String
         Call wb.Navigate(String.Format(GOOGLE_TRANSLATION_URL, _src_language, _sbj_language, Replace(MyString, " ", "%20").ToLower))
-        Return InternalTranslation()
+        Return __translation()
     End Function
 
-    Private Function InternalTranslation() As String
+    Private Function __translation() As String
         While ((wb.IsBusy) Or (wb.ReadyState <> WebBrowserReadyState.Complete))
             Call Threading.Thread.Sleep(1) ' wait for the browser to fully load
         End While
@@ -87,7 +89,7 @@ Public Class GoogleTranslation
         Dim rawString As String = ""
         Dim finalstring As StringBuilder = New StringBuilder(2048)
         Dim st As String = ""
-        Dim tag As String = get_Seperator()
+        Dim tag As String = __seperator()
 
         If wb.ReadyState = WebBrowserReadyState.Complete Then  ' decode the string returned
             htm = wb.Document
@@ -108,7 +110,7 @@ Public Class GoogleTranslation
                 If InStr(st, "...") = 0 Then 'check if still translating
                     Return st    'finalstring the translation
                 Else
-                    Return InternalTranslation() 'retry the translation
+                    Return __translation() 'retry the translation
                 End If
             End If
         End If

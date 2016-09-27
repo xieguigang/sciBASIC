@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac23a4e92e2d0b250903950d69236b9e, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlStream.vb"
+﻿#Region "Microsoft.VisualBasic::ac23a4e92e2d0b250903950d69236b9e, ..\visualbasic_App\mime\Markups\YAML\Syntax\YamlStream.vb"
 
     ' Author:
     ' 

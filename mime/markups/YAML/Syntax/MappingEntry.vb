@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8677ecbef30dfb21d8372248803c2735, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::8677ecbef30dfb21d8372248803c2735, ..\visualbasic_App\mime\Markups\YAML\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 

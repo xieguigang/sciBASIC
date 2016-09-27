@@ -85,9 +85,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BootstrapEstimate.vb" />
-    <Compile Include="Analysis.vb" />
+    <Compile Include="BootstrapIterator.vb" />
+    <Compile Include="Obsolete\Analysis.vb" />
+    <Compile Include="Monte-Carlo\AnalysisProtocol.vb" />
     <Compile Include="EigenvectorBootstrapping.vb" />
+    <Compile Include="Monte-Carlo\Model.vb" />
+    <Compile Include="Monte-Carlo\Example.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

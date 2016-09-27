@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::365386d384738ea8dad173865d834349, ..\visualbasic_App\Scripting\Math\Math\BasicR\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::365386d384738ea8dad173865d834349, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\Helpers\Function.vb"
 
     ' Author:
     ' 

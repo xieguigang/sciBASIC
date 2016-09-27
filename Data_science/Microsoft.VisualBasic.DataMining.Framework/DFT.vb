@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::effc1245ef4f3ee96eacd478ef59c981, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\DFT.vb"
+﻿#Region "Microsoft.VisualBasic::effc1245ef4f3ee96eacd478ef59c981, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\DFT.vb"
 
     ' Author:
     ' 

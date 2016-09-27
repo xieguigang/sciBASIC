@@ -1,4 +1,32 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::adcd7c601467ab1393b28fd3a12dc1ae, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\SVG\SVG.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
@@ -11,15 +39,17 @@ Namespace SVG
     ''' <summary>
     ''' The svg vector graphics in Xml document format.
     ''' </summary>
-    <XmlType("svg")> Public Class SVGXml : Inherits g
+    <XmlType("svg")> Public Class SVGXml
         Implements ISaveHandle
+        Implements ICanvas
 
 #Region "xml root property"
 
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
+        <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property version As String
-        <XmlAttribute> Public Property viewBox As Double()
+        <XmlAttribute> Public Property viewBox As String()
 #End Region
 
         ''' <summary>
@@ -30,8 +60,22 @@ Namespace SVG
         ''' </summary>
         ''' <returns></returns>
         Public Property defs As CSSStyles
-        <XmlElement("style")> Public Property styles As XmlMeta.CSS()
+        ''' <summary>
+        ''' SVG对象也会在这里面定义CSS
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlElement("style")> Public Shadows Property style As XmlMeta.CSS
         <XmlElement("image")> Public Property images As Image()
+
+        <XmlAttribute> Public Property transform As String Implements ICanvas.transform
+        <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
+        <XmlElement("g")> Public Property gs As g() Implements ICanvas.gs
+        <XmlElement> Public Property path As path() Implements ICanvas.path
+        <XmlElement> Public Property rect As rect() Implements ICanvas.rect
+        <XmlElement> Public Property polygon As polygon() Implements ICanvas.polygon
+        <XmlElement("line")> Public Property lines As line() Implements ICanvas.lines
+        <XmlElement("circle")> Public Property circles As circle() Implements ICanvas.circles
+        <XmlElement> Public Property title As String Implements ICanvas.title
 
         Public Sub SetSize(size As Size)
             width = size.Width & "px"

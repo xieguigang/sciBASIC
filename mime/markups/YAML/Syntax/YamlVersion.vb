@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c33415dc6b19a548b621ad895ab74319, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\YamlVersion.vb"
+﻿#Region "Microsoft.VisualBasic::c33415dc6b19a548b621ad895ab74319, ..\visualbasic_App\mime\Markups\YAML\Syntax\YamlVersion.vb"
 
     ' Author:
     ' 

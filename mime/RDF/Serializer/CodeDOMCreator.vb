@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec1bcd75328921cd4d70e03886a700e9, ..\visualbasic_App\DocumentFormats\RDF\RDF\Serializer\CodeDOMCreator.vb"
+﻿#Region "Microsoft.VisualBasic::ec1bcd75328921cd4d70e03886a700e9, ..\visualbasic_App\mime\RDF\Serializer\CodeDOMCreator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::328686ec50cdae66c945891214e6c579, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3156855c09508a58c8fc083ecb8b150d, ..\visualbasic_App\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Public Module DocumentExtensions
         Return row
     End Function
 End Module
-

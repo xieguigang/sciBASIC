@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c089df00d1865fac5d0d9e21307d106, ..\visualbasic_App\DocumentFormats\VB_DataFrame\VB_DataFrame\StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb"
+﻿#Region "Microsoft.VisualBasic::6c089df00d1865fac5d0d9e21307d106, ..\visualbasic_App\Data\DataFrame\StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb"
 
     ' Author:
     ' 

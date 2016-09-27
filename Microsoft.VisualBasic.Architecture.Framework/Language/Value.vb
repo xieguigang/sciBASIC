@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e012597933fd0b5bad590ab8f132bb71, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Value.vb"
+﻿#Region "Microsoft.VisualBasic::365e46f91f50033d62fd38d207ef0907, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Value.vb"
 
     ' Author:
     ' 
@@ -141,7 +141,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Value assignment: ``Dim s As String = Value(Of String) = var``
+        ''' Inline value assignment: ``Dim s As String = Value(Of String) = var``
         ''' </summary>
         ''' <param name="value"></param>
         ''' <param name="o"></param>

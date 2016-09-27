@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::064948139ae223a5c9495b17b41bed6f, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\User\User.vb"
+﻿#Region "Microsoft.VisualBasic::1d5528947d6039702e42d54228e55c42, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
 
     ' Author:
     ' 

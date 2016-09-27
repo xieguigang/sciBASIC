@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4c036100820a3bb75de4d1580023e26, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::c4c036100820a3bb75de4d1580023e26, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\Match.vb"
 
     ' Author:
     ' 

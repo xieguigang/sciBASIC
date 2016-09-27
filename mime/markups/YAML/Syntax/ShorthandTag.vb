@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a82eb11944141950521f47c88ecbbcca, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\ShorthandTag.vb"
+﻿#Region "Microsoft.VisualBasic::a82eb11944141950521f47c88ecbbcca, ..\visualbasic_App\mime\Markups\YAML\Syntax\ShorthandTag.vb"
 
     ' Author:
     ' 

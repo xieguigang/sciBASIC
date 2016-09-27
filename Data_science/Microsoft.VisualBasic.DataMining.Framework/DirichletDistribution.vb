@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86d01a2d3cb306623a10883b9f6bddcb, ..\visualbasic_App\Microsoft.VisualBasic.DataMining.Framework\DirichletDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::86d01a2d3cb306623a10883b9f6bddcb, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\DirichletDistribution.vb"
 
     ' Author:
     ' 

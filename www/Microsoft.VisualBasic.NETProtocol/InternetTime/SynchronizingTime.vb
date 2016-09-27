@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3f01a306f6f7ba8b3cae19f2a14113, ..\visualbasic_App\Microsoft.VisualBasic.NETProtocol\InternetTime\SynchronizingTime.vb"
+﻿#Region "Microsoft.VisualBasic::f134b13d48a2ab1affa6e492f861e229, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\InternetTime\SynchronizingTime.vb"
 
     ' Author:
     ' 

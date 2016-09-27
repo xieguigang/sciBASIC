@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03f7cb3e5d1db6f77a1dcb40c3e4357c, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Syntax\Scalar.vb"
+﻿#Region "Microsoft.VisualBasic::03f7cb3e5d1db6f77a1dcb40c3e4357c, ..\visualbasic_App\mime\Markups\YAML\Syntax\Scalar.vb"
 
     ' Author:
     ' 

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::4159e8df030afce5bb914a9f6463619b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::b43894e4b80d8a20afb8a1c5a04c304e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -81,15 +81,19 @@ Namespace Mathematical
         End Function
 
         ''' <summary>
-        ''' 如果每一个数值之间都是相同的大小，则返回原始数据，因为最大值与最小值的差为0，无法进行映射的创建（会出现除0的错误）
+        ''' Linear mappings the vector elements in to another scale within specifc range from parameter <paramref name="Level"></paramref>.
+        ''' (如果每一个数值之间都是相同的大小，则返回原始数据，因为最大值与最小值的差为0，无法进行映射的创建（会出现除0的错误）)
         ''' </summary>
-        ''' <param name="data"></param>
+        ''' <param name="data">Your input numeric vector.</param>
+        ''' <param name="Level">The scaler range.</param>
         ''' <returns></returns>
         ''' <remarks>为了要保持顺序，不能够使用并行拓展</remarks>
         ''' <param name="offset">
-        ''' 默认是 [1, <paramref name="Level"></paramref>]，
+        ''' The default scaler range output is [1, <paramref name="Level"></paramref>], but you can modify this parameter 
+        ''' value for moving the range to [<paramref name="offset"></paramref>, <paramref name="Level"></paramref> + <paramref name="offset"></paramref>].
+        ''' (默认是 [1, <paramref name="Level"></paramref>]，
         ''' 当offset的值为0的时候，则为[0, <paramref name="Level"></paramref>-1]，
-        ''' 当然这个参数也可以使其他的值
+        ''' 当然这个参数也可以使其他的值)
         ''' </param>
         <ExportAPI("Ranks.Mapping")>
         <Extension> Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10, Optional offset As Integer = 1) As Integer()
@@ -103,7 +107,7 @@ Namespace Mathematical
             End If
 
             Dim chunkBuf As Integer() = New Integer(array.Length - 1) {}
-            Dim i As New int
+            Dim i As int = 0
 
             For Each x As Double In array
                 Dim lv As Integer = CInt(Level * (x - MinValue) / d)

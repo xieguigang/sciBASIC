@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::251707da58147b071500678b016029cd, ..\visualbasic_App\Datavisualization\Microsoft.VisualBasic.Imaging\SVG\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::ca935957a9106657ecad350580fc8fe4, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\SVG\Xml.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@ Namespace SVG
     Public MustInherit Class node
 
         ''' <summary>
-        ''' CSS style definition
+        ''' CSS style definition.(请注意，假若是SVG对象则赋值这个属性无效)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property style As String
@@ -67,22 +67,6 @@ Namespace SVG
         <XmlAttribute> Public Property cx As Double
         <XmlAttribute> Public Property r As Double
         Public Property title As title
-    End Class
-
-    ''' <summary>
-    ''' SVG graphics unit
-    ''' </summary>
-    Public Class g : Inherits node
-        <XmlAttribute> Public Property transform As String
-        <XmlElement("text")> Public Property texts As text()
-        <XmlElement("g")> Public Property gs As g()
-        <XmlElement> Public Property path As path()
-        <XmlElement> Public Property rect As rect()
-        <XmlElement> Public Property polygon As polygon()
-        <XmlElement("line")> Public Property lines As line()
-        <XmlElement("circle")> Public Property circles As circle()
-        <XmlAttribute> Public Property fill As String
-        <XmlElement> Public Property title As String
     End Class
 
     Public Class polygon : Inherits node

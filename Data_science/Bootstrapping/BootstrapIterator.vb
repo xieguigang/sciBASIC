@@ -1,4 +1,32 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::1d5db2f2348598c905774cd3714b6bf7, ..\visualbasic_App\Data_science\Bootstrapping\BootstrapIterator.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -8,7 +36,10 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Module BootstrapEstimate
+''' <summary>
+''' 参数估计的过程之中的迭代器，这个模块内的函数主要是用来产生数据源的
+''' </summary>
+Public Module BootstrapIterator
 
     ''' <summary>
     ''' 这个更加适合没有任何参数信息的时候的情况
@@ -39,19 +70,21 @@ Public Module BootstrapEstimate
 
         Dim varList = vars.Select(Function(x) New NamedValue(Of PreciseRandom)(x, range))
         Dim y0 = yinit.Select(Function(x) New NamedValue(Of PreciseRandom)(x, range))
-        Return Bootstrapping(Of T)(varList, y0, k, n, a, b, trimNaN, parallel)
+        Return GetType(T).Bootstrapping(varList, y0, k, n, a, b, trimNaN, parallel)
     End Function
 
     ''' <summary>
     ''' Bootstrapping 参数估计分析，这个函数用于生成基本的采样数据
     ''' </summary>
     ''' <param name="vars">各个参数的变化范围</param>
-    ''' <typeparam name="T">具体的求解方程组</typeparam>>
+    ''' <param name="model">具体的求解方程组</param>
     ''' <param name="k">重复的次数</param>
     ''' <param name="yinit">``Y0``初值</param>
     ''' <param name="parallel">并行计算模式有极大的内存泄漏的危险</param>
     ''' <returns></returns>
-    Public Iterator Function Bootstrapping(Of T As ODEs)(
+    ''' 
+    <Extension>
+    Public Iterator Function Bootstrapping(model As Type,
                                            vars As IEnumerable(Of NamedValue(Of PreciseRandom)),
                                           yinit As IEnumerable(Of NamedValue(Of PreciseRandom)),
                                               k As Long,
@@ -66,12 +99,14 @@ Public Module BootstrapEstimate
         Dim ps As Dictionary(Of String, Action(Of Object, Double)) =
             params _
             .Select(Function(x) x.Name) _
-            .SetParameters(Of T)
+            .SetParameters(model)
 
         If parallel Then
+            ' memory leaks on linux
+
             For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
                                      In k.SeqIterator.AsParallel
-                                     Let odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                                     Let odes_Out = params.iterate(model, y0, ps, n, a, b)
                                      Let isNaNResult As Boolean = odes_Out.HaveNaN
                                      Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
                                      Select odes_Out
@@ -79,7 +114,7 @@ Public Module BootstrapEstimate
             Next
         Else
             For Each it As Long In k.SeqIterator
-                Dim odes_Out = params.iterate(Of T)(y0, ps, n, a, b)
+                Dim odes_Out = params.iterate(model, y0, ps, n, a, b)
                 Dim isNaNResult As Boolean = odes_Out.HaveNaN
                 If If(trimNaN, Not isNaNResult, True) Then ' 假若不需要trim，则总是True，即返回所有数据
                     Yield odes_Out
@@ -91,7 +126,6 @@ Public Module BootstrapEstimate
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <typeparam name="TODEs"></typeparam>
     ''' <param name="vars"></param>
     ''' <param name="yinis"></param>
     ''' <param name="ps"></param>
@@ -101,14 +135,15 @@ Public Module BootstrapEstimate
     ''' <returns></returns>
     ''' <remarks>在Linux服务器上面有内存泄漏的危险</remarks>
     <Extension>
-    Public Function iterate(Of TODEs As ODEs)(vars As NamedValue(Of PreciseRandom)(),
-                                              yinis As NamedValue(Of PreciseRandom)(),
-                                              ps As Dictionary(Of String, Action(Of Object, Double)),
-                                              n As Integer,
-                                              a As Integer,
-                                              b As Integer) As ODEsOut
+    Public Function iterate(vars As NamedValue(Of PreciseRandom)(),
+                            model As Type,
+                            yinis As NamedValue(Of PreciseRandom)(),
+                            ps As Dictionary(Of String, Action(Of Object, Double)),
+                            n As Integer,
+                            a As Integer,
+                            b As Integer) As ODEsOut
 
-        Dim odes As TODEs = Activator.CreateInstance(Of TODEs)
+        Dim odes As Object = Activator.CreateInstance(model)
         ' Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
@@ -135,15 +170,21 @@ Public Module BootstrapEstimate
         Return odes.Solve(n, a, b, incept:=True)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="model"><see cref="ODEs"/>类型</param>
+    ''' <param name="vars"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function SetParameters(Of T As ODEs)(vars As IEnumerable(Of String)) As Dictionary(Of String, Action(Of Object, Double))
-        Dim type As Type = GetType(T)
+    Public Function SetParameters(vars As IEnumerable(Of String), model As Type) As Dictionary(Of String, Action(Of Object, Double))
         Dim ps As New Dictionary(Of String, Action(Of Object, Double))
 
         For Each var As String In vars
-            ps(var) = type.FieldSet(Of Double)(var)
+            ps(var) = model.FieldSet(Of Double)(var)
         Next
 
         Return ps
     End Function
 End Module
+

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::4e4ef6d8832b17b9ca3facc0acc20e21, ..\visualbasic_App\Scripting\Math\MathApp\Modules\DEBUG.vb"
+﻿#Region "Microsoft.VisualBasic::d1dcb36ca8a452c33e69a8529edbb62b, ..\visualbasic_App\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -166,7 +166,7 @@ Module DEBUG
         Dim ysssss = {New NamedValue(Of DoubleRange) With {.Name = "P", .x = New DoubleRange(-10, 10)},
             New NamedValue(Of DoubleRange) With {.Name = "yC", .x = New DoubleRange(-10, 10)}}
 
-        Dim mcTest = BootstrapEstimate.Bootstrapping(Of ODEsTest)(vars, ysssss, 1, 100, 0, 100).ToArray
+        '   Dim mcTest = BootstrapIterator.Bootstrapping(Of ODEsTest)(vars, ysssss, 1, 100, 0, 100).ToArray
 
 
         '  Call bubblePlots()

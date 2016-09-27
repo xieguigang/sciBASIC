@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::794d326459c21969688f7f89663c2d30, ..\visualbasic_App\Scripting\Math\Math\Arithmetic.Expression\Func.vb"
+﻿#Region "Microsoft.VisualBasic::a1951b08c19127a971df8237ce22a97f, ..\visualbasic_App\Data_science\Mathematical\Math\Arithmetic.Expression\Func.vb"
 
     ' Author:
     ' 

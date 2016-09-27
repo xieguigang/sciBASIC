@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf0a9cafdac7021126ec901623696e5c, ..\visualbasic_App\Datavisualization\Datavisualization.Network\Datavisualization.Network\Visualize\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::cf0a9cafdac7021126ec901623696e5c, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Visualize\StyleMappings.vb"
 
     ' Author:
     ' 

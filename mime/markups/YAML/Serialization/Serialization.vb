@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dc27b6723d35dccac94c3cfb99c3963, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\Serialization\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::b1e39454d81e68aed168977988a28542, ..\visualbasic_App\mime\Markups\YAML\Serialization\Serialization.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98492ed71bff20e4991e504709d27fbd, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::798d8f467fbd7be1697f8b603f6460ba, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Resources.vb"
 
     ' Author:
     ' 
@@ -243,6 +243,10 @@ Namespace SoftwareToolkits
             Call Me.New(Assembly.GetExecutingAssembly)
         End Sub
 
+        ''' <summary>
+        ''' Load external resource data from current module's satellite assembly.
+        ''' </summary>
+        ''' <param name="type"></param>
         Sub New(type As Type)
             Call Me.New(type.Assembly)
         End Sub

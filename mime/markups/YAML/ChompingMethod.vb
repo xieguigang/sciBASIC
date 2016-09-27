@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0b471439aeddbb68674a2d903b36b37, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\YAML\ChompingMethod.vb"
+﻿#Region "Microsoft.VisualBasic::a0b471439aeddbb68674a2d903b36b37, ..\visualbasic_App\mime\Markups\YAML\ChompingMethod.vb"
 
     ' Author:
     ' 

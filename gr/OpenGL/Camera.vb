@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e1b6aa182a2cf1dbe34171ed73afe49, ..\visualbasic_App\Datavisualization\OpenGL\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::7e1b6aa182a2cf1dbe34171ed73afe49, ..\visualbasic_App\gr\OpenGL\Camera.vb"
 
     ' Author:
     ' 

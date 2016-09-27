@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48b0cec594b5b5cf646042a4540c704c, ..\visualbasic_App\DocumentFormats\VB_HTML\VB_HTML\HTML\Head\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::48b0cec594b5b5cf646042a4540c704c, ..\visualbasic_App\mime\Markups\HTML\Head\Meta.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1db00e09e8ac082f9aae369133b744e9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\VistaSecurity.vb"
+﻿#Region "Microsoft.VisualBasic::68896195097706af0361c9bff4a55b3d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\VistaSecurity.vb"
 
     ' Author:
     ' 
