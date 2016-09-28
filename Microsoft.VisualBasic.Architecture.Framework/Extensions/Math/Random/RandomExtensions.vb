@@ -35,6 +35,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Mathematical
 
+    Public Delegate Function INextRandomNumber() As Double
+
     ''' <summary>
     ''' Some extension methods for <see cref="Random"/> for creating a few more kinds of random stuff.
     ''' </summary>

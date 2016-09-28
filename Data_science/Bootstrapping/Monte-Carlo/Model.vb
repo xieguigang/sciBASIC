@@ -38,12 +38,12 @@ Namespace MonteCarlo
         ''' 系统的初始值列表
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function yinit() As NamedValue(Of PreciseRandom)()
+        Public MustOverride Function yinit() As NamedValue(Of INextRandomNumber)()
         ''' <summary>
         ''' 系统的状态列表，即方程里面的参数
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function params() As NamedValue(Of PreciseRandom)()
+        Public MustOverride Function params() As NamedValue(Of INextRandomNumber)()
         Public MustOverride Function eigenvector() As Dictionary(Of String, Eigenvector)
 
         Protected NotOverridable Overrides Function y0() As var()

@@ -1,11 +1,11 @@
-#Code style guidelines for Microsoft VisualBasic
-------------------------------------------------
-##Code Architecture of a VisualBasic CLI program
+# Code style guidelines for Microsoft VisualBasic
+
+## Code Architecture of a VisualBasic CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
 [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
 
-**A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a Integer Function Main. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
+**A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a ``Integer`` state code returns Function ``Main``. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
 ```vb.net
 Module Program
@@ -20,7 +20,7 @@ Module Program
 End Module
 ```
 
-By using a **Integer** _Function_ instead of _Sub_ in VisualBasic, this makes your code style is more standard compare with the main function from C++.
+By using a **Integer** _Function_ instead of _Sub_ in VisualBasic, this makes your code style is more standard compare with the ``main`` function from C++.
 
 ```c
 int main(int argc, char *argv[]) {
@@ -28,14 +28,15 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in **CLI** module.
+In the above example, Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in your application's **CLI** module.
 
-###How to define the CLI module?
+### How to define the CLI module?
+
 A **Module** is a static _Class_ type in the VisualBasic, and it usually used for _the API exportation and common method definition for a set of similarity or functional correlated utility functions_.
 
 And then so that the CLI module in the VisualBasic can be explained as: **A module for exposed the CLI interface API to your user.**
 
-Here is a example:
+Here is an example:
 
 ```vb.net
 Partial Module CLI
@@ -60,7 +61,7 @@ End Module
 
 This example code can be found at: [github](https://github.com/SMRUCC/ncbi-localblast/tree/master/Tools/CLI)
 
-###How to expose the CLI interface API in your application?
+### How to expose the CLI interface API in your application?
 
 A wrapper for parsing the commandline from your user is already been defined in namespace: [**Microsoft.VisualBasic.CommandLine**](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Microsoft.VisualBasic.Architecture.Framework/CommandLine)
 
@@ -74,9 +75,10 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Public Function CLI_API(args As CommandLine) As Integer
 ```
 
-###Using the VisualBasic CommandLine Parser
-For learn how to using the CommandLine Parser, we first lean the syntax of the VisualBasic commandline arguments.
+### Using the VisualBasic CommandLine Parser
+For learn how to using the ``CommandLine`` Parser, we first lean the syntax of the VisualBasic commandline arguments.
 A typical commandline arguments in VisualBasic is consist of two parts:
+
 1. _Command Name_
 2. _Arguments_
 
@@ -151,7 +153,7 @@ Example CLI is:
 |``GetValue(Of T)(String, T, System.Func(Of String, T)) As T``|Get a parameter value, if the parameter is not exist, then default value will be returns, this method is usually used on optional value|``Dim n As Long = args.GetValue("/num_threads", 100L)``|
 |``Item(String) As String``|Default readonly property for read string value of a specific parameter|``Dim path As String = args("/file")``|
 
--------------------------------------
+
 ## List(Of T) operation in VisualBasic
 
 For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
@@ -238,6 +240,23 @@ Loop
 
 Enable this language syntax just very easy, wrapping your variable object type with ``Value(Of T)`` in VB language.
 
+## The Unix bash syntax for listing files
+
+Here is how to using this bash syntax that you can used for listing files/folders in VisualBasic language:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language.UnixBash
+
+Return (ls - l - r - wildcards("*.csv") <= DIR) _
+      .Select(AddressOf ODEsOut.LoadFromDataFrame) _
+      .Sampling(eigenvector, partN)
+      
+' Or used in For Loop
+For Each file As String In ls - l - r - wildcards("*.csv") <= DIR
+    ' blablabla
+Next
+```
+
 ## VisualBasic identifer names
 
 #### 1. Directory type
@@ -248,7 +267,8 @@ Dim DIR As String = "/home/xieguigang/Downloads"
 Dim EXPORT As String = "/usr/lib/GCModeller/"
 ```
 
-####2. Module variable
+#### 2. Module variable
+
 + All of the module variable should in format like **_lowerUpper** if the variable is _private_
 + But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
 
@@ -264,11 +284,11 @@ Public ReadOnly Property FileName As String
 Public ReadOnly Property InDIR As Directory
 ```
 
-####3. Local varaible and function parameter
+#### 3. Local varaible and function parameter
+
 If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
 
-
-####4. Function And Type name
+#### 4. Function And Type name
 
 For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
 
@@ -295,10 +315,9 @@ Public Function DensityCis(Of T As I_GeneBrief)(
 
 At last, for improves of the code readable, try _**Make your identifier name short enough as possible**_
 
-
 ![Code standard overview example](./codeStandard.png)
 
-##String manipulate
+## String manipulate
 
 ###### 1. String.Format
 

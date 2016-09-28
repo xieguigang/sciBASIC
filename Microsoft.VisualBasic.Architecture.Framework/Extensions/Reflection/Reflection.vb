@@ -296,14 +296,17 @@ NULL:       If Not strict Then
     ''' </summary>
     ''' <param name="a">继承类型继承自基本类型，具备有基本类型的所有特性</param>
     ''' <param name="b">基本类型</param>
+    ''' <param name="strict">这个参数是为了解决比较来自不同的assembly文件之中的相同类型的比较，但是这个可能会在类型转换出现一些BUG</param>
     ''' <returns></returns>
-    '''
+    ''' <remarks>假若两个类型是来自于不同的assembly文件的话，即使这两个类型是相同的对象，也会无法判断出来</remarks>
     <ExportAPI("Is.InheritsFrom")>
-    <Extension> Public Function IsInheritsFrom(a As Type, b As Type) As Boolean
+    <Extension> Public Function IsInheritsFrom(a As Type, b As Type, Optional strict As Boolean = True) As Boolean
         Dim baseType As Type = a.BaseType
 
         Do While Not baseType Is Nothing
             If baseType.Equals(b) Then
+                Return True
+            ElseIf Not strict AndAlso (baseType.FullName = b.FullName) Then
                 Return True
             Else
                 baseType = baseType.BaseType
