@@ -146,7 +146,7 @@ Public Module Bootstraping
     ''' <param name="m">Mean</param>
     ''' <param name="sd"></param>
     ''' <returns></returns>
-    Public Function ProbabilityDensity(x As Double, m As Double, sd As Double) As Double
+    Public Function ProbabilityDensity(x#, m#, sd#) As Double
         Dim answer As Double = 1 / (sd * (Math.Sqrt(2 * Math.PI)))
         Dim exp As Double = Math.Pow((x - m), 2.0)
         Dim expP2 As Double = 2 * Math.Pow(sd, 2.0)
