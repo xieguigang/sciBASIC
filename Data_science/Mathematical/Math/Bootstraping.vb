@@ -35,8 +35,9 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module Bootstraping
 
-    Public Function Sample(x As Integer) As Vector
-        Dim xvec As Integer() = New Random(Now.Millisecond).Permutation(x, x)
+    Public Function Sample(x%) As Vector
+        Dim xvec As Integer() =
+            New Random(Now.Millisecond).Permutation(x, x)
         Return New Vector(xvec.Select(Function(n) CDbl(n)))
     End Function
 
@@ -108,7 +109,7 @@ Public Module Bootstraping
     ''' <param name="sd"></param>
     ''' <returns></returns>
     ''' <remarks>https://github.com/mpadge/tnorm</remarks>
-    Public Function TruncNDist(len As Integer, sd As Double) As Vector
+    Public Function TruncNDist(len%, sd#) As Vector
         Dim eps As Vector ' Set up truncated normal distribution
         Dim z As New List(Of Double)()
 
@@ -130,7 +131,7 @@ Public Module Bootstraping
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
-    Public Function StandardDistribution(x As Double) As Double
+    Public Function StandardDistribution#(x#)
         Dim answer As Double = 1 / ((Math.Sqrt(2 * Math.PI)))
         Dim exp1 As Double = Math.Pow(x, 2) / 2
         Dim exp As Double = Math.Pow(Math.E, -(exp1))
@@ -176,7 +177,7 @@ Public Module Bootstraping
         Return answer
     End Function
 
-    Public Function TrapezodialRule(a As Double, b As Double, n As Double, m As Double, sd As Double) As Double
+    Public Function TrapezodialRule(a#, b#, n#, m#, sd#) As Double
         Dim changeX As Double = (b - a) / n
         Dim a1 As Double = ProbabilityDensity(a, m, sd)
         Dim b1 As Double = ProbabilityDensity(b, m, sd)
@@ -190,7 +191,7 @@ Public Module Bootstraping
         Return c
     End Function
 
-    Public Function Z(x As Double, m As Double, sd As Double) As Double
+    Public Function Z#(x#, m#, sd#)
         Dim answer As Double = (x - m) / sd
         Return answer
     End Function
@@ -202,7 +203,7 @@ Public Module Bootstraping
     ''' <param name="base"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Distributes(data As IEnumerable(Of Double), Optional base As Single = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
+    Public Function Distributes(data As IEnumerable(Of Double), Optional base! = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
         Dim array As DoubleTagged(Of Double)() = data.ToArray(
             Function(x) New DoubleTagged(Of Double) With {
                 .Tag = Math.Log(x, base),

@@ -63,7 +63,7 @@ Public Module ScriptEngine
     ''' </summary>
     ''' <param name="statement"></param>
     ''' <returns></returns>
-    Public Function Shell(statement As String) As String
+    Public Function Shell(statement$) As String
         Dim Token As String = statement.Split.First.ToLower
 
         If InStr(statement, "<-") Then  'This is a value assignment statement
@@ -87,7 +87,7 @@ Public Module ScriptEngine
     ''' </summary>
     ''' <param name="Name"></param>
     ''' <param name="expr"></param>
-    Public Sub SetVariable(Name As String, expr As String)
+    Public Sub SetVariable(Name$, expr$)
         Call Expression.Variables.Set(Name, expr)
     End Sub
 
@@ -96,7 +96,7 @@ Public Module ScriptEngine
     ''' </summary>
     ''' <param name="Name"></param>
     ''' <param name="expr"></param>
-    Public Sub AddConstant(Name As String, expr As String)
+    Public Sub AddConstant(Name$, expr$)
         Call Expression.Constant.Add(Name, expr)
     End Sub
 End Module

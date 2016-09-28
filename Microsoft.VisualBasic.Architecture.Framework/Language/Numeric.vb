@@ -161,7 +161,7 @@ Namespace Language
     Public Class int : Inherits Value(Of Integer)
         Implements IComparable
 
-        Sub New(Optional x As Integer = Scan0)
+        Sub New(Optional x% = Scan0)
             value = x
         End Sub
 
@@ -251,7 +251,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="n"></param>
         ''' <returns></returns>
-        Public Overloads Shared Widening Operator CType(n As Integer) As int
+        Public Overloads Shared Widening Operator CType(n%) As int
             Return New int(n)
         End Operator
 
@@ -281,7 +281,7 @@ Namespace Language
         ''' <param name="p"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <<(p As int, x As Integer) As Integer
+        Public Shared Operator <<(p As int, x%) As Integer
             Dim i As Integer = p.value
             p.value += x
             Return i
@@ -294,8 +294,8 @@ Namespace Language
     Public Class float : Inherits Value(Of Double)
         Implements IComparable
 
-        Sub New(x As Double)
-            value = x
+        Sub New(x#)
+            value = x#
         End Sub
 
         Sub New()
@@ -325,7 +325,7 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <(n As Double, x As float) As float
+        Public Shared Operator <(n#, x As float) As float
             If n >= x.value Then
                 Return New float(Double.MaxValue)
             Else
@@ -333,11 +333,11 @@ Namespace Language
             End If
         End Operator
 
-        Public Shared Operator *(n As Double, x As float) As Double
+        Public Shared Operator *(n#, x As float) As Double
             Return n * x.value
         End Operator
 
-        Public Overloads Shared Widening Operator CType(x As Double) As float
+        Public Overloads Shared Widening Operator CType(x#) As float
             Return New float(x)
         End Operator
 
@@ -355,7 +355,6 @@ Namespace Language
     End Class
 
     Public Class Precise : Inherits Value(Of Decimal)
-
 
     End Class
 End Namespace

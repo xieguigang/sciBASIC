@@ -38,8 +38,8 @@ Public Module DocumentExtensions
     ''' <returns></returns>
     <Extension>
     Public Function JoinColumns(cols As IEnumerable(Of String())) As DocumentStream.File
-        Dim array As String()() = cols.ToArray
-        Dim out As New DocumentStream.File
+        Dim array$()() = cols.ToArray
+        Dim out As New File
 
         For i As Integer = 0 To array.First.Length - 1
             Dim ind As Integer = i
