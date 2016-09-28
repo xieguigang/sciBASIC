@@ -143,6 +143,10 @@ Namespace KMeans
                 Dim msg As String =
                     $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
                 Throw New Exception(msg)
+            Else
+                If debug Then
+                    Call "Init assigned random clusters...".__DEBUG_ECHO
+                End If
             End If
 
             While clusterNumbers.Count < clusterCount
@@ -158,6 +162,9 @@ Namespace KMeans
 
             If [stop] <= 0 Then
                 [stop] = clusterCount * rowCount
+            End If
+            If debug Then
+                Call "Start kmeans clustering....".__DEBUG_ECHO
             End If
 
             While stableClustersCount <> clusters.NumOfCluster
@@ -219,7 +226,7 @@ Namespace KMeans
             Next
 
             If clusters.NumOfCluster <= 0 Then
-                Throw New SystemException("Cluster Count Cannot Be Zero!")
+                Throw New SystemException("Cluster count cannot be ZERO!")
             End If
 
             '((20+30)/2), ((170+160)/2), ((80+120)/2)
@@ -229,7 +236,7 @@ Namespace KMeans
                 For cluster As Integer = 0 To clusters.NumOfCluster - 1
                     Dim x As KMeansCluster(Of T) = clusters(cluster)
                     If x.NumOfEntity = 0 Then
-                        clusterMean = 0R.CopyVector(dataPoint.Length)
+                        clusterMean = New Double(dataPoint.Length - 1) {}
                     Else
                         clusterMean = x.ClusterMean
                     End If

@@ -55,11 +55,11 @@ Namespace KMeans
         ''' </summary>
         Public ReadOnly Property ClusterMean() As Double()
             Get
-                For count As Integer = 0 To Me(0).Length - 1
-                    Me._clusterMean(count) = (Me._ClusterSum(count) / Me._innerList.Count)
+                For count As Integer = 0 To _clusterMean.Length - 1
+                    _clusterMean(count) = (_ClusterSum(count) / _innerList.Count)
                 Next
 
-                Return Me._clusterMean
+                Return _clusterMean
             End Get
         End Property
 
@@ -107,7 +107,7 @@ Namespace KMeans
             End If
 
             For count As Integer = 0 To data.Length - 1
-                _ClusterSum(count) = Me._ClusterSum(count) + data.Properties(count)
+                _ClusterSum(count) = _ClusterSum(count) + data.Properties(count)
             Next
         End Sub
 
@@ -116,7 +116,7 @@ Namespace KMeans
         ''' </summary>
         Default Public Overridable ReadOnly Property Item(Index As Integer) As T
             Get
-                Return Me._innerList(Index)
+                Return _innerList(Index)
             End Get
         End Property
 
@@ -164,7 +164,7 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="cluster">A Cluster to be added to the collection of clusters</param>
         Public Overridable Sub Add(cluster As KMeansCluster(Of T))
-            Me._innerList.Add(cluster)
+            Call _innerList.Add(cluster)
         End Sub
 
         ''' <summary>
@@ -172,7 +172,7 @@ Namespace KMeans
         ''' </summary>
         Default Public Overridable ReadOnly Property Item(Index As Integer) As KMeansCluster(Of T)
             Get
-                Return Me._innerList(Index)
+                Return _innerList(Index)
             End Get
         End Property
 

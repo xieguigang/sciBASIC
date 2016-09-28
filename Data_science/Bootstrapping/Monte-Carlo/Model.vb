@@ -71,7 +71,16 @@ Namespace MonteCarlo
             Return Me.Solve(n, a, b, incept:=True)
         End Function
 
-        Public Function RunTest(estimates As Dictionary(Of String, Double)(), n%, a%, b%) As ODEsOut
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="estimates"></param>
+        ''' <param name="n%"></param>
+        ''' <param name="a%"></param>
+        ''' <param name="b%"></param>
+        ''' <param name="modify">修改部分数据</param>
+        ''' <returns></returns>
+        Public Function RunTest(estimates As Dictionary(Of String, Double)(), n%, a%, b%, Optional modify As Dictionary(Of String, Double) = Nothing) As ODEsOut
             Dim parms As New Dictionary(Of String, Double)
 
             For Each var$ In estimates(Scan0%).Keys
@@ -83,6 +92,12 @@ Namespace MonteCarlo
                                                                          Order By x.value Descending
                 parms(var$) = most.Tag
             Next
+
+            If Not modify.IsNullOrEmpty Then
+                For Each var$ In modify.Keys
+                    parms(var$) = modify(var$)
+                Next
+            End If
 
             Return RunTest(parms, n, a, b)
         End Function
