@@ -171,6 +171,9 @@ Public Module Heatmap
 
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
+
+                ' Draw legends
+
             End Sub)
     End Function
 
