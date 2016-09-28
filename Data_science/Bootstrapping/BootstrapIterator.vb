@@ -124,6 +124,7 @@ Public Module BootstrapIterator
 
         If parallel Then
             ' memory leaks on linux
+            ' 2016-9-28，可能是由于生成csv文件的时候字符串没有被正确的释放所导致内存泄漏，如果只是执行这段代码的话，经过测试没有内存泄漏的危险
 
             For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
                                      In k.SeqIterator.AsParallel
