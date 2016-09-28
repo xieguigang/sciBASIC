@@ -26,9 +26,12 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 
 Public Module Heatmap
@@ -36,11 +39,11 @@ Public Module Heatmap
     <Extension>
     Public Iterator Function Pearson(data As IEnumerable(Of DataSet)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
         Dim dataset As DataSet() = data.ToArray
-        Dim keys As String() = dataset(Scan0).Properties.Keys.ToArray
+        Dim keys$() = dataset(Scan0).Properties.Keys.ToArray
 
         For Each x As DataSet In dataset
             Dim out As New Dictionary(Of String, Double)
-            Dim array As Double() = keys.ToArray(Function(o) x(o))
+            Dim array As Double() = keys.ToArray(Function(o$) x(o))
 
             For Each y As DataSet In dataset
                 out(y.Identifier) = Correlations.GetPearson(
@@ -53,6 +56,62 @@ Public Module Heatmap
                 .x = out
             }
         Next
+    End Function
+
+    <Extension>
+    Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
+                         Optional colors As Color() = Nothing,
+                         Optional mapLevels% = 100,
+                         Optional mapName$ = ColorMap.PatternJet,
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional bg$ = "white") As Bitmap
+
+        Return GraphicsPlots(
+            If(size.IsEmpty, New Size(1600, 1600), size),
+            margin,
+            bg,
+            Sub(ByRef g, region)
+                Dim array As NamedValue(Of Dictionary(Of String, Double))() =
+                    data.ToArray
+                Dim dw! = CSng(region.GraphicsRegion.Width / array.Length)
+                Dim correl#() = array _
+                    .Select(Function(x) x.x.Values) _
+                    .MatrixAsIterator _
+                    .Distinct _
+                    .ToArray
+                Dim lvs As Dictionary(Of Double, Integer) =
+                    correl _
+                    .GenerateMapping(CInt(mapLevels / 2%)) _
+                    .SeqIterator _
+                    .ToDictionary(Function(x) correl(x.i),
+                                  Function(x) x.obj)
+
+                Dim left! = margin.Width, top! = margin.Height
+                Dim blockSize As New SizeF(dw, dw)
+                Dim keys$() = array(Scan0).x.Keys.ToArray
+
+                If colors.IsNullOrEmpty Then
+                    colors = New ColorMap(mapLevels).ColorSequence(mapName)
+                End If
+
+                For Each x As NamedValue(Of Dictionary(Of String, Double)) In array
+                    For Each key$ In keys
+                        Dim c# = x.x(key)
+                        Dim level% = lvs(c#)  '  得到等级
+                        Dim color As Color = colors(level%)
+                        Dim rect As New RectangleF(New PointF(left, top), blockSize)
+                        Dim b As New SolidBrush(color)
+
+                        Call g.FillRectangle(b, rect)
+
+                        left += dw!
+                    Next
+
+                    left = margin.Width
+                    top += dw!
+                Next
+            End Sub)
     End Function
 End Module
 

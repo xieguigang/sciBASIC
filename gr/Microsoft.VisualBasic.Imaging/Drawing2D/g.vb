@@ -43,7 +43,7 @@ Namespace Drawing2D
         ''' </summary>
         ''' <param name="g">GDI+设备</param>
         ''' <param name="grct">绘图区域的大小</param>
-        Public Delegate Sub IPlot(g As Graphics, grct As GraphicsRegion)
+        Public Delegate Sub IPlot(ByRef g As Graphics, grct As GraphicsRegion)
 
         ''' <summary>
         ''' Data plots graphics engine.
@@ -88,7 +88,7 @@ Namespace Drawing2D
         ''' <param name="plot"></param>
         ''' <returns></returns>
         Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg$, plot As Action(Of Graphics)) As Bitmap
-            Return GraphicsPlots(size, margin, bg, Sub(g, rect) Call plot(g))
+            Return GraphicsPlots(size, margin, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
     End Module
 End Namespace

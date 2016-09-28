@@ -43,9 +43,9 @@ Namespace Linq
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of SeqValue(Of T))
+        Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of SeqValue(Of T))
             If Not source.IsNullOrEmpty Then
-                Dim idx As Integer = offset
+                Dim idx% = offset
 
                 For Each x As T In source
                     Yield New SeqValue(Of T)(idx, x)
@@ -57,7 +57,7 @@ Namespace Linq
         <Extension>
         Public Iterator Function SeqIterator(Of T1, T2)(seqFrom As IEnumerable(Of T1),
                                                         follows As IEnumerable(Of T2),
-                                                        Optional offset As Integer = 0) As IEnumerable(Of SeqValue(Of T1, T2))
+                                                        Optional offset% = 0) As IEnumerable(Of SeqValue(Of T1, T2))
             Dim x As T1() = seqFrom.ToArray
             Dim y As T2() = follows.ToArray
 
@@ -91,7 +91,7 @@ Namespace Linq
             End Set
         End Property
 
-        Sub New(i As Integer, x As T1, y As T2)
+        Sub New(i%, x As T1, y As T2)
             Pos = i
             obj = x
             Follow = y
@@ -111,7 +111,7 @@ Namespace Linq
         ''' The position of this object value in the original sequence.
         ''' </summary>
         ''' <returns></returns>
-        Public Property i As Integer
+        Public Property i%
         ''' <summary>
         ''' The Object data
         ''' </summary>
@@ -127,7 +127,7 @@ Namespace Linq
             End Set
         End Property
 
-        Sub New(i As Integer, x As T)
+        Sub New(i%, x As T)
             Me.i = i
             obj = x
         End Sub
