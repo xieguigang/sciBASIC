@@ -91,7 +91,7 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function AsLinq(Of T As Class)(path As String) As IEnumerable(Of T)
+    <Extension> Public Function AsLinq(Of T As Class)(path$) As IEnumerable(Of T)
         Return DataStream.OpenHandle(path).AsLinq(Of T)
     End Function
 
@@ -140,14 +140,14 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(dat As IEnumerable(Of DocumentStream.RowObject), Path As String, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), Path As String, Optional encoding As Encoding = Nothing) As Boolean
         Dim Csv As DocumentStream.File = CType(dat, DocumentStream.File)
         Return Csv.Save(Path, Encoding:=encoding)
     End Function
 
     <ExportAPI("Row.Parsing")>
     <Extension> Public Function ToCsvRow(data As IEnumerable(Of String)) As RowObject
-        Return CType(data.ToList, Csv.DocumentStream.RowObject)
+        Return CType(data.ToList, RowObject)
     End Function
 
     ''' <summary>
@@ -158,8 +158,8 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
-    <Extension> Public Function DataFrame(data As Csv.DocumentStream.File) As DataFrame
-        Return DocumentStream.DataFrame.CreateObject(data)
+    <Extension> Public Function DataFrame(data As DocumentStream.File) As DataFrame
+        Return DataFrame.CreateObject(data)
     End Function
 
     ''' <summary>
@@ -199,13 +199,13 @@ Public Module Extensions
     '''
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="ImportsFile">The file path of the text doucment which will be imports as a csv document.</param>
+    ''' <param name="importsFile">The file path of the text doucment which will be imports as a csv document.</param>
     ''' <param name="Delimiter">The delimiter to parsing a row in the csv document.</param>
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(ImportsFile As String, Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
-        Dim df As DataFrame = DocumentStream.DataFrame.CreateObject([Imports](ImportsFile, Delimiter))
+    <Extension> Public Function AsDataSource(Of T As Class)(importsFile$, Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+        Dim df As DataFrame = DocumentStream.DataFrame.CreateObject([Imports](importsFile, delimiter))
         Dim data As T() = Reflector.Convert(Of T)(df, explicit).ToArray
         Return data
     End Function
@@ -231,24 +231,24 @@ Public Module Extensions
     ''' Load a csv data file document using a specific object type.(将某一个Csv数据文件加载仅一个特定类型的对象集合中，空文件的话会返回一个空集合，这是一个安全的函数，不会返回空值)
     ''' </summary>
     ''' <typeparam name="T">The type parameter of the element in the returns collection data.</typeparam>
-    ''' <param name="Path">The csv document file path.(目标Csv数据文件的文件路径)</param>
+    ''' <param name="path">The csv document file path.(目标Csv数据文件的文件路径)</param>
     ''' <param name="explicit"></param>
     ''' <param name="encoding"></param>
     ''' <param name="maps">``Csv.Field -> <see cref="PropertyInfo.Name"/>``</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadCsv(Of T As Class)(Path As String,
+    <Extension> Public Function LoadCsv(Of T As Class)(path$,
                                                        Optional explicit As Boolean = False,
                                                        Optional encoding As Encoding = Nothing,
                                                        Optional fast As Boolean = False,
                                                        Optional maps As Dictionary(Of String, String) = Nothing) As List(Of T)
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
-        Dim bufs = Reflector.Load(Of T)(Path, explicit, encoding, fast, maps)
+        Dim bufs = Reflector.Load(Of T)(path, explicit, encoding, fast, maps)
         Dim ms As Long = st.ElapsedMilliseconds
         Dim fs As String = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
         Call $"[CSV.Reflector::{GetType(T).FullName}]
-Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO
+Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO
         Return bufs
     End Function
 
@@ -385,7 +385,7 @@ Load {bufs.Count} lines of data from ""{Path.ToFileURL}""! ...................{f
     Private Structure __loadHelper(Of T)
         Public handle As LoadObject(Of T)
 
-        Public Function LoadObject(s As String) As T
+        Public Function LoadObject(s$) As T
             Return handle(s)
         End Function
     End Structure

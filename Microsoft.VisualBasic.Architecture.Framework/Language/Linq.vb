@@ -95,9 +95,36 @@ Namespace Language
                 .partTokens = partTokens
             }
         End Function
+
+        Public Function IsEquals(Of T)(Optional c% = 0) As CountHelper(Of T)
+            Return New CountHelper(Of T) With {
+                .count = c
+            }
+        End Function
     End Module
 
     Namespace LinqAPIHelpers
+
+        Public Structure CountHelper(Of T)
+
+            Public count%
+
+            Public Shared Operator <=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Integer
+                Return source.Count
+            End Operator
+
+            Public Shared Operator >=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Integer
+                Throw New NotSupportedException
+            End Operator
+
+            Public Shared Operator =(h As CountHelper(Of T), source As IEnumerable(Of T)) As Boolean
+                Return h.count = source.Count
+            End Operator
+
+            Public Shared Operator <>(h As CountHelper(Of T), source As IEnumerable(Of T)) As Boolean
+                Return Not h = source
+            End Operator
+        End Structure
 
         Public Structure LQueryHelper(Of T, out)
 
