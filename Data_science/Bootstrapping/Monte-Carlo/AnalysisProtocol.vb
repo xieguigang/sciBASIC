@@ -186,7 +186,8 @@ Namespace MonteCarlo
                                    Optional [stop] As Integer = -1,
                                    Optional partN As Integer = 20,
                                    Optional cut As Double = 0.3,
-                                   Optional work As String = Nothing) As Dictionary(Of String, Double())
+                                   Optional work As String = Nothing,
+                                   Optional parallel As Boolean = False) As Dictionary(Of String, Double())
 
             Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
@@ -207,7 +208,10 @@ Namespace MonteCarlo
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
-                    model.Bootstrapping(parms.Values, y0.Values, k, n, a, b,, ) _
+                    model.Bootstrapping(parms.Values,
+                                        y0.Values,
+                                        k, n, a, b,,
+                                        parallel:=parallel) _
                     .Sampling(eigenvectors,
                               partN,
                               merge:=True))

@@ -137,10 +137,12 @@ Namespace KMeans
             Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim clusterNumbers As New List(Of Integer)
-            Dim Random As Random = New Random
+            Dim Random As New Random
 
             If clusterCount >= rowCount Then
-                Throw New Exception($"{clusterCount} >= {rowCount}, this will caused a dead loop!")
+                Dim msg As String =
+                    $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
+                Throw New Exception(msg)
             End If
 
             While clusterNumbers.Count < clusterCount
