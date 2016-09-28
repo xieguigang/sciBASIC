@@ -56,7 +56,7 @@ Public Structure Annotation
     ''' <summary>
     ''' The target annotation data point is null!
     ''' </summary>
-    Const PointNull As String = "The target annotation data point is null!"
+    Const PointNull$ = "The target annotation data point is null!"
 
     Public Sub Draw(ByRef g As Graphics, scaler As Scaling, s As SerialData, r As GraphicsRegion)
         Dim pt As PointData = s.GetPointByX(X)

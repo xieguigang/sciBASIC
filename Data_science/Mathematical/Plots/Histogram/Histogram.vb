@@ -41,7 +41,7 @@ Public Module Histogram
     Public Function Plot(data As HistogramGroup,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
-                         Optional bg As String = "white",
+                         Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional stacked As Boolean = False) As Bitmap
 
@@ -152,33 +152,3 @@ Public Module Histogram
         }
     End Function
 End Module
-
-Public Class HistogramSample
-
-    Public Property Tag As String
-    Public Property data As Double()
-
-    Public ReadOnly Property StackedSum As Double
-        Get
-            Return data.Sum
-        End Get
-    End Property
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
-
-Public Class HistogramGroup
-
-    ''' <summary>
-    ''' 与<see cref="HistogramSample.data"/>里面的数据顺序是一致的
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Serials As NamedValue(Of Color)()
-    Public Property Samples As HistogramSample()
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
