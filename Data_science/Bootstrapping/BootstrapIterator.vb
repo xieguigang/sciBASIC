@@ -113,9 +113,11 @@ Public Module BootstrapIterator
                                               a As Integer,
                                               b As Integer,
                                            Optional trimNaN As Boolean = True,
-                                           Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
+                                           Optional parallel As Boolean = False,
+                                           Optional echo As Boolean = True) As IEnumerable(Of ODEsOut)
 
         Dim params As NamedValue(Of INextRandomNumber)() = vars.ToArray
+        Dim i&
         Dim y0 As NamedValue(Of INextRandomNumber)() = yinit.ToArray
         Dim ps As Dictionary(Of String, Action(Of Object, Double)) =
             params _
@@ -132,16 +134,23 @@ Public Module BootstrapIterator
                                      Let isNaNResult As Boolean = odes_Out.HaveNaN
                                      Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
                                      Select odes_Out
+                i += 1L
                 Yield x
             Next
         Else
             For Each it As Long In k.SeqIterator
                 Dim odes_Out = params.iterate(model, y0, ps, n, a, b)
                 Dim isNaNResult As Boolean = odes_Out.HaveNaN
+
                 If If(trimNaN, Not isNaNResult, True) Then ' 假若不需要trim，则总是True，即返回所有数据
+                    i += 1L
                     Yield odes_Out
                 End If
             Next
+        End If
+
+        If echo Then
+            Call $"Bootstrapping populated {i} valid samples...".__DEBUG_ECHO
         End If
     End Function
 

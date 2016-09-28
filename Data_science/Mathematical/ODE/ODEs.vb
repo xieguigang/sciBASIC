@@ -67,7 +67,7 @@ Public MustInherit Class ODEs
 
     Public Const y0RefName As String = NameOf(__vars)
 
-    Default Public ReadOnly Property GetVar(Name As String) As var
+    Default Public ReadOnly Property GetVar(Name$) As var
         Get
             Return __vars(Name)
         End Get
@@ -191,7 +191,7 @@ Public MustInherit Class ODEs
     ''' </summary>
     ''' <param name="dx"></param>
     ''' <param name="dy"></param>
-    Protected MustOverride Sub func(dx As Double, ByRef dy As Vector)
+    Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
     Private Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
         For Each x In vars       ' 更新设置y的值
