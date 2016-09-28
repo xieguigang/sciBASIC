@@ -69,6 +69,10 @@ Call Bubble.Plot(csv.SerialData.GetData("./images/BubbleTest.csv"), legend:=Fals
 
 ![](./images/Bubble.png)
 
+##### Heatmap
+
+![](./images/heatmap.png)
+
 ##### Scatter & Histogram Plot
 
 ```vbnet
