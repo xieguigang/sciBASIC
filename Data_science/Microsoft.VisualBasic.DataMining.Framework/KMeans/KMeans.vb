@@ -48,7 +48,7 @@ Namespace KMeans
             Dim count As Integer = 0
             Dim sum As Double = 0.0
 
-            If X.GetUpperBound(0) <> Y.GetUpperBound(0) Then
+            If X.Length <> Y.Length Then
                 Throw New ArgumentException(DimNotAgree)
             Else
                 count = X.Length
@@ -137,10 +137,12 @@ Namespace KMeans
             Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim clusterNumbers As New List(Of Integer)
-            Dim Random As Random = New Random
+            Dim Random As New Random
 
             If clusterCount >= rowCount Then
-                Throw New Exception($"{clusterCount} >= {rowCount}, this will caused a dead loop!")
+                Dim msg As String =
+                    $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
+                Throw New Exception(msg)
             End If
 
             While clusterNumbers.Count < clusterCount
@@ -200,10 +202,9 @@ Namespace KMeans
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusters">A collection of data clusters</param>
-        ''' <param name="source">An array containing data to b eclustered</param>
+        ''' <param name="data">An array containing data to b eclustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), source As IEnumerable(Of T)) As ClusterCollection(Of T)
-            Dim data As T() = source.ToArray
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T()) As ClusterCollection(Of T)
             Dim clusterMean As Double()
             Dim firstClusterDistance As Double = 0.0
             Dim secondClusterDistance As Double = 0.0

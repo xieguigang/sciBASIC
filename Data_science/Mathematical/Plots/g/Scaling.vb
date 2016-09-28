@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class Scaling
 
-    Public ReadOnly dx, dy As Single
+    Public ReadOnly dx!, dy!
     Public ReadOnly xmin, ymin As Single
 
     ReadOnly serials As SerialData()
@@ -55,7 +55,7 @@ Public Class Scaling
             stacked,
             New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
             hist.Samples.Select(Function(s) s.data).MatrixToList)
-        ymin = h.Min
+        ymin! = h.Min
         dy = h.Max - ymin
         type = GetType(Histogram)
     End Sub
@@ -115,7 +115,7 @@ Public Class Scaling
         Dim px As Single = r.Margin.Width + width * (pt.X - xmin) / dx
         Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
-        Return New PointF(px, py)
+        Return New PointF(px!, py!)
     End Function
 
     Public Function XScaler(size As Size, margin As Size) As Func(Of Single, Single)
@@ -133,20 +133,20 @@ Public Class Scaling
     ''' <param name="margin"></param>
     ''' <param name="avg">当这个参数值是一个有效的数字的时候，返回的Y将会以这个平均值为零点</param>
     ''' <returns></returns>
-    Public Function YScaler(size As Size, margin As Size, Optional avg As Double = Double.NaN) As Func(Of Single, Single)
+    Public Function YScaler(size As Size, margin As Size, Optional avg# = Double.NaN) As Func(Of Single, Single)
         Dim bottom As Integer = size.Height - margin.Height
         Dim height As Integer = size.Height - margin.Height * 2   ' 绘图区域的高度
 
-        If Double.IsNaN(avg) Then
-            Return Function(y) bottom - height * (y - ymin) / dy
+        If Double.IsNaN(avg#) Then
+            Return Function(y!) bottom - height * (y - ymin) / dy
         Else
             Dim half As Single = height / 2
             Dim middle As Single = bottom - half
 
-            Return Function(y) As Single
-                       Dim d = y - avg
+            Return Function(y!) As Single
+                       Dim d! = y - avg
 
-                       If d >= 0 Then  ' 在上面
+                       If d >= 0F Then  ' 在上面
                            Return middle - half * (y - avg) / dy
                        Else
                            Return middle + half * (avg - y) / dy
@@ -163,9 +163,9 @@ Public Class Scaling
     ''' 返回dx或者dy
     ''' </summary>
     ''' <returns></returns>
-    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), ByRef min As Single) As Single
-        Dim array As Single() = data.Select(Function(s) s.pts).MatrixAsIterator.ToArray([get])
-        Dim max = array.Max : min = array.Min
+    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), ByRef min!) As Single
+        Dim array!() = data.Select(Function(s) s.pts).MatrixAsIterator.ToArray([get])
+        Dim max! = array.Max : min! = array.Min
         Dim d As Single = max - min
         Return d
     End Function

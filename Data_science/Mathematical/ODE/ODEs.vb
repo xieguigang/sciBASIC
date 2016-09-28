@@ -65,6 +65,8 @@ Public MustInherit Class ODEs
     ReadOnly __vars As Dictionary(Of var)
     Friend vars As var()
 
+    Public Const y0RefName As String = NameOf(__vars)
+
     Default Public ReadOnly Property GetVar(Name As String) As var
         Get
             Return __vars(Name)

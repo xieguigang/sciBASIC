@@ -211,6 +211,14 @@ Namespace Language
             Return x.value < n
         End Operator
 
+        Public Shared Operator <(n As Double, x As int) As Boolean
+            Return n < x.value
+        End Operator
+
+        Public Shared Operator >(n As Double, x As int) As Boolean
+            Return n > x.value
+        End Operator
+
         ''' <summary>
         ''' ``x.value > n``
         ''' </summary>

@@ -171,28 +171,25 @@ Namespace MonteCarlo
         ''' <summary>
         ''' k是采样的次数， n,a,b 是进行ODEs计算的参数，可以直接从观测数据之中提取出来，<paramref name="expected"/>是期望的cluster数量
         ''' </summary>
-        ''' <param name="dll"></param>
+        ''' <param name="model">必须是继承自<see cref="Model"/>类型</param>
         ''' <param name="observation">实验观察里面只需要y值列表就足够了，不需要参数信息</param>
         ''' <param name="k"></param>
         ''' <param name="expected"></param>
         ''' <param name="[stop]"></param>
         ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
-        Public Function Iterations(dll As String,
+        ''' <param name="outIterates">每一次的迭代结果都会从这里返回</param>
+        ''' <returns>函数返回收敛成功了之后的最后一次迭代的参数数据</returns>
+        <Extension>
+        Public Function Iterations(model As Type,
                                    observation As ODEsOut,
                                    k As Long,
-                                   expected As Integer,
+                                   Optional expected As Integer = 10,
                                    Optional [stop] As Integer = -1,
                                    Optional partN As Integer = 20,
                                    Optional cut As Double = 0.3,
-                                   Optional work As String = Nothing) As Dictionary(Of String, Double())
-
-            Dim model As Type = DllParser(dll)
-
-            If model Is Nothing Then  ' 没有从目标程序集之中查找到计算模型的定义
-                Dim msg As String =
-                    $"Unable found model from assembly {dll}, a calculation model should inherits from type <see cref=""{GetType(Model).FullName}""/>."
-                Throw New NotImplementedException(msg)
-            End If
+                                   Optional work As String = Nothing,
+                                   Optional parallel As Boolean = False,
+                                   Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) As Dictionary(Of String, Double)()
 
             Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
@@ -202,7 +199,7 @@ Namespace MonteCarlo
             Dim b As Integer = observation.x.Max
 
             If work Is Nothing Then
-                work = dll.TrimSuffix & $"-MonteCarlo-{App.PID}/"
+                work = model.Assembly.Location.TrimSuffix & $"-MonteCarlo-{App.PID}/"
             End If
 
             Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
@@ -211,9 +208,15 @@ Namespace MonteCarlo
 
             Call observation.params.GetJson.__DEBUG_ECHO
 
+            Dim uid As New Uid
+            outIterates = New Dictionary(Of String, Dictionary(Of String, Double)())
+
             Do While True
                 Dim randSamples = experimentObservation.Join(
-                    model.Bootstrapping(parms.Values, y0.Values, k, n, A, b,, ) _
+                    model.Bootstrapping(parms.Values,
+                                        y0.Values,
+                                        k, n, a, b,,
+                                        parallel:=parallel) _
                     .Sampling(eigenvectors,
                               partN,
                               merge:=True))
@@ -245,20 +248,25 @@ Namespace MonteCarlo
 
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
                 Dim requires As Integer = GetEntityNumbers(required)
-                Dim output As Dictionary(Of String, Double()) =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
+                Dim out As Dictionary(Of String, Double)() =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
                     required.value _
                     .Where(Function(x) Not x.Name = AnalysisProtocol.Observation) _
                     .Select(Function(x) x.x) _
-                    .MatrixAsIterator _
-                    .MatrixAsIterator _
-                    .GroupBy(Function(x) x.Key).ToDictionary(
-                        Function(x) x.Key,
-                        Function(x) x.ToArray(
-                        Function(o) o.Value))
+                    .MatrixToVector
+
+                Call outIterates.Add(+uid, out)
 
                 If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
-                    Return output
+                    Return out
                 Else
+                    Dim output As Dictionary(Of String, Double()) =
+                        out.MatrixAsIterator _
+                        .GroupBy(Function(x) x.Key) _
+                        .ToDictionary(
+                            Function(x) x.Key,
+                            Function(x) x.ToArray(
+                            Function(o) o.Value))
+
                     ' 调整y0和参数列表
                     For Each y In y0.Keys.ToArray
                         Dim values As Double() = output(y)
@@ -289,7 +297,36 @@ Namespace MonteCarlo
                 End If
             Loop
 
-            Return Nothing
+            Return Nothing ' 这里永远都不会被执行
+        End Function
+
+        ''' <summary>
+        ''' k是采样的次数， n,a,b 是进行ODEs计算的参数，可以直接从观测数据之中提取出来，<paramref name="expected"/>是期望的cluster数量
+        ''' </summary>
+        ''' <param name="dll"></param>
+        ''' <param name="observation">实验观察里面只需要y值列表就足够了，不需要参数信息</param>
+        ''' <param name="k"></param>
+        ''' <param name="expected"></param>
+        ''' <param name="[stop]"></param>
+        ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
+        Public Function Iterations(dll As String,
+                                   observation As ODEsOut,
+                                   k As Long,
+                                   expected As Integer,
+                                   Optional [stop] As Integer = -1,
+                                   Optional partN As Integer = 20,
+                                   Optional cut As Double = 0.3,
+                                   Optional work As String = Nothing) As Dictionary(Of String, Double)()
+
+            Dim model As Type = DllParser(dll)
+
+            If model Is Nothing Then  ' 没有从目标程序集之中查找到计算模型的定义
+                Dim msg As String =
+                    $"Unable found model from assembly {dll}, a calculation model should inherits from type <see cref=""{GetType(Model).FullName}""/>."
+                Throw New NotImplementedException(msg)
+            End If
+
+            Return model.Iterations(observation, k, expected, [stop], partN, cut, work)
         End Function
 
         <Extension>
