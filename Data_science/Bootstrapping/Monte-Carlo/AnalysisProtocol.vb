@@ -180,16 +180,15 @@ Namespace MonteCarlo
         ''' <param name="outIterates">每一次的迭代结果都会从这里返回</param>
         ''' <returns>函数返回收敛成功了之后的最后一次迭代的参数数据</returns>
         <Extension>
-        Public Function Iterations(model As Type,
-                                   observation As ODEsOut,
-                                   k As Long,
-                                   Optional expected As Integer = 10,
-                                   Optional [stop] As Integer = -1,
-                                   Optional partN As Integer = 20,
-                                   Optional cut As Double = 0.3,
-                                   Optional work As String = Nothing,
+        Public Function Iterations(model As Type, observation As ODEsOut, k&,
+                                   Optional expected% = 10,
+                                   Optional stop% = -1,
+                                   Optional partN% = 20,
+                                   Optional cut# = 0.3,
+                                   Optional work$ = Nothing,
                                    Optional parallel As Boolean = False,
-                                   Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) As Dictionary(Of String, Double)()
+                                   Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) _
+                                                              As Dictionary(Of String, Double)()
 
             Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
