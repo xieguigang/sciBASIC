@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Heatmap
 
@@ -61,6 +62,24 @@ Public Module Heatmap
     End Function
 
     ''' <summary>
+    ''' 假若使用这个直接加载数据来进行heatmap的绘制，请先要确保数据集之中的所有数据都是经过归一化的
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="uidMap$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LoadDataSet(path As String, Optional uidMap$ = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
+        Dim ds As DataSet() = DataSet.LoadDataSet(path, uidMap)
+        Return LinqAPI.Exec(Of NamedValue(Of Dictionary(Of String, Double))) <=
+            From x As DataSet
+            In ds
+            Select New NamedValue(Of Dictionary(Of String, Double)) With {
+                .Name = x.Identifier,
+                .x = x.Properties
+            }
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="data"></param>
@@ -80,16 +99,31 @@ Public Module Heatmap
                          Optional kmeans As Boolean = True,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
-                         Optional bg$ = "white") As Bitmap
+                         Optional bg$ = "white",
+                         Optional fontStyle$ = CSSFont.Win10Normal) As Bitmap
+
+        Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
+        Dim array As NamedValue(Of
+            Dictionary(Of String, Double))() = data.ToArray
+
+        If margin.IsEmpty Then
+            Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
+                From x
+                In array
+                Select x.Name
+                Order By Name.Length Descending
+
+            Dim sz As Size = maxLabel.MeasureString(font)
+
+            margin = New Size(sz.Width * 1.5, sz.Width * 1.5)
+        End If
 
         Return GraphicsPlots(
             If(size.IsEmpty, New Size(1600, 1600), size),
             margin,
             bg,
             Sub(ByRef g, region)
-                Dim array As NamedValue(Of Dictionary(Of String, Double))() =
-                    data.ToArray
-                Dim dw! = CSng(region.GraphicsRegion.Width / array.Length)
+                Dim dw! = CSng(region.GraphicsRegion.Width / Array.Length)
                 Dim correl#() = array _
                     .Select(Function(x) x.x.Values) _
                     .MatrixAsIterator _
@@ -129,6 +163,13 @@ Public Module Heatmap
 
                     left = margin.Width
                     top += dw!
+
+                    Dim sz As SizeF = g.MeasureString(x.Name, font)
+                    Dim y As Single = top - dw - (sz.Height - dw) / 2
+                    Dim lx As Single =
+                        margin.Width - sz.Width - margin.Width * 0.1
+
+                    Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
             End Sub)
     End Function
