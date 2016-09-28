@@ -198,10 +198,9 @@ Namespace KMeans
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusters">A collection of data clusters</param>
-        ''' <param name="source">An array containing data to b eclustered</param>
+        ''' <param name="data">An array containing data to b eclustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), source As IEnumerable(Of T)) As ClusterCollection(Of T)
-            Dim data As T() = source.ToArray
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T()) As ClusterCollection(Of T)
             Dim clusterMean As Double()
             Dim firstClusterDistance As Double = 0.0
             Dim secondClusterDistance As Double = 0.0
