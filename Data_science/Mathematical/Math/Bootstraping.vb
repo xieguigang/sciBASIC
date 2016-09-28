@@ -195,6 +195,12 @@ Public Module Bootstraping
         Return answer
     End Function
 
+    ''' <summary>
+    ''' 返回来的标签数据之中的标签是在某个区间范围内的数值集合的平均值
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="base"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Distributes(data As IEnumerable(Of Double), Optional base As Single = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
         Dim array As DoubleTagged(Of Double)() = data.ToArray(
