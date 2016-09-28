@@ -22,6 +22,17 @@ Public Function FromDistributes(
        Optional base! = 10.0F, 
        Optional color$ = "darkblue") As HistogramGroup
 ```
+```vbnet
+Public Function Iterations(model As Type, observation As ODEsOut, k&,
+                           Optional expected% = 10,
+                           Optional stop% = -1,
+                           Optional partN% = 20,
+                           Optional cut# = 0.3,
+                           Optional work$ = Nothing,
+                           Optional parallel As Boolean = False,
+                           Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) _
+                                                      As Dictionary(Of String, Double)()
+```
 
 ## 十六进制文本和八进制文本
 
