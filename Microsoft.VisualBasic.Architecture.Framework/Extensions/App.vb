@@ -102,15 +102,15 @@ Public Module App
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
     ''' </summary>
-    Public ReadOnly Property PID As Integer = System.Diagnostics.Process.GetCurrentProcess.Id
+    Public ReadOnly Property PID As Integer = Process.GetCurrentProcess.Id
     ''' <summary>
     ''' Gets a new <see cref="System.Diagnostics.Process"/> component and associates it with the currently active process.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Process As System.Diagnostics.Process = System.Diagnostics.Process.GetCurrentProcess
+    Public ReadOnly Property Process As Process = Process.GetCurrentProcess
 
     ''' <summary>
-    ''' Gets the command-line arguments for this <see cref="System.Diagnostics.Process"/>.
+    ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
@@ -364,7 +364,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("LogException")>
-    Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace As String = "") As Object
+    Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace$ = "") As Object
         Try
             Call App.TraceBugs(ex, Trace)
         Catch ex2 As Exception
@@ -383,7 +383,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("TraceBugs")>
-    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional Trace As String = "") As String
+    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional Trace$ = "") As String
         Dim Entry As String = App.__getTEMPhash
         Entry = $"{Now.Year}-{Now.Month}-{Now.Day}, {Format(Now.Hour, "00")}-{Format(Now.Minute, "00")}-{Format(Now.Second, "00")}_{Entry}"
         Dim log As String = $"{App.LogErrDIR}/{Entry}.log"
@@ -452,7 +452,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("LogException")>
-    Public Function LogException(ex As Exception, Trace As String, FileName As String) As Object
+    Public Function LogException(ex As Exception, Trace$, FileName$) As Object
         Call BugsFormatter(ex, Trace).SaveTo(FileName)
         Return Nothing
     End Function
@@ -465,7 +465,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("Bugs.Formatter")>
-    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional Trace As String = "") As String
+    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional Trace$ = "") As String
         Dim exMsg As StringBuilder = New StringBuilder()
         Call exMsg.AppendLine("TIME:  " & Now.ToString)
         Call exMsg.AppendLine("TRACE: " & Trace)
@@ -488,7 +488,7 @@ Public Module App
     ''' <param name="Trace"></param>
     ''' <returns></returns>
     <ExportAPI("Exception.Log")>
-    Public Function LogException(exMsg As String, <CallerMemberName> Optional Trace As String = "") As Object
+    Public Function LogException(exMsg$, <CallerMemberName> Optional Trace$ = "") As Object
         Return App.LogException(New Exception(exMsg), Trace)
     End Function
 
@@ -512,7 +512,7 @@ Public Module App
     ''' </summary>
     ''' <param name="state">Exit code to be given to the operating system. Use 0 (zero) to indicate that the process completed successfully.</param>
     '''
-    <SecuritySafeCritical> Public Function [Exit](Optional state As Integer = 0) As Integer
+    <SecuritySafeCritical> Public Function Exit%(Optional state% = 0)
         App._Running = False
 
         Call Terminal.InnerQueue.WaitQueue()
@@ -765,7 +765,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("GetTempFile.AppSys")>
-    Public Function GetAppSysTempFile(Optional ext As String = ".tmp", Optional sessionID As String = "") As String
+    Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "") As String
         Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext  '  FileIO.FileSystem.GetTempFileName.Replace(".tmp", ext)
         tmp = GenerateTemp(tmp, sessionID)
         Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
@@ -780,7 +780,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("CreateTempFile")>
-    Public Function GenerateTemp(sysTemp As String, SessionID As String) As String
+    Public Function GenerateTemp(sysTemp$, SessionID$) As String
         Dim Dir As String = FileIO.FileSystem.GetParentPath(sysTemp)
         Dim Name As String = FileIO.FileSystem.GetFileInfo(sysTemp).Name
         sysTemp = $"{Dir}/{App.AssemblyName}/{SessionID}/{Name}"
@@ -827,25 +827,25 @@ Public Module App
     ''' 请注意，这个函数只能够运行.NET程序, 假若是在Linux系统之上，还需要安装mono运行时环境
     ''' </summary>
     ''' <param name="app"></param>
-    ''' <param name="cli"></param>
+    ''' <param name="CLI"></param>
     ''' <param name="CLR">是否为.NET程序?</param>
     ''' <returns></returns>
     ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
-    Public Function Shell(app As String, cli As String, Optional CLR As Boolean = False) As IIORedirectAbstract
+    Public Function Shell(app$, CLI$, Optional CLR As Boolean = False) As IIORedirectAbstract
         If Platform = PlatformID.MacOSX OrElse
             Platform = PlatformID.Unix Then
 
             Dim process As New ProcessEx With {
                 .Bin = "mono",
-                .CLIArguments = app.CliPath & " " & cli
+                .CLIArguments = app.CliPath & " " & CLI
             }
             Return process
         Else
             If CLR Then
-                Return New IORedirect(app, cli) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                Return New IORedirect(app, CLI) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
             Else
-                Dim process As New IORedirectFile(app, cli)
-                Return Process
+                Dim process As New IORedirectFile(app, CLI)
+                Return process
             End If
         End If
     End Function
@@ -858,7 +858,7 @@ Public Module App
     ''' <returns>返回任务的执行的总时长</returns>
     '''
     <ExportAPI("Folk.Self")>
-    Public Function SelfFolks(CLI As IEnumerable(Of String), Optional parallel As Integer = 0) As Long
+    Public Function SelfFolks&(CLI As IEnumerable(Of String), Optional parallel% = 0)
         Dim sw As Stopwatch = Stopwatch.StartNew
 
         If parallel <= 0 Then
@@ -957,7 +957,7 @@ Public Module App
     ''' <summary>
     ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
     ''' </summary>
-    Public Sub RunAsAdmin(Optional args As String = "")
+    Public Sub RunAsAdmin(Optional args$ = "")
         Call RestartElevated(args)
     End Sub
 End Module

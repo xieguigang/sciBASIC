@@ -1899,7 +1899,7 @@ Public Module Extensions
     <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
     <Extension> Public Iterator Function Sequence(Of T)(
                                         <Parameter("source", "")> source As IEnumerable(Of T),
-                                        <Parameter("index.OffSet", "")> Optional offSet As Integer = 0) _
+                                        <Parameter("index.OffSet", "")> Optional offSet% = 0) _
                                      As <FunctionReturns("A integer array of subscript index of the target generic collection.")> IEnumerable(Of Integer)
 #Else
     ''' <summary>
@@ -1924,7 +1924,7 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of Long)
+    <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)
         If source Is Nothing Then
             Return
         Else
@@ -1937,8 +1937,8 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function LongSeq(n As Long) As Long()
-        Dim array As Long() = New Long(n - 1) {}
+    <Extension> Public Function LongSeq(n&) As Long()
+        Dim array&() = New Long(n - 1) {}
         For i As Long = 0 To array.Length - 1
             array(i) = i
         Next
@@ -1958,9 +1958,9 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("takes")>
-    <Extension> Public Function Takes(Of T)(source As Generic.IEnumerable(Of T),
-                                            indexs As Integer(),
-                                            Optional OffSet As Integer = 0,
+    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
+                                            indexs%(),
+                                            Optional offSet% = 0,
                                             Optional reversedSelect As Boolean = False) As T()
 #Else
     ''' <summary>
@@ -1982,10 +1982,10 @@ Public Module Extensions
 
         Dim result As T()
 
-        If OffSet = 0 Then
+        If offSet = 0 Then
             result = (From idx As Integer In indexs Select source(idx)).ToArray
         Else
-            result = (From idx As Integer In indexs Select source(idx + OffSet)).ToArray
+            result = (From idx As Integer In indexs Select source(idx + offSet)).ToArray
         End If
         Return result
     End Function
@@ -2101,7 +2101,7 @@ Public Module Extensions
 
     <ExportAPI("CopyFile", Info:="kernel32.dll!CopyFileW")>
     <DllImport("kernel32.dll", EntryPoint:="CopyFileW", CharSet:=CharSet.Unicode, ExactSpelling:=False)>
-    Public Function CopyFile(lpExistingFilename As String, lpNewFileName As String, bFailIfExists As Boolean) As Boolean
+    Public Function CopyFile(lpExistingFilename$, lpNewFileName$, bFailIfExists As Boolean) As Boolean
     End Function
 
     ''' <summary>
@@ -2203,10 +2203,6 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
 
-    <Extension> Public Sub ClearParameters(Of InteropService As Microsoft.VisualBasic.CommandLine.InteropService)(Instance As InteropService)
-        Call CommandLine.CLIBuildMethod.ClearParameters(Instance)
-    End Sub
-
     ''' <summary>
     ''' Fill the newly created image data with the specific color brush
     ''' </summary>
@@ -2227,7 +2223,7 @@ Public Module Extensions
     ''' <summary>
     ''' Nothing
     ''' </summary>
-    Friend Const null As Object = Nothing
+    Friend Const null = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>

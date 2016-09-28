@@ -46,7 +46,7 @@ Namespace Mathematical
         <ExportAPI("SW", Info:="Sandelin-Wasserman similarity function")>
         Public Function SW(x As Double(), y As Double()) As Double
             Dim p As IEnumerable(Of Double) = From i As Integer
-                                          In x.Sequence
+                                              In x.Sequence
                                               Select x(i) - y(i)
             Dim s As Double = (From n As Double In p Select n * n).Sum
             s = 2 - s
@@ -62,7 +62,7 @@ Namespace Mathematical
             Return value
         End Function
 
-        Private Function __kldPart(Xa As Double, Ya As Double) As Double
+        Private Function __kldPart(Xa#, Ya#) As Double
             If Xa = 0R Then
                 Return 0R
             End If
@@ -88,11 +88,8 @@ Namespace Mathematical
         ''' checked by Excel
         ''' </remarks>
         <ExportAPI("Pearson")>
-        Public Function GetPearson(x As Double(), y As Double(),
-                               Optional ByRef prob As Double = 0,
-                               Optional ByRef prob2 As Double = 0,
-                               Optional ByRef z As Double = 0) As Double
-            Dim t As Double, df As Double
+        Public Function GetPearson(x#(), y#(), Optional ByRef prob# = 0, Optional ByRef prob2# = 0, Optional ByRef z# = 0) As Double
+            Dim t#, df#
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length
 
@@ -109,8 +106,7 @@ Namespace Mathematical
         End Function
 
         <ExportAPI("Pearson")>
-        Public Function GetPearson(x As Double(), y As Double()) As Double
-            Dim pcc As Double
+        Public Function GetPearson(x#(), y#()) As Double
             Dim j As Integer, n As Integer = x.Length
             Dim yt As Double, xt As Double
             Dim syy As Double = 0.0, sxy As Double = 0.0, sxx As Double = 0.0, ay As Double = 0.0, ax As Double = 0.0
@@ -129,9 +125,8 @@ Namespace Mathematical
                 syy += yt * yt
                 sxy += xt * yt
             Next
-            pcc = sxy / (Math.Sqrt(sxx * syy) + TINY)
 
-            Return pcc
+            Return sxy / (Math.Sqrt(sxx * syy) + TINY)
         End Function
 
         ''' <summary>
@@ -140,7 +135,7 @@ Namespace Mathematical
         ''' <param name="X"></param>
         ''' <param name="Y"></param>
         ''' <returns></returns>
-        Public Delegate Function ICorrelation(X As Double(), Y As Double()) As Double
+        Public Delegate Function ICorrelation(X#(), Y#()) As Double
 
         ''' <summary>
         ''' This method should not be used in cases where the data set is truncated; that is,
@@ -162,11 +157,13 @@ Namespace Mathematical
                that is, when the Spearman correlation coefficient is desired for the top X records 
                (whether by pre-change rank or post-change rank, or both), the user should use the 
                Pearson correlation coefficient formula given above.")>
-        Public Function Spearman(X As Double(), Y As Double()) As Double
+        Public Function Spearman#(X#(), Y#())
             If X.Length <> Y.Length Then
-                Throw New DataException($"[X:={X.Length}, Y:={Y.Length}] The vector length betwen the two samples is not agreed!!!")
+                Dim msg As String =
+                    $"[X:={X.Length}, Y:={Y.Length}] The vector length betwen the two samples is not agreed!!!"
+                Throw New DataException(msg)
             ElseIf X.Length = 1 Then
-                Throw New DataException("Samples number just equals 1, the function unable to measure the correlation!!!")
+                Throw New DataException(UnableMeasures)
             End If
 
             Dim n As Integer = X.Length  ' size n
@@ -180,7 +177,9 @@ Namespace Mathematical
             Return spcc
         End Function
 
-        Private Function __getOrder(samples As Double()) As spcc()
+        Const UnableMeasures$ = "Samples number just equals 1, the function unable to measure the correlation!!!"
+
+        Private Function __getOrder(samples#()) As spcc()
             Dim dat = (From i As Integer
                        In samples.Sequence
                        Select spcc = New spcc.__spccInner With {  ' 原有的顺序
