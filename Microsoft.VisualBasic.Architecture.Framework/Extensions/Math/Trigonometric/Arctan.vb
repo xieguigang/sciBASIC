@@ -30,14 +30,14 @@ Namespace Mathematical
 
     Partial Module Trigonometric
 
-        Const HalfPI = Math.PI / 2
-        Const n1 = 1.0R
-        Const n05 = 0.5R
+        Const HalfPI# = Math.PI / 2
+        Const n1# = 1.0R
+        Const n05# = 0.5R
 
         ''' <summary>
         ''' 通过这个参数来控制计算精度，这个参数值越大，计算精度越高
         ''' </summary>
-        Public AtanPrecise As Integer = 500
+        Public AtanPrecise% = 500
 
         ''' <summary>
         ''' Taylor Atan
@@ -45,8 +45,8 @@ Namespace Mathematical
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks>Atan测试没有问题</remarks>>
-        Public Function Atn(x As Double) As Double
-            If x = 1.0 Then
+        Public Function Atn(x#) As Double
+            If x# = 1.0 Then
                 Return Math.PI / 4
             End If
             If Math.Sign(x) = Math.Sign(-1) Then
