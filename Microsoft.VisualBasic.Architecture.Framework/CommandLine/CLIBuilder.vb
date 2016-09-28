@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::bbcc7f3d94c273c9f90b2982c3d24f59, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.Optional
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine
@@ -84,7 +85,7 @@ Namespace CommandLine
 
     Public Module CLIBuildMethod
 
-        ReadOnly _innerTypeInfo As System.Type = GetType([Optional])
+        ReadOnly _typeInfo As Type = GetType([Optional])
 
         ''' <summary>
         ''' Generates the command line string value for the invoked target cli program using this interop services object instance.
@@ -94,7 +95,7 @@ Namespace CommandLine
         ''' A class type object for interaction with a commandline program.
         ''' (与命令行程序进行交互的模块对象类型)
         ''' </typeparam>
-        ''' <param name="Instance">目标交互对象的实例</param>
+        ''' <param name="app">目标交互对象的实例</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 依照类型<see cref="CLITypes"/>来生成参数字符串
@@ -105,26 +106,33 @@ Namespace CommandLine
         ''' <see cref="CLITypes.File"/>, 假若字符串为空则不添加，有空格自动添加双引号，相对路径会自动转换为全路径。
         ''' </remarks>
         <Extension>
-        Public Function GetCLI(Of TInteropService As Class)(Instance As TInteropService) As String
-            Dim arguments = (From [property] As System.Reflection.PropertyInfo
-                             In GetType(TInteropService).GetProperties
-                             Let attrs As Object() = [property].GetCustomAttributes(attributeType:=_innerTypeInfo, inherit:=True)
-                             Where Not attrs.IsNullOrEmpty
-                             Let attr As [Optional] = DirectCast(attrs.First, [Optional])
-                             Select attr, [property]).ToArray
-            Dim sBuilder As StringBuilder = New StringBuilder(1024)
+        Public Function GetCLI(Of TInteropService As Class)(app As TInteropService) As String
+            Dim args As BindProperty(Of [Optional])() =
+                LinqAPI.Exec(Of BindProperty(Of [Optional])) <=
+ _
+                From [property] As PropertyInfo
+                In GetType(TInteropService).GetProperties
+                Let attrs As Object() =
+                    [property].GetCustomAttributes(attributeType:=_typeInfo, inherit:=True)
+                Where Not attrs.IsNullOrEmpty
+                Let attr As [Optional] = DirectCast(attrs.First, [Optional])
+                Select New BindProperty(Of [Optional]) With {
+                    .Field = attr,
+                    .Property = [property]
+                }
+            Dim sb As New StringBuilder(1024)
 
-            For Each argum In arguments
-                Dim getCLIToken As __getCLIToken = __getMethods(argum.attr.Type)
-                Dim value As Object = argum.property.GetValue(Instance, Nothing)
-                Dim cliToken As String = getCLIToken(value, argum.attr, argum.property)
+            For Each argum In args
+                Dim getCLIToken As __getCLIToken = __getMethods(argum.Field.Type)
+                Dim value As Object = argum.Property.GetValue(app, Nothing)
+                Dim cliToken As String = getCLIToken(value, argum.Field, argum.Property)
 
                 If Not String.IsNullOrEmpty(cliToken) Then
-                    Call sBuilder.Append(cliToken & " ")
+                    Call sb.Append(cliToken & " ")
                 End If
             Next
 
-            Return sBuilder.ToString.TrimEnd
+            Return sb.ToString.TrimEnd
         End Function
 
         ''' <summary>
@@ -133,7 +141,7 @@ Namespace CommandLine
         ''' <param name="name"></param>
         ''' <param name="args"></param>
         ''' <returns></returns>
-        Public Function SimpleBuilder(name As String, args As IEnumerable(Of KeyValuePair(Of String, String))) As String
+        Public Function SimpleBuilder(name$, args As IEnumerable(Of KeyValuePair(Of String, String))) As String
             Dim sbr As New StringBuilder(name)
 
             For Each x In args
@@ -262,14 +270,13 @@ rtvl:           Dim strValue As String = enumValue.Description
         ''' <param name="inst"></param>
         ''' <returns>返回所重置的参数的个数</returns>
         ''' <remarks></remarks>
-        <Extension>
         Public Function ClearParameters(Of TInteropService As Class)(inst As TInteropService) As Integer
             Dim n As Integer
             Dim lstProperty As PropertyInfo() = inst.GetType().GetProperties()
 
             Try
                 For Each [Property] As PropertyInfo In lstProperty
-                    Dim attrs As Object() = [Property].GetCustomAttributes(_innerTypeInfo, inherit:=False)
+                    Dim attrs As Object() = [Property].GetCustomAttributes(_typeInfo, inherit:=False)
                     If Not (attrs Is Nothing OrElse attrs.Length = 0) Then
                         Call [Property].SetValue(inst, "", Nothing)
                         n += 1
@@ -282,6 +289,6 @@ rtvl:           Dim strValue As String = enumValue.Description
             Return n
         End Function
 
-        Const InvalidOperation As String = "The target type information is not the 'System.String'!"
+        Const InvalidOperation$ = "The target type information is not the 'System.String'!"
     End Module
 End Namespace
