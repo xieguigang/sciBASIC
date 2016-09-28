@@ -207,7 +207,7 @@ Module DEBUG
 
         Call GraphicsPlots(
             New Size(350, 600), New Size, "white",
-            Sub(g, grect)
+            Sub(ByRef g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
             End Sub).SaveAs("./legends_test.png")
 
