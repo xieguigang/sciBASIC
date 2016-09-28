@@ -99,7 +99,7 @@ Namespace Types
         ''' <exception cref="DataException">Expression contains no number(表达式中没有任何数字)</exception>
         ''' <remarks></remarks>
         Public Shared Widening Operator CType(expression As String) As UnitExpression
-            Dim Match = Regex.Match(expression, Arithmetic.DOUBLE_NUMBER_REGX)
+            Dim Match = Regex.Match(expression, Arithmetic.NumericRegexp)
 
             If Match.Success Then 'match the first number in the expression string.
                 Dim Left = Val(Match.Value), l = Len(Match.Value)
