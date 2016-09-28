@@ -146,11 +146,25 @@ Public Module Heatmap
         Dim clusters = ClusterDataSet(entityList.Length / 5, entityList)
         Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
 
+        ' 通过kmeans计算出keys的顺序
+        Dim keysEntity = keys.ToArray(
+            Function(k) New Entity With {
+                .uid = k,
+                .Properties = data.ToArray(Function(x) x.x(k))
+            })
+        Dim keysOrder As New List(Of String)
+
+        For Each cluster In ClusterDataSet(keys.Length / 5, keysEntity)
+            For Each k In cluster
+                keysOrder += k.uid
+            Next
+        Next
+
         For Each cluster In clusters
             For Each entity As Entity In cluster
                 out += New NamedValue(Of Dictionary(Of String, Double)) With {
                     .Name = entity.uid,
-                    .x = keys _
+                    .x = keysOrder _
                         .SeqIterator _
                         .ToDictionary(Function(x) x.obj,
                                       Function(x) entity.Properties(x.i))
