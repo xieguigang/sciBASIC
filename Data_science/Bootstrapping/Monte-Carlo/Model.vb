@@ -27,7 +27,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Emit
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 
@@ -67,6 +69,22 @@ Namespace MonteCarlo
             Next
 
             Return Me.Solve(n, a, b, incept:=True)
+        End Function
+
+        Public Function RunTest(estimates As Dictionary(Of String, Double)(), n%, a%, b%) As ODEsOut
+            Dim parms As New Dictionary(Of String, Double)
+
+            For Each var$ In estimates(Scan0%).Keys
+                Dim dist = estimates.Select(Function(x) x(var$)).Distributes
+                Dim most As DoubleTagged(Of Integer) =
+                    LinqAPI.DefaultFirst(Of DoubleTagged(Of Integer)) <= From x As DoubleTagged(Of Integer)
+                                                                         In dist.Values
+                                                                         Select x
+                                                                         Order By x.value Descending
+                parms(var$) = most.Tag
+            Next
+
+            Return RunTest(parms, n, a, b)
         End Function
     End Class
 End Namespace
