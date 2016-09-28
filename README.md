@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 
 ![](./Data_science/Mathematical/images/Bubble.png)
 ![](./Data_science/Mathematical/images/37_number_of_observation_on_barplot.png)
+![](./Data_science/Mathematical/images/heatmap.png)
 
 ## What's new of VisualBasic language Syntax from this runtime library?
 
