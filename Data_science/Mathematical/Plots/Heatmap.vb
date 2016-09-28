@@ -30,8 +30,10 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Public Module Heatmap
@@ -58,11 +60,24 @@ Public Module Heatmap
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="colors"></param>
+    ''' <param name="mapLevels%"></param>
+    ''' <param name="mapName$"></param>
+    ''' <param name="kmeans">Reorder datasets by using kmeans clustering</param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
                          Optional colors As Color() = Nothing,
                          Optional mapLevels% = 100,
                          Optional mapName$ = ColorMap.PatternJet,
+                         Optional kmeans As Boolean = True,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white") As Bitmap
@@ -86,6 +101,10 @@ Public Module Heatmap
                     .SeqIterator _
                     .ToDictionary(Function(x) correl(x.i),
                                   Function(x) x.obj)
+
+                If kmeans Then
+                    array = array.KmeansReorder
+                End If
 
                 Dim left! = margin.Width, top! = margin.Height
                 Dim blockSize As New SizeF(dw, dw)
@@ -112,6 +131,34 @@ Public Module Heatmap
                     top += dw!
                 Next
             End Sub)
+    End Function
+
+    <Extension>
+    Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
+        Dim keys$() = data(Scan0%).x.Keys.ToArray
+        Dim entityList As Entity() = LinqAPI.Exec(Of Entity) <=
+            From x As NamedValue(Of Dictionary(Of String, Double))
+            In data
+            Select New Entity With {
+                .uid = x.Name,
+                .Properties = keys.ToArray(Function(k) x.x(k))
+            }
+        Dim clusters = ClusterDataSet(entityList.Length / 5, entityList)
+        Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
+
+        For Each cluster In clusters
+            For Each entity As Entity In cluster
+                out += New NamedValue(Of Dictionary(Of String, Double)) With {
+                    .Name = entity.uid,
+                    .x = keys _
+                        .SeqIterator _
+                        .ToDictionary(Function(x) x.obj,
+                                      Function(x) entity.Properties(x.i))
+                }
+            Next
+        Next
+
+        Return out
     End Function
 End Module
 
