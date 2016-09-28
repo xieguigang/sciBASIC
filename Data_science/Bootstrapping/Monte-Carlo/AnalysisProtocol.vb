@@ -183,7 +183,7 @@ Namespace MonteCarlo
         Public Function Iterations(model As Type,
                                    observation As ODEsOut,
                                    k As Long,
-                                   expected As Integer,
+                                   Optional expected As Integer = 10,
                                    Optional [stop] As Integer = -1,
                                    Optional partN As Integer = 20,
                                    Optional cut As Double = 0.3,
