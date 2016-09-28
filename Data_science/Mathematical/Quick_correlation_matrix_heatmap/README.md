@@ -63,6 +63,8 @@ ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) +
   geom_tile()
 ```
 
+![](./ggplot2-correlation-matrix-heatmap-geom-tile-data-visualization-1.png)
+
 The default plot is very ugly. We’ll see in the next sections, how to change the appearance of the heatmap.
 Note that, if you have lot of data, it’s preferred to use the function geom_raster() which can be much faster.
 
@@ -122,6 +124,8 @@ ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
  coord_fixed()
 ```
 
+![](./ggplot2-correlation-matrix-heatmap-correlation-matrix-data-visualization-1.png)
+
 In the figure above :
 
 + **negative correlations** are in blue color and positive correlations in red. The function ``scale_fill_gradient2`` is used with the argument ``limit = c(-1,1)`` as correlation coefficients range from -1 to 1.
@@ -167,6 +171,8 @@ ggheatmap <- ggplot(melted_cormat, aes(Var2, Var1, fill = value))+
 print(ggheatmap)
 ```
 
+![](./ggplot2-correlation-matrix-heatmap-reordered-correlation-data-visualization-1.png)
+
 ## Add correlation coefficients on the heatmap
 
 + Use geom_text() to add the correlation coefficients on the graph
@@ -189,6 +195,8 @@ theme(
   guides(fill = guide_colorbar(barwidth = 7, barheight = 1,
                 title.position = "top", title.hjust = 0.5))
 ```
+
+![](./ggplot2-correlation-matrix-heatmap-add-correlation-coefficients-1.png)
 
 Read more about correlation matrix data visualization : [correlation data visualization in R](http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software)
 
