@@ -161,7 +161,7 @@ Module DEBUG
     Public Function Main() As Integer
 
         Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
-        Call ddddd.Pearson().Plot(mapName:=ColorMap.PatternSummer).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
+        Call ddddd.Pearson().Plot(mapName:=ColorMap.PatternJet, mapLevels:=20).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
 
         '   Call randdddTest()
 

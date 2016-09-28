@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -100,7 +101,8 @@ Public Module Heatmap
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
-                         Optional fontStyle$ = CSSFont.Win10Normal) As Bitmap
+                         Optional fontStyle$ = CSSFont.Win10Normal,
+                         Optional legendTitle$ = "Heatmap Color Legend") As Bitmap
 
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim array As NamedValue(Of
@@ -118,12 +120,12 @@ Public Module Heatmap
             margin = New Size(sz.Width * 1.5, sz.Width * 1.5)
         End If
 
+        size = If(size.IsEmpty, New Size(2000, 1600), size)
+
         Return GraphicsPlots(
-            If(size.IsEmpty, New Size(1600, 1600), size),
-            margin,
-            bg,
+            size, margin, bg$,
             Sub(ByRef g, region)
-                Dim dw! = CSng(region.GraphicsRegion.Width / Array.Length)
+                Dim dw! = CSng((size.Height - 2 * margin.Width) / array.Length)
                 Dim correl#() = array _
                     .Select(Function(x) x.x.Values) _
                     .MatrixAsIterator _
@@ -173,6 +175,22 @@ Public Module Heatmap
                 Next
 
                 ' Draw legends
+                Dim legend As Bitmap = colors.ColorMapLegend(
+                    haveUnmapped:=False,
+                    min:=Math.Round(correl.Min, 1),
+                    max:=Math.Round(correl.Max, 1),
+                    title:=legendTitle)
+                Dim lsize As Size = legend.Size
+                Dim lmargin As Integer = size.Width - size.Height + margin.Width
+
+                left = size.Width - lmargin
+                top = size.Height / 3
+
+                Dim scale# = lmargin / lsize.Width
+                Dim lh% = CInt(scale * (size.Height * 2 / 3))
+
+                Call g.DrawImage(
+                    legend, CInt(left), CInt(top), lmargin, lh)
 
             End Sub)
     End Function
