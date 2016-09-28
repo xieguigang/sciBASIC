@@ -51,23 +51,19 @@ Namespace MonteCarlo
             Return {}
         End Function
 
-        Public Function RunTest(estimates As Dictionary(Of String, Double()), n%, a%, b%, Optional value As Func(Of Double(), Double) = Nothing) As ODEsOut
+        Public Function RunTest(estimates As Dictionary(Of String, Double), n%, a%, b%) As ODEsOut
             Dim model As Type = Me.GetType()
-            Dim vars$() = ODEs.GetVariables(model).ToArray
             Dim parms$() = ODEs.GetParameters(model).ToArray
-
-            If value Is Nothing Then
-                value = Function(data) data.Average
-            End If
+            Dim vars$() = ODEs.GetVariables(model).ToArray
 
             For Each var$ In vars
-                Me(var).value = value(estimates(var))
+                Me(var).value = estimates(var)
             Next
 
             For Each parm$ In parms
                 Dim [set] As Action(Of Object, Double) =
                     Delegates.FieldSet(Of Double)(model, parm)
-                Call [set](Me, value(estimates(parm)))
+                Call [set](Me, estimates(parm))
             Next
 
             Return Me.Solve(n, a, b, incept:=True)

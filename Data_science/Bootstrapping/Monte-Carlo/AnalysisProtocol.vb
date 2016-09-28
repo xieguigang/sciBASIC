@@ -178,6 +178,7 @@ Namespace MonteCarlo
         ''' <param name="[stop]"></param>
         ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
         ''' <param name="outIterates">每一次的迭代结果都会从这里返回</param>
+        ''' <returns>函数返回收敛成功了之后的最后一次迭代的参数数据</returns>
         <Extension>
         Public Function Iterations(model As Type,
                                    observation As ODEsOut,
@@ -188,7 +189,7 @@ Namespace MonteCarlo
                                    Optional cut As Double = 0.3,
                                    Optional work As String = Nothing,
                                    Optional parallel As Boolean = False,
-                                   Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double())) = Nothing) As Dictionary(Of String, Double())
+                                   Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) As Dictionary(Of String, Double)()
 
             Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
@@ -208,7 +209,7 @@ Namespace MonteCarlo
             Call observation.params.GetJson.__DEBUG_ECHO
 
             Dim uid As New Uid
-            outIterates = New Dictionary(Of String, Dictionary(Of String, Double()))
+            outIterates = New Dictionary(Of String, Dictionary(Of String, Double)())
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
@@ -247,22 +248,25 @@ Namespace MonteCarlo
 
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
                 Dim requires As Integer = GetEntityNumbers(required)
-                Dim output As Dictionary(Of String, Double()) =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
+                Dim out As Dictionary(Of String, Double)() =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
                     required.value _
                     .Where(Function(x) Not x.Name = AnalysisProtocol.Observation) _
                     .Select(Function(x) x.x) _
-                    .MatrixAsIterator _
-                    .MatrixAsIterator _
-                    .GroupBy(Function(x) x.Key).ToDictionary(
-                        Function(x) x.Key,
-                        Function(x) x.ToArray(
-                        Function(o) o.Value))
+                    .MatrixToVector
 
-                Call outIterates.Add(+uid, output)
+                Call outIterates.Add(+uid, out)
 
                 If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
-                    Return output
+                    Return out
                 Else
+                    Dim output As Dictionary(Of String, Double()) =
+                        out.MatrixAsIterator _
+                        .GroupBy(Function(x) x.Key) _
+                        .ToDictionary(
+                            Function(x) x.Key,
+                            Function(x) x.ToArray(
+                            Function(o) o.Value))
+
                     ' 调整y0和参数列表
                     For Each y In y0.Keys.ToArray
                         Dim values As Double() = output(y)
@@ -312,7 +316,7 @@ Namespace MonteCarlo
                                    Optional [stop] As Integer = -1,
                                    Optional partN As Integer = 20,
                                    Optional cut As Double = 0.3,
-                                   Optional work As String = Nothing) As Dictionary(Of String, Double())
+                                   Optional work As String = Nothing) As Dictionary(Of String, Double)()
 
             Dim model As Type = DllParser(dll)
 
