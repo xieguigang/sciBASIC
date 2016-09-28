@@ -79,6 +79,14 @@ Namespace DocumentStream
             }
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="uidMap">
+        ''' 默认是使用csv文件的第一行第一个单元格中的内容作为标识符，但是有时候可能标识符不是在第一列的，则这个时候就需要对这个参数进行赋值了
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of DataSet)
             If uidMap Is Nothing Then
                 Dim first As New RowObject(path.ReadFirstLine)
