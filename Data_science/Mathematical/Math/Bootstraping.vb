@@ -196,28 +196,40 @@ Public Module Bootstraping
     End Function
 
     <Extension>
-    Public Function Distributes(data As IEnumerable(Of Double), Optional base As Single = 10.0F) As Dictionary(Of Double, DoubleTagged(Of Integer))
-        Dim array As Double() = data.ToArray(Function(x) Math.Log(x, base))
-        Dim min As Double = CInt(array.Min) - 1
-        Dim max As Double = CInt(array.Max) + 1
-        Dim l As int = 0
-        Dim out As New Dictionary(Of Double, DoubleTagged(Of Integer))
+    Public Function Distributes(data As IEnumerable(Of Double), Optional base As Single = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
+        Dim array As DoubleTagged(Of Double)() = data.ToArray(
+            Function(x) New DoubleTagged(Of Double) With {
+                .Tag = Math.Log(x, base),
+                .value = x
+            })
+        Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1
+        Dim max As Integer = CInt(array.Max(Function(x) x.Tag)) + 1
+        Dim l As int = min, low As Integer = min
+        Dim out As New Dictionary(Of Integer, DoubleTagged(Of Integer))
 
         Do While ++l < max
-            Dim LQuery As Double() = LinqAPI.Exec(Of Double) <=
+            Dim LQuery As DoubleTagged(Of Double)() =
+                LinqAPI.Exec(Of DoubleTagged(Of Double)) <=
  _
-                From x As Double
+                From x As DoubleTagged(Of Double)
                 In array
-                Where x >= min AndAlso
-                    x < l
+                Where x.Tag >= low AndAlso
+                    x.Tag < l
                 Select x
 
             out(l) = New DoubleTagged(Of Integer) With {
-                .Tag = LQuery.Average,
+                .Tag = If(LQuery.Length = 0, 0, LQuery.Average(Function(x) x.value)),
                 .value = LQuery.Length
             }
-            min = l
+            low = l
         Loop
+
+        If out(min + 1).value = 0 Then
+            Call out.Remove(min)
+        End If
+        If out(max - 1).value = 0 Then
+            Call out.Remove(max)
+        End If
 
         Return out
     End Function
