@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d1dcb36ca8a452c33e69a8529edbb62b, ..\visualbasic_App\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,8 +32,12 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.AnalysisProtocol
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Example
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
@@ -43,7 +47,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module DEBUG
 
@@ -131,8 +135,58 @@ Module DEBUG
 
     End Sub
 
+    Private Sub randdddTest()
+        Dim rrr As New Random
+        Dim ll As New List(Of Double)
+
+        For i = 0 To 10000
+            ll += Math.Log10(rrr.NextDouble)
+        Next
+
+        Call ll.GetJson.SaveTo("x:\sfdsfds.json")
+        '   MsgBox(ll.Min)
+
+        Call RandomRange.Testing(-1.0E+101, -1.22E-18).GetJson.SaveTo("x:\@\-1.0E+101, -1.22E-18.json")
+        Call RandomRange.Testing(-100, 20).GetJson.SaveTo("x:\@\-100, 20.json")
+        Call RandomRange.Testing(-1000, -20).GetJson.SaveTo("x:\@\-1000, -20.json")
+        Call RandomRange.Testing(-100, -3.0E-20).GetJson.SaveTo("x:\@\-100, -3.0E-20.json")
+        Call RandomRange.Testing(-5.0E-100, 200).GetJson.SaveTo("x:\@\-5.0E-100, 200.json")
+        Call RandomRange.Testing(3, 200).GetJson.SaveTo("x:\@\3, 200.json")
+        Call RandomRange.Testing(3.0E-99, 1.0E+21).GetJson.SaveTo("x:\@\3.0E-99, 1.0E+21.json")
+
+        Pause()
+    End Sub
+
     Public Function Main() As Integer
 
+        '   Call randdddTest()
+
+
+        Call RandomRange.Testing(-1000, 1000).GetJson.__DEBUG_ECHO
+
+
+
+        Dim ttttdsfsd = GetType(Example)
+        Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(Model)) AndAlso Not ttttdsfsd.IsAbstract)
+        Dim iiisddsfd = 1
+        For Each sfsdfsds In TestObservation.Compares(100, 0, 10, New Dictionary(Of String, Double) From {{"a", 18.689678431519159}, {"f", 1.0614939771775227}, {"sin", -56.777710793912966}})
+            Call sfsdfsds.Plot().SaveAs($"x:\{iiisddsfd}.png")
+            iiisddsfd += 1
+        Next
+
+        Pause()
+
+        Dim trueData As ODEsOut = New TestObservation().Solve(100, 0, 10)
+        For Each yasdas In trueData.y0
+            trueData.params.Add(yasdas.Key, yasdas.Value)
+        Next
+
+        Dim result = Iterations(
+            "./Microsoft.VisualBasic.Data.Bootstrapping.dll",
+            trueData,
+            1000, 5,,,, )
+
+        Pause()
 
         Call scatterWithAnnotation()
 

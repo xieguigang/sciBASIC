@@ -65,7 +65,7 @@ Namespace Parallel.Linq
         ''' 由于本函数需要处理大量的数据，使用Array的方法会内存占用较厉害，所以在这里更改为List操作以降低内存的占用
         ''' </remarks>
         <Extension>
-        Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
+        Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
             Dim buf As New List(Of T)
             Dim n As Integer = 0
             Dim parts As Integer
@@ -86,7 +86,9 @@ Namespace Parallel.Linq
                 Yield buf.ToArray
             End If
 
-            Call $"Large data set data partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
+            If echo Then
+                Call $"Large data set data partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
+            End If
         End Function
 
         ''' <summary>

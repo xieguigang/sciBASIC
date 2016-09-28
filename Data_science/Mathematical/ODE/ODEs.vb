@@ -213,7 +213,7 @@ Public MustInherit Class ODEs
     End Property
 
     ''' <summary>
-    ''' Get function parameters
+    ''' Get function parameters name collection
     ''' </summary>
     ''' <returns></returns>
     Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
@@ -224,7 +224,7 @@ Public MustInherit Class ODEs
     End Function
 
     ''' <summary>
-    ''' Get Y
+    ''' Get Y names
     ''' </summary>
     ''' <returns></returns>
     Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)

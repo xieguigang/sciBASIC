@@ -361,6 +361,7 @@
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
     <Compile Include="Extensions\Math\TokenConnections.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
