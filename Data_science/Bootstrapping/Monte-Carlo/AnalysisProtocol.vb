@@ -177,7 +177,7 @@ Namespace MonteCarlo
         ''' <param name="expected"></param>
         ''' <param name="[stop]"></param>
         ''' <param name="work">工作的临时文件夹工作区间，默认使用dll的文件夹</param>
-        ''' 
+        ''' <param name="outIterates">每一次的迭代结果都会从这里返回</param>
         <Extension>
         Public Function Iterations(model As Type,
                                    observation As ODEsOut,
@@ -187,7 +187,8 @@ Namespace MonteCarlo
                                    Optional partN As Integer = 20,
                                    Optional cut As Double = 0.3,
                                    Optional work As String = Nothing,
-                                   Optional parallel As Boolean = False) As Dictionary(Of String, Double())
+                                   Optional parallel As Boolean = False,
+                                   Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double())) = Nothing) As Dictionary(Of String, Double())
 
             Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
             Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
@@ -205,6 +206,9 @@ Namespace MonteCarlo
             Dim i As int = 0
 
             Call observation.params.GetJson.__DEBUG_ECHO
+
+            Dim uid As New Uid
+            outIterates = New Dictionary(Of String, Dictionary(Of String, Double()))
 
             Do While True
                 Dim randSamples = experimentObservation.Join(
@@ -253,6 +257,8 @@ Namespace MonteCarlo
                         Function(x) x.Key,
                         Function(x) x.ToArray(
                         Function(o) o.Value))
+
+                Call outIterates.Add(+uid, output)
 
                 If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
                     Return output
