@@ -48,7 +48,7 @@ Namespace KMeans
             Dim count As Integer = 0
             Dim sum As Double = 0.0
 
-            If X.GetUpperBound(0) <> Y.GetUpperBound(0) Then
+            If X.Length <> Y.Length Then
                 Throw New ArgumentException(DimNotAgree)
             Else
                 count = X.Length
