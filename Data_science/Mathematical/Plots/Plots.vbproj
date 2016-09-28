@@ -136,9 +136,10 @@
     <Compile Include="csv\SerialData.vb" />
     <Compile Include="g\Legends\LegendStyles.vb" />
     <Compile Include="Heatmap.vb" />
+    <Compile Include="Histogram\Data.vb" />
     <Compile Include="PieChart.vb" />
     <Compile Include="PlotTypes.vb" />
-    <Compile Include="Histogram.vb" />
+    <Compile Include="Histogram\Histogram.vb" />
     <Compile Include="Scatter\Annotation.vb" />
     <Compile Include="Scatter\Data.vb" />
     <Compile Include="Scatter\Scatter.vb" />

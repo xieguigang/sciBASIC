@@ -207,7 +207,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Default Public Property Value(name As String) As T
+        Default Public Property Value(name$) As T
             Get
                 If Properties.ContainsKey(name) Then
                     Return Properties(name)
@@ -239,7 +239,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="initKey"></param>
         ''' <param name="initValue"></param>
-        Sub New(initKey As String, initValue As T)
+        Sub New(initKey$, initValue As T)
             Call Properties.Add(initKey, initValue)
         End Sub
 
@@ -299,7 +299,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <param name="value"></param>
-        Sub New(name As String, value As T)
+        Sub New(name$, value As T)
             Me.Name = name
             Me.x = value
         End Sub
