@@ -55,7 +55,7 @@ Namespace Imaging
         <ExportAPI("Color.Sequence")>
         <Extension>
         Public Function ColorSequence(map As ColorMap, Optional mapName$ = ColorMap.PatternJet, Optional min% = 0) As Color()
-            Dim cMap%(,) = map.ColorMaps(mapName)()
+            Dim cMap%(,) = map.GetMaps(mapName)()
             Dim maxDepth% = map.MaxDepth
             Dim m% = maxDepth * 2
             Dim sequence As New List(Of Color)

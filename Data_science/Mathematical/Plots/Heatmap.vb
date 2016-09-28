@@ -82,7 +82,7 @@ Public Module Heatmap
                     .ToArray
                 Dim lvs As Dictionary(Of Double, Integer) =
                     correl _
-                    .GenerateMapping(CInt(mapLevels / 2%)) _
+                    .GenerateMapping(CInt(mapLevels / 2%) - 1) _
                     .SeqIterator _
                     .ToDictionary(Function(x) correl(x.i),
                                   Function(x) x.obj)
@@ -98,7 +98,7 @@ Public Module Heatmap
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array
                     For Each key$ In keys
                         Dim c# = x.x(key)
-                        Dim level% = lvs(c#)  '  得到等级
+                        Dim level% = lvs(c#) - 1 '  得到等级
                         Dim color As Color = colors(level%)
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
                         Dim b As New SolidBrush(color)

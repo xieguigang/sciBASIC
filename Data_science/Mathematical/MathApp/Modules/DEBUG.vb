@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.AnalysisProtocol
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Example
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
@@ -159,9 +160,12 @@ Module DEBUG
 
     Public Function Main() As Integer
 
+        Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
+        Call ddddd.Pearson().Plot().SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
+
         '   Call randdddTest()
 
-
+        Pause()
         Call RandomRange.Testing(-1000, 1000).GetJson.__DEBUG_ECHO
 
 
