@@ -68,7 +68,7 @@ Namespace Windows.Forms
         ''' <summary>
         ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
         ''' </summary>
-        Public Sub RestartElevated(Optional args As String = "")
+        Public Sub RestartElevated(Optional args$ = "")
             Dim startInfo As New ProcessStartInfo()
             startInfo.UseShellExecute = True
             startInfo.WorkingDirectory = Environment.CurrentDirectory

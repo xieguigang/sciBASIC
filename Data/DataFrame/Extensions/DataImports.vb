@@ -1,35 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::cef2cc6d63d25d3cdb8f29a0baaea17f, ..\visualbasic_App\Data\DataFrame\Extensions\DataImports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
@@ -57,9 +60,9 @@ Public Module DataImports
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("--Imports", Info:="Imports the data in a well formatted text file using a specific delimiter, default delimiter is comma character.")>
-    Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath As String,
-                              Optional delimiter As String = ",",
-                              Optional encoding As System.Text.Encoding = Nothing) As DocumentStream.File
+    Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
+                              Optional delimiter$ = ",",
+                              Optional encoding As Encoding = Nothing) As DocumentStream.File
         If encoding Is Nothing Then
             encoding = System.Text.Encoding.Default
         End If
@@ -77,7 +80,7 @@ Public Module DataImports
     ''' <param name="delimiter"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function [Imports](Of T As Class)(path As String, Optional delimiter As String = ",", Optional encoding As System.Text.Encoding = Nothing) As T()
+    <Extension> Public Function [Imports](Of T As Class)(path$, Optional delimiter$ = ",", Optional encoding As Encoding = Nothing) As T()
         Dim source As DocumentStream.File = [Imports](path, delimiter, encoding)
         If source.RowNumbers = 0 Then
             Return New T() {}
@@ -130,27 +133,27 @@ Public Module DataImports
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Imports.FixLength", Info:="Imports the data in a well formatted text file using the fix length as the data separate method.")>
-    Public Function FixLengthImports(txtPath As String,
-                                     <Parameter("Length", "The string length width of the data row.")> Optional length As Integer = 10,
-                                     Optional encoding As System.Text.Encoding = Nothing) As Microsoft.VisualBasic.Data.csv.DocumentStream.File
+    Public Function FixLengthImports(txtPath$,
+                                     <Parameter("Length", "The string length width of the data row.")> Optional length% = 10,
+                                     Optional encoding As Encoding = Nothing) As DocumentStream.File
         If encoding Is Nothing Then
-            encoding = System.Text.Encoding.Default
+            encoding = Encoding.Default
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim LQuery As Csv.DocumentStream.RowObject() = (From line As String In Lines Select RowParsing(line, length:=length)).ToArray
+        Dim LQuery As RowObject() = (From line As String In Lines Select RowParsing(line, length:=length)).ToArray
         Dim Csv As New DocumentStream.File(LQuery, txtPath)
         Return Csv
     End Function
 
     <ExportAPI("Row.Parsing")>
-    Public Function RowParsing(line As String, length As Integer) As DocumentStream.RowObject
+    Public Function RowParsing(line$, length%) As RowObject
         Dim n As Integer = CInt(Len(line) / length) + 1
         Dim cols As String() = New String(n - 1) {}
         For i As Integer = 0 To n - 1 Step length
             cols(i) = Mid(line, i, length)
         Next
-        Return New DocumentStream.RowObject With {
+        Return New RowObject With {
             ._innerColumns = cols.ToList
         }
     End Function
@@ -169,20 +172,53 @@ Public Module DataImports
     <ExportAPI("DataType.Match")>
     <Extension>
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
-        Dim n As Integer = column.Count
-        Dim LQuery As Integer = (From s As String In column Let Dbl As Double = Val(s) Let ss As String = Dbl.ToString Where String.Equals(ss, s) Select 1).ToArray.Count
-        If LQuery = n Then Return GetType(Double)
+        Dim array$() = column.ToArray, n% = array.Length
 
-        LQuery = (From s As String In column Let Int As Integer = CInt(Val(s)) Let ss As String = Int.ToString Where String.Equals(ss, s) Select 1).ToArray.Count
-        If LQuery = n Then Return GetType(Integer)
+        If IsEquals(Of Integer)(n) =
+            From s As String
+            In column
+            Let Dbl As Double = Val(s)
+            Let ss As String = Dbl.ToString
+            Where String.Equals(ss, s)
+            Select 1 Then
 
-        LQuery = (From s As String In column Let Bol As Boolean = Boolean.Parse(s) Let ss As String = Bol.ToString Where String.Equals(ss, s) Select 1).ToArray.Count
-        If LQuery = n Then Return GetType(Boolean)
+            Return GetType(Double)
+        End If
 
-        LQuery = (From s As String In column Let Dat As Date = Date.Parse(s)
-                  Where Dat.Year = 0 AndAlso Dat.Month = 0 AndAlso Dat.Day = 0 AndAlso Dat.Hour = 0 AndAlso Dat.Minute = 0 AndAlso Dat.Second = 0
-                  Select 1).ToArray.Count
-        If LQuery = 0 Then Return GetType(Date)
+        If IsEquals(Of Integer)(n) =
+            From s As String
+            In column
+            Let Int As Integer = CInt(Val(s))
+            Let ss As String = Int.ToString
+            Where String.Equals(ss, s)
+            Select 1 Then
+
+            Return GetType(Integer)
+        End If
+
+        If IsEquals(Of Integer)(n) =
+            From s As String
+            In column
+            Let Bol As Boolean = Boolean.Parse(s)
+            Let ss As String = Bol.ToString
+            Where String.Equals(ss, s)
+            Select 1 Then
+
+            Return GetType(Boolean)
+        End If
+
+        If IsEquals(Of Integer)() = From s As String
+                                    In column
+                                    Let Dat As Date = Date.Parse(s)
+                                    Where Dat.Year = 0 AndAlso
+                                        Dat.Month = 0 AndAlso
+                                        Dat.Day = 0 AndAlso
+                                        Dat.Hour = 0 AndAlso
+                                        Dat.Minute = 0 AndAlso
+                                        Dat.Second = 0
+                                    Select 1 Then
+            Return GetType(Date)
+        End If
 
         Return GetType(String)
     End Function

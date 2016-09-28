@@ -14,7 +14,7 @@ Namespace Mathematical
         ''' <param name="x"></param>
         ''' <param name="INF"></param>
         ''' <returns></returns>
-        Public Function Log(x As Double, Optional INF As Integer = 5) As Single
+        Public Function Log(x#, Optional INF% = 5) As Single
             Dim p As Double = Math.Log10(Math.Abs(x))
 
             If p < -4 Then
@@ -37,9 +37,8 @@ Namespace Mathematical
         ''' True的时候会通过牺牲性能来强制重新实例化随机数发生器来获取足够的随机
         ''' </param>
         ''' <returns></returns>
-        Public Function GetRandom(from As Double, [to] As Double, Optional INF As Integer = 5, Optional forceInit As Boolean = False) As INextRandomNumber
-            Dim pf As Single = Log(from, INF)
-            Dim pt As Single = Log([to], INF)
+        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As INextRandomNumber
+            Dim pf! = Log(from, INF), pt! = Log([to], INF)
 
             If from > 0 Then
                 If [to] > 0 Then ' from 是正数，则to也必须是正数
@@ -71,7 +70,7 @@ Namespace Mathematical
                         pf = Math.Log10(Math.Abs(from))
                         pt = Math.Log10(Math.Abs([to]))
 
-                        Dim c As Single() = {0F, pf}
+                        Dim c!() = {0F, pf}
                         Dim rf As New PreciseRandom(c.Min, c.Max)
                         c = {0F, pt}
                         Dim rt As New PreciseRandom(c.Min, c.Max)
@@ -126,11 +125,11 @@ Namespace Mathematical
             End If
         End Function
 
-        Public Function Testing(from As Double, [to] As String) As Double()
+        Public Function Testing(from#, to#) As Double()
             Dim rnd As INextRandomNumber = GetRandom(from, [to])
             Dim bufs As New List(Of Double)
 
-            For Each i As Integer In 1000.Sequence
+            For Each i% In 1000%.Sequence
                 bufs += rnd()
             Next
 

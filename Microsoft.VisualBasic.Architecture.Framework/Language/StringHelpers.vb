@@ -62,8 +62,7 @@ Namespace Language
     ''' </summary>
     Public Structure FormatHelper
 
-        Dim source As String
-        Dim args As String()
+        Dim source$, args$()
 
         Public Overrides Function ToString() As String
             Return source

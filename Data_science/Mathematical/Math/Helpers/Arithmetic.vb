@@ -56,14 +56,14 @@ Namespace Helpers
         ''' (一个枚举所有的基本运算符的字符串常数)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Const OPERATORS As String = "+-*/\%^!"
+        Public Const Operators$ = "+-*/\%^!"
 
         ''' <summary>
         ''' A string constant RegularExpressions that stands a double type number.
         ''' (一个用于表示一个双精度类型的实数的正则表达式)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Const DOUBLE_NUMBER_REGX As String = "-?\d+([.]\d+)?"
+        Public Const NumericRegexp$ = "-?\d+([.]\d+)?"
 
         ''' <summary>
         ''' Do a basically arithmetic calculation.
@@ -74,8 +74,8 @@ Namespace Helpers
         ''' <param name="o">Arithmetic operator(运算符)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Evaluate(a As Double, b As Double, o As Char) As Double
-            Dim idx As Integer = OPERATORS.IndexOf(o)
+        Public Function Evaluate(a#, b#, o As Char) As Double
+            Dim idx As Integer = Operators.IndexOf(o)
             Return _Arithmetic(idx)(a, b)
         End Function
 
