@@ -129,6 +129,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3D\Axis.vb" />
     <Compile Include="Axis.vb" />
     <Compile Include="Bubble.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
@@ -209,9 +210,7 @@
       <Name>diffEq</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="3D\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

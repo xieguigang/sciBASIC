@@ -62,7 +62,8 @@ Public Module Scatter
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
                          Optional drawLine As Boolean = True,
-                         Optional legendBorder As Border = Nothing) As Bitmap
+                         Optional legendBorder As Border = Nothing,
+                         Optional fill As Boolean = False) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
