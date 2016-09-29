@@ -171,6 +171,7 @@
   <ItemGroup>
     <Compile Include="d3js\color\rgb.vb" />
     <Compile Include="d3js\interpolate\rgb.vb" />
+    <Compile Include="Drawing2D\Colors\Legend.vb" />
     <Compile Include="Drawing2D\g.vb" />
     <Compile Include="Drawing2D\GraphicsRegion.vb" />
     <Compile Include="Drawing2D\Shapes\Arrow.vb" />

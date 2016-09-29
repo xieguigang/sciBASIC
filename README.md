@@ -65,6 +65,15 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 
 ![](./Data_science/Mathematical/images/Bubble.png)
 ![](./Data_science/Mathematical/images/37_number_of_observation_on_barplot.png)
+![](./Data_science/Mathematical/images/heatmap.png)
+
+> ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
+>
+> Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
+> ```R
+data(mtcars)
+write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
+```
 
 ## What's new of VisualBasic language Syntax from this runtime library?
 
