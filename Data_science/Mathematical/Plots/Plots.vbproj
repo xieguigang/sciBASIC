@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\Axis.vb" />
+    <Compile Include="3D\Data.vb" />
     <Compile Include="Axis.vb" />
     <Compile Include="Bubble.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
