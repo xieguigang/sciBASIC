@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
+Imports System.Text.RegularExpressions
 
 Namespace Drawing2D.Colors
 
@@ -43,6 +44,7 @@ Namespace Drawing2D.Colors
         '''      &quot;value&quot;: [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly AvailableInterpolates As IReadOnlyDictionary(Of Color, Color())
+        Public ReadOnly ColorBrewer As Dictionary(Of String, ColorBrewer)
 
         Sub New()
             Dim colors = My.Resources _
@@ -56,6 +58,9 @@ Namespace Drawing2D.Colors
             Next
 
             AvailableInterpolates = valids
+
+            Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""").ToArray(Function(m) CInt(m.Trim(""""c)))
+
         End Sub
 
         ''' <summary>
