@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::91d2ca2394bb0023af96a18312c2cedc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorMap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -46,20 +47,21 @@ Namespace Imaging
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Maps"></param>
+        ''' <param name="mapName"></param>
         ''' <param name="map"><see cref="ColorMap.MaxDepth"/></param>
         ''' <param name="min">value should smaller than <see cref="ColorMap.MaxDepth"/> in parameter <paramref name="map"/></param>
         ''' <returns></returns>
         ''' 
         <ExportAPI("Color.Sequence")>
-        Public Function ColorSequence(Maps As MapsFunc, map As ColorMap, Optional min As Integer = 0) As Color()
-            Dim cMap As Integer(,) = Maps()
-            Dim maxDepth As Integer = map.MaxDepth
-            Dim m As Integer = maxDepth * 2
+        <Extension>
+        Public Function ColorSequence(map As ColorMap, Optional mapName$ = ColorMap.PatternJet, Optional min% = 0) As Color()
+            Dim cMap%(,) = map.GetMaps(mapName)()
+            Dim maxDepth% = map.MaxDepth
+            Dim m% = maxDepth * 2
             Dim sequence As New List(Of Color)
 
             For i As Integer = 0 To maxDepth - 1
-                Dim colorIndex As Integer = CInt((i - min) * m \ (maxDepth - min))
+                Dim colorIndex% = CInt((i - min) * m \ (maxDepth - min))
                 Dim a = cMap(colorIndex, 0)
                 Dim r = cMap(colorIndex, 1)
                 Dim g = cMap(colorIndex, 2)
@@ -72,12 +74,13 @@ Namespace Imaging
             Return sequence.ToArray
         End Function
 
-        ReadOnly __default As ColorMap = New ColorMap(64)
+        ReadOnly __default As ColorMap = New ColorMap(64%)
 
         <ExportAPI("Color.Sequence")>
-        Public Function ColorSequence(Optional min As Integer = 0, Optional name As String = "Jet") As Color()
-            Dim maps As MapsFunc = ColorMapsExtensions.__default.GetMaps(name)
-            Return ColorMapsExtensions.ColorSequence(maps, __default, min)
+        Public Function ColorSequence(Optional min% = 0, Optional name$ = "Jet") As Color()
+            SyncLock __default
+                Return ColorSequence(__default, name, min)
+            End SyncLock
         End Function
 
         Public Delegate Function MapsFunc() As Integer(,)
@@ -102,11 +105,16 @@ Namespace Imaging
         Sub New()
         End Sub
 
-        Sub New(colorLength As Integer)
+        Sub New(colorLength%)
             ColorMapLength = colorLength
         End Sub
 
-        Sub New(colorLength As Integer, alpha As Integer)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="colorLength%"></param>
+        ''' <param name="alpha%"><see cref="Color.A"/>: color alpha value</param>
+        Sub New(colorLength%, alpha%)
             ColorMapLength = colorLength
             Me.Alpha = alpha
         End Sub
