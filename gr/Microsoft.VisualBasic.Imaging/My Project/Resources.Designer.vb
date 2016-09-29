@@ -69,5 +69,44 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {  
+        '''  &quot;Color [PapayaWhip]&quot;: [
+        '''    {
+        '''      &quot;knownColor&quot;: 93,
+        '''      &quot;name&quot;: null,
+        '''      &quot;state&quot;: 1,
+        '''      &quot;value&quot;: 0
+        '''    },
+        '''    {
+        '''      &quot;knownColor&quot;: 119,
+        '''      &quot;name&quot;: null,
+        '''      &quot;state&quot;: 1,
+        '''      &quot;value&quot;: 0
+        '''    },
+        '''    {
+        '''      &quot;knownColor&quot;: 30,
+        '''      &quot;name&quot;: null,
+        '''      &quot;state&quot;: 1,
+        '''      &quot;value&quot;: 0
+        '''    },
+        '''    {
+        '''      &quot;knownColor&quot;: 165,
+        '''      &quot;name&quot;: null,
+        '''      &quot;state&quot;: 1,
+        '''      &quot;value&quot;: 0
+        '''    },
+        '''    {
+        '''      &quot;knownColor&quot;: 81,
+        '''      &quot;name&quot;: null,
+        '''      &quot;state&quot;: 1,
+        '''      &quot;value&quot;: [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property designer_colors() As String
+            Get
+                Return ResourceManager.GetString("designer_colors", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace
