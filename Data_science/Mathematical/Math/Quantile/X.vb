@@ -53,7 +53,7 @@ Namespace Quantile
         Public Property g As Integer
         Public ReadOnly Property delta As Integer
 
-        Public Sub New(value As Long, lower_delta As Integer, delta As Integer)
+        Public Sub New(value&, lower_delta%, delta%)
             Me.value = value
             Me.g = lower_delta
             Me.delta = delta

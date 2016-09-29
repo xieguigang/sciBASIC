@@ -46,12 +46,9 @@ Namespace Quantile
 
     Public Structure Quantile
 
-        Public ReadOnly ___quantile As Double
-        Public ReadOnly [error] As Double
-        Public ReadOnly u As Double
-        Public ReadOnly v As Double
+        Public ReadOnly ___quantile#, error#, u#, v#
 
-        Public Sub New(quantile As Double, [error] As Double)
+        Public Sub New(quantile#, error#)
             Me.___quantile = quantile
             Me.error = [error]
             Me.u = 2.0 * [error] / (1.0 - quantile)
