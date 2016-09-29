@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
 Imports System.Text.RegularExpressions
+Imports System.Text
 
 Namespace Drawing2D.Colors
 
@@ -59,8 +60,16 @@ Namespace Drawing2D.Colors
 
             AvailableInterpolates = valids
 
-            Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""").ToArray(Function(m) CInt(m.Trim(""""c)))
+            Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""") _
+                .ToArray(Function(m) m.Trim(""""c))
+            Dim sb As New StringBuilder(My.Resources.colorbrewer)
 
+            For Each n In ns.Distinct
+                Call sb.Replace($"""{n}""", $"""c{n}""")
+            Next
+
+            ColorBrewer = sb.ToString _
+                .LoadObject(Of Dictionary(Of String, ColorBrewer))
         End Sub
 
         ''' <summary>
