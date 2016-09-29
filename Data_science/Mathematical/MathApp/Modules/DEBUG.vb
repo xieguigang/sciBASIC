@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
@@ -49,6 +50,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Module DEBUG
 
@@ -158,7 +160,36 @@ Module DEBUG
         Pause()
     End Sub
 
+
+    Private Function avadsfdsfds(x As Color) As Color()
+        Dim llll As New List(Of Color)
+
+        For Each y In AllDotNetPrefixColors
+            Try
+                ColorCube.GetColorSequence(x, y, 100)
+                llll += y
+            Catch ex As Exception
+
+            End Try
+        Next
+
+        Return llll
+    End Function
+
     Public Function Main() As Integer
+
+
+        Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).SaveAs("x:\fsdfsfsdfds.png")
+
+        '  Dim ava As Dictionary(Of String, String()) = (From x In AllDotNetPrefixColors.AsParallel Select c = ColorTranslator.ToHtml(x), vd = avadsfdsfds(x)).ToDictionary(Function(x) x.c, Function(x) x.vd.ToArray(AddressOf ColorTranslator.ToHtml))
+
+        '  Call ava.GetJson.SaveTo("./avacolors.json")
+
+
+        Dim dddddserew = Designer.Colors({Color.Red, Color.Green, Color.Blue})
+
+        Call Colors.ColorMapLegend(dddddserew, "ffffff", "sfsdf", "wrwerew").SaveAs("x:\hhhh.png")
+        Pause()
 
         Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
         Call ddddd.Pearson().Plot(mapName:=ColorMap.PatternJet, mapLevels:=20).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")

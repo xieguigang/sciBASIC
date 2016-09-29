@@ -171,6 +171,8 @@
   <ItemGroup>
     <Compile Include="d3js\color\rgb.vb" />
     <Compile Include="d3js\interpolate\rgb.vb" />
+    <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
+    <Compile Include="Drawing2D\Colors\Designer.vb" />
     <Compile Include="Drawing2D\Colors\Legend.vb" />
     <Compile Include="Drawing2D\g.vb" />
     <Compile Include="Drawing2D\GraphicsRegion.vb" />
@@ -253,6 +255,12 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>Markups</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\designer.colors.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\colorbrewer.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
