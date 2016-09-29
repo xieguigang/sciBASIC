@@ -77,7 +77,7 @@ Namespace Quantile
         ''' </summary>
         ''' <param name="epsilon">Acceptable % error in percentile estimate</param>
         ''' <param name="compact_size">Threshold to trigger a compaction</param>
-        Public Sub New(epsilon As Double, compact_size As Integer)
+        Public Sub New(epsilon#, compact_size%)
             Me.compact_size = compact_size
             Me.epsilon = epsilon
         End Sub
@@ -94,7 +94,7 @@ Namespace Quantile
             Call buf.ToString.__DEBUG_ECHO
         End Sub
 
-        Public Overridable Sub insert(v As Long)
+        Public Sub Insert(v&)
             Dim idx As Integer = 0
 
             For Each i As X In sample
@@ -123,7 +123,7 @@ Namespace Quantile
             Me.count += 1
         End Sub
 
-        Public Overridable Sub compress()
+        Private Sub compress()
             Dim removed As Integer = 0
 
             For i As Integer = 0 To sample.Count - 2
@@ -144,7 +144,7 @@ Namespace Quantile
             Next
         End Sub
 
-        Public Overridable Function query(quantile As Double) As Long
+        Public Function Query&(quantile#)
             Dim rankMin As Integer = 0
             Dim desired As Integer = CInt(Fix(quantile * count))
 

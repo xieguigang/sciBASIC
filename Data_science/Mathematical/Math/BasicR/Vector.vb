@@ -111,7 +111,7 @@ Namespace BasicR
         ''' </summary>
         ''' <param name="init"></param>
         ''' <param name="m"></param>
-        Sub New(init As Double, m As Integer)
+        Sub New(init#, m%)
             Call MyBase.New(capacity:=m)
 
             For i As Integer = 0 To m - 1
