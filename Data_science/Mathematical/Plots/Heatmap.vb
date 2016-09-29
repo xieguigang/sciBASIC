@@ -102,7 +102,8 @@ Public Module Heatmap
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
                          Optional fontStyle$ = CSSFont.Win10Normal,
-                         Optional legendTitle$ = "Heatmap Color Legend") As Bitmap
+                         Optional legendTitle$ = "Heatmap Color Legend",
+                         Optional angle! = 45.0F) As Bitmap
 
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim array As NamedValue(Of
@@ -174,6 +175,16 @@ Public Module Heatmap
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
 
+                angle = -angle
+
+                For Each key$ In keys
+                    Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
+                    Dim dx! = sz.Width * Math.Cos(angle)
+                    Dim dy! = sz.Width * Math.Sin(angle)
+                    Call g.DrawString(key$, font, Brushes.Black, left - dx, top - dy, angle)
+                    left += dw
+                Next
+
                 ' Draw legends
                 Dim legend As Bitmap = colors.ColorMapLegend(
                     haveUnmapped:=False,
@@ -194,6 +205,24 @@ Public Module Heatmap
 
             End Sub)
     End Function
+
+    ''' <summary>
+    ''' 绘制按照任意角度旋转的文本
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="text"></param>
+    ''' <param name="font"></param>
+    ''' <param name="brush"></param>
+    ''' <param name="x!"></param>
+    ''' <param name="y!"></param>
+    ''' <param name="angle!"></param>
+    <Extension>
+    Public Sub DrawString(g As Graphics, text$, font As Font, brush As Brush, x!, y!, angle!)
+        g.TranslateTransform(x, y)     ' 先转换坐标系原点
+        g.RotateTransform(angle)
+        g.DrawString(text, font, brush, New PointF)
+        g.ResetTransform()
+    End Sub
 
     <Extension>
     Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
