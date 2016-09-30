@@ -178,6 +178,11 @@ Module DEBUG
 
     Public Function Main() As Integer
 
+        Dim dadasdasdasdasXXXXXX = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
+        Dim dadasdasdasdasYYYYYY = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
+
+        Call QQPlot.Plot(dadasdasdasdasXXXXXX, dadasdasdasdasYYYYYY, xcol:="red").SaveAs("x:\asfsdfsdfsd.png")
+        Pause()
 
         Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).SaveAs("x:\fsdfsfsdfds.png")
 

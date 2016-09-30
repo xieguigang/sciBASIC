@@ -12,6 +12,8 @@ Imports Microsoft.VisualBasic.Mathematical.Quantile
 Public Module QQPlot
 
     ''' <summary>
+    ''' [2016-9-30 Currently this function is not working]
+    ''' 
     ''' The quantile-quantile (q-q) plot is a graphical technique for determining if two data sets 
     ''' come from populations with a common distribution.
     ''' 
@@ -50,7 +52,7 @@ Public Module QQPlot
                          Optional bg$ = "white",
                          Optional xcol$ = "black",
                          Optional ycol$ = "black",
-                         Optional ptSize! = 5,
+                         Optional ptSize! = 35,
                          Optional lv% = 100000,
                          Optional epsilon# = Quantile.epsilon,
                          Optional compact_size% = 1000) As Bitmap
