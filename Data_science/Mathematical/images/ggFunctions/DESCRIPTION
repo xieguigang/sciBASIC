@@ -1,0 +1,14 @@
+Package: ggFunctions
+Title: Custom ggplot2 Functions
+Version: 0.1.32
+Date: 2016-08-18
+Authors@R: c(person("Mickael", "Canouil", role = c("aut", "cre"), email = "mickael.canouil@cnrs.fr"))
+Description: Some ggplot2 functions: manhanttan, qqplot, ...
+Depends:
+    R (>= 3.1.0),
+    ggplot2,
+    scales
+License: GPL (>= 2)
+LazyData: true
+Encoding: UTF-8
+RoxygenNote: 5.0.1
