@@ -111,6 +111,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -130,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\Axis.vb" />
+    <Compile Include="3D\Canvas.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
     <Compile Include="Axis.vb" />
