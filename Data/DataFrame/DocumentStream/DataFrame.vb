@@ -54,7 +54,7 @@ Namespace DocumentStream
         ''' <see cref="__currentLine"></see>在<see cref="_innerTable"></see>之中的位置
         ''' </summary>
         ''' <remarks></remarks>
-        Dim __currentPointer As Integer = -1
+        Dim __current% = -1
         Dim __currentLine As RowObject
 
         ''' <summary>
@@ -92,6 +92,9 @@ Namespace DocumentStream
             End If
         End Function
 
+        ''' <summary>
+        ''' There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!
+        ''' </summary>
         Const DuplicatedKeys As String = "There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!"
 
         ''' <summary>
@@ -103,7 +106,6 @@ Namespace DocumentStream
             Dim arrayCache As String() = df.__columnList.ToArray
 
             Try
-
                 Return arrayCache _
                     .SeqIterator _
                     .ToDictionary(Function(i) i.obj, Function(i) i.i)
@@ -187,10 +189,14 @@ Namespace DocumentStream
             End Get
         End Property
 
-        Public Function CreateDocument() As Csv.DocumentStream.File
-            Dim File As New Csv.DocumentStream.File
-            Call File.AppendLine(Me.__columnList.ToCsvRow)
-            Call File.AppendRange(Me._innerTable)
+        ''' <summary>
+        ''' Convert this dataframe object as a csv document object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function csv() As File
+            Dim File As New File
+            File += __columnList.ToCsvRow
+            File += DirectCast(_innerTable, IEnumerable(Of RowObject))
             Return File
         End Function
 
@@ -209,9 +215,16 @@ Namespace DocumentStream
             Return CreateObject(File)
         End Function
 
-        Private Shared Function __getColumnList(table As Generic.IEnumerable(Of Csv.DocumentStream.RowObject)) As List(Of String)
-            Return (From strValue As String In table.First Select __reviewColumnHeader(strValue)).ToList
+        Private Shared Function __getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
+            Return LinqAPI.MakeList(Of String) <= From strValue As String
+                                                  In table.First
+                                                  Select __reviewColumnHeader(strValue)
         End Function
+
+        ''' <summary>
+        ''' ``[CSV::Reflector::Warnning] There are empty column header in your data!``
+        ''' </summary>
+        Const EmptyWarning$ = "[CSV::Reflector::Warnning] There are empty column header in your data!"
 
         ''' <summary>
         ''' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，使用Trim函数之后，反而会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
@@ -221,7 +234,7 @@ Namespace DocumentStream
         ''' <remarks></remarks>
         Private Shared Function __reviewColumnHeader(strValue As String) As String
             If String.IsNullOrEmpty(strValue) Then
-                Call "[CSV::Reflector::Warnning] There are empty column header in your data!".__DEBUG_ECHO
+                Call EmptyWarning.Warning
                 Return ""
             End If
 
@@ -239,7 +252,7 @@ Namespace DocumentStream
         End Function
 
         Const FailureWarning As String =
-            "[CSV::Reflector::Warning] The Column header ""{0}"" end with the space character value, this may caused the GetOrder() function execute failure!"
+            "[CSV::Reflector::Warning] The Column header ""{0}"" end with the space character value, this may caused the ``GetOrder()`` function execute failure!"
 
         ''' <summary>
         ''' Creates the data frame object from the csv docs.
@@ -305,22 +318,18 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
         Public Function GetOrdinalSchema(columns As String()) As Integer()
-            Dim LQuery As Integer() = LinqAPI.Exec(Of Integer) <=
- _
-                From cName As String
-                In columns
-                Select Me.__columnList.IndexOf(cName)
-
-            Return LQuery
+            Return columns.ToArray(
+                [ctype]:=AddressOf __columnList.IndexOf,
+                parallel:=False)
         End Function
 
-        Public Function GetValue(Ordinal As Integer) As String
+        Public Function GetValue(ordinal As Integer) As String
 #If DEBUG Then
             If Ordinal > Me.__currentLine.Count - 1 Then
                 Return ""
             End If
 #End If
-            Return __currentLine.Column(Ordinal)
+            Return __currentLine.Column(ordinal)
         End Function
 
         ''' <summary>
@@ -330,11 +339,11 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Function Read() As Boolean Implements IDataReader.Read, IDataReader.NextResult
-            If __currentPointer = _innerTable.Count - 1 Then
+            If __current = _innerTable.Count - 1 Then
                 Return False
             Else
-                __currentPointer += 1
-                __currentLine = _innerTable(__currentPointer)
+                __current += 1
+                __currentLine = _innerTable(__current)
 
                 Return True
             End If
@@ -345,7 +354,7 @@ Namespace DocumentStream
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub Reset()
-            __currentPointer = -1
+            __current = -1
         End Sub
 
         ''' <summary>
@@ -360,64 +369,46 @@ Namespace DocumentStream
         End Sub
 
         Public Overrides Function ToString() As String
-            Return FilePath.ToFileURL & "  // " & _innerTable(__currentPointer).ToString
+            Return FilePath.ToFileURL & "  // " & _innerTable(__current).ToString
         End Function
 
-        'Public Sub ShowDialog(Optional Title As String = "")
-        '    Dim Dialog = New CsvChartDevice
-
-        '    If String.IsNullOrEmpty(Title) Then
-        '        Dialog.Text = FilePath
-        '    Else
-        '        Dialog.Text = Title
-        '        Dialog._chart.Titles.Add(Title)
-        '        Dim T = Dialog._chart.Titles("Title1")
-        '        T.Font = New Font("Microsoft YaHei", 16, FontStyle.Bold)
-        '    End If
-
-        '    Dialog.Draw(Me)
-
-        '    Call Dialog.ShowDialog()
-        'End Sub
-
-        Public Function Take(ColumnList As String()) As DataFrame
-            Dim PQuery As IEnumerable(Of Integer) =
-                From Column As String
-                In ColumnList
-                Select Me.__columnList.IndexOf(Column) '
-            Dim pList As List(Of Integer) = PQuery.ToList   'Location pointer to the column
-            Dim NewTable As New List(Of RowObject)
+        Public Function [Select](columnList As String()) As DataFrame
+            Dim newTable As New List(Of RowObject)
+            Dim pList As Integer() =
+                GetOrdinalSchema(columnList)   'Location pointer to the column
 
             Call Me.Reset()
 
             Do While Me.Read
-                Dim Query As IEnumerable(Of String) = From p In pList Select __currentLine.Column(p) '
-                NewTable.Add(New RowObject(Query))
+                newTable += New RowObject(
+                    pList.Select(
+                    Function(i) __currentLine.Column(i)))
             Loop
 
             Return New DataFrame With {
-                .__columnList = ColumnList.ToList,
+                .__columnList = columnList.ToList,
                 .FilePath = FilePath,
-                ._innerTable = NewTable
+                ._innerTable = newTable
             }
         End Function
 
         Public Iterator Function GetEnumerator2() As IEnumerator(Of DynamicObjectLoader) Implements IEnumerable(Of DynamicObjectLoader).GetEnumerator
-            Dim ColumnSchema As Dictionary(Of String, Integer) =
-                (From i As Integer
-                 In Me.__columnList.Sequence
-                 Select New KeyValuePair(Of String, Integer)(Me.__columnList(i), i)) _
-                       .ToDictionary(Function(itm) itm.Key,
-                                     Function(itm) itm.Value)
-            For Each Item As DynamicObjectLoader In From i As Integer In Me.RowNumbers.Sequence
-                                                    Let Line As RowObject = Me(i)
-                                                    Let loader = New DynamicObjectLoader With {
-                                                        .LineNumber = i,
-                                                        .RowData = Line,
-                                                        .Schema = ColumnSchema
-                                                    }
-                                                    Select loader
-                Yield Item
+            Dim schema As Dictionary(Of String, Integer) =
+                __columnList _
+                .SeqIterator _
+                .ToDictionary(Function(x) x.obj,
+                              Function(x) x.i)
+
+            For Each l As DynamicObjectLoader In From i As SeqValue(Of RowObject)
+                                                 In Me._innerTable.SeqIterator
+                                                 Let line As RowObject = i.obj
+                                                 Let loader = New DynamicObjectLoader With {
+                                                     .LineNumber = i.i,
+                                                     .RowData = line,
+                                                     .Schema = schema
+                                                 }
+                                                 Select loader
+                Yield l
             Next
         End Function
 
