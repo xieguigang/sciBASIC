@@ -346,14 +346,14 @@ Namespace Linq
         ''' <returns>An array that contains the elements from the input sequence.</returns>
         <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
                                                         [ctype] As Func(Of T, TOut),
-                                                        Optional Parallel As Boolean = False) As TOut()
+                                                        Optional parallel As Boolean = False) As TOut()
             If source Is Nothing Then  ' 假若这里使用IsNullOrEmpty的话，会导致Linq查询会被执行两次，所以在这里直接判断是否为空值就行了
                 Return New TOut() {}
             End If
 
             Dim LQuery As TOut()
 
-            If Parallel Then
+            If parallel Then
                 LQuery = (From obj As T In source.AsParallel Select [ctype](obj)).ToArray
             Else
                 LQuery = (From obj As T In source Select [ctype](obj)).ToArray
@@ -510,7 +510,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
                                                          [CType] As Func(Of TKey, TValue, T),
                                                          Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value), Parallel:=Parallel)
+            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value), parallel:=Parallel)
         End Function
 
         <Extension>
