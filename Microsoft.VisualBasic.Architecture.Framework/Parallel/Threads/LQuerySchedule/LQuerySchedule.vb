@@ -89,38 +89,38 @@ Namespace Parallel.Linq
             End Get
         End Property
 
-        ''' <summary>
-        ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="inputs"></param>
-        ''' <param name="task"></param>
-        ''' <returns></returns>
-        Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
-                                                    task As Func(Of T, TOut),
-                                                    Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
+        '''' <summary>
+        '''' 将大量的短时间的任务进行分区，合并，然后再执行并行化
+        '''' </summary>
+        '''' <typeparam name="T"></typeparam>
+        '''' <typeparam name="TOut"></typeparam>
+        '''' <param name="inputs"></param>
+        '''' <param name="task"></param>
+        '''' <returns></returns>
+        'Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
+        '                                            task As Func(Of T, TOut),
+        '                                            Optional parTokens As Integer = 20000) As IEnumerable(Of TOut)
 
-            Call $"Start schedule task pool for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
+        '    Call $"Start schedule task pool for {GetType(T).FullName}  -->  {GetType(TOut).FullName}".__DEBUG_ECHO
 
-            Dim buf = TaskPartitions.Partitioning(inputs, parTokens, task)
-            Dim LQueryInvoke = From part As Func(Of TOut())
-                               In buf.AsParallel
-                               Select New AsyncHandle(Of TOut())(part).Run
+        '    Dim buf = TaskPartitions.Partitioning(inputs, parTokens, task)
+        '    Dim LQueryInvoke = From part As Func(Of TOut())
+        '                       In buf.AsParallel
+        '                       Select New AsyncHandle(Of TOut())(part).Run
 
-            For Each part As AsyncHandle(Of TOut()) In LQueryInvoke
-                If part Is Nothing Then
-                    Call VBDebugger.Warning("Parts of the data operation timeout!")
-                    Continue For
-                End If
+        '    For Each part As AsyncHandle(Of TOut()) In LQueryInvoke
+        '        If part Is Nothing Then
+        '            Call VBDebugger.Warning("Parts of the data operation timeout!")
+        '            Continue For
+        '        End If
 
-                For Each x As TOut In part.GetValue
-                    Yield x
-                Next
-            Next
+        '        For Each x As TOut In part.GetValue
+        '            Yield x
+        '        Next
+        '    Next
 
-            Call $"Task job done!".__DEBUG_ECHO
-        End Function
+        '    Call $"Task job done!".__DEBUG_ECHO
+        'End Function
 
         ''' <summary>
         ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化

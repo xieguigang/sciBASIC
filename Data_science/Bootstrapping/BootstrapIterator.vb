@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -127,14 +128,18 @@ Public Module BootstrapIterator
         If parallel Then
             ' memory leaks on linux
             ' 2016-9-28，可能是由于生成csv文件的时候字符串没有被正确的释放所导致内存泄漏，如果只是执行这段代码的话，经过测试没有内存泄漏的危险
+            ' 2016-10-1，经过测试：当数据集增大的时候，内存泄漏的危险依旧存在
 
-            For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
-                                     In k.SeqIterator.AsParallel
-                                     Let odes_Out = params.iterate(model, y0, ps, n, a, b)
-                                     Let isNaNResult As Boolean = odes_Out.HaveNaN
-                                     Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
-                                     Select odes_Out
-                i += 1L
+            Dim task As Func(Of Long, ODEsOut) = Function(null) params.iterate(model, y0, ps, n, a, b)
+            Dim p% = k / CPU_NUMBER
+
+            For Each x As ODEsOut In LQuerySchedule.LQuery(k.Sequence, task, parTokens:=p%) ' 进行k次并行的采样计算
+                If x.HaveNaN AndAlso trimNaN Then
+                    Continue For
+                Else
+                    i += 1L
+                End If
+
                 Yield x
             Next
         Else
