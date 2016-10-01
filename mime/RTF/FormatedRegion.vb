@@ -40,7 +40,7 @@ Public Class FormatedRegion
 #If DEBUG Then
             Try
 #End If
-            Return Mid(RTFDocument._InternalTextMetaSrcCache, Start, Right - Start + 1)
+            Return Mid(RTFDocument.__textMetaSrcCache, Start, Right - Start + 1)
 #If DEBUG Then
             Catch ex As Exception
                 Call Console.WriteLine("[DEBUG] ({0}, {1})", Start, Right)
