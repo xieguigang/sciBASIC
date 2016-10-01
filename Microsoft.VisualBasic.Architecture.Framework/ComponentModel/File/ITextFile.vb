@@ -62,18 +62,18 @@ Namespace ComponentModel
 #End If
 
 #If NET_40 = 0 Then
-        Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
+        Public MustOverride Function Save(Optional path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements Settings.IProfile.Save, ISaveHandle.Save
 #Else
         Public MustOverride Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
 #End If
 
         Public Overrides Function ToString() As String
-            Dim Path As String = FilePath
+            Dim path As String = FilePath
 
-            If String.IsNullOrEmpty(Path) Then
+            If String.IsNullOrEmpty(path) Then
                 Return MyBase.ToString
             Else
-                Return Path.ToFileURL
+                Return path.ToFileURL
             End If
         End Function
 
@@ -110,9 +110,9 @@ Namespace ComponentModel
             Return ""
         End Function
 
-        Protected Shared Function getEncoding(encoding As Encoding) As System.Text.Encoding
+        Protected Shared Function getEncoding(encoding As Encoding) As Encoding
             If encoding Is Nothing Then
-                Return System.Text.Encoding.Default
+                Return Encoding.Default
             Else
                 Return encoding
             End If
@@ -125,7 +125,7 @@ Namespace ComponentModel
         Protected Overridable Overloads Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    Call Save(Encoding:=Encoding.UTF8)
+                    Call Save(encoding:=Encoding.UTF8)
                     ' TODO:  释放托管状态(托管对象)。
                 End If
 
@@ -150,8 +150,8 @@ Namespace ComponentModel
         End Sub
 #End Region
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.GetEncodings)
+        Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.GetEncodings)
         End Function
     End Class
 End Namespace
