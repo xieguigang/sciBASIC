@@ -108,7 +108,7 @@ Public Class ODEsOut
         Return file
     End Function
 
-    Public Shared Function LoadFromDataFrame(csv As String) As ODEsOut
+    Public Shared Function LoadFromDataFrame(csv$) As ODEsOut
         Dim df As File = File.Load(csv)
         Dim cols = df.Columns().ToArray
         Dim X = cols(Scan0)

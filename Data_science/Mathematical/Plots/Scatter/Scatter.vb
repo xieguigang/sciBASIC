@@ -62,7 +62,9 @@ Public Module Scatter
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
                          Optional drawLine As Boolean = True,
-                         Optional legendBorder As Border = Nothing) As Bitmap
+                         Optional legendBorder As Border = Nothing,
+                         Optional fill As Boolean = False,
+                         Optional fillPie As Boolean = True) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -80,6 +82,7 @@ Public Module Scatter
                     Dim br As New SolidBrush(line.color)
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
+                    Dim bottom! = size.Height - margin.Height
 
                     For Each pt In pts
                         Dim a As PointData = pt.First
@@ -88,9 +91,24 @@ Public Module Scatter
                         If drawLine Then
                             Call g.DrawLine(pen, a.pt, b.pt)
                         End If
+                        If fill Then
+                            Dim path As New GraphicsPath
+                            Dim ptbr As New PointF(b.pt.X, bottom)
+                            Dim ptbl As New PointF(a.pt.X, bottom)
 
-                        Call g.FillPie(br, a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
-                        Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
+                            path.AddLine(a.pt, b.pt)
+                            path.AddLine(b.pt, ptbr)
+                            path.AddLine(ptbr, ptbl)
+                            path.AddLine(ptbl, a.pt)
+                            path.CloseFigure()
+
+                            Call g.FillPath(br, path)
+                        End If
+
+                        If fillPie Then
+                            Call g.FillPie(br, a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
+                            Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
+                        End If
                     Next
 
                     If Not line.annotations.IsNullOrEmpty Then
@@ -111,7 +129,7 @@ Public Module Scatter
                                 .fontstyle = CSSFont.GetFontStyle(
                                     FontFace.MicrosoftYaHei,
                                     FontStyle.Regular,
-                                    20),
+                                    30),
                                 .style = LegendStyles.Circle,
                                 .title = x.title
                             }

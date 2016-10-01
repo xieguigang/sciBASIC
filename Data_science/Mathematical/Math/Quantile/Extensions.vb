@@ -36,7 +36,7 @@ Namespace Quantile
 
     Public Module Extensions
 
-        Const epsilon As Double = 0.001
+        Public Const epsilon As Double = 0.001
 
         ''' <summary>
         ''' Example Usage:

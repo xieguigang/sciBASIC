@@ -122,6 +122,7 @@ Public Module LegendPlotExtensions
             Case Else
                 Throw New NotSupportedException(
                     l.style.ToString & " currently is not supported yet!")
+
         End Select
 
         Call g.DrawString(l.title,
@@ -144,17 +145,17 @@ Public Module LegendPlotExtensions
     ''' <param name="topLeft"></param>
     ''' <param name="ls"></param>
     ''' <param name="graphicSize">单个legend图形的绘图区域的大小</param>
-    ''' <param name="d"></param>
+    ''' <param name="d%">Interval distance between the legend graphics.</param>
     <Extension>
     Public Sub DrawLegends(ByRef g As Graphics,
                            topLeft As Point,
                            ls As IEnumerable(Of Legend),
                            Optional graphicSize As SizeF = Nothing,
-                           Optional d As Integer = 10,
+                           Optional d% = 10,
                            Optional border As Border = Nothing)
 
         If graphicSize.IsEmpty Then
-            graphicSize = New SizeF(120, 45)
+            graphicSize = New SizeF(120.0!, 45.0!)
         End If
 
         For Each l As Legend In ls

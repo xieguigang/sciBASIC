@@ -113,6 +113,10 @@ Namespace Language
             Return list
         End Operator
 
+        Public Overloads Shared Operator +(x As Value(Of T), list As IEnumerable(Of T)) As List(Of T)
+            Return (+x).Join(list)
+        End Operator
+
         Public Overloads Shared Operator -(list As Generic.List(Of Value(Of T)), x As Value(Of T)) As Generic.List(Of Value(Of T))
             Call list.Remove(x)
             Return list
