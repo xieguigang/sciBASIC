@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::541ffac43d40d1e554bdf616fcac99db, ..\visualbasic_App\mime\RTF\Font.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Drawing
 
 ''' <summary>
 ''' Font style of the selected text region.
@@ -43,7 +44,7 @@ Public Class Font : Inherits Models.Font
     Sub New()
     End Sub
 
-    Sub New(size As Integer, Bold As Boolean, Name As String, Italic As Boolean, Underline As Boolean, Color As System.Drawing.Color)
+    Sub New(size%, Bold As Boolean, Name$, Italic As Boolean, Underline As Boolean, Color As Color)
         FontSize = size
         FontBold = Bold
         FontFamilyName = Name
@@ -79,7 +80,7 @@ Public Class Font : Inherits Models.Font
         Return FontFamilyName
     End Function
 
-    Public Shared Function FromExistsValue(Font As Font, Color As System.Drawing.Color) As Font
+    Public Shared Function FromExistsValue(Font As Font, Color As Color) As Font
         Dim value = Font.Clone
         value.FontColor = Color
         Return value
@@ -129,7 +130,7 @@ Public Class Font : Inherits Models.Font
         Return String.Format("\red{0}\green{1}\blue{2};", R, G, B)
     End Function
 
-    Public Overloads Shared Function ToString(Color As System.Drawing.Color) As String
+    Public Overloads Shared Function ToString(Color As Color) As String
         Return FontColorToString(Color.R, Color.G, Color.B)
     End Function
 End Class
