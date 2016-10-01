@@ -122,7 +122,7 @@ Public Module StringHelpers
                 Return New NamedValue(Of String)(s, "")
             End If
         Else
-            Dim key As String = Mid(s, 1, p - delimiter.Length)
+            Dim key As String = Mid(s, 1, p - 1)
             Dim value As String = Mid(s, p + delimiter.Length)
 
             If trim Then

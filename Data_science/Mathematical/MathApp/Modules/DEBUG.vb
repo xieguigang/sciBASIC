@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 Module DEBUG
 
@@ -178,7 +179,21 @@ Module DEBUG
 
     Public Function Main() As Integer
 
+        Call Plot3D.Scatter.Plot(Function(x, y) x * y,
+                                 New DoubleRange(-10, 10),
+                                 New DoubleRange(-10, 10),
+                                 New Camera With {
+                                 .screen = New Size(1600, 1000),
+                                 .angle = -60,
+                                 .ViewDistance = -40
+                                 }).SaveAs("x:\@@@@@fdsdfdseeee.png")
 
+        ' Dim dadasdasdasdasXXXXXX = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
+        '  Dim dadasdasdasdasYYYYYY = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
+
+        '  Call QQPlot.Plot(dadasdasdasdasXXXXXX, dadasdasdasdasYYYYYY, xcol:="red").SaveAs("x:\asfsdfsdfsd.png")
+        '   Pause()
+        Pause()
         Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).SaveAs("x:\fsdfsfsdfds.png")
 
         '  Dim ava As Dictionary(Of String, String()) = (From x In AllDotNetPrefixColors.AsParallel Select c = ColorTranslator.ToHtml(x), vd = avadsfdsfds(x)).ToDictionary(Function(x) x.c, Function(x) x.vd.ToArray(AddressOf ColorTranslator.ToHtml))
@@ -202,7 +217,7 @@ Module DEBUG
 
 
         Dim ttttdsfsd = GetType(Example)
-        Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(Model)) AndAlso Not ttttdsfsd.IsAbstract)
+        Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(MonteCarlo.Model)) AndAlso Not ttttdsfsd.IsAbstract)
         Dim iiisddsfd = 1
         For Each sfsdfsds In TestObservation.Compares(100, 0, 10, New Dictionary(Of String, Double) From {{"a", 18.689678431519159}, {"f", 1.0614939771775227}, {"sin", -56.777710793912966}})
             Call sfsdfsds.Plot().SaveAs($"x:\{iiisddsfd}.png")
