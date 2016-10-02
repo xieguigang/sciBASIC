@@ -74,7 +74,7 @@ Public MustInherit Class ODEs
     End Property
 
     Sub New()
-        Dim type As TypeInfo = Me.GetType
+        Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
         Dim fields = type.DeclaredFields _
             .Where(Function(x) x.FieldType.Equals(var.type)) _
             .ToArray
@@ -212,7 +212,7 @@ Public MustInherit Class ODEs
 
     Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
         Get
-            Dim type As TypeInfo = Me.GetType
+            Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
             Dim fields As IEnumerable(Of FieldInfo) =
                 type _
                 .DeclaredFields _

@@ -70,7 +70,9 @@ Public Module Heatmap
     ''' <returns></returns>
     <Extension>
     Public Function LoadDataSet(path As String, Optional uidMap$ = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
-        Dim ds As DataSet() = DataSet.LoadDataSet(path, uidMap)
+        Dim ds As IEnumerable(Of DataSet) =
+            DataSet.LoadDataSet(path, uidMap)
+
         Return LinqAPI.Exec(Of NamedValue(Of Dictionary(Of String, Double))) <=
             From x As DataSet
             In ds
@@ -245,7 +247,7 @@ Public Module Heatmap
             })
         Dim keysOrder As New List(Of String)
 
-        For Each cluster In ClusterDataSet(keys.Length / 5, keysEntity)
+        For Each cluster In ClusterDataSet(CInt(keys.Length / 5), keysEntity)
             For Each k In cluster
                 keysOrder += k.uid
             Next

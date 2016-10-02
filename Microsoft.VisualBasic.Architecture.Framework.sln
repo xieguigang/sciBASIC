@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25402.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
@@ -22,6 +22,14 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "Data_science\Mathematical\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "Data_science\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{AD648A47-8288-4CD1-87BA-B249EDEEC545}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data_science", "Data_science", "{EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gr", "gr", "{8C3E0BC6-7381-4D90-B1F7-ED690E38ACE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mime", "mime", "{75EBAB01-1AD5-40BE-9604-D493D39F29E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -282,5 +290,16 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB} = {AD648A47-8288-4CD1-87BA-B249EDEEC545}
+		{2DD4BE80-DDC3-4767-94A7-10F1C3395716} = {75EBAB01-1AD5-40BE-9604-D493D39F29E2}
+		{85E71B4B-9276-4EC8-AADC-C849205F1EA8} = {8C3E0BC6-7381-4D90-B1F7-ED690E38ACE7}
+		{076315EE-B598-40DC-9280-C71CDF9B6A48} = {8C3E0BC6-7381-4D90-B1F7-ED690E38ACE7}
+		{EF70BED6-8795-4523-A260-C1ABED9405AA} = {8C3E0BC6-7381-4D90-B1F7-ED690E38ACE7}
+		{E3367B88-5D0C-495A-8273-331656D4B5AA} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
+		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
+		{17F8E821-0A01-4975-9CAA-AC95251226D5} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
+		{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
 	EndGlobalSection
 EndGlobal

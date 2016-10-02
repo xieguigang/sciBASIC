@@ -135,7 +135,7 @@ Public Module Scatter
                             }
 
                         If legendPosition.IsEmpty Then
-                            legendPosition = New Point(size.Width * 0.8, margin.Height)
+                            legendPosition = New Point(CInt(size.Width * 0.8), margin.Height)
                         End If
 
                         Call g.DrawLegends(legendPosition, legends,,, legendBorder)
@@ -172,7 +172,7 @@ Public Module Scatter
     Public Function FromVector(x As Vector,
                                Optional color As String = "black",
                                Optional dash As DashStyle = DashStyle.Dash,
-                               Optional ptSize As Integer = 30,
+                               Optional ptSize! = 30,
                                Optional width As Single = 5) As SerialData
         Return New SerialData With {
             .color = color.ToColor,
@@ -184,7 +184,7 @@ Public Module Scatter
                 From o As SeqValue(Of Double)
                 In x.SeqIterator
                 Select New PointData With {
-                    .pt = New PointF(o.i, o.obj)
+                    .pt = New PointF(o.i, CSng(o.obj))
                 }
                     }
     End Function
@@ -211,7 +211,7 @@ Public Module Scatter
     <Extension>
     Public Function FromODEs(odes As ODEsOut,
                              Optional colors As IEnumerable(Of String) = Nothing,
-                             Optional ptSize As Integer = 30,
+                             Optional ptSize! = 30,
                              Optional width As Single = 5) As SerialData()
         Dim c As Color() = If(
             colors.IsNullOrEmpty,
@@ -226,7 +226,7 @@ Public Module Scatter
                 .PointSize = ptSize,
                 .title = y.obj.Name,
                 .width = width,
-                .pts = odes.x.SeqIterator.ToArray(Function(x) New PointData(x.obj, y.obj.x(x.i)))
+                .pts = odes.x.SeqIterator.ToArray(Function(x) New PointData(CSng(x.obj), CSng(y.obj.x(x.i))))
             }
     End Function
 End Module

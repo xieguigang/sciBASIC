@@ -60,9 +60,9 @@ Public Module Bubble
                 Dim array As SerialData() = data.ToArray
                 Dim mapper As New Scaling(array)
                 Dim scale As Func(Of Double, Double) =
-                    If(logR,
-                    Function(r) Math.Log(r + 1) + 1,
-                    Function(r) r)
+                     [If](Of Func(Of Double, Double))(
+                     logR, Function(r) Math.Log(r + 1) + 1,
+                           Function(r) r)
 
                 Call g.DrawAxis(size, margin, mapper, True)
 
@@ -71,7 +71,7 @@ Public Module Bubble
 
                     For Each pt As PointData In s
                         Dim r As Double = scale(pt.value)
-                        Dim p As New Point(pt.pt.X - r, pt.pt.Y - r)
+                        Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
                         Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
 
                         Call g.FillPie(b, rect, 0, 360)

@@ -63,7 +63,7 @@ Namespace csv
 
                 Yield New Plots.SerialData With {
                     .title = g.obj.serial,
-                    .color = colors(g),
+                    .color = colors(g.i),
                     .pts = LinqAPI.Exec(Of PointData) <=
                         From x As SerialData
                         In g.obj.Group
