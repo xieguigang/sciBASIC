@@ -1,7 +1,8 @@
 # Syroot.IO.BinaryData
 
 .NET library extending binary reading and writing functionality.
-> Adapted from the original work of https://github.com/Syroot/BinaryData
+> + Adapted from the original work of https://github.com/Syroot/BinaryData
+> + CodeProject: [&lt;A more powerful BinaryReader/Writer>](http://www.codeproject.com/Articles/1130187/A-more-powerful-BinaryReader-Writer)
 
 ## Introduction
 
@@ -15,7 +16,7 @@ The usage is described in detail [on the wiki](https://github.com/Syroot/BinaryD
 
 ## License
 
-<a href="http://www.wtfpl.net/"><img src="./res/wtfpl.svg" height="20"/ ></a>WTFPL
+<a href="http://www.wtfpl.net/"><img src="./res/wtfpl.svg" height="20"/ ></a> WTFPL
 
     Copyright © 2016 syroot.com <admin@syroot.com>
     This work is free. You can redistribute it and/or modify it under the
