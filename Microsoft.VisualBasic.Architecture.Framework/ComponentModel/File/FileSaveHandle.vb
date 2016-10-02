@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel
 
