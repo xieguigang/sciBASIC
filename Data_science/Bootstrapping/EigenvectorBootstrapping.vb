@@ -106,7 +106,7 @@ Public Module EigenvectorBootstrapping
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
-        Dim clusters = ClusterDataSet(n, datasets, debug:=True, [stop]:=[stop])
+        Dim clusters = ClusterDataSet(n, datasets, debug:=True, [stop]:=[stop], parallel:=True)
         Dim out As New Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags

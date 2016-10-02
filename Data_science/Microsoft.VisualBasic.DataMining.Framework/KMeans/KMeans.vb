@@ -1,35 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::b1c2b7816f4470e8c11263a8a4d3fc28, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel.Linq
 
 Namespace KMeans
 
@@ -127,7 +130,16 @@ Namespace KMeans
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
         ''' <param name="source">An array containing data that will be clustered</param>
         ''' <returns>A collection of clusters of data</returns>
-        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusterCount As Integer, source As IEnumerable(Of T), Optional debug As Boolean = False, Optional [stop] As Integer = -1) As ClusterCollection(Of T)
+        ''' <param name="parallel">
+        ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
+        ''' </param>
+        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(
+                                           clusterCount As Integer,
+                                                 source As IEnumerable(Of T),
+                                           Optional debug As Boolean = False,
+                                           Optional [stop] As Integer = -1,
+                                           Optional parallel As Boolean = True) As ClusterCollection(Of T)
+
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
@@ -166,15 +178,18 @@ Namespace KMeans
             If debug Then
                 Call "Start kmeans clustering....".__DEBUG_ECHO
             End If
+            If parallel Then
+                Call $"Kmeans have {LQuerySchedule.CPU_NUMBER} CPU core for parallel computing.".__DEBUG_ECHO
+            End If
 
             While stableClustersCount <> clusters.NumOfCluster
+                Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data, parallel)
+
                 stableClustersCount = 0
 
-                Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data)
-
                 For clusterIndex As Integer = 0 To clusters.NumOfCluster - 1
-                    Dim x As KMeansCluster(Of T) = newClusters(clusterIndex)
-                    Dim y As KMeansCluster(Of T) = clusters(clusterIndex)
+                    Dim x As KMeansCluster(Of T) = newClusters(clusterIndex)  ' 这一次迭代的聚类结果
+                    Dim y As KMeansCluster(Of T) = clusters(clusterIndex)  ' 上一次迭代的结果
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
 
@@ -185,7 +200,7 @@ Namespace KMeans
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
-                    If (EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then
+                    If (EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then  ' 假若上一次的迭代结果和这一次迭代的结果一样，则距离是0，得到了一个稳定的聚类结果
                         stableClustersCount += 1
                     End If
                 Next
@@ -193,7 +208,7 @@ Namespace KMeans
                 iterationCount += 1
                 clusters = newClusters
 
-                If iterationCount > [stop] Then
+                If iterationCount > [stop] Then ' 迭代的次数已经超过了最大的迭代次数了，则退出计算，否则可能会在这里出现死循环
                     Exit While
                 Else
                     If debug Then
@@ -209,15 +224,11 @@ Namespace KMeans
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusters">A collection of data clusters</param>
-        ''' <param name="data">An array containing data to b eclustered</param>
+        ''' <param name="data">An array containing data to be clustered</param>
+        ''' <param name="parallel">是否采用并行算法</param>
         ''' <returns>A collection of clusters of data</returns>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T()) As ClusterCollection(Of T)
-            Dim clusterMean As Double()
-            Dim firstClusterDistance As Double = 0.0
-            Dim secondClusterDistance As Double = 0.0
-            Dim rowCount As Integer = data.Length
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T(), Optional parallel As Boolean = False) As ClusterCollection(Of T)
             Dim fieldCount As Integer = data(Scan0).Length
-            Dim position As Integer = 0
             Dim newClusters As New ClusterCollection(Of T)     ' create a new collection of clusters
 
             For count As Integer = 0 To clusters.NumOfCluster - 1
@@ -229,35 +240,69 @@ Namespace KMeans
                 Throw New SystemException("Cluster count cannot be ZERO!")
             End If
 
-            '((20+30)/2), ((170+160)/2), ((80+120)/2)
-            For row As Integer = 0 To rowCount - 1
-                Dim dataPoint As T = data(row)
+            If parallel Then  ' Kmeans并行算法
 
-                For cluster As Integer = 0 To clusters.NumOfCluster - 1
-                    Dim x As KMeansCluster(Of T) = clusters(cluster)
-                    If x.NumOfEntity = 0 Then
-                        clusterMean = New Double(dataPoint.Length - 1) {}
-                    Else
-                        clusterMean = x.ClusterMean
-                    End If
+                For Each x As T In data
+                    Dim min = LinqAPI.Exec(Of SeqValue(Of Double)) <=
+ _
+                        From c As SeqValue(Of KMeansCluster(Of T))
+                        In clusters.SeqIterator.AsParallel
+                        Let cluster As KMeansCluster(Of T) = c.obj
+                        Let clusterMean As Double() = If(
+                            cluster.NumOfEntity = 0,
+                            New Double(x.Properties.Length - 1) {},
+                            cluster.ClusterMean)
+                        Let distance As Double = EuclideanDistance(x.Properties, clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
+                        Select New SeqValue(Of Double) With {
+                            .i = c.i,
+                            .obj = distance
+                        }
+                    Dim index As Integer = min _
+                        .OrderBy(Function(distance) distance.obj) _
+                        .First.i ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
 
-                    If cluster = 0 Then
-                        firstClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
-                        position = cluster
-                    Else
-                        secondClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
-
-                        If firstClusterDistance > secondClusterDistance Then
-                            firstClusterDistance = secondClusterDistance
-                            position = cluster
-                        End If
-                    End If
+                    Call newClusters(index).Add(x)
                 Next
-
-                newClusters(position).Add(dataPoint)
-            Next
+            Else
+                '((20+30)/2), ((170+160)/2), ((80+120)/2)
+                For Each x As T In data
+                    Call newClusters(clusters.__minIndex(x)).Add(x)
+                Next
+            End If
 
             Return newClusters
+        End Function
+
+        <Extension>
+        Private Function __minIndex(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), dataPoint As T) As Integer
+            Dim position As Integer = 0
+            Dim clusterMean As Double()
+            Dim firstClusterDistance As Double = 0.0
+            Dim secondClusterDistance As Double = 0.0
+
+            For cluster As Integer = 0 To clusters.NumOfCluster - 1
+                Dim x As KMeansCluster(Of T) = clusters(cluster)
+
+                If x.NumOfEntity = 0 Then
+                    clusterMean = New Double(dataPoint.Length - 1) {}
+                Else
+                    clusterMean = x.ClusterMean
+                End If
+
+                If cluster = 0 Then
+                    firstClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
+                    position = cluster
+                Else
+                    secondClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
+
+                    If firstClusterDistance > secondClusterDistance Then ' 相比前一个cluster的计算结果，在这里有一个更好的计算结果，则使用这个对象的下标
+                        firstClusterDistance = secondClusterDistance
+                        position = cluster  ' 得到某个聚类和当前的数据对象距离最小的下标
+                    End If
+                End If
+            Next
+
+            Return position
         End Function
 
         ''' <summary>

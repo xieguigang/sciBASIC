@@ -132,7 +132,7 @@ Namespace Language
             Dim partTokens As Integer
 
             Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()
-                Return LQuerySchedule.LQuery(source, helper.task, parTokens:=helper.partTokens).ToArray
+                Return LQuerySchedule.LQuery(source, helper.task, helper.partTokens).ToArray
             End Operator
 
             Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()

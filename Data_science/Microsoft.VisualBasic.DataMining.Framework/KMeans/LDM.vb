@@ -95,7 +95,8 @@ Namespace KMeans
         End Function
 
         ''' <summary>
-        ''' Adds a single dimension array data to the cluster
+        ''' Adds a single dimension array data to the cluster.
+        ''' (请注意，每当使用这个方法新添加一个对象的时候，都会导致均值被重新计算)
         ''' </summary>
         ''' <param name="data">A 1-dimensional array containing data that will be added to the cluster</param>
         Public Overrides Sub Add(data As T)
