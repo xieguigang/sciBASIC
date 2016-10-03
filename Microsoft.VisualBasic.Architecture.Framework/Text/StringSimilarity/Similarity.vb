@@ -85,6 +85,39 @@ Namespace Text.Similarity
             Return String.Equals(w1, w2, StringComparison.OrdinalIgnoreCase)
         End Function
 
+        Public Delegate Function IEvaluate(s1$, s2$, ignoreCase As Boolean, cost#, ByRef dist As DistResult) As Double
+
+        ''' <summary>
+        ''' 计算字符串，这个是直接通过计算字符而非像<see cref="Evaluate"/>方法之中计算单词的
+        ''' </summary>
+        ''' <param name="s1$"></param>
+        ''' <param name="s2$"></param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="cost#"></param>
+        ''' <param name="dist"></param>
+        ''' <returns></returns>
+        Public Function LevenshteinEvaluate(s1$, s2$,
+                                            Optional ignoreCase As Boolean = True,
+                                            Optional cost# = 0.7,
+                                            Optional ByRef dist As DistResult = Nothing) As Double
+            If ignoreCase Then
+                s1 = s1.ToLower
+                s2 = s2.ToLower
+            End If
+
+            If s1 = s2 Then ' 假若是大小写不敏感的，由于前面已经被转换为小写了，所以这里直接进行比较
+                Return 1
+            End If
+
+            dist = LevenshteinDistance.ComputeDistance(s1, s2, cost)
+
+            If dist Is Nothing Then
+                Return 0
+            Else
+                Return dist.MatchSimilarity
+            End If
+        End Function
+
         ''' <summary>
         ''' 以s1为准则，将s2进行比较，返回s2之中的单词在s1之中的排列顺序
         ''' </summary>
@@ -98,10 +131,14 @@ Namespace Text.Similarity
 
         <Extension>
         Public Function TokenOrders(s1$(), s2$, Optional caseSensitive As Boolean = False) As Integer()
-            Dim t2$() = s2.Split
+            Return TokenOrders(s1, s2.Split.Distinct, caseSensitive) ' 假若有重复的字符串出现，则肯定不会有顺序排布的结果，将重复的去掉
+        End Function
+
+        <Extension>
+        Public Function TokenOrders(s1$(), s2 As IEnumerable(Of String), Optional caseSensitive As Boolean = False) As Integer()
             Dim orders As New List(Of Integer)
 
-            For Each t$ In t2.Distinct  ' 假若有重复的字符串出现，则肯定不会有顺序排布的结果，将重复的去掉
+            For Each t$ In s2
                 orders += s1.Located(t$, caseSensitive)
             Next
 
@@ -110,6 +147,11 @@ Namespace Text.Similarity
 
         <Extension>
         Public Function IsOrdered(s1$(), s2$, Optional caseSensitive As Boolean = False) As Boolean
+            Return s1.IsOrdered(s2.Split, caseSensitive)
+        End Function
+
+        <Extension>
+        Public Function IsOrdered(s1$(), s2$(), Optional caseSensitive As Boolean = False) As Boolean
             Dim orders%() = s1.TokenOrders(s2, caseSensitive)
             orders = orders.Where(Function(x) x <> -1).ToArray
 
@@ -127,6 +169,36 @@ Namespace Text.Similarity
         <Extension>
         Public Function IsOrdered(s1$, s2$, Optional caseSensitive As Boolean = False) As Boolean
             Return s1.Split.IsOrdered(s2$, caseSensitive)
+        End Function
+
+        <Extension>
+        Public Function IsOrdered(s1$, s2$(), Optional caseSensitive As Boolean = False) As Boolean
+            Return s1.Split.IsOrdered(s2$, caseSensitive)
+        End Function
+
+        Public Function StringSelection(query As String, collection As IEnumerable(Of String), Optional cutoff# = 0.6, Optional ignoreCase As Boolean = True, Optional tokenBased As Boolean = False) As String
+            Dim compare As IEvaluate
+
+            If tokenBased Then
+                compare = AddressOf Evaluate
+            Else
+                compare = AddressOf LevenshteinEvaluate
+            End If
+
+            Dim LQuery = From s As String
+                         In collection.AsParallel
+                         Let score As Double = compare(query, s, ignoreCase, 0.7, Nothing)
+                         Where score >= cutoff
+                         Select s,
+                             score
+                         Order By score Descending
+            Dim result = LQuery.FirstOrDefault
+
+            If result Is Nothing Then
+                Return Nothing
+            Else
+                Return result.s
+            End If
         End Function
     End Module
 End Namespace
