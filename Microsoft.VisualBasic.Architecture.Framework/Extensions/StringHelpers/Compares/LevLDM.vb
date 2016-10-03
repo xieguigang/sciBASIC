@@ -41,136 +41,138 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Public Class DistResult
+Namespace Text
 
-    Public Property Reference As String
-    Public Property Hypotheses As String
-    Public Property DistTable As Streams.Array.Double()
-    ''' <summary>
-    ''' How doest the <see cref="Hypotheses"/> evolve from <see cref="Reference"/>.(这个结果描述了subject是如何变化成为Query的)
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property DistEdits As String
-    Public Property CSS As Coords()
-    Public Property Matches As String
+    Public Class DistResult
 
-    'Public Property Meta As Dictionary(Of String, String) =
-    '    New Dictionary(Of String, String)
+        Public Property Reference As String
+        Public Property Hypotheses As String
+        Public Property DistTable As Streams.Array.Double()
+        ''' <summary>
+        ''' How doest the <see cref="Hypotheses"/> evolve from <see cref="Reference"/>.(这个结果描述了subject是如何变化成为Query的)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property DistEdits As String
+        Public Property CSS As Coords()
+        Public Property Matches As String
 
-    Public Overrides Function ToString() As String
-        Return $"{Reference} => {Hypotheses} // {DistEdits}"
-    End Function
+        'Public Property Meta As Dictionary(Of String, String) =
+        '    New Dictionary(Of String, String)
 
-    Public Function IsPath(i As Integer, j As Integer) As Boolean
-        Dim LQuery = (From x In CSS Where x.X = i AndAlso x.Y = j Select 100).FirstOrDefault
-        Return LQuery > 50
-    End Function
+        Public Overrides Function ToString() As String
+            Return $"{Reference} => {Hypotheses} // {DistEdits}"
+        End Function
 
-    Public ReadOnly Property Distance As Double
-        Get
-            If DistTable.IsNullOrEmpty Then
-                Return 0
-            End If
+        Public Function IsPath(i As Integer, j As Integer) As Boolean
+            Dim LQuery = (From x In CSS Where x.X = i AndAlso x.Y = j Select 100).FirstOrDefault
+            Return LQuery > 50
+        End Function
 
-            Dim reference As String = __getReference()
-            Dim hypotheses As String = __getSubject()
-            Return DistTable(reference.Length).Values(hypotheses.Length)
-        End Get
-    End Property
+        Public ReadOnly Property Distance As Double
+            Get
+                If DistTable.IsNullOrEmpty Then
+                    Return 0
+                End If
 
-    ''' <summary>
-    ''' 可以简单地使用这个数值来表述所比较的两个对象之间的相似度
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property Score As Double
-        Get
-            If String.IsNullOrEmpty(DistEdits) Then
-                Return 0
-            End If
+                Dim reference As String = __getReference()
+                Dim hypotheses As String = __getSubject()
+                Return DistTable(reference.Length).Values(hypotheses.Length)
+            End Get
+        End Property
 
-            Dim view As String = DistEdits.ToLower
-            Dim m As Integer = view.Count("m"c)
-            Dim i As Integer = view.Count("i"c)
-            Dim d As Integer = view.Count("d"c)
-            Dim s As Integer = view.Count("s"c)
-            Dim len As Integer = view.Length
+        ''' <summary>
+        ''' 可以简单地使用这个数值来表述所比较的两个对象之间的相似度
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Score As Double
+            Get
+                If String.IsNullOrEmpty(DistEdits) Then
+                    Return 0
+                End If
 
-            Return (m - (i * 0.5 + d * 0.3 + s * 0.2)) / len
-        End Get
-    End Property
+                Dim view As String = DistEdits.ToLower
+                Dim m As Integer = view.Count("m"c)
+                Dim i As Integer = view.Count("i"c)
+                Dim d As Integer = view.Count("d"c)
+                Dim s As Integer = view.Count("s"c)
+                Dim len As Integer = view.Length
 
-    'Public ReadOnly Property Similarity As Double
-    '    Get
-    '        Dim d As Double = DistTable.Last.Value.Last
-    '        Dim maxLength As Integer = Math.Max(DistTable.Length, DistTable.First.Value.Length)
-    '        Dim value As Double = 1.0 - d / maxLength
-    '        Return value
-    '    End Get
-    'End Property
+                Return (m - (i * 0.5 + d * 0.3 + s * 0.2)) / len
+            End Get
+        End Property
 
-    ''' <summary>
-    ''' m+ scores
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property MatchSimilarity As Double
-        Get
-            Dim ms As String() = Regex.Matches(DistEdits, "m+").ToArray
-            Dim mg = (From x In ms Select x Group x By x Into Count).ToArray
-            Dim len = DistEdits.Length
-            Dim score As Double
+        'Public ReadOnly Property Similarity As Double
+        '    Get
+        '        Dim d As Double = DistTable.Last.Value.Last
+        '        Dim maxLength As Integer = Math.Max(DistTable.Length, DistTable.First.Value.Length)
+        '        Dim value As Double = 1.0 - d / maxLength
+        '        Return value
+        '    End Get
+        'End Property
 
-            For Each x In mg
-                score += (x.x.Length / len) * x.Count
-            Next
+        ''' <summary>
+        ''' m+ scores
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property MatchSimilarity As Double
+            Get
+                Dim ms As String() = Regex.Matches(DistEdits, "m+").ToArray
+                Dim mg = (From x In ms Select x Group x By x Into Count).ToArray
+                Dim len = DistEdits.Length
+                Dim score As Double
 
-            Return score
-        End Get
-    End Property
+                For Each x In mg
+                    score += (x.x.Length / len) * x.Count
+                Next
 
-    ''' <summary>
-    ''' 比对上的对象的数目
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property NumMatches As Integer
-        Get
-            If String.IsNullOrEmpty(DistEdits) Then
-                Return 0
-            End If
+                Return score
+            End Get
+        End Property
 
-            Dim view As String = DistEdits.ToLower
-            Dim m As Integer = view.Count("m"c)
-            Return m
-        End Get
-    End Property
+        ''' <summary>
+        ''' 比对上的对象的数目
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property NumMatches As Integer
+            Get
+                If String.IsNullOrEmpty(DistEdits) Then
+                    Return 0
+                End If
 
-    Public Function CopyTo(Of T As DistResult)(ByRef obj As T) As T
-        obj.CSS = CSS
-        obj.DistEdits = DistEdits
-        obj.DistTable = DistTable
-        obj.Hypotheses = Hypotheses
-        obj.Matches = Matches
-        obj.Reference = Reference
-        Return obj
-    End Function
+                Dim view As String = DistEdits.ToLower
+                Dim m As Integer = view.Count("m"c)
+                Return m
+            End Get
+        End Property
 
-    Public Function TrimMatrix(l As Integer) As Streams.Array.Double()
-        Me.DistTable = Me.DistTable.ToArray(
+        Public Function CopyTo(Of T As DistResult)(ByRef obj As T) As T
+            obj.CSS = CSS
+            obj.DistEdits = DistEdits
+            obj.DistTable = DistTable
+            obj.Hypotheses = Hypotheses
+            obj.Matches = Matches
+            obj.Reference = Reference
+            Return obj
+        End Function
+
+        Public Function TrimMatrix(l As Integer) As Streams.Array.Double()
+            Me.DistTable = Me.DistTable.ToArray(
             Function(row) New Streams.Array.Double With {
                 .Values = row.Values.ToArray(Function(n) Math.Round(n, l))
             })
-        Return Me.DistTable
-    End Function
+            Return Me.DistTable
+        End Function
 
-    ''' <summary>
-    ''' Output HTML result for visualization
-    ''' </summary>
-    ''' <returns></returns>
-    Public Function Visualize() As String
-        Try
-            Return __visualizeHTML()
-        Catch ex As Exception
-            Call App.LogException(ex)
-            Return $"<!DOCTYPE HTML>
+        ''' <summary>
+        ''' Output HTML result for visualization
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Visualize() As String
+            Try
+                Return __visualizeHTML()
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Return $"<!DOCTYPE HTML>
 <html>
 <head>
 <title>{NameOf(HTTP_RFC.RFC_INTERNAL_SERVER_ERROR)}</title>
@@ -179,20 +181,20 @@ Public Class DistResult
 <pre>{ex.ToString}</pre>
 </body>
 </html>"
-        End Try
-    End Function
+            End Try
+        End Function
 
-    Private Function __visualizeHTML() As String
-        Dim html As StringBuilder = New StringBuilder(1024)
-        Call html.AppendLine($"<!DOCTYPE HTML>
+        Private Function __visualizeHTML() As String
+            Dim html As StringBuilder = New StringBuilder(1024)
+            Call html.AppendLine($"<!DOCTYPE HTML>
 <html>
 <head>
 <title>{ToString()}</title>
 </head>
 ")
-        Call html.AppendLine("<body style=""font-family:Ubuntu;"">")
-        Call html.AppendLine("<h3>Summary</h3>")
-        Call html.AppendLine($"<table>
+            Call html.AppendLine("<body style=""font-family:Ubuntu;"">")
+            Call html.AppendLine("<h3>Summary</h3>")
+            Call html.AppendLine($"<table>
 <tr>
 <td>Reference: </td><td> ({__getReference.Length}) <strong> {Reference}</strong></td>
 </tr>
@@ -213,7 +215,7 @@ Public Class DistResult
 <td>Score: </td><td> <strong> {Score}</strong></td>
 </tr>
 </table>")
-        Call html.AppendLine("<p>
+            Call html.AppendLine("<p>
 <table>
 <tr><td>d</td><td> -> Delete</td></tr>
 <tr><td>i</td><td> -> Insert</td></tr>
@@ -221,67 +223,68 @@ Public Class DistResult
 <tr><td>s</td><td> -> Substitute</td></tr>
 </table>
 </p>")
-        Call html.AppendLine("<h3>Levenshtein Edit Distance Table</h3>")
-        Call html.AppendLine(__innerMatrix)
-        Call html.AppendLine("</body></html>")
+            Call html.AppendLine("<h3>Levenshtein Edit Distance Table</h3>")
+            Call html.AppendLine(__innerMatrix)
+            Call html.AppendLine("</body></html>")
 
-        Return html.ToString
-    End Function
+            Return html.ToString
+        End Function
 
-    Protected Overridable Function __innerInsert() As String
-        Return ""
-    End Function
-
-    Private Function __innerMatrix() As String
-        Dim MAT As StringBuilder = New StringBuilder("<table>")
-        Dim dict As Dictionary(Of Integer, Integer())
-
-        If DistTable Is Nothing Then
+        Protected Overridable Function __innerInsert() As String
             Return ""
-        End If
+        End Function
 
-        If CSS.IsNullOrEmpty Then
-            dict = New Dictionary(Of Integer, Integer())
-        Else
-            dict = (From cell As Point
+        Private Function __innerMatrix() As String
+            Dim MAT As StringBuilder = New StringBuilder("<table>")
+            Dim dict As Dictionary(Of Integer, Integer())
+
+            If DistTable Is Nothing Then
+                Return ""
+            End If
+
+            If CSS.IsNullOrEmpty Then
+                dict = New Dictionary(Of Integer, Integer())
+            Else
+                dict = (From cell As Point
                     In CSS
-                    Select cell
-                    Group cell By cell.X Into Group) _
+                        Select cell
+                        Group cell By cell.X Into Group) _
                         .ToDictionary(Function(row) row.X,
                                       Function(row) row.Group.ToArray.ToArray(Function(cell) cell.Y))
-        End If
+            End If
 
-        Dim Reference As String = __getReference()
-        Dim Hypotheses As String = __getSubject()
+            Dim Reference As String = __getReference()
+            Dim Hypotheses As String = __getSubject()
 
-        Call MAT.AppendLine($"<tr><td><tr><td></td>
+            Call MAT.AppendLine($"<tr><td><tr><td></td>
 {Hypotheses.ToArray(Function(ch) $"<td><strong>{ch.ToString}</strong></td>").JoinBy("")}</tr>")
 
-        For i As Integer = 0 To Len(Reference) - 1
-            Dim row As New StringBuilder()
+            For i As Integer = 0 To Len(Reference) - 1
+                Dim row As New StringBuilder()
 
-            For j As Integer = 0 To Len(Hypotheses) - 1
-                If dict.ContainsKey(i) AndAlso Array.IndexOf(dict(i), j) > -1 Then
-                    Call row.Append($"<td style=""background-color:green;color:white""><strong>{DistTable(i)(j)}</strong></td>")
-                Else
-                    Call row.Append($"<td>{DistTable(i)(j)}</td>")
-                End If
-            Next
-            Call MAT.AppendLine($"<tr><td><strong>{Reference(i).ToString}</strong></td>
+                For j As Integer = 0 To Len(Hypotheses) - 1
+                    If dict.ContainsKey(i) AndAlso Array.IndexOf(dict(i), j) > -1 Then
+                        Call row.Append($"<td style=""background-color:green;color:white""><strong>{DistTable(i)(j)}</strong></td>")
+                    Else
+                        Call row.Append($"<td>{DistTable(i)(j)}</td>")
+                    End If
+                Next
+                Call MAT.AppendLine($"<tr><td><strong>{Reference(i).ToString}</strong></td>
 {row.ToString}
 <td style=""background-color:blue;color:white""><strong>{Me.DistEdits(i).ToString}</strong></td></tr>")
-        Next
+            Next
 
-        Call MAT.AppendLine("</table>")
+            Call MAT.AppendLine("</table>")
 
-        Return MAT.ToString
-    End Function
+            Return MAT.ToString
+        End Function
 
-    Protected Overridable Function __getReference() As String
-        Return Reference
-    End Function
+        Protected Overridable Function __getReference() As String
+            Return Reference
+        End Function
 
-    Protected Overridable Function __getSubject() As String
-        Return Hypotheses
-    End Function
-End Class
+        Protected Overridable Function __getSubject() As String
+            Return Hypotheses
+        End Function
+    End Class
+End Namespace

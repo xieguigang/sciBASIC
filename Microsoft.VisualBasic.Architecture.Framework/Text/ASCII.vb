@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Text
 
@@ -253,7 +254,20 @@ Namespace Text
             Return sb.ToString
         End Function
 
+        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().ToArray(AddressOf Chr)
+
         Public Class [Byte]
+
+            Public Shared Function GetASCIISymbols() As Integer()
+                Dim code As New List(Of Integer)
+
+                code += {33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47}
+                code += {58, 59, 60, 61, 62, 63, 64}
+                code += {91, 92, 93, 94, 95, 96}
+                code += {123, 124, 125, 126}
+
+                Return code
+            End Function
 
             ''' <summary>
             ''' 0000 0000	0	00	NUL	空字符（Null）

@@ -252,8 +252,11 @@ Namespace MonteCarlo
                     .Where(Function(x) Not x.Name = AnalysisProtocol.Observation) _
                     .Select(Function(x) x.x) _
                     .MatrixToVector
+                Dim key$ = New NamedValue(Of String)(
+                    (+uid).ToString,
+                    randSamples.Count).GetJson
 
-                Call outIterates.Add(+uid, out)
+                Call outIterates.Add(key$, out)
 
                 If requires / total >= cut Then  ' 已经满足条件了，准备返回数据
                     Return out
