@@ -1324,17 +1324,17 @@ Public Module Extensions
     ''' <remarks></remarks>
     <ExportAPI("FuzzyMatch",
                Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True) As Boolean
+    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
         If tokenbased Then
-            Dim edits As DistResult = StatementMatches.MatchFuzzy(Query, Subject)
-
-            If edits Is Nothing Then
+            Dim similarity# = Evaluate(Query, Subject,,, )
+            Return similarity >= cutoff
+        Else
+            Dim dist = LevenshteinDistance.ComputeDistance(Query, Subject)
+            If dist Is Nothing Then
                 Return False
             Else
-                Return edits.MatchSimilarity >= 0.8
+                Return dist.MatchSimilarity >= cutoff
             End If
-        Else
-            Return FuzzyMatchString.Equals(Query, Subject)
         End If
     End Function
 #End If
