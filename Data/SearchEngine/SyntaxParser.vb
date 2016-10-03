@@ -50,7 +50,7 @@ Public Module SyntaxParser
             Case 1
                 Return op_start.Contains(tmp.First)
             Case 2
-                Return is_Op2nd(a:=tmp(Scan0), b:=tmp(1))
+                Return is_Op2nd(a:=tmp(Scan0), b:=tmp(1), type:=type)
             Case 3
                 If is_Op2nd(a:=tmp(0), b:=tmp(1), type:=type) Then
                     If type = Tokens.op_OR Then ' OR只有两个字符，在这里出现了第三个字符，则很明显不是
@@ -103,6 +103,7 @@ Public Module SyntaxParser
             If c = ASCII.Quot Then
                 If escape Then
                     tmp += c
+                    escape = False
                 Else
                     Dim isQuotClose As Boolean = quotOpen
 
@@ -114,34 +115,41 @@ Public Module SyntaxParser
                         tmp.Clear()
                     End If
                 End If
+            ElseIf c = " "c OrElse c = ASCII.TAB Then
+                If Not quotOpen AndAlso Not escape Then
+                    tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+                    tmp.Clear()
+                Else
+                    tmp += c
+                End If
             Else
                 tmp += c
 
                 If quotOpen Then
-                    Continue Do
-                End If
-                If escape Then
-                    escape = Not escape
-                    Continue Do
-                End If
-                If c = "\"c Then
-                    escape = Not escape
-                    Continue Do
-                End If
-                If c = stackOpen Then
-                    tklist += New Token(Of Tokens)(Tokens.stackOpen, "(")
-                ElseIf c = stackClose Then
-                    tklist += New Token(Of Tokens)(Tokens.stackClose, ")")
-                End If
-
-                If op_start.IndexOf(c) > -1 Then
-                    If tmp.Count = 1 Then ' 可能是操作符的起始
-                        getOp = True
+                    If c = "\"c Then
+                        escape = Not escape
                     Else
-                        If Not IsOptr(tmp) Then
-                            getOp = False
+                        If escape Then
+                            escape = Not escape
                         End If
                     End If
+                    Continue Do
+                End If
+
+                If c = stackOpen Then
+                    tklist += New Token(Of Tokens)(Tokens.stackOpen, "(")
+                    tmp.Clear()
+                    Continue Do
+                ElseIf c = stackClose Then
+                    tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+                    tklist += New Token(Of Tokens)(Tokens.stackClose, ")")
+                    tmp.Clear()
+                    Continue Do
+                End If
+
+                If tmp.Count = 1 AndAlso op_start.IndexOf(c) > -1 Then
+                    ' 可能是操作符的起始
+                    getOp = True
                 Else ' 第二个或者第三个
                     If getOp Then
                         Dim type As Tokens
@@ -153,10 +161,12 @@ Public Module SyntaxParser
                         If type = Tokens.op_OR Then
                             getOp = False ' 因为提取到的已经是OR了，所以无论如何都要关闭提取
 
-                            If t(+1) = " "c Then
+                            If t.Current = " "c Then
                                 ' 是OR
                                 tklist += New Token(Of Tokens)(Tokens.op_OR, "OR")
                                 tmp.Clear()
+                                t += 1
+
                                 Continue Do
                             End If
                         ElseIf type = Tokens.op_AND OrElse type = Tokens.op_NOT Then
@@ -164,10 +174,12 @@ Public Module SyntaxParser
                                 getOp = False ' 因为提取到3个字符了，所以无论如何都要关闭提取
                             End If
 
-                            If t(+1) = " "c Then
+                            If t.Current = " "c Then
                                 ' 是AND/NOT
                                 tklist += New Token(Of Tokens)(type, type.ToString)
                                 tmp.Clear()
+                                t += 1
+
                                 Continue Do
                             End If
                         End If
@@ -175,6 +187,9 @@ Public Module SyntaxParser
                 End If
             End If
         Loop
+
+        tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+        tklist = New List(Of Token(Of Tokens))(tklist.Where(Function(x) Not String.IsNullOrEmpty(x.Text)))
 
         Return tklist
     End Function
