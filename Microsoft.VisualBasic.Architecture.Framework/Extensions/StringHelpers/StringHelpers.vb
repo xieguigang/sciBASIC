@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::2468e18b526a722b5ea19db3cd0f3219, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -301,21 +302,21 @@ Public Module StringHelpers
 
     <ExportAPI("Get.Stackvalue")>
     <Extension>
-    Public Function GetStackValue(s_Data As String, left As String, right As String) As String
-        If Len(s_Data) < 2 Then
+    Public Function GetStackValue(str$, left$, right$) As String
+        If Len(str) < 2 Then
             Return ""
         End If
 
-        Dim p As Integer = InStr(s_Data, left) + 1
-        Dim q As Integer = InStrRev(s_Data, right)
+        Dim p As Integer = InStr(str, left) + 1
+        Dim q As Integer = InStrRev(str, right)
 
         If p = 0 Or q = 0 Then
-            Return s_Data
+            Return str
         ElseIf p >= q Then
             Return ""
         Else
-            s_Data = Mid(s_Data, p, q - p)
-            Return s_Data
+            str = Mid(str, p, q - p)
+            Return str
         End If
     End Function
 
@@ -400,7 +401,7 @@ Public Module StringHelpers
     ''' <param name="regex"></param>
     ''' <returns></returns>
     <ExportAPI("Matched?")>
-    <Extension> Public Function Matches(str As String, regex As String) As Boolean
+    <Extension> Public Function Matched(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
         Return RegularExpressions.Regex.Match(str, regex).Success
     End Function
 
@@ -558,13 +559,14 @@ Public Module StringHelpers
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
     <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
-        Dim Method = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim array As String() = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
-        Dim Len As Integer = array.Length - 1
+        Dim method As StringComparison =
+            If(caseSensitive,
+            StringComparison.Ordinal,
+            StringComparison.OrdinalIgnoreCase)
 
-        For i As Integer = 0 To Len
-            If String.Equals(array(i), Text, Method) Then
-                Return i
+        For Each str As SeqValue(Of String) In collection.SeqIterator
+            If String.Equals(str.obj, Text, method) Then
+                Return str.i
             End If
         Next
 
