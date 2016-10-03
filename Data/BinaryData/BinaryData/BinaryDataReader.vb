@@ -8,12 +8,9 @@ Imports System.Text
 ''' </summary>
 Public Class BinaryDataReader
     Inherits BinaryReader
-    ' ---- MEMBERS ------------------------------------------------------------------------------------------------
 
-    Private _byteOrder As ByteOrder
-    Private _needsReversion As Boolean
-
-    ' ---- CONSTRUCTORS -------------------------------------------------------------------------------------------
+    Dim _byteOrder As ByteOrder
+    Dim _needsReversion As Boolean
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream and
@@ -70,8 +67,6 @@ Public Class BinaryDataReader
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
-    ' ---- PROPERTIES ---------------------------------------------------------------------------------------------
-
     ''' <summary>
     ''' Gets or sets the byte order used to parse binary data with.
     ''' </summary>
@@ -90,15 +85,6 @@ Public Class BinaryDataReader
     ''' way the underlying <see cref="BinaryReader"/> is instantiated, it can only be specified at creation time.
     ''' </summary>
     Public Property Encoding() As Encoding
-        Get
-            Return m_Encoding
-        End Get
-        Private Set
-            m_Encoding = Value
-        End Set
-    End Property
-    Private m_Encoding As Encoding
-
     ''' <summary>
     ''' Gets the length in bytes of the stream in bytes. This is a shortcut to the base stream Length property.
     ''' </summary>
@@ -130,8 +116,6 @@ Public Class BinaryDataReader
         End Get
     End Property
 
-    ' ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
-
     ''' <summary>
     ''' Aligns the reader to the next given byte multiple.
     ''' </summary>
@@ -162,7 +146,7 @@ Public Class BinaryDataReader
     ''' stream by sixteen bytes.
     ''' </summary>
     ''' <returns>The 16-byte floating point value read from the current stream.</returns>
-    Public Overrides Function ReadDecimal() As [Decimal]
+    Public Overrides Function ReadDecimal() As Decimal
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(Marshal.SizeOf(GetType(Decimal)))
             Array.Reverse(bytes)
@@ -180,7 +164,7 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="Decimal"/> values to read.</param>
     ''' <returns>The <see cref="Decimal"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
-    Public Function ReadDecimals(count As Integer) As [Decimal]()
+    Public Function ReadDecimals(count As Integer) As Decimal()
         Return ReadMultiple(count, AddressOf ReadDecimal)
     End Function
 
@@ -189,7 +173,7 @@ Public Class BinaryDataReader
     ''' by eight bytes.
     ''' </summary>
     ''' <returns>The 8-byte floating point value read from the current stream.</returns>
-    Public Overrides Function ReadDouble() As [Double]
+    Public Overrides Function ReadDouble() As Double
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)
             Array.Reverse(bytes)
@@ -207,7 +191,7 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="Double"/> values to read.</param>
     ''' <returns>The <see cref="Double"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
-    Public Function ReadDoubles(count As Integer) As [Double]()
+    Public Function ReadDoubles(count As Integer) As Double()
         Return ReadMultiple(count, AddressOf ReadDouble)
     End Function
 
@@ -300,7 +284,7 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="SByte"/> values to read.</param>
     ''' <returns>The <see cref="SByte"/> array containing data read from the current stream. This might be less than
     ''' the number of bytes requested if the end of the stream is reached.</returns>
-    Public Function ReadSBytes(count As Integer) As [SByte]()
+    Public Function ReadSBytes(count As Integer) As SByte()
         Return ReadMultiple(count, AddressOf ReadSByte)
     End Function
 
@@ -309,7 +293,7 @@ Public Class BinaryDataReader
     ''' by four bytes.
     ''' </summary>
     ''' <returns>The 4-byte floating point value read from the current stream.</returns>
-    Public Overrides Function ReadSingle() As [Single]
+    Public Overrides Function ReadSingle() As Single
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
             Array.Reverse(bytes)
@@ -327,7 +311,7 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="Single"/> values to read.</param>
     ''' <returns>The <see cref="Single"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
-    Public Function ReadSingles(count As Integer) As [Single]()
+    Public Function ReadSingles(count As Integer) As Single()
         Return ReadMultiple(count, AddressOf ReadSingle)
     End Function
 
@@ -336,7 +320,7 @@ Public Class BinaryDataReader
     ''' </summary>
     ''' <param name="format">The binary format, in which the string will be read.</param>
     ''' <returns>The string read from the current stream.</returns>
-    Public Overloads Function ReadString(format As BinaryStringFormat) As [String]
+    Public Overloads Function ReadString(format As BinaryStringFormat) As String
         Return ReadString(format, Encoding)
     End Function
 
@@ -346,7 +330,7 @@ Public Class BinaryDataReader
     ''' <param name="format">The binary format, in which the string will be read.</param>
     ''' <param name="encoding">The encoding used for converting the string.</param>
     ''' <returns>The string read from the current stream.</returns>
-    Public Overloads Function ReadString(format As BinaryStringFormat, encoding As Encoding) As [String]
+    Public Overloads Function ReadString(format As BinaryStringFormat, encoding As Encoding) As String
         Select Case format
             Case BinaryStringFormat.ByteLengthPrefix
                 Return ReadByteLengthPrefixString(encoding)
@@ -357,7 +341,7 @@ Public Class BinaryDataReader
             Case BinaryStringFormat.ZeroTerminated
                 Return ReadZeroTerminatedString(encoding)
             Case BinaryStringFormat.NoPrefixOrTermination
-                Throw New ArgumentException("NoPrefixOrTermination cannot be used for read operations if no length " & "has been specified.", "format")
+                Throw New ArgumentException("NoPrefixOrTermination cannot be used for read operations if no length has been specified.", "format")
             Case Else
                 Throw New ArgumentOutOfRangeException("format", "The specified binary string format is invalid")
         End Select
@@ -369,7 +353,7 @@ Public Class BinaryDataReader
     ''' </summary>
     ''' <param name="length">The length of the string.</param>
     ''' <returns>The string read from the current stream.</returns>
-    Public Overloads Function ReadString(length As Integer) As [String]
+    Public Overloads Function ReadString(length As Integer) As String
         Return ReadString(length, Encoding)
     End Function
 
@@ -380,7 +364,7 @@ Public Class BinaryDataReader
     ''' <param name="length">The length of the string.</param>
     ''' <param name="encoding">The encoding to use for reading the string.</param>
     ''' <returns>The string read from the current stream.</returns>
-    Public Overloads Function ReadString(length As Integer, encoding As Encoding) As [String]
+    Public Overloads Function ReadString(length As Integer, encoding As Encoding) As String
         Return encoding.GetString(ReadBytes(length))
     End Function
 

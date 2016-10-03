@@ -5,8 +5,6 @@ Imports System.IO
 ''' </summary>
 Public Class SeekTask : Implements IDisposable
 
-    ' ---- CONSTRUCTORS -------------------------------------------------------------------------------------------
-
     ''' <summary>
     ''' Initializes a new instance of the <see cref="SeekTask"/> class to temporarily seek the given
     ''' <see cref="Stream"/> to the specified position. The <see cref="System.IO.Stream"/> is rewound to its
@@ -22,18 +20,14 @@ Public Class SeekTask : Implements IDisposable
 		Stream.Seek(offset, origin)
 	End Sub
 
-	' ---- PROPERTIES ---------------------------------------------------------------------------------------------
-
-	''' <summary>
-	''' Gets the <see cref="Stream"/> which is temporarily sought to another position.
-	''' </summary>
-	Public Property Stream() As Stream
+    ''' <summary>
+    ''' Gets the <see cref="Stream"/> which is temporarily sought to another position.
+    ''' </summary>
+    Public Property Stream() As Stream
     ''' <summary>
     ''' Gets the absolute position to which the <see cref="Stream"/> will be rewound after this task is disposed.
     ''' </summary>
     Public Property PreviousPosition() As Long
-
-    ' ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
     ''' <summary>
     ''' Rewinds the <see cref="Stream"/> to its previous position.

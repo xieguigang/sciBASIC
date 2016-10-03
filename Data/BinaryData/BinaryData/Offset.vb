@@ -3,7 +3,6 @@
 ''' be comfortably satisfied later on.
 ''' </summary>
 Public Class Offset
-    ' ---- CONSTRUCTORS & DESTRUCTOR ------------------------------------------------------------------------------
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="Offset"/> class reserving an offset with the specified
@@ -17,41 +16,20 @@ Public Class Offset
 		Writer.Position += 4
 	End Sub
 
-	' ---- PROPERTIES ---------------------------------------------------------------------------------------------
+    ''' <summary>
+    ''' Gets the <see cref="BinaryDataWriter"/> in which underlying stream the allocation is made.
+    ''' </summary>
+    Public Property Writer() As BinaryDataWriter
+    ''' <summary>
+    ''' Gets the address at which the allocation is made.
+    ''' </summary>
+    Public Property Position() As UInteger
 
-	''' <summary>
-	''' Gets the <see cref="BinaryDataWriter"/> in which underlying stream the allocation is made.
-	''' </summary>
-	Public Property Writer() As BinaryDataWriter
-		Get
-			Return m_Writer
-		End Get
-		Private Set
-			m_Writer = Value
-		End Set
-	End Property
-	Private m_Writer As BinaryDataWriter
-
-	''' <summary>
-	''' Gets the address at which the allocation is made.
-	''' </summary>
-	Public Property Position() As UInteger
-		Get
-			Return m_Position
-		End Get
-		Private Set
-			m_Position = Value
-		End Set
-	End Property
-	Private m_Position As UInteger
-
-	' ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
-
-	''' <summary>
-	''' Satisfies the offset by writing the current position of the underlying stream at the reserved
-	''' <see cref="Position"/>, then seeking back to the current position.
-	''' </summary>
-	Public Sub Satisfy()
+    ''' <summary>
+    ''' Satisfies the offset by writing the current position of the underlying stream at the reserved
+    ''' <see cref="Position"/>, then seeking back to the current position.
+    ''' </summary>
+    Public Sub Satisfy()
 		' Temporarily seek back to the allocation offset and write the previous address there, then seek back.
 		Dim oldPosition As UInteger = CUInt(Writer.Position)
 		Writer.Position = Position

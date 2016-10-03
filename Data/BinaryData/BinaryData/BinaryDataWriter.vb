@@ -7,12 +7,9 @@ Imports System.Text
 ''' </summary>
 Public Class BinaryDataWriter
     Inherits BinaryWriter
-    ' ---- MEMBERS ------------------------------------------------------------------------------------------------
 
-    Private _byteOrder As ByteOrder
-    Private _needsReversion As Boolean
-
-    ' ---- CONSTRUCTORS -------------------------------------------------------------------------------------------
+    Dim _byteOrder As ByteOrder
+    Dim _needsReversion As Boolean
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataWriter"/> class based on the specified stream and
@@ -66,8 +63,6 @@ Public Class BinaryDataWriter
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
-    ' ---- PROPERTIES ---------------------------------------------------------------------------------------------
-
     ''' <summary>
     ''' Gets or sets the byte order used to parse binary data with.
     ''' </summary>
@@ -86,15 +81,6 @@ Public Class BinaryDataWriter
     ''' way the underlying <see cref="BinaryWriter"/> is instantiated, it can only be specified at creation time.
     ''' </summary>
     Public Property Encoding() As Encoding
-        Get
-            Return m_Encoding
-        End Get
-        Private Set
-            m_Encoding = Value
-        End Set
-    End Property
-    Private m_Encoding As Encoding
-
     ''' <summary>
     ''' Gets or sets the position within the current stream. This is a shortcut to the base stream Position
     ''' property.
@@ -107,8 +93,6 @@ Public Class BinaryDataWriter
             BaseStream.Position = Value
         End Set
     End Property
-
-    ' ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
     ''' <summary>
     ''' Allocates space for an <see cref="Offset"/> which can be satisfied later on.
@@ -192,7 +176,7 @@ Public Class BinaryDataWriter
     ''' sixteen bytes.
     ''' </summary>
     ''' <param name="value">The value to write.</param>
-    Public Overrides Sub Write(value As [Decimal])
+    Public Overrides Sub Write(value As Decimal)
         If _needsReversion Then
             Dim bytes As Byte() = DecimalToBytes(value)
             WriteReversed(bytes)
@@ -206,7 +190,7 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Decimal"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Decimal"/> values to write.</param>
-    Public Overloads Sub Write(values As [Decimal]())
+    Public Overloads Sub Write(values As Decimal())
         WriteMultiple(values, AddressOf Write)
     End Sub
 
@@ -215,7 +199,7 @@ Public Class BinaryDataWriter
     ''' eight bytes.
     ''' </summary>
     ''' <param name="value">The value to write.</param>
-    Public Overrides Sub Write(value As [Double])
+    Public Overrides Sub Write(value As Double)
         If _needsReversion Then
             Dim bytes As Byte() = BitConverter.GetBytes(value)
             WriteReversed(bytes)
@@ -229,7 +213,7 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Double"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Double"/> values to write.</param>
-    Public Overloads Sub Write(values As [Double]())
+    Public Overloads Sub Write(values As Double())
         WriteMultiple(values, AddressOf Write)
     End Sub
 
@@ -306,7 +290,7 @@ Public Class BinaryDataWriter
     ''' bytes.
     ''' </summary>
     ''' <param name="value">The value to write.</param>
-    Public Overrides Sub Write(value As [Single])
+    Public Overrides Sub Write(value As Single)
         If _needsReversion Then
             Dim bytes As Byte() = BitConverter.GetBytes(value)
             WriteReversed(bytes)
@@ -320,7 +304,7 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Single"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Single"/> values to write.</param>
-    Public Overloads Sub Write(values As [Single]())
+    Public Overloads Sub Write(values As Single())
         WriteMultiple(values, AddressOf Write)
     End Sub
 
@@ -331,7 +315,7 @@ Public Class BinaryDataWriter
     ''' </summary>
     ''' <param name="value">The value to write.</param>
     ''' <param name="format">The binary format in which the string will be written.</param>
-    Public Overloads Sub Write(value As [String], format As BinaryStringFormat)
+    Public Overloads Sub Write(value As String, format As BinaryStringFormat)
         Write(value, format, Encoding)
     End Sub
 
@@ -343,7 +327,7 @@ Public Class BinaryDataWriter
     ''' <param name="value">The value to write.</param>
     ''' <param name="format">The binary format in which the string will be written.</param>
     ''' <param name="encoding">The encoding used for converting the string.</param>
-    Public Overloads Sub Write(value As [String], format As BinaryStringFormat, encoding As Encoding)
+    Public Overloads Sub Write(value As String, format As BinaryStringFormat, encoding As Encoding)
         Select Case format
             Case BinaryStringFormat.ByteLengthPrefix
                 WriteByteLengthPrefixString(value, encoding)
@@ -433,8 +417,6 @@ Public Class BinaryDataWriter
     Public Overloads Sub Write(values As UInt64())
         WriteMultiple(values, AddressOf Write)
     End Sub
-
-    ' ---- METHODS (PRIVATE) --------------------------------------------------------------------------------------
 
     Private Sub WriteMultiple(Of T)(values As T(), writeFunc As Action(Of T))
         For i As Integer = 0 To values.Length - 1
