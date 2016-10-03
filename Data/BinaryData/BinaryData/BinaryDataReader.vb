@@ -50,6 +50,10 @@ Public Class BinaryDataReader
         Me.New(input, encoding, False)
     End Sub
 
+    Public Sub New(input As Stream, Optional encoding As Encodings = Encodings.UTF8)
+        Me.New(input, encoding.GetEncodings)
+    End Sub
+
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream and
     ''' character encoding, and optionally leaves the stream open.

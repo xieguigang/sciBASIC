@@ -47,6 +47,10 @@ Public Class BinaryDataWriter
         Me.New(output, encoding, False)
     End Sub
 
+    Public Sub New(output As Stream, Optional encoding As Encodings = Encodings.UTF8)
+        Me.New(output, encoding.GetEncodings)
+    End Sub
+
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataWriter"/> class based on the specified stream and
     ''' character encoding, and optionally leaves the stream open.
