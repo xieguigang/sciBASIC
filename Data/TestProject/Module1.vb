@@ -1,5 +1,10 @@
-﻿Module Module1
+﻿Imports Microsoft.VisualBasic.Data.IO.SearchEngine
+
+Module Module1
     Sub Main()
+
+        Dim exp = Expression.Build("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText, New AssertionProvider)
+
 
         MsgBox("*.*".WildcardMatch("a.b"))
         MsgBox("*.?ab".WildcardMatch("a.ab"))
@@ -10,6 +15,6 @@
         MsgBox("*.*".WildcardMatch("a.b"))
         MsgBox("*.*".WildcardMatch("a.b"))
 
-        Dim tk = Microsoft.VisualBasic.Data.IO.SearchEngine.SyntaxParser.Parser("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText)
+        Dim tk = SyntaxParser.Parser("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText)
     End Sub
 End Module

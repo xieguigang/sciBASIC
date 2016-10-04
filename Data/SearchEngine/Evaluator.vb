@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text
 
 Public Module Evaluator
@@ -36,5 +37,15 @@ Public Module Evaluator
 
     Public Function MustContains(term$, searchIn$) As Boolean
         Return InStr(searchIn, term$, CompareMethod.Text) > 0
+    End Function
+
+    <Extension>
+    Public Function IsMustExpression(s$) As Boolean
+        Return s.First = """"c AndAlso s.Last = """"c
+    End Function
+
+    <Extension>
+    Public Function IsAnyExpression(s$) As Boolean
+        Return s.First = "'"c AndAlso s.Last = "'"c
     End Function
 End Module
