@@ -558,15 +558,23 @@ Public Module StringHelpers
     ''' <param name="caseSensitive"></param>
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
-    <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
+    <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True, Optional fuzzy As Boolean = False) As Integer
         Dim method As StringComparison =
             If(caseSensitive,
             StringComparison.Ordinal,
             StringComparison.OrdinalIgnoreCase)
+        Dim method2 As CompareMethod =
+            If(caseSensitive,
+            CompareMethod.Binary,
+            CompareMethod.Text)
 
         For Each str As SeqValue(Of String) In collection.SeqIterator
             If String.Equals(str.obj, Text, method) Then
                 Return str.i
+            ElseIf fuzzy Then
+                If InStr(str.obj, Text, method2) > 0 Then
+                    Return str.i
+                End If
             End If
         Next
 
@@ -574,7 +582,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Search the string by keyword in a string collection. Unlike search function <see cref="StringHelpers.Located(IEnumerable(Of String), String, Boolean)"/>
+    ''' Search the string by keyword in a string collection. Unlike search function <see cref="StringHelpers.Located(IEnumerable(Of String), String, Boolean, Boolean)"/>
     ''' using function <see cref="String.Equals"/> function to search string, this function using <see cref="Strings.InStr(String, String, CompareMethod)"/>
     ''' to search the keyword.
     ''' </summary>

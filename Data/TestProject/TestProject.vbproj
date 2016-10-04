@@ -72,6 +72,7 @@
     <Compile Include="Module1.vb" />
     <Compile Include="SchemaParsingTest.vb" />
     <Compile Include="ResultData.vb" />
+    <Compile Include="StringExtensions.vb" />
     <Compile Include="TestMain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

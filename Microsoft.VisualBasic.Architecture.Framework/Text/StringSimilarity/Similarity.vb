@@ -135,11 +135,11 @@ Namespace Text.Similarity
         End Function
 
         <Extension>
-        Public Function TokenOrders(s1$(), s2 As IEnumerable(Of String), Optional caseSensitive As Boolean = False) As Integer()
+        Public Function TokenOrders(s1$(), s2 As IEnumerable(Of String), Optional caseSensitive As Boolean = False, Optional fuzzy As Boolean = True) As Integer()
             Dim orders As New List(Of Integer)
 
             For Each t$ In s2
-                orders += s1.Located(t$, caseSensitive)
+                orders += s1.Located(t$, caseSensitive, fuzzy)
             Next
 
             Return orders
@@ -158,8 +158,8 @@ Namespace Text.Similarity
         ''' <param name="caseSensitive"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function IsOrdered(s1$(), s2$(), Optional caseSensitive As Boolean = False) As Boolean
-            Dim orders%() = s1.TokenOrders(s2, caseSensitive)
+        Public Function IsOrdered(s1$(), s2$(), Optional caseSensitive As Boolean = False, Optional fuzzy As Boolean = True) As Boolean
+            Dim orders%() = s1.TokenOrders(s2, caseSensitive, fuzzy)
             orders = orders.Where(Function(x) x <> -1).ToArray
 
             If orders.Length = 0 Then  ' 这里是完全比对不上的情况，则肯定是False
@@ -181,8 +181,8 @@ Namespace Text.Similarity
         End Function
 
         <Extension>
-        Public Function IsOrdered(s1$, s2$(), Optional caseSensitive As Boolean = False) As Boolean
-            Return s1.Split.IsOrdered(s2$, caseSensitive)
+        Public Function IsOrdered(s1$, s2$(), Optional caseSensitive As Boolean = False, Optional fuzzy As Boolean = True) As Boolean
+            Return s1.Split.IsOrdered(s2$, caseSensitive, fuzzy)
         End Function
 
         Public Function StringSelection(query As String, collection As IEnumerable(Of String), Optional cutoff# = 0.6, Optional ignoreCase As Boolean = True, Optional tokenBased As Boolean = False) As String
