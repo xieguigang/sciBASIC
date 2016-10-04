@@ -554,11 +554,11 @@ Public Module StringHelpers
     ''' String compares using <see cref="system.String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
     ''' </summary>
     ''' <param name="collection"></param>
-    ''' <param name="Text"></param>
+    ''' <param name="text"></param>
     ''' <param name="caseSensitive"></param>
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
-    <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True, Optional fuzzy As Boolean = False) As Integer
+    <Extension> Public Function Located(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True, Optional fuzzy As Boolean = False) As Integer
         Dim method As StringComparison =
             If(caseSensitive,
             StringComparison.Ordinal,
@@ -569,12 +569,30 @@ Public Module StringHelpers
             CompareMethod.Text)
 
         For Each str As SeqValue(Of String) In collection.SeqIterator
-            If String.Equals(str.obj, Text, method) Then
+            If String.Equals(str.obj, text, method) Then
                 Return str.i
             ElseIf fuzzy Then
-                If InStr(str.obj, Text, method2) > 0 Then
+                If InStr(str.obj, text, method2) > 0 Then
                     Return str.i
                 End If
+            End If
+        Next
+
+        Return -1
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="collection"></param>
+    ''' <param name="text">可以使用通配符</param>
+    ''' <param name="caseSensitive"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
+        For Each s As SeqValue(Of String) In collection.SeqIterator
+            If text.WildcardMatch(s.obj, Not caseSensitive) Then
+                Return s.i
             End If
         Next
 
