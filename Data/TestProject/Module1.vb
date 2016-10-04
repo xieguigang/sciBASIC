@@ -3,7 +3,7 @@
 Module Module1
     Sub Main()
 
-        Dim exp = Expression.Build("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText, New AssertionProvider)
+        Dim exp = ExpressionBuilder.Build("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText, New AssertionProvider)
 
 
         MsgBox("*.*".WildcardMatch("a.b"))

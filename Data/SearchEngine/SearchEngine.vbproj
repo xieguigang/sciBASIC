@@ -150,6 +150,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssertionProvider.vb" />
+    <Compile Include="MetaExpression.vb" />
+    <Compile Include="IObject.vb" />
+    <Compile Include="ExpressionBuilder.vb" />
     <Compile Include="Expression.vb" />
     <Compile Include="Evaluator.vb" />
     <Compile Include="SyntaxParser.vb" />
