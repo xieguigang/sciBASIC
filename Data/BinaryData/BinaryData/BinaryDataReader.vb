@@ -2,6 +2,7 @@ Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Represents an extended <see cref="BinaryReader"/> supporting special file format data types.

@@ -1,6 +1,7 @@
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Represents an extended <see cref="BinaryWriter"/> supporting special file format data types.
@@ -166,10 +167,10 @@ Public Class BinaryDataWriter
         Select Case format
             Case BinaryDateTimeFormat.CTime
                 Write(CUInt((New DateTime(1970, 1, 1) - value.ToLocalTime()).TotalSeconds))
-                Exit Select
+
             Case BinaryDateTimeFormat.NetTicks
                 Write(value.Ticks)
-                Exit Select
+
             Case Else
                 Throw New ArgumentOutOfRangeException("format", "The specified binary datetime format is invalid.")
         End Select
@@ -335,19 +336,19 @@ Public Class BinaryDataWriter
         Select Case format
             Case BinaryStringFormat.ByteLengthPrefix
                 WriteByteLengthPrefixString(value, encoding)
-                Exit Select
+
             Case BinaryStringFormat.WordLengthPrefix
                 WriteWordLengthPrefixString(value, encoding)
-                Exit Select
+
             Case BinaryStringFormat.DwordLengthPrefix
                 WriteDwordLengthPrefixString(value, encoding)
-                Exit Select
+
             Case BinaryStringFormat.ZeroTerminated
                 WriteZeroTerminatedString(value, encoding)
-                Exit Select
+
             Case BinaryStringFormat.NoPrefixOrTermination
                 WriteNoPrefixOrTerminationString(value, encoding)
-                Exit Select
+
             Case Else
                 Throw New ArgumentOutOfRangeException("format", "The specified binary string format is invalid")
         End Select

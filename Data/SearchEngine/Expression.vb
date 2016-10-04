@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Linq
+
 ''' <summary>
 ''' The query expression
 ''' </summary>
