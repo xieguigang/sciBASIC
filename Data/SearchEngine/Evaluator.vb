@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Text
+﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Text
 
 Public Module Evaluator
 
@@ -14,6 +15,11 @@ Public Module Evaluator
     ''' <param name="searchIn$"></param>
     ''' <returns></returns>
     Public Function ContainsAny(term$, searchIn$) As Boolean
+        If term.First = "#"c Then
+            Dim regexp As New Regex(Mid(term$, 2), RegexICSng)
+            Return regexp.Match(searchIn$).Success
+        End If
+
         Dim t1$() = term.Split(__symbolsNoWildcards)  ' term
         Dim t2$() = searchIn.Split(ASCII.Symbols)  ' 目标
 
