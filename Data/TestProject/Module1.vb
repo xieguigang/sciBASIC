@@ -3,6 +3,16 @@
 Module Module1
     Sub Main()
 
+        Dim test As IObject = IObject.FromString("1234")
+
+        Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test)) ' T
+        Console.WriteLine("#\d+".Evaluate(test))  ' T
+        Console.WriteLine("""#\d+""".Evaluate(test)) 'F
+        Console.WriteLine("Text:'#\d+'".Evaluate(test))
+        Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test))
+        Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test))
+
+        Pause()
 
         If True And False Or (True And False) Then
             MsgBox(1)

@@ -8,7 +8,7 @@ Public Class IObject
 
     Public ReadOnly Property Type As Type
     Public ReadOnly Property Schema As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
-    Public Property x As Object
+    Public Overridable Property x As Object
 
     Sub New(type As Type)
         Me.Type = type
@@ -27,18 +27,20 @@ Public Class IObject
             }
         Next
     End Function
-End Class
 
-Public Class IString : Inherits IObject
-
-    Sub New()
-        MyBase.New(GetType(String))
-    End Sub
-
-    Public Overrides Iterator Function EnumerateFields() As IEnumerable(Of NamedValue(Of String))
-        Yield New NamedValue(Of String) With {
-            .Name = "Text",
-            .x = Scripting.ToString(x)
+    Public Shared Function FromString(s As String) As IObject
+        Return New IObject(GetType(Text)) With {
+            .x = New Text With {
+                .Text = s
+            }
         }
     End Function
 End Class
+
+Public Structure Text
+    Public Property Text As String
+
+    Public Overrides Function ToString() As String
+        Return Text
+    End Function
+End Structure

@@ -1,4 +1,5 @@
-﻿''' <summary>
+﻿Imports Microsoft.VisualBasic.Linq
+''' <summary>
 ''' The query expression
 ''' </summary>
 Public Class Expression
@@ -23,7 +24,9 @@ Public Class Expression
         ' NOT 0 OR 1 -> {undefine, NOT}, {0, OR}, {1, undefine}
         ' NOT 0 OR NOT 0 -> {undefine, NOT}, {0, OR}, {undefine, NOT}, {0, undefine}
 
-        For Each m As MetaExpression In exp
+        For Each i As SeqValue(Of MetaExpression) In exp.SeqIterator
+            Dim m As MetaExpression = i.obj
+
             If m.Operator = SyntaxParser.Tokens.op_NOT Then
                 notPending = True
                 Continue For
@@ -41,6 +44,8 @@ Public Class Expression
                     Exit For
                 ElseIf m.Operator = SyntaxParser.Tokens.op_AND Then
                     Continue For
+                ElseIf i.i = exp.Count - 1 Then
+                    Exit For
                 Else
                     Throw New SyntaxErrorException
                 End If
@@ -48,6 +53,8 @@ Public Class Expression
                 If m.Operator = SyntaxParser.Tokens.op_OR Then
                     Continue For
                 ElseIf m.Operator = SyntaxParser.Tokens.op_AND Then
+                    Exit For
+                ElseIf i.i = exp.Count - 1 Then
                     Exit For
                 Else
                     Throw New SyntaxErrorException

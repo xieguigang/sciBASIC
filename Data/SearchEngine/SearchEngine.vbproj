@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertionProvider.vb" />
+    <Compile Include="DataEnumerator.vb" />
     <Compile Include="MetaExpression.vb" />
     <Compile Include="IObject.vb" />
     <Compile Include="ExpressionBuilder.vb" />

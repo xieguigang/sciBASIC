@@ -7,6 +7,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module ExpressionBuilder
 
+    <Extension>
+    Public Function Evaluate(query As String, data As IObject) As Boolean
+        Return Build(query$).Evaluate(data)
+    End Function
+
     Public Function Build(query$) As Expression
         Return New Pointer(Of Token(Of Tokens))(Parser(query$)).Build()
     End Function

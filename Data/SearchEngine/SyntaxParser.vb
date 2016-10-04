@@ -147,6 +147,10 @@ Public Module SyntaxParser
                     tmp.Clear()
                     Continue Do
                 ElseIf c = stackClose Then
+                    If tmp.Last = stackClose Then
+                        tmp.RemoveLast
+                    End If
+
                     tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
                     tklist += New Token(Of Tokens)(Tokens.stackClose, ")")
                     tmp.Clear()
