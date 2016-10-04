@@ -150,16 +150,25 @@ Namespace Text.Similarity
             Return s1.IsOrdered(s2.Split, caseSensitive)
         End Function
 
+        ''' <summary>
+        ''' 查看<paramref name="s2"/>之中的字符串的顺序是否是在<paramref name="s1"/>之中按顺序排序的
+        ''' </summary>
+        ''' <param name="s1$"></param>
+        ''' <param name="s2$"></param>
+        ''' <param name="caseSensitive"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function IsOrdered(s1$(), s2$(), Optional caseSensitive As Boolean = False) As Boolean
             Dim orders%() = s1.TokenOrders(s2, caseSensitive)
             orders = orders.Where(Function(x) x <> -1).ToArray
 
-            If orders.Length <= 1 Then
+            If orders.Length = 0 Then  ' 这里是完全比对不上的情况，则肯定是False
                 Return False
             End If
 
+            ' 还有一个比对上的怎么办？？？
             If orders.SequenceEqual(orders.OrderBy(Function(x) x)) Then
+                ' 假若排序前和排序后的元素仍然每一个元素都相等，则是说明s2是和s1的排序是一样的
                 Return True
             Else
                 Return False
