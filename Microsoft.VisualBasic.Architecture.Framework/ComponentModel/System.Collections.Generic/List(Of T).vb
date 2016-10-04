@@ -204,6 +204,12 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         Return list
     End Operator
 
+    ''' <summary>
+    ''' <see cref="List(Of T).RemoveAt(Integer)"/>
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <param name="index"></param>
+    ''' <returns></returns>
     Public Shared Operator -(list As List(Of T), index As Integer) As List(Of T)
         Call list.RemoveAt(index)
         Return list

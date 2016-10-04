@@ -3,7 +3,12 @@
 Module Module1
     Sub Main()
 
-        Dim exp = ExpressionBuilder.Build("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText, New AssertionProvider)
+
+        If True And False Or (True And False) Then
+            MsgBox(1)
+        End If
+
+        Dim exp = ExpressionBuilder.Build("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText)
 
 
         MsgBox("*.*".WildcardMatch("a.b"))

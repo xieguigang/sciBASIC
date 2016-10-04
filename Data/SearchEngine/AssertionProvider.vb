@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Delegate Function IAssertion(data As IObject) As Boolean
 
-Public Class AssertionProvider
+Public Module AssertionProvider
 
     Public Function MustContains(t As Token(Of Tokens)) As IAssertion
         Dim term$ = t.Text.GetString
@@ -71,4 +71,4 @@ Public Class AssertionProvider
                 Return False
             End Function
     End Function
-End Class
+End Module
