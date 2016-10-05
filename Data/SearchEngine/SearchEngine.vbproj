@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</ProjectGuid>
+    <ProjectGuid>{8AFBC715-5EB6-4EAF-A967-D29A5667709F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.IO.SearchEngine</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.IO.SearchEngine</AssemblyName>
@@ -49,7 +49,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>D:\GCModeller\GCModeller\bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.IO.SearchEngine.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>None</DebugType>
