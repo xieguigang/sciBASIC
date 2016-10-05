@@ -80,8 +80,9 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
-        Dim cli = CommandLine.TryParse("/start /test 23 /@set var1=""aa"";var2=""bb"";99=""#######"";123=2333")
+        Dim cli = CommandLine.TryParse("/start /test 23 /@set ""var1=""aa"";var2=""b\""b"";99=""###  ## \""  ##"";123=2333""")
 
+        Dim xadaads = cli.GetDictionary("/@set")
 
         Pause()
 
