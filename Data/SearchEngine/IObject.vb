@@ -4,11 +4,10 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class IObject
+Public Structure IObject
 
     Public ReadOnly Property Type As Type
     Public ReadOnly Property Schema As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
-    Public Overridable Property x As Object
 
     Sub New(type As Type)
         Me.Type = type
@@ -19,7 +18,7 @@ Public Class IObject
     ''' 返回: ``FiledName: value_string``
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable Iterator Function EnumerateFields() As IEnumerable(Of NamedValue(Of String))
+    Public Iterator Function EnumerateFields(x As Object) As IEnumerable(Of NamedValue(Of String))
         For Each field In Schema.Values
             Yield New NamedValue(Of String) With {
                 .Name = field.Identity,
@@ -27,15 +26,7 @@ Public Class IObject
             }
         Next
     End Function
-
-    Public Shared Function FromString(s As String) As IObject
-        Return New IObject(GetType(Text)) With {
-            .x = New Text With {
-                .Text = s
-            }
-        }
-    End Function
-End Class
+End Structure
 
 Public Structure Text
     Public Property Text As String

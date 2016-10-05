@@ -4,15 +4,15 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Delegate Function IAssertion(data As IObject) As Boolean
+Public Delegate Function IAssertion(def As IObject, obj As Object) As Boolean
 
 Public Module AssertionProvider
 
     Public Function MustContains(t As Token(Of Tokens)) As IAssertion
         Dim term$ = t.Text.GetString
 
-        Return Function(data)
-                   For Each x As NamedValue(Of String) In data.EnumerateFields
+        Return Function(def, obj)
+                   For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
                        If Evaluator.MustContains(term, x.x) Then
                            Return True
                        End If
@@ -26,8 +26,8 @@ Public Module AssertionProvider
         Dim term$ = t.Text.GetString("'")
 
         If Not term.Contains(":"c) Then
-            Return Function(data)
-                       For Each x As NamedValue(Of String) In data.EnumerateFields
+            Return Function(def, obj)
+                       For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
                            If Evaluator.ContainsAny(term, x.x) Then
                                Return True
                            End If
@@ -53,12 +53,12 @@ Public Module AssertionProvider
         Dim fName$ = fieldSearch.Name.ToLower
 
         Return _
-            Function(data)
-                For Each key$ In data.Schema.Keys
+            Function(def, obj)
+                For Each key$ In def.Schema.Keys
                     If LCase(key$) = fName$ Then
                         Dim searchIn As String =
                         Scripting.ToString(
-                        data.Schema(key$).GetValue(data.x))
+                        def.Schema(key$).GetValue(obj))
 
                         If assertion(term, searchIn) Then
                             Return True

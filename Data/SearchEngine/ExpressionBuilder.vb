@@ -9,8 +9,18 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Public Module ExpressionBuilder
 
     <Extension>
-    Public Function Evaluate(query As String, data As IObject) As Boolean
-        Return Build(query$).Evaluate(data)
+    Public Function Evaluate(query As String, x As Object) As Boolean
+        Dim type As Type = x.GetType
+
+        If type.Equals(GetType(String)) Then
+            Return Build(query$) _
+                .Evaluate(New IObject(GetType(Text)),
+                          New Text With {
+                            .Text = DirectCast(x, String)
+                          })
+        Else
+            Return Build(query$).Evaluate(New IObject(type), x)
+        End If
     End Function
 
     Public Function Build(query$) As Expression

@@ -7,16 +7,16 @@ Public Class Expression
 
     Public Property Tokens As MetaExpression()
 
-    Public Function Evaluate(x As IObject) As Boolean
-        Return Expression.Evaluate(x, Tokens)
+    Public Function Evaluate(def As IObject, obj As Object) As Boolean
+        Return Expression.Evaluate(def, obj, Tokens)
     End Function
 
     ''' <summary>
     ''' 逻辑运算都是从左往右计算的
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="def"></param>
     ''' <returns></returns>
-    Public Shared Function Evaluate(x As IObject, tokens As IEnumerable(Of MetaExpression)) As Boolean
+    Public Shared Function Evaluate(def As IObject, obj As Object, tokens As IEnumerable(Of MetaExpression)) As Boolean
         Dim notPending As Boolean
         Dim exp As New List(Of MetaExpression)(tokens)
         Dim b As Boolean
@@ -33,7 +33,7 @@ Public Class Expression
                 Continue For
             End If
 
-            b = m.Expression(x)
+            b = m.Expression(def, obj)
 
             If notPending Then
                 b = Not b
