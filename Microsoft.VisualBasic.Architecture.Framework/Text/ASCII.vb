@@ -237,6 +237,8 @@ Namespace Text
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
 
+        Public Const Mark As Char = "'"c
+
         ''' <summary>
         ''' 分别替换英文双引号，中文双引号为指定的字符串
         ''' </summary>

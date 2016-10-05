@@ -274,7 +274,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLine\DictionaryParser.vb" />
+    <Compile Include="CommandLine\Parsers\CLIParser.vb" />
+    <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />
     <Compile Include="CommandLine\CLIBuilder.vb" />
     <Compile Include="CommandLine\CLI\IIORedirectAbstract.vb" />

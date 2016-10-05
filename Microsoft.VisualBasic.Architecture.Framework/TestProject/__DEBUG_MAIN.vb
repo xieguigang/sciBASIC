@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 'Imports Microsoft.VisualBasic.Webservices
+'Imports System.Windows.Forms
 
 Module __DEBUG_MAIN
 
@@ -78,11 +79,15 @@ Module __DEBUG_MAIN
 
     '  End Sub
 
-    Function Main(args As String()) As Integer
+    Function Main() As Integer
 
-        Dim cli = CommandLine.TryParse("/start /test 23 /@set ""var1=""aa"";var2=""b\""b"";99=""###  ## \""  ##"";123=2333""")
+        Dim sasdasdasdas = Environment.GetCommandLineArgs
+        Dim fffdsfsdf = App.Command
+        Dim dsfdsfdsfsdffds = App.CommandLine
 
-        Dim xadaads = cli.GetDictionary("/@set")
+        ' Dim cli = CommandLine.Parsers.GetTokens("/start /test 23 /@set ""var1=""aa"";var2=""b\""b"";99=""###  ## \""  ##"";123=2333""")
+
+        Dim xadaads = dsfdsfdsfsdffds.GetDictionary("/@set")
 
         Pause()
 
