@@ -55,11 +55,13 @@ Public Module WildcardsExtension
                     ' test if a match follows
                     Return Enumerable.Range(sIndex, s.Length - 1).Any(Function(i) WildcardMatch(wildcard, s, wildcardIndex + 1, i, ignoreCase))
                 Case Else
-                    Dim cc = If(ignoreCase, Char.ToLower(c), c)
-                    Dim sc = If(ignoreCase, Char.ToLower(s(sIndex)), s(sIndex))
+                    If sIndex < s.Length Then
+                        Dim cc = If(ignoreCase, Char.ToLower(c), c)
+                        Dim sc = If(ignoreCase, Char.ToLower(s(sIndex)), s(sIndex))
 
-                    If cc <> sc Then
-                        Return False
+                        If cc <> sc Then
+                            Return False
+                        End If
                     End If
             End Select
 

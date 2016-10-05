@@ -2,8 +2,9 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Emit.Marshal
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module ExpressionBuilder
 
@@ -13,7 +14,29 @@ Public Module ExpressionBuilder
     End Function
 
     Public Function Build(query$) As Expression
-        Return New Pointer(Of Token(Of Tokens))(Parser(query$)).Build()
+        Dim tks As IEnumerable(Of Token(Of Tokens)) =
+            SyntaxParser.Parser(query$)
+
+        If IsEquals(Of Token(Of Tokens))(tks.Count) <=
+            From x As Token(Of Tokens)
+            In tks
+            Where x.TokenName = Tokens.AnyTerm
+            Select x Then
+
+            Return New Expression With {
+                .Tokens = {
+                    New MetaExpression With {
+                        .Operator = Tokens.AnyTerm,
+                        .Expression = AssertionProvider.ContainsAny(New Token(Of Tokens)() With {
+                            .TokenName = Tokens.AnyTerm,
+                            .TokenValue = query$
+                        })
+                    }
+                }
+            }
+        End If
+
+        Return New Pointer(Of Token(Of Tokens))(tks).Build()
     End Function
 
     <Extension>

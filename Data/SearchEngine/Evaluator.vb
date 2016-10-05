@@ -7,6 +7,12 @@ Public Module Evaluator
     ReadOnly __symbolsNoWildcards As Char() =
         ASCII.Symbols _
         .Where(Function(x) x <> "*"c AndAlso x <> "%"c) _
+        .Join(" "c, ASCII.TAB) _
+        .ToArray
+
+    ReadOnly __allASCIISymbols As Char() =
+        __symbolsNoWildcards _
+        .Join("*"c, "%"c) _
         .ToArray
 
     ''' <summary>
@@ -22,7 +28,7 @@ Public Module Evaluator
         End If
 
         Dim t1$() = term.Split(__symbolsNoWildcards)  ' term
-        Dim t2$() = searchIn.Split(ASCII.Symbols)  ' 目标
+        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
         For Each t$ In t1$
             If t2.Located(t$) <> -1 Then

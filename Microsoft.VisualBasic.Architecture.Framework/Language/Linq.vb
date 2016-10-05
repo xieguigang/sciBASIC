@@ -109,11 +109,17 @@ Namespace Language
 
             Public count%
 
-            Public Shared Operator <=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Integer
-                Return source.Count
+            ''' <summary>
+            ''' 判断序列计数是否相等
+            ''' </summary>
+            ''' <param name="h"></param>
+            ''' <param name="source"></param>
+            ''' <returns></returns>
+            Public Shared Operator <=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Boolean
+                Return source.Count = h.count
             End Operator
 
-            Public Shared Operator >=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Integer
+            Public Shared Operator >=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Boolean
                 Throw New NotSupportedException
             End Operator
 
