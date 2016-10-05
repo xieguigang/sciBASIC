@@ -1,5 +1,8 @@
-﻿Public Module DataEnumerator
+﻿Imports System.Runtime.CompilerServices
 
+Public Module DataEnumerator
+
+    <Extension>
     Public Iterator Function ForEach(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of IObject)
         Dim o As New IObject(GetType(T))
 

@@ -52,7 +52,8 @@
     <Compile Include="BinaryDataReader.vb" />
     <Compile Include="BinaryDataWriter.vb" />
     <Compile Include="ByteOrder.vb" />
-    <Compile Include="Extensions.vb" />
+    <Compile Include="Extensions\Extensions.vb" />
+    <Compile Include="Extensions\ReaderProvider.vb" />
     <Compile Include="Offset.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="SeekTask.vb" />

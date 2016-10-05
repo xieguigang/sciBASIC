@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Text
 
 Public Module Extensions
@@ -14,7 +15,7 @@ Public Module Extensions
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenBinaryReader(path As String, Optional encoding As Encodings = Encodings.ASCII, Optional buffered% = 1024 * 1024 * 10) As BinaryDataReader
+    Public Function OpenBinaryReader(path As String, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10) As BinaryDataReader
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
             Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存
             Dim ms As New MemoryStream(byts)
