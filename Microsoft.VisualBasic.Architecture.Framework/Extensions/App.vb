@@ -233,6 +233,28 @@ Public Module App
         __joinedVariables.Add(vars)
     End Sub
 
+    Public Sub JoinVariables(vars As Dictionary(Of String, String))
+        __joinedVariables.Add(
+            vars.Select(Function(x)
+                            Return New NamedValue(Of String) With {
+                                .Name = x.Key,
+                                .x = x.Value
+                            }
+                        End Function).ToArray)
+    End Sub
+
+    ''' <summary>
+    ''' 这个函数只是会从设置的变量之中查找，本模块之中的变量请直接从属性进行引用
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <returns></returns>
+    Public Function GetVariables(name$) As String()
+        Return LinqAPI.Exec(Of String) <= From x As NamedValue(Of String)
+                                          In __joinedVariables
+                                          Where String.Equals(name$, x.Name, StringComparison.OrdinalIgnoreCase)
+                                          Select x.x
+    End Function
+
     ''' <summary>
     ''' 获取<see cref="App"/>的可读属性值来作为环境变量
     ''' </summary>

@@ -81,6 +81,8 @@ Module __DEBUG_MAIN
 
     Function Main() As Integer
 
+        '   Call GetType(__DEBUG_MAIN).RunCLI(App.CommandLine)
+
         Dim sasdasdasdas = Environment.GetCommandLineArgs
         Dim fffdsfsdf = App.Command
         Dim dsfdsfdsfsdffds = App.CommandLine
@@ -88,6 +90,12 @@ Module __DEBUG_MAIN
         ' Dim cli = CommandLine.Parsers.GetTokens("/start /test 23 /@set ""var1=""aa"";var2=""b\""b"";99=""###  ## \""  ##"";123=2333""")
 
         Dim xadaads = dsfdsfdsfsdffds.GetDictionary("/@set")
+
+        Call App.JoinVariables(xadaads)
+
+        Dim varssfdsfdsfs = App.GetAppVariables
+
+        Call printf(varssfdsfdsfs.GetJson)
 
         Pause()
 
