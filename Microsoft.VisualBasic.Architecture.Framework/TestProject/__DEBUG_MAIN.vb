@@ -80,6 +80,11 @@ Module __DEBUG_MAIN
 
     Function Main(args As String()) As Integer
 
+        Dim cli = CommandLine.TryParse("/start /test 23 /@set var1=""aa"";var2=""bb"";99=""#######"";123=2333")
+
+
+        Pause()
+
         Dim bitmap As Image = Image.FromFile("G:\GCModeller\src\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         Dim binbitmap = bitmap.GetBinaryBitmap
         Call binbitmap.SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\lena.binary.png", ImageFormats.Jpeg)

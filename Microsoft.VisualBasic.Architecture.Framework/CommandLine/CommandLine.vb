@@ -295,6 +295,21 @@ Namespace CommandLine
             End If
         End Function
 
+        ''' <summary>
+        ''' If the target parameter is not presents in the CLI, then this function will returns nothing
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <returns></returns>
+        Public Function GetDictionary(name$) As Dictionary(Of String, String)
+            Dim s$ = Me(name$)
+
+            If String.IsNullOrEmpty(s$) Then
+                Return Nothing
+            Else
+                Return DictionaryParser.TryParse(s$)
+            End If
+        End Function
+
 #Region "Pipeline"
 
         ''' <summary>About <paramref name="s"/>:

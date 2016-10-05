@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::b00d59616aaf6ed018f7a40de07f0aa6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\DebuggerArgs.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
@@ -73,7 +74,7 @@ Namespace Debugging
         ''' Some optional VisualBasic debugger parameter help information.(VisualBasic调试器的一些额外的开关参数的帮助信息)
         ''' </summary>
         Public Const DebuggerHelps As String =
-        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute /auto-paused --err <filename.log> /ps1 <bash_PS1>
+        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute /auto-paused --err <filename.log> /ps1 <bash_PS1> /@set var1=""value1"";var2=""value2""
 
     [--echo] The debugger echo options, it have 5 values:
              on     App will output all of the debugger echo message, but the VBDebugger.Mute option is enabled, disable echo options can be control by the program code;
@@ -92,6 +93,7 @@ Namespace Debugging
     [/auto-paused] This boolean flag will makes the program paused after the command is executed done. and print a message on the console:
                        ""Press any key to continute..."" 
 
+    [/@set]  This option will be using for settings of the interval environment variable.
 
     ** Additionally, you can using ""/linux-bash"" command for generates the bash shortcuts on linux system.
 "
@@ -145,6 +147,19 @@ Namespace Debugging
                 VBDebugger.Mute = True
             Else
                 VBDebugger.Mute = config.mute
+            End If
+
+            Dim vars As Dictionary(Of String, String) = args.GetDictionary("/@set")
+
+            If Not vars.IsNullOrEmpty Then
+                Call App.JoinVariables(
+                    vars _
+                    .Select(Function(x)
+                                Return New NamedValue(Of String) With {
+                                    .Name = x.Key,
+                                    .x = x.Value
+                                }
+                            End Function).ToArray)
             End If
         End Sub
     End Module
