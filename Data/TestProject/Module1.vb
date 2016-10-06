@@ -3,14 +3,16 @@
 Module Module1
     Sub Main()
 
-        Dim test As IObject = IObject.FromString("1234")
+        Call "Aedes aegypti strain Liverpool supercont1.301 genomic scaffold, whole genome shotgun sequence".Match("(Aedes OR Aed) AND Aegypti").__DEBUG_ECHO
 
-        Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test)) ' T
-        Console.WriteLine("#\d+".Evaluate(test))  ' T
-        Console.WriteLine("""#\d+""".Evaluate(test)) 'F
-        Console.WriteLine("Text:'#\d+'".Evaluate(test))
-        Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test))
-        Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test))
+        'Dim test As IObject = IObject.FromString("1234")
+
+        'Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test)) ' T
+        'Console.WriteLine("#\d+".Evaluate(test))  ' T
+        'Console.WriteLine("""#\d+""".Evaluate(test)) 'F
+        'Console.WriteLine("Text:'#\d+'".Evaluate(test))
+        'Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test))
+        'Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test))
 
         Pause()
 

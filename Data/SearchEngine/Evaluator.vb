@@ -33,13 +33,13 @@ Public Module Evaluator
             Return Function(searchIn$) regexp.Match(searchIn$).Success
         End If
 
-        Dim t1$() = term.Split(__symbolsNoWildcards)  ' term
-
         If term.First = "~"c Then  ' Levenshtein match
-            Dim query%() = Mid(term, 2).ToArray(AddressOf AscW)
+            Dim query%() = Mid(term.ToLower, 2).ToArray(AddressOf AscW)
 
             Return Function(searchIn$)
-                       Dim dist = LevenshteinDistance.ComputeDistance(query%, searchIn$, )
+                       Dim dist As DistResult = ComputeDistance(
+                           query%, searchIn$.ToLower, )
+
                        If dist Is Nothing OrElse dist.MatchSimilarity < 0.8 Then
                            Return False
                        Else
@@ -47,13 +47,14 @@ Public Module Evaluator
                        End If
                    End Function
         Else
+            Dim t1$() = term.Split(__symbolsNoWildcards)  ' term
             Return Function(searchIn$)
                        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
                        For Each t$ In t1$
-                           If t2.Located(t$) <> -1 Then
+                           If t2.Located(t$, False) <> -1 Then
                                Return True
-                           ElseIf t2.WildcardsLocated(t$) <> -1 Then
+                           ElseIf t2.WildcardsLocated(t$, False) <> -1 Then
                                Return True
                            End If
                        Next
