@@ -7,6 +7,10 @@ Public Class Expression
 
     Public Property Tokens As MetaExpression()
 
+    Public Overrides Function ToString() As String
+        Return String.Join(" ", Tokens.ToArray(Function(x) $"<{x.Operator}>"))
+    End Function
+
     Public Function Evaluate(def As IObject, obj As Object) As Boolean
         Return Expression.Evaluate(def, obj, Tokens)
     End Function

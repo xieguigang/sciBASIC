@@ -6,6 +6,29 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Module SyntaxParser
 
+    <Extension>
+    Public Function Debug(exp As IEnumerable(Of Token(Of Tokens))) As String
+        Dim list As New List(Of String)
+
+        For Each x As Token(Of Tokens) In exp
+            If x.Type = Tokens.AnyTerm OrElse x.Type = Tokens.MustTerm Then
+                list += $"[{x.Type.ToString}, {x.Text}]"
+            ElseIf x.Type = Tokens.stackClose Then
+                list += "("
+            ElseIf x.Type = Tokens.stackOpen Then
+                list += ")"
+            ElseIf x.Type = Tokens.op_AND Then
+                list += "AND"
+            ElseIf x.Type = Tokens.op_NOT Then
+                list += "NOT"
+            ElseIf x.Type = Tokens.op_OR Then
+                list += "OR"
+            End If
+        Next
+
+        Return String.Join(" ", list.ToArray)
+    End Function
+
     Const AND$ = "AND"
     Const OR$ = "OR"
     Const NOT$ = "NOT"

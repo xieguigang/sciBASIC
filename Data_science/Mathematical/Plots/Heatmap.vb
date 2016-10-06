@@ -128,7 +128,7 @@ Public Module Heatmap
         Return GraphicsPlots(
             size, margin, bg$,
             Sub(ByRef g, region)
-                Dim dw! = CSng((size.Height - 2 * margin.Width) / array.Length)
+                Dim dw!? = CSng((size.Height - 2 * margin.Width) / array.Length)
                 Dim correl#() = array _
                     .Select(Function(x) x.x.Values) _
                     .MatrixAsIterator _
