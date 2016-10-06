@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</ProjectGuid>
+    <ProjectGuid>{8AFBC715-5EB6-4EAF-A967-D29A5667709F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.IO.SearchEngine</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.IO.SearchEngine</AssemblyName>
