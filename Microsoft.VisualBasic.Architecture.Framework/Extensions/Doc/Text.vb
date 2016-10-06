@@ -169,7 +169,8 @@ Public Module TextDoc
     <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
                                        <Parameter("Path")> path As String,
                                        <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing,
-                                       Optional append As Boolean = False) As Boolean
+                                       Optional append As Boolean = False,
+                                       Optional throwEx As Boolean = True) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
@@ -199,7 +200,13 @@ Public Module TextDoc
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
-            Throw ex
+
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+                Return False
+            End If
         End Try
 
         Return True
