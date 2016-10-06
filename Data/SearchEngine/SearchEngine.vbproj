@@ -72,15 +72,17 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Publish\</OutputPath>
+    <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.IO.SearchEngine.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DefineConstants>NET_40=1</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>

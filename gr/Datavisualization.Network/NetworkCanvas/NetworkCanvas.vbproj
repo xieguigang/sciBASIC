@@ -74,6 +74,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Canvas.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
