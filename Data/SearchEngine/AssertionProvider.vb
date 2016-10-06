@@ -10,10 +10,12 @@ Public Module AssertionProvider
 
     Public Function MustContains(t As Token(Of Tokens)) As IAssertion
         Dim term$ = t.Text.GetString
+        Dim evaluate As Func(Of String, Boolean) =
+            term$.CompileMustSearch
 
         Return Function(def, obj)
                    For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
-                       If Evaluator.MustContains(term, x.x) Then
+                       If evaluate(x.x) Then
                            Return True
                        End If
                    Next
@@ -46,7 +48,7 @@ Public Module AssertionProvider
 
         If fieldSearch.x.IsMustExpression Then
             term = term.GetString()
-            assertion = Function(searchIn$) Evaluator.MustContains(term, searchIn$)
+            assertion = term$.CompileMustSearch
         Else
             term = term.GetString("'")
             assertion = term.CompileNormalSearch

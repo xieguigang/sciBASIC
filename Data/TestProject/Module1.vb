@@ -5,6 +5,15 @@ Module Module1
 
         Call "Aedes aegypti strain Liverpool supercont1.301 genomic scaffold, whole genome shotgun sequence".Match("(Aedes OR Aed) AND Aegypti").__DEBUG_ECHO
 
+        Call "Aedes (Diceronyia) furcifer".Match("((Aedes OR Aed) AND furcifer) OR Diceronyia").__DEBUG_ECHO
+        Call "Aedes Luteocephalus".Match("(Aedes OR Aed) AND luteocephalus").__DEBUG_ECHO
+
+        Call "Aedes Luteo|cephalus".Match("(Aedes OR Aed) AND luteocephalus").__DEBUG_ECHO
+        Call "Aedes Luteo|cephalus".Match("(Aedes OR Aed) AND ~luteocephalus").__DEBUG_ECHO
+        Call "Aedes Luteocephalus".Match("(Aedes OR Aed) AND ""luteocephalus""").__DEBUG_ECHO
+        Call "A+edes Luteocephalus".Match("(Aedes OR Aed) AND ""luteocephalus""").__DEBUG_ECHO
+        Call "A+edes Luteocephalus".Match("(~Aedes OR Aed) AND ""luteocephalus""").__DEBUG_ECHO
+
         'Dim test As IObject = IObject.FromString("1234")
 
         'Console.WriteLine("12* AND (NOT ""4"" OR #\d+)".Evaluate(test)) ' T

@@ -34,25 +34,42 @@ Public Module Evaluator
         End If
 
         If term.First = "~"c Then  ' Levenshtein match
-            Dim query%() = Mid(term.ToLower, 2).ToArray(AddressOf AscW)
+            Dim exp$ = Mid(term.ToLower, 2)
+            Dim t1$() = exp.Split(__allASCIISymbols)
+            Dim query%() = exp.ToArray(AddressOf AscW)
 
-            Return Function(searchIn$)
-                       Dim dist As DistResult = ComputeDistance(
-                           query%, searchIn$.ToLower, )
+            If t1$.Length = 1 Then ' 只有一个单词，则做匹配的时候需要一个单词一个单词的进行匹配
+                Return Function(searchIn$)
+                           For Each t$ In searchIn$.Split(" "c)
+                               Dim dist As DistResult = ComputeDistance(
+                                   query%, t$.ToLower, )
 
-                       If dist Is Nothing OrElse dist.MatchSimilarity < 0.8 Then
+                               If (Not dist Is Nothing) AndAlso dist.MatchSimilarity >= 0.8 Then
+                                   Return True
+                               End If
+                           Next
+
                            Return False
-                       Else
-                           Return True
-                       End If
-                   End Function
+                       End Function
+            Else ' 为一整个句子，则直接计算整个句子
+                Return Function(searchIn$)
+                           Dim dist As DistResult = ComputeDistance(
+                               query%, searchIn$.ToLower, )
+
+                           If dist Is Nothing OrElse dist.MatchSimilarity < 0.8 Then
+                               Return False
+                           Else
+                               Return True
+                           End If
+                       End Function
+            End If
         Else
             Dim t1$() = term.Split(__symbolsNoWildcards)  ' term
             Return Function(searchIn$)
                        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
                        For Each t$ In t1$
-                           If t2.Located(t$, False) <> -1 Then
+                           If t2.Located(t$, caseSensitive:=False, fuzzy:=True) <> -1 Then
                                Return True
                            ElseIf t2.WildcardsLocated(t$, False) <> -1 Then
                                Return True
@@ -64,8 +81,35 @@ Public Module Evaluator
         End If
     End Function
 
-    Public Function MustContains(term$, searchIn$) As Boolean
-        Return InStr(searchIn, term$, CompareMethod.Text) > 0
+    ''' <summary>
+    ''' 假若是一个单词，则要整个单词都相等才行，假若为组合词，则直接匹配
+    ''' </summary>
+    ''' <param name="term$"></param>
+    ''' <param name="searchIn$"></param>
+    ''' <returns></returns>
+    Public Function MustxContains(term$, searchIn$) As Boolean
+        Return term$.CompileMustSearch()(searchIn$)
+    End Function
+
+    <Extension>
+    Public Function CompileMustSearch(term$) As Func(Of String, Boolean)
+        Dim t1$() = term.Split(__allASCIISymbols)
+
+        If t1$.Length = 1 Then ' 必须要整个单词都被匹配上
+            Return Function(searchIn$)
+                       Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
+
+                       For Each t$ In t1$
+                           If t2.Located(t$, False, False) <> -1 Then
+                               Return True
+                           End If
+                       Next
+
+                       Return False
+                   End Function
+        Else
+            Return Function(searchIn$) InStr(searchIn, term$, CompareMethod.Text) > 0
+        End If
     End Function
 
     <Extension>
