@@ -26,9 +26,11 @@ Public Module AssertionProvider
         Dim term$ = t.Text.GetString("'")
 
         If Not term.Contains(":"c) Then
+            Dim evaluate As Func(Of String, Boolean) = term.CompileNormalSearch
+
             Return Function(def, obj)
                        For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
-                           If Evaluator.ContainsAny(term, x.x) Then
+                           If evaluate(x.x) Then
                                Return True
                            End If
                        Next
@@ -38,16 +40,16 @@ Public Module AssertionProvider
         End If
 
         Dim fieldSearch = term.GetTagValue(":")
-        Dim assertion As Func(Of String, String, Boolean)
+        Dim assertion As Func(Of String, Boolean)
 
         term = fieldSearch.x
 
         If fieldSearch.x.IsMustExpression Then
-            assertion = AddressOf Evaluator.MustContains
             term = term.GetString()
+            assertion = Function(searchIn$) Evaluator.MustContains(term, searchIn$)
         Else
-            assertion = AddressOf Evaluator.ContainsAny
             term = term.GetString("'")
+            assertion = term.CompileNormalSearch
         End If
 
         Dim fName$ = fieldSearch.Name.ToLower
@@ -60,11 +62,8 @@ Public Module AssertionProvider
                         Scripting.ToString(
                         def.Schema(key$).GetValue(obj))
 
-                        If assertion(term, searchIn) Then
-                            Return True
-                        Else
-                            Return False
-                        End If
+                        ' 由于是限定搜索的域的，所以在这里直接返回结果了，不需要在匹配失败之后继续遍历域列表
+                        Return assertion(searchIn)
                     End If
                 Next
 

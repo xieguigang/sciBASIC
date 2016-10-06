@@ -551,7 +551,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' String compares using <see cref="system.String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
+    ''' String compares using <see cref="String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
     ''' </summary>
     ''' <param name="collection"></param>
     ''' <param name="text"></param>

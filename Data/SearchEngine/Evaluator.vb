@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Public Module Evaluator
@@ -22,23 +23,44 @@ Public Module Evaluator
     ''' <param name="searchIn$"></param>
     ''' <returns></returns>
     Public Function ContainsAny(term$, searchIn$) As Boolean
+        Return term$.CompileNormalSearch()(searchIn$)
+    End Function
+
+    <Extension>
+    Public Function CompileNormalSearch(term$) As Func(Of String, Boolean)
         If term.First = "#"c Then
             Dim regexp As New Regex(Mid(term$, 2), RegexICSng)
-            Return regexp.Match(searchIn$).Success
+            Return Function(searchIn$) regexp.Match(searchIn$).Success
         End If
 
         Dim t1$() = term.Split(__symbolsNoWildcards)  ' term
-        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
-        For Each t$ In t1$
-            If t2.Located(t$) <> -1 Then
-                Return True
-            ElseIf t2.WildcardsLocated(t$) <> -1 Then
-                Return True
-            End If
-        Next
+        If term.First = "~"c Then  ' Levenshtein match
+            Dim query%() = Mid(term, 2).ToArray(AddressOf AscW)
 
-        Return False
+            Return Function(searchIn$)
+                       Dim dist = LevenshteinDistance.ComputeDistance(query%, searchIn$, )
+                       If dist Is Nothing OrElse dist.MatchSimilarity < 0.8 Then
+                           Return False
+                       Else
+                           Return True
+                       End If
+                   End Function
+        Else
+            Return Function(searchIn$)
+                       Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
+
+                       For Each t$ In t1$
+                           If t2.Located(t$) <> -1 Then
+                               Return True
+                           ElseIf t2.WildcardsLocated(t$) <> -1 Then
+                               Return True
+                           End If
+                       Next
+
+                       Return False
+                   End Function
+        End If
     End Function
 
     Public Function MustContains(term$, searchIn$) As Boolean
