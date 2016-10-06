@@ -360,6 +360,7 @@
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
+    <Compile Include="Extensions\IO\Extensions.vb" />
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />

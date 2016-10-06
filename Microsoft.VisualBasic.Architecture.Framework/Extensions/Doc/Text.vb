@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.FileIO.Extensions
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
@@ -65,17 +66,7 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension>
     Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
-        Call "".SaveTo(path)
-
-        Dim file As New FileStream(path, FileMode.OpenOrCreate)
-        Dim writer As New StreamWriter(file, encoding.GetEncodings) With {
-            .NewLine =
-            If(newLine Is Nothing OrElse newLine.Length = 0,
-            vbLf,
-            newLine)
-        }
-
-        Return writer
+        Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
     End Function
 
     ''' <summary>

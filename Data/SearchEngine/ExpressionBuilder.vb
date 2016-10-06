@@ -23,6 +23,12 @@ Public Module ExpressionBuilder
         End If
     End Function
 
+    ''' <summary>
+    ''' 构建查询表达式的对象模型
+    ''' </summary>
+    ''' <param name="query$"></param>
+    ''' <returns></returns>
+    <Extension>
     Public Function Build(query$) As Expression
         Dim tks As IEnumerable(Of Token(Of Tokens)) =
             SyntaxParser.Parser(query$)
