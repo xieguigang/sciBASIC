@@ -125,6 +125,16 @@ Public Module RegexExtensions
     End Function
 
     ''' <summary>
+    ''' Each match its value in the source match collection.
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function EachValue(m As MatchCollection) As IEnumerable(Of String)
+        Return From s As Match In m Select s.Value
+    End Function
+
+    ''' <summary>
     ''' Gets the matched strings from the regex match result as source
     ''' </summary>
     ''' <param name="source"></param>

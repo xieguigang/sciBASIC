@@ -42,13 +42,14 @@ Namespace Language.Python
         ''' <param name="input"></param>
         ''' <param name="options"></param>
         ''' <returns></returns>
-        Public Function FindAll(pattern As String, input As String, Optional options As RegexOptions = RegexOptions.None) As String()
+        Public Function FindAll(pattern As String, input As String, Optional options As RegexOptions = RegexOptions.None) As Array(Of String)
             Dim tokens As String() = pattern.Trim.lTokens _
                 .Select(AddressOf __trimComment) _
                 .Where(Function(s) Not String.IsNullOrEmpty(s)) _
                 .ToArray
             pattern = String.Join("", tokens)
-            Return Regex.Matches(input, pattern, options).ToArray
+            Return New Array(Of String)(
+                Regex.Matches(input, pattern, options).EachValue)
         End Function
 
         ''' <summary>
