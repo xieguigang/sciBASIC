@@ -1,55 +1,96 @@
 ﻿#Region "Microsoft.VisualBasic::62a0b903f749a63e29c778493e652b7e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Python\Regexp.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Language.Python
 
     ''' <summary>
-    ''' ``re`` module in the python language.
+    ''' This module provides regular expression matching operations similar to those found in Perl. ``re`` module in the python language.
     ''' </summary>
-    Public Module Regexp
+    Public Module re
+
+        Public Structure Match
+            Private __raw As System.Text.RegularExpressions.Match
+
+            Friend Sub New(m As System.Text.RegularExpressions.Match)
+                __raw = m
+            End Sub
+
+            Default Public ReadOnly Property Value(index%) As String
+                Get
+                    If index < 0 Then
+                        index = __raw.Groups.Count + index%
+                    End If
+
+                    Return __raw.Groups.Item(index%).Value
+                End Get
+            End Property
+
+            Public Shared Narrowing Operator CType(m As Match) As String
+                Return m.__raw.Value
+            End Operator
+
+            ''' <summary>
+            ''' <see cref="System.Text.RegularExpressions.Match.Value"/>
+            ''' </summary>
+            ''' <returns></returns>
+            Public Overrides Function ToString() As String
+                Return __raw.Value
+            End Function
+        End Structure
 
         ''' <summary>
-        ''' 
+        ''' Return all non-overlapping matches of pattern in string, as a list of strings. The string is scanned left-to-right, and matches are returned in the order found. 
+        ''' If one or more groups are present in the pattern, return a list of groups; this will be a list of tuples if the pattern has more than one group. 
+        ''' Empty matches are included in the result unless they touch the beginning of another match.
         ''' </summary>
         ''' <param name="pattern">这个会首先被分行然后去除掉python注释</param>
         ''' <param name="input"></param>
         ''' <param name="options"></param>
         ''' <returns></returns>
-        Public Function FindAll(pattern As String, input As String, Optional options As RegexOptions = RegexOptions.None) As Array(Of String)
-            Dim tokens As String() = pattern.Trim.lTokens _
+        Public Function FindAll(pattern$, input$, Optional options As RegexOptions = RegexOptions.None) As Array(Of Match)
+            Dim tokens As String() = pattern.Trim _
+                .lTokens _
                 .Select(AddressOf __trimComment) _
                 .Where(Function(s) Not String.IsNullOrEmpty(s)) _
                 .ToArray
             pattern = String.Join("", tokens)
-            Return New Array(Of String)(
-                Regex.Matches(input, pattern, options).EachValue)
+
+            Dim ms As MatchCollection =
+                Regex.Matches(input, pattern, options)
+            Dim mlist As IEnumerable(Of Match) =
+                ms.Count _
+                .Sequence _
+                .Select(Function(i) New Match(ms(i)))
+
+            Return New Array(Of Match)(mlist)
         End Function
 
         ''' <summary>
