@@ -147,14 +147,16 @@ Vladimir I",
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 
-            Dim distTable As Double(,) = CreateTable(reference, hypotheses, cost, equals)
-            Dim i As Integer = reference.Length, j As Integer = hypotheses.Length
+            Dim distTable As Double(,) =
+                CreateTable(reference, hypotheses, cost, equals)
+            Dim i As Integer = reference.Length,
+                j As Integer = hypotheses.Length
             Dim sHyp As String = New String(hypotheses.ToArray(Function(x) asChar(x)))
             Dim sRef As String = New String(reference.ToArray(Function(x) asChar(x)))
             Dim result As New DistResult With {
-            .Hypotheses = sHyp,
-            .Reference = sRef
-        }
+                .Hypotheses = sHyp,
+                .Reference = sRef
+            }
             Return __computeRoute(sHyp, result, i, j, distTable)
         End Function
 
@@ -170,17 +172,27 @@ Vladimir I",
 
         Public Delegate Function ToChar(Of T)(x As T) As Char
 
+        ''' <summary>
+        ''' Implement the Levenshtein Edit Distance algorithm between string.
+        ''' </summary>
+        ''' <param name="reference">The reference string ASCII cache.</param>
+        ''' <param name="hypotheses"></param>
+        ''' <param name="cost"></param>
+        ''' <returns></returns>
         <ExportAPI("ComputeDistance", Info:="Implement the Levenshtein Edit Distance algorithm.")>
         Public Function ComputeDistance(reference As Integer(), hypotheses As String, Optional cost As Double = 0.7) As DistResult
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = New Integer() {}
 
-            Dim distTable As Double(,) = __createTable(reference, hypotheses.ToArray(Function(ch) Asc(ch)), cost)
-            Dim i As Integer = reference.Length, j As Integer = hypotheses.Length
-            Dim result As DistResult = New DistResult With {
-            .Hypotheses = hypotheses,
-            .Reference = Nothing
-        }
+            Dim distTable#(,) = __createTable(reference,
+                                              hypotheses.ToArray(Function(ch) Asc(ch)),
+                                              cost)
+            Dim i As Integer = reference.Length,
+                j As Integer = hypotheses.Length
+            Dim result As New DistResult With {
+                .Hypotheses = hypotheses,
+                .Reference = Nothing
+            }
             Return __computeRoute(hypotheses, result, i, j, distTable)
         End Function
 
@@ -191,12 +203,16 @@ Vladimir I",
                 Return 0
             End If
 
-            Dim distinct = (New [Set](query) + New [Set](subject)).ToArray.ToArray(Function(x) DirectCast(x, T))
+            Dim distinct As T() =
+                (New [Set](query) + New [Set](subject)) _
+                .ToArray _
+                .ToArray(Function(x) DirectCast(x, T))
             Dim dict = (From index As Integer
-                    In distinct.Sequence(offSet:=a)
+                        In distinct.Sequence(offSet:=a)
                         Select ch = ChrW(index),
-                        obj = distinct(index - a)) _
-                        .ToDictionary(Function(x) x.obj, elementSelector:=Function(x) x.ch)
+                            obj = distinct(index - a)) _
+                            .ToDictionary(Function(x) x.obj,
+                                          Function(x) x.ch)
             Dim ref As String = New String(query.ToArray(Function(x) dict(x)))
             Dim sbj As String = New String(subject.ToArray(Function(x) dict(x)))
 
@@ -221,11 +237,10 @@ Vladimir I",
         ''' <param name="j"></param>
         ''' <param name="distTable"></param>
         ''' <returns></returns>
-        Private Function __computeRoute(hypotheses As String,
-                                    result As DistResult,
-                                    i As Integer,
-                                    j As Integer,
-                                    distTable As Double(,)) As DistResult
+        Private Function __computeRoute(hypotheses$,
+                                        result As DistResult,
+                                        i%, j%,
+                                        distTable#(,)) As DistResult
 
             Dim css As New List(Of Coords)
             Dim evolve As List(Of Char) = New List(Of Char)
@@ -240,7 +255,11 @@ Vladimir I",
                     Call Array.Reverse(evolveRoute)
                     Call css.Add({i, j})
 
-                    result.DistTable = distTable.ToVectorList.ToArray(Function(vec) New Streams.Array.Double With {.Values = vec})
+                    result.DistTable = distTable _
+                        .ToVectorList _
+                        .ToArray(Function(vec) New Streams.Array.Double With {
+                            .Values = vec
+                        })
                     result.DistEdits = New String(evolveRoute)
                     result.CSS = css.ToArray
                     result.Matches = New String(edits.ToArray.Reverse.ToArray)
@@ -308,19 +327,21 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <returns></returns>
         <ExportAPI("ComputeDistance", Info:="Implement the Levenshtein Edit Distance algorithm.")>
-        Public Function ComputeDistance(reference As String, hypotheses As String, Optional cost As Double = 0.7) As DistResult
+        Public Function ComputeDistance(reference$, hypotheses$, Optional cost# = 0.7) As DistResult
 
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = ""
 
-            Dim distTable As Double(,) = __createTable(reference.ToArray(Function(ch) AscW(ch)),
-                                                   hypotheses.ToArray(Function(ch) AscW(ch)),
-                                                   cost)
-            Dim i As Integer = reference.Length, j As Integer = hypotheses.Length
-            Dim result As DistResult = New DistResult With {
-            .Hypotheses = hypotheses,
-            .Reference = reference
-        }
+            Dim distTable As Double(,) = __createTable(
+                reference.ToArray(Function(ch) AscW(ch)),
+                hypotheses.ToArray(Function(ch) AscW(ch)),
+                cost)
+            Dim i As Integer = reference.Length,
+                j As Integer = hypotheses.Length
+            Dim result As New DistResult With {
+                .Hypotheses = hypotheses,
+                .Reference = reference
+            }
 
             Return __computeRoute(hypotheses, result, i, j, distTable)
         End Function

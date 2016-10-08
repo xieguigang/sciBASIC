@@ -37,7 +37,12 @@ Public Module ExpressionBuilder
             }
         End If
 
-        Return New Pointer(Of Token(Of Tokens))(tks).Build()
+        Try
+            Return New Pointer(Of Token(Of Tokens))(tks).Build()
+        Catch ex As Exception
+            ex = New Exception("$query_expression:= " & query, ex)
+            Throw ex
+        End Try
     End Function
 
     <Extension>
