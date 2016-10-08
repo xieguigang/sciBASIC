@@ -7,6 +7,20 @@ Public Class Expression
 
     Public Property Tokens As MetaExpression()
 
+    ReadOnly __textType As New IObject(GetType(Text))
+
+    ''' <summary>
+    ''' Does this expression model in the target input <paramref name="text"/> have a match?
+    ''' </summary>
+    ''' <param name="text">The text data that using for data search.</param>
+    ''' <returns></returns>
+    Public Function Match(text As String) As Boolean
+        Return Evaluate(
+            __textType, New Text With {
+                .Text = text
+            })
+    End Function
+
     Public Overrides Function ToString() As String
         Return String.Join(" ", Tokens.ToArray(Function(x) $"<{x.Operator}>"))
     End Function

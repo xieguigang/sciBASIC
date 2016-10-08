@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertionProvider.vb" />
+    <Compile Include="QueryArgument.vb" />
     <Compile Include="Comparer.vb" />
     <Compile Include="DataEnumerator.vb" />
     <Compile Include="MetaExpression.vb" />

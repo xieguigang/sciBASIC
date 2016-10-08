@@ -29,6 +29,11 @@ Public Structure IObject
 End Structure
 
 Public Structure Text
+
+    ''' <summary>
+    ''' The string value.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Text As String
 
     Public Overrides Function ToString() As String
