@@ -1866,6 +1866,7 @@ Public Module Extensions
             i += 1
             list += x
         Next
+
         Return list
     End Function
 #End If
