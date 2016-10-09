@@ -1424,7 +1424,7 @@ Public Module Extensions
     <ExportAPI("Get.Item")>
     <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #Else
-    <Extension> Public Function GetItem(Of T)(Collection As Generic.IEnumerable(Of T), index As Integer) As T
+    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #End If
         If source.IsNullOrEmpty OrElse index >= source.Count Then
             Return Nothing
@@ -1472,7 +1472,7 @@ Public Module Extensions
     ''' <param name="e"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function Description(e As [Enum]) As String
+    <Extension> Public Function Description(value As [Enum]) As String
 #End If
         Dim type As Type = value.GetType()
         Dim s As String = value.ToString
@@ -1577,7 +1577,7 @@ Public Module Extensions
     ''' <param name="Collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function TrimNull(Of T As Class)(Collection As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #End If
         If source.IsNullOrEmpty Then
             Return New T() {}
@@ -1911,12 +1911,12 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Sequence(Of T)(Collection As Generic.IEnumerable(Of T), Optional offset As Integer = 0) As Integer()
+    <Extension> Public Iterator Function Sequence(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of Integer)
 #End If
         If source Is Nothing Then
             Return
         Else
-            Dim i As Integer = offSet
+            Dim i As Integer = offset
 
             For Each x As T In source
                 Yield i
@@ -1975,7 +1975,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Takes(Of T)(Collection As Generic.IEnumerable(Of T), IndexCollection As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
+    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T), indexs As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
 #End If
         If reversedSelect Then
             Return __reversedTakeSelected(source, indexs)
@@ -1983,10 +1983,10 @@ Public Module Extensions
 
         Dim result As T()
 
-        If offSet = 0 Then
+        If OffSet = 0 Then
             result = (From idx As Integer In indexs Select source(idx)).ToArray
         Else
-            result = (From idx As Integer In indexs Select source(idx + offSet)).ToArray
+            result = (From idx As Integer In indexs Select source(idx + OffSet)).ToArray
         End If
         Return result
     End Function
