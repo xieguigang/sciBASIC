@@ -500,7 +500,7 @@
     <Compile Include="Extensions\Doc\XmlExtensions.vb" />
     <Compile Include="Extensions\Image\Colors\ColorCube.vb" />
     <Compile Include="Extensions\Image\Colors\ColorMap.vb" />
-    <Compile Include="Extensions\Image\GDI+\gdi+Device.vb" />
+    <Compile Include="Extensions\Image\GDI+\Graphics.vb" />
     <Compile Include="Extensions\Image\GDI+\GDITransform.vb" />
     <Compile Include="Extensions\Image\Wmf.vb" />
     <Compile Include="Extensions\Image\TiffWriter.vb" />
