@@ -347,7 +347,7 @@
     <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\CollectionIO.vb" />
+    <Compile Include="Extensions\IO\CollectionIO.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
@@ -517,7 +517,7 @@
     <Compile Include="Extensions\StringHelpers\Parser.vb" />
     <Compile Include="Language\Linq.vb" />
     <Compile Include="Text\UnbufferedStringReader.vb" />
-    <Compile Include="Tools\HtmlParser\Table.vb" />
+    <Compile Include="Text\Parser\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
     <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
     <Compile Include="Language\UnixBash\FileSystem\File.vb" />

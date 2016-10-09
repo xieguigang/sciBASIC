@@ -28,6 +28,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace Language

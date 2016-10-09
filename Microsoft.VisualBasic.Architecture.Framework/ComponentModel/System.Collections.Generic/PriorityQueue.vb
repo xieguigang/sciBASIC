@@ -69,41 +69,48 @@ Imports System.Linq
 Imports System.Text
 Imports System.Collections
 
-Public Class PriorityQueue(Of T As IComparable)
+Namespace ComponentModel.Collection
 
-    Dim m_data As List(Of T)
+    ''' <summary>
+    ''' An Interface for the PriorityQueue Class.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Class PriorityQueue(Of T As IComparable)
 
-    Public Sub New()
-		Me.m_data = New List(Of T)()
-	End Sub
+        Dim m_data As List(Of T)
 
-	Public Sub Enqueue(queueItem As T)
-		m_data.Add(queueItem)
-		m_data.Sort()
-	End Sub
+        Public Sub New()
+            Me.m_data = New List(Of T)()
+        End Sub
 
-	Public Sub Clear()
-		m_data.Clear()
-	End Sub
+        Public Sub Enqueue(queueItem As T)
+            m_data.Add(queueItem)
+            m_data.Sort()
+        End Sub
 
-    Public Function Dequeue() As T
-		Dim frontItem As T = m_data(0)
-		m_data.RemoveAt(0)
-		Return frontItem
-	End Function
+        Public Sub Clear()
+            m_data.Clear()
+        End Sub
 
-	Public Function Peek() As T
-		Dim frontItem As T = m_data(0)
-		Return frontItem
-	End Function
+        Public Function Dequeue() As T
+            Dim frontItem As T = m_data(0)
+            m_data.RemoveAt(0)
+            Return frontItem
+        End Function
 
-    Public Function Contains(queueItem As T) As Boolean
-        Return m_data.Contains(queueItem)
-    End Function
+        Public Function Peek() As T
+            Dim frontItem As T = m_data(0)
+            Return frontItem
+        End Function
 
-    Public ReadOnly Property Count() As Integer
-		Get
-			Return m_data.Count
-		End Get
-	End Property
-End Class
+        Public Function Contains(queueItem As T) As Boolean
+            Return m_data.Contains(queueItem)
+        End Function
+
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return m_data.Count
+            End Get
+        End Property
+    End Class
+End Namespace
