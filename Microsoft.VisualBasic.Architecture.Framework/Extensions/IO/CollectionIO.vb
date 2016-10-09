@@ -43,6 +43,12 @@ Namespace FileIO
         Public ReadOnly Property DefaultHandle As ISave = AddressOf SaveJSON
         Public ReadOnly Property DefaultLoadHandle As IRead = AddressOf ReadJSON
 
+        Public ReadOnly Property DefaultSaveDescription As String
+            Get
+                Return DefaultHandle.Method.FullName(True)
+            End Get
+        End Property
+
         Public Sub SetHandle(handle As ISave)
             _DefaultHandle = handle
         End Sub
