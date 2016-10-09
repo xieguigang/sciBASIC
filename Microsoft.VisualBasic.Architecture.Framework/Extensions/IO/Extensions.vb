@@ -26,18 +26,16 @@ Namespace FileIO
         <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encoding = Nothing) As Boolean
             Dim strings As IEnumerable(Of String) =
                 data.Select(AddressOf Scripting.ToString)
-            Dim parent$ =
-                FileIO.FileSystem.GetParentPath(saveTo)
+            Dim parent$ = FileSystem.GetParentPath(saveTo)
 
             Call parent.MkDIR
+
             If encoding Is Nothing Then
                 encoding = Encoding.Default
             End If
 
             Try
-                Dim file As New FileStream(saveTo, FileMode.OpenOrCreate, access:=FileAccess.Write)
-
-                Using writer As New StreamWriter(file, encoding)
+                Using writer As StreamWriter = saveTo.OpenWriter(encoding,)
                     For Each line As String In strings
                         Call writer.WriteLine(line)
                     Next

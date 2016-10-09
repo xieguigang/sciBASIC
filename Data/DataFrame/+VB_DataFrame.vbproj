@@ -53,7 +53,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>D:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
