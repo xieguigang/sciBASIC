@@ -1,25 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 
 Public Module DataEnumerator
 
-    '<Extension>
-    'Public Iterator Function ForEach(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of IObject)
-    '    Dim o As New IObject(GetType(T))
+    <Extension>
+    Public Iterator Function [Where](df As DataFrame, query$) As IEnumerable(Of Dictionary(Of String, String))
+        Dim exp As Expression = query.Build
 
-    '    For Each x As T In source
-    '        o.x = x
-    '        Yield o
-    '    Next
-    'End Function
 
-    'Public Iterator Function ForEach(source As IEnumerable(Of String)) As IEnumerable(Of IObject)
-    '    Dim o As New IObject(GetType(Text))
-
-    '    For Each s$ In source
-    '        o.x = New Text With {
-    '            .Text = s$
-    '        }
-    '        Yield o
-    '    Next
-    'End Function
+    End Function
 End Module

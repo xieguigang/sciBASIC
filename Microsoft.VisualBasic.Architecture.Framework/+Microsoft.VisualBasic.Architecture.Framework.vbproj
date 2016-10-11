@@ -300,6 +300,8 @@
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\IMatched.vb" />
     <Compile Include="ComponentModel\DataSource\Repository.vb" />
@@ -330,7 +332,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
-    <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />

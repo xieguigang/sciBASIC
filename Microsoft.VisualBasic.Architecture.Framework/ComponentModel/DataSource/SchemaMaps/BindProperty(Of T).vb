@@ -38,6 +38,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     Public Structure BindProperty(Of T As Attribute)
         Implements IReadOnlyId
         Implements sIdEnumerable
+        Implements IProperty
 
         ''' <summary>
         ''' The property object that bind with its custom attribute <see cref="Field"/> of type <typeparamref name="T"/>
@@ -126,7 +127,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <param name="obj">The object whose property value will be set.</param>
         ''' <param name="value">The new property value.</param>
-        Public Sub SetValue(obj As Object, value As Object)
+        Public Sub SetValue(obj As Object, value As Object) Implements IProperty.SetValue
             Call [Property].SetValue(obj, value, Nothing)
         End Sub
 
@@ -160,7 +161,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <param name="x">The object whose property value will be returned.</param>
         ''' <returns>The property value of the specified object.</returns>
-        Public Function GetValue(x As Object) As Object
+        Public Function GetValue(x As Object) As Object Implements IProperty.GetValue
             Return [Property].GetValue(x, Nothing)
         End Function
 
@@ -178,5 +179,6 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 .Property = x.Value
             }
         End Function
+
     End Structure
 End Namespace
