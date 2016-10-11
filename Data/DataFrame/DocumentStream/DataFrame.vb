@@ -143,6 +143,18 @@ Namespace DocumentStream
             Return LQuery
         End Function
 
+        Public Iterator Function EnumerateData() As IEnumerable(Of Dictionary(Of String, String))
+            For Each row In _innerTable
+                Dim out As New Dictionary(Of String, String)
+
+                For Each key In SchemaOridinal
+                    out.Add(key.Key, row(key.Value))
+                Next
+
+                Yield out
+            Next
+        End Function
+
         ''' <summary>
         ''' The column headers in the csv file first row.
         ''' </summary>

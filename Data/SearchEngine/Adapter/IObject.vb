@@ -20,6 +20,10 @@ Public Structure IObject
         Next
     End Sub
 
+    ''' <summary>
+    ''' 这个接口是针对字典类型的对象而准备的
+    ''' </summary>
+    ''' <param name="keys"></param>
     Sub New(keys As IEnumerable(Of String))
         Type = GetType(IDictionary)
         Schema = New Dictionary(Of String, IProperty)
