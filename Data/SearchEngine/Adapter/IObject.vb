@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
@@ -19,6 +20,15 @@ Public Structure IObject
         Next
     End Sub
 
+    Sub New(keys As IEnumerable(Of String))
+        Type = GetType(IDictionary)
+        Schema = New Dictionary(Of String, IProperty)
+
+        For Each key$ In keys
+            Schema.Add(key$, New DictionaryKey(key$))
+        Next
+    End Sub
+
     ''' <summary>
     ''' 返回: ``FiledName: value_string``
     ''' </summary>
@@ -31,17 +41,11 @@ Public Structure IObject
             }
         Next
     End Function
-End Structure
-
-Public Structure Text
-
-    ''' <summary>
-    ''' The string value.
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Text As String
 
     Public Overrides Function ToString() As String
-        Return Text
+        Return New NamedValue(Of String()) With {
+            .Name = Type.FullName,
+            .x = Schema.Keys.ToArray
+        }.GetJson
     End Function
 End Structure
