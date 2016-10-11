@@ -20,7 +20,7 @@ Public Module ExpressionBuilder
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Build(query$, Optional anyDefault As Tokens = Tokens.op_OR) As Expression
+    Public Function Build(query$, Optional anyDefault As Tokens = Tokens.op_OR, Optional allowInStr As Boolean = True) As Expression
         Dim tks As IEnumerable(Of Token(Of Tokens)) =
             SyntaxParser.Parser(query$)
 
@@ -63,7 +63,7 @@ Public Module ExpressionBuilder
         End If
 
         Try
-            Return New Pointer(Of Token(Of Tokens))(tks).Build()
+            Return New Pointer(Of Token(Of Tokens))(tks).Build(allowInStr)
         Catch ex As Exception
             ex = New Exception("$query_expression:= " & query, ex)
             Throw ex
@@ -71,7 +71,7 @@ Public Module ExpressionBuilder
     End Function
 
     <Extension>
-    Public Function Build(tks As Pointer(Of Token(Of Tokens))) As Expression
+    Public Function Build(tks As Pointer(Of Token(Of Tokens)), Optional allowInStr As Boolean = True) As Expression
         Dim metas As New List(Of MetaExpression)
         Dim meta As MetaExpression
 
@@ -82,11 +82,11 @@ Public Module ExpressionBuilder
 
             Select Case t.Type
                 Case SyntaxParser.Tokens.AnyTerm
-                    meta.Expression = AssertionProvider.ContainsAny(t)
+                    meta.Expression = AssertionProvider.ContainsAny(t, allowInStr)
                 Case SyntaxParser.Tokens.MustTerm
                     meta.Expression = AssertionProvider.MustContains(t)
                 Case SyntaxParser.Tokens.stackOpen
-                    meta.Expression = AddressOf Build(tks).Evaluate
+                    meta.Expression = AddressOf Build(tks, allowInStr).Evaluate
                 Case SyntaxParser.Tokens.stackClose
                     Return New Expression With {
                         .Tokens = metas

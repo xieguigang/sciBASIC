@@ -6,11 +6,11 @@ Module Module1
         Return (first, second)
     End Function
 
-    Public ReadOnly Property Item(index As Integer) As ByRef Integer
-            Get
+    'Public ReadOnly Property Item(index As Integer) As ByRef Integer
+    '        Get
 
-        End Get
-    End Property
+    '    End Get
+    'End Property
 
     Sub Main()
 

@@ -551,14 +551,22 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' String compares using <see cref="String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
+    ''' String compares using <see cref="String.Equals"/>, if the target value could not be located, 
+    ''' then -1 will be return from this function.
     ''' </summary>
     ''' <param name="collection"></param>
     ''' <param name="text"></param>
     ''' <param name="caseSensitive"></param>
+    ''' <param name="fuzzy">
+    ''' If fuzzy, then <see cref="InStr"/> will be used if ``String.Equals`` method have no result.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
-    <Extension> Public Function Located(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True, Optional fuzzy As Boolean = False) As Integer
+    <Extension> Public Function Located(collection As IEnumerable(Of String),
+                                        text As String,
+                                        Optional caseSensitive As Boolean = True,
+                                        Optional fuzzy As Boolean = False) As Integer
+
         Dim method As StringComparison =
             If(caseSensitive,
             StringComparison.Ordinal,

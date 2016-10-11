@@ -22,12 +22,12 @@ Public Module Evaluator
     ''' <param name="term$"></param>
     ''' <param name="searchIn$"></param>
     ''' <returns></returns>
-    Public Function ContainsAny(term$, searchIn$) As Boolean
-        Return term$.CompileNormalSearch()(searchIn$)
+    Public Function ContainsAny(term$, searchIn$, Optional allowInStr As Boolean = True) As Boolean
+        Return term$.CompileNormalSearch(allowInStr)(searchIn$)
     End Function
 
     <Extension>
-    Public Function CompileNormalSearch(term$) As Func(Of String, Boolean)
+    Public Function CompileNormalSearch(term$, Optional allowInStr As Boolean = True) As Func(Of String, Boolean)
         If term.First = "#"c Then
             Dim regexp As New Regex(Mid(term$, 2), RegexICSng)
             Return Function(searchIn$) regexp.Match(searchIn$).Success
@@ -69,7 +69,7 @@ Public Module Evaluator
                        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
                        For Each t$ In t1$
-                           If t2.Located(t$, caseSensitive:=False, fuzzy:=True) <> -1 Then
+                           If t2.Located(t$, caseSensitive:=False, fuzzy:=allowInStr) <> -1 Then
                                Return True
                            ElseIf t2.WildcardsLocated(t$, False) <> -1 Then
                                Return True
@@ -107,7 +107,7 @@ Public Module Evaluator
 
                        Return False
                    End Function
-        Else
+        Else ' 对于含有多个tokens的查询，则直接比较
             Return Function(searchIn$) InStr(searchIn, term$, CompareMethod.Text) > 0
         End If
     End Function
