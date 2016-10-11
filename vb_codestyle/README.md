@@ -408,6 +408,12 @@ _
         }
 ```
 
+#### Extension Method And Linq
+With the extension method, then you can implementes a Fully Object-Oriented coding style, as you can add extend any method or function onto any type of object.  
+
+###### Javascript like style
+The Javascript like coding style is recommended combined with the extension method style
+
 ## Appendix
 
 Here are tables of names that i used in my programming, and continues updated....
