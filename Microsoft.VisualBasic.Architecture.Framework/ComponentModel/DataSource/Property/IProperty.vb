@@ -1,7 +1,8 @@
-﻿
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+
 Namespace ComponentModel.DataSourceModel
 
-    Public Interface IProperty
+    Public Interface IProperty : Inherits IReadOnlyId
 
         ''' <summary>
         ''' Gets property value from <paramref name="target"/> object.

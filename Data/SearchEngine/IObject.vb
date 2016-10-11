@@ -7,11 +7,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Structure IObject
 
     Public ReadOnly Property Type As Type
-    Public ReadOnly Property Schema As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
+    Public ReadOnly Property Schema As Dictionary(Of String, IProperty)
 
     Sub New(type As Type)
         Me.Type = type
-        Me.Schema = DataFrameColumnAttribute.LoadMapping(type, , mapsAll:=True)
+        Me.Schema = New Dictionary(Of String, IProperty)
+
+        For Each p In DataFrameColumnAttribute _
+            .LoadMapping(type, , mapsAll:=True)
+            Call Schema.Add(p.Key, p.Value)
+        Next
     End Sub
 
     ''' <summary>
