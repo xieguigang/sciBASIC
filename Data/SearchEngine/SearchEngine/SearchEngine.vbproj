@@ -163,16 +163,16 @@
   <ItemGroup>
     <Compile Include="Adapter\Text.vb" />
     <Compile Include="Adapter\DictionaryKey.vb" />
-    <Compile Include="AssertionProvider.vb" />
+    <Compile Include="Evaluation\AssertionProvider.vb" />
     <Compile Include="QueryArgument.vb" />
     <Compile Include="Comparer.vb" />
     <Compile Include="Adapter\DataEnumerator.vb" />
-    <Compile Include="MetaExpression.vb" />
+    <Compile Include="Expression\MetaExpression.vb" />
     <Compile Include="Adapter\IObject.vb" />
-    <Compile Include="ExpressionBuilder.vb" />
-    <Compile Include="Expression.vb" />
-    <Compile Include="Evaluator.vb" />
-    <Compile Include="SyntaxParser.vb" />
+    <Compile Include="Expression\ExpressionBuilder.vb" />
+    <Compile Include="Expression\Expression.vb" />
+    <Compile Include="Evaluation\Evaluator.vb" />
+    <Compile Include="Expression\SyntaxParser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -199,7 +199,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="Syntax.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
