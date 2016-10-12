@@ -73,8 +73,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ItemGroup.vb" />
-    <Compile Include="Project.vb" />
+    <Compile Include="Template\PropertyGroup.vb" />
+    <Compile Include="Template\ItemGroup.vb" />
+    <Compile Include="Template\Project.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
