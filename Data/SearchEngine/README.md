@@ -2,7 +2,7 @@
 
 ## Query Syntax
 
-##### Normal Search
+##### 1. Normal Search
 
 Just inputs the normal words that want to performed in the search action, example by using this statement as query:
 
@@ -12,7 +12,7 @@ Hello world!
 
 And then it will be tokenlize as two words: ``hello`` and ``world``, these two words will match any text that contains the string ``hello`` or ``world`` by default.
 
-###### Using Wildcards
+###### 1.1 Using Wildcards
 
 This search engine allowed wildcards search: ``*`` for any length any characters match, and ``%`` allowed just one any character match, example as:
 
@@ -24,7 +24,7 @@ abc%d
 + ``abc*d`` will match ``abc...blabla...d``
 + ``abc%d`` will match ``abc.d``, and this text ``abc...blabla...d`` will match failure.
 
-###### Using Regexp
+###### 1.2 Using Regexp
 
 If your query expression its first char is ``#``, then query will be translate as regexp search, for example:
 
@@ -34,7 +34,7 @@ If your query expression its first char is ``#``, then query will be translate a
 
 this query expression will translate as regexp ``\d+`` match any number string.
 
-###### Using Levenshtein
+###### 1.3 Using Levenshtein
 
 If your query expression its first char is ``~``, then query will be translate as ``Levenshtein`` calculate for string similarity match:
 
@@ -44,7 +44,7 @@ If your query expression its first char is ``~``, then query will be translate a
 
 ``~abcd`` will match any string that looks like to ``abcd`` with similarity score **0.85** cutoff.
 
-##### Must have Search
+##### 2. Must have Search
 
 ```
 "ABC D"
@@ -52,7 +52,7 @@ If your query expression its first char is ``~``, then query will be translate a
 
 ``"ABC D"`` will match ``EEEABC DEE`` as it contains the entire query string ``ABC D``, ``ABC+D`` will match failure, as it can not contains ``ABC D``
 
-##### Logical Expression
+##### 3. Logical Expression
 
 Query can also using the logical expression for advance search, allowed operators are ``AND``, ``OR``, ``NOT``, and you can also using brackets ``(`` and ``)`` to changes the calculate priority, example:
 
@@ -62,7 +62,7 @@ Query can also using the logical expression for advance search, allowed operator
 
 This query expression can be explained as: **the result should match an any length numeric string (``\d+``) andalso the result should contains the entire string ``ABC D`` or not contains number string ``22``.**
 
-##### Field Search
+##### 4. Field Search
 
 This search engine can specific the search field in the object by specifc the field name, example:
 
