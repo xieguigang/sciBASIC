@@ -297,7 +297,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' If the target parameter is not presents in the CLI, then this function will returns nothing
+        ''' If the target parameter is not presents in the CLI, then this function will returns nothing.
+        ''' (键值对之间使用分号分隔)
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>

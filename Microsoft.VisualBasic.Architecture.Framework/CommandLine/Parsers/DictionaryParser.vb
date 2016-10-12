@@ -5,6 +5,11 @@ Namespace CommandLine.Parsers
 
     Public NotInheritable Class DictionaryParser
 
+        ''' <summary>
+        ''' 键值对之间使用分号分隔
+        ''' </summary>
+        ''' <param name="str$"></param>
+        ''' <returns></returns>
         Public Shared Function TryParse(str$) As Dictionary(Of String, String)
             Dim chars As New Pointer(Of Char)(str$)
             Dim tmp As New List(Of Char)

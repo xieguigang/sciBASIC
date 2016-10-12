@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Module Program
 
@@ -26,7 +27,14 @@ Module Program
         End If
 
         For Each xml As String In files
-            Dim vbproj As Project = xml.LoadXml(Of Project)
+            Dim vbproj As Project = xml.LoadXml(Of Project)(,, AddressOf Project.RemoveNamespace)
+            Dim config = vbproj.GetProfile(condition$)
+            Dim relOut$ = RelativePath(xml.ParentPath, output)
+#If DEBUG Then
+            xml = xml.TrimSuffix & "_updated.xml"
+#End If
+            config.OutputPath = relOut
+            vbproj.Save(xml, Encodings.UTF8)
         Next
 
         Return 0
