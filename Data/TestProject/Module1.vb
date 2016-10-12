@@ -1,10 +1,11 @@
-﻿Imports Microsoft.VisualBasic.Data.IO.SearchEngine
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.IO.SearchEngine
 
 Module Module1
 
-    Function Pair(Of T1, T2)(first As T1, second As T2) As (first As T1, second As T2)
-        Return (first, second)
-    End Function
+    'Function Pair(Of T1, T2)(first As T1, second As T2) As (first As T1, second As T2)
+    '    Return (first, second)
+    'End Function
 
     'Public ReadOnly Property Item(index As Integer) As ByRef Integer
     '        Get
@@ -13,6 +14,21 @@ Module Module1
     'End Property
 
     Sub Main()
+
+        Dim query = "#\d+".Build(anyDefault:=Tokens.op_OR, allowInStr:=False)
+
+        Dim result As Boolean = query.Match(text:="23333")
+
+        Dim obj As New NamedValue(Of String) With {
+            .Name = "Hello world!",
+            .x = "23333",
+            .Description = "Test Object"
+        }
+        Dim def As New IObject(GetType(NamedValue(Of String)))
+
+        result = query.Evaluate(def, obj)
+
+        Dim source As IEnumerable(Of NamedValue(Of String))
 
         Call "Aedes aegypti strain Liverpool supercont1.301 genomic scaffold, whole genome shotgun sequence".Match("(Aedes OR Aed) AND Aegypti").__DEBUG_ECHO
 
