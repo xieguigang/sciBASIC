@@ -12,7 +12,8 @@ Module Program
 
     Const Condition$ = " '$(Configuration)|$(Platform)' == '%s|%s' "
 
-    <ExportAPI("/config.output", Usage:="/config.output /in <*.vbproj/DIR> /output <DIR> /c 'config=<Name>,platform=<type>'")>
+    <ExportAPI("/config.output",
+               Usage:="/config.output /in <*.vbproj/DIR> /output <DIR> /c 'config=<Name>,platform=<type>'")>
     Public Function ConfigOutputPath(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
         Dim output As String = args("/output")

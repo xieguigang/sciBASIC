@@ -1,5 +1,11 @@
 # DataFrame System for VisualBasic Data Science
 
+Includes:
+
++ [./BinaryData](./BinaryData) : Binary I/O tools extensions
++ [./DataFrame](./DataFrame) : CSV data framework for data science
++ [./SearchEngine](./SearchEngine) : Data Object search engine
+
 ## Basic Usage
 
 ##### Read/Write csv Data
