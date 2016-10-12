@@ -48,6 +48,7 @@ Namespace Language
 
         ''' <summary>
         ''' Synax like ``"formats" &lt;= {args}.xFormat`` 
+        ''' Format by <see cref="sprintf"/>
         ''' </summary>
         ''' <param name="args"></param>
         ''' <returns></returns>
