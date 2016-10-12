@@ -17,6 +17,8 @@ Public Class ItemGroup
     Public Property EmbeddedResources As ItemGroup()
     <XmlElement("Content")>
     Public Property Contents As ItemGroup()
+    <XmlElement("ProjectReference")>
+    Public Property ProjectReferences As ItemGroup()
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
@@ -38,6 +40,11 @@ Public Class IncludeItem
     Public Property Visible As String
     Public Property ProductName As String
     Public Property Install As String
+
+    Public Property HintPath As String
+    Public Property [Private] As String
+    Public Property Project As String
+    Public Property Name As String
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
