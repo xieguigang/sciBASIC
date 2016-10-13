@@ -348,20 +348,25 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 基类集合与继承类的集合约束
+    ''' Constrain the inherits class type into the base type.
+    ''' (基类集合与继承类的集合约束)
     ''' </summary>
     ''' <typeparam name="T">继承类向基类进行约束</typeparam>
+    ''' <typeparam name="Tbase">基类</typeparam>
     ''' <returns></returns>
-    Public Function Constrain(Of TConstrain As Class, T As TConstrain)(source As Generic.IEnumerable(Of T)) As TConstrain()
+    Public Function Constrain(Of Tbase As Class, T As Tbase)(source As IEnumerable(Of T)) As Tbase()
         If source.IsNullOrEmpty Then
-            Return New TConstrain() {}
+            Return New Tbase() {}
         End If
 
-        Dim ChunkBuffer As TConstrain() = New TConstrain(source.Count - 1) {}
-        For i As Integer = 0 To ChunkBuffer.Length - 1
-            ChunkBuffer(i) = source(i)
+        Dim array As T() = source.ToArray
+        Dim out As Tbase() = New Tbase(array.Length - 1) {}
+
+        For i As Integer = 0 To out.Length - 1
+            out(i) = source(i)
         Next
-        Return ChunkBuffer
+
+        Return out
     End Function
 
     ''' <summary>
