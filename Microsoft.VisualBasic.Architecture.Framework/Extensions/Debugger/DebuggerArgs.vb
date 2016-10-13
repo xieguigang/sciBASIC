@@ -107,7 +107,12 @@ Namespace Debugging
             If Not String.Equals(caller, "Main") Then
                 Return  ' 这个调用不是从Main出发的，则不设置环境了，因为这个环境可能在其他的代码上面设置过了
             Else
-                Call __logShell(args)
+                Try
+                    Call __logShell(args)
+                Catch ex As Exception
+                    ' 因为只是进行命令行的调用历史的记录，所以实在不行的话就放弃这次的调用记录
+                    Call ex.PrintException
+                End Try
             End If
 
             Dim opt As String = args <= "--echo"
