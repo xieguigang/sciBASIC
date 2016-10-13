@@ -120,7 +120,7 @@ Namespace Parallel
             Public Function Load(url As String) As T()
                 Dim Socket As New Microsoft.VisualBasic.Net.TcpSynchronizationServicesSocket(AddressOf DataProcessor, Net.GetFirstAvailablePort)
                 Call New Threading.Thread(AddressOf Socket.Run).Start()
-                Call StartProcess($"{url.CliPath} { Socket.LocalPort}")
+                Call StartProcess($"{url.CLIPath} { Socket.LocalPort}")
                 Call WaitForTaskComplete()
                 Return resultBuffer
             End Function

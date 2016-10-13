@@ -75,9 +75,9 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
-        Using fs As New FileStream(path, FileMode.Open)
-            Using reader As New StreamReader(fs)
+    Public Iterator Function IterateAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+        Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
+            Using reader As New StreamReader(fs, encoding.GetEncodings)
 
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine

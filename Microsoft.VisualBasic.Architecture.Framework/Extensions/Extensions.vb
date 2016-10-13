@@ -469,7 +469,7 @@ Public Module Extensions
     ''' <returns></returns>
     '''
     <ExportAPI("CLI_PATH")>
-    <Extension> Public Function CliPath(Path As String) As String
+    <Extension> Public Function CLIPath(Path As String) As String
         If String.IsNullOrEmpty(Path) Then
             Return ""
         Else
@@ -479,7 +479,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="CliPath(String)"/>函数为了保持对Linux系统的兼容性会自动替换\为/符号，这个函数则不会执行这个替换
+    ''' <see cref="CLIPath(String)"/>函数为了保持对Linux系统的兼容性会自动替换\为/符号，这个函数则不会执行这个替换
     ''' </summary>
     ''' <param name="Token"></param>
     ''' <returns></returns>

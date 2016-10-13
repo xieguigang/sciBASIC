@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Text
 
 Module DEBUG
 
@@ -178,6 +179,19 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
+
+        Call {
+            New NamedValue(Of Integer)("s1", 123),
+            New NamedValue(Of Integer)("s2", 235),
+            New NamedValue(Of Integer)("s3", 99),
+            New NamedValue(Of Integer)("s4", 499),
+            New NamedValue(Of Integer)("s5", 123),
+            New NamedValue(Of Integer)("s6", 235),
+            New NamedValue(Of Integer)("s7", 99),
+            New NamedValue(Of Integer)("s8", 499)
+        }.FromData().Plot(minRadius:=100, reorder:=1).SaveAs("./pie_chart_vars.png")
+
+        Pause()
 
         Call Plot3D.Scatter.Plot(Function(x, y) x * y,
                                  New DoubleRange(-10, 10),
@@ -312,7 +326,7 @@ Module DEBUG
             New NamedValue(Of Integer)("s3", 99),
             New NamedValue(Of Integer)("s4", 499),
             New NamedValue(Of Integer)("s5", 499)
-        }.FromData().Plot().SaveAs("./pie_chart.png")
+        }.FromData().Plot(minRadius:=100).SaveAs("./pie_chart_vars.png")
 
 
         Dim ode As New ODE With {

@@ -118,6 +118,7 @@ Call {
 ```
 
 ![](./images/pie_chart.png)
+![](./images/pie_chart_vars.png)
 
 ##### Solving ODEs
 

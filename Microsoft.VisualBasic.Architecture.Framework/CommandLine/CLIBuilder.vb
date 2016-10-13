@@ -175,7 +175,7 @@ Namespace CommandLine
         Private Delegate Function __getCLIToken(value As Object, attr As [Optional], prop As PropertyInfo) As String
 
         ''' <summary>
-        ''' The different between the String and Path is that applying <see cref="CliToken"/> or <see cref="CliPath"/>.
+        ''' The different between the String and Path is that applying <see cref="CliToken"/> or <see cref="CLIPath"/>.
         ''' </summary>
         ''' <param name="value">只能是<see cref="System.String"/>类型的</param>
         ''' <param name="attr"></param>
@@ -184,7 +184,7 @@ Namespace CommandLine
         Private Function __pathRule(value As Object, attr As [Optional], prop As PropertyInfo) As String
             Dim path As String = DirectCast(value, String)
             If Not String.IsNullOrEmpty(path) Then
-                path = $"{attr.Name} {path.CliPath}"
+                path = $"{attr.Name} {path.CLIPath}"
             End If
             Return path
         End Function

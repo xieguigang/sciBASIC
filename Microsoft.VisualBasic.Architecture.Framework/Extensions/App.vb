@@ -859,7 +859,7 @@ Public Module App
 
             Dim process As New ProcessEx With {
                 .Bin = "mono",
-                .CLIArguments = app.CliPath & " " & CLI
+                .CLIArguments = app.CLIPath & " " & CLI
             }
             Return process
         Else
