@@ -112,6 +112,12 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Public Property MetaAttributes As MetaAttribute
 
+        ''' <summary>
+        ''' 提供当前的schema数据的原始数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Raw As SchemaProvider
+
         Dim _columns As Column()
         Dim _collectionColumns As CollectionColumn()
         Dim _enumColumns As [Enum]()
@@ -184,6 +190,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
+                ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanReadDataFromObject,
@@ -202,6 +209,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanWriteDataToObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanWriteDataToObject Select p).ToArray,
                 .KeyValuePairColumns = KeyValuePairColumns.Where(Function(p) p.CanWriteDataToObject).ToArray,
+                ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanWriteDataToObject,
@@ -303,6 +311,7 @@ Namespace StorageProvider.ComponentModels
                 .KeyValuePairColumns = GetKeyValuePairColumn(Properties),
                 ._DeclaringType = type
             }
+            Schema._Raw = Schema
 
             Return Schema
         End Function

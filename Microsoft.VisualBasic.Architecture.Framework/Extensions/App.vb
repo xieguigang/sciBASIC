@@ -896,7 +896,7 @@ Public Module App
                 Let task As Func(Of Integer) = AddressOf io.Run
                 Select task
 
-            Call BatchTask(Of Integer)(Tasks, parallel, TimeInterval:=10)
+            Call BatchTask(Of Integer)(Tasks, parallel, TimeInterval:=200)
         End If
 
         Return sw.ElapsedMilliseconds

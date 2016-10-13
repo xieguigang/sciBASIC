@@ -32,6 +32,11 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Collection
 
+    ''' <summary>
+    ''' An ultralarge size dictionary object.
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
     Public Class BucketDictionary(Of K, V)
         Implements IReadOnlyDictionary(Of K, V)
 

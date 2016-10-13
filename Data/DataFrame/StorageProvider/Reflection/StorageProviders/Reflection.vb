@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::90b0aaf0e3bce405a5dd68c4528dbcdf, ..\visualbasic_App\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace StorageProvider.Reflection
 
@@ -95,6 +96,7 @@ Namespace StorageProvider.Reflection
                           row = line.obj
 
             Call rowBuilder.Indexof(csv)
+            Call rowBuilder.SolveReadOnlyMetaConflicts()
 
             Dim LQuery = From item
                          In buf.AsParallel
@@ -209,12 +211,20 @@ Namespace StorageProvider.Reflection
                 RowWriter.GetRowNames(maps).Join(RowWriter.GetMetaTitles)
             Dim dataFrame As New File(title + LQuery)
 
-            If Not RowWriter.MetaRow Is Nothing Then
+            If Not RowWriter.MetaRow Is Nothing Then  ' 只读属性会和字典属性产生冲突
                 Dim valueType As Type =
                     RowWriter.MetaRow.Dictionary.GenericTypeArguments.Last
-                For Each key As String In RowWriter.GetMetaTitles
-                    Call schemaOut.Add(key, valueType)
-                Next
+                Dim key$ = Nothing
+
+                Try
+                    For Each key$ In RowWriter.GetMetaTitles
+                        Call schemaOut.Add(key, valueType)
+                    Next
+                Catch ex As Exception
+                    Dim msg = $"key:='{key}', keys:={JSON.GetJson(schemaOut.Keys.ToArray)}, metaKeys:={JSON.GetJson(RowWriter.GetMetaTitles)}"
+                    ex = New Exception(msg, ex)
+                    Throw ex
+                End Try
             End If
 
             Return dataFrame

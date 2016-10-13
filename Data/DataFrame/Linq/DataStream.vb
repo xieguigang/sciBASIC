@@ -132,6 +132,7 @@ Namespace DocumentStream.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
+            Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While True
                 Dim buffer As String() = BufferProvider()
@@ -169,6 +170,7 @@ Namespace DocumentStream.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
+            Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While True
                 Dim chunks As IEnumerable(Of String()) =
@@ -241,6 +243,7 @@ Namespace DocumentStream.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
+            Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While Not EndRead
                 Dim LQuery As IEnumerable(Of T) = From line As String
