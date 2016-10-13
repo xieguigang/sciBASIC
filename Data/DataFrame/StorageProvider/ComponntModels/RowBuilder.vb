@@ -113,9 +113,16 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         Public Sub SolveReadOnlyMetaConflicts()
             If HaveMetaAttribute Then ' 假若存在字典属性的话，则需要进行额外的处理
+                Dim schema As SchemaProvider = SchemaProvider.Raw.Raw ' why two reference that have the effects????
+
+                Call "Schema has meta dictionary property...".__DEBUG_ECHO
+
                 For Each name In NonIndexed.Keys.ToArray
-                    If Not SchemaProvider.Raw.GetField(name) Is Nothing Then  ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
+                    If Not schema.GetField(name) Is Nothing Then  ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
                         Call NonIndexed.Remove(name)
+#If DEBUG Then
+                        Call $"{name} was removed!".__DEBUG_ECHO
+#End If
                     End If
                 Next
             End If
