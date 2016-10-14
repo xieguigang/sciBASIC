@@ -389,6 +389,7 @@
     <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
+    <Compile Include="Language\C\RandomNumbers.vb" />
     <Compile Include="Language\Java\Arrays.vb" />
     <Compile Include="Language\LanguageExtensions.vb" />
     <Compile Include="Language\Python\Array.vb" />
