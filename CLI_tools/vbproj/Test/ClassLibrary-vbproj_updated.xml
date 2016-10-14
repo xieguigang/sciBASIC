@@ -712,17 +712,17 @@
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
-      <DependentUpon>Application.myapp</DependentUpon>
       <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
-      <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
-      <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Extensions\Reflection\Delegate\README.md" />
@@ -731,8 +731,15 @@
     <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource />
-    <EmbeddedResource />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\SoftwareToolkits\UpdatesEditor.resx">
+      <DependentUpon>UpdatesEditor.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
@@ -749,8 +756,16 @@
     <None Include="Resources\gpl.txt" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage />
-    <BootstrapperPackage />
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\license.txt" />
@@ -764,8 +779,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <Content />
-    <Content />
+    <Content Include="ComponentModel\Ranges\Copyright.txt" />
+    <Content Include="Serialization\JSON\Formatter\license.txt" />
   </ItemGroup>
   <ItemGroup />
 </Project>

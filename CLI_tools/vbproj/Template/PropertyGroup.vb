@@ -16,6 +16,7 @@ Public Class PropertyGroup
     Public Property MyType As String
     Public Property TargetFrameworkVersion As String
     Public Property TargetFrameworkProfile
+    Public Property StartupObject As String
     Public Property PublishUrl As String
     Public Property Install As String
     Public Property InstallFrom As String
