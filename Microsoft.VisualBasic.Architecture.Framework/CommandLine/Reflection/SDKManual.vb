@@ -140,10 +140,10 @@ Namespace CommandLine.Reflection
                     .Select(Function(s) s.Trim) _
                     .JoinBy(vbCrLf))
 
-                If api.ParameterInfo.Count > 0 Then
+                If api.Arguments.Count > 0 Then
                     Call sb.AppendLine("##### Accepted Types")
 
-                    For Each param As NamedValue(Of Argument) In api.ParameterInfo
+                    For Each param As NamedValue(Of Argument) In api.Arguments
                         Call sb.AppendLine("###### " & param.Name)
 
                         For Each pType As Type In param.x.AcceptTypes.SafeQuery

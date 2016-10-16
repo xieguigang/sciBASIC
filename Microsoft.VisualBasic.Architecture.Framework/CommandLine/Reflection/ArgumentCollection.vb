@@ -36,7 +36,7 @@ Namespace CommandLine.Reflection
     ''' The help information for a specific command line parameter switch.(某一个指定的命令的开关的帮助信息)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ParameterInfoCollection
+    Public Class ArgumentCollection
         Implements IEnumerable(Of NamedValue(Of Argument))
 
         ReadOnly _params As New Dictionary(Of String, Argument)
@@ -74,30 +74,43 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public ReadOnly Property GetExample() As String
             Get
-                Dim RequiredSwitchs = (From switch In Me._params.Values Where switch.Optional = False Select switch).ToArray
-                Dim OptionalSwitchs = (From switch In Me._params.Values Where switch.Optional Select switch).ToArray
-                Dim sBuilder As StringBuilder = New StringBuilder(1024)
-                For Each Switch As Argument In RequiredSwitchs
-                    Call sBuilder.AppendFormat("{0} {1} ", Switch.Name, Switch.Example)
+                Dim required = From par As Argument
+                               In Me._params.Values
+                               Where Not par.Optional
+                               Select par
+                Dim optionals = From par
+                                In Me._params.Values
+                                Where par.Optional
+                                Select par
+                Dim sb As New StringBuilder(1024)
+
+                For Each Switch As Argument In required
+                    Call sb.AppendFormat("{0} {1} ", Switch.Name, Switch.Example)
                 Next
-                For Each Switch As Argument In OptionalSwitchs
-                    Call sBuilder.AppendFormat("[{0} {1}] ", Switch.Name, Switch.Example)
+                For Each Switch As Argument In optionals
+                    Call sb.AppendFormat("[{0} {1}] ", Switch.Name, Switch.Example)
                 Next
 
-                Return sBuilder.ToString.Trim
+                Return sb.ToString.Trim
             End Get
         End Property
 
         Public ReadOnly Property GetUsage() As String
             Get
-                Dim requiredParameters = (From parameter In Me._params.Values Where parameter.Optional = False Select parameter).ToArray
-                Dim optionalParameters = (From parameter In Me._params.Values Where parameter.Optional Select parameter).ToArray
+                Dim requireds = From par
+                                In Me._params.Values
+                                Where Not par.Optional
+                                Select par
+                Dim optionals = From par
+                                In Me._params.Values
+                                Where par.Optional
+                                Select par
                 Dim sb As New StringBuilder(1024)
 
-                For Each param As Argument In requiredParameters
+                For Each param As Argument In requireds
                     Call sb.AppendFormat("{0} {1} ", param.Name, param.Usage)
                 Next
-                For Each param As Argument In optionalParameters
+                For Each param As Argument In optionals
                     Call sb.AppendFormat("[{0} {1}] ", param.Name, param.Usage)
                 Next
 
@@ -114,7 +127,10 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property EmptyExample As Boolean
             Get
-                Dim LQuery = From switch In _params.Values Where String.IsNullOrEmpty(switch.Example) Select 1 '
+                Dim LQuery = From par As Argument
+                             In _params.Values
+                             Where String.IsNullOrEmpty(par.Example)
+                             Select 1 '
                 Return LQuery.Sum = _params.Count
             End Get
         End Property

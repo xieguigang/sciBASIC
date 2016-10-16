@@ -44,7 +44,11 @@ Namespace CommandLine.Reflection.EntryPoints
 
 #Region "ReadOnly Properties"
 
-        Public ReadOnly Property ParameterInfo As ParameterInfoCollection
+        ''' <summary>
+        ''' 当前的这个命令对象的参数帮助信息列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Arguments As ArgumentCollection
         ''' <summary>
         ''' The reflection entry point in the assembly for the target method object.
         ''' </summary>
@@ -59,7 +63,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property InvokeOnObject As Object
+        Public Property target As Object
 
         ''' <summary>
         ''' The shared method did not requires of the object instance.(这个方法是否为实例方法)
@@ -69,7 +73,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <remarks></remarks>
         Public ReadOnly Property IsInstanceMethod As Boolean
             Get
-                Return Not Me.EntryPoint.IsStatic OrElse Not InvokeOnObject Is Nothing
+                Return Not Me.EntryPoint.IsStatic OrElse Not target Is Nothing
             End Get
         End Property
 
@@ -79,12 +83,12 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function EntryPointFullName(relativePath As Boolean) As String
-            Dim path As String
+            Dim path$ = EntryPoint.DeclaringType.Assembly.Location
 
             If relativePath Then
-                path = ProgramPathSearchTool.RelativePath(EntryPoint.DeclaringType.Assembly.Location)
+                path = ProgramPathSearchTool.RelativePath(path)
             Else
-                path = EntryPoint.DeclaringType.Assembly.Location.ToFileURL
+                path = path.ToFileURL
             End If
 
             Return $"{path}!{EntryPoint.DeclaringType.FullName}::{EntryPoint.ToString}"
@@ -97,7 +101,7 @@ Namespace CommandLine.Reflection.EntryPoints
         End Sub
 
         Public Sub New(invokeOn As Object)
-            Me.InvokeOnObject = invokeOn
+            Me.target = invokeOn
         End Sub
 
         ''' <summary>
@@ -114,7 +118,7 @@ Namespace CommandLine.Reflection.EntryPoints
             }
             __funcInvoker = Function(args As Object()) InvokeCLI(parameters:=args, target:=Nothing, [Throw]:=[Throw])
             _EntryPoint = Invoke
-            _ParameterInfo = New ParameterInfoCollection(methodInfo:=Invoke)
+            _Arguments = New ArgumentCollection(methodInfo:=Invoke)
             _NumberOfParameters = Invoke.GetParameters.Length
         End Sub
 #End Region
@@ -129,15 +133,15 @@ Namespace CommandLine.Reflection.EntryPoints
         Public Overrides Function HelpInformation(Optional md As Boolean = False) As String
             Dim sb As New StringBuilder(MyBase.HelpInformation(md))
 
-            If Not ParameterInfo.IsNullOrEmpty Then
+            If Not Arguments.IsNullOrEmpty Then
                 Call sb.AppendLine(vbCrLf & vbCrLf)
                 Call sb.AppendLine("#### Parameters information:")
 
                 If Not md Then
                     Call sb.AppendLine(vbCrLf & "   ---------------------------------------")
-                    Call sb.AppendLine("    " & ParameterInfo.ToString)
+                    Call sb.AppendLine("    " & Arguments.ToString)
                 Else
-                    For Each param In ParameterInfo
+                    For Each param In Arguments
                         Call sb.AppendLine("##### " & If(param.x.Optional, $"[{param.Name}]", param.Name))
                         Call sb.AppendLine(param.x.Description)
                         Call sb.AppendLine("###### Example")
@@ -163,7 +167,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Invoke(parameters As Object(), Optional [Throw] As Boolean = True) As Object
-            Return Invoke(parameters, Me.InvokeOnObject, [Throw])
+            Return Invoke(parameters, Me.target, [Throw])
         End Function
 
         ''' <summary>
@@ -173,7 +177,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="[Throw]"></param>
         ''' <returns></returns>
         Public Function DirectInvoke(callParameters As Object(), Optional [Throw] As Boolean = True) As Object
-            Return __directInvoke(callParameters, Me.InvokeOnObject, [Throw])
+            Return __directInvoke(callParameters, Me.target, [Throw])
         End Function
 
         ''' <summary>

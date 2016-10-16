@@ -294,6 +294,7 @@
     <Compile Include="CommandLine\CLITools.vb" />
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Interpreters\Abstract.vb" />
+    <Compile Include="CommandLine\Reflection\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\CLITypes.vb" />
     <Compile Include="CommandLine\Reflection\ExceptionHandler.vb" />
     <Compile Include="CommandLine\Reflection\SDKManual.vb" />
@@ -705,7 +706,7 @@
     <Compile Include="ComponentModel\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attribute.vb" />
-    <Compile Include="CommandLine\Reflection\ParameterInfo.vb" />
+    <Compile Include="CommandLine\Reflection\ArgumentCollection.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />

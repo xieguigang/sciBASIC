@@ -275,7 +275,7 @@ Namespace CommandLine.Reflection
     ''' <summary>
     ''' 应用于命令行类型容器之上的，用于功能分组的详细描述信息
     ''' </summary>
-    Public Class Grouping : Inherits Group
+    Public Class GroupingAttribute : Inherits Group
 
         ''' <summary>
         ''' 当前的这一功能分组的详细描述信息
