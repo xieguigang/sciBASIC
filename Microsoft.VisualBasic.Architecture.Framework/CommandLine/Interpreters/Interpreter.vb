@@ -46,8 +46,10 @@ Imports Microsoft.VisualBasic.Text
 Namespace CommandLine
 
     ''' <summary>
-    ''' Command line interpreter for your cli program.(命令行解释器，请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
-    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
+    ''' Command line interpreter for your **CLI** program.
+    ''' (命令行解释器，请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待
+    ''' 回车退出)
     ''' </summary>
     ''' <remarks></remarks>
     '''
@@ -367,7 +369,7 @@ Namespace CommandLine
         End Sub
 
         ''' <summary>
-        ''' 申明这个解释器的命令行API容器类型
+        ''' The CLI API container Module/Class type information.(申明这个解释器的命令行API容器类型)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Type As Type
@@ -395,8 +397,10 @@ Namespace CommandLine
 
             Dim Methods As MethodInfo() = Type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
             Dim commandAttribute As Type = GetType(ExportAPIAttribute)
+
             Dim commandsInfo As List(Of APIEntryPoint) =
                 LinqAPI.MakeList(Of APIEntryPoint) <=
+ _
                 From methodInfo As MethodInfo
                 In Methods
                 Let commandInfo As APIEntryPoint =
@@ -404,6 +408,7 @@ Namespace CommandLine
                 Where Not commandInfo Is Nothing
                 Select commandInfo
                 Order By commandInfo.Name Ascending
+
             Return commandsInfo
         End Function
 
@@ -655,7 +660,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ListCommandsEntryName As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
+        Public ReadOnly Property APINameList As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
             Get
                 Return Me.__API_InfoHash.Keys
             End Get
@@ -669,7 +674,11 @@ Namespace CommandLine
             Return Me.__API_InfoHash.TryGetValue(key, value)
         End Function
 
-        Public ReadOnly Property Values As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
+        ''' <summary>
+        ''' 当前的解释器内所容纳的所有的CLI API列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property APIList As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
             Get
                 Return Me.__API_InfoHash.Values
             End Get

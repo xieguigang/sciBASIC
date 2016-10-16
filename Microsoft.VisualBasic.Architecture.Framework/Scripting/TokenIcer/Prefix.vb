@@ -33,6 +33,8 @@ Namespace Scripting.TokenIcer
     ''' </summary>
     Public Module Prefix
 
+        Public Const undefined$ = NameOf(MathTokens.UNDEFINED)
+
         ' This is our token enumeration. It holds every token defined in the grammar
         ''' <summary>
         ''' Tokens is an enumeration of all possible token values.

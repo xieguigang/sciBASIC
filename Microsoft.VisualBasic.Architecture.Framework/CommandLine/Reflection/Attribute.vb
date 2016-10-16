@@ -261,6 +261,8 @@ Namespace CommandLine.Reflection
     ''' <summary>
     ''' 应用于方法之上的，标注当前的这个方法的功能分组
     ''' </summary>
+    ''' 
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
     Public Class Group : Inherits CLIToken
 
         Public Sub New(name As String)
@@ -275,6 +277,8 @@ Namespace CommandLine.Reflection
     ''' <summary>
     ''' 应用于命令行类型容器之上的，用于功能分组的详细描述信息
     ''' </summary>
+    ''' 
+    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=True, Inherited:=True)>
     Public Class GroupingAttribute : Inherits Group
 
         ''' <summary>
