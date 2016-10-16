@@ -37,9 +37,9 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     Public Class ParameterInfoCollection
-        Implements IEnumerable(Of NamedValue(Of ParameterInfo))
+        Implements IEnumerable(Of NamedValue(Of Argument))
 
-        ReadOnly _params As New Dictionary(Of String, ParameterInfo)
+        ReadOnly _params As New Dictionary(Of String, Argument)
 
         ''' <summary>
         ''' 本命令行对象中的包含有帮助信息的开关参数的数目
@@ -77,10 +77,10 @@ Namespace CommandLine.Reflection
                 Dim RequiredSwitchs = (From switch In Me._params.Values Where switch.Optional = False Select switch).ToArray
                 Dim OptionalSwitchs = (From switch In Me._params.Values Where switch.Optional Select switch).ToArray
                 Dim sBuilder As StringBuilder = New StringBuilder(1024)
-                For Each Switch As ParameterInfo In RequiredSwitchs
+                For Each Switch As Argument In RequiredSwitchs
                     Call sBuilder.AppendFormat("{0} {1} ", Switch.Name, Switch.Example)
                 Next
-                For Each Switch As ParameterInfo In OptionalSwitchs
+                For Each Switch As Argument In OptionalSwitchs
                     Call sBuilder.AppendFormat("[{0} {1}] ", Switch.Name, Switch.Example)
                 Next
 
@@ -94,10 +94,10 @@ Namespace CommandLine.Reflection
                 Dim optionalParameters = (From parameter In Me._params.Values Where parameter.Optional Select parameter).ToArray
                 Dim sb As New StringBuilder(1024)
 
-                For Each param As ParameterInfo In requiredParameters
+                For Each param As Argument In requiredParameters
                     Call sb.AppendFormat("{0} {1} ", param.Name, param.Usage)
                 Next
-                For Each param As ParameterInfo In optionalParameters
+                For Each param As Argument In optionalParameters
                     Call sb.AppendFormat("[{0} {1}] ", param.Name, param.Usage)
                 Next
 
@@ -127,32 +127,32 @@ Namespace CommandLine.Reflection
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder(1024)
 
-            For Each parameter As ParameterInfo In _params.Values
+            For Each parameter As Argument In _params.Values
                 Call sb.AppendLine(parameter.ToString)
             Next
             Return sb.ToString
         End Function
 
-        ReadOnly __flag As Type = GetType(ParameterInfo)
+        ReadOnly __flag As Type = GetType(Argument)
 
         Sub New(methodInfo As MethodInfo)
             Dim attrs As Object() = methodInfo.GetCustomAttributes(__flag, inherit:=False)
-            Dim LQuery As IEnumerable(Of ParameterInfo) =
+            Dim LQuery As IEnumerable(Of Argument) =
                 From attr As Object
                 In attrs
-                Let parameter As ParameterInfo =
-                    TryCast(attr, ParameterInfo)
+                Let parameter As Argument =
+                    TryCast(attr, Argument)
                 Select parameter
                 Order By parameter.Optional Ascending '
 
-            For Each param As ParameterInfo In LQuery
+            For Each param As Argument In LQuery
                 Call _params.Add(param.Name, param)
             Next
         End Sub
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of ParameterInfo)) Implements IEnumerable(Of NamedValue(Of ParameterInfo)).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of Argument)) Implements IEnumerable(Of NamedValue(Of Argument)).GetEnumerator
             For Each obj In _params
-                Yield New NamedValue(Of ParameterInfo) With {
+                Yield New NamedValue(Of Argument) With {
                     .Name = obj.Key,
                     .x = obj.Value
                 }

@@ -160,7 +160,7 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
-    Public Class ParameterInfo : Inherits CLIToken
+    Public Class Argument : Inherits CLIToken
 
         ''' <summary>
         ''' The name of this command line parameter switch.(该命令开关的名称)

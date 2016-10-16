@@ -143,7 +143,7 @@ Namespace CommandLine.Reflection
                 If api.ParameterInfo.Count > 0 Then
                     Call sb.AppendLine("##### Accepted Types")
 
-                    For Each param As NamedValue(Of ParameterInfo) In api.ParameterInfo
+                    For Each param As NamedValue(Of Argument) In api.ParameterInfo
                         Call sb.AppendLine("###### " & param.Name)
 
                         For Each pType As Type In param.x.AcceptTypes.SafeQuery
