@@ -257,4 +257,38 @@ Namespace CommandLine.Reflection
             Return sBuilder.ToString
         End Function
     End Class
+
+    ''' <summary>
+    ''' 应用于方法之上的，标注当前的这个方法的功能分组
+    ''' </summary>
+    Public Class Group : Inherits CLIToken
+
+        Public Sub New(name As String)
+            MyBase.New(name)
+        End Sub
+
+        Public Sub New(name As System.Enum)
+            MyBase.New(name.Description)
+        End Sub
+    End Class
+
+    ''' <summary>
+    ''' 应用于命令行类型容器之上的，用于功能分组的详细描述信息
+    ''' </summary>
+    Public Class Grouping : Inherits Group
+
+        ''' <summary>
+        ''' 当前的这一功能分组的详细描述信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Description As String
+
+        Public Sub New(name As String)
+            MyBase.New(name)
+        End Sub
+
+        Public Sub New(name As System.Enum)
+            MyBase.New(name)
+        End Sub
+    End Class
 End Namespace
