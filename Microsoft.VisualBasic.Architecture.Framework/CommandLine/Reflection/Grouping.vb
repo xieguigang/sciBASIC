@@ -38,10 +38,10 @@ Namespace CommandLine
                      Select DirectCast(x, GroupingAttribute)
             Dim api = (From x As APIEntryPoint
                        In CLI.APIList
-                       Let g As Group() = x.EntryPoint _
-                           .GetCustomAttributes(GetType(Group), True) _
-                           .ToArray(Function(o) DirectCast(o, Group))
-                       Select If(g.Length = 0, {New Group(undefined)}, g) _
+                       Let g As GroupAttribute() = x.EntryPoint _
+                           .GetCustomAttributes(GetType(GroupAttribute), True) _
+                           .ToArray(Function(o) DirectCast(o, GroupAttribute))
+                       Select If(g.Length = 0, {New GroupAttribute(undefined)}, g) _
                            .Select(Function(gx) New With {gx, x})) _
                            .MatrixAsIterator _
                            .GroupBy(Function(x) x.gx.Name) _
