@@ -30,7 +30,7 @@ Imports System.CodeDom.Compiler
 Imports System.Reflection
 Imports System.Text
 
-Namespace CodeDOM_VBC
+Namespace Emit.CodeDOM_VBC
 
     ''' <summary>
     ''' Extension wrappers for VisualBasic compiler

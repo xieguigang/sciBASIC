@@ -33,6 +33,15 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Public Module KeyValuePairExtensions
 
     ''' <summary>
+    ''' 请注意，这里的类型约束只允许枚举类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
+    Public Function ParserDictionary(Of T)() As Dictionary(Of String, T)
+        Return Enums(Of T).ToDictionary(Function(x) DirectCast(CType(x, Object), [Enum]).Description)
+    End Function
+
+    ''' <summary>
     ''' Data exists and not nothing
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

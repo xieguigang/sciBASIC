@@ -48,6 +48,7 @@ Namespace Language
 
         ''' <summary>
         ''' Synax like ``"formats" &lt;= {args}.xFormat`` 
+        ''' Format by <see cref="sprintf"/>
         ''' </summary>
         ''' <param name="args"></param>
         ''' <returns></returns>
@@ -62,8 +63,7 @@ Namespace Language
     ''' </summary>
     Public Structure FormatHelper
 
-        Dim source As String
-        Dim args As String()
+        Dim source$, args$()
 
         Public Overrides Function ToString() As String
             Return source

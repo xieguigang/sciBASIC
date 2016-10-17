@@ -30,14 +30,14 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 
 Public Module EigenvectorBootstrapping
 
@@ -106,7 +106,7 @@ Public Module EigenvectorBootstrapping
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
-        Dim clusters = ClusterDataSet(n, datasets, debug:=True, [stop]:=[stop])
+        Dim clusters = ClusterDataSet(n, datasets, debug:=True, [stop]:=[stop], parallel:=True)
         Dim out As New Dictionary(Of Double(), NamedValue(Of Dictionary(Of String, Double)())())
         Dim raw = (From x As NamedValue(Of VectorTagged(Of Dictionary(Of String, Double)))
                    In strTags

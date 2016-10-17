@@ -47,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>D:\GCModeller\GCModeller\bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -145,6 +145,15 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+    <OutputPath>bin\Release2\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+    <OutputPath>bin\x64\Release2\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+    <OutputPath>bin\x86\Release2\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -171,6 +180,9 @@
   <ItemGroup>
     <Compile Include="d3js\color\rgb.vb" />
     <Compile Include="d3js\interpolate\rgb.vb" />
+    <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
+    <Compile Include="Drawing2D\Colors\Designer.vb" />
+    <Compile Include="Drawing2D\Colors\Legend.vb" />
     <Compile Include="Drawing2D\g.vb" />
     <Compile Include="Drawing2D\GraphicsRegion.vb" />
     <Compile Include="Drawing2D\Shapes\Arrow.vb" />
@@ -189,6 +201,7 @@
     <Compile Include="Drawing2D\VectorScript.vb" />
     <Compile Include="Drawing2D\Text\String.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
+    <Compile Include="Drawing3D\Camera.vb" />
     <Compile Include="Drawing3D\Surface.vb" />
     <Compile Include="Drawing3D\Models\Model.vb" />
     <Compile Include="Drawing3D\GDIDevice.vb">
@@ -252,6 +265,12 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>Markups</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\designer.colors.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\colorbrewer.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

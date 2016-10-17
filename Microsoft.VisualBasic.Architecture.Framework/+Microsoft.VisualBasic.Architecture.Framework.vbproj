@@ -89,7 +89,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -231,6 +231,17 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+    <OutputPath>bin\Release2\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+    <OutputPath>bin\x64\Release2\</OutputPath>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+    <OutputPath>bin\x86\Release2\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -274,6 +285,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLine\Parsers\CLIParser.vb" />
+    <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />
     <Compile Include="CommandLine\CLIBuilder.vb" />
     <Compile Include="CommandLine\CLI\IIORedirectAbstract.vb" />
@@ -281,12 +294,15 @@
     <Compile Include="CommandLine\CLITools.vb" />
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Interpreters\Abstract.vb" />
+    <Compile Include="CommandLine\Reflection\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\CLITypes.vb" />
     <Compile Include="CommandLine\Reflection\ExceptionHandler.vb" />
     <Compile Include="CommandLine\Reflection\SDKManual.vb" />
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\IMatched.vb" />
     <Compile Include="ComponentModel\DataSource\Repository.vb" />
@@ -317,7 +333,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
-    <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
@@ -334,7 +350,7 @@
     <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\CollectionIO.vb" />
+    <Compile Include="Extensions\IO\CollectionIO.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
@@ -358,9 +374,11 @@
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
+    <Compile Include="Extensions\IO\Extensions.vb" />
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
     <Compile Include="Extensions\Math\TokenConnections.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
@@ -369,9 +387,13 @@
     <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\StringHelpers\DateParser.vb" />
+    <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
+    <Compile Include="Language\C\RandomNumbers.vb" />
+    <Compile Include="Language\Java\Arrays.vb" />
     <Compile Include="Language\LanguageExtensions.vb" />
+    <Compile Include="Language\Python\Array.vb" />
     <Compile Include="Language\Tuple.vb" />
     <Compile Include="Language\Python\Regexp.vb" />
     <Compile Include="Language\Value.vb" />
@@ -482,7 +504,7 @@
     <Compile Include="Extensions\Doc\XmlExtensions.vb" />
     <Compile Include="Extensions\Image\Colors\ColorCube.vb" />
     <Compile Include="Extensions\Image\Colors\ColorMap.vb" />
-    <Compile Include="Extensions\Image\GDI+\gdi+Device.vb" />
+    <Compile Include="Extensions\Image\GDI+\Graphics.vb" />
     <Compile Include="Extensions\Image\GDI+\GDITransform.vb" />
     <Compile Include="Extensions\Image\Wmf.vb" />
     <Compile Include="Extensions\Image\TiffWriter.vb" />
@@ -498,9 +520,8 @@
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Extensions\StringHelpers\Parser.vb" />
     <Compile Include="Language\Linq.vb" />
-    <Compile Include="Text\StringSimilarity\StatementMatches.vb" />
     <Compile Include="Text\UnbufferedStringReader.vb" />
-    <Compile Include="Tools\HtmlParser\Table.vb" />
+    <Compile Include="Text\Parser\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
     <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
     <Compile Include="Language\UnixBash\FileSystem\File.vb" />
@@ -524,8 +545,8 @@
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
     <Compile Include="Extensions\Reflection\Reflection.vb" />
-    <Compile Include="Extensions\StringHelpers\Compares\LevLDM.vb" />
-    <Compile Include="Extensions\StringHelpers\Compares\LevExtensions.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinModel.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Extensions\StringHelpers\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
@@ -534,7 +555,7 @@
     <Compile Include="Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
-    <Compile Include="Extensions\StringHelpers\Compares\LevenshteinDistance.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb" />
     <Compile Include="MMFProtocol\Pipeline\API.vb" />
     <Compile Include="MMFProtocol\Pipeline\PipeBuffer.vb" />
     <Compile Include="MMFProtocol\Pipeline\PipeStream.vb" />
@@ -563,11 +584,7 @@
     <Compile Include="Scripting\MetaData\Parameter.vb" />
     <Compile Include="Scripting\MetaData\Namespace.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryWriter.vb" />
-    <Compile Include="Text\StringSimilarity\BipartiteMatcher.vb" />
-    <Compile Include="Text\StringSimilarity\Abstract.vb" />
-    <Compile Include="Text\StringSimilarity\Leven.vb" />
-    <Compile Include="Text\StringSimilarity\MatchString.vb" />
-    <Compile Include="Text\StringSimilarity\Tokeniser.vb" />
+    <Compile Include="Text\StringSimilarity\Similarity.vb" />
     <Compile Include="Text\TextIndexing.vb" />
     <Compile Include="Text\GB2312.vb" />
     <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
@@ -577,7 +594,6 @@
     <Compile Include="CommandLine\CliResCommon.vb" />
     <Compile Include="Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
-    <Compile Include="Text\StringSimilarity\MatchsMaker.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="Extensions\Image\GrayBitmap.vb" />
     <Compile Include="Tools\Logging\EventLog.vb" />
@@ -690,7 +706,7 @@
     <Compile Include="ComponentModel\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attribute.vb" />
-    <Compile Include="CommandLine\Reflection\ParameterInfo.vb" />
+    <Compile Include="CommandLine\Reflection\ArgumentCollection.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />

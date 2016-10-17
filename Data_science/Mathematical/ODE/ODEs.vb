@@ -65,14 +65,16 @@ Public MustInherit Class ODEs
     ReadOnly __vars As Dictionary(Of var)
     Friend vars As var()
 
-    Default Public ReadOnly Property GetVar(Name As String) As var
+    Public Const y0RefName As String = NameOf(__vars)
+
+    Default Public ReadOnly Property GetVar(Name$) As var
         Get
             Return __vars(Name)
         End Get
     End Property
 
     Sub New()
-        Dim type As TypeInfo = Me.GetType
+        Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
         Dim fields = type.DeclaredFields _
             .Where(Function(x) x.FieldType.Equals(var.type)) _
             .ToArray
@@ -176,6 +178,15 @@ Public MustInherit Class ODEs
                 .x = y(var)
             }
 
+        ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏
+        GC.SuppressFinalize(K1)
+        GC.SuppressFinalize(K2)
+        GC.SuppressFinalize(K3)
+        GC.SuppressFinalize(K4)
+        GC.SuppressFinalize(darrayn)
+        GC.SuppressFinalize(darraynext)
+        GC.SuppressFinalize(vars)
+
         Return New ODEsOut With {
             .x = x,
             .y = out.ToDictionary,
@@ -189,7 +200,7 @@ Public MustInherit Class ODEs
     ''' </summary>
     ''' <param name="dx"></param>
     ''' <param name="dy"></param>
-    Protected MustOverride Sub func(dx As Double, ByRef dy As Vector)
+    Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
     Private Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
         For Each x In vars       ' 更新设置y的值
@@ -201,7 +212,7 @@ Public MustInherit Class ODEs
 
     Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
         Get
-            Dim type As TypeInfo = Me.GetType
+            Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
             Dim fields As IEnumerable(Of FieldInfo) =
                 type _
                 .DeclaredFields _
@@ -213,7 +224,7 @@ Public MustInherit Class ODEs
     End Property
 
     ''' <summary>
-    ''' Get function parameters
+    ''' Get function parameters name collection
     ''' </summary>
     ''' <returns></returns>
     Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
@@ -224,7 +235,7 @@ Public MustInherit Class ODEs
     End Function
 
     ''' <summary>
-    ''' Get Y
+    ''' Get Y names
     ''' </summary>
     ''' <returns></returns>
     Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)

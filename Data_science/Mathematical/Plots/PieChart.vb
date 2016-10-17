@@ -39,27 +39,82 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Public Module PieChart
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="legend"></param>
+    ''' <param name="legendBorder"></param>
+    ''' <param name="minRadius">
+    ''' 当这个参数值大于0的时候，除了扇形的面积会不同外，半径也会不同，这个参数指的是最小的半径
+    ''' </param>
+    ''' <param name="reorder">
+    ''' 是否按照数据比例重新对数据排序？
+    ''' +  0 : 不需要
+    ''' +  1 : 从小到大排序
+    ''' + -1 : 从大到小排序 
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(data As IEnumerable(Of Pie),
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
                          Optional legend As Boolean = True,
-                         Optional legendBorder As Border = Nothing) As Bitmap
+                         Optional legendBorder As Border = Nothing,
+                         Optional minRadius As Single = -1,
+                         Optional reorder% = 0) As Bitmap
+#Const DEBUG = 0
+        If reorder <> 0 Then
+            If reorder > 0 Then
+                data = data.OrderBy(Function(x) x.Percentage)
+            Else
+                data = data.OrderByDescending(Function(x) x.Percentage)
+            End If
+        End If
 
         Return GraphicsPlots(size, margin, bg,
                  Sub(g)
-                     Dim r = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2
-                     Dim topLeft = New Point(size.Width / 2 - r, size.Height / 2 - r)
-                     Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
-                     Dim a As New Value(Of Single)
-                     Dim sweep As New Value(Of Single)
+                     Dim r# = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2  ' 最大的半径值
+                     Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
 
-                     Call g.FillPie(Brushes.LightGray, rect, 0, 360)
+                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then
+                         Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
+                         Dim a As New Value(Of Single)
+                         Dim sweep As New Value(Of Single)
 
-                     For Each x As Pie In data
-                         Call g.FillPie(New SolidBrush(x.Color), rect, (a = (a.value + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
-                     Next
+                         Call g.FillPie(Brushes.LightGray, rect, 0, 360)
+
+                         For Each x As Pie In data
+                             Call g.FillPie(New SolidBrush(x.Color), rect, (a = (a.value + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
+                         Next
+                     Else  ' 半径也会有变化
+                         Dim a As New Value(Of Single)
+                         Dim sweep! = 360 / data.Count
+                         Dim maxp# = data.Max(Function(x) x.Percentage)
+#If DEBUG Then
+                         Dim list As New List(Of Rectangle)
+#End If
+                         For Each x As Pie In data
+                             Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
+                             Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
+                             Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
+                             Dim br As New SolidBrush(x.Color)
+
+                             Call g.FillPie(br, rect, (a = (a.value + sweep)), sweep)
+#If DEBUG Then
+                             list += rect
+#End If
+                         Next
+#If DEBUG Then
+                         For Each rect In list
+                             Call g.DrawRectangle(Pens.Red, rect)
+                         Next
+#End If
+                     End If
 
                      If legend Then
                          Dim font As New Font(FontFace.MicrosoftYaHei, 20)

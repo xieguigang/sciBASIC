@@ -110,6 +110,14 @@ Namespace Language.UnixBash
             End If
         End Operator
 
+        Public Shared Operator -(ls As Search, wildcards$()) As Search
+            Return ls - FileSystemAPI.wildcards(wildcards$)
+        End Operator
+
+        Public Shared Operator -(ls As Search, wildcards$) As Search
+            Return ls - wildcards.Split(","c)
+        End Operator
+
         Public ReadOnly Property SearchType As FileIO.SearchOption
             Get
                 Dim opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly

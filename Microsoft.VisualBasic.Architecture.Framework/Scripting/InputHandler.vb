@@ -48,8 +48,8 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Delegate Function LoadObject(value As String) As Object
-        Public Delegate Function LoadObject(Of T)(value As String) As T
+        Public Delegate Function LoadObject(value$) As Object
+        Public Delegate Function LoadObject(Of T)(value$) As T
 
         ''' <summary>
         ''' Object为字符串类型，这个字典可以讲字符串转为目标类型
@@ -57,7 +57,7 @@ Namespace Scripting
         ''' <remarks></remarks>
         Public ReadOnly Property CasterString As Dictionary(Of Type, Func(Of String, Object)) =
             New Dictionary(Of Type, Func(Of String, Object)) From {
-                {GetType(String), Function(s) s},
+                {GetType(String), Function(s$) s},
                 {GetType(Char), AddressOf Casting.CastChar},
                 {GetType(Integer), AddressOf Casting.CastInteger},
                 {GetType(Double), AddressOf Val},
@@ -84,21 +84,20 @@ Namespace Scripting
         ''' Converts a string expression which was input from the console or script file to the specified type.
         ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值)
         ''' </summary>
-        ''' <param name="Expression">The string expression to convert.</param>
-        ''' <param name="TargetType">The type to which to convert the object.</param>
+        ''' <param name="expression">The string expression to convert.</param>
+        ''' <param name="target">The type to which to convert the object.</param>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
-        <Extension> Public Function CTypeDynamic(Expression As String, TargetType As Type) As Object
-            If _CasterString.ContainsKey(TargetType) Then
-                Dim Caster = _CasterString(TargetType)
-                Return Caster(Expression)
+        <Extension> Public Function CTypeDynamic(expression As String, target As Type) As Object
+            If _CasterString.ContainsKey(target) Then
+                Dim Caster As Func(Of String, Object) = _CasterString(target)
+                Return Caster(expression$)
             End If
 
             Try
-                Return Conversion.CTypeDynamic(Expression, TargetType)
+                Return Conversion.CTypeDynamic(expression, target)
             Catch ex As Exception
-                Call App.LogException(
-                    New Exception($"{Expression}  ===> {TargetType.FullName}", ex),
-                    MethodBase.GetCurrentMethod.GetFullName)
+                ex = New Exception($"{expression} ==> {target.FullName}", ex)
+                Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Return Nothing
             End Try
         End Function
@@ -142,7 +141,7 @@ Namespace Scripting
             End If
             Call CasterString.Add(stringConvertType, cast)
 
-            Dim key As String = briefName.ToLower
+            Dim key$ = briefName.ToLower
 
             If Types.ContainsKey(key) Then
                 Call Types.Remove(key)

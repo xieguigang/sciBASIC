@@ -33,7 +33,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 
-Namespace CodeDOM_VBC
+Namespace Emit.CodeDOM_VBC
 
     <Extension> Public Module CodeDOMExtension
 

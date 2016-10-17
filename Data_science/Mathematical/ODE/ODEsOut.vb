@@ -71,6 +71,15 @@ Public Class ODEsOut
         End Get
     End Property
 
+    ''' <summary>
+    ''' Merge <see cref="y0"/> into <see cref="params"/>
+    ''' </summary>
+    Public Sub Join()
+        For Each v In y0
+            Call params.Add(v.Key, v.Value)
+        Next
+    End Sub
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function
@@ -99,7 +108,7 @@ Public Class ODEsOut
         Return file
     End Function
 
-    Public Shared Function LoadFromDataFrame(csv As String) As ODEsOut
+    Public Shared Function LoadFromDataFrame(csv$) As ODEsOut
         Dim df As File = File.Load(csv)
         Dim cols = df.Columns().ToArray
         Dim X = cols(Scan0)

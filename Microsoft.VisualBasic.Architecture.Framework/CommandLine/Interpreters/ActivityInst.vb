@@ -50,7 +50,7 @@ Namespace CommandLine
 
             Dim setValue =
                 New SetValue(Of EntryPoints.APIEntryPoint)() _
-                    .GetSet(NameOf(EntryPoints.APIEntryPoint.InvokeOnObject))
+                    .GetSet(NameOf(EntryPoints.APIEntryPoint.target))
 
             Call (From api As EntryPoints.APIEntryPoint
                   In Me.__API_InfoHash.Values

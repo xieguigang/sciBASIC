@@ -394,7 +394,7 @@ For define a new object, a short format is recommended:
 Dim x As New <Type>
 ```
 
-If the type you want to create object instance can be initialize from its property, then the With keyword is recommended to used:
+If the type you want to create object instance can be initialize from its property, then the ``With`` keyword is recommended to used:
 
 ```vb.net
 Dim MyvaCog As MyvaCOG() = LinqAPI.Exec(Of MyvaCOG) <= 
@@ -406,6 +406,89 @@ _
             .QueryName = gene.LocusID,
             .QueryLength = gene.Length
         }
+```
+
+#### Extension Method And Linq
+With the extension method, then you can implementes a Fully Object-Oriented coding style, as you can add extend any method or function onto any type of object.
+
+For example:
+
+```vbnet
+''' <summary>
+''' Make directory
+''' </summary>
+''' <param name="DIR"></param>
+<Extension> Public Sub MkDIR(DIR As String)
+    Call FileIO.FileSystem.CreateDirectory(DIR)
+End Sub
+```
+
+This string object extension method will makes the string working as a directory object:
+
+```vbnet
+Call "D:\MyData\".MkDIR
+```
+
+If another Linq expression is internal inner your Linq expression, then these two staggered linq expression will messing up your coding style, and then using the Linq extension instead of the Linq expression for your internal linq expression that would be good.
+
+Example:
+
+```vbnet
+
+```
+
+Try avoid the style like ``(Linq Expression).Method``, you should folding the extension to the next line, and this would be more clear for the reading.
+
+```vbnet
+Call (From x In data Select x.Properties.Length Distinct) _
+    .ToArray _
+    .GetJson _
+    .__DEBUG_ECHO
+```
+
+###### Javascript like style
+The Javascript like coding style is recommended combined with the extension method style. If the extension calling is very long, then folding in the javascript style that would be great. For example:
+
+This is the **bad** style:
+
+```vbnet
+For Each line$ In lines
+
+    Yield New WordTokens With {
+        .name = line.Trim(" "c, ASCII.TAB),
+        .tokens = line.Trim.StripSymbol.Split.Distinct.Where(Function(s) Not String.IsNullOrEmpty(s.Trim(ASCII.TAB))).ToArray
+    }
+Next
+```
+
+This is great style:
+
+```vbnet
+For Each line$ In lines
+
+    Yield New WordTokens With {
+        .name = line.Trim(" "c, ASCII.TAB),
+        .tokens = line.Trim _
+            .StripSymbol _
+            .Split _
+            .Distinct _
+            .Where(Function(s) Not String.IsNullOrEmpty(s.Trim(ASCII.TAB))) _
+            .ToArray
+    }
+Next
+```
+
+Another great style example:
+
+```vbnet
+Dim exp As Expression = expression _
+    .Split(__dels) _
+    .Select(Function(s) s.Trim(" "c, ASCII.TAB)) _
+    .Where(Function(s) Not String.IsNullOrEmpty(s)) _
+    .JoinBy(" AND ") _
+    .Build()
+
+Return Function(text) If(exp.Match(text), 1.0R, 0R)
 ```
 
 ## Appendix
@@ -423,8 +506,7 @@ Here are tables of names that i used in my programming, and continues updated...
 	<tr><td>System.String</td>
     	<td>s, str, name, sId, id, x</td>
         <td>
-<pre>        
-Dim s As String
+<pre>Dim s As String
 Dim str As String
 Dim name As String
 Dim sId As String
@@ -483,8 +565,7 @@ Loop</pre>
 </td>
     </tr>
     <tr><td>Linq query expression</td><td>LQuery</td><td>
-<pre>
-Dim LQuery = From path As String
+<pre>Dim LQuery = From path As String
              In ls -l -r -wildcards("*.Xml") <= DIR
              Where InStr(path.BaseName, "xcb") = 1
              Select path.LoadXml(Of KEGG.DBGET.Module)</pre>
@@ -492,8 +573,7 @@ Dim LQuery = From path As String
 </tr>
     <tr>
     	<td>Query Result/Function Returns</td><td>result, rtvl</td><td>
-<pre>
-Dim result As [Module]() = LinqAPI.Exec(Of [Module]) <= 
+<pre>Dim result As [Module]() = LinqAPI.Exec(Of [Module]) <= 
 _
     From path As String
     In ls -l -r -wildcards("*.Xml") <= DIR

@@ -76,7 +76,7 @@ Namespace CommandLine.Reflection
             pages += LinqAPI.MakeList(Of String) <=
  _
                 From api As SeqValue(Of APIEntryPoint)
-                In CLI.Values.SeqIterator(offset:=1)
+                In CLI.APIList.SeqIterator(offset:=1)
                 Let index As String = api.i & ".   "
                 Select index & api.obj.HelpInformation
 
@@ -131,7 +131,7 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine("## CLI API list")
             Call sb.AppendLine("--------------------------")
 
-            For Each i As SeqValue(Of APIEntryPoint) In App.Values.SeqIterator
+            For Each i As SeqValue(Of APIEntryPoint) In App.APIList.SeqIterator
                 Dim api As APIEntryPoint = i.obj
 
                 Call sb.Append($"<h3 id=""{api.Name}""> {i.i + 1}. ")
@@ -140,10 +140,10 @@ Namespace CommandLine.Reflection
                     .Select(Function(s) s.Trim) _
                     .JoinBy(vbCrLf))
 
-                If api.ParameterInfo.Count > 0 Then
+                If api.Arguments.Count > 0 Then
                     Call sb.AppendLine("##### Accepted Types")
 
-                    For Each param As NamedValue(Of ParameterInfo) In api.ParameterInfo
+                    For Each param As NamedValue(Of Argument) In api.Arguments
                         Call sb.AppendLine("###### " & param.Name)
 
                         For Each pType As Type In param.x.AcceptTypes.SafeQuery
@@ -167,7 +167,7 @@ Namespace CommandLine.Reflection
         Public Function HelpSummary(App As Interpreter, markdown As Boolean) As String
             Dim sb As New StringBuilder(1024)
             Dim nameMaxLen As Integer =
-                App.Values.Select(Function(x) Len(x.Name)).Max
+                App.APIList.Select(Function(x) Len(x.Name)).Max
 
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
@@ -177,7 +177,7 @@ Namespace CommandLine.Reflection
                 Call sb.AppendLine("|------------|----|")
             End If
 
-            For Each commandInfo As APIEntryPoint In App.Values
+            For Each commandInfo As APIEntryPoint In App.APIList
                 If Not markdown Then
                     Dim blank As String =
                         New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))

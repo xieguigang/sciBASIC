@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::57b8f33d34fa5e56df626822b4936899, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,22 +31,25 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Debugging
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.ComponentModel.Settings
+Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 #Const NET_45 = 0
 
 Namespace CommandLine
 
     ''' <summary>
-    ''' Command line interpreter for your cli program.(命令行解释器，请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
-    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
+    ''' Command line interpreter for your **CLI** program.
+    ''' (命令行解释器，请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待
+    ''' 回车退出)
     ''' </summary>
     ''' <remarks></remarks>
     '''
@@ -366,7 +369,7 @@ Namespace CommandLine
         End Sub
 
         ''' <summary>
-        ''' 申明这个解释器的命令行API容器类型
+        ''' The CLI API container Module/Class type information.(申明这个解释器的命令行API容器类型)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Type As Type
@@ -394,8 +397,10 @@ Namespace CommandLine
 
             Dim Methods As MethodInfo() = Type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
             Dim commandAttribute As Type = GetType(ExportAPIAttribute)
+
             Dim commandsInfo As List(Of APIEntryPoint) =
                 LinqAPI.MakeList(Of APIEntryPoint) <=
+ _
                 From methodInfo As MethodInfo
                 In Methods
                 Let commandInfo As APIEntryPoint =
@@ -403,6 +408,7 @@ Namespace CommandLine
                 Where Not commandInfo Is Nothing
                 Select commandInfo
                 Order By commandInfo.Name Ascending
+
             Return commandsInfo
         End Function
 
@@ -654,7 +660,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ListCommandsEntryName As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
+        Public ReadOnly Property APINameList As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
             Get
                 Return Me.__API_InfoHash.Keys
             End Get
@@ -668,7 +674,11 @@ Namespace CommandLine
             Return Me.__API_InfoHash.TryGetValue(key, value)
         End Function
 
-        Public ReadOnly Property Values As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
+        ''' <summary>
+        ''' 当前的解释器内所容纳的所有的CLI API列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property APIList As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
             Get
                 Return Me.__API_InfoHash.Values
             End Get

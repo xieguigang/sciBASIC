@@ -94,6 +94,11 @@ While any number of complex code solutions could be created to attempt to addres
         End Function
 
         ''' <summary>
+        ''' Value must be between 0 and 90.
+        ''' </summary>
+        Const InvalidRange$ = "Value must be between 0 and 90."
+
+        ''' <summary>
         ''' Gets a color from within the cube starting at the specified location and moving a given distance in the specified direction.
         ''' </summary>
         ''' <param name="source">The source location within the cube from which to start moving.</param>
@@ -104,10 +109,16 @@ While any number of complex code solutions could be created to attempt to addres
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("CreateColor")>
-        Public Function GetColorFrom(source As Color, azimuth As Double, elevation As Double, distance As Double, Optional isRadians As Boolean = False) As Color
-            If azimuth < 0 OrElse azimuth > 90 Then Throw New ArgumentException("azimuth", "Value must be between 0 and 90.")
-            If elevation < 0 OrElse elevation > 90 Then Throw New ArgumentException("elevation", "Value must be between 0 and 90.")
+        Public Function GetColorFrom(source As Color, azimuth As Double, elevation As Double, distance As Double, Optional isRadians As Boolean = False, Optional alpha% = 255) As Color
+            If azimuth < 0 OrElse azimuth > 90 Then
+                Throw New ArgumentException("azimuth", InvalidRange)
+            End If
+            If elevation < 0 OrElse elevation > 90 Then
+                Throw New ArgumentException("elevation", InvalidRange)
+            End If
+
             Dim a, e, r, g, b As Double
+
             If isRadians Then
                 a = azimuth
                 e = elevation
@@ -115,13 +126,20 @@ While any number of complex code solutions could be created to attempt to addres
                 a = DegreesToRadians(azimuth)
                 e = DegreesToRadians(elevation)
             End If
+
             r = distance * Math.Cos(a) * Math.Cos(e)
             b = distance * Math.Sin(a) * Math.Cos(e)
             g = distance * Math.Sin(e)
+
             If Double.IsNaN(r) Then r = 0
             If Double.IsNaN(g) Then g = 0
             If Double.IsNaN(b) Then b = 0
-            Return Color.FromArgb(Math.Max(Math.Min(source.R + r, 255), 0), Math.Max(Math.Min(source.G + g, 255), 0), Math.Max(Math.Min(source.B + b, 255), 0))
+
+            Return Color.FromArgb(
+                alpha,
+                Math.Max(Math.Min(source.R + r, 255), 0),
+                Math.Max(Math.Min(source.G + g, 255), 0),
+                Math.Max(Math.Min(source.B + b, 255), 0))
         End Function
 
         ''' <summary>
@@ -158,14 +176,20 @@ While any number of complex code solutions could be created to attempt to addres
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Gradients")>
-        Public Function GetColorSequence(source As Color, target As Color, increment As Integer) As Color()
-            Dim result As New List(Of Color)
+        Public Function GetColorSequence(source As Color, target As Color, increment As Integer, Optional alpha% = 255) As Color()
             Dim a As Double = GetAzimuthTo(source, target)
             Dim e As Double = GetElevationTo(source, target)
             Dim d As Double = GetDistance(source, target)
+            Dim result As New List(Of Color)
+
             For i As Integer = 0 To d Step increment
-                result.Add(GetColorFrom(source, a, e, i, True))
+                result += GetColorFrom(
+                    source,
+                    a, e, i,
+                    isRadians:=True,
+                    alpha:=alpha%)
             Next
+
             Return result.ToArray
         End Function
 

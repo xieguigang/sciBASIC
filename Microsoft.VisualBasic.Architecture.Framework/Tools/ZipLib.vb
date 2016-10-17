@@ -233,7 +233,7 @@ Public Module GZip
             Case ArchiveAction.[Error]
                 'Throws an error if the file exists
                 If archiveExists Then
-                    Throw New IOException($"The zip file {archiveFullName.ToFileURL.CliPath} already exists.")
+                    Throw New IOException($"The zip file {archiveFullName.ToFileURL.CLIPath} already exists.")
                 End If
 
             Case ArchiveAction.Ignore

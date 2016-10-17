@@ -36,7 +36,7 @@ Namespace Quantile
 
     Public Module Extensions
 
-        Const epsilon As Double = 0.001
+        Public Const epsilon As Double = 0.001
 
         ''' <summary>
         ''' Example Usage:
@@ -68,13 +68,13 @@ Namespace Quantile
         ''' <returns></returns>
         <Extension>
         Public Function GKQuantile(source As IEnumerable(Of Long),
-                                   Optional epsilon As Double = Extensions.epsilon,
-                                   Optional compact_size As Integer = 1000) As QuantileEstimationGK
+                                   Optional epsilon# = Extensions.epsilon,
+                                   Optional compact_size% = 1000) As QuantileEstimationGK
 
             Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
 
             For Each x As Long In source
-                Call estimator.insert(x)
+                Call estimator.Insert(x)
             Next
 
             Return estimator
@@ -82,12 +82,25 @@ Namespace Quantile
 
         Const window_size As Integer = 10000
 
+        ''' <summary>
+        ''' Selector for object sequence that by using quantile calculation.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="data"></param>
+        ''' <param name="getValue">
+        ''' Object in the input sequence that can be measuring as a numeric value by using this function pointer.
+        ''' (通过这个函数指针可以将序列之中的对象转换为可计算quantile的数值)
+        ''' </param>
+        ''' <param name="quantiles#"></param>
+        ''' <param name="epsilon#"></param>
+        ''' <param name="compact_size%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function SelectByQuantile(Of T)(data As IEnumerable(Of T),
                                                         getValue As Func(Of T, Long),
-                                                        quantiles As Double(),
-                                                        Optional epsilon As Double = Extensions.epsilon,
-                                                        Optional compact_size As Integer = 1000) As IEnumerable(Of DoubleTagged(Of T()))
+                                                        quantiles#(),
+                                                        Optional epsilon# = Extensions.epsilon,
+                                                        Optional compact_size% = 1000) As IEnumerable(Of DoubleTagged(Of T()))
             Dim cache = (From x As T
                          In data
                          Select x,
@@ -96,7 +109,7 @@ Namespace Quantile
             Dim estimator As QuantileEstimationGK = vals.GKQuantile(epsilon, compact_size)
 
             For Each q As Double In quantiles
-                Dim estimate As Long = estimator.query(q)
+                Dim estimate As Long = estimator.Query(q)
                 Dim up As IEnumerable(Of T) = From x
                                               In cache
                                               Where x.v >= estimate
@@ -125,7 +138,7 @@ Namespace Quantile
             Dim quantiles As Double() = {0.5, 0.9, 0.95, 0.99, 1.0}
 
             For Each q As Double In quantiles
-                Dim estimate As Long = estimator.query(q)
+                Dim estimate As Long = estimator.Query(q)
                 Dim actual As Long = shuffle.actually(q)
                 Dim out As String = String.Format("Estimated {0:F2} quantile as {1:D} (actually {2:D})", q, estimate, actual)
 

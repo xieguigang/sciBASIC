@@ -68,14 +68,14 @@ Namespace CommandLine.Reflection
                 Call Console.WriteLine($"  Example:      {App.AssemblyName} {api.Name} {api.Example}")
             End If
 
-            If Not api.ParameterInfo.IsNullOrEmpty Then
+            If Not api.Arguments.IsNullOrEmpty Then
                 Call Console.WriteLine(vbCrLf & vbCrLf)
                 Call Console.WriteLine("   Parameters information:" & vbCrLf & "   ---------------------------------------")
 
-                Dim maxLen As Integer = (From x In api.ParameterInfo Select x.Name.Length + 2).Max
+                Dim maxLen As Integer = (From x In api.Arguments Select x.Name.Length + 2).Max
                 Dim l As Integer
 
-                For Each param As ParameterInfo In api.ParameterInfo.Select(Function(x) x.x)
+                For Each param As Argument In api.Arguments.Select(Function(x) x.x)
                     fore = Console.ForegroundColor
 
                     If param.[Optional] Then

@@ -57,7 +57,14 @@ Namespace StorageProvider.ComponentModels
                 If value.IsNullOrEmpty Then
                     _dictColumns = New Dictionary(Of String, Column)
                 Else
-                    _dictColumns = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictColumns = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictColumns.ContainsKey(x.Name) Then
+                            Call _dictColumns.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -75,7 +82,14 @@ Namespace StorageProvider.ComponentModels
                 If _collectionColumns.IsNullOrEmpty Then
                     _dictCollectionColumns = New Dictionary(Of String, CollectionColumn)
                 Else
-                    _dictCollectionColumns = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictCollectionColumns = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictCollectionColumns.ContainsKey(x.Name) Then
+                            Call _dictCollectionColumns.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -88,7 +102,14 @@ Namespace StorageProvider.ComponentModels
                 If _enumColumns.IsNullOrEmpty Then
                     _dictEnumColumns = New Dictionary(Of String, [Enum])
                 Else
-                    _dictEnumColumns = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictEnumColumns = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictEnumColumns.ContainsKey(x.Name) Then
+                            Call _dictEnumColumns.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -101,7 +122,14 @@ Namespace StorageProvider.ComponentModels
                 If value.IsNullOrEmpty Then
                     _dictKeyMeta = New Dictionary(Of String, KeyValuePair)
                 Else
-                    _dictKeyMeta = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictKeyMeta = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictKeyMeta.ContainsKey(x.Name) Then
+                            Call _dictKeyMeta.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -111,6 +139,12 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <returns></returns>
         Public Property MetaAttributes As MetaAttribute
+
+        ''' <summary>
+        ''' 提供当前的schema数据的原始数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Raw As SchemaProvider
 
         Dim _columns As Column()
         Dim _collectionColumns As CollectionColumn()
@@ -135,7 +169,7 @@ Namespace StorageProvider.ComponentModels
 
         Public ReadOnly Iterator Property Properties As IEnumerable(Of StorageProvider)
             Get
-                For Each p As CollectionColumn In Me.CollectionColumns.SafeQuery
+                For Each p As CollectionColumn In CollectionColumns.SafeQuery
                     Yield p
                 Next
                 For Each p As Column In Me.Columns.SafeQuery
@@ -157,7 +191,12 @@ Namespace StorageProvider.ComponentModels
             Return DeclaringType.FullName
         End Function
 
-        Public Function GetField(Name As String) As ComponentModels.StorageProvider
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="Name">支持属性名称或者域名称</param>
+        ''' <returns></returns>
+        Public Function GetField(Name As String) As StorageProvider
             If _dictColumns.ContainsKey(Name) Then
                 Return _dictColumns(Name)
             End If
@@ -184,6 +223,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
+                ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanReadDataFromObject,
@@ -202,6 +242,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanWriteDataToObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanWriteDataToObject Select p).ToArray,
                 .KeyValuePairColumns = KeyValuePairColumns.Where(Function(p) p.CanWriteDataToObject).ToArray,
+                ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanWriteDataToObject,
@@ -303,6 +344,7 @@ Namespace StorageProvider.ComponentModels
                 .KeyValuePairColumns = GetKeyValuePairColumn(Properties),
                 ._DeclaringType = type
             }
+            Schema._Raw = Schema
 
             Return Schema
         End Function

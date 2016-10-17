@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::51c614a4391e385e53096d81dcdebfe8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.FileIO.Extensions
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
@@ -64,17 +66,7 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension>
     Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
-        Call "".SaveTo(path)
-
-        Dim file As New FileStream(path, FileMode.OpenOrCreate)
-        Dim writer As New StreamWriter(file, encoding.GetEncodings) With {
-            .NewLine =
-            If(newLine Is Nothing OrElse newLine.Length = 0,
-            vbLf,
-            newLine)
-        }
-
-        Return writer
+        Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
     End Function
 
     ''' <summary>
@@ -83,9 +75,9 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
-        Using fs As New FileStream(path, FileMode.Open)
-            Using reader As New StreamReader(fs)
+    Public Iterator Function IterateAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+        Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
+            Using reader As New StreamReader(fs, encoding.GetEncodings)
 
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine
@@ -177,7 +169,8 @@ Public Module TextDoc
     <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
                                        <Parameter("Path")> path As String,
                                        <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing,
-                                       Optional append As Boolean = False) As Boolean
+                                       Optional append As Boolean = False,
+                                       Optional throwEx As Boolean = True) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
@@ -207,7 +200,13 @@ Public Module TextDoc
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
-            Throw ex
+
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+                Return False
+            End If
         End Try
 
         Return True

@@ -110,7 +110,7 @@ Namespace CommandLine
                 Optional stdRedirect As String = "")
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
-                _TempRedirect = stdRedirect.CliPath
+                _TempRedirect = stdRedirect.CLIPath
             End If
 
             File = FileIO.FileSystem.GetFileInfo(File).FullName
@@ -128,7 +128,7 @@ Namespace CommandLine
                 .Root.Name.Replace("\", "").Replace("/", "")
 
             Call BAT.AppendLine(Drive)
-            Call BAT.AppendLine("CD " & FileIO.FileSystem.CurrentDirectory.CliPath)
+            Call BAT.AppendLine("CD " & FileIO.FileSystem.CurrentDirectory.CLIPath)
 
             If Not environment.IsNullOrEmpty Then '写入临时的环境变量
                 For Each para As KeyValuePair(Of String, String) In environment

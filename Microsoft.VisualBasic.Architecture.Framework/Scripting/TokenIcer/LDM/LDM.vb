@@ -128,6 +128,9 @@ Namespace Scripting.TokenIcer
             TokenName = name
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function ToString() As String
             If UNDEFINED Then
                 Return "UNDEFINED --> " & TokenValue

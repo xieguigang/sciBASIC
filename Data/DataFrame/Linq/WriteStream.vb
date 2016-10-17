@@ -68,22 +68,30 @@ Namespace DocumentStream.Linq
         ''' <param name="path"></param>
         ''' <param name="Explicit">Schema parsing of the object strictly?</param>
         ''' <param name="metaKeys">预设的标题头部</param>
-        Sub New(path As String, Optional Explicit As Boolean = False, Optional metaBlank As String = "", Optional metaKeys As String() = Nothing)
-            Dim typeDef As Type = GetType(T)
-            Dim Schema = SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
-            Dim parent As String = path.ParentPath
+        Sub New(path As String,
+                Optional Explicit As Boolean = False,
+                Optional metaBlank As String = "",
+                Optional metaKeys As String() = Nothing,
+                Optional maps As Dictionary(Of String, String) = Nothing)
 
-            Call FileIO.FileSystem.CreateDirectory(parent)
+            Dim typeDef As Type = GetType(T)
+            Dim Schema As SchemaProvider =
+                SchemaProvider _
+                .CreateObject(typeDef, Explicit) _
+                .CopyReadDataFromObject
+
+            Call path.ParentPath.MkDIR
 
             RowWriter = New RowWriter(Schema, metaBlank)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
 
             Call "".SaveTo(handle)
 
-            Dim file As New FileStream(handle,
-                                       FileMode.OpenOrCreate,
-                                       FileAccess.ReadWrite,
-                                       share:=FileShare.Read)
+            Dim file As New FileStream(
+                handle,
+                FileMode.OpenOrCreate,
+                FileAccess.ReadWrite,
+                share:=FileShare.Read)
 
             _fileIO = New IO.StreamWriter(file) With {
                 .AutoFlush = True,
@@ -91,7 +99,7 @@ Namespace DocumentStream.Linq
             }
             RowWriter.__cachedIndex = metaKeys
 
-            Dim title As RowObject = RowWriter.GetRowNames
+            Dim title As RowObject = RowWriter.GetRowNames(maps)
 
             If Not metaKeys.IsNullOrEmpty Then
                 title = New RowObject(title.Join(metaKeys))

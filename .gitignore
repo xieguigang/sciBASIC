@@ -29,6 +29,8 @@ local.properties
 .buildpath
 
 
+packages/
+
 #################
 ## Visual Studio
 #################

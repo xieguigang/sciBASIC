@@ -32,12 +32,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace Mathematical
 
     ''' <summary>
-    ''' 主要针对的是非常小的小数
+    ''' 主要针对的是非常小的小数（仅适用于Positive Number）
     ''' </summary>
     Public Class PreciseRandom
 
         ReadOnly __rnd As New Random(Now.Millisecond)
-        ReadOnly __digits As IntRange
+        ReadOnly __digits As DoubleRange
 
         ''' <summary>
         ''' 4.94065645841247E-324
@@ -49,8 +49,8 @@ Namespace Mathematical
         ''' </summary>
         ''' <param name="digitMin">``10^?``</param>
         ''' <param name="digitMax">``10^?``</param>
-        Sub New(digitMin As Integer, digitMax As Integer)
-            __digits = New IntRange(digitMin, digitMax + 1)  ' 假若max是1e10的话，则最高的位数是10，这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
+        Sub New(digitMin!, digitMax!)
+            __digits = New DoubleRange(digitMin, digitMax + 1)  ' 假若max是1e10的话，则最高的位数是10，这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
         End Sub
 
         ''' <summary>
@@ -58,10 +58,10 @@ Namespace Mathematical
         ''' </summary>
         ''' <param name="from">最小的精度为<see cref="System.Double.Epsilon"/></param>
         ''' <param name="[to]"></param>
-        Sub New(from As Double, [to] As Double)
+        Sub New(from#, to#)
             Call Me.New(
-                CInt(If(from = 0R, 0, Math.Log10(from))), ' 避免出现log(0)的情况
-                CInt(If([to] = 0R, 0, Math.Log10([to]))))
+                CSng(If(from = 0R, 0F, Math.Log10(from))), ' 避免出现log(0)的情况
+                CSng(If([to] = 0R, 0F, Math.Log10([to]))))
         End Sub
 
         Public Overrides Function ToString() As String
@@ -70,8 +70,8 @@ Namespace Mathematical
 
         Public Function NextNumber() As Double
             Dim d As Integer = __rnd.NextDouble * __digits.Length + __digits.Min      ' generates the digits
-            Dim digits As Double = 10 ^ d
-            Dim r As Double = __rnd.NextDouble
+            Dim digits# = 10 ^ d
+            Dim r# = __rnd.NextDouble
             Return r * digits
         End Function
 

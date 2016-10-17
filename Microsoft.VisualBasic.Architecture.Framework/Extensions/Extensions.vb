@@ -348,20 +348,25 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 基类集合与继承类的集合约束
+    ''' Constrain the inherits class type into the base type.
+    ''' (基类集合与继承类的集合约束)
     ''' </summary>
     ''' <typeparam name="T">继承类向基类进行约束</typeparam>
+    ''' <typeparam name="Tbase">基类</typeparam>
     ''' <returns></returns>
-    Public Function Constrain(Of TConstrain As Class, T As TConstrain)(source As Generic.IEnumerable(Of T)) As TConstrain()
+    Public Function Constrain(Of Tbase As Class, T As Tbase)(source As IEnumerable(Of T)) As Tbase()
         If source.IsNullOrEmpty Then
-            Return New TConstrain() {}
+            Return New Tbase() {}
         End If
 
-        Dim ChunkBuffer As TConstrain() = New TConstrain(source.Count - 1) {}
-        For i As Integer = 0 To ChunkBuffer.Length - 1
-            ChunkBuffer(i) = source(i)
+        Dim array As T() = source.ToArray
+        Dim out As Tbase() = New Tbase(array.Length - 1) {}
+
+        For i As Integer = 0 To out.Length - 1
+            out(i) = source(i)
         Next
-        Return ChunkBuffer
+
+        Return out
     End Function
 
     ''' <summary>
@@ -464,7 +469,7 @@ Public Module Extensions
     ''' <returns></returns>
     '''
     <ExportAPI("CLI_PATH")>
-    <Extension> Public Function CliPath(Path As String) As String
+    <Extension> Public Function CLIPath(Path As String) As String
         If String.IsNullOrEmpty(Path) Then
             Return ""
         Else
@@ -474,7 +479,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="CliPath(String)"/>函数为了保持对Linux系统的兼容性会自动替换\为/符号，这个函数则不会执行这个替换
+    ''' <see cref="CLIPath(String)"/>函数为了保持对Linux系统的兼容性会自动替换\为/符号，这个函数则不会执行这个替换
     ''' </summary>
     ''' <param name="Token"></param>
     ''' <returns></returns>
@@ -1324,17 +1329,17 @@ Public Module Extensions
     ''' <remarks></remarks>
     <ExportAPI("FuzzyMatch",
                Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True) As Boolean
+    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
         If tokenbased Then
-            Dim edits As DistResult = StatementMatches.MatchFuzzy(Query, Subject)
-
-            If edits Is Nothing Then
+            Dim similarity# = Evaluate(Query, Subject,,, )
+            Return similarity >= cutoff
+        Else
+            Dim dist = LevenshteinDistance.ComputeDistance(Query, Subject)
+            If dist Is Nothing Then
                 Return False
             Else
-                Return edits.MatchSimilarity >= 0.8
+                Return dist.MatchSimilarity >= cutoff
             End If
-        Else
-            Return FuzzyMatchString.Equals(Query, Subject)
         End If
     End Function
 #End If
@@ -1424,7 +1429,7 @@ Public Module Extensions
     <ExportAPI("Get.Item")>
     <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #Else
-    <Extension> Public Function GetItem(Of T)(Collection As Generic.IEnumerable(Of T), index As Integer) As T
+    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #End If
         If source.IsNullOrEmpty OrElse index >= source.Count Then
             Return Nothing
@@ -1472,7 +1477,7 @@ Public Module Extensions
     ''' <param name="e"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function Description(e As [Enum]) As String
+    <Extension> Public Function Description(value As [Enum]) As String
 #End If
         Dim type As Type = value.GetType()
         Dim s As String = value.ToString
@@ -1577,7 +1582,7 @@ Public Module Extensions
     ''' <param name="Collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function TrimNull(Of T As Class)(Collection As Generic.IEnumerable(Of T)) As T()
+    <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #End If
         If source.IsNullOrEmpty Then
             Return New T() {}
@@ -1866,6 +1871,7 @@ Public Module Extensions
             i += 1
             list += x
         Next
+
         Return list
     End Function
 #End If
@@ -1899,7 +1905,7 @@ Public Module Extensions
     <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
     <Extension> Public Iterator Function Sequence(Of T)(
                                         <Parameter("source", "")> source As IEnumerable(Of T),
-                                        <Parameter("index.OffSet", "")> Optional offSet As Integer = 0) _
+                                        <Parameter("index.OffSet", "")> Optional offSet% = 0) _
                                      As <FunctionReturns("A integer array of subscript index of the target generic collection.")> IEnumerable(Of Integer)
 #Else
     ''' <summary>
@@ -1910,12 +1916,12 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Sequence(Of T)(Collection As Generic.IEnumerable(Of T), Optional offset As Integer = 0) As Integer()
+    <Extension> Public Iterator Function Sequence(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of Integer)
 #End If
         If source Is Nothing Then
             Return
         Else
-            Dim i As Integer = offSet
+            Dim i As Integer = offset
 
             For Each x As T In source
                 Yield i
@@ -1924,7 +1930,7 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of Long)
+    <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)
         If source Is Nothing Then
             Return
         Else
@@ -1937,8 +1943,8 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function LongSeq(n As Long) As Long()
-        Dim array As Long() = New Long(n - 1) {}
+    <Extension> Public Function LongSeq(n&) As Long()
+        Dim array&() = New Long(n - 1) {}
         For i As Long = 0 To array.Length - 1
             array(i) = i
         Next
@@ -1958,9 +1964,9 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("takes")>
-    <Extension> Public Function Takes(Of T)(source As Generic.IEnumerable(Of T),
-                                            indexs As Integer(),
-                                            Optional OffSet As Integer = 0,
+    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
+                                            indexs%(),
+                                            Optional offSet% = 0,
                                             Optional reversedSelect As Boolean = False) As T()
 #Else
     ''' <summary>
@@ -1974,7 +1980,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Takes(Of T)(Collection As Generic.IEnumerable(Of T), IndexCollection As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
+    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T), indexs As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
 #End If
         If reversedSelect Then
             Return __reversedTakeSelected(source, indexs)
@@ -2101,7 +2107,7 @@ Public Module Extensions
 
     <ExportAPI("CopyFile", Info:="kernel32.dll!CopyFileW")>
     <DllImport("kernel32.dll", EntryPoint:="CopyFileW", CharSet:=CharSet.Unicode, ExactSpelling:=False)>
-    Public Function CopyFile(lpExistingFilename As String, lpNewFileName As String, bFailIfExists As Boolean) As Boolean
+    Public Function CopyFile(lpExistingFilename$, lpNewFileName$, bFailIfExists As Boolean) As Boolean
     End Function
 
     ''' <summary>
@@ -2203,10 +2209,6 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
 
-    <Extension> Public Sub ClearParameters(Of InteropService As Microsoft.VisualBasic.CommandLine.InteropService)(Instance As InteropService)
-        Call CommandLine.CLIBuildMethod.ClearParameters(Instance)
-    End Sub
-
     ''' <summary>
     ''' Fill the newly created image data with the specific color brush
     ''' </summary>
@@ -2227,7 +2229,7 @@ Public Module Extensions
     ''' <summary>
     ''' Nothing
     ''' </summary>
-    Friend Const null As Object = Nothing
+    Friend Const null = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>

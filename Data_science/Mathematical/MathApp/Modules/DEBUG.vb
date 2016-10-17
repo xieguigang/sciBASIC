@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d1dcb36ca8a452c33e69a8529edbb62b, ..\visualbasic_App\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,8 +32,14 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.AnalysisProtocol
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Example
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
@@ -43,7 +49,10 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Text
 
 Module DEBUG
 
@@ -131,8 +140,117 @@ Module DEBUG
 
     End Sub
 
+    Private Sub randdddTest()
+        Dim rrr As New Random
+        Dim ll As New List(Of Double)
+
+        For i = 0 To 10000
+            ll += Math.Log10(rrr.NextDouble)
+        Next
+
+        Call ll.GetJson.SaveTo("x:\sfdsfds.json")
+        '   MsgBox(ll.Min)
+
+        Call RandomRange.Testing(-1.0E+101, -1.22E-18).GetJson.SaveTo("x:\@\-1.0E+101, -1.22E-18.json")
+        Call RandomRange.Testing(-100, 20).GetJson.SaveTo("x:\@\-100, 20.json")
+        Call RandomRange.Testing(-1000, -20).GetJson.SaveTo("x:\@\-1000, -20.json")
+        Call RandomRange.Testing(-100, -3.0E-20).GetJson.SaveTo("x:\@\-100, -3.0E-20.json")
+        Call RandomRange.Testing(-5.0E-100, 200).GetJson.SaveTo("x:\@\-5.0E-100, 200.json")
+        Call RandomRange.Testing(3, 200).GetJson.SaveTo("x:\@\3, 200.json")
+        Call RandomRange.Testing(3.0E-99, 1.0E+21).GetJson.SaveTo("x:\@\3.0E-99, 1.0E+21.json")
+
+        Pause()
+    End Sub
+
+
+    Private Function avadsfdsfds(x As Color) As Color()
+        Dim llll As New List(Of Color)
+
+        For Each y In AllDotNetPrefixColors
+            Try
+                ColorCube.GetColorSequence(x, y, 100)
+                llll += y
+            Catch ex As Exception
+
+            End Try
+        Next
+
+        Return llll
+    End Function
+
     Public Function Main() As Integer
 
+        Call {
+            New NamedValue(Of Integer)("s1", 123),
+            New NamedValue(Of Integer)("s2", 235),
+            New NamedValue(Of Integer)("s3", 99),
+            New NamedValue(Of Integer)("s4", 499),
+            New NamedValue(Of Integer)("s5", 123),
+            New NamedValue(Of Integer)("s6", 235),
+            New NamedValue(Of Integer)("s7", 99),
+            New NamedValue(Of Integer)("s8", 499)
+        }.FromData().Plot(minRadius:=100, reorder:=1).SaveAs("./pie_chart_vars.png")
+
+        Pause()
+
+        Call Plot3D.Scatter.Plot(Function(x, y) x * y,
+                                 New DoubleRange(-10, 10),
+                                 New DoubleRange(-10, 10),
+                                 New Camera With {
+                                 .screen = New Size(1600, 1000),
+                                 .angle = -60,
+                                 .ViewDistance = -40
+                                 }).SaveAs("x:\@@@@@fdsdfdseeee.png")
+
+        ' Dim dadasdasdasdasXXXXXX = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
+        '  Dim dadasdasdasdasYYYYYY = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
+
+        '  Call QQPlot.Plot(dadasdasdasdasXXXXXX, dadasdasdasdasYYYYYY, xcol:="red").SaveAs("x:\asfsdfsdfsd.png")
+        '   Pause()
+        Pause()
+        Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).SaveAs("x:\fsdfsfsdfds.png")
+
+        '  Dim ava As Dictionary(Of String, String()) = (From x In AllDotNetPrefixColors.AsParallel Select c = ColorTranslator.ToHtml(x), vd = avadsfdsfds(x)).ToDictionary(Function(x) x.c, Function(x) x.vd.ToArray(AddressOf ColorTranslator.ToHtml))
+
+        '  Call ava.GetJson.SaveTo("./avacolors.json")
+
+
+        Dim dddddserew = Designer.Colors({Color.Red, Color.Green, Color.Blue})
+
+        Call Colors.ColorMapLegend(dddddserew, "ffffff", "sfsdf", "wrwerew").SaveAs("x:\hhhh.png")
+        Pause()
+
+        Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
+        Call ddddd.Pearson().Plot(mapName:=ColorMap.PatternJet, mapLevels:=20).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
+
+        '   Call randdddTest()
+
+        Pause()
+        Call RandomRange.Testing(-1000, 1000).GetJson.__DEBUG_ECHO
+
+
+
+        Dim ttttdsfsd = GetType(Example)
+        Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(MonteCarlo.Model)) AndAlso Not ttttdsfsd.IsAbstract)
+        Dim iiisddsfd = 1
+        For Each sfsdfsds In TestObservation.Compares(100, 0, 10, New Dictionary(Of String, Double) From {{"a", 18.689678431519159}, {"f", 1.0614939771775227}, {"sin", -56.777710793912966}})
+            Call sfsdfsds.Plot().SaveAs($"x:\{iiisddsfd}.png")
+            iiisddsfd += 1
+        Next
+
+        Pause()
+
+        Dim trueData As ODEsOut = New TestObservation().Solve(100, 0, 10)
+        For Each yasdas In trueData.y0
+            trueData.params.Add(yasdas.Key, yasdas.Value)
+        Next
+
+        Dim result = Iterations(
+            "./Microsoft.VisualBasic.Data.Bootstrapping.dll",
+            trueData,
+            1000, 5,,,, )
+
+        Pause()
 
         Call scatterWithAnnotation()
 
@@ -153,7 +271,7 @@ Module DEBUG
 
         Call GraphicsPlots(
             New Size(350, 600), New Size, "white",
-            Sub(g, grect)
+            Sub(ByRef g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
             End Sub).SaveAs("./legends_test.png")
 
@@ -208,7 +326,7 @@ Module DEBUG
             New NamedValue(Of Integer)("s3", 99),
             New NamedValue(Of Integer)("s4", 499),
             New NamedValue(Of Integer)("s5", 499)
-        }.FromData().Plot().SaveAs("./pie_chart.png")
+        }.FromData().Plot(minRadius:=100).SaveAs("./pie_chart_vars.png")
 
 
         Dim ode As New ODE With {

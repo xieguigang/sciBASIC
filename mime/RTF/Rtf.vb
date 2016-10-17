@@ -1,34 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::61079d51aac04d32c50abcc6f23160d9, ..\visualbasic_App\mime\RTF\Rtf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Drawing
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' Rich text format document object model.(带有格式描述信息的文本文档的对象模型)
@@ -36,15 +38,15 @@ Imports Microsoft.VisualBasic.Imaging
 ''' <remarks></remarks>
 Public Class Rtf : Inherits ITextFile
 
-    Friend FormattedRegions As List(Of FormatedRegion) = New List(Of FormatedRegion)
-    Dim _InternalTextBuilder As StringBuilder = New StringBuilder(4096)
-    Protected Friend _InternalTextMetaSrcCache As String
+    Dim _TextBuilder As New StringBuilder(4096)
+    Protected Friend __textMetaSrcCache As String
+    Friend __formattedRegions As New List(Of FormatedRegion)
 
     Public Property GlobalFormat As Font
 
     Public ReadOnly Property Length As Integer
         Get
-            Return _InternalTextBuilder.Length
+            Return _TextBuilder.Length
         End Get
     End Property
 
@@ -79,23 +81,27 @@ Public Class Rtf : Inherits ITextFile
     ''' <remarks>
     ''' 目标区域<paramref name="start"></paramref> -&gt; <paramref name="selectLength"></paramref>可能与某一个设置了字体的区域重合一部分，也可能完全包含有其他的多个区域
     ''' </remarks>
-    Public Function SetFormat(start As Integer, selectLength As Integer, FontStyle As Font) As Boolean
-        Dim Right As Integer = start + selectLength
-        Dim LQuery = (From Region As FormatedRegion
-                          In FormattedRegions
-                      Where Region.Contains(Right) OrElse Region.Contains(start)
-                      Select Region).ToList '重叠的区域
-        Dim FormattedRegion As New FormatedRegion(start, Right, FontStyle, Me)
+    Public Function SetFormat(start%, selectLength%, FontStyle As Font) As Boolean
+        Dim right As Integer = start + selectLength
+        Dim formatted As New FormatedRegion(start, right, FontStyle, Me)
+        Dim LQuery As List(Of FormatedRegion) =
+            LinqAPI.MakeList(Of FormatedRegion) <= From region As FormatedRegion
+                                                   In __formattedRegions
+                                                   Where region.Contains(right) OrElse
+                                                       region.Contains(start) ' 查找出重叠的区域
+                                                   Select region
 
-        Call LQuery.AddRange((From Region As FormatedRegion
-                                  In FormattedRegions
-                              Where FormattedRegion.Contains(Region.Start) OrElse FormattedRegion.Contains(Region.Right)
-                              Select Region).ToArray)  '可能当前的设置区域完全的包括了一些原有的区域
+
+        LQuery += From region As FormatedRegion
+                  In __formattedRegions
+                  Where formatted.Contains(region.Start) OrElse
+                      formatted.Contains(region.Right)
+                  Select region  ' 可能当前的设置区域完全的包括了一些原有的区域
 
         If LQuery.IsNullOrEmpty Then
-            '目标区域还没有设置任何格式，则新建一个格式
-            Call FormattedRegions.Add(FormattedRegion)
-        Else '已经设置了格式了，则将目标格式区域截断
+            ' 目标区域还没有设置任何格式，则新建一个格式
+            Call __formattedRegions.Add(formatted)
+        Else ' 已经设置了格式了，则将目标格式区域截断
             Return InternalSetFormat(start, selectLength, FontStyle, LQuery.ToArray)
         End If
 
@@ -109,14 +115,14 @@ Public Class Rtf : Inherits ITextFile
     ''' <param name="Format"></param>
     ''' <remarks></remarks>
     Public Sub AppendText(text As String, Optional Format As Font = Nothing)
-        Dim Start = _InternalTextBuilder.Length
+        Dim Start = _TextBuilder.Length
 
-        Call _InternalTextBuilder.Append(text)
-        Call Me.FormattedRegions.Add(New FormatedRegion(Start, Start + Len(text), If(Format Is Nothing, GlobalFormat, Format), Me))
+        Call _TextBuilder.Append(text)
+        Call Me.__formattedRegions.Add(New FormatedRegion(Start, Start + Len(text), If(Format Is Nothing, GlobalFormat, Format), Me))
     End Sub
 
     Public Sub AppendLine()
-        Call _InternalTextBuilder.AppendLine()
+        Call _TextBuilder.AppendLine()
     End Sub
 
     ''' <summary>
@@ -126,10 +132,10 @@ Public Class Rtf : Inherits ITextFile
     ''' <param name="Format"></param>
     ''' <remarks></remarks>
     Public Sub AppendLine(text As String, Optional Format As Font = Nothing)
-        Dim Start = _InternalTextBuilder.Length
+        Dim Start = _TextBuilder.Length
 
-        Call _InternalTextBuilder.AppendLine(text)
-        Call Me.FormattedRegions.Add(New FormatedRegion(Start, Start + Len(text), If(Format Is Nothing, GlobalFormat, Format), Me))
+        Call _TextBuilder.AppendLine(text)
+        Call Me.__formattedRegions.Add(New FormatedRegion(Start, Start + Len(text), If(Format Is Nothing, GlobalFormat, Format), Me))
     End Sub
 
     Public Sub AppendLine(text As String, Color As System.Drawing.Color)
@@ -149,9 +155,9 @@ Public Class Rtf : Inherits ITextFile
         Dim doc As New StringBuilder(4096)
 
         doc.AppendLine(__getMetaDataStr) '生成元数据
-        _InternalTextMetaSrcCache = _InternalTextBuilder.ToString       '更新数据缓存
+        __textMetaSrcCache = _TextBuilder.ToString       '更新数据缓存
 
-        For Each Region In Me.FormattedRegions
+        For Each Region In Me.__formattedRegions
             Call doc.Append(Region.GenerateDocumentText)
         Next
         Call doc.Append("}")
@@ -159,11 +165,15 @@ Public Class Rtf : Inherits ITextFile
         Return doc.ToString
     End Function
 
-    Private Shared ReadOnly __metaData As String = <RTF_META>{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl%font_meta%}
+    Const __metaData$ =
+"{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl%font_meta%}
 {\colortbl ;%cl_meta%}
-{\*\generator gcmodeller %version%;}\viewkind4\uc1\pard\brdrb\brdrs\brdrw20\brsp80 </RTF_META>
+{\*\generator gcmodeller %version%;}\viewkind4\uc1\pard\brdrb\brdrs\brdrw20\brsp80 "
 
-    Const FONT_TOKEN As String = "{\f1\fnil\fcharset0 %font.name%;}"
+    ''' <summary>
+    ''' ``{\f1\fnil\fcharset0 %font.name%;}``
+    ''' </summary>
+    Const FontToken As String = "{\f1\fnil\fcharset0 %font.name%;}"
 
     ''' <summary>
     ''' 
@@ -186,22 +196,22 @@ Public Class Rtf : Inherits ITextFile
     '''   }
     ''' </remarks>
     Private Function __getMetaDataStr() As String
-        Dim Colors = (From Region In Me.FormattedRegions Select Region.Font.FontColor Distinct).ToArray
+        Dim Colors = (From Region In Me.__formattedRegions Select Region.Font.FontColor Distinct).ToArray
         _colorMetas = Colors
         Dim Fonts As List(Of String) = New List(Of String) From {Me.GlobalFormat.FontFamilyName}
-        Call Fonts.AddRange((From region In Me.FormattedRegions Select region.Font.FontFamilyName Distinct).ToArray)
+        Call Fonts.AddRange((From region In Me.__formattedRegions Select region.Font.FontFamilyName Distinct).ToArray)
         _fontMetas = Fonts.Distinct.ToArray
 
         Dim MetaBuilder As StringBuilder = New StringBuilder(__metaData)
-        Call MetaBuilder.Replace("%cl_meta%", String.Join(" ", (From cl As System.Drawing.Color In _colorMetas Select Font.FontColorToString(cl.R, cl.G, cl.B))).ToArray)
+        Call MetaBuilder.Replace("%cl_meta%", String.Join(" ", (From cl As Color In _colorMetas Select Font.FontColorToString(cl.R, cl.G, cl.B))).ToArray)
         Call MetaBuilder.Replace("%version%", My.Application.Info.Version.ToString)
-        Call MetaBuilder.Replace("%font_meta%", String.Join("", (From ffName As String In _fontMetas Select FONT_TOKEN.Replace("%font.name%", ffName)).ToArray))
+        Call MetaBuilder.Replace("%font_meta%", String.Join("", (From ffName As String In _fontMetas Select FontToken.Replace("%font.name%", ffName)).ToArray))
 
         Return MetaBuilder.ToString
     End Function
 
-    Friend _colorMetas As System.Drawing.Color()
-    Friend _fontMetas As System.String()
+    Friend _colorMetas As Color()
+    Friend _fontMetas As String()
 
     Friend Function GetColor(Font As Font) As String
         Dim i As Integer = Array.IndexOf(_colorMetas, Font.FontColor)
@@ -222,8 +232,8 @@ Public Class Rtf : Inherits ITextFile
         End If
     End Function
 
-    Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean
-        FilePath = getPath(FilePath)
-        Return __toRTF.SaveTo(FilePath, Encoding)
+    Public Overrides Function Save(Optional path As String = "", Optional Encoding As Encoding = Nothing) As Boolean
+        path = getPath(path)
+        Return __toRTF.SaveTo(path, Encoding)
     End Function
 End Class

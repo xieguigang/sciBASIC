@@ -36,7 +36,7 @@ Namespace DocumentStream
 
     Module Meta
 
-        Public Function TryGetMetaData(Of T)(reader As File, ByRef i As Integer) As T
+        Public Function TryGetMetaData(Of T)(reader As File, ByRef i%) As T
             Dim [in] As Dictionary(Of String, String) = TryGetMetaData(reader, i)
             Dim schema = DataFrameColumnAttribute.LoadMapping(Of T)(mapsAll:=True)
             Dim x As Object = Activator.CreateInstance(Of T)
@@ -44,7 +44,8 @@ Namespace DocumentStream
 
             For Each prop In schema
                 If [in].TryGetValue(prop.Key, value) Then
-                    Dim o As Object = Scripting.CTypeDynamic(value, prop.Value.Type)
+                    Dim o As Object =
+                        Scripting.CTypeDynamic(value, prop.Value.Type)
                     Call prop.Value.SetValue(x, o)
                 End If
             Next
@@ -58,7 +59,7 @@ Namespace DocumentStream
         ''' <param name="reader"></param>
         ''' <param name="i">下一行是标题行</param>
         ''' <returns></returns>
-        Public Function TryGetMetaData(reader As File, ByRef i As Integer) As Dictionary(Of String, String)
+        Public Function TryGetMetaData(reader As File, ByRef i%) As Dictionary(Of String, String)
             Dim p As New Pointer(Of RowObject)(reader)
             Dim out As New Dictionary(Of String, String)
             Dim name As String

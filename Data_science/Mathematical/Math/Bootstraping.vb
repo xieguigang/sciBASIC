@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b44c4ca21f91bccf205afa5f287d2aa7, ..\visualbasic_App\Data_science\Mathematical\Math\Bootstraping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,11 +31,13 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Public Module Bootstraping
 
-    Public Function Sample(x As Integer) As Vector
-        Dim xvec As Integer() = New Random(Now.Millisecond).Permutation(x, x)
+    Public Function Sample(x%) As Vector
+        Dim xvec As Integer() =
+            New Random(Now.Millisecond).Permutation(x, x)
         Return New Vector(xvec.Select(Function(n) CDbl(n)))
     End Function
 
@@ -107,7 +109,7 @@ Public Module Bootstraping
     ''' <param name="sd"></param>
     ''' <returns></returns>
     ''' <remarks>https://github.com/mpadge/tnorm</remarks>
-    Public Function TruncNDist(len As Integer, sd As Double) As Vector
+    Public Function TruncNDist(len%, sd#) As Vector
         Dim eps As Vector ' Set up truncated normal distribution
         Dim z As New List(Of Double)()
 
@@ -129,7 +131,7 @@ Public Module Bootstraping
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
-    Public Function StandardDistribution(x As Double) As Double
+    Public Function StandardDistribution#(x#)
         Dim answer As Double = 1 / ((Math.Sqrt(2 * Math.PI)))
         Dim exp1 As Double = Math.Pow(x, 2) / 2
         Dim exp As Double = Math.Pow(Math.E, -(exp1))
@@ -144,7 +146,7 @@ Public Module Bootstraping
     ''' <param name="m">Mean</param>
     ''' <param name="sd"></param>
     ''' <returns></returns>
-    Public Function ProbabilityDensity(x As Double, m As Double, sd As Double) As Double
+    Public Function ProbabilityDensity(x#, m#, sd#) As Double
         Dim answer As Double = 1 / (sd * (Math.Sqrt(2 * Math.PI)))
         Dim exp As Double = Math.Pow((x - m), 2.0)
         Dim expP2 As Double = 2 * Math.Pow(sd, 2.0)
@@ -175,7 +177,7 @@ Public Module Bootstraping
         Return answer
     End Function
 
-    Public Function TrapezodialRule(a As Double, b As Double, n As Double, m As Double, sd As Double) As Double
+    Public Function TrapezodialRule(a#, b#, n#, m#, sd#) As Double
         Dim changeX As Double = (b - a) / n
         Dim a1 As Double = ProbabilityDensity(a, m, sd)
         Dim b1 As Double = ProbabilityDensity(b, m, sd)
@@ -189,9 +191,54 @@ Public Module Bootstraping
         Return c
     End Function
 
-    Public Function Z(x As Double, m As Double, sd As Double) As Double
+    Public Function Z#(x#, m#, sd#)
         Dim answer As Double = (x - m) / sd
         Return answer
+    End Function
+
+    ''' <summary>
+    ''' 返回来的标签数据之中的标签是在某个区间范围内的数值集合的平均值
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="base"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Distributes(data As IEnumerable(Of Double), Optional base! = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
+        Dim array As DoubleTagged(Of Double)() = data.ToArray(
+            Function(x) New DoubleTagged(Of Double) With {
+                .Tag = Math.Log(x, base),
+                .value = x
+            })
+        Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1
+        Dim max As Integer = CInt(array.Max(Function(x) x.Tag)) + 1
+        Dim l As int = min, low As Integer = min
+        Dim out As New Dictionary(Of Integer, DoubleTagged(Of Integer))
+
+        Do While ++l < max
+            Dim LQuery As DoubleTagged(Of Double)() =
+                LinqAPI.Exec(Of DoubleTagged(Of Double)) <=
+ _
+                From x As DoubleTagged(Of Double)
+                In array
+                Where x.Tag >= low AndAlso
+                    x.Tag < l
+                Select x
+
+            out(l) = New DoubleTagged(Of Integer) With {
+                .Tag = If(LQuery.Length = 0, 0, LQuery.Average(Function(x) x.value)),
+                .value = LQuery.Length
+            }
+            low = l
+        Loop
+
+        If out(min + 1).value = 0 Then
+            Call out.Remove(min)
+        End If
+        If out(max - 1).value = 0 Then
+            Call out.Remove(max)
+        End If
+
+        Return out
     End Function
 End Module
 

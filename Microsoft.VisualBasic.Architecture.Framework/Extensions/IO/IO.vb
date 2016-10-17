@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::40cfbe0715822d2f4bba0e25353ba3bf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,8 +30,10 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' IO函数拓展
@@ -52,15 +54,15 @@ Public Module IOExtensions
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
-    Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
-        Call FileIO.FileSystem.CreateDirectory(path.ParentPath)
+    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
+        Call path.ParentPath.MkDIR
         Return IO.File.Open(path, mode)
     End Function
 
     <ExportAPI("Open.Reader")>
     <Extension>
     Public Function OpenReader(path As String, Optional encoding As Encoding = Nothing) As StreamReader
-        encoding = If(encoding Is Nothing, System.Text.Encoding.Default, encoding)
+        encoding = If(encoding Is Nothing, Encoding.Default, encoding)
         Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
 
@@ -82,33 +84,11 @@ Public Module IOExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="data"></param>
-    ''' <param name="SaveTo"></param>
+    ''' <param name="saveTo"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T),
-                                                    SaveTo As String,
-                                                    Optional encoding As Encoding = Nothing) As Boolean
-        Dim strings As IEnumerable(Of String) =
-            data.Select(AddressOf Scripting.ToString)
-
-        Try
-            Dim parent As String = FileIO.FileSystem.GetParentPath(SaveTo)
-
-            encoding = If(encoding Is Nothing, Encoding.Default, encoding)
-
-            Call FileIO.FileSystem.CreateDirectory(parent)
-
-            Using file As New StreamWriter(New FileStream(SaveTo, FileMode.OpenOrCreate, access:=FileAccess.Write))
-                For Each line As String In strings
-                    Call file.WriteLine(line)
-                Next
-            End Using
-        Catch ex As Exception
-            Call App.LogException(New Exception(SaveTo, ex))
-            Return False
-        End Try
-
-        Return True
+    <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
+        Return data.FlushAllLines(saveTo, encoding.GetEncodings)
     End Function
 
     ''' <summary>
@@ -132,11 +112,11 @@ Public Module IOExtensions
     End Function
 
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, SavePath As String) As Boolean
+    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, savePath As String) As Boolean
         Dim rawStream As Byte() = stream.Serialize
         If rawStream Is Nothing Then
             rawStream = New Byte() {}
         End If
-        Return rawStream.FlushStream(SavePath)
+        Return rawStream.FlushStream(savePath)
     End Function
 End Module

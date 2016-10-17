@@ -33,6 +33,11 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Namespace StorageProvider.ComponentModels
 
     Public Interface ISchema
+
+        ''' <summary>
+        ''' 从数据源之中解析出来得到的域列表
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer)
         Function GetOrdinal(name As String) As Integer
     End Interface
@@ -100,6 +105,27 @@ Namespace StorageProvider.ComponentModels
                            Where Array.IndexOf(Indexed, colum.Key.ToLower) = -1
                            Select colum).ToDictionary(Function(field) field.Key,
                                                       Function(field) field.Value)
+        End Sub
+
+        ''' <summary>
+        ''' 对于只读属性而言，由于没有写入的过程，所以在从文件加在csv数据到.NET对象的时候会被放进字典属性里面，从而会导致输出的时候出现重复的域的BUG
+        ''' 故而需要在这里将字典属性之中的只读属性的名称移除掉
+        ''' </summary>
+        Public Sub SolveReadOnlyMetaConflicts()
+            If HaveMetaAttribute Then ' 假若存在字典属性的话，则需要进行额外的处理
+                Dim schema As SchemaProvider = SchemaProvider.Raw.Raw ' why two reference that have the effects????
+
+                Call "Schema has meta dictionary property...".__DEBUG_ECHO
+
+                For Each name In NonIndexed.Keys.ToArray
+                    If Not schema.GetField(name) Is Nothing Then  ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
+                        Call NonIndexed.Remove(name)
+#If DEBUG Then
+                        Call $"{name} was removed!".__DEBUG_ECHO
+#End If
+                    End If
+                Next
+            End If
         End Sub
 
         Public Function FillData(row As DocumentStream.RowObject, obj As Object) As Object

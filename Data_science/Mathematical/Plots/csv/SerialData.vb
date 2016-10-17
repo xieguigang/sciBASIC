@@ -44,7 +44,7 @@ Namespace csv
         Public Property errPlus As Double
         Public Property errMinus As Double
 
-        Public Shared Function GetData(csv As String, Optional colors As Color() = Nothing) As IEnumerable(Of Plots.SerialData)
+        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing) As IEnumerable(Of Plots.SerialData)
             Return GetData(csv.LoadCsv(Of SerialData), colors)
         End Function
 
@@ -63,7 +63,7 @@ Namespace csv
 
                 Yield New Plots.SerialData With {
                     .title = g.obj.serial,
-                    .color = colors(g),
+                    .color = colors(g.i),
                     .pts = LinqAPI.Exec(Of PointData) <=
                         From x As SerialData
                         In g.obj.Group

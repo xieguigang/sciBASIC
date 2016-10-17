@@ -147,7 +147,7 @@ Namespace Text
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("Tokens", Info:="", Usage:="tokens p_str pointer", Example:="")>
-        <ParameterInfo("pointer", False,
+        <Argument("pointer", False,
         Description:="pointer must be a zero base integer number which is smaller than the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last element and ""first"" to get the first element in the tokens array.")>
         Private Shared Function Tokens(source As String, script As String()) As String
             Dim Delimiter As String = script(1)

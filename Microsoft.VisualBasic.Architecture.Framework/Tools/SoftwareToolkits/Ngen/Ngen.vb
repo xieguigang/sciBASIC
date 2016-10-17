@@ -178,11 +178,11 @@ Namespace SoftwareToolkits
                             Optional queue As NgenInstaller.PriorityLevels = PriorityLevels.null) As String
 
             Dim cliBuilder As StringBuilder = New StringBuilder("install ", 1024)
-            Call cliBuilder.Append(assemblyName.CliPath & " ")
+            Call cliBuilder.Append(assemblyName.CLIPath & " ")
             Call cliBuilder.Append(scenarios.Description & " ")
 
             If Not String.IsNullOrEmpty(ExeConfig) Then
-                Call cliBuilder.Append($"/ExeConfig:{ExeConfig}".CliPath & " ")
+                Call cliBuilder.Append($"/ExeConfig:{ExeConfig}".CLIPath & " ")
             End If
 
             If AppBase Then
@@ -226,11 +226,11 @@ Namespace SoftwareToolkits
                               Optional AppBase As Boolean = False) As String
 
             Dim cliBuilder As StringBuilder = New StringBuilder("uninstall ", 1024)
-            Call cliBuilder.Append(assemblyName.CliPath & " ")
+            Call cliBuilder.Append(assemblyName.CLIPath & " ")
             Call cliBuilder.Append(scenarios.Description & " ")
 
             If Not String.IsNullOrEmpty(ExeConfig) Then
-                Call cliBuilder.Append($"/ExeConfig:{ExeConfig}".CliPath & " ")
+                Call cliBuilder.Append($"/ExeConfig:{ExeConfig}".CLIPath & " ")
             End If
 
             If AppBase Then
@@ -264,7 +264,7 @@ Namespace SoftwareToolkits
         ''' </summary>
         ''' <param name="assemblyName"></param>
         Public Function Display(assemblyName As String) As String
-            Dim NGen = New CommandLine.IORedirectFile(NgenInstaller.Ngen, "display " & assemblyName.CliPath & " /verbose")
+            Dim NGen = New CommandLine.IORedirectFile(NgenInstaller.Ngen, "display " & assemblyName.CLIPath & " /verbose")
             Call NGen.Run()
             Return NGen.StandardOutput
         End Function

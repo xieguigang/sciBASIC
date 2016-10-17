@@ -30,7 +30,7 @@ Imports System.CodeDom
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace CodeDOM_VBC
+Namespace Emit.CodeDOM_VBC
 
     Public Module CodeDOMExpressions
 

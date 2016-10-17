@@ -727,50 +727,57 @@ Public Module ProgramPathSearchTool
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
 
-        If lcFrom.Length > 0 AndAlso lcTo.Length > 0 AndAlso IO.Path.GetPathRoot(lcFrom.ToUpper()).Equals(IO.Path.GetPathRoot(lcTo.ToUpper())) Then
-            Dim laDirSep As Char() = {"\"c}
-            Dim lcPathFrom As String = (If(IO.Path.GetDirectoryName(lcFrom) Is Nothing, IO.Path.GetPathRoot(lcFrom.ToUpper()), IO.Path.GetDirectoryName(lcFrom)))
-            Dim lcPathTo As String = (If(IO.Path.GetDirectoryName(lcTo) Is Nothing, IO.Path.GetPathRoot(lcTo.ToUpper()), IO.Path.GetDirectoryName(lcTo)))
-            Dim lcFileTo As String = (If(IO.Path.GetFileName(lcTo) Is Nothing, "", IO.Path.GetFileName(lcTo)))
-            Dim laFrom As String() = lcPathFrom.Split(laDirSep)
-            Dim laTo As String() = lcPathTo.Split(laDirSep)
-            Dim lnFromCnt As Integer = laFrom.Length
-            Dim lnToCnt As Integer = laTo.Length
-            Dim lnSame As Integer = 0
-            Dim lnCount As Integer = 0
+        If lcFrom.Length = 0 OrElse lcTo.Length = 0 Then
+            Throw New InvalidDataException("One of the path string value is null!")
+        End If
+        If Not IO.Path.GetPathRoot(lcFrom.ToUpper()) _
+            .Equals(IO.Path.GetPathRoot(lcTo.ToUpper())) Then
+            Return pcTo
+        End If
 
-            While lnToCnt > 0 AndAlso lnSame < lnToCnt
-                If lnCount < lnFromCnt Then
-                    If laFrom(lnCount).ToUpper().Equals(laTo(lnCount).ToUpper()) Then
-                        lnSame += 1
-                    Else
-                        Exit While
-                    End If
+        ' 两个路径都有值并且都在相同的驱动器下才会进行计算
+
+        Dim laDirSep As Char() = {"\"c}
+        Dim lcPathFrom As String = (If(IO.Path.GetDirectoryName(lcFrom) Is Nothing, IO.Path.GetPathRoot(lcFrom.ToUpper()), IO.Path.GetDirectoryName(lcFrom)))
+        Dim lcPathTo As String = (If(IO.Path.GetDirectoryName(lcTo) Is Nothing, IO.Path.GetPathRoot(lcTo.ToUpper()), IO.Path.GetDirectoryName(lcTo)))
+        Dim lcFileTo As String = (If(IO.Path.GetFileName(lcTo) Is Nothing, "", IO.Path.GetFileName(lcTo)))
+        Dim laFrom As String() = lcPathFrom.Split(laDirSep)
+        Dim laTo As String() = lcPathTo.Split(laDirSep)
+        Dim lnFromCnt As Integer = laFrom.Length
+        Dim lnToCnt As Integer = laTo.Length
+        Dim lnSame As Integer = 0
+        Dim lnCount As Integer = 0
+
+        While lnToCnt > 0 AndAlso lnSame < lnToCnt
+            If lnCount < lnFromCnt Then
+                If laFrom(lnCount).ToUpper().Equals(laTo(lnCount).ToUpper()) Then
+                    lnSame += 1
                 Else
                     Exit While
                 End If
-                lnCount += 1
-            End While
-
-            Dim lcEndPart As String = ""
-            For lnEnd As Integer = lnSame To lnToCnt - 1
-                If laTo(lnEnd).Length > 0 Then
-                    lcEndPart += laTo(lnEnd) & "\"
-                Else
-                    Exit For
-                End If
-            Next
-
-            Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
-            If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
-                While lnDiff > 0
-                    lnDiff -= 1
-                    lcEndPart = "..\" & lcEndPart
-                End While
+            Else
+                Exit While
             End If
-            lcRelativePath = lcEndPart & lcFileTo
-        End If
+            lnCount += 1
+        End While
 
+        Dim lcEndPart As String = ""
+        For lnEnd As Integer = lnSame To lnToCnt - 1
+            If laTo(lnEnd).Length > 0 Then
+                lcEndPart += laTo(lnEnd) & "\"
+            Else
+                Exit For
+            End If
+        Next
+
+        Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
+        If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
+            While lnDiff > 0
+                lnDiff -= 1
+                lcEndPart = "..\" & lcEndPart
+            End While
+        End If
+        lcRelativePath = lcEndPart & lcFileTo
         Return "..\" & lcRelativePath
     End Function
 

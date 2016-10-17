@@ -40,7 +40,7 @@ Namespace SyntaxAPI.Vectors
         ''' 向量维数
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property [Dim] As Integer
+        Public ReadOnly Property Dim%
             Get
                 Return Count
             End Get
@@ -54,7 +54,14 @@ Namespace SyntaxAPI.Vectors
             MyBase.New(data)
         End Sub
 
-        Sub New(capacity As Integer)
+        ''' <summary>
+        ''' Initializes a new instance of the generic type vector class that
+        ''' is empty and has the specified initial capacity.
+        ''' </summary>
+        ''' <param name="capacity">
+        ''' The number of elements that the new list can initially store.
+        ''' </param>
+        Sub New(capacity%)
             MyBase.New(capacity)
         End Sub
 
@@ -77,7 +84,7 @@ Namespace SyntaxAPI.Vectors
             End Set
         End Property
 
-        Public Sub Factor(value As Integer)
+        Public Sub Factor(value%)
             ' ReDim Preserve _Elements(value - 1)
         End Sub
 
