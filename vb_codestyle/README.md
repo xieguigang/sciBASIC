@@ -611,4 +611,9 @@ Return net >> Open("./test.net/")
 </pre>
 </td>
 </tr>
+<tr>
+<td>A line of text in a text file</td>
+<td>line</td>
+<td>Dim line$ = path.ReadFirstLine</td>
+</tr>
 </table>
