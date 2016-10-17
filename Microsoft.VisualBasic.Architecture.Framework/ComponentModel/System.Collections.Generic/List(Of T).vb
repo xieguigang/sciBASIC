@@ -133,6 +133,25 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         End If
     End Operator
 
+    Public Shared Operator *(list As List(Of T), n%) As List(Of T)
+        Select Case n
+            Case <= 0
+                Return New List(Of T)
+            Case 1
+                Return New List(Of T)(list)
+            Case > 1
+                Dim out As New List(Of T)
+
+                For i As Integer = 1 To n
+                    out.AddRange(list)
+                Next
+
+                Return out
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Operator
+
     ''' <summary>
     ''' Removes the first occurrence of a specific object from the List`1.
     ''' </summary>
