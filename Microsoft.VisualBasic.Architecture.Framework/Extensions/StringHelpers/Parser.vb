@@ -29,9 +29,9 @@
 Imports System.Runtime.CompilerServices
 
 ''' <summary>
-''' Simple type parser
+''' Simple type parser extension function for <see cref="String"/>
 ''' </summary>
-Public Module Parser
+Public Module PrimitiveParser
 
     ''' <summary>
     ''' <see cref="Integer"/> text parser

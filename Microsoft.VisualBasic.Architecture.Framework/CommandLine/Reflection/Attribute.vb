@@ -268,6 +268,10 @@ Namespace CommandLine.Reflection
         Public Sub New(name As String)
             MyBase.New(name)
         End Sub
+
+        Public Sub New(name As System.Enum)
+            MyBase.New(name.Description)
+        End Sub
     End Class
 
     ''' <summary>
@@ -284,6 +288,10 @@ Namespace CommandLine.Reflection
         Public Property Description As String
 
         Public Sub New(name As String)
+            MyBase.New(name)
+        End Sub
+
+        Public Sub New(name As System.Enum)
             MyBase.New(name)
         End Sub
     End Class
