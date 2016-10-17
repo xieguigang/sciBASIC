@@ -15,8 +15,8 @@
 ###### 1. source projects
 
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
-+ **[/Data](./Data/)** : VisualBasic data framework system for data science
-+ **[/Data_science](./Data_science/)** : VBMath system
++ **[/Data](./Data/)** : VisualBasic data framework system for data science, includes data frame, data I/O and data object search framework.
++ **[/Data_science](./Data_science/)** : VisualBasic mathmatica system, data graphics plot system & Data Mining library
 + **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
 + **[/mime](./mime/)** : VisualBasic various mime-types doc parsers
 + **[/gr](./gr/)** : VisualBasic data graphics system
@@ -25,8 +25,8 @@
 
 ###### 2. docs for User
 
-+ **[/guides](./guides/)**
-+ **[/vb_codestyle](./vb_codestyle/)**
++ **[/guides](./guides/)** : This framework code usage example and manual documents
++ **[/vb_codestyle](./vb_codestyle/)** : Coding style standard document
 
 
 ---------------------------------------------------------------------------------------------------------------

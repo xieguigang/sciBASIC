@@ -256,6 +256,29 @@ For Each file As String In ls - l - r - wildcards("*.csv") <= DIR
     ' blablabla
 Next
 ```
+In the newer version of this VB runtime, the wildcards can be simplify as a string or string array if you are not feeling confused with this syntax example:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language.UnixBash
+
+' A more simple version of the syntax 
+Return (ls - l - r - "*.csv" <= DIR) _
+      .Select(AddressOf ODEsOut.LoadFromDataFrame) _
+      .Sampling(eigenvector, partN)
+      
+' Or used in For Loop
+For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
+    ' blablabla
+Next
+```
+
+## Type char coding style
+
+###### Recommended
+It is recommended that using type char in the parameter declaring of a function or method
+
+###### Not Recommended
+Not recommended that using type char for Property, Field or local variable declaring.
 
 ## VisualBasic identifer names
 
@@ -610,5 +633,10 @@ net += New Edge With {
 Return net >> Open("./test.net/")
 </pre>
 </td>
+</tr>
+<tr>
+<td>A line of text in a text file</td>
+<td>line</td>
+<td><pre>Dim line$ = path.ReadFirstLine</pre></td>
 </tr>
 </table>
