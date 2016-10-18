@@ -623,7 +623,7 @@ Return result</pre>
 </td>
 </tr>
     <tr><td>json</td><td>json, JSON</td><td>
-<pre>Dim JSON As String = (ls -l -r -wildcards("*.json") <= DIR).GetJson</pre>
+<pre>Dim JSON As String = (ls -l -r -"*.json" <= DIR).GetJson</pre>
 </td>
 </tr>
     <tr><td>data frame</td><td>df, ds, data</td><td>
@@ -648,5 +648,18 @@ Return net >> Open("./test.net/")
 <td>A line of text in a text file</td>
 <td>line</td>
 <td><pre>Dim line$ = path.ReadFirstLine</pre></td>
+</tr>
+<tr>
+<td>Lambda expression parameter</td>
+<td><li>For generic object, using name: <pre>x, o;</pre></li>
+<li>For numeric object, using name: <pre>x, y, z, a, b, c, n, i;</pre></li>
+<li>For string and char, using name: <pre>s, c;</pre></li>
+<li>For System.Type, using name: <pre>t</pre></li></td>
+<td><pre>Dim result = array.Select(Function(x) x.Name)
+Dim value = array _
+    .Select(Function(x) x.value) _
+    .Select(Function(t) t.FullName) _
+    .JoinBy("+")
+</pre></td>
 </tr>
 </table>
