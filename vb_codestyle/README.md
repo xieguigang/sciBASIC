@@ -47,13 +47,16 @@ Partial Module CLI
         Dim inDIR As String = args - "/in"
         Dim out As String = args.GetValue("/out", inDIR.TrimDIR & ".contents.Csv")
         Dim files As IEnumerable(Of String) =
-            ls - l - r - wildcards(ext) <= inDIR
+            ls - l - r - ext <= inDIR
         Dim content As NamedValue(Of String)() =
             LinqAPI.Exec(Of NamedValue(Of String)) <= From file As String
                                                       In files
                                                       Let name As String = file.BaseName
                                                       Let genome As String = file.ParentDirName
-                                                      Select New NamedValue(Of String)(genome, name)
+                                                      Select New NamedValue(Of String) With {
+                                                          .Name = name,
+                                                          .x = genome
+                                                      }
         Return content.SaveTo(out).CLICode
     End Function
 End Module
@@ -72,8 +75,15 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+<Group("Function Group Name")>
+<Argument("/in", AcceptTypes:={GetType(String)}, Description:="The input directory path.")>
+<Argument("/out", True, AcceptTypes:={GetType(NamedValue(Of String))}, Description:="The output csv data.")>
 Public Function CLI_API(args As CommandLine) As Integer
 ```
+
++ ``ExportAPI`` attribute that flag this function will be exposed to your user as a CLI command.
++ ``Group`` attribute that can grouping this API into a function group
++ ``Argument`` attribute that records the help information of the parameter in the CLI.
 
 ### Using the VisualBasic CommandLine Parser
 For learn how to using the ``CommandLine`` Parser, we first lean the syntax of the VisualBasic commandline arguments.
