@@ -94,7 +94,7 @@ Namespace CommandLine.Reflection
         ''' 
         <Extension>
         Public Function MarkdownDoc(App As Interpreter) As String
-            Dim sb As New StringBuilder($"# {Application.ProductName} [version {Application.ProductVersion}]")
+            Dim sb As New StringBuilder($"# { VisualBasic.App.ProductName} [version { VisualBasic.App.Version}]")
             Dim type As Type = App.Type
             Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(App.Type)
 
@@ -113,20 +113,21 @@ Namespace CommandLine.Reflection
 
             Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
 
-            Call sb.AppendLine()
-            Call sb.AppendLine("------------------------------------------------------------")
-            Call sb.AppendLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems:")
-            Call sb.AppendLine("> " & helps.Documentation)
-            Call sb.AppendLine()
-            Call sb.AppendLine()
-            Call sb.AppendLine("The debugging facility Is helpful To figure out what's happening under the hood:")
-            Call sb.AppendLine("> " & helps.Debugging)
-            Call sb.AppendLine()
-            Call sb.AppendLine()
-            Call sb.AppendLine("If you're still stumped, you can try get help from author directly from E-mail:")
-            Call sb.AppendLine("> " & helps.EMailLink)
-            Call sb.AppendLine()
-
+            If Not helps Is Nothing Then
+                Call sb.AppendLine()
+                Call sb.AppendLine("------------------------------------------------------------")
+                Call sb.AppendLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems:")
+                Call sb.AppendLine("> " & helps.Documentation)
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call sb.AppendLine("The debugging facility Is helpful To figure out what's happening under the hood:")
+                Call sb.AppendLine("> " & helps.Debugging)
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call sb.AppendLine("If you're still stumped, you can try get help from author directly from E-mail:")
+                Call sb.AppendLine("> " & helps.EMailLink)
+                Call sb.AppendLine()
+            End If
 
             Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary(True))
             Call sb.AppendLine()

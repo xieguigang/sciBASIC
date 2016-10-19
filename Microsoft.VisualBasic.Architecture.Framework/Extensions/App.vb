@@ -373,7 +373,7 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property Version As String
         Get
-            Return Application.ProductVersion
+            Return Trim(Application.ProductVersion)
         End Get
     End Property
 
