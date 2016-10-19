@@ -1,40 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::a2f9b71ee6fd4e72b2abc8001bf45576, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Grouping
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Terminal.Utility
@@ -166,27 +168,59 @@ Namespace CommandLine.Reflection
         <Extension>
         Public Function HelpSummary(App As Interpreter, markdown As Boolean) As String
             Dim sb As New StringBuilder(1024)
-            Dim nameMaxLen As Integer =
-                App.APIList.Select(Function(x) Len(x.Name)).Max
+            Dim nameMaxLen% = App.APIList _
+                .Select(Function(x) Len(x.Name)) _
+                .Max
 
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
 
+            Dim gg As New Grouping(CLI:=App)
+            Dim print = Sub(list As IEnumerable(Of APIEntryPoint))
+                            If markdown Then
+                                Call sb.AppendLine("|Function API|Info|")
+                                Call sb.AppendLine("|------------|----|")
+                            End If
+
+                            For Each API As APIEntryPoint In list
+                                If Not markdown Then
+                                    Dim indent% = 3 + nameMaxLen - Len(API.Name)
+                                    Dim blank$ = New String(c:=" "c, count:=indent)
+                                    Dim line$ = $" {API.Name}:  {blank}{API.Info}"
+
+                                    Call sb.AppendLine(line)
+                                Else
+                                    Call sb.AppendLine(
+                                        $"|[{API.Name}](#{API.Name})|{API.Info}|")
+                                End If
+                            Next
+
+                            Call sb.AppendLine()
+                            Call sb.AppendLine()
+                        End Sub
+
             If markdown Then
-                Call sb.AppendLine("|Function API|Info|")
-                Call sb.AppendLine("|------------|----|")
+                Call sb.AppendLine("##### Generic function API list")
             End If
 
-            For Each commandInfo As APIEntryPoint In App.APIList
-                If Not markdown Then
-                    Dim blank As String =
-                        New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
-                    Dim line As String = $" {commandInfo.Name}:  {blank}{commandInfo.Info}"
+            Dim undefines = gg.GroupData(undefined)
 
-                    Call sb.AppendLine(line)
+            Call print(undefines.Data)
+
+            For Each g As SeqValue(Of Groups) In gg _
+                .Where(Function(list) list.Name <> undefined) _
+                .SeqIterator(offset:=1)
+
+                If markdown Then
+                    Call sb.AppendLine($"##### {g.i}. {g.obj.Name}")
                 Else
-                    Call sb.AppendLine($"|[{commandInfo.Name}](#{commandInfo.Name})|{commandInfo.Info}|")
+                    Call sb.AppendLine($"{g.i}. {g.obj.Name}")
                 End If
+
+                Call sb.AppendLine(Trim(g.obj.Description))
+                Call sb.AppendLine()
+
+                Call print(g.obj.Data)
             Next
 
             Return sb.ToString

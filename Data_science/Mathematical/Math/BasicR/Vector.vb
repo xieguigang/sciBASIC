@@ -161,7 +161,7 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(v1 As Vector, v2 As Vector) As Vector
+        Public Overloads Shared Operator *(v1 As Vector, v2 As Vector) As Vector
             Dim N0 As Integer = v1.[Dim]        '获取变量维数
             Dim v3 As New Vector(N0)
 
@@ -231,7 +231,7 @@ Namespace BasicR
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(v1 As Vector, a As Double) As Vector
+        Public Overloads Shared Operator *(v1 As Vector, a As Double) As Vector
             Dim N0 As Integer = v1.[Dim]            '获取变量维数
             Dim v2 As New Vector(N0)
 
@@ -301,7 +301,7 @@ Namespace BasicR
         ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator *(a As Double, v1 As Vector) As Vector
+        Public Overloads Shared Operator *(a As Double, v1 As Vector) As Vector
             Dim N0 As Integer = v1.[Dim]        '获取变量维数
             Dim v2 As New Vector(N0)
 

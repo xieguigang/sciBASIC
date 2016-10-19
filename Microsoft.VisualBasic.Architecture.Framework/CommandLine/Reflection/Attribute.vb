@@ -279,7 +279,7 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' 
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=True, Inherited:=True)>
-    Public Class GroupingAttribute : Inherits GroupAttribute
+    Public Class GroupingDefineAttribute : Inherits GroupAttribute
 
         ''' <summary>
         ''' 当前的这一功能分组的详细描述信息

@@ -304,9 +304,9 @@ Namespace CommandLine
         ''' <remarks></remarks>
         <ExportAPI("?", Usage:="? [CommandName]", Info:="Show Application help", Example:="? example_commandName")>
         Public Function Help(CommandName As String) As Integer
-            If String.IsNullOrEmpty(CommandName) Then 'List all commands.
+            If String.IsNullOrEmpty(CommandName) Then     ' List all commands when command name is empty.
                 Call Console.WriteLine(HelpSummary(False))
-            Else
+            Else ' listing the help for specific command name
                 Dim name As New Value(Of String)
 
                 If __API_InfoHash.ContainsKey(name = CommandName.ToLower) Then
