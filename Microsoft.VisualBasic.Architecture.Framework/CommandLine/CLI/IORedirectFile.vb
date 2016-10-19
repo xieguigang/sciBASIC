@@ -99,12 +99,12 @@ Namespace CommandLine
         ''' <summary>
         ''' Using this class object rather than <see cref="IORedirect"/> is more encouraged if there is no console interactive with your folked process.
         ''' </summary>
-        ''' <param name="File">The program file.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
+        ''' <param name="file">The program file.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
         ''' <param name="argv">The program commandline arguments.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
         ''' <param name="environment">Temporary environment variable</param>
         ''' <param name="FolkNew">Folk the process on a new console window if this parameter value is TRUE</param>
         ''' <param name="stdRedirect">If not want to redirect the std out to your file, just leave this value blank.</param>
-        Sub New(File As String, Optional argv As String = "",
+        Sub New(file As String, Optional argv As String = "",
                 Optional environment As KeyValuePair(Of String, String)() = Nothing,
                 Optional FolkNew As Boolean = False,
                 Optional stdRedirect As String = "")
@@ -113,11 +113,17 @@ Namespace CommandLine
                 _TempRedirect = stdRedirect.CLIPath
             End If
 
-            File = FileIO.FileSystem.GetFileInfo(File).FullName
+            Try
+                file = FileIO.FileSystem.GetFileInfo(file).FullName
+            Catch ex As Exception
+                ex = New Exception(file, ex)
+                Throw ex
+            End Try
+
             argv = $"{argv} > {_TempRedirect}"
 
-            If File.Contains(" "c) Then
-                File = $"""{File}"""
+            If file.Contains(" "c) Then
+                file = $"""{file}"""
             End If
 
             Dim BAT As New StringBuilder(1024)
@@ -144,16 +150,16 @@ Namespace CommandLine
             Call BAT.AppendLine()
 
             If FolkNew Then
-                Call BAT.AppendLine($"start {File} {argv}")   '在新的窗口打开
+                Call BAT.AppendLine($"start {file} {argv}")   '在新的窗口打开
             Else
-                Call BAT.AppendLine($"{File} {argv}")  '生成IO重定向的命令行
+                Call BAT.AppendLine($"{file} {argv}")  '生成IO重定向的命令行
             End If
 
             ProcessBAT = BAT.ToString
-            Bin = File
+            Bin = file
             CLIArguments = argv
 
-            Call $"""{File.ToFileURL}"" {argv}".__DEBUG_ECHO
+            Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
         End Sub
 
         ''' <summary>
