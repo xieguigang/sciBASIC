@@ -124,8 +124,13 @@ Namespace MonteCarlo
         Public Iterator Function Sampling(data As IEnumerable(Of ODEsOut),
                                           eigenvector As Dictionary(Of String, Eigenvector),
                                           Optional partN As Integer = 20,
-                                          Optional merge As Boolean = False) _
+                                          Optional merge As Boolean = False,
+                                          Optional echo As Boolean = True) _
                                                          As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
+            If echo Then
+                Call "Data sampling as eigenvector.....".__DEBUG_ECHO
+            End If
+
             For Each x As ODEsOut In data
                 If merge Then
                     Call x.Join()
@@ -133,6 +138,10 @@ Namespace MonteCarlo
 
                 Yield x.Sampling(eigenvector, partN)
             Next
+
+            If echo Then
+                Call "Sampling job done!".__DEBUG_ECHO
+            End If
         End Function
 
         Public Const Observation As String = NameOf(Observation)
