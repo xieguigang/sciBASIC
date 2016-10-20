@@ -33,10 +33,19 @@ Namespace Text
                     Dim part As NamedValue(Of String) =
                         nextLine.GetTagValue
 
-                    If Not String.IsNullOrEmpty(part.Name) Then
-                        Yield Trim((+s) & part.Name)
+                    If Not String.IsNullOrEmpty(part.Name) Then ' 有空格
+                        s.value = Trim((+s) & part.Name)
                         left += part.Name.Length + 1
+                    ElseIf nextLine.First = " "c Then ' 第一个字符是空格，则忽略掉
+                        left += 1
+                    Else
+                        s.value &= nextLine  ' 是剩余的结束部分
+                        Yield +s
+                        s.value = Nothing ' 必须要value值删除字符串，否则会重复出现最后一行
+                        Exit Do
                     End If
+
+                    Yield +s
                 Loop
 
                 If Not String.IsNullOrEmpty(+s) Then
