@@ -69,7 +69,7 @@ Namespace Terminal
 
         Public Sub StartInitialize()
             Call __init()
-            _historyList = (From his As History In _lsthistory Select his.Histories).MatrixToList
+            _historyList = (From his As History In _lsthistory Select his.Histories).Unlist
             p = _historyList.Count - 1
             If p < 0 Then p = 0
         End Sub

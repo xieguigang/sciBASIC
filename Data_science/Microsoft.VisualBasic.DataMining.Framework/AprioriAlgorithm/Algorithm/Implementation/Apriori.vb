@@ -156,7 +156,7 @@ Namespace AprioriAlgorithm
         Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of String)) As Dictionary(Of String, Double)
             Dim LQuery = (From i As Integer In (frequentItems.Count).SeqIterator.AsParallel
                           Let firstItem As String = SorterSortTokens(frequentItems(i).Name)
-                          Select GetCandidate(frequentItems, i, firstItem, transactions)).MatrixAsIterator _
+                          Select GetCandidate(frequentItems, i, firstItem, transactions)).IteratesALL _
                                 .ToDictionary(Function(obj) obj.Key,
                                               Function(obj) obj.Value)
             Return LQuery
@@ -270,7 +270,7 @@ Namespace AprioriAlgorithm
             Dim rulesList = New HashSet(Of Rule)()
             Dim LQuery = (From Token In allFrequentItems.AsParallel
                           Where Token.Key.Length > 1
-                          Select ___generateRules(Token)).ToArray.MatrixToList
+                          Select ___generateRules(Token)).ToArray.Unlist
 
             For Each Rule In LQuery
                 If Not rulesList.Contains(Rule) Then

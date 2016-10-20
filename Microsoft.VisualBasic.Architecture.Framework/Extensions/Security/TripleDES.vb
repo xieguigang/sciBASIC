@@ -59,7 +59,7 @@ Namespace SecurityString
             md5 = md5 & md5 & md5 & md5
             Dim bytes = _uni.GetBytes(md5)
             If bytes.Length < 24 Then
-                bytes = {bytes, New Byte() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24}}.MatrixToVector
+                bytes = {bytes, New Byte() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24}}.ToVector
             End If
             _key = bytes.Take(24).ToArray
 

@@ -131,7 +131,7 @@ Public Module Heatmap
                 Dim dw!? = CSng((size.Height - 2 * margin.Width) / array.Length)
                 Dim correl#() = array _
                     .Select(Function(x) x.x.Values) _
-                    .MatrixAsIterator _
+                    .IteratesALL _
                     .Distinct _
                     .ToArray
                 Dim lvs As Dictionary(Of Double, Integer) =

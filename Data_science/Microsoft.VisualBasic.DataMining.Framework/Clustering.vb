@@ -78,7 +78,7 @@ Namespace Clustering
         End Function
 
         Public Function Merge(value As SimpleCluster) As SimpleCluster
-            Me.Items = {Items, value.Items}.MatrixToVector
+            Me.Items = {Items, value.Items}.ToVector
             Return Me
         End Function
 
@@ -157,13 +157,13 @@ Namespace Clustering
                       Select New SimpleCluster With
                          {
                              .Kernel = item.Kernel,
-                             .Items = (From sk In sub_kernels Select sk.Items).ToArray.MatrixToVector, .d = item.d}).ToList
+                             .Items = (From sk In sub_kernels Select sk.Items).ToArray.ToVector, .d = item.d}).ToList
 
             If LQuery.Count = 1 Then '在阈值d之下已经无法再聚类的，则必须要退出递归
                 Return LQuery.ToArray
             End If
 
-            Dim ChunkBuffer = (From item In LQuery Select Clustering(item.Items, d)).ToArray.MatrixToVector
+            Dim ChunkBuffer = (From item In LQuery Select Clustering(item.Items, d)).ToArray.ToVector
             '  ChunkBuffer = InternalMergeJ(ChunkBuffer, d)
             Return ChunkBuffer
         End Function
@@ -178,7 +178,7 @@ Namespace Clustering
                 Dim item = data(i)
                 Dim LQuery = (From n In item.Items Where n - [next].Kernel <= d Select n).ToArray
 
-                [next].Items = {[next].Items, LQuery}.MatrixToVector
+                [next].Items = {[next].Items, LQuery}.ToVector
                 [next].Kernel = [next].Items.Average
                 Dim tmpList = item.Items.ToList
                 For Each n In LQuery

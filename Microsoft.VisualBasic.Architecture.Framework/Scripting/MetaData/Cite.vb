@@ -170,7 +170,7 @@ Namespace Scripting.MetaData
             End If
 
             Dim Tokens As String() = Regex.Split(Abstract.Replace(vbCr, "").Replace(vbLf, " ").Replace("  ", " "), "<p>", RegexOptions.IgnoreCase Or RegexOptions.Singleline)
-            Tokens = (From s As String In Tokens Select Regex.Split(s, "<br/>", RegexOptions.Singleline Or RegexOptions.IgnoreCase)).ToArray.MatrixToVector
+            Tokens = (From s As String In Tokens Select Regex.Split(s, "<br/>", RegexOptions.Singleline Or RegexOptions.IgnoreCase)).ToArray.ToVector
             Dim sbr As StringBuilder = New StringBuilder(1024)
 
             For Each s As String In Tokens

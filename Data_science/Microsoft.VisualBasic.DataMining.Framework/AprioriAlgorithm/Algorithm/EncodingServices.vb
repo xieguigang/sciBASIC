@@ -89,7 +89,7 @@ Namespace AprioriAlgorithm
             Dim ItemLevels = (From itemName As String In _originals
                               Select (From n As Integer
                                       In Levels.Distinct
-                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).MatrixToVector
+                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).ToVector
             Dim Codes = GenerateCodes(ItemLevels.Length)
             _CodeMappings = New ReadOnlyDictionary(Of Char, KeyValuePair(Of String, Integer))(
                 (From i As Integer

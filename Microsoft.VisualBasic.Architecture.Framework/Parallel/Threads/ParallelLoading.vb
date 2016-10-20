@@ -205,7 +205,7 @@ Namespace Parallel
                           Where Not String.IsNullOrEmpty(ref.FullName)
                           Let entry = ref.FullName
                           Select refListValue = getReferences(url:=entry, i:=i + 1, refList:=Temp)).ToList
-            Dim resultBuffer = LQuery.MatrixToList
+            Dim resultBuffer = LQuery.Unlist
             Call resultBuffer.Add(assembly.Location)
             Call refList.AddRange(resultBuffer)
         End Sub

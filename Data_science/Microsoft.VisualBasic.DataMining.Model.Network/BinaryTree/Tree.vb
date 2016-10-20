@@ -246,7 +246,7 @@ EXIT_:          Dim array = source.ToArray
 
                 'Call list.Add(cluster)
                 Call Console.Write(">")
-                Call list.Add(__treeCluster(result.MatrixToList, depth, [stop], kmeansStop))  ' 递归聚类分解
+                Call list.Add(__treeCluster(result.Unlist, depth, [stop], kmeansStop))  ' 递归聚类分解
             Else
                 For i As Integer = 0 To result.Length - 1
                     Dim cluster = result(i)

@@ -146,7 +146,7 @@ Namespace Language
             End Operator
 
             Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of IEnumerable(Of T))) As out()
-                Return helper <= source.MatrixAsIterator
+                Return helper <= source.IteratesALL
             End Operator
 
             Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of IEnumerable(Of T))) As out()
@@ -255,7 +255,7 @@ Namespace Language
             ''' <param name="linq">The collection whose elements are copied to the new list.</param>
             ''' <returns></returns>
             Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
-                Return linq.MatrixToList
+                Return linq.Unlist
             End Operator
 
             Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
@@ -270,7 +270,7 @@ Namespace Language
             ''' <param name="linq">The collection whose elements are copied to the new list.</param>
             ''' <returns></returns>
             Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of IEnumerable(Of T)))) As List(Of T)
-                Return linq.MatrixAsIterator.MatrixToList
+                Return linq.IteratesALL.Unlist
             End Operator
 
             Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of IEnumerable(Of T)))) As List(Of T)
@@ -309,7 +309,7 @@ Namespace Language
             ''' </param>
             ''' <returns>An array that contains the elements from the input sequence.</returns>
             Public Shared Operator <=(cls As ExecHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As T()
-                Return linq.MatrixToVector
+                Return linq.ToVector
             End Operator
 
             Public Shared Operator >=(cls As ExecHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As T()

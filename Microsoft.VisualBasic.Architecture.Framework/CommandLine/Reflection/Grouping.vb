@@ -43,7 +43,7 @@ Namespace CommandLine
                            .ToArray(Function(o) DirectCast(o, GroupAttribute))
                        Select If(g.Length = 0, {New GroupAttribute(undefined)}, g) _
                            .Select(Function(gx) New With {gx, x})) _
-                           .MatrixAsIterator _
+                           .IteratesALL _
                            .GroupBy(Function(x) x.gx.Name) _
                            .ToDictionary(Function(x) x.Key,
                                          Function(x) x.ToArray(

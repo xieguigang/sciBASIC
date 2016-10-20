@@ -43,7 +43,7 @@ Public Module Abundance
         Dim array As T() = source.ToArray
         Dim allTags As String() = array _
             .Select(Function(x) x.Samples.Keys) _
-            .MatrixAsIterator _
+            .IteratesALL _
             .Distinct _
             .ToArray
         Dim max As Dictionary(Of String, Double) = (

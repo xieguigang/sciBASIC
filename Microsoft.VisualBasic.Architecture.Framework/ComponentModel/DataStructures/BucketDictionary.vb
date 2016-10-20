@@ -94,13 +94,13 @@ Namespace ComponentModel.Collection
 
         Public ReadOnly Property Keys As IEnumerable(Of K) Implements IReadOnlyDictionary(Of K, V).Keys
             Get
-                Return __buckets.Select(Function(x) x.Keys).MatrixAsIterator
+                Return __buckets.Select(Function(x) x.Keys).IteratesALL
             End Get
         End Property
 
         Public ReadOnly Property Values As IEnumerable(Of V) Implements IReadOnlyDictionary(Of K, V).Values
             Get
-                Return __buckets.Select(Function(x) x.Values).MatrixAsIterator
+                Return __buckets.Select(Function(x) x.Values).IteratesALL
             End Get
         End Property
 

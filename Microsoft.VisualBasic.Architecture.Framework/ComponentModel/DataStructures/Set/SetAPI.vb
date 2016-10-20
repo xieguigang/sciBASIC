@@ -57,7 +57,7 @@ Public Module SetAPI
         Dim result As T() = (From x In GetIntersects.AsParallel
                              Select (From o In x
                                      Where String.Equals(tag, o.st)
-                                     Select o).ToArray(Function(o) o.x)).MatrixToVector
+                                     Select o).ToArray(Function(o) o.x)).ToVector
         Return result
     End Function
 

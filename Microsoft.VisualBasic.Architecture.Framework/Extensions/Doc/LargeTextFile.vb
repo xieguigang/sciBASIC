@@ -49,7 +49,7 @@ Public Module LargeTextFile
         If currentSize > maxSize Then
             Dim SplitTokens = dat.Split(CInt(dat.Length / 2))
             If SplitTokens.Length > 1 Then
-                Return (From n In SplitTokens Select __textPartitioning(n, maxSize)).ToArray.MatrixToVector
+                Return (From n In SplitTokens Select __textPartitioning(n, maxSize)).ToArray.ToVector
             Else
                 Return SplitTokens
             End If

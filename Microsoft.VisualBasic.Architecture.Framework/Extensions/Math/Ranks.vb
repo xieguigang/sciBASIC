@@ -74,7 +74,7 @@ Namespace Mathematical
         End Function
 
         Public Function Sort(Of T)(source As IEnumerable(Of T), Evaluate As IEnumerable(Of Ranking(Of T))) As IEnumerable(Of T)
-            Dim LQuery = (From method As Ranking(Of T) In Evaluate.AsParallel Select method.Sort(source)).MatrixAsIterator
+            Dim LQuery = (From method As Ranking(Of T) In Evaluate.AsParallel Select method.Sort(source)).IteratesALL
             Dim Groups = (From x In LQuery Select x Group x By x.obj Into Group).ToArray
             Dim Ranks = (From x In Groups.AsParallel
                          Select x.obj,

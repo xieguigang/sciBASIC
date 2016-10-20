@@ -1170,17 +1170,18 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixToVector(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T()
-        Return MatrixToList(source).ToArray
+    <Extension> Public Function ToVector(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T()
+        Return Unlist(source).ToArray
     End Function
 
     ''' <summary>
-    ''' Empty list will be skip and ignored.(这是一个安全的方法，空集合会被自动跳过，并且这个函数总是返回一个集合不会返回空值)
+    ''' Empty list will be skip and ignored.
+    ''' (这是一个安全的方法，空集合会被自动跳过，并且这个函数总是返回一个集合不会返回空值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
-    <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
+    <Extension> Public Function Unlist(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
         Dim list As New List(Of T)
 
         For Each line As IEnumerable(Of T) In source

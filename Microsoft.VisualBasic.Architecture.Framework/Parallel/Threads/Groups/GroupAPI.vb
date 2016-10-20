@@ -49,7 +49,7 @@ Namespace Parallel
             Dim FirstGroups = (From Partition In Partitions.AsParallel
                                Select (From obj In (From Token In Partition
                                                     Select Token.guid
-                                                    Group guid By guid Into Group).ToArray Select obj.guid).ToArray).ToArray.MatrixToList
+                                                    Group guid By guid Into Group).ToArray Select obj.guid).ToArray).ToArray.Unlist
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Unique group...")
             Dim UniqueGroup = (From TAG As T_TAG
                                In FirstGroups.AsParallel

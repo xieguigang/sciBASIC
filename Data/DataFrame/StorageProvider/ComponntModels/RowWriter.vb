@@ -145,7 +145,7 @@ Namespace StorageProvider.ComponentModels
                                                     In hashMetas.AsParallel
                                                     Select From o As Object
                                                            In x.Keys
-                                                           Select Scripting.ToString(o)).MatrixAsIterator
+                                                           Select Scripting.ToString(o)).IteratesALL
             __cachedIndex = indexs.Distinct.ToArray
 
             Return Me

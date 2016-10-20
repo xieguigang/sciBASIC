@@ -54,7 +54,7 @@ Public Class Scaling
         Dim h As List(Of Double) = If(
             stacked,
             New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
-            hist.Samples.Select(Function(s) s.data).MatrixToList)
+            hist.Samples.Select(Function(s) s.data).Unlist)
         ymin! = h.Min
         dy = h.Max - ymin
         type = GetType(Histogram)
@@ -156,7 +156,7 @@ Public Class Scaling
     End Function
 
     Public Shared Function Average(hist As HistogramGroup) As Double
-        Return hist.Samples.Select(Function(x) x.data).MatrixAsIterator.Average()
+        Return hist.Samples.Select(Function(x) x.data).IteratesALL.Average()
     End Function
 
     ''' <summary>
@@ -164,7 +164,7 @@ Public Class Scaling
     ''' </summary>
     ''' <returns></returns>
     Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), ByRef min!) As Single
-        Dim array!() = data.Select(Function(s) s.pts).MatrixAsIterator.ToArray([get])
+        Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
         Dim max! = array.Max : min! = array.Min
         Dim d As Single = max - min
         Return d

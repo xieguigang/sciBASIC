@@ -374,7 +374,7 @@ Public Module ProgramPathSearchTool
                    In matches
                    Where InStr(extType, path.ExtValue, CompareMethod.Text) > 0
                    Select path.Path
-        Return LQuery.MatrixAsIterator.Distinct.ToArray
+        Return LQuery.IteratesALL.Distinct.ToArray
     End Function
 
     ''' <summary>
@@ -657,7 +657,7 @@ Public Module ProgramPathSearchTool
             Call files.AddRange(BranchRule(ProgramFilesX86, keyword))
         End If
         Call files.AddRange(DriveRoot)
-        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).MatrixToList)
+        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).Unlist)
 
         Return files.ToArray
     End Function

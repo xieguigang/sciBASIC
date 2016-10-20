@@ -188,7 +188,7 @@ Public Class List(Of T) : Inherits Generic.List(Of T)
         If vals Is Nothing Then
             Return list
         End If
-        Call list.AddRange(vals.MatrixAsIterator)
+        Call list.AddRange(vals.IteratesALL)
         Return list
     End Operator
 

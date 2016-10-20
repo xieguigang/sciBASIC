@@ -56,7 +56,7 @@ Namespace AprioriAlgorithm
         Public Function AnalysisTransactions(Transactions As IEnumerable(Of String),
                                              Optional MinSupport As Double = 1,
                                              Optional MinConfidence As Double = 1) As Output
-            Dim source = (From Transaction As String In Transactions Select Transaction.ToArray).MatrixAsIterator
+            Dim source = (From Transaction As String In Transactions Select Transaction.ToArray).IteratesALL
             Dim items__1 As IEnumerable(Of String) = (From ch In source Select str = ch.ToString Distinct).ToArray
             Dim output As Output = _aprioriWorkerAnalysis(MinSupport / 100, MinConfidence / 100, items__1, Transactions.ToArray())
             Return output

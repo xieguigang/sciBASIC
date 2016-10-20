@@ -71,7 +71,7 @@ Namespace StorageProvider.ComponentModels
             }
 
             Me.SchemaProvider = SchemaProvider
-            Me.Columns = M.MatrixAsIterator _
+            Me.Columns = M.IteratesALL _
                 .Join(DirectCast(SchemaProvider.MetaAttributes, StorageProvider)) _
                 .ToArray
             Me.Columns = LinqAPI.Exec(Of StorageProvider) <=

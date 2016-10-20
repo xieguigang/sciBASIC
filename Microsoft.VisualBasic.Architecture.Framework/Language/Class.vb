@@ -95,7 +95,7 @@ Namespace Language
         End Operator
 
         Public Shared Operator <=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()
-            Return source.MatrixToVector
+            Return source.ToVector
         End Operator
 
         Public Shared Operator >=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()

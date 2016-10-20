@@ -97,7 +97,7 @@ Public Class ODEsOut
 
         Dim skips As Integer = ly.Length + 2
 
-        For Each v In y0.SafeQuery.JoinAsIterator(params).SeqIterator
+        For Each v In y0.SafeQuery.JoinIterates(params).SeqIterator
             Dim row As RowObject = file(v.i)
             Dim var = v.obj
 

@@ -48,9 +48,9 @@ Namespace NeuralNetwork.Models
             network += net.InputLayer.ToArray(Function(x) x.__node(NameOf(net.InputLayer), hash))
             network += net.OutputLayer.ToArray(Function(x) x.__node(NameOf(net.OutputLayer), hash))
 
-            network += net.HiddenLayer.ToArray(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).MatrixAsIterator
-            network += net.InputLayer.ToArray(Function(x) x.__edges(NameOf(net.InputLayer), hash)).MatrixAsIterator
-            network += net.OutputLayer.ToArray(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).MatrixAsIterator
+            network += net.HiddenLayer.ToArray(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
+            network += net.InputLayer.ToArray(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
+            network += net.OutputLayer.ToArray(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
 
             Return network
         End Function
