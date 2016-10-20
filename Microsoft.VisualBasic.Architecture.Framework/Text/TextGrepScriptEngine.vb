@@ -1,37 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::ca93bcdd35d40c216de02a9840affa25, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.CommandLine
+Imports System.Text
 Imports System.Text.RegularExpressions
-
-Imports TextGrepMethodTokenHandle = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Text.TextGrepMethodToken)
+Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Text.TextGrepMethodToken)
 
 Namespace Text
 
@@ -65,7 +65,7 @@ Namespace Text
         ''' Source,Script,ReturnValue
         ''' </summary>
         ''' <remarks></remarks>
-        Dim _Operations As TextGrepMethodTokenHandle()
+        Dim _Operations As Token()
         Dim _Script As String
 
         ''' <summary>
@@ -76,19 +76,22 @@ Namespace Text
         <ExportAPI("compile", Info:="", Usage:="script_tokens1;script_tokens2;....", Example:="")>
         Public Shared Function Compile(scriptText As String) As TextGrepScriptEngine
             Dim Script As String() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
-            Dim OperationLQueryBuilder = (From sToken As String
-                                          In Script
-                                          Let tokens As String() = TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
-                                          Let EntryPoint As String = sToken.Split.First.ToLower
-                                          Where MethodsHash.ContainsKey(EntryPoint)
-                                          Select New TextGrepMethodTokenHandle(tokens, _MethodsHash(EntryPoint))).ToArray
-            If Script.Length > OperationLQueryBuilder.Length Then
+            Dim builder = LinqAPI.Exec(Of Token) <=
+ _
+                From sToken As String
+                In Script
+                Let tokens As String() = TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
+                Let EntryPoint As String = sToken.Split.First.ToLower
+                Where MethodsHash.ContainsKey(EntryPoint)
+                Select New Token(tokens, _MethodsHash(EntryPoint))
+
+            If Script.Length > builder.Length Then
                 Return Nothing         ' 有非法的命令短语，则为了保护数据的一致性，这个含有错误的语法的脚本是不能够用于操作的，则函数返回空指针
             Else
                 Return New TextGrepScriptEngine With {
-                ._Script = scriptText,
-                ._Operations = OperationLQueryBuilder
-            }
+                    ._Script = scriptText,
+                    ._Operations = builder
+                }
             End If
         End Function
 
@@ -108,18 +111,19 @@ Namespace Text
         ''' <param name="source"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Grep(Source As String) As String
+        Public Function Grep(source As String) As String
+            Dim __parser As Func(Of String, Token, Integer) =
+                Function(sourceText As String, method As Token) As Integer
+                    source = method.Value()(sourceText, method.Key) '迭代解析
+                    Return Len(source)
+                End Function
 
-            Dim InternalParser As Func(Of String, TextGrepMethodTokenHandle, Integer) =
-            Function(sourceText As String, method As TextGrepMethodTokenHandle) As Integer
-                Source = method.Value()(sourceText, method.Key) '迭代解析
-                Return Len(Source)
-            End Function
+            ' 这里是迭代计算，所以请不要使用并行拓展
+            For Each operation As Token In _Operations
+                Call __parser(source, operation)
+            Next
 
-            Dim OperationInvokeLQuery As Integer() = (From operation As TextGrepMethodTokenHandle
-                                                      In _Operations
-                                                      Select InternalParser(Source, operation)).ToArray  '这里是迭代计算，所以请不要使用并行拓展
-            Return Source
+            Return source
         End Function
 
         Public Overrides Function ToString() As String
@@ -193,12 +197,13 @@ Namespace Text
 
         <ExportAPI("replace", Usage:="replace <regx_text> <replace_value>")>
         Private Shared Function Replace(source As String, script As String()) As String
-            Dim Regx As Regex = New Regex(script(1))
+            Dim Regx As New Regex(script(1))
             Dim Matchs = Regx.Matches(source)
-            Dim sBuilder As System.Text.StringBuilder = New System.Text.StringBuilder(source)
+            Dim sBuilder As New StringBuilder(source)
             Dim NewValue = script(2)
-            For Each Value As Match In Matchs
-                Call sBuilder.Replace(Value.Value, NewValue)
+
+            For Each m As Match In Matchs
+                Call sBuilder.Replace(m.Value, NewValue)
             Next
 
             Return sBuilder.ToString

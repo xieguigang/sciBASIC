@@ -40,6 +40,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
 
@@ -177,7 +178,7 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine()
 
             Dim gg As New Grouping(CLI:=App)
-            Dim print = Sub(list As IEnumerable(Of APIEntryPoint))
+            Dim print = Sub(list As IEnumerable(Of APIEntryPoint), left$)
                             If markdown Then
                                 Call sb.AppendLine("|Function API|Info|")
                                 Call sb.AppendLine("|------------|----|")
@@ -187,7 +188,7 @@ Namespace CommandLine.Reflection
                                 If Not markdown Then
                                     Dim indent% = 3 + nameMaxLen - Len(API.Name)
                                     Dim blank$ = New String(c:=" "c, count:=indent)
-                                    Dim line$ = $" {API.Name}:  {blank}{API.Info}"
+                                    Dim line$ = $"{left}{API.Name}:  {blank}{API.Info}"
 
                                     Call sb.AppendLine(line)
                                 Else
@@ -206,7 +207,12 @@ Namespace CommandLine.Reflection
 
             Dim undefines = gg.GroupData(undefined)
 
-            Call print(undefines.Data)
+            Call print(undefines.Data, " ")
+
+            If Not markdown Then
+                Call sb.AppendLine("API list that with functional grouping")
+                Call sb.AppendLine()
+            End If
 
             For Each g As SeqValue(Of Groups) In gg _
                 .Where(Function(list) list.Name <> undefined) _
@@ -218,10 +224,24 @@ Namespace CommandLine.Reflection
                     Call sb.AppendLine($"{g.i}. {g.obj.Name}")
                 End If
 
-                Call sb.AppendLine(Trim(g.obj.Description))
-                Call sb.AppendLine()
+                Dim describ$ = Trim(g.obj.Description)
+                Dim indent As New String(" "c, (g.i & ". ").Length)
 
-                Call print(g.obj.Data)
+                If Not String.IsNullOrEmpty(describ) Then
+                    Call sb.AppendLine()
+
+                    If markdown Then
+                        Call sb.AppendLine(describ)
+                    Else
+                        For Each line$ In Paragraph.Split(describ, 120)
+                            Call sb.AppendLine(indent & line)
+                        Next
+                    End If
+                End If
+
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call print(g.obj.Data, left:=indent)
             Next
 
             Return sb.ToString

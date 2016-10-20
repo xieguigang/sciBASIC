@@ -36,7 +36,7 @@ Namespace Text
     ''' Encoding fileEncoding = TextFileEncodingDetector.DetectTextFileEncoding("you file path",Encoding.Default);
     ''' </summary>
     ''' <remarks></remarks>
-    Module TextFileEncodingDetector
+    Public Module TextFileEncodingDetector
 
         Public ReadOnly Property TextCodings As Dictionary(Of String, System.Text.Encoding) =
             New Dictionary(Of String, Encoding) From {
