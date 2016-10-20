@@ -61,6 +61,14 @@ Namespace SoftwareToolkits
             Call Me.New(GetType(ApplicationDetails).Assembly)
         End Sub
 
+        ''' <summary>
+        ''' 获取当前进程的exe文件的程序描述信息，直接使用New申明得到的只是运行时核心模块dll文件的信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function CurrentExe() As ApplicationDetails
+            Return New ApplicationDetails(Assembly.LoadFile(App.ExecutablePath))
+        End Function
+
         Public Shared Function FromTypeModule(type As Type) As ApplicationDetails
             Return New ApplicationDetails(type.Assembly)
         End Function

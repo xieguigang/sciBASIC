@@ -34,13 +34,13 @@ Namespace Text
                         nextLine.GetTagValue
 
                     If Not String.IsNullOrEmpty(part.Name) Then
-                        Yield (+s) & part.Name
+                        Yield Trim((+s) & part.Name)
                         left += part.Name.Length + 1
                     End If
                 Loop
 
                 If Not String.IsNullOrEmpty(+s) Then
-                    Yield +s
+                    Yield Trim(+s)
                 Else
                     Yield vbCrLf
                 End If

@@ -174,6 +174,25 @@ Namespace CommandLine.Reflection
                 .Select(Function(x) Len(x.Name)) _
                 .Max
 
+            If Not markdown Then
+                Dim descr = Microsoft.VisualBasic.App _
+                    .Info _
+                    .ProductDescription
+
+                descr = Trim(descr)
+
+                Call sb.AppendLine(New String("="c, descr.Length))
+                Call sb.AppendLine(descr)
+                Call sb.AppendLine(New String("="c, descr.Length))
+                Call sb.AppendLine()
+
+                For Each line$ In Paragraph.Split(App.Info.Description, 110)
+                    Call sb.AppendLine(line$)
+                Next
+
+                Call sb.AppendLine()
+            End If
+
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
 
@@ -188,9 +207,18 @@ Namespace CommandLine.Reflection
                                 If Not markdown Then
                                     Dim indent% = 3 + nameMaxLen - Len(API.Name)
                                     Dim blank$ = New String(c:=" "c, count:=indent)
-                                    Dim line$ = $"{left}{API.Name}:  {blank}{API.Info}"
+                                    Dim lines As String() = Paragraph _
+                                        .Split(API.Info, 90 - nameMaxLen) _
+                                        .ToArray
+                                    Dim line$ = $"{left}{API.Name}:  {blank}{lines.FirstOrDefault}"
 
                                     Call sb.AppendLine(line)
+
+                                    If lines.Length > 1 Then
+                                        For Each line$ In lines.Skip(1)
+                                            Call sb.AppendLine(left & New String(" ", nameMaxLen + 6) & line$)
+                                        Next
+                                    End If
                                 Else
                                     Call sb.AppendLine(
                                         $"|[{API.Name}](#{API.Name})|{API.Info}|")
@@ -233,7 +261,7 @@ Namespace CommandLine.Reflection
                     If markdown Then
                         Call sb.AppendLine(describ)
                     Else
-                        For Each line$ In Paragraph.Split(describ, 120)
+                        For Each line$ In Paragraph.Split(describ, 110)
                             Call sb.AppendLine(indent & line)
                         Next
                     End If
@@ -244,7 +272,7 @@ Namespace CommandLine.Reflection
                 Call print(g.obj.Data, left:=indent)
             Next
 
-            Return sb.ToString
+            Return sb.ToString.Trim(ASCII.CR, ASCII.LF, " "c)
         End Function
 
         Public Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"

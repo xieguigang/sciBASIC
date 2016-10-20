@@ -346,6 +346,7 @@ Namespace CommandLine
         End Property
 
         Public ReadOnly Property Stack As String
+        Public ReadOnly Property Info As [Namespace]
 
         ''' <summary>
         '''
@@ -366,6 +367,7 @@ Namespace CommandLine
             Me._nsRoot = type.Namespace
             Me._Stack = caller
             Me._Type = type
+            Me._Info = type.NamespaceEntry
         End Sub
 
         ''' <summary>
