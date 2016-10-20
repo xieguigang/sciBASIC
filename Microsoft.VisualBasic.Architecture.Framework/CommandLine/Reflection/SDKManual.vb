@@ -237,7 +237,7 @@ Namespace CommandLine.Reflection
 
             Call print(undefines.Data, " ")
 
-            If Not markdown Then
+            If gg.GroupData.Count > 1 AndAlso Not markdown Then
                 Call sb.AppendLine("API list that with functional grouping")
                 Call sb.AppendLine()
             End If
