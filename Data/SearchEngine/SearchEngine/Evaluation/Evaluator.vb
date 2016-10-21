@@ -3,6 +3,9 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
+''' <summary>
+''' 进行字符串计算的具体过程
+''' </summary>
 Public Module Evaluator
 
     ReadOnly __symbolsNoWildcards As Char() =
@@ -22,12 +25,17 @@ Public Module Evaluator
     ''' <param name="term$"></param>
     ''' <param name="searchIn$"></param>
     ''' <returns></returns>
-    Public Function ContainsAny(term$, searchIn$, Optional allowInStr As Boolean = True, Optional caseSensitive As Boolean = True) As Boolean
+    Public Function ContainsAny(term$,
+                                searchIn$,
+                                Optional allowInStr As Boolean = True,
+                                Optional caseSensitive As Boolean = True) As Boolean
         Return term$.CompileNormalSearch(allowInStr, caseSensitive)(searchIn$)
     End Function
 
     <Extension>
-    Public Function CompileNormalSearch(term$, Optional allowInStr As Boolean = True, Optional caseSensitive As Boolean = True) As Func(Of String, Boolean)
+    Public Function CompileNormalSearch(term$,
+                                        Optional allowInStr As Boolean = True,
+                                        Optional caseSensitive As Boolean = True) As Func(Of String, Boolean)
         If term.First = "#"c Then
             Dim regexp As New Regex(Mid(term$, 2), RegexICSng)
             Return Function(searchIn$) regexp.Match(searchIn$).Success

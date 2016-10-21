@@ -1,5 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Public Module DataEnumerator
 
@@ -20,13 +23,16 @@ Public Module DataEnumerator
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="type"></param>
     ''' <param name="query$"></param>
     ''' <param name="n%"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Limit(Of T)(source As IEnumerable(Of T), type As Type, query$, n%) As IEnumerable(Of T)
-        Dim exp As Expression = query.Build
+    Public Iterator Function Limit(Of T)(source As IEnumerable(Of T), query$, n%,
+                                         Optional anyDefault As Tokens = Tokens.op_OR,
+                                         Optional allowInStr As Boolean = True,
+                                         Optional caseSensitive As Boolean = False) As IEnumerable(Of T)
+        Dim exp As Expression = query.Build(anyDefault, allowInStr, caseSensitive)
+        Dim type As Type = GetType(T)
         Dim def As New IObject(type)
 
         For Each x As T In source
@@ -47,12 +53,66 @@ Public Module DataEnumerator
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="type"></param>
     ''' <param name="query$"></param>
     ''' <param name="n%"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Top(Of T)(source As IEnumerable(Of T), type As Type, query$, n%) As IEnumerable(Of T)
+    Public Function Top(Of T)(source As IEnumerable(Of T), query$, n%,
+                              Optional anyDefault As Tokens = Tokens.op_OR,
+                              Optional allowInStr As Boolean = True,
+                              Optional caseSensitive As Boolean = False) As IEnumerable(Of T)
+        Dim exp As Expression = query.Build(anyDefault, allowInStr, caseSensitive)
+        Dim type As Type = GetType(T)
+        Dim def As New IObject(type)
+        Dim LQuery = LinqAPI.Exec(Of Match) <=
+ _
+            From x As T
+            In source.AsParallel
+            Let result As Match = exp.Evaluate(def, x)
+            Where result.Success
+            Select result
+            Order By result.score Descending
 
+        Return LQuery _
+            .Take(n) _
+            .Select(Function(x) DirectCast(x.x, T))
+    End Function
+
+    Const TOPregexp = "TOP\s+\d+\s*$"
+    Const LIMITregexp = "LIMIT\s+\d+\s*$"
+
+    ''' <summary>
+    ''' 这个函数可以接受``LIMIT``和``TOP``参数
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
+    Public Function Execute(Of T)(source As IEnumerable(Of T), query$,
+                                  Optional anyDefault As Tokens = Tokens.op_OR,
+                                  Optional allowInStr As Boolean = True,
+                                  Optional caseSensitive As Boolean = False) As IEnumerable(Of T)
+        Dim m As New Value(Of System.Text.RegularExpressions.Match)
+
+        If (m = Regex.Match(query, TOPregexp, RegexOptions.Multiline)).Success Then
+
+            Dim n% = CInt((+m).Value.Trim(" "c, ASCII.TAB).Split.Last)
+            query = Mid(query, 1, query.Length - (+m).Value.Length)
+            Return Top(source, query$, n%, anyDefault, allowInStr, caseSensitive)
+
+        ElseIf (m = Regex.Match(query, LIMITregexp, RegexOptions.Multiline)).Success Then
+
+            Dim n% = CInt((+m).Value.Trim(" "c, ASCII.TAB).Split.Last)
+            query = Mid(query, 1, query.Length - (+m).Value.Length)
+            Return Limit(source, query$, n%, anyDefault, allowInStr, caseSensitive)
+
+        Else
+            Dim exp As Expression = query.Build(anyDefault, allowInStr, caseSensitive)
+            Dim type As Type = GetType(T)
+            Dim def As New IObject(type)
+
+            Return From x As T
+                   In source
+                   Where exp.Evaluate(def, x).Success
+                   Select x
+        End If
     End Function
 End Module

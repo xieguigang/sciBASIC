@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' 提供对字符串的计算方法
+''' </summary>
 Public Module AssertionProvider
 
     ''' <summary>

@@ -4,6 +4,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class QueryArgument : Implements sIdEnumerable
 
     Public Property Name As String Implements sIdEnumerable.Identifier
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' Example: 
+    ''' 
+    ''' ```
+    ''' #\d+
+    ''' #\d+ AND Name:'#\s{3,}' TOP 100
+    ''' value:'#[a-zA-Z]{5,}' LIMIT 10
+    ''' ```
+    ''' </remarks>
     Public Property Expression As String
 
     ''' <summary>

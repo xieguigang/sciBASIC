@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
+''' <summary>
+''' 只是构建出对单个对象的查询计算的表达式，进行整个数据集查询的LIMIT和TOP关键词将不会在这里被处理
+''' </summary>
 Public Module ExpressionBuilder
 
     <Extension>
@@ -82,7 +85,10 @@ Public Module ExpressionBuilder
     End Function
 
     <Extension>
-    Public Function Build(tks As Pointer(Of Token(Of Tokens)), Optional allowInStr As Boolean = True, Optional caseSensitive As Boolean = False) As Expression
+    Public Function Build(tks As Pointer(Of Token(Of Tokens)),
+                          Optional allowInStr As Boolean = True,
+                          Optional caseSensitive As Boolean = False) As Expression
+
         Dim metas As New List(Of MetaExpression)
         Dim meta As MetaExpression
 

@@ -730,4 +730,11 @@ Public Module StringHelpers
 
         Return False
     End Function
+
+    <Extension>
+    Public Function TextLast(s$, token$) As Boolean
+        Dim lastIndex% = s.Length - token.Length
+        Dim val% = InStrRev(s, token)
+        Return lastIndex = val
+    End Function
 End Module
