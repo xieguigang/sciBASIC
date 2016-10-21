@@ -44,7 +44,12 @@ A language feature runtime library for CLI architecture applications. This frame
 
 + https://www.nuget.org/packages/VB_AppFramework/
 
->  PM> Install-Package VB_AppFramework
+```bash
+# For install latest stable release version:
+PM> Install-Package VB_AppFramework
+# For install latest unstable beta version:
+PM> Install-Package VB_AppFramework -Pre
+```
 
 + For .NET framework 4.0, install package
 https://www.nuget.org/packages/VB_AppFramework_40/
