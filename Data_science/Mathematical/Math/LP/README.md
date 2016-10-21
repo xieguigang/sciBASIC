@@ -9,7 +9,7 @@ Implementation of the [Simplex Method](https://en.wikipedia.org/wiki/Simplex_alg
 ###### Code Usage
 
 ```vbnet
-Dim input = LP.InputReader.readInput("../../../data/input.txt")
+Dim input = LP.InputReader.readInput("../../../data/LP/input.txt")
 Dim converted = LP.InputReader.convertDoublesMatrix(input)
 Dim t As New LP.Tableau(converted)
 Dim solver As New LP.LinearSolver(LP.OptimizationType.MAX)
