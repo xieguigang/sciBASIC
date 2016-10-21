@@ -2,14 +2,15 @@
 
 Namespace LP
 
-    Public Structure ObjectiveFunction
+    ''' <summary>
+    ''' Subject to these <see cref="Equation"/>
+    ''' </summary>
+    Public Structure Equation
 
-        Dim type As OptimizationType
-        Dim xyz#()
-        Dim Z#
+        Dim xyz#(), c#
 
         Public Overrides Function ToString() As String
-            Return $"{type.ToString}({xyz.GetJson})"
+            Return Me.GetJson
         End Function
     End Structure
 End Namespace

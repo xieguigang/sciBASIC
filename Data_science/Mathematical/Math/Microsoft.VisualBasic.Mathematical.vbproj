@@ -248,13 +248,14 @@
     <Compile Include="Logical\FuzzyLogic\Models\LDM.vb" />
     <Compile Include="Logical\FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Logical\TokenIcer.vb" />
+    <Compile Include="LP\Data\Equation.vb" />
+    <Compile Include="LP\Data\Solver.vb" />
     <Compile Include="LP\Data\ObjectiveFunction.vb" />
     <Compile Include="LP\Exceptions.vb" />
-    <Compile Include="LP\InputReader.vb" />
+    <Compile Include="LP\Data\InputReader.vb" />
     <Compile Include="LP\LinearSolver.vb" />
     <Compile Include="LP\Objective.vb" />
     <Compile Include="LP\OptimizationType.vb" />
-    <Compile Include="LP\Solver.vb" />
     <Compile Include="LP\Tableau.vb" />
     <Compile Include="Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Matrix.NET\EigenvalueDecomposition.vb" />

@@ -3,7 +3,6 @@ Imports Microsoft.VisualBasic.Language
 Namespace LP
 
     Public Class LinearSolver
-        Implements Solver
 
         Public Property Loops As Integer = 100
 
@@ -13,8 +12,8 @@ Namespace LP
             Me.type = type
         End Sub
 
-        Public Function solve(___tableau As Tableau) As Objective Implements Solver.solve
-            If Not validate(___tableau) Then
+        Public Function solve(___tableau As Tableau) As Objective
+            If Not ___tableau.inProperForm Then
                 Throw New ArgumentException("Tableau is not in proper form")
             End If
 
@@ -38,10 +37,6 @@ Namespace LP
             Loop
 
             Return New Objective(___tableau)
-        End Function
-
-        Public Function validate(___tableau As Tableau) As Boolean Implements Solver.validate
-            Return ___tableau.inProperForm()
         End Function
 
         ''' <summary>

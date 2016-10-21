@@ -1,13 +1,17 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.IO
 
 Namespace LP
-
 
     Public Module InputReader
 
         Private Const DELIMINATOR As String = ","
 
+        ''' <summary>
+        ''' 这个方法是直接读取已经构件好的矩阵来初始化线性规划计算模型
+        ''' </summary>
+        ''' <param name="fileName"></param>
+        ''' <returns></returns>
         Public Function readInput(fileName As String) As List(Of List(Of Double))
             Dim file As New FileStream(fileName, FileMode.Open)
             Dim input As New List(Of List(Of Double))
@@ -50,5 +54,4 @@ Namespace LP
             Return doubles
         End Function
     End Module
-
 End Namespace
