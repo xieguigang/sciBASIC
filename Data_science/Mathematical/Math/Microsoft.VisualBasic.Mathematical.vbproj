@@ -248,6 +248,14 @@
     <Compile Include="Logical\FuzzyLogic\Models\LDM.vb" />
     <Compile Include="Logical\FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Logical\TokenIcer.vb" />
+    <Compile Include="LP\InfeasibleException.vb" />
+    <Compile Include="LP\InputReader.vb" />
+    <Compile Include="LP\LinearSolver.vb" />
+    <Compile Include="LP\Objective.vb" />
+    <Compile Include="LP\OptimizationType.vb" />
+    <Compile Include="LP\Solver.vb" />
+    <Compile Include="LP\Tableau.vb" />
+    <Compile Include="LP\UnboundedException.vb" />
     <Compile Include="Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Matrix.NET\EigenvalueDecomposition.vb" />
     <Compile Include="Matrix.NET\GeneralMatrix.vb" />
@@ -294,6 +302,7 @@
   <ItemGroup>
     <None Include="Expression_Evaluate.sequencediagram" />
     <None Include="Logical\FuzzyLogic\README.md" />
+    <None Include="LP\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
