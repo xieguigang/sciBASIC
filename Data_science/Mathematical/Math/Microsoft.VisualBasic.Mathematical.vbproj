@@ -248,6 +248,7 @@
     <Compile Include="Logical\FuzzyLogic\Models\LDM.vb" />
     <Compile Include="Logical\FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Logical\TokenIcer.vb" />
+    <Compile Include="LP\Data\ObjectiveFunction.vb" />
     <Compile Include="LP\Exceptions.vb" />
     <Compile Include="LP\InputReader.vb" />
     <Compile Include="LP\LinearSolver.vb" />
