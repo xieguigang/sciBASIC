@@ -832,14 +832,14 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 只有文件名称，没有拓展名
+    ''' 返回``文件名称.拓展名``
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <ExportAPI("File.BaseName")>
+    <ExportAPI("File.Name")>
     <Extension>
-    Public Function GetJustFileName(path As String) As String
-        Return IO.Path.GetFileNameWithoutExtension(path)
+    Public Function FileName(path As String) As String
+        Return FileIO.FileSystem.GetFileInfo(path).Name
     End Function
 
     ''' <summary>

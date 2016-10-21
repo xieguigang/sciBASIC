@@ -101,12 +101,11 @@ Public Module IOExtensions
     '''
     <ExportAPI("FlushStream")>
     <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path As String) As Boolean
-        Dim parentDIR As String = If(String.IsNullOrEmpty(path),
-            FileIO.FileSystem.CurrentDirectory,
-            FileIO.FileSystem.GetParentPath(path))
-
-        Call FileIO.FileSystem.CreateDirectory(parentDIR)
-        Call FileIO.FileSystem.WriteAllBytes(path, buf.ToArray, False)
+        Using write As BinaryWriter = New BinaryWriter(path.Open)
+            For Each b As Byte In buf
+                Call write.Write(b)
+            Next
+        End Using
 
         Return True
     End Function
