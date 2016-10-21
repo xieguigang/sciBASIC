@@ -164,6 +164,7 @@
     <Compile Include="Adapter\Text.vb" />
     <Compile Include="Adapter\DictionaryKey.vb" />
     <Compile Include="Evaluation\AssertionProvider.vb" />
+    <Compile Include="Evaluation\Match.vb" />
     <Compile Include="QueryArgument.vb" />
     <Compile Include="Comparer.vb" />
     <Compile Include="Adapter\DataEnumerator.vb" />

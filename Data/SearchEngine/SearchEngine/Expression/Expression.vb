@@ -1,9 +1,14 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Data.IO.SearchEngine
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' The query expression
 ''' </summary>
 Public Class Expression
+    Implements IEnumerable(Of MetaExpression)
 
     Public Property Tokens As MetaExpression()
 
@@ -22,11 +27,13 @@ Public Class Expression
     End Function
 
     Public Overrides Function ToString() As String
-        Return String.Join(" ", Tokens.ToArray(Function(x) $"<{x.Operator}>"))
+        Return Debug()
     End Function
 
-    Public Function Evaluate(def As IObject, obj As Object) As Boolean
-        Return Expression.Evaluate(def, obj, Tokens)
+    Public Function Evaluate(def As IObject, obj As Object) As Match
+        Dim m As Match = Nothing
+        Expression.Evaluate(def, obj, Tokens, m)
+        Return m
     End Function
 
     ''' <summary>
@@ -34,10 +41,13 @@ Public Class Expression
     ''' </summary>
     ''' <param name="def"></param>
     ''' <returns></returns>
-    Public Shared Function Evaluate(def As IObject, obj As Object, tokens As IEnumerable(Of MetaExpression)) As Boolean
+    Public Shared Function Evaluate(def As IObject, obj As Object, tokens As IEnumerable(Of MetaExpression), ByRef match As Match) As Boolean
         Dim notPending As Boolean
         Dim exp As New List(Of MetaExpression)(tokens)
         Dim b As Boolean
+        Dim result As Match
+        Dim fields As New List(Of NamedValue(Of String))
+        Dim score As Double
 
         ' 1 OR 0 -> {1, OR} {0, undefine}
         ' NOT 0 OR 1 -> {undefine, NOT}, {0, OR}, {1, undefine}
@@ -51,7 +61,8 @@ Public Class Expression
                 Continue For
             End If
 
-            b = m.Expression(def, obj)
+            result = m.Expression(def, obj)
+            b = result.Success
 
             If notPending Then
                 b = Not b
@@ -59,6 +70,9 @@ Public Class Expression
             End If
 
             If b = True Then ' 成立
+                score += result.score
+                fields += result.Field
+
                 If m.Operator = SyntaxParser.Tokens.op_OR Then  ' 短路，这里已经成立了则不必再计算下去了
                     Exit For
                 ElseIf m.Operator = SyntaxParser.Tokens.op_AND Then
@@ -81,7 +95,28 @@ Public Class Expression
             End If
         Next
 
+        match = New Match With {
+            .score = score,
+            .x = obj,
+            .Field = New NamedValue(Of String) With {
+                .Name = tokens.Debug,
+                .x = fields _
+                    .ToDictionary(Function(x) x.Name,
+                                  Function(x) x.x).GetJson
+            }
+        }
+
         Return b
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of MetaExpression) Implements IEnumerable(Of MetaExpression).GetEnumerator
+        For Each x In Tokens
+            Yield x
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
     End Function
 End Class
 

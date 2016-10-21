@@ -8,6 +8,11 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Module ExpressionBuilder
 
+    <Extension>
+    Public Function Debug(expression As IEnumerable(Of MetaExpression)) As String
+        Return String.Join(" ", expression.ToArray(Function(x) $"<{x.Operator}>"))
+    End Function
+
     ''' <summary>
     ''' 构建查询表达式的对象模型
     ''' </summary>

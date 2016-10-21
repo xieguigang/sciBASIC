@@ -14,4 +14,45 @@ Public Module DataEnumerator
             End If
         Next
     End Function
+
+    ''' <summary>
+    ''' 直接取出前n个
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="type"></param>
+    ''' <param name="query$"></param>
+    ''' <param name="n%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function Limit(Of T)(source As IEnumerable(Of T), type As Type, query$, n%) As IEnumerable(Of T)
+        Dim exp As Expression = query.Build
+        Dim def As New IObject(type)
+
+        For Each x As T In source
+            If exp.Evaluate(def, x) Then
+                Yield x
+
+                If n > 0 Then
+                    n -= 1
+                Else
+                    Exit For
+                End If
+            End If
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 排序之后取得分最高的前n个
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="type"></param>
+    ''' <param name="query$"></param>
+    ''' <param name="n%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Top(Of T)(source As IEnumerable(Of T), type As Type, query$, n%) As IEnumerable(Of T)
+
+    End Function
 End Module
