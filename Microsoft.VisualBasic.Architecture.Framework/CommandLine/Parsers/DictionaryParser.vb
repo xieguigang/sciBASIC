@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.Parsers
 

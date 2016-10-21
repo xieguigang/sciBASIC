@@ -24,7 +24,7 @@ Public Module ExpressionBuilder
         Dim tks As IEnumerable(Of Token(Of Tokens)) =
             SyntaxParser.Parser(query$)
 
-        If IsEquals(Of Token(Of Tokens))(tks.Count) <=
+        If LinqAPI.IsEquals(Of Token(Of Tokens))(tks.Count) <=
             From x As Token(Of Tokens)
             In tks
             Where x.TokenName = Tokens.AnyTerm

@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Language
 
 Namespace Mathematical
 

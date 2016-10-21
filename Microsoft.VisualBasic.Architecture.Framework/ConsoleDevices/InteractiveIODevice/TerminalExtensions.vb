@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Threading
+Imports Microsoft.VisualBasic.Language
 
 Namespace Terminal
 

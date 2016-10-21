@@ -65,7 +65,7 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
+    Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
         Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
     End Function
 

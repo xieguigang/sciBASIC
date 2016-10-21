@@ -29,6 +29,7 @@
 Imports System.CodeDom.Compiler
 Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace Emit.CodeDOM_VBC
 

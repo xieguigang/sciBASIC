@@ -174,7 +174,7 @@ Public Module DataImports
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
         Dim array$() = column.ToArray, n% = array.Length
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Dbl As Double = Val(s)
@@ -185,7 +185,7 @@ Public Module DataImports
             Return GetType(Double)
         End If
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Int As Integer = CInt(Val(s))
@@ -196,7 +196,7 @@ Public Module DataImports
             Return GetType(Integer)
         End If
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Bol As Boolean = Boolean.Parse(s)
@@ -207,16 +207,16 @@ Public Module DataImports
             Return GetType(Boolean)
         End If
 
-        If IsEquals(Of Integer)() = From s As String
-                                    In column
-                                    Let Dat As Date = Date.Parse(s)
-                                    Where Dat.Year = 0 AndAlso
-                                        Dat.Month = 0 AndAlso
-                                        Dat.Day = 0 AndAlso
-                                        Dat.Hour = 0 AndAlso
-                                        Dat.Minute = 0 AndAlso
-                                        Dat.Second = 0
-                                    Select 1 Then
+        If LinqAPI.IsEquals(Of Integer)() = From s As String
+                                            In column
+                                            Let Dat As Date = Date.Parse(s)
+                                            Where Dat.Year = 0 AndAlso
+                                                Dat.Month = 0 AndAlso
+                                                Dat.Day = 0 AndAlso
+                                                Dat.Hour = 0 AndAlso
+                                                Dat.Minute = 0 AndAlso
+                                                Dat.Second = 0
+                                            Select 1 Then
             Return GetType(Date)
         End If
 
