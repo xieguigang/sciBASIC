@@ -95,16 +95,20 @@ Public Class Expression
             End If
         Next
 
-        match = New Match With {
-            .score = score,
-            .x = obj,
-            .Field = New NamedValue(Of String) With {
-                .Name = tokens.Debug,
-                .x = fields _
+        If b = True Then  ' 当b是False的时候，说明匹配失败了，则要将match置为空值，否则最终的结果任然是True
+            match = New Match With {
+                .score = score,
+                .x = obj,
+                .Field = New NamedValue(Of String) With {
+                    .Name = tokens.Debug,
+                    .x = fields _
                     .ToDictionary(Function(x) x.Name,
                                   Function(x) x.x).GetJson
+                }
             }
-        }
+        Else
+            match = Nothing
+        End If
 
         Return b
     End Function

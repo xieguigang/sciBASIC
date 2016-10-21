@@ -12,10 +12,10 @@ Public Module AssertionProvider
     ''' <param name="t"></param>
     ''' <returns></returns>
     ''' <remarks>得分最高</remarks>
-    Public Function MustContains(t As Token(Of Tokens)) As IAssertion
+    Public Function MustContains(t As Token(Of Tokens), Optional caseSensitive As Boolean = True) As IAssertion
         Dim term$ = t.Text.GetString
         Dim evaluate As Func(Of String, Boolean) =
-            term$.CompileMustSearch
+            term$.CompileMustSearch(caseSensitive)
 
         Return Function(def, obj)
                    For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
@@ -32,12 +32,12 @@ Public Module AssertionProvider
                End Function
     End Function
 
-    Public Function ContainsAny(t As Token(Of Tokens), Optional allowInstr As Boolean = True) As IAssertion
+    Public Function ContainsAny(t As Token(Of Tokens), Optional allowInstr As Boolean = True, Optional caseSensitive As Boolean = True) As IAssertion
         Dim term$ = t.Text.GetString("'")
 
-        If Not term.Contains(":"c) Then
+        If Not term.Contains(":"c) Then  ' 并不是对特定的域进行搜索
             Dim evaluate As Func(Of String, Boolean) =
-                term.CompileNormalSearch(allowInstr)
+                term.CompileNormalSearch(allowInstr, caseSensitive)
 
             Return Function(def, obj)
                        For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
@@ -61,10 +61,10 @@ Public Module AssertionProvider
 
         If fieldSearch.x.IsMustExpression Then
             term = term.GetString()
-            assertion = term$.CompileMustSearch
+            assertion = term$.CompileMustSearch(caseSensitive)
         Else
             term = term.GetString("'")
-            assertion = term.CompileNormalSearch(allowInstr)
+            assertion = term.CompileNormalSearch(allowInstr, caseSensitive)
         End If
 
         Dim fName$ = fieldSearch.Name.ToLower

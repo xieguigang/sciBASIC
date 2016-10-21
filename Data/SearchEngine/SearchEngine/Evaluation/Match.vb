@@ -1,11 +1,16 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Runtime.Serialization
+Imports System.Web.Script.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 ''' <summary>
 ''' 匹配结果
 ''' </summary>
+''' 
+<KnownType(GetType(NamedValue(Of String)))>
 Public Structure Match
 
-    Dim x As Object
+    <ScriptIgnore>
+    Public Property x As Object
     Dim score#
     Dim Field As NamedValue(Of String)
 

@@ -23,9 +23,15 @@ Public Module ExpressionBuilder
     ''' <see cref="Tokens.op_AND"/> for all should match or <see cref="Tokens.op_OR"/> for any match?
     ''' (请注意，这个参数值只允许<see cref="Tokens.op_AND"/>或者<see cref="Tokens.op_OR"/>)
     ''' </param>
+    ''' <param name="caseSensitive">计算字符串值的时候是否大小写敏感？</param>
+    ''' <param name="allowInStr">是否允许只匹配上部分字符串</param>
     ''' <returns></returns>
     <Extension>
-    Public Function Build(query$, Optional anyDefault As Tokens = Tokens.op_OR, Optional allowInStr As Boolean = True) As Expression
+    Public Function Build(query$,
+                          Optional anyDefault As Tokens = Tokens.op_OR,
+                          Optional allowInStr As Boolean = True,
+                          Optional caseSensitive As Boolean = False) As Expression
+
         Dim tks As IEnumerable(Of Token(Of Tokens)) =
             SyntaxParser.Parser(query$)
 
@@ -68,7 +74,7 @@ Public Module ExpressionBuilder
         End If
 
         Try
-            Return New Pointer(Of Token(Of Tokens))(tks).Build(allowInStr)
+            Return New Pointer(Of Token(Of Tokens))(tks).Build(allowInStr, caseSensitive)
         Catch ex As Exception
             ex = New Exception("$query_expression:= " & query, ex)
             Throw ex
@@ -76,7 +82,7 @@ Public Module ExpressionBuilder
     End Function
 
     <Extension>
-    Public Function Build(tks As Pointer(Of Token(Of Tokens)), Optional allowInStr As Boolean = True) As Expression
+    Public Function Build(tks As Pointer(Of Token(Of Tokens)), Optional allowInStr As Boolean = True, Optional caseSensitive As Boolean = False) As Expression
         Dim metas As New List(Of MetaExpression)
         Dim meta As MetaExpression
 
@@ -87,11 +93,11 @@ Public Module ExpressionBuilder
 
             Select Case t.Type
                 Case SyntaxParser.Tokens.AnyTerm
-                    meta.Expression = AssertionProvider.ContainsAny(t, allowInStr)
+                    meta.Expression = AssertionProvider.ContainsAny(t, allowInStr, caseSensitive)
                 Case SyntaxParser.Tokens.MustTerm
-                    meta.Expression = AssertionProvider.MustContains(t)
+                    meta.Expression = AssertionProvider.MustContains(t, caseSensitive)
                 Case SyntaxParser.Tokens.stackOpen
-                    meta.Expression = AddressOf Build(tks, allowInStr).Evaluate
+                    meta.Expression = AddressOf Build(tks, allowInStr, caseSensitive).Evaluate
                 Case SyntaxParser.Tokens.stackClose
                     Return New Expression With {
                         .Tokens = metas

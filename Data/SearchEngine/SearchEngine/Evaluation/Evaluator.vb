@@ -22,12 +22,12 @@ Public Module Evaluator
     ''' <param name="term$"></param>
     ''' <param name="searchIn$"></param>
     ''' <returns></returns>
-    Public Function ContainsAny(term$, searchIn$, Optional allowInStr As Boolean = True) As Boolean
-        Return term$.CompileNormalSearch(allowInStr)(searchIn$)
+    Public Function ContainsAny(term$, searchIn$, Optional allowInStr As Boolean = True, Optional caseSensitive As Boolean = True) As Boolean
+        Return term$.CompileNormalSearch(allowInStr, caseSensitive)(searchIn$)
     End Function
 
     <Extension>
-    Public Function CompileNormalSearch(term$, Optional allowInStr As Boolean = True) As Func(Of String, Boolean)
+    Public Function CompileNormalSearch(term$, Optional allowInStr As Boolean = True, Optional caseSensitive As Boolean = True) As Func(Of String, Boolean)
         If term.First = "#"c Then
             Dim regexp As New Regex(Mid(term$, 2), RegexICSng)
             Return Function(searchIn$) regexp.Match(searchIn$).Success
@@ -69,9 +69,9 @@ Public Module Evaluator
                        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
                        For Each t$ In t1$
-                           If t2.Located(t$, caseSensitive:=False, fuzzy:=allowInStr) <> -1 Then
+                           If t2.Located(t$, caseSensitive, fuzzy:=allowInStr) <> -1 Then
                                Return True
-                           ElseIf t2.WildcardsLocated(t$, False) <> -1 Then
+                           ElseIf t2.WildcardsLocated(t$, caseSensitive) <> -1 Then
                                Return True
                            End If
                        Next
@@ -87,12 +87,12 @@ Public Module Evaluator
     ''' <param name="term$"></param>
     ''' <param name="searchIn$"></param>
     ''' <returns></returns>
-    Public Function MustxContains(term$, searchIn$) As Boolean
-        Return term$.CompileMustSearch()(searchIn$)
+    Public Function MustxContains(term$, searchIn$, Optional caseSensitive As Boolean = True) As Boolean
+        Return term$.CompileMustSearch(caseSensitive)(searchIn$)
     End Function
 
     <Extension>
-    Public Function CompileMustSearch(term$) As Func(Of String, Boolean)
+    Public Function CompileMustSearch(term$, Optional caseSensitive As Boolean = True) As Func(Of String, Boolean)
         Dim t1$() = term.Split(__allASCIISymbols)
 
         If t1$.Length = 1 Then ' 必须要整个单词都被匹配上
@@ -100,7 +100,7 @@ Public Module Evaluator
                        Dim t2$() = searchIn.Split(__allASCIISymbols) ' 目标
 
                        For Each t$ In t1$
-                           If t2.Located(t$, False, False) <> -1 Then
+                           If t2.Located(t$, caseSensitive, False) <> -1 Then
                                Return True
                            End If
                        Next
@@ -108,7 +108,11 @@ Public Module Evaluator
                        Return False
                    End Function
         Else ' 对于含有多个tokens的查询，则直接比较
-            Return Function(searchIn$) InStr(searchIn, term$, CompareMethod.Text) > 0
+            Dim compare As CompareMethod = If(
+                caseSensitive,
+                CompareMethod.Binary,
+                CompareMethod.Text)
+            Return Function(searchIn$) InStr(searchIn, term$, compare) > 0
         End If
     End Function
 

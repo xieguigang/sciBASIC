@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.SearchEngine
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
 
@@ -15,18 +16,22 @@ Module Module1
 
     Sub Main()
 
-        Dim query = "#\d+".Build(anyDefault:=Tokens.op_OR, allowInStr:=False)
+        Dim query = "#\d+ AND (X AND obj)".Build(anyDefault:=Tokens.op_OR, allowInStr:=True)
 
         Dim result As Boolean = query.Match(text:="23333")
 
         Dim obj As New NamedValue(Of String) With {
-            .Name = "Hello world!",
+            .Name = "Hello world! xieguigang",
             .x = "23333",
             .Description = "Test Object"
         }
         Dim def As New IObject(GetType(NamedValue(Of String)))
 
-        result = query.Evaluate(def, obj)
+        Dim match As Match = query.Evaluate(def, obj)
+
+        Call match.GetJson.__DEBUG_ECHO.SaveTo("x:\ffff.json")
+
+        Pause()
 
         Dim source As IEnumerable(Of NamedValue(Of String))
 
