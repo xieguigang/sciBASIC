@@ -1,39 +1,46 @@
+Imports Microsoft.VisualBasic.Language
+
 Namespace LP
-
-
-
 
     Public Class LinearSolver
         Implements Solver
 
+        Public Property Loops As Integer = 100
 
-        Private ReadOnly type As OptimizationType
+        ReadOnly type As OptimizationType
 
-        Public Sub New(ByVal type As OptimizationType)
+        Public Sub New(type As OptimizationType)
             Me.type = type
         End Sub
 
-        Public Function solve(ByVal ___tableau As Tableau) As Objective Implements Solver.solve
-            If Not validate(___tableau) Then Throw New System.ArgumentException("Tableau is not in proper form")
+        Public Function solve(___tableau As Tableau) As Objective Implements Solver.solve
+            If Not validate(___tableau) Then
+                Throw New ArgumentException("Tableau is not in proper form")
+            End If
 
             ' Check if the problem has a solution
-            If ___tableau.Infeasible Then Throw New InfeasibleException("Problem is infeasible.")
-            If ___tableau.Unbounded Then Throw New UnboundedException("Problem is unbounded.")
+            If ___tableau.Infeasible Then
+                Throw New InfeasibleException("Problem is infeasible.")
+            End If
+            If ___tableau.Unbounded Then
+                Throw New UnboundedException("Problem is unbounded.")
+            End If
 
             ' Optimize
-            Dim [loop] As Integer = 0
+            Dim [loop] As int = 0
             Dim objectiveFunction As Double() = ___tableau.Matrix(0)
-            Do While (Not isOptimal(objectiveFunction)) AndAlso [loop] < 100
-                Dim pivotColumn As Integer = ___tableau.PivotColumn ' entering variable
-                Dim pivotRow As Integer = ___tableau.getPivotRow(pivotColumn) ' leaving variable
-                ___tableau.pivot(pivotRow, pivotColumn)
-                [loop] += 1
+
+            Do While (Not isOptimal(objectiveFunction)) AndAlso ++[loop] < Loops
+                Dim pivotColumn% = ___tableau.PivotColumn           ' entering variable
+                Dim pivotRow% = ___tableau.getPivotRow(pivotColumn) ' leaving variable
+
+                Call ___tableau.pivot(pivotRow, pivotColumn)
             Loop
 
             Return New Objective(___tableau)
         End Function
 
-        Public Function validate(ByVal ___tableau As Tableau) As Boolean Implements Solver.validate
+        Public Function validate(___tableau As Tableau) As Boolean Implements Solver.validate
             Return ___tableau.inProperForm()
         End Function
 
@@ -42,15 +49,11 @@ Namespace LP
         ''' if no entering basic variable is available, ie. there are no
         ''' negative values in the objective function 
         ''' </summary>
-        Private Function isOptimal(ByVal objective As Double()) As Boolean
+        Private Function isOptimal(objective As Double()) As Boolean
             For Each d As Double In objective
                 If d < 0 Then Return False
-            Next d
+            Next
             Return True
         End Function
-
-
-
     End Class
-
 End Namespace
