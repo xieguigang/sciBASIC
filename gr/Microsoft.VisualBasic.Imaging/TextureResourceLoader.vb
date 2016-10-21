@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 
 <PackageNamespace("Texture.Resource.Loader", Publisher:="xie.guigang@gmail.com")>
 Public Module TextureResourceLoader

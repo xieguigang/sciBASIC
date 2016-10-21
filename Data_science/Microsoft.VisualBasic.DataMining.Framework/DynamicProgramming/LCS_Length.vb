@@ -28,6 +28,7 @@
 
 Imports System
 Imports Microsoft.VisualBasic.Text.LevenshteinDistance
+Imports Microsoft.VisualBasic.Language
 
 Namespace DynamicProgramming
 

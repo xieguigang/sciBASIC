@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' Initializes a new instance of the <see cref="List"/>`1 class that

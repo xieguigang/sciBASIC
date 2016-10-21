@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace Logical
 

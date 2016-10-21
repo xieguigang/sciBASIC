@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Emit.Marshal
+Imports Microsoft.VisualBasic.Language
 
 Namespace HTML
 

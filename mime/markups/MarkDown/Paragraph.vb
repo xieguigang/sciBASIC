@@ -29,6 +29,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.Markup.MarkDown.Span
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace MarkDown
 

@@ -29,6 +29,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Language
 
 Namespace MarkDown
 
