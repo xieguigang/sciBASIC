@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.TokenIcer
 

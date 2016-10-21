@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
