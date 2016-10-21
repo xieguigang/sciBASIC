@@ -9,7 +9,11 @@ Namespace LP
         Dim Z#
 
         Public Overrides Function ToString() As String
-            Return $"{type.ToString}({xyz.GetJson})"
+            Dim eq As New Equation With {
+                .c = Z,
+                .xyz = xyz
+            }
+            Return $"{type.ToString}( {eq.ToString} )"
         End Function
     End Structure
 End Namespace

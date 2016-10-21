@@ -38,6 +38,21 @@ Namespace Language
         ReadOnly __upbound As Integer = __chars.Length - 1
 
         ''' <summary>
+        ''' 使用自定义顺序的字符序列
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="_chars"></param>
+        Sub New(n As Integer, _chars As IEnumerable(Of Char))
+            chars += -1
+            __chars = _chars.ToArray
+            __upbound = __chars.Length - 1
+
+            For i As Integer = 0 To n - 1
+                Call __plus(chars.Count - 1)
+            Next
+        End Sub
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="n"></param>
@@ -112,6 +127,10 @@ Namespace Language
             Return i
         End Operator
 
+        ''' <summary>
+        ''' 直接字符串序列，不会产生步进前移
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return New String(
                 chars.ToArray(Function(x) __chars(x)))

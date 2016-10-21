@@ -4,8 +4,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Program
 
     Sub Main()
-        Call Test2()
         Call Test()
+        Call Test2()
     End Sub
 
     Sub Test()
