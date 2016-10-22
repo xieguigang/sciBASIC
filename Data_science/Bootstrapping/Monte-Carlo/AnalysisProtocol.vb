@@ -260,7 +260,7 @@ Namespace MonteCarlo
                     required.value _
                     .Where(Function(x) Not x.Name = AnalysisProtocol.Observation) _
                     .Select(Function(x) x.x) _
-                    .MatrixToVector
+                    .ToVector
                 Dim key$ = New NamedValue(Of String)(
                     (+uid).ToString,
                     randSamples.Count).GetJson
@@ -271,7 +271,7 @@ Namespace MonteCarlo
                     Return out
                 Else
                     Dim output As Dictionary(Of String, Double()) =
-                        out.MatrixAsIterator _
+                        out.IteratesALL _
                         .GroupBy(Function(x) x.Key) _
                         .ToDictionary(
                             Function(x) x.Key,
@@ -342,12 +342,16 @@ Namespace MonteCarlo
 
         <Extension>
         Private Function __getRanges(values As Double()) As INextRandomNumber
-            Dim low As Double = values.Min, high As Double = values.Max
+            Dim low As Double = values.Min
+            Dim high As Double = values.Max
             Return RandomRange.GetRandom(low, high,, forceInit:=True)
         End Function
 
         Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer
-            Dim array = data.MatrixAsIterator.Select(Function(x) x.x).MatrixAsIterator
+            Dim array = data _
+                .IteratesALL _
+                .Select(Function(x) x.x) _
+                .IteratesALL
             Dim value As Integer = array.Count
             Return value
         End Function

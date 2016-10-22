@@ -173,7 +173,16 @@ Public Module Scatter
                                Optional color As String = "black",
                                Optional dash As DashStyle = DashStyle.Dash,
                                Optional ptSize! = 30,
-                               Optional width As Single = 5) As SerialData
+                               Optional width As Single = 5,
+                               Optional xrange As IEnumerable(Of Double) = Nothing) As SerialData
+        Dim array#()
+
+        If xrange Is Nothing Then
+            array = VBMathExtensions.seq(0, x.Count, 1)
+        Else
+            array = xrange.ToArray
+        End If
+
         Return New SerialData With {
             .color = color.ToColor,
             .lineType = dash,
@@ -184,7 +193,7 @@ Public Module Scatter
                 From o As SeqValue(Of Double)
                 In x.SeqIterator
                 Select New PointData With {
-                    .pt = New PointF(o.i, CSng(o.obj))
+                    .pt = New PointF(array(o.i), CSng(o.obj))
                 }
                     }
     End Function

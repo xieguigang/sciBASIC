@@ -1,4 +1,5 @@
 ﻿Imports System.Math
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.Distributions.DirichletDistribution
 
@@ -27,7 +28,8 @@ Namespace Distributions
                 Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))
         End Function
 
-        Public Function beta(x As Vector, alpha#, _beta#) As Vector
+        <Extension>
+        Public Function beta(x As IEnumerable(Of Double), alpha#, _beta#) As Vector
             Return New Vector(x.Select(Function(a) beta(a, alpha, _beta)))
         End Function
     End Module

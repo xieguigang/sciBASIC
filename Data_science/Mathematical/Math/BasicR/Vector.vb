@@ -106,6 +106,10 @@ Namespace BasicR
             Me.New(x.Select(apply))
         End Sub
 
+        Sub New(from#, to#, Optional by# = 0.01)
+            Me.New(VBMathExtensions.seq(from, [to], by))
+        End Sub
+
         ''' <summary>
         ''' Creates vector with m element and init value specific by init parameter.
         ''' </summary>

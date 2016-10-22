@@ -31,9 +31,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -83,7 +83,9 @@ Public Module Analysis
             Dim data As New List(Of KeyValuePair(Of String, Double))
 
             For Each x As Entity In cluster
-                data += bufs(x.uid).Select(Function(d) d.x.ToArray).MatrixAsIterator
+                data += bufs(x.uid) _
+                    .Select(Function(d) d.x.ToArray) _
+                    .IteratesALL
             Next
 
             Dim pg = data.GroupBy(Function(p) p.Key)

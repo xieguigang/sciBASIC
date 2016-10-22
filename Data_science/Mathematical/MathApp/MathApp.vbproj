@@ -184,6 +184,7 @@
   <ItemGroup>
     <Compile Include="CLI.vb" />
     <Compile Include="Modules\DEBUG.vb" />
+    <Compile Include="Modules\PDFTest.vb" />
     <Compile Include="Modules\ODEsTest.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -180,6 +180,8 @@ Module DEBUG
 
     Public Function Main() As Integer
 
+        Call PDFTest.betaTest()
+
         Call {
             New NamedValue(Of Integer)("s1", 123),
             New NamedValue(Of Integer)("s2", 235),
