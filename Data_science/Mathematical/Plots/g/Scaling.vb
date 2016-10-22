@@ -108,16 +108,16 @@ Public Class Scaling
     ''' 返回的系列是已经被转换过的，直接使用来进行画图
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function ForEach_histSample(size As Size, margin As Size) As IEnumerable(Of NamedValue(Of HistogramData()))
+    Public Iterator Function ForEach_histSample(size As Size, margin As Size) As IEnumerable(Of HistProfile)
         Dim bottom As Integer = size.Height - margin.Height
         Dim width As Integer = size.Width - margin.Width * 2
         Dim height As Integer = size.Height - margin.Height * 2
 
-        For Each histData As NamedValue(Of HistogramData()) In hist.Samples
+        For Each histData As HistProfile In hist.Samples
             Dim pts = LinqAPI.Exec(Of HistogramData) <=
  _
                 From p As HistogramData
-                In histData.x
+                In histData.data
                 Let px1 As Single = margin.Width + width * (p.x1 - xmin) / dx
                 Let px2 As Single = margin.Width + width * (p.x2 - xmin) / dx
                 Let py As Single = bottom - height * (p.y - ymin) / dy
@@ -127,10 +127,9 @@ Public Class Scaling
                     .y = py
                 }
 
-            Yield New NamedValue(Of HistogramData()) With {
-                .Name = histData.Name,
-                .Description = histData.Description,
-                .x = pts
+            Yield New HistProfile With {
+                .legend = histData.legend,
+                .data = pts
             }
         Next
     End Function
@@ -220,7 +219,7 @@ Public Class Scaling
     ''' <returns></returns>
     Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single()), ByRef min!) As Single
         Dim array!() = data.Samples _
-            .Select(Function(s) s.x) _
+            .Select(Function(s) s.data) _
             .IteratesALL _
             .ToArray([get]) _
             .IteratesALL _

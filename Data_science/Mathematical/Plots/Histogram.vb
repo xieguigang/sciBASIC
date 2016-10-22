@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 
 Public Module Histogram
 
@@ -31,7 +34,7 @@ Public Module Histogram
 
     <Extension>
     Public Function Plot(data As IEnumerable(Of HistogramData),
-                         Optional color$ = "blue",
+                         Optional color$ = "darkblue",
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
@@ -43,34 +46,34 @@ Public Module Histogram
                     .Name = NameOf(data),
                     .x = color.ToColor(Drawing.Color.Blue)
                 }
+            },
+            .Samples = {
+                New HistProfile With {
+                    .legend = New Legend With {
+                        .color = color,
+                        .fontstyle = CSSFont.Win10Normal,
+                        .style = LegendStyles.Rectangle,
+                        .title = NameOf(data)
+                    },
+                    .data = data.ToArray
+                }
             }
         }.Plot(bg, size, margin, showGrid)
     End Function
 
     Public Function Plot(data As IEnumerable(Of Double), xrange As DoubleRange,
-                         Optional color$ = "blue",
+                         Optional color$ = "darkblue",
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional showGrid As Boolean = True) As Bitmap
-        Dim array#() = data.ToArray
-        Dim delta = xrange.Length / array.Length
-        Dim x As New Value(Of Double)(xrange.Min)
-        Dim hist = From n As Double
-                   In array
-                   Let x1 As Double = x
-                   Let x2 As Double = (x = x.value + delta)
-                   Select New HistogramData With {
-                       .x1 = x1,
-                       .x2 = x2,
-                       .y = n
-                   }
-        Return Plot(hist, color, bg, size, margin, showGrid)
+        Dim hist As New HistProfile(data, xrange)
+        Return Plot(hist.data, color, bg, size, margin, showGrid)
     End Function
 
     Public Function Plot(xrange As DoubleRange, expression As Func(Of Double, Double),
                          Optional steps# = 0.01,
-                         Optional color$ = "blue",
+                         Optional color$ = "darkblue",
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
@@ -84,7 +87,7 @@ Public Module Histogram
 
     Public Function Plot(xrange As NamedValue(Of DoubleRange), expression$,
                          Optional steps# = 0.01,
-                         Optional color$ = "blue",
+                         Optional color$ = "darkblue",
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
@@ -100,12 +103,27 @@ Public Module Histogram
         Return Plot(data, xrange.x, color, bg, size, margin, showGrid)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="groups"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="showGrid"></param>
+    ''' <param name="legendPos">The legend position on the output image.</param>
+    ''' <param name="legendBorder"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(groups As HistogramGroup,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
-                         Optional showGrid As Boolean = True) As Bitmap
+                         Optional showGrid As Boolean = True,
+                         Optional legendPos As Point = Nothing,
+                         Optional legendBorder As Border = Nothing,
+                         Optional alpha% = 255,
+                         Optional drawRect As Boolean = True) As Bitmap
 
         Return GraphicsPlots(
            size, margin,
@@ -116,23 +134,93 @@ Public Module Histogram
 
                Call g.DrawAxis(size, margin, mapper, showGrid)
 
-               For Each hist In mapper.ForEach_histSample(size, margin)
+               For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
                    Dim ann As NamedValue(Of Color) =
-                       annotations(hist.Name)
-                   Dim b As New SolidBrush(ann.x)
+                       annotations(hist.legend.title)
+                   Dim b As New SolidBrush(Drawing.Color.FromArgb(alpha, ann.x))
 
-                   For Each block As HistogramData In hist.x
-                       Dim rect As New Rectangle(
-                           New Point(block.x1, block.y),
-                           New Size(block.width, block.y - region.GraphicsRegion.Bottom))
+                   For Each block As HistogramData In hist.data
+                       Dim rect As New RectangleF(
+                           New PointF(block.x1, block.y),
+                           New SizeF(block.width, region.GraphicsRegion.Bottom - block.y))
                        Call g.FillRectangle(b, rect)
+                       If drawRect Then
+                           Call g.DrawRectangle(
+                                Pens.Black,
+                                rect.Left, rect.Top, rect.Width, rect.Height)
+                       End If
                    Next
                Next
+
+               If legendPos.IsEmpty Then
+                   legendPos = New Point(
+                       CInt(size.Width * 0.8),
+                       margin.Height)
+               End If
+
+               Call g.DrawLegends(
+                    legendPos,
+                    groups.Samples _
+                          .Select(Function(x) x.legend),
+                    ,,
+                    legendBorder)
            End Sub)
     End Function
 
     Public Class HistogramGroup : Inherits ProfileGroup
 
-        Public Property Samples As NamedValue(Of HistogramData())()
+        Public Property Samples As HistProfile()
+
+        Sub New()
+        End Sub
+
+        Sub New(data As IEnumerable(Of HistProfile))
+            Samples = data
+            Serials = data _
+                .ToArray(Function(x) New NamedValue(Of Color) With {
+                    .Name = x.legend.title,
+                    .x = x.legend.color.ToColor
+            })
+        End Sub
     End Class
+
+    Public Structure HistProfile
+
+        Public legend As Legend
+        Public data As HistogramData()
+
+        ''' <summary>
+        ''' 仅仅在这里初始化了<see cref="data"/>
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="func"></param>
+        ''' <param name="steps#"></param>
+        Sub New(range As DoubleRange, func As Func(Of Double, Double), Optional steps# = 0.01)
+            Me.New(range.seq(steps).Select(func), range)
+        End Sub
+
+        ''' <summary>
+        ''' 仅仅在这里初始化了<see cref="data"/>
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="xrange"></param>
+        Sub New(data As IEnumerable(Of Double), xrange As DoubleRange)
+            Dim array#() = data.ToArray
+            Dim delta# = xrange.Length / array.Length
+            Dim x As New Value(Of Double)(xrange.Min)
+
+            Me.data = LinqAPI.Exec(Of HistogramData) <=
+ _
+                From n As Double
+                In array
+                Let x1 As Double = x
+                Let x2 As Double = (x = x.value + delta)
+                Where Not n.Is_NA_UHandle
+                Select New HistogramData With {
+                    .x1 = x1,
+                    .x2 = x2,
+                    .y = n
+                }
+        End Sub
+    End Structure
 End Module
