@@ -10,8 +10,6 @@ In Bayesian inference, the beta distribution is the conjugate prior probability 
 
 The usual formulation of the beta distribution is also known as the beta distribution of the first kind, whereas beta distribution of the second kind is an alternative name for the beta prime distribution.
 
-![](./Beta_distribution_pdf.svg)
-
 ##### Beta PDF in VisualBasic
 
 ```vbnet
