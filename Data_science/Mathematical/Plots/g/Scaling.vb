@@ -53,8 +53,8 @@ Public Class Scaling
     End Sub
 
     Sub New(data As HistogramGroup)
-        dx = Scaling(data, Function(x) x.x, xmin)
-        dy = Scaling(data, Function(x) x.y, ymin)
+        dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin)
+        dy = Scaling(data, Function(x) {x.y}, ymin)
         hist = data
         type = GetType(Histogram)
     End Sub
@@ -118,10 +118,12 @@ Public Class Scaling
  _
                 From p As HistogramData
                 In histData.x
-                Let px As Single = margin.Width + width * (p.x - xmin) / dx
+                Let px1 As Single = margin.Width + width * (p.x1 - xmin) / dx
+                Let px2 As Single = margin.Width + width * (p.x2 - xmin) / dx
                 Let py As Single = bottom - height * (p.y - ymin) / dy
                 Select New HistogramData With {
-                    .x = px,
+                    .x1 = px1,
+                    .x2 = px2,
                     .y = py
                 }
 
@@ -216,11 +218,13 @@ Public Class Scaling
     ''' 返回dx或者dy
     ''' </summary>
     ''' <returns></returns>
-    Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single), ByRef min!) As Single
+    Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single()), ByRef min!) As Single
         Dim array!() = data.Samples _
             .Select(Function(s) s.x) _
             .IteratesALL _
-            .ToArray([get])
+            .ToArray([get]) _
+            .IteratesALL _
+            .ToArray
         Return __scaling(array!, min!)
     End Function
 End Class
