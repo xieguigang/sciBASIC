@@ -64,11 +64,3 @@ Public Class BarDataGroup : Inherits ProfileGroup
         }
     End Function
 End Class
-
-Public MustInherit Class ProfileGroup
-    Public Overridable Property Serials As NamedValue(Of Color)()
-
-    Public Overrides Function ToString() As String
-        Return MyClass.GetJson
-    End Function
-End Class

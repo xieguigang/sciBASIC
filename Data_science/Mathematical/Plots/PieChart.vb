@@ -171,9 +171,25 @@ Public Module PieChart
     End Function
 End Module
 
+''' <summary>
+''' 扇形的数据模型
+''' </summary>
 Public Class Pie
+
+    ''' <summary>
+    ''' 对象在整体中所占的百分比
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Percentage As Double
+    ''' <summary>
+    ''' 对象的名称标签
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Name As String
+    ''' <summary>
+    ''' 扇形的填充颜色
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Color As Color
 
     Public Overrides Function ToString() As String
