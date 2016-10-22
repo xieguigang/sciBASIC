@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::d003821843d119fed7790c51941003d6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ManualBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
 
@@ -44,10 +45,18 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         <Extension>
         Public Function PrintHelp(api As APIEntryPoint) As Integer
+            Dim infoLines = Paragraph.Split(api.Info, 90).ToArray
 
             Call Console.WriteLine($"Help for command '{api.Name}':")
             Call Console.WriteLine()
-            Call Console.WriteLine($"  Information:  {api.Info}")
+            Call Console.WriteLine($"  Information:  {infoLines.FirstOrDefault}")
+
+            If infoLines.Length > 1 Then
+                For Each line$ In infoLines.Skip(1)
+                    Call Console.WriteLine($"                {line}")
+                Next
+            End If
+
             Call Console.Write($"  Usage:        ")
 
             Dim fore As ConsoleColor = Console.ForegroundColor
@@ -69,8 +78,10 @@ Namespace CommandLine.Reflection
             End If
 
             If Not api.Arguments.IsNullOrEmpty Then
-                Call Console.WriteLine(vbCrLf & vbCrLf)
-                Call Console.WriteLine("   Parameters information:" & vbCrLf & "   ---------------------------------------")
+                Call Console.WriteLine()
+                Call Console.WriteLine("  Arguments:")
+                Call Console.WriteLine("  ============================")
+                Call Console.WriteLine()
 
                 Dim maxLen As Integer = (From x In api.Arguments Select x.Name.Length + 2).Max
                 Dim l As Integer
@@ -79,23 +90,34 @@ Namespace CommandLine.Reflection
                     fore = Console.ForegroundColor
 
                     If param.[Optional] Then
-                        Call Console.Write("   [")
+                        Call Console.Write("  [")
                         Console.ForegroundColor = ConsoleColor.Green
                         Call Console.Write(param.Name)
                         Console.ForegroundColor = fore
                         Call Console.Write("]")
                         l = param.Name.Length
                     Else
-                        Call Console.Write("    " & param.Name)
+                        Call Console.Write("   " & param.Name)
                         l = param.Name.Length - 1
                     End If
 
                     Dim blank As String = New String(" "c, maxLen - l + 1)
+                    Dim descriptLines = Paragraph.Split(param.Description, 60).ToArray
 
                     Call Console.Write(blank)
-                    Call Console.WriteLine($"Description:  {param.Description}")
+                    Call Console.WriteLine($"Description:  {descriptLines.FirstOrDefault}")
+
+                    If descriptLines.Length > 1 Then
+                        blank = New String(" "c, maxLen + 11)
+
+                        For Each line In descriptLines.Skip(1)
+                            Call Console.WriteLine(blank & "        " & line)
+                        Next
+                    End If
+
+                    Call Console.WriteLine()
                     Call Console.Write(New String(" "c, maxLen + 5))
-                    Call Console.WriteLine($">Example:      {param.Name} ""{param.Example}""")
+                    Call Console.WriteLine($"Example:      {param.Name} ""{param.Example}""")
                     Call Console.WriteLine()
                 Next
             End If

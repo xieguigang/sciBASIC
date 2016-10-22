@@ -172,7 +172,7 @@ Namespace LP
             Get
                 Dim x As Integer = Matrix.Length
                 Dim y As Integer = Matrix(0).Length - 1
-                Dim basicVars As Integer() = New Integer(x - 1) {}
+                Dim basicVars%() = New Integer(x - 1) {}
 
                 Call Arrays.Fill(basicVars, -1)
 
