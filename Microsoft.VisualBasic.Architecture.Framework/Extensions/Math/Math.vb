@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -56,6 +57,13 @@ Namespace Mathematical
             Do While (from = from.value + by) <= [to]
                 Yield from
             Loop
+        End Function
+
+        <Extension>
+        Public Iterator Function seq(range As DoubleRange, Optional steps# = 0.1) As IEnumerable(Of Double)
+            For Each x# In seq(range.Min, range.Max, steps)
+                Yield x#
+            Next
         End Function
 
         ''' <summary>

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::e5809880ed9b39b24770a7bb12f8ef44, ..\visualbasic_App\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -42,6 +42,7 @@ Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 
 Public Module Scatter
 
@@ -169,30 +170,32 @@ Public Module Scatter
         Return {FromVector(x,,, ptSize, width)}.Plot(size, margin, bg, True, False, , drawLine)
     End Function
 
-    Public Function FromVector(x As Vector,
+    Public Function FromVector(y As IEnumerable(Of Double),
                                Optional color As String = "black",
                                Optional dash As DashStyle = DashStyle.Dash,
                                Optional ptSize! = 30,
                                Optional width As Single = 5,
                                Optional xrange As IEnumerable(Of Double) = Nothing,
-                               Optional title$ = "Vector Plot") As SerialData
+                               Optional title$ = "Vector Plot",
+                               Optional alpha% = 255) As SerialData
         Dim array#()
+        Dim y0#() = y.ToArray
 
         If xrange Is Nothing Then
-            array = VBMathExtensions.seq(0, x.Count, 1)
+            array = VBMathExtensions.seq(0, y0.Length, 1)
         Else
             array = xrange.ToArray
         End If
 
         Return New SerialData With {
-            .color = color.ToColor,
+            .color = Drawing.Color.FromArgb(alpha, color.ToColor),
             .lineType = dash,
             .PointSize = ptSize,
             .title = title,
             .width = width,
             .pts = LinqAPI.Exec(Of PointData) <=
                 From o As SeqValue(Of Double)
-                In x.SeqIterator
+                In y0.SeqIterator
                 Where Not o.obj.Is_NA_UHandle
                 Select New PointData With {
                     .pt = New PointF(array(o.i), CSng(o.obj))
@@ -239,5 +242,47 @@ Public Module Scatter
                 .width = width,
                 .pts = odes.x.SeqIterator.ToArray(Function(x) New PointData(CSng(x.obj), CSng(y.obj.x(x.i))))
             }
+    End Function
+
+    <Extension>
+    Public Function Plot(range As NamedValue(Of DoubleRange),
+                         expression$,
+                         Optional steps# = 0.01,
+                         Optional lineColor$ = "black",
+                         Optional lineWidth! = 10,
+                         Optional bg$ = "white") As Bitmap
+
+        Dim engine As New Expression
+        Dim ranges As Double() = range.x.seq(steps).ToArray
+        Dim y As New List(Of Double)
+
+        For Each x# In ranges
+            Call engine _
+                .SetVariable(range.Name, x)
+            y += engine.Evaluation(expression)
+        Next
+
+        Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, expression,)
+        Return Plot({serial}, ,, bg)
+    End Function
+
+    <Extension>
+    Public Function Plot(range As DoubleRange,
+                         expression As Func(Of Double, Double),
+                         Optional steps# = 0.01,
+                         Optional lineColor$ = "black",
+                         Optional lineWidth! = 10,
+                         Optional bg$ = "white",
+                         Optional title$ = "Function Plot") As Bitmap
+
+        Dim ranges As Double() = range.seq(steps).ToArray
+        Dim y As New List(Of Double)
+
+        For Each x# In ranges
+            y += expression(x#)
+        Next
+
+        Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, title,)
+        Return Plot({serial}, ,, bg)
     End Function
 End Module

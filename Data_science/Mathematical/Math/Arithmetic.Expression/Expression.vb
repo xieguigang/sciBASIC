@@ -110,6 +110,10 @@ Public Class Expression
         Call Variables.Set(Name, expr)
     End Sub
 
+    Public Sub SetVariable(name$, value#)
+        Call Variables.Set(name, value)
+    End Sub
+
     Public Sub AddConstant(Name As String, expr As String)
         Dim val As Double = Me.Evaluation(expr)
         Call Constant.Add(Name, val)
