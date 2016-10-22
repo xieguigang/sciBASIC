@@ -166,7 +166,7 @@ Example CLI is:
 
 ## List(Of T) operation in VisualBasic
 
-For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
+For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic.Language** at first
 
 ```vb.net
 Dim source As IEnumerable(Of <Type>)
