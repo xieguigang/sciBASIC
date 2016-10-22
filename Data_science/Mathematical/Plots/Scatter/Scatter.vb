@@ -174,7 +174,8 @@ Public Module Scatter
                                Optional dash As DashStyle = DashStyle.Dash,
                                Optional ptSize! = 30,
                                Optional width As Single = 5,
-                               Optional xrange As IEnumerable(Of Double) = Nothing) As SerialData
+                               Optional xrange As IEnumerable(Of Double) = Nothing,
+                               Optional title$ = "Vector Plot") As SerialData
         Dim array#()
 
         If xrange Is Nothing Then
@@ -187,11 +188,12 @@ Public Module Scatter
             .color = color.ToColor,
             .lineType = dash,
             .PointSize = ptSize,
-            .title = "Vector Plot",
+            .title = title,
             .width = width,
             .pts = LinqAPI.Exec(Of PointData) <=
                 From o As SeqValue(Of Double)
                 In x.SeqIterator
+                Where Not o.obj.Is_NA_UHandle
                 Select New PointData With {
                     .pt = New PointF(array(o.i), CSng(o.obj))
                 }
