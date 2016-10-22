@@ -124,6 +124,9 @@ Namespace CommandLine.Reflection
                 sb.AppendLine($"                  {boolFlag}")
             Else
                 sb.AppendLine(String.Format("    Example:      {0} {1}", Name, example))
+                If Pipeline <> PipelineTypes.undefined Then
+                    sb.AppendLine($"                  " & Pipeline.Description)
+                End If
             End If
 
             Return sb.ToString

@@ -120,13 +120,18 @@ Namespace CommandLine.Reflection
                     Call Console.WriteLine()
                     Call Console.Write(blank)
 
+                    blank = blank & "              "
+
                     If param.TokenType = CLITypes.Boolean Then
                         Call Console.WriteLine($"Example:      {param.Name}")
-                        Call Console.Write(blank & "              ")
+                        Call Console.Write(blank)
                         Call Console.WriteLine(boolFlag)
                     Else
                         Dim example$ = param.ExampleValue
                         Call Console.WriteLine($"Example:      {param.Name} {example}")
+                        If param.Pipeline <> PipelineTypes.undefined Then
+                            Call Console.WriteLine(blank & param.Pipeline.Description)
+                        End If
                     End If
 
                     Call Console.WriteLine()

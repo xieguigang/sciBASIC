@@ -153,6 +153,9 @@ Namespace CommandLine.Reflection.EntryPoints
                             Call sb.AppendLine("#" & ManualBuilder.boolFlag)
                         Else
                             Call sb.AppendLine(param.Name & " " & param.x.ExampleValue)
+                            If param.x.Pipeline <> PipelineTypes.undefined Then
+                                Call sb.AppendLine("# " & param.x.Pipeline.Description)
+                            End If
                         End If
 
                         Call sb.AppendLine("```")
