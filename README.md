@@ -72,8 +72,11 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 ![](./Data_science/Mathematical/images/Bubble.png)
 ![](./Data_science/Mathematical/images/pie_chart_vars.png)
 ![](./Data_science/Mathematical/images/37_number_of_observation_on_barplot.png)
-![](./Data_science/Mathematical/images/heatmap.png)
 
+###### Histogram Plot of beta-PDF
+<a href="./Data_science/Mathematical/data/beta-PDF/">![](./Data_science/Mathematical/data/beta-PDF/beta_hist.png)</a>
+
+![](./Data_science/Mathematical/images/heatmap.png)
 > ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
 >
 > Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
@@ -154,10 +157,6 @@ Console.WriteLine(min <= x < max) ' False
 Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic.Imaging) 3D engine.
 
 ![](./gr/d3.png)
-
-Chart plot system
-
-![](./Data_science/Mathematical/images/pie_chart.png)
 
 ===================================================================
 
