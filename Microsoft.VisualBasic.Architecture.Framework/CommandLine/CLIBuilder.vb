@@ -151,7 +151,7 @@ Namespace CommandLine
 
                 Call sbr.Append(" ")
                 Call sbr.Append(x.Key & " ")
-                Call sbr.Append(x.Value.CliToken)
+                Call sbr.Append(x.Value.CLIToken)
             Next
 
             Return sbr.ToString
@@ -175,7 +175,7 @@ Namespace CommandLine
         Private Delegate Function __getCLIToken(value As Object, attr As [Optional], prop As PropertyInfo) As String
 
         ''' <summary>
-        ''' The different between the String and Path is that applying <see cref="CliToken"/> or <see cref="CLIPath"/>.
+        ''' The different between the String and Path is that applying <see cref="CLIToken"/> or <see cref="CLIPath"/>.
         ''' </summary>
         ''' <param name="value">只能是<see cref="System.String"/>类型的</param>
         ''' <param name="attr"></param>
@@ -202,7 +202,7 @@ Namespace CommandLine
                 If String.IsNullOrEmpty(str) Then
                     Return ""
                 Else
-                    Return $"{attr.Name} {str.CliToken}"
+                    Return $"{attr.Name} {str.CLIToken}"
                 End If
             ElseIf prop.PropertyType.IsInheritsFrom(GetType([Enum])) Then
                 Return __stringEnumRule(value, attr, prop)
@@ -222,7 +222,7 @@ Namespace CommandLine
                            Select flag, x).FirstOrDefault
             If nullGet Is Nothing Then  '没有默认值
 rtvl:           Dim strValue As String = enumValue.Description
-                Return $"{attr.Name} {strValue.CliToken}"
+                Return $"{attr.Name} {strValue.CLIToken}"
             Else
                 If nullGet.x.GetValue(Nothing).Equals(value) Then
                     Dim str As String = nullGet.flag.value      ' 是默认值，则返回默认值

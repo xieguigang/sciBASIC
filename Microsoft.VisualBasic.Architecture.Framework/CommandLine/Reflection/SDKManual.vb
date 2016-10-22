@@ -145,15 +145,21 @@ Namespace CommandLine.Reflection
                     .JoinBy(vbCrLf))
 
                 If api.Arguments.Count > 0 Then
-                    Call sb.AppendLine("##### Accepted Types")
+                    Dim prints = api.Arguments _
+                        .Where(Function(x) Not x.x.AcceptTypes.IsNullOrEmpty) _
+                        .ToArray
 
-                    For Each param As NamedValue(Of Argument) In api.Arguments
-                        Call sb.AppendLine("###### " & param.Name)
+                    If Not prints.Length = 0 Then
+                        Call sb.AppendLine("##### Accepted Types")
 
-                        For Each pType As Type In param.x.AcceptTypes.SafeQuery
-                            Call sb.AppendLine(Actives.DisplType(pType))
+                        For Each param As NamedValue(Of Argument) In prints
+                            Call sb.AppendLine("###### " & param.Name)
+
+                            For Each pType As Type In param.x.AcceptTypes
+                                Call sb.AppendLine(Actives.DisplType(pType))
+                            Next
                         Next
-                    Next
+                    End If
                 End If
             Next
 

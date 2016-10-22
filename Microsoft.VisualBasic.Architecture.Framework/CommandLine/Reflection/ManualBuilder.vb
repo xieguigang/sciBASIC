@@ -115,14 +115,59 @@ Namespace CommandLine.Reflection
                         Next
                     End If
 
+                    blank = New String(" "c, maxLen + 5)
+
                     Call Console.WriteLine()
-                    Call Console.Write(New String(" "c, maxLen + 5))
-                    Call Console.WriteLine($"Example:      {param.Name} ""{param.Example}""")
+                    Call Console.Write(blank)
+
+                    If param.TokenType = CLITypes.Boolean Then
+                        Call Console.WriteLine($"Example:      {param.Name}")
+                        Call Console.Write(blank & "              ")
+                        Call Console.WriteLine(boolFlag)
+                    Else
+                        Dim example$ = param.ExampleValue
+                        Call Console.WriteLine($"Example:      {param.Name} {example}")
+                    End If
+
                     Call Console.WriteLine()
                 Next
             End If
 
             Return 0
+        End Function
+
+        ''' <summary>
+        ''' (bool flag does not require of argument value)
+        ''' </summary>
+        Public Const boolFlag$ = "(bool flag does not require of argument value)"
+
+        <Extension>
+        Public Function ExampleValue(arg As Argument) As String
+            Dim example$ = arg.Example
+
+            If String.IsNullOrEmpty(example) Then
+                Select Case arg.TokenType
+                    Case CLITypes.Double
+                        example = "<float>"
+                    Case CLITypes.Integer
+                        example = "<int32>"
+                    Case CLITypes.String
+                        example = "<term_string>"
+                    Case CLITypes.File
+                        example = "<file/directory>"
+                End Select
+            Else
+                example = example.CLIToken
+            End If
+
+            Return example
+        End Function
+
+        Const CLI$ = "(Microsoft.VisualBasic.CommandLine.CommandLine)"
+        Const VBStyle_CLI = "(args As Microsoft.VisualBasic.CommandLine.CommandLine)"
+
+        Public Function APIPrototype(declare$) As String
+            Return [declare].Replace(CLI, VBStyle_CLI)
         End Function
     End Module
 End Namespace

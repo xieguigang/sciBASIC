@@ -474,7 +474,7 @@ Public Module Extensions
             Return ""
         Else
             Path = Path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
-            Return Path.CliToken
+            Return Path.CLIToken
         End If
     End Function
 
@@ -483,7 +483,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="Token"></param>
     ''' <returns></returns>
-    <Extension> Public Function CliToken(Token As String) As String
+    <Extension> Public Function CLIToken(Token As String) As String
         If String.IsNullOrEmpty(Token) OrElse Not Len(Token) > 2 Then
             Return Token
         End If

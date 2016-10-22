@@ -295,6 +295,7 @@
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Interpreters\Abstract.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Argument.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\ActiveViews.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Flags.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\[Namespace].vb" />

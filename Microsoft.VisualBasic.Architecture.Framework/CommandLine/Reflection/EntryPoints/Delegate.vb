@@ -97,21 +97,26 @@ Namespace CommandLine.Reflection.EntryPoints
             Call sb.AppendLine()
 
             If md Then
+                Dim prototype$ = APIPrototype(_metaData.Target.GetFullName)
+
                 Call sb.AppendLine(Info)
-                Call sb.AppendLine($"**Prototype**: ``{_metaData.Target.GetFullName}``")
+                Call sb.AppendLine($"**Prototype**: ``{prototype}``")
                 Call sb.AppendLine()
                 Call sb.AppendLine("###### Usage")
                 Call sb.AppendLine("```bash")
                 Call sb.AppendLine($"{App.AssemblyName} {Usage}")
                 Call sb.AppendLine("```")
-                Call sb.AppendLine("###### Example")
-                Call sb.AppendLine("```bash")
-                Call sb.AppendLine($"{App.AssemblyName} {Example}")
-                Call sb.AppendLine("```")
+
+                If Not String.IsNullOrEmpty(Example) Then
+                    Call sb.AppendLine("###### Example")
+                    Call sb.AppendLine("```bash")
+                    Call sb.AppendLine($"{App.AssemblyName} {Example}")
+                    Call sb.AppendLine("```")
+                End If
             Else
                 sb.AppendLine(String.Format("  Information:  {0}", Info))
                 sb.AppendLine(String.Format("  Usage:        {0} {1}", Application.ExecutablePath, Usage))
-                sb.AppendLine(String.Format("  Example:      {0} {1}", IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath), Example))
+                sb.AppendLine(String.Format("  Example:      {0} {1}", App.AssemblyName, Example))
             End If
 
             Return sb.ToString

@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
 
@@ -101,16 +102,31 @@ Namespace CommandLine.Reflection
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim sBuilder As StringBuilder = New StringBuilder(1024)
-            If [Optional] Then
-                sBuilder.AppendLine(String.Format("   [{0}]", Name))
-            Else
-                sBuilder.AppendLine(Name)
-            End If
-            sBuilder.AppendLine(String.Format("    Description:  {0}", Description))
-            sBuilder.AppendLine(String.Format("    Example:      {0} ""{1}""", Name, Example))
+            Dim sb As New StringBuilder(1024)
+            Dim example$ = ExampleValue
+            Dim descripts$() = Paragraph.Split(Description, 80).ToArray
 
-            Return sBuilder.ToString
+            If [Optional] Then
+                sb.AppendLine(String.Format("    [{0}]", Name))
+            Else
+                sb.AppendLine(Name)
+            End If
+            sb.AppendLine(String.Format("    Description:  {0}", descripts.FirstOrDefault))
+
+            If descripts.Length > 1 Then
+                For Each line$ In descripts.Skip(1)
+                    sb.AppendLine("                  " & line)
+                Next
+            End If
+
+            If TokenType = CLITypes.Boolean Then
+                sb.AppendLine($"    Example:      {Name}")
+                sb.AppendLine($"                  {boolFlag}")
+            Else
+                sb.AppendLine(String.Format("    Example:      {0} {1}", Name, example))
+            End If
+
+            Return sb.ToString
         End Function
     End Class
 End Namespace

@@ -126,7 +126,7 @@ Public Module App
         Dim tokens As String() = ' 第一个参数为应用程序的文件路径，不需要
             Environment.GetCommandLineArgs.Skip(1).ToArray
         Dim CLI As String = String _
-            .Join(" ", tokens.ToArray(Function(s) s.CliToken)) _
+            .Join(" ", tokens.ToArray(Function(s) s.CLIToken)) _
             .Replace(gitBash, "")
         Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
     End Function
