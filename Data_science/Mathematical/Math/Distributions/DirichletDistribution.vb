@@ -46,7 +46,10 @@ Namespace Distributions
 
         Public Function Probability(x1 As Double, x2 As Double, x3 As Double) As Double
             Dim logCoef As Double = lgamma(a1 + a2 + a3) - lgamma(a1) - lgamma(a2) - lgamma(a3)
-            Dim logValue As Double = (a1 - 1.0F) * Math.Log(x1) + (a2 - 1.0F) * Math.Log(x2) + (a3 - 1.0F) * Math.Log(x3)
+            Dim logValue As Double =
+                (a1 - 1.0F) * Math.Log(x1) +
+                (a2 - 1.0F) * Math.Log(x2) +
+                (a3 - 1.0F) * Math.Log(x3)
 
             Return Math.Exp(logCoef + logValue)
         End Function
@@ -56,6 +59,7 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' <remarks>Works fun with function <see cref="Beta.beta(Double, Double, Double)"/></remarks>
         Public Shared Function lgamma(x As Double) As Double
             Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))
             Dim xp3 As Double = 3.0F + x
