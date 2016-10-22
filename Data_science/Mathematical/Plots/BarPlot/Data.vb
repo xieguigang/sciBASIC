@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class HistogramSample
+Public Class BarDataSample
 
     Public Property Tag As String
     Public Property data As Double()
@@ -24,20 +24,20 @@ Public Class HistogramSample
     End Function
 End Class
 
-Public Class HistogramGroup
+Public Class BarDataGroup
 
     ''' <summary>
-    ''' 与<see cref="HistogramSample.data"/>里面的数据顺序是一致的
+    ''' 与<see cref="BarDataSample.data"/>里面的数据顺序是一致的
     ''' </summary>
     ''' <returns></returns>
     Public Property Serials As NamedValue(Of Color)()
-    Public Property Samples As HistogramSample()
+    Public Property Samples As BarDataSample()
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function
 
-    Public Shared Function FromDistributes(data As IEnumerable(Of Double), Optional base! = 10.0F, Optional color$ = "darkblue") As HistogramGroup
+    Public Shared Function FromDistributes(data As IEnumerable(Of Double), Optional base! = 10.0F, Optional color$ = "darkblue") As BarDataGroup
         Dim source = data.Distributes(base!)
         Dim bg As Color = color.ToColor(onFailure:=Drawing.Color.DarkBlue)
         Dim values As New List(Of Double)
@@ -53,10 +53,10 @@ Public Class HistogramGroup
             values += source(CInt(x.Name)).value
         Next
 
-        Return New HistogramGroup With {
+        Return New BarDataGroup With {
             .Serials = serials,
             .Samples = {
-                New HistogramSample With {
+                New BarDataSample With {
                     .Tag = "Distribution",
                     .data = values
                 }

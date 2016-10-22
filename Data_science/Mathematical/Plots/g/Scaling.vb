@@ -50,14 +50,14 @@ Public Class Scaling
         type = GetType(Scatter)
     End Sub
 
-    Sub New(hist As HistogramGroup, stacked As Boolean)
+    Sub New(hist As BarDataGroup, stacked As Boolean)
         Dim h As List(Of Double) = If(
             stacked,
             New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
             hist.Samples.Select(Function(s) s.data).Unlist)
         ymin! = h.Min
         dy = h.Max - ymin
-        type = GetType(Histogram)
+        type = GetType(BarPlot)
     End Sub
 
     ''' <summary>
@@ -155,7 +155,7 @@ Public Class Scaling
         End If
     End Function
 
-    Public Shared Function Average(hist As HistogramGroup) As Double
+    Public Shared Function Average(hist As BarDataGroup) As Double
         Return hist.Samples.Select(Function(x) x.data).IteratesALL.Average()
     End Function
 

@@ -71,7 +71,7 @@ Module Axis
             Dim label As Single = dx * (i + 1)
             Dim sz As SizeF
 
-            If scaler.type <> GetType(Histogram) Then
+            If scaler.type <> GetType(BarPlot) Then
                 Dim x = sx(label + scaler.xmin)
                 Dim axisX As New PointF(x, o.Y)
 

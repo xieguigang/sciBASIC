@@ -35,10 +35,10 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Module Histogram
+Public Module BarPlot
 
     <Extension>
-    Public Function Plot(data As HistogramGroup,
+    Public Function Plot(data As BarDataGroup,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
@@ -63,7 +63,7 @@ Public Module Histogram
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
 
-                For Each sample As SeqValue(Of HistogramSample) In data.Samples.SeqIterator
+                For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                     Dim x = left + interval
 
                     If stacked Then ' 改变Y
@@ -109,25 +109,25 @@ Public Module Histogram
     End Function
 
     <Extension>
-    Public Function FromData(data As IEnumerable(Of Double)) As HistogramGroup
-        Return New HistogramGroup With {
+    Public Function FromData(data As IEnumerable(Of Double)) As BarDataGroup
+        Return New BarDataGroup With {
             .Serials = {
                 New NamedValue(Of Color) With {
                     .Name = "",
                     .x = Color.Lime
                 }
             },
-            .Samples = LinqAPI.Exec(Of HistogramSample) <=
+            .Samples = LinqAPI.Exec(Of BarDataSample) <=
                 From n
                 In data.SeqIterator
-                Select New HistogramSample With {
+                Select New BarDataSample With {
                     .data = {n.obj},
                     .Tag = n.i
                 }
         }
     End Function
 
-    Public Function FromODE(ParamArray odes As ODE()) As HistogramGroup
+    Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
         Dim colors = Imaging.ChartColors.Shuffles
         Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
  _
@@ -137,16 +137,16 @@ Public Module Histogram
                 .Name = x.obj.df.ToString,
                 .x = colors(x.i)
             }
-        Dim samples = LinqAPI.Exec(Of HistogramSample) <=
+        Dim samples = LinqAPI.Exec(Of BarDataSample) <=
  _
             From i As Integer
             In odes.First.y.Sequence
-            Select New HistogramSample With {
+            Select New BarDataSample With {
                 .Tag = i,
                 .data = odes.ToArray(Function(x) x.y(i))
             }
 
-        Return New HistogramGroup With {
+        Return New BarDataGroup With {
             .Samples = samples,
             .Serials = serials
         }
