@@ -28,6 +28,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -43,9 +44,17 @@ Namespace DocumentStream
     ''' A comma character seperate table file that can be read and write in the EXCEL.(一个能够被Excel程序所读取的表格文件)
     ''' </summary>
     ''' <remarks></remarks>
+    ''' 
+    <ActiveViews(File.ActiveViews)>
     Public Class File : Inherits ITextFile
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
+
+        Friend Const ActiveViews =
+"header1,header2,header3,...
+A11,A12,A13,...
+B21,B22,B23,...
+......"
 
         ''' <summary>
         ''' First line in the table is the column name definition line.
