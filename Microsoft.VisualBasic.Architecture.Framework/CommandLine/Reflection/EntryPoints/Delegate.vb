@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::fcee18b402645aa8fc7342c25dfdae22, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection.EntryPoints
 
@@ -114,7 +115,16 @@ Namespace CommandLine.Reflection.EntryPoints
                     Call sb.AppendLine("```")
                 End If
             Else
-                sb.AppendLine(String.Format("  Information:  {0}", Info))
+                Dim infoLines$() = Paragraph.Split(Info, 90).ToArray
+
+                sb.AppendLine(String.Format("  Information:  {0}", infoLines.FirstOrDefault))
+
+                If infoLines.Length > 1 Then
+                    For Each line$ In infoLines.Skip(1)
+                        Call sb.AppendLine($"                {line}")
+                    Next
+                End If
+
                 sb.AppendLine(String.Format("  Usage:        {0} {1}", Application.ExecutablePath, Usage))
                 sb.AppendLine(String.Format("  Example:      {0} {1}", App.AssemblyName, Example))
             End If

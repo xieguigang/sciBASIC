@@ -109,7 +109,7 @@ Namespace CommandLine.Reflection
             If [Optional] Then
                 sb.AppendLine(String.Format("    [{0}]", Name))
             Else
-                sb.AppendLine(Name)
+                sb.AppendLine("     " & Name)
             End If
             sb.AppendLine(String.Format("    Description:  {0}", descripts.FirstOrDefault))
 

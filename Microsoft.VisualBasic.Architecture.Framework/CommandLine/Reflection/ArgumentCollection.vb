@@ -146,7 +146,7 @@ Namespace CommandLine.Reflection
             For Each parameter As Argument In _params.Values
                 Call sb.AppendLine(parameter.ToString)
             Next
-            Return sb.ToString
+            Return Trim(sb.ToString)
         End Function
 
         ReadOnly __flag As Type = GetType(Argument)
