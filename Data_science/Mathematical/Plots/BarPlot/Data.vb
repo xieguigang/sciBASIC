@@ -24,13 +24,13 @@ Public Class BarDataSample
     End Function
 End Class
 
-Public Class BarDataGroup
+Public Class BarDataGroup : Inherits ProfileGroup
 
     ''' <summary>
     ''' 与<see cref="BarDataSample.data"/>里面的数据顺序是一致的
     ''' </summary>
     ''' <returns></returns>
-    Public Property Serials As NamedValue(Of Color)()
+    Public Overrides Property Serials As NamedValue(Of Color)()
     Public Property Samples As BarDataSample()
 
     Public Overrides Function ToString() As String
@@ -62,5 +62,13 @@ Public Class BarDataGroup
                 }
             }
         }
+    End Function
+End Class
+
+Public MustInherit Class ProfileGroup
+    Public Overridable Property Serials As NamedValue(Of Color)()
+
+    Public Overrides Function ToString() As String
+        Return MyClass.GetJson
     End Function
 End Class

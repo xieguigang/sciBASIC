@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b1d293331f15214b70f5b6a4e5194996, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Scaling.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -40,6 +41,7 @@ Public Class Scaling
     Public ReadOnly xmin, ymin As Single
 
     ReadOnly serials As SerialData()
+    ReadOnly hist As HistogramGroup
 
     Public ReadOnly type As Type
 
@@ -48,6 +50,13 @@ Public Class Scaling
         dy = Scaling(array, Function(p) p.pt.Y, ymin)
         serials = array
         type = GetType(Scatter)
+    End Sub
+
+    Sub New(data As HistogramGroup)
+        dx = Scaling(data, Function(x) x.x, xmin)
+        dy = Scaling(data, Function(x) x.y, ymin)
+        hist = data
+        type = GetType(Histogram)
     End Sub
 
     Sub New(hist As BarDataGroup, stacked As Boolean)
@@ -91,6 +100,35 @@ Public Class Scaling
                 .title = s.title,
                 .width = s.width,
                 .annotations = s.annotations
+            }
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 返回的系列是已经被转换过的，直接使用来进行画图
+    ''' </summary>
+    ''' <returns></returns>
+    Public Iterator Function ForEach_histSample(size As Size, margin As Size) As IEnumerable(Of NamedValue(Of HistogramData()))
+        Dim bottom As Integer = size.Height - margin.Height
+        Dim width As Integer = size.Width - margin.Width * 2
+        Dim height As Integer = size.Height - margin.Height * 2
+
+        For Each histData As NamedValue(Of HistogramData()) In hist.Samples
+            Dim pts = LinqAPI.Exec(Of HistogramData) <=
+ _
+                From p As HistogramData
+                In histData.x
+                Let px As Single = margin.Width + width * (p.x - xmin) / dx
+                Let py As Single = bottom - height * (p.y - ymin) / dy
+                Select New HistogramData With {
+                    .x = px,
+                    .y = py
+                }
+
+            Yield New NamedValue(Of HistogramData()) With {
+                .Name = histData.Name,
+                .Description = histData.Description,
+                .x = pts
             }
         Next
     End Function
@@ -165,9 +203,25 @@ Public Class Scaling
     ''' <returns></returns>
     Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), ByRef min!) As Single
         Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
+        Return __scaling(array!, min!)
+    End Function
+
+    Private Shared Function __scaling(array!(), ByRef min!) As Single
         Dim max! = array.Max : min! = array.Min
         Dim d As Single = max - min
         Return d
+    End Function
+
+    ''' <summary>
+    ''' 返回dx或者dy
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single), ByRef min!) As Single
+        Dim array!() = data.Samples _
+            .Select(Function(s) s.x) _
+            .IteratesALL _
+            .ToArray([get])
+        Return __scaling(array!, min!)
     End Function
 End Class
 
