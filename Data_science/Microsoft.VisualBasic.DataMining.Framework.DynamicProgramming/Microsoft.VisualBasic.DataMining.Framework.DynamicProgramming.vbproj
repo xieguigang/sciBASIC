@@ -65,7 +65,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
-    <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
+    <OutputPath>bin\nuget_publish\VB_APP\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
