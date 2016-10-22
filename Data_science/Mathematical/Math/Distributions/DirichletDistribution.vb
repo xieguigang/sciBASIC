@@ -26,6 +26,7 @@
 
 #End Region
 Namespace Distributions
+
     ''' <summary>
     ''' Dirichlet distribution
     ''' 

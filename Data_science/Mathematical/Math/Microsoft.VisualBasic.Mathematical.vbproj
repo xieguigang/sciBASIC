@@ -235,6 +235,7 @@
     <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
     <Compile Include="BasicR\Vector.vb" />
     <Compile Include="Bootstraping.vb" />
+    <Compile Include="Distributions\Beta.vb" />
     <Compile Include="Distributions\DirichletDistribution.vb" />
     <Compile Include="Distributions\Gamma.vb" />
     <Compile Include="Extensions.vb" />
