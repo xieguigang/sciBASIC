@@ -80,3 +80,38 @@ Call png.SaveAs("./beta_PDF.png")
 ###### Generated result
 
 ![](./beta_PDF.png)
+
+##### Histogram Plot of beta-PDF
+
+```vbnet
+Dim range As New DoubleRange(0, 1)
+Dim f1 = Function(xx) Beta.beta(xx, 2, 5)
+Dim f2 = Function(xx) Beta.beta(xx, 2, 2)
+Dim a1 As New HistProfile(range, f1, 0.025) With {
+    .legend = New Legend With {
+        .color = "green",
+        .fontstyle = CSSFont.Win10Normal,
+        .style = LegendStyles.Triangle,
+        .title = "α = 2, β = 5"
+        }
+    }
+Dim a2 As New HistProfile(range, f2, 0.05) With {
+    .legend = New Legend With {
+        .color = "yellow",
+        .fontstyle = CSSFont.Win7Normal,
+        .style = LegendStyles.Triangle,
+        .title = "α = β = 2"
+    }
+}
+Dim hist As New HistogramGroup({a2, a1})
+
+Call Histogram.Plot(
+    hist,,
+    New Size(2000, 1300),
+    alpha:=230) _
+    .SaveAs("./beta_hist.png")
+```
+
+###### Generated Output
+
+![](./beta_hist.png)
