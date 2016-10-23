@@ -210,7 +210,7 @@
     <Compile Include="Drawing3D\2DShape.vb" />
     <Compile Include="Drawing3D\Line.vb" />
     <Compile Include="Drawing3D\Surface.vb" />
-    <Compile Include="Drawing3D\Models\Model.vb" />
+    <Compile Include="Drawing3D\Models\Cube.vb" />
     <Compile Include="Drawing3D\GDIDevice.vb">
       <SubType>UserControl</SubType>
     </Compile>

@@ -27,6 +27,8 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing3D
 
@@ -176,37 +178,98 @@ Namespace Drawing3D
         All = X + Y + Z
     End Enum
 
-    Public Class Cube : Inherits Model
+    Public Structure Cube : Implements I3DModel
 
-        Sub New(Optional colors As Color() = Nothing)
-            ' Create the cube vertices.
-            _vertices = New Point3D() {
-                         New Point3D(-1, 1, -1),
-                         New Point3D(1, 1, -1),
-                         New Point3D(1, -1, -1),
-                         New Point3D(-1, -1, -1),
-                         New Point3D(-1, 1, 1),
-                         New Point3D(1, 1, 1),
-                         New Point3D(1, -1, 1),
-                         New Point3D(-1, -1, 1)}
+        ''' <summary>
+        ''' Create an array representing the 6 faces of a cube. Each face is composed by indices to the vertex array
+        ''' above.
+        ''' </summary>
+        Shared ReadOnly _faces%()() = {
+            {0, 1, 2, 3},
+            {1, 5, 6, 2},
+            {5, 4, 7, 6},
+            {4, 0, 3, 7},
+            {0, 4, 5, 1},
+            {3, 2, 6, 7}
+        }.ToVectorList
 
-            ' Create an array representing the 6 faces of a cube. Each face is composed by indices to the vertex array
-            ' above.
-            _faces = New Integer(,) {{0, 1, 2, 3}, {1, 5, 6, 2}, {5, 4, 7, 6}, {4, 0, 3, 7}, {0, 4, 5, 1}, {3, 2, 6, 7}}
+        Dim faces As Surface()
 
-            ' Define the colors of each face.
-            If colors.IsNullOrEmpty Then
-                colors = New Color() {Color.BlueViolet, Color.Cyan, Color.Green, Color.Yellow, Color.Violet, Color.LightSkyBlue}
-            End If
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="d%">正方形的边的长度</param>
+        ''' <param name="colors"></param>
+        Sub New(Optional d% = 1, Optional colors As Color() = Nothing)
+            Me.New(
+                vertices:={  ' Create the cube vertices.
+                    New Point3D(-1 * d, 1 * d, -1 * d),
+                    New Point3D(1 * d, 1 * d, -1 * d),
+                    New Point3D(1 * d, -1 * d, -1 * d),
+                    New Point3D(-1 * d, -1 * d, -1 * d),
+                    New Point3D(-1 * d, 1 * d, 1 * d),
+                    New Point3D(1 * d, 1 * d, 1 * d),
+                    New Point3D(1 * d, -1 * d, 1 * d),
+                    New Point3D(-1 * d, -1 * d, 1 * d)
+                },
+                colors:=If(
+                colors.IsNullOrEmpty,
+                {   ' Define the colors of each face.
+                    Color.BlueViolet,
+                    Color.Cyan,
+                    Color.Green,
+                    Color.Yellow,
+                    Color.Violet,
+                    Color.LightSkyBlue
+                }, colors))
+        End Sub
 
+        Sub New(vertices As Point3D(), colors As Color())
+            Me.New(
+                vertices,
+                colors.ToArray(Function(c) New SolidBrush(c)))
+        End Sub
+
+        Sub New(vertices As Point3D(), brushes As Brush())
             ' Create the brushes to draw each face. Brushes are used to draw filled polygons.
-            For i = 0 To 5
-                _brushes(i) = New SolidBrush(colors(i))
+            faces = New Surface(5) {}
+
+            For i% = 0 To 5
+                Dim side%() = _faces(i)
+
+                faces(i) = New Surface With {
+                    .vertices = {
+                        vertices(side(0)),
+                        vertices(side(1)),
+                        vertices(side(2)),
+                        vertices(side(3))
+                    },
+                    .brush = brushes(i)
+                }
+                faces(i).Allocation()
             Next
         End Sub
 
-        Public Overrides Sub Draw(gdi As Graphics)
-
+        Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
+            For Each s As Surface In faces
+                Call s.Draw(canvas, camera)
+            Next
         End Sub
-    End Class
+
+        Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
+            Return New Cube(data.ToArray, faces.ToArray(Function(s) s.brush))
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
+            For Each s In faces
+                For Each v In s.vertices
+                    Yield v
+                Next
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+    End Structure
 End Namespace
