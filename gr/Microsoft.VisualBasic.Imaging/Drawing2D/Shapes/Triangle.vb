@@ -41,8 +41,8 @@ Namespace Drawing2D.Vector.Shapes
         Public Property Vertex3 As Point
         Public Property Angle As Double
 
-        Sub New(Location As Point, GDI As GDIPlusDeviceHandle, Color As Color)
-            Call MyBase.New(GDI, Location)
+        Sub New(Location As Point, Color As Color)
+            Call MyBase.New(Location)
             Me.Color = Color
         End Sub
 
@@ -65,7 +65,7 @@ Namespace Drawing2D.Vector.Shapes
             End Get
         End Property
 
-        Public Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Border = Nothing)
+        Public Overloads Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Border = Nothing)
             Dim t As New GraphicsPath
             Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
             Dim rect As New Rectangle(topLeft, size)

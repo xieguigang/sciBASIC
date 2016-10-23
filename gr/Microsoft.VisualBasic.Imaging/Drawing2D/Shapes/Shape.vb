@@ -47,8 +47,6 @@ Namespace Drawing2D.Vector.Shapes
             End Get
         End Property
 
-        Protected _GDIDevice As GDIPlusDeviceHandle
-
         ''' <summary>
         ''' 默认是允许自动组织布局的
         ''' </summary>
@@ -57,9 +55,8 @@ Namespace Drawing2D.Vector.Shapes
         ''' <remarks></remarks>
         Public Property EnableAutoLayout As Boolean = True
 
-        Sub New(GDI As GDIPlusDeviceHandle, InitLoci As Point)
-            _GDIDevice = GDI
-            Location = InitLoci
+        Sub New(initLoci As Point)
+            Location = initLoci
         End Sub
 
         Protected MustOverride Sub InvokeDrawing()
@@ -81,7 +78,6 @@ Namespace Drawing2D.Vector.Shapes
         ''' <returns>函数返回当前元素在绘制之后所占据的区域</returns>
         ''' <remarks></remarks>
         Public Function InvokeDrawing(Optional OverridesLoci As Point = Nothing) As Rectangle
-
             If Not OverridesLoci.IsEmpty Then
                 Me.Location = OverridesLoci
             End If
@@ -90,6 +86,10 @@ Namespace Drawing2D.Vector.Shapes
 
             Return New Rectangle(Me.Location, Me.Size)
         End Function
+
+        Public Overridable Sub Draw(ByRef g As Graphics)
+
+        End Sub
 
         Public Overrides Function ToString() As String
             Return DrawingRegion.ToString

@@ -36,8 +36,8 @@ Namespace Drawing2D.Vector.Shapes
 
     Public Class Box : Inherits Shape
 
-        Sub New(Location As Point, Size As Size, GDI As GDIPlusDeviceHandle, Color As Color)
-            Call MyBase.New(GDI, Location)
+        Sub New(Location As Point, Size As Size, Color As Color)
+            Call MyBase.New(Location)
         End Sub
 
         Protected Overloads Overrides Sub InvokeDrawing()

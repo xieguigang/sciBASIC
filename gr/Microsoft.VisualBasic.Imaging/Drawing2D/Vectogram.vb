@@ -87,7 +87,7 @@ Namespace Drawing2D
         End Function
 
         Public Function AddCircle(FillColor As Color, TopLeft As Point, d As Integer) As Circle
-            Dim Circle As New Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._GDIDevice, FillColor:=FillColor)
+            Dim Circle As New Circle(topLeft:=TopLeft, d:=d, FillColor:=FillColor)
             Call Me._lstElements.Add(Circle)
             Return Circle
         End Function

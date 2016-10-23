@@ -57,16 +57,15 @@ Namespace Drawing2D.Vector.Shapes
         ''' </summary>
         ''' <param name="Location">箭头头部的位置</param>
         ''' <param name="Size">高度和宽度</param>
-        ''' <param name="GDI"></param>
         ''' <param name="Color">填充的颜色</param>
-        Sub New(Location As Point, Size As Size, GDI As GDIPlusDeviceHandle, Color As Color)
-            Call MyBase.New(GDI, Location)
+        Sub New(Location As Point, Size As Size, Color As Color)
+            Call MyBase.New(Location)
             Me.Color = Color
             Me.BodySize = Size
         End Sub
 
-        Sub New(source As Arrow, GDI As GDIPlusDeviceHandle)
-            Call MyBase.New(GDI, source.Location)
+        Sub New(source As Arrow)
+            Call MyBase.New(source.Location)
             Call Microsoft.VisualBasic.Serialization.ShadowCopy(source, Me)
         End Sub
 
@@ -139,7 +138,7 @@ Namespace Drawing2D.Vector.Shapes
             Call Path.AddLine(prePoint.value, Me.Location)                                                                  '\
             Call Path.CloseFigure()
 
-            Call Me._GDIDevice.Graphics.FillPath(New SolidBrush(Me.Color), Path)
+            ' Call Me._GDIDevice.Graphics.FillPath(New SolidBrush(Me.Color), Path)
         End Sub
     End Class
 End Namespace
