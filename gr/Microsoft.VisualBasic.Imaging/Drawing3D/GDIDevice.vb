@@ -97,7 +97,9 @@ Namespace Drawing3D
             Throw New Exception("Please Implements the control code at here.")
         End Sub
 
-        Protected Overridable Sub __updateGraphics(sender As Object, g As Graphics, region As Rectangle)
+        Protected Overridable Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
+            Call g.Clear(Color.LightBlue)
+
             For Each model As I3DModel In models
                 Call model.Draw(g, camera)
             Next

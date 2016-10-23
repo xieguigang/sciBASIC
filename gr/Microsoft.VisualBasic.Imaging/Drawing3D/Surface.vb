@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing3D
@@ -56,11 +57,24 @@ Namespace Drawing3D
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
             SyncLock path
+                Dim polygon As New GraphicsPath
+
                 For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
                     path(pt.i) = pt.obj.PointXY
                 Next
 
-                Call canvas.FillPolygon(brush, path)
+                Dim a As Point = path(0)
+                Dim b As Point
+
+                For i As Integer = 1 To path.Length - 1
+                    b = path(i)
+                    Call polygon.AddLine(a, b)
+                    a = b
+                Next
+
+                Call polygon.AddLine(a, path(0))
+                Call polygon.CloseAllFigures()
+                Call canvas.FillPath(brush, polygon)
             End SyncLock
         End Sub
 

@@ -9,7 +9,7 @@ Namespace Plot3D
 
         Protected Overrides Sub __init()
             '  data = Evaluate(Function(x, y) x * y, New DoubleRange(-1, 10), New DoubleRange(-10, 10))
-            models += New Surface With {.brush = Brushes.Red, .vertices = {New Point3D(10, 10, 10), New Point3D(0, 0, 0), New Point3D(2, 2, 2)}}
+            models += New Surface With {.brush = Brushes.Red, .vertices = {New Point3D(50, 50, 50), New Point3D(10, 10, 0), New Point3D(100, 100, 100)}}
             Call DirectCast(models.First, Surface).Allocation()
             Call Run()
         End Sub
