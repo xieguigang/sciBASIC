@@ -38,6 +38,7 @@ Namespace Drawing3D
 
         Protected WithEvents _animationLoop As Timer
         Protected camera As Camera
+        Protected models As New List(Of I3DModel)
 
         ''' <summary>
         ''' Enable double-buffering to eliminate flickering.
@@ -46,7 +47,9 @@ Namespace Drawing3D
         ''' <param name="e"></param>
         Private Sub GDIDevice_Load(sender As Object, e As EventArgs) Handles Me.Load
             camera = New Camera With {
-                .angle = 0,
+                .angleX = 0,
+                .angleY = 0,
+                .angleZ = 0,
                 .fov = 256,
                 .screen = Size,
                 .ViewDistance = -40
@@ -112,27 +115,44 @@ Namespace Drawing3D
 
         End Sub
 
-        Dim rotate As Boolean
-        Dim angle!
+        Dim _rotate As Boolean
 
-        Public Event RotateCamera(angle!)
+        Public Event RotateCamera(angleX!, angleY!, angleZ!)
 
         Private Sub GDIDevice_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-            rotate = True
+            _rotate = True
         End Sub
 
         Private Sub GDIDevice_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
-            If Not rotate Then
-                Return
+            If _rotate Then
+                camera.angleX += 1
+                camera.angleY += 1
+                camera.angleZ += 1
             End If
 
-            angle += 1
+            RaiseEvent RotateCamera(camera.angleX, camera.angleY, camera.angleZ)
+        End Sub
 
-            RaiseEvent RotateCamera(angle)
+        Public Sub RotateX(angle!)
+            camera.angleX = angle
+        End Sub
+
+        Public Sub RotateY(angle!)
+            camera.angleY = angle
+        End Sub
+
+        Public Sub RotateZ(angle!)
+            camera.angleZ = angle
+        End Sub
+
+        Public Sub Rotate(angle As Point3D)
+            camera.angleX = angle.X
+            camera.angleY = angle.Y
+            camera.angleZ = angle.Z
         End Sub
 
         Private Sub GDIDevice_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-            rotate = False
+            _rotate = False
         End Sub
 
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
