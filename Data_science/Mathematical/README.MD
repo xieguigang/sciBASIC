@@ -130,6 +130,22 @@ Call {
 ![](./images/pie_chart.png)
 ![](./images/pie_chart_vars.png)
 
+##### Pyramid plot
+
+```vbnet
+Call Pyramid.Plot(
+    {
+        New NamedValue(Of Integer)("Eaten", 55),
+        New NamedValue(Of Integer)("Tinned", 70),
+        New NamedValue(Of Integer)("Killed", 187),
+        New NamedValue(Of Integer)("Engaged", 235),
+        New NamedValue(Of Integer)("Monster Met", 340)
+    }.FromData()) _
+     .SaveAs("./Pyramid.png")
+```
+
+![](./images/Pyramid.png)
+
 ##### Solving ODEs
 
 Try solving the ODEs example below:

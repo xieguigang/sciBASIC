@@ -179,7 +179,15 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
-
+        Call Pyramid.Plot(
+            {
+                New NamedValue(Of Integer)("Eaten", 55),
+                New NamedValue(Of Integer)("Tinned", 70),
+                New NamedValue(Of Integer)("Killed", 187),
+                New NamedValue(Of Integer)("Engaged", 235),
+                New NamedValue(Of Integer)("Monster Met", 340)
+            }.FromData()) _
+             .SaveAs("./Pyramid.png")
 
         Call {
             New NamedValue(Of Integer)("s1", 123),

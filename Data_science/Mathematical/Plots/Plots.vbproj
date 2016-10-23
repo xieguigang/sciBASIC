@@ -168,6 +168,8 @@
     <Compile Include="3D\Data.vb" />
     <Compile Include="Axis.vb" />
     <Compile Include="Bubble.vb" />
+    <Compile Include="Percents\PercentageData.vb" />
+    <Compile Include="Pyramid.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
     <Compile Include="g\Legends\Legend.vb" />

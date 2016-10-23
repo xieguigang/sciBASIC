@@ -59,7 +59,7 @@ Public Module PieChart
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(data As IEnumerable(Of Pie),
+    Public Function Plot(data As IEnumerable(Of PercentageData),
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
@@ -88,7 +88,7 @@ Public Module PieChart
 
                          Call g.FillPie(Brushes.LightGray, rect, 0, 360)
 
-                         For Each x As Pie In data
+                         For Each x As PercentageData In data
                              Call g.FillPie(New SolidBrush(x.Color), rect, (a = (a.value + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
                          Next
                      Else  ' 半径也会有变化
@@ -98,7 +98,7 @@ Public Module PieChart
 #If DEBUG Then
                          Dim list As New List(Of Rectangle)
 #End If
-                         For Each x As Pie In data
+                         For Each x As PercentageData In data
                              Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
                              Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
                              Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
@@ -123,7 +123,7 @@ Public Module PieChart
                          Dim top = margin.Height
                          Dim legends As New List(Of Legend)
 
-                         For Each x As Pie In data
+                         For Each x As PercentageData In data
                              legends += New Legend With {
                                 .color = x.Color.RGBExpression,
                                 .style = LegendStyles.Rectangle,
@@ -137,8 +137,14 @@ Public Module PieChart
                  End Sub)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data">每个标记的数量，函数会自动根据这些数量计算出百分比</param>
+    ''' <param name="colors"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As Pie()
+    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As PercentageData()
         Dim all = data.Select(Function(x) x.x).Sum
         Dim s = From x
                 In data
@@ -149,10 +155,16 @@ Public Module PieChart
         Return s.FromPercentages(colors)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data">手工计算出来的百分比</param>
+    ''' <param name="colors"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As String() = Nothing) As Pie()
+    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As String() = Nothing) As PercentageData()
         Dim array = data.ToArray
-        Dim out As Pie() = New Pie(array.Length - 1) {}
+        Dim out As PercentageData() = New PercentageData(array.Length - 1) {}
         Dim c As Color() = If(
             colors.IsNullOrEmpty,
             ChartColors.Shuffles,
@@ -160,7 +172,7 @@ Public Module PieChart
         )
 
         For Each x In array.SeqIterator
-            out(x.i) = New Pie With {
+            out(x.i) = New PercentageData With {
                 .Color = c(x.i),
                 .Name = x.obj.Name,
                 .Percentage = x.obj.x
@@ -171,28 +183,3 @@ Public Module PieChart
     End Function
 End Module
 
-''' <summary>
-''' 扇形的数据模型
-''' </summary>
-Public Class Pie
-
-    ''' <summary>
-    ''' 对象在整体中所占的百分比
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Percentage As Double
-    ''' <summary>
-    ''' 对象的名称标签
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Name As String
-    ''' <summary>
-    ''' 扇形的填充颜色
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Color As Color
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
