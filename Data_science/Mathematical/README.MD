@@ -117,8 +117,14 @@ Call {
     New NamedValue(Of Integer)("s2", 235),
     New NamedValue(Of Integer)("s3", 99),
     New NamedValue(Of Integer)("s4", 499),
-    New NamedValue(Of Integer)("s5", 499)
-}.FromData().Plot().SaveAs("./pie_chart.png")
+    New NamedValue(Of Integer)("s5", 123),
+    New NamedValue(Of Integer)("s6", 235),
+    New NamedValue(Of Integer)("s7", 99),
+    New NamedValue(Of Integer)("s8", 499)
+}.FromData() _
+ .Plot(reorder:=1,
+       size:=New Size(1500, 1000)) _
+ .SaveAs("./pie_chart.png")
 ```
 
 ![](./images/pie_chart.png)
