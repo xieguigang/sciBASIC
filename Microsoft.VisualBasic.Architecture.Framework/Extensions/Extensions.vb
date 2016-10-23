@@ -75,7 +75,15 @@ Imports Microsoft.VisualBasic.Text.Similarity
 Public Module Extensions
 #End If
 
-    Public Function NotNull(Of T)(ParamArray args As T()) As T
+    ''' <summary>
+    ''' Returns the first not nothing object.
+    ''' </summary>
+    ''' <typeparam name="T">
+    ''' Due to the reason of value type is always not nothing, so that this generic type constrain as Class reference type.
+    ''' </typeparam>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    Public Function NotNull(Of T As Class)(ParamArray args As T()) As T
         If args.IsNullOrEmpty Then
             Return Nothing
         Else
@@ -89,7 +97,12 @@ Public Module Extensions
         Return Nothing
     End Function
 
-    Public Function NotEmpty(ParamArray args As String()) As String
+    ''' <summary>
+    ''' Returns the first not null or empty string.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    Public Function FirstNotEmpty(ParamArray args As String()) As String
         If args.IsNullOrEmpty Then
             Return ""
         Else
@@ -103,13 +116,28 @@ Public Module Extensions
         Return ""
     End Function
 
+    ''' <summary>
+    ''' Returns the second element in the source collection, if the collection 
+    ''' is nothing or elements count not enough, then will returns nothing.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Second(Of T)(source As IEnumerable(Of T)) As T
-        If source.Count > 1 Then
-            Return source(1)
-        Else
+    Public Function SecondOrNull(Of T)(source As IEnumerable(Of T)) As T
+        Dim i As Integer = 0
+
+        If source Is Nothing Then
             Return Nothing
         End If
+
+        For Each x As T In source
+            If i = 1 Then
+                Return x
+            End If
+        Next
+
+        Return Nothing
     End Function
 
     <Extension> Public Function Add(Of T As sIdEnumerable)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
@@ -134,15 +162,25 @@ Public Module Extensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Gets all keys value from the target <see cref="KeyValuePair"/> collection.
+    ''' </summary>
+    ''' <typeparam name="T1"></typeparam>
+    ''' <typeparam name="T2"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
         Return source.ToArray(Function(x) x.Key)
     End Function
 
     ''' <summary>
-    ''' 性能测试工具，函数之中会自动输出整个任务所经历的处理时长
+    ''' Returns the total executation time of the target <paramref name="work"/>.
+    ''' (性能测试工具，函数之中会自动输出整个任务所经历的处理时长)
     ''' </summary>
-    ''' <param name="work">需要测试性能的工作对象</param>
-    ''' <returns></returns>
+    ''' <param name="work">
+    ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
+    ''' </param>
+    ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
     Public Function Time(work As Action) As Long
         Dim sw As Stopwatch = Stopwatch.StartNew
         Call work()
@@ -208,7 +246,7 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' 会自动跳过空集合，这个方法是安全的
+    ''' Add given elements into an array object.(会自动跳过空集合，这个方法是安全的)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
@@ -227,7 +265,14 @@ Public Module Extensions
         array = chunkBuffer
     End Sub
 
-    <Extension> Public Function Append(Of T)(buffer As T(), value As Generic.IEnumerable(Of T)) As T()
+    ''' <summary>
+    ''' Add given elements into an array object and then returns the target array object <paramref name="buffer"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="buffer"></param>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
         If buffer Is Nothing Then
             Return value.ToArray
         End If
@@ -236,6 +281,12 @@ Public Module Extensions
         Return buffer
     End Function
 
+    ''' <summary>
+    ''' Add given elements into an array object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="value"></param>
     <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
         Call Add(Of T)(array, value.ToArray)
     End Sub
@@ -256,14 +307,15 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' 假若下标越界的话会返回默认值
+    ''' Safe get the specific index element from the target collection, is the index value invalid, then default value will be return.
+    ''' (假若下标越界的话会返回默认值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="index"></param>
-    ''' <param name="[default]"></param>
+    ''' <param name="[default]">Default value for invalid index is nothing.</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As Generic.IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension> Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If

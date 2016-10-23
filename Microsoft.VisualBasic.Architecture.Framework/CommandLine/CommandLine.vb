@@ -85,6 +85,10 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Property Tokens As String()
 
+        ''' <summary>
+        ''' Listing all of the parameter value collection that parsed from the commandline string.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ParameterList As NamedValue(Of String)()
             Get
                 Return __lstParameter.ToArray
@@ -124,9 +128,9 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' 开关的名称是不区分大小写的
+        ''' The parameter name is not case sensitive.(开关的名称是不区分大小写的)
         ''' </summary>
-        ''' <param name="paramName"></param>
+        ''' <param name="paramName">The argument name in the commandline.</param>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -149,7 +153,8 @@ Namespace CommandLine
         Public Property SingleValue As String
 
         ''' <summary>
-        ''' 查看命令行之中是否存在某一个逻辑开关
+        ''' See if the target logical flag argument is exists in the commandline?
+        ''' (查看命令行之中是否存在某一个逻辑开关)
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
@@ -171,7 +176,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get specific argument value as full directory path.
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
@@ -180,7 +185,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get specific argument value as full file path.
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
@@ -189,7 +194,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the brief summary information of current cli command line object.(获取当前的命令行对象的参数摘要信息)
+        ''' Gets the brief summary information of current cli command line object.
+        ''' (获取当前的命令行对象的参数摘要信息)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -232,12 +238,18 @@ Namespace CommandLine
             Return LQuery
         End Function
 
-        Public Function CheckMissingRequiredParameters(ParamArray args As String()) As String()
+        ''' <summary>
+        ''' Gets a list of missing required argument name.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        Public Function CheckMissingRequiredArguments(ParamArray args As String()) As String()
             Return CheckMissingRequiredParameters(list:=args)
         End Function
 
         ''' <summary>
-        ''' Does this cli command line object contains any parameter argument information.(查看本命令行参数对象之中是否存在有参数信息)
+        ''' Does this cli command line object contains any parameter argument information.
+        ''' (查看本命令行参数对象之中是否存在有参数信息)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -259,7 +271,8 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' 大小写不敏感，
+        ''' Does the specific argument exists in this commandline? argument name is not case sensitity.
+        ''' (参数名称字符串大小写不敏感)
         ''' </summary>
         ''' <param name="parameterName"></param>
         ''' <returns></returns>
@@ -273,12 +286,17 @@ Namespace CommandLine
             Return LQuery > 50
         End Function
 
+        ''' <summary>
+        ''' Parsing the commandline string as object model
+        ''' </summary>
+        ''' <param name="CommandLine"></param>
+        ''' <returns></returns>
         Public Shared Widening Operator CType(CommandLine As String) As CommandLine
             Return TryParse(CommandLine)
         End Operator
 
-        Public Shared Widening Operator CType(CommandLine As System.Func(Of String)) As CommandLine
-            Return TryParse(CommandLine())
+        Public Shared Widening Operator CType(CLI As Func(Of String)) As CommandLine
+            Return TryParse(CLI())
         End Operator
 
         ''' <summary>

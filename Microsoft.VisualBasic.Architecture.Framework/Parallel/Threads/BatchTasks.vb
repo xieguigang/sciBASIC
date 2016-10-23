@@ -37,6 +37,9 @@ Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Parallel.Threads
 
+    ''' <summary>
+    ''' Parallel batch task tool for processor
+    ''' </summary>
     Public Module BatchTasks
 
         ''' <summary>
@@ -96,19 +99,38 @@ Namespace Parallel.Threads
         End Structure
 
         ''' <summary>
-        ''' 由于LINQ是分片段来执行的，当某个片段有一个线程被卡住之后整个进程都会被卡住，所以执行大型的计算任务的时候效率不太好，
-        ''' 使用这个并行化函数可以避免这个问题，同时也可以自己手动控制线程的并发数
+        ''' Using parallel linq that may stuck the program when a linq task partion wait a long time task to complete. 
+        ''' By using this parallel function that you can avoid this problem from parallel linq, and also you can 
+        ''' controls the task thread number manually by using this parallel task function.
+        ''' (由于LINQ是分片段来执行的，当某个片段有一个线程被卡住之后整个进程都会被卡住，所以执行大型的计算任务的时候效率不太好，
+        ''' 使用这个并行化函数可以避免这个问题，同时也可以自己手动控制线程的并发数)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="actions"></param>
-        ''' <param name="numThreads">可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量</param>
-        ''' <param name="TimeInterval"></param>
-        ''' 
+        ''' <param name="actions">Tasks collection</param>
+        ''' <param name="numThreads">
+        ''' You can controls the parallel tasks number from this parameter, smaller or equals to ZERO means auto 
+        ''' config the thread number, If want single thread, not parallel, set this value to 1, and positive 
+        ''' value greater than 1 will makes the tasks parallel.
+        ''' (可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量)
+        ''' </param>
+        ''' <param name="TimeInterval">The task run loop sleep time, unit is **ms**</param>
+        ''' <param name="smart">
+        ''' ZERO or negative value will turn off this smart mode, default value is ZERO, mode was turn off.
+        ''' If this parameter value is set to any positive value, that means this smart mode will be turn on.
+        ''' then, if the CPU load is higher than the value of this parameter indicated, then no additional 
+        ''' task thread would be added, if CPU load lower than this parameter value, then some additional 
+        ''' task thread will be added for utilize the CPU resources and save the computing time. 
+        ''' (假若开启smart模式的话，在CPU负载较高的时候会保持在限定的线程数量来执行批量任务，
+        ''' 假若CPU的负载较低的话，则会开启超量的线程，以保持执行效率充分利用计算资源来节省总任务的执行时间
+        ''' 任意正实数都将会开启smart模式
+        ''' 小于等于零的数将不会开启，默认值为零，不开启)
+        ''' </param>
         <Extension>
-        Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads As Integer = -1, Optional TimeInterval As Integer = 1000) As T()
+        Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads% = -1%, Optional TimeInterval% = 1000%, Optional smart# = 0#) As T()
             Dim taskPool As New List(Of AsyncHandle(Of T))
             Dim p As New Pointer
             Dim resultList As New List(Of T)
+            Dim CPU#
 
             If numThreads <= 0 Then
                 numThreads = LQuerySchedule.CPU_NUMBER * 2
@@ -116,7 +138,16 @@ Namespace Parallel.Threads
 
             Do While p <= (actions.Length - 1)
                 If taskPool.Count < numThreads Then  ' 向任务池里面添加新的并行任务
-                    taskPool += New AsyncHandle(Of T)(actions(++p)).Run
+                    taskPool += New AsyncHandle(Of T)(actions(++p)).Run ' 任务数量小于指定值的情况下，会直接添加计算任务直到满足数量条件
+                Else   ' 这里是smart模式
+                    If smart > 0# Then  ' CPU的负载在指定值之内，则smart模式开启的情况下会添加新的额外的计算任务
+                        CPU = Win32.TaskManager.ProcessUsage
+
+                        If CPU <= smart Then
+                            taskPool += New AsyncHandle(Of T)(actions(++p)).Run
+                            Call $"CPU:{CPU}% <= {smart}, join an additional task thread...".__DEBUG_ECHO
+                        End If
+                    End If
                 End If
 
                 Dim LQuery As AsyncHandle(Of T)() =
