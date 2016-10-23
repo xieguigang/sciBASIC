@@ -9,7 +9,7 @@ Namespace Drawing3D
         Public shape As Shape
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            Dim pt As Point = camera.Project(focus).PointXY
+            Dim pt As Point = camera.Project(focus).PointXY(camera.screen)
             shape.Location = pt
             Call shape.Draw(canvas)
         End Sub

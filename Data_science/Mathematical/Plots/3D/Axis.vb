@@ -48,9 +48,9 @@ Namespace Plot3D
         <Extension>
         Public Sub DrawAxis(ByRef g As Graphics, camera As Camera, font As Font, axis As Axis)
             With camera
-                Call g.DrawLine(axis.penX, .Project(.Rotate(axis.x1)).PointXY, .Project(.Rotate(axis.x2)).PointXY)
-                Call g.DrawLine(axis.penY, .Project(.Rotate(axis.y1)).PointXY, .Project(.Rotate(axis.y2)).PointXY)
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(axis.z1)).PointXY, .Project(.Rotate(axis.z2)).PointXY)
+                Call g.DrawLine(axis.penX, .Project(.Rotate(axis.x1)).PointXY(camera.screen), .Project(.Rotate(axis.x2)).PointXY(camera.screen))
+                Call g.DrawLine(axis.penY, .Project(.Rotate(axis.y1)).PointXY(camera.screen), .Project(.Rotate(axis.y2)).PointXY(camera.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(axis.z1)).PointXY(camera.screen), .Project(.Rotate(axis.z2)).PointXY(camera.screen))
             End With
         End Sub
     End Module

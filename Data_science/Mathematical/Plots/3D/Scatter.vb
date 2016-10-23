@@ -27,7 +27,7 @@ Namespace Plot3D
 
                         For Each pt As Point3D In data
                             pt = .Project(.Rotate(pt))
-                            Call g.FillPie(Brushes.Red, New Rectangle(pt.PointXY, New Size(5, 5)), 0, 360)
+                            Call g.FillPie(Brushes.Red, New Rectangle(pt.PointXY(camera.screen), New Size(5, 5)), 0, 360)
                         Next
                     End With
                 End Sub)

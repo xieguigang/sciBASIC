@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Drawing3D
 
@@ -40,6 +41,28 @@ Namespace Drawing3D
         Protected WithEvents _animationLoop As Timer
         Protected camera As Camera
         Protected models As New List(Of I3DModel)
+
+        Dim _rotationThread As New UpdateThread(
+            1000, Sub()
+                      SyncLock camera
+                          camera.angleX += 0.01
+                          camera.angleY += 0.01
+                          camera.angleZ += 0.01
+                      End SyncLock
+                  End Sub)
+
+        Public Property AutoRotation As Boolean
+            Get
+                Return _rotationThread.Running
+            End Get
+            Set(value As Boolean)
+                If value Then
+                    _rotationThread.Start()
+                Else
+                    _rotationThread.Stop()
+                End If
+            End Set
+        End Property
 
         ''' <summary>
         ''' Enable double-buffering to eliminate flickering.
