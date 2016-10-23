@@ -32,6 +32,7 @@ Module Program
 
     Public Function Main() As Integer
         Try
+            Call New Form1().ShowDialog()
             Call DEBUG.Main()
         Catch ex As Exception
             Call App.LogException(ex)

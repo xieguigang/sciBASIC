@@ -164,6 +164,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -183,6 +184,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CLI.vb" />
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Modules\DEBUG.vb" />
     <Compile Include="Modules\PDFTest.vb" />
     <Compile Include="Modules\ODEsTest.vb" />
