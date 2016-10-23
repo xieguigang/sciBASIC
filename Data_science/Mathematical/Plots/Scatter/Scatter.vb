@@ -210,7 +210,7 @@ Public Module Scatter
                             Optional width As Single = 5) As SerialData
 
         Return New SerialData With {
-            .title = ode.df.ToString,
+            .title = ode.Id,
             .color = color.ToColor,
             .lineType = dash,
             .PointSize = ptSize,

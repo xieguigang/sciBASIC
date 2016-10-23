@@ -181,22 +181,24 @@ Module DEBUG
     Public Function Main() As Integer
 
         Dim ode As New ODE With {
-            .df = Function(x, y) Math.Cos(x),
-            .y0 = 0.540302,
-            .Id = "cos(x)"
+            .df = Function(x, y) 0.1 * Math.Cos(x),
+            .y0 = 0.340302,
+            .Id = "0.1 * Cos(x)"
         }
         Dim ode2 As New ODE With {
-            .df = Function(x, y) Math.Sin(x),
-            .y0 = Math.Sin(0),
-            .Id = "sin(x)"
+            .df = Function(x, y) Math.Sin(x) / x - 0.005,
+            .y0 = 0,
+            .Id = "Sin(x) / x - 0.005"
         }
-        Call ode.RK4(50, 1, 10)
-        Call ode2.RK4(50, 1, 10)
+        Call ode.RK4(150, 1, 50)
+        Call ode2.RK4(150, 1, 50)
 
         Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
 
         Call Scatter.Plot(serials).SaveAs("./cos.png")
-        Call Histogram.Plot(Histogram.FromODE(ode, ode2), alpha:=220).SaveAs("./cos.hist.png")
+        Call Histogram.Plot(
+            Histogram.FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
+            .SaveAs("./cos.hist.png")
 
         Pause()
         '    Call PDFTest.betaTest()

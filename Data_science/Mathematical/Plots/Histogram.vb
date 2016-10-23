@@ -262,15 +262,18 @@ Public Module Histogram
         End Sub
     End Structure
 
-    Public Function FromODE(ParamArray odes As ODE()) As HistogramGroup
-        Dim colors = Imaging.ChartColors.Shuffles
+    Public Function FromODE(odes As IEnumerable(Of ODE), Optional colors$() = Nothing) As HistogramGroup
+        Dim clData As Color() = If(
+            colors.IsNullOrEmpty,
+            ChartColors.Shuffles,
+            colors.ToArray(AddressOf ToColor))
         Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
  _
             From x As SeqValue(Of ODE)
             In odes.SeqIterator
             Select New NamedValue(Of Color) With {
                 .Name = x.obj.Id,
-                .x = colors(x.i)
+                .x = clData(x.i)
             }
 
         Dim range As DoubleRange = odes.First.xrange
