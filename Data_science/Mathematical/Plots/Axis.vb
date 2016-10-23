@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d61644a48330c4857a7297a567d5dc1, ..\visualbasic_App\Data_science\Mathematical\Plots\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::065d4f382edb49b25a9f75dee9c8ca0e, ..\visualbasic_App\Data_science\Mathematical\Plots\Axis.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Module Axis
         Next
     End Sub
 End Module
-

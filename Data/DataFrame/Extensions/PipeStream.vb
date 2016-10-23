@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93146fbad06979535731266b75426743, ..\visualbasic_App\Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::c5efae1cbf748563abcd7540f8b47eeb, ..\visualbasic_App\Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -36,4 +36,3 @@ Public Module PipeStream
 
     End Function
 End Module
-

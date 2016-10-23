@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e35de68a88a7a324448305ba64a66c3f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::7f4f88bc68e38c1296db110521c58de9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 

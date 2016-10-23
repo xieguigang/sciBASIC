@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::392e64d0df4c87d335d78b1ac9501553, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::0fbdb46574669a1f724589f9ef1ed678, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 

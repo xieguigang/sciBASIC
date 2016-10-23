@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa2bc210d1be33d471053e54ee304735, ..\visualbasic_App\Data_science\Mathematical\Plots\csv\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::0ff438cd02ce443840166b38d5586e26, ..\visualbasic_App\Data_science\Mathematical\Plots\csv\SerialData.vb"
 
     ' Author:
     ' 

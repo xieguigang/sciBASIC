@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff833b63078ffa6c2952de98fc232b54, ..\visualbasic_App\www\WWW.Google\Map\KML.vb"
+﻿#Region "Microsoft.VisualBasic::4065fabee788aa15e161924e237c9587, ..\visualbasic_App\www\WWW.Google\Map\KML.vb"
 
     ' Author:
     ' 

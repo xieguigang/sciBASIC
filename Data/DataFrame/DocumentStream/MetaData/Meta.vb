@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a259d1ab2a3e2502d7ed21f7b61fbb1, ..\visualbasic_App\Data\DataFrame\DocumentStream\MetaData\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::2b8d978566e22747d1cc17dbdc22825f, ..\visualbasic_App\Data\DataFrame\DocumentStream\MetaData\Meta.vb"
 
     ' Author:
     ' 

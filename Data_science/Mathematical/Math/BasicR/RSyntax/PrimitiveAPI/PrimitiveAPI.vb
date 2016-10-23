@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72e771339b0bab69da2a21168deb1498, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
+﻿#Region "Microsoft.VisualBasic::9b575e84b071097d0d424e6440e0c104, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
 
     ' Author:
     ' 

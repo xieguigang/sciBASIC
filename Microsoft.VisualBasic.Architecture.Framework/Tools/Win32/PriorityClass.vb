@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35a8281e0de8377da98110bd8d2a6177, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\PriorityClass.vb"
+﻿#Region "Microsoft.VisualBasic::d2fb9c656753077274a4c14b6c3ef9d6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\PriorityClass.vb"
 
     ' Author:
     ' 

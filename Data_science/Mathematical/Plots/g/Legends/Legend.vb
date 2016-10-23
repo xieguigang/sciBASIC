@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3679c2998366b9bc8c8cc22c9a41266b, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Legends\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::aac8568a770c7692f099ecd8d48c8bc5, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Legends\Legend.vb"
 
     ' Author:
     ' 
@@ -54,4 +54,3 @@ Public Class Legend
         Return Me.GetJson
     End Function
 End Class
-

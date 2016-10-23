@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bad3c894ce28a2cbe7c643498dca93c, ..\visualbasic_App\Data_science\Mathematical\ODE\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::444876ae727041a66cc99bb5d9efaac8, ..\visualbasic_App\Data_science\Mathematical\ODE\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Public Class ODEsOut
         Return params
     End Function
 End Class
-

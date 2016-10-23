@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a3dc7d89d5bbbaef0f55c481c6a27f2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::32899c8a0e9fbd500ef1a6b65230335c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Directory.vb"
 
     ' Author:
     ' 

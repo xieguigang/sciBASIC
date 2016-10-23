@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73eabd33bd813f254599a3b524614e9e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::9739a2dfdefc02b9fe20ca81f03b878d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\STDIO__\Shell.vb"
 
     ' Author:
     ' 

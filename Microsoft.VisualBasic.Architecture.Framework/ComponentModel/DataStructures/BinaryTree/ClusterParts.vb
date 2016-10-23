@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4818d87448b914b362f13d48ef126133, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\ClusterParts.vb"
+﻿#Region "Microsoft.VisualBasic::d672b1c6e2b309470b9f513e03d9a74b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\ClusterParts.vb"
 
     ' Author:
     ' 

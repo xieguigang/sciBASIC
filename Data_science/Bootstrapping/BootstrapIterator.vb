@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d5db2f2348598c905774cd3714b6bf7, ..\visualbasic_App\Data_science\Bootstrapping\BootstrapIterator.vb"
+﻿#Region "Microsoft.VisualBasic::a0f829c3ea0f951d55f3983f58caff84, ..\visualbasic_App\Data_science\Bootstrapping\BootstrapIterator.vb"
 
     ' Author:
     ' 
@@ -218,4 +218,3 @@ Public Module BootstrapIterator
         Return ps
     End Function
 End Module
-

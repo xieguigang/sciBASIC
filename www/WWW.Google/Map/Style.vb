@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce90094922c48c1e39fd624fbf9e80e6, ..\visualbasic_App\www\WWW.Google\Map\Style.vb"
+﻿#Region "Microsoft.VisualBasic::d19aea302410f605b59a8c09be4b64ec, ..\visualbasic_App\www\WWW.Google\Map\Style.vb"
 
     ' Author:
     ' 

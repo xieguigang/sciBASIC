@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e065124dcdd5722585dd692d7bc876ef, ..\visualbasic_App\Data_science\Mathematical\ODE\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::20102218fefff00174f9c1b102b021cf, ..\visualbasic_App\Data_science\Mathematical\ODE\Solver.vb"
 
     ' Author:
     ' 
@@ -126,5 +126,3 @@ Public Module ODESolver
         Next
     End Sub
 End Module
-
-

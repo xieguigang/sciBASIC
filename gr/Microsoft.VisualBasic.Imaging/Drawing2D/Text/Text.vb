@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92d3b838e6698b99d9df39fd465476fc, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::5cd83470a4eac3ff800ea044f03a2416, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices

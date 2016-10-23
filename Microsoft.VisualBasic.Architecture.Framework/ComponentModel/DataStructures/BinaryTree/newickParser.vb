@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87743f9d7e2f082ab1c70c9d194d19da, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\newickParser.vb"
+﻿#Region "Microsoft.VisualBasic::13af97ed546a6ac140b05f1134662067, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\newickParser.vb"
 
     ' Author:
     ' 

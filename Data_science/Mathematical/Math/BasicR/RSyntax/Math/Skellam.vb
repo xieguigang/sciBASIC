@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f937dba2010bb01010093d8e7bdda9b, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\RSyntax\Math\Skellam.vb"
+﻿#Region "Microsoft.VisualBasic::ff90ad2646802f9cc3caa3faa2af4d6b, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\RSyntax\Math\Skellam.vb"
 
     ' Author:
     ' 
@@ -382,4 +382,3 @@
 '        End Function
 '    End Module
 'End Namespace
-

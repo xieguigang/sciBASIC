@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f937d64bb23451d781ce2f8fe57d0b7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::7e6ac955a41d7e30a7d61112a7ee5abe, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 

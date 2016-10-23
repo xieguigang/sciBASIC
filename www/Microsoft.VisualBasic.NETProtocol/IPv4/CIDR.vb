@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97b5a781b1074445a5dd4e87d82117d4, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::f326c36f4dc30a9d20ba7ec1e056c2ff, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
     ' Author:
     ' 
@@ -445,4 +445,3 @@ Public Class IPv4
         Return CIDR
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::821083e59f8c1508034655e0d4172759, ..\visualbasic_App\Data_science\Mathematical\Plots\Scatter\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::53900efcfa2334224a6fcc13e8d9f62d, ..\visualbasic_App\Data_science\Mathematical\Plots\Scatter\Annotation.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D

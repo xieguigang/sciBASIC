@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2c0b9e57b64ec62597b941290d5b1b6, ..\visualbasic_App\mime\RTF\FormatedRegion.vb"
+﻿#Region "Microsoft.VisualBasic::124e7d1c1eda27d4112fca9f569cbafe, ..\visualbasic_App\mime\RTF\FormatedRegion.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Public Class FormatedRegion
 
@@ -109,4 +108,3 @@ Public Class FormatedRegion
         End Get
     End Property
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb8fa86f6be6c737f892d21bf529f456, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb"
+﻿#Region "Microsoft.VisualBasic::735e7947e31cef5c12dc1093ec5d51d1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb"
 
     ' Author:
     ' 

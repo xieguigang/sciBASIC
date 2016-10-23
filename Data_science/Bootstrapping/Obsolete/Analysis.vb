@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b2de4eaed283f13c9ecd81639342728, ..\visualbasic_App\Data_science\Bootstrapping\Obsolete\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::e5ca0e39d1e06c792c9fa95bfc4efe7d, ..\visualbasic_App\Data_science\Bootstrapping\Obsolete\Analysis.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Public Module Analysis
         Return out
     End Function
 End Module
-

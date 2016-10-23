@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b2ae30c7bf7f7c7566a7024cc48747a, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\WaveletTransform.vb"
+﻿#Region "Microsoft.VisualBasic::6056984fdd055973546999149bb67056, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\WaveletTransform.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a63ab568ea21725b0057c8caaae197d3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InnerQueue.vb"
+﻿#Region "Microsoft.VisualBasic::1ac283efbb1401b537605e1965db8693, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InnerQueue.vb"
 
     ' Author:
     ' 

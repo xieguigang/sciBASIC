@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6990c65fc3b72b1ec28fc55467458806, ..\visualbasic_App\Data_science\Mathematical\Plots\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::5299c8e24383a4219e03f8a3cb6b8cc5, ..\visualbasic_App\Data_science\Mathematical\Plots\Bubble.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Public Module Bubble
             End Sub)
     End Function
 End Module
-

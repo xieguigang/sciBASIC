@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e807b960346d5c441b0c9ac311bacbc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5d52aeb1717c3f150a5c31a726f4632f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Namespace Emit.Delegates
         End Function
     End Module
 End Namespace
-

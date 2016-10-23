@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67190439b7962222a3d4ea51a7992065, ..\visualbasic_App\Data_science\Mathematical\ODE\GenericODEs.vb"
+﻿#Region "Microsoft.VisualBasic::bdaaff22dc4f0a80685e2b6494064b9b, ..\visualbasic_App\Data_science\Mathematical\ODE\GenericODEs.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR

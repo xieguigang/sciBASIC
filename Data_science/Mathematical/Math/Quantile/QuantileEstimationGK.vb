@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18086d353812414eae7396025b805440, ..\visualbasic_App\Data_science\Mathematical\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::14c5f5720799bc24bb170fa92e250881, ..\visualbasic_App\Data_science\Mathematical\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 

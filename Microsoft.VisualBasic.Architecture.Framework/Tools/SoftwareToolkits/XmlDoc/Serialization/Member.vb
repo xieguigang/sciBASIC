@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80d8926d0aab7a7e2ff4339374c7e842, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb"
+﻿#Region "Microsoft.VisualBasic::835de644447204f3357ed4f51a6c55d1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb"
 
     ' Author:
     ' 

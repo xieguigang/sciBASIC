@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce93799b6572f78cae9245379585d634, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\HeapNode.vb"
+﻿#Region "Microsoft.VisualBasic::05c87baeacab72defabcecbe7a50cc9c, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\HeapNode.vb"
 
     ' Author:
     ' 

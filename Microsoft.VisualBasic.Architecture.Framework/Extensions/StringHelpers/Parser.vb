@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3abe1c7088003748bd06d2f3e1f3a97, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::55d3051781b4ed545244f362e9ee1b79, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1780c4a541e52d3b326e6ab7f38756e0, ..\visualbasic_App\www\WWW.Google\News\RSS.vb"
+﻿#Region "Microsoft.VisualBasic::63020bc7dc0772e0bffb99c57ad1f1ff, ..\visualbasic_App\www\WWW.Google\News\RSS.vb"
 
     ' Author:
     ' 

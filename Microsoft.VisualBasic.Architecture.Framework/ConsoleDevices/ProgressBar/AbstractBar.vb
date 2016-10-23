@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e006096e936c8271faeadbd88f7cd217, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\AbstractBar.vb"
+﻿#Region "Microsoft.VisualBasic::0b7944b7499a6150710f41ccec1cf578, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\AbstractBar.vb"
 
     ' Author:
     ' 

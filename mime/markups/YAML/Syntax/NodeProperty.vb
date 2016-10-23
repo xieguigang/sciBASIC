@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::284bcec870e72e474a6e1f9c2d543190, ..\visualbasic_App\mime\Markups\YAML\Syntax\NodeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c7eb2890e31060384cd1b95febbc54fc, ..\visualbasic_App\mime\Markups\YAML\Syntax\NodeProperty.vb"
 
     ' Author:
     ' 

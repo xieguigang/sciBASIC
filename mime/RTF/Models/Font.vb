@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbaa6c09f6e8ba2f5b6f9bba29c9fd28, ..\visualbasic_App\mime\RTF\Models\Font.vb"
+﻿#Region "Microsoft.VisualBasic::e270c7bfe2e57aa9c8ebffeaaef2d8e9, ..\visualbasic_App\mime\RTF\Models\Font.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b408509cf2332ab4172cad5fd961b300, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\INeuron.vb"
+﻿#Region "Microsoft.VisualBasic::5d3e75cf39798a18bf57cde46d9cb7f8, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\GeneticAlgorithm\INeuron.vb"
 
     ' Author:
     ' 

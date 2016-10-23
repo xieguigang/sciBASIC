@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5252f2fb86eb17afc12ccc9576fe474c, ..\visualbasic_App\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
+﻿#Region "Microsoft.VisualBasic::223025365b1a3727afbd432a5e829ee0, ..\visualbasic_App\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
 
     ' Author:
     ' 
@@ -238,4 +238,3 @@ End Module
 ''' <param name="data"></param>
 ''' <returns></returns>
 Public Delegate Function Eigenvector(data As Double()) As Double()
-

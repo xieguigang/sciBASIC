@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d21dedd37f6d9fbac259aa07dbc7ca9e, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::867d6e183a1666f5ab83882cac1e8cf3, ..\visualbasic_App\Data_science\Mathematical\Math\Distributions\Gamma.vb"
 
     ' Author:
     ' 

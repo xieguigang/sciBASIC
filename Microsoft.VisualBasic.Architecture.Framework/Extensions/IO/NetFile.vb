@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdf26f8c70dbbd9c7462ddc702d48142, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::5dbb1dd7a952be513e67f16033234c32, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
 
     ' Author:
     ' 

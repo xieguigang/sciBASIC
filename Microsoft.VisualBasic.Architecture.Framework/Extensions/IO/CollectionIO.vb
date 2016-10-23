@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15fc76e2fc8c1470e43ed717bc85b9d1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\CollectionIO.vb"
+﻿#Region "Microsoft.VisualBasic::6d41b646d2c444e2b24372748db2ff58, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\CollectionIO.vb"
 
     ' Author:
     ' 

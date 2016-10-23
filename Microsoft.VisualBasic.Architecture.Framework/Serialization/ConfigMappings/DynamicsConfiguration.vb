@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b763d528e882507b37b6a8bf71b5839e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\DynamicsConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::a8fa1387a649d93c1fb4343cb217dbba, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\DynamicsConfiguration.vb"
 
     ' Author:
     ' 

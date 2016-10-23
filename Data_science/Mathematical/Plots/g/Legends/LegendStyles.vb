@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358ad157e0d8c9a3b786e49bc187c667, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
+﻿#Region "Microsoft.VisualBasic::c24ed2eca63f11bb47df0e09e80ebe20, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Vector shapes that drawing of this legend.

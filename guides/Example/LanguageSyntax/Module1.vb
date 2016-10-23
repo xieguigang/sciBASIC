@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::400298f24d135125510e2502d6494266, ..\visualbasic_App\guides\Example\LanguageSyntax\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6ef887e10f951ecee6311703fe89f5a3, ..\visualbasic_App\guides\Example\LanguageSyntax\Module1.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Module Module1
         End If
     End Function
 End Module
-

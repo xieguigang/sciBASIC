@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aea6eebe531b1076f8f49f7bfd4e21a, ..\visualbasic_App\www\WWW.Google\News\XML.vb"
+﻿#Region "Microsoft.VisualBasic::f4dee8da94c256c13687cb02a395f237, ..\visualbasic_App\www\WWW.Google\News\XML.vb"
 
     ' Author:
     ' 

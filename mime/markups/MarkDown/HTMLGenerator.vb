@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::915a66a0a3c0a2ade1215b3860d424d5, ..\visualbasic_App\mime\Markups\MarkDown\HTMLGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c6649073129a2a36d43cdb9e9a35c731, ..\visualbasic_App\mime\Markups\MarkDown\HTMLGenerator.vb"
 
     ' Author:
     ' 

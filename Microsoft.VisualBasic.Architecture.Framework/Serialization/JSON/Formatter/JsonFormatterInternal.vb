@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::460a32264abe004592333ff95f42667f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\JsonFormatterInternal.vb"
+﻿#Region "Microsoft.VisualBasic::f1977fad5b8481516a06d917ec139c65, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\JsonFormatterInternal.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9df9f6c84fab11bf4cb9193eb5fa65be, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::cfb8a8a14c4bb8ff6fdf5b82ac2b12d4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c7f56400723b7e0016d915d6fd6a333, ..\visualbasic_App\www\WWW.Google\Translation.vb"
+﻿#Region "Microsoft.VisualBasic::81cad946bb604954efe4b1439c005454, ..\visualbasic_App\www\WWW.Google\Translation.vb"
 
     ' Author:
     ' 

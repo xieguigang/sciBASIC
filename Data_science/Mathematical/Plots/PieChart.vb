@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3372a55b01f720cdd57c3451796d14b9, ..\visualbasic_App\Data_science\Mathematical\Plots\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::c6df515455e00f01c2b6213873a45d28, ..\visualbasic_App\Data_science\Mathematical\Plots\PieChart.vb"
 
     ' Author:
     ' 
@@ -182,4 +182,3 @@ Public Module PieChart
         Return out
     End Function
 End Module
-

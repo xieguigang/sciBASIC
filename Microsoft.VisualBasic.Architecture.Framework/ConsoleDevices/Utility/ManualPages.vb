@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1bb0af9d37b5f313a1d6e99447ad18b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\ManualPages.vb"
+﻿#Region "Microsoft.VisualBasic::229f2e437346d237a9fa802495eeea31, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\ManualPages.vb"
 
     ' Author:
     ' 

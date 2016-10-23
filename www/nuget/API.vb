@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::048cc991f7df7c75e9693a0aa7034be3, ..\visualbasic_App\www\nuget\API.vb"
+﻿#Region "Microsoft.VisualBasic::1e08e93c723cf18f3d232824d21ad5b5, ..\visualbasic_App\www\nuget\API.vb"
 
     ' Author:
     ' 
@@ -29,4 +29,3 @@
 Public Module API
 
 End Module
-

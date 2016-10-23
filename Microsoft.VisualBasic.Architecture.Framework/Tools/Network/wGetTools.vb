@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3233674ce9a362af64f6394219df8a25, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\wGetTools.vb"
+﻿#Region "Microsoft.VisualBasic::d123268ab48cb110ebd63048c445139e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\wGetTools.vb"
 
     ' Author:
     ' 

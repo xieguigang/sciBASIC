@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bff54219538e2ffdbd10e9e07d33bd0, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
+﻿#Region "Microsoft.VisualBasic::2636317bb01493d12b25caa40c6e6e33, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Module IPUtils
         Return Dot2LongIP
     End Function
 End Module
-

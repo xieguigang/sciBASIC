@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df7f165593ba845f79b349b03fa0ab23, ..\visualbasic_App\guides\Example\CLI_Example\Program.vb"
+﻿#Region "Microsoft.VisualBasic::15888fd702100b29303dca213c2e19ed, ..\visualbasic_App\guides\Example\CLI_Example\Program.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be5939591d3de9d6ddb9eb6660a81dc9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
+﻿#Region "Microsoft.VisualBasic::8bbfbc5cece9ba4b3579b91e2918b673, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
 
     ' Author:
     ' 
