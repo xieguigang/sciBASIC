@@ -180,6 +180,23 @@ Module DEBUG
 
     Public Function Main() As Integer
 
+
+        Call {
+            New NamedValue(Of Integer)("s1", 123),
+            New NamedValue(Of Integer)("s2", 235),
+            New NamedValue(Of Integer)("s3", 99),
+            New NamedValue(Of Integer)("s4", 499),
+            New NamedValue(Of Integer)("s5", 123),
+            New NamedValue(Of Integer)("s6", 235),
+            New NamedValue(Of Integer)("s7", 99),
+            New NamedValue(Of Integer)("s8", 499)
+        }.FromData() _
+         .Plot(reorder:=1,
+               size:=New Size(1500, 1000)) _
+         .SaveAs("./pie_chart.png")
+
+
+
         Dim ode As New ODE With {
             .df = Function(x, y) 0.1 * Math.Cos(x),
             .y0 = 0.340302,
@@ -203,16 +220,6 @@ Module DEBUG
         Pause()
         '    Call PDFTest.betaTest()
 
-        'Call {
-        '    New NamedValue(Of Integer)("s1", 123),
-        '    New NamedValue(Of Integer)("s2", 235),
-        '    New NamedValue(Of Integer)("s3", 99),
-        '    New NamedValue(Of Integer)("s4", 499),
-        '    New NamedValue(Of Integer)("s5", 123),
-        '    New NamedValue(Of Integer)("s6", 235),
-        '    New NamedValue(Of Integer)("s7", 99),
-        '    New NamedValue(Of Integer)("s8", 499)
-        '}.FromData().Plot(minRadius:=100, reorder:=1).SaveAs("./pie_chart_vars.png")
 
         'Pause()
 
