@@ -1,38 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::db04af205fe655d5d9f5f2200e2683fe, ..\visualbasic_App\Data_science\Mathematical\Plots\Histogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -46,7 +49,10 @@ Public Module BarPlot
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
-                         Optional stacked As Boolean = False) As Bitmap
+                         Optional stacked As Boolean = False,
+                         Optional showLegend As Boolean = True,
+                         Optional legendPos As Point = Nothing,
+                         Optional legendBorder As Border = Nothing) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -102,6 +108,28 @@ Public Module BarPlot
 
                     left = x
                 Next
+
+                If showLegend Then
+                    Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+ _
+                        From x As NamedValue(Of Color)
+                        In data.Serials
+                        Select New Legend With {
+                            .color = x.x.RGBExpression,
+                            .fontstyle = CSSFont.GetFontStyle(
+                                FontFace.MicrosoftYaHei,
+                                FontStyle.Regular,
+                                30),
+                            .style = LegendStyles.Circle,
+                            .title = x.Name
+                        }
+
+                    If legendPos.IsEmpty Then
+                        legendPos = New Point(CInt(size.Width * 0.8), margin.Height)
+                    End If
+
+                    Call g.DrawLegends(legendPos, legends,,, legendBorder)
+                End If
             End Sub)
     End Function
 
