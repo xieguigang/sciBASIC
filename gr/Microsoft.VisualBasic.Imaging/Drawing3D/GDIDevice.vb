@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing3D
 
@@ -97,7 +98,9 @@ Namespace Drawing3D
         End Sub
 
         Protected Overridable Sub __updateGraphics(sender As Object, g As Graphics, region As Rectangle)
-            Throw New Exception("Please Implements the graphics updates code at here.")
+            For Each model As I3DModel In models
+                Call model.Draw(g, camera)
+            Next
         End Sub
 
         Private Sub GDIDevice_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint

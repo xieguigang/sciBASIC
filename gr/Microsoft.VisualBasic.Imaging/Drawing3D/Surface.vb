@@ -34,6 +34,8 @@ Namespace Drawing3D
     Public Interface I3DModel : Inherits IEnumerable(Of Point3D)
 
         Function Copy() As I3DModel
+
+        Sub Draw(ByRef canvas As Graphics, camera As Camera)
     End Interface
 
     Public Class Surface
@@ -52,7 +54,7 @@ Namespace Drawing3D
             path = New Point(vertices.Length - 1) {}
         End Sub
 
-        Public Sub Draw(ByRef canvas As Graphics, camera As Camera)
+        Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
             SyncLock path
                 For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
                     path(pt.i) = pt.obj.PointXY

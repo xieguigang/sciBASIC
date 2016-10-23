@@ -9,22 +9,13 @@ Namespace Plot3D
 
         Protected Overrides Sub __init()
             '  data = Evaluate(Function(x, y) x * y, New DoubleRange(-1, 10), New DoubleRange(-10, 10))
+            models += New Surface With {.brush = Brushes.Red, .vertices = {New Point3D(10, 10, 10), New Point3D(0, 0, 0), New Point3D(2, 2, 2)}}
+            Call DirectCast(models.First, Surface).Allocation()
+            Call Run()
         End Sub
 
         Protected Overrides Sub ___animationLoop()
 
-        End Sub
-
-        Dim data As Point3D()
-
-        Protected Overrides Sub __updateGraphics(sender As Object, g As Graphics, region As Rectangle)
-            'Dim pSize As New Size(5, 5)
-
-            'With camera
-            '    For Each pt In data
-            '        Call g.FillPie(Brushes.Black, New Rectangle(.Project(.Rotate(pt)).PointXY, pSize), 0, 360)
-            '    Next
-            'End With
         End Sub
     End Class
 End Namespace
