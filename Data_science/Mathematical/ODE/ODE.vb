@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -33,6 +34,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' Ordinary differential equation(ODE).(常微分方程的模型)
 ''' </summary>
 Public Class ODE
+    Implements sIdEnumerable
 
 #Region "Output results"
 
@@ -63,6 +65,8 @@ Public Class ODE
             Return New DoubleRange(x.First, x.Last)
         End Get
     End Property
+
+    Public Property Id As String Implements sIdEnumerable.Identifier
 
     Public Overrides Function ToString() As String
         Return x.GetJson & " --> " & y.GetJson

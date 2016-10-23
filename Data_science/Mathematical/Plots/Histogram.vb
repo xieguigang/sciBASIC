@@ -269,7 +269,7 @@ Public Module Histogram
             From x As SeqValue(Of ODE)
             In odes.SeqIterator
             Select New NamedValue(Of Color) With {
-                .Name = x.obj.df.ToString,
+                .Name = x.obj.Id,
                 .x = colors(x.i)
             }
 

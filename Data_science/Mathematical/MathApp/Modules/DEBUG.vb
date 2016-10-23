@@ -180,36 +180,55 @@ Module DEBUG
 
     Public Function Main() As Integer
 
-        Call PDFTest.betaTest()
+        Dim ode As New ODE With {
+            .df = Function(x, y) Math.Cos(x),
+            .y0 = 0.540302,
+            .Id = "cos(x)"
+        }
+        Dim ode2 As New ODE With {
+            .df = Function(x, y) Math.Sin(x),
+            .y0 = Math.Sin(0),
+            .Id = "sin(x)"
+        }
+        Call ode.RK4(50, 1, 10)
+        Call ode2.RK4(50, 1, 10)
 
-        Call {
-            New NamedValue(Of Integer)("s1", 123),
-            New NamedValue(Of Integer)("s2", 235),
-            New NamedValue(Of Integer)("s3", 99),
-            New NamedValue(Of Integer)("s4", 499),
-            New NamedValue(Of Integer)("s5", 123),
-            New NamedValue(Of Integer)("s6", 235),
-            New NamedValue(Of Integer)("s7", 99),
-            New NamedValue(Of Integer)("s8", 499)
-        }.FromData().Plot(minRadius:=100, reorder:=1).SaveAs("./pie_chart_vars.png")
+        Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
+
+        Call Scatter.Plot(serials).SaveAs("./cos.png")
+        Call Histogram.Plot(Histogram.FromODE(ode, ode2), alpha:=220).SaveAs("./cos.hist.png")
 
         Pause()
+        '    Call PDFTest.betaTest()
 
-        Call Plot3D.Scatter.Plot(Function(x, y) x * y,
-                                 New DoubleRange(-10, 10),
-                                 New DoubleRange(-10, 10),
-                                 New Camera With {
-                                 .screen = New Size(1600, 1000),
-                                 .angle = -60,
-                                 .ViewDistance = -40
-                                 }).SaveAs("x:\@@@@@fdsdfdseeee.png")
+        'Call {
+        '    New NamedValue(Of Integer)("s1", 123),
+        '    New NamedValue(Of Integer)("s2", 235),
+        '    New NamedValue(Of Integer)("s3", 99),
+        '    New NamedValue(Of Integer)("s4", 499),
+        '    New NamedValue(Of Integer)("s5", 123),
+        '    New NamedValue(Of Integer)("s6", 235),
+        '    New NamedValue(Of Integer)("s7", 99),
+        '    New NamedValue(Of Integer)("s8", 499)
+        '}.FromData().Plot(minRadius:=100, reorder:=1).SaveAs("./pie_chart_vars.png")
+
+        'Pause()
+
+        'Call Plot3D.Scatter.Plot(Function(x, y) x * y,
+        '                         New DoubleRange(-10, 10),
+        '                         New DoubleRange(-10, 10),
+        '                         New Camera With {
+        '                         .screen = New Size(1600, 1000),
+        '                         .angle = -60,
+        '                         .ViewDistance = -40
+        '                         }).SaveAs("x:\@@@@@fdsdfdseeee.png")
 
         ' Dim dadasdasdasdasXXXXXX = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
         '  Dim dadasdasdasdasYYYYYY = New Double() {42, 5, 43, 6, 54, 8, 60, 5, 4, 78, -38, 5, 2, 9, 33, 48, 2, 4, 82, 3, 0, 94, 8, 2, 30, 9, 4, 823}
 
         '  Call QQPlot.Plot(dadasdasdasdasXXXXXX, dadasdasdasdasYYYYYY, xcol:="red").SaveAs("x:\asfsdfsdfsd.png")
         '   Pause()
-        Pause()
+        ' Pause()
         Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).SaveAs("x:\fsdfsfsdfds.png")
 
         '  Dim ava As Dictionary(Of String, String()) = (From x In AllDotNetPrefixColors.AsParallel Select c = ColorTranslator.ToHtml(x), vd = avadsfdsfds(x)).ToDictionary(Function(x) x.c, Function(x) x.vd.ToArray(AddressOf ColorTranslator.ToHtml))
@@ -331,23 +350,6 @@ Module DEBUG
         }.FromData().Plot(minRadius:=100).SaveAs("./pie_chart_vars.png")
 
 
-        Dim ode As New ODE With {
-            .df = Function(x, y) Math.Cos(x),
-            .y0 = 0.540302
-        }
-        Dim ode2 As New ODE With {
-            .df = Function(x, y) Math.Sin(x),
-            .y0 = Math.Sin(0)
-        }
-        Call ode.RK4(50, 1, 10)
-        Call ode2.RK4(50, 1, 10)
-
-        Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
-
-        Call Scatter.Plot(serials).SaveAs("./cos.png")
-        Call BarPlot.Plot(BarPlot.FromODE(ode, ode2), stacked:=False).SaveAs("./cos.hist.png")
-
-        Pause()
 
         Dim water As New LinguisticVariable("Water")
         water.MembershipFunctionCollection.Add(New MembershipFunction("Cold", 0, 0, 20, 40))
