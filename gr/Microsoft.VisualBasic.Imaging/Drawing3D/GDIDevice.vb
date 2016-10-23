@@ -101,7 +101,7 @@ Namespace Drawing3D
             Call g.Clear(Color.LightBlue)
 
             For Each model As I3DModel In models
-                Call model.Draw(g, camera)
+                Call model.Copy(camera.Rotate(model)).Draw(g, camera)
             Next
         End Sub
 
@@ -162,6 +162,11 @@ Namespace Drawing3D
 
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
             camera.screen = Size
+        End Sub
+
+        Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+            Dim d% = Math.Sign(e.Delta)
+            camera.ViewDistance += d
         End Sub
     End Class
 End Namespace

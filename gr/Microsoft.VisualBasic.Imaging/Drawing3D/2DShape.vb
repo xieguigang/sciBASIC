@@ -14,8 +14,8 @@ Namespace Drawing3D
             Call shape.Draw(canvas)
         End Sub
 
-        Public Function Copy() As I3DModel Implements I3DModel.Copy
-            Return New Shape2D With {.focus = focus, .shape = shape}
+        Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
+            Return New Shape2D With {.focus = data.First, .shape = shape}
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator

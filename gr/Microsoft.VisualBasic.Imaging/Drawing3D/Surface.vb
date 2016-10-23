@@ -34,7 +34,7 @@ Namespace Drawing3D
 
     Public Interface I3DModel : Inherits IEnumerable(Of Point3D)
 
-        Function Copy() As I3DModel
+        Function Copy(data As IEnumerable(Of Point3D)) As I3DModel
 
         Sub Draw(ByRef canvas As Graphics, camera As Camera)
     End Interface
@@ -73,7 +73,10 @@ Namespace Drawing3D
                 Next
 
                 Call polygon.AddLine(a, path(0))
-                Call polygon.CloseAllFigures()
+                Call polygon.CloseFigure()
+#If DEBUG Then
+                Call canvas.DrawPath(Pens.Black, polygon)
+#End If
                 Call canvas.FillPath(brush, polygon)
             End SyncLock
         End Sub
@@ -88,10 +91,10 @@ Namespace Drawing3D
             Yield GetEnumerator()
         End Function
 
-        Public Function Copy() As I3DModel Implements I3DModel.Copy
+        Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
             Dim model As New Surface With {
                 .brush = brush,
-                .vertices = vertices.ToArray
+                .vertices = data.ToArray
             }
             Call model.Allocation()
 
