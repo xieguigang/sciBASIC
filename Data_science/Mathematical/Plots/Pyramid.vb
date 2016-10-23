@@ -22,12 +22,12 @@ Public Module Pyramid
 
         Return GraphicsPlots(size, margin, bg,
                 Sub(ByRef g, region)
-                    Dim height% = region.GraphicsRegion.Height
-                    Dim width% = region.GraphicsRegion.Width * wp
-                    Dim left! = (region.GraphicsRegion.Width - width) / 2 + margin.Width
+                    Dim height% = region.PlotRegion.Height
+                    Dim width% = region.PlotRegion.Width * wp
+                    Dim left! = (region.PlotRegion.Width - width) / 2 + margin.Width
                     Dim tan_ab = height / (width / 2) ' tan(a)
                     Dim right! = (left + width)
-                    Dim bottom! = region.GraphicsRegion.Bottom
+                    Dim bottom! = region.PlotRegion.Bottom
 
                     For Each l As PercentageData In array
                         Dim dh! = height * l.Percentage

@@ -51,7 +51,7 @@ Public Module BarPlot
         Return GraphicsPlots(
             size, margin, bg,
             Sub(ByRef g, grect)
-                Dim mapper As New Scaling(data, stacked)
+                Dim mapper As New Scaling(data, stacked, False)
                 Dim n As Integer = If(
                     stacked,
                     data.Samples.Length,

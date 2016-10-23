@@ -167,6 +167,7 @@
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
     <Compile Include="Axis.vb" />
+    <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="Bubble.vb" />
     <Compile Include="csv\BarData.vb" />
     <Compile Include="Percents\PercentageData.vb" />

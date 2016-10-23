@@ -19,7 +19,7 @@ Namespace Drawing2D.Colors
             Return GraphicsPlots(
                 lsize, lmargin, bg,
                 Sub(ByRef g, region)
-                    Dim graphicsRegion As Rectangle = region.GraphicsRegion
+                    Dim graphicsRegion As Rectangle = region.PlotRegion
                     Dim size As Size = region.Size
                     Dim margin As Size = region.Margin
                     Dim grayHeight As Integer = size.Height * 0.05

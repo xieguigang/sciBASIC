@@ -39,7 +39,7 @@ Namespace Drawing2D
         Public Size As Size
         Public Margin As Size
 
-        Public ReadOnly Property GraphicsRegion As Rectangle
+        Public ReadOnly Property PlotRegion As Rectangle
             Get
                 Dim topLeft As New Point(Margin.Width, Margin.Height)
                 Dim size As New Size(

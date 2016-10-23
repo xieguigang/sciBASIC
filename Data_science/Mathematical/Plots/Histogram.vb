@@ -174,7 +174,7 @@ Public Module Histogram
                    For Each block As HistogramData In hist.data
                        Dim rect As New RectangleF(
                            New PointF(block.x1, block.y),
-                           New SizeF(block.width, region.GraphicsRegion.Bottom - block.y))
+                           New SizeF(block.width, region.PlotRegion.Bottom - block.y))
                        Call g.FillRectangle(b, rect)
                        If drawRect Then
                            Call g.DrawRectangle(

@@ -59,13 +59,20 @@ Public Class Scaling
         type = GetType(Histogram)
     End Sub
 
-    Sub New(hist As BarDataGroup, stacked As Boolean)
+    Sub New(hist As BarDataGroup, stacked As Boolean, horizontal As Boolean)
         Dim h As List(Of Double) = If(
             stacked,
             New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
             hist.Samples.Select(Function(s) s.data).Unlist)
-        ymin! = h.Min
-        dy = h.Max - ymin
+
+        If Not horizontal Then
+            ymin! = h.Min
+            dy = h.Max - ymin
+        Else
+            xmin! = h.Min
+            dx = h.Max - xmin
+        End If
+
         type = GetType(BarPlot)
     End Sub
 
