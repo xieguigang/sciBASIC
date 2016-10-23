@@ -146,6 +146,26 @@ Call Pyramid.Plot(
 
 ![](./images/Pyramid.png)
 
+##### Simple bar plot
+PLOT DATA: [Fruit_consumption.csv](./images/Fruit_consumption.csv)
+
+```vbnet
+Dim data = csv.LoadBarData(
+    "./images/Fruit_consumption.csv",
+    {
+        "rgb(124,181,236)",
+        "rgb(67,67,72)"
+    })
+
+Call BarPlot.Plot(data) _
+    .SaveAs("./images/Fruit_consumption-bar.png")
+Call BarPlot.Plot2(data) _
+    .SaveAs("./images/Fruit_consumption-bar2.png")
+```
+
+![](./images/Fruit_consumption-bar.png)
+![](./images/Fruit_consumption-bar2.png)
+
 ##### Solving ODEs
 
 Try solving the ODEs example below:
