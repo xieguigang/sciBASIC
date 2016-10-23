@@ -120,7 +120,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' \       |
         '''  \|-----
         ''' </summary>
-        Protected Overrides Sub InvokeDrawing()
+        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim Path As New GraphicsPath
             Dim Direction As Integer = If(DirectionLeft, 1, -1)
             Dim Top As Integer = Me.Location.Y - BodySize.Height / 2
@@ -138,7 +138,9 @@ Namespace Drawing2D.Vector.Shapes
             Call Path.AddLine(prePoint.value, Me.Location)                                                                  '\
             Call Path.CloseFigure()
 
-            ' Call Me._GDIDevice.Graphics.FillPath(New SolidBrush(Me.Color), Path)
-        End Sub
+            Call g.FillPath(New SolidBrush(Me.Color), Path)
+
+            Return Nothing
+        End Function
     End Class
 End Namespace

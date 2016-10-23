@@ -36,6 +36,12 @@ Namespace Drawing2D.Vector.Shapes
         Dim pt1 As Point, pt2 As Point
         Dim BrushPen As Pen
 
+        Public Overrides ReadOnly Property Size As Size
+            Get
+                Return New Size(pt2.X - pt1.X, pt2.Y - pt1.Y)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -51,16 +57,12 @@ Namespace Drawing2D.Vector.Shapes
             Me.BrushPen = New Pen(New SolidBrush(Color), Width)
         End Sub
 
-        Protected Overloads Overrides Sub InvokeDrawing()
+        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+            Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
             Dim p1 = Location
             Dim p2 = New Point(Me.Location.X + pt2.X - pt1.X, Me.Location.Y + pt2.Y - pt1.Y)
-            '  Call Me._GDIDevice.Graphics.DrawLine(BrushPen, p1, p2)
-        End Sub
-
-        Public Overrides ReadOnly Property Size As Size
-            Get
-                Return New Size(pt2.X - pt1.X, pt2.Y - pt1.Y)
-            End Get
-        End Property
+            Call g.DrawLine(BrushPen, p1, p2)
+            Return rect
+        End Function
     End Class
 End Namespace

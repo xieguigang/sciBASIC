@@ -61,10 +61,6 @@ Namespace Drawing2D.Vector.Shapes
             Me.New(Nothing, d, fill)
         End Sub
 
-        Protected Overloads Overrides Sub InvokeDrawing()
-
-        End Sub
-
         Public Overrides ReadOnly Property Size As Size
 
         Public ReadOnly Property Radius As Double
@@ -73,9 +69,11 @@ Namespace Drawing2D.Vector.Shapes
             End Get
         End Property
 
-        Public Overrides Sub Draw(ByRef g As Graphics)
+        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+            Dim rect = MyBase.Draw(g, overridesLoci)
             Call Draw(g, Location, Radius, Brush)
-        End Sub
+            Return rect
+        End Function
 
         ''' <summary>
         ''' 绘制圆

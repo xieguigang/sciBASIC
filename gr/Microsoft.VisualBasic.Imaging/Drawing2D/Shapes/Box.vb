@@ -40,15 +40,7 @@ Namespace Drawing2D.Vector.Shapes
             Call MyBase.New(Location)
         End Sub
 
-        Protected Overloads Overrides Sub InvokeDrawing()
-
-        End Sub
-
         Public Overrides ReadOnly Property Size As Size
-            Get
-
-            End Get
-        End Property
 
         Public Shared Sub DrawRectangle(ByRef g As Graphics,
                                         topLeft As Point,

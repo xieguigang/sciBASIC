@@ -94,7 +94,7 @@ Namespace Drawing2D
 
         Public Function ToImage() As Image
             For Each Element As Shape In Me._lstElements
-                Call Element.InvokeDrawing()
+                Call Element.Draw(GDIDevice.Graphics)
             Next
 
             Return _GDIDevice.ImageResource

@@ -55,10 +55,6 @@ Namespace Drawing2D.Vector.Shapes
             Throw New NotImplementedException
         End Function
 
-        Protected Overloads Overrides Sub InvokeDrawing()
-
-        End Sub
-
         Public Overrides ReadOnly Property Size As Size
             Get
                 Throw New NotImplementedException
