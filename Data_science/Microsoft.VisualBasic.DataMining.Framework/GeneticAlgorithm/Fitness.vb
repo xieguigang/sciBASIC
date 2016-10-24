@@ -26,6 +26,6 @@ Namespace GAF
         ''' So the following condition must be true <br/>
         ''' fit1.compareTo(fit2) &lt;= 0 <br/>
         ''' </summary>
-        Function calculate(chromosome As C) As T
+        Function Calculate(chromosome As C) As T
     End Interface
 End Namespace

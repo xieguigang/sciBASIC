@@ -69,7 +69,7 @@ Namespace GAF
         ''' </summary>
         ''' <param name="anotherChromosome"></param>
         ''' <returns></returns>
-        Function crossover(anotherChromosome As C) As IList(Of C)
+        Function Crossover(anotherChromosome As C) As IList(Of C)
         ''' <summary>
         ''' Mutation is a genetic operator used to maintain genetic diversity from one generation 
         ''' of a population of genetic algorithm chromosomes to the next. It is analogous to 
@@ -95,6 +95,6 @@ Namespace GAF
         ''' With a weighting toward those that are fitter.
         ''' </summary>
         ''' <returns></returns>
-        Function mutate() As C
+        Function Mutate() As C
     End Interface
 End Namespace

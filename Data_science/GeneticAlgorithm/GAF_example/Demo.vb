@@ -5,12 +5,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class Demo
 
     Public Shared Sub Main(args As String())
-        Dim population As Population(Of MyVector) = createInitialPopulation(50000)
+        Dim population As Population(Of MyVector) = createInitialPopulation(5000)
         Dim fitness As Fitness(Of MyVector, Double) = New MyVectorFitness()
         Dim ga As New GeneticAlgorithm(Of MyVector, Double)(population, fitness)
 
         addListener(ga)
-        ga.evolve(5000)
+        ga.Evolve(5000)
 
         Pause()
     End Sub
@@ -25,8 +25,8 @@ Public Class Demo
         For i As Integer = 0 To populationSize - 1
             ' each member of initial population
             ' is mutated clone of base chromosome
-            Dim chr As MyVector = base.mutate()
-            population.addChromosome(chr)
+            Dim chr As MyVector = base.Mutate()
+            population.Add(chr)
         Next
         Return population
     End Function
@@ -47,10 +47,10 @@ Public Class Demo
 
         Private ReadOnly threshold As Double = 0.00001
 
-        Public Sub update(ga As GeneticAlgorithm(Of MyVector, Double)) Implements IterartionListener(Of MyVector, Double).update
+        Public Sub Update(ga As GeneticAlgorithm(Of MyVector, Double)) Implements IterartionListener(Of MyVector, Double).Update
 
             Dim best As MyVector = ga.Best
-            Dim bestFit As Double = ga.fitness(best)
+            Dim bestFit As Double = ga.Fitness(best)
             Dim iteration As Integer = ga.Iteration
 
             ' Listener prints best achieved solution
@@ -58,7 +58,7 @@ Public Class Demo
 
             ' If fitness is satisfying - we can stop Genetic algorithm
             If bestFit < Me.threshold Then
-                ga.terminate()
+                ga.Terminate()
             End If
         End Sub
     End Class
@@ -76,7 +76,7 @@ Public Class Demo
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
         ''' </summary>
-        Public Function mutate() As MyVector Implements Chromosome(Of MyVector).mutate
+        Public Function Mutate() As MyVector Implements Chromosome(Of MyVector).Mutate
             Dim result As MyVector = Me.clone()
 
             ' just select random element of vector
@@ -93,7 +93,7 @@ Public Class Demo
         ''' Siblings are actually new chromosomes, <br/>
         ''' created using any of crossover strategy
         ''' </summary>
-        Public Function crossover(other As MyVector) As IList(Of MyVector) Implements Chromosome(Of MyVector).crossover
+        Public Function Crossover(other As MyVector) As IList(Of MyVector) Implements Chromosome(Of MyVector).Crossover
             Dim thisClone As MyVector = Me.clone()
             Dim otherClone As MyVector = other.clone()
 
@@ -134,7 +134,7 @@ Public Class Demo
 
         Private ReadOnly target As Integer() = {10, 20, 30, 40, 50}
 
-        Public Function calculate(chromosome As MyVector) As Double Implements Fitness(Of MyVector, Double).calculate
+        Public Function Calculate(chromosome As MyVector) As Double Implements Fitness(Of MyVector, Double).Calculate
             Dim delta As Double = 0
             Dim v As Integer() = chromosome.Vector
             For i As Integer = 0 To 4

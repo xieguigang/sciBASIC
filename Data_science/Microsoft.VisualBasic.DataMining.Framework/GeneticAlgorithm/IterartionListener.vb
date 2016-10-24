@@ -18,6 +18,6 @@ Namespace GAF
 
     Public Interface IterartionListener(Of C As Chromosome(Of C), T As IComparable(Of T))
 
-        Sub update(environment As GeneticAlgorithm(Of C, T))
+        Sub Update(environment As GeneticAlgorithm(Of C, T))
     End Interface
 End Namespace

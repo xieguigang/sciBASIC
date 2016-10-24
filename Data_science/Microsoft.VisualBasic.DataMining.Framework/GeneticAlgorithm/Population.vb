@@ -19,54 +19,71 @@ Imports Microsoft.VisualBasic.Language.Java
 
 Namespace GAF
 
-    Public Class Population(Of C As Chromosome(Of C))
-        Implements IEnumerable(Of C)
+    Public Class Population(Of chr As Chromosome(Of chr))
+        Implements IEnumerable(Of chr)
 
         Const DEFAULT_NUMBER_OF_CHROMOSOMES As Integer = 32
 
-        Dim chromosomes As New List(Of C)(DEFAULT_NUMBER_OF_CHROMOSOMES)
-        ReadOnly random As New Random()
+        Dim chromosomes As New List(Of chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
+        ReadOnly _random As New Random()
 
-        Public Overridable Sub addChromosome(chromosome As C)
-            Me.chromosomes.Add(chromosome)
+        ''' <summary>
+        ''' Add chromosome
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        Public Sub Add(chromosome As chr)
+            Call chromosomes.Add(chromosome)
         End Sub
 
-        Public Overridable ReadOnly Property Size As Integer
+        ''' <summary>
+        ''' The number of chromosome elements in the inner list
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Size As Integer
             Get
-                Return Me.chromosomes.Count
+                Return chromosomes.Count
             End Get
         End Property
 
-        Public Overridable ReadOnly Property RandomChromosome As C
+        ''' <summary>
+        ''' Gets random chromosome
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Random As chr
             Get
-                Dim numOfChromosomes As Integer = Me.chromosomes.Count
+                Dim numOfChromosomes As Integer = chromosomes.Count
                 ' TODO improve random generator
                 ' maybe use pattern strategy ?
-                Dim indx As Integer = Me.random.Next(numOfChromosomes)
-                Return Me.chromosomes(indx)
+                Dim indx As Integer = _random.Next(numOfChromosomes)
+                Return chromosomes(indx)
             End Get
         End Property
 
-        Default Public ReadOnly Property Item(index%) As C
+        ''' <summary>
+        ''' Gets chromosome by index
+        ''' </summary>
+        ''' <param name="index%"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property Item(index%) As chr
             Get
                 Return chromosomes(index)
             End Get
         End Property
 
-        Public Overridable Sub sortPopulationByFitness(chromosomesComparator As IComparer(Of C))
-            Call Arrays.Shuffle(Me.chromosomes)
-            Me.chromosomes.Sort(chromosomesComparator)
+        Public Sub SortPopulationByFitness(comparator As IComparer(Of chr))
+            Call Arrays.Shuffle(chromosomes)
+            Call chromosomes.Sort(comparator)
         End Sub
 
         ''' <summary>
         ''' shortening population till specific number
         ''' </summary>
-        Public Overridable Sub trim(len As Integer)
-            Me.chromosomes = Me.chromosomes.sublist(0, len)
+        Public Sub Trim(len As Integer)
+            chromosomes = chromosomes.sublist(0, len)
         End Sub
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of C) Implements IEnumerable(Of C).GetEnumerator
-            For Each x As C In chromosomes
+        Public Iterator Function GetEnumerator() As IEnumerator(Of chr) Implements IEnumerable(Of chr).GetEnumerator
+            For Each x As chr In chromosomes
                 Yield x
             Next
         End Function
@@ -75,5 +92,4 @@ Namespace GAF
             Yield GetEnumerator()
         End Function
     End Class
-
 End Namespace

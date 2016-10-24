@@ -221,6 +221,7 @@
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
     <Compile Include="FourierTransform.vb" />
     <Compile Include="GeneticAlgorithm\Chromosome.vb" />
+    <Compile Include="GeneticAlgorithm\Helper\ChromosomesComparator.vb" />
     <Compile Include="GeneticAlgorithm\Fitness.vb" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.vb" />
     <Compile Include="GeneticAlgorithm\IterartionListener.vb" />
