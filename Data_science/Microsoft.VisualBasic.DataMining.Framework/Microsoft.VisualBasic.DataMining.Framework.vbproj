@@ -34,7 +34,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -220,6 +220,11 @@
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
     <Compile Include="FourierTransform.vb" />
+    <Compile Include="GeneticAlgorithm\Chromosome.vb" />
+    <Compile Include="GeneticAlgorithm\Fitness.vb" />
+    <Compile Include="GeneticAlgorithm\GeneticAlgorithm.vb" />
+    <Compile Include="GeneticAlgorithm\IterartionListener.vb" />
+    <Compile Include="GeneticAlgorithm\Population.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\Extensions.vb" />
@@ -263,14 +268,7 @@
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\BinaryNeuron.vb" />
     <Content Include="AprioriAlgorithm\CodeProject.txt" />
-    <Content Include="Kernel\GeneticAlgorithm\README.txt" />
-    <Compile Include="Kernel\GeneticAlgorithm\DifferenceInfo.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\INeuron.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\InputNeuron.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\IntNeuron.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\Common.vb" />
     <Compile Include="Kernel\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
     <Compile Include="ComponentModel\Entity.vb" />

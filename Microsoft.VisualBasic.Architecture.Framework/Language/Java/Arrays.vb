@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::dfe93dc2a7363b6fae6135b7f5f97d76, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Java\Arrays.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Mathematical
 
 Namespace Language.Java
 
@@ -43,6 +44,31 @@ Namespace Language.Java
             Dim out As T() = New T(length - 1) {}
             Call Array.Copy(matrix, start, out, Scan0, length)
             Return out
+        End Function
+
+        <Extension>
+        Public Function Shuffle(Of T)(ByRef list As List(Of T)) As List(Of T)
+            Dim rnd As New Random
+            Call rnd.Shuffle(list)
+            Return list
+        End Function
+
+        ''' <summary>
+        ''' Returns a view of the portion of this list between the specified fromIndex, inclusive, 
+        ''' and toIndex, exclusive. (If fromIndex and toIndex are equal, the returned list is empty.) 
+        ''' The returned list is backed by this list, so non-structural changes in the returned 
+        ''' list are reflected in this list, and vice-versa. The returned list supports all of the 
+        ''' optional list operations supported by this list.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
+        ''' <param name="fromIndex%">low endpoint (inclusive) of the subList</param>
+        ''' <param name="toIndex%">high endpoint (exclusive) of the subList</param>
+        ''' <returns>a view of the specified range within this list</returns>
+        ''' 
+        <Extension>
+        Public Function sublist(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
+            Return list.Skip(fromIndex).Take(toIndex - fromIndex).ToList
         End Function
     End Module
 End Namespace
