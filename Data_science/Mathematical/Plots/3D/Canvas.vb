@@ -74,6 +74,8 @@ Namespace Plot3D
             'models += New Cube(25)
 
             Call Run()
+
+            Call SetAutoRotate(New Point3D(1, 0, 0))
         End Sub
 
         Protected Overrides Sub ___animationLoop()

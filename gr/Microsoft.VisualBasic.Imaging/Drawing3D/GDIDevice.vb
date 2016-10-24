@@ -31,6 +31,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
@@ -203,6 +204,11 @@ Namespace Drawing3D
         End Sub
 
         Dim keyRotate As Point3D
+
+        Public Sub SetAutoRotate(angle As Point3D)
+            keyRotate = angle
+            AutoRotation = True
+        End Sub
 
         Private Sub GDIDevice_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
             AutoRotation = True
