@@ -139,8 +139,6 @@ Namespace Drawing3D
                 End If
             Next
 
-            order = order.Reverse.ToArray
-
             ' Draw the faces using the PAINTERS ALGORITHM (distant faces first, closer faces last).
             For i = 0 To 5
                 Call faces(order(i)).Draw(canvas, camera)
