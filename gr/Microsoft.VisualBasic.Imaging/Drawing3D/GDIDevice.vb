@@ -44,13 +44,19 @@ Namespace Drawing3D
         Protected models As New List(Of I3DModel)
 
         Dim _rotationThread As New UpdateThread(
-            1000, Sub()
-                      SyncLock camera
-                          camera.angleX += 0.01
-                          camera.angleY += 0.01
-                          camera.angleZ += 0.01
-                      End SyncLock
-                  End Sub)
+            200, Sub()
+                     SyncLock camera
+                         If keyRotate.X <> 0R OrElse keyRotate.Y <> 0R OrElse keyRotate.Z <> 0R Then
+                             camera.angleX += keyRotate.X
+                             camera.angleY += keyRotate.Y
+                             camera.angleZ += keyRotate.Z
+                         Else
+                             camera.angleX += 0.01
+                             camera.angleY += 0.01
+                             camera.angleZ += 0.01
+                         End If
+                     End SyncLock
+                 End Sub)
 
         Public Property AutoRotation As Boolean
             Get
@@ -194,6 +200,31 @@ Namespace Drawing3D
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Dim d% = Math.Sign(e.Delta)
             camera.ViewDistance += d
+        End Sub
+
+        Dim keyRotate As Point3D
+
+        Private Sub GDIDevice_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+            AutoRotation = True
+
+            Select Case e.KeyCode
+                Case System.Windows.Forms.Keys.Up
+                    keyRotate = New Point3D(0, 1, 0)
+                Case System.Windows.Forms.Keys.Down
+                    keyRotate = New Point3D(0, -1, 0)
+                Case System.Windows.Forms.Keys.Left
+                    keyRotate = New Point3D(1, 0, 0)
+                Case System.Windows.Forms.Keys.Right
+                    keyRotate = New Point3D(-1, 0, 0)
+                Case Else
+                    ' Do Nothing
+                    AutoRotation = False
+            End Select
+        End Sub
+
+        Private Sub GDIDevice_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+            keyRotate = Nothing
+            AutoRotation = False
         End Sub
     End Class
 End Namespace
