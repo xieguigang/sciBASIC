@@ -285,4 +285,28 @@ Public Module Scatter
         Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, title,)
         Return Plot({serial}, ,, bg)
     End Function
+
+    Public Function Plot(points As IEnumerable(Of Point),
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional lineColor$ = "black",
+                         Optional bg$ = "white",
+                         Optional lineWidth! = 5.0!,
+                         Optional ptSize! = 15.0!,
+                         Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+
+        Dim serial = {
+            New SerialData With {
+                .color = lineColor.ToColor,
+                .lineType = lineType,
+                .PointSize = ptSize,
+                .width = lineWidth,
+                .pts = points.ToArray(
+                    Function(pt) New PointData With {
+                        .pt = New PointF(pt.X, pt.Y)
+                })
+            }
+        }
+        Return Plot(serial, size:=size, margin:=margin, bg:=bg)
+    End Function
 End Module
