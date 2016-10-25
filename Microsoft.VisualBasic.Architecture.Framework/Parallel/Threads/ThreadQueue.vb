@@ -34,6 +34,7 @@ Namespace Parallel
     ''' 任务线程队列
     ''' </summary>
     Public Class ThreadQueue
+        Implements IDisposable
 
         ''' <summary>
         ''' Writer Thread ☺
@@ -56,30 +57,24 @@ Namespace Parallel
         ''' </summary>
         Dim QSolverRunning As Boolean = False
 
-        ''' <summary>
-        ''' lock
-        ''' </summary>
-        Dim dummy As New Object()
+        Sub New()
+            QSolverRunning = False
+            MyThread.Name = "xConsole · Multi-Thread Writer"
+            MyThread.Start()
+        End Sub
 
         ''' <summary>
         ''' Add an Action to the queue.
         ''' </summary>
         ''' <param name="A">()=>{ .. }</param>
         Public Sub AddToQueue(A As Action)
-            Queue.Enqueue(A)
+            SyncLock Queue
+                Call Queue.Enqueue(A)
+            End SyncLock
 
-            If MultiThreadSupport Then
-                SyncLock dummy   ' 假若当前没有线程执行，则启动线程，反之则只需要将任务添加到队列之中就行了
-                    If Not MyThread.IsAlive Then
-                        QSolverRunning = False
-                        MyThread = New Thread(AddressOf exeQueue)
-
-                        MyThread.Name = "xConsole · Multi-Thread Writer"
-                        MyThread.Start()
-                    End If
-                End SyncLock
+            If MultiThreadSupport Then ' 只需要将任务添加到队列之中就行了
             Else
-                exeQueue()
+                WaitQueue()   ' 等待线程任务的执行完毕
             End If
         End Sub
 
@@ -96,19 +91,63 @@ Namespace Parallel
         ''' Execute the queue list
         ''' </summary>
         Private Sub exeQueue()
-            QSolverRunning = True
+            Do While App.Running AndAlso Not waitForExit
+                QSolverRunning = True
 
-            While Queue IsNot Nothing AndAlso Queue.Count > 0
-                Thread.MemoryBarrier()
+                While True
+                    Dim a As Action
 
-                Dim a As Action = Queue.Dequeue()
+                    SyncLock Queue
+                        If Queue.Count = 0 Then
+                            Exit While
+                        Else
+                            a = Queue.Dequeue()
+                        End If
+                    End SyncLock
 
-                If a IsNot Nothing Then
-                    a.Invoke()
-                End If
-            End While
+                    If a IsNot Nothing Then
+                        a.Invoke()
+                    End If
+                End While
 
-            QSolverRunning = False
+                QSolverRunning = False
+            Loop
         End Sub
+
+        Dim waitForExit As Boolean = False
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' 要检测冗余调用
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)。
+                    Call WaitQueue()
+                    waitForExit = True
+                End If
+
+                ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。
+                ' TODO: 将大型字段设置为 null。
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: 仅当以上 Dispose(disposing As Boolean)拥有用于释放未托管资源的代码时才替代 Finalize()。
+        'Protected Overrides Sub Finalize()
+        '    ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' Visual Basic 添加此代码以正确实现可释放模式。
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+            Dispose(True)
+            ' TODO: 如果在以上内容中替代了 Finalize()，则取消注释以下行。
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

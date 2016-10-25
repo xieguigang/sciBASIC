@@ -48,6 +48,10 @@ Namespace GAF
             Next
         End Sub
 
+        ''' <summary>
+        ''' 按值复制
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Clone() As Object Implements ICloneable.Clone
             Dim v As var() = LinqAPI.Exec(Of var) <=
  _
@@ -60,6 +64,11 @@ Namespace GAF
             }
         End Function
 
+        ''' <summary>
+        ''' 结果是按值复制的
+        ''' </summary>
+        ''' <param name="anotherChromosome"></param>
+        ''' <returns></returns>
         Public Function Crossover(anotherChromosome As ParameterVector) As IList(Of ParameterVector) Implements Chromosome(Of ParameterVector).Crossover
             Dim thisClone As ParameterVector = DirectCast(Clone(), ParameterVector)
             Dim otherClone As ParameterVector = DirectCast(anotherChromosome.Clone, ParameterVector)
@@ -67,24 +76,26 @@ Namespace GAF
             Dim array2#() = otherClone.Vector
 
             random.Crossover(array1, array2)
-
-            Dim copy1#() = New Double(array1.Length - 1) {}
-            Dim copy2#() = New Double(array2.Length - 1) {}
-
-            Call Array.ConstrainedCopy(array1, Scan0, copy1, Scan0, copy1.Length)
-            Call Array.ConstrainedCopy(array2, Scan0, copy2, Scan0, copy2.Length)
-
-            thisClone.__setValues(copy1)
-            otherClone.__setValues(copy2)
+            thisClone.__setValues(array1)
+            otherClone.__setValues(array2)
 
             Return {thisClone, otherClone}.ToList
         End Function
 
+        ''' <summary>
+        ''' 会按值复制
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Mutate() As ParameterVector Implements Chromosome(Of ParameterVector).Mutate
             Dim m As ParameterVector = Clone()
-            Call m.Vector.Mutate(random)
-            Call m.Vector.Mutate(random)
-            Call m.Vector.Mutate(random)
+
+            For i As Integer = 0 To 3
+                Dim array#() = m.Vector
+
+                Call array.Mutate(random)
+                Call m.__setValues(array)
+            Next
+
             Return m
         End Function
 

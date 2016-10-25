@@ -14,7 +14,7 @@ Namespace GAF.Helper
             ' and increase or decrease it on small value
             Dim index As Integer = random.Next(v.Length)
             Dim mutationValue# =
-                random.Next(v.Length) - random.Next(v.Length)
+                random.Next(v.Length) - (random.NextDouble - v.Length)
 
             v(index) += mutationValue
         End Sub

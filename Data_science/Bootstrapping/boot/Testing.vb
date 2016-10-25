@@ -1,15 +1,23 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.DataMining.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Testing
 
     Public Sub Run()
         Dim model As Model = New TestModel
-        Dim result = GAF.Protocol.Fitting(model, 100, 0, 10, evolIterations:=150)
+        Dim outPrint As List(Of outPrint) = Nothing
+        Dim result = GAF.Protocol.Fitting(model, 20, 0, 10, evolIterations:=150000, outPrint:=outPrint)
+
+        Call outPrint.SaveTo("x:\test_debug.csv")
+        Call result.GetJson.__DEBUG_ECHO
+
         Pause()
     End Sub
 

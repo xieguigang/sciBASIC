@@ -15,6 +15,7 @@
 ' *****************************************************************************
 
 Imports Microsoft.VisualBasic.DataMining.GAF.Helper
+Imports Microsoft.VisualBasic.Linq
 
 Namespace GAF
 
@@ -45,27 +46,18 @@ Namespace GAF
             Dim i As Integer = 0
 
             Do While (i < parentPopulationSize) AndAlso (i < Me.ParentChromosomesSurviveCount)
-                newPopulation.Add(Population(i))
+                newPopulation.Add(Population(i)) ' 旧的原有的种群
                 i += 1
             Loop
 
-            For i = 0 To parentPopulationSize - 1
-                Dim chromosome As C = Population(i)
-                Dim mutated As C = chromosome.Mutate()   ' 突变
+            ' 新的突变的种群
+            For Each c As C In parentPopulationSize% _
+                .Sequence _
+                .AsParallel _
+                .Select(AddressOf __iterate) _
+                .IteratesALL ' 并行化计算每一个突变迭代
 
-                Dim otherChromosome As C = Me.Population.Random   ' 突变体和其他个体随机杂交
-                Dim crossovered As IList(Of C) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
-
-                ' --------- 新修改的
-                otherChromosome = Population.Random
-                crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
-                ' ---------
-
-                newPopulation.Add(mutated)
-
-                For Each c As C In crossovered
-                    newPopulation.Add(c)
-                Next
+                Call newPopulation.Add(c)
             Next
 
             newPopulation.SortPopulationByFitness(_chromosomesComparator)  ' 通过fitness排序来进行择优
@@ -73,17 +65,43 @@ Namespace GAF
             _Population = newPopulation                                    ' 新种群替代旧的种群
         End Sub
 
+        ''' <summary>
+        ''' 并行化过程之中的单个迭代
+        ''' </summary>
+        ''' <param name="i%"></param>
+        ''' <returns></returns>
+        Private Iterator Function __iterate(i%) As IEnumerable(Of C)
+            Dim chromosome As C = Population(i)
+            Dim mutated As C = chromosome.Mutate()   ' 突变
+            Dim rnd As New Random
+            Dim otherChromosome As C = Population.Random(rnd)  ' 突变体和其他个体随机杂交
+            Dim crossovered As IList(Of C) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
+
+            ' --------- 新修改的
+            otherChromosome = Population.Random(rnd)
+            crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
+            ' ---------
+
+            Yield mutated
+
+            For Each c As C In crossovered
+                Yield c
+            Next
+        End Function
+
         Public Sub Evolve(count As Integer)
-            Me._terminate = False
+            _terminate = False
 
             For i As Integer = 0 To count - 1
-                If Me._terminate Then
+                If _terminate Then
                     Exit For
                 End If
-                Me.Evolve()
-                Me._Iteration = i
-                For Each l As IterartionListener(Of C, T) In Me.iterationListeners
-                    l.Update(Me)
+
+                Call Evolve()
+                _Iteration = i
+
+                For Each l As IterartionListener(Of C, T) In iterationListeners
+                    Call l.Update(Me)
                 Next
             Next
         End Sub
@@ -120,7 +138,7 @@ Namespace GAF
         End Sub
 
         Public Sub removeIterationListener(listener As IterartionListener(Of C, T))
-            Me.iterationListeners.Remove(listener)
+            iterationListeners.Remove(listener)
         End Sub
 
         Public Function Fitness(chromosome As C) As T

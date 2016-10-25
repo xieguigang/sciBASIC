@@ -26,7 +26,7 @@
                 Dim f As T = outerInstance _
                     ._fitnessFunc _
                     .Calculate(chr)
-                cache(key) = f
+                cache.Add(key, f)
 
                 Return f
             End If

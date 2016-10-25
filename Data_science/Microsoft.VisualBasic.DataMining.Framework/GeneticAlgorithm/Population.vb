@@ -25,7 +25,6 @@ Namespace GAF
         Const DEFAULT_NUMBER_OF_CHROMOSOMES As Integer = 32
 
         Dim chromosomes As New List(Of chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
-        ReadOnly _random As New Random()
 
         ''' <summary>
         ''' Add chromosome
@@ -49,12 +48,12 @@ Namespace GAF
         ''' Gets random chromosome
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Random As chr
+        Public ReadOnly Property Random(rnd As Random) As chr
             Get
                 Dim numOfChromosomes As Integer = chromosomes.Count
                 ' TODO improve random generator
                 ' maybe use pattern strategy ?
-                Dim indx As Integer = _random.Next(numOfChromosomes)
+                Dim indx As Integer = rnd.Next(numOfChromosomes)
                 Return chromosomes(indx)
             End Get
         End Property
