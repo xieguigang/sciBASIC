@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DataMining.GAF
 Imports Microsoft.VisualBasic.DataMining.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.DataMining.KMeans
 
 Namespace GAF
 
@@ -39,12 +40,13 @@ Namespace GAF
                 chromosome _
                     .vars _
                     .ToDictionary(Function(var) var.Name,
-                                  Function(var) var.GetValue)
+                                  Function(var) var.value)
             Dim out As ODEsOut = model.RunTest(vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
 
             For Each y As NamedValue(Of Double()) In observation.y.Values
-                fit += FitnessHelper.Calculate(y.x, out.y(y.Name).x)   ' 再计算出fitness
+                ' 再计算出fitness
+                fit += EuclideanDistance(y.x, out.y(y.Name).x) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
             Return fit.Max

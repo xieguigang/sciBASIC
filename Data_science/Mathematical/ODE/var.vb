@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Mathematical.diffEq
 ''' </summary>
 Public Class var : Inherits float
     Implements Ivar
+    Implements ICloneable
 
     Public Property Index As Integer
     Public Property Name As String Implements sIdEnumerable.Identifier
@@ -43,6 +44,13 @@ Public Class var : Inherits float
     Public Shared ReadOnly type As Type = GetType(var)
 
     Sub New()
+    End Sub
+
+    Sub New(name$, value#)
+        With Me
+            .Name = name
+            .value = value
+        End With
     End Sub
 
     Sub New(name As String)
@@ -77,6 +85,10 @@ Public Class var : Inherits float
     Public Overloads Shared Operator <>(var As var, x As Double) As var
         Throw New NotSupportedException
     End Operator
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return New var(Me)
+    End Function
 End Class
 
 Public Interface Ivar : Inherits sIdEnumerable

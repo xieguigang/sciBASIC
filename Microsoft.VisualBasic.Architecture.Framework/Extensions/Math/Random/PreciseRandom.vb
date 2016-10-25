@@ -36,7 +36,7 @@ Namespace Mathematical
     ''' </summary>
     Public Class PreciseRandom
 
-        ReadOnly __rnd As New Random(Now.Millisecond)
+        ReadOnly __rnd As New Random
         ReadOnly __digits As DoubleRange
 
         ''' <summary>

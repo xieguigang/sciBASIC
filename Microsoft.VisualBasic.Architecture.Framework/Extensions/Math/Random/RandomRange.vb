@@ -81,7 +81,7 @@ Namespace Mathematical
                             Dim range As New DoubleRange(from, [to])
 
                             If forceInit Then
-                                Return Function() New Random(Now.Millisecond).NextDouble(range)  ' 想要通过牺牲性能来强制获取足够的随机
+                                Return Function() New Random().NextDouble(range)  ' 想要通过牺牲性能来强制获取足够的随机
                             Else
                                 Dim rnd As New Random
                                 Return Function() rnd.NextDouble(range)  ' 假若二者都是常数，则返回常数随机区间
@@ -107,7 +107,7 @@ Namespace Mathematical
 
                         If forceInit Then
                             Return Function()
-                                       If New Random(Now.Millisecond).NextDouble < ppf Then
+                                       If New Random().NextDouble < ppf Then
                                            Return -1 * rf.NextNumber
                                        Else
                                            Return rt.NextNumber
@@ -126,7 +126,7 @@ Namespace Mathematical
                     Else
                         Dim range As New DoubleRange(from, [to])
                         If forceInit Then
-                            Return Function() New Random(Now.Millisecond).NextDouble(range)
+                            Return Function() New Random().NextDouble(range)
                         Else
                             Dim rnd As New Random
                             Return Function() rnd.NextDouble(range)
@@ -144,7 +144,7 @@ Namespace Mathematical
                     Else  ' from 和 to 都是负实数
                         Dim range As New DoubleRange(from, [to])
                         If forceInit Then
-                            Return Function() New Random(Now.Millisecond).NextDouble(range)
+                            Return Function() New Random().NextDouble(range)
                         Else
                             Dim rnd As New Random
                             Return Function() rnd.NextDouble(range)

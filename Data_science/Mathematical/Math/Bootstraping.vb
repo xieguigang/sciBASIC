@@ -37,7 +37,7 @@ Public Module Bootstraping
 
     Public Function Sample(x%) As Vector
         Dim xvec As Integer() =
-            New Random(Now.Millisecond).Permutation(x, x)
+            New Random().Permutation(x, x)
         Return New Vector(xvec.Select(Function(n) CDbl(n)))
     End Function
 
@@ -60,7 +60,7 @@ Public Module Bootstraping
     <Extension>
     Public Iterator Function Samples(Of T)(source As IEnumerable(Of T), N As Integer, Optional B As Integer = 100) As IEnumerable(Of IntegerTagged(Of T()))
         Dim array As T() = source.ToArray
-        Dim rnd As New Random(Now.Millisecond)
+        Dim rnd As New Random
 
         For i As Integer = 0 To B
             Dim ls As New List(Of T)

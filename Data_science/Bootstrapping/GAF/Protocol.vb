@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DataMining.GAF
 Imports Microsoft.VisualBasic.DataMining.GAF.Helper
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Namespace GAF
 
@@ -27,19 +28,23 @@ Namespace GAF
         Public Function Fitting(model As Model, n%, a#, b#,
                                 Optional popSize% = 100%,
                                 Optional evolIterations% = 5000%,
-                                Optional ByRef outPrint As List(Of outPrint) = Nothing) As VariableModel()
+                                Optional ByRef outPrint As List(Of outPrint) = Nothing) As var()
 
-            Dim vars As VariableModel() = model.params _
-                .Join(model.yinit) _
-                .ToArray
+            Dim getVars As Func(Of var()) =
+                Function() model.params _
+                    .Select(Function(x) New var(x.Name, x.GetValue)) _
+                    .Join(model.yinit _
+                    .Select(Function(x) New var(x.Name, x.GetValue))) _
+                    .ToArray
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector() With {
-                    .vars = vars
+                    .vars = getVars() _
+                    .ToArray(Function(x) New var(x.Name, x.value + 10 * Rnd()))
             }.InitialPopulation(popSize%)
             Dim obs As Dictionary(Of String, Double) =
-                vars _
+                getVars() _
                 .ToDictionary(Function(x) x.Name,
-                              Function(x) x.GetValue)
+                              Function(x) x.value)
             Dim fitness As Fitness(Of ParameterVector, Double) =
                 New GAFfitness(obs, model, n, a, b)
             Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)
@@ -61,7 +66,6 @@ Namespace GAF
             Call Console.WriteLine("GAF fitting:")
             Call Console.WriteLine(ga.Best.vars.GetJson)
 #End If
-
             Return ga.Best.vars
         End Function
     End Module

@@ -9,7 +9,7 @@ Module Testing
 
     Public Sub Run()
         Dim model As Model = New TestModel
-        Dim result = GAF.Protocol.Fitting(model, 100, 0, 10)
+        Dim result = GAF.Protocol.Fitting(model, 100, 0, 10, evolIterations:=20000)
         Pause()
     End Sub
 

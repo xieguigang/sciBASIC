@@ -179,13 +179,13 @@ Public MustInherit Class ODEs
             }
 
         ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏
-        GC.SuppressFinalize(K1)
-        GC.SuppressFinalize(K2)
-        GC.SuppressFinalize(K3)
-        GC.SuppressFinalize(K4)
-        GC.SuppressFinalize(darrayn)
-        GC.SuppressFinalize(darraynext)
-        GC.SuppressFinalize(vars)
+        'GC.SuppressFinalize(K1)
+        'GC.SuppressFinalize(K2)
+        'GC.SuppressFinalize(K3)
+        'GC.SuppressFinalize(K4)
+        'GC.SuppressFinalize(darrayn)
+        'GC.SuppressFinalize(darraynext)
+        'GC.SuppressFinalize(vars)
 
         Return New ODEsOut With {
             .x = x,
