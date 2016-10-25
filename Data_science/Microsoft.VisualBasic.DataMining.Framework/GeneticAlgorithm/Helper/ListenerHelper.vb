@@ -6,7 +6,10 @@ Namespace GAF.Helper
     Public Module ListenerHelper
 
         Public Structure outPrint
-            Public iter%, fit%, chromosome$
+
+            Public Property iter%
+            Public Property fit%
+            Public Property chromosome$
 
             Public Overrides Function ToString() As String
                 Return $"{iter}{vbTab}{fit}{vbTab}{chromosome}"
