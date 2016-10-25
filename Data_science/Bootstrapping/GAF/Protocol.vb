@@ -45,7 +45,7 @@ Namespace GAF
             Dim obs As Dictionary(Of String, Double) =
                 getVars() _
                 .ToDictionary(Function(x) x.Name,
-                              Function(x) x.value)
+                              Function(x) 1.0#)
             Dim fitness As Fitness(Of ParameterVector, Double) =
                 New GAFfitness(obs, model, n, a, b)
             Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)

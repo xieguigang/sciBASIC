@@ -21,6 +21,10 @@ Namespace GAF
         ''' </summary>
         Dim model As Model
         Dim n%, a#, b#
+        ''' <summary>
+        ''' 计算的采样数
+        ''' </summary>
+        Dim samples%
 
         ''' <summary>
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
@@ -33,6 +37,7 @@ Namespace GAF
                 .n = n
                 .a = a
                 .b = b
+                .samples = n / 10
             End With
         End Sub
 
@@ -47,15 +52,15 @@ Namespace GAF
 
             For Each y As NamedValue(Of Double()) In observation.y.Values
                 ' 再计算出fitness
-                Dim sample1 = y.x.Split(100)
-                Dim sample2 = out.y(y.Name).x.Split(100)
-                Dim a#() = sample1.ToArray(Function(x) x.Average)
-                Dim b#() = sample2.ToArray(Function(x) x.Average)
+                Dim sample1 = y.x.Split(samples)
+                Dim sample2 = out.y(y.Name).x.Split(samples)
+                Dim a#() = sample1.ToArray(Function(x) x.Max)
+                Dim b#() = sample2.ToArray(Function(x) x.Max)
 
                 fit += EuclideanDistance(a#, b#) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
-            Return fit.Min
+            Return fit.Average
         End Function
     End Class
 End Namespace
