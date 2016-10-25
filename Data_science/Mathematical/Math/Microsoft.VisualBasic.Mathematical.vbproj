@@ -191,6 +191,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -234,6 +235,7 @@
     <Compile Include="BasicR\Solvers\ISolver.vb" />
     <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
     <Compile Include="BasicR\Vector.vb" />
+    <Compile Include="CubicSpline.vb" />
     <Compile Include="Bootstraping.vb" />
     <Compile Include="Distributions\Beta.vb" />
     <Compile Include="Distributions\DirichletDistribution.vb" />

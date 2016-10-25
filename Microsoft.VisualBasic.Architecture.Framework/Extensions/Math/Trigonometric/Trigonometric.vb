@@ -63,5 +63,59 @@ Namespace Mathematical
         Public Function Distance(a As PointF, b As PointF) As Double
             Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
+
+        Public Function GetAngle(p1 As Point, p2 As Point) As Double
+            Dim xDiff As Double = p2.X - p1.X
+            Dim yDiff As Double = p2.Y - p1.Y
+            Return 180 - (toDegrees(Math.Atan2(yDiff, xDiff)) - 90)
+        End Function
+
+        <Extension>
+        Public Function MovePoint(p As Point, angle As Double, distance As Integer) As Point
+            p = New Point(p)
+            p.X += distance * Math.Sin(angle)
+            p.Y += distance * Math.Cos(angle)
+
+            Return p
+        End Function
+
+        ''' <summary>
+        ''' Converts an angle measured in degrees to an approximately
+        ''' equivalent angle measured in radians.  The conversion from
+        ''' degrees to radians is generally inexact.
+        ''' </summary>
+        ''' <param name="angdeg">   an angle, in degrees </param>
+        ''' <returns>  the measurement of the angle {@code angdeg}
+        '''          in radians.
+        ''' @since   1.2 </returns>
+        Public Function toRadians(angdeg As Double) As Double
+            Return angdeg / 180.0 * Math.PI
+        End Function
+
+        ''' <summary>
+        ''' Converts an angle measured in radians to an approximately
+        ''' equivalent angle measured in degrees.  The conversion from
+        ''' radians to degrees is generally inexact; users should
+        ''' <i>not</i> expect {@code cos(toRadians(90.0))} to exactly
+        ''' equal {@code 0.0}.
+        ''' </summary>
+        ''' <param name="angrad">   an angle, in radians </param>
+        ''' <returns>  the measurement of the angle {@code angrad}
+        '''          in degrees.
+        ''' @since   1.2 </returns>
+        Public Function toDegrees(angrad As Double) As Double
+            Return angrad * 180.0 / Math.PI
+        End Function
+
+        <Extension>
+        Public Function NearestPoint(points As IEnumerable(Of Point), x As Integer, y As Integer, radius As Integer) As Point
+            For Each pos As Point In points
+                Dim dist As Double = Math.Sqrt(Math.Pow(x - pos.X, 2) + Math.Pow(y - pos.Y, 2))
+                If dist <= radius Then
+                    Return pos
+                End If
+            Next
+            Return Nothing
+        End Function
     End Module
 End Namespace

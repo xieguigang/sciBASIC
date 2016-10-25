@@ -2,10 +2,11 @@
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.GAF
 Imports Microsoft.VisualBasic.DataMining.GAF.Helper
-Imports Microsoft.VisualBasic.Mathematical.diffEq
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace GAF
 
@@ -44,7 +45,7 @@ Namespace GAF
                                 Optional popSize% = 100%,
                                 Optional evolIterations% = 5000%,
                                 Optional ByRef outPrint As List(Of outPrint) = Nothing,
-                                Optional threshold# = 1,
+                                Optional threshold# = 0.5,
                                 Optional obs As Dictionary(Of String, Double) = Nothing,
                                 Optional log10Fit As Boolean = False) As var()
 
