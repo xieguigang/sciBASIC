@@ -53,6 +53,14 @@ Namespace MonteCarlo
             Return {}
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="estimates">新的方程参数</param>
+        ''' <param name="n%"></param>
+        ''' <param name="a%"></param>
+        ''' <param name="b%"></param>
+        ''' <returns></returns>
         Public Function RunTest(estimates As Dictionary(Of String, Double), n%, a%, b%) As ODEsOut
             Dim model As Type = Me.GetType()
             Dim parms$() = ODEs.GetParameters(model).ToArray

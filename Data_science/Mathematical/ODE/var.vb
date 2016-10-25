@@ -49,6 +49,18 @@ Public Class var : Inherits float
         Me.Name = name
     End Sub
 
+    ''' <summary>
+    ''' Value copy
+    ''' </summary>
+    ''' <param name="var"></param>
+    Sub New(var As var)
+        With var
+            Index = .Index
+            Name = .Name
+            value = .value
+        End With
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{Index}] {Name} As System.Double = {value}"
     End Function
