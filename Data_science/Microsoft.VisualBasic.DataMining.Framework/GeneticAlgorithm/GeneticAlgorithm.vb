@@ -45,7 +45,7 @@ Namespace GAF
             Dim newPopulation As New Population(Of C)()
             Dim i As Integer = 0
 
-            Do While (i < parentPopulationSize) AndAlso (i < Me.ParentChromosomesSurviveCount)
+            Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
                 newPopulation.Add(Population(i)) ' 旧的原有的种群
                 i += 1
             Loop

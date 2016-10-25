@@ -66,22 +66,51 @@ Namespace MonteCarlo
         ''' <param name="a%"></param>
         ''' <param name="b%"></param>
         ''' <returns></returns>
+        ''' <remarks>线程不安全的</remarks>
         Public Function RunTest(estimates As Dictionary(Of String, Double), n%, a%, b%) As ODEsOut
             Dim model As Type = Me.GetType()
+            'Dim parms$() = ODEs.GetParameters(model).ToArray
+            'Dim vars$() = ODEs.GetVariables(model).ToArray
+
+            'For Each var$ In vars
+            '    Me(var).value = estimates(var)
+            'Next
+
+            'For Each parm$ In parms
+            '    Dim [set] As Action(Of Object, Double) =
+            '        Delegates.FieldSet(Of Double)(model, parm)
+            '    Call [set](Me, estimates(parm))
+            'Next
+
+            'Return Me.Solve(n, a, b, incept:=True)
+            Return RunTest(model, estimates, n, a, b)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数是为并行化而设计的，线程安全的
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <param name="estimates">新的方程参数，这里面需要同时包括了参数和y初始值</param>
+        ''' <param name="n%"></param>
+        ''' <param name="a%"></param>
+        ''' <param name="b%"></param>
+        ''' <returns></returns>
+        Public Shared Function RunTest(model As Type, estimates As Dictionary(Of String, Double), n%, a%, b%) As ODEsOut
             Dim parms$() = ODEs.GetParameters(model).ToArray
             Dim vars$() = ODEs.GetVariables(model).ToArray
+            Dim x As Model = TryCast(Activator.CreateInstance(model), Model)
 
             For Each var$ In vars
-                Me(var).value = estimates(var)
+                x(var).value = estimates(var)
             Next
 
             For Each parm$ In parms
                 Dim [set] As Action(Of Object, Double) =
                     Delegates.FieldSet(Of Double)(model, parm)
-                Call [set](Me, estimates(parm))
+                Call [set](x, estimates(parm))
             Next
 
-            Return Me.Solve(n, a, b, incept:=True)
+            Return x.Solve(n, a, b, incept:=True)
         End Function
 
         ''' <summary>
@@ -93,7 +122,10 @@ Namespace MonteCarlo
         ''' <param name="b%"></param>
         ''' <param name="modify">修改部分数据</param>
         ''' <returns></returns>
-        Public Function RunTest(estimates As Dictionary(Of String, Double)(), n%, a%, b%, Optional modify As Dictionary(Of String, Double) = Nothing) As ODEsOut
+        Public Function RunTest(estimates As Dictionary(Of String, Double)(),
+                                n%, a%, b%,
+                                Optional modify As Dictionary(Of String, Double) = Nothing) As ODEsOut
+
             Dim parms As New Dictionary(Of String, Double)
 
             For Each var$ In estimates(Scan0%).Keys
@@ -123,6 +155,11 @@ Namespace MonteCarlo
 
         Sub New(min#, max#)
             MyBase.New(min, max)
+        End Sub
+
+        Sub New(name$, min#, max#)
+            MyBase.New(min, max)
+            _Name = name
         End Sub
 
         Sub New()

@@ -15,8 +15,6 @@ Namespace GAF
     Public Class ParameterVector
         Implements Chromosome(Of ParameterVector), ICloneable
 
-        ReadOnly random As New Random
-
         Public Property vars As var()
 
         <ScriptIgnore>
@@ -75,7 +73,8 @@ Namespace GAF
             Dim array1#() = thisClone.Vector
             Dim array2#() = otherClone.Vector
 
-            random.Crossover(array1, array2)
+            Call New Random() _
+                .Crossover(array1, array2)
             thisClone.__setValues(array1)
             otherClone.__setValues(array2)
 
@@ -88,6 +87,7 @@ Namespace GAF
         ''' <returns></returns>
         Public Function Mutate() As ParameterVector Implements Chromosome(Of ParameterVector).Mutate
             Dim m As ParameterVector = Clone()
+            Dim random As New Random
 
             For i As Integer = 0 To 3
                 Dim array#() = m.Vector
@@ -101,8 +101,8 @@ Namespace GAF
 
         Public Overrides Function ToString() As String
             Return vars _
-                .Select(Function(x) x.value) _
-                .JoinBy(",")
+                .Select(Function(x) x.Name & ":=" & x.value) _
+                .JoinBy(",  ")
         End Function
     End Class
 End Namespace

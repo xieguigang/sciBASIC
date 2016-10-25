@@ -8,7 +8,7 @@ Namespace GAF.Helper
         Public Structure outPrint
 
             Public Property iter%
-            Public Property fit%
+            Public Property fit#
             Public Property chromosome$
 
             Public Overrides Function ToString() As String
@@ -64,8 +64,8 @@ Namespace GAF.Helper
                     })
 
                 ' If fitness is satisfying - we can stop Genetic algorithm
-                If bestFit <= Me.threshold Then
-                    ga.Terminate()
+                If bestFit <= threshold Then
+                    Call ga.Terminate()
                 End If
             End Sub
         End Structure

@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
+    <Compile Include="GAF\Dump.vb" />
     <Compile Include="GAF\Fitness.vb" />
     <Compile Include="GAF\Protocol.vb" />
     <Compile Include="GAF\ParameterVector.vb" />

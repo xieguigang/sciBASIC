@@ -798,6 +798,9 @@ Public Module App
         Return tmp
     End Function
 
+    Public ReadOnly Property CurrentProcessTemp As String =
+        GenerateTemp(App.SysTemp & "/tmp.io", App.PID)
+
     ''' <summary>
     '''
     ''' </summary>
