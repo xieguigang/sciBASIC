@@ -50,16 +50,16 @@ Namespace MonteCarlo.Example
             dy(sin) = a * Math.Sin(dx) + f
         End Sub
 
-        Public Overrides Function params() As NamedValue(Of INextRandomNumber)()
+        Public Overrides Function params() As VariableModel()
             Return {
-                New NamedValue(Of INextRandomNumber)(NameOf(a), GetRandom(-1000, 1000)),
-                New NamedValue(Of INextRandomNumber)(NameOf(f), GetRandom(-1000, 1000))
+                New VariableModel(-1000, 1000) With {.Name = NameOf(a)},
+                New VariableModel(-1000, 1000) With {.Name = NameOf(f)}
             }
         End Function
 
-        Public Overrides Function yinit() As NamedValue(Of INextRandomNumber)()
+        Public Overrides Function yinit() As VariableModel()
             Return {
-                New NamedValue(Of INextRandomNumber)(NameOf(sin), GetRandom(-1000, 1000))
+                New VariableModel(-1000, 1000) With {.Name = NameOf(sin)}
             }
         End Function
 

@@ -38,6 +38,8 @@ Imports Microsoft.VisualBasic.Text
 Module Program
 
     Public Function Main() As Integer
+        Call Testing.Run()
+
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 

@@ -39,7 +39,7 @@ Namespace GAF
                 chromosome _
                     .vars _
                     .ToDictionary(Function(var) var.Name,
-                                  Function(var) var.value)
+                                  Function(var) var.GetValue)
             Dim out As ODEsOut = model.RunTest(vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
 

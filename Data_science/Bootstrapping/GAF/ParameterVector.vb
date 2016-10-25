@@ -1,7 +1,9 @@
-﻿Imports Microsoft.VisualBasic.DataMining.GAF
-Imports Microsoft.VisualBasic.Mathematical.diffEq
-Imports Microsoft.VisualBasic.Linq
+﻿Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
+Imports Microsoft.VisualBasic.DataMining.GAF
 Imports Microsoft.VisualBasic.DataMining.GAF.Helper
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace GAF
 
@@ -13,16 +15,22 @@ Namespace GAF
 
         ReadOnly random As New Random(Now.Millisecond)
 
-        Public Property vars As var()
+        Public Property vars As VariableModel()
         Public Property Vector As Double()
             Get
                 Return vars _
-                    .Select(Function(var) var.value) _
+                    .Select(Function(var) {var.Min, var.Max}) _
+                    .IteratesALL _
                     .ToArray
             End Get
             Set(value As Double())
-                For i As Integer = 0 To vars.Length - 1
-                    vars(i).value = value(i)
+                For Each var As SeqValue(Of Double()) In value _
+                    .Split(parTokens:=2) _
+                    .SeqIterator
+
+                    Dim i% = var.i
+                    vars(i).Min = var.obj(Scan0)
+                    vars(i).Max = var.obj(1)
                 Next
             End Set
         End Property
@@ -30,7 +38,7 @@ Namespace GAF
         Public Function Clone() As Object Implements ICloneable.Clone
             Return New ParameterVector With {
                 .vars = vars _
-                    .ToArray(Function(var) New var(var))
+                    .ToArray(Function(var) TryCast(var.Clone, VariableModel))
             }
         End Function
 
@@ -45,6 +53,10 @@ Namespace GAF
             Dim m As ParameterVector = Clone()
             Call m.Vector.Mutate(random)
             Return m
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
         End Function
     End Class
 End Namespace
