@@ -32,17 +32,17 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 
 Public Module Scatter
 

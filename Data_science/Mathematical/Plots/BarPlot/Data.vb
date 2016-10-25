@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class BarDataSample

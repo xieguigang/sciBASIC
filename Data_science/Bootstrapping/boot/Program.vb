@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.EigenvectorBootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Text
 
 Module Program

@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.DataMining.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Testing

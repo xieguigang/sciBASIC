@@ -43,7 +43,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS

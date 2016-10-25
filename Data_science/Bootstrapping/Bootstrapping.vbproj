@@ -150,9 +150,9 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mathematical\ODE\diffEq.vbproj">
+    <ProjectReference Include="..\Mathematical\ODE\Calculus_diffEq.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
-      <Name>diffEq</Name>
+      <Name>Calculus_diffEq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>

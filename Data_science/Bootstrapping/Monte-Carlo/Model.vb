@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Emit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace MonteCarlo
 
