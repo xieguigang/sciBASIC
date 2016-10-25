@@ -55,6 +55,7 @@ Namespace GAF
                                   Function(var) var.value)
             Dim out As ODEsOut = MonteCarlo.Model.RunTest(model, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
+            Dim NaN%
 
             For Each y As NamedValue(Of Double()) In observation.y.Values
                 ' 再计算出fitness
@@ -71,10 +72,19 @@ Namespace GAF
                     b = sample2.ToArray(Function(x) x.Max)
                 End If
 
+                NaN% = b.Where(AddressOf Is_NA_UHandle).Count
                 fit += Math.Sqrt(FitnessHelper.Calculate(a#, b#)) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
-            Return fit.Average
+            ' Return fit.Average
+            Dim fitness# = fit.Average
+
+            If fitness.Is_NA_UHandle Then
+                fitness = Single.MaxValue
+                fitness += NaN% * 10
+            End If
+
+            Return fitness
         End Function
     End Class
 End Namespace
