@@ -291,22 +291,36 @@ Public Module Scatter
                          Optional margin As Size = Nothing,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
+                         Optional title$ = "Plot Of Points",
                          Optional lineWidth! = 5.0!,
                          Optional ptSize! = 15.0!,
                          Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+        Dim s As SerialData = points _
+            .FromPoints(lineColor$,
+                        title$,
+                        lineWidth!,
+                        ptSize!,
+                        lineType)
+        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+    End Function
 
-        Dim serial = {
-            New SerialData With {
-                .color = lineColor.ToColor,
-                .lineType = lineType,
-                .PointSize = ptSize,
-                .width = lineWidth,
-                .pts = points.ToArray(
-                    Function(pt) New PointData With {
-                        .pt = New PointF(pt.X, pt.Y)
-                })
-            }
+    <Extension>
+    Public Function FromPoints(points As IEnumerable(Of Point),
+                               Optional lineColor$ = "black",
+                               Optional title$ = "Plot Of Points",
+                               Optional lineWidth! = 5.0!,
+                               Optional ptSize! = 15.0!,
+                               Optional lineType As DashStyle = DashStyle.Solid) As SerialData
+        Return New SerialData With {
+            .color = lineColor.ToColor,
+            .lineType = lineType,
+            .PointSize = ptSize,
+            .width = lineWidth,
+            .pts = points.ToArray(
+                Function(pt) New PointData With {
+                    .pt = New PointF(pt.X, pt.Y)
+            }),
+            .title = title
         }
-        Return Plot(serial, size:=size, margin:=margin, bg:=bg)
     End Function
 End Module

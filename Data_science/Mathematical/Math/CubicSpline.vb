@@ -51,8 +51,8 @@ Public Class CubicSpline
         Y
     End Enum
 
-    Private Function __extractValues(points As IList(Of Point), field As PosField) As IList(Of Integer?)
-        Dim ints As IList(Of Integer?) = New List(Of Integer?)()
+    Private Function __extractValues(points As IList(Of Point), field As PosField) As IList(Of Integer)
+        Dim ints As New List(Of Integer)()
         For Each p As Point In points
             Select Case field
                 Case PosField.X
