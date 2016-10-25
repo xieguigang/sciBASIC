@@ -25,7 +25,7 @@ Namespace GAF
         ''' <returns></returns>
         <Extension>
         Public Function Fitting(model As Model, n%, a#, b#,
-                                Optional popSize% = 1000%,
+                                Optional popSize% = 100%,
                                 Optional evolIterations% = 5000%,
                                 Optional ByRef outPrint As List(Of outPrint) = Nothing) As VariableModel()
 
