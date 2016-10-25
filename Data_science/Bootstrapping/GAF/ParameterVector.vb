@@ -72,7 +72,9 @@ Namespace GAF
         End Function
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return vars _
+                .Select(Function(x) x.value) _
+                .JoinBy(",")
         End Function
     End Class
 End Namespace

@@ -61,7 +61,7 @@ Public Class Demo
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me.Vector.GetJson
+            Return Vector.JoinBy(",")
         End Function
     End Class
 

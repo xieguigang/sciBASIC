@@ -28,7 +28,8 @@ Namespace GAF
         Public Function Fitting(model As Model, n%, a#, b#,
                                 Optional popSize% = 100%,
                                 Optional evolIterations% = 5000%,
-                                Optional ByRef outPrint As List(Of outPrint) = Nothing) As var()
+                                Optional ByRef outPrint As List(Of outPrint) = Nothing,
+                                Optional threshold# = 1) As var()
 
             Dim getVars As Func(Of var()) =
                 Function() model.params _
@@ -55,7 +56,7 @@ Namespace GAF
 #If DEBUG Then
                                            Call x.ToString.__DEBUG_ECHO
 #End If
-                                       End Sub)
+                                       End Sub, threshold)
             Call ga.Evolve(evolIterations%)
 
             outPrint = out

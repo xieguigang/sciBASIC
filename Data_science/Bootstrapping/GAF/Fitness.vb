@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.DataMining.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Linq
 
 Namespace GAF
 
@@ -46,10 +47,15 @@ Namespace GAF
 
             For Each y As NamedValue(Of Double()) In observation.y.Values
                 ' 再计算出fitness
-                fit += EuclideanDistance(y.x, out.y(y.Name).x) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
+                Dim sample1 = y.x.Split(100)
+                Dim sample2 = out.y(y.Name).x.Split(100)
+                Dim a#() = sample1.ToArray(Function(x) x.Average)
+                Dim b#() = sample2.ToArray(Function(x) x.Average)
+
+                fit += EuclideanDistance(a#, b#) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
-            Return fit.Max
+            Return fit.Min
         End Function
     End Class
 End Namespace

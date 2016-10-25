@@ -51,10 +51,15 @@ Namespace GAF
 
             For i = 0 To parentPopulationSize - 1
                 Dim chromosome As C = Population(i)
-                Dim mutated As C = chromosome.Mutate()
+                Dim mutated As C = chromosome.Mutate()   ' 突变
 
-                Dim otherChromosome As C = Me.Population.Random
-                Dim crossovered As IList(Of C) = chromosome.Crossover(otherChromosome)
+                Dim otherChromosome As C = Me.Population.Random   ' 突变体和其他个体随机杂交
+                Dim crossovered As IList(Of C) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
+
+                ' --------- 新修改的
+                otherChromosome = Population.Random
+                crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
+                ' ---------
 
                 newPopulation.Add(mutated)
 
@@ -63,9 +68,9 @@ Namespace GAF
                 Next
             Next
 
-            newPopulation.SortPopulationByFitness(_chromosomesComparator)
-            newPopulation.Trim(parentPopulationSize)
-            _Population = newPopulation
+            newPopulation.SortPopulationByFitness(_chromosomesComparator)  ' 通过fitness排序来进行择优
+            newPopulation.Trim(parentPopulationSize)                       ' 剪裁掉后面的对象，达到淘汰的效果
+            _Population = newPopulation                                    ' 新种群替代旧的种群
         End Sub
 
         Public Sub Evolve(count As Integer)

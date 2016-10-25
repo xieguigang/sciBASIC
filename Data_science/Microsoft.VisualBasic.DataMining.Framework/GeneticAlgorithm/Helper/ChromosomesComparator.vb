@@ -4,7 +4,7 @@
         Implements IComparer(Of C)
 
         ReadOnly outerInstance As GeneticAlgorithm(Of C, T)
-        ReadOnly cache As New Dictionary(Of C, T)
+        ReadOnly cache As New Dictionary(Of String, T)
 
         Public Sub New(GA As GeneticAlgorithm(Of C, T))
             outerInstance = GA
@@ -18,13 +18,15 @@
         End Function
 
         Public Function fit(chr As C) As T
-            If cache.ContainsKey(chr) Then
-                Return cache(chr)
+            Dim key$ = chr.ToString
+
+            If cache.ContainsKey(key) Then
+                Return cache(key)
             Else
                 Dim f As T = outerInstance _
                     ._fitnessFunc _
                     .Calculate(chr)
-                cache(chr) = f
+                cache(key) = f
 
                 Return f
             End If
