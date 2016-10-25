@@ -13,7 +13,7 @@ Dim result = CubicSpline.RecalcSpline(data).ToArray
 
 ## Example
 
-```
+```vbnet
 Dim data#()() = "./duom2.txt" _
     .IterateAllLines _
     .ToArray(Function(s) Regex.Replace(s, "\s+", " ") _
