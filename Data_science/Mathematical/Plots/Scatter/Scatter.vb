@@ -136,7 +136,7 @@ Public Module Scatter
                             }
 
                         If legendPosition.IsEmpty Then
-                            legendPosition = New Point(CInt(size.Width * 0.8), margin.Height)
+                            legendPosition = New Point(CInt(size.Width * 0.7), margin.Height)
                         End If
 
                         Call g.DrawLegends(legendPosition, legends,,, legendBorder)

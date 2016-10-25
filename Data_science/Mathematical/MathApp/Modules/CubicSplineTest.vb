@@ -33,7 +33,7 @@ Public Module CubicSplineTest
             ptSize:=40,
             title:="duom2: raw")
 
-        Call Scatter.Plot({raw, interplot}) _
+        Call Scatter.Plot({raw, interplot}, size:=New Size(3000, 1400)) _
             .SaveAs("./duom2.png")
 
         Pause()
