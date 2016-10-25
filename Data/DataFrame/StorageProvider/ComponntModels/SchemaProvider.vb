@@ -330,17 +330,17 @@ Namespace StorageProvider.ComponentModels
         ''' Creates the data frame schema for the specific object type.
         ''' </summary>
         ''' <param name="type"></param>
-        ''' <param name="Explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
-        Public Shared Function CreateObject(type As Type, Optional Explicit As Boolean = False) As SchemaProvider
+        Public Shared Function CreateObject(type As Type, Optional strict As Boolean = False) As SchemaProvider
             Dim Properties As Dictionary(Of PropertyInfo, StorageProvider) =
-                TypeSchemaProvider.GetProperties(type, Explicit)
+                TypeSchemaProvider.GetProperties(type, strict)
 
             Dim Schema As New SchemaProvider With {
                 .Columns = GetColumns(Properties),
                 .CollectionColumns = GetCollectionColumns(Properties),
                 .EnumColumns = GetEnumColumns(Properties),
-                .MetaAttributes = GetMetaAttributeColumn(Properties),
+                .MetaAttributes = GetMetaAttributeColumn(Properties, strict),
                 .KeyValuePairColumns = GetKeyValuePairColumn(Properties),
                 ._DeclaringType = type
             }
@@ -387,7 +387,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="Properties"></param>
         ''' <returns></returns>
-        Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As MetaAttribute
+        Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider), strict As Boolean) As MetaAttribute
             Dim MetaAttributes As MetaAttribute =
                 __gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
 
@@ -395,18 +395,24 @@ Namespace StorageProvider.ComponentModels
                 Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
 
                 If prop Is Nothing Then
-                    Throw New Exception(DynamicsNotFound)
+                    If strict Then
+                        Throw New Exception(DynamicsNotFound)
+                    Else
+                        Return Nothing
+                    End If
                 End If
 
-                Dim type As Type = prop.DeclaringType
+                Dim type As New Value(Of Type)(prop.DeclaringType)
 
-                If type.IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
-                    type = type.BaseType
+                If (+type).IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
                     Dim metaProp As PropertyInfo =
-                        type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),
-                                         BindingFlags.Public Or BindingFlags.Instance)
-                    type = type.GetGenericArguments.First
-                    MetaAttributes = New MetaAttribute(New Reflection.MetaAttribute(type), metaProp)
+                        (type = (+type).BaseType).GetProperty(
+                        NameOf(DynamicPropertyBase(Of Double).Properties),
+                        BindingFlags.Public Or BindingFlags.Instance)
+                    type = (+type).GetGenericArguments.First
+                    MetaAttributes = New MetaAttribute(
+                        New Reflection.MetaAttribute(+type),
+                        metaProp)
                 End If
             End If
 
