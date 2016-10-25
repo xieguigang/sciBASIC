@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
+    <Compile Include="GAF\Class1.vb" />
     <Compile Include="Obsolete\Analysis.vb" />
     <Compile Include="Monte-Carlo\AnalysisProtocol.vb" />
     <Compile Include="EigenvectorBootstrapping.vb" />
