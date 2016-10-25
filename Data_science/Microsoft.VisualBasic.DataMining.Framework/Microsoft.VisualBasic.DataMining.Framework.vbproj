@@ -224,6 +224,9 @@
     <Compile Include="GeneticAlgorithm\Helper\ChromosomesComparator.vb" />
     <Compile Include="GeneticAlgorithm\Fitness.vb" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.vb" />
+    <Compile Include="GeneticAlgorithm\Helper\ListenerHelper.vb" />
+    <Compile Include="GeneticAlgorithm\Helper\FitnessHelper.vb" />
+    <Compile Include="GeneticAlgorithm\Helper\GeneticHelper.vb" />
     <Compile Include="GeneticAlgorithm\IterartionListener.vb" />
     <Compile Include="GeneticAlgorithm\Population.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
