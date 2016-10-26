@@ -84,6 +84,8 @@ Namespace GAF
                         Function(x) New var(x, (2 ^ x.Length) * (100000 * New Random().NextDouble)))
             }.InitialPopulation(popSize%)
 
+            population.Parallel = True
+
             Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)
             Dim out As New List(Of outPrint)
 #If DEBUG Then

@@ -14,6 +14,8 @@
 ' limitations under the License.
 ' *****************************************************************************
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataMining.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 
@@ -25,6 +27,12 @@ Namespace GAF
         Const DEFAULT_NUMBER_OF_CHROMOSOMES As Integer = 32
 
         Dim chromosomes As New List(Of chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
+
+        ''' <summary>
+        ''' 是否采用并行计算模式？？
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Parallel As Boolean = False
 
         ''' <summary>
         ''' Add chromosome
@@ -71,6 +79,39 @@ Namespace GAF
 
         Public Sub SortPopulationByFitness(comparator As IComparer(Of chr))
             Call Arrays.Shuffle(chromosomes)
+            Call chromosomes.Sort(comparator)
+        End Sub
+
+        ''' <summary>
+        ''' 这里可能是限速的步骤，例如计算ODEs，可能会非常耗时
+        ''' 则可以先在这里进行并行化，计算出cache，后面比较的时候直接使用cache即可
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="GA"></param>
+        ''' <param name="comparator"></param>
+        Friend Sub SortPopulationByFitness(Of T As IComparable(Of T))(GA As GeneticAlgorithm(Of chr, T), comparator As ChromosomesComparator(Of chr, T))
+            Call Arrays.Shuffle(chromosomes)
+
+            If Parallel Then
+                Dim LQuery = From x As chr
+                             In chromosomes.AsParallel
+                             Let key As String = x.ToString
+                             Where Not comparator.cache.ContainsKey(key)
+                             Let fit As T = GA._fitnessFunc.Calculate(x)
+                             Select New NamedValue(Of T) With {
+                                 .Name = key,
+                                 .x = fit
+                             }
+
+                For Each x As NamedValue(Of T) In LQuery
+                    SyncLock comparator
+                        If Not comparator.cache.ContainsKey(x.Name) Then
+                            Call comparator.cache.Add(x.Name, x.x)
+                        End If
+                    End SyncLock
+                Next
+            End If
+
             Call chromosomes.Sort(comparator)
         End Sub
 

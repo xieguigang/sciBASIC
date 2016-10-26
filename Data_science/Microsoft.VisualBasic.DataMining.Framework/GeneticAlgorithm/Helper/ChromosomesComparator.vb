@@ -1,10 +1,15 @@
 ﻿Namespace GAF.Helper
 
+    ''' <summary>
+    ''' 缓存的Key是染色体的ToString的计算值
+    ''' </summary>
+    ''' <typeparam name="C"></typeparam>
+    ''' <typeparam name="T"></typeparam>
     Friend Class ChromosomesComparator(Of C As Chromosome(Of C), T As IComparable(Of T))
         Implements IComparer(Of C)
 
         ReadOnly outerInstance As GeneticAlgorithm(Of C, T)
-        ReadOnly cache As New Dictionary(Of String, T)
+        Friend ReadOnly cache As New Dictionary(Of String, T)
 
         Public Sub New(GA As GeneticAlgorithm(Of C, T))
             outerInstance = GA

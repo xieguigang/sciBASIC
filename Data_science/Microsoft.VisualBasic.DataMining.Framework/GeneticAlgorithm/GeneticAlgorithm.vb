@@ -37,12 +37,18 @@ Namespace GAF
             Me._Population = population
             Me._fitnessFunc = fitnessFunc
             Me._chromosomesComparator = New ChromosomesComparator(Of C, T)(Me)
-            Me._Population.SortPopulationByFitness(_chromosomesComparator)
+            Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
+
+            If population.Parallel Then
+                Call "Genetic Algorithm running in parallel mode.".Warning
+            End If
         End Sub
 
         Public Sub Evolve()
             Dim parentPopulationSize As Integer = Population.Size
-            Dim newPopulation As New Population(Of C)()
+            Dim newPopulation As New Population(Of C)() With {
+                .Parallel = Population.Parallel
+            }
             Dim i As Integer = 0
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
@@ -51,18 +57,18 @@ Namespace GAF
             Loop
 
             ' 新的突变的种群
+            ' 这一步并不是限速的部分
             For Each c As C In parentPopulationSize% _
                 .Sequence _
-                .AsParallel _
                 .Select(AddressOf __iterate) _
                 .IteratesALL ' 并行化计算每一个突变迭代
 
                 Call newPopulation.Add(c)
             Next
 
-            newPopulation.SortPopulationByFitness(_chromosomesComparator)  ' 通过fitness排序来进行择优
-            newPopulation.Trim(parentPopulationSize)                       ' 剪裁掉后面的对象，达到淘汰的效果
-            _Population = newPopulation                                    ' 新种群替代旧的种群
+            newPopulation.SortPopulationByFitness(Me, _chromosomesComparator)    ' 通过fitness排序来进行择优
+            newPopulation.Trim(parentPopulationSize)                             ' 剪裁掉后面的对象，达到淘汰的效果
+            _Population = newPopulation                                          ' 新种群替代旧的种群
         End Sub
 
         ''' <summary>
