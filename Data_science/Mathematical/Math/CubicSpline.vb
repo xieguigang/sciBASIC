@@ -8,9 +8,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' https://github.com/CrushedPixel/CubicSplineDemo
 ''' </remarks>
 Public Class CubicSpline
-    Implements IEnumerable(Of Point)
+    Implements IEnumerable(Of PointF)
 
-    Dim _points As New List(Of Point)
+    Dim _points As New List(Of PointF)
     Dim xCubics As New List(Of Cubic)
     Dim yCubics As New List(Of Cubic)
 
@@ -38,11 +38,11 @@ Public Class CubicSpline
     Sub New()
     End Sub
 
-    Sub New(points As IEnumerable(Of Point))
+    Sub New(points As IEnumerable(Of PointF))
         Call _points.AddRange(points)
     End Sub
 
-    Public Sub AddPoint(point As Point)
+    Public Sub AddPoint(point As PointF)
         Me._points.Add(point)
     End Sub
 
@@ -51,9 +51,9 @@ Public Class CubicSpline
         Y
     End Enum
 
-    Private Function __extractValues(points As IList(Of Point), field As PosField) As IList(Of Integer)
-        Dim ints As New List(Of Integer)()
-        For Each p As Point In points
+    Private Function __extractValues(points As IList(Of PointF), field As PosField) As IList(Of Single)
+        Dim ints As New List(Of Single)()
+        For Each p As PointF In points
             Select Case field
                 Case PosField.X
                     ints.Add(p.X)
@@ -70,15 +70,15 @@ Public Class CubicSpline
         CalcNaturalCubic(__extractValues(_points, PosField.Y), yCubics)
     End Sub
 
-    Public Function GetPoint(position As Single) As Point
+    Public Function GetPoint(position As Single) As PointF
         position = position * xCubics.Count
         Dim cubicNum As Integer = CInt(Fix(Math.Min(xCubics.Count - 1, position)))
         Dim cubicPos As Single = (position - cubicNum)
 
-        Return New Point(CInt(Fix(xCubics(cubicNum).Eval(cubicPos))), CInt(Fix(yCubics(cubicNum).Eval(cubicPos))))
+        Return New PointF(Fix(xCubics(cubicNum).Eval(cubicPos)), Fix(yCubics(cubicNum).Eval(cubicPos)))
     End Function
 
-    Public Sub CalcNaturalCubic(values As IList(Of Integer), cubics As ICollection(Of Cubic))
+    Public Sub CalcNaturalCubic(values As IList(Of Single), cubics As ICollection(Of Cubic))
         Dim num As Integer = values.Count - 1
 
         Dim gamma As Double() = New Double(num) {}
@@ -104,8 +104,8 @@ Public Class CubicSpline
         Next
         gamma(num) = 1.0F / (2.0F - gamma(num - 1))
 
-        Dim p0 As Integer = values(0)
-        Dim p1 As Integer = values(1)
+        Dim p0 As Single = values(0)
+        Dim p1 As Single = values(1)
 
         delta(0) = 3.0F * (p1 - p0) * gamma(0)
         For i = 1 To num - 1
@@ -140,12 +140,12 @@ Public Class CubicSpline
     ''' </summary>
     ''' <param name="source">假若点的数目少于或者等于2个，则会返回空集合</param>
     ''' <returns></returns>
-    Public Shared Iterator Function RecalcSpline(source As IEnumerable(Of Point)) As IEnumerable(Of Point)
+    Public Shared Iterator Function RecalcSpline(source As IEnumerable(Of PointF)) As IEnumerable(Of PointF)
         Dim spline As New CubicSpline()
-        Dim points As Point() = source.ToArray
+        Dim PointFs As PointF() = source.ToArray
 
-        If points.Length > 2 Then
-            For Each p As Point In points
+        If PointFs.Length > 2 Then
+            For Each p As PointF In PointFs
                 spline._points.Add(p)
             Next
 
@@ -159,7 +159,11 @@ Public Class CubicSpline
         End If
     End Function
 
-    Public Iterator Function GetEnumerator() As IEnumerator(Of Point) Implements IEnumerable(Of Point).GetEnumerator
+    Public Shared Function RecalcSpline(source As IEnumerable(Of Point)) As IEnumerable(Of Point)
+        Return RecalcSpline(source.Select(Function(pt) New PointF(pt.X, pt.Y)))
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of PointF) Implements IEnumerable(Of PointF).GetEnumerator
         For f As Single = 0 To 1 Step 0.01
             Yield GetPoint(f)
         Next
