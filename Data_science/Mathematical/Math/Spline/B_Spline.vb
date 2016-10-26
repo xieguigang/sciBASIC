@@ -1,5 +1,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Interpolation
 
@@ -10,14 +12,33 @@ Namespace Interpolation
     Public Module B_Spline
 
         ''' <summary>
-        ''' 
+        ''' B-spline curve interpolation
         ''' </summary>
         ''' <param name="ctrlPts">Control points</param>
         ''' <param name="degree%"></param>
         ''' <param name="RESOLUTION%"></param>
         ''' <returns></returns>
-        Public Function Compute(ctrlPts As Point(), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of Point)
-            Dim out As New List(Of Point)
+        ''' 
+        <Extension>
+        Public Function Compute(ctrlPts As Point(), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
+            Return ctrlPts.ToArray(
+                Function(pt) New PointF With {
+                    .X = pt.X,
+                    .Y = pt.Y
+                }).Compute(degree, RESOLUTION)
+        End Function
+
+        ''' <summary>
+        ''' B-spline curve interpolation
+        ''' </summary>
+        ''' <param name="ctrlPts">Control points</param>
+        ''' <param name="degree%"></param>
+        ''' <param name="RESOLUTION%"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function Compute(ctrlPts As PointF(), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
+            Dim out As New List(Of PointF)
 
             If ctrlPts.Length > 1 Then
                 Dim ustep As Double = 1.0 / (RESOLUTION * (ctrlPts.Length - 1))
@@ -52,7 +73,7 @@ Namespace Interpolation
         End Function
 
         <Extension>
-        Private Sub OutputPoint(ctrlPts As Point(), out As List(Of Point), t As Double(), k As Integer, u As Double)
+        Private Sub OutputPoint(ctrlPts As PointF(), out As List(Of PointF), t As Double(), k As Integer, u As Double)
             Dim i As Integer, j As Integer, r As Integer
             Dim d1 As Double, d2 As Double
             Dim l As Integer = 0
@@ -63,14 +84,14 @@ Namespace Interpolation
 
             l -= 1
 
-            Dim A As Point() = New Point(k - 1) {}
+            Dim A As PointF() = New PointF(k - 1) {}
 
             For j = 0 To k - 1
                 Dim index As Integer = l - k + 1 + j
                 If index < 0 OrElse index > ctrlPts.Length - 1 Then
                     Return
                 End If
-                A(j) = New Point() With {
+                A(j) = New PointF() With {
                     .X = ctrlPts(index).X,
                     .Y = ctrlPts(index).Y
                 }
