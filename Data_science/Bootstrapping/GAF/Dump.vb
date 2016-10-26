@@ -11,6 +11,7 @@ Namespace GAF
 
         Public model As Type
         Public n%, a%, b%
+        Public y0 As Dictionary(Of String, Double)
 
         Dim i As New Uid(caseSensitive:=False)
 
@@ -21,7 +22,8 @@ Namespace GAF
                    .vars _
                    .ToDictionary(Function(var) var.Name,
                                  Function(var) var.value)
-            Dim out As ODEsOut = MonteCarlo.Model.RunTest(model, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
+            Dim out As ODEsOut =
+                MonteCarlo.Model.RunTest(model, y0, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
             Dim path = App.CurrentProcessTemp & $"\debug_{++i}.csv"
 
             Call out.DataFrame("#TIME").Save(path$, Encodings.ASCII)

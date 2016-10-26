@@ -81,7 +81,7 @@ Namespace GAF
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector() With {
                     .vars = vars.ToArray(
-                        Function(x) New var(x, (2 ^ x.Length) * (10 * Rnd())))
+                        Function(x) New var(x, (2 ^ x.Length) * (100000 * New Random().NextDouble)))
             }.InitialPopulation(popSize%)
 
             Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)
@@ -92,7 +92,8 @@ Namespace GAF
                     .a = fitness.a,
                     .b = fitness.b,
                     .n = fitness.n,
-                    .model = fitness.Model
+                    .model = fitness.Model,
+                    .y0 = fitness.y0
                 })
 #End If
             Call ga.AddDefaultListener(Sub(x)

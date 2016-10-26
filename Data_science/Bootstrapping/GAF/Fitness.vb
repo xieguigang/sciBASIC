@@ -22,11 +22,23 @@ Namespace GAF
         ''' 具体的计算模型
         ''' </summary>
         Public ReadOnly Property Model As Type
-        Friend n%, a#, b#
+
         ''' <summary>
         ''' 计算的采样数
         ''' </summary>
         Dim samples%
+
+#Region "Friend visit for dump debug module and run test for fitness calc"
+
+        ''' <summary>
+        ''' ODEs y0
+        ''' </summary>
+        Friend y0 As Dictionary(Of String, Double)
+        ''' <summary>
+        ''' RK4 parameters
+        ''' </summary>
+        Friend n%, a#, b#
+#End Region
 
         Public log10Fitness As Boolean
 
@@ -41,7 +53,22 @@ Namespace GAF
                 .n = n
                 .a = a
                 .b = b
+            End With
+
+            Call __init()
+        End Sub
+
+        ''' <summary>
+        ''' 初始化一些共同的数据
+        ''' </summary>
+        Private Sub __init()
+            With Me
                 .samples = n / 100
+                .y0 = observation _
+                    .y _
+                    .Values _
+                    .ToDictionary(Function(v) v.Name,
+                                  Function(y) y.x(0))
 
                 Call .Model.FullName.Warning
             End With
@@ -58,10 +85,9 @@ Namespace GAF
                 .n = observation.x.Length
                 .a = observation.x(0)
                 .b = observation.x.Last
-                .samples = n / 100
-
-                Call .Model.FullName.Warning
             End With
+
+            Call __init()
         End Sub
 
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector, Double).Calculate
@@ -70,7 +96,8 @@ Namespace GAF
                     .vars _
                     .ToDictionary(Function(var) var.Name,
                                   Function(var) var.value)
-            Dim out As ODEsOut = MonteCarlo.Model.RunTest(Model, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
+            Dim out As ODEsOut =
+                MonteCarlo.Model.RunTest(Model, y0, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
             Dim NaN%
 

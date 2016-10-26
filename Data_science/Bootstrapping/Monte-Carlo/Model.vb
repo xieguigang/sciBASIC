@@ -83,7 +83,7 @@ Namespace MonteCarlo
             'Next
 
             'Return Me.Solve(n, a, b, incept:=True)
-            Return RunTest(model, estimates, n, a, b)
+            Return RunTest(model, estimates, estimates, n, a, b) ' y0也被包含在estimates之中，所以传递两个
         End Function
 
         ''' <summary>
@@ -95,16 +95,20 @@ Namespace MonteCarlo
         ''' <param name="a%"></param>
         ''' <param name="b%"></param>
         ''' <returns></returns>
-        Public Shared Function RunTest(model As Type, estimates As Dictionary(Of String, Double), n%, a%, b%) As ODEsOut
+        Public Shared Function RunTest(model As Type,
+                                       y0 As Dictionary(Of String, Double),
+                                       estimates As Dictionary(Of String, Double),
+                                       n%, a%, b%) As ODEsOut
+
             Dim parms$() = ODEs.GetParameters(model).ToArray
             Dim vars$() = ODEs.GetVariables(model).ToArray
             Dim x As Model = TryCast(Activator.CreateInstance(model), Model)
 
-            For Each var$ In vars
-                x(var).value = estimates(var)
+            For Each var$ In vars    ' 设置初始值
+                x(var).value = y0(var)
             Next
 
-            For Each parm$ In parms
+            For Each parm$ In parms  ' 设置参数值
                 Dim [set] As Action(Of Object, Double) =
                     Delegates.FieldSet(Of Double)(model, parm)
                 Call [set](x, estimates(parm))
