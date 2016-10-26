@@ -139,6 +139,8 @@ Namespace GAF
                 .Ignores = If(ignores Is Nothing, {}, ignores)
             }
 
+            Call $"Ignores of {fitness.Ignores.GetJson}".__DEBUG_ECHO
+
             Return vars.__runInternal(
                 popSize:=popSize,
                 evolIterations:=evolIterations,

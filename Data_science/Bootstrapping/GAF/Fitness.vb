@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace GAF
@@ -99,6 +100,8 @@ Namespace GAF
                 For Each k$ In initOverrides.Keys
                     y0(k$) = initOverrides(k$)
                 Next
+
+                Call $"Overrides y0: {initOverrides.GetJson}".__DEBUG_ECHO
             End If
         End Sub
 
