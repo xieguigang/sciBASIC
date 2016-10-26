@@ -125,20 +125,19 @@ Namespace Interpolation
             Dim spline As New CubicSpline()
             Dim PointFs As PointF() = source.ToArray
 
-            If PointFs.Length > 2 Then
-                For Each p As PointF In PointFs
-                    spline._points.Add(p)
-                Next
+            If PointFs.Length <= 2 Then Return  ' 什么也不做，返回空集合
 
-                Call spline.CalcSpline()
+            For Each p As PointF In PointFs
+                spline._points.Add(p)
+            Next
 
-                Dim delta# = 1 / (spline._points.Count * expected)
-                For f As Single = 0 To 1 Step delta
-                    Yield spline.GetPoint(f)
-                Next
-            Else
-                ' 什么也不做，返回空集合
-            End If
+            Call spline.CalcSpline()
+
+            Dim delta! = spline._points.Count * expected
+            delta = 1 / delta
+            For f! = 0 To 1.0! Step delta
+                Yield spline.GetPoint(f)
+            Next
         End Function
 
         Public Shared Function RecalcSpline(source As IEnumerable(Of Point)) As IEnumerable(Of Point)

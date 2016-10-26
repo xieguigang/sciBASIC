@@ -41,6 +41,11 @@ Namespace GAF
 #End Region
 
         Public log10Fitness As Boolean
+        ''' <summary>
+        ''' 被忽略比较的y变量名称
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Ignores As String()
 
         ''' <summary>
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
@@ -69,6 +74,7 @@ Namespace GAF
                     .Values _
                     .ToDictionary(Function(v) v.Name,
                                   Function(y) y.x(0))
+                .Ignores = {}
 
                 Call .Model.FullName.Warning
             End With
@@ -78,7 +84,7 @@ Namespace GAF
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
         ''' </summary>
         ''' <param name="observation"></param>
-        Sub New(model As Type, observation As ODEsOut)
+        Sub New(model As Type, observation As ODEsOut, initOverrides As Dictionary(Of String, Double))
             With Me
                 .observation = observation
                 ._Model = model
@@ -88,6 +94,12 @@ Namespace GAF
             End With
 
             Call __init()
+
+            If Not initOverrides.IsNullOrEmpty Then
+                For Each k$ In initOverrides.Keys
+                    y0(k$) = initOverrides(k$)
+                Next
+            End If
         End Sub
 
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector, Double).Calculate
@@ -101,10 +113,15 @@ Namespace GAF
             Dim fit As New List(Of Double)
             Dim NaN%
 
-            For Each y As NamedValue(Of Double()) In observation.y.Values
-                ' 再计算出fitness
-                Dim sample1 = y.x.Split(samples)
-                Dim sample2 = out.y(y.Name).x.Split(samples)
+            ' 再计算出fitness
+            For Each y As NamedValue(Of Double()) In observation.y _
+                .Values _
+                .Where(Function(v)
+                           Return Array.IndexOf(Ignores, v.Name) = -1
+                       End Function)
+
+                Dim sample1 = y.x.Split(samples, echo:=False)
+                Dim sample2 = out.y(y.Name).x.Split(samples, echo:=False)
                 Dim a#()
                 Dim b#()
 

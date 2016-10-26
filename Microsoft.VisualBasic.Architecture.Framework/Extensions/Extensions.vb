@@ -641,8 +641,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer) As T()()
-        Return source.SplitIterator(parTokens).ToArray
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As T()()
+        Return source.SplitIterator(parTokens, echo).ToArray
     End Function
 
     ''' <summary>
@@ -654,12 +654,12 @@ Public Module Extensions
     ''' <param name="parTokens"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
+    Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
         Dim buf As T() = source.ToArray
         Dim n As Integer = buf.Length
         Dim count As Integer
 
-        If n >= 50000 Then
+        If echo AndAlso n >= 50000 Then
             Call $"Start large data set(size:={n}) partitioning...".__DEBUG_ECHO
         End If
 
@@ -678,7 +678,7 @@ Public Module Extensions
             count += 1
         Next
 
-        If n >= 50000 Then
+        If echo AndAlso n >= 50000 Then
             Call $"Large data set data partitioning(partitions:={count}) jobs done!".__DEBUG_ECHO
         End If
     End Function

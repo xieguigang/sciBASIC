@@ -127,13 +127,16 @@ Namespace GAF
                          Optional evolIterations% = 5000%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
                          Optional threshold# = 0.5,
-                         Optional log10Fit As Boolean = False) As var()
+                         Optional log10Fit As Boolean = True,
+                         Optional ignores$() = Nothing,
+                         Optional initOverrides As Dictionary(Of String, Double) = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)) _
                 .Join(Model.GetVariables(GetType(T))) _
                 .ToArray
-            Dim fitness As New GAFfitness(GetType(T), observation) With {
-                .log10Fitness = log10Fit
+            Dim fitness As New GAFfitness(GetType(T), observation, initOverrides) With {
+                .log10Fitness = log10Fit,
+                .Ignores = If(ignores Is Nothing, {}, ignores)
             }
 
             Return vars.__runInternal(
