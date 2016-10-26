@@ -97,6 +97,7 @@
     <Compile Include="GAF\Fitness.vb" />
     <Compile Include="GAF\Protocol.vb" />
     <Compile Include="GAF\ParameterVector.vb" />
+    <Compile Include="Monte-Carlo\VariableModel.vb" />
     <Compile Include="Obsolete\Analysis.vb" />
     <Compile Include="Monte-Carlo\AnalysisProtocol.vb" />
     <Compile Include="EigenvectorBootstrapping.vb" />

@@ -49,22 +49,19 @@ Namespace GAF
                                 Optional obs As Dictionary(Of String, Double) = Nothing,
                                 Optional log10Fit As Boolean = False) As var()
 
-            Dim getVars As Func(Of var()) =
-                Function() model.params _
-                    .Select(Function(x) New var(x.Name, x.GetValue)) _
-                    .Join(model.yinit _
-                    .Select(Function(x) New var(x.Name, x.GetValue))) _
-                    .ToArray
+            Dim vars$() = Model.GetParameters(model.GetType) _
+                .Join(Model.GetVariables(model.GetType)) _
+                .ToArray
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector() With {
-                    .vars = getVars() _
-                    .ToArray(Function(x) New var(x.Name, x.value + 10 * Rnd()))
+                    .vars = vars.ToArray(
+                        Function(x) New var(x, (2 ^ x.Length) * (10 * Rnd())))
             }.InitialPopulation(popSize%)
 
             If obs.IsNullOrEmpty Then
-                obs = getVars() _
-                    .ToDictionary(Function(x) x.Name,
-                                  Function(x) 1.0#)
+                obs = vars.ToDictionary(
+                    Function(x) x,
+                    Function(x) 1.0#)
             Else
                 Console.Title = obs.GetJson
             End If
