@@ -30,7 +30,7 @@ Namespace GAF
         End Sub
 
         ''' <summary>
-        ''' 测试用
+        ''' Using for model testing debug.(测试用)
         ''' </summary>
         ''' <param name="model"></param>
         ''' <param name="n%"></param>
@@ -52,11 +52,6 @@ Namespace GAF
             Dim vars$() = Model.GetParameters(model.GetType) _
                 .Join(Model.GetVariables(model.GetType)) _
                 .ToArray
-            Dim population As Population(Of ParameterVector) =
-                New ParameterVector() With {
-                    .vars = vars.ToArray(
-                        Function(x) New var(x, (2 ^ x.Length) * (10 * Rnd())))
-            }.InitialPopulation(popSize%)
 
             If obs.IsNullOrEmpty Then
                 obs = vars.ToDictionary(
@@ -66,21 +61,38 @@ Namespace GAF
                 Console.Title = obs.GetJson
             End If
 
-            Dim fitness As Fitness(Of ParameterVector, Double) =
-                New GAFfitness(obs, model, n, a, b) With {
-                    .log10Fitness = log10Fit
+            Dim fitness As New GAFfitness(obs, model, n, a, b) With {
+                .log10Fitness = log10Fit
             }
-            Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(
-                population, fitness)
-            Dim out As New List(Of outPrint)
 
+            Return vars.__runInternal(
+                popSize:=popSize,
+                evolIterations:=evolIterations,
+                fitness:=fitness,
+                outPrint:=outPrint,
+                threshold:=threshold)
+        End Function
+
+        <Extension>
+        Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
+                                       fitness As GAFfitness,
+                                       ByRef outPrint As List(Of outPrint)) As var()
+
+            Dim population As Population(Of ParameterVector) =
+                New ParameterVector() With {
+                    .vars = vars.ToArray(
+                        Function(x) New var(x, (2 ^ x.Length) * (10 * Rnd())))
+            }.InitialPopulation(popSize%)
+
+            Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)
+            Dim out As New List(Of outPrint)
 #If DEBUG Then
             Call ga.addIterationListener(
                 New Dump With {
-                    .a = a,
-                    .b = b,
-                    .n = n,
-                    .model = model.GetType
+                    .a = fitness.a,
+                    .b = fitness.b,
+                    .n = fitness.n,
+                    .model = fitness.Model
                 })
 #End If
             Call ga.AddDefaultListener(Sub(x)
@@ -90,14 +102,45 @@ Namespace GAF
             Call ga.Evolve(evolIterations%)
 
             outPrint = out
-
 #If DEBUG Then
-            Call Console.WriteLine("Observation:")
-            Call Console.WriteLine(obs.GetJson)
             Call Console.WriteLine("GAF fitting:")
             Call Console.WriteLine(ga.Best.vars.GetJson)
 #End If
             Return ga.Best.vars
+        End Function
+
+        ''' <summary>
+        ''' 用于实际分析的GAF工具
+        ''' </summary>
+        ''' <param name="observation">用于进行拟合的目标真实的实验数据，模型计算所使用的y0初值从这里面来</param>
+        ''' <param name="popSize%"></param>
+        ''' <param name="evolIterations%"></param>
+        ''' <param name="outPrint"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="log10Fit"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Fitting(Of T As MonteCarlo.Model)(
+                         observation As ODEsOut,
+                         Optional popSize% = 100%,
+                         Optional evolIterations% = 5000%,
+                         Optional ByRef outPrint As List(Of outPrint) = Nothing,
+                         Optional threshold# = 0.5,
+                         Optional log10Fit As Boolean = False) As var()
+
+            Dim vars$() = Model.GetParameters(GetType(T)) _
+                .Join(Model.GetVariables(GetType(T))) _
+                .ToArray
+            Dim fitness As New GAFfitness(GetType(T), observation) With {
+                .log10Fitness = log10Fit
+            }
+
+            Return vars.__runInternal(
+                popSize:=popSize,
+                evolIterations:=evolIterations,
+                fitness:=fitness,
+                outPrint:=outPrint,
+                threshold:=threshold)
         End Function
     End Module
 End Namespace
