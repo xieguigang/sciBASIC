@@ -1,4 +1,4 @@
-# Curve Interpolation Tools
+# [Curve Interpolation Tools](../../Math/Spline)
 
 ```vbnet
 Imports Microsoft.VisualBasic.Mathematical.Interpolation
@@ -90,4 +90,8 @@ Call Scatter.Plot({raw, interplot}) _
 
 ## Method Compare
 
+```vbnet
+Call Scatter.Plot({raw, B_interplot, interplot}, size:=New Size(3000, 1400)) _
+    .SaveAs("./duom2-compares.png")
+```
 ![](./duom2-compares.png)
