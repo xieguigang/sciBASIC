@@ -46,7 +46,7 @@ Namespace GAF
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
         ''' </summary>
         ''' <param name="observation"></param>
-        Sub New(observation As Dictionary(Of String, Double), model As Model, n%, a#, b#)
+        Sub New(observation As Dictionary(Of String, Double), model As MonteCarlo.Model, n%, a#, b#)
             With Me
                 .observation = model.RunTest(observation, n, a, b)
                 ._Model = model.GetType

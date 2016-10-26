@@ -41,7 +41,7 @@ Namespace GAF
         ''' <param name="outPrint"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Fitting(model As Model, n%, a#, b#,
+        Public Function Fitting(model As MonteCarlo.Model, n%, a#, b#,
                                 Optional popSize% = 100%,
                                 Optional evolIterations% = 5000%,
                                 Optional ByRef outPrint As List(Of outPrint) = Nothing,
@@ -49,8 +49,8 @@ Namespace GAF
                                 Optional obs As Dictionary(Of String, Double) = Nothing,
                                 Optional log10Fit As Boolean = False) As var()
 
-            Dim vars$() = Model.GetParameters(model.GetType) _
-                .Join(Model.GetVariables(model.GetType)) _
+            Dim vars$() = ODEs.GetParameters(model.GetType) _
+                .Join(ODEs.GetVariables(model.GetType)) _
                 .ToArray
 
             If obs.IsNullOrEmpty Then
