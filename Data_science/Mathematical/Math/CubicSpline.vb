@@ -75,7 +75,7 @@ Public Class CubicSpline
         Dim cubicNum As Integer = CInt(Fix(Math.Min(xCubics.Count - 1, position)))
         Dim cubicPos As Single = (position - cubicNum)
 
-        Return New PointF(Fix(xCubics(cubicNum).Eval(cubicPos)), Fix(yCubics(cubicNum).Eval(cubicPos)))
+        Return New PointF(xCubics(cubicNum).Eval(cubicPos), yCubics(cubicNum).Eval(cubicPos))
     End Function
 
     Public Sub CalcNaturalCubic(values As IList(Of Single), cubics As ICollection(Of Cubic))
@@ -139,8 +139,9 @@ Public Class CubicSpline
     ''' 
     ''' </summary>
     ''' <param name="source">假若点的数目少于或者等于2个，则会返回空集合</param>
+    ''' <param name="expected">期待返回的数据点倍数，默认是100倍个点</param>
     ''' <returns></returns>
-    Public Shared Iterator Function RecalcSpline(source As IEnumerable(Of PointF)) As IEnumerable(Of PointF)
+    Public Shared Iterator Function RecalcSpline(source As IEnumerable(Of PointF), Optional expected# = 100) As IEnumerable(Of PointF)
         Dim spline As New CubicSpline()
         Dim PointFs As PointF() = source.ToArray
 
@@ -151,7 +152,8 @@ Public Class CubicSpline
 
             Call spline.CalcSpline()
 
-            For f As Single = 0 To 1 Step 0.01
+            Dim delta# = 1 / (spline._points.Count * expected)
+            For f As Single = 0 To 1 Step delta
                 Yield spline.GetPoint(f)
             Next
         Else

@@ -304,6 +304,24 @@ Public Module Scatter
         Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
     End Function
 
+    Public Function Plot(points As IEnumerable(Of PointF),
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional lineColor$ = "black",
+                         Optional bg$ = "white",
+                         Optional title$ = "Plot Of Points",
+                         Optional lineWidth! = 5.0!,
+                         Optional ptSize! = 15.0!,
+                         Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+        Dim s As SerialData = points _
+            .FromPoints(lineColor$,
+                        title$,
+                        lineWidth!,
+                        ptSize!,
+                        lineType)
+        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+    End Function
+
     <Extension>
     Public Function FromPoints(points As IEnumerable(Of Point),
                                Optional lineColor$ = "black",
@@ -311,6 +329,27 @@ Public Module Scatter
                                Optional lineWidth! = 5.0!,
                                Optional ptSize! = 15.0!,
                                Optional lineType As DashStyle = DashStyle.Solid) As SerialData
+        Return FromPoints(
+            points.Select(
+            Function(pt) New PointF With {
+                .X = pt.X,
+                .Y = pt.Y
+            }),
+            lineColor,
+            title,
+            lineWidth,
+            ptSize,
+            lineType)
+    End Function
+
+    <Extension>
+    Public Function FromPoints(points As IEnumerable(Of PointF),
+                               Optional lineColor$ = "black",
+                               Optional title$ = "Plot Of Points",
+                               Optional lineWidth! = 5.0!,
+                               Optional ptSize! = 15.0!,
+                               Optional lineType As DashStyle = DashStyle.Solid) As SerialData
+
         Return New SerialData With {
             .color = lineColor.ToColor,
             .lineType = lineType,
@@ -318,7 +357,7 @@ Public Module Scatter
             .width = lineWidth,
             .pts = points.ToArray(
                 Function(pt) New PointData With {
-                    .pt = New PointF(pt.X, pt.Y)
+                    .pt = pt
             }),
             .title = title
         }
