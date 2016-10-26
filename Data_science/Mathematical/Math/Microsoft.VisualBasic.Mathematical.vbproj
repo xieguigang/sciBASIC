@@ -235,12 +235,14 @@
     <Compile Include="BasicR\Solvers\ISolver.vb" />
     <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
     <Compile Include="BasicR\Vector.vb" />
-    <Compile Include="CubicSpline.vb" />
+    <Compile Include="Spline\CubicEval.vb" />
+    <Compile Include="Spline\CubicSpline.vb" />
     <Compile Include="Bootstraping.vb" />
     <Compile Include="Distributions\Beta.vb" />
     <Compile Include="Distributions\DirichletDistribution.vb" />
     <Compile Include="Distributions\Gamma.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Spline\B_Spline.vb" />
     <Compile Include="Helpers\MetaExpression.vb" />
     <Compile Include="Helpers\MemoryCollection.vb" />
     <Compile Include="Helpers\Logical.vb" />
