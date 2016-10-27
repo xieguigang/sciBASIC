@@ -24,7 +24,7 @@ Namespace GAF
                                  Function(var) var.value)
             Dim out As ODEsOut =
                 MonteCarlo.Model.RunTest(model, y0, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
-            Dim path = App.CurrentProcessTemp & $"\debug_{++i}.csv"
+            Dim path = App.CurrentProcessTemp & $"\debug_{+i}.csv"
 
             Call out.DataFrame("#TIME").Save(path$, Encodings.ASCII)
         End Sub

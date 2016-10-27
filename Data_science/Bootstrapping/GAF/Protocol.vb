@@ -49,9 +49,7 @@ Namespace GAF
                                 Optional obs As Dictionary(Of String, Double) = Nothing,
                                 Optional log10Fit As Boolean = False) As var()
 
-            Dim vars$() = ODEs.GetParameters(model.GetType) _
-                .Join(ODEs.GetVariables(model.GetType)) _
-                .ToArray
+            Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
 
             If obs.IsNullOrEmpty Then
                 obs = vars.ToDictionary(
@@ -126,16 +124,14 @@ Namespace GAF
         Public Function Fitting(Of T As MonteCarlo.Model)(
                          observation As ODEsOut,
                          Optional popSize% = 100%,
-                         Optional evolIterations% = 5000%,
+                         Optional evolIterations% = Integer.MaxValue%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
                          Optional threshold# = 0.5,
                          Optional log10Fit As Boolean = True,
                          Optional ignores$() = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing) As var()
 
-            Dim vars$() = Model.GetParameters(GetType(T)) _
-                .Join(Model.GetVariables(GetType(T))) _
-                .ToArray
+            Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFfitness(GetType(T), observation, initOverrides) With {
                 .log10Fitness = log10Fit,
                 .Ignores = If(ignores Is Nothing, {}, ignores)

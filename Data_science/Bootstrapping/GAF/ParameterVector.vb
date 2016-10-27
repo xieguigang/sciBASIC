@@ -15,6 +15,10 @@ Namespace GAF
     Public Class ParameterVector
         Implements Chromosome(Of ParameterVector), ICloneable
 
+        ''' <summary>
+        ''' 只需要在这里调整参数就行了，y0初始值不需要
+        ''' </summary>
+        ''' <returns></returns>
         Public Property vars As var()
 
         <ScriptIgnore>
@@ -101,8 +105,8 @@ Namespace GAF
 
         Public Overrides Function ToString() As String
             Return vars _
-                .Select(Function(x) x.Name & ":=" & x.value) _
-                .JoinBy(",  ")
+                .Select(Function(x) x.Name & ":" & x.value) _
+                .JoinBy(";")
         End Function
     End Class
 End Namespace

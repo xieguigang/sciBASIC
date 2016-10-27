@@ -111,7 +111,7 @@ Namespace GAF
                     .vars _
                     .ToDictionary(Function(var) var.Name,
                                   Function(var) var.value)
-            Dim out As ODEsOut =
+            Dim out As ODEsOut = ' y0使用实验观测值，而非突变的随机值
                 MonteCarlo.Model.RunTest(Model, y0, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
             Dim NaN%
@@ -144,7 +144,7 @@ Namespace GAF
             Dim fitness# = fit.Average
 
             If fitness.Is_NA_UHandle Then
-                fitness = Single.MaxValue
+                fitness = Integer.MaxValue * 100.0R
                 fitness += NaN% * 10
             End If
 
