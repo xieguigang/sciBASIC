@@ -58,9 +58,10 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 
 ## Microsoft VisualBasic Mathematics System for Data Science
 
-+ **[Mathematics System](./Data_science/Mathematical/)** <<<
-+ **[DataFrame System for VisualBasic Data Science](./Data/DataFrame/)** <<<
-+ **[Network Visualization Interface](./gr/Datavisualization.Network/)** <<<
++ **[Mathematics System](./Data_science/Mathematical/)**
++ **[Darwinism computing module](./Data_science/Darwinism)**
++ **[DataFrame System for VisualBasic Data Science](./Data/DataFrame/)**
++ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 
 ![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
