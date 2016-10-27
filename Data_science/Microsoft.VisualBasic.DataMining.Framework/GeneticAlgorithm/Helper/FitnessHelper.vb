@@ -13,7 +13,7 @@
             Dim v#() = chromosome
 
             For i As Integer = 0 To chromosome.Length - 1
-                delta += sqr(v(i) - target(i))
+                delta += (v(i) - target(i)) ^ 2
             Next
 
             Return delta
@@ -24,14 +24,10 @@
             Dim v%() = chromosome
 
             For i As Integer = 0 To chromosome.Length - 1
-                delta += sqr(v(i) - target(i))
+                delta += (v(i) - target(i)) ^ 2
             Next
 
             Return delta
-        End Function
-
-        Private Function sqr(x As Double) As Double
-            Return x * x
         End Function
     End Module
 End Namespace

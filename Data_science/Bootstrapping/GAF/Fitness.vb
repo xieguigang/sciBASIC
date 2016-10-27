@@ -137,8 +137,8 @@ Namespace GAF
                 Dim b#()
 
                 If log10Fitness Then
-                    a = sample1.ToArray(Function(x) Math.Log10(x.Max))
-                    b = sample2.ToArray(Function(x) Math.Log10(x.Max))
+                    a = sample1.ToArray(Function(x) log10(x.Max))
+                    b = sample2.ToArray(Function(x) log10(x.Max))
                 Else
                     a = sample1.ToArray(Function(x) x.Max)
                     b = sample2.ToArray(Function(x) x.Max)
@@ -157,6 +157,14 @@ Namespace GAF
             End If
 
             Return fitness
+        End Function
+
+        Private Function log10(x#) As Double
+            If x = 0R Then
+                Return -1000
+            Else
+                Return Math.Log10(Math.Abs(x))
+            End If
         End Function
     End Class
 End Namespace

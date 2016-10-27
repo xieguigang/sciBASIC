@@ -68,18 +68,36 @@ Namespace GAF
                 evolIterations:=evolIterations,
                 fitness:=fitness,
                 outPrint:=outPrint,
-                threshold:=threshold)
+                threshold:=threshold,
+                argsInit:=Nothing)
         End Function
 
         <Extension>
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
                                        fitness As GAFFitness,
-                                       ByRef outPrint As List(Of outPrint)) As var()
+                                       ByRef outPrint As List(Of outPrint),
+                                       argsInit As Dictionary(Of String, Double)) As var()
+
+            Dim estArgs As var()
+
+            If argsInit.IsNullOrEmpty Then
+                estArgs = vars.ToArray(
+                    Function(x) New var With {
+                        .Name = x,
+                        .value = (2 ^ x.Length) * (100000 * New Random().NextDouble)
+                    })
+            Else
+                estArgs = LinqAPI.Exec(Of var) <= From x
+                                                  In argsInit
+                                                  Select New var With {
+                                                      .Name = x.Key,
+                                                      .value = x.Value
+                                                  }
+            End If
 
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector() With {
-                    .vars = vars.ToArray(
-                        Function(x) New var(x, (2 ^ x.Length) * (100000 * New Random().NextDouble)))
+                    .vars = estArgs
             }.InitialPopulation(popSize%)
 
             population.Parallel = True
@@ -129,7 +147,8 @@ Namespace GAF
                          Optional threshold# = 0.5,
                          Optional log10Fit As Boolean = True,
                          Optional ignores$() = Nothing,
-                         Optional initOverrides As Dictionary(Of String, Double) = Nothing) As var()
+                         Optional initOverrides As Dictionary(Of String, Double) = Nothing,
+                         Optional estArgsBase As Dictionary(Of String, Double) = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFFitness(GetType(T), observation, initOverrides) With {
@@ -144,7 +163,8 @@ Namespace GAF
                 evolIterations:=evolIterations,
                 fitness:=fitness,
                 outPrint:=outPrint,
-                threshold:=threshold)
+                threshold:=threshold,
+                argsInit:=estArgsBase)
         End Function
     End Module
 End Namespace
