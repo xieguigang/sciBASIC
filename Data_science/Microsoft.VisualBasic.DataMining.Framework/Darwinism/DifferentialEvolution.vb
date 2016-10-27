@@ -145,26 +145,31 @@ Namespace Darwinism
                     Dim originalFitness# = fitnessFunction(original)
                     Dim candidateFitness# = fitnessFunction(candidate)
 
-                    If (originalFitness > candidateFitness AndAlso candidateFitness <= bestFit) Then
+                    If (originalFitness > candidateFitness) Then
                         population.Remove(original)
                         population.Add(candidate)
-                        bestFit = candidateFitness
 
-                        If Not iteratePrints Is Nothing Then
+                        If bestFit > candidateFitness Then
+                            bestFit = candidateFitness
+
                             Dim out As New outPrint With {
                                 .fit = bestFit,
                                 .chromosome = candidate.ToString,
                                 .iter = i
                             }
-                            Call iteratePrints(out)
+                            If Not iteratePrints Is Nothing Then
+                                Call iteratePrints(out)
 #If DEBUG Then
-                            Call Console.WriteLine(out.ToString)
+                                Call Console.WriteLine(out.ToString)
 #End If
+                            Else
+                                Call Console.WriteLine(out.ToString)
+                            End If
                         End If
+                    End If
 
-                        If bestFit <= threshold Then
-                            Exit Do
-                        End If
+                    If bestFit <= threshold Then
+                        Exit Do
                     End If
                 Next
             Loop
@@ -173,7 +178,7 @@ Namespace Darwinism
             Dim bestFitness As Individual = [new](random)
             i = 0
             Do While (++i < PopulationSize)
-                Dim candidate As Individual = population(i)
+                Dim candidate As Individual = population(i.value - 1)
                 If (fitnessFunction(bestFitness) > fitnessFunction(candidate)) Then
                     bestFitness = candidate
                 End If
