@@ -14,7 +14,7 @@
 ' limitations under the License.
 ' *****************************************************************************
 
-Namespace GAF
+Namespace Darwinism.Models
 
     ''' <summary>
     ''' In computer programming, genetic representation is a way of representing 

@@ -216,11 +216,12 @@
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="BezierCurve.vb" />
+    <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
     <Compile Include="FourierTransform.vb" />
-    <Compile Include="Darwinism\GeneticAlgorithm\Chromosome.vb" />
+    <Compile Include="Darwinism\Models\Chromosome.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\ChromosomesComparator.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb" />
