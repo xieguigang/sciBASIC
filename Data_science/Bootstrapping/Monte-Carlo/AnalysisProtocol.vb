@@ -46,16 +46,16 @@ Namespace MonteCarlo
         ''' </summary>
         ''' <param name="dll"></param>
         ''' <returns></returns>
-        Public Function DllParser(dll As String) As Type
+        Public Function DllParser(dll As String) As IEnumerable(Of Type)
             Dim assem As Assembly = Assembly.LoadFrom(dll.GetFullPath)
             Dim types As Type() = assem.GetTypes
             Dim model As Type = GetType(Model)
 
-            Return LinqAPI.DefaultFirst(Of Type) <= From type As Type
-                                                    In types
-                                                    Where (type.IsInheritsFrom(model, strict:=False) AndAlso
-                                                        Not type.IsAbstract)  ' a bug???
-                                                    Select type
+            Return From type As Type
+                   In types
+                   Where (type.IsInheritsFrom(model, strict:=False) AndAlso
+                       Not type.IsAbstract)  ' a bug???
+                   Select type
         End Function
 
         <Extension>

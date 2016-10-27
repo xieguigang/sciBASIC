@@ -15,13 +15,19 @@ Namespace GAF
     ''' </summary>
     Public Module Protocol
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="array#">需要被拟合的参数列表，在这个函数里面会被修改一点产生突变</param>
+        ''' <param name="rnd"></param>
         <Extension> Public Sub Mutate(ByRef array#(), rnd As Random)
-            Dim i% = rnd.Next(array.Length)
-            Dim n# = array(i)
-            Dim power# = Math.Log10(n#) - 1
-            Dim sign% = If(rnd.NextBoolean, 1, -1)
+            Dim i% = rnd.Next(array.Length)  ' 得到需要被突变的位点在数组中的下标
+            Dim n# = Math.Abs(array(i))      ' 得到元素值，由于负数取位数的时候回出错，所以这里取绝对值，因为只需要取位数
+            Dim power# = Math.Log10(n#) - 1  ' 取位数
+            Dim sign% =
+                If(rnd.NextBoolean, 1, -1)
 
-            n += sign * (rnd.Next(10) * (10 ^ power))
+            n += sign * (rnd.Next(1000) * (1000 ^ power))
             If n.IsNaNImaginary Then
                 n = Short.MaxValue
             End If
