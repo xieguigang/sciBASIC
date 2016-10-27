@@ -12,7 +12,15 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace GAF
 
-    Public Class GAFfitness
+    ''' <summary>
+    ''' 计算当前的最好的参数的fitness
+    ''' </summary>
+    ''' <param name="best">当前代之中的最好的参数</param>
+    ''' <param name="fit"></param>
+    ''' <returns></returns>
+    Public Delegate Function FitnessCompute(best As ParameterVector, fit As GAFFitness) As Double
+
+    Public Class GAFFitness
         Implements Fitness(Of ParameterVector, Double)
 
         ''' <summary>
@@ -136,14 +144,14 @@ Namespace GAF
                     b = sample2.ToArray(Function(x) x.Max)
                 End If
 
-                NaN% = b.Where(AddressOf Is_NA_UHandle).Count
+                NaN% = b.Where(AddressOf IsNaNImaginary).Count
                 fit += Math.Sqrt(FitnessHelper.Calculate(a#, b#)) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
             ' Return fit.Average
             Dim fitness# = fit.Average
 
-            If fitness.Is_NA_UHandle Then
+            If fitness.IsNaNImaginary Then
                 fitness = Integer.MaxValue * 100.0R
                 fitness += NaN% * 10
             End If

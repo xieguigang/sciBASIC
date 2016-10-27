@@ -1361,7 +1361,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     <ExportAPI("Double.Is.NA",
                Info:="Is this double type of the number is an NA type infinity number. this is major comes from the devided by ZERO.")>
-    <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
+    <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
     <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
 #End If

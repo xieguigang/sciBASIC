@@ -84,15 +84,22 @@ Public Class ODEsOut
         Return Me.GetJson
     End Function
 
-    Public Function DataFrame(Optional xDisp As String = "X") As DocumentStream.File
+    Public Function DataFrame(Optional xDisp As String = "X", Optional fix% = -1) As DocumentStream.File
         Dim ly = y.Values.ToArray
         Dim file As New DocumentStream.File
         Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
+        Dim round As Func(Of Double, String)
+
+        If fix <= 0 Then
+            round = Function(n) CStr(n)
+        Else
+            round = Function(n) CStr(Math.Round(n, fix))
+        End If
 
         file += head
 
         For Each x As SeqValue(Of Double) In Me.x.SeqIterator
-            file += (x.obj.ToString + ly.ToList(Function(n) n.x(x.i).ToString))
+            file += (round(x.obj) + ly.ToList(Function(n) round(n.x(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2

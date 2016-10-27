@@ -196,7 +196,7 @@ Public Module Scatter
             .pts = LinqAPI.Exec(Of PointData) <=
                 From o As SeqValue(Of Double)
                 In y0.SeqIterator
-                Where Not o.obj.Is_NA_UHandle
+                Where Not o.obj.IsNaNImaginary
                 Select New PointData With {
                     .pt = New PointF(array(o.i), CSng(o.obj))
                 }

@@ -22,7 +22,7 @@ Namespace GAF
             Dim sign% = If(rnd.NextBoolean, 1, -1)
 
             n += sign * (rnd.Next(10) * (10 ^ power))
-            If n.Is_NA_UHandle Then
+            If n.IsNaNImaginary Then
                 n = Short.MaxValue
             End If
 
@@ -59,7 +59,7 @@ Namespace GAF
                 Console.Title = obs.GetJson
             End If
 
-            Dim fitness As New GAFfitness(obs, model, n, a, b) With {
+            Dim fitness As New GAFFitness(obs, model, n, a, b) With {
                 .log10Fitness = log10Fit
             }
 
@@ -73,7 +73,7 @@ Namespace GAF
 
         <Extension>
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
-                                       fitness As GAFfitness,
+                                       fitness As GAFFitness,
                                        ByRef outPrint As List(Of outPrint)) As var()
 
             Dim population As Population(Of ParameterVector) =
@@ -132,7 +132,7 @@ Namespace GAF
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
-            Dim fitness As New GAFfitness(GetType(T), observation, initOverrides) With {
+            Dim fitness As New GAFFitness(GetType(T), observation, initOverrides) With {
                 .log10Fitness = log10Fit,
                 .Ignores = If(ignores Is Nothing, {}, ignores)
             }

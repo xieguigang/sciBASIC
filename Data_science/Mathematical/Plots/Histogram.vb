@@ -281,7 +281,7 @@ Public Module Histogram
                 In array
                 Let x1 As Double = x
                 Let x2 As Double = (x = x.value + delta)
-                Where Not n.Is_NA_UHandle
+                Where Not n.IsNaNImaginary
                 Select New HistogramData With {
                     .x1 = x1,
                     .x2 = x2,
@@ -324,7 +324,7 @@ Public Module Histogram
                     In out.obj.y.SeqIterator
                     Let x1 As Double = left
                     Let x2 As Double = (left = left.value + delta)
-                    Where Not i.obj.Is_NA_UHandle
+                    Where Not i.obj.IsNaNImaginary
                     Select New HistogramData With {
                         .x1 = x1,
                         .x2 = x2,
