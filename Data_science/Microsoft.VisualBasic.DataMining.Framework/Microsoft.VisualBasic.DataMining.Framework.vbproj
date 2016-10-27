@@ -217,6 +217,7 @@
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="BezierCurve.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
+    <Compile Include="Darwinism\Models\FitnessPool.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
