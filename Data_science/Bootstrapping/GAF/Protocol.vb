@@ -72,6 +72,17 @@ Namespace GAF
                 argsInit:=Nothing)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="vars$">从模型内部定义所解析出来的需要进行拟合的参数的名称列表</param>
+        ''' <param name="popSize%"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="evolIterations%"></param>
+        ''' <param name="fitness"></param>
+        ''' <param name="outPrint"></param>
+        ''' <param name="argsInit"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
                                        fitness As GAFFitness,
@@ -89,10 +100,21 @@ Namespace GAF
             Else
                 estArgs = LinqAPI.Exec(Of var) <= From x
                                                   In argsInit
+                                                  Where Array.IndexOf(vars, x.Key) > -1
                                                   Select New var With {
                                                       .Name = x.Key,
                                                       .value = x.Value
                                                   }
+                Dim varsData As Dictionary(Of var) =
+                    estArgs.ToDictionary
+                For Each name$ In vars
+                    If Not varsData.ContainsKey(name$) Then
+                        varsData += New var With {
+                            .Name = name,
+                            .value = (2 ^ name.Length) * (100 * New Random().NextDouble)
+                        }
+                    End If
+                Next
             End If
 
             Dim population As Population(Of ParameterVector) =
