@@ -1,6 +1,6 @@
 ﻿Namespace Darwinism.Models
 
-    Public Class FitnessPool(Of Individual As Chromosome(Of Individual), T As IComparable(Of T))
+    Public Class FitnessPool(Of Individual, T As IComparable(Of T))
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, T)
         Protected caclFitness As Func(Of Individual, T)
@@ -25,10 +25,10 @@
                 fit = cache(key$)
             Else
                 fit = caclFitness([in])
-                cache.Add(key$, fitness)
+                cache.Add(key$, Fitness)
             End If
 
-            Return fitness
+            Return Fitness
         End Function
     End Class
 End Namespace

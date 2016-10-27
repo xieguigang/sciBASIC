@@ -149,7 +149,7 @@ Namespace Darwinism.GAF
         End Sub
 
         Public Function Fitness(chromosome As C) As T
-            Return _chromosomesComparator.fit(chromosome)
+            Return _chromosomesComparator.Fitness(chromosome)
         End Function
 
         ''' <summary>

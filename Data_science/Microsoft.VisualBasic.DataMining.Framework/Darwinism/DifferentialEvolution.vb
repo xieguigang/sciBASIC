@@ -1,49 +1,16 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.DataMining.Darwinism
 Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
 
-' definition of one individual in population
-Public Class Individual
-    Implements Chromosome(Of Individual)
-
-    ' normally DifferentialEvolution uses floating point variables
-    Public data1, data2 As Double
-    ' but using integers Is possible too  
-    Public data3%
-
-    Public Overrides Function ToString() As String
-        Return String.Join(",", data1, data2, data3)
-    End Function
-
-    Public Function Clone() As Individual
-        Return New Individual With {
-            .data1 = data1,
-            .data2 = data2,
-            .data3 = data3
-        }
-    End Function
-
-    Public Function Crossover(anotherChromosome As Individual) As IList(Of Individual) Implements Chromosome(Of Individual).Crossover
-
-    End Function
-
-    Public Function Mutate() As Individual Implements Chromosome(Of Individual).Mutate
-
-    End Function
-
-    Public Shared Function CreateOne(random As Random) As Individual
-        Dim Individual As New Individual()
-        Individual.data1 = random.NextDouble * 100
-        Individual.data2 = random.NextDouble * 100
-        ' integers cant take floating point values And they need to be either rounded
-        Individual.data3 = Math.Floor(random.NextDouble * 100)
-
-        Return Individual
-    End Function
-End Class
-
 Namespace Darwinism
+
+    Public Interface IIndividual : Inherits Chromosome(Of IIndividual), ICloneable
+
+        Function Yield(i%) As Double
+        Sub Put(i%, value#)
+    End Interface
 
     ''' <summary>
     ''' In evolutionary computation, differential evolution (DE) is a method that optimizes a problem by 
@@ -71,30 +38,6 @@ Namespace Darwinism
     ''' </summary>
     Public Module DifferentialEvolution
 
-
-        ' New instance of Random number generator
-        Dim random As New Random()
-
-        ' differential weight [0,2]
-        Dim F As Double = 1
-        ' crossover probability [0,1]
-        Dim CR As Double = 0.5
-        ' dimensionality of problem, means how many variables problem has. this case 3 (data1,data2,data3)
-        Dim N = 3
-
-        Sub Main()
-            Dim target As New Individual With {.data1 = 1, .data2 = 2, .data3 = 3}
-            Dim tt = {target.data1, target.data2, target.data3}
-            Dim result = DE(0.05, Function(x)
-                                      Return RMS(tt, {x.data1, x.data2, x.data3})
-                                  End Function)
-
-            RMS(tt, {result.data1, result.data2, result.data3})
-
-            Console.WriteLine(result.ToString)
-            Console.ReadKey()
-        End Sub
-
         Public Function RMS(a#(), b#()) As Double
             Dim sum#
             Dim n% = a.Length
@@ -106,7 +49,7 @@ Namespace Darwinism
             Return Math.Sqrt(sum)
         End Function
 
-        Public Delegate Function [New](Of Individual As Chromosome(Of Individual))(seed As Random) As Individual
+        Public Delegate Function [New](Of Individual As IIndividual)(seed As Random) As Individual
 
         ''' <summary>
         ''' Initialize population with individuals that have been initialized with uniform random noise
@@ -117,7 +60,7 @@ Namespace Darwinism
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetPopulation(Of Individual As Chromosome(Of Individual))(
+        Public Function GetPopulation(Of Individual As IIndividual)(
                                                                                  __new As [New](Of Individual),
                                                                                  Optional PopulationSize% = 20) As List(Of Individual)
             Dim population As New List(Of Individual)
@@ -130,43 +73,53 @@ Namespace Darwinism
             Return population
         End Function
 
-        Public Function Evolution(Of Individual As Chromosome(Of Individual))(
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="Individual"></typeparam>
+        ''' <param name="target"></param>
+        ''' <param name="[new]">How to creates a new <typeparamref name="Individual"/></param>
+        ''' <param name="N%">dimensionality of problem, means how many variables problem has.</param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="maxIterations%"></param>
+        ''' <param name="F">differential weight [0,2]</param>
+        ''' <param name="CR">crossover probability [0,1]</param>
+        ''' <param name="PopulationSize%"></param>
+        ''' <returns></returns>
+        Public Function Evolution(Of Individual As IIndividual)(
                                         target As Func(Of Individual, Double),
                                         [new] As [New](Of Individual),
+                                        N%, Optional F As Double = 1, Optional CR As Double = 0.5,
                                               Optional threshold# = 0.1,
+                                        Optional maxIterations% = 500000,
                                               Optional PopulationSize% = 20) As Individual
-            Dim i = 0
-            Dim j%
 
-            ' Variables
             ' linked list that has our population inside
             Dim population As List(Of Individual) = [new].GetPopulation(PopulationSize)
-
-
-
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New fitnessCache() With {.cacl = target}.fitnessFunction
+            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual, Double)(target).Fitness
+            Dim i As int = Scan0
+            Dim random As New Random
 
             ' main loop of evolution.
-            Do While (Not bestFit <= threshold)
-                i += 1
-                j = 0
-                Do While (j < PopulationSize)
+            Do While (++i < maxIterations AndAlso Not bestFit <= threshold)
+
+                For j As Integer = 0 To PopulationSize - 1
                     ' calculate New candidate solution
 
                     ' pick random point from population
-                    Dim x = Math.Floor(random.NextDouble * (population.Count() - 1))
+                    Dim x = Math.Floor(random.NextDouble * (PopulationSize - 1))
                     Dim a, b, c As Integer
 
                     ' pick three different random points from population
                     Do While (a = x)
-                        a = Math.Floor(random.NextDouble * (population.Count() - 1))
+                        a = Math.Floor(random.NextDouble * (PopulationSize - 1))
                     Loop
                     Do While (b = x OrElse b = a)
-                        b = Math.Floor(random.NextDouble * (population.Count() - 1))
+                        b = Math.Floor(random.NextDouble * (PopulationSize - 1))
                     Loop
                     Do While (c = x OrElse c = a OrElse c = b)
-                        c = Math.Floor(random.NextDouble * (population.Count() - 1))
+                        c = Math.Floor(random.NextDouble * (PopulationSize - 1))
                     Loop
 
                     ' Pick a random index [0-Dimensionality]
@@ -174,7 +127,7 @@ Namespace Darwinism
 
                     ' Compute the agent's new position
                     Dim original As Individual = population(x)
-                    Dim candidate As Individual = original.Clone()
+                    Dim candidate As Individual = DirectCast(original.Clone, Individual)
 
                     Dim individual1 As Individual = population(a)
                     Dim individual2 As Individual = population(b)
@@ -184,44 +137,34 @@ Namespace Darwinism
                     ' candidate=a+f*(b-c)
                     ' else
                     ' candidate=x
-                    If (0 = R OrElse random.NextDouble < CR) Then
-                        candidate.data1 = individual1.data1 + F * (individual2.data1 - individual3.data1)
+                    If random.NextDouble < CR Then
+                        Call candidate.Put(R, individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R)))
                     End If ' else isn't needed because we cloned original to candidate
-                    If (1 = R OrElse random.NextDouble < CR) Then
-                        candidate.data2 = individual1.data2 + F * (individual2.data2 - individual3.data2)
-                    End If
-                    ' integer work same as floating points but they need to be rounded
-                    If (2 = R OrElse random.NextDouble < CR) Then
-                        candidate.data3 = Math.Floor(individual1.data3 + F * (individual2.data3 - individual3.data3))
-                    End If
 
                     ' see if Is better than original, if so replace
                     Dim candidateFitness# = fitnessFunction(candidate)
-
-                    If (fitnessFunction(original) > candidateFitness AndAlso candidateFitness <= bestFit) Then
+                    Dim originalFitness# = fitnessFunction(original)
+                    If (originalFitness > candidateFitness AndAlso candidateFitness <= bestFit) Then
                         population.Remove(original)
                         population.Add(candidate)
                         bestFit = candidateFitness
 
                         Call Console.WriteLine(bestFit)
                     End If
-
-                    j += 1
-                Loop
+                Next
             Loop
 
             ' find best candidate solution
+            Dim bestFitness As Individual = [new](random)
             i = 0
-            Dim bestFitness As New Individual()
-            Do While (i < PopulationSize)
-                Dim Individual As Individual = population(i)
-                If (fitnessFunction(bestFitness) > fitnessFunction(Individual)) Then
-                    bestFitness = Individual
+            Do While (++i < PopulationSize)
+                Dim candidate As Individual = population(i)
+                If (fitnessFunction(bestFitness) > fitnessFunction(candidate)) Then
+                    bestFitness = candidate
                 End If
-                i += 1
             Loop
 
-            ' your solution
+            ' Returns your solution
             Return bestFitness
         End Function
     End Module
