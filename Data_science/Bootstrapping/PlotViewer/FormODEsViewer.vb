@@ -11,6 +11,7 @@ Public Class FormODEsViewer
 
     Dim defines As New Dictionary(Of String, Double)
     Dim vars As New Dictionary(Of String, PictureBox)
+    Dim inputs As New Dictionary(Of String, TextBox)
 
     Private Sub LoadModelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadModelToolStripMenuItem.Click
         Using file As New OpenFileDialog With {
@@ -46,6 +47,10 @@ Public Class FormODEsViewer
                             }
                             vars(var) = pic
                             FlowLayoutPanel2.Controls.Add(vars(var))
+
+                            AddHandler pic.Click, Sub(picBox, arg)
+                                                      PictureBox1.BackgroundImage = DirectCast(picBox, PictureBox).BackgroundImage
+                                                  End Sub
                         Next
 
                         For Each var$ In MonteCarlo.Model.GetParameters(model) _
@@ -58,6 +63,7 @@ Public Class FormODEsViewer
                             Call FlowLayoutPanel1.Controls.Add(text)
 
                             defines(var) = 0
+                            inputs(var) = text
 
                             AddHandler text.TextChanged, Sub(txt, args)
                                                              Dim txtBox = DirectCast(txt, TextBox)
@@ -74,7 +80,7 @@ Public Class FormODEsViewer
         For Each y In result.y.Values
             Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.x(i.i)))
             Try
-                vars(y.Name).BackgroundImage = Scatter.Plot(pts)
+                vars(y.Name).BackgroundImage = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
             Catch ex As Exception
 
             End Try
@@ -93,5 +99,19 @@ Public Class FormODEsViewer
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Call Draw(MonteCarlo.Model.RunTest(model, defines, defines, 10000, 0, 100))
+    End Sub
+
+    Private Sub LoadParametersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadParametersToolStripMenuItem.Click
+        Using file As New OpenFileDialog With {
+            .Filter = "Excel(*.csv)|*.csv"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                defines = ODEsOut.LoadFromDataFrame(file.FileName).params
+
+                For Each x In defines.ToArray
+                    inputs(x.Key).Text = x.Value
+                Next
+            End If
+        End Using
     End Sub
 End Class
