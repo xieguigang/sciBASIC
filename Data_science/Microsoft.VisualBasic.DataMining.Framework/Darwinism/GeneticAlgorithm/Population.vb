@@ -15,11 +15,12 @@
 ' *****************************************************************************
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.DataMining.GAF.Helper
+Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 
-Namespace GAF
+Namespace Darwinism.GAF
 
     Public Class Population(Of chr As Chromosome(Of chr))
         Implements IEnumerable(Of chr)

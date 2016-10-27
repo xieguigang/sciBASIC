@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
-Imports Microsoft.VisualBasic.DataMining.GAF
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Text

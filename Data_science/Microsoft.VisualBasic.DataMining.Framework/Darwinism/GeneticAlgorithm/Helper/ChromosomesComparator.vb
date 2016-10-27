@@ -1,4 +1,6 @@
-﻿Namespace GAF.Helper
+﻿Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
+
+Namespace Darwinism.GAF.Helper
 
     ''' <summary>
     ''' 缓存的Key是染色体的ToString的计算值

@@ -1,7 +1,8 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 
-Namespace GAF.Helper
+Namespace Darwinism.GAF.Helper
 
     Public Module ListenerHelper
 

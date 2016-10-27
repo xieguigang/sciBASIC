@@ -1,4 +1,4 @@
-﻿Namespace GAF.Helper
+﻿Namespace Darwinism.GAF.Helper
 
     Public Module FitnessHelper
 

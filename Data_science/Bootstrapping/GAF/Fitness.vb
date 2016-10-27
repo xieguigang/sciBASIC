@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
-Imports Microsoft.VisualBasic.DataMining.GAF
-Imports Microsoft.VisualBasic.DataMining.GAF.Helper
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq

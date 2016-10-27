@@ -1,7 +1,8 @@
 ﻿Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
-Imports Microsoft.VisualBasic.DataMining.GAF
-Imports Microsoft.VisualBasic.DataMining.GAF.Helper
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
+Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus

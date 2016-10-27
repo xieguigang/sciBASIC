@@ -15,7 +15,9 @@
 ' limitations under the License.
 ' *****************************************************************************
 
-Namespace GAF
+Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
+
+Namespace Darwinism.GAF
 
     Public Interface Fitness(Of C As Chromosome(Of C), T As IComparable(Of T))
 
