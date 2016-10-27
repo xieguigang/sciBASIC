@@ -95,11 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
-    <Compile Include="GAF\GAFModel.vb" />
-    <Compile Include="GAF\Dump.vb" />
-    <Compile Include="GAF\Fitness.vb" />
-    <Compile Include="GAF\Protocol.vb" />
-    <Compile Include="GAF\ParameterVector.vb" />
+    <Compile Include="Darwinism\DESolver.vb" />
+    <Compile Include="Darwinism\GAF\GAFModel.vb" />
+    <Compile Include="Darwinism\GAF\Dump.vb" />
+    <Compile Include="Darwinism\GAF\Fitness.vb" />
+    <Compile Include="Darwinism\GAF\Protocol.vb" />
+    <Compile Include="Darwinism\GAF\ParameterVector.vb" />
     <Compile Include="Normalization.vb" />
     <Compile Include="Monte-Carlo\VariableModel.vb" />
     <Compile Include="Obsolete\Analysis.vb" />
