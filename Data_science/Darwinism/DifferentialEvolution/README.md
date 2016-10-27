@@ -1,6 +1,8 @@
 ![](./DE_Meta-Fitness_Landscape_(Sphere_and_Rosenbrock).jpg)
 > Performance landscape showing how the basic DE performs in aggregate on the Sphere and Rosenbrock benchmark problems when varying the two DE parameters and , and keeping fixed =0.9.
-> Pedersen, M.E.H., Tuning & Simplifying Heuristical Optimization, PhD Thesis, 2010, University of Southampton, School of Engineering Sciences, Computational Engineering and Design Group. - Own work
+>
+> Pedersen, M.E.H., Tuning & Simplifying Heuristical Optimization, PhD Thesis, 2010, University of Southampton, School of Engineering Sciences, Computational Engineering and Design Group.
+>
 > Performance landscape showing how basic Differential Evolution (DE) performs in aggregate on the Sphere and Rosenbrock benchmark problems when varying the two DE parameters NP and F, and keeping fixed CR=0.9. Lower meta-fitness values means better DE performance. Such a performance landscape is very time-consuming to compute, especially for optimizers with several behavioural parameters, but it can be searched efficiently using the simple meta-optimization approach by Pedersen implemented in SwarmOps to uncover DE parameters with good performance.
 
 ```java
@@ -123,6 +125,8 @@ public class DifferentialEvolution {
 	}
 }
 ```
+
+Usage example in VB.NET
 
 ```vbnet
 
