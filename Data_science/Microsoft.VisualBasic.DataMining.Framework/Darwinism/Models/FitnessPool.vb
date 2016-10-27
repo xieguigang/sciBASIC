@@ -25,10 +25,10 @@
                 fit = cache(key$)
             Else
                 fit = caclFitness([in])
-                cache.Add(key$, Fitness)
+                cache.Add(key$, fit)
             End If
 
-            Return Fitness
+            Return fit
         End Function
     End Class
 End Namespace

@@ -1,13 +1,13 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.Darwinism
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
 
 Namespace Darwinism
 
     Public Interface IIndividual : Inherits Chromosome(Of IIndividual), ICloneable
-
         Function Yield(i%) As Double
         Sub Put(i%, value#)
     End Interface
@@ -60,9 +60,7 @@ Namespace Darwinism
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetPopulation(Of Individual As IIndividual)(
-                                                                                 __new As [New](Of Individual),
-                                                                                 Optional PopulationSize% = 20) As List(Of Individual)
+        Public Function GetPopulation(Of Individual As IIndividual)(__new As [New](Of Individual), Optional PopulationSize% = 20) As List(Of Individual)
             Dim population As New List(Of Individual)
             Dim rand As New Random
 
@@ -87,12 +85,15 @@ Namespace Darwinism
         ''' <param name="PopulationSize%"></param>
         ''' <returns></returns>
         Public Function Evolution(Of Individual As IIndividual)(
-                                        target As Func(Of Individual, Double),
-                                        [new] As [New](Of Individual),
-                                        N%, Optional F As Double = 1, Optional CR As Double = 0.5,
-                                              Optional threshold# = 0.1,
-                                        Optional maxIterations% = 500000,
-                                              Optional PopulationSize% = 20) As Individual
+                                         target As Func(Of Individual, Double),
+                                          [new] As [New](Of Individual),
+                                           N%,
+                                     Optional F As Double = 1,
+                                    Optional CR As Double = 0.5,
+                                    Optional threshold# = 0.1,
+                                    Optional maxIterations% = 500000,
+                                    Optional PopulationSize% = 20,
+                                    Optional iteratePrints As Action(Of outPrint) = Nothing) As Individual
 
             ' linked list that has our population inside
             Dim population As List(Of Individual) = [new].GetPopulation(PopulationSize)
@@ -102,8 +103,7 @@ Namespace Darwinism
             Dim random As New Random
 
             ' main loop of evolution.
-            Do While (++i < maxIterations AndAlso Not bestFit <= threshold)
-
+            Do While (++i < maxIterations)
                 For j As Integer = 0 To PopulationSize - 1
                     ' calculate New candidate solution
 
@@ -142,14 +142,29 @@ Namespace Darwinism
                     End If ' else isn't needed because we cloned original to candidate
 
                     ' see if Is better than original, if so replace
-                    Dim candidateFitness# = fitnessFunction(candidate)
                     Dim originalFitness# = fitnessFunction(original)
+                    Dim candidateFitness# = fitnessFunction(candidate)
+
                     If (originalFitness > candidateFitness AndAlso candidateFitness <= bestFit) Then
                         population.Remove(original)
                         population.Add(candidate)
                         bestFit = candidateFitness
 
-                        Call Console.WriteLine(bestFit)
+                        If Not iteratePrints Is Nothing Then
+                            Dim out As New outPrint With {
+                                .fit = bestFit,
+                                .chromosome = candidate.ToString,
+                                .iter = i
+                            }
+                            Call iteratePrints(out)
+#If DEBUG Then
+                            Call Console.WriteLine(out.ToString)
+#End If
+                        End If
+
+                        If bestFit <= threshold Then
+                            Exit Do
+                        End If
                     End If
                 Next
             Loop
