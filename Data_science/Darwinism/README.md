@@ -5,3 +5,10 @@ In computer science, evolutionary computation is a subfield of artificial intell
 Evolutionary computation uses iterative progress, such as growth or development in a population. This population is then selected in a guided random search using parallel processing to achieve the desired end. Such processes are often inspired by biological mechanisms of evolution.
 
 As evolution can produce highly optimised processes and networks, it has many applications in computer science.
+
+##### Darwinism computing modules in VisualBasic
+> [Darwinism computing modules](../Microsoft.VisualBasic.DataMining.Framework/Darwinism/) in Microsoft VisualBasic data mining framework:
+>
+```vbnet
+Imports Microsoft.VisualBasic.DataMining.Darwinism
+```
