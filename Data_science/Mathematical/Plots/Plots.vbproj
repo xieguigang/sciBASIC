@@ -248,9 +248,9 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ODE\Calculus_diffEq.vbproj">
+    <ProjectReference Include="..\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
-      <Name>Calculus_diffEq</Name>
+      <Name>ODEsSolver</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
