@@ -176,10 +176,11 @@ Namespace GAF
                          Optional log10Fit As Boolean = True,
                          Optional ignores$() = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
-                         Optional estArgsBase As Dictionary(Of String, Double) = Nothing) As var()
+                         Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
+                         Optional isRefModel As Boolean = False) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
-            Dim fitness As New GAFFitness(GetType(T), observation, initOverrides) With {
+            Dim fitness As New GAFFitness(GetType(T), observation, initOverrides, isRefModel) With {
                 .log10Fitness = log10Fit,
                 .Ignores = If(ignores Is Nothing, {}, ignores)
             }

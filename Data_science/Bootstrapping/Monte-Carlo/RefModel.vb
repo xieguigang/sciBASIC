@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace MonteCarlo
 
+    ''' <summary>
+    ''' Sample partial reference model
+    ''' </summary>
     Public MustInherit Class RefModel : Inherits Model
 
         Public Property RefValues As ValueVector

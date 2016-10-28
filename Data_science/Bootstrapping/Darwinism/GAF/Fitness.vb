@@ -36,6 +36,10 @@ Namespace GAF
         ''' 计算的采样数
         ''' </summary>
         Dim samples%
+        ''' <summary>
+        ''' 样本列表部分计算的参考值
+        ''' </summary>
+        Dim ref As ODEsOut
 
 #Region "Friend visit for dump debug module and run test for fitness calc"
 
@@ -93,13 +97,17 @@ Namespace GAF
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
         ''' </summary>
         ''' <param name="observation"></param>
-        Sub New(model As Type, observation As ODEsOut, initOverrides As Dictionary(Of String, Double))
+        Sub New(model As Type, observation As ODEsOut, initOverrides As Dictionary(Of String, Double), isRef As Boolean)
             With Me
                 .observation = observation
                 ._Model = model
                 .n = observation.x.Length
                 .a = observation.x(0)
                 .b = observation.x.Last
+
+                If isRef Then
+                    ref = observation
+                End If
             End With
 
             Call __init()
@@ -120,7 +128,7 @@ Namespace GAF
                     .ToDictionary(Function(var) var.Name,
                                   Function(var) var.value)
             Dim out As ODEsOut = ' y0使用实验观测值，而非突变的随机值
-                MonteCarlo.Model.RunTest(Model, y0, vars, n, a, b)  ' 通过拟合的参数得到具体的计算数据
+                MonteCarlo.Model.RunTest(Model, y0, vars, n, a, b, ref)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
             Dim NaN%
 

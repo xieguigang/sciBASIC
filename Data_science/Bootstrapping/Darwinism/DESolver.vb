@@ -20,7 +20,8 @@ Namespace Darwinism
                          Optional maxIterations% = 500000,
                          Optional PopulationSize% = 20,
                          Optional ByRef iteratePrints As List(Of outPrint) = Nothing,
-                         Optional initOverrides As Dictionary(Of String, Double) = Nothing) As var()
+                         Optional initOverrides As Dictionary(Of String, Double) = Nothing,
+                         Optional isRefModel As Boolean = False) As var()
 
             Dim model As Type = GetType(T)
             Dim vars As String() = MonteCarlo.Model.GetParameters(model).ToArray
@@ -44,7 +45,7 @@ Namespace Darwinism
 
                     Return out
                 End Function
-            Dim fitness As New GAFFitness(model, observation, initOverrides)
+            Dim fitness As New GAFFitness(model, observation, initOverrides, isRefModel)
             Dim iterates As New List(Of outPrint)
             Dim best = DifferentialEvolution.Evolution(
                 AddressOf fitness.Calculate,
