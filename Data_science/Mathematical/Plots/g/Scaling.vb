@@ -91,7 +91,8 @@ Public Class Scaling
                 From p As PointData
                 In s.pts
                 Let px As Single = margin.Width + width * (p.pt.X - xmin) / dx
-                Let py As Single = bottom - height * (p.pt.Y - ymin) / dy
+                Let yh As Single = If(dy = 0R, height / 2, height * (p.pt.Y - ymin) / dy) ' 如果y没有变化，则是一条居中的水平直线
+                Let py As Single = bottom - yh
                 Select New PointData(px, py) With {
                     .errMinus = p.errMinus,
                     .errPlus = p.errPlus,
