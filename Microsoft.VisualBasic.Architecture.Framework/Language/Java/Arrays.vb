@@ -70,5 +70,15 @@ Namespace Language.Java
         Public Function sublist(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).ToList
         End Function
+
+        <Extension>
+        Public Function Min(Of T As IComparable(Of T))(source As IEnumerable(Of T)) As T
+            Return Enumerable.Min(source)
+        End Function
+
+        <Extension>
+        Public Function Max(Of T As IComparable(Of T))(source As IEnumerable(Of T)) As T
+            Return Enumerable.Max(source)
+        End Function
     End Module
 End Namespace

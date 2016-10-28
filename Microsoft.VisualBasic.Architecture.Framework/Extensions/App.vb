@@ -80,6 +80,19 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
 
+    ''' <summary>
+    ''' Gets the number of ticks that represent the date and time of this instance.
+    ''' 
+    ''' The number of ticks that represent the date and time of this instance. The value
+    ''' is between DateTime.MinValue.Ticks and DateTime.MaxValue.Ticks.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property NanoTime As Long
+        Get
+            Return Now.Ticks
+        End Get
+    End Property
+
     Sub New()
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
