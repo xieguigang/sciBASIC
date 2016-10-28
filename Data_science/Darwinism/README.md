@@ -7,8 +7,8 @@ Evolutionary computation uses iterative progress, such as growth or development 
 As evolution can produce highly optimised processes and networks, it has many applications in computer science.
 
 ##### Darwinism computing modules in VisualBasic
-[Darwinism computing module in data mining framework](../Microsoft.VisualBasic.DataMining.Framework/Darwinism/)
-
+> [Darwinism computing modules](../Microsoft.VisualBasic.DataMining.Framework/Darwinism/) in Microsoft VisualBasic data mining framework:
+>
 ```vbnet
 Imports Microsoft.VisualBasic.DataMining.Darwinism
 ```
