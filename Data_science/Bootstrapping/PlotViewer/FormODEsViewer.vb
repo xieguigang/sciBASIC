@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Linq
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Public Class FormODEsViewer
 
@@ -24,6 +25,7 @@ Public Class FormODEsViewer
                 }
                     If loader.ShowDialog = DialogResult.OK Then
                         model = loader.Model
+                        Text = file.FileName.ToFileURL & "!" & model.FullName
 
                         For Each ctrl As Control In FlowLayoutPanel1.Controls
                             If ctrl.Equals(ToolStrip1) Then
@@ -83,14 +85,23 @@ Public Class FormODEsViewer
     End Sub
 
     Public Sub Draw(result As ODEsOut)
-        For Each y In result.y.Values
+        ToolStripProgressBar1.Value = 15
+        Application.DoEvents()
+
+        Dim delta = 80 / result.y.Count
+
+        For Each y As NamedValue(Of Double()) In result.y.Values
             Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.x(i.i)))
             Try
                 vars(y.Name).BackgroundImage = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
             Catch ex As Exception
-
+            Finally
+                ToolStripProgressBar1.Value += delta
+                Application.DoEvents()
             End Try
         Next
+
+        ToolStripProgressBar1.Value = 100
     End Sub
 
     Private Sub SaveResultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveResultToolStripMenuItem.Click
@@ -104,6 +115,8 @@ Public Class FormODEsViewer
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        ToolStripProgressBar1.Value = 0
+        Application.DoEvents()
         Call Draw(MonteCarlo.Model.RunTest(model, defines, defines, n, a, b))
     End Sub
 
