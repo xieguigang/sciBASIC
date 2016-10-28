@@ -14,3 +14,7 @@ As evolution can produce highly optimised processes and networks, it has many ap
 ```vbnet
 Imports Microsoft.VisualBasic.DataMining.Darwinism
 ```
+
+###### Current Implements
++ Genetic Algorithm 
++ Differential Evolution
