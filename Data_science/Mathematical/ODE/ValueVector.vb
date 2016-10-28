@@ -6,12 +6,12 @@ Public Class ValueVector : Inherits int
 
     Public Property Y As Dictionary(Of NamedValue(Of Double()))
 
-    Default Public Overloads Property Value(name As var) As Double
+    Default Public Overloads Property Value(name$) As Double
         Get
-            Return Y(name.Name).x(MyBase.value)
+            Return Y(name).x(MyBase.value)
         End Get
         Set(value As Double)
-            Y(name.Name$).x(MyBase.value) = value
+            Y(name$).x(MyBase.value) = value
         End Set
     End Property
 
