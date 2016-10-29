@@ -5,129 +5,67 @@
 >
 > Performance landscape showing how basic Differential Evolution (DE) performs in aggregate on the Sphere and Rosenbrock benchmark problems when varying the two DE parameters NP and F, and keeping fixed CR=0.9. Lower meta-fitness values means better DE performance. Such a performance landscape is very time-consuming to compute, especially for optimizers with several behavioural parameters, but it can be searched efficiently using the simple meta-optimization approach by Pedersen implemented in SwarmOps to uncover DE parameters with good performance.
 
-```java
-//definition of one individual in population
-public class Individual {
-	//normally DifferentialEvolution uses floating point variables
-	float data1, data2
-	//but using integers is possible too  
-	int data3
-}
+###### Usage example in VB.NET
 
-public class DifferentialEvolution {
-	//Variables
-	//linked list that has our population inside
-	LinkedList<Individual> population=new LinkedList<Individual>()
-	//New instance of Random number generator
-	Random random=new Random()
-	int PopulationSize=20
-
-	//differential weight [0,2]
-	float F=1
-	//crossover probability [0,1]
-	float CR=0.5
-	//dimensionality of problem, means how many variables problem has. this case 3 (data1,data2,data3)
-	int N=3;
-
-	//This function tells how well given individual performs at given problem.
-	public float fitnessFunction(Individual in) {
-		...
-		return	fitness	
-	}
-
-	//this is main function of program
-	public void Main() {
-		//Initialize population with individuals that have been initialized with uniform random noise
-		//uniform noise means random value inside your search space
-		int i=0
-		while(i<populationSize) {
-			Individual individual= new Individual()
-			individual.data1=random.UniformNoise()
-			individual.data2=random.UniformNoise()
-			//integers cant take floating point values and they need to be either rounded
-			individual.data3=Math.Floor( random.UniformNoise())
-			population.add(individual)
-			i++
-		}
-		
-		i=0
-		int j
-		//main loop of evolution.
-		while (!StoppingCriteria) {
-			i++
-			j=0
-			while (j<populationSize) {
-				//calculate new candidate solution
-			
-				//pick random point from population
-				int x=Math.floor(random.UniformNoise()%(population.size()-1))
-				int a,b,c
-
-				//pick three different random points from population
-				do{
-					a=Math.floor(random.UniformNoise()%(population.size()-1))
-				}while(a==x);
-				do{
-					b=Math.floor(random.UniformNoise()%(population.size()-1))
-				}while(b==x| b==a);
-				do{
-					c=Math.floor(random.UniformNoise()%(population.size()-1))
-				}while(c==x | c==a | c==b);
-				
-				// Pick a random index [0-Dimensionality]
-				int R=rand.nextInt()%N;
-				
-				//Compute the agent's new position
-				Individual original=population.get(x)
-				Individual candidate=original.clone()
-				
-				Individual individual1=population.get(a)
-				Individual individual2=population.get(b)
-				Individual individual3=population.get(c)
-				
-				//if(i==R | i<CR)
-					//candidate=a+f*(b-c)
-				//else
-					//candidate=x
-				if( 0==R | random.UniformNoise()%1<CR){	
-					candidate.data1=individual1.data1+F*(individual2.data1-individual3.data1)
-				}// else isn't needed because we cloned original to candidate
-				if( 1==R | random.UniformNoise()%1<CR){	
-					candidate.data2=individual1.data2+F*(individual2.data2-individual3.data2)
-				}
-				//integer work same as floating points but they need to be rounded
-				if( 2==R | random.UniformNoise()%1<CR){	
-					candidate.data3=Math.floor(individual1.data3+F*(individual2.data3-individual3.data3))
-				}
-				
-				//see if is better than original, if so replace
-				if(fitnessFunction(original)<fitnessFunction(candidate)){
-					population.remove(original)
-					population.add(candidate)
-				}
-				j++
-			}
-		}
-		
-		//find best candidate solution
-		i=0
-		Individual bestFitness=new Individual()
-		while (i<populationSize) {
-			Individual individual=population.get(i)
-			if(fitnessFunction(bestFitness)<fitnessFunction(individual)){
-				bestFitness=individual
-			}
-			i++
-		}
-		
-		//your solution
-		return bestFitness
-	}
-}
-```
-
-Usage example in VB.NET
+Usage reference to this bootstraping code:
 
 ```vbnet
+Imports Microsoft.VisualBasic.Data.Bootstrapping.GAF
+Imports Microsoft.VisualBasic.DataMining.Darwinism
+Imports Microsoft.VisualBasic.DataMining.Darwinism.DifferentialEvolution
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
+Public Function Fitting(Of T As MonteCarlo.Model)(
+                         observation As ODEsOut,
+                         Optional F As Double = 1,
+                         Optional CR As Double = 0.5,
+                         Optional threshold# = 0.1,
+                         Optional maxIterations% = 500000,
+                         Optional PopulationSize% = 200,
+                         Optional ByRef iteratePrints As List(Of outPrint) = Nothing,
+                         Optional initOverrides As Dictionary(Of String, Double) = Nothing,
+                         Optional isRefModel As Boolean = False,
+                         Optional parallel As Boolean = False) As var()
+
+    Dim model As Type = GetType(T)
+    Dim vars As String() = MonteCarlo.Model.GetParameters(model).ToArray
+    Dim [new] As [New](Of ParameterVector) =
+        Function(seed)
+            Dim out As New ParameterVector With {
+                .vars = vars _
+                .ToArray(Function(v) New var(v))
+            }
+
+            If seed Is Nothing Then
+                Return out
+            Else
+                For Each x In out.vars
+                    Dim power# = (
+                        If(seed.Next > 0.5, 1, -1) * seed.Next(vars.Length)
+                    )
+                    x.value = 100 ^ power
+                Next
+            End If
+
+            Return out
+        End Function
+    Dim fitness As New GAFFitness(model, observation, initOverrides, isRefModel)
+    Dim iterates As New List(Of outPrint)
+    Dim best = DifferentialEvolution.Evolution(
+        AddressOf fitness.Calculate,
+        [new],
+        vars.Length,
+        F, CR, threshold,
+        maxIterations,
+        PopulationSize,
+        AddressOf iterates.Add,
+        parallel)
+
+    iteratePrints = iterates
+
+    Return best.vars
+End Function
 ```
