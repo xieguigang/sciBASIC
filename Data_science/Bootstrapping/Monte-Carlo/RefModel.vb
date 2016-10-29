@@ -8,9 +8,11 @@ Namespace MonteCarlo
     ''' </summary>
     Public MustInherit Class RefModel : Inherits Model
 
+        Public Property Delta As Integer
         Public Property RefValues As ValueVector
 
         Dim RK%
+        Dim d%
 
         ''' <summary>
         ''' RK4每一次迭代会调用这个函数计算4次
@@ -23,7 +25,11 @@ Namespace MonteCarlo
 
             If RK = 4 Then
                 RK = 0
-                RefValues += 1  ' 最开始是0，假若这句代码被放在func调用的前面首先自增1的话，会在末尾出现越界的问题
+                d += 1
+                If d > Delta Then
+                    RefValues += 1  ' 最开始是0，假若这句代码被放在func调用的前面首先自增1的话，会在末尾出现越界的问题
+                    d = 0
+                End If
             End If
         End Sub
 

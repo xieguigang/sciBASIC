@@ -138,7 +138,12 @@ Namespace Darwinism
                     ' else
                     ' candidate=x
                     If random.NextDouble < CR Then
-                        Call candidate.Put(R, individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R)))
+                        ' 当群体内的染色体全部都是一样的参数的时候，在这里会无法产生突变
+                        ' 所以需要在这里添加一个随机数来解决这个问题
+                        ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
+                        Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
+                        mutate = Math.Sign(mutate) * random.NextDouble * 10 ^ (Math.Log10(Math.Abs(mutate)) - 1)
+                        Call candidate.Put(R, mutate)
                     End If ' else isn't needed because we cloned original to candidate
 
                     ' see if Is better than original, if so replace

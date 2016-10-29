@@ -116,9 +116,13 @@ Namespace MonteCarlo
             Next
 
             If Not ref Is Nothing Then
+                Dim partTokens As Integer = n / ref.x.Length
+
                 TryCast(x, RefModel).RefValues = New ValueVector With {
-                    .Y = ref.y
+                    .Y = ref.y,
+                    .value = Scan0
                 }
+                TryCast(x, RefModel).Delta = partTokens
             End If
 
             Return x.Solve(n, a, b, incept:=True)

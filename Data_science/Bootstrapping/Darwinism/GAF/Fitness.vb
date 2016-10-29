@@ -40,6 +40,10 @@ Namespace GAF
         ''' 样本列表部分计算的参考值
         ''' </summary>
         Dim ref As ODEsOut
+        ''' <summary>
+        ''' 模型之中所定义的y变量
+        ''' </summary>
+        Dim modelVariables As String()
 
 #Region "Friend visit for dump debug module and run test for fitness calc"
 
@@ -88,6 +92,9 @@ Namespace GAF
                     .ToDictionary(Function(v) v.Name,
                                   Function(y) y.x(0))
                 .Ignores = {}
+                .modelVariables = MonteCarlo.Model _
+                    .GetVariables(Model) _
+                    .ToArray
 
                 Call .Model.FullName.Warning
             End With
@@ -133,14 +140,13 @@ Namespace GAF
             Dim NaN%
 
             ' 再计算出fitness
-            For Each y As NamedValue(Of Double()) In observation.y _
-                .Values _
+            For Each y$ In modelVariables _
                 .Where(Function(v)
-                           Return Array.IndexOf(Ignores, v.Name) = -1
+                           Return Array.IndexOf(Ignores, v) = -1
                        End Function)
 
-                Dim sample1 = y.x.Split(samples, echo:=False)
-                Dim sample2 = out.y(y.Name).x.Split(samples, echo:=False)
+                Dim sample1#()() = observation.y(y).x.Split(samples, echo:=False)
+                Dim sample2#()() = out.y(y$).x.Split(samples, echo:=False)
                 Dim a#()
                 Dim b#()
 
