@@ -1,9 +1,10 @@
 ﻿Imports Microsoft.VisualBasic.Data.Bootstrapping.GAF
-Imports Microsoft.VisualBasic.DataMining.Darwinism.DifferentialEvolution
-Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.DataMining.Darwinism
+Imports Microsoft.VisualBasic.DataMining.Darwinism.DifferentialEvolution
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace Darwinism
 
@@ -19,7 +20,11 @@ Namespace Darwinism
         ''' <param name="observation"></param>
         ''' <param name="F"></param>
         ''' <param name="CR"></param>
-        ''' <param name="threshold#"></param>
+        ''' <param name="threshold#">
+        ''' 现实的曲线太复杂了，因为模型是简单方程，只能够计算出简单的曲线，所以肯定不能完全拟合，
+        ''' 最终的结果fitness也会较大，默认的0.1的fitness这个要求肯定不能够达到，
+        ''' 所以只要达到一定次数的迭代就足够了，这个fitness的阈值参数值可以设置大一些
+        ''' </param>
         ''' <param name="maxIterations%"></param>
         ''' <param name="PopulationSize%"></param>
         ''' <param name="iteratePrints"></param>
