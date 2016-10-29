@@ -1,9 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.Darwinism
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Darwinism
 
@@ -88,96 +90,73 @@ Namespace Darwinism
                                          target As Func(Of Individual, Double),
                                           [new] As [New](Of Individual),
                                            N%,
-                                     Optional F As Double = 1,
-                                    Optional CR As Double = 0.5,
-                                    Optional threshold# = 0.1,
-                                    Optional maxIterations% = 500000,
-                                    Optional PopulationSize% = 20,
-                                    Optional iteratePrints As Action(Of outPrint) = Nothing) As Individual
+                                         Optional F# = 1,
+                                         Optional CR# = 0.5,
+                                         Optional threshold# = 0.1,
+                                         Optional maxIterations% = 500000,
+                                         Optional PopulationSize% = 20,
+                                         Optional iteratePrints As Action(Of outPrint) = Nothing,
+                                         Optional parallel As Boolean = False) As Individual
 
             ' linked list that has our population inside
-            Dim population As List(Of Individual) = [new].GetPopulation(PopulationSize)
+            Dim population As Individual() = [new].GetPopulation(PopulationSize).ToArray
             Dim bestFit# = Integer.MaxValue
             Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual, Double)(target).Fitness
             Dim i As int = Scan0
             Dim random As New Random
 
             ' main loop of evolution.
-            Do While (++i < maxIterations)
-                For j As Integer = 0 To PopulationSize - 1
-                    ' calculate New candidate solution
+            If parallel Then
 
-                    ' pick random point from population
-                    Dim x = Math.Floor(random.NextDouble * (PopulationSize - 1))
-                    Dim a, b, c As Integer
+                Dim parts% = PopulationSize / App.CPUCoreNumbers
 
-                    ' pick three different random points from population
-                    Do While (a = x)
-                        a = Math.Floor(random.NextDouble * (PopulationSize - 1))
-                    Loop
-                    Do While (b = x OrElse b = a)
-                        b = Math.Floor(random.NextDouble * (PopulationSize - 1))
-                    Loop
-                    Do While (c = x OrElse c = a OrElse c = b)
-                        c = Math.Floor(random.NextDouble * (PopulationSize - 1))
-                    Loop
+                Do While (++i < maxIterations)
+                    Dim subPopulates As Individual()() = population.Split(parts)
+                    Dim LQuery = LinqAPI.Exec(Of DoubleTagged(Of Individual())) <=
+ _
+                        From subPop As Individual()
+                        In subPopulates.AsParallel
+                        Select subPop.__subPopulationEvolute(
+                            bestFit:=bestFit,
+                            CR:=CR,
+                            F:=F,
+                            fitnessFunction:=fitnessFunction,
+                            iteratePrints:=iteratePrints,
+                            iterates:=i,
+                            N:=N)
 
-                    ' Pick a random index [0-Dimensionality]
-                    Dim R = random.Next(N)
-
-                    ' Compute the agent's new position
-                    Dim original As Individual = population(x)
-                    Dim candidate As Individual = DirectCast(original.Clone, Individual)
-
-                    Dim individual1 As Individual = population(a)
-                    Dim individual2 As Individual = population(b)
-                    Dim individual3 As Individual = population(c)
-
-                    ' if(i==R | i<CR)
-                    ' candidate=a+f*(b-c)
-                    ' else
-                    ' candidate=x
-                    If random.NextDouble < CR Then
-                        ' 当群体内的染色体全部都是一样的参数的时候，在这里会无法产生突变
-                        ' 所以需要在这里添加一个随机数来解决这个问题
-                        ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
-                        Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
-                        mutate = Math.Sign(mutate) * random.NextDouble * 10 ^ (Math.Log10(Math.Abs(mutate)) - 1)
-                        Call candidate.Put(R, mutate)
-                    End If ' else isn't needed because we cloned original to candidate
-
-                    ' see if Is better than original, if so replace
-                    Dim originalFitness# = fitnessFunction(original)
-                    Dim candidateFitness# = fitnessFunction(candidate)
-
-                    If (originalFitness > candidateFitness) Then
-                        population.Remove(original)
-                        population.Add(candidate)
-
-                        If bestFit > candidateFitness Then
-                            bestFit = candidateFitness
-
-                            Dim out As New outPrint With {
-                                .fit = bestFit,
-                                .chromosome = candidate.ToString,
-                                .iter = i
-                            }
-                            If Not iteratePrints Is Nothing Then
-                                Call iteratePrints(out)
-#If DEBUG Then
-                                Call Console.WriteLine(out.ToString)
-#End If
-                            Else
-                                Call Console.WriteLine(out.ToString)
-                            End If
-                        End If
-                    End If
+                    bestFit = LQuery.Min(Function(x) x.Tag)
+                    population = LQuery _
+                        .Select(Function(x) x.value) _
+                        .IteratesALL _
+                        .Shuffles
 
                     If bestFit <= threshold Then
                         Exit Do
                     End If
-                Next
-            Loop
+                Loop
+
+            Else
+
+                Do While (++i < maxIterations)
+                    Dim iter As DoubleTagged(Of Individual()) =
+                        population.__subPopulationEvolute(
+                        F:=F,
+                        bestFit:=bestFit,
+                        CR:=CR,
+                        fitnessFunction:=fitnessFunction,
+                        iteratePrints:=iteratePrints,
+                        iterates:=i,
+                        N:=N)
+
+                    bestFit = iter.Tag
+
+                    If bestFit <= threshold Then
+                        Exit Do
+                    End If
+                Loop
+
+            End If
 
             ' find best candidate solution
             Dim bestFitness As Individual = [new](random)
@@ -191,6 +170,107 @@ Namespace Darwinism
 
             ' Returns your solution
             Return bestFitness
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="Individual"></typeparam>
+        ''' <param name="population"></param>
+        ''' <param name="F#"></param>
+        ''' <param name="N%"></param>
+        ''' <param name="CR#"></param>
+        ''' <param name="bestFit#"></param>
+        ''' <param name="iterates%">i</param>
+        ''' <param name="iteratePrints"></param>
+        ''' <param name="fitnessFunction"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function __subPopulationEvolute(Of Individual As IIndividual)(
+                                                   population As Individual(),
+                                                   F#, N%, CR#,
+                                                   bestFit#,
+                                                   iterates%,
+                                                iteratePrints As Action(Of outPrint),
+                                              fitnessFunction As Func(Of Individual, Double)) As DoubleTagged(Of Individual())
+            Dim random As New Random
+            Dim populationSize% = population.Length
+
+            For i As Integer = 0 To populationSize - 1
+                ' calculate New candidate solution
+
+                ' pick random point from population
+                Dim x = Math.Floor(random.NextDouble * (populationSize - 1))
+                Dim a, b, c As Integer
+
+                ' pick three different random points from population
+                Do While (a = x)
+                    a = Math.Floor(random.NextDouble * (populationSize - 1))
+                Loop
+                Do While (b = x OrElse b = a)
+                    b = Math.Floor(random.NextDouble * (populationSize - 1))
+                Loop
+                Do While (c = x OrElse c = a OrElse c = b)
+                    c = Math.Floor(random.NextDouble * (populationSize - 1))
+                Loop
+
+                ' Pick a random index [0-Dimensionality]
+                Dim R = random.Next(N)
+
+                ' Compute the agent's new position
+                Dim original As Individual = population(x)
+                Dim candidate As Individual = DirectCast(original.Clone, Individual)
+
+                Dim individual1 As Individual = population(a)
+                Dim individual2 As Individual = population(b)
+                Dim individual3 As Individual = population(c)
+
+                ' if(i==R | i<CR)
+                ' candidate=a+f*(b-c)
+                ' else
+                ' candidate=x
+                If random.NextDouble < CR Then
+                    ' 当群体内的染色体全部都是一样的参数的时候，在这里会无法产生突变
+                    ' 所以需要在这里添加一个随机数来解决这个问题
+                    ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
+                    Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
+                    mutate = Math.Sign(mutate) * random.NextDouble * 10 ^ (Math.Log10(Math.Abs(mutate)) - 1)
+                    Call candidate.Put(R, mutate)
+                End If ' else isn't needed because we cloned original to candidate
+
+                ' see if Is better than original, if so replace
+                Dim originalFitness# = fitnessFunction(original)
+                Dim candidateFitness# = fitnessFunction(candidate)
+
+                If (originalFitness > candidateFitness) Then
+                    population(x) = candidate
+
+                    If bestFit > candidateFitness Then
+                        bestFit = candidateFitness
+
+                        Dim out As New outPrint With {
+                            .fit = bestFit,
+                            .chromosome = candidate.ToString,
+                            .iter = iterates
+                        }
+                        If Not iteratePrints Is Nothing Then
+                            SyncLock iteratePrints
+                                Call iteratePrints(out)
+                            End SyncLock
+#If DEBUG Then
+                            Call Console.WriteLine(out.ToString)
+#End If
+                        Else
+                            Call Console.WriteLine(out.ToString)
+                        End If
+                    End If
+                End If
+            Next
+
+            Return New DoubleTagged(Of Individual()) With {
+                .Tag = bestFit,
+                .value = population
+            }
         End Function
     End Module
 End Namespace

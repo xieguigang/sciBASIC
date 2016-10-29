@@ -18,10 +18,11 @@ Namespace Darwinism
                          Optional CR As Double = 0.5,
                          Optional threshold# = 0.1,
                          Optional maxIterations% = 500000,
-                         Optional PopulationSize% = 20,
+                         Optional PopulationSize% = 200,
                          Optional ByRef iteratePrints As List(Of outPrint) = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
-                         Optional isRefModel As Boolean = False) As var()
+                         Optional isRefModel As Boolean = False,
+                         Optional parallel As Boolean = False) As var()
 
             Dim model As Type = GetType(T)
             Dim vars As String() = MonteCarlo.Model.GetParameters(model).ToArray
@@ -54,7 +55,8 @@ Namespace Darwinism
                 F, CR, threshold,
                 maxIterations,
                 PopulationSize,
-                AddressOf iterates.Add)
+                AddressOf iterates.Add,
+                parallel)
 
             iteratePrints = iterates
 
