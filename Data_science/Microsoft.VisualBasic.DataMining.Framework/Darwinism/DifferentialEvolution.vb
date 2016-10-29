@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 
 Namespace Darwinism
 
@@ -73,6 +74,8 @@ Namespace Darwinism
             Return population
         End Function
 
+        Const MaxIteratesReach$ = "Max iterates number was reached, Darwinism.DE fitting loop exit..."
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -133,7 +136,10 @@ Namespace Darwinism
                         .Shuffles
 
                     If bestFit <= threshold Then
+                        Call MaxIteratesReach.Warning
                         Exit Do
+                    Else
+                        Call Console.Write(".")
                     End If
                 Loop
 
@@ -153,10 +159,12 @@ Namespace Darwinism
                     bestFit = iter.Tag
 
                     If bestFit <= threshold Then
+                        Call MaxIteratesReach.Warning
                         Exit Do
+                    Else
+                        Call Console.Write(".")
                     End If
                 Loop
-
             End If
 
             ' find best candidate solution
@@ -234,8 +242,11 @@ Namespace Darwinism
                     ' 当群体内的染色体全部都是一样的参数的时候，在这里会无法产生突变
                     ' 所以需要在这里添加一个随机数来解决这个问题
                     ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
+                    'Dim raw = individual1.Yield(R)
+                    'Dim mutate# = Math.Log10(Math.Abs(raw)) + F * (Math.Log10(Math.Abs(individual2.Yield(R))) - Math.Log10(Math.Abs(individual3.Yield(R))))
+                    'mutate = raw + If(random.NextBoolean, 1, -1) * 10 ^ mutate
                     Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
-                    mutate = Math.Sign(mutate) * random.NextDouble * 10 ^ (Math.Log10(Math.Abs(mutate)) - 1)
+                    mutate *= random.NextDouble
                     Call candidate.Put(R, mutate)
                 End If ' else isn't needed because we cloned original to candidate
 

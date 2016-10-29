@@ -31,6 +31,7 @@ Namespace Darwinism
         ''' <param name="initOverrides"></param>
         ''' <param name="isRefModel"></param>
         ''' <param name="parallel">并行化计算要在种群的规模足够大的情况下才会有性能上的提升</param>
+        ''' <param name="ignores">在计算fitness的时候将要被忽略掉的函数变量的名称</param>
         ''' <returns></returns>
         Public Function Fitting(Of T As MonteCarlo.Model)(
                          observation As ODEsOut,
@@ -41,11 +42,18 @@ Namespace Darwinism
                          Optional PopulationSize% = 200,
                          Optional ByRef iteratePrints As List(Of outPrint) = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
+                         Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
+                         Optional ignores$() = Nothing,
                          Optional isRefModel As Boolean = False,
                          Optional parallel As Boolean = False) As var()
 
             Dim model As Type = GetType(T)
             Dim vars As String() = MonteCarlo.Model.GetParameters(model).ToArray
+
+            If estArgsBase.IsNullOrEmpty Then
+                estArgsBase = New Dictionary(Of String, Double)
+            End If
+
             Dim [new] As [New](Of ParameterVector) =
                 Function(seed)
                     Dim out As New ParameterVector With {
@@ -56,17 +64,23 @@ Namespace Darwinism
                     If seed Is Nothing Then
                         Return out
                     Else
-                        For Each x In out.vars
-                            Dim power# = (
-                                If(seed.Next > 0.5, 1, -1) * seed.Next(vars.Length)
-                            )
-                            x.value = 100 ^ power
+                        For Each x As var In out.vars
+                            If estArgsBase.ContainsKey(x.Name) Then
+                                x.value = estArgsBase(x.Name)
+                            Else
+                                Dim power# = (
+                                    If(seed.NextDouble > 0.5, 1, -1) * seed.Next(vars.Length)
+                                )
+                                x.value = 100 ^ power
+                            End If
                         Next
                     End If
 
                     Return out
                 End Function
-            Dim fitness As New GAFFitness(model, observation, initOverrides, isRefModel)
+            Dim fitness As New GAFFitness(model, observation, initOverrides, isRefModel) With {
+                .Ignores = If(ignores.IsNullOrEmpty, {}, ignores)
+            }
             Dim iterates As New List(Of outPrint)
             Dim best = DifferentialEvolution.Evolution(
                 AddressOf fitness.Calculate,
