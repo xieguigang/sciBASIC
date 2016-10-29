@@ -107,8 +107,9 @@ Namespace Darwinism
 
             ' main loop of evolution.
             If parallel Then
-
                 Dim parts% = PopulationSize / App.CPUCoreNumbers
+
+                Call $"Differential Evolution kernel have {App.CPUCoreNumbers}(=> {PopulationSize}/{parts}) CPU core for parallel computing.".Warning
 
                 Do While (++i < maxIterations)
                     Dim subPopulates As Individual()() = population.Split(parts)

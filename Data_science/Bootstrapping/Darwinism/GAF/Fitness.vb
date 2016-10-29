@@ -128,6 +128,17 @@ Namespace GAF
             End If
         End Sub
 
+        ''' <summary>
+        ''' 使用指定的参数测试计算模型的输出
+        ''' </summary>
+        ''' <param name="parms"></param>
+        ''' <returns></returns>
+        Public Function RunTest(parms As Dictionary(Of String, Double)) As ODEsOut
+            Dim out As ODEsOut = ' y0使用实验观测值，而非突变的随机值
+                MonteCarlo.Model.RunTest(Model, y0, parms, n, a, b, ref)  ' 通过拟合的参数得到具体的计算数据
+            Return out
+        End Function
+
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector, Double).Calculate
             Dim vars As Dictionary(Of String, Double) =
                 chromosome _

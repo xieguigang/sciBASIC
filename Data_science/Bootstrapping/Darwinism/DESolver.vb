@@ -12,6 +12,21 @@ Namespace Darwinism
     ''' </summary>
     Public Module DESolver
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="observation"></param>
+        ''' <param name="F"></param>
+        ''' <param name="CR"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="maxIterations%"></param>
+        ''' <param name="PopulationSize%"></param>
+        ''' <param name="iteratePrints"></param>
+        ''' <param name="initOverrides"></param>
+        ''' <param name="isRefModel"></param>
+        ''' <param name="parallel">并行化计算要在种群的规模足够大的情况下才会有性能上的提升</param>
+        ''' <returns></returns>
         Public Function Fitting(Of T As MonteCarlo.Model)(
                          observation As ODEsOut,
                          Optional F As Double = 1,
