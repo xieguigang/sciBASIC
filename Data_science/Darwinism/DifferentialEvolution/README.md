@@ -69,3 +69,7 @@ Public Function Fitting(Of T As MonteCarlo.Model)(
     Return best.vars
 End Function
 ```
+
+###### Example
+[Test_fitting.csv](./Test_fitting.csv)
+![](./Test_fitting.png)
