@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Terminal
 
 Module __DEBUG_MAIN
 
-    <ParameterInfo("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
+    <Argument("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
     Private Sub TestExtensionProperty()
         Dim x As New ClassObject
         Dim n As Long = x.Uid  ' The init value is zero
