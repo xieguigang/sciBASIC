@@ -21,12 +21,14 @@
             Dim key$ = [in].ToString
             Dim fit As T
 
-            If cache.ContainsKey(key$) Then
-                fit = cache(key$)
-            Else
-                fit = caclFitness([in])
-                cache.Add(key$, fit)
-            End If
+            SyncLock cache
+                If cache.ContainsKey(key$) Then
+                    fit = cache(key$)
+                Else
+                    fit = caclFitness([in])
+                    cache.Add(key$, fit)
+                End If
+            End SyncLock
 
             Return fit
         End Function
