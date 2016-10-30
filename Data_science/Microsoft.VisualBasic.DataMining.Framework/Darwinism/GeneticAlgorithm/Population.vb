@@ -19,6 +19,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Parallel.Linq
 
 Namespace Darwinism.GAF
 
@@ -94,22 +95,40 @@ Namespace Darwinism.GAF
             Call Arrays.Shuffle(chromosomes)
 
             If Parallel Then
-                Dim LQuery = From x As chr
-                             In chromosomes.AsParallel
-                             Let key As String = x.ToString
-                             Where Not comparator.cache.ContainsKey(key)
-                             Let fit As T = GA._fitnessFunc.Calculate(x)
+                Dim source = chromosomes _
+                    .Select(Function(x) New NamedValue(Of chr) With {
+                        .Name = x.ToString,
+                        .x = x
+                    }) _
+                    .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
+                    .ToArray
+                Dim LQuery As IEnumerable(Of NamedValue(Of T))
+
+                If source.Length > 10000 Then ' not working on Linux, still high sys% load if partition larger than total cpu cores
+                    Dim n As Integer = source.Length / (App.CPUCoreNumbers - 1)
+
+                    Call $"Using large scale computing scheduler.... ({source.Length} --> {n}/cpu)".__DEBUG_ECHO
+
+                    LQuery = LQuerySchedule.LQuery(
+                        source,
+                        Function(x) New NamedValue(Of T) With {
+                            .Name = x.Name,
+                            .x = GA._fitnessFunc.Calculate(x.x)
+                        }, n)
+                Else
+                    LQuery = From x As NamedValue(Of chr)
+                             In source.AsParallel
+                             Let fit As T = GA._fitnessFunc.Calculate(x.x)
                              Select New NamedValue(Of T) With {
-                                 .Name = key,
+                                 .Name = x.Name,
                                  .x = fit
                              }
+                End If
 
                 For Each x As NamedValue(Of T) In LQuery
-                    SyncLock comparator
-                        If Not comparator.cache.ContainsKey(x.Name) Then
-                            Call comparator.cache.Add(x.Name, x.x)
-                        End If
-                    End SyncLock
+                    If Not comparator.cache.ContainsKey(x.Name) Then
+                        Call comparator.cache.Add(x.Name, x.x)
+                    End If
                 Next
             End If
 

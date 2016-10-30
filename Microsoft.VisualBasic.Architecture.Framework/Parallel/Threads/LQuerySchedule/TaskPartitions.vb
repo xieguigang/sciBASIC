@@ -95,6 +95,7 @@ Namespace Parallel.Linq
         ''' 进行分区之后返回一个长时间的任务组合
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
+        ''' <param name="parts">函数参数是每一个分区里面的元素的数量</param>
         ''' <returns></returns>
         ''' 
         <Extension>

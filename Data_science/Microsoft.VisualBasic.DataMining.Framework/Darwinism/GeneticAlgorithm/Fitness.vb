@@ -27,6 +27,7 @@ Namespace Darwinism.GAF
         ''' fit2 = calculate(chromosome2) <br/>
         ''' So the following condition must be true <br/>
         ''' fit1.compareTo(fit2) &lt;= 0 <br/>
+        ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
         ''' </summary>
         Function Calculate(chromosome As C) As T
     End Interface

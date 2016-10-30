@@ -269,6 +269,7 @@ Namespace Darwinism
                             SyncLock iteratePrints
                                 Call iteratePrints(out)
                             End SyncLock
+#Const DEBUG = 1
 #If DEBUG Then
                             Call Console.WriteLine(out.ToString)
 #End If

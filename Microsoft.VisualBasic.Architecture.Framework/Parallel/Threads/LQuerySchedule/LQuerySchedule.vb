@@ -96,6 +96,7 @@ Namespace Parallel.Linq
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="inputs"></param>
         ''' <param name="task"></param>
+        ''' <param name="parTokens">函数参数是每一个分区里面的元素的数量</param>
         ''' <returns></returns>
         Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
                                                     task As Func(Of T, TOut),
