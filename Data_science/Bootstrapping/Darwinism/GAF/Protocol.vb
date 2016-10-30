@@ -27,7 +27,7 @@ Namespace GAF
             Dim sign% =
                 If(rnd.NextBoolean, 1, -1)
 
-            n += sign * (rnd.Next(1000) * (1000 ^ power))
+            n += sign * (rnd.NextDouble * 10 * (10 ^ power))
             If n.IsNaNImaginary Then
                 n = Short.MaxValue
             End If

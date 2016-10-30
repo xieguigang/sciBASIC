@@ -156,17 +156,17 @@ Namespace GAF
                            Return Array.IndexOf(Ignores, v) = -1
                        End Function)
 
-                Dim sample1#()() = observation.y(y).x.Split(samples, echo:=False)
-                Dim sample2#()() = out.y(y$).x.Split(samples, echo:=False)
-                Dim a#()
-                Dim b#()
+                ' Dim sample1#()() = observation.y(y).x.Split(samples, echo:=False)
+                ' Dim sample2#()() = out.y(y$).x.Split(samples, echo:=False)
+                Dim a#() = observation.y(y$).x
+                Dim b#() = out.y(y$).x
 
                 If log10Fitness Then
-                    a = sample1.ToArray(Function(x) log10(x.Max))
-                    b = sample2.ToArray(Function(x) log10(x.Max))
-                Else
-                    a = sample1.ToArray(Function(x) x.Max)
-                    b = sample2.ToArray(Function(x) x.Max)
+                    a = a.ToArray(Function(x) log10(x))
+                    b = a.ToArray(Function(x) log10(x))
+                    'Else
+                    '    a = sample1.ToArray(Function(x) x.Max)
+                    '    b = sample2.ToArray(Function(x) x.Max)
                 End If
 
                 NaN% = b.Where(AddressOf IsNaNImaginary).Count
@@ -184,11 +184,13 @@ Namespace GAF
             Return fitness
         End Function
 
-        Private Function log10(x#) As Double
+        Public Shared Function log10(x#) As Double
             If x = 0R Then
                 Return -1000
             Else
-                Return Math.Log10(Math.Abs(x))
+                ' 假若不乘以符号，则相同指数级别的正数和负数之间的差异就会为0，
+                ' 所以在这里需要乘以符号值
+                Return Math.Sign(x) * Math.Log10(Math.Abs(x))
             End If
         End Function
     End Class
