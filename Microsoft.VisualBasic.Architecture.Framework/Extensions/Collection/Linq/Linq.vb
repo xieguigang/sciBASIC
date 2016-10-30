@@ -238,6 +238,12 @@ Namespace Linq
             Next
         End Function
 
+        ''' <summary>
+        ''' ``0,1,2,3,...<paramref name="n"/>``
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
             If n < 0 Then
