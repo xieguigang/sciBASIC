@@ -94,6 +94,6 @@ Public Module DateParser
     ''' <param name="d"></param>
     ''' <returns></returns>
     Public Function FillDateZero(d As Integer) As String
-        Return If(d > 10, d, "0" & d)
+        Return If(d >= 10, d, "0" & d)
     End Function
 End Module
