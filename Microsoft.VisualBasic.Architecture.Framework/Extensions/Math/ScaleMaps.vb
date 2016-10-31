@@ -156,8 +156,8 @@ Namespace Mathematical
         ''' <remarks>为了要保持顺序，不能够使用并行拓展</remarks>
         ''' 
         <ExportAPI("Ranks.Mapping")>
-        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Integer), Optional Level As Integer = 10) As Integer()
-            Return GenerateMapping((From n In data Select CDbl(n)).ToArray, Level)
+        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Integer), Optional Level As Integer = 10, Optional offset% = 1) As Integer()
+            Return GenerateMapping((From n In data Select CDbl(n)).ToArray, Level, offset)
         End Function
 
         <ExportAPI("Ranks.Mapping")>

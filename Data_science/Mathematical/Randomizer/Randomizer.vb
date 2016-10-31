@@ -95,7 +95,11 @@ Public Class Randomizer
         Return __getRandoms(n, _digits)
     End Function
 
-    Public Function GetRandomInt() As Integer
+    ''' <summary>
+    ''' Returns a non-negative random integer.
+    ''' </summary>
+    ''' <returns>A 32-bit signed integer that is greater than or equal to 0 and less than System.Int32.MaxValue.</returns>
+    Public Function [Next]() As Integer
         Return __getRandom(_digits)
     End Function
 
@@ -118,7 +122,7 @@ Public Class Randomizer
         Dim rand As New Random(n * Now.Millisecond)
         Dim d As Integer = rand.NextBoolean
         Dim out As New List(Of T)
-        Dim maxRange As Integer = n * (rand.NextDouble * 100) + n
+        Dim maxRange As Integer = n * rand.NextDouble + n
 
         Call array.Set(rand.Next(array.Length))
 
@@ -145,8 +149,52 @@ Public Class Randomizer
         Return ps
     End Function
 
+    ''' <summary>
+    ''' Returns a random floating-point number that is greater than or equal to 0.0,
+    ''' and less than 1.0.
+    ''' </summary>
+    ''' <returns>A double-precision floating point number that is greater than or equal to 0.0,
+    ''' and less than 1.0.</returns>
     Public Function NextDouble() As Double
         Return (__getRandom(_digits) - min) / len
+    End Function
+
+    ''' <summary>
+    ''' Fills the elements of a specified array of bytes with random numbers.
+    ''' </summary>
+    ''' <param name="buffer">An array of bytes to contain random numbers.</param>
+    Public Overridable Sub NextBytes(ByRef buffer() As Byte)
+        Dim ints%() = GetRandomInts(buffer.Length)
+        Dim lvs = ints.GenerateMapping(255, 0)
+
+        For i As Integer = 0 To buffer.Length - 1
+            buffer(i) = CByte(lvs(i))
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Returns a non-negative random integer that is less than the specified maximum.
+    ''' </summary>
+    ''' <param name="maxValue">The exclusive upper bound of the random number to be generated. maxValue must
+    ''' be greater than or equal to 0.</param>
+    ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+    ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+    ''' if maxValue equals 0, maxValue is returned.</returns>
+    Public Overridable Function [Next](maxValue As Integer) As Integer
+        Return Next%(Scan0, maxValue)
+    End Function
+
+    ''' <summary>
+    ''' Returns a random integer that is within a specified range.
+    ''' </summary>
+    ''' <param name="minValue">The inclusive lower bound of the random number returned.</param>
+    ''' <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater
+    ''' than or equal to minValue.</param>
+    ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue;
+    ''' that is, the range of return values includes minValue but not maxValue. If minValue
+    ''' equals maxValue, minValue is returned.</returns>
+    Public Overridable Function [Next](minValue As Integer, maxValue As Integer) As Integer
+        Return minValue + NextDouble() * (maxValue - minValue)
     End Function
 
     ''' <summary>
@@ -158,7 +206,11 @@ Public Class Randomizer
         Return __getRandoms(n, _deviates)
     End Function
 
-    Public Function GetRandomNormalDeviate() As Double
+    ''' <summary>
+    ''' Normal deviates
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function Sample() As Double
         Return __getRandom(_deviates)
     End Function
 End Class

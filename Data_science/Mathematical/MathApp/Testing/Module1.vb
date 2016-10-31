@@ -43,6 +43,10 @@ Module Module1
 
         Call list.GetJson.__DEBUG_ECHO
 
+        Dim bytes As Byte() = New Byte(500) {}
+
+        Call rnd.NextBytes(bytes)
+
         Pause()
 
 
