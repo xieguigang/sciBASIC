@@ -128,8 +128,9 @@ Namespace GAF
                     .vars = estArgs
             }.InitialPopulation(popSize%)
 
+#If Not DEBUG Then
             population.Parallel = True
-
+#End If
             Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)
             Dim out As New List(Of outPrint)
 #If DEBUG Then
