@@ -34,6 +34,18 @@ Module Module1
 
     Sub Main()
 
+        Dim rnd As New Randomizer
+        Dim list As New List(Of Double)
+
+        For i As Integer = 0 To 100
+            list.Add(rnd.NextDouble)
+        Next
+
+        Call list.GetJson.__DEBUG_ECHO
+
+        Pause()
+
+
         Dim b = 10.Sequence.ToArray(Function(x) Distributions.Beta.beta(x, 10, 100))
 
         b = Distributions.Beta.beta(Mathematical.Extensions.seq(0, 1, 0.01), 0.5, 0.5).ToArray

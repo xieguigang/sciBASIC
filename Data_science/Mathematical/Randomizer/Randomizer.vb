@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' ##### Random generator based on the random table
+''' ##### Random generator based on the random table.(请注意，这个模块之中的所有函数都是线程不安全的)
 ''' 
 ''' ###### A Million Random Digits with 100,000 Normal Deviates
 ''' 
@@ -40,7 +40,8 @@ Public Class Randomizer
             Let tokens As String() = Regex.Replace(Mid(line, 5).Trim, "\s{2,}", " ").Split
             Let n As Double() =
                 tokens _
-                .Select(Function(s) If(s.Last = "-"c, -Val(s), Val(s)))
+                .Select(Function(s) If(s.Last = "-"c, -Val(s), Val(s))) _
+                .ToArray
             Select n
 
         lines$ = My.Resources.digits.lTokens
@@ -51,7 +52,8 @@ Public Class Randomizer
             Let tokens As String() = Regex.Replace(Mid(line, 6).Trim, "\s{2,}", " ").Split
             Let n As Integer() =
                 tokens _
-                .Select(Function(s) CInt(Val(s)))
+                .Select(Function(s) CInt(Val(s))) _
+                .ToArray
             Select n
 
         max = digits.IteratesALL.Max
@@ -93,6 +95,25 @@ Public Class Randomizer
         Return __getRandoms(n, _digits)
     End Function
 
+    Public Function GetRandomInt() As Integer
+        Return __getRandom(_digits)
+    End Function
+
+    Dim rand As New Random(Now.Millisecond)
+
+    Private Function __getRandom(Of T)(array As LoopArray(Of T())) As T
+        Dim d As Integer = rand.NextBoolean
+        Dim out As New List(Of T)
+        Dim maxRange As Integer = (rand.NextDouble * 100) + 1
+
+        Call array.Set(rand.Next(array.Length))
+
+        Dim delta% = rand.Next(maxRange)
+        Dim c% = rand.Next(DigitsRowLength)
+
+        Return array.GET(delta)(c)
+    End Function
+
     Private Function __getRandoms(Of T)(n%, array As LoopArray(Of T())) As T()
         Dim rand As New Random(n * Now.Millisecond)
         Dim d As Integer = rand.NextBoolean
@@ -124,6 +145,10 @@ Public Class Randomizer
         Return ps
     End Function
 
+    Public Function NextDouble() As Double
+        Return (__getRandom(_digits) - min) / len
+    End Function
+
     ''' <summary>
     ''' 返回一组符合标准正态分布的实数
     ''' </summary>
@@ -131,5 +156,9 @@ Public Class Randomizer
     ''' <returns></returns>
     Public Function GetRandomNormalDeviates(n As Integer) As Double()
         Return __getRandoms(n, _deviates)
+    End Function
+
+    Public Function GetRandomNormalDeviate() As Double
+        Return __getRandom(_deviates)
     End Function
 End Class
