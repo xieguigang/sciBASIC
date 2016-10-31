@@ -163,7 +163,7 @@ Namespace GAF
 
                 If log10Fitness Then
                     a = a.ToArray(Function(x) log10(x))
-                    b = a.ToArray(Function(x) log10(x))
+                    b = b.ToArray(Function(x) log10(x))
                     'Else
                     '    a = sample1.ToArray(Function(x) x.Max)
                     '    b = sample2.ToArray(Function(x) x.Max)
@@ -175,6 +175,10 @@ Namespace GAF
 
             ' Return fit.Average
             Dim fitness# = fit.Average
+#Const DEBUG = False
+#If DEBUG Then
+            Call $"{fit.GetJson}  --->  {fitness}".__DEBUG_ECHO
+#End If
 
             If fitness.IsNaNImaginary Then
                 fitness = Integer.MaxValue * 100.0R
@@ -187,6 +191,8 @@ Namespace GAF
         Public Shared Function log10(x#) As Double
             If x = 0R Then
                 Return -1000
+            ElseIf x.IsNaNImaginary Then
+                Return Double.NaN
             Else
                 ' 假若不乘以符号，则相同指数级别的正数和负数之间的差异就会为0，
                 ' 所以在这里需要乘以符号值
