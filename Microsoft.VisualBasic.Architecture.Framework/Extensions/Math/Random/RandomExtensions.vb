@@ -114,13 +114,17 @@ Namespace Mathematical
         End Function
 
         ''' <summary>
-        ''' Equally likely to return true or false. Uses <see cref="Random.Next()"/>.
+        ''' Equally likely to return true or false. Uses <see cref="Random.Next(Integer)"/>.
         ''' </summary>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' ```vbnet
+        ''' 1 > 0 OR 0 > 0
+        ''' ```
+        ''' </remarks>
         <ExportAPI("NextBoolean")>
         <Extension> Public Function NextBoolean(r As Random) As Boolean
-            Return r.[Next](2) > 0
+            Return r.[Next](2) > 0 ' 1 > 0 OR 0 > 0
         End Function
 
         ''' <summary>
