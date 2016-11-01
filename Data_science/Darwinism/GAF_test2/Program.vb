@@ -91,10 +91,11 @@ Module Program
         Dim prints As List(Of outprint) = Nothing
         Dim estimates As var() = observations _
             .Fitting(Of Kinetics_of_influenza_A_virus_infection_in_humans_Model)(
+            x#,
             popSize:=1000,
             outPrint:=prints)
 
-        Call prints.saveto("./Kinetics_of_influenza_A_virus_infection_in_humans-iterations.csv")
+        Call prints.SaveTo("./Kinetics_of_influenza_A_virus_infection_in_humans-iterations.csv")
 
         Dim result = MonteCarlo.Model.RunTest(
             GetType(Kinetics_of_influenza_A_virus_infection_in_humans_Model),

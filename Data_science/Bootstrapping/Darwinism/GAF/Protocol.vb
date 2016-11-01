@@ -230,7 +230,7 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         <Extension>
         Public Function Fitting(Of T As MonteCarlo.Model)(
-                         observation As IEnumerable(Of NamedValue(Of Double())),
+                         observation As IEnumerable(Of NamedValue(Of Double())), x#(),
                          Optional popSize% = 100%,
                          Optional evolIterations% = Integer.MaxValue%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
@@ -243,7 +243,8 @@ Namespace Darwinism.GAF
                          Optional randomGenerator As IRandomSeeds = Nothing) As var()
 
             Return New ODEsOut With {
-                .y = observation.ToDictionary
+                .y = observation.ToDictionary,
+                .x = x#
             }.Fitting(Of T)(popSize:=popSize,
                             estArgsBase:=estArgsBase,
                             evolIterations:=evolIterations,

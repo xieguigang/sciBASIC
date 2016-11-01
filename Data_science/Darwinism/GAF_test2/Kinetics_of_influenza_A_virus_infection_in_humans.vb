@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Analysis
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
@@ -39,7 +40,7 @@ Public Class Kinetics_of_influenza_A_virus_infection_in_humans : Inherits ODEs
     End Function
 End Class
 
-Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits MonteCarlo.Model
+Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits GAF.Model
 
     Dim T As var
     Dim I As var
@@ -55,25 +56,4 @@ Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits 
         dy(I) = beta * T * V - delta * I
         dy(V) = p * I - c * V
     End Sub
-
-    Public Overrides Function eigenvector() As Dictionary(Of String, Eigenvector)
-        Return Nothing
-    End Function
-
-    Public Overrides Function params() As MonteCarlo.VariableModel()
-        Return {
-            New MonteCarlo.VariableModel(NameOf(p), 0.000000000000001, 1000),
-            New MonteCarlo.VariableModel(NameOf(c), 0, 1000),
-            New MonteCarlo.VariableModel(NameOf(beta), 0.00000000000001, 1000),
-            New MonteCarlo.VariableModel(NameOf(delta), 0, 1000)
-        }
-    End Function
-
-    Public Overrides Function yinit() As MonteCarlo.VariableModel()
-        Return {
-            New MonteCarlo.VariableModel(NameOf(V), 0.0000000000001, 1000.0),
-            New MonteCarlo.VariableModel(NameOf(T), 0, 1.0E+20),
-            New MonteCarlo.VariableModel(NameOf(I), 0, 1000000)
-        }
-    End Function
 End Class
