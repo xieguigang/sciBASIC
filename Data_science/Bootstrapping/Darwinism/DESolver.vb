@@ -12,7 +12,7 @@ Namespace Darwinism
     ''' <summary>
     ''' Differential Evolution estimates solver.
     ''' </summary>
-    Public Module DESolver
+    Public Module DifferentialEvolutionSolver
 
         ''' <summary>
         ''' 
@@ -55,10 +55,13 @@ Namespace Darwinism
             If estArgsBase.IsNullOrEmpty Then
                 estArgsBase = New Dictionary(Of String, Double)
             End If
+            If randomGenerator Is Nothing Then
+                randomGenerator = Function() New Random
+            End If
 
             Dim [new] As [New](Of ParameterVector) =
                 Function(seed)
-                    Dim out As New ParameterVector With {
+                    Dim out As New ParameterVector(randomGenerator) With {
                         .vars = vars _
                         .ToArray(Function(v) New var(v))
                     }
