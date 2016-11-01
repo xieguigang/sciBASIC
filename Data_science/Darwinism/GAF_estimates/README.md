@@ -216,7 +216,9 @@ LQuery = From x As NamedValue(Of chr)
 A virus infection dynamics model of Influenza was used in this testing for the GAF method demo:
 
 > ![](./U.png)
+>
 > ![](./I.png)
+>
 > ![](./V.png)
 
 Original definition and fitting parameter values can be found in this scientific paper:
