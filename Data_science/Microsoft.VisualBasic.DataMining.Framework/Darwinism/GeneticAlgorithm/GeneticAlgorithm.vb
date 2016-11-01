@@ -17,6 +17,7 @@
 Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 
 Namespace Darwinism.GAF
 
@@ -31,10 +32,11 @@ Namespace Darwinism.GAF
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
         ''' </summary>
         ReadOnly iterationListeners As New List(Of IterartionListener(Of C, T))
+        ReadOnly seeds As IRandomSeeds
 
         Dim _terminate As Boolean = False
 
-        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C, T))
+        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C, T), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
             Me._fitnessFunc = fitnessFunc
             Me._chromosomesComparator = New ChromosomesComparator(Of C, T)(Me)
@@ -43,6 +45,11 @@ Namespace Darwinism.GAF
             If population.Parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
             End If
+            If seeds Is Nothing Then
+                seeds = Function() New Random(Now.Millisecond)
+            End If
+
+            Me.seeds = seeds
         End Sub
 
         Public Sub Evolve()
@@ -80,7 +87,7 @@ Namespace Darwinism.GAF
         Private Iterator Function __iterate(i%) As IEnumerable(Of C)
             Dim chromosome As C = Population(i)
             Dim mutated As C = chromosome.Mutate()   ' 突变
-            Dim rnd As New Random
+            Dim rnd As Random = seeds()
             Dim otherChromosome As C = Population.Random(rnd)  ' 突变体和其他个体随机杂交
             Dim crossovered As IList(Of C) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
 

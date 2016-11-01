@@ -53,7 +53,8 @@ Namespace GAF
                                 Optional ByRef outPrint As List(Of outPrint) = Nothing,
                                 Optional threshold# = 0.5,
                                 Optional obs As Dictionary(Of String, Double) = Nothing,
-                                Optional log10Fit As Boolean = False) As var()
+                                Optional log10Fit As Boolean = False,
+                                Optional randomGenerator As IRandomSeeds = Nothing) As var()
 
             Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
 
@@ -75,7 +76,8 @@ Namespace GAF
                 fitness:=fitness,
                 outPrint:=outPrint,
                 threshold:=threshold,
-                argsInit:=Nothing)
+                argsInit:=Nothing,
+                randomGenerator:=randomGenerator)
         End Function
 
         ''' <summary>
@@ -93,15 +95,18 @@ Namespace GAF
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
                                        fitness As GAFFitness,
                                        ByRef outPrint As List(Of outPrint),
-                                       argsInit As Dictionary(Of String, Double)) As var()
-
+                                       argsInit As Dictionary(Of String, Double),
+                                       randomGenerator As IRandomSeeds) As var()
             Dim estArgs As var()
 
+            If randomGenerator Is Nothing Then
+                randomGenerator = Function() New Random
+            End If
             If argsInit.IsNullOrEmpty Then
                 estArgs = vars.ToArray(
                     Function(x) New var With {
                         .Name = x,
-                        .value = (2 ^ x.Length) * (100000 * New Random().NextDouble)
+                        .value = (2 ^ x.Length) * (1000 * randomGenerator().NextDouble)
                     })
             Else
                 estArgs = LinqAPI.Exec(Of var) <= From x
@@ -117,21 +122,24 @@ Namespace GAF
                     If Not varsData.ContainsKey(name$) Then
                         varsData += New var With {
                             .Name = name,
-                            .value = (2 ^ name.Length) * (100 * New Random().NextDouble)
+                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
                         }
                     End If
                 Next
             End If
 
             Dim population As Population(Of ParameterVector) =
-                New ParameterVector() With {
+                New ParameterVector(seeds:=randomGenerator) With {
                     .vars = estArgs
             }.InitialPopulation(popSize%)
 
 #If Not DEBUG Then
             population.Parallel = True
 #End If
-            Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(population, fitness)
+            Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(
+                population,
+                fitness,
+                randomGenerator)
             Dim out As New List(Of outPrint)
 #If DEBUG Then
             Call ga.addIterationListener(
@@ -178,7 +186,8 @@ Namespace GAF
                          Optional ignores$() = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
-                         Optional isRefModel As Boolean = False) As var()
+                         Optional isRefModel As Boolean = False,
+                         Optional randomGenerator As IRandomSeeds = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFFitness(GetType(T), observation, initOverrides, isRefModel) With {
@@ -194,7 +203,8 @@ Namespace GAF
                 fitness:=fitness,
                 outPrint:=outPrint,
                 threshold:=threshold,
-                argsInit:=estArgsBase)
+                argsInit:=estArgsBase,
+                randomGenerator:=randomGenerator)
         End Function
     End Module
 End Namespace

@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -17,6 +18,16 @@ Namespace GAF
     Public Class ParameterVector
         Implements Chromosome(Of ParameterVector), ICloneable
         Implements IIndividual
+
+        ReadOnly seeds As IRandomSeeds
+
+        Public Sub New(seeds As IRandomSeeds)
+            If seeds Is Nothing Then
+                seeds = Function() New Random
+            End If
+
+            Me.seeds = seeds
+        End Sub
 
         ''' <summary>
         ''' 只需要在这里调整参数就行了，y0初始值不需要
@@ -68,7 +79,7 @@ Namespace GAF
                 In vars
                 Select New var(var)
 
-            Return New ParameterVector With {
+            Return New ParameterVector(seeds) With {
                 .vars = v
             }
         End Function
@@ -88,7 +99,7 @@ Namespace GAF
             Dim array1#() = thisClone.Vector
             Dim array2#() = otherClone.Vector
 
-            Call New Random() _
+            Call seeds() _
                 .Crossover(array1, array2)
             thisClone.__setValues(array1)
             otherClone.__setValues(array2)
@@ -102,9 +113,9 @@ Namespace GAF
         ''' <returns></returns>
         Public Function Mutate() As ParameterVector Implements Chromosome(Of ParameterVector).Mutate
             Dim m As ParameterVector = Clone()
-            Dim random As New Random
+            Dim random As Random = seeds()
 
-            For i As Integer = 0 To 3
+            For i As Integer = 0 To 2
                 Dim array#() = m.Vector
 
                 Call array.Mutate(random)
