@@ -45,10 +45,10 @@ Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits 
     Dim I As var
     Dim V As var
 
-    Dim p As Double = 3 * 10 ^ -2
-    Dim c As Double = 2
-    Dim beta As Double = 8.8 * 10 ^ -6
-    Dim delta As Double = 2.6
+    Dim p As Double = Integer.MaxValue
+    Dim c As Double = Integer.MaxValue
+    Dim beta As Double = Integer.MaxValue
+    Dim delta As Double = Integer.MaxValue
 
     Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
         dy(T) = -beta * T * V

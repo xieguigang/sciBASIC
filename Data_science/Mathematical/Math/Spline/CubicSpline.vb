@@ -1,4 +1,4 @@
-Imports System.Drawing
+ï»¿Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Interpolation
@@ -116,16 +116,16 @@ Namespace Interpolation
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' ä¸‰æ¬¡æ ·æœ¬æ›²çº¿æ’å€¼
         ''' </summary>
-        ''' <param name="source">¼ÙÈôµãµÄÊıÄ¿ÉÙÓÚ»òÕßµÈÓÚ2¸ö£¬Ôò»á·µ»Ø¿Õ¼¯ºÏ</param>
-        ''' <param name="expected">ÆÚ´ı·µ»ØµÄÊı¾İµã±¶Êı£¬Ä¬ÈÏÊÇ100±¶¸öµã</param>
+        ''' <param name="source">åŸå§‹æ•°æ®ç‚¹é›†åˆï¼Œè¯·æ³¨æ„ï¼Œè¿™äº›æ•°æ®ç‚¹ä¹‹é—´éƒ½æ˜¯æœ‰é¡ºåºåˆ†åˆ«çš„</param>
+        ''' <param name="expected">æ‰€æœŸæœ›çš„æ•°æ®ç‚¹çš„ä¸ªæ•°</param>
         ''' <returns></returns>
         Public Shared Iterator Function RecalcSpline(source As IEnumerable(Of PointF), Optional expected# = 100) As IEnumerable(Of PointF)
             Dim spline As New CubicSpline()
             Dim PointFs As PointF() = source.ToArray
 
-            If PointFs.Length <= 2 Then Return  ' Ê²Ã´Ò²²»×ö£¬·µ»Ø¿Õ¼¯ºÏ
+            If PointFs.Length <= 2 Then Return  ' åªæœ‰ä¸¤ä¸ªç‚¹ï¼Œæ— æ³•è¿›è¡Œæ’å€¼ï¼Œç›´æ¥è¿”å›ç©ºé›†åˆ
 
             For Each p As PointF In PointFs
                 spline._points.Add(p)

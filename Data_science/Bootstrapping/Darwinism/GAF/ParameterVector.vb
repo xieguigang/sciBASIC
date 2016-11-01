@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace GAF
+Namespace Darwinism.GAF
 
     ''' <summary>
     ''' Parameters that wait for bootstrapping estimates

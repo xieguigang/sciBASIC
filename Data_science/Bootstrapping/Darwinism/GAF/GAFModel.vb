@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 
-Namespace GAF
+Namespace Darwinism.GAF
 
     Public MustInherit Class Model : Inherits MonteCarlo.Model
 

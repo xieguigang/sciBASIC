@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace GAF
+Namespace Darwinism.GAF
 
     ''' <summary>
     ''' 计算当前的最好的参数的fitness
@@ -103,7 +103,7 @@ Namespace GAF
         ''' <summary>
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
         ''' </summary>
-        ''' <param name="observation"></param>
+        ''' <param name="observation">只需要其中的<see cref="ODEsOut.y"/>有数据就行了</param>
         Sub New(model As Type, observation As ODEsOut, initOverrides As Dictionary(Of String, Double), isRef As Boolean)
             With Me
                 .observation = observation

@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Text
 
-Namespace GAF
+Namespace Darwinism.GAF
 
     Public Class Dump
         Implements IterartionListener(Of ParameterVector, Double)

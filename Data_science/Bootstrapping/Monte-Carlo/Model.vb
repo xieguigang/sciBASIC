@@ -129,6 +129,28 @@ Namespace MonteCarlo
         End Function
 
         ''' <summary>
+        ''' 这个函数是为并行化而设计的，线程安全的
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <param name="estimates">新的方程参数，这里面需要同时包括了参数和y初始值</param>
+        ''' <param name="n%"></param>
+        ''' <param name="a%"></param>
+        ''' <param name="b%"></param>
+        ''' <returns></returns>
+        Public Shared Function RunTest(model As Type,
+                                       y0 As Dictionary(Of String, Double),
+                                       estimates As var(),
+                                       n%, a%, b%,
+                                       Optional ref As ODEsOut = Nothing) As ODEsOut
+
+            Dim args As Dictionary(Of String, Double) =
+                estimates _
+                .ToDictionary(Function(x) x.Name,
+                              Function(x) x.value)
+            Return RunTest(model, y0, args, n, a, b, ref)
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="estimates"></param>

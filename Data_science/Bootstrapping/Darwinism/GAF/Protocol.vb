@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
@@ -8,12 +9,22 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace GAF
+Namespace Darwinism.GAF
 
     ''' <summary>
     ''' 参数拟合的方法
     ''' </summary>
     Public Module Protocol
+
+        ''' <summary>
+        ''' Gets the first value as ``y0`` from the inputs samples
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function y0(data As IEnumerable(Of NamedValue(Of Double()))) As Dictionary(Of String, Double)
+            Return data.ToDictionary(Function(x) x.Name, Function(x) x.x(Scan0))
+        End Function
 
         ''' <summary>
         ''' 
@@ -168,7 +179,7 @@ Namespace GAF
         ''' <summary>
         ''' 用于实际分析的GAF工具
         ''' </summary>
-        ''' <param name="observation">用于进行拟合的目标真实的实验数据，模型计算所使用的y0初值从这里面来</param>
+        ''' <param name="observation">用于进行拟合的目标真实的实验数据，模型计算所使用的y0初值从这里面来，这个数据对象只要求y属性具有实验数据就行了</param>
         ''' <param name="popSize%"></param>
         ''' <param name="evolIterations%"></param>
         ''' <param name="outPrint"></param>
@@ -205,6 +216,44 @@ Namespace GAF
                 threshold:=threshold,
                 argsInit:=estArgsBase,
                 randomGenerator:=randomGenerator)
+        End Function
+
+        ''' <summary>
+        ''' 用于实际分析的GAF工具
+        ''' </summary>
+        ''' <param name="observation">用于进行拟合的目标真实的实验数据，模型计算所使用的y0初值从这里面来</param>
+        ''' <param name="popSize%"></param>
+        ''' <param name="evolIterations%"></param>
+        ''' <param name="outPrint"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="log10Fit"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Fitting(Of T As MonteCarlo.Model)(
+                         observation As IEnumerable(Of NamedValue(Of Double())),
+                         Optional popSize% = 100%,
+                         Optional evolIterations% = Integer.MaxValue%,
+                         Optional ByRef outPrint As List(Of outPrint) = Nothing,
+                         Optional threshold# = 0.5,
+                         Optional log10Fit As Boolean = True,
+                         Optional ignores$() = Nothing,
+                         Optional initOverrides As Dictionary(Of String, Double) = Nothing,
+                         Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
+                         Optional isRefModel As Boolean = False,
+                         Optional randomGenerator As IRandomSeeds = Nothing) As var()
+
+            Return New ODEsOut With {
+                .y = observation.ToDictionary
+            }.Fitting(Of T)(popSize:=popSize,
+                            estArgsBase:=estArgsBase,
+                            evolIterations:=evolIterations,
+                            ignores:=ignores,
+                            initOverrides:=initOverrides,
+                            isRefModel:=isRefModel,
+                            log10Fit:=log10Fit,
+                            outPrint:=outPrint,
+                            randomGenerator:=randomGenerator,
+                            threshold:=threshold)
         End Function
     End Module
 End Namespace

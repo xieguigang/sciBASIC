@@ -1,12 +1,17 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol
+Imports Microsoft.VisualBasic.Data.csv.DocumentExtensions
+Imports Microsoft.VisualBasic.Data.csv.Extensions
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Mathematical.Interpolation
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Data.csv.Extensions
 
 Module Program
 
@@ -14,6 +19,8 @@ Module Program
         Call ODEsSolverTest()
         Call BuildFakeObservationForTest()
         Call GAF_estimates()
+
+        Call App.Exit()
     End Sub
 
     Public Sub ODEsSolverTest()
@@ -63,6 +70,39 @@ Module Program
     End Sub
 
     Public Sub GAF_estimates()
+        Dim samples = "./Kinetics_of_influenza_A_virus_infection_in_humans-fake-observation.csv".LoadData.ToDictionary
+        Dim x As Double() = samples("X").x
+        Dim observations As NamedValue(Of Double())() =
+            LinqAPI.Exec(Of NamedValue(Of Double())) <=
+ _
+            From sample As NamedValue(Of Double())
+            In samples.Values
+            Let raw As PointF() = x _
+                .SeqIterator _
+                .ToArray(Function(xi) New PointF(+xi, y:=sample.x(xi)))
+            Let cubicInterplots = CubicSpline.RecalcSpline(raw, 1000).ToArray
+            Let newData As Double() = cubicInterplots _
+                .ToArray(Function(pt) CDbl(pt.Y))
+            Select New NamedValue(Of Double()) With {
+                .Name = sample.Name,
+                .x = newData
+            }
 
+        Dim prints As List(Of outprint) = Nothing
+        Dim estimates As var() = observations _
+            .Fitting(Of Kinetics_of_influenza_A_virus_infection_in_humans_Model)(
+            popSize:=1000,
+            outPrint:=prints)
+
+        Call prints.saveto("./Kinetics_of_influenza_A_virus_infection_in_humans-iterations.csv")
+
+        Dim result = MonteCarlo.Model.RunTest(
+            GetType(Kinetics_of_influenza_A_virus_infection_in_humans_Model),
+            observations.y0,
+            estimates,
+            10000, 0, 10)
+
+        Call result.DataFrame("#TIME") _
+            .Save("./Kinetics_of_influenza_A_virus_infection_in_humans-GAF_estimates.csv", Encodings.ASCII)
     End Sub
 End Module

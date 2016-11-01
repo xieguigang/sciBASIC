@@ -26,12 +26,14 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Public Module DocumentExtensions
 
@@ -106,5 +108,24 @@ Public Module DocumentExtensions
         Next
 
         Return ls.JoinBy(ASCII.TAB)
+    End Function
+
+    <Extension>
+    Public Function LoadData(path$) As NamedValue(Of Double())()
+        Dim data As DocumentStream.File =
+            DocumentStream.File.Load(path)
+        Dim out As NamedValue(Of Double())() =
+            LinqAPI.Exec(Of NamedValue(Of Double())) <=
+ _
+            From column As String()
+            In data.Columns
+            Let name As String = column(Scan0)
+            Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
+            Select New NamedValue(Of Double()) With {
+                .Name = name,
+                .x = values
+            }
+
+        Return out
     End Function
 End Module
