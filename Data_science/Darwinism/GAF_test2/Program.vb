@@ -11,6 +11,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.Interpolation
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Module Program
@@ -85,13 +86,16 @@ Module Program
                 .ToArray(Function(pt) CDbl(pt.Y))
             Select New NamedValue(Of Double()) With {
                 .Name = sample.Name,
-                .x = newData
+                .x = newData,
+                .Description = cubicInterplots _
+                    .ToArray(Function(pt) pt.X) _
+                    .GetJson  ' just needs the x value for the test
             }
 
-        Dim prints As List(Of outprint) = Nothing
+        Dim prints As List(Of outPrint) = Nothing
         Dim estimates As var() = observations _
             .Fitting(Of Kinetics_of_influenza_A_virus_infection_in_humans_Model)(
-            x#,
+            x#:=observations.First.Description.LoadObject(Of Double()),
             popSize:=1000,
             outPrint:=prints)
 
