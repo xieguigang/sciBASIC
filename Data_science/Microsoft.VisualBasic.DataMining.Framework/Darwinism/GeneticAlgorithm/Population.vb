@@ -1,4 +1,4 @@
-' *****************************************************************************
+ï»¿' *****************************************************************************
 ' Copyright 2012 Yuriy Lagodiuk
 ' 
 ' Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ Namespace Darwinism.GAF
         Dim chromosomes As New List(Of chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
 
         ''' <summary>
-        ''' ÊÇ·ñ²ÉÓÃ²¢ĞĞ¼ÆËãÄ£Ê½£¿£¿
+        ''' ÃŠÃ‡Â·Ã±Â²Ã‰Ã“ÃƒÂ²Â¢ÃÃÂ¼Ã†Ã‹Ã£Ã„Â£ÃŠÂ½Â£Â¿Â£Â¿
         ''' </summary>
         ''' <returns></returns>
         Public Property Parallel As Boolean = False
@@ -85,8 +85,7 @@ Namespace Darwinism.GAF
         End Sub
 
         ''' <summary>
-        ''' ÕâÀï¿ÉÄÜÊÇÏŞËÙµÄ²½Öè£¬ÀıÈç¼ÆËãODEs£¬¿ÉÄÜ»á·Ç³£ºÄÊ±
-        ''' Ôò¿ÉÒÔÏÈÔÚÕâÀï½øĞĞ²¢ĞĞ»¯£¬¼ÆËã³öcache£¬ºóÃæ±È½ÏµÄÊ±ºòÖ±½ÓÊ¹ÓÃcache¼´¿É
+        ''' è¿™é‡Œæ˜¯ODEså‚æ•°ä¼°è®¡çš„é™é€Ÿæ­¥éª¤
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="GA"></param>

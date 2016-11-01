@@ -123,17 +123,107 @@ Call {
 
 ### GAF Parallel computing
 
+Enable the GAF parallel computing is super easy, just needs specific the Parallel property its value to ``TRUE``, And then before the fitness sorts, A parallel Linq will be call to boost the entire ODEs fitness evaluation process.
+
+```vbnet
+Population(Of chr).Parallel As Boolean
+
+LQuery = From x As NamedValue(Of chr)
+         In source.AsParallel
+         Let fit As T = GA._fitnessFunc.Calculate(x.x)
+         Select New NamedValue(Of T) With {
+             .Name = x.Name,
+             .x = fit
+         }
+```
+
 ## Testing
 
 ##### Problem & Goal
 
+![](./U.png)
+![](./I.png)
+![](./V.png)
+
+> Kinetics of Influenza A Virus Infection in Humans. **DOI: 10.1128/JVI.01623-05**
+
 ##### ODEs Model
 
+We want to estimates the kinetics parameters (p, c, beta and delta) in the equations using GAF method, so that we just define a ODEs model and leaves the parameter blank or assign any value, wait for the estimates, and here is the code example:
+
+```vbnet
+Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits GAF.Model
+
+    Dim T As var
+    Dim I As var
+    Dim V As var
+
+    Dim p As Double = Integer.MaxValue
+    Dim c As Double = Integer.MaxValue
+    Dim beta As Double = Integer.MaxValue
+    Dim delta As Double = Integer.MaxValue
+
+    Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+        dy(T) = -beta * T * V
+        dy(I) = beta * T * V - delta * I
+        dy(V) = p * I - c * V
+    End Sub
+End Class
+```
+
 ##### Observation Data Example
+
+For this testing demo, I using the exists model output as the biological experiment observation reference for the GAF estimates' fitness calculation. And using this method to creates a fake experiment data:
+
+```vbnet
+Public Sub BuildFakeObservationForTest()
+    Dim result As ODEsOut = ODEsOut _
+        .LoadFromDataFrame("./Kinetics_of_influenza_A_virus_infection_in_humans.csv")
+    Dim sampleSize% = 100
+    Dim xlabels#() = result.x.Split(sampleSize).ToArray(Function(block) block.Average)
+    Dim samples As NamedValue(Of Double())() =
+        LinqAPI.Exec(Of NamedValue(Of Double())) <=
+ _
+        From y As NamedValue(Of Double())
+        In result.y.Values
+        Let sample As Double() = y.x _
+            .Split(sampleSize) _
+            .ToArray(Function(block) block.Average)
+        Select New NamedValue(Of Double()) With {
+            .Name = y.Name,
+            .x = sample
+        }
+
+    Call samples.SaveTo(
+        path:="./Kinetics_of_influenza_A_virus_infection_in_humans-fake-observation.csv",
+        xlabels:=xlabels)
+End Sub
+```
 
 ###### Preprocessing
 
 ##### GAF Estimates
+
+```vbnet
+Dim prints As List(Of outPrint) = Nothing
+Dim estimates As var() = observations _
+    .Fitting(Of Kinetics_of_influenza_A_virus_infection_in_humans_Model)(
+    x#:=observations.First.Description.LoadObject(Of Double()),
+    popSize:=1000,
+    outPrint:=prints)
+
+Call prints _
+    .SaveTo("./Kinetics_of_influenza_A_virus_infection_in_humans-iterations.csv")
+
+Dim result = MonteCarlo.Model.RunTest(
+    GetType(Kinetics_of_influenza_A_virus_infection_in_humans_Model),
+    observations.y0,
+    estimates,
+    10000, 0, 10)
+
+Call result.DataFrame("#TIME") _
+    .Save("./Kinetics_of_influenza_A_virus_infection_in_humans-GAF_estimates.csv", Encodings.ASCII)
+```
 
 ## Testing On Linux and Super Computer
 This demo has been tested successfully on a Dell 40 CPU core server running CentOS 7 and China TianHe 1 Super Computer.
