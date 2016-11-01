@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::8424e2161cd6f88a72a8a52d6ae9026c, ..\visualbasic_App\Data\DataFrame\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,6 +39,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
@@ -62,6 +63,52 @@ Public Module Extensions
     Sub New()
         Call InitHandle()
     End Sub
+
+    ''' <summary>
+    ''' Save variable value vector as data frame
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="xlabels#"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveTo(samples As IEnumerable(Of NamedValue(Of Double())),
+                           path$,
+                           Optional encoding As Encodings = Encodings.ASCII,
+                           Optional xlabels#() = Nothing) As Boolean
+        Dim out As New DocumentStream.File
+        Dim data As NamedValue(Of Double())() = samples.ToArray
+
+        If xlabels.IsNullOrEmpty Then
+            out += New RowObject(data.Select(Function(s) s.Name))
+
+            For i As Integer = 0 To data(Scan0).x.Length - 1
+                Dim row As New RowObject
+
+                For Each sample In data
+                    row.Add(CStr(sample.x(i)))
+                Next
+
+                out += row
+            Next
+        Else
+            out += New RowObject("X".Join(data.Select(Function(s) s.Name)))
+
+            For i As Integer = 0 To data(Scan0).x.Length - 1
+                Dim row As New RowObject From {
+                    CStr(xlabels(i))
+                }
+                For Each sample As NamedValue(Of Double()) In data
+                    Call row.Add(CStr(sample.x(i)))
+                Next
+
+                out += row
+            Next
+        End If
+
+        Return out.Save(path, encoding)
+    End Function
 
     ''' <summary>
     '''

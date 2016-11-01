@@ -733,6 +733,13 @@ Public Module Extensions
         Return source.Join({data})
     End Function
 
+    ''' <summary>
+    ''' X, ....
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="obj"></param>
+    ''' <param name="collection"></param>
+    ''' <returns></returns>
     <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
         Dim list As New List(Of T) From {obj}
         Call list.AddRange(collection)
