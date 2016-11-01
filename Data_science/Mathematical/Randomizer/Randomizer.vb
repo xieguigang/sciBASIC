@@ -194,7 +194,13 @@ Public Class Randomizer : Inherits Random
     ''' that is, the range of return values includes minValue but not maxValue. If minValue
     ''' equals maxValue, minValue is returned.</returns>
     Public Overrides Function [Next](minValue As Integer, maxValue As Integer) As Integer
-        Return minValue + NextDouble() * (maxValue - minValue)
+        Dim x As Integer = Integer.MaxValue
+
+        Do While x < minValue OrElse maxValue <= x
+            x = minValue + NextDouble() * (maxValue - minValue)
+        Loop
+
+        Return x
     End Function
 
     ''' <summary>
