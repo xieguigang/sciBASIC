@@ -84,6 +84,12 @@ Public Class ODEsOut
         Return Me.GetJson
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="xDisp"></param>
+    ''' <param name="fix%">Formats output by using <see cref="Math.Round"/></param>
+    ''' <returns></returns>
     Public Function DataFrame(Optional xDisp As String = "X", Optional fix% = -1) As DocumentStream.File
         Dim ly = y.Values.ToArray
         Dim file As New DocumentStream.File
@@ -106,7 +112,7 @@ Public Class ODEsOut
 
         For Each v In y0.SafeQuery.JoinIterates(params).SeqIterator
             Dim row As RowObject = file(v.i)
-            Dim var = v.obj
+            Dim var As KeyValuePair(Of String, Double) = v.obj
 
             row(skips) = var.Key
             row(skips + 1) = var.Value
