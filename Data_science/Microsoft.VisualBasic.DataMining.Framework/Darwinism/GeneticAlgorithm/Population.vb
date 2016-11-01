@@ -1,4 +1,4 @@
-﻿' *****************************************************************************
+' *****************************************************************************
 ' Copyright 2012 Yuriy Lagodiuk
 ' 
 ' Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ Namespace Darwinism.GAF
         Dim chromosomes As New List(Of chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
 
         ''' <summary>
-        ''' ÊÇ·ñ²ÉÓÃ²¢ÐÐ¼ÆËãÄ£Ê½£¿£¿
+        ''' 是否使用并行模式在排序之前来计算出fitness
         ''' </summary>
         ''' <returns></returns>
         Public Property Parallel As Boolean = False

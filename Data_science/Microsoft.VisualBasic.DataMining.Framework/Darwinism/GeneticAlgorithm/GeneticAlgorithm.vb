@@ -1,4 +1,4 @@
-' *****************************************************************************
+ï»¿' *****************************************************************************
 ' Copyright 2012 Yuriy Lagodiuk
 ' 
 ' Licensed under the Apache License, Version 2.0 (the "License");
@@ -60,38 +60,38 @@ Namespace Darwinism.GAF
             Dim i As Integer = 0
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
-                newPopulation.Add(Population(i)) ' ¾ÉµÄÔ­ÓĞµÄÖÖÈº
+                newPopulation.Add(Population(i)) ' æ—§çš„åŸæœ‰çš„ç§ç¾¤
                 i += 1
             Loop
 
-            ' ĞÂµÄÍ»±äµÄÖÖÈº
-            ' ÕâÒ»²½²¢²»ÊÇÏŞËÙµÄ²¿·Ö
+            ' æ–°çš„çªå˜çš„ç§ç¾¤
+            ' è¿™ä¸€æ­¥å¹¶ä¸æ˜¯é™é€Ÿçš„éƒ¨åˆ†
             For Each c As C In parentPopulationSize% _
                 .Sequence _
                 .Select(AddressOf __iterate) _
-                .IteratesALL ' ²¢ĞĞ»¯¼ÆËãÃ¿Ò»¸öÍ»±äµü´ú
+                .IteratesALL ' å¹¶è¡ŒåŒ–è®¡ç®—æ¯ä¸€ä¸ªçªå˜è¿­ä»£
 
                 Call newPopulation.Add(c)
             Next
 
-            newPopulation.SortPopulationByFitness(Me, _chromosomesComparator)    ' Í¨¹ıfitnessÅÅĞòÀ´½øĞĞÔñÓÅ
-            newPopulation.Trim(parentPopulationSize)                             ' ¼ô²ÃµôºóÃæµÄ¶ÔÏó£¬´ïµ½ÌÔÌ­µÄĞ§¹û
-            _Population = newPopulation                                          ' ĞÂÖÖÈºÌæ´ú¾ÉµÄÖÖÈº
+            newPopulation.SortPopulationByFitness(Me, _chromosomesComparator)    ' é€šè¿‡fitnessæ’åºæ¥è¿›è¡Œæ‹©ä¼˜
+            newPopulation.Trim(parentPopulationSize)                             ' å‰ªè£æ‰åé¢çš„å¯¹è±¡ï¼Œè¾¾åˆ°æ·˜æ±°çš„æ•ˆæœ
+            _Population = newPopulation                                          ' æ–°ç§ç¾¤æ›¿ä»£æ—§çš„ç§ç¾¤
         End Sub
 
         ''' <summary>
-        ''' ²¢ĞĞ»¯¹ı³ÌÖ®ÖĞµÄµ¥¸öµü´ú
+        ''' å¹¶è¡ŒåŒ–è¿‡ç¨‹ä¹‹ä¸­çš„å•ä¸ªè¿­ä»£
         ''' </summary>
         ''' <param name="i%"></param>
         ''' <returns></returns>
         Private Iterator Function __iterate(i%) As IEnumerable(Of C)
             Dim chromosome As C = Population(i)
-            Dim mutated As C = chromosome.Mutate()   ' Í»±ä
+            Dim mutated As C = chromosome.Mutate()   ' çªå˜
             Dim rnd As Random = seeds()
-            Dim otherChromosome As C = Population.Random(rnd)  ' Í»±äÌåºÍÆäËû¸öÌåËæ»úÔÓ½»
+            Dim otherChromosome As C = Population.Random(rnd)  ' çªå˜ä½“å’Œå…¶ä»–ä¸ªä½“éšæœºæ‚äº¤
             Dim crossovered As IList(Of C) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
 
-            ' --------- ĞÂĞŞ¸ÄµÄ
+            ' --------- æ–°ä¿®æ”¹çš„
             otherChromosome = Population.Random(rnd)
             crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
             ' ---------

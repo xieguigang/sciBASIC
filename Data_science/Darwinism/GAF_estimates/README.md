@@ -25,6 +25,8 @@ k3 =f( y(tm)  + k2 / 2 * h, tm + h / 2)            (4)
 k4 =f( y(tm) + h * k3, tm + h)                     (5)
 ```
 
+Here is the code that implements the Runge-Kutta method for solving an ODEs in VisualBasic, for more technical details you can viewing the Runge-Kutta wiki page: [https://en.wikipedia.org/wiki/Runge-Kutta](https://en.wikipedia.org/wiki/Runge-Kutta)
+
 ```vbnet
 ''' <summary>
 ''' RK4 ODEs solver
@@ -49,6 +51,8 @@ End Sub
 ```
 
 #### RK4 solver Code Usage
+
+Here is the brief introduce of how to using the ODEs solver in VisualBasic:
 
 1. Inherits the abstract ODEs model: ``Microsoft.VisualBasic.Mathematical.Calculus.ODEs``
 2. Declaring of the y variables: ``Dim <y_name> As var``
@@ -122,6 +126,73 @@ Call {
 
 ### GAF Core
 
+``Microsoft.VisualBasic.DataMining.Darwinism.GAF.GeneticAlgorithm(Of C, T)``, for using the genetic algorithm, you must implements these interface for your model:
+
+###### 1. The GAF core needs the information to knowns how to calculates the fitness for your chromesome model
+
+```vbnet
+' Microsoft.VisualBasic.DataMining.Darwinism.GAF.Fitness(Of C, T)
+
+Public Interface Fitness(Of C As Chromosome(Of C), T As IComparable(Of T))
+
+    ''' <summary>
+    ''' Assume that chromosome1 is better than chromosome2 <br/>
+    ''' fit1 = calculate(chromosome1) <br/>
+    ''' fit2 = calculate(chromosome2) <br/>
+    ''' So the following condition must be true <br/>
+    ''' fit1.compareTo(fit2) &lt;= 0 <br/>
+    ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
+    ''' </summary>
+    Function Calculate(chromosome As C) As T
+End Interface
+```
+
+###### 2. The GAF core requird of information to knowns how to mutate and corssover itself
+
+```vbnet
+' Microsoft.VisualBasic.DataMining.Darwinism.Models.Chromosome(Of C)
+
+Public Interface Chromosome(Of C As Chromosome(Of C))
+
+    ''' <summary>
+    ''' In genetic algorithms, crossover is a genetic operator used to vary the programming 
+    ''' of a chromosome or chromosomes from one generation to the next. It is analogous to 
+    ''' reproduction and biological crossover, upon which genetic algorithms are based. 
+    ''' Cross over is a process of taking more than one parent solutions and producing a 
+    ''' child solution from them. There are methods for selection of the chromosomes.
+    ''' </summary>
+    ''' <param name="anotherChromosome"></param>
+    ''' <returns></returns>
+    Function Crossover(anotherChromosome As C) As IList(Of C)
+    ''' <summary>
+    ''' Mutation is a genetic operator used to maintain genetic diversity from one generation 
+    ''' of a population of genetic algorithm chromosomes to the next. It is analogous to 
+    ''' biological mutation. Mutation alters one or more gene values in a chromosome from its 
+    ''' initial state. In mutation, the solution may change entirely from the previous solution. 
+    ''' Hence GA can come to better solution by using mutation. Mutation occurs during evolution 
+    ''' according to a user-definable mutation probability. This probability should be set low. 
+    ''' If it is set too high, the search will turn into a primitive random search.
+    '''
+    ''' The classic example Of a mutation Operator involves a probability that an arbitrary bit 
+    ''' In a genetic sequence will be changed from its original state. A common method Of 
+    ''' implementing the mutation Operator involves generating a random variable For Each bit 
+    ''' In a sequence. This random variable tells whether Or Not a particular bit will be modified. 
+    ''' This mutation procedure, based On the biological point mutation, Is called Single point 
+    ''' mutation. Other types are inversion And floating point mutation. When the gene encoding 
+    ''' Is restrictive As In permutation problems, mutations are swaps, inversions, And scrambles.
+    '''
+    ''' The purpose Of mutation In GAs Is preserving And introducing diversity. Mutation should 
+    ''' allow the algorithm To avoid local minima by preventing the population Of chromosomes 
+    ''' from becoming too similar To Each other, thus slowing Or even stopping evolution. This 
+    ''' reasoning also explains the fact that most GA systems avoid only taking the fittest Of 
+    ''' the population In generating the Next but rather a random (Or semi-random) selection 
+    ''' With a weighting toward those that are fitter.
+    ''' </summary>
+    ''' <returns></returns>
+    Function Mutate() As C
+End Interface
+```
+
 ### GAF Parallel computing
 
 Enable the GAF parallel computing is super easy, just needs specific the Parallel property its value to ``TRUE``, And then before the fitness sorts, A parallel Linq will be call to boost the entire ODEs fitness evaluation process.
@@ -142,11 +213,16 @@ LQuery = From x As NamedValue(Of chr)
 
 ##### Problem & Goal
 
-![](./U.png)
-![](./I.png)
-![](./V.png)
+A virus infection dynamics model of Influenza was used in this testing for the GAF method demo:
 
-> Kinetics of Influenza A Virus Infection in Humans. **DOI: 10.1128/JVI.01623-05**
+> ![](./U.png)
+> ![](./I.png)
+> ![](./V.png)
+
+Original definition and fitting parameter values can be found in this scientific paper:
+
+> Kinetics of Influenza A Virus Infection in Humans. 
+> **DOI: 10.1128/JVI.01623-05**
 
 ##### ODEs Model
 
@@ -235,6 +311,25 @@ Call observations _
 
 ##### GAF Estimates
 
+All of the method protocol are avaliable in the namespace: ``Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol``, and using ``Fitting`` function for invoke this GAF parameter estimates:
+
+```vbnet
+Public Shared Function Fitting(Of T As Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Model)(
+                        observation As System.Collections.Generic.IEnumerable(Of Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of Double())),
+                                  x As Double(),
+                   Optional popSize As Integer = 100,
+                   Optional evolIterations As Integer = 2147483647,
+                   Optional ByRef outPrint As Microsoft.VisualBasic.Language.List(Of Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint) = Nothing,
+                   Optional threshold As Double = 0.5,
+                   Optional log10Fit As Boolean = True,
+                   Optional ignores As String() = Nothing,
+                   Optional initOverrides As System.Collections.Generic.Dictionary(Of String, Double) = Nothing,
+                   Optional estArgsBase As System.Collections.Generic.Dictionary(Of String, Double) = Nothing,
+                   Optional isRefModel As Boolean = False,
+                   Optional randomGenerator As Microsoft.VisualBasic.Mathematical.IRandomSeeds = Nothing) As Microsoft.VisualBasic.Mathematical.Calculus.var()
+    ' Member of Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol
+```
+Here is the example code of invoke the GAF method and save the result into a csv file:
 ```vbnet
 Dim prints As List(Of outPrint) = Nothing
 Dim estimates As var() = observations _

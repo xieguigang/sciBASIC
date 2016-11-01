@@ -1,4 +1,4 @@
-
+ï»¿
 ' *****************************************************************************
 ' Copyright 2012 Yuriy Lagodiuk
 ' 
@@ -27,7 +27,7 @@ Namespace Darwinism.GAF
         ''' fit2 = calculate(chromosome2) <br/>
         ''' So the following condition must be true <br/>
         ''' fit1.compareTo(fit2) &lt;= 0 <br/>
-        ''' (¼ÙÈôÊÇ²¢ĞĞÄ£Ê½µÄÖ®ÏÂ£¬»¹ÒªÇóÕâ¸öº¯ÊıÊÇÏß³Ì°²È«µÄ)
+        ''' (å‡è‹¥æ˜¯å¹¶è¡Œæ¨¡å¼çš„ä¹‹ä¸‹ï¼Œè¿˜è¦æ±‚è¿™ä¸ªå‡½æ•°æ˜¯çº¿ç¨‹å®‰å…¨çš„)
         ''' </summary>
         Function Calculate(chromosome As C) As T
     End Interface
