@@ -63,9 +63,16 @@ Namespace Darwinism
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetPopulation(Of Individual As IIndividual)(__new As [New](Of Individual), Optional PopulationSize% = 20) As List(Of Individual)
+        Public Function GetPopulation(Of Individual As IIndividual)(
+                                              __new As [New](Of Individual),
+                                              Optional PopulationSize% = 20,
+                                              Optional randomGenerator As IRandomSeeds = Nothing) As List(Of Individual)
+
             Dim population As New List(Of Individual)
-            Dim rand As New Random
+            Dim rand As Random = If(
+                randomGenerator Is Nothing,
+                New Random,
+                randomGenerator())
 
             For i As Integer = 0 To PopulationSize - 1
                 population += __new(seed:=rand)
@@ -99,14 +106,24 @@ Namespace Darwinism
                                          Optional maxIterations% = 500000,
                                          Optional PopulationSize% = 20,
                                          Optional iteratePrints As Action(Of outPrint) = Nothing,
-                                         Optional parallel As Boolean = False) As Individual
+                                         Optional parallel As Boolean = False,
+                                         Optional randomGenerator As IRandomSeeds = Nothing) As Individual
 
             ' linked list that has our population inside
-            Dim population As Individual() = [new].GetPopulation(PopulationSize).ToArray
+
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual, Double)(target).Fitness
+            Dim fitnessFunction As Func(Of Individual, Double) =
+                AddressOf New FitnessPool(Of Individual, Double)(target).Fitness
             Dim i As int = Scan0
-            Dim random As New Random
+
+            If randomGenerator Is Nothing Then
+                randomGenerator = Function() New Random
+            End If
+
+            Dim random As Random = randomGenerator()
+            Dim population As Individual() = [new] _
+                .GetPopulation(PopulationSize, randomGenerator) _
+                .ToArray
 
             ' main loop of evolution.
             If parallel Then
@@ -127,7 +144,8 @@ Namespace Darwinism
                             fitnessFunction:=fitnessFunction,
                             iteratePrints:=iteratePrints,
                             iterates:=i,
-                            N:=N)
+                            N:=N,
+                            randomGenerator:=randomGenerator)
 
                     bestFit = LQuery.Min(Function(x) x.Tag)
                     population = LQuery _
@@ -154,7 +172,8 @@ Namespace Darwinism
                         fitnessFunction:=fitnessFunction,
                         iteratePrints:=iteratePrints,
                         iterates:=i,
-                        N:=N)
+                        N:=N,
+                        randomGenerator:=randomGenerator)
 
                     bestFit = iter.Tag
 
@@ -201,8 +220,9 @@ Namespace Darwinism
                                                    bestFit#,
                                                    iterates%,
                                                 iteratePrints As Action(Of outPrint),
-                                              fitnessFunction As Func(Of Individual, Double)) As DoubleTagged(Of Individual())
-            Dim random As New Random
+                                              fitnessFunction As Func(Of Individual, Double),
+                                              randomGenerator As IRandomSeeds) As DoubleTagged(Of Individual())
+            Dim random As Random = randomGenerator()
             Dim populationSize% = population.Length
 
             For i As Integer = 0 To populationSize - 1

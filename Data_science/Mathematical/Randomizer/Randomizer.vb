@@ -26,7 +26,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' 
 ''' > http://www.rand.org/pubs/monograph_reports/MR1418.html
 ''' </summary>
-Public Class Randomizer
+Public Class Randomizer : Inherits Random
 
     Shared ReadOnly deviates#()()
     Shared ReadOnly digits%()()
@@ -99,7 +99,7 @@ Public Class Randomizer
     ''' Returns a non-negative random integer.
     ''' </summary>
     ''' <returns>A 32-bit signed integer that is greater than or equal to 0 and less than System.Int32.MaxValue.</returns>
-    Public Function [Next]() As Integer
+    Public Overrides Function [Next]() As Integer
         Return __getRandom(_digits)
     End Function
 
@@ -155,7 +155,7 @@ Public Class Randomizer
     ''' </summary>
     ''' <returns>A double-precision floating point number that is greater than or equal to 0.0,
     ''' and less than 1.0.</returns>
-    Public Function NextDouble() As Double
+    Public Overrides Function NextDouble() As Double
         Return (__getRandom(_digits) - min) / len
     End Function
 
@@ -163,7 +163,7 @@ Public Class Randomizer
     ''' Fills the elements of a specified array of bytes with random numbers.
     ''' </summary>
     ''' <param name="buffer">An array of bytes to contain random numbers.</param>
-    Public Overridable Sub NextBytes(ByRef buffer() As Byte)
+    Public Overrides Sub NextBytes(buffer() As Byte)
         Dim ints%() = GetRandomInts(buffer.Length)
         Dim lvs = ints.GenerateMapping(255, 0)
 
@@ -180,7 +180,7 @@ Public Class Randomizer
     ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
     ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
     ''' if maxValue equals 0, maxValue is returned.</returns>
-    Public Overridable Function [Next](maxValue As Integer) As Integer
+    Public Overrides Function [Next](maxValue As Integer) As Integer
         Return Next%(Scan0, maxValue)
     End Function
 
@@ -193,7 +193,7 @@ Public Class Randomizer
     ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue;
     ''' that is, the range of return values includes minValue but not maxValue. If minValue
     ''' equals maxValue, minValue is returned.</returns>
-    Public Overridable Function [Next](minValue As Integer, maxValue As Integer) As Integer
+    Public Overrides Function [Next](minValue As Integer, maxValue As Integer) As Integer
         Return minValue + NextDouble() * (maxValue - minValue)
     End Function
 
@@ -210,7 +210,7 @@ Public Class Randomizer
     ''' Normal deviates
     ''' </summary>
     ''' <returns></returns>
-    Public Function Sample() As Double
+    Public Overloads Function Sample() As Double
         Return __getRandom(_deviates)
     End Function
 End Class

@@ -36,6 +36,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Namespace Mathematical
 
     Public Delegate Function INextRandomNumber() As Double
+    ''' <summary>
+    ''' Tells the function how to generates a new random seed?
+    ''' </summary>
+    ''' <returns></returns>
+    Public Delegate Function IRandomSeeds() As Random
 
     ''' <summary>
     ''' Some extension methods for <see cref="Random"/> for creating a few more kinds of random stuff.

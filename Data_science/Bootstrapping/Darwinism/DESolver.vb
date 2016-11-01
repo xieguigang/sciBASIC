@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.DifferentialEvolution
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace Darwinism
@@ -45,7 +46,8 @@ Namespace Darwinism
                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
                          Optional ignores$() = Nothing,
                          Optional isRefModel As Boolean = False,
-                         Optional parallel As Boolean = False) As var()
+                         Optional parallel As Boolean = False,
+                         Optional randomGenerator As IRandomSeeds = Nothing) As var()
 
             Dim model As Type = GetType(T)
             Dim vars As String() = MonteCarlo.Model.GetParameters(model).ToArray
@@ -90,7 +92,8 @@ Namespace Darwinism
                 maxIterations,
                 PopulationSize,
                 AddressOf iterates.Add,
-                parallel)
+                parallel,
+                randomGenerator)
 
             iteratePrints = iterates
 
