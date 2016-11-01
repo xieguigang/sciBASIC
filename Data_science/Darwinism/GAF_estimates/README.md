@@ -5,6 +5,7 @@
 > PM> Install-Package VB_AppFramework -Pre
 > ```
 > and then add reference to these dll modules:
+>
 > + Microsoft.VisualBasic.Data.Csv.dll
 > + Microsoft.VisualBasic.DataMining.Framework.dll
 > + Microsoft.VisualBasic.Mathematical.dll
@@ -200,7 +201,37 @@ Public Sub BuildFakeObservationForTest()
 End Sub
 ```
 
-###### Preprocessing
+##### Interpolation Preprocessing
+
+If the experiments data is too small for the GAF based parameter estimates, then you can using the curve interpolation method for increasing the data points in your sample data. There are two curve Interpolation method that available in VisualBasic: **B-spline** method and **Cubic spline** in namespace ``Microsoft.VisualBasic.Mathematical.Interpolation``. Here is an example of Cubic spline for the experiment datas' curve Interpolation processing:
+
+```vbnet
+Dim samples = "./Kinetics_of_influenza_A_virus_infection_in_humans-fake-observation.csv" _
+    .LoadData _
+    .ToDictionary
+Dim x As Double() = samples("X").x
+Dim observations As NamedValue(Of Double())() =
+    LinqAPI.Exec(Of NamedValue(Of Double())) <=
+ _
+    From sample As NamedValue(Of Double())
+    In samples.Values
+    Let raw As PointF() = x _
+        .SeqIterator _
+        .ToArray(Function(xi) New PointF(+xi, y:=sample.x(xi)))
+    Let cubicInterplots = CubicSpline.RecalcSpline(raw, 10).ToArray
+    Let newData As Double() = cubicInterplots _
+        .ToArray(Function(pt) CDbl(pt.Y))
+    Select New NamedValue(Of Double()) With {
+        .Name = sample.Name,
+        .x = newData,
+        .Description = cubicInterplots _
+            .ToArray(Function(pt) pt.X) _
+            .GetJson  ' just needs the x value for the test
+    }
+
+Call observations _
+    .SaveTo("./Kinetics_of_influenza_A_virus_infection_in_humans-samples.csv")
+```
 
 ##### GAF Estimates
 
@@ -226,4 +257,4 @@ Call result.DataFrame("#TIME") _
 ```
 
 ## Testing On Linux and Super Computer
-This demo has been tested successfully on a Dell 40 CPU core server running CentOS 7 and China TianHe 1 Super Computer.
+This demo has been tested successfully on a Dell 40 CPU core server(running CentOS 7) and China TianHe 1 Super Computer.

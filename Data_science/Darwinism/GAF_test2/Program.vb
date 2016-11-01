@@ -21,6 +21,8 @@ Module Program
         Call BuildFakeObservationForTest()
         Call GAF_estimates()
 
+        Pause()
+
         Call App.Exit()
     End Sub
 
@@ -73,6 +75,9 @@ Module Program
     Public Sub GAF_estimates()
         Dim samples = "./Kinetics_of_influenza_A_virus_infection_in_humans-fake-observation.csv".LoadData.ToDictionary
         Dim x As Double() = samples("X").x
+
+        Call samples.Remove("X")
+
         Dim observations As NamedValue(Of Double())() =
             LinqAPI.Exec(Of NamedValue(Of Double())) <=
  _
@@ -81,7 +86,7 @@ Module Program
             Let raw As PointF() = x _
                 .SeqIterator _
                 .ToArray(Function(xi) New PointF(+xi, y:=sample.x(xi)))
-            Let cubicInterplots = CubicSpline.RecalcSpline(raw, 1000).ToArray
+            Let cubicInterplots = CubicSpline.RecalcSpline(raw, 10).ToArray
             Let newData As Double() = cubicInterplots _
                 .ToArray(Function(pt) CDbl(pt.Y))
             Select New NamedValue(Of Double()) With {
@@ -91,6 +96,8 @@ Module Program
                     .ToArray(Function(pt) pt.X) _
                     .GetJson  ' just needs the x value for the test
             }
+
+        Call observations.SaveTo("./Kinetics_of_influenza_A_virus_infection_in_humans-samples.csv")
 
         Dim prints As List(Of outPrint) = Nothing
         Dim estimates As var() = observations _
