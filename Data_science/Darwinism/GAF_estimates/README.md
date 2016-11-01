@@ -14,7 +14,110 @@
 
 ### RK4 ODEs solver in VisualBasic
 
+![](./ODE_Trapezoidal.png)
+
+```
+y(tm+1) =y(tm)  + (k1 + 2k2 +2k3 + k4) / 6 * h     (1)
+k1 =f( y(tm), tm)                                  (2)
+k2 =f( y(tm)  + k1 / 2 * h, tm + h / 2)            (3)
+k3 =f( y(tm)  + k2 / 2 * h, tm + h / 2)            (4)
+k4 =f( y(tm) + h * k3, tm + h)                     (5)
+```
+
+```vbnet
+''' <summary>
+''' RK4 ODEs solver
+''' </summary>
+''' <param name="dxn">The x initial value.(x初值)</param>
+''' <param name="dyn">The y initial value.(初值y(n))</param>
+''' <param name="dh">Steps delta.(步长)</param>
+''' <param name="dynext">
+''' Returns the y(n+1) result from this parameter.(下一步的值y(n+1))
+''' </param>
+Private Sub __rungeKutta(dxn As Double,
+                         ByRef dyn As Vector,
+                         dh As Double,
+                         ByRef dynext As Vector)
+    Call ODEs(dxn, dyn, K1)                             ' 求解K1
+    Call ODEs(dxn + dh / 2, dyn + dh / 2 * K1, K2)      ' 求解K2
+    Call ODEs(dxn + dh / 2, dyn + dh / 2 * K2, K3)      ' 求解K3
+    Call ODEs(dxn + dh, dyn + dh * K3, K4)              ' 求解K4
+
+    dynext = dyn + (K1 + K2 + K3 + K4) * dh / 6.0  ' 求解下一步的值y(n+1)
+End Sub
+```
+
 #### RK4 solver Code Usage
+
+1. Inherits the abstract ODEs model: ``Microsoft.VisualBasic.Mathematical.Calculus.ODEs``
+2. Declaring of the y variables: ``Dim <y_name> As var``
+3. Other parameter just declared as constant or normal fields: ``Const param# = value``
+4. Specific the ``y0`` by using inline value assign: ``var = value``
+5. Then at last, you can using ``ODEs.Solve(Integer, Double, Double, Boolean) As Microsoft.VisualBasic.Mathematical.Calculus.ODEsOut`` to solve your equations.
+
+Here represents a simple example of construct an ODEs model in VisualBasic:
+
+```vbnet
+''' <summary>
+''' ##### Kinetics of influenza A virus infection in humans
+'''
+''' > **DOI** 10.3390/v7102875
+''' </summary>
+''' <remarks>假设为实验观测数据</remarks>
+Public Class Kinetics_of_influenza_A_virus_infection_in_humans : Inherits ODEs
+
+    Dim T As var
+    Dim I As var
+    Dim V As var
+
+    Const p# = 3 * 10 ^ -2
+    Const c# = 2
+    Const beta# = 8.8 * 10 ^ -6
+    Const delta# = 2.6
+
+    Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+        dy(T) = -beta * T * V
+        dy(I) = beta * T * V - delta * I
+        dy(V) = p * I - c * V
+    End Sub
+
+    Protected Overrides Function y0() As var()
+        Return {
+            V = 1.4 * 10 ^ -2,
+            T = 4 * 10 ^ 8,
+            I = 0
+        }
+    End Function
+End Class
+```
+
+Running the solver and plotting the numerics result of your equations:
+
+```vbnet
+Dim model As New Kinetics_of_influenza_A_virus_infection_in_humans
+Dim result As ODEsOut = model.Solve(10000, 0, 10)
+
+Call result.DataFrame("#TIME") _
+    .Save("./Kinetics_of_influenza_A_virus_infection_in_humans.csv", Encodings.ASCII)
+
+Dim sT = result.y("T").x.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+Dim sI = result.y("I").x.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+Dim sV = result.y("V").x.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+
+Call {
+    Scatter.FromPoints(sT, "red", "Susceptible Cells"),
+    Scatter.FromPoints(sI, "lime", "Infected Cells")
+}.Plot(fill:=False) _
+ .SaveAs("./Kinetics_of_influenza_A_virus_infection_in_humans-TI.png")
+
+Call {
+    Scatter.FromPoints(sV, "skyblue", "Virus Load")
+}.Plot(fill:=False) _
+ .SaveAs("./Kinetics_of_influenza_A_virus_infection_in_humans-V.png")
+```
+
+![](./Kinetics_of_influenza_A_virus_infection_in_humans-TI.png)
+![](./Kinetics_of_influenza_A_virus_infection_in_humans-V.png)
 
 ### GAF Core
 
@@ -33,7 +136,4 @@
 ##### GAF Estimates
 
 ## Testing On Linux and Super Computer
-This demo has been tested successfully on CentOS 7 and China TianHe 1 Super Computer.
-
-![](./Kinetics_of_influenza_A_virus_infection_in_humans-TI.png)
-![](./Kinetics_of_influenza_A_virus_infection_in_humans-V.png)
+This demo has been tested successfully on a Dell 40 CPU core server running CentOS 7 and China TianHe 1 Super Computer.

@@ -20,10 +20,10 @@ Public Class Kinetics_of_influenza_A_virus_infection_in_humans : Inherits ODEs
     Dim I As var
     Dim V As var
 
-    Dim p As Double = 3 * 10 ^ -2
-    Dim c As Double = 2
-    Dim beta As Double = 8.8 * 10 ^ -6
-    Dim delta As Double = 2.6
+    Const p# = 3 * 10 ^ -2
+    Const c# = 2
+    Const beta# = 8.8 * 10 ^ -6
+    Const delta# = 2.6
 
     Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
         dy(T) = -beta * T * V
