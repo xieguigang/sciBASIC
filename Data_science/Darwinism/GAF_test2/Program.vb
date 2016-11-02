@@ -86,7 +86,7 @@ Module Program
             Let raw As PointF() = x _
                 .SeqIterator _
                 .ToArray(Function(xi) New PointF(+xi, y:=sample.x(xi)))
-            Let cubicInterplots = CubicSpline.RecalcSpline(raw, 110).ToArray
+            Let cubicInterplots = CubicSpline.RecalcSpline(raw, 50).ToArray
             Let newData As Double() = cubicInterplots _
                 .ToArray(Function(pt) CDbl(pt.Y))
             Select New NamedValue(Of Double()) With {

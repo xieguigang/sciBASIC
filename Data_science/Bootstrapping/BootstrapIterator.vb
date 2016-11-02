@@ -174,7 +174,7 @@ Public Module BootstrapIterator
                             a As Integer,
                             b As Integer) As ODEsOut
 
-        Dim odes As Object = Activator.CreateInstance(model)
+        Dim odes As ODEs = DirectCast(Activator.CreateInstance(model), ODEs)
         ' Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
