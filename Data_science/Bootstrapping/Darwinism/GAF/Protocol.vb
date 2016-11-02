@@ -207,6 +207,7 @@ Namespace Darwinism.GAF
             }
 
             Call $"Ignores of {fitness.Ignores.GetJson}".__DEBUG_ECHO
+            Call $"Observation data length: {observation.x.Length}".__DEBUG_ECHO
 
             Return vars.__runInternal(
                 popSize:=popSize,

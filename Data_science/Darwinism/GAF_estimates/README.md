@@ -375,4 +375,6 @@ Call result.DataFrame("#TIME") _
 ```
 
 ## Testing On Linux and Super Computer
-This demo has been tested successfully on a Dell 40 CPU core server(running CentOS 7) and China TianHe 1 Super Computer.
+This demo was build with VisualStudio 2015 and has been tested successfully on a Dell 40 CPU core server(running CentOS 7) and China TianHe 1 Super Computer.
+
+![](./Dell_screenshot.png)
