@@ -32,33 +32,58 @@ Imports Microsoft.VisualBasic.Mathematical
 
 Module Module1
 
+    Public Sub FittingTest()
+
+        Dim result As Dictionary(Of NamedValue(Of Double())) = "G:\eeeeeeeeeeee.ConvertedToVBNet\test_linearfit.csv".LoadData.ToDictionary
+
+        Dim out As FittedResult = Fit.linearFit(result("X").x.ToList, result("Y").x.ToList)
+
+        Dim y2 As New NamedValue(Of Double())("y-linearfit", out.fitedYs.ToArray)
+        Dim ypoly2 As New NamedValue(Of Double())("y-polyfit-2", Fit.polyfit(result("X").x.ToList, result("Y").x.ToList, 2).fitedYs.ToArray)
+        Dim ypoly3 As New NamedValue(Of Double())("y-polyfit-3", Fit.polyfit(result("X").x.ToList, result("Y").x.ToList, 3).fitedYs.ToArray)
+        Dim ypoly4 As New NamedValue(Of Double())("y-polyfit-4", Fit.polyfit(result("X").x.ToList, result("Y").x.ToList, 4).fitedYs.ToArray)
+        Dim ypoly5 As New NamedValue(Of Double())("y-polyfit-5", Fit.polyfit(result("X").x.ToList, result("Y").x.ToList, 5).fitedYs.ToArray)
+
+        Dim outpiu As New List(Of NamedValue(Of Double()))
+
+        outpiu.AddRange(result.Values)
+        outpiu.Add(y2)
+        outpiu.Add(ypoly2)
+        outpiu.Add(ypoly3)
+        outpiu.Add(ypoly4)
+        outpiu.Add(ypoly5)
+
+
+        Call outpiu.SaveTo("./output.csv")
+    End Sub
+
     Sub Main()
 
-        Dim rnd As New Randomizer
-        Dim list As New List(Of Double)
+        'Dim rnd As New Randomizer
+        'Dim list As New List(Of Double)
 
-        For i As Integer = 0 To 100
-            list.Add(rnd.NextDouble)
-        Next
+        'For i As Integer = 0 To 100
+        '    list.Add(rnd.NextDouble)
+        'Next
 
-        Call list.GetJson.__DEBUG_ECHO
+        'Call list.GetJson.__DEBUG_ECHO
 
-        Dim bytes As Byte() = New Byte(500) {}
+        'Dim bytes As Byte() = New Byte(500) {}
 
-        Call rnd.NextBytes(bytes)
+        'Call rnd.NextBytes(bytes)
 
-        Pause()
+        'Pause()
 
 
-        Dim b = 10.Sequence.ToArray(Function(x) Distributions.Beta.beta(x, 10, 100))
+        'Dim b = 10.Sequence.ToArray(Function(x) Distributions.Beta.beta(x, 10, 100))
 
-        b = Distributions.Beta.beta(Mathematical.Extensions.seq(0, 1, 0.01), 0.5, 0.5).ToArray
+        'b = Distributions.Beta.beta(Mathematical.Extensions.seq(0, 1, 0.01), 0.5, 0.5).ToArray
 
-        Call b.FlushAllLines("x:\dddd.csv")
+        'Call b.FlushAllLines("x:\dddd.csv")
 
-        Call b.GetJson.__DEBUG_ECHO
+        'Call b.GetJson.__DEBUG_ECHO
 
-        Pause()
+        'Pause()
     End Sub
 End Module
 
