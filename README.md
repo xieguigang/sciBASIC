@@ -2,7 +2,7 @@
 
 ![(๑•̀ㅂ•́)و✧](./etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
-[![Github All Releases](https://img.shields.io/github/downloads/xieguigang/VisualBasic_AppFramework/total.svg?maxAge=2592000?style=flat-square)]()
+[![Github All Releases](https://img.shields.io/github/downloads/xieguigang/sciBASIC/total.svg?maxAge=2592000?style=flat-square)]()
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.160492.svg)](https://doi.org/10.5281/zenodo.160492)
 
@@ -34,10 +34,10 @@
 A language feature runtime library for CLI architecture applications. This framework project includes a lot of utility tools and the utility code extension functions for the data sciences programming for VisualBasic, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernization by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:
-> + https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/vb_codestyle
+> + https://github.com/xieguigang/sciBASIC/tree/master/vb_codestyle
 
 > Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
-> + https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/guides/
+> + https://github.com/xieguigang/sciBASIC/blob/master/guides/
 
 
 ##### Install this framework via nuget package
