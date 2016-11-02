@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module Scatter
 
     ''' <summary>
-    ''' 绘图函数
+    ''' Scatter plot function.(绘图函数)
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>
@@ -194,6 +194,7 @@ Public Module Scatter
             .title = title,
             .width = width,
             .pts = LinqAPI.Exec(Of PointData) <=
+ _
                 From o As SeqValue(Of Double)
                 In y0.SeqIterator
                 Where Not o.obj.IsNaNImaginary
@@ -222,6 +223,14 @@ Public Module Scatter
         }
     End Function
 
+    ''' <summary>
+    ''' Convert ODEs result as scatter plot serial model.
+    ''' </summary>
+    ''' <param name="odes"></param>
+    ''' <param name="colors"></param>
+    ''' <param name="ptSize!"></param>
+    ''' <param name="width"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function FromODEs(odes As ODEsOut,
                              Optional colors As IEnumerable(Of String) = Nothing,
@@ -231,16 +240,21 @@ Public Module Scatter
             colors.IsNullOrEmpty,
             ChartColors.Shuffles,
             colors.ToArray(AddressOf ToColor))
+
         Return LinqAPI.Exec(Of SerialData) <=
+ _
             From y As SeqValue(Of NamedValue(Of Double()))
             In odes.y.Values.SeqIterator
+            Let pts As PointData() = odes.x _
+                .SeqIterator _
+                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.obj.x(x))))
             Select New SerialData With {
                 .color = c(y.i),
                 .lineType = DashStyle.Solid,
                 .PointSize = ptSize,
                 .title = y.obj.Name,
                 .width = width,
-                .pts = odes.x.SeqIterator.ToArray(Function(x) New PointData(CSng(x.obj), CSng(y.obj.x(x.i))))
+                .pts = pts
             }
     End Function
 
