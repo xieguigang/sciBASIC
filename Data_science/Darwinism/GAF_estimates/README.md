@@ -13,6 +13,10 @@
 > + Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll
 > + Microsoft.VisualBasic.Data.Bootstrapping.dll
 
+## Background
+
+In computer science and operations research, a genetic algorithm (GA) is a metaheuristic inspired by the process of natural selection that belongs to the larger class of evolutionary algorithms (EA). Genetic algorithms are commonly used to generate high-quality solutions to optimization and search problems by relying on bio-inspired operators such as mutation, crossover and selection.
+
 ### RK4 ODEs solver in VisualBasic
 
 ![](./ODE_Trapezoidal.png)
@@ -124,7 +128,20 @@ Call {
 ![](./Kinetics_of_influenza_A_virus_infection_in_humans-TI.png)
 ![](./Kinetics_of_influenza_A_virus_infection_in_humans-V.png)
 
+## Using the Code
+
 ### GAF Core
+
+As the [Genetic Algorithm](https://en.wikipedia.org/wiki/Genetic_algorithm) described, the genetic algorithm should contains the individual mutation, crossover between the individual chromosomes, and the fitness sort for population selection. Then I concluded the points that may be useful in the coding of your own GAF implementation, you can implements the genetics algorithm by yourself from following these steps:
+
+1. Initialized a population with specific population size, and each chromosome in this population is the candidate solution for your problem
+2. Then you are going to use a while loop in your function for the genetic iteration, loop until the best fitness in of your solution meets the threshold
+3. As the algorithm described, each iteration, each chromosomes has the chance to mutate it self a bit, and the mutate will creates a new clone of the chromosomes itself
+4. In each iteration, each chromosomes or its mutation have the chance to crossover with other chromosomes(random in the population, crossover means swap some elements in the chromosomes)
+5. At last, these new mutation join the original population to creates a new population.
+6. Then you can calculate the fitness for each chromosome in this new population and then sort these chromosomes by their fitness.
+7. By takes the first population size number of chromosomes from the new population after the fitness sort step, then you may get a better solution for your problem.
+8. Loop until the first element(best solution) in the population its fitness meets the threshold.
 
 ``Microsoft.VisualBasic.DataMining.Darwinism.GAF.GeneticAlgorithm(Of C, T)``, for using the genetic algorithm, you must implements these interface for your model:
 
