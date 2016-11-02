@@ -1,4 +1,4 @@
-# Programming Guidelines for sciBASIC#
+# Programming Guidelines for VisualBasic App
 
 ![](../etc/badge.png)
 

@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language.C
 
 Namespace Mathematical
 
@@ -43,12 +44,21 @@ Namespace Mathematical
     Public Delegate Function IRandomSeeds() As Random
 
     ''' <summary>
-    ''' Some extension methods for <see cref="Random"/> for creating a few more kinds of random stuff.
+    ''' Some extension methods for <see cref="System.Random"/> for creating a few more kinds of random stuff.
     ''' </summary>
     ''' <remarks>Imports from https://github.com/rvs76/superbest-random.git </remarks>
     ''' 
     <PackageNamespace("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
     Public Module RandomExtensions
+
+        Public Function randf(min As Double, max As Double) As Double
+            Dim minInteger As Integer = CInt(Math.Truncate(min * 10000))
+            Dim maxInteger As Integer = CInt(Math.Truncate(max * 10000))
+            Dim randInteger As Integer = RandomNumbers.rand() * RandomNumbers.rand()
+            Dim diffInteger As Integer = maxInteger - minInteger
+            Dim resultInteger As Integer = randInteger Mod diffInteger + minInteger
+            Return resultInteger / 10000.0
+        End Function
 
         ReadOnly __randomSeeds As New Random(RandomDouble() * 10000)
 
