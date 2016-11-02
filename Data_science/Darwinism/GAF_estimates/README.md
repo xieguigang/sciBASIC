@@ -17,6 +17,8 @@
 
 In computer science and operations research, a genetic algorithm (GA) is a metaheuristic inspired by the process of natural selection that belongs to the larger class of evolutionary algorithms (EA). Genetic algorithms are commonly used to generate high-quality solutions to optimization and search problems by relying on bio-inspired operators such as mutation, crossover and selection.
 
+Recently, I was working on an research of modelling the virus infection dynamic with the details of human IR, the dynamics parameter in the equation was going to estimates from the clinical data of some human patients. As the description in others' previous scientific work paper, the genetics algorithm was chosen for this parameter estimates. 
+
 ### RK4 ODEs solver in VisualBasic
 
 ![](./ODE_Trapezoidal.png)
