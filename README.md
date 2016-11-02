@@ -1,4 +1,4 @@
-# sciBASIC#: Microsoft VisualBasic for scientific
+# sciBASIC#: Microsoft VisualBasic for Scientific
 
 ![(๑•̀ㅂ•́)و✧](./etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
@@ -20,13 +20,13 @@
 + **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
 + **[/mime](./mime/)** : VisualBasic various mime-types doc parsers
 + **[/gr](./gr/)** : VisualBasic data graphics system
-+ **[/win32_api](./win32_api/)** : Win32 API collection
-+ **[/www](./www/)** : Web related codes
++ **[/win32_api](./win32_api/)** : Win32 API collection(Obsolete)
++ **[/www](./www/)** : Web related utilities code
 
 ###### 2. docs for User
 
 + **[/guides](./guides/)** : This framework code usage example and manual documents
-+ **[/vb_codestyle](./vb_codestyle/)** : Coding style standard document
++ **[/vb_codestyle](./vb_codestyle/)** : sciBASIC# Coding style standard document
 
 
 ---------------------------------------------------------------------------------------------------------------
@@ -56,16 +56,16 @@ https://www.nuget.org/packages/VB_AppFramework_40/
 
 >  PM> Install-Package VB_AppFramework_40
 
-## Microsoft VisualBasic Mathematics System for Data Science
+## Microsoft VisualBasic Mathematics & Data Graphics System
 
-+ **[Mathematics System](./Data_science/Mathematical/)**
++ **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
 + **[Darwinism computing module](./Data_science/Darwinism)**
-+ **[DataFrame System for VisualBasic Data Science](./Data/DataFrame/)**
++ **[sciBASIC# DataFrame System](./Data/DataFrame/)**
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 
 ![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
-##### Plots System
+##### sciBASIC# Chart Plots System
 ```vbnet
 Imports Microsoft.VisualBasic.Mathematical.Plots
 ```
