@@ -23,7 +23,7 @@ Public Class FittedResult
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Public Property FitedYarray As New List(Of Double)()
+    Public Property FitedYlist As New List(Of Double)()
 
     Sub New()
         Call Factor.Resize(2, 0)

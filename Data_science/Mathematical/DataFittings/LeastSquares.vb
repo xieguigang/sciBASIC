@@ -23,6 +23,10 @@ Public Module LeastSquares
         Return LinearFit(x.ToArray, y.ToArray, getSeriesLength(x, y))
     End Function
 
+    Public Function LinearFit(x As Double(), y As Double()) As FittedResult
+        Return LinearFit(x.ToArray, y.ToArray, getSeriesLength(x, y))
+    End Function
+
     Public Function LinearFit(x As Double(), y As Double(), length As Integer) As FittedResult
         Dim result As New FittedResult
         Dim t1 As Double = 0, t2 As Double = 0, t3 As Double = 0, t4 As Double = 0
@@ -52,6 +56,10 @@ Public Module LeastSquares
     ''' <param name="y">观察值的y</param>
     ''' <param name="poly_n">期望拟合的阶数，若poly_n=2，则y=a0+a1*x+a2*x^2</param>
     Public Function PolyFit(x As List(Of Double), y As List(Of Double), poly_n As Integer) As FittedResult
+        Return PolyFit(x.ToArray, y.ToArray, getSeriesLength(x, y), poly_n)
+    End Function
+
+    Public Function PolyFit(x#(), y#(), poly_n%) As FittedResult
         Return PolyFit(x.ToArray, y.ToArray, getSeriesLength(x, y), poly_n)
     End Function
 
@@ -93,7 +101,7 @@ Public Module LeastSquares
         Next
         gauss_solve(poly_n + 1, ata, result.Factor, sumxy)
         '计算拟合后的数据并计算误差
-        result.FitedYarray.Capacity = length
+        result.FitedYlist.Capacity = length
         calcError(x, y, length, result)
 
         Return result
@@ -105,8 +113,10 @@ Public Module LeastSquares
     ''' <param name="x"></param>
     ''' <param name="y"></param>
     ''' <returns>最小的一个长度</returns>
-    Public Function getSeriesLength(x As List(Of Double), y As List(Of Double)) As Integer
-        Return (If(x.Count > y.Count, y.Count, x.Count))
+    Public Function getSeriesLength(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Integer
+        Dim xl% = x.Count
+        Dim yl% = y.Count
+        Return If(xl > yl, yl, xl)
     End Function
 
     ''' <summary>
@@ -130,7 +140,7 @@ Public Module LeastSquares
         Dim mean_y As Double = Mean(y, length)
         Dim yi#
 
-        result.FitedYarray.Capacity = length
+        result.FitedYlist.Capacity = length
 
         For i As Integer = 0 To length - 1
             yi = result.GetY(x(i))
@@ -139,7 +149,7 @@ Public Module LeastSquares
             result.SSE += ((yi - y(i)) * (yi - y(i)))
             '残差平方和
 
-            Call result.FitedYarray.Add(CDbl(yi))
+            Call result.FitedYlist.Add(CDbl(yi))
         Next
         result.RMSE = Math.Sqrt(result.SSE / CDbl(length))
     End Sub
