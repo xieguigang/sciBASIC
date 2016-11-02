@@ -1,4 +1,4 @@
-# Microsoft VisualBasic App Runtime
+# sciBASIC#: Microsoft VisualBasic for scientific
 
 ![(๑•̀ㅂ•́)و✧](./etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
