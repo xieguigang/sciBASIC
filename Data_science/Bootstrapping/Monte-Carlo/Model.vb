@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Emit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
 
@@ -104,16 +105,30 @@ Namespace MonteCarlo
             Dim parms$() = ODEs.GetParameters(model).ToArray
             Dim vars$() = ODEs.GetVariables(model).ToArray
             Dim x As Model = TryCast(Activator.CreateInstance(model), Model)
+            Dim var$ = Nothing
+            Dim parm$ = Nothing
 
-            For Each var$ In vars    ' 设置初始值
-                x(var).value = y0(var)
-            Next
+            Try
+                For Each var$ In vars    ' 设置初始值
+                    x(var).value = y0(var)
+                Next
+            Catch ex As Exception
+                Dim msg$ = $"Model required a parameter which is named ``{var}``, but '{var}' is not exists in list: {y0.Keys.ToArray.GetJson}"
+                ex = New Exception(msg, ex)
+                Throw ex
+            End Try
 
-            For Each parm$ In parms  ' 设置参数值
-                Dim [set] As Action(Of Object, Double) =
-                    Delegates.FieldSet(Of Double)(model, parm)
-                Call [set](x, estimates(parm))
-            Next
+            Try
+                For Each parm$ In parms  ' 设置参数值
+                    Dim [set] As Action(Of Object, Double) =
+                        Delegates.FieldSet(Of Double)(model, parm)
+                    Call [set](x, estimates(parm))
+                Next
+            Catch ex As Exception
+                Dim msg$ = $"Model required a parameter which is named ``{parm}``, but '{parm}' is not exists in list: {estimates.Keys.ToArray.GetJson}"
+                ex = New Exception(msg, ex)
+                Throw ex
+            End Try
 
             If Not ref Is Nothing Then
                 Dim partTokens As Integer = n / ref.x.Length
