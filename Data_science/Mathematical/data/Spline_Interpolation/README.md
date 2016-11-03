@@ -95,3 +95,33 @@ Call Scatter.Plot({raw, B_interplot, interplot}, size:=New Size(3000, 1400)) _
     .SaveAs("./duom2-compares.png")
 ```
 ![](./duom2-compares.png)
+
+## Compares B-Splines Parameters
+
+```vbnet
+Dim bsplines = {
+    B_Spline.Compute(points, 0.5, RESOLUTION:=100) _
+            .FromPoints(lineColor:="green", ptSize:=5, title:="duom2: B-spline, 0.5 degree", lineWidth:=3),
+    B_Spline.Compute(points, 1, RESOLUTION:=100) _
+            .FromPoints(lineColor:="skyblue", ptSize:=3, title:="duom2: B-spline, 1 degree", lineWidth:=2),
+    B_Spline.Compute(points, 2, RESOLUTION:=100) _
+            .FromPoints(lineColor:="yellow", ptSize:=3, title:="duom2: B-spline, 2 degree", lineWidth:=2),
+    B_Spline.Compute(points, 3, RESOLUTION:=100) _
+            .FromPoints(lineColor:="lime", ptSize:=3, title:="duom2: B-spline, 3 degree", lineWidth:=2),
+    B_Spline.Compute(points, 4, RESOLUTION:=100) _
+            .FromPoints(lineColor:="orange", ptSize:=3, title:="duom2: B-spline, 4 degree", lineWidth:=2),
+    B_Spline.Compute(points, 5, RESOLUTION:=100) _
+            .FromPoints(lineColor:="darkred", ptSize:=3, title:="duom2: B-spline, 5 degree", lineWidth:=2),
+    B_Spline.Compute(points, 10, RESOLUTION:=100) _
+            .FromPoints(lineColor:="red", ptSize:=3, title:="duom2: B-spline, 10 degree", lineWidth:=2),
+    B_Spline.Compute(points, 20, RESOLUTION:=100) _
+            .FromPoints(lineColor:="gray", ptSize:=3, title:="duom2: B-spline, 20 degree", lineWidth:=2),
+    B_Spline.Compute(points, 30, RESOLUTION:=100) _
+            .FromPoints(lineColor:="lightgreen", ptSize:=3, title:="duom2: B-spline, 30 degree", lineWidth:=2)
+}
+
+Call Scatter.Plot(raw.Join(bsplines), size:=New Size(3000, 1400)) _
+    .SaveAs("./duom2-B-splines.png")
+```
+
+![](./duom2-B-splines.png)
