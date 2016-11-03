@@ -97,7 +97,8 @@ Public Class Scaling
                     .errMinus = p.errMinus,
                     .errPlus = p.errPlus,
                     .Tag = p.Tag,
-                    .value = p.value
+                    .value = p.value,
+                    .Statics = p.Statics
                 }
 
             Yield New SerialData With {
