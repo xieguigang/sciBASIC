@@ -56,7 +56,7 @@ Public Module ManhattanStatics
                     .title = NameOf(PointData.errPlus),
                     .pts = s.pts _
                         .ToArray(Function(err) New PointData With {
-                            .pt = New PointF(err.pt.X, err.errPlus),
+                            .pt = New PointF(err.pt.X, err.pt.Y + err.errPlus),
                             .errPlus = err.errPlus
                         })
                 }
@@ -68,7 +68,7 @@ Public Module ManhattanStatics
                     .title = NameOf(PointData.errMinus),
                     .pts = s.pts _
                         .ToArray(Function(err) New PointData With {
-                            .pt = New PointF(err.pt.X, err.errMinus),
+                            .pt = New PointF(err.pt.X, err.pt.Y + err.errMinus),
                             .errMinus = err.errMinus
                         })
                 }
