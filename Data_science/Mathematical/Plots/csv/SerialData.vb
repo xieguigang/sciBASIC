@@ -43,6 +43,7 @@ Namespace csv
         Public Property tag As String
         Public Property errPlus As Double
         Public Property errMinus As Double
+        Public Property Statics As Double()
 
         Public Shared Function GetData(csv$, Optional colors As Color() = Nothing) As IEnumerable(Of Plots.SerialData)
             Return GetData(csv.LoadCsv(Of SerialData), colors)
@@ -72,7 +73,8 @@ Namespace csv
                             .errPlus = x.errPlus,
                             .pt = New PointF(x.X, x.Y),
                             .Tag = x.tag,
-                            .value = x.value
+                            .value = x.value,
+                            .Statics = x.Statics
                         }
                     }
             Next
