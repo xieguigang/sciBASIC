@@ -44,7 +44,7 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of SeqValue(Of T))
-            If Not source.IsNullOrEmpty Then
+            If Not source Is Nothing Then
                 Dim idx% = offset
 
                 For Each x As T In source
