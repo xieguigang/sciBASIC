@@ -119,25 +119,8 @@ Public Module LeastSquares
         Return If(xl > yl, yl, xl)
     End Function
 
-    ''' <summary>
-    ''' 计算均值
-    ''' </summary>
-    ''' <param name="v"></param>
-    ''' <returns>均值</returns>
-    Public Function Mean(v As List(Of Double)) As Double
-        Return Mean(v.ToArray, v.Count)
-    End Function
-
-    Public Function Mean(v As Double(), length As Integer) As Double
-        Dim total#
-        For i As Integer = 0 To length - 1
-            total += v(i)
-        Next
-        Return (total / length)
-    End Function
-
     Private Sub calcError(x As Double(), y As Double(), length As Integer, ByRef result As FittedResult)
-        Dim mean_y As Double = Mean(y, length)
+        Dim mean_y As Double = y.Sum / length
         Dim yi#
 
         result.FitedYlist.Capacity = length
