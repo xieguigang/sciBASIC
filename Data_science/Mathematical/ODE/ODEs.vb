@@ -232,7 +232,7 @@ Public MustInherit Class ODEs
     Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
         Dim fields = CType(model, TypeInfo) _
             .DeclaredFields _
-            .Where(Function(f) f.FieldType.Equals(GetType(Double)))
+            .Where(Function(f) (Not f.IsLiteral) AndAlso f.FieldType.Equals(GetType(Double)))
         Return fields.Select(Function(f) f.Name)
     End Function
 
