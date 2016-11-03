@@ -189,7 +189,7 @@ Namespace Darwinism.GAF
         <Extension>
         Public Function Fitting(Of T As MonteCarlo.Model)(
                          observation As ODEsOut,
-                         Optional popSize% = 100%,
+                         Optional popSize% = 200%,
                          Optional evolIterations% = Integer.MaxValue%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
                          Optional threshold# = 0.5,

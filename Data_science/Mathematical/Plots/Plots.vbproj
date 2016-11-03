@@ -185,6 +185,7 @@
     <Compile Include="PlotTypes.vb" />
     <Compile Include="BarPlot\BarPlot.vb" />
     <Compile Include="Scatter\Annotation.vb" />
+    <Compile Include="Scatter\ManhattanStatics.vb" />
     <Compile Include="Scatter\Data.vb" />
     <Compile Include="Scatter\Scatter.vb" />
     <Compile Include="g\Scaling.vb" />

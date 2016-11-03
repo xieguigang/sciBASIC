@@ -94,6 +94,10 @@ Public Structure PointData
     ''' 正负误差
     ''' </summary>
     Public errPlus#, errMinus#, Tag$, value#
+    ''' <summary>
+    ''' 可能会有数据点在<see cref="errPlus"/>或者<see cref="errMinus"/>范围内，或者范围外
+    ''' </summary>
+    Public Statics#()
 
     Sub New(x!, y!)
         pt = New PointF(x, y)
