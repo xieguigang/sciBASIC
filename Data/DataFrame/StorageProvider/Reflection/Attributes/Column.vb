@@ -47,21 +47,56 @@ Namespace StorageProvider.Reflection
         End Property
 
         ''' <summary>
+        ''' The type should implements the interface <see cref="IParser"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property CustomParser As Type
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="Name"></param>
-        Sub New(Name As String)
+        ''' <param name="customParser">The type should implements the interface <see cref="IParser"/></param>
+        Sub New(Name As String, Optional customParser As Type = Nothing)
             Me.Name = Name
+            Me.CustomParser = customParser
+
             If String.IsNullOrEmpty(Name) Then
                 Throw New DataException($"{NameOf(Name)} value can not be null!")
             End If
         End Sub
 
+        ''' <summary>
+        ''' Display name
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Name
         End Function
 
-        Public Shared ReadOnly Property TypeInfo As System.Type = GetType(ColumnAttribute)
+        Public Function GetParser() As IParser
+            If CustomParser Is Nothing Then  ' 没有定义自定义解析器
+                Return Nothing
+            Else
+                If Not CustomParser.GetInterface(GetType(IParser).FullName) Is Nothing Then
+                    Return DirectCast(Activator.CreateInstance(CustomParser), IParser)
+                Else
+                    Dim ex As New Exception("==> " & Name)
+                    Throw New InvalidProgramException(__innerMsg, ex)
+                End If
+            End If
+        End Function
+
+        Private Function __innerMsg() As String
+            Return _
+                $"Custom parser required of the type implements interface {GetType(IParser).FullName}, but {CustomParser.FullName} did not!"
+        End Function
+
+        ''' <summary>
+        ''' Reflector
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property TypeInfo As Type = GetType(ColumnAttribute)
 
         Public Shared Narrowing Operator CType(attr As ColumnAttribute) As String
             Return attr.Name
@@ -71,4 +106,20 @@ Namespace StorageProvider.Reflection
             Return New ColumnAttribute(sName)
         End Operator
     End Class
+
+    Public Interface IParser
+
+        ''' <summary>
+        ''' 将目标对象序列化为文本字符串
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Function ToString(obj As Object) As String
+        ''' <summary>
+        ''' 从Csv文件之中所读取出来的字符串之中解析出目标对象
+        ''' </summary>
+        ''' <param name="cell$"></param>
+        ''' <returns></returns>
+        Function TryParse(cell$) As Object
+    End Interface
 End Namespace
