@@ -361,6 +361,10 @@ Namespace Language
         Public Shared Operator >(n As Double, x As float) As float
             Return x
         End Operator
+
+        Public Shared Operator ^(x As float, power As Double) As Double
+            Return x.value ^ power
+        End Operator
     End Class
 
     Public Class Precise : Inherits Value(Of Decimal)
