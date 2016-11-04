@@ -260,7 +260,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="StorageProvider\ComponntModels\AttrBridges.vb" />
+    <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Field.vb" />
+    <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Array.vb" />
+    <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb" />
+    <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Enum.vb" />
+    <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\KeyValuePair.vb" />
     <Compile Include="StorageProvider\ComponntModels\DynamicObjectLoader.vb" />
     <Compile Include="StorageProvider\ComponntModels\ProviderBase.vb" />
     <Compile Include="StorageProvider\ComponntModels\RowBuilder.vb" />

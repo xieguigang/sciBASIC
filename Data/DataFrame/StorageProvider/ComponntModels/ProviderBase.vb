@@ -76,10 +76,15 @@ Namespace StorageProvider.ComponentModels
 
         Public MustOverride ReadOnly Property ProviderId As Reflection.ProviderIds
 
+        ''' <summary>
+        ''' 解析字符串为.NET对象的方法
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LoadMethod As Func(Of String, Object)
 
         ''' <summary>
-        ''' By using this function that save the property value as a cell value string 
+        ''' By using this function that save the property value as a cell value string.
+        ''' (将.NET对象序列化为csv单元格之中的一个字符串值的方法) 
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
@@ -104,7 +109,8 @@ Namespace StorageProvider.ComponentModels
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[Dim {Name} As {BindProperty.PropertyType.FullName}] //{Me.GetType.Name} --> {BindProperty.Name}"
+            Dim vbDim$ = $"[Dim {Name} As {BindProperty.PropertyType.FullName}]"
+            Return vbDim & $" //{Me.GetType.Name} --> {BindProperty.Name}"
         End Function
     End Class
 End Namespace

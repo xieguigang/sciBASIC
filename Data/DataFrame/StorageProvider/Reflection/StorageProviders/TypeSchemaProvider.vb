@@ -119,7 +119,7 @@ Namespace StorageProvider.Reflection
 
             If Scripting.IsPrimitive([Property].PropertyType) Then
                 Dim column As New ColumnAttribute(_getName)  '属性值的类型是简单类型，则其标记的类型只能是普通列
-                Return New ComponentModels.Column(column, [Property])
+                Return ComponentModels.Column.CreateObject(column, [Property])
             End If
 
             Dim valueType As New Value(Of Type)
@@ -190,7 +190,7 @@ Namespace StorageProvider.Reflection
         Public Function GetThisElement(type As Type, Optional forcePrimitive As Boolean = True) As Type
             Dim intfs As Type() = type.GetInterfaces
 
-            If Array.IndexOf(intfs, GetType(IEnumerable)) = -1 Then
+            If System.Array.IndexOf(intfs, GetType(IEnumerable)) = -1 Then
                 If forcePrimitive Then
                     Return GetType(System.Void)
                 Else

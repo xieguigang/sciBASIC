@@ -53,7 +53,7 @@ Namespace DocumentStream
                 Dim allNames As String() = schema.Properties.ToArray(Function(x) x.Name)
                 Dim matches = (From p As String
                                In allNames
-                               Where Array.IndexOf(head, p) > -1
+                               Where System.Array.IndexOf(head, p) > -1
                                Select 1).Sum
                 Call scores.Add(schema.DeclaringType, matches)
             Next
