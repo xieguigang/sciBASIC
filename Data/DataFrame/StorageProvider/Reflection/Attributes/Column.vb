@@ -56,7 +56,9 @@ Namespace StorageProvider.Reflection
         ''' 
         ''' </summary>
         ''' <param name="Name"></param>
-        ''' <param name="customParser">The type should implements the interface <see cref="IParser"/></param>
+        ''' <param name="customParser">The type should implements the interface <see cref="IParser"/>.
+        ''' (对于基本类型，这个参数是可以被忽略掉的，但是对于复杂类型，这个参数是不能够被忽略的，否则会报错)
+        ''' </param>
         Sub New(Name As String, Optional customParser As Type = Nothing)
             Me.Name = Name
             Me.CustomParser = customParser
