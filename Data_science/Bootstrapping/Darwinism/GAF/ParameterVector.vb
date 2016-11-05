@@ -30,11 +30,16 @@ Namespace Darwinism.GAF
         End Sub
 
         ''' <summary>
-        ''' 只需要在这里调整参数就行了，y0初始值不需要
+        ''' The function variable parameter that needs to fit, not includes the ``y0``.
+        ''' (只需要在这里调整参数就行了，y0初始值不需要)
         ''' </summary>
         ''' <returns></returns>
         Public Property vars As var()
 
+        ''' <summary>
+        ''' Transform as a vector for the mutation and crossover function.
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         Public ReadOnly Property Vector As Double()
             Get
@@ -89,7 +94,7 @@ Namespace Darwinism.GAF
         End Function
 
         ''' <summary>
-        ''' 结果是按值复制的
+        ''' Clone and crossover and last assign the vector value.(结果是按值复制的)
         ''' </summary>
         ''' <param name="anotherChromosome"></param>
         ''' <returns></returns>
@@ -108,11 +113,11 @@ Namespace Darwinism.GAF
         End Function
 
         ''' <summary>
-        ''' 会按值复制
+        ''' Clone and mutation a bit and last assign the vector value.(会按值复制)
         ''' </summary>
         ''' <returns></returns>
         Public Function Mutate() As ParameterVector Implements Chromosome(Of ParameterVector).Mutate
-            Dim m As ParameterVector = Clone()
+            Dim m As ParameterVector = DirectCast(Clone(), ParameterVector)
             Dim random As Random = seeds()
 
             For i As Integer = 0 To 2

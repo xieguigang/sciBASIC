@@ -42,19 +42,16 @@ A language feature runtime library for CLI architecture applications. This frame
 
 ##### Install this framework via nuget package
 
-+ https://www.nuget.org/packages/VB_AppFramework/
+For .NET Framework 4.6:
+
++ https://www.nuget.org/packages/sciBASIC/
 
 ```bash
 # For install latest stable release version:
-PM> Install-Package VB_AppFramework
+PM> Install-Package sciBASIC
 # For install latest unstable beta version:
-PM> Install-Package VB_AppFramework -Pre
+PM> Install-Package sciBASIC -Pre
 ```
-
-+ For .NET framework 4.0, install package
-https://www.nuget.org/packages/VB_AppFramework_40/
-
->  PM> Install-Package VB_AppFramework_40
 
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 

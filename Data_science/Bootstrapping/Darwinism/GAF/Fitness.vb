@@ -85,7 +85,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         Private Sub __init()
             With Me
-                .samples = n / 100
+                .samples = CInt(n / 100)
                 .y0 = observation _
                     .y _
                     .Values _

@@ -1,8 +1,8 @@
 # Genetic Algorithm
 
-> Installing VisualBasic for data science via nuget:
+> Installing **sciBASIC#** package via nuget:
 > ```
-> PM> Install-Package VB_AppFramework -Pre
+> PM> Install-Package sciBASIC -Pre
 > ```
 > and then add reference to these dll modules:
 >
@@ -230,9 +230,194 @@ LQuery = From x As NamedValue(Of chr)
          }
 ```
 
+## Parameter estimates
+
+### Chromosome: ParameterVector
+
+The chromosomes in a population can evolve better fitting to the environment due to the reason of mutation and environment selection. Here is the utility functions that can produce a bit of mutation in a chromosome and the crossover function can provides the elements swap between two chromosomes:
+
+```vbnet
+''' <summary>
+''' Mutate a bit in an array.
+''' </summary>
+''' <param name="array#">The abstraction of a chromosome(parameter list).
+''' (需要被拟合的参数列表，在这个函数里面会被修改一点产生突变)
+''' </param>
+''' <param name="rnd"></param>
+<Extension> Public Sub Mutate(ByRef array#(), rnd As Random)
+    Dim i% = rnd.Next(array.Length)  ' 得到需要被突变的位点在数组中的下标
+    Dim n# = Math.Abs(array(i))      ' 得到元素值，由于负数取位数的时候回出错，所以这里取绝对值，因为只需要取位数
+    Dim power# = Math.Log10(n#) - 1  ' 取位数
+    Dim sign% =
+        If(rnd.NextBoolean, 1, -1)
+
+    n += sign * (rnd.NextDouble * 10 * (10 ^ power))
+    If n.IsNaNImaginary Then
+        n = Short.MaxValue
+    End If
+
+    array(i) = n
+End Sub
+
+''' <summary>
+''' Returns list of siblings
+''' Siblings are actually new chromosomes,
+''' created using any of crossover strategy
+''' </summary>
+''' <param name="random"></param>
+''' <param name="v1#"></param>
+''' <param name="v2#"></param>
+<Extension>
+Public Sub Crossover(Of T)(random As Random, ByRef v1 As T(), ByRef v2 As T())
+    Dim index As Integer = random.Next(v1.Length - 1)
+    Dim tmp As T
+
+    ' one point crossover
+    For i As Integer = index To v1.Length - 1
+        tmp = v1(i)
+        v1(i) = v2(i)
+        v2(i) = tmp
+    Next
+End Sub
+```
+
+As you can see on the Mutate and Crossover utility functions, the chromosomes was abstracted as an array, so that we needs a model to translates our fitted parameter list as an array that can be proceeded by these two utility function:
+
+```vbnet
+Namespace Darwinism.GAF
+
+    ''' <summary>
+    ''' Parameters that wait for bootstrapping estimates
+    ''' </summary>
+    Public Class ParameterVector
+        Implements Chromosome(Of ParameterVector), ICloneable
+        Implements IIndividual
+
+        ''' <summary>
+        ''' The function variable parameter that needs to fit, not includes the ``y0``.
+        ''' (只需要在这里调整参数就行了，y0初始值不需要)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property vars As var()
+
+        ''' <summary>
+        ''' Transform as a vector for the mutation and crossover function.
+        ''' </summary>
+        ''' <returns></returns>
+        <ScriptIgnore>
+        Public ReadOnly Property Vector As Double()
+            Get
+                Return vars _
+                    .Select(Function(var) var.value) _
+                    .ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Clone and crossover and last assign the vector value.(结果是按值复制的)
+        ''' </summary>
+        ''' <param name="anotherChromosome"></param>
+        ''' <returns></returns>
+        Public Function Crossover(anotherChromosome As ParameterVector) As IList(Of ParameterVector) Implements Chromosome(Of ParameterVector).Crossover
+            Dim thisClone As ParameterVector = DirectCast(Clone(), ParameterVector)
+            Dim otherClone As ParameterVector = DirectCast(anotherChromosome.Clone, ParameterVector)
+            Dim array1#() = thisClone.Vector
+            Dim array2#() = otherClone.Vector
+
+            Call seeds() _
+                .Crossover(array1, array2)
+            thisClone.__setValues(array1)
+            otherClone.__setValues(array2)
+
+            Return {thisClone, otherClone}.ToList
+        End Function
+
+        ''' <summary>
+        ''' Clone and mutation a bit and last assign the vector value.(会按值复制)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Mutate() As ParameterVector Implements Chromosome(Of ParameterVector).Mutate
+            Dim m As ParameterVector = DirectCast(Clone(), ParameterVector)
+            Dim random As Random = seeds()
+
+            For i As Integer = 0 To 2
+                Dim array#() = m.Vector
+
+                Call array.Mutate(random)
+                Call m.__setValues(array)
+            Next
+
+            Return m
+        End Function
+    End Class
+End Namespace
+```
+
+### GAF fitness
+
+Each variable in the function of ODEs its calculated value was compared with the observation value through RMS value:
+
+![](./RMS.png)
+
+And then using the average value of these RMS value as the final fitness of the current parameter value.
+
+```vbnet
+Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector, Double).Calculate
+    Dim vars As Dictionary(Of String, Double) =
+        chromosome _
+            .vars _
+            .ToDictionary(Function(var) var.Name,
+                          Function(var) var.value)
+    Dim out As ODEsOut = ' y0使用实验观测值，而非突变的随机值
+        MonteCarlo.Model.RunTest(Model, y0, vars, n, a, b, ref)  ' 通过拟合的参数得到具体的计算数据
+    Dim fit As New List(Of Double)
+    Dim NaN%
+
+    ' 再计算出fitness
+    For Each y$ In modelVariables _
+        .Where(Function(v)
+                   Return Array.IndexOf(Ignores, v) = -1
+               End Function)
+
+        Dim a#() = observation.y(y$).x
+        Dim b#() = out.y(y$).x
+
+        If log10Fitness Then
+            a = a.ToArray(Function(x) log10(x))
+            b = b.ToArray(Function(x) log10(x))
+        End If
+
+        NaN% = b.Where(AddressOf IsNaNImaginary).Count
+        fit += Math.Sqrt(FitnessHelper.Calculate(a#, b#))
+    Next
+
+    ' Return fit.Average
+    Dim fitness# = fit.Average
+
+    If fitness.IsNaNImaginary Then
+        fitness = Integer.MaxValue * 100.0R
+        fitness += NaN% * 10
+    End If
+
+    Return fitness
+End Function
+
+Public Shared Function log10(x#) As Double
+    If x = 0R Then
+        Return -1000
+    ElseIf x.IsNaNImaginary Then
+        Return Double.NaN
+    Else
+        ' 假若不乘以符号，则相同指数级别的正数和负数之间的差异就会为0，
+        ' 所以在这里需要乘以符号值
+        Return Math.Sign(x) * Math.Log10(Math.Abs(x))
+    End If
+End Function
+```
+
 ## Testing
 
-##### Problem & Goal
+##### Problem &amp; Goal
 
 A virus infection dynamics model of Influenza was used in this testing for the GAF method demo:
 

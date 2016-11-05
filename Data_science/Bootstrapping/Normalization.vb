@@ -68,7 +68,7 @@ Public Module Normalization
         Dim times As Dictionary(Of Single, PointF) =
             raw.x.ToDictionary(
             Function(x) CSng(x.Time),
-            Function(p) New PointF(p.Time, p.value))
+            Function(p) New PointF(CSng(p.Time), CSng(p.value)))
         Dim i As int = Scan0
         Dim preX As Value(Of Single) = intr.x(++i).X
 

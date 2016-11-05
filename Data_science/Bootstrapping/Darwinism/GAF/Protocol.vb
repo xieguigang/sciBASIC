@@ -27,9 +27,11 @@ Namespace Darwinism.GAF
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Mutate a bit in an array.
         ''' </summary>
-        ''' <param name="array#">需要被拟合的参数列表，在这个函数里面会被修改一点产生突变</param>
+        ''' <param name="array#">The abstraction of a chromosome(parameter list).
+        ''' (需要被拟合的参数列表，在这个函数里面会被修改一点产生突变)
+        ''' </param>
         ''' <param name="rnd"></param>
         <Extension> Public Sub Mutate(ByRef array#(), rnd As Random)
             Dim i% = rnd.Next(array.Length)  ' 得到需要被突变的位点在数组中的下标

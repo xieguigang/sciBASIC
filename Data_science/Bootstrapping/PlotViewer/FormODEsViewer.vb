@@ -128,13 +128,13 @@ Public Class FormODEsViewer
                 defines = ODEsOut.LoadFromDataFrame(file.FileName).params
 
                 For Each x In defines.ToArray
-                    inputs(x.Key).Text = x.Value
+                    inputs(x.Key).Text = CStr(x.Value)
                 Next
             End If
         End Using
     End Sub
 
-    Dim n%, a#, b#
+    Dim n%, a%, b%
 
     Private Sub ToolStripTextBox1_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox1.TextChanged
         n = CInt(Val(ToolStripTextBox1.Text))
@@ -142,18 +142,18 @@ Public Class FormODEsViewer
     End Sub
 
     Private Sub ToolStripTextBox2_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox2.TextChanged
-        a = Val(ToolStripTextBox2.Text)
+        a = CInt(Val(ToolStripTextBox2.Text))
         ToolStripLabel2.Text = "a:= " & a
     End Sub
 
     Private Sub ToolStripTextBox3_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox3.TextChanged
-        b = Val(ToolStripTextBox3.Text)
+        b = CInt(Val(ToolStripTextBox3.Text))
         ToolStripLabel3.Text = "b:= " & b
     End Sub
 
     Private Sub FormODEsViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
-        ToolStripTextBox1.Text = 10000
-        ToolStripTextBox2.Text = 0
-        ToolStripTextBox3.Text = 10
+        ToolStripTextBox1.Text = "10000"
+        ToolStripTextBox2.Text = "0"
+        ToolStripTextBox3.Text = "10"
     End Sub
 End Class
