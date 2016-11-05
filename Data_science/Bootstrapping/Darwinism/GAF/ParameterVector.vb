@@ -36,6 +36,8 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property vars As var()
 
+        Public Property MutationLevel As MutateLevels = MutateLevels.Low
+
         ''' <summary>
         ''' Transform as a vector for the mutation and crossover function.
         ''' </summary>
@@ -119,13 +121,16 @@ Namespace Darwinism.GAF
         Public Function Mutate() As ParameterVector Implements Chromosome(Of ParameterVector).Mutate
             Dim m As ParameterVector = DirectCast(Clone(), ParameterVector)
             Dim random As Random = seeds()
+            Dim i As Integer = MutationLevel
 
-            For i As Integer = 0 To 2
+            Do While i > 0
                 Dim array#() = m.Vector
 
                 Call array.Mutate(random)
                 Call m.__setValues(array)
-            Next
+
+                i -= 1
+            Loop
 
             Return m
         End Function

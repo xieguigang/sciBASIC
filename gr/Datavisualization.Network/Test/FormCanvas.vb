@@ -28,8 +28,8 @@
 
 Imports System.Drawing
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
-Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 
 Public Class FormCanvas
 

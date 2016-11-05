@@ -11,6 +11,13 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Darwinism.GAF
 
+    Public Enum MutateLevels As Integer
+        Low = 1
+        Medium = 2
+        High = 3
+        Ultra = 5
+    End Enum
+
     ''' <summary>
     ''' 参数拟合的方法
     ''' </summary>
@@ -67,7 +74,9 @@ Namespace Darwinism.GAF
                                 Optional threshold# = 0.5,
                                 Optional obs As Dictionary(Of String, Double) = Nothing,
                                 Optional log10Fit As Boolean = False,
-                                Optional randomGenerator As IRandomSeeds = Nothing) As var()
+                                Optional randomGenerator As IRandomSeeds = Nothing,
+                                Optional mutateLevel As MutateLevels = MutateLevels.Low,
+                                Optional print As Action(Of outPrint) = Nothing) As var()
 
             Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
 
@@ -90,7 +99,9 @@ Namespace Darwinism.GAF
                 outPrint:=outPrint,
                 threshold:=threshold,
                 argsInit:=Nothing,
-                randomGenerator:=randomGenerator)
+                randomGenerator:=randomGenerator,
+                mutateLevel:=mutateLevel,
+                print:=print)
         End Function
 
         ''' <summary>
@@ -109,11 +120,16 @@ Namespace Darwinism.GAF
                                        fitness As GAFFitness,
                                        ByRef outPrint As List(Of outPrint),
                                        argsInit As Dictionary(Of String, Double),
-                                       randomGenerator As IRandomSeeds) As var()
+                                       randomGenerator As IRandomSeeds,
+                                       mutateLevel As MutateLevels,
+                                       print As Action(Of outPrint)) As var()
             Dim estArgs As var()
 
             If randomGenerator Is Nothing Then
                 randomGenerator = Function() New Random
+            End If
+            If print Is Nothing Then
+                print = Sub(x) Call x.ToString.__DEBUG_ECHO
             End If
             If argsInit.IsNullOrEmpty Then
                 estArgs = vars.ToArray(
@@ -143,7 +159,8 @@ Namespace Darwinism.GAF
 
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector(seeds:=randomGenerator) With {
-                    .vars = estArgs
+                    .vars = estArgs,
+                    .MutationLevel = mutateLevel
             }.InitialPopulation(popSize%)
 
 #If Not DEBUG Then
@@ -166,7 +183,7 @@ Namespace Darwinism.GAF
 #End If
             Call ga.AddDefaultListener(Sub(x)
                                            Call out.Add(x)
-                                           Call x.ToString.__DEBUG_ECHO
+                                           Call print(x)
                                        End Sub, threshold)
             Call ga.Evolve(evolIterations%)
 
@@ -200,7 +217,9 @@ Namespace Darwinism.GAF
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
                          Optional isRefModel As Boolean = False,
-                         Optional randomGenerator As IRandomSeeds = Nothing) As var()
+                         Optional randomGenerator As IRandomSeeds = Nothing,
+                         Optional mutateLevel As MutateLevels = MutateLevels.Low,
+                         Optional print As Action(Of outPrint) = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFFitness(GetType(T), observation, initOverrides, isRefModel) With {
@@ -218,7 +237,9 @@ Namespace Darwinism.GAF
                 outPrint:=outPrint,
                 threshold:=threshold,
                 argsInit:=estArgsBase,
-                randomGenerator:=randomGenerator)
+                randomGenerator:=randomGenerator,
+                mutateLevel:=mutateLevel,
+                print:=print)
         End Function
 
         ''' <summary>
@@ -243,7 +264,9 @@ Namespace Darwinism.GAF
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
                          Optional isRefModel As Boolean = False,
-                         Optional randomGenerator As IRandomSeeds = Nothing) As var()
+                         Optional randomGenerator As IRandomSeeds = Nothing,
+                         Optional mutateLevel As MutateLevels = MutateLevels.Low,
+                         Optional print As Action(Of outPrint) = Nothing) As var()
 
             Return New ODEsOut With {
                 .y = observation.ToDictionary,
@@ -257,7 +280,9 @@ Namespace Darwinism.GAF
                             log10Fit:=log10Fit,
                             outPrint:=outPrint,
                             randomGenerator:=randomGenerator,
-                            threshold:=threshold)
+                            threshold:=threshold,
+                            mutateLevel:=mutateLevel,
+                            print:=print)
         End Function
     End Module
 End Namespace
