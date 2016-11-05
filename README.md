@@ -44,7 +44,7 @@ A language feature runtime library for CLI architecture applications. This frame
 
 For .NET Framework 4.6:
 
-+ https://www.nuget.org/packages/sciBASIC/
++ https://www.nuget.org/packages/sciBASIC#
 
 ```bash
 # For install latest stable release version:
