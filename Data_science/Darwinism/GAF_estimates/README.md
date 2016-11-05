@@ -1,5 +1,8 @@
 # Genetic Algorithm
 
+> CodeProject KB: http://www.codeproject.com/Articles/1151926/Genetic-Algorithm-in-VisualBasic 
+>
+>
 > Installing **sciBASIC#** package via nuget:
 > ```
 > PM> Install-Package sciBASIC -Pre
