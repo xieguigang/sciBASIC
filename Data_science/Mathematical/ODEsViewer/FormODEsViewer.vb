@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 
 Public Class FormODEsViewer
 

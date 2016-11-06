@@ -1,4 +1,6 @@
-﻿Public Class FormLoadModel
+﻿Imports Microsoft.VisualBasic.Data.Bootstrapping
+
+Public Class FormLoadModel
 
     Public Property DllFile As String
     Public ReadOnly Property Model As Type
