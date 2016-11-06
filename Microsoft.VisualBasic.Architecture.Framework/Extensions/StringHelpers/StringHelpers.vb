@@ -272,13 +272,12 @@ Public Module StringHelpers
     <Extension> Public Function Count(str As String, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
+        Else
+            Dim n As Integer = str _
+                .Where(Function(c) c = ch) _
+                .Count
+            Return n%
         End If
-
-        Dim LQuery As Integer = (From chr As Char
-                                 In str
-                                 Where ch = chr
-                                 Select 1).Count
-        Return LQuery
     End Function
 
     ''' <summary>

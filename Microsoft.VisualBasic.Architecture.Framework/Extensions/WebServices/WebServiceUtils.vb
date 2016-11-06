@@ -108,9 +108,9 @@ Public Module WebServiceUtils
     ''' <remarks></remarks>
     '''
     <ExportAPI("Html.Href")>
-    <Extension> Public Function href(<Parameter("HTML",
-                                                    "A string that contains the url string pattern like: href=""url_text""")>
-                                         html As String) As String
+    <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")>
+                                     html As String) As String
+
         If String.IsNullOrEmpty(html) Then
             Return ""
         End If
@@ -501,21 +501,22 @@ Public Module WebServiceUtils
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件)
+    ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件，失败或者错误会返回空字符串)
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
     ''' <param name="timeout">发生错误的时候的重试的次数</param>
-    ''' <returns></returns>
+    ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
-                       <Parameter("Request.TimeOut")>
-                       Optional timeout As UInteger = 20,
-                       <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
-                       Optional isFileUrl As Boolean = False,
-                       Optional headers As Dictionary(Of String, String) = Nothing,
-                       Optional proxy As String = Nothing) As String
+                                      <Parameter("Request.TimeOut")>
+                                      Optional timeout As UInteger = 20,
+                                      <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
+                                      Optional isFileUrl As Boolean = False,
+                                      Optional headers As Dictionary(Of String, String) = Nothing,
+                                      Optional proxy As String = Nothing,
+                                      Optional DoNotRetry404 As Boolean = False) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -542,22 +543,39 @@ Public Module WebServiceUtils
 #If FRAMEWORD_CORE Then
         Using Process As New CBusyIndicator(_start:=True)
 #End If
-            Return __downloadWebpage(url, timeout, headers, proxy)
+            Return __downloadWebpage(
+                url,
+                timeout,
+                headers,
+                proxy,
+                DoNotRetry404)
+
 #If FRAMEWORD_CORE Then
         End Using
 #End If
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String), proxy As String) As String
+    Private Function __downloadWebpage(url$,
+                                       RequestTimeOut%,
+                                       headers As Dictionary(Of String, String),
+                                       proxy As String,
+                                       DoNotRetry404 As Boolean) As String
         Dim RequestTime As Integer = 0
         Try
 RETRY:      Return __downloadWebpage(url, headers, proxy)
         Catch ex As Exception
+            Dim is404 As Boolean =
+                InStr(ex.Message, "(404) Not Found") > 0
+
             ex = New Exception(url, ex)
-            Call ex.PrintException
+            ex.PrintException
 
             If RequestTime < RequestTimeOut Then
+                If is404 AndAlso DoNotRetry404 Then
+                    Return LogException(url, ex)
+                End If
+
                 RequestTime += 1
                 Call "Data downloading error, retry connect to the server!".__DEBUG_ECHO
                 GoTo RETRY
@@ -602,7 +620,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
             Dim html As String = ioStream.ReadToEnd
             Dim title As String = html.HTMLtitle
 
-            If InStr(html, "http://www.doctorcom.com") Then
+            If InStr(html, "http://www.doctorcom.com") > 0 Then
                 Return ""
             End If
 

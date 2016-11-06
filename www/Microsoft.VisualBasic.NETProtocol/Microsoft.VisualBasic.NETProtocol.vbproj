@@ -122,6 +122,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTTP\WebExtensions.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\APIBase.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\UserMsgPool.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\UserAPI.vb" />
@@ -180,6 +181,10 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mime\markups\Markups.vbproj">
+      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
+      <Name>Markups</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
