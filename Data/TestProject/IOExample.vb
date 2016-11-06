@@ -47,7 +47,7 @@ Public Module IOExample
 
         Public Function TryParse(cell As String) As Object Implements IParser.TryParse
             Dim tagValue = cell.GetTagValue(":")
-            Return New KeyValuePair(Of String, Integer)(tagValue.Name, CInt(Val(tagValue.x.Trim)))
+            Return New KeyValuePair(Of String, Integer)(tagValue.Name.GetString, CInt(Val(tagValue.x.Trim)))
         End Function
     End Structure
 
@@ -63,6 +63,10 @@ Public Module IOExample
     End Class
 
     Sub Main()
+
+        Dim ttt = DocumentStream.CharsParser("""Iron ion, ""(Fe2+)"",Iron homeostasis,PM0352,Iron homeostasis,Fur - Pasteurellales,+,XC_2767,XC_1988; XC_1989,oo""""oo,123")
+
+
         Dim data = {New TestCustomParser With {.data = New KeyValuePair(Of String, Integer)("abc", 2333)}}
 
         Call data.SaveTo("./test.csv")

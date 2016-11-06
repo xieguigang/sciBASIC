@@ -82,7 +82,7 @@ Namespace DocumentStream
             Dim preToken As Boolean = False
             Dim deliExit As Boolean = False
 
-            For Each c As Char In s.Replace("""""", """")
+            For Each c As Char In s.Replace("""""", "\""")
                 If c = ","c Then
                     If Not stack Then
                         Call tokens.Add(New String(temp.ToArray))
@@ -133,6 +133,10 @@ Namespace DocumentStream
                     Call tokens.Add("")
                 End If
             End If
+
+            For i As Integer = 0 To tokens.Count - 1
+                tokens(i) = tokens(i).Replace("\""", """")
+            Next
 
             Return tokens
         End Function
