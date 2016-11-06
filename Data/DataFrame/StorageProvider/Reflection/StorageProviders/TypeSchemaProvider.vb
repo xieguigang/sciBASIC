@@ -51,7 +51,7 @@ Namespace StorageProvider.Reflection
                 Let isIgnored As Boolean =
                     Not prop.GetCustomAttributes(attributeType:=ignored, inherit:=True).IsNullOrEmpty ' 当忽略的标志不为空的时候，说明这个属性是被忽略掉的
                 Where Not isIgnored AndAlso
-                    prop.GetIndexParameters.IsNullOrEmpty  ' 从这里筛选掉需要被忽略掉的属性以及有参数的属性
+                    prop.GetIndexParameters.IsNullOrEmpty                                             ' 从这里筛选掉需要被忽略掉的属性以及有参数的属性
                 Select prop
 
             Dim hash As Dictionary(Of PropertyInfo, ComponentModels.StorageProvider) =
@@ -59,7 +59,10 @@ Namespace StorageProvider.Reflection
                  In Properties
                  Let IAC = GetInterfaces([Property], Explicit)
                  Where Not IAC Is Nothing
-                 Select [Property], IAC).ToDictionary(Function(obj) obj.Property, Function(obj) obj.IAC)
+                 Select [Property], IAC) _
+ _
+                    .ToDictionary(Function(obj) obj.Property,
+                                  Function(obj) obj.IAC)
             Return hash
         End Function
 
@@ -72,7 +75,7 @@ Namespace StorageProvider.Reflection
         ''' <returns></returns>
         Public Function GetInterfaces([Property] As PropertyInfo, Explicit As Boolean, Optional forcePrimitive As Boolean = True) As ComponentModels.StorageProvider
             Dim attrs As Object() = [Property].GetCustomAttributes(
-                attributeType:=GetType(Reflection.CollectionAttribute),
+                attributeType:=GetType(CollectionAttribute),
                 inherit:=True)
 
             If Not attrs.IsNullOrEmpty Then
@@ -90,12 +93,21 @@ Namespace StorageProvider.Reflection
 
             attrs = [Property].GetCustomAttributes(attributeType:=GetType(Reflection.ColumnAttribute), inherit:=True)
 
-            If Not attrs.IsNullOrEmpty Then
-                Dim attr = DirectCast(attrs(Scan0), Reflection.ColumnAttribute) '枚举和键值对可能会通过这个属性来取别名，所以这里还需要进行额外的处理
-                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
-            End If  '请注意，由于这个属性之间有继承关系，座椅最基本的类型会放在最后以防止出现重复
+            If Not attrs.IsNullOrEmpty Then  ' 查找列数据定义
+                Dim attr As ColumnAttribute = DirectCast(attrs(Scan0), Reflection.ColumnAttribute) ' 枚举和键值对可能会通过这个属性来取别名，所以这里还需要进行额外的处理
 
-            attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute), inherit:=True)
+                Return __generateMask(
+                    [Property],
+                    [alias]:=attr.Name,
+                    forcePrimitive:=False,
+                    ColumnMaps:=attr)  ' 由于已经定义了Column类型自定义属性定义，所以Column里面可能是非基本类型，这里不再强制需要基本类型了
+
+            End If  ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
+
+            attrs = [Property].GetCustomAttributes(
+                attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute),
+                inherit:=True)
+
             If Not attrs.IsNullOrEmpty Then
                 Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)  '也可能是别名属性
                 Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
@@ -109,17 +121,31 @@ Namespace StorageProvider.Reflection
         End Function
 
         ''' <summary>
-        '''
+        ''' 这个函数是针对没有任何自定义属性标记的属性对象而言的
         ''' </summary>
         ''' <param name="[Property]"></param>
         ''' <param name="[alias]"></param>
         ''' <returns></returns>
-        Private Function __generateMask([Property] As PropertyInfo, [alias] As String, forcePrimitive As Boolean) As ComponentModels.StorageProvider
+        Private Function __generateMask([Property] As PropertyInfo,
+                                        [alias] As String,
+                                        forcePrimitive As Boolean,
+                                        Optional ColumnMaps As ColumnAttribute = Nothing) As ComponentModels.StorageProvider
+
             Dim _getName As String = If(String.IsNullOrEmpty([alias]), [Property].Name, [alias])
 
-            If Scripting.IsPrimitive([Property].PropertyType) Then
-                Dim column As New ColumnAttribute(_getName)  '属性值的类型是简单类型，则其标记的类型只能是普通列
-                Return ComponentModels.Column.CreateObject(column, [Property])
+            ' 直接返回结果的情况：
+            ' 1. 列类型为基本类型
+            ' 2. 类属性定义之中定义了自定义解析器
+            If Scripting.IsPrimitive([Property].PropertyType) OrElse
+                ((Not ColumnMaps Is Nothing) AndAlso (Not ColumnMaps.CustomParser Is Nothing)) Then
+
+                Dim column As ColumnAttribute = If(
+                    ColumnMaps Is Nothing,
+                    New ColumnAttribute(_getName),
+                    ColumnMaps)  ' 属性值的类型是简单类型，则其标记的类型只能是普通列
+                Return ComponentModels.Column _
+                    .CreateObject(column, [Property])
+
             End If
 
             Dim valueType As New Value(Of Type)
@@ -127,23 +153,28 @@ Namespace StorageProvider.Reflection
 
             If Not (valueType = GetMetaAttribute([Property].PropertyType)) Is Nothing Then
 
-                Return New ComponentModels.MetaAttribute(
-                    New Reflection.MetaAttribute(valueType.value), [Property])
+                Return New ComponentModels.MetaAttribute(              ' 是字典类型
+                    New MetaAttribute(valueType.value), [Property])
+
             ElseIf Not (elType = (GetThisElement([Property].PropertyType, forcePrimitive)) Is Nothing OrElse
                         elType.value.Equals(GetType(Void))) Then
 
-                Return ComponentModels.CollectionColumn.CreateObject(
+                Return ComponentModels.CollectionColumn.CreateObject(    ' 是集合类型
                     New CollectionAttribute(_getName), [Property], elType.value)
-            ElseIf IsKeyValuePair([Property]) Then
+
+            ElseIf IsKeyValuePair([Property]) Then   ' 是键值对
+
                 Return ComponentModels.KeyValuePair.CreateObject(_getName, [Property])
-            ElseIf IsEnum([Property]) Then
+
+            ElseIf IsEnum([Property]) Then   ' 是枚举类型
                 Return ComponentModels.Enum.CreateObject(_getName, [Property])
+
             End If
 
             Return Nothing
         End Function
 
-        Private Function IsEnum([Property] As System.Reflection.PropertyInfo) As Boolean
+        Private Function IsEnum([Property] As PropertyInfo) As Boolean
             If Not [Property].PropertyType.BaseType.Equals(GetType(System.Enum)) Then
                 Return False
             End If
@@ -163,7 +194,9 @@ Namespace StorageProvider.Reflection
             Dim Type As System.Type = [Property].PropertyType
             Dim TypeFullName As String = $"{Type.Namespace }.{Type.Name }"
 
-            If Not (String.Equals(KeyValuePair, TypeFullName) OrElse String.Equals(KeyValuePairObject, TypeFullName)) Then
+            If Not (String.Equals(KeyValuePair, TypeFullName) OrElse
+                String.Equals(KeyValuePairObject, TypeFullName)) Then
+
                 Return False
             End If
 
@@ -192,7 +225,7 @@ Namespace StorageProvider.Reflection
 
             If System.Array.IndexOf(intfs, GetType(IEnumerable)) = -1 Then
                 If forcePrimitive Then
-                    Return GetType(System.Void)
+                    Return GetType(Void)
                 Else
                     Return Nothing
                 End If
@@ -205,7 +238,7 @@ Namespace StorageProvider.Reflection
 
                 If Not String.Equals(List, TypeFullName) Then
                     If forcePrimitive Then
-                        Return GetType(System.Void)
+                        Return GetType(Void)
                     End If
                 End If
 

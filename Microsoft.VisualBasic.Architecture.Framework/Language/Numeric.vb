@@ -365,6 +365,18 @@ Namespace Language
         Public Shared Operator ^(x As float, power As Double) As Double
             Return x.value ^ power
         End Operator
+
+        Public Overloads Shared Narrowing Operator CType(f As float) As Double
+            Return f.value
+        End Operator
+
+        Public Overloads Shared Operator -(a As float, b As float) As Double
+            Return a.value - b.value
+        End Operator
+
+        Public Overloads Shared Operator *(a As float, b As float) As Double
+            Return a.value * b.value
+        End Operator
     End Class
 
     Public Class Precise : Inherits Value(Of Decimal)

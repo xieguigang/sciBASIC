@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::73cefcfcf4f42a6ac3f96bfa4859e5a4, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Option Strict Off
 
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -46,10 +47,14 @@ Namespace StorageProvider.ComponentModels
         Sub New(SchemaProvider As SchemaProvider, metaBlank As String)
             Me.SchemaProvider = SchemaProvider
             Me.Columns =
-                SchemaProvider.Columns.ToList(Function(field) DirectCast(field, StorageProvider)) +
-                SchemaProvider.EnumColumns.ToArray(Function(field) DirectCast(field, StorageProvider)) +
-                SchemaProvider.KeyValuePairColumns.ToArray(Function(field) DirectCast(field, StorageProvider)) +
-                SchemaProvider.CollectionColumns.ToArray(Function(field) DirectCast(field, StorageProvider))
+                SchemaProvider.Columns _
+                    .ToList(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.EnumColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.KeyValuePairColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.CollectionColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider))
             Me.Columns =
                 LinqAPI.Exec(Of StorageProvider) <= From field As StorageProvider
                                                     In Me.Columns
@@ -94,20 +99,23 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Delegate Function IRowBuilder(obj As Object) As DocumentStream.RowObject
+        Private Delegate Function IRowBuilder(obj As Object) As RowObject
 
         ''' <summary>
         ''' 这里是没有动态属性的
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __buildRowNullMeta(obj As Object) As DocumentStream.RowObject
-            Dim row As List(Of String) = (From colum As StorageProvider
-                                          In Columns
-                                          Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
-                                          Let strData As String = colum.ToString(value)
-                                          Select strData).ToList
-            Return New DocumentStream.RowObject(row)
+        Private Function __buildRowNullMeta(obj As Object) As RowObject
+            Dim row As List(Of String) = LinqAPI.MakeList(Of String) <=
+ _
+                From colum As StorageProvider
+                In Columns
+                Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
+                Let strData As String = colum.ToString(value)
+                Select strData
+
+            Return New RowObject(row)
         End Function
 
         Friend __cachedIndex As String()

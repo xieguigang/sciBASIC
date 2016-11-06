@@ -34,7 +34,46 @@ Imports Microsoft.VisualBasic.Text
 
 Public Module IOExample
 
+    ''' <summary>
+    ''' <see cref="KeyValuePair(Of String, Integer)"/>
+    ''' </summary>
+    Public Structure CustomParserExample
+        Implements IParser
+
+        Public Overloads Function ToString(obj As Object) As String Implements IParser.ToString
+            Dim data = DirectCast(obj, KeyValuePair(Of String, Integer))
+            Return $"""{data.Key}"": {data.Value}"
+        End Function
+
+        Public Function TryParse(cell As String) As Object Implements IParser.TryParse
+            Dim tagValue = cell.GetTagValue(":")
+            Return New KeyValuePair(Of String, Integer)(tagValue.Name, CInt(Val(tagValue.x.Trim)))
+        End Function
+    End Structure
+
+    Public Class TestCustomParser
+        '  Public Property uid As Long
+
+        <Column("POST -> data", GetType(CustomParserExample))>
+        Public Property data As KeyValuePair(Of String, Integer)
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+
     Sub Main()
+        Dim data = {New TestCustomParser With {.data = New KeyValuePair(Of String, Integer)("abc", 2333)}}
+
+        Call data.SaveTo("./test.csv")
+
+        data = Nothing
+        data = "./test.csv".LoadCsv(Of TestCustomParser)
+
+        Call data.GetJson.__DEBUG_ECHO
+
+        Pause()
+
         Call csvIO()
         Call Reflection()
         Call Linq()
