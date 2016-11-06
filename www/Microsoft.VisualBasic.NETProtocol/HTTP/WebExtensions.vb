@@ -38,26 +38,51 @@ Namespace HTTP
         ''' <param name="Downloads$">Directory for save the download contents.</param>
         ''' <returns>返回失败的页面的url</returns>
         <Extension>
-        Public Iterator Function DownloadAllLinks(url$, Downloads$, Optional recursive As Boolean = False) As IEnumerable(Of String)
-            For Each failed$ In __downloadAllLinks(url, Downloads, recursive, New Dictionary(Of String, String))
+        Public Iterator Function DownloadAllLinks(url$,
+                                                  Downloads$,
+                                                  Optional recursive As Boolean = False,
+                                                  Optional ignores$() = Nothing,
+                                                  Optional sleeps As Integer = 1000) As IEnumerable(Of String)
+
+            For Each failed$ In __downloadAllLinks(url,
+                                                   Downloads,
+                                                   recursive,
+                                                   New Dictionary(Of String, String),
+                                                   If(ignores Is Nothing, {}, ignores),
+                                                   sleeps)
                 Yield failed
             Next
         End Function
 
-        Private Iterator Function __downloadAllLinks(url$, Downloads$, recursive As Boolean, visited As Dictionary(Of String, String)) As IEnumerable(Of String)
+        Private Iterator Function __downloadAllLinks(url$,
+                                                     Downloads$,
+                                                     recursive As Boolean,
+                                                     visited As Dictionary(Of String, String),
+                                                     ignoresUrls$(),
+                                                     sleeps As Integer) As IEnumerable(Of String)
             Dim current$ = GetCurrentFolder(url)
             Dim root As String = GetRootPath(url)
 
             If visited.ContainsKey(url) Then
+                Call $"Skip visited {url}".Warning
                 Return
             Else
                 Call visited.Add(url, Nothing)
             End If
 
+            For Each key$ In ignoresUrls
+                If InStr(url, key, CompareMethod.Text) = 1 Then
+                    Return
+                End If
+            Next
+
             Dim page As String = url.GET(DoNotRetry404:=True)
             Dim links$() = Regex _
                 .Matches(page, "<a .*?href="".+?"".*?>", RegexICSng) _
                 .ToArray(AddressOf href)
+
+            Call SavePage(page, url, Downloads)
+            Call Threading.Thread.Sleep(sleeps)
 
             For Each link$ In links.Where(Function(s) Not s.TextEquals(InvokeJavascript))
                 If link.IsFullURL OrElse InStr(link, "//") = 1 Then
@@ -74,15 +99,61 @@ Namespace HTTP
                     End If
                 End If
 
-                For Each failed$ In __parsePage(url, Downloads, recursive, visited)
+                Dim skips As Boolean = False
+
+                For Each key$ In ignoresUrls
+                    If InStr(url, key, CompareMethod.Text) = 1 Then
+                        skips = True
+                        Continue For
+                    End If
+                Next
+
+                If skips Then
+                    Continue For
+                Else  ' 假若链接都是指向同一个服务器，需要在这里休眠一段时间降低对方服务器的压力
+                    Call Threading.Thread.Sleep(sleeps)
+                End If
+
+                For Each failed$ In __parsePage(url,
+                                                Downloads,
+                                                recursive,
+                                                visited,
+                                                ignoresUrls,
+                                                sleeps)
                     Yield failed
                 Next
             Next
         End Function
 
-        Private Iterator Function __parsePage(url$, Downloads$, recursive As Boolean, visited As Dictionary(Of String, String)) As IEnumerable(Of String)
+        Private Sub SavePage(page$, url$, Downloads$)
+            Dim path$, tokens$()
+
+            url = Strings.Split(url, "://").Last
+            tokens = url.Split("/"c)
+            url = tokens.Take(tokens.Length - 1).JoinBy("/")
+            url = url & "/" & tokens.Last.NormalizePathString
+            path = Downloads & "/" & url
+
+            If path.Last = "/"c Then
+                path &= "index.html"
+            End If
+
+            Call page.SaveTo(path, Encoding.UTF8)
+        End Sub
+
+        Private Iterator Function __parsePage(url$,
+                                              Downloads$,
+                                              recursive As Boolean,
+                                              visited As Dictionary(Of String, String),
+                                              ignoresUrls$(),
+                                              sleeps As Integer) As IEnumerable(Of String)
             If recursive Then
-                For Each failed$ In DownloadAllLinks(url, Downloads, recursive)
+                For Each failed$ In __downloadAllLinks(url,
+                                                       Downloads,
+                                                       recursive,
+                                                       visited,
+                                                       ignoresUrls,
+                                                       sleeps)
                     Yield failed
                 Next
             Else
@@ -91,19 +162,7 @@ Namespace HTTP
                 If String.IsNullOrEmpty(page) Then
                     Yield url
                 Else
-                    Dim path$, tokens$()
-
-                    url = Strings.Split(url, "://").Last
-                    tokens = url.Split("/"c)
-                    url = tokens.Take(tokens.Length - 1).JoinBy("/")
-                    url = url & "/" & tokens.Last.NormalizePathString
-                    path = Downloads & "/" & url
-
-                    If path.Last = "/"c Then
-                        path &= "index.html"
-                    End If
-
-                    Call page.SaveTo(path, Encoding.UTF8)
+                    Call SavePage(page, url, Downloads)
                 End If
             End If
         End Function
