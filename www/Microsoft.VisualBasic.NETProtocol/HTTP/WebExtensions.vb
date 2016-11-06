@@ -39,10 +39,25 @@ Namespace HTTP
         ''' <returns>返回失败的页面的url</returns>
         <Extension>
         Public Iterator Function DownloadAllLinks(url$, Downloads$, Optional recursive As Boolean = False) As IEnumerable(Of String)
-            Dim page As String = url.GET(DoNotRetry404:=True)
-            Dim links$() = Regex.Matches(page, "<a .*?href="".+?"".*?>", RegexICSng).ToArray(AddressOf href)
+            For Each failed$ In __downloadAllLinks(url, Downloads, recursive, New Dictionary(Of String, String))
+                Yield failed
+            Next
+        End Function
+
+        Private Iterator Function __downloadAllLinks(url$, Downloads$, recursive As Boolean, visited As Dictionary(Of String, String)) As IEnumerable(Of String)
             Dim current$ = GetCurrentFolder(url)
-            Dim root$ = GetRootPath(url)
+            Dim root As String = GetRootPath(url)
+
+            If visited.ContainsKey(url) Then
+                Return
+            Else
+                Call visited.Add(url, Nothing)
+            End If
+
+            Dim page As String = url.GET(DoNotRetry404:=True)
+            Dim links$() = Regex _
+                .Matches(page, "<a .*?href="".+?"".*?>", RegexICSng) _
+                .ToArray(AddressOf href)
 
             For Each link$ In links.Where(Function(s) Not s.TextEquals(InvokeJavascript))
                 If link.IsFullURL OrElse InStr(link, "//") = 1 Then
@@ -59,13 +74,13 @@ Namespace HTTP
                     End If
                 End If
 
-                For Each failed$ In __parsePage(url, Downloads, recursive)
+                For Each failed$ In __parsePage(url, Downloads, recursive, visited)
                     Yield failed
                 Next
             Next
         End Function
 
-        Private Iterator Function __parsePage(url$, Downloads$, recursive As Boolean) As IEnumerable(Of String)
+        Private Iterator Function __parsePage(url$, Downloads$, recursive As Boolean, visited As Dictionary(Of String, String)) As IEnumerable(Of String)
             If recursive Then
                 For Each failed$ In DownloadAllLinks(url, Downloads, recursive)
                     Yield failed
