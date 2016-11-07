@@ -36,23 +36,34 @@ Public Module CubicSplineTest
         'Call Scatter.Plot({raw, interplot}, size:=New Size(3000, 1400)) _
         '    .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-cubic-spline.png")
 
+        result = CatmullRomSpline.CatmullRomSpline(points)
+
+        Dim CRInterplot = result.FromPoints(
+            lineColor:="orange",
+            ptSize:=3,
+            lineType:=DashStyle.Dot,
+            lineWidth:=3,
+            title:="duom2: Catmull-Rom Spline")
+
+        Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
+            .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-CatmullRomSpline.png")
 
         'result = B_Spline.Compute(points, 1.5, RESOLUTION:=100)
 
-        'Dim B_interplot = result.FromPoints(
-        '    lineColor:="green",
-        '    ptSize:=5,
-        '    title:="duom2: B-spline",
-        '    lineType:=DashStyle.Dot,
-        '    lineWidth:=3)
+        Dim B_interplot = result.FromPoints(
+            lineColor:="green",
+            ptSize:=5,
+            title:="duom2: B-spline",
+            lineType:=DashStyle.Dot,
+            lineWidth:=3)
 
 
         'Call Scatter.Plot({raw, B_interplot}, size:=New Size(3000, 1400)) _
         '    .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-spline.png")
 
 
-        'Call Scatter.Plot({raw, B_interplot, interplot}, size:=New Size(3000, 1400)) _
-        '    .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-compares.png")
+        Call Scatter.Plot({raw, B_interplot, interplot, CRInterplot}, size:=New Size(3000, 1400)) _
+            .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-compares.png")
 
 
         Dim bsplines = {

@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Interpolation
@@ -71,14 +72,14 @@ Namespace Interpolation
 
         <ExportAPI("CatmullRom.Spline")>
         <Extension>
-        Public Function CatmullRomSpline(raw As List(Of Point),
+        Public Function CatmullRomSpline(raw As IEnumerable(Of Point),
                                          <Parameter("Interpolation.Steps")>
                                          Optional interpolationStep# = 0.1,
                                          <Parameter("Is.Polygon")>
                                          Optional isPolygon As Boolean = False) As List(Of Point)
 
-            Dim data As New List(Of PointF)(
-                raw.Select(Function(pt) New PointF(pt.X, pt.Y)))
+            Dim data As IEnumerable(Of PointF) =
+                raw.Select(Function(pt) New PointF(pt.X, pt.Y))
             Dim spline = data.CatmullRomSpline(interpolationStep, isPolygon)
             Dim result As New List(Of Point)(
                 spline.Select(Function(pt) New Point(pt.X, pt.Y)))
@@ -88,11 +89,14 @@ Namespace Interpolation
 
         <ExportAPI("CatmullRom.Spline")>
         <Extension>
-        Public Function CatmullRomSpline(raw As List(Of PointF),
+        Public Function CatmullRomSpline(points As IEnumerable(Of PointF),
                                          <Parameter("Interpolation.Steps")>
                                          Optional interpolationStep# = 0.1,
                                          <Parameter("Is.Polygon")>
                                          Optional isPolygon As Boolean = False) As List(Of PointF)
+
+            Dim raw As New List(Of PointF)(points)
+
             If raw.Count <= 2 Then
                 Return raw
             End If
