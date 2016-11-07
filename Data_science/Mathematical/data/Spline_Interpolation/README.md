@@ -120,6 +120,8 @@ Call Scatter.Plot({raw, interplot}) _
 
 ## Catmull–Rom spline
 
+Catmull-Rom splines are a family of cubic interpolating splines formulated such that the tangent at each point **pi** is calculated using the previous and next point on the spline.
+
 #### How to use
 
 ```vbnet
@@ -148,7 +150,7 @@ Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
 ## Method Compare
 
 ```vbnet
-Call Scatter.Plot({raw, B_interplot, interplot}, size:=New Size(3000, 1400)) _
+Call Scatter.Plot({raw, CRInterplot, B_interplot, interplot}, size:=New Size(3000, 1400)) _
     .SaveAs("./duom2-compares.png")
 ```
 ![](./duom2-compares.png)

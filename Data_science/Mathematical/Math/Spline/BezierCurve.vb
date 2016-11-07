@@ -32,7 +32,18 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Interpolation
-
+    
+    ''' <summary>
+    ''' A Bezier curve is a parametric curve frequently used in computer graphics and related fields. 
+    ''' In vector graphics, Bezier curves are used to model smooth curves that can be scaled indefinitely. 
+    ''' There are many ways to construct a Bezier curve. This simple program uses the midpoint algorithm 
+    ''' of constructing a Bezier curve. To show the nature of the divide and conquer approach in the 
+    ''' algorithm, a recursive function has been used to implement the construction of the piece of 
+    ''' Bezier curve.
+    ''' </summary>
+    ''' <remarks>
+    ''' http://www.codeproject.com/Articles/223159/Midpoint-Algorithm-Divide-and-Conquer-Method-for-D
+    ''' </remarks> 
     Public Class BezierCurve
 
         ''' <summary>
@@ -102,7 +113,10 @@ Namespace Interpolation
         ''' <param name="ctrl2">second control point of bezier curve segment</param>
         ''' <param name="ctrl3">third control point of bezier curve segment</param>
         ''' <param name="currentIteration">the current interation of a branch</param>
-        Private Sub PopulateBezierPoints(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, currentIteration As Integer)
+        ''' <remarks>
+        ''' http://www.codeproject.com/Articles/223159/Midpoint-Algorithm-Divide-and-Conquer-Method-for-D
+        ''' </remarks> 
+        Private Sub PopulateBezierPoints(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, currentIteration%)
             If currentIteration < _Iterations Then
                 'calculate next mid points
                 Dim midPoint1 As PointF = MidPoint(ctrl1, ctrl2)
