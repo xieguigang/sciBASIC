@@ -236,6 +236,7 @@
     <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
     <Compile Include="BasicR\Vector.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
+    <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />
     <Compile Include="Spline\CubicEval.vb" />
     <Compile Include="Spline\CubicSpline.vb" />
     <Compile Include="Bootstraping.vb" />
