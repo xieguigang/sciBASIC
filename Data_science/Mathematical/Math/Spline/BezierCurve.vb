@@ -32,7 +32,18 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Interpolation
-
+    
+    ''' <summary>
+    ''' A Bezier curve is a parametric curve frequently used in computer graphics and related fields. 
+    ''' In vector graphics, Bezier curves are used to model smooth curves that can be scaled indefinitely. 
+    ''' There are many ways to construct a Bezier curve. This simple program uses the midpoint algorithm 
+    ''' of constructing a Bezier curve. To show the nature of the divide and conquer approach in the 
+    ''' algorithm, a recursive function has been used to implement the construction of the piece of 
+    ''' Bezier curve.
+    ''' </summary>
+    ''' <remarks>
+    ''' http://www.codeproject.com/Articles/223159/Midpoint-Algorithm-Divide-and-Conquer-Method-for-D
+    ''' </remarks> 
     Public Class BezierCurve
 
         ''' <summary>
