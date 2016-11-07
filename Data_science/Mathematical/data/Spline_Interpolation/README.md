@@ -64,7 +64,7 @@ A simple VB.NET tool demonstrating the use of cubic spline interpolation. This t
 Too simple!
 
 ```vbnet
-Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.Interpolation
 
 Dim data As Point() ' = ...
 Dim result = CubicSpline.RecalcSpline(data).ToArray
@@ -87,6 +87,33 @@ Call Scatter.Plot({raw, interplot}) _
 ```
 
 ![](./duom2-cubic-spline.png)
+
+## Catmull–Rom spline
+
+#### How to use
+
+```vbnet
+Dim points As PointF() ' = ...
+Dim result = CatmullRomSpline.CatmullRomSpline(points)
+```
+
+###### Example
+
+```vbnet
+Dim result = CatmullRomSpline.CatmullRomSpline(points)
+
+Dim CRInterplot = result.FromPoints(
+    lineColor:="orange",
+    ptSize:=3,
+    lineType:=DashStyle.Dot,
+    lineWidth:=3,
+    title:="duom2: Catmull-Rom Spline")
+
+Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
+    .SaveAs("./duom2-CatmullRomSpline.png")
+```
+
+![](./duom2-CatmullRomSpline.png)
 
 ## Method Compare
 

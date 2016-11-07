@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 Public Module CubicSplineTest
 
     Sub Test()
-        Dim data#()() = "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2.txt" _
+        Dim data#()() = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2.txt" _
             .IterateAllLines _
             .ToArray(Function(s) Regex.Replace(s, "\s+", " ") _
                 .Trim _
@@ -46,9 +46,9 @@ Public Module CubicSplineTest
             title:="duom2: Catmull-Rom Spline")
 
         Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
-            .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-CatmullRomSpline.png")
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-CatmullRomSpline.png")
 
-        'result = B_Spline.Compute(points, 1.5, RESOLUTION:=100)
+        result = B_Spline.Compute(points, 1.5, RESOLUTION:=100)
 
         Dim B_interplot = result.FromPoints(
             lineColor:="green",
@@ -62,8 +62,8 @@ Public Module CubicSplineTest
         '    .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-spline.png")
 
 
-        Call Scatter.Plot({raw, B_interplot, interplot, CRInterplot}, size:=New Size(3000, 1400)) _
-            .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-compares.png")
+        Call Scatter.Plot({raw, CRInterplot, B_interplot, interplot}, size:=New Size(3000, 1400)) _
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-compares.png")
 
 
         Dim bsplines = {
@@ -88,7 +88,7 @@ Public Module CubicSplineTest
         }
 
         Call Scatter.Plot(raw.Join(bsplines), size:=New Size(3000, 1400)) _
-            .SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-splines.png")
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-splines.png")
 
         Pause()
     End Sub
