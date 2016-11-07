@@ -70,6 +70,15 @@ Namespace Interpolation
             Return ret
         End Function
 
+        ''' <summary>
+        ''' Catmull-Rom splines are a family of cubic interpolating splines formulated such 
+        ''' that the tangent at each point **Pi** Is calculated using the previous And next 
+        ''' point on the spline
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="interpolationStep#"></param>
+        ''' <param name="isPolygon"></param>
+        ''' <returns></returns>
         <ExportAPI("CatmullRom.Spline")>
         <Extension>
         Public Function CatmullRomSpline(raw As IEnumerable(Of Point),
@@ -87,6 +96,16 @@ Namespace Interpolation
             Return result
         End Function
 
+        ''' <summary>
+        ''' Catmull-Rom splines are a family of cubic interpolating splines formulated such 
+        ''' that the tangent at each point **Pi** Is calculated using the previous And next 
+        ''' point on the spline
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <param name="interpolationStep#"></param>
+        ''' <param name="isPolygon"></param>
+        ''' <returns></returns>
+        ''' <remarks>http://www.codeproject.com/Articles/747928/Spline-Interpolation-history-theory-and-implementa</remarks>
         <ExportAPI("CatmullRom.Spline")>
         <Extension>
         Public Function CatmullRomSpline(points As IEnumerable(Of PointF),

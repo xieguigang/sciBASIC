@@ -1,54 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::966e73f8c2b5a5e5ee69e6800d5c1b0e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Drawing
-Imports System.IO
-Imports System.Net
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports System.Runtime.Serialization
-Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Text
-Imports System.Text.RegularExpressions
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Similarity
@@ -95,6 +88,10 @@ Public Module Extensions
         End If
 
         Return Nothing
+    End Function
+
+    <Extension> Public Function MD5(s$) As String
+        Return s.GetMd5Hash
     End Function
 
     ''' <summary>
@@ -1981,7 +1978,7 @@ Public Module Extensions
         If source Is Nothing Then
             Return
         Else
-            Dim i As Integer = offset
+            Dim i As Integer = offSet
 
             For Each x As T In source
                 Yield i
@@ -2048,10 +2045,10 @@ Public Module Extensions
 
         Dim result As T()
 
-        If OffSet = 0 Then
+        If offSet = 0 Then
             result = (From idx As Integer In indexs Select source(idx)).ToArray
         Else
-            result = (From idx As Integer In indexs Select source(idx + OffSet)).ToArray
+            result = (From idx As Integer In indexs Select source(idx + offSet)).ToArray
         End If
         Return result
     End Function

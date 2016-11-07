@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Terminal
 'Imports Microsoft.VisualBasic.Webservices
 'Imports System.Windows.Forms
 
-Module __DEBUG_MAIN
+Public Module __DEBUG_MAIN
 
     <Argument("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
     Private Sub TestExtensionProperty()
@@ -79,7 +79,25 @@ Module __DEBUG_MAIN
 
     '  End Sub
 
+
+    Public Class TestJSON
+        Public Property Name As String = "1234"
+        Public Property Data As Double() = {0, 1, 2, 3}
+        Public Property Extensions As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{"abcd", "999"}, {"gggg", "XXXXXXX"}}
+    End Class
+
     Function Main() As Integer
+
+        Dim x = {New TestJSON}
+
+        ' Interaction.MsgBox(x.GetJson)
+        Dim JSON As String = x.GetJson
+
+        x = Nothing
+
+        x = JSON.LoadObject(Of TestJSON())
+
+
 
         '   Call GetType(__DEBUG_MAIN).RunCLI(App.CommandLine)
 
