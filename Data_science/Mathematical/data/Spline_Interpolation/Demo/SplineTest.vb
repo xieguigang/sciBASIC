@@ -17,6 +17,9 @@ Public Module SplineTest
         Pause()
     End Sub
 
+    ''' <summary>
+    ''' Spline Interpolation using 4 control points
+    ''' </summary>
     Sub CentripetalCatmullRomSplineTest()
         Dim P As PointF() = {
             New PointF(1, 1),
@@ -76,12 +79,15 @@ Public Module SplineTest
             .SaveAs("../../../DEMO-Centripetal-CatmullRom-Spline.png")
     End Sub
 
+    ''' <summary>
+    ''' BezierCurve using 3 Control Points
+    ''' </summary>
     Sub BezierCurveTest()
         Dim P As PointF() = {
-          New PointF(40, 45),
-          New PointF(70, 580),
-          New PointF(100, 40)
-      }
+            New PointF(40, 45),
+            New PointF(70, 580),
+            New PointF(100, 40)
+        }
         Dim result As List(Of PointF) =
             New BezierCurve(P(0), P(1), P(2), 10).BezierPoints
 
@@ -139,6 +145,12 @@ Public Module SplineTest
                 .X = c(Scan0),
                 .Y = c(1)
             })
+        Dim raw = points.FromPoints(
+            lineColor:="skyblue",
+            ptSize:=40,
+            title:="duom2: raw")
+
+        ' CubicSpline
         Dim result = CubicSpline.RecalcSpline(points).ToArray
 
         Dim interplot = result.FromPoints(
@@ -147,14 +159,11 @@ Public Module SplineTest
             title:="duom2: CubicSpline.RecalcSpline",
             lineType:=DashStyle.Dash,
             lineWidth:=3)
-        Dim raw = points.FromPoints(
-            lineColor:="skyblue",
-            ptSize:=40,
-            title:="duom2: raw")
 
         Call Scatter.Plot({raw, interplot}, size:=New Size(3000, 1400)) _
             .SaveAs("../../../duom2-cubic-spline.png")
 
+        ' CatmullRomSpline
         result = CatmullRomSpline.CatmullRomSpline(points)
 
         Dim CRInterplot = result.FromPoints(
@@ -167,6 +176,7 @@ Public Module SplineTest
         Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
             .SaveAs("../../../duom2-CatmullRomSpline.png")
 
+        ' B-Spline
         result = B_Spline.Compute(points, 1.5, RESOLUTION:=100)
 
         Dim B_interplot = result.FromPoints(
@@ -176,15 +186,14 @@ Public Module SplineTest
             lineType:=DashStyle.Dot,
             lineWidth:=3)
 
-
         Call Scatter.Plot({raw, B_interplot}, size:=New Size(3000, 1400)) _
         .SaveAs("../../../duom2-B-spline.png")
 
-
+        ' Method Compares
         Call Scatter.Plot({raw, CRInterplot, B_interplot, interplot}, size:=New Size(3000, 1400)) _
             .SaveAs("../../../duom2-compares.png")
 
-
+        ' Compare B-spline parameters
         Dim bsplines = {
             B_Spline.Compute(points, 0.5, RESOLUTION:=100) _
                     .FromPoints(lineColor:="green", ptSize:=5, title:="duom2: B-spline, 0.5 degree", lineWidth:=3),

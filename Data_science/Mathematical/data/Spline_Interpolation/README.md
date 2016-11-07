@@ -57,6 +57,36 @@ Call Scatter.Plot({raw, B_interplot}, size:=New Size(3000, 1400)) _
 
 ![](./duom2-B-spline.png)
 
+#### Compares B-Splines Parameters
+
+```vbnet
+Dim bsplines = {
+    B_Spline.Compute(points, 0.5, RESOLUTION:=100) _
+            .FromPoints(lineColor:="green", ptSize:=5, title:="duom2: B-spline, 0.5 degree", lineWidth:=3),
+    B_Spline.Compute(points, 1, RESOLUTION:=100) _
+            .FromPoints(lineColor:="skyblue", ptSize:=3, title:="duom2: B-spline, 1 degree", lineWidth:=2),
+    B_Spline.Compute(points, 2, RESOLUTION:=100) _
+            .FromPoints(lineColor:="yellow", ptSize:=3, title:="duom2: B-spline, 2 degree", lineWidth:=2),
+    B_Spline.Compute(points, 3, RESOLUTION:=100) _
+            .FromPoints(lineColor:="lime", ptSize:=3, title:="duom2: B-spline, 3 degree", lineWidth:=2),
+    B_Spline.Compute(points, 4, RESOLUTION:=100) _
+            .FromPoints(lineColor:="orange", ptSize:=3, title:="duom2: B-spline, 4 degree", lineWidth:=2),
+    B_Spline.Compute(points, 5, RESOLUTION:=100) _
+            .FromPoints(lineColor:="darkred", ptSize:=3, title:="duom2: B-spline, 5 degree", lineWidth:=2),
+    B_Spline.Compute(points, 10, RESOLUTION:=100) _
+            .FromPoints(lineColor:="red", ptSize:=3, title:="duom2: B-spline, 10 degree", lineWidth:=2),
+    B_Spline.Compute(points, 20, RESOLUTION:=100) _
+            .FromPoints(lineColor:="gray", ptSize:=3, title:="duom2: B-spline, 20 degree", lineWidth:=2),
+    B_Spline.Compute(points, 30, RESOLUTION:=100) _
+            .FromPoints(lineColor:="lightgreen", ptSize:=3, title:="duom2: B-spline, 30 degree", lineWidth:=2)
+}
+
+Call Scatter.Plot(raw.Join(bsplines), size:=New Size(3000, 1400)) _
+    .SaveAs("./duom2-B-splines.png")
+```
+
+![](./duom2-B-splines.png)
+
 ## CubicSpline
 A simple VB.NET tool demonstrating the use of cubic spline interpolation. This tool was adapted from the original work of @CrushedPixel : [CubicSplineDemo](https://github.com/CrushedPixel/CubicSplineDemo)
 
@@ -123,32 +153,98 @@ Call Scatter.Plot({raw, B_interplot, interplot}, size:=New Size(3000, 1400)) _
 ```
 ![](./duom2-compares.png)
 
-## Compares B-Splines Parameters
+## Centripetal Catmull–Rom spline
+
+In computer graphics, centripetal Catmull–Rom spline is a variant form of Catmull-Rom spline formulated by Edwin Catmull and Raphael Rom according to the work of Barry and Goldman. It is a type of interpolating spline (a curve that goes through its control points) defined by four control points P0, P1, P2, P3, with the curve drawn only from P1 to P2.
+
+> https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline#cite_ref-1
+
+#### How to Use
 
 ```vbnet
-Dim bsplines = {
-    B_Spline.Compute(points, 0.5, RESOLUTION:=100) _
-            .FromPoints(lineColor:="green", ptSize:=5, title:="duom2: B-spline, 0.5 degree", lineWidth:=3),
-    B_Spline.Compute(points, 1, RESOLUTION:=100) _
-            .FromPoints(lineColor:="skyblue", ptSize:=3, title:="duom2: B-spline, 1 degree", lineWidth:=2),
-    B_Spline.Compute(points, 2, RESOLUTION:=100) _
-            .FromPoints(lineColor:="yellow", ptSize:=3, title:="duom2: B-spline, 2 degree", lineWidth:=2),
-    B_Spline.Compute(points, 3, RESOLUTION:=100) _
-            .FromPoints(lineColor:="lime", ptSize:=3, title:="duom2: B-spline, 3 degree", lineWidth:=2),
-    B_Spline.Compute(points, 4, RESOLUTION:=100) _
-            .FromPoints(lineColor:="orange", ptSize:=3, title:="duom2: B-spline, 4 degree", lineWidth:=2),
-    B_Spline.Compute(points, 5, RESOLUTION:=100) _
-            .FromPoints(lineColor:="darkred", ptSize:=3, title:="duom2: B-spline, 5 degree", lineWidth:=2),
-    B_Spline.Compute(points, 10, RESOLUTION:=100) _
-            .FromPoints(lineColor:="red", ptSize:=3, title:="duom2: B-spline, 10 degree", lineWidth:=2),
-    B_Spline.Compute(points, 20, RESOLUTION:=100) _
-            .FromPoints(lineColor:="gray", ptSize:=3, title:="duom2: B-spline, 20 degree", lineWidth:=2),
-    B_Spline.Compute(points, 30, RESOLUTION:=100) _
-            .FromPoints(lineColor:="lightgreen", ptSize:=3, title:="duom2: B-spline, 30 degree", lineWidth:=2)
+Dim P As PointF() = {
+    New PointF(1, 1),    ' P0
+    New PointF(10, 15),  ' P1
+    New PointF(90, 60),  ' P2
+    New PointF(150, 40)  ' P3
 }
-
-Call Scatter.Plot(raw.Join(bsplines), size:=New Size(3000, 1400)) _
-    .SaveAs("./duom2-B-splines.png")
+Dim result As List(Of PointF) =
+    CentripetalCatmullRomSpline.CatmulRom(P(0), P(1), P(2), P(3))
 ```
 
-![](./duom2-B-splines.png)
+###### Example
+
+```vbnet
+Dim P As PointF() = {
+    New PointF(1, 1),
+    New PointF(10, 15),
+    New PointF(90, 60),
+    New PointF(150, 40)
+}
+Dim result As List(Of PointF) =
+    CentripetalCatmullRomSpline.CatmulRom(P(0), P(1), P(2), P(3))
+
+Dim CRInterplotCenter = result.FromPoints(
+    lineColor:="lime",
+    ptSize:=3,
+    lineType:=DashStyle.Solid,
+    lineWidth:=3,
+    title:="Centripetal Catmull–Rom spline")
+
+Dim raw As SerialData = P.FromPoints(
+    lineColor:="red",
+    ptSize:=30,
+    lineType:=DashStyle.Dot,
+    lineWidth:=5,
+    title:="P1-P4 Control Points")
+
+Call Scatter.Plot({raw, CRInterplotCenter}, size:=New Size(3000, 1400)) _
+    .SaveAs("../../../DEMO-Centripetal-CatmullRom-Spline.png")
+```
+
+![](./DEMO-Centripetal-CatmullRom-Spline.png)
+
+## BezierCurve Spline
+
+#### How to Use
+
+```vbnet
+Dim P As PointF() = {
+    New PointF(40, 45),
+    New PointF(70, 580),
+    New PointF(100, 40)
+}
+Dim result As List(Of PointF) =
+    New BezierCurve(P(0), P(1), P(2), 10).BezierPoints
+```
+
+###### Example
+
+```vbnet
+Dim P As PointF() = {
+    New PointF(40, 45),
+    New PointF(70, 580),
+    New PointF(100, 40)
+}
+Dim result As List(Of PointF) =
+    New BezierCurve(P(0), P(1), P(2), 10).BezierPoints
+
+Dim BezierInterplot = result.FromPoints(
+    lineColor:="lime",
+    ptSize:=3,
+    lineType:=DashStyle.Solid,
+    lineWidth:=3,
+    title:="BezierCurve spline")
+
+Dim raw As SerialData = P.FromPoints(
+    lineColor:="red",
+    ptSize:=30,
+    lineType:=DashStyle.Dot,
+    lineWidth:=5,
+    title:="BezierCurve Control Points")
+
+Call Scatter.Plot({raw, BezierInterplot}, size:=New Size(3000, 1400)) _
+    .SaveAs("../../../DEMO-BezierCurve-Spline.png")
+```
+
+![](./DEMO-BezierCurve-Spline.png)
