@@ -34,16 +34,16 @@ Imports Microsoft.VisualBasic.Imaging
 Namespace Drawing2D
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="g">GDI+设备</param>
+    ''' <param name="grct">绘图区域的大小</param>
+    Public Delegate Sub IPlot(ByRef g As Graphics, grct As GraphicsRegion)
+
+    ''' <summary>
     ''' Data plots graphics engine common abstract.
     ''' </summary>
     Public Module g
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="g">GDI+设备</param>
-        ''' <param name="grct">绘图区域的大小</param>
-        Public Delegate Sub IPlot(ByRef g As Graphics, grct As GraphicsRegion)
 
         ''' <summary>
         ''' Data plots graphics engine.
@@ -51,9 +51,9 @@ Namespace Drawing2D
         ''' <param name="size"></param>
         ''' <param name="margin"></param>
         ''' <param name="bg"></param>
-        ''' <param name="plot"></param>
+        ''' <param name="plotAPI"></param>
         ''' <returns></returns>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg$, plot As IPlot) As Bitmap
+        Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg$, plotAPI As IPlot) As Bitmap
             If size.IsEmpty Then
                 size = New Size(4300, 2000)
             End If
@@ -70,7 +70,7 @@ Namespace Drawing2D
                 g.FillRectangle(New SolidBrush(bgColor), rect)
                 g.CompositingQuality = CompositingQuality.HighQuality
 
-                Call plot(g, New GraphicsRegion With {
+                Call plotAPI(g, New GraphicsRegion With {
                      .Size = size,
                      .Margin = margin
                 })
