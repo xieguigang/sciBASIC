@@ -30,24 +30,23 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Visualize
+Namespace Interpolation
 
-    Public Module Lines
+    Public Module CatmullRomSpline
 
         ''' <summary>
-        ''' Calculates interpolated point between two points using Catmull-Rom Spline/// </summary>
+        ''' Calculates interpolated point between two points using Catmull-Rom Spline</summary>
         ''' <remarks>
-        ''' Points calculated exist on the spline between points two and three./// </remarks>
+        ''' Points calculated exist on the spline between points two and three.</remarks>
         ''' <param name="p0">First Point</param>
         ''' <param name="p1">Second Point</param>
         ''' <param name="p2">Third Point</param>
         ''' <param name="p3">Fourth Point</param>
         ''' <param name="t">
-        ''' Normalised distance between second and third point /// where the spline point will be calculated/// </param>
-        ''' <returns>Calculated Spline Point/// </returns>
+        ''' Normalised distance between second and third point where the spline point will be calculated</param>
+        ''' <returns>Calculated Spline Point</returns>
         ''' 
-        <ExportAPI("CatmullRom.Spline",
-                   Info:="Calculates interpolated point between two points using Catmull-Rom Spline")>
+        <ExportAPI("CatmullRom.Spline", Info:="Calculates interpolated point between two points using Catmull-Rom Spline")>
         Private Function PointOnCurve(p0 As Point, p1 As Point, p2 As Point, p3 As Point, t As Double) As Point
             Dim ret As New Point()
 
@@ -62,8 +61,10 @@ Namespace Visualize
 
         <ExportAPI("CatmullRom.Spline")>
         Public Function CatmullRomSpline(Points As List(Of Point),
-                                     <Parameter("Interpolation.Steps")> Optional InterpolationStep As Double = 0.1,
-                                     <Parameter("Is.Polygon")> Optional IsPolygon As Boolean = False) As List(Of Point)
+                                         <Parameter("Interpolation.Steps")>
+                                         Optional InterpolationStep As Double = 0.1,
+                                         <Parameter("Is.Polygon")>
+                                         Optional IsPolygon As Boolean = False) As List(Of Point)
             If Points.Count <= 2 Then
                 Return Points
             End If

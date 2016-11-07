@@ -225,9 +225,6 @@
     <Compile Include="FindPath\PathFinder.vb" />
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
-    <Compile Include="Visualize\Lines.vb" />
-    <Compile Include="Visualize\StyleMappings.vb" />
-    <Compile Include="Visualize\NetworkVisualizer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
