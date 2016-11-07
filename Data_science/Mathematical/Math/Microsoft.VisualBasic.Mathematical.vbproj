@@ -235,6 +235,7 @@
     <Compile Include="BasicR\Solvers\ISolver.vb" />
     <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
     <Compile Include="BasicR\Vector.vb" />
+    <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
     <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />
     <Compile Include="Spline\CubicEval.vb" />
