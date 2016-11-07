@@ -5,11 +5,83 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Interpolation
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Public Module CubicSplineTest
+Public Module SplineTest
 
-    Sub Test()
-        Dim data#()() = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2.txt" _
+    Sub Main()
+        Call InterpolationTest()
+        Call BezierCurveTest()
+        Call CentripetalCatmullRomSplineTest()
+
+        Pause()
+    End Sub
+
+    Sub CentripetalCatmullRomSplineTest()
+        Dim P As PointF() = {
+            New PointF(1, 1),
+            New PointF(10, 15),
+            New PointF(90, 60),
+            New PointF(150, 40)
+        }
+        Dim result As List(Of PointF) =
+            CentripetalCatmullRomSpline.CatmulRom(P(0), P(1), P(2), P(3))
+
+        Dim CRInterplotCenter = result.FromPoints(
+            lineColor:="lime",
+            ptSize:=3,
+            lineType:=DashStyle.Solid,
+            lineWidth:=3,
+            title:="duom2: Centripetal Catmull–Rom spline")
+
+        Dim raw As SerialData = P.FromPoints(
+            lineColor:="red",
+            ptSize:=30,
+            lineType:=DashStyle.Dot,
+            lineWidth:=5,
+            title:="duom2: Raw Plot")
+
+        raw.annotations = {
+            New Annotation With {
+                .Text = "P0",
+                .X = P(0).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            },
+            New Annotation With {
+                .Text = "P1",
+                .X = P(1).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            },
+            New Annotation With {
+                .Text = "P2",
+                .X = P(2).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            },
+            New Annotation With {
+                .Text = "P3",
+                .X = P(3).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            }
+        }
+
+        Call Scatter.Plot({raw, CRInterplotCenter}, size:=New Size(3000, 1400)) _
+            .SaveAs("../../../duom2-Centripetal-CatmullRom-Spline.png")
+    End Sub
+
+    Sub BezierCurveTest()
+
+    End Sub
+
+    Sub InterpolationTest()
+        Dim data#()() = "../../../duom2.txt" _
             .IterateAllLines _
             .ToArray(Function(s) Regex.Replace(s, "\s+", " ") _
                 .Trim _
@@ -34,7 +106,7 @@ Public Module CubicSplineTest
             title:="duom2: raw")
 
         Call Scatter.Plot({raw, interplot}, size:=New Size(3000, 1400)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-cubic-spline.png")
+            .SaveAs("../../../duom2-cubic-spline.png")
 
         result = CatmullRomSpline.CatmullRomSpline(points)
 
@@ -46,20 +118,7 @@ Public Module CubicSplineTest
             title:="duom2: Catmull-Rom Spline")
 
         Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-CatmullRomSpline.png")
-
-        'result = CentripetalCatmullRomSpline.CatmulRom(points)
-
-        'Dim CRInterplotCenter = result.FromPoints(
-        '    lineColor:="lime",
-        '    ptSize:=3,
-        '    lineType:=DashStyle.Dot,
-        '    lineWidth:=3,
-        '    title:="duom2: Centripetal Catmull–Rom spline")
-
-        'Call Scatter.Plot({raw, CRInterplotCenter}, size:=New Size(3000, 1400)) _
-        '    .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-Centripetal-CatmullRom-Spline.png")
-
+            .SaveAs("../../../duom2-CatmullRomSpline.png")
 
         result = B_Spline.Compute(points, 1.5, RESOLUTION:=100)
 
@@ -72,11 +131,11 @@ Public Module CubicSplineTest
 
 
         Call Scatter.Plot({raw, B_interplot}, size:=New Size(3000, 1400)) _
-        .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-spline.png")
+        .SaveAs("../../../duom2-B-spline.png")
 
 
         Call Scatter.Plot({raw, CRInterplot, B_interplot, interplot}, size:=New Size(3000, 1400)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-compares.png")
+            .SaveAs("../../../duom2-compares.png")
 
 
         Dim bsplines = {
@@ -101,8 +160,6 @@ Public Module CubicSplineTest
         }
 
         Call Scatter.Plot(raw.Join(bsplines), size:=New Size(3000, 1400)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-splines.png")
-
-        Pause()
+            .SaveAs("../../../duom2-B-splines.png")
     End Sub
 End Module

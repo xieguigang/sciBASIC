@@ -192,7 +192,6 @@
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\CubicSplineTest.vb" />
     <Compile Include="Modules\DEBUG.vb" />
     <Compile Include="Modules\PDFTest.vb" />
     <Compile Include="Modules\ODEsTest.vb" />

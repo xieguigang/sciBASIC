@@ -65,7 +65,8 @@ Public Module Scatter
                          Optional drawLine As Boolean = True,
                          Optional legendBorder As Border = Nothing,
                          Optional fill As Boolean = False,
-                         Optional fillPie As Boolean = True) As Bitmap
+                         Optional fillPie As Boolean = True,
+                         Optional legendFontSize! = 24) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -130,7 +131,7 @@ Public Module Scatter
                                 .fontstyle = CSSFont.GetFontStyle(
                                     FontFace.MicrosoftYaHei,
                                     FontStyle.Regular,
-                                    30),
+                                    legendFontSize),
                                 .style = LegendStyles.Circle,
                                 .title = x.title
                             }
