@@ -123,7 +123,7 @@ Namespace Graph
 
         Public Overloads Function Equals(p As Node) As Boolean
             ' If parameter is null return false:
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -132,14 +132,14 @@ Namespace Graph
         End Function
 
         Public Shared Operator =(a As Node, b As Node) As Boolean
+            ' If one is null, but not both, return false.
+            If a Is Nothing OrElse b Is Nothing Then
+                Return False
+            End If
+
             ' If both are null, or both are same instance, return true.
             If System.[Object].ReferenceEquals(a, b) Then
                 Return True
-            End If
-
-            ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
-                Return False
             End If
 
             ' Return true if the fields match:

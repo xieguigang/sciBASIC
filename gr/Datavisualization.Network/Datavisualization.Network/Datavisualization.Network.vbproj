@@ -190,6 +190,9 @@
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
+    <Compile Include="LDM\FileStream\Cytoscape.vb" />
+    <Compile Include="LDM\FileStream\Network.vb" />
+    <Compile Include="LDM\FileStream\INetComponent.vb" />
     <Compile Include="LDM\FileStream\GraphAPI.vb" />
     <Compile Include="LDM\Graph\Extensions.vb" />
     <Compile Include="LDM\Graph\Edge.vb" />
@@ -209,7 +212,7 @@
     <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
     <Compile Include="LDM\FileStream\NameOf.vb" />
     <Compile Include="LDM\FileStream\Edge.vb" />
-    <Compile Include="LDM\FileStream\Network.vb" />
+    <Compile Include="LDM\FileStream\Network%28Of T%29.vb" />
     <Compile Include="LDM\FileStream\Node.vb" />
     <Compile Include="FindPath\Dijkstra\Dijkstra.vb" />
     <Compile Include="FindPath\PQDijkstra\BasicHeap.vb" />

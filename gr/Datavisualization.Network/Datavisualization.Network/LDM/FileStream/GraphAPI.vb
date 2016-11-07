@@ -29,18 +29,18 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileStream
 
+    ''' <summary>
+    ''' Data Model Extensions
+    ''' </summary>
     Public Module GraphAPI
 
         <Extension>
@@ -48,21 +48,32 @@ Namespace FileStream
             Return CreateGraph(Of Node, NetworkEdge)(net)
         End Function
 
+        ''' <summary>
+        ''' Transform the network data model to graph model
+        ''' </summary>
+        ''' <typeparam name="TNode"></typeparam>
+        ''' <typeparam name="TEdge"></typeparam>
+        ''' <param name="net"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge)) As NetworkGraph
             Dim nodes As Graph.Node() =
+ _
                 LinqAPI.Exec(Of Graph.Node) <= From n As Node
                                                In net.Nodes
-                                               Select New Graph.Node(n.Identifier, New NodeData)
+                                               Let id = n.Identifier
+                                               Select New Graph.Node(id, New NodeData)
+
             Dim nodehash As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =
+ _
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
                                          In net.Edges
-                                         Select New Edge(
-                                             edge.GetNullDirectedGuid,
-                                             nodehash(edge.FromNode),
-                                             nodehash(edge.ToNode),
-                                             New EdgeData)
+                                         Let a = nodehash(edge.FromNode)
+                                         Let b = nodehash(edge.ToNode)
+                                         Let id = edge.GetNullDirectedGuid
+                                         Select New Edge(id, a, b, New EdgeData)
+
             Dim graph As New NetworkGraph With {
                 .nodes = New List(Of Graph.Node)(nodes),
                 .edges = New List(Of Edge)(edges)
@@ -70,23 +81,35 @@ Namespace FileStream
             Return graph
         End Function
 
+        ''' <summary>
+        ''' Load cytoscape exports as network graph model.
+        ''' </summary>
+        ''' <param name="edgesDf">``edges.csv``</param>
+        ''' <param name="nodesDf">``nodes.csv``</param>
+        ''' <returns></returns>
         Public Function CytoscapeExportAsGraph(edgesDf As String, nodesDf As String) As NetworkGraph
             Dim edges As Edges() = edgesDf.LoadCsv(Of Edges)
             Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
             Dim colors As Color() = AllDotNetPrefixColors
-            Dim randColor = Function() As Color
-                                Return Color.FromArgb(220, colors(RandomSingle() * (colors.Length - 1)))
-                            End Function
+            Dim randColor As Func(Of Color) =
+                Function() Color.FromArgb(
+                    baseColor:=colors(RandomSingle() * (colors.Length - 1)),
+                    alpha:=225)
+
             Dim gNodes As List(Of Graph.Node) =
+ _
                 LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
                                                    In nodes
+                                                   Let r = If(n.Degree <= 4, 4, n.Degree) * 5
                                                    Let nd As NodeData = New NodeData With {
-                                                       .radius = If(n.Degree <= 4, 4, n.Degree) * 5,
+                                                       .radius = r,
                                                        .Color = New SolidBrush(randColor())
                                                    }
                                                    Select New Graph.Node(n.name, nd)
+
             Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)
             Dim gEdges As List(Of Graph.Edge) =
+ _
                 LinqAPI.MakeList(Of Edge) <= From edge As Edges
                                              In edges
                                              Let geNodes As Graph.Node() =
@@ -102,52 +125,4 @@ Namespace FileStream
             }
         End Function
     End Module
-
-    Namespace Cytoscape
-
-        Public Class Edges
-            Public Property SUID As String
-            Public Property EdgeBetweenness As String
-            Public Property interaction As String
-            Public Property name As String
-
-            Public Iterator Function GetNodes(nodeHash As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
-                Dim tokens As String() =
-                    Strings.Split(name, $"({interaction})") _
-                    .ToArray(Function(s) s.Trim)
-
-                Yield nodeHash(tokens.First)
-                Yield nodeHash(tokens.Last)
-            End Function
-
-            Public Overrides Function ToString() As String
-                Return Me.GetJson
-            End Function
-        End Class
-
-        Public Class Nodes
-            Public Property SUID As String
-            Public Property AverageShortestPathLength As String
-            Public Property BetweennessCentrality As String
-            Public Property ClosenessCentrality As String
-            Public Property ClusteringCoefficient As String
-            Public Property Degree As Integer
-            Public Property Eccentricity As Integer
-            Public Property IsSingleNode As String
-            Public Property name As String
-            Public Property NeighborhoodConnectivity As String
-            Public Property NumberOfDirectedEdges As String
-            Public Property NumberOfUndirectedEdges As String
-            Public Property PartnerOfMultiEdgedNodePairs As String
-            Public Property Radiality As String
-            Public Property SelfLoops As String
-            <Column("shared name")> Public Property SharedName As String
-            Public Property Stress As String
-            Public Property TopologicalCoefficient As String
-
-            Public Overrides Function ToString() As String
-                Return Me.GetJson
-            End Function
-        End Class
-    End Namespace
 End Namespace
