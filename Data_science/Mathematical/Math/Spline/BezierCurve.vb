@@ -1,63 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::967228b641b1e1b61e1fbe87bc35c04f, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\BezierCurve.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Interpolation
 
     Public Class BezierCurve
 
-        Dim _bezierPoints As List(Of PointF)
-
         ''' <summary>
         ''' store the list of points in the bezier curve
         ''' </summary>
-        Public ReadOnly Property BezierPointList() As List(Of PointF)
-            Get
-                Return _bezierPoints
-            End Get
-        End Property
+        Public ReadOnly Property BezierPoints() As List(Of PointF)
 
-        Dim _InitPoints As List(Of PointF) = New List(Of PointF)()
+        Dim _initPoints As New List(Of PointF)()
 
         ''' <summary>
         ''' store the list of initial points
         ''' </summary>
         Public ReadOnly Property InitPointsList() As List(Of PointF)
             Get
-                If _InitPoints Is Nothing Then
-                    _InitPoints = New List(Of PointF)()
+                If _initPoints Is Nothing Then
+                    _initPoints = New List(Of PointF)()
                 End If
-                Return _InitPoints
+                Return _initPoints
             End Get
         End Property
 
@@ -80,10 +73,10 @@ Namespace Interpolation
         ''' <returns>the list of points in the curve</returns>
         Public Function ReCalculate(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, iteration As Integer) As List(Of PointF)
             Iterations = iteration
-            _InitPoints.Clear()
-            _InitPoints.AddRange(New PointF() {ctrl1, ctrl2, ctrl3})
+            _initPoints.Clear()
+            _initPoints.AddRange(New PointF() {ctrl1, ctrl2, ctrl3})
             CreateBezier(ctrl1, ctrl2, ctrl3)
-            Return _bezierPoints
+            Return _BezierPoints
         End Function
 
         ''' <summary>
@@ -93,13 +86,13 @@ Namespace Interpolation
         ''' <param name="ctrl2">second initial point</param>
         ''' <param name="ctrl3">third initial point</param>
         Private Sub CreateBezier(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF)
-            _bezierPoints = New List(Of PointF)()
-            _bezierPoints.Clear()
-            _bezierPoints.Add(ctrl1)
-            ' add the first control point
-            PopulateBezierPoints(ctrl1, ctrl2, ctrl3, 0)
-            _bezierPoints.Add(ctrl3)
-            ' add the last control point
+            _BezierPoints = New List(Of PointF)()
+            _BezierPoints.Clear()
+            _BezierPoints.Add(ctrl1)  ' add the first control point
+
+            Call PopulateBezierPoints(ctrl1, ctrl2, ctrl3, 0)
+
+            _BezierPoints.Add(ctrl3)  ' add the last control point
         End Sub
 
         ''' <summary>
@@ -119,7 +112,7 @@ Namespace Interpolation
                 currentIteration += 1
                 PopulateBezierPoints(ctrl1, midPoint1, midPoint3, currentIteration)
                 'left branch
-                _bezierPoints.Add(midPoint3)
+                _BezierPoints.Add(midPoint3)
                 'add the next control point
                 'right branch
                 PopulateBezierPoints(midPoint3, midPoint2, ctrl3, currentIteration)
@@ -140,61 +133,88 @@ Namespace Interpolation
         ''' 
         ''' </summary>
         ''' <param name="data"></param>
-        ''' <param name="Parallel">���а汾��</param>
-        ''' <param name="WindowSize">���ݲ����Ĵ��ڴ�С��Ĭ�ϴ�С��<paramref name="data"></paramref>�İٷ�֮1</param>
+        ''' <param name="parallel">并行版本的</param>
+        ''' <param name="windowSize">数据采样的窗口大小，默认大小是<paramref name="data"></paramref>的百分之1</param>
         ''' <returns></returns>
-        ''' <remarks>�ȶ����ݽ��в�����Ȼ���ֵ����󷵻ز�ֵ���ƽ������������������һ������</remarks>
-        Public Shared Function BezierSmoothInterpolation(data As Double(),
-                                                     Optional WindowSize As Integer = -1,
-                                                     Optional iteration As Integer = 3,
-                                                     Optional Parallel As Boolean = False) As Double()
-            If WindowSize <= 0 Then
-                WindowSize = data.Count / 100
+        ''' <remarks>先对数据进行采样，然后插值，最后返回插值后的平滑曲线数据以用于下一步分析</remarks>
+        Public Shared Function BezierSmoothInterpolation(
+                               data#(),
+                               Optional windowSize% = -1,
+                               Optional iteration% = 3,
+                               Optional parallel As Boolean = False) As Double()
+
+            If windowSize <= 0 Then
+                windowSize = data.Length / 100
             End If
 
-            If WindowSize < 3 Then
-                WindowSize = 3 '������Ҫ3������в�ֵ
+            If windowSize < 3 Then
+                windowSize = 3 ' 最少需要3个点进行插值
             End If
 
-            Dim SlideWindows = data.CreateSlideWindows(WindowSize, offset:=WindowSize - 1)
-            Dim ChunkBuffer As List(Of Double) = New List(Of Double)
+            Dim LQuery As SeqValue(Of Double())()
+            Dim slideWindows = data _
+                .CreateSlideWindows(slideWindowSize:=windowSize,
+                                    offset:=windowSize - 1)
 
-            If Parallel Then
-                Dim LQuery = (From win In SlideWindows.AsParallel
-                              Select idt = __interpolation(win.Elements, iteration), i = win.p
-                              Order By i Ascending).ToArray
-                For Each win In LQuery
-                    Call ChunkBuffer.AddRange(win.idt)
-                Next
+            If parallel Then
+                LQuery = LinqAPI.Exec(Of SeqValue(Of Double())) <=
+ _
+                    From win
+                    In slideWindows.AsParallel
+                    Let value = __interpolation(
+                        win.Elements, iteration)
+                    Select x = New SeqValue(Of Double()) With {
+                        .i = win.p,
+                        .obj = value
+                    }
+                    Order By x.i Ascending
             Else
-                Dim LQuery = (From win As SlideWindowHandle(Of Double) In SlideWindows
-                              Select idt = __interpolation(win.Elements, iteration), i = win.p
-                              Order By i Ascending).ToArray
-                For Each win In LQuery
-                    Call ChunkBuffer.AddRange(win.idt)
-                Next
+                LQuery = LinqAPI.Exec(Of SeqValue(Of Double())) <=
+ _
+                    From win As SlideWindowHandle(Of Double)
+                    In slideWindows
+                    Let value = __interpolation(
+                        win.Elements, iteration)
+                    Select x = New SeqValue(Of Double()) With {
+                        .i = win.p,
+                        .obj = value
+                    }
+                    Order By x.i Ascending
             End If
 
-            Return ChunkBuffer.ToArray
+            Dim out#() = LQuery _
+                .Select(Function(win) +win) _
+                .IteratesALL _
+                .ToArray
+
+            Return out
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Elements"></param>
+        ''' <param name="X"></param>
         ''' <param name="iteration"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Shared Function __interpolation(Elements As Double(), iteration As Integer) As Double()
+        Private Shared Function __interpolation(X#(), iteration%) As Double()
             Dim data As Double() = New Double(2) {}
 
-            data(0) = Elements.First
-            data(1) = Elements(Elements.Count / 2)
-            data(2) = Elements.Last
+            data(0) = X(Scan0)
+            data(1) = X(X.Length / 2)
+            data(2) = X.Last
 
-            Dim ChunkTemp = New BezierCurve(New PointF(0, data(0)), New PointF(1, data(1)), New PointF(2, data(2)), iteration).BezierPointList
-            Elements = (From p In ChunkTemp Select CDbl(p.Y)).ToArray
-            Return Elements
+            Dim tmp As New BezierCurve(
+                New PointF(0, data(0)),
+                New PointF(1, data(1)),
+                New PointF(2, data(2)),
+                iteration)
+
+            X = tmp.BezierPoints _
+                .Select(Function(p) CDbl(p.Y)) _
+                .ToArray
+
+            Return X
         End Function
     End Class
 End Namespace
