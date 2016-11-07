@@ -102,7 +102,10 @@ Namespace Interpolation
         ''' <param name="ctrl2">second control point of bezier curve segment</param>
         ''' <param name="ctrl3">third control point of bezier curve segment</param>
         ''' <param name="currentIteration">the current interation of a branch</param>
-        Private Sub PopulateBezierPoints(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, currentIteration As Integer)
+        ''' <remarks>
+        ''' http://www.codeproject.com/Articles/223159/Midpoint-Algorithm-Divide-and-Conquer-Method-for-D
+        ''' </remarks> 
+        Private Sub PopulateBezierPoints(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, currentIteration%)
             If currentIteration < _Iterations Then
                 'calculate next mid points
                 Dim midPoint1 As PointF = MidPoint(ctrl1, ctrl2)
