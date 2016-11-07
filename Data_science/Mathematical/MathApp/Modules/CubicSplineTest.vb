@@ -33,8 +33,8 @@ Public Module CubicSplineTest
             ptSize:=40,
             title:="duom2: raw")
 
-        'Call Scatter.Plot({raw, interplot}, size:=New Size(3000, 1400)) _
-        '    .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-cubic-spline.png")
+        Call Scatter.Plot({raw, interplot}, size:=New Size(3000, 1400)) _
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-cubic-spline.png")
 
         result = CatmullRomSpline.CatmullRomSpline(points)
 
@@ -48,6 +48,19 @@ Public Module CubicSplineTest
         Call Scatter.Plot({raw, CRInterplot}, size:=New Size(3000, 1400)) _
             .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-CatmullRomSpline.png")
 
+        'result = CentripetalCatmullRomSpline.CatmulRom(points)
+
+        'Dim CRInterplotCenter = result.FromPoints(
+        '    lineColor:="lime",
+        '    ptSize:=3,
+        '    lineType:=DashStyle.Dot,
+        '    lineWidth:=3,
+        '    title:="duom2: Centripetal Catmull–Rom spline")
+
+        'Call Scatter.Plot({raw, CRInterplotCenter}, size:=New Size(3000, 1400)) _
+        '    .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-Centripetal-CatmullRom-Spline.png")
+
+
         result = B_Spline.Compute(points, 1.5, RESOLUTION:=100)
 
         Dim B_interplot = result.FromPoints(
@@ -58,8 +71,8 @@ Public Module CubicSplineTest
             lineWidth:=3)
 
 
-        'Call Scatter.Plot({raw, B_interplot}, size:=New Size(3000, 1400)) _
-        '    .SaveAs("E:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-spline.png")
+        Call Scatter.Plot({raw, B_interplot}, size:=New Size(3000, 1400)) _
+        .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\duom2-B-spline.png")
 
 
         Call Scatter.Plot({raw, CRInterplot, B_interplot, interplot}, size:=New Size(3000, 1400)) _

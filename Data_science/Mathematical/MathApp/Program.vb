@@ -31,8 +31,9 @@ Imports Microsoft.VisualBasic.Mathematical
 Module Program
 
     Public Function Main() As Integer
+        Call CubicSplineTest.Test()
+
         Try
-            Call CubicSplineTest.Test()
             Call New Form1().ShowDialog()
             Call DEBUG.Main()
         Catch ex As Exception
