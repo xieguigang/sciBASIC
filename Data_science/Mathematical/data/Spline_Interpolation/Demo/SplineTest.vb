@@ -32,14 +32,14 @@ Public Module SplineTest
             ptSize:=3,
             lineType:=DashStyle.Solid,
             lineWidth:=3,
-            title:="duom2: Centripetal Catmull–Rom spline")
+            title:="Centripetal Catmull–Rom spline")
 
         Dim raw As SerialData = P.FromPoints(
             lineColor:="red",
             ptSize:=30,
             lineType:=DashStyle.Dot,
             lineWidth:=5,
-            title:="duom2: Raw Plot")
+            title:="P1-P4 Control Points")
 
         raw.annotations = {
             New Annotation With {
@@ -73,11 +73,58 @@ Public Module SplineTest
         }
 
         Call Scatter.Plot({raw, CRInterplotCenter}, size:=New Size(3000, 1400)) _
-            .SaveAs("../../../duom2-Centripetal-CatmullRom-Spline.png")
+            .SaveAs("../../../DEMO-Centripetal-CatmullRom-Spline.png")
     End Sub
 
     Sub BezierCurveTest()
+        Dim P As PointF() = {
+          New PointF(40, 45),
+          New PointF(70, 580),
+          New PointF(100, 40)
+      }
+        Dim result As List(Of PointF) =
+            New BezierCurve(P(0), P(1), P(2), 10).BezierPoints
 
+        Dim BezierInterplot = result.FromPoints(
+            lineColor:="lime",
+            ptSize:=3,
+            lineType:=DashStyle.Solid,
+            lineWidth:=3,
+            title:="BezierCurve spline")
+
+        Dim raw As SerialData = P.FromPoints(
+            lineColor:="red",
+            ptSize:=30,
+            lineType:=DashStyle.Dot,
+            lineWidth:=5,
+            title:="BezierCurve Control Points")
+
+        raw.annotations = {
+            New Annotation With {
+                .Text = "P0",
+                .X = P(0).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            },
+            New Annotation With {
+                .Text = "P1",
+                .X = P(1).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            },
+            New Annotation With {
+                .Text = "P2",
+                .X = P(2).X,
+                .color = "skyblue",
+                .Font = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 24),
+                .Legend = LegendStyles.Pentacle
+            }
+        }
+
+        Call Scatter.Plot({raw, BezierInterplot}, size:=New Size(3000, 1400)) _
+            .SaveAs("../../../DEMO-BezierCurve-Spline.png")
     End Sub
 
     Sub InterpolationTest()
