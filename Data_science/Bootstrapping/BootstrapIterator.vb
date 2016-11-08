@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a0f829c3ea0f951d55f3983f58caff84, ..\visualbasic_App\Data_science\Bootstrapping\BootstrapIterator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Terminal.Utility
 
 ''' <summary>
 ''' 参数估计的过程之中的迭代器，这个模块内的函数主要是用来产生数据源的
@@ -167,8 +168,15 @@ Public Module BootstrapIterator
             .Select(Function(x) x.Name) _
             .SetParameters(model)
         Dim yinit As NamedValue(Of INextRandomNumber)() = y0.ToArray
+        Dim proc As New EventProc(k, "Bootstrapping Samples")
+
+        If echo Then
+            Call "Start bootstrapping data samples...".__DEBUG_ECHO
+        End If
 
         If parallel Then
+            proc.Capacity = k * 0.4
+
             ' memory leaks on linux
             ' 2016-9-28，可能是由于生成csv文件的时候字符串没有被正确的释放所导致内存泄漏，如果只是执行这段代码的话，经过测试没有内存泄漏的危险
 
@@ -180,6 +188,10 @@ Public Module BootstrapIterator
                                      Select odes_Out
                 i += 1L
                 Yield x
+
+                If echo Then
+                    Call proc.Tick()
+                End If
             Next
         Else
             For Each it As Long In k.SeqIterator
@@ -190,11 +202,14 @@ Public Module BootstrapIterator
                     i += 1L
                     Yield odes_Out
                 End If
+                If echo Then
+                    Call proc.Tick()
+                End If
             Next
         End If
 
         If echo Then
-            Call $"Bootstrapping populated {i} valid samples...".__DEBUG_ECHO
+            Call $"Bootstrapping populated {i}({Math.Round(100 * i / k, 2)}%) valid samples...".__DEBUG_ECHO
         End If
     End Function
 

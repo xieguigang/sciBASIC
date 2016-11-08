@@ -15,7 +15,8 @@ Namespace MonteCarlo
     Public Module StatesCharacters
 
         ''' <summary>
-        ''' 使用蒙特卡洛的方法来搜索可能的系统状态空间
+        ''' Search for all possible system status clusters by using MonteCarlo method from random system inits.
+        ''' (使用蒙特卡洛的方法来搜索可能的系统状态空间)
         ''' </summary>
         ''' <param name="model"></param>
         ''' <returns>可能的系统状态的KMeans聚类结果</returns>
@@ -27,6 +28,7 @@ Namespace MonteCarlo
                                                Optional ncluster% = -1,
                                                Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))
 
+            ' 整个系统使用随机初始值进行计算，从而可以使用蒙特卡洛的方法得到所有可能的系统状态
             Dim y0 = TryCast(Activator.CreateInstance(model), Model).yinit
             Dim y0rand = y0.Select(
                 Function(v) New NamedValue(Of INextRandomNumber) With {

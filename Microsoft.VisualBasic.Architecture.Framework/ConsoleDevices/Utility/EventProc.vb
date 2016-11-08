@@ -1,92 +1,123 @@
 ﻿#Region "Microsoft.VisualBasic::6b6befe93c30706ceda3c73fc642e4be, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\EventProc.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace Terminal.Utility
 
+    ''' <summary>
+    ''' Generates the task progress for the console output.(处理任务进度)
+    ''' </summary>
     Public Class EventProc
 
-        Dim current As Integer
+        ''' <summary>
+        ''' The total <see cref="Tick"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Capacity As Integer
             Get
-                Return _Capacity
+                Return _capacity
             End Get
             Set(value As Integer)
-                _Capacity = value
+                _capacity = value
                 delta = Capacity / 100
-                current = CInt(_Capacity * p)
+                current = CInt(_capacity * percentage)
             End Set
         End Property
 
-        Dim _Capacity As Integer
+        Dim _capacity As Integer
         Dim delta As Integer
-        Dim TAG As String
+        Dim tag As String
+        Dim out As StreamWriter
+        Dim current As int = 0
 
-        Sub New(n As Integer, <CallerMemberName> Optional TAG As String = "")
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="tag"></param>
+        ''' <param name="out">Default is <see cref="Console"/></param>
+        Sub New(n As Integer, <CallerMemberName> Optional tag As String = "", Optional out As StreamWriter = Nothing)
             Me.Capacity = n
-            Me.TAG = TAG
+            Me.tag = tag
+            Me.out = If(out Is Nothing,
+                New StreamWriter(Console.OpenStandardOutput),
+                out)
 
-            If String.IsNullOrEmpty(Me.TAG) Then
-                Me.TAG = vbTab
+            If String.IsNullOrEmpty(Me.tag) Then
+                Me.tag = vbTab
             End If
         End Sub
 
+        ''' <summary>
+        ''' 会自动输出进度的
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Tick() As Integer
             If delta = 0 Then
                 Return 0
             End If
 
-            current += 1
-            If current Mod delta = 0 Then
+            If ++current Mod delta = 0 Then
                 Call ToString.__DEBUG_ECHO
             Else
-                Call Console.Write(".")
+                Call out.Write(".")
             End If
 
             Return current
         End Function
 
-        Dim p As Double
+        ''' <summary>
+        ''' Current progress percentage.
+        ''' </summary>
+        Dim percentage As Double
         Dim sw As Stopwatch = Stopwatch.StartNew
-        Dim pre As Long
+        ''' <summary>
+        ''' Previous <see cref="Stopwatch.ElapsedMilliseconds"/>
+        ''' </summary>
+        Dim preElapsedMilliseconds As Long
 
+        ''' <summary>
+        ''' Generates progress output
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             If Capacity = 0 Then
                 Return ""
             End If
 
-            Dim dt As Long = sw.ElapsedMilliseconds - pre
-            pre = sw.ElapsedMilliseconds
-            p = current / Capacity
+            Dim dt As Long = sw.ElapsedMilliseconds - preElapsedMilliseconds
+            preElapsedMilliseconds = sw.ElapsedMilliseconds
+            percentage = current / Capacity
 
-            Return $" [{TAG}, {dt}ms] * ...... {Math.Round(100 * p, 2)}%"
+            Return $" [{tag}, {dt}ms] * ...... {Math.Round(100 * percentage, 2)}%"
         End Function
     End Class
 End Namespace

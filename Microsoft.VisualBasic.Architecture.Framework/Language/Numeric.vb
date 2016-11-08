@@ -247,6 +247,10 @@ Namespace Language
             Return x
         End Operator
 
+        Public Shared Operator /(x As int, b As Integer) As Double
+            Return x / b
+        End Operator
+
         ''' <summary>
         ''' 必须要overloads这个方法，否则会出现无法将Value(Of Integer)转换为int的错误
         ''' </summary>
