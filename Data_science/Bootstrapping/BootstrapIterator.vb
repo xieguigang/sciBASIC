@@ -63,8 +63,8 @@ Public Module BootstrapIterator
                                  yinit As IEnumerable(Of String),
                                      k As Long,
                                      n As Integer,
-                                     a As Integer,
-                                     b As Integer,
+                                     a As Double,
+                                     b As Double,
                                  Optional trimNaN As Boolean = True,
                                  Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
 
@@ -87,8 +87,8 @@ Public Module BootstrapIterator
                                   yinit As IEnumerable(Of NamedValue(Of PreciseRandom)),
                                       k As Long,
                                       n As Integer,
-                                      a As Integer,
-                                      b As Integer,
+                                      a As Double,
+                                      b As Double,
                                   Optional trimNaN As Boolean = True,
                                   Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
         Return model.Bootstrapping(
@@ -123,8 +123,8 @@ Public Module BootstrapIterator
                                      y0 As IEnumerable(Of NamedValue(Of INextRandomNumber)),
                                       k As Long,
                                       n As Integer,
-                                      a As Integer,
-                                      b As Integer,
+                                      a As Double,
+                                      b As Double,
                                   Optional trimNaN As Boolean = True,
                                   Optional parallel As Boolean = False,
                                   Optional echo As Boolean = True) As IEnumerable(Of ODEsOut)
@@ -154,8 +154,8 @@ Public Module BootstrapIterator
                                               y0 As IEnumerable(Of NamedValue(Of INextRandomNumber)),
                                                k As Long,
                                                n As Integer,
-                                               a As Integer,
-                                               b As Integer,
+                                               a As Double,
+                                               b As Double,
                                            Optional trimNaN As Boolean = True,
                                            Optional parallel As Boolean = False,
                                            Optional echo As Boolean = True) As IEnumerable(Of ODEsOut)
@@ -215,8 +215,8 @@ Public Module BootstrapIterator
                             yinis As NamedValue(Of INextRandomNumber)(),
                             ps As Dictionary(Of String, Action(Of Object, Double)),
                             n As Integer,
-                            a As Integer,
-                            b As Integer) As ODEsOut
+                            a As Double,
+                            b As Double) As ODEsOut
 
         Dim odes As ODEs = DirectCast(Activator.CreateInstance(model), ODEs)
         ' Dim debug As New List(Of NamedValue(Of Double))
