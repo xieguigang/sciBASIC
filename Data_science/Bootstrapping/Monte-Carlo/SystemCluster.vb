@@ -23,7 +23,9 @@ Namespace MonteCarlo
         Public Iterator Function KMeansCluster(model As Type,
                                                k&, n%, a#, b#,
                                                args As Dictionary(Of String, Double),
-                                               Optional stop% = -1) As IEnumerable(Of NamedValue(Of VariableModel()))
+                                               Optional stop% = -1,
+                                               Optional ncluster% = -1,
+                                               Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))
 
             Dim y0 = TryCast(Activator.CreateInstance(model), Model).yinit
             Dim y0rand = y0.Select(
@@ -47,18 +49,50 @@ Namespace MonteCarlo
                 }
             Next
 
+            If ncluster <= 1 Then
+                ncluster = inputs.Count / 10
+            End If
+
             Dim result As ClusterCollection(Of Entity) =
-                ClusterDataSet(n, inputs,
+                ClusterDataSet(ncluster, inputs,
                 debug:=True,
                 [stop]:=[stop],
                 parallel:=True)
 
-            For Each cluster In result
-                Dim inits As Dictionary(Of String, Double)() = cluster _
+            For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In result.SeqIterator
+                Dim inits As EntityLDM() =
+                    (+cluster) _
                     .Select(Function(x) x.uid) _
-                    .ToArray(AddressOf LoadObject(Of Dictionary(Of String, Double)))
+                    .ToArray(Function(data) New EntityLDM With {
+                        .Name = data,
+                        .Properties = data.LoadObject(Of Dictionary(Of String, Double))
+                    })
+
                 ' 由于不同的组合也可能产生相同的系统状态，所以在这里是不是还需要做进一步的聚类？
                 ' 从这里populates一个可能的系统状态的范围
+                Dim clusters = inits.Kmeans(nsubCluster).GroupBy(Function(x) x.Cluster)
+
+                For Each subc In clusters
+                    Dim status As Dictionary(Of String, Double()) =
+                        ys.ToDictionary(
+                        Function(name$) name,
+                        Function(name$) subc _
+                            .Select(Function(x) x.Properties(name)) _
+                            .ToArray)
+                    Dim means As Dictionary(Of String, Double) =
+                        status.ToDictionary(Function(kk) kk.Key,
+                                            Function(kk) kk.Value.Average)
+
+                    Yield New NamedValue(Of VariableModel()) With {
+                        .Name = means.GetJson,
+                        .x = status _
+                            .ToArray(Function(s) New VariableModel With {
+                                .Name = s.Key,
+                                .Min = s.Value.Min,
+                                .Max = s.Value.Max
+                            })
+                    }
+                Next
             Next
         End Function
     End Module

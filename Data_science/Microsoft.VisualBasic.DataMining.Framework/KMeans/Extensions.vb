@@ -45,7 +45,9 @@ Namespace KMeans
             Dim entities As EntityLDM() = array.ToArray(
                 Function(x, i) New EntityLDM With {
                     .Name = i & ":" & x,
-                    .Properties = New Dictionary(Of String, Double) From {{"val", x}}
+                    .Properties = New Dictionary(Of String, Double) From {
+                        {"val", x}
+                    }
                 })
             Return entities.Kmeans(nd)
         End Function
@@ -56,22 +58,32 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
-        <Extension> Public Function Kmeans(source As IEnumerable(Of EntityLDM), n As Integer) As List(Of EntityLDM)
-            Dim maps As String() = source.First.Properties.Keys.ToArray
-            Dim clusters As ClusterCollection(Of Entity) = n.ClusterDataSet(source.ToArray(Function(x) x.ToModel))
+        <Extension> Public Function Kmeans(source As IEnumerable(Of EntityLDM),
+                                           n As Integer,
+                                           Optional debug As Boolean = True,
+                                           Optional parallel As Boolean = True) As List(Of EntityLDM)
+
+            Dim maps As String() = source _
+                .First _
+                .Properties _
+                .Keys _
+                .ToArray
+            Dim clusters As ClusterCollection(Of Entity) =
+                ClusterDataSet(clusterCount:=n,
+                               source:=source.ToArray(Function(x) x.ToModel),
+                               debug:=debug,
+                               parallel:=parallel)
             Dim result As New List(Of EntityLDM)
 
-            n = 1
-
-            For Each cluster As KMeansCluster(Of Entity) In clusters
-                Dim values As EntityLDM() = cluster.ToArray(Function(x) x.ToLDM(maps))
+            For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In clusters.SeqIterator(offset:=1)
+                Dim values As EntityLDM() = (+cluster) _
+                    .ToArray(Function(x) x.ToLDM(maps))
 
                 For Each x In values
-                    x.Cluster = n
+                    x.Cluster = cluster.i
                 Next
 
                 result += values
-                n += 1
             Next
 
             Return result

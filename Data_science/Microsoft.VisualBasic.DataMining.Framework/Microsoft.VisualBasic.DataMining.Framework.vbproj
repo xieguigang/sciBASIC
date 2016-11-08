@@ -232,13 +232,14 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="KMeans\EntityModels\csv.vb" />
     <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
     <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />
     <Compile Include="KMeans\CompleteLinkage\Point.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
-    <Compile Include="KMeans\Entity.vb" />
+    <Compile Include="KMeans\EntityModels\Entity.vb" />
     <Compile Include="KMeans\LDM.vb" />
     <Compile Include="KMeans\KMeans.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb" />
