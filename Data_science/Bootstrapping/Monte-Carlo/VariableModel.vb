@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Emit
@@ -11,6 +12,7 @@ Namespace MonteCarlo
     Public Class VariableModel : Inherits DoubleRange
         Implements ICloneable
 
+        <XmlAttribute>
         Public Property Name As String
 
         Sub New(min#, max#)
