@@ -58,18 +58,18 @@ Public Module BootstrapIterator
     ''' 
     <Extension>
     Public Function Bootstrapping(Of T As ODEs)(
-                                          range As PreciseRandom,
-                                           vars As IEnumerable(Of String),
-                                          yinit As IEnumerable(Of String),
-                                              k As Long,
-                                              n As Integer,
-                                              a As Integer,
-                                              b As Integer,
-                                           Optional trimNaN As Boolean = True,
-                                           Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
+                                 range As PreciseRandom,
+                                  vars As IEnumerable(Of String),
+                                 yinit As IEnumerable(Of String),
+                                     k As Long,
+                                     n As Integer,
+                                     a As Integer,
+                                     b As Integer,
+                                 Optional trimNaN As Boolean = True,
+                                 Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
 
-        Dim varList = vars.Select(Function(x) New NamedValue(Of PreciseRandom)(x, range))
-        Dim y0 = yinit.Select(Function(x) New NamedValue(Of PreciseRandom)(x, range))
+        Dim varList = vars.Select(Function(x) New NamedValue(Of INextRandomNumber)(x, AddressOf range.NextNumber))
+        Dim y0 = yinit.Select(Function(x) New NamedValue(Of INextRandomNumber)(x, AddressOf range.NextNumber))
 
         Return GetType(T).Bootstrapping(
             vars:=varList,
