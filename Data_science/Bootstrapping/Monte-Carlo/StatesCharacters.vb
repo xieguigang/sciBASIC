@@ -1,18 +1,18 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Linq
 
 Namespace MonteCarlo
 
     ''' <summary>
-    ''' System status cluster
+    ''' Search for all possible system status clusters
     ''' </summary>
-    Public Module SystemCluster
+    Public Module StatesCharacters
 
         ''' <summary>
         ''' 使用蒙特卡洛的方法来搜索可能的系统状态空间
