@@ -128,7 +128,10 @@ Namespace KMeans
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
-        ''' <param name="source">An array containing data that will be clustered</param>
+        ''' <param name="source">
+        ''' An array containing data that will be clustered, the elements number must greater than 2, at least 3 elements.
+        ''' (里面的元素至少需要三个)
+        ''' </param>
         ''' <returns>A collection of clusters of data</returns>
         ''' <param name="parallel">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行

@@ -70,9 +70,29 @@ Namespace MonteCarlo
 
                 ' 由于不同的组合也可能产生相同的系统状态，所以在这里是不是还需要做进一步的聚类？
                 ' 从这里populates一个可能的系统状态的范围
-                Dim clusters = inits.Kmeans(nsubCluster).GroupBy(Function(x) x.Cluster)
+                Dim parts% = nsubCluster
+                Dim subclusters As EntityLDM()()
 
-                For Each subc In clusters
+                If inits.Length < 3 Then ' 无法聚类
+                    subclusters = {
+                        inits
+                    }
+                Else
+                    If parts >= inits.Length Then
+                        If inits.Length = 3 Then
+                            parts = 2
+                        Else
+                            parts = 3
+                        End If
+                    End If
+
+                    subclusters = inits _
+                        .Kmeans(parts) _
+                        .GroupBy(Function(x) x.Cluster) _
+                        .ToArray(Function(g) g.ToArray)
+                End If
+
+                For Each subc As EntityLDM() In subclusters
                     Dim status As Dictionary(Of String, Double()) =
                         ys.ToDictionary(
                         Function(name$) name,
@@ -84,7 +104,7 @@ Namespace MonteCarlo
                                             Function(kk) kk.Value.Average)
 
                     Yield New NamedValue(Of VariableModel()) With {
-                        .Name = means.GetJson,
+                        .Name = cluster.i & "::" & means.GetJson,
                         .x = status _
                             .ToArray(Function(s) New VariableModel With {
                                 .Name = s.Key,

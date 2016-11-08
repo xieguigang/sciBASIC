@@ -36,7 +36,7 @@ Namespace MonteCarlo
         End Function
 
         Public Overrides Function ToString() As String
-            Return Name & " --> " & MyBase.ToString
+            Return Name & " --> " & "{ min:=" & Min & ", max:=" & Max & " }"
         End Function
     End Class
 End Namespace
