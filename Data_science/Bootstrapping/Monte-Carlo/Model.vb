@@ -44,15 +44,20 @@ Namespace MonteCarlo
     Public MustInherit Class Model : Inherits ODEs
 
         ''' <summary>
-        ''' 系统的初始值列表
+        ''' 系统的初始值列表(应用于系统状态随机聚类)
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride Function yinit() As VariableModel()
         ''' <summary>
-        ''' 系统的状态列表，即方程里面的参数
+        ''' 系统的状态列表，即方程里面的参数(应用于参数估计)
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride Function params() As VariableModel()
+
+        ''' <summary>
+        ''' 在计算聚类的相似度的时候对y变量的特征提取
+        ''' </summary>
+        ''' <returns></returns>
         Public MustOverride Function eigenvector() As Dictionary(Of String, Eigenvector)
 
         Protected NotOverridable Overrides Function y0() As var()

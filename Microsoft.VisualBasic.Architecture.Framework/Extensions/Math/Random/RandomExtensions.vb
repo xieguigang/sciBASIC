@@ -36,7 +36,12 @@ Imports Microsoft.VisualBasic.Language.C
 
 Namespace Mathematical
 
+    ''' <summary>
+    ''' Generates a random number
+    ''' </summary>
+    ''' <returns></returns>
     Public Delegate Function INextRandomNumber() As Double
+
     ''' <summary>
     ''' Tells the function how to generates a new random seed?
     ''' </summary>
