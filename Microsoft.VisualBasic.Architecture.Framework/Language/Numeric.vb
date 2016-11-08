@@ -248,7 +248,7 @@ Namespace Language
         End Operator
 
         Public Shared Operator /(x As int, b As Integer) As Double
-            Return x / b
+            Return x.value / b
         End Operator
 
         ''' <summary>
