@@ -104,13 +104,13 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine()
             Call sb.AppendLine("<!--more-->")
             Call sb.AppendLine()
-            Call sb.AppendLine($"**{assm.ProductTitle}**")
-            Call sb.AppendLine($"_{assm.ProductDescription}_")
+            Call sb.AppendLine($"**{assm.ProductTitle}**<br/>")
+            Call sb.AppendLine($"_{assm.ProductDescription}_<br/>")
             Call sb.AppendLine(assm.CopyRightsDetail)
             Call sb.AppendLine()
 
-            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}")
-            Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``")
+            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}<br/>")
+            Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``<br/>")
 
             Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
 
