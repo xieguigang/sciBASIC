@@ -36,7 +36,7 @@ Namespace Mathematical
     ''' </summary>
     Public Class PreciseRandom
 
-        ReadOnly __rnd As New Random
+        ReadOnly __rnd As Random
         ReadOnly __digits As DoubleRange
 
         ''' <summary>
@@ -49,8 +49,16 @@ Namespace Mathematical
         ''' </summary>
         ''' <param name="digitMin">``10^?``</param>
         ''' <param name="digitMax">``10^?``</param>
-        Sub New(digitMin!, digitMax!)
-            __digits = New DoubleRange(digitMin, digitMax + 1)  ' 假若max是1e10的话，则最高的位数是10，这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
+        Sub New(digitMin!, digitMax!, Optional seeds As IRandomSeeds = Nothing)
+            ' 假若max是1e10的话，则最高的位数是10，
+            ' 这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
+            __digits = New DoubleRange(digitMin, digitMax + 1)
+
+            If seeds Is Nothing Then
+                __rnd = New Random
+            Else
+                __rnd = seeds()
+            End If
         End Sub
 
         ''' <summary>
@@ -58,10 +66,11 @@ Namespace Mathematical
         ''' </summary>
         ''' <param name="from">最小的精度为<see cref="System.Double.Epsilon"/></param>
         ''' <param name="[to]"></param>
-        Sub New(from#, to#)
+        Sub New(from#, to#, Optional seeds As IRandomSeeds = Nothing)
             Call Me.New(
                 CSng(If(from = 0R, 0F, Math.Log10(from))), ' 避免出现log(0)的情况
-                CSng(If([to] = 0R, 0F, Math.Log10([to]))))
+                CSng(If([to] = 0R, 0F, Math.Log10([to]))),
+                seeds)
         End Sub
 
         Public Overrides Function ToString() As String
