@@ -118,7 +118,7 @@
     <Compile Include="Normalization.vb" />
     <Compile Include="Monte-Carlo\VariableModel.vb" />
     <Compile Include="Obsolete\Analysis.vb" />
-    <Compile Include="Monte-Carlo\AnalysisProtocol.vb" />
+    <Compile Include="Monte-Carlo\EstimatesProtocol.vb" />
     <Compile Include="EigenvectorBootstrapping.vb" />
     <Compile Include="Monte-Carlo\Model.vb" />
     <Compile Include="Monte-Carlo\Example.vb" />

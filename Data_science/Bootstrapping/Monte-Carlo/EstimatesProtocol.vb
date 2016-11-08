@@ -39,7 +39,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
 
-    Public Module AnalysisProtocol
+    ''' <summary>
+    ''' 使用蒙特卡洛的方法估算出系统的参数，不过这个方法的效率太低了，没有遗传算法的效率好
+    ''' </summary>
+    Public Module EstimatesProtocol
 
         ''' <summary>
         ''' 加载dll文件之中的计算模型
@@ -211,7 +214,7 @@ Namespace MonteCarlo
             End If
 
             Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
-                observation.Sampling(eigenvectors, partN, AnalysisProtocol.Observation)
+                observation.Sampling(eigenvectors, partN, EstimatesProtocol.Observation)
             Dim i As int = 0
 
             Call observation.params.GetJson.__DEBUG_ECHO
@@ -258,7 +261,7 @@ Namespace MonteCarlo
                 Dim requires As Integer = GetEntityNumbers(required)
                 Dim out As Dictionary(Of String, Double)() =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
                     required.value _
-                    .Where(Function(x) Not x.Name = AnalysisProtocol.Observation) _
+                    .Where(Function(x) Not x.Name = EstimatesProtocol.Observation) _
                     .Select(Function(x) x.x) _
                     .ToVector
                 Dim key$ = New NamedValue(Of String)(
