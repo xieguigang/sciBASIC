@@ -1,4 +1,7 @@
-﻿Namespace Parser
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.Linq
+
+Namespace Parser
 
     Public Class JsonArray : Inherits JsonElement
         Implements IEnumerable(Of JsonElement)
@@ -39,13 +42,15 @@
             Return "JSONarray: {count: " & list.Count & "}"
         End Function
 
-        Public Overloads Function BuildJsonString() As String
-            Dim a As New System.Text.StringBuilder
-            a.Append("[")
-            For i As Integer = 0 To list.Count - 1
-                a.Append(list(i).BuildJsonString())
-            Next
-            a.Append("]")
+        Public Overrides Function BuildJsonString() As String
+            Dim a As New StringBuilder
+            Dim array$() = list _
+                .ToArray(Function(x) x.BuildJsonString)
+
+            a.AppendLine("[")
+            a.AppendLine(array.JoinBy(", "))
+            a.AppendLine("]")
+
             Return a.ToString
         End Function
 

@@ -7,6 +7,7 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.Text
 Imports Microsoft.VisualBasic.Language
 
 Namespace Parser
@@ -183,22 +184,13 @@ eh:
             End Select
         End Function
 
-        ''' <summary>
-        ''' parse string
-        ''' </summary>
-        ''' <param name="str"></param>
-        ''' <param name="index"></param>
-        ''' <returns></returns>
-        Private Function parseString(ByRef str As String, ByRef index As Long) As JsonValue
-            Dim quote, chr, code As String
-            Dim sb As New System.Text.StringBuilder
+        Public Shared Function StripString(str$) As String
+            Dim index% = 1
+            Dim chr$, code$
+            Dim sb As New StringBuilder
 
-            skipChar(str, index)
-            quote = Mid(str, index, 1)
-            index += 1
-
-            While index > 0 AndAlso index <= Len(str)
-                chr = Mid(str, index, 1)
+            While Index > 0 AndAlso Index <= Len(str)
+                Chr = Mid(str, Index, 1)
                 Select Case chr
                     Case "\"
                         index += 1
@@ -228,17 +220,81 @@ eh:
                                 sb.Append(ChrW(Val("&h" & code)))
                                 index += 4
                         End Select
-                    Case quote
-                        index += 1
-
-                        Return New JsonValue(sb.ToString)
                     Case Else
                         sb.Append(chr)
                         index += 1
                 End Select
             End While
 
-            Return New JsonValue(sb.ToString)
+            Return sb.ToString
+        End Function
+
+        ''' <summary>
+        ''' parse string
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Private Function parseString(ByRef str As String, ByRef index As Long) As JsonValue
+            Dim quote, chr, code As String
+            Dim sb As New StringBuilder
+
+            skipChar(str, index)
+            quote = Mid(str, index, 1)
+            index += 1
+
+            While index > 0 AndAlso index <= Len(str)
+                chr = Mid(str, index, 1)
+                Select Case chr
+                    Case "\"
+                        index += 1
+                        chr = Mid(str, index, 1)
+
+                        sb.Append("\") ' !!!!!
+
+                        Select Case chr
+                            Case """", "\", "/", """"
+                                sb.Append(chr)
+                                index += 1
+                            Case "b"
+                                ' sb.Append(vbBack)
+                                sb.Append(chr)
+                                index += 1
+                            Case "f"
+                                ' sb.Append(vbFormFeed)
+                                sb.Append(chr)
+                                index += 1
+                            Case "n"
+                                ' sb.Append(vbLf)
+                                sb.Append(chr)
+                                index += 1
+                            Case "r"
+                                ' sb.Append(vbCr)
+                                sb.Append(chr)
+                                index += 1
+                            Case "t"
+                                ' sb.Append(vbTab)
+                                sb.Append(chr)
+                                index += 1
+                            Case "u"
+                                index += 1
+                                code = Mid(str, index, 4)
+                                ' sb.Append(ChrW(Val("&h" & code)))
+                                sb.Append(chr)
+                                sb.Append(code)
+                                index += 4
+                        End Select
+                    Case quote
+                        index += 1
+
+                        Return New JsonValue($"""{sb.ToString}""")
+                    Case Else
+                        sb.Append(chr)
+                        index += 1
+                End Select
+            End While
+
+            Return New JsonValue($"""{sb.ToString}""")
         End Function
 
         ''' <summary>

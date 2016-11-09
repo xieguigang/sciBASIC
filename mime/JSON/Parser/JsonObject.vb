@@ -42,10 +42,10 @@ Namespace Parser
         End Function
 
         Public Overrides Function ToString() As String
-            Return "[" & array.Keys.JoinBy(", ") & "]"
+            Return "Class::[" & array.Keys.JoinBy(", ") & "]"
         End Function
 
-        Public Overloads Function BuildJsonString() As String
+        Public Overrides Function BuildJsonString() As String
             Dim a As New StringBuilder
             Dim array$() = Me _
                 .array _
