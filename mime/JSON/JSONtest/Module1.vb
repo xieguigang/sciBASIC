@@ -3,9 +3,10 @@ Imports Microsoft.VisualBasic.MIME.JSON.Extensions
 Imports Microsoft.VisualBasic.MIME.JSON.ExtendedDictionary
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class Test : Inherits Dictionary(Of String, NamedValue(Of Integer()))
-    Public Property tt As Double()
-    Public Property sss As String
+Public Class TestDynamicsObject : Inherits Dictionary(Of String, NamedValue(Of Integer()))
+    Public Property Tarray As Double()
+    Public Property str As String
+    Public Property Tarray2 As String()
 End Class
 
 Module Module1
@@ -13,18 +14,23 @@ Module Module1
     Sub Main()
         Dim aaa = ParseJsonStr("[{a:[1,2,3,4,5,6,7,[{xxoo:[""233333""]}]], b: ""xxxxxooooo""}]")
 
-        Dim tttt As New Test With {.tt = {1, 2, 3, 4, 5, 6, 7, 8}, .sss = "asdasdasdasas" & vbCrLf & "dsfafdsfadasd"}
-        tttt.Add("1234", New NamedValue(Of Integer())("xxxxx", {1, 2, 3}))
-        tttt.Add("2333", New NamedValue(Of Integer())("xx---xxx", {-10, 203, 3}))
+        Dim t As New TestDynamicsObject With {
+            .Tarray = {1, 2, 3, 4, 5, 6, 7, 8},
+            .str = "12345" & vbCrLf & "67890",
+            .Tarray2 = {
+                "xxoo", "1234", "6789", "50"
+            }
+        }
+        t.Add("1234", New NamedValue(Of Integer())("x1", {100, 200, 3}))
+        t.Add("2333", New NamedValue(Of Integer())("x2", {-10, 203, 3}))
 
-        Call tttt.GetJson(True).__DEBUG_ECHO
+        Dim json$ = GetExtendedJson(Of NamedValue(Of Integer()), TestDynamicsObject)(t)
+        Dim t2 = LoadExtendedJson(Of NamedValue(Of Integer()), TestDynamicsObject)(json)
 
-        Call GetExtendedJson(Of NamedValue(Of Integer()), Test)(tttt, True).SaveTo("x:\dddd.json")
-
-        Dim dfdsfdsf = GetExtendedJson(Of NamedValue(Of Integer()), Test)(tttt)
-        Dim t2 = LoadExtendedJson(Of NamedValue(Of Integer()), Test)(dfdsfdsf)
-
-        Call t2.tt.GetJson.__DEBUG_ECHO
+        Call t.GetJson(True).SaveTo("./test_out.json")
+        Call json.SaveTo("./test_out2.json")
+        Call t2.Tarray.GetJson.__DEBUG_ECHO
+        Call t2.Tarray2.GetJson.__DEBUG_ECHO
 
         Pause()
     End Sub
