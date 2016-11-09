@@ -74,7 +74,7 @@ Namespace CommandLine.Reflection
             If String.IsNullOrEmpty(api.Example) Then
                 Call Console.WriteLine($"  Example:      CLI usage example not found!")
             Else
-                Call Console.WriteLine($"  Example:      {App.AssemblyName} {api.Name} {api.Example}")
+                Call Console.WriteLine($"  Example:      {App.AssemblyName} {api.Example}")
             End If
 
             If Not api.Arguments.IsNullOrEmpty Then
