@@ -4,12 +4,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileStream.Cytoscape
 
+    ' Cytoscape exports csv files
+
     Public Class Edges
 
         Public Property SUID As String
         Public Property EdgeBetweenness As String
         Public Property interaction As String
         Public Property name As String
+        ''' <summary>
+        ''' Dynamics extended data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Data As Dictionary(Of String, String)
 
         Public Iterator Function GetNodes(nodeHash As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
             Dim tokens As String() =
@@ -45,6 +52,11 @@ Namespace FileStream.Cytoscape
         <Column("shared name")> Public Property SharedName As String
         Public Property Stress As String
         Public Property TopologicalCoefficient As String
+        ''' <summary>
+        ''' Dynamics extended data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Data As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
