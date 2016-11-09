@@ -65,11 +65,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.vb" />
-    <Compile Include="JsonValue.vb" />
-    <Compile Include="JsonObject.vb" />
-    <Compile Include="JsonArray.vb" />
-    <Compile Include="JsonElement.vb" />
-    <Compile Include="JsonParser.vb" />
+    <Compile Include="Parser\JsonValue.vb" />
+    <Compile Include="Parser\JsonObject.vb" />
+    <Compile Include="Parser\JsonArray.vb" />
+    <Compile Include="Parser\JsonElement.vb" />
+    <Compile Include="Parser\JsonParser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -85,6 +85,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Serializer\ExtendedDictionary.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -112,6 +113,7 @@
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

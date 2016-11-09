@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MIME.JSON.Parser
 
 Public Module Extensions
 
