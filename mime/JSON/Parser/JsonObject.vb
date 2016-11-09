@@ -15,6 +15,10 @@ Namespace Parser
             Call array.Add(key, element)
         End Sub
 
+        Public Sub Add(key$, value$)
+            Call array.Add(key, New JsonValue(value))
+        End Sub
+
         Default Public Overloads Property Item(key As String) As JsonElement
             Get
                 Return array(key)

@@ -14,6 +14,10 @@
             Value = obj
         End Sub
 
+        Public Overrides Function BuildJsonString() As String
+            Return Scripting.ToString(Value.ToString, "null")
+        End Function
+
         Public Overrides Function ToString() As String
             Return "{" & Scripting.ToString(Value, "null") & "}"
         End Function

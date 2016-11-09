@@ -29,7 +29,7 @@
             End Set
         End Property
 
-        Public Function BuildJsonString() As String
+        Public Overridable Function BuildJsonString() As String
             Return ""
         End Function
     End Class
