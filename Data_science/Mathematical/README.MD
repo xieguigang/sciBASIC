@@ -1,4 +1,4 @@
-### VisualBasic Mathematics expression evaluation
+## Mathematics Expression Evaluate Engine
 ![](./images/2016-05-15.png)
 
 If you are running on Linux/macOS platform, try start by mono:
@@ -39,10 +39,12 @@ Imports Microsoft.VisualBasic.Mathematical
 
 Dim engine As New Expression
 
-' Add variable
+' Add variable, name is not case sensitive 
 Call engine.Variables.Set(Name, expr)
 ' Add Constant
-' But please notices that, unlike the variable its value can be updated, the constant value can not be updated after it was assigned the initial value.
+' But please notices that, unlike the variable its value can be updated in the runtime, 
+' the constant value can not be updated once it was assigned the initial value.
+' Constant name is case sensitive.
 Call engine.Constant.Add(Name, expr)
 ' Add user define function
 Call engine.Functions.Add(Name, def)
@@ -59,12 +61,15 @@ value = engine.Evaluation("sin(PI)")
 value = engine.Evaluation("cos(PI)+sin(PI/5)+6%3")
 ```
 
-### VisualBasic Data Science plot system
+## Data Plot System
 
 ##### Bubble Plot
 
 ```vbnet
-Call Bubble.Plot(csv.SerialData.GetData("./images/BubbleTest.csv"), legend:=False).SaveAs("./images/Bubble.png")
+Dim data = csv.SerialData.GetData("./images/BubbleTest.csv")
+Call Bubble _
+     .Plot(data, legend:=False) _
+     .SaveAs("./images/Bubble.png")
 ```
 
 ![](./images/Bubble.png)
@@ -122,8 +127,7 @@ Call {
     New NamedValue(Of Integer)("s7", 99),
     New NamedValue(Of Integer)("s8", 499)
 }.FromData() _
- .Plot(reorder:=1,
-       size:=New Size(1500, 1000)) _
+ .Plot(reorder:=1, size:=New Size(1500, 1000)) _
  .SaveAs("./pie_chart.png")
 ```
 
@@ -228,7 +232,10 @@ End Class
 
 Solving:
 ```vbnet
-Call New ODEsTest().Solve(300, 0, 500).Plot.SaveAs("./ODEs.png")
+Call New ODEsTest() _
+    .Solve(300, 0, 500) _
+    .Plot _
+    .SaveAs("./ODEs.png")
 ```
 
 ![](./images/ODEs.png)
@@ -244,7 +251,9 @@ Call New GenericODEs(P = 2, C = 1) With {
                dy(P) = 0.1 * P - 0.1 * C * P
                dy(C) = 0.1 * P * C - 0.1 * C
            End Sub
-}.Solve(300, 0, 500).Plot().SaveAs("./ODEs_test2.png")
+}.Solve(300, 0, 500) _
+ .Plot() _
+ .SaveAs("./ODEs_test2.png")
 ```
 
 ![](./images/ODEs_test2.png)
@@ -258,14 +267,38 @@ Set value ``n=100000`` or larger value will makes the calculated result more pre
 ```vbnet
 Dim type As New Value(Of LegendStyles)
 Dim legends As Legend() = {
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "red", .style = type = LegendStyles.Hexagon, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "blue", .style = type = LegendStyles.Rectangle, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "lime", .style = type = LegendStyles.Diamond, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.Triangle, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.Circle, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.DashLine, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.SolidLine, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "red",
+        .style = type = LegendStyles.Hexagon, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "blue", 
+        .style = type = LegendStyles.Rectangle, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "lime", 
+        .style = type = LegendStyles.Diamond, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "skyblue", 
+        .style = type = LegendStyles.Triangle, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "black", 
+        .style = type = LegendStyles.Circle, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "skyblue", 
+        .style = type = LegendStyles.DashLine, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "black", 
+        .style = type = LegendStyles.SolidLine, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "yellow", 
+        .style = type = LegendStyles.Pentacle, 
+        .title = type.ToString}
 }
 
 Call g.GraphicsPlots(
