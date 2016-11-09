@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Parser
 
@@ -46,11 +47,12 @@ Namespace Parser
 
         Public Overloads Function BuildJsonString() As String
             Dim a As New StringBuilder
+            Dim array$() = Me _
+                .array _
+                .ToArray(Function(kp) $"""{kp.Key}"": {kp.Value.BuildJsonString}")
 
             Call a.AppendLine("{")
-            For Each kp As KeyValuePair(Of String, JsonElement) In array
-                Call a.AppendLine($"{kp.Key}: {kp.Value.BuildJsonString},")
-            Next
+            Call a.AppendLine(array.JoinBy("," & vbLf))
             Call a.AppendLine("}")
 
             Return a.ToString

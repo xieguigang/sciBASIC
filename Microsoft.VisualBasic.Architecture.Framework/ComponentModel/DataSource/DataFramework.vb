@@ -75,20 +75,42 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="flag"></param>
+        ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
-        Public Function Schema(Of T)(flag As PropertyAccess) As Dictionary(Of String, PropertyInfo)
-            Return GetType(T).Schema(flag)
+        Public Function Schema(Of T)(flag As PropertyAccess, Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
+            Return GetType(T).Schema(flag,, nonIndex)
         End Function
 
+        ''' <summary>
+        ''' (instance) Public Property xxxxx As xxxxx
+        ''' </summary>
+        Public Const PublicProperty As BindingFlags = BindingFlags.Public Or BindingFlags.Instance
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="flag"></param>
+        ''' <param name="binds"></param>
+        ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
+        ''' <returns></returns>
         <Extension>
         Public Function Schema(type As Type,
                                flag As PropertyAccess,
-                               Optional binds As BindingFlags =
-                               BindingFlags.Public Or BindingFlags.Instance) As Dictionary(Of String, PropertyInfo)
-            Dim props As PropertyInfo() =
-                type.GetProperties(binds)
-            Return props.Where(Flags(flag)) _
-                .ToDictionary(Function(x) x.Name)
+                               Optional binds As BindingFlags = PublicProperty,
+                               Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
+
+            Dim props As IEnumerable(Of PropertyInfo) =
+                type _
+                .GetProperties(binds) _
+                .Where(Flags(flag))
+
+            If nonIndex Then
+                props = props _
+                    .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty)
+            End If
+
+            Return props.ToDictionary(Function(x) x.Name)
         End Function
 
 #If NET_40 = 0 Then

@@ -16,16 +16,24 @@ Public Module ExtendedDictionary
     ''' 1. 首先序列化字典本身
     ''' 2. 然后添加属性
     ''' </remarks>
-    Public Function GetExtendedJson(Of T As Dictionary(Of String, V), V)(obj As T) As String
+    Public Function GetExtendedJson(Of V, T As Dictionary(Of String, V))(obj As T) As String
         Dim br As New JsonObject
 
         For Each key$ In obj.Keys
             Call br.Add(key, obj(key$).GetJson)
         Next
 
-        Dim defines = DataFramework.Schema(Of T)(PropertyAccess.Readable)
+        Dim defines = DataFramework.Schema(obj.GetType, PropertyAccess.Readable,, True)
 
         For Each key$ In defines.Keys
+            If key = NameOf(obj.Keys) OrElse
+                key = NameOf(obj.Values) OrElse
+                key = NameOf(obj.Comparer) OrElse
+                key = NameOf(obj.Count) Then
+                ' 忽略掉系统字典对象的自有属性
+                Continue For
+            End If
+
             Dim o = defines(key$).GetValue(obj)
             Dim value$ = If(
                 o Is Nothing,
