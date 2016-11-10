@@ -70,7 +70,7 @@ Namespace News
         ''' <returns></returns>
         Public Shared Function Fetch(url As String, Optional proxy As String = Nothing) As RSS
             Dim xml As String = url.GET(proxy:=proxy)
-            Dim value As RSS = xml.CreateObjectFromXml(Of RSS)
+            Dim value As RSS = xml.LoadFromXml(Of RSS)
             Return value
         End Function
 
