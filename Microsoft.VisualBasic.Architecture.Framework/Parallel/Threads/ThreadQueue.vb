@@ -110,6 +110,9 @@ Namespace Parallel
                     End If
                 End While
 
+                ' 必须要休眠1个毫秒，否则CPU的占用率会非常高
+                Call Thread.Sleep(1)
+
                 QSolverRunning = False
             Loop
         End Sub
