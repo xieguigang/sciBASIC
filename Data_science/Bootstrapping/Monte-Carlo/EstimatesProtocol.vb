@@ -106,9 +106,17 @@ Namespace MonteCarlo
         ''' <returns></returns>
         <Extension>
         Public Function Run(dll As String, k As Long, n As Integer, a As Integer, b As Integer) As IEnumerable(Of ODEsOut)
-            Dim model As Type = DllParser(dll)
-            Dim y0 = model.Gety0
-            Dim parms = model.GetRandomParameters
+            Dim model As Type = DllParser(dll).First
+            Dim y0 = model.Gety0 _
+                .Select(Function(v) New NamedValue(Of INextRandomNumber) With {
+                    .Name = v.Name,
+                    .x = AddressOf v.GetValue
+                })
+            Dim parms = model.GetRandomParameters _
+                .Select(Function(v) New NamedValue(Of INextRandomNumber) With {
+                    .Name = v.Name,
+                    .x = AddressOf v.GetValue
+                })
             Return model.Bootstrapping(parms, y0, k, n, a, b,,)
         End Function
 
@@ -166,7 +174,7 @@ Namespace MonteCarlo
 
             For Each var As String In eigenvector.Keys
                 Dim y As Double() = x.y(var).x
-                Dim n As Integer = y.Length / partN
+                Dim n As Integer = CInt(y.Length / partN)
 
                 For Each block As Double() In Parallel.Linq.SplitIterator(y, n, echo:=False)
                     vector += eigenvector(var)(block)
@@ -202,8 +210,12 @@ Namespace MonteCarlo
                                    Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) _
                                                               As Dictionary(Of String, Double)()
 
-            Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.Gety0)
-            Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(model.GetRandomParameters)
+            Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(
+                model.Gety0 _
+                .Select(Function(v) v.GetRandomModel))
+            Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(
+                model.GetRandomParameters _
+                .Select(Function(v) v.GetRandomModel))
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector
             Dim n As Integer = observation.x.Length
             Dim a As Integer = observation.x.Min
@@ -258,7 +270,7 @@ Namespace MonteCarlo
                 End If
 
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
-                Dim requires As Integer = GetEntityNumbers(required)
+                Dim requires As Integer = GetEntityNumbers(required.value)
                 Dim out As Dictionary(Of String, Double)() =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
                     required.value _
                     .Where(Function(x) Not x.Name = EstimatesProtocol.Observation) _
@@ -332,7 +344,7 @@ Namespace MonteCarlo
                                    Optional cut As Double = 0.3,
                                    Optional work As String = Nothing) As Dictionary(Of String, Double)()
 
-            Dim model As Type = DllParser(dll)
+            Dim model As Type = DllParser(dll).First
 
             If model Is Nothing Then  ' 没有从目标程序集之中查找到计算模型的定义
                 Dim msg As String =

@@ -37,6 +37,13 @@ Namespace MonteCarlo
             }
         End Function
 
+        Public Function GetRandomModel() As NamedValue(Of INextRandomNumber)
+            Return New NamedValue(Of INextRandomNumber) With {
+                .Name = Name,
+                .x = AddressOf GetValue
+            }
+        End Function
+
         Public Overrides Function ToString() As String
             Return Name & " --> " & "{ min:=" & Min & ", max:=" & Max & " }"
         End Function

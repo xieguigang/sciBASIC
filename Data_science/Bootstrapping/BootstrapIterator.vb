@@ -195,7 +195,7 @@ Public Module BootstrapIterator
             Next
         Else
             For Each it As Long In k.SeqIterator
-                Dim odes_Out = params.iterate(model, y0, ps, n, a, b)
+                Dim odes_Out = params.iterate(model, yinit, ps, n, a, b)
                 Dim isNaNResult As Boolean = odes_Out.HaveNaN
 
                 If If(trimNaN, Not isNaNResult, True) Then ' 假若不需要trim，则总是True，即返回所有数据
