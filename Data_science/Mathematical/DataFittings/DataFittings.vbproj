@@ -66,9 +66,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <OutputPath>bin\x64\Publish\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
