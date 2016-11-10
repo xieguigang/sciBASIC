@@ -41,6 +41,21 @@ Imports Microsoft.VisualBasic.Text
 <PackageNamespace("IO")>
 Public Module IOExtensions
 
+    ''' <summary>
+    ''' 为了方便在linux上面使用，这里会处理一下file://这种情况，请注意参数是ByRef引用的
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function FixPath(ByRef path$) As String
+        If InStr(path, "file://", CompareMethod.Text) = 1 Then
+            Return Mid(path, 8)
+        Else
+            Return FileIO.FileSystem.GetFileInfo(path).FullName
+        End If
+    End Function
+
     <Extension>
     Public Function ReadVector(path As String) As Double()
         Return IO.File.ReadAllLines(path).ToArray(Function(x) CDbl(x))
