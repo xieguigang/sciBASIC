@@ -173,19 +173,24 @@ Public Module Extensions
 
     <ExportAPI("Write.Csv")>
     <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Return Save(data, False).Save(path, False, encoding)
+        Return Save(data, False).Save(path, encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), Path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
-        Dim Headers = data.First.Schema
-        Dim LQuery = (From item In data Select CType((From p In Headers Select item.GetValue(p.Value)).ToList, RowObject)).ToArray
-        Dim File As New DocumentStream.File
+    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path As String, Optional encoding As Encoding = Nothing) As Boolean
+        Dim headers As Dictionary(Of String, Integer) = data.First.Schema
+        Dim LQuery = LinqAPI.Exec(Of RowObject) <=
+ _
+            From x As DynamicObjectLoader
+            In data
+            Select New RowObject(From p In headers Select x.GetValue(p.Value))
 
-        Call File.AppendLine((From p In Headers Select p.Key).ToList)
-        Call File.AppendRange(LQuery)
+        Dim csv As New DocumentStream.File
 
-        Return File.Save(Path, False, encoding)
+        Call csv.AppendLine((From p In headers Select p.Key).ToList)
+        Call csv.AppendRange(LQuery)
+
+        Return csv.Save(path, encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
@@ -351,14 +356,9 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                            metaBlank,
                            maps,
                            Not nonParallel)
-        Dim lazy As Boolean = df.RowNumbers > 20000
 
-        If nonParallel Then
-            lazy = False
-        End If
+        Dim success As Boolean = df.Save(path, Encoding:=encoding)
 
-        Dim success As Boolean =
-            df.Save(path, LazySaved:=lazy, encoding:=encoding)
         If success Then
             Call "CSV saved!".__DEBUG_ECHO
         End If
@@ -397,13 +397,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path As String) As Boolean
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path As String, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
                                             Select s =
                                                 n.ToString
         Dim buf As New DocumentStream.File({New RowObject(row)})
-        Return buf.Save(path, LazySaved:=False)
+        Return buf.Save(path, encoding.GetEncodings)
     End Function
 
     ''' <summary>

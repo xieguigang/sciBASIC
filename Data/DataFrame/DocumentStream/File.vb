@@ -479,25 +479,13 @@ B21,B22,B23,...
         End Operator
 #End Region
 
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Save(FilePath, False, Encoding)
-        End Function
-
         ''' <summary>
         ''' Save this csv document into a specific file location <paramref name="path"/>.
         ''' </summary>
         ''' <param name="Path"></param>
-        ''' <param name="LazySaved">Optional, this is for the consideration of performance and memory consumption.
-        ''' When a data file is very large, then you may encounter a out of memory exception on a 32 bit platform,
-        ''' then you should set this parameter to True to avoid this problem. Defualt is False for have a better
-        ''' performance.
-        ''' (当估计到文件的数据量很大的时候，请使用本参数，以避免内存溢出致使应用程序崩溃，默认为False，不开启缓存)
-        ''' </param>
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
-        Public Overridable Overloads Function Save(Optional Path As String = "",
-                                                   Optional LazySaved As Boolean = False,
-                                                   Optional encoding As Encoding = Nothing) As Boolean
-            Return StreamIO.SaveDataFrame(Me, getPath(Path), LazySaved, encoding)
+        Public Overrides Function Save(Optional path$ = "", Optional Encoding As Encoding = Nothing) As Boolean
+            Return StreamIO.SaveDataFrame(Me, getPath(path), Encoding)
         End Function
 
         ''' <summary>

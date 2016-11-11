@@ -31,6 +31,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace DocumentStream
 
+    ''' <summary>
+    ''' The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>
+    ''' </summary>
     Public Class EntityObject : Inherits DynamicPropertyBase(Of String)
         Implements sIdEnumerable
 
@@ -63,6 +66,9 @@ Namespace DocumentStream
         End Function
     End Class
 
+    ''' <summary>
+    ''' The numeric dataset, <see cref="DynamicPropertyBase(Of Double)"/>, <see cref="Double"/>
+    ''' </summary>
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements sIdEnumerable
 

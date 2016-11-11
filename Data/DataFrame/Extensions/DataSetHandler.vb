@@ -44,7 +44,7 @@ Module DataSetHandler
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", type.FullName, path)
-        Call Reflector.__save(source, type, False).Save(path, LazySaved:=False, encoding:=encoding)
+        Call Reflector.__save(source, type, False).Save(path, Encoding:=encoding)
         Call Console.WriteLine("CSV saved!")
 
         Return True

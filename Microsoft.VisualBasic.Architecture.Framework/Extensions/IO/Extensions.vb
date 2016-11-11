@@ -79,7 +79,7 @@ Namespace FileIO
         ''' <summary>
         ''' Open text file writer, this function will auto handle all things.
         ''' </summary>
-        ''' <param name="path"></param>
+        ''' <param name="path">假若路径是指向一个已经存在的文件，则原有的文件数据将会被清空</param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         <Extension>
