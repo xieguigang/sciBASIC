@@ -1,35 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::20c8934f82c5ff1e72bdaf61e4bceff1, ..\visualbasic_App\Data\DataFrame\Linq\BatchQueue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace DocumentStream.Linq
@@ -37,22 +38,46 @@ Namespace DocumentStream.Linq
     Public Module BatchQueue
 
         ''' <summary>
+        ''' 函数会自动处理文件或者文件夹的情况
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="handle$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RequestData(Of T As Class)(handle$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of T)
+            If handle.FileExists Then
+                Return handle.LoadCsv(Of T)
+            ElseIf handle.DirectoryExists Then
+                Return ReadQueue(Of T)(ls - l - r - "*.csv" <= handle, encoding) _
+                    .Select(Function(csv) csv.x) _
+                    .IteratesALL
+            Else
+                Dim msg$ = $"Handle {handle} is invalid! Check if it is a exists file or folder?"
+                Throw New TaskCanceledException(msg)
+            End If
+        End Function
+
+        ''' <summary>
         ''' {<see cref="IO.Path.GetFileNameWithoutExtension(String)"/>, <typeparamref name="T"/>()}
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="files"></param>
         ''' <returns></returns>
-        ''' <remarks>在服务器上面可能会出现IO很慢的情况，这个时候可以试一下这个函数进行批量数据加载</remarks>
-        ''' 
+        ''' <remarks>
+        ''' 在服务器上面可能会出现IO很慢的情况，这个时候可以试一下这个函数进行批量数据加载
+        ''' </remarks>
         <Extension>
         Public Iterator Function ReadQueue(Of T As Class)(
-                                 files As IEnumerable(Of String),
-                                 Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of NamedValue(Of T()))
-
-            Call "Wait for the IO queue.....".__DEBUG_ECHO
+                                          files As IEnumerable(Of String),
+                              Optional encoding As Encodings = Encodings.Default) _
+                                                As IEnumerable(Of NamedValue(Of T()))
 
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim encode As Encoding = encoding.GetEncodings
+
+            Call "Wait for the IO queue.....".__DEBUG_ECHO
+
             Dim IO As IEnumerable(Of NamedValue(Of String())) =
  _
                 From path As String
