@@ -1862,6 +1862,12 @@ Public Module Extensions
         obj2 = objTemp
     End Sub
 
+    <Extension> Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
+        Dim tmp As T = array(a)
+        array(a) = array(b)
+        array(b) = tmp
+    End Sub
+
     ''' <summary>
     ''' Swap the value in the two variables.
     ''' </summary>
