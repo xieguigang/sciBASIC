@@ -130,8 +130,9 @@ Public Class Expression
                 .Field = New NamedValue(Of String) With {
                     .Name = tokens.Debug,
                     .x = fields _
-                    .ToDictionary(Function(x) x.Name,
-                                  Function(x) x.x).GetJson
+                        .GroupBy(Function(x) x.Name) _
+                        .ToDictionary(Function(x) x.Key,
+                                      Function(x) x.First.x).GetJson
                 }
             }
         Else
