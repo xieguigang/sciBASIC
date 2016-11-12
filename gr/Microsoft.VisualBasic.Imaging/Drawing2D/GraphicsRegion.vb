@@ -36,9 +36,19 @@ Namespace Drawing2D
     ''' </summary>
     Public Structure GraphicsRegion
 
+        ''' <summary>
+        ''' 整张画布的大小
+        ''' </summary>
         Public Size As Size
+        ''' <summary>
+        ''' 画布的边留白
+        ''' </summary>
         Public Margin As Size
 
+        ''' <summary>
+        ''' 整张画布出去margin部分剩余的可供绘图的区域
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property PlotRegion As Rectangle
             Get
                 Dim topLeft As New Point(Margin.Width, Margin.Height)
@@ -50,6 +60,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' 整张画布的大小区域
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property EntireArea As Rectangle
             Get
                 Return New Rectangle(New Point, Size)
