@@ -170,6 +170,10 @@ Call BarPlot.Plot2(data) _
 ![](./images/Fruit_consumption-bar.png)
 ![](./images/Fruit_consumption-bar2.png)
 
+###### Stacked bar plot
+
+![](./images/Fruit_consumption-bar-stacked.png)
+
 ##### Solving ODEs
 
 Try solving the ODEs example below:
