@@ -40,13 +40,13 @@ Namespace DocumentStream
         ''' <summary>
         ''' 根据文件的头部的定义，从<paramref name="types"/>之中选取得到最合适的类型的定义
         ''' </summary>
-        ''' <param name="df"></param>
+        ''' <param name="csv"></param>
         ''' <param name="types"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function [GetType](df As File, ParamArray types As Type()) As Type
-            Dim head As String() = df.First.ToArray
+        Public Function [GetType](csv As File, ParamArray types As Type()) As Type
+            Dim head As String() = csv.First.ToArray
             Dim scores As New Dictionary(Of Type, Integer)
 
             For Each schema In types.Select(AddressOf SchemaProvider.CreateObject)
