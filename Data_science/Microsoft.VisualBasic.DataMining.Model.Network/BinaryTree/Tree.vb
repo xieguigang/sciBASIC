@@ -126,8 +126,9 @@ Namespace KMeans
         '''
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As EntityLDM()
-            Dim mapNames As String() = resultSet.First.Properties.Keys.ToArray   ' 得到所有属性的名称
-            Dim ds As Entity() = resultSet.ToArray(
+            Dim source As EntityLDM() = resultSet.ToArray
+            Dim mapNames As String() = source(Scan0).Properties.Keys.ToArray   ' 得到所有属性的名称
+            Dim ds As Entity() = source.ToArray(
                 Function(x) New KMeans.Entity With {
                     .uid = x.Name,
                     .Properties = mapNames.ToArray(Function(s) x.Properties(s))
@@ -135,7 +136,7 @@ Namespace KMeans
             Dim tree As KMeans.Entity() = TreeCluster(ds, parallel, [stop])   ' 二叉树聚类操作
             Dim saveResult As EntityLDM() = tree.ToArray(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
-            For Each name As String In resultSet.ToArray(Function(x) x.Name)
+            For Each name As String In source.Select(Function(x) x.Name)
                 For Each x In saveResult
                     If InStr(x.Name, name) > 0 Then
                         x.Cluster = x.Name.Replace(name & ".", "")
@@ -151,13 +152,13 @@ Namespace KMeans
         ''' <summary>
         ''' 二叉树聚类的路径会在<see cref="Entity.uid"/>上面出现
         ''' </summary>
-        ''' <param name="source"></param>
+        ''' <param name="source">函数会在这里自动调用ToArray方法结束Linq查询</param>
         ''' <param name="parallel"></param>
         ''' <param name="stop">Max iteration number for the kmeans kernel</param>
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As Entity()
-            Return TreeCluster(Of Entity)(source, parallel, [stop])
+            Return TreeCluster(Of Entity)(source.ToArray, parallel, [stop])
         End Function
 
         Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T), Optional parallel As Boolean = False, Optional [stop] As Integer = -1) As Entity()
@@ -321,7 +322,11 @@ EXIT_:          Dim array = source.ToArray
         ''' <param name="depth"></param>
         ''' <param name="nodes"></param>
         ''' <returns></returns>
-        Private Function __buildNET(array As __edgePath(), parent As FileStream.Node, depth As Integer, ByRef nodes As List(Of FileStream.Node)) As NetworkEdge()
+        Private Function __buildNET(array As __edgePath(),
+                                    parent As FileStream.Node,
+                                    depth As Integer,
+                                    ByRef nodes As List(Of FileStream.Node)) As NetworkEdge()
+
             Dim [next] As Integer = depth + 1  ' 下一层节点的深度
 
             If depth = array(Scan0).path.Length AndAlso
