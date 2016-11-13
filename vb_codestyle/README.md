@@ -282,6 +282,53 @@ For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
 Next
 ```
 
+## VB specific ``With`` anonymous variable
+
+When you are dealing the variable with an array, usually you are going to do in this style:
+
+```vbnet
+Dim array As <Class>()
+
+For i% = 0 To array.Length - 1
+    Dim o = array(i)
+    
+    If <blablabla(o)> Is True Then
+        Return i%
+    End If
+Next
+```
+
+But by using the ``With`` anonymous variable syntax, the code would be more brief and better:
+
+```vbnet
+Dim array As <Class>()
+
+For i% = 0 To array.Length - 1
+    With array(i)
+    
+        If <blablabla(.Property)> Is True Then
+            Return i%
+        End If
+    End With
+Next
+```
+
+###### Example
+
+```vbnet
+Public Function IndexOf(Id As Char) As Integer
+    For i As Integer = 0 To Catalogs.Length - 1
+        With Catalogs(i)
+            If .SubClasses.ContainsKey(Id) Then
+                Return i
+            End If
+        End With
+    Next
+
+    Return -1
+End Function
+```
+
 ## Type char coding style
 
 ###### Recommended
