@@ -6,6 +6,22 @@ Imports System.Drawing
 Module Module1
 
     Sub Main()
+
+
+        Dim data = csv.LoadBarData(
+    "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
+    {
+        "rgb(124,181,236)",
+        "rgb(67,67,72)",
+        "gray"
+    })
+
+        Call BarPlot.Plot(data, stacked:=True) _
+    .SaveAs("X:/Fruit_consumption-bar.png")
+
+        Pause()
+
+
         Call {New csv.SerialData}.SaveTo("./template.csv")
 
         'Dim raw = "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics\example.csv".LoadCsv(Of csv.SerialData).ToArray

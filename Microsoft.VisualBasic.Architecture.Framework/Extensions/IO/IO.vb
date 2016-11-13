@@ -47,13 +47,18 @@ Public Module IOExtensions
     ''' <param name="path$"></param>
     ''' <returns></returns>
     ''' 
-    <Extension>
-    Public Function FixPath(ByRef path$) As String
+    <Extension> Public Function FixPath(ByRef path$) As String
         If InStr(path, "file://", CompareMethod.Text) = 1 Then
-            Return Mid(path, 8)
+            If App.IsMicrosoftPlatform AndAlso InStr(path, "file:///", CompareMethod.Text) = 1 Then
+                path = Mid(path, 9)
+            Else
+                path = Mid(path, 8)
+            End If
         Else
-            Return FileIO.FileSystem.GetFileInfo(path).FullName
+            path = FileIO.FileSystem.GetFileInfo(path).FullName
         End If
+
+        Return path$
     End Function
 
     <Extension>

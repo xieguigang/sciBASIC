@@ -811,7 +811,8 @@ Public Module ProgramPathSearchTool
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimSuffix(file As String) As String
         Try
-            Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
+            Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
+            Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
             Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
             Return $"{fileInfo.Directory.FullName}/{Name}"
         Catch ex As Exception

@@ -584,23 +584,6 @@ Public Module Extensions
 #Enable Warning
 
     ''' <summary>
-    ''' Removes VbCr and VbLf
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TrimVBCrLf(s As String) As String
-        s = s.Replace(vbCrLf, "")
-        s = s.Replace(vbCr, "").Replace(vbLf, "")
-        Return s
-    End Function
-
-    ''' <summary>
-    ''' Chr(0): NULL char
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Const NIL As Char = Chr(0)
-
-    ''' <summary>
     ''' Format the datetime value in the format of yy/mm/dd hh:min
     ''' </summary>
     ''' <param name="dat"></param>
@@ -1451,7 +1434,7 @@ Public Module Extensions
     End Function
 
     <Extension> <ExportAPI("Get.Boolean")> Public Function getBoolean(ch As Char) As Boolean
-        If ch = NIL Then
+        If ch = ASCII.NUL Then
             Return False
         End If
 
@@ -1910,7 +1893,7 @@ Public Module Extensions
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Trim")>
-    <Extension> Public Function TrimA(strText As String, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace As String = " ") As String
+    <Extension> Public Function TrimNewLine(strText As String, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace As String = " ") As String
 #Else
     <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
 #End If

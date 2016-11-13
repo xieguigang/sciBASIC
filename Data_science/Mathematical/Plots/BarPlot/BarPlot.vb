@@ -50,88 +50,138 @@ Public Module BarPlot
                          Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional stacked As Boolean = False,
+                         Optional stackReordered? As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPos As Point = Nothing,
                          Optional legendBorder As Border = Nothing) As Bitmap
 
+        If margin.IsEmpty Then
+            margin = New Size(120, 300)
+        End If
+
         Return GraphicsPlots(
             size, margin, bg,
-            Sub(ByRef g, grect)
-                Dim mapper As New Scaling(data, stacked, False)
-                Dim n As Integer = If(
-                    stacked,
-                    data.Samples.Length,
-                    data.Samples.Sum(Function(x) x.data.Length))
-                Dim dx As Double =
-                    (size.Width - 2 * margin.Width - 2 * margin.Width) / n
-                Dim interval As Double = 2 * margin.Width / n
-                Dim left As Single = margin.Width
-                Dim sy As Func(Of Single, Single) =
-                    mapper.YScaler(size, margin)
-                Dim bottom = size.Height - margin.Height
+            Sub(ByRef g, grect) Call __plot1(
+                g, grect,
+                data,
+                bg,
+                showGrid, stacked, stackReordered,
+                showLegend, legendPos, legendBorder))
+    End Function
 
-                Call g.DrawAxis(size, margin, mapper, showGrid)
+    Private Sub __plot1(ByRef g As Graphics, grect As GraphicsRegion,
+                        data As BarDataGroup,
+                        bg$,
+                        showGrid As Boolean,
+                        stacked As Boolean,
+                        stackReorder As Boolean,
+                        showLegend As Boolean,
+                        legendPos As Point,
+                        legendBorder As Border)
 
-                For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
-                    Dim x = left + interval
+        Dim mapper As New Scaling(data, stacked, False)
+        Dim n As Integer = If(
+            stacked,
+            data.Samples.Length,
+            data.Samples.Sum(Function(x) x.data.Length))
+        Dim dxStep As Double =
+            (grect.Size.Width - 2 * grect.Margin.Width - 2 * grect.Margin.Width) / n
+        Dim interval As Double = 2 * grect.Margin.Width / n
+        Dim left As Single = grect.Margin.Width
+        Dim sy As Func(Of Single, Single) =
+            mapper.YScaler(grect.Size, grect.Margin)
+        Dim bottom = grect.Size.Height - grect.Margin.Height
+        Dim angle! = -45
 
-                    If stacked Then ' 改变Y
-                        Dim right = x + dx
-                        Dim top = sy(sample.obj.StackedSum)
-                        Dim canvasHeight = size.Height - (margin.Height * 2)
+        Call g.DrawAxis(grect.Size, grect.Margin, mapper, showGrid)
 
-                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
-                            Dim rect As Rectangle = Rectangle(top, x, right, bottom)
+        For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
+            Dim x = left + interval
 
-                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).x), rect)
+            If stacked Then ' 改变Y
+                Dim right = x + dxStep
+                Dim top = sy(sample.obj.StackedSum)
+                Dim canvasHeight = grect.Size.Height - (grect.Margin.Height * 2)  ' 畫布的高度
+                Dim actualHeight = bottom - top ' 底部減去最高的就是實際的高度（縂的）
+                Dim barWidth = dxStep
 
-                            top += ((val.obj - mapper.ymin) / mapper.dy) * canvasHeight
-                        Next
+                Dim stack = If(stackReorder,
+                    sample.obj.data _
+                        .SeqIterator _
+                        .OrderBy(Function(o) o.obj),
+                    sample.obj.data.SeqIterator)
 
-                        x += dx
-                    Else ' 改变X
-                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
-                            Dim right = x + dx
-                            Dim top = sy(val.obj)
-                            Dim rect As Rectangle = Rectangle(top, x, right, size.Height - margin.Height)
+                For Each val As SeqValue(Of Double) In stack
+                    Dim topleft As New Point(x, top)
+                    Dim barHeight! = (+val) / (+sample).StackedSum  ' 百分比
+                    barHeight = barHeight * actualHeight
+                    Dim barSize As New Size(barWidth, barHeight)
+                    Dim rect As New Rectangle(topleft, barSize)
 
-                            Call g.DrawRectangle(Pens.Black, rect)
-                            Call g.FillRectangle(
-                                New SolidBrush(data.Serials(val.i).x),
-                                Rectangle(top + 1,
-                                          x + 1,
-                                          right - 1,
-                                          size.Height - margin.Height - 1))
-                            x += dx
-                        Next
-                    End If
+                    Call g.FillRectangle(New SolidBrush(data.Serials(val.i).x), rect)
 
-                    left = x
+                    top += barHeight
                 Next
 
-                If showLegend Then
-                    Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                x += dxStep
+            Else ' 改变X
+                For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                    Dim right = x + dxStep
+                    Dim top = sy(val.obj)
+                    Dim rect As Rectangle = Rectangle(top, x, right, grect.Size.Height - grect.Margin.Height)
+
+                    Call g.DrawRectangle(Pens.Black, rect)
+                    Call g.FillRectangle(
+                        New SolidBrush(data.Serials(val.i).x),
+                        Rectangle(top + 1,
+                                  x + 1,
+                                  right - 1,
+                                  grect.Size.Height - grect.Margin.Height - 1))
+                    x += dxStep
+                Next
+            End If
+
+            left = x
+        Next
+
+        Dim keys$() = data.Samples _
+            .Select(Function(s) s.Tag) _
+            .ToArray
+        Dim font As New Font(FontFace.SegoeUI, 28)
+
+        bottom += 80
+        left = grect.PlotRegion.Left + interval + dxStep / 2
+
+        For Each key$ In keys
+            Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
+            Dim dx! = sz.Width * Math.Cos(angle)
+            Dim dy! = sz.Width * Math.Sin(angle)
+            Call g.DrawString(key$, font, Brushes.Black, left - dx, bottom, angle)
+            left += dxStep
+        Next
+
+        If showLegend Then
+            Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
  _
-                        From x As NamedValue(Of Color)
-                        In data.Serials
-                        Select New Legend With {
-                            .color = x.x.RGBExpression,
-                            .fontstyle = CSSFont.GetFontStyle(
-                                FontFace.MicrosoftYaHei,
-                                FontStyle.Regular,
-                                30),
-                            .style = LegendStyles.Circle,
-                            .title = x.Name
-                        }
+                From x As NamedValue(Of Color)
+                In data.Serials
+                Select New Legend With {
+                    .color = x.x.RGBExpression,
+                    .fontstyle = CSSFont.GetFontStyle(
+                        FontFace.MicrosoftYaHei,
+                        FontStyle.Regular,
+                        30),
+                    .style = LegendStyles.Circle,
+                    .title = x.Name
+                }
 
-                    If legendPos.IsEmpty Then
-                        legendPos = New Point(CInt(size.Width * 0.8), margin.Height)
-                    End If
+            If legendPos.IsEmpty Then
+                legendPos = New Point(CInt(grect.Size.Width * 0.8), grect.Margin.Height / legends.Length)
+            End If
 
-                    Call g.DrawLegends(legendPos, legends,,, legendBorder)
-                End If
-            End Sub)
-    End Function
+            Call g.DrawLegends(legendPos, legends,,, legendBorder)
+        End If
+    End Sub
 
     Public Function Rectangle(top As Single, left As Single, right As Single, bottom As Single) As Rectangle
         Dim pt As New Point(left, top)

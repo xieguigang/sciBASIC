@@ -41,6 +41,10 @@ Public Class BarDataSample
     Public Property Tag As String
     Public Property data As Double()
 
+    ''' <summary>
+    ''' The sum of <see cref="data"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property StackedSum As Double
         Get
             Return data.Sum

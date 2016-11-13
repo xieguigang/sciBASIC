@@ -47,7 +47,7 @@ Namespace Drawing2D
     Public Module g
 
         ''' <summary>
-        ''' Data plots graphics engine.
+        ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="margin"/>:=(100,100)
         ''' </summary>
         ''' <param name="size"></param>
         ''' <param name="margin"></param>

@@ -67,9 +67,19 @@ Public Class Scaling
 
         If Not horizontal Then
             ymin! = h.Min
+
+            If ymin > 0 Then  ' 由於bar是有一定高度的，所以儅直接使用數據之中的最小值作爲繪圖的最小參考值的畫，會出現最小的那個bar會沒有高度的bug，在這裏統一修改為0為最小參考值
+                ymin = 0
+            End If
+
             dy = h.Max - ymin
         Else
             xmin! = h.Min
+
+            If xmin > 0 Then
+                xmin = 0
+            End If
+
             dx = h.Max - xmin
         End If
 
