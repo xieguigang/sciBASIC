@@ -169,6 +169,17 @@ Namespace Linq
             End If
         End Function
 
+        <Extension>
+        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As T) As IEnumerable(Of T)
+            If Not a Is Nothing Then
+                For Each x As T In a
+                    Yield x
+                Next
+            End If
+
+            Yield b
+        End Function
+
         ''' <summary>
         ''' 删除制定的键之后返回剩下的数据
         ''' </summary>

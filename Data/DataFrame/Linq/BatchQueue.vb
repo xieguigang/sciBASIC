@@ -59,6 +59,33 @@ Namespace DocumentStream.Linq
         End Function
 
         ''' <summary>
+        ''' 函数会自动处理文件或者文件夹的情况
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="handle$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function RequestFiles(Of T As Class)(handle$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of NamedValue(Of T()))
+            If handle.FileExists Then
+                Yield New NamedValue(Of T()) With {
+                    .Name = handle.BaseName,
+                    .x = handle.LoadCsv(Of T).ToArray
+                }
+            ElseIf handle.DirectoryExists Then
+                For Each file$ In ls - l - r - "*.csv" <= handle
+                    Yield New NamedValue(Of T()) With {
+                        .Name = file.BaseName,
+                        .x = file.LoadCsv(Of T).ToArray
+                    }
+                Next
+            Else
+                Dim msg$ = $"Handle {handle} is invalid! Check if it is a exists file or folder?"
+                Throw New TaskCanceledException(msg)
+            End If
+        End Function
+
+        ''' <summary>
         ''' {<see cref="IO.Path.GetFileNameWithoutExtension(String)"/>, <typeparamref name="T"/>()}
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
