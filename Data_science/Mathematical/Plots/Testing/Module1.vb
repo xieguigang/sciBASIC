@@ -16,8 +16,8 @@ Module Module1
         "gray"
     })
 
-        Call BarPlot.Plot(data, stacked:=True) _
-    .SaveAs("X:/Fruit_consumption-bar.png")
+        Call BarPlot.Plot(data, size:=New Size(2000, 2500), stacked:=True) _
+    .SaveAs("X:/Fruit_consumption-bar-stacked.png")
 
         Pause()
 

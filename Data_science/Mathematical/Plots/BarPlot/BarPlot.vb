@@ -83,7 +83,7 @@ Public Module BarPlot
         Dim n As Integer = If(
             stacked,
             data.Samples.Length,
-            data.Samples.Sum(Function(x) x.data.Length))
+            data.Samples.Sum(Function(x) x.data.Length) - 1)
         Dim dxStep As Double =
             (grect.Size.Width - 2 * grect.Margin.Width - 2 * grect.Margin.Width) / n
         Dim interval As Double = 2 * grect.Margin.Width / n
@@ -92,11 +92,14 @@ Public Module BarPlot
             mapper.YScaler(grect.Size, grect.Margin)
         Dim bottom = grect.Size.Height - grect.Margin.Height
         Dim angle! = -45
+        Dim leftMargins As New List(Of Single)
 
         Call g.DrawAxis(grect.Size, grect.Margin, mapper, showGrid)
 
         For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
             Dim x = left + interval
+
+            leftMargins += x
 
             If stacked Then ' 改变Y
                 Dim right = x + dxStep
@@ -148,16 +151,17 @@ Public Module BarPlot
             .Select(Function(s) s.Tag) _
             .ToArray
         Dim font As New Font(FontFace.SegoeUI, 28)
+        Dim dd = leftMargins(1) - leftMargins(0)
 
         bottom += 80
-        left = grect.PlotRegion.Left + interval + dxStep / 2
 
-        For Each key$ In keys
-            Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
+        For Each key As SeqValue(Of String) In keys.SeqIterator
+            left = leftMargins(key) + dd / 2 - If(Not stacked, dxStep / 2, 0)
+
+            Dim sz = g.MeasureString((+key), font) ' 得到斜边的长度
             Dim dx! = sz.Width * Math.Cos(angle)
             Dim dy! = sz.Width * Math.Sin(angle)
-            Call g.DrawString(key$, font, Brushes.Black, left - dx, bottom, angle)
-            left += dxStep
+            Call g.DrawString(+key, font, Brushes.Black, left - dx, bottom, angle)
         Next
 
         If showLegend Then
