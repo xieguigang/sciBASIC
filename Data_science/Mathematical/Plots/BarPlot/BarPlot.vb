@@ -43,6 +43,20 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' </summary>
 Public Module BarPlot
 
+    ''' <summary>
+    ''' Bar data plot
+    ''' </summary>
+    ''' <param name="data">Data groups</param>
+    ''' <param name="size">image output size</param>
+    ''' <param name="margin">margin blank of the plots region</param>
+    ''' <param name="bg$">Background color expression</param>
+    ''' <param name="showGrid">Show axis grid?</param>
+    ''' <param name="stacked">Bar plot is stacked of each sample?</param>
+    ''' <param name="stackReordered">reorder bar data? Only works in stacked mode</param>
+    ''' <param name="showLegend">Show data legend?</param>
+    ''' <param name="legendPos">Position of the data legend on the image</param>
+    ''' <param name="legendBorder">legend shape border style.</param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(data As BarDataGroup,
                          Optional size As Size = Nothing,
@@ -69,6 +83,19 @@ Public Module BarPlot
                 showLegend, legendPos, legendBorder))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="g">gdi+</param>
+    ''' <param name="grect"></param>
+    ''' <param name="data"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="showGrid"></param>
+    ''' <param name="stacked"></param>
+    ''' <param name="stackReorder"></param>
+    ''' <param name="showLegend"></param>
+    ''' <param name="legendPos"></param>
+    ''' <param name="legendBorder"></param>
     Private Sub __plot1(ByRef g As Graphics, grect As GraphicsRegion,
                         data As BarDataGroup,
                         bg$,
@@ -193,6 +220,11 @@ Public Module BarPlot
         Return New Rectangle(pt, size)
     End Function
 
+    ''' <summary>
+    ''' Creates sample groups from a data vector
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function FromData(data As IEnumerable(Of Double)) As BarDataGroup
         Return New BarDataGroup With {
@@ -212,6 +244,11 @@ Public Module BarPlot
         }
     End Function
 
+    ''' <summary>
+    ''' Plot ODEs result using bar plot
+    ''' </summary>
+    ''' <param name="odes"></param>
+    ''' <returns></returns>
     Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
         Dim colors = Imaging.ChartColors.Shuffles
         Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=

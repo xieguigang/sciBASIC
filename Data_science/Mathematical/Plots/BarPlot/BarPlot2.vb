@@ -40,6 +40,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Partial Module BarPlot
 
+    ''' <summary>
+    ''' Plot bar plot in different direction compare with <see cref="Plot"/>
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="showGrid"></param>
+    ''' <param name="stacked"></param>
+    ''' <param name="showLegend"></param>
+    ''' <param name="legendPos"></param>
+    ''' <param name="legendBorder"></param>
+    ''' <returns></returns>
     Public Function Plot2(data As BarDataGroup,
                           Optional size As Size = Nothing,
                           Optional margin As Size = Nothing,
