@@ -313,6 +313,22 @@ For i% = 0 To array.Length - 1
 Next
 ```
 
+###### Example
+
+```vbnet
+Public Function IndexOf(Id As Char) As Integer
+    For i As Integer = 0 To Catalogs.Length - 1
+        With Catalogs(i)
+            If .SubClasses.ContainsKey(Id) Then
+                Return i
+            End If
+        End With
+    Next
+
+    Return -1
+End Function
+```
+
 ## Type char coding style
 
 ###### Recommended
