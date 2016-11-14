@@ -89,4 +89,8 @@ Public Class FormCanvas
     Private Sub ShowLabelsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLabelsToolStripMenuItem.Click
         canvas.ShowLabel = ShowLabelsToolStripMenuItem.Checked
     End Sub
+
+    Private Sub FormCanvas_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        Call App.Exit(0)
+    End Sub
 End Class

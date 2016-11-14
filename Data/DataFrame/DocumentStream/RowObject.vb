@@ -164,7 +164,7 @@ Namespace DocumentStream
                 Dim LQuery As Integer =
                     LinqAPI.DefaultFirst(Of Integer) <= From colum As String
                                                         In _innerColumns.AsParallel
-                                                        Where Len(Trim(colum)) > 0
+                                                        Where Len(Strings.Trim(colum)) > 0
                                                         Select 100 '
                 Return Not LQuery > 50
             End Get
@@ -314,6 +314,10 @@ Namespace DocumentStream
                 Return s
             End If
         End Function
+
+        Public Sub Trim(lefts%)
+            _innerColumns = New List(Of String)(_innerColumns.Take(lefts))
+        End Sub
 
         ''' <summary>
         ''' Write to file.

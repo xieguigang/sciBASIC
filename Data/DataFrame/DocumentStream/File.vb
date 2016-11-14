@@ -57,6 +57,16 @@ B21,B22,B23,...
 ......"
 
         ''' <summary>
+        ''' The first row in the table was using as the headers
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Headers As RowObject
+            Get
+                Return _innerTable?.FirstOrDefault
+            End Get
+        End Property
+
+        ''' <summary>
         ''' First line in the table is the column name definition line.
         ''' </summary>
         ''' <remarks></remarks>
