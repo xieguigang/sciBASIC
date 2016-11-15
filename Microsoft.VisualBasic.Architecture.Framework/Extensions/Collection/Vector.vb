@@ -139,9 +139,14 @@ Public Module VectorExtensions
         Return buf
     End Function
 
+    ''' <summary>
+    ''' Each line in the text file should be a <see cref="Double"/> type numeric value.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <Extension> Public Function LoadDblArray(path As String) As Double()
         Dim array As String() = IO.File.ReadAllLines(path)
-        Dim n As Double() = array.ToArray(Function(x) Val(x))
+        Dim n As Double() = array.ToArray(AddressOf Val)
         Return n
     End Function
 
