@@ -31,7 +31,9 @@
 
 ---------------------------------------------------------------------------------------------------------------
 
-A language feature runtime library for CLI architecture applications. This framework project includes a lot of utility tools and the utility code extension functions for the data sciences programming for VisualBasic, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernization by using this runtime library framework.
+#### Scientific Computing Tools for VisualBasic.NET
+
+A visualbasic language feature runtime library for data science CLI architecture applications which is running on Windows/Linux/macOS Desktop/server platform or supercomputer platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:
 > + https://github.com/xieguigang/sciBASIC/tree/master/vb_codestyle
