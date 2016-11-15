@@ -114,7 +114,7 @@ Namespace Net
         ''' <returns></returns>
         Public Function GetFirstAvailablePort(Optional BEGIN_PORT As Integer = 100) As Integer
             If BEGIN_PORT <= 0 Then
-                BEGIN_PORT = RandomDouble() * (MAX_PORT - 1)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
+                BEGIN_PORT = Rnd() * (MAX_PORT - 1)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
             End If
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1

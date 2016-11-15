@@ -37,8 +37,13 @@ Namespace Imaging
     <PackageNamespace("GDI.Transform")>
     Public Module GDITransform
 
+        ''' <summary>
+        ''' Gets the center location of the region rectangle.
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
         <ExportAPI("Center")>
-        <Extension> Public Function Center(rect As Rectangle) As Point
+        <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 

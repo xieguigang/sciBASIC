@@ -754,21 +754,6 @@ Public Module Extensions
         Return Process.ExitCode
     End Function
 
-    ''' <summary>
-    ''' Gets a random number in the region of [0,1]. (获取一个[0,1]区间之中的随机数，请注意：因为为了尽量做到随机化，这个函数会不断的初始化随机种子，
-    ''' 故而性能较低，不可以在大量重复调用，或者在批量调用的时候请使用并行化拓展的LINQ)
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Rand", Info:="Returns a random floating-point number between 0.0 and 1.0.")>
-    Public Function RandomDouble() As Double
-        Dim rand As New Random(SecurityString.MD5Hash.ToLong(SecurityString.MD5Hash.GetMd5Hash(Now.ToString)) / Integer.MaxValue)
-        Dim n As Double = rand.Next(0, 100)
-        n = n / 100
-        Return n
-    End Function
-
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' 非线程的方式启动，当前线程会被阻塞在这里直到运行完毕
@@ -1788,23 +1773,27 @@ Public Module Extensions
     ''' 随机的在目标集合中选取指定数目的子集合
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
-    ''' <param name="Counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
+    ''' <param name="source"></param>
+    ''' <param name="counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function TakeRandomly(Of T)(Collection As Generic.IEnumerable(Of T), Counts As Integer) As T()
-        If Counts >= Collection.Count Then
-            Return Collection
+    <Extension> Public Function TakeRandomly(Of T)(source As IEnumerable(Of T), counts%) As T()
+        Dim array As T() = source.ToArray
+
+        If counts >= array.Length Then
+            Return source
         Else
-            Dim chunkBuffer As T() = New T(Counts - 1) {}
-            Dim OriginalList = Collection.ToList
-            For i As Integer = 0 To Counts - 1
-                Dim Index = RandomDouble() * (OriginalList.Count - 1)
-                chunkBuffer(i) = OriginalList(Index)
-                Call OriginalList.RemoveAt(Index)
+            Dim out As T() = New T(counts - 1) {}
+            Dim input As New List(Of T)(array)
+            Dim random As New Random
+
+            For i As Integer = 0 To counts - 1
+                Dim ind As Integer = random.Next(input.Count)
+                out(i) = input(ind)
+                Call input.RemoveAt(ind)
             Next
 
-            Return chunkBuffer
+            Return out
         End If
     End Function
 

@@ -65,7 +65,7 @@ Namespace Mathematical
             Return resultInteger / 10000.0
         End Function
 
-        ReadOnly __randomSeeds As New Random(RandomDouble() * 10000)
+        ReadOnly __randomSeeds As New Random(Rnd() * 10000)
 
         Public Function RandomSingle() As Single
             Dim result = __randomSeeds.NextDouble()

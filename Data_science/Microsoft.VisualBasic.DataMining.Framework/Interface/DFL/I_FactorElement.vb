@@ -80,7 +80,7 @@ Namespace DFL_Driver
         ''' <remarks></remarks>
         Public ReadOnly Property FunctionalState As Double
             Get
-                Dim n As Double = RandomDouble()
+                Dim n As Double = Rnd()
                 Dim p As Double = Internal_getEventProbabilities()
 
                 If n >= p Then

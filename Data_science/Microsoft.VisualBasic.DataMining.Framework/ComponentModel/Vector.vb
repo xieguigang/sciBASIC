@@ -60,7 +60,7 @@ Namespace ComponentModel
             Dim LQuery As Double() = LinqAPI.Exec(Of Double) <=
                 From irun As Integer
                 In Length.Sequence
-                Select RandomDouble() * Upper + Lower '
+                Select Rnd() * Upper + Lower '
 
             Return New Vector With {
                 .Properties = LQuery.ToArray
