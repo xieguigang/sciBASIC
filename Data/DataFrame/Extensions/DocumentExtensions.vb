@@ -128,4 +128,9 @@ Public Module DocumentExtensions
 
         Return out
     End Function
+
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path$, Optional encoding As Encodings = Encodings.Default) As T()
+        Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.GetEncodings)
+    End Function
 End Module
