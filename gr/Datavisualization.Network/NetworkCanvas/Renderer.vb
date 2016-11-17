@@ -185,7 +185,7 @@ Public Class Renderer : Inherits AbstractRenderer
             Call canvas.FillPie(n.Data.Color, rect, 0, 360)
 
             If ShowLabels Then
-                Dim center As Point = rect.Center
+                Dim center As Point = rect.Centre
                 Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
                 center = New Point(
                     CInt(center.X - sz.Width / 2),

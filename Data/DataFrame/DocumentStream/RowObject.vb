@@ -163,7 +163,7 @@ Namespace DocumentStream
                 If _innerColumns.Count = 0 Then Return True
                 Dim LQuery As Integer =
                     LinqAPI.DefaultFirst(Of Integer) <= From colum As String
-                                                        In _innerColumns.AsParallel
+                                                        In _innerColumns
                                                         Where Len(Strings.Trim(colum)) > 0
                                                         Select 100 '
                 Return Not LQuery > 50

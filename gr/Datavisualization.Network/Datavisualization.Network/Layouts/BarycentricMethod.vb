@@ -180,12 +180,14 @@ Namespace Layouts
                                             size As Size,
                                             Optional cutoff As Double = 100,
                                             Optional _DEBUG_EXPORT As String = "") As NetworkGraph
+            Dim rand As New Random
             Network.nodes =
                 LinqAPI.MakeList(Of Node) <= From node As Node
                                              In Network.nodes
-                                             Let randl As Point = New Point(
-                                                 size.Width * RandomDouble(),
-                                                 size.Height * RandomDouble())
+                                             Let randl As Point = New Point With {
+                                                 .X = size.Width * rand.NextDouble(),
+                                                 .Y = size.Height * rand.NextDouble()
+                                             }
                                              Select node.__setLoci(randl)
             Call doLayout(Network, 1, size)
 
