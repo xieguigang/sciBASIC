@@ -33,6 +33,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Text
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
@@ -84,11 +85,11 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate"></param>
-        ''' <param name="hexoPublish"></param>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
+        ''' <param name="lib"></param>
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional [lib] As Libraries = Libraries.Github)
             Dim typeList As New StringBuilder()
             Dim projectTypes As New SortedList(Of String, ProjectType)()
-            Dim ext As String = If(hexoPublish, ".html", ".md")
+            Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md")
 
             For Each pt As ProjectType In Me.Types
                 projectTypes.Add(pt.Name, pt)
@@ -99,11 +100,16 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
             For Each pt As ProjectType In projectTypes.Values
                 Dim file$
+                Dim link$
 
-                If hexoPublish Then
+                If [lib] = Libraries.Hexo Then
                     file = "T-" & Me.Path & "." & pt.Name & $"{ext}"
-                Else
+                    link = $"[{pt.Name}]({file})"
+                ElseIf [lib] = Libraries.Github Then
                     file = $"./{pt.Name}.md"
+                    link = $"[{pt.Name}]({file})"
+                Else
+                    link = $"<a href=""#"" onClick=""load('/docs/{Me.Path}/{pt.Name}.md')"">{pt.Name}</a>"
                 End If
 
                 Dim lines$() = If(pt.Summary Is Nothing, "", pt.Summary) _
@@ -114,13 +120,13 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     lines.FirstOrDefault,
                     lines.First & " ...")
 
-                Call typeList.AppendLine($"|[{pt.Name}]({file})|{summary}|")
+                Call typeList.AppendLine($"|{link}|{summary}|")
             Next
 
             Dim text As String
             Dim path$ ' *.md output path
 
-            If hexoPublish Then
+            If [lib] = Libraries.Hexo Then
                 text = $"---
 title: {Me.Path}
 ---"

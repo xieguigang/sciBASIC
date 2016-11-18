@@ -133,13 +133,13 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <param name="pageTemplate">
         ''' a markdown page template. This token: [content] will be replaced with generated content.
         ''' </param>
-        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
+        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, Optional [lib] As Libraries = Libraries.Github)
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
-                    pn.ExportMarkdownFile(folderPath, pageTemplate, hexoPublish)
+                    pn.ExportMarkdownFile(folderPath, pageTemplate, [lib])
 
                     For Each pt As ProjectType In pn.Types
-                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, hexoPublish)
+                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, [lib])
                     Next
                 Next
             Next
@@ -159,7 +159,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <param name="lib">Generates the hexo page source file?</param>
         ''' <returns></returns>
         Public Function ExportMarkdownFiles(folderPath As String, Optional [lib] As Libraries = Libraries.Github) As Boolean
-            ExportMarkdownFiles(folderPath, TemplateToken, False)
+            Call ExportMarkdownFiles(folderPath, TemplateToken, [lib])
+            Call "Build library index...".__DEBUG_ECHO
+
             Return BuildIndex(folderPath, [lib])
         End Function
 
@@ -200,7 +202,7 @@ date: {Now.ToString}
             If [lib] <> Libraries.xDoc Then
                 Return $"+ [{ns}]({If([lib] = Libraries.Hexo, $"N-{ns}{ext}", $"./{ns}/index.md")})"
             Else
-                Return $"<a href=""#"" onClick=""load('/docs/{ns}/index.md')"">{ns}</a>"
+                Return $"+ <a href=""#"" onClick=""load('/docs/{ns}/index.md')"">{ns}</a>"
             End If
         End Function
     End Class

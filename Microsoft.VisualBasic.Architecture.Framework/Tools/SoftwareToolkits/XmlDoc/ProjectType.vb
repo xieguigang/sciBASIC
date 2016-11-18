@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::7f4f88bc68e38c1296db110521c58de9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.IO
 Imports System.Xml
+Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -138,9 +139,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate"></param>
-        ''' <param name="hexoPublish"></param>
+        ''' <param name="lib"></param>
         ''' <remarks>这里还应该包括完整的函数的参数注释的输出</remarks>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional [lib] As Libraries = Libraries.Github)
             Dim methodList As New StringBuilder()
 
             If Me.methods.Values.Count > 0 Then
@@ -174,7 +175,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     End If
 
                     If Not pm.Returns.IsBlank Then
-                        If Not hexoPublish Then
+                        If Not [lib] = Libraries.Hexo Then
                             methodList.AppendLine()
                         End If
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
@@ -217,10 +218,13 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 rmk = ""
             End If
 
-            Dim ext As String = If(hexoPublish, ".html", ".md") ' link url after hexo generates the static site
-            Dim pnPath$ = If(hexoPublish,
+            Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md") ' link url after hexo generates the static site
+            Dim pnPath$ = If([lib] = Libraries.Hexo,
                 $"N-{Me.[Namespace].Path}{ext}",
-                "./index.md")
+                If([lib] = Libraries.Github,
+                "./index.md",
+                $"<a href=""#"" onClick=""load('/docs/{[Namespace].Path}/index.md')""></a>"))
+
             Dim text As String = String.Format("# {0}" & vbCr & vbLf &
                                                $"_namespace: [{Me.[Namespace].Path}]({pnPath})_" & vbCr & vbLf &
                                                vbCr & vbLf &
@@ -232,7 +236,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                                                "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
             Dim path$ ' *.md save path
 
-            If hexoPublish Then
+            If [lib] = Libraries.Hexo Then
                 text = $"---
 title: {Me.Name}
 ---
