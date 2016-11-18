@@ -68,8 +68,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pt As ProjectType = Me.[GetType](typeName)
 
             If pt Is Nothing Then
-                pt = New ProjectType(Me)
-                pt.Name = typeName
+                pt = New ProjectType(Me) With {
+                    .Name = typeName
+                }
 
                 Me.m_types.Add(typeName.ToLower(), pt)
             End If
@@ -77,6 +78,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Return pt
         End Function
 
+        ''' <summary>
+        ''' Exports for namespace markdown documents
+        ''' </summary>
+        ''' <param name="folderPath"></param>
+        ''' <param name="pageTemplate"></param>
+        ''' <param name="hexoPublish"></param>
         Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
             Dim typeList As New StringBuilder()
             Dim projectTypes As New SortedList(Of String, ProjectType)()

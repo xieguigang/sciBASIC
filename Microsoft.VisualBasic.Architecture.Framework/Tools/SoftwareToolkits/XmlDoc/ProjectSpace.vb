@@ -128,27 +128,46 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="folderPath"></param>
-        ''' <param name="pageTemplate">a markdown page template. This token: [content] will be replaced with generated content.</param>
+        ''' <param name="folderPath">The root directory folder path for the generated markdown document that saved.</param>
+        ''' <param name="pageTemplate">
+        ''' a markdown page template. This token: [content] will be replaced with generated content.
+        ''' </param>
         Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
                     pn.ExportMarkdownFile(folderPath, pageTemplate, hexoPublish)
 
                     For Each pt As ProjectType In pn.Types
-                        pt.ExportMarkdownFile(folderPath, pageTemplate, hexoPublish)
+                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, hexoPublish)
                     Next
                 Next
             Next
         End Sub
 
+        ''' <summary>
+        ''' Default page content template
+        ''' </summary>
         Public Const TemplateToken As String = "[content]"
 
+        ''' <summary>
+        ''' Using this method for the xml docs export as markdown documents
+        ''' </summary>
+        ''' <param name="folderPath">
+        ''' The root directory folder path for the generated markdown document that saved.
+        ''' </param>
+        ''' <param name="hexoPublish">Generates the hexo page source file?</param>
+        ''' <returns></returns>
         Public Function ExportMarkdownFiles(folderPath As String, Optional hexoPublish As Boolean = False) As Boolean
             ExportMarkdownFiles(folderPath, TemplateToken, hexoPublish)
             Return BuildIndex(folderPath, hexoPublish)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="out"></param>
+        ''' <param name="hexoPublish">Generates the hexo page source?</param>
+        ''' <returns></returns>
         Public Function BuildIndex(out As String, Optional hexoPublish As Boolean = False) As Boolean
             Dim path As String = out & "/index.md"
             Dim allns As String() =

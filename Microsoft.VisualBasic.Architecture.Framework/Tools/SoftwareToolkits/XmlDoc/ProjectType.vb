@@ -43,10 +43,11 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     ''' A type within a project namespace.
     ''' </summary>
     Public Class ProjectType
-        Private projectNamespace As ProjectNamespace
-        Private fields As Dictionary(Of String, ProjectMember)
-        Private properties As Dictionary(Of String, ProjectMember)
-        Private methods As Dictionary(Of String, ProjectMember)
+
+        Dim projectNamespace As ProjectNamespace
+        Dim fields As Dictionary(Of String, ProjectMember)
+        Dim properties As Dictionary(Of String, ProjectMember)
+        Dim methods As Dictionary(Of String, ProjectMember)
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             Get
@@ -54,9 +55,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             End Get
         End Property
 
-        Public Property Name() As String
-        Public Property Summary() As String
-        Public Property remarks As String
+        Public Property Name As String
+        Public Property Summary As String
+        Public Property Remarks As String
 
         Public Sub New(projectNamespace As ProjectNamespace)
             Me.projectNamespace = projectNamespace
@@ -78,8 +79,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pm As ProjectMember = Me.GetMethod(methodName)
 
             If pm Is Nothing Then
-                pm = New ProjectMember(Me)
-                pm.Name = methodName
+                pm = New ProjectMember(Me) With {
+                    .Name = methodName
+                }
 
                 Me.methods.Add(methodName.ToLower(), pm)
             End If
@@ -99,8 +101,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pm As ProjectMember = Me.GetProperty(propertyName)
 
             If pm Is Nothing Then
-                pm = New ProjectMember(Me)
-                pm.Name = propertyName
+                pm = New ProjectMember(Me) With {
+                    .Name = propertyName
+                }
 
                 Me.properties.Add(propertyName.ToLower(), pm)
             End If
@@ -120,8 +123,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pm As ProjectMember = Me.GetField(fieldName)
 
             If pm Is Nothing Then
-                pm = New ProjectMember(Me)
-                pm.Name = fieldName
+                pm = New ProjectMember(Me) With {
+                    .Name = fieldName
+                }
 
                 Me.fields.Add(fieldName.ToLower(), pm)
             End If
@@ -130,7 +134,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Exports for the specific type in a namespace
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate"></param>
@@ -205,7 +209,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
             Dim rmk As String = ""
 
-            For Each l As String In remarks.lTokens
+            For Each l As String In Remarks.lTokens
                 rmk &= "> " & l & vbCrLf
             Next
 
@@ -248,7 +252,7 @@ title: {Me.Name}
 
             summaryNode = xn.SelectSingleNode("remarks")
             If Not summaryNode Is Nothing Then
-                remarks = summaryNode.InnerText
+                Remarks = summaryNode.InnerText
             End If
         End Sub
 
