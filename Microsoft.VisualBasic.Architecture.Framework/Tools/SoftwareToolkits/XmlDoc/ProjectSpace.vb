@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::0336e1c3267c5bb68f760810b8dc8949, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -38,6 +38,7 @@ Imports System.Xml
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -155,35 +156,35 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <param name="folderPath">
         ''' The root directory folder path for the generated markdown document that saved.
         ''' </param>
-        ''' <param name="hexoPublish">Generates the hexo page source file?</param>
+        ''' <param name="lib">Generates the hexo page source file?</param>
         ''' <returns></returns>
-        Public Function ExportMarkdownFiles(folderPath As String, Optional hexoPublish As Boolean = False) As Boolean
-            ExportMarkdownFiles(folderPath, TemplateToken, hexoPublish)
-            Return BuildIndex(folderPath, hexoPublish)
+        Public Function ExportMarkdownFiles(folderPath As String, Optional [lib] As Libraries = Libraries.Github) As Boolean
+            ExportMarkdownFiles(folderPath, TemplateToken, False)
+            Return BuildIndex(folderPath, [lib])
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="out"></param>
-        ''' <param name="hexoPublish">Generates the hexo page source?</param>
+        ''' <param name="lib">Generates the hexo page source?</param>
         ''' <returns></returns>
-        Public Function BuildIndex(out As String, Optional hexoPublish As Boolean = False) As Boolean
+        Public Function BuildIndex(out As String, Optional [lib] As Libraries = Libraries.Github) As Boolean
             Dim path As String = out & "/index.md"
             Dim allns As String() =
                 LinqAPI.Exec(Of String) <= From x As Project
                                            In projects
                                            Select x.Namespaces.Select(Function(ns) ns.Path)
 
-            Dim ext As String = If(hexoPublish, ".html", ".md")
+            Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md")
             Dim links As String() = allns _
                 .OrderBy(Function(ns) ns) _
-                .ToArray(Function(ns) $"+ [{ns}]({If(hexoPublish, $"N-{ns}{ext}", $"./{ns}/index.md")})")
+                .ToArray(Function(ns) __getIndexLink(ns, ext, [lib]))
             Dim sb As String = "Browser by namespace:" & vbCrLf &
                 vbCrLf &
                 links.JoinBy(vbCrLf)
 
-            If hexoPublish Then
+            If [lib] = Libraries.Hexo Then
                 sb = $"---
 title: API index
 date: {Now.ToString}
@@ -193,6 +194,14 @@ date: {Now.ToString}
             End If
 
             Return sb.SaveTo(path)
+        End Function
+
+        Private Shared Function __getIndexLink(ns$, ext$, [lib] As Libraries) As String
+            If [lib] <> Libraries.xDoc Then
+                Return $"+ [{ns}]({If([lib] = Libraries.Hexo, $"N-{ns}{ext}", $"./{ns}/index.md")})"
+            Else
+                Return $"<a href=""#"" onClick=""load('/docs/{ns}/index.md')"">{ns}</a>"
+            End If
         End Function
     End Class
 End Namespace
