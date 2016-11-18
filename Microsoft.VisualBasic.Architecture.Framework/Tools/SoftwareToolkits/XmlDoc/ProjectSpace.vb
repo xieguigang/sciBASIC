@@ -176,8 +176,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                                            Select x.Namespaces.Select(Function(ns) ns.Path)
 
             Dim ext As String = If(hexoPublish, ".html", ".md")
-            Dim links As String() = allns.OrderBy(Function(ns) ns).ToArray(Function(ns) $"+ [{ns}](N-{ns}{ext})")
-            Dim sb As String = "Browser by namespace:" & vbCrLf & vbCrLf & links.JoinBy(vbCrLf)
+            Dim links As String() = allns _
+                .OrderBy(Function(ns) ns) _
+                .ToArray(Function(ns) $"+ [{ns}]({If(hexoPublish, $"N-{ns}{ext}", $"./{ns}/index.md")})")
+            Dim sb As String = "Browser by namespace:" & vbCrLf &
+                vbCrLf &
+                links.JoinBy(vbCrLf)
 
             If hexoPublish Then
                 sb = $"---

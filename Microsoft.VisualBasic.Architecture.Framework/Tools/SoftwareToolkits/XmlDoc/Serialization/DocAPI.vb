@@ -116,9 +116,9 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
 
             For Each m As String In ms
                 Dim bold As String = m.__trans
-                Dim name As String = Regex.Match(bold, """[^""]*""").Value
-                bold = bold.Replace(name, (Mid(name, 2, name.Length - 2)))
-                bold = $"**{bold}**"
+                Dim name As String = Regex.Match(bold, "``[^`]*``").Value
+                ' bold = bold.Replace(name, (Mid(name, 2, name.Length - 2)))
+                ' bold = $"**{bold}**"
                 Call sb.Replace(m, bold)
             Next
 
@@ -137,6 +137,11 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
             Return sb.ToString
         End Function
 
+        ''' <summary>
+        ''' 这里会将双引号替换成为markdown里面的inline code形式
+        ''' </summary>
+        ''' <param name="cref"></param>
+        ''' <returns></returns>
         <Extension> Private Function __trans(cref As String) As String
             Dim m As String = Regex.Match(cref, "="".+?""").Value
             Dim alt As String = cref.GetValue
@@ -147,6 +152,8 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
             Else
                 m &= $"[{alt}]"
             End If
+
+            m = m.Replace("""", "``")
 
             Return m
         End Function

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::8e6c3d13a900910d0f36ecfac82b75d7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.Text
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -93,26 +94,48 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 projectTypes.Add(pt.Name, pt)
             Next
 
+            Call typeList.AppendLine("|Type|Summary|")
+            Call typeList.AppendLine("|----|-------|")
+
             For Each pt As ProjectType In projectTypes.Values
-                typeList.AppendLine("[" & pt.Name & "](T-" & Me.Path & "." & pt.Name & $"{ext})")
+                Dim file$
+
+                If hexoPublish Then
+                    file = "T-" & Me.Path & "." & pt.Name & $"{ext}"
+                Else
+                    file = $"./{pt.Name}.md"
+                End If
+
+                Dim lines$() = If(pt.Summary Is Nothing, "", pt.Summary) _
+                    .Trim(ASCII.CR, ASCII.LF) _
+                    .Trim _
+                    .lTokens
+                Dim summary$ = If(lines.IsNullOrEmpty OrElse lines.Length = 1,
+                    lines.FirstOrDefault,
+                    lines.First & " ...")
+
+                Call typeList.AppendLine($"|[{pt.Name}]({file})|{summary}|")
             Next
 
             Dim text As String
+            Dim path$ ' *.md output path
 
             If hexoPublish Then
                 text = $"---
 title: {Me.Path}
 ---"
                 text = text & vbCrLf & vbCrLf & typeList.ToString
+                path = folderPath & "/N-" & Me.Path & ".md"
             Else
                 text = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
+                path = folderPath & "/" & Me.Path & "/index.md"
             End If
 
             If pageTemplate IsNot Nothing Then
                 text = pageTemplate.Replace("[content]", text)
             End If
 
-            Call text.SaveTo(folderPath & "/N-" & Me.Path & ".md", Encoding.UTF8)
+            Call text.SaveTo(path, Encoding.UTF8)
         End Sub
     End Class
 End Namespace

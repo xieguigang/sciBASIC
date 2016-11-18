@@ -670,7 +670,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Line tokens. ==> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>.
+    ''' Line tokens. **=> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>**.
     ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
     ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
     ''' 所以可以使用这个函数来进行统一的分行操作)

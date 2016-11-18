@@ -146,7 +146,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             If Me.methods.Values.Count > 0 Then
                 methodList.AppendLine("### Methods" & vbCr & vbLf)
 
-                Dim sortedMembers As SortedList(Of String, ProjectMember) = New SortedList(Of String, ProjectMember)()
+                Dim sortedMembers As New SortedList(Of String, ProjectMember)()
 
                 For Each pm As ProjectMember In Me.methods.Values
                     sortedMembers.Add(pm.Name, pm)
@@ -217,9 +217,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 rmk = ""
             End If
 
-            Dim ext As String = If(hexoPublish, ".html", ".md")
+            Dim ext As String = If(hexoPublish, ".html", ".md") ' link url after hexo generates the static site
+            Dim pnPath$ = If(hexoPublish,
+                $"N-{Me.[Namespace].Path}{ext}",
+                "./index.md")
             Dim text As String = String.Format("# {0}" & vbCr & vbLf &
-                                               "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf &
+                                               $"_namespace: [{Me.[Namespace].Path}]({pnPath})_" & vbCr & vbLf &
                                                vbCr & vbLf &
                                                "{2}" & vbCr & vbLf &
                                                vbCr & vbLf &
@@ -227,6 +230,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                                                vbCr & vbLf &
                                                "{4}" & vbCr & vbLf &
                                                "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
+            Dim path$ ' *.md save path
 
             If hexoPublish Then
                 text = $"---
@@ -234,13 +238,16 @@ title: {Me.Name}
 ---
 
 " & text
+                path = folderPath & "/T-" & Me.[Namespace].Path & "." & Me.Name & ".md"
             Else
                 If pageTemplate IsNot Nothing Then
                     text = pageTemplate.Replace("[content]", text)
                 End If
+
+                path = folderPath & "/" & Me.Name & ".md"
             End If
 
-            Call text.SaveTo(folderPath & "/T-" & Me.[Namespace].Path & "." & Me.Name & ".md", Encoding.UTF8)
+            Call text.SaveTo(path, Encoding.UTF8)
         End Sub
 
         Public Sub LoadFromNode(xn As XmlNode)
