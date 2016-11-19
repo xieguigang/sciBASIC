@@ -139,9 +139,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate"></param>
-        ''' <param name="lib"></param>
+        ''' <param name="url"></param>
         ''' <remarks>这里还应该包括完整的函数的参数注释的输出</remarks>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional [lib] As Libraries = Libraries.Github)
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, url As URLBuilder)
             Dim methodList As New StringBuilder()
 
             If Me.methods.Values.Count > 0 Then
@@ -162,12 +162,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     End If
                     methodList.AppendLine(CleanText(pm.Summary))
 
-                    If Not pm.param.IsNullOrEmpty Then
+                    If Not pm.Params.IsNullOrEmpty Then
                         Call methodList.AppendLine()
                         Call methodList.AppendLine("|Parameter Name|Remarks|")
                         Call methodList.AppendLine("|--------------|-------|")
 
-                        For Each arg In pm.param
+                        For Each arg In pm.Params
                             Call methodList.AppendLine($"|{arg.name}|{arg.text}|")
                         Next
 
@@ -175,7 +175,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     End If
 
                     If Not pm.Returns.IsBlank Then
-                        If Not [lib] = Libraries.Hexo Then
+                        If Not url.[lib] = Libraries.Hexo Then
                             methodList.AppendLine()
                         End If
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
@@ -218,15 +218,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 rmk = ""
             End If
 
-            Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md") ' link url after hexo generates the static site
-            Dim pnPath$ = If([lib] = Libraries.Hexo,
-                $"N-{Me.[Namespace].Path}{ext}",
-                If([lib] = Libraries.Github,
-                "./index.md",
-                $"<a href=""#"" onClick=""load('/docs/{[Namespace].Path}/index.md')""></a>"))
-
+            Dim link$ = url.GetTypeNamespaceLink(Me)
             Dim text As String = String.Format("# {0}" & vbCr & vbLf &
-                                               $"_namespace: [{Me.[Namespace].Path}]({pnPath})_" & vbCr & vbLf &
+                                               $"_namespace: {link}_" & vbCr & vbLf &
                                                vbCr & vbLf &
                                                "{2}" & vbCr & vbLf &
                                                vbCr & vbLf &
@@ -234,21 +228,19 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                                                vbCr & vbLf &
                                                "{4}" & vbCr & vbLf &
                                                "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
-            Dim path$ ' *.md save path
 
-            If [lib] = Libraries.Hexo Then
+            Dim path$ = url.GetTypeSave(folderPath, Me) ' *.md save path
+
+            If url.[lib] = Libraries.Hexo Then
                 text = $"---
 title: {Me.Name}
 ---
 
 " & text
-                path = folderPath & "/T-" & Me.[Namespace].Path & "." & Me.Name & ".md"
             Else
                 If pageTemplate IsNot Nothing Then
                     text = pageTemplate.Replace("[content]", text)
                 End If
-
-                path = folderPath & "/" & Me.Name & ".md"
             End If
 
             Call text.SaveTo(path, Encoding.UTF8)

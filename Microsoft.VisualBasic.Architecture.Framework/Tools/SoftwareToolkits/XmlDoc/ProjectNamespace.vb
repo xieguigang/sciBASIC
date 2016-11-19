@@ -44,23 +44,23 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     Public Class ProjectNamespace
 
         Dim project As Project
-        Dim m_types As Dictionary(Of String, ProjectType)
+        Dim _types As Dictionary(Of String, ProjectType)
 
         Public Property Path() As String
 
         Public ReadOnly Property Types() As IEnumerable(Of ProjectType)
             Get
-                Return Me.m_types.Values
+                Return Me._types.Values
             End Get
         End Property
         Public Sub New(project As Project)
             Me.project = project
-            Me.m_types = New Dictionary(Of String, ProjectType)()
+            Me._types = New Dictionary(Of String, ProjectType)()
         End Sub
 
         Public Overloads Function [GetType](typeName As String) As ProjectType
-            If Me.m_types.ContainsKey(typeName.ToLower()) Then
-                Return Me.m_types(typeName.ToLower())
+            If Me._types.ContainsKey(typeName.ToLower()) Then
+                Return Me._types(typeName.ToLower())
             End If
 
             Return Nothing
@@ -74,7 +74,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     .Name = typeName
                 }
 
-                Me.m_types.Add(typeName.ToLower(), pt)
+                Me._types.Add(typeName.ToLower(), pt)
             End If
 
             Return pt
@@ -85,11 +85,10 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate"></param>
-        ''' <param name="lib"></param>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional [lib] As Libraries = Libraries.Github)
+        ''' <param name="url"></param>
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, url As URLBuilder)
             Dim typeList As New StringBuilder()
             Dim projectTypes As New SortedList(Of String, ProjectType)()
-            Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md")
 
             For Each pt As ProjectType In Me.Types
                 projectTypes.Add(pt.Name, pt)
@@ -99,19 +98,6 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Call typeList.AppendLine("|----|-------|")
 
             For Each pt As ProjectType In projectTypes.Values
-                Dim file$
-                Dim link$
-
-                If [lib] = Libraries.Hexo Then
-                    file = "T-" & Me.Path & "." & pt.Name & $"{ext}"
-                    link = $"[{pt.Name}]({file})"
-                ElseIf [lib] = Libraries.Github Then
-                    file = $"./{pt.Name}.md"
-                    link = $"[{pt.Name}]({file})"
-                Else
-                    link = $"<a href=""#"" onClick=""load('/docs/{Me.Path}/{pt.Name}.md')"">{pt.Name}</a>"
-                End If
-
                 Dim lines$() = If(pt.Summary Is Nothing, "", pt.Summary) _
                     .Trim(ASCII.CR, ASCII.LF) _
                     .Trim _
@@ -119,22 +105,22 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 Dim summary$ = If(lines.IsNullOrEmpty OrElse lines.Length = 1,
                     lines.FirstOrDefault,
                     lines.First & " ...")
+                Dim link As String = url.GetNamespaceTypeUrl(Me, pt)
 
                 Call typeList.AppendLine($"|{link}|{summary}|")
             Next
 
             Dim text As String
-            Dim path$ ' *.md output path
+            Dim path$ = url.GetNamespaceSave(folderPath, Me) ' *.md output path
 
-            If [lib] = Libraries.Hexo Then
+            If url.[lib] = Libraries.Hexo Then
                 text = $"---
 title: {Me.Path}
 ---"
                 text = text & vbCrLf & vbCrLf & typeList.ToString
-                path = folderPath & "/N-" & Me.Path & ".md"
             Else
-                text = String.Format(vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf, Me.Path, typeList.ToString())
-                path = folderPath & "/" & Me.Path & "/index.md"
+                text = vbCr & vbLf & "# {0}" & vbCr & vbLf & vbCr & vbLf & "{1}" & vbCr & vbLf
+                text = String.Format(text, Me.Path, typeList.ToString())
             End If
 
             If pageTemplate IsNot Nothing Then

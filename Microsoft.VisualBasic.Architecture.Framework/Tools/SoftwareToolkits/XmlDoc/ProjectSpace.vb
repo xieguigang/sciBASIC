@@ -133,13 +133,13 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <param name="pageTemplate">
         ''' a markdown page template. This token: [content] will be replaced with generated content.
         ''' </param>
-        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, Optional [lib] As Libraries = Libraries.Github)
+        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, url As URLBuilder)
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
-                    pn.ExportMarkdownFile(folderPath, pageTemplate, [lib])
+                    pn.ExportMarkdownFile(folderPath, pageTemplate, url)
 
                     For Each pt As ProjectType In pn.Types
-                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, [lib])
+                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, url)
                     Next
                 Next
             Next
@@ -156,13 +156,15 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <param name="folderPath">
         ''' The root directory folder path for the generated markdown document that saved.
         ''' </param>
-        ''' <param name="lib">Generates the hexo page source file?</param>
+        ''' <param name="url">Generates the hexo page source file?</param>
         ''' <returns></returns>
-        Public Function ExportMarkdownFiles(folderPath As String, Optional [lib] As Libraries = Libraries.Github) As Boolean
+        Public Function ExportMarkdownFiles(folderPath As String, Optional url As URLBuilder = Nothing) As Boolean
+            Dim [lib] As URLBuilder = If(url Is Nothing, New URLBuilder, url)
+
             Call ExportMarkdownFiles(folderPath, TemplateToken, [lib])
             Call "Build library index...".__DEBUG_ECHO
 
-            Return BuildIndex(folderPath, [lib])
+            Return BuildIndex(folderPath, [lib].lib)
         End Function
 
         ''' <summary>

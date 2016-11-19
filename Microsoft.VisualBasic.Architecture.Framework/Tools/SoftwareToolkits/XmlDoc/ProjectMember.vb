@@ -46,7 +46,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         Public Property Summary() As String
         Public Property Returns() As String
         Public Property Remarks As String
-        Public Property param As param()
+        Public Property Params As param()
 
         ''' <summary>
         ''' 申明的原型
@@ -98,7 +98,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     }
                 Next
 
-                Me.param = args
+                Me.Params = args
             End If
         End Sub
     End Class

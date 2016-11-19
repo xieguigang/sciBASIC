@@ -43,37 +43,38 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     ''' </summary>
     Public Class Project
 
-        Private m_namespaces As Dictionary(Of String, ProjectNamespace)
+        Private _namespaces As Dictionary(Of String, ProjectNamespace)
 
         Public Property Name() As String
 
         Public ReadOnly Property Namespaces() As IEnumerable(Of ProjectNamespace)
             Get
-                Return Me.m_namespaces.Values
+                Return Me._namespaces.Values
             End Get
         End Property
 
         Public Sub New(name As String)
             Me._Name = name
-            Me.m_namespaces = New Dictionary(Of String, ProjectNamespace)()
+            Me._namespaces = New Dictionary(Of String, ProjectNamespace)()
         End Sub
 
         Public Function GetNamespace(namespacePath As String) As ProjectNamespace
-            If Me.m_namespaces.ContainsKey(namespacePath.ToLower()) Then
-                Return Me.m_namespaces(namespacePath.ToLower())
+            If Me._namespaces.ContainsKey(namespacePath.ToLower()) Then
+                Return Me._namespaces(namespacePath.ToLower())
             End If
 
             Return Nothing
         End Function
 
         Public Function EnsureNamespace(namespacePath As String) As ProjectNamespace
-            Dim pn As ProjectNamespace = Me.GetNamespace(namespacePath)
+            Dim pn As ProjectNamespace = GetNamespace(namespacePath)
 
             If pn Is Nothing Then
-                pn = New ProjectNamespace(Me)
-                pn.Path = namespacePath
+                pn = New ProjectNamespace(Me) With {
+                    .Path = namespacePath
+                }
 
-                Me.m_namespaces.Add(namespacePath.ToLower(), pn)
+                _namespaces.Add(namespacePath.ToLower(), pn)
             End If
 
             Return pn
