@@ -276,6 +276,13 @@ Public Module TextDoc
         Return True
     End Function
 
+    ''' <summary>
+    ''' Save the text content in the <see cref="StringBuilder"/> object into a text file.
+    ''' </summary>
+    ''' <param name="sBuilder"></param>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         Return sBuilder.ToString.SaveTo(path, encoding)
