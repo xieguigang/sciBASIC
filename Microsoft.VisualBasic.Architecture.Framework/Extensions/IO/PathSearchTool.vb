@@ -1,43 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::76a78ec68cd6305bb25c66755948ed4e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports System.IO
-Imports System.Text.RegularExpressions
-Imports System.Text
-Imports System.Reflection
 Imports System.Collections.ObjectModel
-Imports Microsoft.VisualBasic.Language
+Imports System.IO
+Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
@@ -217,6 +218,20 @@ Public Module ProgramPathSearchTool
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length
         End If
+    End Function
+
+    <Extension>
+    Public Function FileCopy(source$, copyTo$) As Boolean
+        Try
+            Call copyTo.ParentPath.MkDIR
+            Call FileIO.FileSystem.CopyFile(source, copyTo)
+        Catch ex As Exception
+            ex = New Exception({source, copyTo}.GetJson, ex)
+            Call App.LogException(ex)
+            Return False
+        End Try
+
+        Return True
     End Function
 
     ''' <summary>
