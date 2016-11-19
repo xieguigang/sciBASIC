@@ -6,6 +6,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports System.Drawing.Drawing2D
 
 Public Class FormODEsViewer
 
@@ -93,9 +94,21 @@ Public Class FormODEsViewer
 
         For Each y As NamedValue(Of Double()) In result.y.Values
             Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.x(i.i)))
+
             Try
-                vars(y.Name).BackgroundImage = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
+
+                If Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name) Then
+                    Dim refS = Scatter.FromPoints(ref(y.Name).x, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
+                    Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
+
+                    vars(y.Name).BackgroundImage = Scatter.Plot({refS, cal})
+                Else
+                    vars(y.Name).BackgroundImage =
+                        Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
+                End If
+
             Catch ex As Exception
+                Call App.LogException(ex)
             Finally
                 ToolStripProgressBar1.Value += delta
                 Application.DoEvents()
@@ -145,6 +158,28 @@ Public Class FormODEsViewer
     Private Sub ToolStripTextBox2_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox2.TextChanged
         a = CInt(Val(ToolStripTextBox2.Text))
         ToolStripLabel2.Text = "a:= " & a
+    End Sub
+
+    Dim ref As Dictionary(Of NamedValue(Of PointF()))
+
+    Private Sub AddReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddReferenceToolStripMenuItem.Click
+        Using file As New OpenFileDialog With {
+            .Filter = "Excel(*.csv)|*.csv"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                With ODEsOut.LoadFromDataFrame(file.FileName)
+                    Dim x#() = .x
+
+                    ref = .y _
+                        .Select(
+                        Function(y) New NamedValue(Of PointF()) With {
+                            .Name = y.Key,
+                            .x = x.SeqIterator.ToArray(
+                                Function(xi) New PointF(xi.obj, y.Value.x(xi)))
+                        }).ToDictionary
+                End With
+            End If
+        End Using
     End Sub
 
     Private Sub ToolStripTextBox3_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox3.TextChanged

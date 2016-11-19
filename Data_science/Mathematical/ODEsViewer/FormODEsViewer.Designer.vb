@@ -42,6 +42,7 @@ Partial Class FormODEsViewer
         Me.LoadModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveResultToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddReferenceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -173,7 +174,7 @@ Partial Class FormODEsViewer
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.SaveResultToolStripMenuItem, Me.LoadParametersToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.SaveResultToolStripMenuItem, Me.LoadParametersToolStripMenuItem, Me.AddReferenceToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(39, 21)
         Me.FileToolStripMenuItem.Text = "File"
@@ -195,6 +196,12 @@ Partial Class FormODEsViewer
         Me.LoadParametersToolStripMenuItem.Name = "LoadParametersToolStripMenuItem"
         Me.LoadParametersToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.LoadParametersToolStripMenuItem.Text = "Load Parameters"
+        '
+        'AddReferenceToolStripMenuItem
+        '
+        Me.AddReferenceToolStripMenuItem.Name = "AddReferenceToolStripMenuItem"
+        Me.AddReferenceToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AddReferenceToolStripMenuItem.Text = "Add Reference"
         '
         'FormODEsViewer
         '
@@ -240,4 +247,5 @@ Partial Class FormODEsViewer
     Friend WithEvents ToolStripTextBox2 As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents ToolStripLabel3 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents ToolStripTextBox3 As System.Windows.Forms.ToolStripTextBox
+    Friend WithEvents AddReferenceToolStripMenuItem As ToolStripMenuItem
 End Class
