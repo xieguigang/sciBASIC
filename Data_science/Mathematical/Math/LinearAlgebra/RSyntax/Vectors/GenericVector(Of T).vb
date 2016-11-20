@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace SyntaxAPI.Vectors
 

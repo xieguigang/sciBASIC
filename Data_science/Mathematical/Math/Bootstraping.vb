@@ -28,10 +28,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
 
 Public Module Bootstraping
 

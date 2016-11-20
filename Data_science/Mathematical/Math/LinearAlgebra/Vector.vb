@@ -372,19 +372,19 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' 向量模的平方
         ''' </summary>
-        ''' <param name="v1"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Not(v1 As Vector) As Double
-            '获取变量维数
-            Dim N0 = v1.[Dim]
-            Dim sum As Double
+        Public ReadOnly Property [Mod] As Double
+            Get
+                Dim N0% = [Dim]
+                Dim sum As Double
 
-            For j = 0 To N0 - 1
-                sum = sum + v1(j) * v1(j)
-            Next
-            Return sum
-        End Operator
+                For j = 0 To N0 - 1
+                    sum = sum + Me(j) * Me(j)
+                Next
+                Return sum
+            End Get
+        End Property
 
         ''' <summary>
         ''' 负向量 

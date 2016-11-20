@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Language
 
 Namespace Interpolation
