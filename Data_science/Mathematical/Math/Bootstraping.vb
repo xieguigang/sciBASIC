@@ -210,6 +210,40 @@ Public Module Bootstraping
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' http://blog.163.com/huai_jing@126/blog/static/171861983201321074124426/
+    ''' </remarks>
+    <Extension> Public Function Z(x As Vector) As Vector
+        Dim m# = x.Average
+        Dim delta# = x.STD
+        Dim x1 As Vector = (x - m) / delta
+        Return x1
+    End Function
+
+    ''' <summary>
+    ''' ###### 0-1标准化(0-1 normalization)
+    ''' 也叫离差标准化，是对原始数据的线性变换，使结果落到[0,1]区间
+    ''' 其中max为样本数据的最大值，min为样本数据的最小值。这种方法有一个缺陷就是当有新数据加入时，可能导致max和min的变化，需要重新定义。
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 数据的标准化（normalization）是将数据按比例缩放，使之落入一个小的特定区间。这样去除数据的单位限制，
+    ''' 将其转化为无量纲的纯数值，便于不同单位或量级的指标能够进行比较和加权。
+    ''' 其中最典型的就是0-1标准化和Z标准化
+    ''' </remarks>
+    <Extension> Public Function DeviationStandardization(x As Vector) As Vector
+        Dim max# = x.Max
+        Dim min# = x.Min
+        Dim x1 As Vector = (x - min) / (max - min)
+        Return x1
+    End Function
+
+    ''' <summary>
     ''' 返回来的标签数据之中的标签是在某个区间范围内的数值集合的平均值
     ''' </summary>
     ''' <param name="data"></param>
