@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5866b0563a6297e715c6205f0c57b93e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::5866b0563a6297e715c6205f0c57b93e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BucketDictionary.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5481ec438fe81a7a303ad3ba53495d3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\ParserValue.vb"
+﻿#Region "Microsoft.VisualBasic::f5481ec438fe81a7a303ad3ba53495d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\ParserValue.vb"
 
     ' Author:
     ' 

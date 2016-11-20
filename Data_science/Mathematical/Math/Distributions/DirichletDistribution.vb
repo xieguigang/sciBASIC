@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::298255a98178c51bb61d30a0efe186b3, ..\visualbasic_App\Data_science\Mathematical\Math\Distributions\DirichletDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::298255a98178c51bb61d30a0efe186b3, ..\sciBASIC#\Data_science\Mathematical\Math\Distributions\DirichletDistribution.vb"
 
     ' Author:
     ' 

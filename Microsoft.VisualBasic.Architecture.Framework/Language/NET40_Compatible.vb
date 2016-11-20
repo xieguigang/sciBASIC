@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fcb4aef4d239de44380d52e0062661e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\NET40_Compatible.vb"
+﻿#Region "Microsoft.VisualBasic::1fcb4aef4d239de44380d52e0062661e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\NET40_Compatible.vb"
 
     ' Author:
     ' 

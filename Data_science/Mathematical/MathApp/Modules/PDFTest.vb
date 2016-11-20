@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ebf70337139e5e0ab8c93a2f4dcc6e7, ..\visualbasic_App\Data_science\Mathematical\MathApp\Modules\PDFTest.vb"
+﻿#Region "Microsoft.VisualBasic::6f385512ceda0890aeb0ea7fb1f874d0, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\PDFTest.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Module PDFTest
         Pause()
     End Sub
 End Module
-

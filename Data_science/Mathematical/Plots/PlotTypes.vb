@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3503b95dbe10c98f4e3453234bdc759b, ..\visualbasic_App\Data_science\Mathematical\Plots\PlotTypes.vb"
+﻿#Region "Microsoft.VisualBasic::3503b95dbe10c98f4e3453234bdc759b, ..\sciBASIC#\Data_science\Mathematical\Plots\PlotTypes.vb"
 
     ' Author:
     ' 

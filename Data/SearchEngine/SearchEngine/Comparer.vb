@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f30145b3c5ab814e9b7d340240b57e5d, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Comparer.vb"
+﻿#Region "Microsoft.VisualBasic::1d8022d685200f14f00ab72d6ff092fb, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Comparer.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Public Module IComparer
         Return True
     End Function
 End Module
-

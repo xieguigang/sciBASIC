@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebResult.vb"
 
     ' Author:
     ' 

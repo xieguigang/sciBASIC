@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f05e828babac57b6fbb8890761810c9c, ..\visualbasic_App\Data_science\Mathematical\Plots\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::242e71af332e430898bc4deb1d4224a8, ..\sciBASIC#\Data_science\Mathematical\Plots\Histogram.vb"
 
     ' Author:
     ' 
@@ -338,4 +338,3 @@ Public Module Histogram
         }
     End Function
 End Module
-

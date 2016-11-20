@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3fef8e411b9a052af2d1b18f6f2f0f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Wildcards.vb"
+﻿#Region "Microsoft.VisualBasic::68e5fcdc23a4fa46b380a5a111c254d8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Wildcards.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Module WildcardsExtension
         Throw New Exception("This code is never run, so this exception is useless.")
     End Function
 End Module
-

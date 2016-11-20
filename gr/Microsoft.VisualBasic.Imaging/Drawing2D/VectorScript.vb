@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4011602bca0c183dc256f3d35d937a43, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\VectorScript.vb"
+﻿#Region "Microsoft.VisualBasic::4011602bca0c183dc256f3d35d937a43, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\VectorScript.vb"
 
     ' Author:
     ' 

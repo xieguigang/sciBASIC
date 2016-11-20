@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0355ba9f301ae8ae54825fe3ae9e282, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::a0355ba9f301ae8ae54825fe3ae9e282, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 

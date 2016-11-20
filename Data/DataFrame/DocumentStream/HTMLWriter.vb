@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d23a03e641182cfa3bea2e2b7f8f558, ..\visualbasic_App\Data\DataFrame\DocumentStream\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1d23a03e641182cfa3bea2e2b7f8f558, ..\sciBASIC#\Data\DataFrame\DocumentStream\HTMLWriter.vb"
 
     ' Author:
     ' 

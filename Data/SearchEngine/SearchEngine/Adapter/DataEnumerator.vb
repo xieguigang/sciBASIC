@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bbb09a1769c093547a6fbe12afd6386, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Adapter\DataEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::f769663e01a11daf6bddd89aa2a95049, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\DataEnumerator.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Public Module DataEnumerator
         End If
     End Function
 End Module
-

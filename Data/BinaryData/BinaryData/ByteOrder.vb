@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10196fde7ed8b0c89d827b3b445210d6, ..\visualbasic_App\Data\BinaryData\BinaryData\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::9b77a98a0c261ad51ee6f1144ee680d4, ..\sciBASIC#\Data\BinaryData\BinaryData\ByteOrder.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Represents the possible endianness of binary data.
@@ -61,4 +60,3 @@ Public Module ByteOrderHelper
         End Get
     End Property
 End Module
-

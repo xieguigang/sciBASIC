@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::932016faa0e4811b52413256ceacef56, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\AttrBridges.vb"
+﻿#Region "Microsoft.VisualBasic::e19499531b2c59713d86ef7041417b00, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
 
     ' Author:
     ' 

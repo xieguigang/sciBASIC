@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0d6f8c9866c73d50b401b0acb657441, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::e0d6f8c9866c73d50b401b0acb657441, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d38e17b2708188db2a98aee8f2e24574, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\TokenConnections.vb"
+﻿#Region "Microsoft.VisualBasic::d38e17b2708188db2a98aee8f2e24574, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\TokenConnections.vb"
 
     ' Author:
     ' 

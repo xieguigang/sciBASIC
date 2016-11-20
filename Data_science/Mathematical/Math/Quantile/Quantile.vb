@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f95f3bd299df23102a740bdf0013e3, ..\visualbasic_App\Data_science\Mathematical\Math\Quantile\Quantile.vb"
+﻿#Region "Microsoft.VisualBasic::e5f95f3bd299df23102a740bdf0013e3, ..\sciBASIC#\Data_science\Mathematical\Math\Quantile\Quantile.vb"
 
     ' Author:
     ' 

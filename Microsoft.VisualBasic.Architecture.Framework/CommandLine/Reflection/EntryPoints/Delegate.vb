@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b31f11a967012086914a85ca48d7d39, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::5b31f11a967012086914a85ca48d7d39, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3df4af9b8f7fc9b69999b13183042b84, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
+﻿#Region "Microsoft.VisualBasic::da858eb4581f7063834aa7276bc598db, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Public Module Evaluator
         Return s.First = "'"c AndAlso s.Last = "'"c
     End Function
 End Module
-

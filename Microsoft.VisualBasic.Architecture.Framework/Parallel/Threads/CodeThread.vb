@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb3ac43d52deafd223b3151b65268ad, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::bdb3ac43d52deafd223b3151b65268ad, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\CodeThread.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa5a4b7f6c6ef5d20e94f2f4426e2a1b, ..\visualbasic_App\Data_science\Mathematical\Math\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::72bad00925d89b6b2a578a848c1b49c3, ..\sciBASIC#\Data_science\Mathematical\Math\Bootstraping.vb"
 
     ' Author:
     ' 

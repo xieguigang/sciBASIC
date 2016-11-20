@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::558a45048a9c7f17eb70c0e193287017, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::558a45048a9c7f17eb70c0e193287017, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Edge.vb"
 
     ' Author:
     ' 

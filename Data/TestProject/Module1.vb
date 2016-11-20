@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba36401bc859c66652e565d3998d3e86, ..\visualbasic_App\Data\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::7e64af5e8310ff6083f8b0330648c1fc, ..\sciBASIC#\Data\TestProject\Module1.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Module Module1
         Dim tk = SyntaxParser.Parser("D:\GCModeller\src\runtime\visualbasic_App\Data\query_syntaxTest.txt".ReadAllText)
     End Sub
 End Module
-

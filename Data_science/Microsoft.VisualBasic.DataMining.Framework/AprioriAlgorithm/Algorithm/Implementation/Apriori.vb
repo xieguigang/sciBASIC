@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86548f9ae78f166d871e3ce7d0859814, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Implementation\Apriori.vb"
+﻿#Region "Microsoft.VisualBasic::86548f9ae78f166d871e3ce7d0859814, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Implementation\Apriori.vb"
 
     ' Author:
     ' 

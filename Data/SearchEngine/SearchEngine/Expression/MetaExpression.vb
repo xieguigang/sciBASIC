@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d402beae714073189a913489113cfe, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Expression\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::70d402beae714073189a913489113cfe, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\MetaExpression.vb"
 
     ' Author:
     ' 

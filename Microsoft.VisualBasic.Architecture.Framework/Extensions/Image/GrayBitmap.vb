@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc2850cc0919229d1a464b7964da0be4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GrayBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::bc2850cc0919229d1a464b7964da0be4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GrayBitmap.vb"
 
     ' Author:
     ' 

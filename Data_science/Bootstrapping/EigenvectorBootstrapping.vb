@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::223025365b1a3727afbd432a5e829ee0, ..\visualbasic_App\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
+﻿#Region "Microsoft.VisualBasic::104788f995df8fb6f052fd13013fd34a, ..\sciBASIC#\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
 
     ' Author:
     ' 

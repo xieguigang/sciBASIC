@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e24f20f6ec3eada82e556197f71fdf95, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::e24f20f6ec3eada82e556197f71fdf95, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 

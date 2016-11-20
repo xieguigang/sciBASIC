@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5ccabd214545668bc349bde15dd225, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IVector.vb"
+﻿#Region "Microsoft.VisualBasic::bc5ccabd214545668bc349bde15dd225, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IVector.vb"
 
     ' Author:
     ' 

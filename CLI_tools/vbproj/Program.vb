@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11dd92817740074c2561b6bd863f49f0, ..\visualbasic_App\CLI_tools\vbproj\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d2c7fa94fdcef75dbfd4958e582f794c, ..\sciBASIC#\CLI_tools\vbproj\Program.vb"
 
     ' Author:
     ' 
@@ -79,4 +79,3 @@ Module Program
         Return 0
     End Function
 End Module
-

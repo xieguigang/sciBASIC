@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8b092c698432c66e763fa1a8d557a09, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\DateParser.vb"
+﻿#Region "Microsoft.VisualBasic::20407919c1343a480b277b9387806239, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\DateParser.vb"
 
     ' Author:
     ' 

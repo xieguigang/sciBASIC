@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1083039dd3e4083c53e5ad1e5a6363b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::f1083039dd3e4083c53e5ad1e5a6363b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 

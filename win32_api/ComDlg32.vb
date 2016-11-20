@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26c0dbbe8cf5102b9b9ff3043a3d7bb5, ..\visualbasic_App\win32_api\ComDlg32.vb"
+﻿#Region "Microsoft.VisualBasic::26c0dbbe8cf5102b9b9ff3043a3d7bb5, ..\sciBASIC#\win32_api\ComDlg32.vb"
 
     ' Author:
     ' 

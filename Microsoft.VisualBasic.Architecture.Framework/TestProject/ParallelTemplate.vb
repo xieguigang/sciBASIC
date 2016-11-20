@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelTemplate.vb"
 
     ' Author:
     ' 

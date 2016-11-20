@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cec4f1ce41344e17c0b8b65c3d8ded7c, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ed5bc1745d4805e7d4c222a08046600e, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices

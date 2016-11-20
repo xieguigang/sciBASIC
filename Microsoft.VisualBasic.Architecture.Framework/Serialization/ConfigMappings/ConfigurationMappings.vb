@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc8f2515bc7ffd950d280fc6999828ad, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\ConfigurationMappings.vb"
+﻿#Region "Microsoft.VisualBasic::bc8f2515bc7ffd950d280fc6999828ad, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
     ' Author:
     ' 

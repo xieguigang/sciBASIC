@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf33a4c62745db835349f40f06005d24, ..\visualbasic_App\Data_science\Mathematical\Math\LP\LinearSolver.vb"
+﻿#Region "Microsoft.VisualBasic::cf33a4c62745db835349f40f06005d24, ..\sciBASIC#\Data_science\Mathematical\Math\LP\LinearSolver.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34c2107fd9d0cd88176bb89e764a8736, ..\visualbasic_App\Data\TestProject\TestMain.vb"
+﻿#Region "Microsoft.VisualBasic::49f2fd481e87924b541d0bff0f5fa9eb, ..\sciBASIC#\Data\TestProject\TestMain.vb"
 
     ' Author:
     ' 
@@ -201,4 +201,3 @@
 '        Public Property Tags As String()
 '    End Class
 'End Module
-

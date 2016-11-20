@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da54c1fc7a7c06212975fa89a844463b, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\Helpers\MatrixMathArithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::da54c1fc7a7c06212975fa89a844463b, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Helpers\MatrixMathArithmetic.vb"
 
     ' Author:
     ' 

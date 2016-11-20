@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63f24a05632213261be8c904f16f375d, ..\visualbasic_App\guides\Example\EasyDocument\Program.vb"
+﻿#Region "Microsoft.VisualBasic::63f24a05632213261be8c904f16f375d, ..\sciBASIC#\guides\Example\EasyDocument\Program.vb"
 
     ' Author:
     ' 

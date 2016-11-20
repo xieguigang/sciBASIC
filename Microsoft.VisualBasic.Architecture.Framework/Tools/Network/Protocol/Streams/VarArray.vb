@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::612f6b761c3f37f508e72bfa77e66571, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\VarArray.vb"
+﻿#Region "Microsoft.VisualBasic::612f6b761c3f37f508e72bfa77e66571, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\VarArray.vb"
 
     ' Author:
     ' 

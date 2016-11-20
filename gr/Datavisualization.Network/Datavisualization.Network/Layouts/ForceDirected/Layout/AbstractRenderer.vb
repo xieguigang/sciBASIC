@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da2b965099430ef906be2c8d0a12f935, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::da2b965099430ef906be2c8d0a12f935, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractRenderer.vb"
 
     ' Author:
     ' 

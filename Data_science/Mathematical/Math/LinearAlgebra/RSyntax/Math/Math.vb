@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcb3ea1435d0e90880243709ec6ed73c, ..\visualbasic_App\Data_science\Mathematical\Math\BasicR\RSyntax\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::43877972980d5b272b42619859d5d8d2, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\Math\Math.vb"
 
     ' Author:
     ' 

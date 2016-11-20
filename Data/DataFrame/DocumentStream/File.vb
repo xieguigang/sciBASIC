@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d23965238364ce7f93bedc256cdeb50e, ..\visualbasic_App\Data\DataFrame\DocumentStream\File.vb"
+﻿#Region "Microsoft.VisualBasic::cdc368b776776feaac32fc93b4b3aff0, ..\sciBASIC#\Data\DataFrame\DocumentStream\File.vb"
 
     ' Author:
     ' 

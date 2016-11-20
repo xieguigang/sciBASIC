@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26f4fff10fba887366bd157f86618ee5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
+﻿#Region "Microsoft.VisualBasic::26f4fff10fba887366bd157f86618ee5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
 
     ' Author:
     ' 

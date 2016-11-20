@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4f3130afbea6f248a89ed7a93d801bf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
+﻿#Region "Microsoft.VisualBasic::a4f3130afbea6f248a89ed7a93d801bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
 
     ' Author:
     ' 

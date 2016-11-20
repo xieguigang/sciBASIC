@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45fdde98907c7775632db531e38771c5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\[Namespace].vb"
+﻿#Region "Microsoft.VisualBasic::06b8acf20abbbaebf70e6d6d92da3c7f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\[Namespace].vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::233c92f643c49fc74918a97874e09be6, ..\visualbasic_App\Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5ebc6928209db7e800b3868f87167b9c, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Module Extensions
         End If
     End Function
 End Module
-

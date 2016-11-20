@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f82a53403b422ae84815b0547e60a3, ..\visualbasic_App\gr\Datavisualization.Network\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::28f82a53403b422ae84815b0547e60a3, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 

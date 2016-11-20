@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f32a054a099ef8d4f93fbe330ede831e, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.vb"
+﻿#Region "Microsoft.VisualBasic::f32a054a099ef8d4f93fbe330ede831e, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.vb"
 
     ' Author:
     ' 

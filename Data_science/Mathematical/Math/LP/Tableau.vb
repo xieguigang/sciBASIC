@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a0940650a20ddfa87fcc650d71004c, ..\visualbasic_App\Data_science\Mathematical\Math\LP\Tableau.vb"
+﻿#Region "Microsoft.VisualBasic::f9a0940650a20ddfa87fcc650d71004c, ..\sciBASIC#\Data_science\Mathematical\Math\LP\Tableau.vb"
 
     ' Author:
     ' 

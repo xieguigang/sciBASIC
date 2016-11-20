@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2063c97afde193d2d74c6b6a0fafbea8, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Evaluation\AssertionProvider.vb"
+﻿#Region "Microsoft.VisualBasic::8d08aaf5981341b6be1ae72b2a6a4972, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\AssertionProvider.vb"
 
     ' Author:
     ' 
@@ -128,4 +128,3 @@ Public Module AssertionProvider
             End Function
     End Function
 End Module
-

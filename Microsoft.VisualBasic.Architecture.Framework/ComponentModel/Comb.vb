@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a451bf50b7dfd1e08defa5935324ccd4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::a451bf50b7dfd1e08defa5935324ccd4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Comb.vb"
 
     ' Author:
     ' 

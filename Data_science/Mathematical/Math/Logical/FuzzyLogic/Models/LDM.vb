@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10a817703b91cbd01af065c6f0957838, ..\visualbasic_App\Data_science\Mathematical\Math\Logical\FuzzyLogic\Models\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::10a817703b91cbd01af065c6f0957838, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\FuzzyLogic\Models\LDM.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32dad244ef3b7b655de3c6c7ea44b836, ..\visualbasic_App\CLI_tools\vbproj\Template\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::e154124fe856c2bc0201266d29cc8053, ..\sciBASIC#\CLI_tools\vbproj\Template\PropertyGroup.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -90,4 +89,3 @@ Public Class PropertyGroup
         Return Me.GetJson
     End Function
 End Class
-

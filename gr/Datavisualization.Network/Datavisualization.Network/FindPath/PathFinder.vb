@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de19bacbb0a29a98cbe3e9f9221fae6b, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\FindPath\PathFinder.vb"
+﻿#Region "Microsoft.VisualBasic::de19bacbb0a29a98cbe3e9f9221fae6b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\PathFinder.vb"
 
     ' Author:
     ' 

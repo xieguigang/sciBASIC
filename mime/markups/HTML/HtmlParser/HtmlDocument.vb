@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b55c6e14690ff006ade8c2ae5bc0bcd1, ..\visualbasic_App\mime\Markups\HTML\HtmlParser\HtmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::b55c6e14690ff006ade8c2ae5bc0bcd1, ..\sciBASIC#\mime\markups\HTML\HtmlParser\HtmlDocument.vb"
 
     ' Author:
     ' 

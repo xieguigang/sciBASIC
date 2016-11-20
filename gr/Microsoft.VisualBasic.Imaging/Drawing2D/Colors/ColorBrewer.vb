@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6e640c055f6e1fd6b26535efe28a818, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
+﻿#Region "Microsoft.VisualBasic::a604b5e7f5d8a8d530cbb50170cfd8d6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Serialization.JSON
 

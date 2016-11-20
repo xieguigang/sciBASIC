@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee24877514190ee868ba0aaa6215fd0c, ..\visualbasic_App\win32_api\IMM32.vb"
+﻿#Region "Microsoft.VisualBasic::ee24877514190ee868ba0aaa6215fd0c, ..\sciBASIC#\win32_api\IMM32.vb"
 
     ' Author:
     ' 

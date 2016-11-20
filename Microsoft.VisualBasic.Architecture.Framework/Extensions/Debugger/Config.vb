@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d49dc4d7c0b8f112deb3ad945be4a143, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Config.vb"
+﻿#Region "Microsoft.VisualBasic::d49dc4d7c0b8f112deb3ad945be4a143, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Config.vb"
 
     ' Author:
     ' 

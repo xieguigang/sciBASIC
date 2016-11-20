@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9f39d083fd2d279f6ab44ae5c58a546, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::f9f39d083fd2d279f6ab44ae5c58a546, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
 
     ' Author:
     ' 

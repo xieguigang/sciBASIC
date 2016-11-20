@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4bcd056286c7b7f5cd12f0104623845, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\LevenshteinModel.vb"
+﻿#Region "Microsoft.VisualBasic::b4bcd056286c7b7f5cd12f0104623845, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\LevenshteinModel.vb"
 
     ' Author:
     ' 

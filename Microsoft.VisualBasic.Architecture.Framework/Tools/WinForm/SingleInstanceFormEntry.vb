@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9500101433e6f035d9c7698f32d5a3ff, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\SingleInstanceFormEntry.vb"
+﻿#Region "Microsoft.VisualBasic::9500101433e6f035d9c7698f32d5a3ff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\SingleInstanceFormEntry.vb"
 
     ' Author:
     ' 

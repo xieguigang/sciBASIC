@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6680058451f4f7c9315e14f11aa59c03, ..\visualbasic_App\Data\BinaryData\BinaryData\SeekTask.vb"
+﻿#Region "Microsoft.VisualBasic::6a3af42995efb4562bcc9fd857a10e38, ..\sciBASIC#\Data\BinaryData\BinaryData\SeekTask.vb"
 
     ' Author:
     ' 
@@ -64,4 +64,3 @@ Public Class SeekTask : Implements IDisposable
 		Stream.Seek(PreviousPosition, SeekOrigin.Begin)
 	End Sub
 End Class
-

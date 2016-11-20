@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4163d36176ea809d115877d73ea8267, ..\visualbasic_App\CLI_tools\FindKeyWord\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c4163d36176ea809d115877d73ea8267, ..\sciBASIC#\CLI_tools\FindKeyWord\Program.vb"
 
     ' Author:
     ' 

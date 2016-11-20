@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::998d1a57ac4cd8e8b4269819905f621a, ..\visualbasic_App\gr\Datavisualization.Network\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::7b9605da03bc280b9c15aeeeaa000636, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
     ' Author:
     ' 

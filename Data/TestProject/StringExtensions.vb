@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1efedcf3ca395ea5c28fa0013ea66442, ..\visualbasic_App\Data\TestProject\StringExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2c87a942112ce875331122f803976d6, ..\sciBASIC#\Data\TestProject\StringExtensions.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Public Module StringExtensions
         Throw New Exception("This code is never run, so this exception is useless.")
     End Function
 End Module
-

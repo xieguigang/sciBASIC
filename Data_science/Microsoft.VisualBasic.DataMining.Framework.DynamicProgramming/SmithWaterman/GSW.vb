@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a73731cb3a310414a583cd9f698357d, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\DP_lib\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::7a73731cb3a310414a583cd9f698357d, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4ff4cac14b76547344c9d88d3467029, ..\visualbasic_App\CLI_tools\ErrorCodes\ErrorCodes\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a4ff4cac14b76547344c9d88d3467029, ..\sciBASIC#\CLI_tools\ErrorCodes\ErrorCodes\Program.vb"
 
     ' Author:
     ' 

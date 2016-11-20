@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea5b00035d368de4496eb1d1e56c6762, ..\visualbasic_App\Data_science\Mathematical\ODE\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::4a75bbf09c38e01b90d73f2f1976c638, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEs.vb"
 
     ' Author:
     ' 

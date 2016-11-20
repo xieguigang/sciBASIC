@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c2b124f90ca8f3a4f13b63df799d373, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::9c2b124f90ca8f3a4f13b63df799d373, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
 
     ' Author:
     ' 

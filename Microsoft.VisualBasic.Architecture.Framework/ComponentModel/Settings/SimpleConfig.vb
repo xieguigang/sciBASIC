@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d731ee532a118b9c7ce74129044137c5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::d731ee532a118b9c7ce74129044137c5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 

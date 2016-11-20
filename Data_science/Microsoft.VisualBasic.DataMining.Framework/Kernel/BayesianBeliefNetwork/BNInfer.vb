@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8e61874a260bcf2315f620776751bb1, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BNInfer.vb"
+﻿#Region "Microsoft.VisualBasic::c8e61874a260bcf2315f620776751bb1, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BNInfer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f23770ef2e93298742f271153280c50, ..\visualbasic_App\Data\SearchEngine\SearchEngine\QueryArgument.vb"
+﻿#Region "Microsoft.VisualBasic::0f23770ef2e93298742f271153280c50, ..\sciBASIC#\Data\SearchEngine\SearchEngine\QueryArgument.vb"
 
     ' Author:
     ' 

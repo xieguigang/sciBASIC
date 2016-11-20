@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63732a6c9bf569c4afe5aa243ab3bfdc, ..\visualbasic_App\Data\BinaryData\BinaryData\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::b34f426dc31de3ca67953bac336f2f70, ..\sciBASIC#\Data\BinaryData\BinaryData\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -611,4 +611,3 @@ Public Class BinaryDataReader
         Return New Decimal(intValues)
     End Function
 End Class
-

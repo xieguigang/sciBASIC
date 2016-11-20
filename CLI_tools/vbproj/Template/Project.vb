@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c03a639f59edfad4bd721026aae6fa6, ..\visualbasic_App\CLI_tools\vbproj\Template\Project.vb"
+﻿#Region "Microsoft.VisualBasic::9c03a639f59edfad4bd721026aae6fa6, ..\sciBASIC#\CLI_tools\vbproj\Template\Project.vb"
 
     ' Author:
     ' 

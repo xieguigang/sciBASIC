@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92bdf137c2a84222a99b634957ba6b45, ..\visualbasic_App\CLI_tools\LicenseMgr\LicenseMgr\Pages\FileSymbolic.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::92bdf137c2a84222a99b634957ba6b45, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Pages\FileSymbolic.xaml.vb"
 
     ' Author:
     ' 

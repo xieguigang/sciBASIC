@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4c6f9a6578b0838b8559fe3ce4e4354, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::e190c1ca273188601f57586804bd5318, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -152,7 +152,3 @@ Public Class Expression
         Yield GetEnumerator()
     End Function
 End Class
-
-
-
-

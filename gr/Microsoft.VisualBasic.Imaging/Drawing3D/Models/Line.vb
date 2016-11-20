@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1d3d1eea23db1f4c9358018da8268b2, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Line.vb"
+﻿#Region "Microsoft.VisualBasic::09dd3f69d5a32a157b53ee81325da1fd, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Line.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 

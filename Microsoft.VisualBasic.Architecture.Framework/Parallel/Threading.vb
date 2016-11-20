@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aab5d65673186dcf22de324c7b683d1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threading.vb"
+﻿#Region "Microsoft.VisualBasic::4aab5d65673186dcf22de324c7b683d1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threading.vb"
 
     ' Author:
     ' 

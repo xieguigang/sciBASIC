@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45a455ec408a9a0a49fb596b27517251, ..\visualbasic_App\Data\BinaryData\BinaryData\Offset.vb"
+﻿#Region "Microsoft.VisualBasic::d6abbfcc0b91e3371019651f7a899474, ..\sciBASIC#\Data\BinaryData\BinaryData\Offset.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Public Class Offset
 		Writer.Position = oldPosition
 	End Sub
 End Class
-

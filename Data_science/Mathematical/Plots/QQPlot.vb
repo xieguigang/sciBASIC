@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::414436180b7c7e36e470531ff6da3962, ..\visualbasic_App\Data_science\Mathematical\Plots\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::1727d80867edb35e81e5c3e1b685b91f, ..\sciBASIC#\Data_science\Mathematical\Plots\QQPlot.vb"
 
     ' Author:
     ' 
@@ -151,4 +151,3 @@ Public Module QQPlot
             End Sub)
     End Function
 End Module
-

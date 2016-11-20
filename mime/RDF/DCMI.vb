@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, ..\visualbasic_App\mime\RDF\DCMI.vb"
+﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, ..\sciBASIC#\mime\RDF\DCMI.vb"
 
     ' Author:
     ' 

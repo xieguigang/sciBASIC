@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c56fe3bf739669906bd75068dbe03c80, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c56fe3bf739669906bd75068dbe03c80, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff0282663d7bfb3c56a5f31d8416a30e, ..\visualbasic_App\Data_science\Mathematical\Math\LP\Data\Equation.vb"
+﻿#Region "Microsoft.VisualBasic::ff0282663d7bfb3c56a5f31d8416a30e, ..\sciBASIC#\Data_science\Mathematical\Math\LP\Data\Equation.vb"
 
     ' Author:
     ' 

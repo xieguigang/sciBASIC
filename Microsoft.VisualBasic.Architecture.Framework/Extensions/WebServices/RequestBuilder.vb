@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fd11aee4dda772f91231db6825e4ac1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\RequestBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::7fd11aee4dda772f91231db6825e4ac1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\RequestBuilder.vb"
 
     ' Author:
     ' 

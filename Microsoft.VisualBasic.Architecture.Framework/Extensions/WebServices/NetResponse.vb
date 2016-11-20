@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9badf946a5bcbeb6e6e350feeddc3c9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\NetResponse.vb"
+﻿#Region "Microsoft.VisualBasic::d9badf946a5bcbeb6e6e350feeddc3c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\NetResponse.vb"
 
     ' Author:
     ' 

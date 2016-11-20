@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c96152c260d6a48ecd6f8c27c850a1f, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Arrow.vb"
+﻿#Region "Microsoft.VisualBasic::7c96152c260d6a48ecd6f8c27c850a1f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Arrow.vb"
 
     ' Author:
     ' 

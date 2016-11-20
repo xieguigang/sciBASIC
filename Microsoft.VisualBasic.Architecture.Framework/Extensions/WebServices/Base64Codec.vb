@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17b968357faf5c82a34668e83990f17c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::17b968357faf5c82a34668e83990f17c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Base64Codec.vb"
 
     ' Author:
     ' 

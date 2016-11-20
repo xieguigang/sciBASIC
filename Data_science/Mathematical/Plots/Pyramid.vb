@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef0a1322899f98051431db4e10d6b32e, ..\visualbasic_App\Data_science\Mathematical\Plots\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::bb5acdacc67bc48e9cba08fa4bc7f5e9, ..\sciBASIC#\Data_science\Mathematical\Plots\Pyramid.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Public Module Pyramid
                 End Sub)
     End Function
 End Module
-

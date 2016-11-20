@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61425b732450b4a9e6446347bd269581, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
+﻿#Region "Microsoft.VisualBasic::61425b732450b4a9e6446347bd269581, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
 
     ' Author:
     ' 

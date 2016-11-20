@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e729f5965ece7d92b1c083d5ae73ca6f, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::e729f5965ece7d92b1c083d5ae73ca6f, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\POST.vb"
 
     ' Author:
     ' 

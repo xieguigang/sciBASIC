@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d4e14d64c6a34163cf3856648221c5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\UserId.vb"
+﻿#Region "Microsoft.VisualBasic::70d4e14d64c6a34163cf3856648221c5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\Persistent\Protocols\UserId.vb"
 
     ' Author:
     ' 

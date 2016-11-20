@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5c3d844947fc33fab5cd1a678db819d, ..\visualbasic_App\Data\DataFrame.Extensions\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::a5c3d844947fc33fab5cd1a678db819d, ..\sciBASIC#\Data\DataFrame.Extensions\Schema.vb"
 
     ' Author:
     ' 

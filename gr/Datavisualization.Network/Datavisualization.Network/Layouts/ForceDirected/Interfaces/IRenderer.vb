@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60096c54a5403d9f534e4e7884a573b, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::f60096c54a5403d9f534e4e7884a573b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IRenderer.vb"
 
     ' Author:
     ' 

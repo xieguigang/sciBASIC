@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::497851227af7ccbbac87e33a2b21c2b6, ..\visualbasic_App\Data_science\Mathematical\Math\LP\Exceptions.vb"
+﻿#Region "Microsoft.VisualBasic::497851227af7ccbbac87e33a2b21c2b6, ..\sciBASIC#\Data_science\Mathematical\Math\LP\Exceptions.vb"
 
     ' Author:
     ' 

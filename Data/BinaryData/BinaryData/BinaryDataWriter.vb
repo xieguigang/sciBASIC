@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fd9444a1812c1c859b3ef441fa2da00, ..\visualbasic_App\Data\BinaryData\BinaryData\BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::637d25620ecab24f42badd17c20d7703, ..\sciBASIC#\Data\BinaryData\BinaryData\BinaryDataWriter.vb"
 
     ' Author:
     ' 
@@ -493,4 +493,3 @@ Public Class BinaryDataWriter
         Return bytes
     End Function
 End Class
-

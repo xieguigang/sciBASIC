@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca40eb85a45f41963e65afa7e14c8186, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8fbe5e27bcc6f3a9d04425788a7e6e33, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Extensions.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices

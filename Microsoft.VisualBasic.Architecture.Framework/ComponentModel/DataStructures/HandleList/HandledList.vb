@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b410fb6485b31f0f802a9d7761053b7b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\HandledList.vb"
+﻿#Region "Microsoft.VisualBasic::b410fb6485b31f0f802a9d7761053b7b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\HandledList.vb"
 
     ' Author:
     ' 

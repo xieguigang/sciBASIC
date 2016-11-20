@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5b1e6f603e42074c2829d7ad34bce42, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::f5b1e6f603e42074c2829d7ad34bce42, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 

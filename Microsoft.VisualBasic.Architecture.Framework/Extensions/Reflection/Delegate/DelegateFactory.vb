@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23bc9efd58f3079b2c154d9ca081e0a2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::23bc9efd58f3079b2c154d9ca081e0a2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 

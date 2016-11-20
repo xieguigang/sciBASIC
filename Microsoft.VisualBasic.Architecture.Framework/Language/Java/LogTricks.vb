@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4072ff7946703b42b56f429258c37a6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Java\LogTricks.vb"
+﻿#Region "Microsoft.VisualBasic::e4072ff7946703b42b56f429258c37a6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Java\LogTricks.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1412ecd3b5a278d2b057ae387d7f92b7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\MetaAPI.vb"
+﻿#Region "Microsoft.VisualBasic::1412ecd3b5a278d2b057ae387d7f92b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\MetaAPI.vb"
 
     ' Author:
     ' 

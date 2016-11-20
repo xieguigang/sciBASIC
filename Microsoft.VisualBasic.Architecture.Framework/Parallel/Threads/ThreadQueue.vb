@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3d547e07dfc11c3377098ba4c9b70e4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ThreadQueue.vb"
+﻿#Region "Microsoft.VisualBasic::40b593ba002ca0896329f47b860d8365, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ThreadQueue.vb"
 
     ' Author:
     ' 

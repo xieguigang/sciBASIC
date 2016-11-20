@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a25ae132e7149a473aa46fee85c6d6a, ..\visualbasic_App\Data_science\Mathematical\MathApp\Modules\ODEsTest.vb"
+﻿#Region "Microsoft.VisualBasic::92de42849e8394b8e69735f2b4cadb5e, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\ODEsTest.vb"
 
     ' Author:
     ' 

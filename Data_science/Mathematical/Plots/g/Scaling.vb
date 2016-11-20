@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::712f1b4926c7ae6af59bab1ce714d6b1, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::30a01b4abbdec39735a81190b3579948, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Scaling.vb"
 
     ' Author:
     ' 

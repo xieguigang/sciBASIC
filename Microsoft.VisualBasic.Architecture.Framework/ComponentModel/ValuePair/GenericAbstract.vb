@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3e29840946f2725811668f4cc89425c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\GenericAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::c3e29840946f2725811668f4cc89425c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\GenericAbstract.vb"
 
     ' Author:
     ' 

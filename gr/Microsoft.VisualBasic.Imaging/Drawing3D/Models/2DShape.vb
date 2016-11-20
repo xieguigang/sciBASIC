@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7a80ddf95bfdeaaca7232aa47856659, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing3D\2DShape.vb"
+﻿#Region "Microsoft.VisualBasic::e7a80ddf95bfdeaaca7232aa47856659, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\2DShape.vb"
 
     ' Author:
     ' 

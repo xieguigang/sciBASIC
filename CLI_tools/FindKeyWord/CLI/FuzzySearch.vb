@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c77fbd61bc40f29251e18374e234196b, ..\visualbasic_App\CLI_tools\FindKeyWord\CLI\FuzzySearch.vb"
+﻿#Region "Microsoft.VisualBasic::c77fbd61bc40f29251e18374e234196b, ..\sciBASIC#\CLI_tools\FindKeyWord\CLI\FuzzySearch.vb"
 
     ' Author:
     ' 

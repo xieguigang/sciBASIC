@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45cba76eb3740ed7b4fc2419ff4ccfe9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\JunctionPoint.vb"
+﻿#Region "Microsoft.VisualBasic::45cba76eb3740ed7b4fc2419ff4ccfe9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\JunctionPoint.vb"
 
     ' Author:
     ' 

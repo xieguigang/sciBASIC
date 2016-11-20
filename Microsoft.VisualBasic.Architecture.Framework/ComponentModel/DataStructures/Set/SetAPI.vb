@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c92289b30433561e401859c754ecd390, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetAPI.vb"
+﻿#Region "Microsoft.VisualBasic::c92289b30433561e401859c754ecd390, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetAPI.vb"
 
     ' Author:
     ' 

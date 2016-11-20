@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9646ebd716f02e8a54548e809ba36338, ..\visualbasic_App\Data_science\Mathematical\Plots\Percents\PercentageData.vb"
+﻿#Region "Microsoft.VisualBasic::cb9986344915d69ccc1728eedf78df7a, ..\sciBASIC#\Data_science\Mathematical\Plots\Percents\PercentageData.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON

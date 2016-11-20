@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13f8c2c85ffbfa04c6be5f11cec8e4e8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::13f8c2c85ffbfa04c6be5f11cec8e4e8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d981eca50a164a8a7b6069fc9e50a262, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d981eca50a164a8a7b6069fc9e50a262, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\Extensions.vb"
 
     ' Author:
     ' 

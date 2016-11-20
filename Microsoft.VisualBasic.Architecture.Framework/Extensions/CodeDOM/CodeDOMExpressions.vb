@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8666c9cff344569a6554bda7a3b9afc9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOMExpressions.vb"
+﻿#Region "Microsoft.VisualBasic::8666c9cff344569a6554bda7a3b9afc9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOMExpressions.vb"
 
     ' Author:
     ' 

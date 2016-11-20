@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d64db20302840e678ae4c5ac41b112d, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Maze-Q-Learning\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8d64db20302840e678ae4c5ac41b112d, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Maze-Q-Learning\Program.vb"
 
     ' Author:
     ' 

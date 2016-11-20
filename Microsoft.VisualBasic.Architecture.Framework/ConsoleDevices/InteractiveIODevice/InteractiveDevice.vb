@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67beb42d4fc01a85d6cf36d6480f7ead, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::67beb42d4fc01a85d6cf36d6480f7ead, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 

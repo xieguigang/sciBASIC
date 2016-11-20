@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c68e94ebdd48db0de52bb477b771639, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsMedian.vb"
+﻿#Region "Microsoft.VisualBasic::3c68e94ebdd48db0de52bb477b771639, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsMedian.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80ee87ef0a10a5c624e9912161e06061, ..\visualbasic_App\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::d6d5e6f8578503000bca2fb70f978556, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 
@@ -185,4 +185,3 @@ Public Module ExpressionBuilder
             t = SyntaxParser.Tokens.op_OR
     End Function
 End Module
-

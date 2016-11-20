@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e5b3955927cf8c9a54d16ba9d6bd589, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::7e5b3955927cf8c9a54d16ba9d6bd589, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
 
     ' Author:
     ' 
