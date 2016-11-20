@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace BasicR
+Namespace LinearAlgebra
 
     ''' <summary>
     ''' <see cref="List(Of Double)"/>
@@ -347,7 +347,7 @@ Namespace BasicR
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As MATRIX
+        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As Matrix
             '获取变量维数
             Dim N0 = v1.[Dim]
             Dim M0 = v2.[Dim]
@@ -357,7 +357,7 @@ Namespace BasicR
             End If
             '如果向量维数不匹配，给出告警信息
 
-            Dim vvmat As New MATRIX(N0, N0)
+            Dim vvmat As New Matrix(N0, N0)
 
             For i As Integer = 0 To N0 - 1
                 For j As Integer = 0 To N0 - 1

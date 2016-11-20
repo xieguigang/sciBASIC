@@ -216,25 +216,24 @@
     <Compile Include="Arithmetic.Expression\ExpressionParser.vb" />
     <Compile Include="Arithmetic.Expression\SimpleParser.vb" />
     <Compile Include="Arithmetic.Expression\Expression.vb" />
-    <Compile Include="BasicR\Helpers\MatrixMathArithmetic.vb" />
-    <Compile Include="BasicR\Helpers\Constants.vb" />
-    <Compile Include="BasicR\Helpers\Function.vb" />
-    <Compile Include="BasicR\Helpers\Variable.vb" />
-    <Compile Include="BasicR\Matrix\MATRIX.vb" />
-    <Compile Include="BasicR\Parser.vb" />
-    <Compile Include="BasicR\Matrix\Functions.vb" />
-    <Compile Include="BasicR\RSyntax\Math\Math.vb" />
-    <Compile Include="BasicR\RSyntax\Math\Poisson.vb" />
-    <Compile Include="BasicR\RSyntax\Math\Skellam.vb" />
-    <Compile Include="BasicR\RSyntax\PrimitiveAPI\Etc.vb" />
-    <Compile Include="BasicR\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
-    <Compile Include="BasicR\RSyntax\Vectors\BooleanVector.vb" />
-    <Compile Include="BasicR\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
-    <Compile Include="BasicR\Solvers\SOR.vb" />
-    <Compile Include="BasicR\Solvers\GaussianElimination.vb" />
-    <Compile Include="BasicR\Solvers\ISolver.vb" />
-    <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
-    <Compile Include="BasicR\Vector.vb" />
+    <Compile Include="LinearAlgebra\Helpers\MatrixMathArithmetic.vb" />
+    <Compile Include="LinearAlgebra\Helpers\Constants.vb" />
+    <Compile Include="LinearAlgebra\Helpers\Function.vb" />
+    <Compile Include="LinearAlgebra\Helpers\Variable.vb" />
+    <Compile Include="LinearAlgebra\Matrix\Matrix.vb" />
+    <Compile Include="LinearAlgebra\Matrix\MatrixMath.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Math\Math.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Math\Poisson.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Math\Skellam.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\PrimitiveAPI\Etc.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Vectors\BooleanVector.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
+    <Compile Include="LinearAlgebra\Solvers\SOR.vb" />
+    <Compile Include="LinearAlgebra\Solvers\GaussianElimination.vb" />
+    <Compile Include="LinearAlgebra\Solvers\ISolver.vb" />
+    <Compile Include="LinearAlgebra\Helpers\MatrixArithmetic.vb" />
+    <Compile Include="LinearAlgebra\Vector.vb" />
     <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
     <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />
@@ -330,7 +329,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BasicR\RSyntax\README.txt" />
+    <Content Include="LinearAlgebra\RSyntax\README.txt" />
     <Content Include="Icon\Terminal.ico" />
   </ItemGroup>
   <ItemGroup>

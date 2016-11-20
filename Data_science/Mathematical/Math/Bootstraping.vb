@@ -191,6 +191,19 @@ Public Module Bootstraping
         Return c
     End Function
 
+    ''' <summary>
+    ''' ###### Z-score 标准化(zero-mean normalization)
+    ''' 也叫标准差标准化，经过处理的数据符合标准正态分布，即均值为0，标准差为1
+    ''' 其中<paramref name="m"/>为所有样本数据的均值，<paramref name="sd"/>为所有样本数据的标准差。
+    ''' </summary>
+    ''' <param name="x#">Sample data</param>
+    ''' <param name="m#">Average</param>
+    ''' <param name="sd#">STD</param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 注：是否要进行标准化，要根据具体实验定。如果特征非常稀疏，并且有大量的0（现实应用中很多特征都具有这个特点），
+    ''' ``Z-score`` 标准化的过程几乎就是一个除0的过程，结果不可预料。
+    ''' </remarks>
     Public Function Z#(x#, m#, sd#)
         Dim answer As Double = (x - m) / sd
         Return answer
