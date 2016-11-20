@@ -38,7 +38,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -168,7 +168,9 @@ Public Module Scatter
                          Optional ptSize As Single = 15,
                          Optional width As Single = 5,
                          Optional drawLine As Boolean = False) As Bitmap
-        Return {FromVector(x,,, ptSize, width)}.Plot(size, margin, bg, True, False, , drawLine)
+        Return {
+            FromVector(x,,, ptSize, width)
+        }.Plot(size, margin, bg, True, False, , drawLine)
     End Function
 
     Public Function FromVector(y As IEnumerable(Of Double),
