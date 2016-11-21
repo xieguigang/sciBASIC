@@ -743,7 +743,8 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
     <ExportAPI("wget", Info:="Download data from the specific URL location.")>
     <Extension> Public Function DownloadFile(<Parameter("url")> strUrl As String,
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
-                                             save As String) As Boolean
+                                             save As String,
+                                             Optional proxy As String = Nothing) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -755,13 +756,22 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
     <Extension> Public Function DownloadFile(strUrl As String, SavedPath As String) As Boolean
 #End If
         Try
-            Using dwl As New System.Net.WebClient()
+            Using dwl As New WebClient()
+                If Not String.IsNullOrEmpty(proxy) Then
+                    Call dwl.SetProxy(proxy)
+                End If
+
                 Call dwl.DownloadFile(strUrl, save)
             End Using
             Return True
         Catch ex As Exception
-            Dim trace As String = MethodBase.GetCurrentMethod.GetFullName & ":: " & strUrl
-            Call App.LogException(ex, trace)
+            Dim trace As String = MethodBase.GetCurrentMethod.GetFullName
+
+            Call App.LogException(
+                New Exception(strUrl, ex),
+                trace)
+            Call ex.PrintException
+
             Return False
         Finally
             If save.FileExists Then
