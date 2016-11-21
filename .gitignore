@@ -43,6 +43,11 @@ packages/
 *.user
 *.sln.docstates
 
+slnx.sqlite-journal
+slnx.sqlite
+bin-Debug/
+GCModeller-[Xx]64/
+
 # Build results
 
 [Dd]ebug/
