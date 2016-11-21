@@ -539,9 +539,16 @@ Public Module WebServiceUtils
         ' returned values are returned as a stream, then read into a string
         Dim response = request.GetResponse().As(Of HttpWebResponse)
         Using responseStream As New StreamReader(response.GetResponseStream())
-            Dim html As String = responseStream.ReadToEnd()
-            Call $"[GET] {responseStream.BaseStream.Length} bytes...".__DEBUG_ECHO
-            Return html
+            Dim html As New StringBuilder
+            Dim s As New Value(Of String)
+
+            Do While Not (s = responseStream.ReadLine) Is Nothing
+                Call html.AppendLine(+s)
+            Loop
+
+            Call $"[GET] {html.Length} bytes...".__DEBUG_ECHO
+
+            Return html.ToString
         End Using
     End Function
 
