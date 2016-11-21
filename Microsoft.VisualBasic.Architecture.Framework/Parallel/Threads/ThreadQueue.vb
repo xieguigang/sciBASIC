@@ -57,10 +57,15 @@ Namespace Parallel
         ''' </summary>
         Dim QSolverRunning As Boolean = False
 
+        Dim waitForExit As Boolean = False
+
+        ''' <summary>
+        ''' lock
+        ''' </summary>
+        Dim dummy As New Object()
+
         Sub New()
             QSolverRunning = False
-            MyThread.Name = "xConsole · Multi-Thread Writer"
-            MyThread.Start()
         End Sub
 
         ''' <summary>
@@ -73,8 +78,17 @@ Namespace Parallel
             End SyncLock
 
             If MultiThreadSupport Then ' 只需要将任务添加到队列之中就行了
+                SyncLock dummy
+                    If Not MyThread.IsAlive Then
+                        QSolverRunning = False
+                        MyThread = New Thread(AddressOf exeQueue)
+
+                        MyThread.Name = "xConsole · Multi-Thread Writer"
+                        MyThread.Start()
+                    End If
+                End SyncLock
             Else
-                WaitQueue()   ' 等待线程任务的执行完毕
+                exeQueue()  ' 等待线程任务的执行完毕
             End If
         End Sub
 
@@ -91,8 +105,10 @@ Namespace Parallel
         ''' Execute the queue list
         ''' </summary>
         Private Sub exeQueue()
-            Do While App.Running AndAlso Not waitForExit
-                QSolverRunning = True
+            QSolverRunning = True
+
+            While Queue IsNot Nothing AndAlso Queue.Count > 0
+                Call Thread.MemoryBarrier()
 
                 While True
                     Dim a As Action
@@ -109,15 +125,10 @@ Namespace Parallel
                         a.Invoke()
                     End If
                 End While
+            End While
 
-                ' 必须要休眠1个毫秒，否则CPU的占用率会非常高
-                Call Thread.Sleep(1)
-
-                QSolverRunning = False
-            Loop
+            QSolverRunning = False
         End Sub
-
-        Dim waitForExit As Boolean = False
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' 要检测冗余调用
