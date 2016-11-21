@@ -33,6 +33,11 @@ Namespace Net.Http
     ''' </summary>
     Public Class UserAgent
 
+        ''' <summary>
+        ''' ``User-Agent``
+        ''' </summary>
+        Public Const UAheader As String = "User-Agent"
+
         Public Class Android
 
             Public Const GalaxyS5 As String = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36"

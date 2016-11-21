@@ -507,7 +507,11 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, data As Dictionary(Of String, String()), Optional Referer$ = "", Optional proxy$ = Nothing) As String
+    <Extension> Public Function PostRequest(url$, data As Dictionary(Of String, String()),
+                                            Optional Referer$ = "",
+                                            Optional proxy$ = Nothing,
+                                            Optional ua As String = UserAgent.GoogleChrome) As String
+
         Dim postString As New List(Of String)
 
         For Each postValue As KeyValuePair(Of String, String()) In data
@@ -522,7 +526,7 @@ Public Module WebServiceUtils
         request.Accept = "application/json"
         request.ContentLength = postData.Length
         request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
-        request.UserAgent = UserAgent.GoogleChrome
+        request.UserAgent = ua
         request.Referer = Referer
 
         If Not String.IsNullOrEmpty(proxy) Then
@@ -602,7 +606,8 @@ Public Module WebServiceUtils
                                       Optional isFileUrl As Boolean = False,
                                       Optional headers As Dictionary(Of String, String) = Nothing,
                                       Optional proxy As String = Nothing,
-                                      Optional DoNotRetry404 As Boolean = False) As String
+                                      Optional doNotRetry404 As Boolean = False,
+                                      Optional UA$ = UserAgent.GoogleChrome) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -634,7 +639,7 @@ Public Module WebServiceUtils
                 timeout,
                 headers,
                 proxy,
-                DoNotRetry404)
+                doNotRetry404, UA)
 
 #If FRAMEWORD_CORE Then
         End Using
@@ -646,10 +651,13 @@ Public Module WebServiceUtils
                                        RequestTimeOut%,
                                        headers As Dictionary(Of String, String),
                                        proxy As String,
-                                       DoNotRetry404 As Boolean) As String
-        Dim RequestTime As Integer = 0
+                                       DoNotRetry404 As Boolean,
+                                       UA$) As String
+
+        Dim retryTime As Integer = 0
+
         Try
-RETRY:      Return __downloadWebpage(url, headers, proxy)
+RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
         Catch ex As Exception
             Dim is404 As Boolean =
                 InStr(ex.Message, "(404) Not Found") > 0
@@ -657,12 +665,12 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
             ex = New Exception(url, ex)
             ex.PrintException
 
-            If RequestTime < RequestTimeOut Then
+            If retryTime < RequestTimeOut Then
                 If is404 AndAlso DoNotRetry404 Then
                     Return LogException(url, ex)
                 End If
 
-                RequestTime += 1
+                retryTime += 1
                 Call "Data downloading error, retry connect to the server!".__DEBUG_ECHO
                 GoTo RETRY
             Else
@@ -697,7 +705,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
         }
     End Function
 
-    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String), proxy As String) As String
+    Private Function __downloadWebpage(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
         Call "Waiting for the server reply..".__DEBUG_ECHO
 
         Dim Timer As Stopwatch = Stopwatch.StartNew
@@ -744,7 +752,8 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
     <Extension> Public Function DownloadFile(<Parameter("url")> strUrl As String,
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
                                              save As String,
-                                             Optional proxy As String = Nothing) As Boolean
+                                             Optional proxy As String = Nothing,
+                                             Optional ua As String = UserAgent.FireFox) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -761,6 +770,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
                     Call dwl.SetProxy(proxy)
                 End If
 
+                Call dwl.Headers.Add(UserAgent.UAheader, ua)
                 Call save.ParentPath.MkDIR
                 Call dwl.DownloadFile(strUrl, save)
             End Using
