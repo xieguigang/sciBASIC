@@ -362,6 +362,10 @@ Namespace Language
             Return x.value >= n
         End Operator
 
+        Public Overloads Shared Operator /(x As float, n As Double) As Double
+            Return x.value / n
+        End Operator
+
         Public Shared Operator >(n As Double, x As float) As float
             Return x
         End Operator

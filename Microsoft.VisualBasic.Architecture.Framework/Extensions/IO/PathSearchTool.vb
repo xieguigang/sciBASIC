@@ -220,10 +220,20 @@ Public Module ProgramPathSearchTool
         End If
     End Function
 
-    <Extension>
-    Public Function FileCopy(source$, copyTo$) As Boolean
+    ''' <summary>
+    ''' Safe file copy operation
+    ''' </summary>
+    ''' <param name="source$"></param>
+    ''' <param name="copyTo$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
         Try
-            Call copyTo.ParentPath.MkDIR
+            If copyTo.FileExists Then
+                Call FileIO.FileSystem.DeleteFile(copyTo)
+            Else
+                Call copyTo.ParentPath.MkDIR
+            End If
+
             Call FileIO.FileSystem.CopyFile(source, copyTo)
         Catch ex As Exception
             ex = New Exception({source, copyTo}.GetJson, ex)

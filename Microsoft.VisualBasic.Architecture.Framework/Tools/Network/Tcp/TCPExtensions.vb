@@ -31,10 +31,10 @@ Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Net
 
@@ -178,7 +178,7 @@ Namespace Net
                 New KeyValuePair(Of String, String)(hash, ca.PrivateKey),
                 New KeyValuePair(Of String, String)(uid, ca.uid)
             }
-            Dim oauth As String = WebServiceUtils.BuildArgvs(array)
+            Dim oauth As String = WebServiceUtils.BuildUrlData(array)
             Return oauth
         End Function
 
@@ -186,16 +186,14 @@ Namespace Net
 #If DEBUG Then
             Call $"{MethodBase.GetCurrentMethod.GetFullName} ==> {args}".__DEBUG_ECHO
 #End If
-            Dim dict = WebServiceUtils.requestParser(args, False)
+            Dim data = WebServiceUtils.RequestParser(args, False)
 #If DEBUG Then
-            Call String.Join("; ", dict.ToArray(Function(obj) obj.ToString)).__DEBUG_ECHO
+            Call data.AllKeys.ToArray(Function(k) data(k)).GetJson.__DEBUG_ECHO
 #End If
-            Dim privateKey As String = dict(hash)
-            Dim uid As Long = Scripting.CTypeDynamic(Of Long)(dict(TCPExtensions.uid))
+            Dim privateKey As String = data(hash)
+            Dim uid As Long = Scripting.CTypeDynamic(Of Long)(data(TCPExtensions.uid))
             Return Net.SSL.Certificate.Install(privateKey, uid)
         End Function
-
 #End Region
-
     End Module
 End Namespace
