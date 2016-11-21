@@ -186,12 +186,14 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Get specific argument value as full file path.
+        ''' Get specific argument value as full file path.(这个函数还会同时修正file://协议的头部)
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
         Public Function GetFullFilePath(name As String) As String
-            Return FileIO.FileSystem.GetFileInfo(Me(name)).FullName
+            Dim path$ = Me(name)
+            path = FixPath(path)
+            Return FileIO.FileSystem.GetFileInfo(path).FullName
         End Function
 
         ''' <summary>
