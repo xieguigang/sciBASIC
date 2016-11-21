@@ -44,8 +44,9 @@ Namespace Text.HtmlParser
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetTablesHTML(html As String) As String()
-            Dim tbls As String() = Regex.Matches(html, "<table.+?</table>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
+        Public Function GetTablesHTML(html As String, Optional greedy As Boolean = False) As String()
+            Dim regxp As String = If(greedy, "<table.+</table>", "<table.+?</table>")
+            Dim tbls As String() = Regex.Matches(html, regxp, RegexICSng).ToArray
             Return tbls
         End Function
 
@@ -69,7 +70,7 @@ Namespace Text.HtmlParser
         ''' 
         <Extension>
         Public Function GetColumnsHTML(row As String) As String()
-            Dim cols As String() = Regex.Matches(row, "<td.+?</td>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
+            Dim cols As String() = Regex.Matches(row, "<td.+?</td>", RegexICSng).ToArray
             cols = cols.ToArray(Function(s) s.GetValue)
             Return cols
         End Function
