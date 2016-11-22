@@ -121,12 +121,12 @@ Public Class FormODEsViewer
         Dim delta = 80 / result.y.Count
 
         For Each y As NamedValue(Of Double()) In result.y.Values
-            Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.x(i.i)))
+            Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.Value(i.i)))
 
             Try
 
                 If Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name) Then
-                    Dim refS = Scatter.FromPoints(ref(y.Name).x, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
+                    Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
                     Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
 
                     vars(y.Name).BackgroundImage = Scatter.Plot({refS, cal})
@@ -202,8 +202,8 @@ Public Class FormODEsViewer
                         .Select(
                         Function(y) New NamedValue(Of PointF()) With {
                             .Name = y.Key,
-                            .x = x.SeqIterator.ToArray(
-                                Function(xi) New PointF(xi.obj, y.Value.x(xi)))
+                            .Value = x.SeqIterator.ToArray(
+                                Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
                         }).ToDictionary
                 End With
             End If
