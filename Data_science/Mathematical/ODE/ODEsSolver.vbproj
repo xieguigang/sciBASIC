@@ -157,6 +157,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.vb" />
     <Compile Include="RefODEs.vb" />
     <Compile Include="ValueVector.vb" />
     <Compile Include="GenericODEs.vb" />

@@ -67,7 +67,8 @@ Namespace DocumentStream
     End Class
 
     ''' <summary>
-    ''' The numeric dataset, <see cref="DynamicPropertyBase(Of Double)"/>, <see cref="Double"/>
+    ''' The numeric dataset, <see cref="DynamicPropertyBase(Of Double)"/>, <see cref="Double"/>.
+    ''' (数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)
     ''' </summary>
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements sIdEnumerable

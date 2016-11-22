@@ -34,9 +34,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
-''' ODEs output
+''' ODEs output, this object can populates the <see cref="ODEsOut.y"/> 
+''' variables values through its enumerator interface.
 ''' </summary>
 Public Class ODEsOut
+    Implements IEnumerable(Of NamedValue(Of Double()))
 
     Public Property x As Double()
     Public Property y As Dictionary(Of NamedValue(Of Double()))
@@ -176,5 +178,15 @@ Public Class ODEsOut
         Next
 
         Return params
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of Double())) Implements IEnumerable(Of NamedValue(Of Double())).GetEnumerator
+        For Each var As NamedValue(Of Double()) In y.Values
+            Yield var
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
     End Function
 End Class
