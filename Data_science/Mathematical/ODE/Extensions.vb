@@ -25,6 +25,8 @@ Public Module Extensions
                     .GetPearson(var.Value, df.y(name).Value)
                 x.Properties(name$) = __pcc
             Next
+
+            out += x
         Next
 
         Return out
@@ -50,6 +52,8 @@ Public Module Extensions
                     .Spearman(var.Value, df.y(name).Value)
                 x.Properties(name$) = __spcc
             Next
+
+            out += x
         Next
 
         Return out

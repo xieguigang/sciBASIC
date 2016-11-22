@@ -28,8 +28,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports ______NETWORK__ =
@@ -122,5 +124,70 @@ Public Module NetworkAPI
             Select x
 
         Return LQuery
+    End Function
+
+    ''' <summary>
+    ''' 变量的属性里面必须是包含有相关度的
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="cut"><see cref="Math.Abs(Double)"/></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FromCorrelations(data As IEnumerable(Of DataSet),
+                                     Optional nodeTypes As Dictionary(Of String, String) = Nothing,
+                                     Optional interacts As Dictionary(Of String, String) = Nothing,
+                                     Optional cut# = 0R) As FileStream.Network
+
+        Dim array As DataSet() = data.ToArray
+
+        If nodeTypes Is Nothing Then
+            nodeTypes = New Dictionary(Of String, String)
+        End If
+        If interacts Is Nothing Then
+            interacts = New Dictionary(Of String, String)
+        End If
+
+        Dim nodes As FileStream.Node() =
+ _
+            LinqAPI.Exec(Of FileStream.Node) <=
+ _
+            From v As DataSet
+            In array
+            Let type As String = nodeTypes.TryGetValue(v.Identifier, [default]:="variable")
+            Select New FileStream.Node With {
+                .Identifier = v.Identifier,
+                .NodeType = type,
+                .Properties = v.Properties _
+                    .ToDictionary(Function(k) k.Key,
+                                  Function(k) CStr(k.Value))
+            }
+        Dim edges As New List(Of FileStream.NetworkEdge)
+        Dim interact$
+        Dim c#
+
+        For Each var As DataSet In array
+            For Each k$ In var.Properties.Keys
+                c# = var.Properties(k$)
+
+                If Math.Abs(c) < cut Then
+                    Continue For
+                End If
+
+                interact = interacts.TryGetValue(
+                    $"{var.Identifier} --> {k}",
+                    [default]:="correlates")
+                edges += New FileStream.NetworkEdge With {
+                    .FromNode = var.Identifier,
+                    .ToNode = k,
+                    .Confidence = c,
+                    .InteractionType = interact
+                }
+            Next
+        Next
+
+        Return New FileStream.Network With {
+            .Edges = edges,
+            .Nodes = nodes
+        }
     End Function
 End Module
