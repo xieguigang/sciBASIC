@@ -65,6 +65,11 @@ Namespace Darwinism.GAF
         Public Property vars As var()
 
         Public Property MutationLevel As MutateLevels = MutateLevels.Low
+        ''' <summary>
+        ''' 突变的激进程度，假若这个值越高的话，会有越高的概率突变当前数位，反之较高的概率突变当前的-1数位
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property radicals As Double = 0.3
 
         ''' <summary>
         ''' Transform as a vector for the mutation and crossover function.
@@ -112,10 +117,12 @@ Namespace Darwinism.GAF
  _
                 From var As var
                 In vars
-                Select New var(var)
+                Select New var(var)  ' 按值复制需要估算的参数数据对象
 
             Return New ParameterVector(seeds) With {
-                .vars = v
+                .vars = v,
+                .radicals = radicals,
+                .MutationLevel = MutationLevel
             }
         End Function
 
@@ -130,16 +137,19 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Function Crossover(anotherChromosome As ParameterVector) As IList(Of ParameterVector) Implements Chromosome(Of ParameterVector).Crossover
             Dim thisClone As ParameterVector = DirectCast(Clone(), ParameterVector)
-            Dim otherClone As ParameterVector = DirectCast(anotherChromosome.Clone, ParameterVector)
-            Dim array1#() = thisClone.Vector
-            Dim array2#() = otherClone.Vector
+            Dim otheClone As ParameterVector = DirectCast(anotherChromosome.Clone, ParameterVector)
+
+            Dim this#() = thisClone.Vector
+            Dim othr#() = otheClone.Vector
 
             Call seeds() _
-                .Crossover(array1, array2)
-            thisClone.__setValues(array1)
-            otherClone.__setValues(array2)
+                .Crossover(this, othr)
+            Call thisClone.__setValues(this)
+            Call otheClone.__setValues(othr)
 
-            Return {thisClone, otherClone}.ToList
+            Return {
+                thisClone, otheClone
+            }.ToList
         End Function
 
         ''' <summary>
@@ -154,7 +164,7 @@ Namespace Darwinism.GAF
             Do While i > 0
                 Dim array#() = m.Vector
 
-                Call array.Mutate(random)
+                Call array.Mutate(random, radicals)
                 Call m.__setValues(array)
 
                 i -= 1

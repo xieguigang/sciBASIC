@@ -180,7 +180,11 @@ Public Module NetworkAPI
                     .FromNode = var.Identifier,
                     .ToNode = k,
                     .Confidence = c,
-                    .InteractionType = interact
+                    .InteractionType = interact,
+                    .Properties = New Dictionary(Of String, String) From {
+                        {"type", If(c# > 0, "positive", "negative")},
+                        {"abs", Math.Abs(c#)}
+                    }
                 }
             Next
         Next

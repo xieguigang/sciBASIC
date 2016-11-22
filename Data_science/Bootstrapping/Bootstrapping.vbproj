@@ -135,6 +135,7 @@
     <Compile Include="Darwinism\GAF\Fitness.vb" />
     <Compile Include="Darwinism\GAF\Protocol.vb" />
     <Compile Include="Darwinism\GAF\ParameterVector.vb" />
+    <Compile Include="Monte-Carlo\CodeGenerator.vb" />
     <Compile Include="Monte-Carlo\StatesCharacters.vb" />
     <Compile Include="Monte-Carlo\RefModel.vb" />
     <Compile Include="Normalization.vb" />

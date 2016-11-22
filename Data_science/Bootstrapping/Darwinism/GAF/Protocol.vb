@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::13c9281e28043759668290f5dfcebac8, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Protocol.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
@@ -68,14 +69,16 @@ Namespace Darwinism.GAF
         ''' (需要被拟合的参数列表，在这个函数里面会被修改一点产生突变)
         ''' </param>
         ''' <param name="rnd"></param>
-        <Extension> Public Sub Mutate(ByRef array#(), rnd As Random)
+        <Extension> Public Sub Mutate(ByRef array#(), rnd As Random, radicals#)
             Dim i% = rnd.Next(array.Length)  ' 得到需要被突变的位点在数组中的下标
             Dim n# = Math.Abs(array(i))      ' 得到元素值，由于负数取位数的时候回出错，所以这里取绝对值，因为只需要取位数
-            Dim power# = Math.Log10(n#) - 1  ' 取位数
+            Dim d# = If(rnd.NextDouble <= radicals, 0, 1)  ' radicals越大，则有越高的概率是发生很大的突变值的，反之会-1，即发生很小的突变
+            Dim power# = Math.Log10(n#) - d#  ' 取位数
             Dim sign% =
                 If(rnd.NextBoolean, 1, -1)
 
             n += sign * (rnd.NextDouble * 10 * (10 ^ power))
+
             If n.IsNaNImaginary Then
                 n = Short.MaxValue
             End If
@@ -104,7 +107,8 @@ Namespace Darwinism.GAF
                                 Optional log10Fit As Boolean = False,
                                 Optional randomGenerator As IRandomSeeds = Nothing,
                                 Optional mutateLevel As MutateLevels = MutateLevels.Low,
-                                Optional print As Action(Of outPrint, var()) = Nothing) As var()
+                                Optional print As Action(Of outPrint, var()) = Nothing,
+                                Optional radicals# = 0.3) As var()
 
             Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
 
@@ -129,7 +133,8 @@ Namespace Darwinism.GAF
                 argsInit:=Nothing,
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
-                print:=print)
+                print:=print,
+                radicals:=radicals)
         End Function
 
         ''' <summary>
@@ -150,7 +155,8 @@ Namespace Darwinism.GAF
                                        argsInit As Dictionary(Of String, Double),
                                        randomGenerator As IRandomSeeds,
                                        mutateLevel As MutateLevels,
-                                       print As Action(Of outPrint, var())) As var()
+                                       print As Action(Of outPrint, var()),
+                                       radicals#) As var()
             Dim estArgs As var()
 
             If randomGenerator Is Nothing Then
@@ -188,7 +194,8 @@ Namespace Darwinism.GAF
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector(seeds:=randomGenerator) With {
                     .vars = estArgs,
-                    .MutationLevel = mutateLevel
+                    .MutationLevel = mutateLevel,
+                    .radicals = radicals
             }.InitialPopulation(popSize%)
 
 #If Not DEBUG Then
@@ -232,6 +239,7 @@ Namespace Darwinism.GAF
         ''' <param name="outPrint"></param>
         ''' <param name="threshold#"></param>
         ''' <param name="log10Fit"></param>
+        ''' <param name="radicals">参数值介于[0-1]之间</param>
         ''' <returns></returns>
         <Extension>
         Public Function Fitting(Of T As MonteCarlo.Model)(
@@ -247,7 +255,8 @@ Namespace Darwinism.GAF
                          Optional isRefModel As Boolean = False,
                          Optional randomGenerator As IRandomSeeds = Nothing,
                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
-                         Optional print As Action(Of outPrint, var()) = Nothing) As var()
+                         Optional print As Action(Of outPrint, var()) = Nothing,
+                         Optional radicals# = 0.3) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFFitness(GetType(T), observation, initOverrides, isRefModel) With {
@@ -267,7 +276,26 @@ Namespace Darwinism.GAF
                 argsInit:=estArgsBase,
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
-                print:=print)
+                print:=print,
+                radicals:=radicals)
+        End Function
+
+        <Extension>
+        Public Function GetRandomParameters(model As Type, Optional range As DoubleRange = Nothing) As Dictionary(Of String, Double)
+            Dim vars$() = MonteCarlo.Model.GetParameters(model).ToArray
+
+            If range Is Nothing Then
+                range = New DoubleRange(-10, 10)
+            End If
+
+            Dim out As New Dictionary(Of String, Double)
+            Dim rand As New Random
+
+            For Each v$ In vars$
+                Call out.Add(v, rand.NextDouble(range))
+            Next
+
+            Return out
         End Function
 
         ''' <summary>
@@ -294,7 +322,8 @@ Namespace Darwinism.GAF
                          Optional isRefModel As Boolean = False,
                          Optional randomGenerator As IRandomSeeds = Nothing,
                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
-                         Optional print As Action(Of outPrint, var()) = Nothing) As var()
+                         Optional print As Action(Of outPrint, var()) = Nothing,
+                         Optional radicals# = 0.3) As var()
 
             Return New ODEsOut With {
                 .y = observation.ToDictionary,
@@ -310,7 +339,8 @@ Namespace Darwinism.GAF
                             randomGenerator:=randomGenerator,
                             threshold:=threshold,
                             mutateLevel:=mutateLevel,
-                            print:=print)
+                            print:=print,
+                            radicals:=radicals)
         End Function
     End Module
 End Namespace
