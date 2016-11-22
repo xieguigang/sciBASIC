@@ -370,18 +370,18 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 向量模的平方
+        ''' 向量模的平方，||x||是向量x=(x1，x2，…，xp)的欧几里得范数
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property [Mod] As Double
             Get
-                Dim N0% = [Dim]
                 Dim sum As Double
 
-                For j = 0 To N0 - 1
-                    sum = sum + Me(j) * Me(j)
+                For Each x# In Me
+                    sum += x ^ 2
                 Next
+
                 Return sum
             End Get
         End Property

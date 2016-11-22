@@ -33,6 +33,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
 
+''' <summary>
+''' Data sampling bootstrapping extensions
+''' </summary>
 Public Module Bootstraping
 
     Public Function Sample(x%) As Vector

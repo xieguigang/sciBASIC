@@ -114,4 +114,33 @@ Public Module Extensions
     Public Function seq2(from#, to#, Optional by# = 0.1) As Vector
         Return New Vector(seq(from, [to], by))
     End Function
+
+    ''' <summary>
+    ''' 余弦相似度
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Sim(x As Vector, y As Vector) As Double
+        Return (x * y).Sum / (x.Mod * y.Mod)
+    End Function
+
+    ''' <summary>
+    ''' 这是x和y所共有的属性个数与x或y所具有的属性个数之间的比率。这个函数被称为Tanimoto系数或Tanimoto距离，
+    ''' 它经常用在信息检索和生物学分类中。(余弦度量的一个简单的变种)
+    ''' 当属性是二值属性时，余弦相似性函数可以用共享特征或属性解释。假设如果xi=1，则对象x具有第i个属性。于是，
+    ''' x·y是x和y共同具有的属性数，而xy是x具有的属性数与y具有的属性数的几何均值。于是，sim(x,y)是公共属性相
+    ''' 对拥有的一种度量。
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' http://xiao5461.blog.163.com/blog/static/22754562201211237567238/
+    ''' </remarks>
+    <Extension>
+    Public Function Tanimoto(x As Vector, y As Vector) As Double
+        Return (x * y).Sum / ((x * x).Sum + (y * y).Sum - (x * y).Sum)
+    End Function
 End Module
