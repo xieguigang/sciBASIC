@@ -72,7 +72,7 @@ Namespace Darwinism.GAF
         <Extension> Public Sub Mutate(ByRef array#(), rnd As Random, radicals#)
             Dim i% = rnd.Next(array.Length)  ' 得到需要被突变的位点在数组中的下标
             Dim n# = Math.Abs(array(i))      ' 得到元素值，由于负数取位数的时候回出错，所以这里取绝对值，因为只需要取位数
-            Dim d# = If(rnd.NextDouble <= radicals, 0, 1)  ' radicals越大，则有越高的概率是发生很大的突变值的，反之会-1，即发生很小的突变
+            Dim d# = If(rnd.NextDouble <= radicals, 1, 2)  ' radicals越大，则有越高的概率是发生很大的突变值的，反之会-1，即发生很小的突变
             Dim power# = Math.Log10(n#) - d#  ' 取位数
             Dim sign% =
                 If(rnd.NextBoolean, 1, -1)

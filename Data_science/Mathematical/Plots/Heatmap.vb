@@ -40,17 +40,34 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Heatmap
 
+    ''' <summary>
+    ''' 相比于<see cref="LoadDataSet(String, String, Boolean, Correlations.ICorrelation)"/>函数，这个函数处理的是没有经过归一化处理的原始数据
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="correlation">假若这个参数为空，则默认使用<see cref="Correlations.GetPearson(Double(), Double())"/></param>
+    ''' <returns></returns>
     <Extension>
-    Public Iterator Function Pearson(data As IEnumerable(Of DataSet)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+    Public Iterator Function CorrelatesNormalized(
+                                    data As IEnumerable(Of DataSet),
+                    Optional correlation As Correlations.ICorrelation = Nothing) _
+                                         As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+
         Dim dataset As DataSet() = data.ToArray
-        Dim keys$() = dataset(Scan0).Properties.Keys.ToArray
+        Dim keys$() = dataset(Scan0) _
+            .Properties _
+            .Keys _
+            .ToArray
+
+        If correlation Is Nothing Then
+            correlation = AddressOf Correlations.GetPearson
+        End If
 
         For Each x As DataSet In dataset
             Dim out As New Dictionary(Of String, Double)
             Dim array As Double() = keys.ToArray(Function(o$) x(o))
 
             For Each y As DataSet In dataset
-                out(y.Identifier) = Correlations.GetPearson(
+                out(y.Identifier) = correlation(
                     array,
                     keys.ToArray(Function(o) y(o)))
             Next
@@ -63,23 +80,37 @@ Public Module Heatmap
     End Function
 
     ''' <summary>
-    ''' 假若使用这个直接加载数据来进行heatmap的绘制，请先要确保数据集之中的所有数据都是经过归一化的
+    ''' (这个函数是直接加在已经计算好了的相关度数据).假若使用这个直接加载数据来进行heatmap的绘制，
+    ''' 请先要确保数据集之中的所有数据都是经过归一化的，假若没有归一化，则确保函数参数
+    ''' <paramref name="normalization"/>的值为真
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="uidMap$"></param>
+    ''' <param name="normalization">是否对输入的数据集进行归一化处理？</param>
+    ''' <param name="correlation">
+    ''' 默认为<see cref="Correlations.GetPearson(Double(), Double())"/>方法
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadDataSet(path As String, Optional uidMap$ = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
+    Public Function LoadDataSet(path As String,
+                                Optional uidMap$ = Nothing,
+                                Optional normalization As Boolean = False,
+                                Optional correlation As Correlations.ICorrelation = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
+
         Dim ds As IEnumerable(Of DataSet) =
             DataSet.LoadDataSet(path, uidMap)
 
-        Return LinqAPI.Exec(Of NamedValue(Of Dictionary(Of String, Double))) <=
-            From x As DataSet
-            In ds
-            Select New NamedValue(Of Dictionary(Of String, Double)) With {
-                .Name = x.Identifier,
-                .Value = x.Properties
-            }
+        If normalization Then
+            Return ds.CorrelatesNormalized(correlation).ToArray
+        Else
+            Return LinqAPI.Exec(Of NamedValue(Of Dictionary(Of String, Double))) _
+               () <= From x As DataSet
+                     In ds
+                     Select New NamedValue(Of Dictionary(Of String, Double)) With {
+                         .Name = x.Identifier,
+                         .Value = x.Properties
+                     }
+        End If
     End Function
 
     ''' <summary>
@@ -178,6 +209,7 @@ Public Module Heatmap
                 Next
 
                 angle = -angle
+                left += dw / 2
 
                 For Each key$ In keys
                     Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
