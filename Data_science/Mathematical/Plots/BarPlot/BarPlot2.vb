@@ -92,7 +92,7 @@ Partial Module BarPlot
                         For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
                             Dim rect As Rectangle = Rectangle(y, lefts, right, bottom)
 
-                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).x), rect)
+                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
 
                             top += ((val.obj - mapper.xmin) / mapper.dx) * canvasWidth
                         Next
@@ -104,7 +104,7 @@ Partial Module BarPlot
                             Dim right = sx(val.obj)
                             Dim rect As Rectangle = Rectangle(bottom, lefts, right, bottom + dy)
 
-                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).x), rect)
+                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
                             Call g.DrawRectangle(Pens.Black, rect)
 
                             y += dy
@@ -120,7 +120,7 @@ Partial Module BarPlot
                         From x As NamedValue(Of Color)
                         In data.Serials
                         Select New Legend With {
-                            .color = x.x.RGBExpression,
+                            .color = x.Value.RGBExpression,
                             .fontstyle = CSSFont.GetFontStyle(
                                 FontFace.MicrosoftYaHei,
                                 FontStyle.Regular,

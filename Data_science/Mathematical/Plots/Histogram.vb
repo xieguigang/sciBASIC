@@ -91,7 +91,7 @@ Public Module Histogram
             .Serials = {
                 New NamedValue(Of Color) With {
                     .Name = NameOf(data),
-                    .x = color.ToColor(Drawing.Color.Blue)
+                    .Value = color.ToColor(Drawing.Color.Blue)
                 }
             },
             .Samples = {
@@ -154,12 +154,12 @@ Public Module Histogram
         Dim data As New List(Of Double)
         Dim engine As New Expression
 
-        For Each x# In xrange.x.seq(steps)
+        For Each x# In xrange.Value.seq(steps)
             Call engine.SetVariable(xrange.Name, x#)
             data += engine.Evaluation(expression$)
         Next
 
-        Return Plot(data, xrange.x, color, bg, size, margin, showGrid)
+        Return Plot(data, xrange.Value, color, bg, size, margin, showGrid)
     End Function
 
     ''' <summary>
@@ -197,7 +197,7 @@ Public Module Histogram
                For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
                    Dim ann As NamedValue(Of Color) =
                        annotations(hist.legend.title)
-                   Dim b As New SolidBrush(Drawing.Color.FromArgb(alpha, ann.x))
+                   Dim b As New SolidBrush(Drawing.Color.FromArgb(alpha, ann.Value))
 
                    For Each block As HistogramData In hist.data
                        Dim rect As New RectangleF(
@@ -239,7 +239,7 @@ Public Module Histogram
             Serials = data _
                 .ToArray(Function(x) New NamedValue(Of Color) With {
                     .Name = x.legend.title,
-                    .x = x.legend.color.ToColor
+                    .Value = x.legend.color.ToColor
             })
         End Sub
     End Class
@@ -301,7 +301,7 @@ Public Module Histogram
             In odes.SeqIterator
             Select New NamedValue(Of Color) With {
                 .Name = x.obj.Id,
-                .x = clData(x.i)
+                .Value = clData(x.i)
             }
 
         Dim range As DoubleRange = odes.First.xrange
@@ -313,7 +313,7 @@ Public Module Histogram
             Let left = New Value(Of Double)(range.Min)
             Select New HistProfile With {
                 .legend = New Legend With {
-                    .color = serials(out.i).x.RGBExpression,
+                    .color = serials(out.i).Value.RGBExpression,
                     .fontstyle = CSSFont.Win10Normal,
                     .style = LegendStyles.Rectangle,
                     .title = serials(out.i).Name

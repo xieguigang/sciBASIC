@@ -58,7 +58,7 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         <Extension>
         Public Function y0(data As IEnumerable(Of NamedValue(Of Double()))) As Dictionary(Of String, Double)
-            Return data.ToDictionary(Function(x) x.Name, Function(x) x.x(Scan0))
+            Return data.ToDictionary(Function(x) x.Name, Function(x) x.Value(Scan0))
         End Function
 
         ''' <summary>

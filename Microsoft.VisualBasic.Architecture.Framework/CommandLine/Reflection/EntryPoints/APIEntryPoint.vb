@@ -143,18 +143,18 @@ Namespace CommandLine.Reflection.EntryPoints
                     Call sb.AppendLine("    " & Arguments.ToString)
                 Else
                     For Each param In Arguments
-                        Call sb.AppendLine("##### " & If(param.x.Optional, $"[{param.Name}]", param.Name))
-                        Call sb.AppendLine(param.x.Description)
+                        Call sb.AppendLine("##### " & If(param.Value.Optional, $"[{param.Name}]", param.Name))
+                        Call sb.AppendLine(param.Value.Description)
                         Call sb.AppendLine("###### Example")
                         Call sb.AppendLine("```bash")
 
-                        If param.x.TokenType = CLITypes.Boolean Then
+                        If param.Value.TokenType = CLITypes.Boolean Then
                             Call sb.AppendLine(param.Name)
                             Call sb.AppendLine("#" & ManualBuilder.boolFlag)
                         Else
-                            Call sb.AppendLine(param.Name & " " & param.x.ExampleValue)
-                            If param.x.Pipeline <> PipelineTypes.undefined Then
-                                Call sb.AppendLine("# " & param.x.Pipeline.Description)
+                            Call sb.AppendLine(param.Name & " " & param.Value.ExampleValue)
+                            If param.Value.Pipeline <> PipelineTypes.undefined Then
+                                Call sb.AppendLine("# " & param.Value.Pipeline.Description)
                             End If
                         End If
 

@@ -59,14 +59,14 @@ Namespace Net.Http
                         value.ToString)
 
                     args += New NamedValue(Of String) With {
-                        .x = s,
+                        .Value = s,
                         .Name = p.Field.Name
                     }
                 End If
             Next
 
             Dim param As String = args _
-                .ToArray(Function(o) $"{o.Name}={o.x.UrlEncode}") _
+                .ToArray(Function(o) $"{o.Name}={o.Value.UrlEncode}") _
                 .JoinBy("&")
             Return param
         End Function

@@ -90,7 +90,7 @@ Namespace Parser
             For Each kp As KeyValuePair(Of String, JsonElement) In array
                 Yield New NamedValue(Of JsonElement) With {
                 .Name = kp.Key,
-                .x = kp.Value
+                .Value = kp.Value
             }
             Next
         End Function

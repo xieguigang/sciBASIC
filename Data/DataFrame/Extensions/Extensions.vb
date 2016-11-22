@@ -83,11 +83,11 @@ Public Module Extensions
         If xlabels.IsNullOrEmpty Then
             out += New RowObject(data.Select(Function(s) s.Name))
 
-            For i As Integer = 0 To data(Scan0).x.Length - 1
+            For i As Integer = 0 To data(Scan0).Value.Length - 1
                 Dim row As New RowObject
 
                 For Each sample In data
-                    row.Add(CStr(sample.x(i)))
+                    row.Add(CStr(sample.Value(i)))
                 Next
 
                 out += row
@@ -95,12 +95,12 @@ Public Module Extensions
         Else
             out += New RowObject("X".Join(data.Select(Function(s) s.Name)))
 
-            For i As Integer = 0 To data(Scan0).x.Length - 1
+            For i As Integer = 0 To data(Scan0).Value.Length - 1
                 Dim row As New RowObject From {
                     CStr(xlabels(i))
                 }
                 For Each sample As NamedValue(Of Double()) In data
-                    Call row.Add(CStr(sample.x(i)))
+                    Call row.Add(CStr(sample.Value(i)))
                 Next
 
                 out += row

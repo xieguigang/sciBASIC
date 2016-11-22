@@ -118,7 +118,7 @@ Namespace Darwinism.GAF
                     .y _
                     .Values _
                     .ToDictionary(Function(v) v.Name,
-                                  Function(y) y.x(0))
+                                  Function(y) y.Value(0))
                 .Ignores = {}
                 .modelVariables = MonteCarlo.Model _
                     .GetVariables(Model) _
@@ -186,8 +186,8 @@ Namespace Darwinism.GAF
 
                 ' Dim sample1#()() = observation.y(y).x.Split(samples, echo:=False)
                 ' Dim sample2#()() = out.y(y$).x.Split(samples, echo:=False)
-                Dim a#() = observation.y(y$).x
-                Dim b#() = out.y(y$).x
+                Dim a#() = observation.y(y$).Value
+                Dim b#() = out.y(y$).Value
 
                 If log10Fitness Then
                     a = a.ToArray(Function(x) log10(x))

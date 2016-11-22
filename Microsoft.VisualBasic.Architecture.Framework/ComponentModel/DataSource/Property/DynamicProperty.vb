@@ -252,12 +252,12 @@ Namespace ComponentModel.DataSourceModel
                 For Each x In Properties
                     Yield New NamedValue(Of T) With {
                         .Name = x.Key,
-                        .x = x.Value
+                        .Value = x.Value
                     }
                 Next
             End Get
             Set(value As IEnumerable(Of NamedValue(Of T)))
-                Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.x)
+                Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set
         End Property
     End Class

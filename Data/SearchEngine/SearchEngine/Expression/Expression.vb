@@ -129,10 +129,10 @@ Public Class Expression
                 .x = obj,
                 .Field = New NamedValue(Of String) With {
                     .Name = tokens.Debug,
-                    .x = fields _
+                    .Value = fields _
                         .GroupBy(Function(x) x.Name) _
                         .ToDictionary(Function(x) x.Key,
-                                      Function(x) x.First.x).GetJson
+                                      Function(x) x.First.Value).GetJson
                 }
             }
         Else

@@ -42,7 +42,7 @@ Namespace Scripting.MetaData
         End Sub
 
         Public Sub EMail()
-            Call Diagnostics.Process.Start($"mailto://{value.x}")
+            Call Diagnostics.Process.Start($"mailto://{value.Value}")
         End Sub
 
         Public Overrides Function ToString() As String

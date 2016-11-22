@@ -36,10 +36,10 @@ Public Class ValueVector : Inherits int
 
     Default Public Overloads Property Value(name$) As Double
         Get
-            Return Y(name).x(MyBase.value)
+            Return Y(name).Value(MyBase.value)
         End Get
         Set(value As Double)
-            Y(name$).x(MyBase.value) = value
+            Y(name$).Value(MyBase.value) = value
         End Set
     End Property
 

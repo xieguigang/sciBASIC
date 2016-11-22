@@ -57,7 +57,7 @@ Public Module Heatmap
 
             Yield New NamedValue(Of Dictionary(Of String, Double)) With {
                 .Name = x.Identifier,
-                .x = out
+                .Value = out
             }
         Next
     End Function
@@ -78,7 +78,7 @@ Public Module Heatmap
             In ds
             Select New NamedValue(Of Dictionary(Of String, Double)) With {
                 .Name = x.Identifier,
-                .x = x.Properties
+                .Value = x.Properties
             }
     End Function
 
@@ -130,7 +130,7 @@ Public Module Heatmap
             Sub(ByRef g, region)
                 Dim dw!? = CSng((size.Height - 2 * margin.Width) / array.Length)
                 Dim correl#() = array _
-                    .Select(Function(x) x.x.Values) _
+                    .Select(Function(x) x.Value.Values) _
                     .IteratesALL _
                     .Distinct _
                     .ToArray
@@ -147,7 +147,7 @@ Public Module Heatmap
 
                 Dim left! = margin.Width, top! = margin.Height
                 Dim blockSize As New SizeF(dw, dw)
-                Dim keys$() = array(Scan0).x.Keys.ToArray
+                Dim keys$() = array(Scan0).Value.Keys.ToArray
 
                 If colors.IsNullOrEmpty Then
                     colors = New ColorMap(mapLevels).ColorSequence(mapName)
@@ -155,7 +155,7 @@ Public Module Heatmap
 
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array
                     For Each key$ In keys
-                        Dim c# = x.x(key)
+                        Dim c# = x.Value(key)
                         Dim level% = lvs(c#) - 1 '  得到等级
                         Dim color As Color = colors(level%)
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
@@ -228,13 +228,13 @@ Public Module Heatmap
 
     <Extension>
     Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
-        Dim keys$() = data(Scan0%).x.Keys.ToArray
+        Dim keys$() = data(Scan0%).Value.Keys.ToArray
         Dim entityList As Entity() = LinqAPI.Exec(Of Entity) <=
             From x As NamedValue(Of Dictionary(Of String, Double))
             In data
             Select New Entity With {
                 .uid = x.Name,
-                .Properties = keys.ToArray(Function(k) x.x(k))
+                .Properties = keys.ToArray(Function(k) x.Value(k))
             }
         Dim clusters = ClusterDataSet(entityList.Length / 5, entityList)
         Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
@@ -243,7 +243,7 @@ Public Module Heatmap
         Dim keysEntity = keys.ToArray(
             Function(k) New Entity With {
                 .uid = k,
-                .Properties = data.ToArray(Function(x) x.x(k))
+                .Properties = data.ToArray(Function(x) x.Value(k))
             })
         Dim keysOrder As New List(Of String)
 
@@ -257,7 +257,7 @@ Public Module Heatmap
             For Each entity As Entity In cluster
                 out += New NamedValue(Of Dictionary(Of String, Double)) With {
                     .Name = entity.uid,
-                    .x = keysOrder _
+                    .Value = keysOrder _
                         .SeqIterator _
                         .ToDictionary(Function(x) x.obj,
                                       Function(x) entity.Properties(x.i))

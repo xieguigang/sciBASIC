@@ -83,7 +83,7 @@ Namespace KMeans
             For Each x As NamedValue(Of Dictionary(Of String, Double)) In data
                 Yield New EntityLDM With {
                     .Name = x.Name,
-                    .Properties = x.x
+                    .Properties = x.Value
                 }
             Next
         End Function

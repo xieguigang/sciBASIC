@@ -441,7 +441,7 @@ B21,B22,B23,...
                     In counts
                     Select New NamedValue(Of Integer) With {
                         .Name = x.Group.First.str,
-                        .x = x.Group.Count
+                        .Value = x.Group.Count
                     }
             Else
                 Dim counts = From x In gData
@@ -452,7 +452,7 @@ B21,B22,B23,...
                     In counts
                     Select New NamedValue(Of Integer) With {
                         .Name = x.str,
-                        .x = x.Group.Count
+                        .Value = x.Group.Count
                     }
             End If
 
@@ -460,7 +460,7 @@ B21,B22,B23,...
             stats += New RowObject({If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
             stats += From token As NamedValue(Of Integer)
                      In tokensGroup
-                     Select New RowObject({token.Name, CStr(token.x)})
+                     Select New RowObject({token.Name, CStr(token.Value)})
             Return stats
         End Function
 

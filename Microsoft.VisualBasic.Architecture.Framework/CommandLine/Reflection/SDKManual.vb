@@ -146,7 +146,7 @@ Namespace CommandLine.Reflection
 
                 If api.Arguments.Count > 0 Then
                     Dim prints = api.Arguments _
-                        .Where(Function(x) Not x.x.AcceptTypes.IsNullOrEmpty) _
+                        .Where(Function(x) Not x.Value.AcceptTypes.IsNullOrEmpty) _
                         .ToArray
 
                     If Not prints.Length = 0 Then
@@ -155,7 +155,7 @@ Namespace CommandLine.Reflection
                         For Each param As NamedValue(Of Argument) In prints
                             Call sb.AppendLine("###### " & param.Name)
 
-                            For Each pType As Type In param.x.AcceptTypes
+                            For Each pType As Type In param.Value.AcceptTypes
                                 Call sb.AppendLine(Actives.DisplType(pType))
                             Next
                         Next

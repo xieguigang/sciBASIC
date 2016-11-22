@@ -68,7 +68,7 @@ Namespace MonteCarlo
         Public Function GetRandomModel() As NamedValue(Of INextRandomNumber)
             Return New NamedValue(Of INextRandomNumber) With {
                 .Name = Name,
-                .x = AddressOf GetValue
+                .Value = AddressOf GetValue
             }
         End Function
 

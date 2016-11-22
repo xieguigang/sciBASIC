@@ -115,7 +115,7 @@ Namespace Windows.Forms
                 Dim setValue As New SetValue(Of TForm)()
 
                 For Each arg As NamedValue(Of Object) In __invokeSets
-                    Call setValue.InvokeSetValue(Form, arg.Name, arg.x)
+                    Call setValue.InvokeSetValue(Form, arg.Name, arg.Value)
                 Next
             End If
 

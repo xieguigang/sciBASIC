@@ -51,7 +51,7 @@ Namespace SoftwareToolkits
                     .Authors = {
                         New NamedValue(Of String) With {
                             .Name = "asuka",
-                            .x = "amethyst.asuka@gcmodeller.org"
+                            .Value = "amethyst.asuka@gcmodeller.org"
                         }
                     },
                     .Brief = "Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -137,7 +137,7 @@ THE SOFTWARE.",
             Call sb.AppendLine("    ' ")
 
             For Each author As NamedValue(Of String) In info.Authors.SafeQuery
-                Call sb.AppendLine($"    '       {author.Name} ({author.x})")
+                Call sb.AppendLine($"    '       {author.Name} ({author.Value})")
             Next
             Call sb.AppendLine("    ' ")
             Call sb.AppendLine("    ' " & info.Copyright)

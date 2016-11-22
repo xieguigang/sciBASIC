@@ -79,7 +79,7 @@ Namespace ComponentModel.Settings
                 ConfigEngine.Load(Of IProfile)(
                     obj.GetType,
                     obj:=_SettingsData).ToDictionary(Function(x) x.Name,
-                                                     Function(x) x.x)
+                                                     Function(x) x.Value)
         End Sub
 
         Protected Sub New()
@@ -103,7 +103,7 @@ Namespace ComponentModel.Settings
                     Let name As String = GetName(ProfileItem, ProfileItem.BindProperty)
                     Select New NamedValue(Of BindMapping) With {
                         .Name = name,
-                        .x = ProfileItem
+                        .Value = ProfileItem
                     }
 
             Dim Nodes = From [property] As PropertyInfo
@@ -181,7 +181,7 @@ Namespace ComponentModel.Settings
         End Function
 
         Public Function [Set](var As NamedValue(Of String)) As Boolean
-            Return [Set](var.Name, var.x)
+            Return [Set](var.Name, var.Value)
         End Function
 
         <ExportAPI("GetValue")>
@@ -225,7 +225,7 @@ Namespace ComponentModel.Settings
                     If(String.IsNullOrEmpty(x.Value), "null", x.Value)
                 Select New NamedValue(Of String) With {
                     .Name = x.Name,
-                    .x = value,
+                    .Value = value,
                     .Description = x.Description
                 }
 
@@ -242,7 +242,7 @@ Namespace ComponentModel.Settings
 
             For Each line As NamedValue(Of String) In data
                 Dim blank As String = New String(" "c, maxLen - Len(line.Name) + 2)
-                Dim str As String = String.Format("  {0}{1}  = {2}", line.Name, blank, line.x)
+                Dim str As String = String.Format("  {0}{1}  = {2}", line.Name, blank, line.Value)
 
                 If Not String.IsNullOrEmpty(line.Description) Then
                     str &= "     // " & line.Description

@@ -61,7 +61,7 @@ Namespace MonteCarlo
             Dim y0rand = y0.Select(
                 Function(v) New NamedValue(Of INextRandomNumber) With {
                     .Name = v.Name,
-                    .x = AddressOf v.GetValue
+                    .Value = AddressOf v.GetValue
                 })
             Dim validResults As IEnumerable(Of ODEsOut) =
                 model.Bootstrapping(
@@ -75,7 +75,7 @@ Namespace MonteCarlo
             For Each v As ODEsOut In validResults
                 inputs += New Entity With {
                     .uid = v.y0.GetJson, ' 因为发生变化的是y0，参数没有变，所以只使用y0来标识Entity就行了
-                    .Properties = ys.Select(Function(name$) v.y(name).x).ToVector
+                    .Properties = ys.Select(Function(name$) v.y(name).Value).ToVector
                 }
             Next
 
@@ -135,7 +135,7 @@ Namespace MonteCarlo
 
                     Yield New NamedValue(Of VariableModel()) With {
                         .Name = cluster.i & "::" & means.GetJson,
-                        .x = status _
+                        .Value = status _
                             .ToArray(Function(s) New VariableModel With {
                                 .Name = s.Key,
                                 .Min = s.Value.Min,

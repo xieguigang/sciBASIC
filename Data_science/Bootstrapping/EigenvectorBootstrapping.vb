@@ -91,7 +91,7 @@ Public Module EigenvectorBootstrapping
             In data.AsParallel
             Select New NamedValue(Of VectorTagged(Of Dictionary(Of String, Double))) With {
                 .Name = x.Tag.GetJson,
-                .x = x,
+                .Value = x,
                 .Description = x.TagStr
             }
 
@@ -100,7 +100,7 @@ Public Module EigenvectorBootstrapping
         Dim datasets As Entity() = strTags.ToArray(
             Function(x) New Entity With {
                 .uid = x.Description,
-                .Properties = x.x.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
+                .Properties = x.Value.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
         })
 
         Call "Creates dataset complete!".__DEBUG_ECHO
@@ -121,11 +121,11 @@ Public Module EigenvectorBootstrapping
             For Each x As Entity In cluster
                 Dim rawKey As String = x.Properties.GetJson
                 Dim rawParams =
-                    raw(rawKey).ToArray(Function(o) o.x.value)
+                    raw(rawKey).ToArray(Function(o) o.Value.value)
 
                 tmp += New NamedValue(Of Dictionary(Of String, Double)()) With {
                     .Name = x.uid,
-                    .x = rawParams
+                    .Value = rawParams
                 }
             Next
 
@@ -156,12 +156,12 @@ Public Module EigenvectorBootstrapping
         For Each key As SeqValue(Of String) In eig.Keys.SeqIterator
             out.y(key) = New NamedValue(Of Double()) With {
                 .Name = key,
-                .x = serials(key.i).Split(2).ToArray(Function(o) o(0))
+                .Value = serials(key.i).Split(2).ToArray(Function(o) o(0))
             }
         Next
 
         out.x = out.y.Values _
-            .First.x _
+            .First.Value _
             .Sequence _
             .Select(Function(x) CDbl(x)) _
             .ToArray

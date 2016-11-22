@@ -110,12 +110,12 @@ Namespace MonteCarlo
             Dim y0 = model.Gety0 _
                 .Select(Function(v) New NamedValue(Of INextRandomNumber) With {
                     .Name = v.Name,
-                    .x = AddressOf v.GetValue
+                    .Value = AddressOf v.GetValue
                 })
             Dim parms = model.GetRandomParameters _
                 .Select(Function(v) New NamedValue(Of INextRandomNumber) With {
                     .Name = v.Name,
-                    .x = AddressOf v.GetValue
+                    .Value = AddressOf v.GetValue
                 })
             Return model.Bootstrapping(parms, y0, k, n, a, b,,)
         End Function
@@ -173,7 +173,7 @@ Namespace MonteCarlo
             Dim vector As New List(Of Double)
 
             For Each var As String In eigenvector.Keys
-                Dim y As Double() = x.y(var).x
+                Dim y As Double() = x.y(var).Value
                 Dim n As Integer = CInt(y.Length / partN)
 
                 For Each block As Double() In Parallel.Linq.SplitIterator(y, n, echo:=False)
@@ -274,7 +274,7 @@ Namespace MonteCarlo
                 Dim out As Dictionary(Of String, Double)() =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
                     required.value _
                     .Where(Function(x) Not x.Name = EstimatesProtocol.Observation) _
-                    .Select(Function(x) x.x) _
+                    .Select(Function(x) x.Value) _
                     .ToVector
                 Dim key$ = New NamedValue(Of String)(
                     (+uid).ToString,
@@ -305,7 +305,7 @@ Namespace MonteCarlo
 
                         parms(parm) = New NamedValue(Of INextRandomNumber) With {
                             .Name = parm,
-                            .x = range
+                            .Value = range
                         }
                     Next
 
@@ -365,7 +365,7 @@ Namespace MonteCarlo
         Public Function GetEntityNumbers(ParamArray data As NamedValue(Of Dictionary(Of String, Double)())()()) As Integer
             Dim array = data _
                 .IteratesALL _
-                .Select(Function(x) x.x) _
+                .Select(Function(x) x.Value) _
                 .IteratesALL
             Dim value As Integer = array.Count
             Return value

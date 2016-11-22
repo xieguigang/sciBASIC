@@ -141,7 +141,7 @@ Namespace CommandLine
                     __lstParameter.Where(
                         Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault
 
-                Dim value As String = LQuery.x ' 是值类型，不会出现空引用的情况
+                Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
 
                 If value Is Nothing Then
                     value = ""
@@ -218,7 +218,7 @@ Namespace CommandLine
                                             In __lstParameter
                                             Select Len(item.Name)).Max
             For Each sw As NamedValue(Of String) In __lstParameter
-                Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.x}"";")
+                Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
             Next
 
             Return sBuilder.ToString
@@ -727,7 +727,7 @@ Namespace CommandLine
             If Not Me.__lstParameter.IsNullOrEmpty Then
                 lst += From obj As NamedValue(Of String)
                        In __lstParameter
-                       Select New NamedValue(Of String)(obj.Name, obj.x)
+                       Select New NamedValue(Of String)(obj.Name, obj.Value)
             End If
 
             If Not Me.BoolFlags.IsNullOrEmpty Then

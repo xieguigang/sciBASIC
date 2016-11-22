@@ -148,7 +148,7 @@ Public Module BarPlot
                     Dim barSize As New Size(barWidth, barHeight)
                     Dim rect As New Rectangle(topleft, barSize)
 
-                    Call g.FillRectangle(New SolidBrush(data.Serials(val.i).x), rect)
+                    Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
 
                     top += barHeight
                 Next
@@ -162,7 +162,7 @@ Public Module BarPlot
 
                     Call g.DrawRectangle(Pens.Black, rect)
                     Call g.FillRectangle(
-                        New SolidBrush(data.Serials(val.i).x),
+                        New SolidBrush(data.Serials(val.i).Value),
                         Rectangle(top + 1,
                                   x + 1,
                                   right - 1,
@@ -197,7 +197,7 @@ Public Module BarPlot
                 From x As NamedValue(Of Color)
                 In data.Serials
                 Select New Legend With {
-                    .color = x.x.RGBExpression,
+                    .color = x.Value.RGBExpression,
                     .fontstyle = CSSFont.GetFontStyle(
                         FontFace.MicrosoftYaHei,
                         FontStyle.Regular,
@@ -231,7 +231,7 @@ Public Module BarPlot
             .Serials = {
                 New NamedValue(Of Color) With {
                     .Name = "",
-                    .x = Color.Lime
+                    .Value = Color.Lime
                 }
             },
             .Samples = LinqAPI.Exec(Of BarDataSample) <=
@@ -257,7 +257,7 @@ Public Module BarPlot
             In odes.SeqIterator
             Select New NamedValue(Of Color) With {
                 .Name = x.obj.df.ToString,
-                .x = colors(x.i)
+                .Value = colors(x.i)
             }
         Dim samples = LinqAPI.Exec(Of BarDataSample) <=
  _

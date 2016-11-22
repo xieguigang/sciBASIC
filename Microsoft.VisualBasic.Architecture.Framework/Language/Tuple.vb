@@ -51,7 +51,7 @@ Namespace Language
         Sub New(o As Object)
             __meta = __getValues(o).ToDictionary(
                 Function(x) x.Name,
-                Function(x) x.x)
+                Function(x) x.Value)
         End Sub
 
         Sub New()
@@ -82,7 +82,7 @@ Namespace Language
 
         Public Shared Operator +(t As Tuple, o As Object) As Tuple
             For Each x In __getValues(o)
-                t.Properties(x.Name) = x.x
+                t.Properties(x.Name) = x.Value
             Next
 
             Return t
@@ -92,7 +92,7 @@ Namespace Language
             For Each p In DataFrameColumnAttribute.LoadMapping(o.GetType,, True).Values
                 Yield New NamedValue(Of Object) With {
                     .Name = p.Identity,
-                    .x = p.GetValue(o)
+                    .Value = p.GetValue(o)
                 }
             Next
         End Function

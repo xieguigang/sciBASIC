@@ -55,7 +55,7 @@ Public Module EigenvectorBootstrappingExtension
             In data.AsParallel
             Select New NamedValue(Of VectorTagged(Of Dictionary(Of String, Double))) With {
                 .Name = x.Tag.GetJson,
-                .x = x
+                .Value = x
             }
 
         Call "Load data complete!".__DEBUG_ECHO
@@ -64,7 +64,7 @@ Public Module EigenvectorBootstrappingExtension
         Dim datasets As EntityLDM() = strTags.ToArray(
             Function(x) New EntityLDM With {
                 .Name = "boot" & uid.Plus,
-                .Properties = x.x.Tag _
+                .Properties = x.Value.Tag _
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
                                   Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
@@ -85,13 +85,13 @@ Public Module EigenvectorBootstrappingExtension
         For Each cluster As Partition In treeParts
             Dim key As New NamedValue(Of Double()) With {
                 .Name = cluster.Tag,
-                .x = cluster.PropertyMeans
+                .Value = cluster.PropertyMeans
             } ' out之中的key
             Dim tmp As New List(Of Dictionary(Of String, Double))   ' out之中的value
 
             For Each x As EntityLDM In cluster.members
                 Dim rawKey As String = x.Properties.Values.ToArray.GetJson
-                Dim rawParams = raw(rawKey).ToArray(Function(o) o.x.value)
+                Dim rawParams = raw(rawKey).ToArray(Function(o) o.Value.value)
 
                 tmp += rawParams
             Next

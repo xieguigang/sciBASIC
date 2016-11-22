@@ -460,7 +460,7 @@ Namespace CommandLine
 
             For Each arg As NamedValue(Of String) In args1.__lstParameter
                 Dim value2 As String = args2(arg.Name)
-                If Not String.Equals(value2, arg.x, StringComparison.OrdinalIgnoreCase) Then
+                If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
                     Return False
                 End If
             Next

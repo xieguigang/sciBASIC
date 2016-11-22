@@ -142,7 +142,7 @@ Namespace HTML.CSS
                     .Where(Function(s) Not s.IsBlank) _
                     .Select(Function(s) s.GetTagValue(":", True)) _
                     .ToDictionary(Function(x) x.Name.Trim.ToLower,
-                                  Function(x) x.x)
+                                  Function(x) x.Value)
                 Dim font As New CSSFont
 
                 If styles.ContainsKey("font-style") Then font.style = GetStyle(styles("font-style"))

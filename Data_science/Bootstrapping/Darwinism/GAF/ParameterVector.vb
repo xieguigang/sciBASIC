@@ -178,7 +178,7 @@ Namespace Darwinism.GAF
             Dim vars As Dictionary(Of String, Double) = tks _
                 .Select(Function(t) t.GetTagValue(":")) _
                 .ToDictionary(Function(v) v.Name,
-                              Function(v) v.x.ParseDouble)
+                              Function(v) v.Value.ParseDouble)
             Return vars
         End Function
 

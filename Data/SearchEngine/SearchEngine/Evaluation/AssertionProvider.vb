@@ -50,7 +50,7 @@ Public Module AssertionProvider
 
         Return Function(def, obj)
                    For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
-                       If evaluate(x.x) Then
+                       If evaluate(x.Value) Then
                            Return New Match With {
                                .Field = x,
                                .x = obj,
@@ -72,7 +72,7 @@ Public Module AssertionProvider
 
             Return Function(def, obj)
                        For Each x As NamedValue(Of String) In def.EnumerateFields(obj)
-                           If evaluate(x.x) Then
+                           If evaluate(x.Value) Then
                                Return New Match With {
                                    .Field = x,
                                    .x = obj,
@@ -88,9 +88,9 @@ Public Module AssertionProvider
         Dim fieldSearch = term.GetTagValue(":")
         Dim assertion As Func(Of String, Boolean)
 
-        term = fieldSearch.x
+        term = fieldSearch.Value
 
-        If fieldSearch.x.IsMustExpression Then
+        If fieldSearch.Value.IsMustExpression Then
             term = term.GetString()
             assertion = term$.CompileMustSearch(caseSensitive)
         Else
@@ -115,7 +115,7 @@ Public Module AssertionProvider
                                 .score = 0.75,
                                 .Field = New NamedValue(Of String) With {
                                     .Name = key,
-                                    .x = searchIn
+                                    .Value = searchIn
                                 }
                             }
                         Else

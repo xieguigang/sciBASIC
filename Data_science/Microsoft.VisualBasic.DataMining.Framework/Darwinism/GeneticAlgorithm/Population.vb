@@ -125,7 +125,7 @@ Namespace Darwinism.GAF
                 Dim source = chromosomes _
                     .Select(Function(x) New NamedValue(Of chr) With {
                         .Name = x.ToString,
-                        .x = x
+                        .Value = x
                     }) _
                     .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
                     .ToArray
@@ -140,21 +140,21 @@ Namespace Darwinism.GAF
                         source,
                         Function(x) New NamedValue(Of T) With {
                             .Name = x.Name,
-                            .x = GA._fitnessFunc.Calculate(x.x)
+                            .Value = GA._fitnessFunc.Calculate(x.Value)
                         }, n)
                 Else
                     LQuery = From x As NamedValue(Of chr)
                              In source.AsParallel
-                             Let fit As T = GA._fitnessFunc.Calculate(x.x)
+                             Let fit As T = GA._fitnessFunc.Calculate(x.Value)
                              Select New NamedValue(Of T) With {
                                  .Name = x.Name,
-                                 .x = fit
+                                 .Value = fit
                              }
                 End If
 
                 For Each x As NamedValue(Of T) In LQuery
                     If Not comparator.cache.ContainsKey(x.Name) Then
-                        Call comparator.cache.Add(x.Name, x.x)
+                        Call comparator.cache.Add(x.Name, x.Value)
                     End If
                 Next
             End If

@@ -170,7 +170,7 @@ Namespace CommandLine.Reflection
             For Each obj In _params
                 Yield New NamedValue(Of Argument) With {
                     .Name = obj.Key,
-                    .x = obj.Value
+                    .Value = obj.Value
                 }
             Next
         End Function

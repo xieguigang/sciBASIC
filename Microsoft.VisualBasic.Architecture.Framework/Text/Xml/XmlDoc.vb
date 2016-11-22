@@ -68,7 +68,7 @@ Namespace Text.Xml
             Dim root As NamedValue(Of Xmlns) =
             Xmlns.RootParser(__rootString(xml))
             rootNode = root.Name
-            xmlns = root.x
+            xmlns = root.Value
             Me.xml = xml
         End Sub
 

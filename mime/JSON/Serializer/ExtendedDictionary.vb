@@ -55,7 +55,7 @@ Public Module ExtendedDictionary
         Dim out As T = DirectCast(obj, T)
         type = GetType(V)
         For Each key In model
-            Dim j As String = key.x.BuildJsonString
+            Dim j As String = key.Value.BuildJsonString
             Dim value As V = DirectCast(LoadObject(j$, type,), V)
             Call out.Add(key.Name, value)
         Next

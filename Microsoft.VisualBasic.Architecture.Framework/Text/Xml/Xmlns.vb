@@ -63,7 +63,7 @@ Namespace Text.Xml
         Default Public ReadOnly Property ns(name As String) As String
             Get
                 If [namespace].ContainsKey(name) Then
-                    Return [namespace](name).x
+                    Return [namespace](name).Value
                 Else
                     Return ""
                 End If
@@ -132,13 +132,13 @@ Namespace Text.Xml
 
                 If Not String.IsNullOrEmpty(rootNs) Then
                     Dim s As String =
-                        If(String.IsNullOrEmpty(nsValue.x),
+                        If(String.IsNullOrEmpty(nsValue.Value),
                         "",
-                        $"{nsValue.Name}=""{nsValue.x}""")
+                        $"{nsValue.Name}=""{nsValue.Value}""")
                     Call ns.Replace($"{nsValue.Name}=""{rootNs}""", s)
                 Else
-                    If Not String.IsNullOrEmpty(nsValue.x) Then
-                        Call ns.Replace(">", $" {nsValue.Name}=""{nsValue.x}"">")
+                    If Not String.IsNullOrEmpty(nsValue.Value) Then
+                        Call ns.Replace(">", $" {nsValue.Name}=""{nsValue.Value}"">")
                     End If
                 End If
             Next

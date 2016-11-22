@@ -69,7 +69,7 @@ Public Structure IObject
         For Each field In Schema.Values
             Yield New NamedValue(Of String) With {
                 .Name = field.Identity,
-                .x = Scripting.ToString(field.GetValue(x))
+                .Value = Scripting.ToString(field.GetValue(x))
             }
         Next
     End Function
@@ -77,7 +77,7 @@ Public Structure IObject
     Public Overrides Function ToString() As String
         Return New NamedValue(Of String()) With {
             .Name = Type.FullName,
-            .x = Schema.Keys.ToArray
+            .Value = Schema.Keys.ToArray
         }.GetJson
     End Function
 End Structure

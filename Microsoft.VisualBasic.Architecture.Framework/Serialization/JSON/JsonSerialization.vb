@@ -181,7 +181,7 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <Extension>
         Public Function NamedProperty(Of T)(x As NamedValue(Of T)) As String
-            Return x.Name.NamedProperty(Of T)(x.x)
+            Return x.Name.NamedProperty(Of T)(x.Value)
         End Function
     End Module
 End Namespace

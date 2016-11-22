@@ -129,7 +129,7 @@ Namespace Linq
         End Function
 
         Public Function InvokeSetValue(x As T, value As NamedValue(Of Object)) As T
-            Return InvokeSetValue(x, value.Name, value.x)
+            Return InvokeSetValue(x, value.Name, value.Value)
         End Function
 
         ''' <summary>

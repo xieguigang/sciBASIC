@@ -261,7 +261,7 @@ Public Module App
             vars.Select(Function(x)
                             Return New NamedValue(Of String) With {
                                 .Name = x.Key,
-                                .x = x.Value
+                                .Value = x.Value
                             }
                         End Function).ToArray)
     End Sub
@@ -275,7 +275,7 @@ Public Module App
         Return LinqAPI.Exec(Of String) <= From x As NamedValue(Of String)
                                           In __joinedVariables
                                           Where String.Equals(name$, x.Name, StringComparison.OrdinalIgnoreCase)
-                                          Select x.x
+                                          Select x.Value
     End Function
 
     ''' <summary>
@@ -295,7 +295,7 @@ Public Module App
 
             out += New NamedValue(Of String) With {
                 .Name = prop.Name,
-                .x = prop.GetValue(Nothing, Nothing)
+                .Value = prop.GetValue(Nothing, Nothing)
             }
         Next
 

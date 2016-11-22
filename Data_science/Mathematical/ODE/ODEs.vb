@@ -177,7 +177,7 @@ Public MustInherit Class ODEs
             In vars
             Select New NamedValue(Of Double()) With {
                 .Name = var.Name,
-                .x = y(var)
+                .Value = y(var)
             }
 
         ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏

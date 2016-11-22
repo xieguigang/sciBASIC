@@ -53,11 +53,11 @@ Public Class Schema : Inherits ClassObject
             Return Tables.ToArray(
                 Function(x) New NamedValue(Of String) With {
                     .Name = x.Key,
-                    .x = x.Value
+                    .Value = x.Value
                 })
         End Get
         Set(value As NamedValue(Of String)())
-            _Tables = value.ToDictionary(Function(x) x.Name, Function(x) x.x)
+            _Tables = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
         End Set
     End Property
 
@@ -104,7 +104,7 @@ Public Class Schema : Inherits ClassObject
             If Primitive(pType) Then
                 members += New NamedValue(Of String) With {
                     .Name = $"{parent}::{prop.Name}",
-                    .x = path
+                    .Value = path
                 }
             Else
 
@@ -117,7 +117,7 @@ Public Class Schema : Inherits ClassObject
                     ' 基本类型
                     members += New NamedValue(Of String) With {
                         .Name = $"{parent}::{prop.Name}",
-                        .x = path
+                        .Value = path
                     }
                 Else     ' 复杂类型
                     Call __memberStack(members, elType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")

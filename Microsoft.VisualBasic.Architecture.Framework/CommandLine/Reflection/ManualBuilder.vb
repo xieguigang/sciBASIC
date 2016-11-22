@@ -86,7 +86,7 @@ Namespace CommandLine.Reflection
                 Dim maxLen As Integer = (From x In api.Arguments Select x.Name.Length + 2).Max
                 Dim l As Integer
 
-                For Each param As Argument In api.Arguments.Select(Function(x) x.x)
+                For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
                     fore = Console.ForegroundColor
 
                     If param.[Optional] Then

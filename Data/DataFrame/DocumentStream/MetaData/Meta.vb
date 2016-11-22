@@ -69,7 +69,7 @@ Namespace DocumentStream
                 name = row.Name
                 name = Regex.Replace(name, "^#+", "", RegexOptions.Multiline)
 
-                Call out.Add(name, row.x)
+                Call out.Add(name, row.Value)
             Loop
 
             i = p.Pointer
@@ -108,7 +108,7 @@ Namespace DocumentStream
             Dim s As String
 
             For Each x As NamedValue(Of T) In source
-                s = Scripting.ToString(x.x)
+                s = Scripting.ToString(x.Value)
                 Yield New RowObject({$"##{x.Name}={s}"})
             Next
         End Function

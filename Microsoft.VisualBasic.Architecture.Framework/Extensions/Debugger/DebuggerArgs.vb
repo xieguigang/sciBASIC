@@ -162,7 +162,7 @@ Namespace Debugging
                     .Select(Function(x)
                                 Return New NamedValue(Of String) With {
                                     .Name = x.Key,
-                                    .x = x.Value
+                                    .Value = x.Value
                                 }
                             End Function).ToArray)
             End If

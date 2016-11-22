@@ -250,7 +250,7 @@ Public Module Scatter
             In odes.y.Values.SeqIterator
             Let pts As PointData() = odes.x _
                 .SeqIterator _
-                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.obj.x(x))))
+                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.obj.Value(x))))
             Select New SerialData With {
                 .color = c(y.i),
                 .lineType = DashStyle.Solid,
@@ -270,7 +270,7 @@ Public Module Scatter
                          Optional bg$ = "white") As Bitmap
 
         Dim engine As New Expression
-        Dim ranges As Double() = range.x.seq(steps).ToArray
+        Dim ranges As Double() = range.Value.seq(steps).ToArray
         Dim y As New List(Of Double)
 
         For Each x# In ranges

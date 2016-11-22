@@ -50,7 +50,7 @@ Namespace DocumentStream.Linq
                 Return handle.LoadCsv(Of T)
             ElseIf handle.DirectoryExists Then
                 Return ReadQueue(Of T)(ls - l - r - "*.csv" <= handle, encoding) _
-                    .Select(Function(csv) csv.x) _
+                    .Select(Function(csv) csv.Value) _
                     .IteratesALL
             Else
                 Dim msg$ = $"Handle {handle} is invalid! Check if it is a exists file or folder?"
@@ -70,13 +70,13 @@ Namespace DocumentStream.Linq
             If handle.FileExists Then
                 Yield New NamedValue(Of T()) With {
                     .Name = handle.BaseName,
-                    .x = handle.LoadCsv(Of T).ToArray
+                    .Value = handle.LoadCsv(Of T).ToArray
                 }
             ElseIf handle.DirectoryExists Then
                 For Each file$ In ls - l - r - "*.csv" <= handle
                     Yield New NamedValue(Of T()) With {
                         .Name = file.BaseName,
-                        .x = file.LoadCsv(Of T).ToArray
+                        .Value = file.LoadCsv(Of T).ToArray
                     }
                 Next
             Else
@@ -118,11 +118,11 @@ Namespace DocumentStream.Linq
             Call $"All I/O queue job done!   {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
 
             For Each data As NamedValue(Of String()) In IO
-                Dim buf As T() = data.x.LoadStream(Of T)(False)
+                Dim buf As T() = data.Value.LoadStream(Of T)(False)
 
                 Yield New NamedValue(Of T())(data.Name, buf)
 
-                Call GC.SuppressFinalize(data.x)    ' 数据量非常大的话，在这里进行内存的释放
+                Call GC.SuppressFinalize(data.Value)    ' 数据量非常大的话，在这里进行内存的释放
                 Call GC.SuppressFinalize(data)
                 Call Console.Write(".")
             Next
@@ -145,7 +145,7 @@ Namespace DocumentStream.Linq
             Dim queue = files.ReadQueue(Of T)(encoding)
 
             For Each data As NamedValue(Of T()) In queue
-                For Each x As T In data.x
+                For Each x As T In data.Value
                     Yield x
                 Next
             Next

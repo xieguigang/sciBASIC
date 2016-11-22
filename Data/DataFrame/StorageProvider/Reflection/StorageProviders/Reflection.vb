@@ -61,17 +61,17 @@ Namespace StorageProvider.Reflection
                 In Schema.Columns
                 Select New NamedValue(Of Type) With {
                     .Name = columAttr.Name,
-                    .x = columAttr.BindProperty.PropertyType
+                    .Value = columAttr.BindProperty.PropertyType
                 }
             Dim array = From columnItem As CollectionColumn
                         In Schema.CollectionColumns
                         Select New NamedValue(Of Type) With {
                             .Name = columnItem.Name,
-                            .x = columnItem.BindProperty.PropertyType
+                            .Value = columnItem.BindProperty.PropertyType
                         }
             Dim hash As Dictionary(Of String, Type) =
                 cols.Join(array).ToDictionary(Function(x) x.Name,
-                                              Function(x) x.x)
+                                              Function(x) x.Value)
             Return hash
         End Function
 #End If

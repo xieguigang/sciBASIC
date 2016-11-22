@@ -95,11 +95,11 @@ Public Module BootstrapIterator
         Return model.Bootstrapping(
             vars.Select(Function(x) New NamedValue(Of INextRandomNumber) With {
                 .Name = x.Name,
-                .x = AddressOf x.x.NextNumber
+                .Value = AddressOf x.Value.NextNumber
             }),
             yinit.Select(Function(x) New NamedValue(Of INextRandomNumber) With {
                 .Name = x.Name,
-                .x = AddressOf x.x.NextNumber
+                .Value = AddressOf x.Value.NextNumber
             }),
             k, n, a, b, trimNaN, parallel)
     End Function
@@ -132,7 +132,7 @@ Public Module BootstrapIterator
         Dim vars = args.Select(
             Function(v) New NamedValue(Of INextRandomNumber) With {
                 .Name = v.Key,
-                .x = Function() v.Value  ' 在研究可能的系统状态的时候，参数值是固定不变的，只变化初始状态值y0
+                .Value = Function() v.Value  ' 在研究可能的系统状态的时候，参数值是固定不变的，只变化初始状态值y0
             })
         Return model.Bootstrapping(vars, y0, k, n, a, b, trimNaN, parallel, echo)
     End Function
@@ -237,7 +237,7 @@ Public Module BootstrapIterator
         ' Dim debug As New List(Of NamedValue(Of Double))
 
         For Each x In vars
-            Dim value As Double = x.x()()
+            Dim value As Double = x.Value()()
             Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
 
             'debug += New NamedValue(Of Double) With {
@@ -247,7 +247,7 @@ Public Module BootstrapIterator
         Next
 
         For Each y In yinis
-            Dim value As Double = y.x()()
+            Dim value As Double = y.Value()()
             odes(y.Name).value = value
             'debug += New NamedValue(Of Double) With {
             '    .Name = y.Name,

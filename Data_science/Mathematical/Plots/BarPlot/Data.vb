@@ -78,7 +78,7 @@ Public Class BarDataGroup : Inherits ProfileGroup
             In source.Keys
             Select New NamedValue(Of Color) With {
                 .Name = lv.ToString,
-                .x = bg
+                .Value = bg
             }
 
         For Each x In serials

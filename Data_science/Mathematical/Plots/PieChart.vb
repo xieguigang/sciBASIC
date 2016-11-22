@@ -145,12 +145,12 @@ Public Module PieChart
     ''' <returns></returns>
     <Extension>
     Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As PercentageData()
-        Dim all = data.Select(Function(x) x.x).Sum
+        Dim all = data.Select(Function(x) x.Value).Sum
         Dim s = From x
                 In data
                 Select New NamedValue(Of Double) With {
                     .Name = x.Name,
-                    .x = x.x / all
+                    .Value = x.Value / all
                 }
         Return s.FromPercentages(colors)
     End Function
@@ -175,7 +175,7 @@ Public Module PieChart
             out(x.i) = New PercentageData With {
                 .Color = c(x.i),
                 .Name = x.obj.Name,
-                .Percentage = x.obj.x
+                .Percentage = x.obj.Value
             }
         Next
 

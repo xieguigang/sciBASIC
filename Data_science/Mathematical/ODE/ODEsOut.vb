@@ -57,7 +57,7 @@ Public Class ODEsOut
     ''' <returns></returns>
     Public Function GetY0() As Dictionary(Of String, Double)
         Return y.ToDictionary(Function(x) x.Key,
-                              Function(x) x.Value.x.First)
+                              Function(x) x.Value.Value.First)
     End Function
 
     ''' <summary>
@@ -67,7 +67,7 @@ Public Class ODEsOut
     Public ReadOnly Property HaveNaN As Boolean
         Get
             For Each val As NamedValue(Of Double()) In y.Values
-                For Each x As Double In val.x
+                For Each x As Double In val.Value
                     If Double.IsNaN(x) OrElse
                         Double.IsInfinity(x) OrElse
                         Double.IsNegativeInfinity(x) OrElse
@@ -116,7 +116,7 @@ Public Class ODEsOut
         file += head
 
         For Each x As SeqValue(Of Double) In Me.x.SeqIterator
-            file += (round(x.obj) + ly.ToList(Function(n) round(n.x(x.i))))
+            file += (round(x.obj) + ly.ToList(Function(n) round(n.Value(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2
@@ -157,7 +157,7 @@ Public Class ODEsOut
                                                         Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
                                                         Select New NamedValue(Of Double()) With {
                                                             .Name = name,
-                                                            .x = values
+                                                            .Value = values
                                                         }
         Return New ODEsOut With {
             .params = args,

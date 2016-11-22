@@ -123,7 +123,7 @@ Public Module DocumentExtensions
             Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
             Select New NamedValue(Of Double()) With {
                 .Name = name,
-                .x = values
+                .Value = values
             }
 
         Return out

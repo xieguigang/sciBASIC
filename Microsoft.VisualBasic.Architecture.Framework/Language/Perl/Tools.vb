@@ -228,7 +228,7 @@ Namespace Language.Perl
                 Dim x As NamedValue(Of String) = hash(key)
                 hash(key) = New NamedValue(Of String) With {
                     .Name = key,
-                    .x = x.x.chomp,
+                    .Value = x.Value.chomp,
                     .Description = x.Description
                 }
             Next

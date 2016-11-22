@@ -69,7 +69,7 @@ Public Module Normalization
             From line As NamedValue(Of TimeValue())
             In raw.Values.AsParallel
             Let pts As IEnumerable(Of PointF) =
-                line.x _
+                line.Value _
                 .Select(Function(x) x.Point) _
                 .OrderBy(Function(x) x.X)
             Let intr As PointF() =
@@ -77,7 +77,7 @@ Public Module Normalization
                 .ToArray
             Select New NamedValue(Of PointF()) With {
                 .Name = line.Name,
-                .x = intr
+                .Value = intr
             }
 
         Return inter _
@@ -94,14 +94,14 @@ Public Module Normalization
     <Extension>
     Private Function Trim(intr As NamedValue(Of PointF()), raw As NamedValue(Of TimeValue())) As NamedValue(Of TimeValue())
         Dim times As Dictionary(Of Single, PointF) =
-            raw.x.ToDictionary(
+            raw.Value.ToDictionary(
             Function(x) CSng(x.Time),
             Function(p) New PointF(CSng(p.Time), CSng(p.value)))
         Dim i As int = Scan0
-        Dim preX As Value(Of Single) = intr.x(++i).X
+        Dim preX As Value(Of Single) = intr.Value(++i).X
 
-        Do While ++i < intr.x.Length - 1
-            If preX > intr.x(i).X Then ' 出现圈了
+        Do While ++i < intr.Value.Length - 1
+            If preX > intr.Value(i).X Then ' 出现圈了
 
             End If
         Loop
@@ -114,12 +114,12 @@ Public Module Normalization
         Dim array As NamedValue(Of TimeValue())() =
             data.ToArray
         Return New ODEsOut With {
-            .x = array(Scan0).x _
+            .x = array(Scan0).Value _
                 .ToArray(Function(x) x.Time),
             .y = array _
                 .Select(Function(x) New NamedValue(Of Double()) With {
                     .Name = x.Name,
-                    .x = x.x _
+                    .Value = x.Value _
                         .ToArray(Function(o) o.value)
                 }).ToDictionary
         }

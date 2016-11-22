@@ -50,7 +50,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Object value
         ''' </summary>
         ''' <returns></returns>
-        <XmlElement> Public Property x As T
+        <XmlElement> Public Property Value As T
 
         <XmlAttribute>
         Public Property Description As String
@@ -61,7 +61,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         <ScriptIgnore> Public ReadOnly Property IsEmpty As Boolean
             Get
-                Return String.IsNullOrEmpty(Name) AndAlso x Is Nothing
+                Return String.IsNullOrEmpty(Name) AndAlso Value Is Nothing
             End Get
         End Property
 
@@ -72,7 +72,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="value"></param>
         Sub New(name$, value As T)
             Me.Name = name
-            Me.x = value
+            Me.Value = value
         End Sub
 
         ''' <summary>
@@ -80,11 +80,11 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"{Name} --> {x.GetJson}"
+            Return $"{Name} --> {Value.GetJson}"
         End Function
 
         Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)
-            Return New NamedValue(Of T)(Name, h(x))
+            Return New NamedValue(Of T)(Name, h(Value))
         End Function
     End Structure
 End Namespace

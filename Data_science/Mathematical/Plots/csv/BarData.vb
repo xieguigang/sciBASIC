@@ -64,7 +64,7 @@ Namespace csv
                     .SeqIterator _
                     .ToArray(Function(x) New NamedValue(Of Color) With {
                         .Name = x.obj,
-                        .x = clData(x.i)
+                        .Value = clData(x.i)
                     }),
                 .Samples = file _
                     .Skip(1) _
