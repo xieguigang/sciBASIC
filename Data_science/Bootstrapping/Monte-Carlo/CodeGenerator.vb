@@ -6,6 +6,22 @@ Namespace MonteCarlo
 
     Public Module CodeGenerator
 
+        <Extension> Public Function ConstAlpha(v$) As String
+            Return v & "_alpha#"
+        End Function
+
+        <Extension> Public Function ConstBeta(v$) As String
+            Return v & "_beta#"
+        End Function
+
+        <Extension> Public Function SPowerAlpha(v$, x$) As String
+            Return v & "_" & x & "_alpha#"
+        End Function
+
+        <Extension> Public Function SPowerBeta(v$, x$) As String
+            Return v & "_" & x & "_beta#"
+        End Function
+
         ''' <summary>
         ''' Generates the S-system non-linear model VisualBasic Class.
         ''' </summary>
@@ -32,25 +48,21 @@ Namespace MonteCarlo
             Call code.AppendLine()
 
             ' Generates the constants
-            Dim calpha = Function(v$) v & "_alpha#"
-            Dim cbeta = Function(v$) v & "_beta#"
 
             For Each v$ In var
-                Call code.AppendLine($"Dim {calpha(v)}, {cbeta(v)}")
+                Call code.AppendLine($"Dim {(v).ConstAlpha }, {(v).ConstBeta}")
             Next
             Call code.AppendLine()
 
             ' Generates the S-powers
-            Dim spalpha = Function(v$, x$) v & "_" & x & "_alpha#"
-            Dim spbeta = Function(v$, x$) v & "_" & x & "_beta#"
 
             For Each v$ In var
                 Dim a As New List(Of String)
                 Dim b As New List(Of String)
 
                 For Each x$ In var
-                    a += spalpha(v, x)
-                    b += spbeta(v, x)
+                    a += SPowerAlpha(v, x)
+                    b += SPowerBeta(v, x)
                 Next
 
                 Dim line$ = $"Dim {a.JoinBy(", ")}, {b.JoinBy(", ")}"
@@ -74,12 +86,12 @@ Namespace MonteCarlo
                 Dim b As New List(Of String)
 
                 For Each x In var
-                    a += $"({x} ^ {spalpha(v, x)})"
-                    b += $"({x} ^ {spbeta(v, x)})"
+                    a += $"({x} ^ {SPowerAlpha(v, x)})"
+                    b += $"({x} ^ {SPowerBeta(v, x)})"
                 Next
 
-                Dim alpha$ = calpha(v) & " * " & a.JoinBy(" * ")
-                Dim beta$ = cbeta(v) & " * " & b.JoinBy(" * ")
+                Dim alpha$ = (v).ConstAlpha & " * " & a.JoinBy(" * ")
+                Dim beta$ = (v).ConstBeta & " * " & b.JoinBy(" * ")
 
                 Call code.AppendLine($"dy({v}) = {alpha} - {beta}")
             Next
