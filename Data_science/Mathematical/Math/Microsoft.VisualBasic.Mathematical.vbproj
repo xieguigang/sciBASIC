@@ -237,8 +237,9 @@
     <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
     <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />
-    <Compile Include="Spline\CubicEval.vb" />
-    <Compile Include="Spline\CubicSpline.vb" />
+    <Compile Include="Spline\CubicSpline\CubicSplineVector.vb" />
+    <Compile Include="Spline\CubicSpline\CubicEval.vb" />
+    <Compile Include="Spline\CubicSpline\CubicSpline.vb" />
     <Compile Include="Bootstraping.vb" />
     <Compile Include="Distributions\Beta.vb" />
     <Compile Include="Distributions\DirichletDistribution.vb" />
