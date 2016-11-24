@@ -1,7 +1,11 @@
 ﻿Imports System.Drawing
+Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D.Colors
@@ -22,6 +26,32 @@ Namespace Drawing2D.Colors
             Aspect = Theme.LoadFromXml(My.Resources.Default_Aspect)
             Paper = Theme.LoadFromXml(My.Resources.Default_Paper)
             Slipstream = Theme.LoadFromXml(My.Resources.Default_Slipstream)
+
+            Call __loadAllThemes()
+        End Sub
+
+        ''' <summary>
+        ''' All office color themes
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Themes As New Dictionary(Of Theme)
+
+        Private Sub __loadAllThemes()
+            Dim resMgr As Type = GetType(My.Resources.Resources)
+            Dim datas As IEnumerable(Of PropertyInfo) =
+                DataFramework _
+                .Schema(resMgr, PropertyAccess.Readable, BindingFlags.NonPublic Or BindingFlags.Static, True) _
+                .Where(Function(k) InStr(k.Key, "Default_") = 1) _
+                .Select(Function(x) x.Value) _
+                .ToArray
+
+            For Each theme As PropertyInfo In datas
+                Dim xml As String = TryCast(theme.GetValue(Nothing, Nothing), String)
+                Dim t As Theme = Drawing2D.Colors.Theme.LoadFromXml(xml)
+
+                t.name = t.name.Replace("Default_", "")
+                Call Themes.Add(t) ' 顺序不能变换，否则键名就不一致了
+            Next
         End Sub
 
         ''' <summary>
@@ -30,27 +60,24 @@ Namespace Drawing2D.Colors
         ''' <param name="theme$"></param>
         ''' <returns></returns>
         Public Function GetAccentColors(theme$) As Color()
-            Select Case LCase(theme)
-                Case LCase(NameOf(Office2010)), LCase(Office2010.name)
-                    Return Office2010.accents _
-                        .Select(Function(x) x.srgbClr.Color) _
-                        .ToArray
-                Case LCase(NameOf(Slipstream)), LCase(Slipstream.name)
-                    Return Slipstream.accents _
-                        .Select(Function(x) x.srgbClr.Color) _
-                        .ToArray
-                Case Else
-                    Return Office2016.accents _
-                        .Select(Function(x) x.srgbClr.Color) _
-                        .ToArray
-            End Select
+            If Themes.ContainsKey(theme) Then
+                Return Themes(theme).GetAccentColors
+            Else
+                For Each t As Theme In Themes.Values
+                    If t.name.TextEquals(theme) Then
+                        Return t.GetAccentColors
+                    End If
+                Next
+            End If
+
+            Return Office2016.GetAccentColors
         End Function
     End Module
 
-    <XmlRoot("clrScheme")> Public Class Theme
+    <XmlRoot("clrScheme")> Public Class Theme : Implements sIdEnumerable
 
         <XmlAttribute>
-        Public Property name As String
+        Public Property name As String Implements sIdEnumerable.Identifier
         Public Property dk1 As ObjectColor
         Public Property lt1 As ObjectColor
         Public Property dk2 As Accent
@@ -60,6 +87,16 @@ Namespace Drawing2D.Colors
 
         <XmlElement("accent")>
         Public Property accents As Accent()
+
+        Public Function GetAccentColors() As Color()
+            Return accents _
+                .Select(Function(x) x.srgbClr.Color) _
+                .ToArray
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
 
         Public Shared Function LoadFromXml(xml$) As Theme
             Dim s As New StringBuilder(

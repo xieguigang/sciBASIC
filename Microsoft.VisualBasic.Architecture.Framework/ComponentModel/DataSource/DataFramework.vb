@@ -82,12 +82,18 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' (instance) Public Property xxxxx As xxxxx
+        ''' (instance) ``Public Property xxxxx As xxxxx``
         ''' </summary>
         Public Const PublicProperty As BindingFlags = BindingFlags.Public Or BindingFlags.Instance
+        ''' <summary>
+        ''' (statics) ``Public Shared Property xxxx As xxxx``
+        ''' </summary>
+        Public Const PublicShared As BindingFlags = BindingFlags.Public Or BindingFlags.Static
 
         ''' <summary>
-        ''' 
+        ''' 请注意：对于VisualBasic的My.Resources.Resources类型而言，里面的属性都是Friend Shared访问类型的，
+        ''' 所以在解析内部资源管理器对象的时候应该要特别注意<paramref name="binds"/>参数值的设置，
+        ''' 因为这个参数默认是<see cref="PublicProperty"/>
         ''' </summary>
         ''' <param name="type"></param>
         ''' <param name="flag"></param>
@@ -103,7 +109,10 @@ Namespace ComponentModel.DataSourceModel
             Dim props As IEnumerable(Of PropertyInfo) =
                 type _
                 .GetProperties(binds) _
-                .Where(Flags(flag))
+                .ToArray
+
+            props = props.Where(Flags(flag)) _
+                .ToArray
 
             If nonIndex Then
                 props = props _
