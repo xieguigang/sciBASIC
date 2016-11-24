@@ -101,10 +101,15 @@ Namespace Excel
             Return columns
         End Function
 
+        ''' <summary>
+        ''' Read table data
+        ''' </summary>
+        ''' <param name="worksheet">table name</param>
+        ''' <returns></returns>
         Public Function GetWorksheet(worksheet As String) As DataTable
             Dim connection As New OleDbConnection(_cnnExcel)
             Dim adaptor As New OleDbDataAdapter($"SELECT * FROM [{worksheet}$]", connection)
-            Dim ws As DataTable = New DataTable(worksheet)
+            Dim ws As New DataTable(worksheet)
             adaptor.FillSchema(ws, SchemaType.Source)
             adaptor.Fill(ws)
 

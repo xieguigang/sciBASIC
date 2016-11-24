@@ -33,11 +33,17 @@ Namespace Excel
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' Load data frame from the excel file.
+        ''' </summary>
+        ''' <param name="file$">*.xlsx file path.</param>
+        ''' <param name="sheetName">Table name</param>
+        ''' <returns></returns>
         <Extension>
-        Public Function ReadXlsx(file As String, Optional sheetName As String = "Sheet1") As DocumentStream.DataFrame
+        Public Function ReadXlsx(file$, Optional sheetName As String = "Sheet1") As DataFrame
             Dim reader As New ExcelReader(file.GetFullPath, True, True)
             Dim data As DataTable = reader.GetWorksheet(sheetName)
-            Dim df As DocumentStream.DataFrame = data.CreateDataReader.DataFrame
+            Dim df As DataFrame = data.CreateDataReader.DataFrame
             Return df
         End Function
 
@@ -96,7 +102,7 @@ Namespace Excel
         ''' <param name="mapName"></param>
         ''' 
         <Extension>
-        Private Sub __updateMaps(df As DataFrame, mapName As String)
+        Private Sub __updateMaps(ByRef df As DataFrame, mapName$)
             If String.IsNullOrEmpty(mapName) Then
                 mapName = df.HeadTitles(Scan0)
             End If
