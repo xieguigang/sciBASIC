@@ -47,6 +47,16 @@ Namespace Imaging
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
+        ''' <summary>
+        ''' Gets the center location of the region rectangle.
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        <ExportAPI("Center")>
+        <Extension> Public Function Centre(rect As RectangleF) As PointF
+            Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As Point
             Dim xOffset As Integer() = pts.ToArray(Function(x) x.X)

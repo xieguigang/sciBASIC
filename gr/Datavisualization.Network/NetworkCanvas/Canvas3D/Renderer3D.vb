@@ -104,17 +104,20 @@ Public Class Renderer3D : Inherits Renderer
         '   pos = GraphToScreen(pos, __regionProvider())
 
         SyncLock canvas
-            Dim pt As New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
-            Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
+            Dim pt As New PointF(pos.X - r / 2, pos.Y - r / 2)
+            Dim rect As New RectangleF(pt, New SizeF(r, r))
 
-            Call canvas.FillPie(n.Data.Color, rect, 0, 360)
+            Call canvas.FillPie(
+                n.Data.Color,
+                rect.X, rect.Y, rect.Width, rect.Height,
+                0!, 360.0!)
 
             If ShowLabels Then
-                Dim center As Point = rect.Centre
+                Dim center As PointF = rect.Centre
                 Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
-                center = New Point(
-                    CInt(center.X - sz.Width / 2),
-                    CInt(center.Y - sz.Height / 2))
+                center = New PointF(
+                    center.X - sz.Width / 2,
+                    center.Y - sz.Height / 2)
                 Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
             End If
         End SyncLock
