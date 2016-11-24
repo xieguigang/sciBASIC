@@ -29,13 +29,12 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module PieChart
 
@@ -59,7 +58,7 @@ Public Module PieChart
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(data As IEnumerable(Of PercentageData),
+    Public Function Plot(data As IEnumerable(Of Fractions),
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg As String = "white",
@@ -88,7 +87,7 @@ Public Module PieChart
 
                          Call g.FillPie(Brushes.LightGray, rect, 0, 360)
 
-                         For Each x As PercentageData In data
+                         For Each x As Fractions In data
                              Call g.FillPie(New SolidBrush(x.Color), rect, (a = (a.value + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
                          Next
                      Else  ' 半径也会有变化
@@ -98,7 +97,7 @@ Public Module PieChart
 #If DEBUG Then
                          Dim list As New List(Of Rectangle)
 #End If
-                         For Each x As PercentageData In data
+                         For Each x As Fractions In data
                              Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
                              Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
                              Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
@@ -123,7 +122,7 @@ Public Module PieChart
                          Dim top = margin.Height
                          Dim legends As New List(Of Legend)
 
-                         For Each x As PercentageData In data
+                         For Each x As Fractions In data
                              legends += New Legend With {
                                 .color = x.Color.RGBExpression,
                                 .style = LegendStyles.Rectangle,
@@ -144,7 +143,7 @@ Public Module PieChart
     ''' <param name="colors"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As PercentageData()
+    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As Fractions()
         Dim all = data.Select(Function(x) x.Value).Sum
         Dim s = From x
                 In data
@@ -162,9 +161,9 @@ Public Module PieChart
     ''' <param name="colors"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As String() = Nothing) As PercentageData()
+    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As String() = Nothing) As Fractions()
         Dim array = data.ToArray
-        Dim out As PercentageData() = New PercentageData(array.Length - 1) {}
+        Dim out As Fractions() = New Fractions(array.Length - 1) {}
         Dim c As Color() = If(
             colors.IsNullOrEmpty,
             ChartColors.Shuffles,
@@ -172,7 +171,7 @@ Public Module PieChart
         )
 
         For Each x In array.SeqIterator
-            out(x.i) = New PercentageData With {
+            out(x.i) = New Fractions With {
                 .Color = c(x.i),
                 .Name = x.obj.Name,
                 .Percentage = x.obj.Value

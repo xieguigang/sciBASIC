@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' 扇形/金字塔的数据模型
 ''' </summary>
-Public Class PercentageData
+Public Class Fractions
 
     ''' <summary>
     ''' 对象在整体中所占的百分比

@@ -36,14 +36,14 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Pyramid
 
-    Public Function Plot(data As IEnumerable(Of PercentageData),
+    Public Function Plot(data As IEnumerable(Of Fractions),
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
                          Optional legendBorder As Border = Nothing,
                          Optional wp# = 0.6) As Bitmap
 
-        Dim array As PercentageData() =
+        Dim array As Fractions() =
             data _
             .OrderByDescending(Function(x) x.Percentage) _
             .ToArray
@@ -57,7 +57,7 @@ Public Module Pyramid
                     Dim right! = (left + width)
                     Dim bottom! = region.PlotRegion.Bottom
 
-                    For Each l As PercentageData In array
+                    For Each l As Fractions In array
                         Dim dh! = height * l.Percentage
                         Dim dw! = dh / tan_ab
                         ' b/| dh |\c
@@ -90,7 +90,7 @@ Public Module Pyramid
                     Dim top = margin.Height
                     Dim legends As New List(Of Legend)
 
-                    For Each x As PercentageData In data
+                    For Each x As Fractions In data
                         legends += New Legend With {
                            .color = x.Color.RGBExpression,
                            .style = LegendStyles.Rectangle,
