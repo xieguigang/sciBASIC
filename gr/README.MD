@@ -53,7 +53,7 @@ Call Legends.ColorMapLegend(
     .SaveAs("./colordesigner.test.png")
 ```
 
-![](./Colors/colordesigner.test.png)
+> <img src="./Colors/colordesigner.test.png" width="200px">
 
 ```vbnet
 colors = OfficeColorThemes _
@@ -63,6 +63,8 @@ Call Legends.ColorMapLegend(
     colors, "office_Slipstream_theme", "minValue", "maxValue", bg:="white") _
     .SaveAs("./officeSlipstream_theme.test.png")
 ```
+> <img src="./Colors/officeSlipstream_theme.test.png" width="200px">
+
 ```vbnet
 colors = OfficeColorThemes _
     .GetAccentColors("office2016") _
@@ -71,6 +73,8 @@ Call Legends.ColorMapLegend(
     colors, "office_office2016_theme", "minValue", "maxValue", bg:="white") _
     .SaveAs("./office2016_theme.test.png")
 ```
+> <img src="./Colors/office2016_theme.test.png" width="200px">
+
 ```vbnet
 colors = OfficeColorThemes _
     .GetAccentColors("office2010") _
@@ -79,3 +83,4 @@ Call Legends.ColorMapLegend(
     colors, "office_office2010_theme", "minValue", "maxValue", bg:="white") _
     .SaveAs("./office2010_theme.test.png")
 ```
+> <img src="./Colors/office2010_theme.test.png" width="200px">
