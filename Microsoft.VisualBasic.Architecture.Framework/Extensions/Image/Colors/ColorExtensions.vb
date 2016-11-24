@@ -123,7 +123,7 @@ Namespace Imaging
         ''' <param name="str">颜色表达式或者名称</param>
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
-        <Extension> Public Function ToColor(str As String, Optional onFailure As Color = Nothing) As Color
+        <Extension> Public Function ToColor(str As String, Optional onFailure As Color = Nothing, Optional throwEx As Boolean = True) As Color
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
                 Return Color.Black
@@ -161,7 +161,11 @@ Namespace Imaging
                     If Not onFailure.IsEmpty Then
                         Return onFailure
                     Else
-                        Throw New Exception(str)
+                        If throwEx Then
+                            Throw New Exception("Unable parsing any color information from expression: " & str)
+                        Else
+                            Return Nothing
+                        End If
                     End If
                 End If
             End If

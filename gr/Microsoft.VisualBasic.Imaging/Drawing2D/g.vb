@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::058a3b64eaaa7b205333407c9a758319, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Drawing2D
 
@@ -63,12 +64,11 @@ Namespace Drawing2D
             End If
 
             Dim bmp As New Bitmap(size.Width, size.Height)
-            Dim bgColor As Color = bg.ToColor(onFailure:=Color.White)
 
             Using g As Graphics = Graphics.FromImage(bmp)
                 Dim rect As New Rectangle(New Point, size)
 
-                g.FillRectangle(New SolidBrush(bgColor), rect)
+                g.FillBg(bg$, rect)
                 g.CompositingQuality = CompositingQuality.HighQuality
                 g.CompositingMode = CompositingMode.SourceOver
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic
@@ -84,6 +84,34 @@ Namespace Drawing2D
 
             Return bmp
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="bg$">
+        ''' 1. 可能为颜色表达式
+        ''' 2. 可能为图片的路径
+        ''' 3. 可能为base64图片字符串
+        ''' </param>
+        <Extension>
+        Public Sub FillBg(ByRef g As Graphics, bg$, rect As Rectangle)
+            Dim bgColor As Color = bg.ToColor(onFailure:=Nothing)
+
+            If Not bgColor.IsEmpty Then
+                Call g.FillRectangle(New SolidBrush(bgColor), rect)
+            Else
+                Dim res As Image
+
+                If Not bg.FileExists Then
+                    res = Base64Codec.GetImage(bg$)
+                Else
+                    res = LoadImage(path:=bg$)
+                End If
+
+                Call g.DrawImage(res, rect)
+            End If
+        End Sub
 
         ''' <summary>
         ''' Data plots graphics engine.
