@@ -1,38 +1,39 @@
 ﻿#Region "Microsoft.VisualBasic::ed5bc1745d4805e7d4c222a08046600e, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Linq
-Imports System.Text.RegularExpressions
 Imports System.Text
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.Interpolation
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D.Colors
 
@@ -123,6 +124,48 @@ Namespace Drawing2D.Colors
             Next
 
             Return out
+        End Function
+
+        ''' <summary>
+        ''' 这个函数并不会计算alpha的值
+        ''' </summary>
+        ''' <param name="colors"></param>
+        ''' <param name="n">所期望的颜色的数量</param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function CubicSpline(colors As IEnumerable(Of Color), n As Integer) As Color()
+            Dim source As Color() = colors.ToArray
+            Dim x As New CubicSplineVector(source.Select(Function(c) c.R))
+            Dim y As New CubicSplineVector(source.Select(Function(c) c.G))
+            Dim z As New CubicSplineVector(source.Select(Function(c) c.B))
+
+            Call x.CalcSpline()
+            Call y.CalcSpline()
+            Call z.CalcSpline()
+
+            Dim delta! = 1 / n
+            Dim out As New List(Of Color)
+
+            For f! = 0 To 1.0! Step delta!
+                Dim r% = __constraint(x.GetPoint(f))
+                Dim g% = __constraint(y.GetPoint(f))
+                Dim b% = __constraint(z.GetPoint(f))
+
+                out += Color.FromArgb(r, g, b)
+            Next
+
+            Return out
+        End Function
+
+        Private Function __constraint(x!) As Integer
+            If x < 0! Then
+                x = 0!
+            ElseIf x > 255.0! Then
+                x = 255.0!
+            End If
+
+            Return x
         End Function
     End Module
 End Namespace
