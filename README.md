@@ -19,7 +19,7 @@
 + **[/Data_science](./Data_science/)** : VisualBasic mathmatica system, data graphics plot system & Data Mining library
 + **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
 + **[/mime](./mime/)** : VisualBasic various mime-types doc parsers
-+ **[/gr](./gr/)** : VisualBasic data graphics system
++ **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET data graphics system
 + **[/win32_api](./win32_api/)** : Win32 API collection(Obsolete)
 + **[/www](./www/)** : Web related utilities code
 
