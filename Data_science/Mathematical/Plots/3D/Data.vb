@@ -60,7 +60,7 @@ Namespace Plot3D
                     out += New Point3D With {
                         .X = xi#,
                         .Y = yi#,
-                        .Z# = f(xi, yi)
+                        .Z = f(xi, yi)
                     }
                 Next
             Next
@@ -101,7 +101,7 @@ Namespace Plot3D
                     b = New Point3D With {
                         .X = xi#,
                         .Y = yi#,
-                        .Z# = f(xi, yi)
+                        .Z = f(xi, yi)
                     }
 
                     Yield New Line3D With {
