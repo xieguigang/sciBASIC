@@ -157,6 +157,7 @@ Console.WriteLine(min <= x < max) ' False
 Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic.Imaging) 3D engine.
 
 ![](./gr/d3.png)
+![](./etc/ColorDesigner-screenshot.png)
 
 ===================================================================
 

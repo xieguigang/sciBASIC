@@ -75,11 +75,20 @@ Namespace Drawing2D.Colors
         '''      &quot;state&quot;: 1,
         '''      &quot;value&quot;: [rest of string was truncated]&quot;;.
         '''</summary>
-        Public ReadOnly AvailableInterpolates As IReadOnlyDictionary(Of Color, Color())
-        Public ReadOnly ColorBrewer As Dictionary(Of String, ColorBrewer)
+        Public ReadOnly Property AvailableInterpolates As IReadOnlyDictionary(Of Color, Color())
+        Public ReadOnly Property ColorBrewer As Dictionary(Of String, ColorBrewer)
+        Public ReadOnly Property Rainbow As Color() = {
+            Color.Red,
+            Color.Orange,
+            Color.Yellow,
+            Color.Green,
+            Color.Lime,
+            Color.Blue,
+            Color.Violet
+        }
 
         Sub New()
-            Dim colors = My.Resources _
+            Dim colors As Dictionary(Of String, String()) = My.Resources _
                 .designer_colors _
                 .LoadObject(Of Dictionary(Of String, String()))
             Dim valids As New Dictionary(Of Color, Color())

@@ -1,0 +1,1 @@
+![](../../etc/ColorDesigner-screenshot.png)
