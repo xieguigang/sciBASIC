@@ -134,11 +134,11 @@ Namespace Drawing2D.Colors
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function CubicSpline(colors As IEnumerable(Of Color), n As Integer) As Color()
+        Public Function CubicSpline(colors As IEnumerable(Of Color), Optional n% = 256, Optional alpha% = 255) As Color()
             Dim source As Color() = colors.ToArray
-            Dim x As New CubicSplineVector(source.Select(Function(c) c.R))
-            Dim y As New CubicSplineVector(source.Select(Function(c) c.G))
-            Dim z As New CubicSplineVector(source.Select(Function(c) c.B))
+            Dim x As New CubicSplineVector(source.Select(Function(c) CSng(c.R)))
+            Dim y As New CubicSplineVector(source.Select(Function(c) CSng(c.G)))
+            Dim z As New CubicSplineVector(source.Select(Function(c) CSng(c.B)))
 
             Call x.CalcSpline()
             Call y.CalcSpline()
@@ -152,7 +152,7 @@ Namespace Drawing2D.Colors
                 Dim g% = __constraint(y.GetPoint(f))
                 Dim b% = __constraint(z.GetPoint(f))
 
-                out += Color.FromArgb(r, g, b)
+                out += Color.FromArgb(alpha, r, g, b)
             Next
 
             Return out

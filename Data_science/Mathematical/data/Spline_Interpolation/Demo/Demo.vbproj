@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{89CDA40C-D95E-4782-BF30-B68F8EBAD4AB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Demo.SplineTest</StartupObject>
+    <StartupObject>Demo.ColorTest</StartupObject>
     <RootNamespace>Demo</RootNamespace>
     <AssemblyName>Demo</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -70,6 +70,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorTest.vb" />
     <Compile Include="SplineTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
