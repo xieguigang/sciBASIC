@@ -40,32 +40,32 @@ Module Module1
             .LoadData _
             .ToDictionary
         Dim output As New List(Of NamedValue(Of Double()))(inits.Values)
-        Dim y1 = LinearFit(inits("X").x, inits("Y").x)
-        Dim ypoly2 = PolyFit(inits("X").x, inits("Y").x, 2)
-        Dim ypoly3 = PolyFit(inits("X").x, inits("Y").x, 3)
-        Dim ypoly4 = PolyFit(inits("X").x, inits("Y").x, 4)
-        Dim ypoly5 = PolyFit(inits("X").x, inits("Y").x, 5)
+        Dim y1 = LinearFit(inits("X").Value, inits("Y").Value)
+        Dim ypoly2 = PolyFit(inits("X").Value, inits("Y").Value, 2)
+        Dim ypoly3 = PolyFit(inits("X").Value, inits("Y").Value, 3)
+        Dim ypoly4 = PolyFit(inits("X").Value, inits("Y").Value, 4)
+        Dim ypoly5 = PolyFit(inits("X").Value, inits("Y").Value, 5)
 
         output += {
             New NamedValue(Of Double()) With {
                 .Name = "y-linearfit",
-                .x = y1.FitedYlist
+                .Value = y1.FitedYlist
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-2",
-                .x = ypoly2.FitedYlist
+                .Value = ypoly2.FitedYlist
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-3",
-                .x = ypoly3.FitedYlist
+                .Value = ypoly3.FitedYlist
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-4",
-                .x = ypoly4.FitedYlist
+                .Value = ypoly4.FitedYlist
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-5",
-                .x = ypoly5.FitedYlist
+                .Value = ypoly5.FitedYlist
             }
         }
 
