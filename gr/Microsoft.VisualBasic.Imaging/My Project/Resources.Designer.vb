@@ -77,7 +77,124 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
-        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Office&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;44546A&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E7E6E6&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;5B9BD5&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;ED7D31&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;A5A5A5&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:sr [rest of string was truncated]&quot;;.
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Aspect&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;323232&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E3DED1&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;F07F09&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;9F2936&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;1B587C&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:sr [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Aspect() As String
+            Get
+                Return ResourceManager.GetString("Default_Aspect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Blue&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;17406D&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;DBEFF9&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;0F6FC6&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;009DD9&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;0BD0D9&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srgb [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Blue() As String
+            Get
+                Return ResourceManager.GetString("Default_Blue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Blue2&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;335B74&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;DFE3E5&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;1CADE4&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;2683C6&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;27CED7&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srg [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Blue2() As String
+            Get
+                Return ResourceManager.GetString("Default_Blue2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_BlueGreen&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;373545&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;CEDBE6&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;3494BA&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;58B6C0&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;75BDA7&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_BlueGreen() As String
+            Get
+                Return ResourceManager.GetString("Default_BlueGreen", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_BlueWarm&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;242852&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;ACCBF9&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;4A66AC&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;629DD1&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;297FD5&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a: [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_BlueWarm() As String
+            Get
+                Return ResourceManager.GetString("Default_BlueWarm", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_GrayScale&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;000000&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;F8F8F8&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;DDDDDD&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;B2B2B2&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;969696&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_GrayScale() As String
+            Get
+                Return ResourceManager.GetString("Default_GrayScale", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Green&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;455F51&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E3DED1&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;549E39&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;8AB833&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;C0CF3A&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srg [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Green() As String
+            Get
+                Return ResourceManager.GetString("Default_Green", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_GreenYellow&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;455F51&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E2DFCC&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;99CB38&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;63A537&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;37A76F&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt; [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_GreenYellow() As String
+            Get
+                Return ResourceManager.GetString("Default_GreenYellow", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Marquee&quot;&gt;&lt;a:dk1&gt;&lt;a:srgbClr val=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;5E5E5E&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;DDDDDD&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;418AB3&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;A6B727&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;F69200&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srgbClr val=&quot;838383&quot;/ [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Marquee() As String
+            Get
+                Return ResourceManager.GetString("Default_Marquee", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Median&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;775F55&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;EBDDC3&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;94B6D2&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;DD8047&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;A5AB81&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:sr [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Median() As String
+            Get
+                Return ResourceManager.GetString("Default_Median", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Office&quot;&gt;
+        '''  &lt;a:dk1&gt;
+        '''    &lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;
+        '''  &lt;/a:dk1&gt;
+        '''  &lt;a:lt1&gt;
+        '''    &lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;
+        '''  &lt;/a:lt1&gt;
+        '''  &lt;a:dk2&gt;
+        '''    &lt;a:srgbClr val=&quot;44546A&quot;/&gt;
+        '''  &lt;/a:dk2&gt;
+        '''  &lt;a:lt2&gt;
+        '''    &lt;a:srgbClr val=&quot;E7E6E6&quot;/&gt;
+        '''  &lt;/a:lt2&gt;
+        '''  &lt;a:accent1&gt;
+        '''    &lt;a:srgbClr val=&quot;5B9BD5&quot;/&gt;
+        '''  &lt;/a:accent1&gt;
+        '''  &lt;a:accent2&gt;
+        '''    &lt;a:srgbClr val=&quot;ED7D3 [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Default_Office() As String
             Get
@@ -87,7 +204,24 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
-        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Office2007-2010&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;1F497D&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;EEECE1&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;4F81BD&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;C0504D&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;9BBB59&quot;/&gt;&lt;/a:accent3&gt;&lt;a:acce [rest of string was truncated]&quot;;.
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Office2007-2010&quot;&gt;
+        '''  &lt;a:dk1&gt;
+        '''    &lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;
+        '''  &lt;/a:dk1&gt;
+        '''  &lt;a:lt1&gt;
+        '''    &lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;
+        '''  &lt;/a:lt1&gt;
+        '''  &lt;a:dk2&gt;
+        '''    &lt;a:srgbClr val=&quot;1F497D&quot;/&gt;
+        '''  &lt;/a:dk2&gt;
+        '''  &lt;a:lt2&gt;
+        '''    &lt;a:srgbClr val=&quot;EEECE1&quot;/&gt;
+        '''  &lt;/a:lt2&gt;
+        '''  &lt;a:accent1&gt;
+        '''    &lt;a:srgbClr val=&quot;4F81BD&quot;/&gt;
+        '''  &lt;/a:accent1&gt;
+        '''  &lt;a:accent2&gt;
+        '''    &lt;a:srgbClr v [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Default_Office2007_2010() As String
             Get
@@ -97,11 +231,128 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
-        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Slipstream&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;212745&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;B4DCFA&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;4E67C8&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;5ECCF3&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;A7EA52&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt; [rest of string was truncated]&quot;;.
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Orange&quot;&gt;&lt;a:dk1&gt;&lt;a:srgbClr val=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;637052&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;CCDDEA&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;E48312&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;BD582C&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;865640&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srgbClr val=&quot;9B8357&quot;/&gt; [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Orange() As String
+            Get
+                Return ResourceManager.GetString("Default_Orange", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_OrangeRed&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;696464&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E9E5DC&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;D34817&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;9B2D1F&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;A28E6A&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_OrangeRed() As String
+            Get
+                Return ResourceManager.GetString("Default_OrangeRed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Paper&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;444D26&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;FEFAC9&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;A5B592&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;F3A447&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;E7BC29&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srg [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Paper() As String
+            Get
+                Return ResourceManager.GetString("Default_Paper", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Red&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;323232&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E5C243&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;A5300F&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;D55816&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;E19825&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:srgbC [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Red() As String
+            Get
+                Return ResourceManager.GetString("Default_Red", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_RedOrange&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;505046&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;EEECE1&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;E84C22&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;FFBD47&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;B64926&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_RedOrange() As String
+            Get
+                Return ResourceManager.GetString("Default_RedOrange", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_RedViolet&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;454551&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;D8D9DC&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;E32D91&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;C830CC&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;4EA6DC&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_RedViolet() As String
+            Get
+                Return ResourceManager.GetString("Default_RedViolet", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Slipstream&quot;&gt;
+        '''  &lt;a:dk1&gt;
+        '''    &lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;
+        '''  &lt;/a:dk1&gt;
+        '''  &lt;a:lt1&gt;
+        '''    &lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;
+        '''  &lt;/a:lt1&gt;
+        '''  &lt;a:dk2&gt;
+        '''    &lt;a:srgbClr val=&quot;212745&quot;/&gt;
+        '''  &lt;/a:dk2&gt;
+        '''  &lt;a:lt2&gt;
+        '''    &lt;a:srgbClr val=&quot;B4DCFA&quot;/&gt;
+        '''  &lt;/a:lt2&gt;
+        '''  &lt;a:accent1&gt;
+        '''    &lt;a:srgbClr val=&quot;4E67C8&quot;/&gt;
+        '''  &lt;/a:accent1&gt;
+        '''  &lt;a:accent2&gt;
+        '''    &lt;a:srgbClr val=&quot;5 [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Default_Slipstream() As String
             Get
                 Return ResourceManager.GetString("Default_Slipstream", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Violet&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;373545&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;DCD8DC&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;AD84C6&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;8784C7&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;5D739A&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:sr [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Violet() As String
+            Get
+                Return ResourceManager.GetString("Default_Violet", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Violet2&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;632E62&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;EAE5EB&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;92278F&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;9B57D3&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;755DD9&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:s [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Violet2() As String
+            Get
+                Return ResourceManager.GetString("Default_Violet2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Yellow&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;39302A&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E5DEDB&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;FFCA08&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;F8931D&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;CE8D3E&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:sr [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Yellow() As String
+            Get
+                Return ResourceManager.GetString("Default_Yellow", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_YellowOrange&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;4E3B30&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;FBEEC9&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;F0A22E&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;A5644E&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;B58B80&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4 [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_YellowOrange() As String
+            Get
+                Return ResourceManager.GetString("Default_YellowOrange", resourceCulture)
             End Get
         End Property
         

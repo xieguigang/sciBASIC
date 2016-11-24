@@ -136,4 +136,64 @@
   <data name="Default_Slipstream" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OfficeThemes\Default_Slipstream.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
+  <data name="Default_Aspect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Aspect.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Blue.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Blue2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Blue2.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_BlueGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_BlueGreen.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_BlueWarm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_BlueWarm.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_GrayScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_GrayScale.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Green.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_GreenYellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_GreenYellow.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Marquee" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Marquee.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Median" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Median.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Orange.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_OrangeRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_OrangeRed.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Paper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Paper.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Red.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_RedOrange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_RedOrange.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_RedViolet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_RedViolet.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Violet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Violet.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Violet2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Violet2.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_Yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_Yellow.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Default_YellowOrange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OfficeThemes\Default_YellowOrange.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
 </root>

@@ -11,10 +11,16 @@ Namespace Drawing2D.Colors
         Public ReadOnly Property Office2016 As Theme
         Public ReadOnly Property Office2010 As Theme
         Public ReadOnly Property Slipstream As Theme
+        Public ReadOnly Property Marquee As Theme
+        Public ReadOnly Property Aspect As Theme
+        Public ReadOnly Property Paper As Theme
 
         Sub New()
             Office2016 = Theme.LoadFromXml(My.Resources.Default_Office)
             Office2010 = Theme.LoadFromXml(My.Resources.Default_Office2007_2010)
+            Marquee = Theme.LoadFromXml(My.Resources.Default_Marquee)
+            Aspect = Theme.LoadFromXml(My.Resources.Default_Aspect)
+            Paper = Theme.LoadFromXml(My.Resources.Default_Paper)
             Slipstream = Theme.LoadFromXml(My.Resources.Default_Slipstream)
         End Sub
 

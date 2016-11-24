@@ -294,6 +294,66 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_Slipstream.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Median.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Violet2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Violet.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_RedViolet.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Red.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_RedOrange.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_OrangeRed.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Paper.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Aspect.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Marquee.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Orange.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_YellowOrange.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Yellow.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_GreenYellow.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Green.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_BlueGreen.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Blue2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Blue.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_BlueWarm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
