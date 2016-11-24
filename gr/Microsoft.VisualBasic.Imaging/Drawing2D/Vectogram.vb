@@ -64,7 +64,7 @@ Namespace Drawing2D
             Call Me.New(New Size(Width, Height))
         End Sub
 
-        Sub New(Width As Integer, AspectRatio As Double)
+        Sub New(Width As Integer, AspectRatio As Single)
             Call Me.New(New Size(Width, CInt(Width * AspectRatio)))
         End Sub
 

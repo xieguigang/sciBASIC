@@ -105,9 +105,9 @@ Namespace Drawing3D
         End Sub
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            Dim avgZ(6) As Double
+            Dim avgZ(6) As Single
             Dim order(6) As Integer
-            Dim tmp As Double
+            Dim tmp As Single
             Dim iMax As Integer
 
             ' Compute the average Z value of each face.

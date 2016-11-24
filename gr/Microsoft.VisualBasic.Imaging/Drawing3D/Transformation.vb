@@ -45,9 +45,9 @@ Namespace Drawing3D
         <Extension>
         Public Function Center(model As IEnumerable(Of Point3D)) As Point3D
             Dim array As Point3D() = model.ToArray
-            Dim x As Double = array.Select(Function(p) p.X).Sum / array.Length
-            Dim y As Double = array.Select(Function(p) p.Y).Sum / array.Length
-            Dim z As Double = array.Select(Function(p) p.Z).Sum / array.Length
+            Dim x As Single = array.Select(Function(p) p.X).Sum / array.Length
+            Dim y As Single = array.Select(Function(p) p.Y).Sum / array.Length
+            Dim z As Single = array.Select(Function(p) p.Z).Sum / array.Length
 
             Return New Point3D(x, y, z)
         End Function
@@ -59,17 +59,17 @@ Namespace Drawing3D
         ''' <param name="xRotate"></param>
         ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
-        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Double) As Point
-            Dim X As Double = Math.Cos(xRotate) * pt3D.X + pt3D.Y
-            Dim Y As Double = Math.Sin(xRotate) * pt3D.X - pt3D.Z
+        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single) As Point
+            Dim X As Single = Math.Cos(xRotate) * pt3D.X + pt3D.Y
+            Dim Y As Single = Math.Sin(xRotate) * pt3D.X - pt3D.Z
 
             Return New Point(X, Y)
         End Function
 
         <ExportAPI("SpaceToGrid")>
-        Public Function SpaceToGrid(px As Single, py As Single, pz As Single, xRotate As Double) As Point
-            Dim X As Double = Math.Cos(xRotate) * px + py
-            Dim Y As Double = Math.Sin(xRotate) * px - pz
+        Public Function SpaceToGrid(px As Single, py As Single, pz As Single, xRotate As Single) As Point
+            Dim X As Single = Math.Cos(xRotate) * px + py
+            Dim Y As Single = Math.Sin(xRotate) * px - pz
 
             Return New Point(X, Y)
         End Function
@@ -82,9 +82,9 @@ Namespace Drawing3D
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
-        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Double, offset As Point) As Point
-            Dim X As Double = Math.Cos(xRotate) * pt3D.X + pt3D.Y + offset.X
-            Dim Y As Double = Math.Sin(xRotate) * pt3D.X - pt3D.Z + offset.Y
+        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single, offset As Point) As Point
+            Dim X As Single = Math.Cos(xRotate) * pt3D.X + pt3D.Y + offset.X
+            Dim Y As Single = Math.Sin(xRotate) * pt3D.X - pt3D.Z + offset.Y
 
             Return New Point(X, Y)
         End Function

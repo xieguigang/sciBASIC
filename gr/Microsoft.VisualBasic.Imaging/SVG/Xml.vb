@@ -63,9 +63,9 @@ Namespace SVG
     End Class
 
     Public Class circle : Inherits node
-        <XmlAttribute> Public Property cy As Double
-        <XmlAttribute> Public Property cx As Double
-        <XmlAttribute> Public Property r As Double
+        <XmlAttribute> Public Property cy As Single
+        <XmlAttribute> Public Property cx As Single
+        <XmlAttribute> Public Property r As Single
         Public Property title As title
     End Class
 
@@ -85,10 +85,10 @@ Namespace SVG
     End Class
 
     Public Class line : Inherits node
-        <XmlAttribute> Public Property y2 As Double
-        <XmlAttribute> Public Property x2 As Double
-        <XmlAttribute> Public Property y1 As Double
-        <XmlAttribute> Public Property x1 As Double
+        <XmlAttribute> Public Property y2 As Single
+        <XmlAttribute> Public Property x2 As Single
+        <XmlAttribute> Public Property y1 As Single
+        <XmlAttribute> Public Property x1 As Single
     End Class
 
     Public Class text : Inherits node

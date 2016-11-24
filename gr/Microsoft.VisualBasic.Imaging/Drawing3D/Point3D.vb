@@ -39,22 +39,23 @@ Namespace Drawing3D
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
     Public Structure Point3D
+        Implements PointF3D
 
         Public ReadOnly Property PointXY(Optional rect As Size = Nothing) As Point
             Get
-                If X > Integer.MaxValue OrElse Double.IsPositiveInfinity(X) Then
+                If X > Integer.MaxValue OrElse Single.IsPositiveInfinity(X) Then
                     X = rect.Width
-                ElseIf X < Integer.MinValue OrElse Double.IsNegativeInfinity(X) Then
+                ElseIf X < Integer.MinValue OrElse Single.IsNegativeInfinity(X) Then
                     X = 0
-                ElseIf Double.IsNaN(x) Then
+                ElseIf Single.IsNaN(X) Then
                     X = rect.Width
                 End If
 
-                If Y > Integer.MaxValue OrElse Double.IsPositiveInfinity(Y) Then
+                If Y > Integer.MaxValue OrElse Single.IsPositiveInfinity(Y) Then
                     Y = rect.Height
-                ElseIf Y < Integer.MinValue OrElse Double.IsNegativeInfinity(Y) Then
+                ElseIf Y < Integer.MinValue OrElse Single.IsNegativeInfinity(Y) Then
                     Y = 0
-                ElseIf Double.IsNaN(y) Then
+                ElseIf Single.IsNaN(Y) Then
                     Y = rect.Height
                 End If
 
@@ -62,7 +63,7 @@ Namespace Drawing3D
             End Get
         End Property
 
-        Public Sub New(x As Double, y As Double, Optional z As Double = 0)
+        Public Sub New(x As Single, y As Single, Optional z As Single = 0)
             Me.X = x
             Me.Y = y
             Me.Z = z
@@ -72,9 +73,9 @@ Namespace Drawing3D
             Call Me.New(Position.X, Position.Y)
         End Sub
 
-        Public Property X As Double
-        Public Property Y As Double
-        Public Property Z As Double
+        Public Property X As Single Implements PointF3D.X
+        Public Property Y As Single Implements PointF3D.Y
+        Public Property Z As Single Implements PointF3D.Z
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -85,8 +86,8 @@ Namespace Drawing3D
         ''' </summary>
         ''' <param name="angle">Degree.(度，函数里面会自动转换为三角函数所需要的弧度的)</param>
         ''' <returns></returns>
-        Public Function RotateX(angle As Double) As Point3D
-            Dim rad As Double, cosa As Double, sina As Double, yn As Double, zn As Double
+        Public Function RotateX(angle As Single) As Point3D
+            Dim rad As Single, cosa As Single, sina As Single, yn As Single, zn As Single
 
             rad = angle * Math.PI / 180
             cosa = Math.Cos(rad)
@@ -96,8 +97,8 @@ Namespace Drawing3D
             Return New Point3D(Me.X, yn, zn)
         End Function
 
-        Public Function RotateY(angle As Double) As Point3D
-            Dim rad As Double, cosa As Double, sina As Double, Xn As Double, Zn As Double
+        Public Function RotateY(angle As Single) As Point3D
+            Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Zn As Single
 
             rad = angle * Math.PI / 180
             cosa = Math.Cos(rad)
@@ -108,8 +109,8 @@ Namespace Drawing3D
             Return New Point3D(Xn, Me.Y, Zn)
         End Function
 
-        Public Function RotateZ(angle As Double) As Point3D
-            Dim rad As Double, cosa As Double, sina As Double, Xn As Double, Yn As Double
+        Public Function RotateZ(angle As Single) As Point3D
+            Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Yn As Single
 
             rad = angle * Math.PI / 180
             cosa = Math.Cos(rad)
@@ -132,9 +133,9 @@ Namespace Drawing3D
         Public Function Project(viewWidth As Integer,
                                 viewHeight As Integer,
                                 fov As Integer,
-                                viewDistance As Double) As Point3D
+                                viewDistance As Single) As Point3D
 
-            Dim factor As Double, Xn As Double, Yn As Double
+            Dim factor As Single, Xn As Single, Yn As Single
             factor = fov / (viewDistance + Me.Z)
             Xn = Me.X * factor + viewWidth / 2
             Yn = Me.Y * factor + viewHeight / 2
@@ -148,7 +149,7 @@ Namespace Drawing3D
                                   viewHeight As Integer,
                                   fov As Integer,
                                   viewDistance As Integer)
-            Dim factor As Double
+            Dim factor As Single
 
             factor = fov / (viewDistance + z)
             x = x * factor + viewWidth / 2

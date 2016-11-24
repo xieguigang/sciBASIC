@@ -40,8 +40,8 @@ Namespace SVG
     ''' </summary>
     Public Class Image
 
-        <XmlAttribute> Public Property x As Double
-        <XmlAttribute> Public Property y As Double
+        <XmlAttribute> Public Property x As Single
+        <XmlAttribute> Public Property y As Single
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute("image.data")> Public Property data As String

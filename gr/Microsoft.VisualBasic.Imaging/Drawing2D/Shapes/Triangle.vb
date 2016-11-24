@@ -39,7 +39,7 @@ Namespace Drawing2D.Vector.Shapes
         Public Property Vertex1 As Point
         Public Property Vertex2 As Point
         Public Property Vertex3 As Point
-        Public Property Angle As Double
+        Public Property Angle As Single
 
         Sub New(Location As Point, Color As Color)
             Call MyBase.New(Location)

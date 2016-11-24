@@ -41,12 +41,12 @@ Namespace Drawing2D.Vector.Shapes
         ''' 箭头的头部占据整个长度的百分比
         ''' </summary>
         ''' <returns></returns>
-        Public Property HeadLengthPercentage As Double = 0.15
+        Public Property HeadLengthPercentage As Single = 0.15
         ''' <summary>
         ''' 箭头的主体部分占据整个高度的百分比
         ''' </summary>
         ''' <returns></returns>
-        Public Property BodyHeightPercentage As Double = 0.85
+        Public Property BodyHeightPercentage As Single = 0.85
 
         Public Property Color As Color
         Public Property BodySize As Size

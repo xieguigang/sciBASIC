@@ -73,7 +73,7 @@ Namespace Drawing3D
         End Property
 
         ''' <summary>
-        ''' Enable double-buffering to eliminate flickering.
+        ''' Enable Single-buffering to eliminate flickering.
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>

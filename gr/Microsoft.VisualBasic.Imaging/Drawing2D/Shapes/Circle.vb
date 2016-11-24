@@ -63,7 +63,7 @@ Namespace Drawing2D.Vector.Shapes
 
         Public Overrides ReadOnly Property Size As Size
 
-        Public ReadOnly Property Radius As Double
+        Public ReadOnly Property Radius As Single
             Get
                 Return Math.Min(Size.Width, Size.Height) / 2
             End Get

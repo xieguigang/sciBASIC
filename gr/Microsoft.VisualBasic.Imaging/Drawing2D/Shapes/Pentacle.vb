@@ -45,7 +45,7 @@ Namespace Drawing2D.Vector.Shapes
             pts(0) = New Point(center.X, center.Y - radius)
             pts(1) = RotateTheta(pts(0), center, 36.0)
 
-            Dim len As Double = radius * Math.Sin((18.0 * Math.PI / 180.0)) / Math.Sin((126.0 * Math.PI / 180.0))
+            Dim len As Single = radius * Math.Sin((18.0 * Math.PI / 180.0)) / Math.Sin((126.0 * Math.PI / 180.0))
 
             pts(1).X = CInt(center.X + len * (pts(1).X - center.X) / radius)
             pts(1).Y = CInt(center.Y + len * (pts(1).Y - center.Y) / radius)
@@ -73,7 +73,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="center"></param>
         ''' <param name="theta"></param>
         ''' <returns></returns>
-        Public Shared Function RotateTheta(ByVal pt As Point, ByVal center As Point, ByVal theta As Double) As Point
+        Public Shared Function RotateTheta(ByVal pt As Point, ByVal center As Point, ByVal theta As Single) As Point
             Dim x As Integer = CInt(center.X + (pt.X - center.X) * Math.Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Math.Sin((theta * Math.PI / 180)))
             Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Math.Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Math.Cos((theta * Math.PI / 180)))
 
