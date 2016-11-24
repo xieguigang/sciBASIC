@@ -65,6 +65,8 @@ Namespace Drawing2D.Colors
             Call s.Replace("a:sysClr", "sysClr")
             Call s.Replace("a:folHlink", "folHlink")
             Call s.Replace("a:hlink", "hlink")
+            Call s.Replace("a:lt", "lt")
+            Call s.Replace("a:dk", "dk")
 
             xml = s.ToString
             xml = Regex.Replace(xml, "a:accent\d+", "accent")
@@ -103,7 +105,7 @@ Namespace Drawing2D.Colors
 
             Public ReadOnly Property Color As Color
                 Get
-                    Return ColorTranslator.FromOle(val)
+                    Return ColorTranslator.FromHtml("#" & val)
                 End Get
             End Property
 
