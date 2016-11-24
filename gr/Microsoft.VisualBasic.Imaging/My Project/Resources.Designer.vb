@@ -67,11 +67,41 @@ Namespace My.Resources
         '''    &quot;4&quot;: [ &quot;rgb(215,25,28)&quot;, &quot;rgb(253,174,97)&quot;, &quot;rgb(171,221,164)&quot;, &quot;rgb(43,131,186)&quot; ],
         '''    &quot;5&quot;: [ &quot;rgb(215,25,28)&quot;, &quot;rgb(253,174,97)&quot;, &quot;rgb(255,255,191)&quot;, &quot;rgb(171,221,164)&quot;, &quot;rgb(43,131,186)&quot; ],
         '''    &quot;6&quot;: [ &quot;rgb(213,62,79)&quot;, &quot;rgb(252,141,89)&quot;, &quot;rgb(254,224,139)&quot;, &quot;rgb(230,245,152)&quot;, &quot;rgb(153,213,148)&quot;, &quot;rgb(50,136,189)&quot; ],
-        '''    &quot;7&quot;: [ &quot;rgb(213,62,79)&quot;, &quot;rgb(252,141,89)&quot;, &quot;rgb(254,224,139)&quot;, &quot;rgb(255,255,191)&quot;, &quot;rgb( [rest of string was truncated]&quot;;.
+        '''    &quot;7&quot;: [ &quot;rgb(213,62,79)&quot;, &quot;rgb(252,141,89)&quot;, &quot;rgb(254,224,139)&quot;, &quot;rgb(255,255,191)&quot;, [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property colorbrewer() As String
             Get
                 Return ResourceManager.GetString("colorbrewer", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Office&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;44546A&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;E7E6E6&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;5B9BD5&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;ED7D31&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;A5A5A5&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt;a:sr [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Office() As String
+            Get
+                Return ResourceManager.GetString("Default_Office", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Office2007-2010&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;1F497D&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;EEECE1&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;4F81BD&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;C0504D&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;9BBB59&quot;/&gt;&lt;/a:accent3&gt;&lt;a:acce [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Office2007_2010() As String
+            Get
+                Return ResourceManager.GetString("Default_Office2007_2010", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        '''&lt;a:clrScheme xmlns:a=&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot; name=&quot;Default_Slipstream&quot;&gt;&lt;a:dk1&gt;&lt;a:sysClr val=&quot;windowText&quot; lastClr=&quot;000000&quot;/&gt;&lt;/a:dk1&gt;&lt;a:lt1&gt;&lt;a:sysClr val=&quot;window&quot; lastClr=&quot;FFFFFF&quot;/&gt;&lt;/a:lt1&gt;&lt;a:dk2&gt;&lt;a:srgbClr val=&quot;212745&quot;/&gt;&lt;/a:dk2&gt;&lt;a:lt2&gt;&lt;a:srgbClr val=&quot;B4DCFA&quot;/&gt;&lt;/a:lt2&gt;&lt;a:accent1&gt;&lt;a:srgbClr val=&quot;4E67C8&quot;/&gt;&lt;/a:accent1&gt;&lt;a:accent2&gt;&lt;a:srgbClr val=&quot;5ECCF3&quot;/&gt;&lt;/a:accent2&gt;&lt;a:accent3&gt;&lt;a:srgbClr val=&quot;A7EA52&quot;/&gt;&lt;/a:accent3&gt;&lt;a:accent4&gt;&lt; [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Default_Slipstream() As String
+            Get
+                Return ResourceManager.GetString("Default_Slipstream", resourceCulture)
             End Get
         End Property
         

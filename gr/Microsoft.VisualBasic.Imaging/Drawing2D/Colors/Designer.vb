@@ -37,6 +37,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D.Colors
 
+    ''' <summary>
+    ''' Generate color sequence
+    ''' </summary>
     Public Module Designer
 
         '''<summary>

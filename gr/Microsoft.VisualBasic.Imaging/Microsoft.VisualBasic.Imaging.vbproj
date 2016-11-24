@@ -285,6 +285,15 @@
   <ItemGroup>
     <None Include="Resources\colorbrewer.js" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Office.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Office2007-2010.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Slipstream.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
