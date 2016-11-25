@@ -51,6 +51,16 @@ Namespace Imaging
     Public Module GDIPlusExtensions
 
         ''' <summary>
+        ''' 这个方形区域的面积
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Area(rect As Rectangle) As Double
+            Return rect.Width * rect.Height
+        End Function
+
+        ''' <summary>
         ''' 返回整个图像的区域
         ''' </summary>
         ''' <param name="img"></param>
