@@ -76,6 +76,8 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 ![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
 ```vbnet
+Imports Microsoft.VisualBasic.Data.ChartPlots
+
 ' Plots metagenome taxonomy profiles annotation result using barplot
 Dim taxonomy As BarDataGroup = csv.LoadBarData(
     "./FigurePlot-Reference-Unigenes.absolute.level1.csv",

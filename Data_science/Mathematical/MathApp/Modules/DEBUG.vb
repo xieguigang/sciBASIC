@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Mathematical.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting

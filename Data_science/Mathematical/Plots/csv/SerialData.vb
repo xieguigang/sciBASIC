@@ -51,13 +51,13 @@ Namespace csv
         Public Property errMinus As Double
         Public Property Statics As Double()
 
-        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing, Optional lineWidth! = 2) As IEnumerable(Of Plots.SerialData)
+        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing, Optional lineWidth! = 2) As IEnumerable(Of ChartPlots.SerialData)
             Return GetData(csv.LoadCsv(Of SerialData), colors, lineWidth)
         End Function
 
         Public Shared Iterator Function GetData(data As IEnumerable(Of SerialData),
                                                 Optional colors As Color() = Nothing,
-                                                Optional lineWidth! = 2) As IEnumerable(Of Plots.SerialData)
+                                                Optional lineWidth! = 2) As IEnumerable(Of ChartPlots.SerialData)
             Dim gs = From x As SerialData
                      In data
                      Select x
@@ -70,7 +70,7 @@ Namespace csv
 
             For Each g In gs.SeqIterator
 
-                Yield New Plots.SerialData With {
+                Yield New ChartPlots.SerialData With {
                     .width = lineWidth,
                     .title = g.obj.serial,
                     .color = colors(g.i),

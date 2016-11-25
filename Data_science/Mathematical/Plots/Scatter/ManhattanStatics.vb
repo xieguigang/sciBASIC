@@ -40,7 +40,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 

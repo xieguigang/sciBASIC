@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.Distributions
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Module PDFTest
