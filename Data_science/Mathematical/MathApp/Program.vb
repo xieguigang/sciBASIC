@@ -32,10 +32,10 @@ Module Program
 
     Public Function Main() As Integer
         '   Call CubicSplineTest.Test()
-
+        Call DEBUG.Main()
         Try
             Call New Form1().ShowDialog()
-            Call DEBUG.Main()
+
         Catch ex As Exception
             Call App.LogException(ex)
             MsgBox(ex.ToString)

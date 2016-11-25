@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c751ae51b0639936534235af0619bcdb, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,25 +33,26 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.AnalysisProtocol
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.EstimatesProtocol
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Example
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
 Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Mathematical.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Text
 
 Module DEBUG
@@ -180,16 +181,17 @@ Module DEBUG
 
     Public Function Main() As Integer
         Dim data = csv.LoadBarData(
-            "G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\Fruit_consumption.csv",
+            "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
             {
                 "rgb(124,181,236)",
-                "rgb(67,67,72)"
+                "rgb(67,67,72)",
+                "gray"
             })
 
         Call BarPlot.Plot(data, New Size(1500, 1000)) _
-            .SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\Fruit_consumption-bar.png")
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption-bar.png")
         Call BarPlot.Plot2(data, New Size(1500, 1000)) _
-            .SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\Fruit_consumption-bar2.png")
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption-bar2.png")
 
         Call Pyramid.Plot(
             {
@@ -198,7 +200,7 @@ Module DEBUG
                 New NamedValue(Of Integer)("Killed", 187),
                 New NamedValue(Of Integer)("Engaged", 235),
                 New NamedValue(Of Integer)("Monster Met", 340)
-            }.FromData()) _
+            }.FromData(schema:="office2010")) _
              .SaveAs("./Pyramid.png")
 
         Call {
@@ -210,7 +212,7 @@ Module DEBUG
             New NamedValue(Of Integer)("s6", 235),
             New NamedValue(Of Integer)("s7", 99),
             New NamedValue(Of Integer)("s8", 499)
-        }.FromData() _
+        }.FromData(schema:="marquee") _
          .Plot(reorder:=1,
                size:=New Size(1500, 1000)) _
          .SaveAs("./pie_chart.png")
@@ -271,7 +273,7 @@ Module DEBUG
         Pause()
 
         Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
-        Call ddddd.Pearson().Plot(mapName:=ColorMap.PatternJet, mapLevels:=20).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
+        Call ddddd.CorrelatesNormalized().Plot(mapName:=ColorMap.PatternJet, mapLevels:=20).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
 
         '   Call randdddTest()
 
@@ -326,13 +328,13 @@ Module DEBUG
             End Sub).SaveAs("./legends_test.png")
 
         Dim vars = {
-            New NamedValue(Of DoubleRange) With {.Name = "a", .x = New DoubleRange(-1, 1)},
-            New NamedValue(Of DoubleRange) With {.Name = "b", .x = New DoubleRange(-1, 1)},
-            New NamedValue(Of DoubleRange) With {.Name = "c", .x = New DoubleRange(-1, 1)}
+            New NamedValue(Of DoubleRange) With {.Name = "a", .Value = New DoubleRange(-1, 1)},
+            New NamedValue(Of DoubleRange) With {.Name = "b", .Value = New DoubleRange(-1, 1)},
+            New NamedValue(Of DoubleRange) With {.Name = "c", .Value = New DoubleRange(-1, 1)}
         }
 
-        Dim ysssss = {New NamedValue(Of DoubleRange) With {.Name = "P", .x = New DoubleRange(-10, 10)},
-            New NamedValue(Of DoubleRange) With {.Name = "yC", .x = New DoubleRange(-10, 10)}}
+        Dim ysssss = {New NamedValue(Of DoubleRange) With {.Name = "P", .Value = New DoubleRange(-10, 10)},
+            New NamedValue(Of DoubleRange) With {.Name = "yC", .Value = New DoubleRange(-10, 10)}}
 
         '   Dim mcTest = BootstrapIterator.Bootstrapping(Of ODEsTest)(vars, ysssss, 1, 100, 0, 100).ToArray
 
@@ -376,7 +378,7 @@ Module DEBUG
             New NamedValue(Of Integer)("s3", 99),
             New NamedValue(Of Integer)("s4", 499),
             New NamedValue(Of Integer)("s5", 499)
-        }.FromData().Plot(minRadius:=100).SaveAs("./pie_chart_vars.png")
+        }.FromData(schema:="paper").Plot(minRadius:=100).SaveAs("./pie_chart_vars.png")
 
 
 

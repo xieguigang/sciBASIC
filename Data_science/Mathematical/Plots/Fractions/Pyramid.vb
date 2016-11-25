@@ -41,12 +41,16 @@ Public Module Pyramid
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
                          Optional legendBorder As Border = Nothing,
-                         Optional wp# = 0.6) As Bitmap
+                         Optional wp# = 0.8) As Bitmap
 
         Dim array As Fractions() =
             data _
             .OrderByDescending(Function(x) x.Percentage) _
             .ToArray
+
+        If size.IsEmpty Then
+            size = New Size(3000, 2000)
+        End If
 
         Return GraphicsPlots(size, margin, bg,
                 Sub(ByRef g, region)
@@ -83,7 +87,7 @@ Public Module Pyramid
                         right -= dw
                     Next
 
-                    Dim font As New Font(FontFace.MicrosoftYaHei, 20)
+                    Dim font As New Font(FontFace.MicrosoftYaHei, 32)
                     Dim gr As Graphics = g
                     Dim maxL = data.Select(Function(x) gr.MeasureString(x.Name, font).Width).Max
                     left = size.Width - (margin.Width * 2) - maxL

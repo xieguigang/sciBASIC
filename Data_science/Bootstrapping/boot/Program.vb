@@ -81,7 +81,7 @@ Module Program
             [in].TrimDIR & $".partN={partN}-binaryTree/")
 
         For Each cluster In out
-            Dim Eigenvector As ODEsOut = cluster.Key.x.GetSample(vec, partN)
+            Dim Eigenvector As ODEsOut = cluster.Key.Value.GetSample(vec, partN)
             Dim DIR As String = EXPORT & "/" & cluster.Key.Name
 
             Call Eigenvector.DataFrame.Save(DIR & "/Eigenvector.Sample.csv", Encodings.ASCII)

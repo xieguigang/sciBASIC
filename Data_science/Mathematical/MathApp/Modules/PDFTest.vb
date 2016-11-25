@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.Distributions
 Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -43,10 +43,10 @@ Module PDFTest
 
 
 
-        Dim xdata As New NamedValue(Of DoubleRange) With {.Name = "x", .x = New DoubleRange(0, Math.PI)}
+        Dim xdata As New NamedValue(Of DoubleRange) With {.Name = "x", .Value = New DoubleRange(0, Math.PI)}
 
         Call xdata.Plot("sin(x)+cos(2*x)").SaveAs("x:\test.png")
-        Call xdata.x.Plot(Function(a) Math.Sin(a) + Math.Cos(2 * a), title:="Value Of ""sin(x)+cos(2*x)""").SaveAs("x:\test_lambda.png")
+        Call xdata.Value.Plot(Function(a) Math.Sin(a) + Math.Cos(2 * a), title:="Value Of ""sin(x)+cos(2*x)""").SaveAs("x:\test_lambda.png")
 
 
         Dim x As New Vector(VBMathExtensions.seq(0.02, 0.98, 0.005))
