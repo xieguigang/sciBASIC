@@ -186,7 +186,7 @@ Call BarPlot.Plot2(data) _
 
 ###### Stacked bar plot
 
-![](./images/Fruit_consumption-bar-stacked.png)
+![](./images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
 ##### Solving ODEs
 

@@ -180,6 +180,17 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
+
+
+        Dim bdata As BarDataGroup = csv.LoadBarData(
+            "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Excels\FigurePlot-Reference-Unigenes.absolute.level1.csv",
+            "Paired:c8")
+
+        Call BarPlot.Plot(bdata, New Size(2000, 1400), stacked:=True, legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\FigurePlot-Reference-Unigenes.absolute.level1.png")
+
+        Pause()
+
         Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
         Call ddddd.CorrelatesNormalized() _
             .Plot(mapName:="PRGn:c6", mapLevels:=20, legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _

@@ -147,7 +147,7 @@ Public Module LegendPlotExtensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' <paramref name="graphicSize"/>的默认值是(120,45)
     ''' </summary>
     ''' <param name="g"></param>
     ''' <param name="topLeft"></param>

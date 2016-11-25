@@ -72,7 +72,7 @@ Namespace csv
 
         <Extension>
         Public Function LoadBarData(csv$, Optional theme$ = NameOf(Office2016)) As BarDataGroup
-            Return csv.LoadBarData(Designer.GetColors(theme))
+            Return csv.LoadBarData(Designer.FromSchema(theme, 50))
         End Function
 
         <Extension>
@@ -93,7 +93,7 @@ Namespace csv
             Dim names$() = header.Skip(1).ToArray
             Dim clData As Color() = If(
                 colors.IsNullOrEmpty,
-                Designer.GetColors(NameOf(Office2016)),
+                Designer.FromSchema(NameOf(Office2016), names.Length),
                 colors)
 
             Return New BarDataGroup With {

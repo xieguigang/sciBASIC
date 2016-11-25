@@ -67,7 +67,8 @@ Public Module BarPlot
                          Optional stackReordered? As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPos As Point = Nothing,
-                         Optional legendBorder As Border = Nothing) As Bitmap
+                         Optional legendBorder As Border = Nothing,
+                         Optional legendFont As Font = Nothing) As Bitmap
 
         If margin.IsEmpty Then
             margin = New Size(120, 300)
@@ -80,7 +81,7 @@ Public Module BarPlot
                 data,
                 bg,
                 showGrid, stacked, stackReordered,
-                showLegend, legendPos, legendBorder))
+                showLegend, legendPos, legendBorder, legendFont))
     End Function
 
     ''' <summary>
@@ -104,7 +105,8 @@ Public Module BarPlot
                         stackReorder As Boolean,
                         showLegend As Boolean,
                         legendPos As Point,
-                        legendBorder As Border)
+                        legendBorder As Border,
+                        legendFont As Font)
 
         Dim mapper As New Scaling(data, stacked, False)
         Dim n As Integer = If(
@@ -192,22 +194,34 @@ Public Module BarPlot
         Next
 
         If showLegend Then
+            If legendFont Is Nothing Then
+                legendFont = New Font(FontFace.SegoeUI, 30, FontStyle.Regular)
+            End If
+
+            Dim cssStyle As String = CSSFont.GetFontStyle(legendFont)
             Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
  _
                 From x As NamedValue(Of Color)
                 In data.Serials
                 Select New Legend With {
                     .color = x.Value.RGBExpression,
-                    .fontstyle = CSSFont.GetFontStyle(
-                        FontFace.MicrosoftYaHei,
-                        FontStyle.Regular,
-                        30),
+                    .fontstyle = cssStyle,
                     .style = LegendStyles.Circle,
                     .title = x.Name
                 }
 
             If legendPos.IsEmpty Then
-                legendPos = New Point(CInt(grect.Size.Width * 0.8), grect.Margin.Height / legends.Length)
+                Dim Y% = grect.Margin.Height / legends.Length
+                Dim X%
+                Dim gr As Graphics = g
+                Dim maxW As Single = legends.Max(
+                    Function(l) gr _
+                        .MeasureString(l.title, legendFont) _
+                        .Width)
+
+                X = grect.Size.Width - maxW - 145
+
+                legendPos = New Point(X, Y)
             End If
 
             Call g.DrawLegends(legendPos, legends,,, legendBorder)

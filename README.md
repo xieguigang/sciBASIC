@@ -71,7 +71,23 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 
 ![](./Data_science/Mathematical/images/Bubble.png)
 ![](./Data_science/Mathematical/images/pie_chart_vars.png)
-![](./Data_science/Mathematical/images/37_number_of_observation_on_barplot.png)
+
+###### Stacked Barplot
+![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
+
+```vbnet
+' Plots metagenome taxonomy profiles annotation result using barplot
+Dim taxonomy As BarDataGroup = csv.LoadBarData(
+    "./FigurePlot-Reference-Unigenes.absolute.level1.csv",
+    "Paired:c8") ' Using color brewer color profiles
+
+Call BarPlot.Plot(
+    taxonomy,
+    New Size(2000, 1400),
+    stacked:=True,
+    legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
+    .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
+```
 
 ###### Histogram Plot of beta-PDF
 <a href="./Data_science/Mathematical/data/beta-PDF/">![](./Data_science/Mathematical/data/beta-PDF/beta_hist.png)</a>
