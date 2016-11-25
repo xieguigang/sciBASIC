@@ -60,9 +60,15 @@ B21,B22,B23,...
         ''' The first row in the table was using as the headers
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Headers As RowObject
+        Public Overridable ReadOnly Property Headers As RowObject
             Get
                 Return _innerTable?.FirstOrDefault
+            End Get
+        End Property
+
+        Public ReadOnly Property Rows As RowObject()
+            Get
+                Return _innerTable.ToArray
             End Get
         End Property
 
@@ -70,7 +76,7 @@ B21,B22,B23,...
         ''' First line in the table is the column name definition line.
         ''' </summary>
         ''' <remarks></remarks>
-        Protected Friend _innerTable As List(Of RowObject) = New List(Of RowObject)
+        Protected Friend _innerTable As New List(Of RowObject)
 
         ''' <summary>
         ''' Creates an empty csv docs object.

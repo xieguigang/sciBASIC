@@ -30,10 +30,11 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.Excel
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeColorThemes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeColorThemes
+Imports Microsoft.VisualBasic.Linq
 
 Namespace csv
 
@@ -51,9 +52,27 @@ Namespace csv
     ''' </summary>
     Public Module BarData
 
+        ''' <summary>
+        ''' Loading bar plot data table from specific excel sheet.
+        ''' </summary>
+        ''' <param name="xlsx$">
+        ''' (*.xlsx) required of excel format version at least office 2010
+        ''' </param>
+        ''' <param name="sheet$">
+        ''' The table sheet name in the excel file.
+        ''' </param>
+        ''' <param name="theme$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function LoadBarDataExcel(xlsx$, sheet$, Optional theme$ = "PRGn:c6") As BarDataGroup
+            Dim csv As DataFrame = xlsx.ReadXlsx(sheet)
+            Dim model As BarDataGroup = csv.LoadBarData(Designer.GetColors(theme))
+            Return model
+        End Function
+
         <Extension>
         Public Function LoadBarData(csv$, Optional theme$ = NameOf(Office2016)) As BarDataGroup
-             Return csv .LoadBarData ( Designer .GetColors ( theme ) )
+            Return csv.LoadBarData(Designer.GetColors(theme))
         End Function
 
         <Extension>
@@ -63,8 +82,14 @@ Namespace csv
 
         <Extension>
         Public Function LoadBarData(csv$, colors As Color()) As BarDataGroup
-            Dim file As New File(csv)
-            Dim header As RowObject = file.First
+            Dim file As DataFrame = DataFrame.CreateObject(New File(csv))
+            Dim model As BarDataGroup = file.LoadBarData(colors)
+            Return model
+        End Function
+
+        <Extension>
+        Public Function LoadBarData(csv As DataFrame, colors As Color()) As BarDataGroup
+            Dim header As RowObject = csv.Headers
             Dim names$() = header.Skip(1).ToArray
             Dim clData As Color() = If(
                 colors.IsNullOrEmpty,
@@ -78,8 +103,7 @@ Namespace csv
                         .Name = x.obj,
                         .Value = clData(x.i)
                     }),
-                .Samples = file _
-                    .Skip(1) _
+                .Samples = csv.Rows _
                     .ToArray(Function(x) New BarDataSample With {
                         .Tag = x.First,
                         .data = x _

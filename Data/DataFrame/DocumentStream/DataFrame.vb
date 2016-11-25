@@ -165,6 +165,16 @@ Namespace DocumentStream
             End Get
         End Property
 
+        ''' <summary>
+        ''' The column headers in the csv file first row.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property Headers As RowObject
+            Get
+                Return New RowObject(__columnList)
+            End Get
+        End Property
+
         Private ReadOnly Property Depth As Integer Implements IDataReader.Depth
             Get
                 Return 0
