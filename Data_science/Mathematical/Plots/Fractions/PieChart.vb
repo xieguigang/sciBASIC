@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c6df515455e00f01c2b6213873a45d28, ..\sciBASIC#\Data_science\Mathematical\Plots\PieChart.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -144,13 +145,38 @@ Public Module PieChart
     ''' <returns></returns>
     <Extension>
     Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As Fractions()
-        Dim all = data.Select(Function(x) x.Value).Sum
+        Dim array As NamedValue(Of Integer)() = data.ToArray
+        Dim all = array.Select(Function(x) x.Value).Sum
         Dim s = From x
-                In data
+                In array
                 Select New NamedValue(Of Double) With {
                     .Name = x.Name,
                     .Value = x.Value / all
                 }
+        Return s.FromPercentages(colors.FromNames(array.Length))
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data">每个标记的数量，函数会自动根据这些数量计算出百分比</param>
+    ''' <param name="schema"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As Fractions()
+        Dim array As NamedValue(Of Integer)() = data.ToArray
+        Dim all As Integer = array _
+            .Select(Function(x) x.Value) _
+            .Sum
+        Dim s = From x
+                In array
+                Select New NamedValue(Of Double) With {
+                    .Name = x.Name,
+                    .Value = x.Value / all
+                }
+        Dim colors As Color() = Designer.FromSchema(
+            schema, array.Length
+        )
         Return s.FromPercentages(colors)
     End Function
 
@@ -158,24 +184,29 @@ Public Module PieChart
     ''' 
     ''' </summary>
     ''' <param name="data">手工计算出来的百分比</param>
-    ''' <param name="colors"></param>
+    ''' <param name="colors">Default is using schema of <see cref="Office2016"/></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As String() = Nothing) As Fractions()
+    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As Color() = Nothing) As Fractions()
         Dim array = data.ToArray
         Dim out As Fractions() = New Fractions(array.Length - 1) {}
         Dim c As Color() = If(
             colors.IsNullOrEmpty,
-            ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor)
+            Designer.FromSchema(NameOf(Office2016), array.Length),
+            colors
         )
 
-        For Each x In array.SeqIterator
-            out(x.i) = New Fractions With {
-                .Color = c(x.i),
-                .Name = x.obj.Name,
-                .Percentage = x.obj.Value
-            }
+        For i As Integer = 0 To array.Length - 1
+            With array(i)
+                Dim tag = .Name
+                Dim v# = .Value
+
+                out(i) = New Fractions With {
+                    .Color = c(i),
+                    .Name = tag,
+                    .Percentage = v#
+                }
+            End With
         Next
 
         Return out
