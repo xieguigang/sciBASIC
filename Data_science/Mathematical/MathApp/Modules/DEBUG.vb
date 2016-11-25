@@ -203,6 +203,16 @@ Module DEBUG
             }.FromData(schema:="office2010")) _
              .SaveAs("./Pyramid.png")
 
+        Call TreeMap.Plot(
+            {
+                New NamedValue(Of Integer)("Eaten", 55),
+                New NamedValue(Of Integer)("Tinned", 70),
+                New NamedValue(Of Integer)("Killed", 187),
+                New NamedValue(Of Integer)("Engaged", 235),
+                New NamedValue(Of Integer)("Monster Met", 340)
+            }.FromData(schema:="office2010")) _
+             .SaveAs("./treemap.png")
+
         Call {
             New NamedValue(Of Integer)("s1", 123),
             New NamedValue(Of Integer)("s2", 235),

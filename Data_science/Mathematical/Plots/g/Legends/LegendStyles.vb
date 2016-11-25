@@ -62,4 +62,8 @@ Public Enum LegendStyles
     ''' 五角星
     ''' </summary>
     Pentacle
+    ''' <summary>
+    ''' 正方形
+    ''' </summary>
+    Square
 End Enum

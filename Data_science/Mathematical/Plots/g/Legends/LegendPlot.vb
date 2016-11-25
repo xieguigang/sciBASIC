@@ -96,6 +96,14 @@ Public Module LegendPlotExtensions
                              graphicsSize.Height - dh * 2),
                     New SolidBrush(l.color.ToColor), border)
 
+            Case LegendStyles.Square
+                Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width)
+
+                Call Box.DrawRectangle(g,
+                    New Point(pos.X + graphicsSize.Width - r, pos.Y + graphicsSize.Height - r),
+                    New Size(r, r),
+                    New SolidBrush(l.color.ToColor), border)
+
             Case LegendStyles.SolidLine
 
                 Dim d As Integer = graphicsSize.Width * 0.2

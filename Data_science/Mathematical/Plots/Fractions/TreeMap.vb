@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.g
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
@@ -26,6 +27,10 @@ Public Module TreeMap
             .OrderByDescending(Function(x) x.Percentage) _
             .ToList
 
+        If margin.IsEmpty Then
+            margin = New Size(100, 350)
+        End If
+
         Return GraphicsPlots(
             size, margin,
             bg,
@@ -33,16 +38,20 @@ Public Module TreeMap
 
                 Dim rect As New Rectangle(
                     New Point(margin.Width, margin.Height),
-                    region.PlotRegion.Size)
+                    New Size(size.Width - margin.Width * 2,
+                             size.Height - margin.Width - margin.Height))
 
                 Dim f As Boolean = True ' true -> width percentage; false -> height percentage
                 Dim width! = rect.Width, height! = rect.Height
                 Dim x! = margin.Width, y! = margin.Height
                 Dim drawW!, drawH!
+                Dim labels As New List(Of Fractions)
 
-                For Each p As Fractions In array
+                Do While array.Count > 0
+                    Dim p As Fractions = array.First
+
                     If f Then  ' 计算宽度百分比
-                        drawW = p.Percentage * width
+                        drawW = p.GetPercentage(array) * width
                         drawH = height
 
                         Call g.FillRectangle(
@@ -53,7 +62,7 @@ Public Module TreeMap
                         width = width - drawW
                     Else ' 计算高度百分比
                         drawW = width
-                        drawH = p.Percentage * height
+                        drawH = p.GetPercentage(array) * height
 
                         Call g.FillRectangle(
                            New SolidBrush(p.Color),
@@ -64,7 +73,14 @@ Public Module TreeMap
                     End If
 
                     f = Not f  ' swap
-                Next
+                    Call labels.Add(item:=p)
+                    Call array.RemoveAt(Scan0)
+                Loop
             End Sub)
+    End Function
+
+    <Extension>
+    Public Function GetPercentage(f As Fractions, all As IEnumerable(Of Fractions)) As Double
+        Return f.Percentage / all.Sum(Function(x) x.Percentage)
     End Function
 End Module
