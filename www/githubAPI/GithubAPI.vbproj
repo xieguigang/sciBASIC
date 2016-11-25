@@ -125,6 +125,7 @@
     <Compile Include="API\Organizations.vb" />
     <Compile Include="API\Users.vb" />
     <Compile Include="Class\Repositories.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="QueryBuilder.vb" />
     <Compile Include="API\Search.vb" />
     <Compile Include="Class\Organization.vb" />
@@ -164,7 +165,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
