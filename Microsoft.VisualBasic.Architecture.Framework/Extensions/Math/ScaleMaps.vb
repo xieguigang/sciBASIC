@@ -115,7 +115,7 @@ Namespace Mathematical
             Dim i As int = 0
 
             For Each x As Double In array
-                Dim lv As Integer = CInt(Level * (x - MinValue) / d)
+                Dim lv As Integer = Fix(Level * (x - MinValue) / d)
                 chunkBuf(++i) = lv + offset
             Next
 

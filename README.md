@@ -77,6 +77,17 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 <a href="./Data_science/Mathematical/data/beta-PDF/">![](./Data_science/Mathematical/data/beta-PDF/beta_hist.png)</a>
 
 ![](./Data_science/Mathematical/images/heatmap.png)
+
+```vbnet
+Dim data = DataSet.LoadDataSet("./Quick_correlation_matrix_heatmap/mtcars.csv")
+
+Call data.CorrelatesNormalized() _
+    .Plot(mapName:="Jet",  ' Using internal color theme 'Jet'
+          mapLevels:=20,
+          legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _
+    .SaveAs("./images/heatmap.png")
+```
+
 > ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
 >
 > Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):

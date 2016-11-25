@@ -130,7 +130,7 @@ Namespace Drawing2D.Colors
         ''' <param name="term$"></param>
         ''' <returns></returns>
         Public Function GetColors(term$) As Color()
-            If Array.IndexOf(__allColorMapNames, term) > -1 Then
+            If Array.IndexOf(__allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If
 
@@ -152,7 +152,7 @@ Namespace Drawing2D.Colors
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
         Public Function GetColors(term$, Optional n% = 256, Optional alpha% = 255) As Color()
-            Return Colors(GetColors(term), n, alpha)
+            Return CubicSpline(GetColors(term), n, alpha)
         End Function
 
         ''' <summary>

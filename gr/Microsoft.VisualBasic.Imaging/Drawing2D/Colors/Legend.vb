@@ -72,7 +72,9 @@ Namespace Drawing2D.Colors
                     Dim margin As Size = region.Margin
                     Dim grayHeight As Integer = size.Height * 0.05
                     Dim y As Single
-                    Dim font As New Font(FontFace.MicrosoftYaHei, 42)
+                    Dim font As Font = If(titleFont Is Nothing,
+                        New Font(FontFace.MicrosoftYaHei, 36),
+                        titleFont)
                     Dim fSize As SizeF
                     Dim pt As Point
                     Dim rectWidth As Integer = 150
@@ -82,9 +84,7 @@ Namespace Drawing2D.Colors
 
                     Call g.DrawString(title, font, Brushes.Black, New Point(margin.Width, 0))
 
-                    font = If(titleFont Is Nothing,
-                        New Font(FontFace.SegoeUI, 28),
-                        titleFont)
+                    font = New Font(FontFace.BookmanOldStyle, 24)
                     y = margin.Height * 2
 
                     Call g.DrawString(max, font, Brushes.Black, New Point(left, y))

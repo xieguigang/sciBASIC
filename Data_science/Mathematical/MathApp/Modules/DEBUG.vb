@@ -180,6 +180,13 @@ Module DEBUG
     End Function
 
     Public Function Main() As Integer
+        Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
+        Call ddddd.CorrelatesNormalized() _
+            .Plot(mapName:="PRGn:c6", mapLevels:=20, legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _
+            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap.png")
+
+        Pause()
+
         Dim data = csv.LoadBarData(
             "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
             {
@@ -282,8 +289,6 @@ Module DEBUG
         Call Colors.ColorMapLegend(dddddserew, "ffffff", "sfsdf", "wrwerew").SaveAs("x:\hhhh.png")
         Pause()
 
-        Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
-        Call ddddd.CorrelatesNormalized().Plot(mapName:=ColorMap.PatternJet, mapLevels:=20).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\images\heatmap.png")
 
         '   Call randdddTest()
 

@@ -136,6 +136,7 @@ Public Module Heatmap
                          Optional bg$ = "white",
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
+                         Optional legendFont As Font = Nothing,
                          Optional angle! = 45.0F) As Bitmap
 
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
@@ -167,7 +168,7 @@ Public Module Heatmap
                     .ToArray
                 Dim lvs As Dictionary(Of Double, Integer) =
                     correl _
-                    .GenerateMapping(CInt(mapLevels / 2%) - 1) _
+                    .GenerateMapping(mapLevels, offset:=0) _
                     .SeqIterator _
                     .ToDictionary(Function(x) correl(x.i),
                                   Function(x) x.obj)
@@ -181,14 +182,17 @@ Public Module Heatmap
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
 
                 If colors.IsNullOrEmpty Then
-                    colors = New ColorMap(mapLevels).ColorSequence(mapName)
+                    colors = Designer.GetColors(mapName, mapLevels)
                 End If
 
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array
                     For Each key$ In keys
                         Dim c# = x.Value(key)
-                        Dim level% = lvs(c#) - 1 '  得到等级
-                        Dim color As Color = colors(level%)
+                        Dim level% = lvs(c#)  '  得到等级
+                        Dim color As Color = colors(
+                            If(level% > colors.Length - 1,
+                            colors.Length - 1,
+                            level))
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
                         Dim b As New SolidBrush(color)
 
@@ -224,7 +228,8 @@ Public Module Heatmap
                     haveUnmapped:=False,
                     min:=Math.Round(correl.Min, 1),
                     max:=Math.Round(correl.Max, 1),
-                    title:=legendTitle)
+                    title:=legendTitle,
+                    titleFont:=legendFont)
                 Dim lsize As Size = legend.Size
                 Dim lmargin As Integer = size.Width - size.Height + margin.Width
 
