@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Interpolation
@@ -112,6 +113,41 @@ Namespace Drawing2D.Colors
                 .LoadObject(Of Dictionary(Of String, ColorBrewer))
         End Sub
 
+        ReadOnly __allColorMapNames$() = {
+            ColorMap.PatternAutumn,
+            ColorMap.PatternCool,
+            ColorMap.PatternGray,
+            ColorMap.PatternHot,
+            ColorMap.PatternJet,
+            ColorMap.PatternSpring,
+            ColorMap.PatternSummer,
+            ColorMap.PatternWinter
+        }.ToArray(AddressOf LCase)
+
+        ''' <summary>
+        ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <returns></returns>
+        Public Function GetColors(term$) As Color()
+            If Array.IndexOf(__allColorMapNames, term) > -1 Then
+                Return New ColorMap(20, 255).ColorSequence(term)
+            End If
+
+            Dim key As NamedValue(Of String) =
+                Drawing2D.Colors.ColorBrewer.ParseName(term)
+
+            If ColorBrewer.ContainsKey(key.Name) Then
+                Return ColorBrewer(key.Name).GetColors(key.Value)
+            End If
+
+            Return OfficeColorThemes.GetAccentColors(term)
+        End Function
+
+        Public Function GetColors(term$, Optional n% = 256, Optional alpha% = 255) As Color()
+            Return Colors(GetColors(term), n, alpha)
+        End Function
+
         ''' <summary>
         ''' Some useful color tables for images and tools to handle them.
         ''' Several color scales useful for image plots: a pleasing rainbow style color table patterned after 
@@ -120,8 +156,13 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="col">A list of colors (names or hex values) to interpolate</param>
         ''' <param name="n%">Number of color levels. The setting n=64 is the orignal definition.</param>
-        ''' <param name="alpha%">The transparency of the color – 255 is opaque and 0 is transparent. This is useful for overlays of color and still being able to view the graphics that is covered.</param>
-        ''' <returns>A vector giving the colors in a hexadecimal format, two extra hex digits are added for the alpha channel.</returns>
+        ''' <param name="alpha%">
+        ''' The transparency of the color – 255 is opaque and 0 is transparent. This is useful for 
+        ''' overlays of color and still being able to view the graphics that is covered.
+        ''' </param>
+        ''' <returns>
+        ''' A vector giving the colors in a hexadecimal format, two extra hex digits are added for the alpha channel.
+        ''' </returns>
         Public Function Colors(col As Color(), Optional n% = 256, Optional alpha% = 255) As Color()
             Dim out As New List(Of Color)
             Dim steps! = n / col.Length

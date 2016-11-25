@@ -44,7 +44,7 @@ Namespace Imaging
     Public Module ColorMapsExtensions
 
         ''' <summary>
-        ''' 
+        ''' <paramref name="mapName"/>大小写不敏感
         ''' </summary>
         ''' <param name="mapName"></param>
         ''' <param name="map"><see cref="ColorMap.MaxDepth"/></param>
