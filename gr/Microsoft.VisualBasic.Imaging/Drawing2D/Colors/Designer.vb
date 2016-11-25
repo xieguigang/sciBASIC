@@ -144,8 +144,48 @@ Namespace Drawing2D.Colors
             Return OfficeColorThemes.GetAccentColors(term)
         End Function
 
+        ''' <summary>
+        ''' 这个函数是获取得到一个连续的颜色谱
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <param name="n%"></param>
+        ''' <param name="alpha%"></param>
+        ''' <returns></returns>
         Public Function GetColors(term$, Optional n% = 256, Optional alpha% = 255) As Color()
             Return Colors(GetColors(term), n, alpha)
+        End Function
+
+        ''' <summary>
+        ''' 相对于<see cref="GetColors"/>函数而言，这个函数是返回非连续的颜色谱，假若数量不足，会重新使用开头的起始颜色连续填充
+        ''' </summary>
+        ''' <param name="colors$"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        <Extension> Public Function FromNames(colors$(), n%) As Color()
+            Return colors.Select(AddressOf ToColor).__internalFills(n)
+        End Function
+
+        <Extension>
+        Private Function __internalFills(colors As IEnumerable(Of Color), n As Integer) As Color()
+            Dim out As New List(Of Color)(colors)
+            Dim i As Integer = Scan0
+
+            Do While out.Count < n
+                out.Add(out(i))
+                i += 1
+            Loop
+
+            Return out.ToArray
+        End Function
+
+        ''' <summary>
+        ''' <see cref="FromSchema"/>和<see cref="FromNames"/>适用于函数绘图之类需要区分数据系列的颜色谱的生成
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        Public Function FromSchema(term$, n%) As Color()
+            Return GetColors(term).__internalFills(n)
         End Function
 
         ''' <summary>
