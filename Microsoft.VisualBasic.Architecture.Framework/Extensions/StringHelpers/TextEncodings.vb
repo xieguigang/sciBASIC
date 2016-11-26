@@ -89,8 +89,24 @@ Namespace Text
             If TextEncodings.ContainsKey(value) Then
                 Return _TextEncodings(value)
             Else
-                Return System.Text.Encoding.UTF8
+                Return Encoding.UTF8
             End If
+        End Function
+
+        ''' <summary>
+        ''' 从字符串名称之中解析出编码格式的枚举值
+        ''' </summary>
+        ''' <param name="encoding$"></param>
+        ''' <param name="onFailure"></param>
+        ''' <returns></returns>
+        <Extension> Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
+            For Each key In TextEncodings.Keys
+                If encoding.TextEquals(key.ToString) Then
+                    Return key
+                End If
+            Next
+
+            Return onFailure
         End Function
 
         Public Function GetEncodings(value As Encoding) As Encodings
