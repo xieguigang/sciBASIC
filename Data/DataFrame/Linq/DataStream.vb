@@ -237,8 +237,10 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Iterator Function AsLinq(Of T As Class)() As IEnumerable(Of T)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False) As IEnumerable(Of T)
+            Dim schema As SchemaProvider = SchemaProvider _
+                .CreateObject(Of T)(False) _
+                .CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
@@ -246,12 +248,17 @@ Namespace DocumentStream.Linq
             Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While Not EndRead
-                Dim LQuery As IEnumerable(Of T) = From line As String
-                                                  In BufferProvider()
-                                                  Let row As RowObject = RowObject.TryParse(line)
-                                                  Let obj As Object = Activator.CreateInstance(type)
-                                                  Let data As Object = RowBuilder.FillData(row, obj)
-                                                  Select DirectCast(data, T)
+
+                Dim LQuery As IEnumerable(Of T) =
+                    From line As String
+                    In If(parallel,
+                        DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)),
+                        DirectCast(BufferProvider(), IEnumerable(Of String)))
+                    Let row As RowObject = RowObject.TryParse(line)
+                    Let obj As Object = Activator.CreateInstance(type)
+                    Let data As Object = RowBuilder.FillData(row, obj)
+                    Select DirectCast(data, T)
+
                 For Each x As T In LQuery
                     Yield x
                 Next
