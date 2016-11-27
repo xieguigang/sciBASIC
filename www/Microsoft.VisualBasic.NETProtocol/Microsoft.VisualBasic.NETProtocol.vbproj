@@ -122,7 +122,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HTTP\WebExtensions.vb" />
+    <Compile Include="HTTP\WebSaveAs.vb" />
+    <Compile Include="HTTP\WebCrawling.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\APIBase.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\UserMsgPool.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\UserAPI.vb" />

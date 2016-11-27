@@ -29,7 +29,12 @@
 Module Module1
 
     Sub Main()
-        For Each s In Microsoft.VisualBasic.Net.HTTP.WebExtensions.DownloadAllLinks("http://120.76.195.65/index.html", "x:\")
+
+        Call Microsoft.VisualBasic.Net.HTTP.WebSaveAs.SaveAs("http://blog.xieguigang.me/about/", "x:\test2\")
+
+        Pause()
+
+        For Each s In Microsoft.VisualBasic.Net.HTTP.WebCrawling.DownloadAllLinks("http://120.76.195.65/index.html", "x:\")
             Call s.Warning
         Next
     End Sub
