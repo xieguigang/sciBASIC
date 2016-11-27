@@ -23,6 +23,7 @@
 >12. [Curve Interpolation Tools](../Data_science/Mathematical/data/Spline_Interpolation)
 >13. [Beta distribution](../Data_science/Mathematical/data/beta-PDF)
 >14. [least-squares fitting](../Data_science/Mathematical/data/least-squares)
+>15. [The tricks of IsNullorEmpty](./tricks_of_IsNullOrEmpty.md)
 
 ### Appendix
 >1. [Deal with the github merge conflicts](./MergeGthubConflicts.md)
