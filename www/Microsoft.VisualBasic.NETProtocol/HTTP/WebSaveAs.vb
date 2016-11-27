@@ -10,6 +10,15 @@ Namespace HTTP
     Public Module WebSaveAs
 
         ''' <summary>
+        ''' Example as:
+        ''' 
+        ''' ```html
+        ''' &lt;link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+        ''' ```
+        ''' </summary>
+        Const CSSLink As String = "<link .*?href=""[^""]+"".*?>"
+
+        ''' <summary>
         ''' 这个函数只支持静态内容的抓取
         ''' </summary>
         ''' <param name="url$"></param>
@@ -23,7 +32,13 @@ Namespace HTTP
             Dim currentDIR = WebCrawling.GetCurrentFolder(url)
             Dim root As String = GetRootPath(url)
 
-            For Each file As String In files
+            Call SaveFile(url, DIR)
+
+            Dim csslinks$() = Regex _
+                .Matches(html, CSSLink, RegexICSng) _
+                .ToArray(AddressOf href)
+
+            For Each file As String In files.Join(csslinks).OrderByDescending(Function(s) s.Length)
                 If InStr(file, "http://", CompareMethod.Text) = 1 OrElse
                     InStr(file, "https://", CompareMethod.Text) = 1 OrElse
                     InStr(file, "//") = 1 OrElse
@@ -31,6 +46,8 @@ Namespace HTTP
 
                     Continue For
                 End If
+
+                ' 还需要进行替换
 
                 If file.First = "/"c Then  ' 根目录
                     url = root & file
@@ -45,7 +62,7 @@ Namespace HTTP
                 Call SaveFile(url, DIR)
             Next
 
-            Return html.SaveTo(DIR & "/index.html", Encoding.UTF8)
+            Return True
         End Function
 
         Private Sub SaveFile(url$, Downloads$)
