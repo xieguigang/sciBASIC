@@ -224,6 +224,10 @@ Public Class Randomizer : Inherits Random
     Public Overrides Function [Next](minValue As Integer, maxValue As Integer) As Integer
         Dim x As Integer = Integer.MaxValue
 
+        If minValue = maxValue Then
+            Return minValue
+        End If
+
         Do While x < minValue OrElse maxValue <= x
             x = minValue + NextDouble() * (maxValue - minValue)
         Loop
