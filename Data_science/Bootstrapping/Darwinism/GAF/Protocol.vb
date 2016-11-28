@@ -198,6 +198,8 @@ Namespace Darwinism.GAF
                     .radicals = radicals
             }.InitialPopulation(popSize%)
 
+            Call $"Fitness using log10(x) is {If(fitness.log10Fitness, "enabled", "disabled")}".Warning
+
 #If Not DEBUG Then
             population.Parallel = True
 #End If
@@ -238,7 +240,7 @@ Namespace Darwinism.GAF
         ''' <param name="evolIterations%"></param>
         ''' <param name="outPrint"></param>
         ''' <param name="threshold#"></param>
-        ''' <param name="log10Fit"></param>
+        ''' <param name="log10Fit">In the most of situation, there is no required of enable this feature.</param>
         ''' <param name="radicals">参数值介于[0-1]之间</param>
         ''' <returns></returns>
         <Extension>
@@ -248,7 +250,7 @@ Namespace Darwinism.GAF
                          Optional evolIterations% = Integer.MaxValue%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
                          Optional threshold# = 0.5,
-                         Optional log10Fit As Boolean = True,
+                         Optional log10Fit As Boolean = False,
                          Optional ignores$() = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
@@ -315,7 +317,7 @@ Namespace Darwinism.GAF
                          Optional evolIterations% = Integer.MaxValue%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
                          Optional threshold# = 0.5,
-                         Optional log10Fit As Boolean = True,
+                         Optional log10Fit As Boolean = False,
                          Optional ignores$() = Nothing,
                          Optional initOverrides As Dictionary(Of String, Double) = Nothing,
                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
