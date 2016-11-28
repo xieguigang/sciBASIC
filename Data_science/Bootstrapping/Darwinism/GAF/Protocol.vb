@@ -243,6 +243,10 @@ Namespace Darwinism.GAF
         ''' <param name="log10Fit">In the most of situation, there is no required of enable this feature.</param>
         ''' <param name="radicals">参数值介于[0-1]之间</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' ###### 2016-11-28
+        ''' 一般情况下，<paramref name="log10Fit"/>会导致曲线失真，所以默认关闭这个参数
+        ''' </remarks>
         <Extension>
         Public Function Fitting(Of T As MonteCarlo.Model)(
                          observation As ODEsOut,

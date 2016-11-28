@@ -45,8 +45,7 @@ Public Class FormODEsViewer
 
     Private Sub LoadModelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadModelToolStripMenuItem.Click
         Using file As New OpenFileDialog With {
-            .Filter = "Application Module(*.dll)|*.dll|.NET Application(*.exe)|*.exe",
-            .InitialDirectory = App.HOME
+            .Filter = "Application Module(*.dll)|*.dll|.NET Application(*.exe)|*.exe"
         }
             If file.ShowDialog = DialogResult.OK Then
                 Using loader As New FormLoadModel() With {

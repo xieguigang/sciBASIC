@@ -228,6 +228,19 @@ Public Module Bootstraping
     End Function
 
     ''' <summary>
+    ''' A logistic function or logistic curve is a common "S" shape (sigmoid curve)
+    ''' > https://en.wikipedia.org/wiki/Logistic_function
+    ''' </summary>
+    ''' <param name="L#">the curve's maximum value</param>
+    ''' <param name="x#">current x value</param>
+    ''' <param name="x0#">the x-value of the sigmoid's midpoint,</param>
+    ''' <param name="k#">the steepness of the curve.</param>
+    ''' <returns></returns>
+    Public Function Logistic(L#, x#, x0#, k#) As Double
+        Return L / (1 + Math.E ^ (-k * (x - x0)))
+    End Function
+
+    ''' <summary>
     ''' ###### 0-1标准化(0-1 normalization)
     ''' 也叫离差标准化，是对原始数据的线性变换，使结果落到[0,1]区间
     ''' 其中max为样本数据的最大值，min为样本数据的最小值。这种方法有一个缺陷就是当有新数据加入时，可能导致max和min的变化，需要重新定义。
