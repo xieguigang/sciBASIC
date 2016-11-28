@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::afd7355eb53c1a9fb74b6d958573505f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -62,21 +63,34 @@ Namespace Net.Protocols.ContentTypes
         }
 
         Sub New()
-            Dim lines As String() = My.Resources.List_of_MIME_types___Internet_Media_Types_.lTokens
-            lines = LinqAPI.Exec(Of String) <=
-                From line As String
-                In lines.Skip(1)
-                Where Not String.IsNullOrWhiteSpace(line)
-                Select line
-
-            Dim array As ContentType() = lines.ToArray(AddressOf ContentType.__createObject)
-            ExtDict = (From x As ContentType
-                       In array
-                       Select x
-                       Group x By x.FileExt.ToLower Into Group) _
-                            .ToDictionary(Function(x) x.ToLower,
-                                          Function(x) x.Group.First)
-            ContentTypes = array.ToDictionary(Function(x) x.MIMEType.ToLower)
+            ExtDict = My.Resources _
+                .List_of_MIME_types___Internet_Media_Types_ _
+                .lTokens _
+                .__loadContents _
+                .Where(Function(x) Not x Is Nothing) _
+                .GroupBy(Function(x) x.FileExt.ToLower) _
+                .ToDictionary(Function(x) x.Key,
+                              Function(x) x.First)
+            ContentTypes = ExtDict.Values _
+                .ToDictionary(Function(x) x.MIMEType.ToLower)
         End Sub
+
+        <Extension>
+        Private Iterator Function __loadContents(lines As IEnumerable(Of String)) As IEnumerable(Of ContentType)
+            lines = From line As String
+                    In lines.Skip(1)
+                    Where Not String.IsNullOrWhiteSpace(line)
+                    Select line
+
+            For Each line$ In lines
+                Try
+                    ' 2016-11-28
+                    ' Not sure why a bugs happed here, there is no bugs here before!
+                    Yield ContentType.__createObject(line)
+                Catch ex As Exception
+                    Call line.Warning
+                End Try
+            Next
+        End Function
     End Module
 End Namespace
