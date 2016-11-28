@@ -30,7 +30,7 @@ Module Module1
 
     Sub Main()
 
-        Call Microsoft.VisualBasic.Net.HTTP.WebSaveAs.SaveAs("http://blog.xieguigang.me/about/", "x:\test2\")
+        Call Microsoft.VisualBasic.Net.HTTP.WebSaveAs.SaveAs("https://jsplumbtoolkit.com/", "C:\Users\Admin\OneDrive\jsplumbtoolkit.com")
 
         Pause()
 

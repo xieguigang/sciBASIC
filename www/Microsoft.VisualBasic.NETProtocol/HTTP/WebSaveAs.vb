@@ -72,7 +72,7 @@ Namespace HTTP
             url = Strings.Split(url, "://").Last
             tokens = url.Split("/"c)
             url = tokens.Take(tokens.Length - 1).JoinBy("/")
-            url = url & "/" & tokens.Last.NormalizePathString
+            url = url & "/" & tokens.Last.Replace("*", "+").Replace("?", "+").Replace(":", "-")
             path = Downloads & "/" & url
 
             If path.Last = "/"c Then
