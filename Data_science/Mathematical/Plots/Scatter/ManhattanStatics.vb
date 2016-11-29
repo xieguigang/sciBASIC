@@ -63,7 +63,8 @@ Public Module ManhattanStatics
                          Optional errPlusColor$ = "green",
                          Optional errMinusColor$ = "red",
                          Optional errInner$ = "black",
-                         Optional errPtSize! = 3) As Bitmap
+                         Optional errPtSize! = 3,
+                         Optional absoluteScaling As Boolean = True) As Bitmap
 
         Dim fillColor As Color = If(
             String.IsNullOrEmpty(fill) OrElse fill = "none",
@@ -100,7 +101,12 @@ Public Module ManhattanStatics
                             .errMinus = err.errMinus
                         })
                 }
-                Dim mapper As New Scaling({serrPlus, s, serrMinus})
+                Dim mapper As New Scaling({
+                    serrPlus,
+                    s,
+                    serrMinus
+                },
+                absoluteScaling)
 
                 ' 绘制线条以及正负误差线
                 For Each line As SerialData In mapper.ForEach(size, margin)

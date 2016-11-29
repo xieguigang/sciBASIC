@@ -45,16 +45,16 @@ Public Class Scaling
 
     Public ReadOnly type As Type
 
-    Sub New(array As SerialData())
-        dx = Scaling(array, Function(p) p.pt.X, xmin)
-        dy = Scaling(array, Function(p) p.pt.Y, ymin)
+    Sub New(array As SerialData(), absoluteScaling As Boolean)
+        dx = Scaling(array, Function(p) p.pt.X, absoluteScaling, xmin)
+        dy = Scaling(array, Function(p) p.pt.Y, absoluteScaling, ymin)
         serials = array
         type = GetType(Scatter)
     End Sub
 
-    Sub New(data As HistogramGroup)
-        dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin)
-        dy = Scaling(data, Function(x) {x.y}, ymin)
+    Sub New(data As HistogramGroup, absoluteScaling As Boolean)
+        dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin, absoluteScaling)
+        dy = Scaling(data, Function(x) {x.y}, ymin, absoluteScaling)
         hist = data
         type = GetType(Histogram)
     End Sub
@@ -220,14 +220,28 @@ Public Class Scaling
     ''' <summary>
     ''' 返回dx或者dy
     ''' </summary>
+    ''' <param name="absoluteScaling">
+    ''' 假若值为真，则当min和max都是正数的时候，从min=0开始
+    ''' 当min和max都是负数的时候，从max=0结束
+    ''' 当min和max的符号不同的时候，只能够使用相对scalling
+    ''' </param>
     ''' <returns></returns>
-    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), ByRef min!) As Single
+    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), absoluteScaling As Boolean, ByRef min!) As Single
         Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
-        Return __scaling(array!, min!)
+        Return __scaling(array!, min!, absoluteScaling)
     End Function
 
-    Private Shared Function __scaling(array!(), ByRef min!) As Single
+    Private Shared Function __scaling(array!(), ByRef min!, absoluteScaling As Boolean) As Single
         Dim max! = array.Max : min! = array.Min
+
+        If absoluteScaling Then
+            If max < 0 Then
+                max = 0
+            ElseIf min > 0 Then
+                min = 0
+            End If
+        End If
+
         Dim d As Single = max - min
         Return d
     End Function
@@ -236,13 +250,13 @@ Public Class Scaling
     ''' 返回dx或者dy
     ''' </summary>
     ''' <returns></returns>
-    Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single()), ByRef min!) As Single
+    Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single()), ByRef min!, absoluteScaling As Boolean) As Single
         Dim array!() = data.Samples _
             .Select(Function(s) s.data) _
             .IteratesALL _
             .ToArray([get]) _
             .IteratesALL _
             .ToArray
-        Return __scaling(array!, min!)
+        Return __scaling(array!, min!, absoluteScaling)
     End Function
 End Class

@@ -58,7 +58,7 @@ Public Module Bubble
             size, margin, bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = data.ToArray
-                Dim mapper As New Scaling(array)
+                Dim mapper As New Scaling(array, False)  ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
                 Dim scale As Func(Of Double, Double) =
                      [If](Of Func(Of Double, Double))(
                      logR, Function(r) Math.Log(r + 1) + 1,

@@ -67,13 +67,14 @@ Public Module Scatter
                          Optional legendBorder As Border = Nothing,
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
-                         Optional legendFontSize! = 24) As Bitmap
+                         Optional legendFontSize! = 24,
+                         Optional absoluteScaling As Boolean = True) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
-                Dim mapper As New Scaling(array)
+                Dim mapper As New Scaling(array, absoluteScaling)
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
 

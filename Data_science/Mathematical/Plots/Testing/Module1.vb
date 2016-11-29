@@ -26,10 +26,10 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
-Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Module Module1
