@@ -250,19 +250,30 @@ Public Module ProgramPathSearchTool
     ''' (这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
     ''' </summary>
     ''' <param name="path"></param>
+    ''' <param name="ZERO_Nonexists">将0长度的文件也作为不存在</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
 #If FRAMEWORD_CORE Then
     <ExportAPI("File.Exists", Info:="Check if the target file object is exists on your file system or not.")>
-    <Extension> Public Function FileExists(path As String) As Boolean
+    <Extension> Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean
 #Else
     <Extension> Public Function FileExists(path As String) As Boolean
 #End If
         If path.IndexOf(ASCII.CR) > -1 OrElse path.IndexOf(ASCII.LF) > -1 Then
             Return False ' 包含有回车符或者换行符，则肯定不是文件路径了
         End If
-        Return Not String.IsNullOrEmpty(path) AndAlso
-            FileIO.FileSystem.FileExists(path)
+
+        If Not String.IsNullOrEmpty(path) AndAlso
+            FileIO.FileSystem.FileExists(path) Then  ' 文件存在
+
+            If ZERO_Nonexists Then
+                Return FileSystem.FileLen(path) > 0
+            Else
+                Return True
+            End If
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>
