@@ -175,7 +175,13 @@ Namespace StorageProvider.Reflection
         End Function
 
         Private Function IsEnum([Property] As PropertyInfo) As Boolean
-            If Not [Property].PropertyType.BaseType.Equals(GetType(System.Enum)) Then
+            If [Property].PropertyType.Equals(GetType(Object)) Then
+                Call [Property].ToString.Warning
+                Return False ' System.Object的basetype是空值，所以要先判断一下是不是Object
+            End If
+            If Not [Property].PropertyType _
+                .BaseType _
+                .Equals(GetType(System.Enum)) Then
                 Return False
             End If
 

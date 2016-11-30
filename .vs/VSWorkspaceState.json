@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Microsoft.VisualBasic.Architecture.Framework",
+    "\\Microsoft.VisualBasic.Architecture.Framework\\Scripting"
   ],
+  "SelectedNode": "\\Microsoft.VisualBasic.Architecture.Framework\\Scripting\\Casting.vb",
   "PreviewInSolutionExplorer": false
 }
