@@ -60,7 +60,7 @@ Namespace Scripting
                 {GetType(String), Function(s$) s},
                 {GetType(Char), AddressOf Casting.CastChar},
                 {GetType(Integer), AddressOf Casting.CastInteger},
-                {GetType(Double), AddressOf Val},
+                {GetType(Double), AddressOf Casting.ParseNumeric},
                 {GetType(Long), AddressOf Casting.CastLong},
                 {GetType(Boolean), AddressOf getBoolean},
                 {GetType(Char()), AddressOf Casting.CastCharArray},
