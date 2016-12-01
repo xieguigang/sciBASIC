@@ -242,7 +242,7 @@
     <Compile Include="Extensions\PipeStream.vb" />
     <Compile Include="Extensions\ProfileStreams.vb" />
     <Compile Include="Extensions\DataImports.vb" />
-    <Compile Include="Extensions\DataSetHandler.vb" />
+    <Compile Include="Extensions\StreamIOHandler.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="Linq\BatchQueue.vb" />
     <Compile Include="Linq\DataStream.vb" />

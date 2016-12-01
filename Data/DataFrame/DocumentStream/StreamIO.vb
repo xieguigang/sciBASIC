@@ -73,7 +73,9 @@ Namespace DocumentStream
         ''' 假若路径是指向一个已经存在的文件，则原有的文件数据将会被清空覆盖
         ''' </param>
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
-        Public Function SaveDataFrame(csv As File, Optional path$ = "", Optional encoding As Encoding = Nothing) As Boolean
+        ''' 
+        <Extension>
+        Public Function SaveDataFrame(csv As IEnumerable(Of RowObject), Optional path$ = "", Optional encoding As Encoding = Nothing) As Boolean
             Dim stopwatch As Stopwatch = Stopwatch.StartNew
 
             If String.IsNullOrEmpty(path) Then

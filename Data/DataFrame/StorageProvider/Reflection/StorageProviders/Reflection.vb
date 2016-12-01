@@ -69,9 +69,10 @@ Namespace StorageProvider.Reflection
                             .Name = columnItem.Name,
                             .Value = columnItem.BindProperty.PropertyType
                         }
-            Dim hash As Dictionary(Of String, Type) =
-                cols.Join(array).ToDictionary(Function(x) x.Name,
-                                              Function(x) x.Value)
+            Dim hash As Dictionary(Of String, Type) = cols _
+                .Join(array) _
+                .ToDictionary(Function(x) x.Name,
+                              Function(x) x.Value)
             Return hash
         End Function
 #End If
@@ -161,73 +162,83 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function Save(source As IEnumerable(Of Object),
-                             Optional Explicit As Boolean = True,
-                             Optional maps As Dictionary(Of String, String) = Nothing,
-                             Optional parallel As Boolean = True) As DocumentStream.File
+        Public Iterator Function Save(source As IEnumerable(Of Object),
+                        Optional Explicit As Boolean = True,
+                        Optional maps As Dictionary(Of String, String) = Nothing,
+                        Optional parallel As Boolean = True,
+                        Optional metaBlank As String = "") As IEnumerable(Of RowObject)
+
             Dim type As Type = source.First.GetType
-            Return __save(source, type, Explicit, maps:=maps, parallel:=parallel)
+
+            For Each row As RowObject In __save(source, type, Explicit, Nothing, metaBlank, maps:=maps, parallel:=parallel)
+                Yield row
+            Next
         End Function
 
         ''' <summary>
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
         ''' <param name="___source"></param>
-        ''' <param name="Explicit"></param>
+        ''' <param name="explicit"></param>
         ''' <param name="schemaOut">请注意，Key是Csv文件之中的标题，不是属性名称了</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Function __save(___source As IEnumerable,
-                               typeDef As Type,
-                               Explicit As Boolean,
+        Public Iterator Function __save(___source As IEnumerable,
+                                          typeDef As Type,
+                                         explicit As Boolean,
+                                        schemaOut As Dictionary(Of String, Type),
                                Optional metaBlank As String = "",
                                Optional maps As Dictionary(Of String, String) = Nothing,
-                               Optional parallel As Boolean = True,
-                               Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As DocumentStream.File
+                               Optional parallel As Boolean = True) As IEnumerable(Of RowObject)
 
             Dim source As Object() = ___source.ToVector
             Dim Schema As SchemaProvider =
-                SchemaProvider.CreateObject(typeDef, Explicit).CopyReadDataFromObject
-            Dim RowWriter As RowWriter = New RowWriter(Schema, metaBlank).CacheIndex(source)
-            Dim LQuery As List(Of RowObject)
-            Dim array As IEnumerable(Of Object) =
-                If(parallel,
-                DirectCast(source.AsParallel, IEnumerable(Of Object)),
-                DirectCast(source, IEnumerable(Of Object)))
+                SchemaProvider.CreateObject(typeDef, explicit).CopyReadDataFromObject
+            Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank).CacheIndex(source)
 
-            schemaOut = RowWriter.Columns.ToDictionary(
+            schemaOut = rowWriter.Columns.ToDictionary(
                 Function(x) x.Name,
                 Function(x) x.BindProperty.PropertyType)
-            LQuery = LinqAPI.MakeList(Of RowObject) <=
- _
-                From row As Object
-                In array
-                Where Not row Is Nothing
-                Let createdRow As RowObject =
-                    RowWriter.ToRow(row)
-                Select createdRow  ' 为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
 
             Dim title As RowObject =
-                RowWriter.GetRowNames(maps).Join(RowWriter.GetMetaTitles)
-            Dim dataFrame As New File(title + LQuery)
+                rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
 
-            If Not RowWriter.MetaRow Is Nothing Then  ' 只读属性会和字典属性产生冲突
+            Yield title
+
+            If Not rowWriter.MetaRow Is Nothing Then  ' 只读属性会和字典属性产生冲突
                 Dim valueType As Type =
-                    RowWriter.MetaRow.Dictionary.GenericTypeArguments.Last
+                    rowWriter.MetaRow.Dictionary.GenericTypeArguments.Last
                 Dim key$ = Nothing
 
                 Try
-                    For Each key$ In RowWriter.GetMetaTitles
+                    For Each key$ In rowWriter.GetMetaTitles
                         Call schemaOut.Add(key, valueType)
                     Next
                 Catch ex As Exception
-                    Dim msg = $"key:='{key}', keys:={JSON.GetJson(schemaOut.Keys.ToArray)}, metaKeys:={JSON.GetJson(RowWriter.GetMetaTitles)}"
+                    Dim msg = $"key:='{key}', keys:={JSON.GetJson(schemaOut.Keys.ToArray)}, metaKeys:={JSON.GetJson(rowWriter.GetMetaTitles)}"
                     ex = New Exception(msg, ex)
                     Throw ex
                 End Try
             End If
 
-            Return dataFrame
+            Dim LQuery As IEnumerable(Of RowObject) =
+                From row As Object
+                In source
+                Let createdRow As RowObject = If(
+                    row Is Nothing,
+                    New RowObject,
+                    rowWriter.ToRow(row))
+                Select createdRow  ' 为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
+
+            If parallel Then
+                For Each row As RowObject In LQuery.AsParallel
+                    Yield row
+                Next
+            Else
+                For Each row As RowObject In LQuery
+                    Yield row
+                Next
+            End If
         End Function
 
         ''' <summary>
@@ -245,9 +256,9 @@ Namespace StorageProvider.Reflection
                                    Optional metaBlank As String = "",
                                    Optional maps As Dictionary(Of String, String) = Nothing,
                                    Optional parallel As Boolean = True,
-                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As DocumentStream.File
+                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As File
             Dim type As Type = GetType(T)
-            Dim file As File = __save(source, type, explicit, metaBlank, maps, parallel, schemaOut)
+            Dim file As New File(__save(source, type, explicit, schemaOut, metaBlank, maps, parallel))
             Return file
         End Function
 
@@ -263,9 +274,9 @@ Namespace StorageProvider.Reflection
                                     source As IEnumerable(Of T),
                                     Optional Explicit As Boolean = True) As List(Of Dictionary(Of String, String))
 
-            Dim df As DocumentStream.File = Save(source, Explicit)
-            Dim TitleRow As DocumentStream.RowObject = df.First
-            Dim __pCache As Integer() = TitleRow.Sequence.ToArray
+            Dim df As File = Save(source, Explicit)
+            Dim title As RowObject = df.First
+            Dim __pCache As Integer() = title.Sequence.ToArray
 
             Dim buf As List(Of Dictionary(Of String, String)) =
                 LinqAPI.MakeList(Of Dictionary(Of String, String)) <=
@@ -273,7 +284,7 @@ Namespace StorageProvider.Reflection
                     In df.Skip(1).AsParallel
                     Select (From p As Integer
                             In __pCache
-                            Select key = TitleRow(CInt(p)),
+                            Select key = title(CInt(p)),
                                 value = rowL(CInt(p))) _
                                   .ToDictionary(Function(x) x.key,
                                                 Function(x) x.value)

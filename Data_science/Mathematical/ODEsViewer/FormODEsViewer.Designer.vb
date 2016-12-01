@@ -43,6 +43,7 @@ Partial Class FormODEsViewer
         Me.SaveResultToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddReferenceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveAsGAFInputsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -174,7 +175,7 @@ Partial Class FormODEsViewer
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.SaveResultToolStripMenuItem, Me.LoadParametersToolStripMenuItem, Me.AddReferenceToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.SaveResultToolStripMenuItem, Me.SaveAsGAFInputsToolStripMenuItem, Me.LoadParametersToolStripMenuItem, Me.AddReferenceToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(39, 21)
         Me.FileToolStripMenuItem.Text = "File"
@@ -182,26 +183,32 @@ Partial Class FormODEsViewer
         'LoadModelToolStripMenuItem
         '
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
-        Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
         '
         'SaveResultToolStripMenuItem
         '
         Me.SaveResultToolStripMenuItem.Name = "SaveResultToolStripMenuItem"
-        Me.SaveResultToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.SaveResultToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.SaveResultToolStripMenuItem.Text = "Save Result"
         '
         'LoadParametersToolStripMenuItem
         '
         Me.LoadParametersToolStripMenuItem.Name = "LoadParametersToolStripMenuItem"
-        Me.LoadParametersToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.LoadParametersToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.LoadParametersToolStripMenuItem.Text = "Load Parameters"
         '
         'AddReferenceToolStripMenuItem
         '
         Me.AddReferenceToolStripMenuItem.Name = "AddReferenceToolStripMenuItem"
-        Me.AddReferenceToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AddReferenceToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.AddReferenceToolStripMenuItem.Text = "Add Reference"
+        '
+        'SaveAsGAFInputsToolStripMenuItem
+        '
+        Me.SaveAsGAFInputsToolStripMenuItem.Name = "SaveAsGAFInputsToolStripMenuItem"
+        Me.SaveAsGAFInputsToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
+        Me.SaveAsGAFInputsToolStripMenuItem.Text = "Save As GAF inputs"
         '
         'FormODEsViewer
         '
@@ -248,4 +255,5 @@ Partial Class FormODEsViewer
     Friend WithEvents ToolStripLabel3 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents ToolStripTextBox3 As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents AddReferenceToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveAsGAFInputsToolStripMenuItem As ToolStripMenuItem
 End Class

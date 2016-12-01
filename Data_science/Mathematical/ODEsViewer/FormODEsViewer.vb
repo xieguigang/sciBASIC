@@ -40,6 +40,9 @@ Public Class FormODEsViewer
 
     Dim defines As New Dictionary(Of String, Double)
     Dim vars As New Dictionary(Of String, PictureBox)
+    ''' <summary>
+    ''' 需要拟合的参数列表
+    ''' </summary>
     Dim inputs As New Dictionary(Of String, TextBox)
     Dim currentSelect As PictureBox
 
@@ -198,17 +201,44 @@ Public Class FormODEsViewer
             .Filter = "Excel(*.csv)|*.csv"
         }
             If file.ShowDialog = DialogResult.OK Then
-                With ODEsOut.LoadFromDataFrame(file.FileName, noVars:=True)
-                    Dim x#() = .x
+                Try
+                    With ODEsOut.LoadFromDataFrame(file.FileName, noVars:=True)
+                        Dim x#() = .x
 
-                    ref = .y _
-                        .Select(
-                        Function(y) New NamedValue(Of PointF()) With {
-                            .Name = y.Key,
-                            .Value = x.SeqIterator.ToArray(
-                                Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
-                        }).ToDictionary
-                End With
+                        ref = .y _
+                            .Select(
+                            Function(y) New NamedValue(Of PointF()) With {
+                                .Name = y.Key,
+                                .Value = x.SeqIterator.ToArray(
+                                    Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                            }).ToDictionary
+                    End With
+                Catch ex As Exception
+                    With ODEsOut.LoadFromDataFrame(file.FileName, noVars:=False)
+                        Dim x#() = .x
+
+                        ref = .y _
+                            .Select(
+                            Function(y) New NamedValue(Of PointF()) With {
+                                .Name = y.Key,
+                                .Value = x.SeqIterator.ToArray(
+                                    Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                            }).ToDictionary
+                    End With
+                End Try
+            End If
+        End Using
+    End Sub
+
+    Private Sub SaveAsGAFInputsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsGAFInputsToolStripMenuItem.Click
+        Using saveFile As New SaveFileDialog With {
+            .Filter = "Text file(*.txt)|*.txt"
+        }
+            If saveFile.ShowDialog = DialogResult.OK Then
+                Dim params As String() = inputs.Select(Function(x) x.Key & ":" & x.Value.Text)
+                Dim out As String = {"0", "0", params.JoinBy(";")}.JoinBy(vbTab)
+
+                Call out.SaveTo(saveFile.FileName, Encodings.ASCII.GetEncodings)
             End If
         End Using
     End Sub

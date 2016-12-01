@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Text
 Public Module Extensions
 
     Sub New()
-        Call InitHandle()
+        Call __initStreamIO_pointer()
     End Sub
 
     ''' <summary>
@@ -173,7 +173,7 @@ Public Module Extensions
 
     <ExportAPI("Write.Csv")>
     <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Return Save(data, False).Save(path, encoding)
+        Return Reflector.Save(data, False).SaveDataFrame(path, encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
@@ -326,21 +326,21 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="path"></param>
-    ''' <param name="explicit">If true then all of the simple data type property its value will be save to the data file,
-    ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.ColumnAttribute"></see>
+    ''' <param name="explicit">
+    ''' If true then all of the simple data type property its value will be save to the data file,
+    ''' if not then only save the property with the <see cref="ColumnAttribute"></see>
     ''' </param>
     ''' <param name="encoding"></param>
-    ''' <param name="maps">{meta_define -> custom}</param>
+    ''' <param name="maps">``{meta_define -> custom}``</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
-                                             path As String,
+                                             path$,
                                              Optional explicit As Boolean = False,
                                              Optional encoding As Encoding = Nothing,
                                              Optional metaBlank As String = "",
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing) As Boolean
-
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -350,14 +350,17 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
         Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
 
-        Dim df As DocumentStream.File =
-            Reflector.Save(source,
-                           explicit,
-                           metaBlank,
-                           maps,
-                           Not nonParallel)
+        Dim csv As IEnumerable(Of RowObject) = Reflector.Save(
+            source.Select(Function(o) DirectCast(o, Object)),
+            explicit,
+            maps,
+            Not nonParallel,
+            metaBlank)
 
-        Dim success As Boolean = df.Save(path, Encoding:=encoding)
+        Dim success As Boolean = StreamIO.SaveDataFrame(
+            csv,
+            path:=path,
+            encoding:=encoding)
 
         If success Then
             Call "CSV saved!".__DEBUG_ECHO
