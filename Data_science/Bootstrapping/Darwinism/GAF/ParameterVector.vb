@@ -177,16 +177,25 @@ Namespace Darwinism.GAF
         ''' 这个函数生成的字符串是和<see cref="Parse"/>解析函数所使用的格式是相对应的
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' ###### 2016.12.2
+        ''' 
+        ''' ```
+        ''' var=value,....
+        ''' ```
+        ''' 
+        ''' 使用这种形式方便在R之中进行测试
+        ''' </remarks>
         Public Overrides Function ToString() As String
             Return vars _
-                .Select(Function(x) x.Name & ":" & x.value) _
-                .JoinBy(";")
+                .Select(Function(x) x.Name & "=" & x.value) _
+                .JoinBy(",")
         End Function
 
         Public Shared Function Parse(s As String) As Dictionary(Of String, Double)
-            Dim tks$() = s.Split(";"c)
+            Dim tks$() = s.Split(","c)
             Dim vars As Dictionary(Of String, Double) = tks _
-                .Select(Function(t) t.GetTagValue(":")) _
+                .Select(Function(t) t.GetTagValue("=")) _
                 .ToDictionary(Function(v) v.Name,
                               Function(v) v.Value.ParseDouble)
             Return vars
