@@ -30,6 +30,7 @@ Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Text
@@ -262,6 +263,16 @@ Public Class FormODEsViewer
                 Call out.SaveTo(saveFile.FileName, Encodings.ASCII.GetEncodings)
             End If
         End Using
+    End Sub
+
+    Private Sub SavePlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SavePlotToolStripMenuItem.Click
+        If Not PictureBox1.BackgroundImage Is Nothing Then
+            Using file As New SaveFileDialog With {.Filter = "Png image(*.png)|*.png"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+                End If
+            End Using
+        End If
     End Sub
 
     Private Sub ToolStripTextBox3_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox3.TextChanged
