@@ -100,6 +100,7 @@ Partial Class FormODEsViewer
         'PictureBox1
         '
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
@@ -287,12 +288,12 @@ Partial Class FormODEsViewer
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SavePlotToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(130, 26)
         '
         'SavePlotToolStripMenuItem
         '
         Me.SavePlotToolStripMenuItem.Name = "SavePlotToolStripMenuItem"
-        Me.SavePlotToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SavePlotToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
         Me.SavePlotToolStripMenuItem.Text = "Save Plot"
         '
         'FormODEsViewer
