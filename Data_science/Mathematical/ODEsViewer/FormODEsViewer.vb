@@ -153,6 +153,7 @@ Public Class FormODEsViewer
 
             Catch ex As Exception
                 Call App.LogException(ex)
+                TextBox1.AppendText(ex.ToString & vbCrLf)
             Finally
                 ToolStripProgressBar1.Value += delta
                 Application.DoEvents()
@@ -249,6 +250,8 @@ Public Class FormODEsViewer
                             Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
                     }).ToDictionary
             End With
+
+            Call TextBox1.AppendText(ex.ToString)
         End Try
     End Sub
 
