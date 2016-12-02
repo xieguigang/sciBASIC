@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Windows.Forms
 
 Public Class FormODEsViewer
 
@@ -45,76 +46,87 @@ Public Class FormODEsViewer
     ''' </summary>
     Dim inputs As New Dictionary(Of String, TextBox)
     Dim currentSelect As PictureBox
+    Dim config As config = config.Load
 
-    Private Sub LoadModelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadModelToolStripMenuItem.Click
+    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Using file As New OpenFileDialog With {
             .Filter = "Application Module(*.dll)|*.dll|.NET Application(*.exe)|*.exe"
         }
             If file.ShowDialog = DialogResult.OK Then
-                Using loader As New FormLoadModel() With {
-                    .DllFile = file.FileName
-                }
-                    If loader.ShowDialog = DialogResult.OK Then
-                        model = loader.Model
-                        Text = file.FileName.ToFileURL & "!" & model.FullName
-
-                        For Each ctrl As Control In FlowLayoutPanel1.Controls
-                            If ctrl.Equals(ToolStrip1) Then
-                                Continue For
-                            End If
-                            Call FlowLayoutPanel1.Controls.Remove(ctrl)
-                        Next
-                        For Each ctrl As Control In FlowLayoutPanel2.Controls
-                            Call FlowLayoutPanel2.Controls.Remove(ctrl)
-                        Next
-
-                        For Each x In vars.Values
-                            Call Controls.Remove(x)
-                            Call x.Dispose()
-                        Next
-
-                        For Each var$ In MonteCarlo.Model.GetVariables(model)
-                            Dim pic As New PictureBox With {
-                                .BackgroundImageLayout = ImageLayout.Zoom,
-                                .Size = New Size(200, 100)
-                            }
-                            vars(var) = pic
-                            FlowLayoutPanel2.Controls.Add(vars(var))
-
-                            AddHandler pic.Click, Sub(picBox, arg)
-                                                      currentSelect = DirectCast(picBox, PictureBox)
-                                                      PictureBox1.BackgroundImage = currentSelect.BackgroundImage
-                                                  End Sub
-                        Next
-
-                        For Each var$ In MonteCarlo.Model.GetParameters(model) _
-                            .Join(MonteCarlo.Model.GetVariables(model))
-
-                            Dim lb As New Label With {
-                                .Text = var & ": "
-                            }
-                            Dim text As New TextBox With {
-                                .Name = var,
-                                .Tag = lb
-                            }
-
-                            Call FlowLayoutPanel1.Controls.Add(lb)
-                            Call FlowLayoutPanel1.Controls.Add(text)
-
-                            defines(var) = 0
-                            inputs(var) = text
-
-                            AddHandler text.TextChanged, Sub(txt, args)
-                                                             Dim txtBox = DirectCast(txt, TextBox)
-                                                             defines(txtBox.Name) = Val(txtBox.Text)
-                                                             DirectCast(txtBox.Tag, Label).Text = $"{txtBox.Name}:= {defines(txtBox.Name)}"
-                                                         End Sub
-                        Next
-                    End If
-                End Using
+                If LoadModel(file.FileName) Then
+                    Call config.models.AddFileHistory(file.FileName)
+                End If
             End If
         End Using
     End Sub
+
+    Public Function LoadModel(path$) As Boolean
+        Using loader As New FormLoadModel() With {
+                  .DllFile = path
+              }
+            If loader.ShowDialog = DialogResult.OK Then
+                model = loader.Model
+                Text = path.ToFileURL & "!" & model.FullName
+
+                For Each ctrl As Control In FlowLayoutPanel1.Controls
+                    If ctrl.Equals(ToolStrip1) Then
+                        Continue For
+                    End If
+                    Call FlowLayoutPanel1.Controls.Remove(ctrl)
+                Next
+                For Each ctrl As Control In FlowLayoutPanel2.Controls
+                    Call FlowLayoutPanel2.Controls.Remove(ctrl)
+                Next
+
+                For Each x In vars.Values
+                    Call Controls.Remove(x)
+                    Call x.Dispose()
+                Next
+
+                For Each var$ In MonteCarlo.Model.GetVariables(model)
+                    Dim pic As New PictureBox With {
+                        .BackgroundImageLayout = ImageLayout.Zoom,
+                        .Size = New Size(200, 100)
+                    }
+                    vars(var) = pic
+                    FlowLayoutPanel2.Controls.Add(vars(var))
+
+                    AddHandler pic.Click, Sub(picBox, arg)
+                                              currentSelect = DirectCast(picBox, PictureBox)
+                                              PictureBox1.BackgroundImage = currentSelect.BackgroundImage
+                                          End Sub
+                Next
+
+                For Each var$ In MonteCarlo.Model.GetParameters(model) _
+                    .Join(MonteCarlo.Model.GetVariables(model))
+
+                    Dim lb As New Label With {
+                        .Text = var & ": "
+                    }
+                    Dim text As New TextBox With {
+                        .Name = var,
+                        .Tag = lb
+                    }
+
+                    Call FlowLayoutPanel1.Controls.Add(lb)
+                    Call FlowLayoutPanel1.Controls.Add(text)
+
+                    defines(var) = 0
+                    inputs(var) = text
+
+                    AddHandler text.TextChanged, Sub(txt, args)
+                                                     Dim txtBox = DirectCast(txt, TextBox)
+                                                     defines(txtBox.Name) = Val(txtBox.Text)
+                                                     DirectCast(txtBox.Tag, Label).Text = $"{txtBox.Name}:= {defines(txtBox.Name)}"
+                                                 End Sub
+                Next
+
+                Return True
+            End If
+        End Using
+
+        Return False
+    End Function
 
     Public Sub Draw(result As ODEsOut)
         ToolStripProgressBar1.Value = 15
@@ -243,10 +255,6 @@ Public Class FormODEsViewer
         End Using
     End Sub
 
-    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
-
-    End Sub
-
     Private Sub ToolStripTextBox3_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox3.TextChanged
         b = CInt(Val(ToolStripTextBox3.Text))
         ToolStripLabel3.Text = "b:= " & b
@@ -256,5 +264,7 @@ Public Class FormODEsViewer
         ToolStripTextBox1.Text = "10000"
         ToolStripTextBox2.Text = "0"
         ToolStripTextBox3.Text = "10"
+
+        Call LoadModelToolStripMenuItem.AddFilesHistory(config.models, AddressOf LoadModel)
     End Sub
 End Class

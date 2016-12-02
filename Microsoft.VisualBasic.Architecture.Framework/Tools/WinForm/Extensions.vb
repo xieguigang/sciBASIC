@@ -34,6 +34,8 @@ Namespace Windows.Forms
         ''' <param name="files"></param>
         ''' <param name="path$"></param>
         ''' <param name="latestFirst">最近使用的文件被放在列表的头部，否则直接放在列表的尾部</param>
+        ''' 
+        <Extension>
         Public Sub AddFileHistory(ByRef files As List(Of String), path$, Optional latestFirst As Boolean = True)
             Dim n As Integer = files.IndexOf(path)
 
