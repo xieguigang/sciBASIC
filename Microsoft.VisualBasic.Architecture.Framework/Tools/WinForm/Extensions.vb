@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Windows.Forms
 
@@ -7,10 +8,10 @@ Namespace Windows.Forms
         <Extension>
         Public Function AddFilesHistory(ByRef menu As ToolStripMenuItem, files As IEnumerable(Of String), invoke As Action(Of String), Optional formats As Func(Of String, String) = Nothing) As Boolean
             If formats Is Nothing Then
-                formats = Function(path$) path$.BaseName & $" ({Mid(path, 1, 20)}...)"
+                formats = Function(path$) path$.FileName & $" ({Mid(path, 1, 30)}...)"
             End If
 
-            For Each path$ In files
+            For Each path$ In files.SafeQuery
                 Dim file As New ToolStripMenuItem With {
                     .Text = formats(path),
                     .AutoToolTip = True,
@@ -37,6 +38,10 @@ Namespace Windows.Forms
         ''' 
         <Extension>
         Public Sub AddFileHistory(ByRef files As List(Of String), path$, Optional latestFirst As Boolean = True)
+            If files Is Nothing Then
+                files = New List(Of String)
+            End If
+
             Dim n As Integer = files.IndexOf(path)
 
             If n <> -1 Then

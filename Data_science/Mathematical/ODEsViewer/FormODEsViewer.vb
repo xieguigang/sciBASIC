@@ -55,6 +55,7 @@ Public Class FormODEsViewer
             If file.ShowDialog = DialogResult.OK Then
                 If LoadModel(file.FileName) Then
                     Call config.models.AddFileHistory(file.FileName)
+                    Call config.Save()
                 End If
             End If
         End Using
@@ -188,7 +189,9 @@ Public Class FormODEsViewer
                 defines = ODEsOut.LoadFromDataFrame(file.FileName).params
 
                 For Each x In defines.ToArray
-                    inputs(x.Key).Text = CStr(x.Value)
+                    If inputs.ContainsKey(x.Key) Then
+                        inputs(x.Key).Text = CStr(x.Value)
+                    End If
                 Next
             End If
         End Using
@@ -208,38 +211,44 @@ Public Class FormODEsViewer
 
     Dim ref As Dictionary(Of NamedValue(Of PointF()))
 
-    Private Sub AddReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddReferenceToolStripMenuItem.Click
+    Private Sub OpenToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem1.Click
         Using file As New OpenFileDialog With {
             .Filter = "Excel(*.csv)|*.csv"
         }
             If file.ShowDialog = DialogResult.OK Then
-                Try
-                    With ODEsOut.LoadFromDataFrame(file.FileName, noVars:=True)
-                        Dim x#() = .x
-
-                        ref = .y _
-                            .Select(
-                            Function(y) New NamedValue(Of PointF()) With {
-                                .Name = y.Key,
-                                .Value = x.SeqIterator.ToArray(
-                                    Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
-                            }).ToDictionary
-                    End With
-                Catch ex As Exception
-                    With ODEsOut.LoadFromDataFrame(file.FileName, noVars:=False)
-                        Dim x#() = .x
-
-                        ref = .y _
-                            .Select(
-                            Function(y) New NamedValue(Of PointF()) With {
-                                .Name = y.Key,
-                                .Value = x.SeqIterator.ToArray(
-                                    Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
-                            }).ToDictionary
-                    End With
-                End Try
+                Call AddReference(file.FileName)
+                Call config.references.AddFileHistory(file.FileName)
+                Call config.Save()
             End If
         End Using
+    End Sub
+
+    Public Sub AddReference(path$)
+        Try
+            With ODEsOut.LoadFromDataFrame(path, noVars:=True)
+                Dim x#() = .x
+
+                ref = .y _
+                    .Select(
+                    Function(y) New NamedValue(Of PointF()) With {
+                        .Name = y.Key,
+                        .Value = x.SeqIterator.ToArray(
+                            Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                    }).ToDictionary
+            End With
+        Catch ex As Exception
+            With ODEsOut.LoadFromDataFrame(path, noVars:=False)
+                Dim x#() = .x
+
+                ref = .y _
+                    .Select(
+                    Function(y) New NamedValue(Of PointF()) With {
+                        .Name = y.Key,
+                        .Value = x.SeqIterator.ToArray(
+                            Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                    }).ToDictionary
+            End With
+        End Try
     End Sub
 
     Private Sub SaveAsGAFInputsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsGAFInputsToolStripMenuItem.Click
@@ -266,5 +275,6 @@ Public Class FormODEsViewer
         ToolStripTextBox3.Text = "10"
 
         Call LoadModelToolStripMenuItem.AddFilesHistory(config.models, AddressOf LoadModel)
+        Call AddReferenceToolStripMenuItem.AddFilesHistory(config.references, AddressOf AddReference)
     End Sub
 End Class
