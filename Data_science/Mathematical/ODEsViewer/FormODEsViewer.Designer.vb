@@ -41,9 +41,11 @@ Partial Class FormODEsViewer
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveResultToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveAsGAFInputsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddReferenceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveAsGAFInputsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -69,7 +71,7 @@ Partial Class FormODEsViewer
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.FlowLayoutPanel1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1021, 533)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1021, 542)
         Me.SplitContainer1.SplitterDistance = 855
         Me.SplitContainer1.TabIndex = 0
         '
@@ -79,16 +81,18 @@ Partial Class FormODEsViewer
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(162, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(693, 533)
+        Me.PictureBox1.Size = New System.Drawing.Size(693, 542)
         Me.PictureBox1.TabIndex = 2
         Me.PictureBox1.TabStop = False
         '
         'FlowLayoutPanel2
         '
+        Me.FlowLayoutPanel2.AutoScroll = True
         Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.FlowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(162, 533)
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(162, 542)
         Me.FlowLayoutPanel2.TabIndex = 1
         '
         'FlowLayoutPanel1
@@ -99,7 +103,7 @@ Partial Class FormODEsViewer
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(162, 533)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(162, 542)
         Me.FlowLayoutPanel1.TabIndex = 0
         Me.FlowLayoutPanel1.WrapContents = False
         '
@@ -182,6 +186,7 @@ Partial Class FormODEsViewer
         '
         'LoadModelToolStripMenuItem
         '
+        Me.LoadModelToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem, Me.ToolStripMenuItem1})
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
         Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
@@ -191,6 +196,12 @@ Partial Class FormODEsViewer
         Me.SaveResultToolStripMenuItem.Name = "SaveResultToolStripMenuItem"
         Me.SaveResultToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.SaveResultToolStripMenuItem.Text = "Save Result"
+        '
+        'SaveAsGAFInputsToolStripMenuItem
+        '
+        Me.SaveAsGAFInputsToolStripMenuItem.Name = "SaveAsGAFInputsToolStripMenuItem"
+        Me.SaveAsGAFInputsToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
+        Me.SaveAsGAFInputsToolStripMenuItem.Text = "Save As GAF inputs"
         '
         'LoadParametersToolStripMenuItem
         '
@@ -204,17 +215,22 @@ Partial Class FormODEsViewer
         Me.AddReferenceToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
         Me.AddReferenceToolStripMenuItem.Text = "Add Reference"
         '
-        'SaveAsGAFInputsToolStripMenuItem
+        'OpenToolStripMenuItem
         '
-        Me.SaveAsGAFInputsToolStripMenuItem.Name = "SaveAsGAFInputsToolStripMenuItem"
-        Me.SaveAsGAFInputsToolStripMenuItem.Size = New System.Drawing.Size(187, 22)
-        Me.SaveAsGAFInputsToolStripMenuItem.Text = "Save As GAF inputs"
+        Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.OpenToolStripMenuItem.Text = "Open"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
         '
         'FormODEsViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1021, 583)
+        Me.ClientSize = New System.Drawing.Size(1021, 592)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -256,4 +272,6 @@ Partial Class FormODEsViewer
     Friend WithEvents ToolStripTextBox3 As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents AddReferenceToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveAsGAFInputsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
 End Class

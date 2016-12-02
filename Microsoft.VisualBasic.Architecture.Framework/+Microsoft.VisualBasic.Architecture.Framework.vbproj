@@ -494,6 +494,7 @@
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
+    <Compile Include="Tools\WinForm\Extensions.vb" />
     <Compile Include="Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />

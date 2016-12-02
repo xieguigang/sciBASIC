@@ -243,6 +243,10 @@ Public Class FormODEsViewer
         End Using
     End Sub
 
+    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
+
+    End Sub
+
     Private Sub ToolStripTextBox3_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox3.TextChanged
         b = CInt(Val(ToolStripTextBox3.Text))
         ToolStripLabel3.Text = "b:= " & b
