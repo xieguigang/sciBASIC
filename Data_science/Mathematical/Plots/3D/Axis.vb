@@ -1,4 +1,32 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::e55274b75b78041efe69363332c25c9c, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Axis.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -48,9 +76,9 @@ Namespace Plot3D
         <Extension>
         Public Sub DrawAxis(ByRef g As Graphics, camera As Camera, font As Font, axis As Axis)
             With camera
-                Call g.DrawLine(axis.penX, .Project(.Rotate(axis.x1)).PointXY, .Project(.Rotate(axis.x2)).PointXY)
-                Call g.DrawLine(axis.penY, .Project(.Rotate(axis.y1)).PointXY, .Project(.Rotate(axis.y2)).PointXY)
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(axis.z1)).PointXY, .Project(.Rotate(axis.z2)).PointXY)
+                Call g.DrawLine(axis.penX, .Project(.Rotate(axis.x1)).PointXY(camera.screen), .Project(.Rotate(axis.x2)).PointXY(camera.screen))
+                Call g.DrawLine(axis.penY, .Project(.Rotate(axis.y1)).PointXY(camera.screen), .Project(.Rotate(axis.y2)).PointXY(camera.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(axis.z1)).PointXY(camera.screen), .Project(.Rotate(axis.z2)).PointXY(camera.screen))
             End With
         End Sub
     End Module

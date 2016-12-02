@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6262d07a93d20159af24ca2395c31cfc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6c87c922d49429eb7144669b256f709b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
 <PackageNamespace("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>

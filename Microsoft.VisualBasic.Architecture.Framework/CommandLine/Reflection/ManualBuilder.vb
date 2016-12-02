@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d003821843d119fed7790c51941003d6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::12e8c0a23fe61d26e7c1bcf258d276a7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ManualBuilder.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
 
@@ -44,10 +45,18 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         <Extension>
         Public Function PrintHelp(api As APIEntryPoint) As Integer
+            Dim infoLines = Paragraph.Split(api.Info, 90).ToArray
 
             Call Console.WriteLine($"Help for command '{api.Name}':")
             Call Console.WriteLine()
-            Call Console.WriteLine($"  Information:  {api.Info}")
+            Call Console.WriteLine($"  Information:  {infoLines.FirstOrDefault}")
+
+            If infoLines.Length > 1 Then
+                For Each line$ In infoLines.Skip(1)
+                    Call Console.WriteLine($"                {line}")
+                Next
+            End If
+
             Call Console.Write($"  Usage:        ")
 
             Dim fore As ConsoleColor = Console.ForegroundColor
@@ -65,42 +74,105 @@ Namespace CommandLine.Reflection
             If String.IsNullOrEmpty(api.Example) Then
                 Call Console.WriteLine($"  Example:      CLI usage example not found!")
             Else
-                Call Console.WriteLine($"  Example:      {App.AssemblyName} {api.Name} {api.Example}")
+                Call Console.WriteLine($"  Example:      {App.AssemblyName} {api.Example}")
             End If
 
-            If Not api.ParameterInfo.IsNullOrEmpty Then
-                Call Console.WriteLine(vbCrLf & vbCrLf)
-                Call Console.WriteLine("   Parameters information:" & vbCrLf & "   ---------------------------------------")
+            If Not api.Arguments.IsNullOrEmpty Then
+                Call Console.WriteLine()
+                Call Console.WriteLine("  Arguments:")
+                Call Console.WriteLine("  ============================")
+                Call Console.WriteLine()
 
-                Dim maxLen As Integer = (From x In api.ParameterInfo Select x.Name.Length + 2).Max
+                Dim maxLen As Integer = (From x In api.Arguments Select x.Name.Length + 2).Max
                 Dim l As Integer
 
-                For Each param As ParameterInfo In api.ParameterInfo.Select(Function(x) x.x)
+                For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
                     fore = Console.ForegroundColor
 
                     If param.[Optional] Then
-                        Call Console.Write("   [")
+                        Call Console.Write("  [")
                         Console.ForegroundColor = ConsoleColor.Green
                         Call Console.Write(param.Name)
                         Console.ForegroundColor = fore
                         Call Console.Write("]")
                         l = param.Name.Length
                     Else
-                        Call Console.Write("    " & param.Name)
+                        Call Console.Write("   " & param.Name)
                         l = param.Name.Length - 1
                     End If
 
                     Dim blank As String = New String(" "c, maxLen - l + 1)
+                    Dim descriptLines = Paragraph.Split(param.Description, 60).ToArray
 
                     Call Console.Write(blank)
-                    Call Console.WriteLine($"Description:  {param.Description}")
-                    Call Console.Write(New String(" "c, maxLen + 5))
-                    Call Console.WriteLine($">Example:      {param.Name} ""{param.Example}""")
+                    Call Console.WriteLine($"Description:  {descriptLines.FirstOrDefault}")
+
+                    If descriptLines.Length > 1 Then
+                        blank = New String(" "c, maxLen + 11)
+
+                        For Each line In descriptLines.Skip(1)
+                            Call Console.WriteLine(blank & "        " & line)
+                        Next
+                    End If
+
+                    blank = New String(" "c, maxLen + 5)
+
+                    Call Console.WriteLine()
+                    Call Console.Write(blank)
+
+                    blank = blank & "              "
+
+                    If param.TokenType = CLITypes.Boolean Then
+                        Call Console.WriteLine($"Example:      {param.Name}")
+                        Call Console.Write(blank)
+                        Call Console.WriteLine(boolFlag)
+                    Else
+                        Dim example$ = param.ExampleValue
+                        Call Console.WriteLine($"Example:      {param.Name} {example}")
+                        If param.Pipeline <> PipelineTypes.undefined Then
+                            Call Console.WriteLine(blank & param.Pipeline.Description)
+                        End If
+                    End If
+
                     Call Console.WriteLine()
                 Next
             End If
 
             Return 0
+        End Function
+
+        ''' <summary>
+        ''' (bool flag does not require of argument value)
+        ''' </summary>
+        Public Const boolFlag$ = "(bool flag does not require of argument value)"
+
+        <Extension>
+        Public Function ExampleValue(arg As Argument) As String
+            Dim example$ = arg.Example
+
+            If String.IsNullOrEmpty(example) Then
+                Select Case arg.TokenType
+                    Case CLITypes.Double
+                        example = "<float>"
+                    Case CLITypes.Integer
+                        example = "<int32>"
+                    Case CLITypes.String
+                        example = "<term_string>"
+                    Case CLITypes.File
+                        example = "<file/directory>"
+                End Select
+            Else
+                example = example.CLIToken
+            End If
+
+            Return example
+        End Function
+
+        Const CLI$ = "(Microsoft.VisualBasic.CommandLine.CommandLine)"
+        Const VBStyle_CLI = "(args As Microsoft.VisualBasic.CommandLine.CommandLine)"
+
+        Public Function APIPrototype(declare$) As String
+            Return [declare].Replace(CLI, VBStyle_CLI)
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00d59616aaf6ed018f7a40de07f0aa6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::05ebfb743dd53e21e51d7a296158b853, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
@@ -73,7 +74,7 @@ Namespace Debugging
         ''' Some optional VisualBasic debugger parameter help information.(VisualBasic调试器的一些额外的开关参数的帮助信息)
         ''' </summary>
         Public Const DebuggerHelps As String =
-        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute /auto-paused --err <filename.log> /ps1 <bash_PS1>
+        "Additional VisualBasic App debugger arguments:   --echo on/off/all/warn/error /mute /auto-paused --err <filename.log> /ps1 <bash_PS1> /@set ""var1='value1';var2='value2'""
 
     [--echo] The debugger echo options, it have 5 values:
              on     App will output all of the debugger echo message, but the VBDebugger.Mute option is enabled, disable echo options can be control by the program code;
@@ -92,6 +93,7 @@ Namespace Debugging
     [/auto-paused] This boolean flag will makes the program paused after the command is executed done. and print a message on the console:
                        ""Press any key to continute..."" 
 
+    [/@set]  This option will be using for settings of the interval environment variable.
 
     ** Additionally, you can using ""/linux-bash"" command for generates the bash shortcuts on linux system.
 "
@@ -105,7 +107,12 @@ Namespace Debugging
             If Not String.Equals(caller, "Main") Then
                 Return  ' 这个调用不是从Main出发的，则不设置环境了，因为这个环境可能在其他的代码上面设置过了
             Else
-                Call __logShell(args)
+                Try
+                    Call __logShell(args)
+                Catch ex As Exception
+                    ' 因为只是进行命令行的调用历史的记录，所以实在不行的话就放弃这次的调用记录
+                    Call ex.PrintException
+                End Try
             End If
 
             Dim opt As String = args <= "--echo"
@@ -145,6 +152,19 @@ Namespace Debugging
                 VBDebugger.Mute = True
             Else
                 VBDebugger.Mute = config.mute
+            End If
+
+            Dim vars As Dictionary(Of String, String) = args.GetDictionary("/@set")
+
+            If Not vars.IsNullOrEmpty Then
+                Call App.JoinVariables(
+                    vars _
+                    .Select(Function(x)
+                                Return New NamedValue(Of String) With {
+                                    .Name = x.Key,
+                                    .Value = x.Value
+                                }
+                            End Function).ToArray)
             End If
         End Sub
     End Module

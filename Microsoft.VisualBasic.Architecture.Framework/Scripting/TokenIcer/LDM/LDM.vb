@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c5828f9cda7273bf2bd1557c857d4f4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::f46a6d56938ad6c9413401160c725fc7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\LDM.vb"
 
     ' Author:
     ' 
@@ -126,6 +126,9 @@ Namespace Scripting.TokenIcer
 
         Sub New(name As Tokens)
             TokenName = name
+        End Sub
+
+        Sub New()
         End Sub
 
         Public Overrides Function ToString() As String

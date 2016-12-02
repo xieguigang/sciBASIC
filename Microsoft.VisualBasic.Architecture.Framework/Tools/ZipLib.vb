@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51cd44f234806b87e21bbcdce73fa16e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::8e0fdc1f8b8b0e0d4e4fef18bcb0346f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
 
     ' Author:
     ' 
@@ -233,7 +233,7 @@ Public Module GZip
             Case ArchiveAction.[Error]
                 'Throws an error if the file exists
                 If archiveExists Then
-                    Throw New IOException($"The zip file {archiveFullName.ToFileURL.CliPath} already exists.")
+                    Throw New IOException($"The zip file {archiveFullName.ToFileURL.CLIPath} already exists.")
                 End If
 
             Case ArchiveAction.Ignore

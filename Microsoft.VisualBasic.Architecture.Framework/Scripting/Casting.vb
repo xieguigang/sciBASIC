@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc42966153de0c16e2271ba22118387f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::f283fa779b7d780e9d5dd7ea25b47efd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Text
 
 Namespace Scripting
 
@@ -58,18 +59,22 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        Private Function val(s As String) As Double
+        Public Function ParseNumeric(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) Then
                 Return Double.NaN
             End If
             s = s.Replace(",", "")
-            Return Conversion.Val(s)
+            If s.Last = "%"c Then
+                Return Conversion.Val(Mid(s, 1, s.Length - 1)) / 100  ' 百分比
+            Else
+                Return Conversion.Val(s)
+            End If
         End Function
 
         Public Function CastChar(obj As String) As Char
-            Return If(String.IsNullOrEmpty(obj), NIL, obj.First)
+            Return If(String.IsNullOrEmpty(obj), ASCII.NUL, obj.First)
         End Function
 
         ''' <summary>
@@ -78,11 +83,11 @@ Namespace Scripting
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public Function CastInteger(obj As String) As Integer
-            Return CInt(val(obj))
+            Return CInt(ParseNumeric(obj))
         End Function
 
         Public Function CastLong(obj As String) As Long
-            Return CLng(val(obj))
+            Return CLng(ParseNumeric(obj))
         End Function
 
         Public Function CastCharArray(obj As String) As Char()
@@ -140,7 +145,7 @@ Namespace Scripting
         End Function
 
         Public Function CastSingle(n As String) As Single
-            Return CSng(val(n))
+            Return CSng(ParseNumeric(n))
         End Function
 
         Public Function CastRegexOptions(name As String) As RegexOptions

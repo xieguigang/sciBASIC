@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1025b45b078483f9cb4e2d6daf3c84d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::16a36c2b3f86dc38b442275b71f12293, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -221,17 +221,18 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
+        ''' Try parsing the cli command string from the string value.
+        ''' (尝试着从文本行之中解析出命令行参数信息，假若value里面有空格，则必须要将value添加双引号)
         ''' </summary>
         ''' <param name="CLI">The commandline arguments which is user inputs from the terminal.</param>
-        ''' <param name="DuplicatedAllowed">Allow the duplicated command parameter argument name in the input, 
+        ''' <param name="duplicateAllowed">Allow the duplicated command parameter argument name in the input, 
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI As String,
-                                 <Parameter("Duplicated.Allowed")> Optional DuplicatedAllowed As Boolean = False) As CommandLine
+        Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI$,
+                                 <Parameter("Duplicates.Allowed")> Optional duplicateAllowed As Boolean = False) As CommandLine
 
             If String.IsNullOrEmpty(CLI) Then
                 Return New CommandLine
@@ -242,7 +243,7 @@ Namespace CommandLine
             End If
 
             Dim Tokens As String() = CLITools.GetTokens(CLI)
-            Dim args As CommandLine = TryParse(Tokens, DuplicatedAllowed)
+            Dim args As CommandLine = TryParse(Tokens, duplicateAllowed)
             args._CLICommandArgvs = CLI
 
             Return args
@@ -459,7 +460,7 @@ Namespace CommandLine
 
             For Each arg As NamedValue(Of String) In args1.__lstParameter
                 Dim value2 As String = args2(arg.Name)
-                If Not String.Equals(value2, arg.x, StringComparison.OrdinalIgnoreCase) Then
+                If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
                     Return False
                 End If
             Next

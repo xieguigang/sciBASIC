@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9bbb21d3c8aa50a18ca7f068bbeab82, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::b9bbb21d3c8aa50a18ca7f068bbeab82, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\PS1.vb"
 
     ' Author:
     ' 

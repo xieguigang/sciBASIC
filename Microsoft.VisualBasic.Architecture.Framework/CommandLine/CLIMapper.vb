@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3ee928041f747c99d939798e0977ea9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIMapper.vb"
+﻿#Region "Microsoft.VisualBasic::c3ee928041f747c99d939798e0977ea9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIMapper.vb"
 
     ' Author:
     ' 

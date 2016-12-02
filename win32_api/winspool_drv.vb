@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96d23013a7fa589ebf1513b3a94e9d4f, ..\visualbasic_App\win32_api\winspool_drv.vb"
+﻿#Region "Microsoft.VisualBasic::96d23013a7fa589ebf1513b3a94e9d4f, ..\sciBASIC#\win32_api\winspool_drv.vb"
 
     ' Author:
     ' 

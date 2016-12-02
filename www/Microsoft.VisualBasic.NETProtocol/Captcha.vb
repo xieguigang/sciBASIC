@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
+﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
 
     ' Author:
     ' 

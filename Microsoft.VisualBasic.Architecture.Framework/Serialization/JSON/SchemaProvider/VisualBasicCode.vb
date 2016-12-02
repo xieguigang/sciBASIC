@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34772121fa5dae00b402fe80c9a84c16, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\SchemaProvider\VisualBasicCode.vb"
+﻿#Region "Microsoft.VisualBasic::34772121fa5dae00b402fe80c9a84c16, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\SchemaProvider\VisualBasicCode.vb"
 
     ' Author:
     ' 

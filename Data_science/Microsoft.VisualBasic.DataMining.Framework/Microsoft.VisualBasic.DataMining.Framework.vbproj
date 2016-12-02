@@ -34,7 +34,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -67,7 +67,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -111,9 +111,11 @@
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
@@ -137,7 +139,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\docs\</OutputPath>
+    <OutputPath>..\..\..\sdk\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -164,6 +166,18 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+    <OutputPath>bin\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+    <OutputPath>bin\x64\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+    <OutputPath>bin\x86\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -201,21 +215,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
-    <Compile Include="BezierCurve.vb" />
-    <Compile Include="DirichletDistribution.vb" />
+    <Compile Include="Darwinism\DifferentialEvolution.vb" />
+    <Compile Include="Darwinism\Models\FitnessPool.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
     <Compile Include="FourierTransform.vb" />
+    <Compile Include="Darwinism\Models\Chromosome.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Helper\ChromosomesComparator.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\IterartionListener.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="KMeans\EntityModels\csv.vb" />
     <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
     <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />
     <Compile Include="KMeans\CompleteLinkage\Point.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
-    <Compile Include="KMeans\Entity.vb" />
+    <Compile Include="KMeans\EntityModels\Entity.vb" />
     <Compile Include="KMeans\LDM.vb" />
     <Compile Include="KMeans\KMeans.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb" />
@@ -224,7 +248,6 @@
     <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
-    <Compile Include="Gamma.vb" />
     <Compile Include="Abundance.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />
@@ -251,14 +274,7 @@
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\BinaryNeuron.vb" />
     <Content Include="AprioriAlgorithm\CodeProject.txt" />
-    <Content Include="Kernel\GeneticAlgorithm\README.txt" />
-    <Compile Include="Kernel\GeneticAlgorithm\DifferenceInfo.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\INeuron.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\InputNeuron.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\IntNeuron.vb" />
-    <Compile Include="Kernel\GeneticAlgorithm\Common.vb" />
     <Compile Include="Kernel\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
     <Compile Include="ComponentModel\Entity.vb" />
@@ -319,6 +335,10 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

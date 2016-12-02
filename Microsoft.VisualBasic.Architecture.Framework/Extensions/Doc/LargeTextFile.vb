@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c795d905d61799c11186b6811726e837, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::991050ed27028611c6569879af07faff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Public Module LargeTextFile
         If currentSize > maxSize Then
             Dim SplitTokens = dat.Split(CInt(dat.Length / 2))
             If SplitTokens.Length > 1 Then
-                Return (From n In SplitTokens Select __textPartitioning(n, maxSize)).ToArray.MatrixToVector
+                Return (From n In SplitTokens Select __textPartitioning(n, maxSize)).ToArray.ToVector
             Else
                 Return SplitTokens
             End If

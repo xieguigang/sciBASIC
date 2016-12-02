@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c383f296667d3d0c8ad3f61532b2a2c6, ..\visualbasic_App\Data_science\Mathematical\Math\Logical\FuzzyLogic\FuzzyEngine.vb"
+﻿#Region "Microsoft.VisualBasic::f1e6f470192d3ae083b7bc99040dfa06, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\FuzzyLogic\FuzzyEngine.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@ Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Namespace Logical.FuzzyLogic
 

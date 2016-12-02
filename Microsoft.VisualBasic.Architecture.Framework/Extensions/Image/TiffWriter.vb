@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0d27ab54fa0a5abeff750726c1b9e61, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::afe5d420842b90a26d6873e2049bc268, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Data
 Imports System.Drawing

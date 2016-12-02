@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1de341fd0e4daa8fcd24a00bb1fa8ddc, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::f1083039dd3e4083c53e5ad1e5a6363b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -28,12 +28,43 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Mathematical
 
     <PackageNamespace("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMathExtensions
+
+        ''' <summary>
+        ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
+        ''' </summary>
+        ''' <param name="From">
+        ''' the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.
+        ''' </param>
+        ''' <param name="To">
+        ''' the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.
+        ''' </param>
+        ''' <param name="By">number: increment of the sequence</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ''' 
+        <Extension>
+        Public Iterator Function seq([from] As Value(Of Double), [to] As Double, Optional by As Double = 0.1) As IEnumerable(Of Double)
+            Yield from
+
+            Do While (from = from.value + by) <= [to]
+                Yield from
+            Loop
+        End Function
+
+        <Extension>
+        Public Iterator Function seq(range As DoubleRange, Optional steps# = 0.1) As IEnumerable(Of Double)
+            For Each x# In seq(range.Min, range.Max, steps)
+                Yield x#
+            Next
+        End Function
 
         ''' <summary>
         ''' 以 N 为底的对数 ``LogN(X) = Log(X) / Log(N)`` 

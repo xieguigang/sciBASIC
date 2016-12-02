@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51c614a4391e385e53096d81dcdebfe8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::c92711cc80b5875b0bacbef756313b53, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.FileIO.Extensions
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
@@ -63,18 +65,8 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
-        Call "".SaveTo(path)
-
-        Dim file As New FileStream(path, FileMode.OpenOrCreate)
-        Dim writer As New StreamWriter(file, encoding.GetEncodings) With {
-            .NewLine =
-            If(newLine Is Nothing OrElse newLine.Length = 0,
-            vbLf,
-            newLine)
-        }
-
-        Return writer
+    Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
+        Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
     End Function
 
     ''' <summary>
@@ -83,9 +75,9 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path As String) As IEnumerable(Of String)
-        Using fs As New FileStream(path, FileMode.Open)
-            Using reader As New StreamReader(fs)
+    Public Iterator Function IterateAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+        Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
+            Using reader As New StreamReader(fs, encoding.GetEncodings)
 
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine
@@ -177,7 +169,8 @@ Public Module TextDoc
     <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
                                        <Parameter("Path")> path As String,
                                        <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing,
-                                       Optional append As Boolean = False) As Boolean
+                                       Optional append As Boolean = False,
+                                       Optional throwEx As Boolean = True) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
@@ -207,7 +200,13 @@ Public Module TextDoc
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
-            Throw ex
+
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+                Return False
+            End If
         End Try
 
         Return True
@@ -277,6 +276,13 @@ Public Module TextDoc
         Return True
     End Function
 
+    ''' <summary>
+    ''' Save the text content in the <see cref="StringBuilder"/> object into a text file.
+    ''' </summary>
+    ''' <param name="sBuilder"></param>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         Return sBuilder.ToString.SaveTo(path, encoding)

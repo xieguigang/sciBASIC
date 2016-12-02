@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41cc2245f9995fd7fff9de967209e3d5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\UserAgent.vb"
+﻿#Region "Microsoft.VisualBasic::41cc2245f9995fd7fff9de967209e3d5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\UserAgent.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,11 @@ Namespace Net.Http
     ''' List of user-agent that can be using in the http GET
     ''' </summary>
     Public Class UserAgent
+
+        ''' <summary>
+        ''' ``User-Agent``
+        ''' </summary>
+        Public Const UAheader As String = "User-Agent"
 
         Public Class Android
 

@@ -29,6 +29,8 @@ local.properties
 .buildpath
 
 
+packages/
+
 #################
 ## Visual Studio
 #################
@@ -40,6 +42,11 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+
+slnx.sqlite-journal
+slnx.sqlite
+bin-Debug/
+GCModeller-[Xx]64/
 
 # Build results
 

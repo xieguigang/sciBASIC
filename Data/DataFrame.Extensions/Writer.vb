@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4d90a5711b242a4e53988d36549912e, ..\visualbasic_App\Data\DataFrame.Extensions\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::d0106e7c5afa39debfa05f4978a94057, ..\sciBASIC#\Data\DataFrame.Extensions\Writer.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,8 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' <see cref="Writer.Dispose"/>的时候会自动保存Csv文件的数据

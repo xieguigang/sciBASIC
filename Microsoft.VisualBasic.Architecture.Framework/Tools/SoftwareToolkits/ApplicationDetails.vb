@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af6f5c838151bfa4cd89064b222335d3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ApplicationDetails.vb"
+﻿#Region "Microsoft.VisualBasic::d8dfeafc11493e2868825f87c5fc4467, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ApplicationDetails.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,14 @@ Namespace SoftwareToolkits
         Sub New()
             Call Me.New(GetType(ApplicationDetails).Assembly)
         End Sub
+
+        ''' <summary>
+        ''' 获取当前进程的exe文件的程序描述信息，直接使用New申明得到的只是运行时核心模块dll文件的信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function CurrentExe() As ApplicationDetails
+            Return New ApplicationDetails(Assembly.LoadFile(App.ExecutablePath))
+        End Function
 
         Public Shared Function FromTypeModule(type As Type) As ApplicationDetails
             Return New ApplicationDetails(type.Assembly)

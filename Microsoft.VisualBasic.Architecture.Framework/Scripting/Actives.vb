@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c072a08162607f04b67e968d0b110e91, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\Actives.vb"
+﻿#Region "Microsoft.VisualBasic::8e0d513cb16d5e78999b2b03fe5e8aef, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Actives.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -39,12 +40,20 @@ Namespace Scripting
 
         <Extension> Public Function DisplType(type As Type) As String
             Dim sb As New StringBuilder
+            Dim view As ActiveViews = type.GetCustomAttribute(Of ActiveViews)
 
             Call sb.AppendLine($"**Decalre**:  _{type.FullName}_")
             Call sb.AppendLine("Example: ")
-            Call sb.AppendLine("```json")
-            Call sb.AppendLine(Active(type))
-            Call sb.AppendLine("```")
+
+            If view Is Nothing Then
+                Call sb.AppendLine("```json")
+                Call sb.AppendLine(Active(type))
+                Call sb.AppendLine("```")
+            Else
+                Call sb.AppendLine("```" & view.type)
+                Call sb.AppendLine(view.Views)
+                Call sb.AppendLine("```")
+            End If
 
             Return sb.ToString
         End Function

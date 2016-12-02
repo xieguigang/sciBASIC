@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2decd1a93acc1fa435c90b58259633af, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IRanges.vb"
+﻿#Region "Microsoft.VisualBasic::2decd1a93acc1fa435c90b58259633af, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IRanges.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33fd3a112bbe47fb94c1b28d58d349a0, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::e692dcb478fa60a78b4bed623061efc8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
 
     ' Author:
     ' 
@@ -38,14 +38,21 @@ Namespace Language
     ''' <summary>
     ''' Language syntax extension for the Linq expression in VisualBasic language
     ''' </summary>
-    Public Module LinqAPI
+    Public NotInheritable Class LinqAPI
+
+        ''' <summary>
+        ''' 2016-10-21
+        ''' 在这里被设计成Class而不是Module是为了防止和Linq拓展之中的函数产生冲突
+        ''' </summary>
+        Private Sub New()
+        End Sub
 
         ''' <summary>
         ''' Initializes a new instance of the <see cref="List"/>`1 class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
         ''' </summary>
-        Public Function MakeList(Of T)() As ListHelper(Of T)
+        Public Shared Function MakeList(Of T)() As ListHelper(Of T)
             Return New ListHelper(Of T)
         End Function
 
@@ -54,11 +61,11 @@ Namespace Language
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns>An array that contains the elements from the input sequence.</returns>
-        Public Function Exec(Of T)() As ExecHelper(Of T)
+        Public Shared Function Exec(Of T)() As ExecHelper(Of T)
             Return New ExecHelper(Of T)
         End Function
 
-        Public Function DefaultFirst(Of T)(Optional [default] As T = Nothing) As FirstOrDefaultHelper(Of T)
+        Public Shared Function DefaultFirst(Of T)(Optional [default] As T = Nothing) As FirstOrDefaultHelper(Of T)
             Return New FirstOrDefaultHelper(Of T)([default])
         End Function
 
@@ -69,39 +76,39 @@ Namespace Language
         ''' <typeparam name="V">Is the type of value output</typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Public Function Exec(Of T, V)(source As IEnumerable(Of T)) As ToArrayHelper(Of T, V)
+        Public Shared Function Exec(Of T, V)(source As IEnumerable(Of T)) As ToArrayHelper(Of T, V)
             Return New ToArrayHelper(Of T, V)(source)
         End Function
 
-        Public Function BuildHash(Of T, V, [In])(keys As Func(Of [In], T), values As Func(Of [In], V)) As BuildHashHelper(Of T, V, [In])
+        Public Shared Function BuildHash(Of T, V, [In])(keys As Func(Of [In], T), values As Func(Of [In], V)) As BuildHashHelper(Of T, V, [In])
             Return New BuildHashHelper(Of T, V, [In])(keys, values)
         End Function
 
-        Public Function BuildHash(Of T, [In])(keys As Func(Of [In], T)) As BuildHashHelper(Of T, [In], [In])
+        Public Shared Function BuildHash(Of T, [In])(keys As Func(Of [In], T)) As BuildHashHelper(Of T, [In], [In])
             Return New BuildHashHelper(Of T, [In], [In])(keys, Function(x) x)
         End Function
 
-        Public Function BuildHash(Of T As sIdEnumerable)() As BuildHashHelper(Of String, T, T)
+        Public Shared Function BuildHash(Of T As sIdEnumerable)() As BuildHashHelper(Of String, T, T)
             Return New BuildHashHelper(Of String, T, T)(Function(x) x.Identifier, Function(x) x)
         End Function
 
-        Public Function Takes(Of T)(n As Integer) As TakeHelper(Of T)
+        Public Shared Function Takes(Of T)(n As Integer) As TakeHelper(Of T)
             Return New TakeHelper(Of T)(n)
         End Function
 
-        Public Function LQuery(Of T, out)(task As Func(Of T, out), Optional partTokens As Integer = 20000) As LQueryHelper(Of T, out)
+        Public Shared Function LQuery(Of T, out)(task As Func(Of T, out), Optional partTokens As Integer = 20000) As LQueryHelper(Of T, out)
             Return New LQueryHelper(Of T, out) With {
                 .task = task,
                 .partTokens = partTokens
             }
         End Function
 
-        Public Function IsEquals(Of T)(Optional c% = 0) As CountHelper(Of T)
+        Public Shared Function IsEquals(Of T)(Optional c% = 0) As CountHelper(Of T)
             Return New CountHelper(Of T) With {
                 .count = c
             }
         End Function
-    End Module
+    End Class
 
     Namespace LinqAPIHelpers
 
@@ -109,11 +116,17 @@ Namespace Language
 
             Public count%
 
-            Public Shared Operator <=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Integer
-                Return source.Count
+            ''' <summary>
+            ''' 判断序列计数是否相等
+            ''' </summary>
+            ''' <param name="h"></param>
+            ''' <param name="source"></param>
+            ''' <returns></returns>
+            Public Shared Operator <=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Boolean
+                Return source.Count = h.count
             End Operator
 
-            Public Shared Operator >=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Integer
+            Public Shared Operator >=(h As CountHelper(Of T), source As IEnumerable(Of T)) As Boolean
                 Throw New NotSupportedException
             End Operator
 
@@ -132,7 +145,7 @@ Namespace Language
             Dim partTokens As Integer
 
             Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()
-                Return LQuerySchedule.LQuery(source, helper.task, parTokens:=helper.partTokens).ToArray
+                Return LQuerySchedule.LQuery(source, helper.task, helper.partTokens).ToArray
             End Operator
 
             Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of T)) As out()
@@ -140,7 +153,7 @@ Namespace Language
             End Operator
 
             Public Overloads Shared Operator <=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of IEnumerable(Of T))) As out()
-                Return helper <= source.MatrixAsIterator
+                Return helper <= source.IteratesALL
             End Operator
 
             Public Overloads Shared Operator >=(helper As LQueryHelper(Of T, out), source As IEnumerable(Of IEnumerable(Of T))) As out()
@@ -249,7 +262,7 @@ Namespace Language
             ''' <param name="linq">The collection whose elements are copied to the new list.</param>
             ''' <returns></returns>
             Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
-                Return linq.MatrixToList
+                Return linq.Unlist
             End Operator
 
             Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
@@ -264,7 +277,7 @@ Namespace Language
             ''' <param name="linq">The collection whose elements are copied to the new list.</param>
             ''' <returns></returns>
             Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of IEnumerable(Of T)))) As List(Of T)
-                Return linq.MatrixAsIterator.MatrixToList
+                Return linq.IteratesALL.Unlist
             End Operator
 
             Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of IEnumerable(Of IEnumerable(Of T)))) As List(Of T)
@@ -303,7 +316,7 @@ Namespace Language
             ''' </param>
             ''' <returns>An array that contains the elements from the input sequence.</returns>
             Public Shared Operator <=(cls As ExecHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As T()
-                Return linq.MatrixToVector
+                Return linq.ToVector
             End Operator
 
             Public Shared Operator >=(cls As ExecHelper(Of T), linq As IEnumerable(Of IEnumerable(Of T))) As T()

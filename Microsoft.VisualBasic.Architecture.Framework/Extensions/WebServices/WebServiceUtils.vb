@@ -1,31 +1,32 @@
-﻿#Region "Microsoft.VisualBasic::5a991321c21b5c93d16401c6e1ad7ae7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::a81ce97e400bae356603ba3e8719cf37, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Collections.Specialized
 Imports System.IO
 Imports System.Net
 Imports System.Net.Security
@@ -36,13 +37,13 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.HtmlParser
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -108,9 +109,9 @@ Public Module WebServiceUtils
     ''' <remarks></remarks>
     '''
     <ExportAPI("Html.Href")>
-    <Extension> Public Function href(<Parameter("HTML",
-                                                    "A string that contains the url string pattern like: href=""url_text""")>
-                                         html As String) As String
+    <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")>
+                                     html As String) As String
+
         If String.IsNullOrEmpty(html) Then
             Return ""
         End If
@@ -180,53 +181,66 @@ Public Module WebServiceUtils
     ''' <param name="tokens">
     ''' 元素的个数必须要大于1，因为从url里面解析出来的元素之中第一个元素是url本身，则不再对url做字典解析
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' ###### 2016-11-21
+    ''' 因为post可能会传递数组数据进来，则这个时候就会出现重复的键名，则已经不再适合字典类型了，这里改为返回<see cref="NameValueCollection"/>
+    ''' </returns>
     <ExportAPI("CreateDirectory", Info:="Create a parameter dictionary from the request parameter tokens.")>
     <Extension>
-    Public Function GenerateDictionary(tokens As String(), Optional lowercase As Boolean = True) As Dictionary(Of String, String)
+    Public Function GenerateDictionary(tokens As String(), Optional lowercase As Boolean = True) As NameValueCollection
+        Dim out As New NameValueCollection
+
         If tokens.IsNullOrEmpty Then
-            Return New Dictionary(Of String, String)
+            Return out
         End If
         If tokens.Length = 1 Then  ' 只有url，没有附带的参数，则返回一个空的字典集合
             If InStr(tokens(Scan0), "=") = 0 Then
-                Return New Dictionary(Of String, String)
+                Return out
             End If
         End If
 
-        Dim LQuery = (From s As String In tokens
+        Dim LQuery = (From s As String
+                      In tokens
                       Let p As Integer = InStr(s, "="c)
                       Let Key As String = Mid(s, 1, p - 1)
-                      Let Value = Mid(s, p + 1)
-                      Select Key, Value).ToArray
-        Return LQuery.ToDictionary(Function(obj) If(lowercase, obj.Key.ToLower, obj.Key), Function(obj) obj.Value)
+                      Let value = Mid(s, p + 1)
+                      Select Key,
+                          value).ToArray
+
+        For Each x In LQuery
+            Dim name As String = If(lowercase,
+                x.Key.ToLower,
+                x.Key)
+            Call out.Add(name, x.value)
+        Next
+
+        Return out
     End Function
 
     ''' <summary>
-    ''' 不像<see cref="postRequestParser(String, Boolean)"/>函数，这个函数不会替换掉转义字符，并且所有的Key都已经被默认转换为小写形式的了
+    ''' 不像<see cref="PostUrlDataParser(String, Boolean)"/>函数，这个函数不会替换掉转义字符，并且所有的Key都已经被默认转换为小写形式的了
     ''' </summary>
-    ''' <param name="argvs"></param>
+    ''' <param name="argsData">URL parameters</param>
     ''' <returns></returns>
-    '''
     <ExportAPI("Request.Parser")>
-    <Extension> Public Function requestParser(argvs As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
-        Dim Tokens As String() = argvs.Split("&"c)
+    <Extension> Public Function RequestParser(argsData As String, Optional TransLower As Boolean = True) As NameValueCollection
+        Dim Tokens As String() = argsData.Split("&"c)
         Return GenerateDictionary(Tokens, TransLower)
     End Function
 
     ''' <summary>
-    '''
+    ''' 生成URL请求的参数
     ''' </summary>
-    ''' <param name="hash"></param>
+    ''' <param name="data"></param>
     ''' <param name="escaping">是否进行对value部分的字符串数据进行转义</param>
     ''' <returns></returns>
-    <Extension> Public Function BuildArgvs(hash As IEnumerable(Of KeyValuePair(Of String, String)),
-                                           Optional escaping As Boolean = False) As String
-        If escaping Then
-
-        End If
-
-        Dim str As String = String.Join("&", (From obj In hash.AsParallel Select $"{obj.Key}={obj.Value}").ToArray)
-        Return str
+    <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)), Optional escaping As Boolean = False) As String
+        Dim __get As Func(Of String, String) = If(escaping,
+            AddressOf UrlDecode,
+            Function(s) s)
+        Dim urlData As String = data _
+            .Select(Function(x) $"{x.Key}={__get(x.Value)}").JoinBy("&")
+        Return urlData
     End Function
 
     <ExportAPI("Build.Args")>
@@ -316,9 +330,9 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     '''
     <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function postRequestParser(data As String, Optional TransLower As Boolean = True) As Dictionary(Of String, String)
+    <Extension> Public Function PostUrlDataParser(data As String, Optional TransLower As Boolean = True) As NameValueCollection
         If String.IsNullOrEmpty(data) Then
-            Return New Dictionary(Of String, String)
+            Return New NameValueCollection
         End If
 
         Dim Tokens As String() = data.UrlDecode.Split("&"c)
@@ -454,15 +468,91 @@ Public Module WebServiceUtils
         Return PostRequest(url, post)
     End Function
 
+    ''' <summary>
+    ''' POST http request for get html.
+    ''' (请注意，假若<paramref name="params"/>之中含有字符串数组的话，则会出错，这个时候需要使用
+    ''' <see cref="PostRequest(String, Dictionary(Of String, String()), String, String, String)"/>方法)
+    ''' </summary>
+    ''' <param name="url$"></param>
+    ''' <param name="params"></param>
+    ''' <param name="Referer$"></param>
+    ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url As String, params As Specialized.NameValueCollection) As String
+    <Extension> Public Function PostRequest(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
         Using request As New WebClient
+
+            Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
+            Call request.Headers.Add(NameOf(Referer), Referer)
+
+            If Not String.IsNullOrEmpty(proxy) Then
+                Call request.SetProxy(proxy)
+            End If
+
             Call $"[POST] {url}....".__DEBUG_ECHO
+
             Dim response As Byte() = request.UploadValues(url, "POST", params)
-            Dim strData As String = System.Text.Encoding.UTF8.GetString(response)
+            Dim strData As String = Encoding.UTF8.GetString(response)
+
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
 
             Return strData
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' POST http request for get html
+    ''' </summary>
+    ''' <param name="url$"></param>
+    ''' <param name="data"></param>
+    ''' <param name="Referer$"></param>
+    ''' <returns></returns>
+    <ExportAPI("POST", Info:="POST http request")>
+    <Extension> Public Function PostRequest(url$, data As Dictionary(Of String, String()),
+                                            Optional Referer$ = "",
+                                            Optional proxy$ = Nothing,
+                                            Optional ua As String = UserAgent.GoogleChrome) As String
+
+        Dim postString As New List(Of String)
+
+        For Each postValue As KeyValuePair(Of String, String()) In data
+            postString += postValue.Value _
+                .Select(Function(v) postValue.Key & "=" & HttpUtility.UrlEncode(v))
+        Next
+
+        Dim postData As String = postString.JoinBy("&")
+        Dim request As HttpWebRequest = WebRequest.Create(url).As(Of HttpWebRequest)
+
+        request.Method = "POST"
+        request.Accept = "application/json"
+        request.ContentLength = postData.Length
+        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+        request.UserAgent = ua
+        request.Referer = Referer
+
+        If Not String.IsNullOrEmpty(proxy) Then
+            Call request.SetProxy(proxy)
+        End If
+
+        Call $"[POST] {url}....".__DEBUG_ECHO
+
+        ' post data Is sent as a stream
+        Using sender As New StreamWriter(request.GetRequestStream())
+            sender.Write(postData)
+        End Using
+
+        ' returned values are returned as a stream, then read into a string
+        Dim response = request.GetResponse().As(Of HttpWebResponse)
+        Using responseStream As New StreamReader(response.GetResponseStream())
+            Dim html As New StringBuilder
+            Dim s As New Value(Of String)
+
+            Do While Not (s = responseStream.ReadLine) Is Nothing
+                Call html.AppendLine(+s)
+            Loop
+
+            Call $"[GET] {html.Length} bytes...".__DEBUG_ECHO
+
+            Return html.ToString
         End Using
     End Function
 
@@ -501,21 +591,23 @@ Public Module WebServiceUtils
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件)
+    ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件，失败或者错误会返回空字符串)
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
     ''' <param name="timeout">发生错误的时候的重试的次数</param>
-    ''' <returns></returns>
+    ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request or a html file on the local filesystem.")>
+    <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request Or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
-                       <Parameter("Request.TimeOut")>
-                       Optional timeout As UInteger = 20,
-                       <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
-                       Optional isFileUrl As Boolean = False,
-                       Optional headers As Dictionary(Of String, String) = Nothing,
-                       Optional proxy As String = Nothing) As String
+                                      <Parameter("Request.TimeOut")>
+                                      Optional timeout As UInteger = 20,
+                                      <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
+                                      Optional isFileUrl As Boolean = False,
+                                      Optional headers As Dictionary(Of String, String) = Nothing,
+                                      Optional proxy As String = Nothing,
+                                      Optional doNotRetry404 As Boolean = False,
+                                      Optional UA$ = UserAgent.GoogleChrome) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -534,7 +626,7 @@ Public Module WebServiceUtils
             Return FileIO.FileSystem.ReadAllText(url)
         Else
             If isFileUrl Then
-                Call $"url {url.ToFileURL} can not be solved on your filesystem!".__DEBUG_ECHO
+                Call $"url {url.ToFileURL} can Not be solved on your filesystem!".__DEBUG_ECHO
                 Return ""
             End If
         End If
@@ -542,23 +634,43 @@ Public Module WebServiceUtils
 #If FRAMEWORD_CORE Then
         Using Process As New CBusyIndicator(_start:=True)
 #End If
-            Return __downloadWebpage(url, timeout, headers, proxy)
+            Return __downloadWebpage(
+                url,
+                timeout,
+                headers,
+                proxy,
+                doNotRetry404, UA)
+
 #If FRAMEWORD_CORE Then
         End Using
 #End If
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, RequestTimeOut As UInteger, headers As Dictionary(Of String, String), proxy As String) As String
-        Dim RequestTime As Integer = 0
-        Try
-RETRY:      Return __downloadWebpage(url, headers, proxy)
-        Catch ex As Exception
-            ex = New Exception(url, ex)
-            Call ex.PrintException
+    Private Function __downloadWebpage(url$,
+                                       RequestTimeOut%,
+                                       headers As Dictionary(Of String, String),
+                                       proxy As String,
+                                       DoNotRetry404 As Boolean,
+                                       UA$) As String
 
-            If RequestTime < RequestTimeOut Then
-                RequestTime += 1
+        Dim retryTime As Integer = 0
+
+        Try
+RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
+        Catch ex As Exception
+            Dim is404 As Boolean =
+                InStr(ex.Message, "(404) Not Found") > 0
+
+            ex = New Exception(url, ex)
+            ex.PrintException
+
+            If retryTime < RequestTimeOut Then
+                If is404 AndAlso DoNotRetry404 Then
+                    Return LogException(url, ex)
+                End If
+
+                retryTime += 1
                 Call "Data downloading error, retry connect to the server!".__DEBUG_ECHO
                 GoTo RETRY
             Else
@@ -575,7 +687,25 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
         Return ""
     End Function
 
-    Private Function __downloadWebpage(url As String, headers As Dictionary(Of String, String), proxy As String) As String
+    <Extension>
+    Public Sub SetProxy(ByRef request As HttpWebRequest, proxy As String)
+        request.Proxy = proxy.GetProxy
+    End Sub
+
+    <Extension>
+    Public Sub SetProxy(ByRef request As WebClient, proxy As String)
+        request.Proxy = proxy.GetProxy
+    End Sub
+
+    <Extension>
+    Public Function GetProxy(proxy As String) As WebProxy
+        Return New WebProxy With {
+            .Address = New Uri(proxy),
+            .Credentials = New NetworkCredential()
+        }
+    End Function
+
+    Private Function __downloadWebpage(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
         Call "Waiting for the server reply..".__DEBUG_ECHO
 
         Dim Timer As Stopwatch = Stopwatch.StartNew
@@ -590,10 +720,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
             Next
         End If
         If Not String.IsNullOrEmpty(proxy) Then
-            Dim prox As New WebProxy
-            prox.Address = New Uri(proxy)
-            prox.Credentials = New NetworkCredential()
-            WebRequest.Proxy = prox
+            Call WebRequest.SetProxy(proxy)
         End If
 
         Dim WebResponse As WebResponse = WebRequest.GetResponse
@@ -602,7 +729,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
             Dim html As String = ioStream.ReadToEnd
             Dim title As String = html.HTMLtitle
 
-            If InStr(html, "http://www.doctorcom.com") Then
+            If InStr(html, "http://www.doctorcom.com") > 0 Then
                 Return ""
             End If
 
@@ -624,7 +751,9 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
     <ExportAPI("wget", Info:="Download data from the specific URL location.")>
     <Extension> Public Function DownloadFile(<Parameter("url")> strUrl As String,
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
-                                             save As String) As Boolean
+                                             save As String,
+                                             Optional proxy As String = Nothing,
+                                             Optional ua As String = UserAgent.FireFox) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -636,13 +765,24 @@ RETRY:      Return __downloadWebpage(url, headers, proxy)
     <Extension> Public Function DownloadFile(strUrl As String, SavedPath As String) As Boolean
 #End If
         Try
-            Using dwl As New System.Net.WebClient()
+            Using dwl As New WebClient()
+                If Not String.IsNullOrEmpty(proxy) Then
+                    Call dwl.SetProxy(proxy)
+                End If
+
+                Call dwl.Headers.Add(UserAgent.UAheader, ua)
+                Call save.ParentPath.MkDIR
                 Call dwl.DownloadFile(strUrl, save)
             End Using
             Return True
         Catch ex As Exception
-            Dim trace As String = MethodBase.GetCurrentMethod.GetFullName & ":: " & strUrl
-            Call App.LogException(ex, trace)
+            Dim trace As String = MethodBase.GetCurrentMethod.GetFullName
+
+            Call App.LogException(
+                New Exception(strUrl, ex),
+                trace)
+            Call ex.PrintException
+
             Return False
         Finally
             If save.FileExists Then

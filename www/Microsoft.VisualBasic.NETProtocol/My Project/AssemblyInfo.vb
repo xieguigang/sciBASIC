@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Microsoft.VisualBasic.NETProtocol")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Microsoft.VisualBasic.NETProtocol")>
+<Assembly: AssemblyTitle("Network Utility Tools library")>
+<Assembly: AssemblyDescription("Network Utility Tools library")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("")>
 <Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2016")>
 <Assembly: AssemblyTrademark("")> 
 

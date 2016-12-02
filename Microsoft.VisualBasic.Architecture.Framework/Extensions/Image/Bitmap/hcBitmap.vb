@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c44e49fe1ebc579ed13d85849d3ab7df, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hcBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::c44e49fe1ebc579ed13d85849d3ab7df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hcBitmap.vb"
 
     ' Author:
     ' 

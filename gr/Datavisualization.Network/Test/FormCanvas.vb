@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16720c7e1cd6f5288a04ed40192a62c0, ..\visualbasic_App\gr\Datavisualization.Network\Test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::49477a18eda48973a5044645fefd229f, ..\sciBASIC#\gr\Datavisualization.Network\Test\FormCanvas.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,8 @@
 
 Imports System.Drawing
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.DataVisualization.Network.Canvas
-Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 
 Public Class FormCanvas
 
@@ -88,5 +88,9 @@ Public Class FormCanvas
 
     Private Sub ShowLabelsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLabelsToolStripMenuItem.Click
         canvas.ShowLabel = ShowLabelsToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub FormCanvas_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        Call App.Exit(0)
     End Sub
 End Class

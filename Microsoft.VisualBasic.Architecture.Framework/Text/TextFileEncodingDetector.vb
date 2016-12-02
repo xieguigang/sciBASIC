@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfdc9368b4c869c33500459387280708, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\TextFileEncodingDetector.vb"
+﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextFileEncodingDetector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@ Namespace Text
     ''' Encoding fileEncoding = TextFileEncodingDetector.DetectTextFileEncoding("you file path",Encoding.Default);
     ''' </summary>
     ''' <remarks></remarks>
-    Module TextFileEncodingDetector
+    Public Module TextFileEncodingDetector
 
         Public ReadOnly Property TextCodings As Dictionary(Of String, System.Text.Encoding) =
             New Dictionary(Of String, Encoding) From {

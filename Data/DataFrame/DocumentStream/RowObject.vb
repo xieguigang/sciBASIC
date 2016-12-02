@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd13d4e8b8479517298b19207321c0ae, ..\visualbasic_App\Data\DataFrame\DocumentStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::3d9eeb037dcaaf4342fc8f9fb411aa6e, ..\sciBASIC#\Data\DataFrame\DocumentStream\RowObject.vb"
 
     ' Author:
     ' 
@@ -163,8 +163,8 @@ Namespace DocumentStream
                 If _innerColumns.Count = 0 Then Return True
                 Dim LQuery As Integer =
                     LinqAPI.DefaultFirst(Of Integer) <= From colum As String
-                                                        In _innerColumns.AsParallel
-                                                        Where Len(Trim(colum)) > 0
+                                                        In _innerColumns
+                                                        Where Len(Strings.Trim(colum)) > 0
                                                         Select 100 '
                 Return Not LQuery > 50
             End Get
@@ -268,11 +268,17 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function LocateKeyWord(KeyWord As String, Optional CaseSensitive As Boolean = True) As Integer
-            Dim cpMethod As CompareMethod = If(CaseSensitive, CompareMethod.Binary, CompareMethod.Text)
-            Dim LQuery As String = (From str As String
-                                    In _innerColumns.AsParallel
-                                    Where InStr(str, KeyWord, cpMethod) > 0
-                                    Select str).FirstOrDefault
+            Dim cpMethod As CompareMethod = If(
+                CaseSensitive,
+                CompareMethod.Binary,
+                CompareMethod.Text)
+            Dim LQuery As String = LinqAPI.DefaultFirst(Of String) <=
+ _
+                From str As String
+                In _innerColumns.AsParallel
+                Where InStr(str, KeyWord, cpMethod) > 0
+                Select str
+
             If Not String.IsNullOrEmpty(LQuery) Then
                 Return _innerColumns.IndexOf(LQuery)
             Else
@@ -286,9 +292,9 @@ Namespace DocumentStream
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property AsLine(Optional delimiter As String = ",") As String
+        Public ReadOnly Property AsLine(Optional delimiter$ = ",") As String
             Get
-                Dim array As String() = _innerColumns.ToArray(AddressOf __mask)
+                Dim array$() = _innerColumns.ToArray(AddressOf __mask)
                 Dim line As String = String.Join(delimiter, array)
                 Return line
             End Get
@@ -297,14 +303,21 @@ Namespace DocumentStream
         Private Shared Function __mask(s As String) As String
             If String.IsNullOrEmpty(s) Then
                 Return ""
+            Else
+                s = s.Replace("""", """""")
             End If
 
-            If s.IndexOf(" "c) > -1 OrElse s.IndexOf(","c) > -1 Then
+            If s.IndexOf(","c) > -1 Then
+                ' If s.IndexOf(" "c) > -1 OrElse s.IndexOf(","c) > -1 Then
                 Return $"""{s}"""
             Else
                 Return s
             End If
         End Function
+
+        Public Sub Trim(lefts%)
+            _innerColumns = New List(Of String)(_innerColumns.Take(lefts))
+        End Sub
 
         ''' <summary>
         ''' Write to file.

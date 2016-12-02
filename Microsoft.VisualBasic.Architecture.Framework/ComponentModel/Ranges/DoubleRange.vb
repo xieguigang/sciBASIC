@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::393bc273fb07684414b4e5ddcabb5ad8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::9ee6e84e2e7392f72edce0afed2d4099, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -45,11 +46,15 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' Minimum value
         ''' </summary>
+        ''' 
+        <XmlAttribute>
         Public Property Min As Double Implements IRanges(Of Double).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
+        '''   
+        <XmlAttribute>
         Public Property Max As Double Implements IRanges(Of Double).Max
 
         ''' <summary>

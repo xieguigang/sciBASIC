@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa2bc210d1be33d471053e54ee304735, ..\visualbasic_App\Data_science\Mathematical\Plots\csv\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::36e0c4e46c620dcd299d27516d071809, ..\sciBASIC#\Data_science\Mathematical\Plots\csv\SerialData.vb"
 
     ' Author:
     ' 
@@ -27,15 +27,21 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.Interpolation
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace csv
 
     Public Class SerialData
 
+        ''' <summary>
+        ''' 系列的名称
+        ''' </summary>
+        ''' <returns></returns>
         Public Property serial As String
         Public Property X As Single
         Public Property Y As Single
@@ -43,12 +49,15 @@ Namespace csv
         Public Property tag As String
         Public Property errPlus As Double
         Public Property errMinus As Double
+        Public Property Statics As Double()
 
-        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing) As IEnumerable(Of Plots.SerialData)
-            Return GetData(csv.LoadCsv(Of SerialData), colors)
+        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing, Optional lineWidth! = 2) As IEnumerable(Of ChartPlots.SerialData)
+            Return GetData(csv.LoadCsv(Of SerialData), colors, lineWidth)
         End Function
 
-        Public Shared Iterator Function GetData(data As IEnumerable(Of SerialData), Optional colors As Color() = Nothing) As IEnumerable(Of Plots.SerialData)
+        Public Shared Iterator Function GetData(data As IEnumerable(Of SerialData),
+                                                Optional colors As Color() = Nothing,
+                                                Optional lineWidth! = 2) As IEnumerable(Of ChartPlots.SerialData)
             Dim gs = From x As SerialData
                      In data
                      Select x
@@ -61,9 +70,10 @@ Namespace csv
 
             For Each g In gs.SeqIterator
 
-                Yield New Plots.SerialData With {
+                Yield New ChartPlots.SerialData With {
+                    .width = lineWidth,
                     .title = g.obj.serial,
-                    .color = colors(g),
+                    .color = colors(g.i),
                     .pts = LinqAPI.Exec(Of PointData) <=
                         From x As SerialData
                         In g.obj.Group
@@ -72,7 +82,8 @@ Namespace csv
                             .errPlus = x.errPlus,
                             .pt = New PointF(x.X, x.Y),
                             .Tag = x.tag,
-                            .value = x.value
+                            .value = x.value,
+                            .Statics = x.Statics
                         }
                     }
             Next
@@ -80,6 +91,45 @@ Namespace csv
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        ''' <summary>
+        ''' 请注意这里只对一个系列的数据进行插值处理，即<paramref name="raw"/>里面的所有标签<see cref="SerialData.serial"/>都必须要相同
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="degree!"></param>
+        ''' <param name="resolution%"></param>
+        ''' <returns></returns>
+        Public Shared Function Interpolation(raw As IEnumerable(Of SerialData),
+                                             Optional degree! = 2,
+                                             Optional resolution% = 10) As SerialData()
+            Dim rawData As SerialData() = raw _
+                .OrderBy(Function(x) x.X) _
+                .ToArray
+            Dim pts As List(Of PointF) = B_Spline.Compute(
+                rawData.ToArray(Function(x) New PointF(x.X, x.Y)),
+                degree,
+                resolution)
+            Dim result As New List(Of SerialData)
+
+            For Each block In pts.SlideWindows(resolution, offset:=resolution).SeqIterator
+                Dim pt As SerialData = rawData(block)
+
+                For Each d As PointF In block.obj.Elements
+                    result += New SerialData With {
+                        .errMinus = pt.errMinus,
+                        .errPlus = pt.errPlus,
+                        .serial = pt.serial,
+                        .Statics = pt.Statics,
+                        .tag = pt.tag,
+                        .value = pt.value,
+                        .X = d.X,
+                        .Y = d.Y
+                    }
+                Next
+            Next
+
+            Return result
         End Function
     End Class
 End Namespace

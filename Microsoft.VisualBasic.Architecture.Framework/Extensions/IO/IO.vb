@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40cfbe0715822d2f4bba0e25353ba3bf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::e970052e232c8e363b6f5cdf3de1ba44, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -30,14 +30,36 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' IO函数拓展
 ''' </summary>
 <PackageNamespace("IO")>
 Public Module IOExtensions
+
+    ''' <summary>
+    ''' 为了方便在linux上面使用，这里会处理一下file://这种情况，请注意参数是ByRef引用的
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension> Public Function FixPath(ByRef path$) As String
+        If InStr(path, "file://", CompareMethod.Text) = 1 Then
+            If App.IsMicrosoftPlatform AndAlso InStr(path, "file:///", CompareMethod.Text) = 1 Then
+                path = Mid(path, 9)
+            Else
+                path = Mid(path, 8)
+            End If
+        Else
+            path = FileIO.FileSystem.GetFileInfo(path).FullName
+        End If
+
+        Return path$
+    End Function
 
     <Extension>
     Public Function ReadVector(path As String) As Double()
@@ -52,15 +74,15 @@ Public Module IOExtensions
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
-    Public Function Open(path As String, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
-        Call FileIO.FileSystem.CreateDirectory(path.ParentPath)
+    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
+        Call path.ParentPath.MkDIR
         Return IO.File.Open(path, mode)
     End Function
 
     <ExportAPI("Open.Reader")>
     <Extension>
     Public Function OpenReader(path As String, Optional encoding As Encoding = Nothing) As StreamReader
-        encoding = If(encoding Is Nothing, System.Text.Encoding.Default, encoding)
+        encoding = If(encoding Is Nothing, Encoding.Default, encoding)
         Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
 
@@ -82,33 +104,11 @@ Public Module IOExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="data"></param>
-    ''' <param name="SaveTo"></param>
+    ''' <param name="saveTo"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T),
-                                                    SaveTo As String,
-                                                    Optional encoding As Encoding = Nothing) As Boolean
-        Dim strings As IEnumerable(Of String) =
-            data.Select(AddressOf Scripting.ToString)
-
-        Try
-            Dim parent As String = FileIO.FileSystem.GetParentPath(SaveTo)
-
-            encoding = If(encoding Is Nothing, Encoding.Default, encoding)
-
-            Call FileIO.FileSystem.CreateDirectory(parent)
-
-            Using file As New StreamWriter(New FileStream(SaveTo, FileMode.OpenOrCreate, access:=FileAccess.Write))
-                For Each line As String In strings
-                    Call file.WriteLine(line)
-                Next
-            End Using
-        Catch ex As Exception
-            Call App.LogException(New Exception(SaveTo, ex))
-            Return False
-        End Try
-
-        Return True
+    <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
+        Return data.FlushAllLines(saveTo, encoding.GetEncodings)
     End Function
 
     ''' <summary>
@@ -121,22 +121,21 @@ Public Module IOExtensions
     '''
     <ExportAPI("FlushStream")>
     <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path As String) As Boolean
-        Dim parentDIR As String = If(String.IsNullOrEmpty(path),
-            FileIO.FileSystem.CurrentDirectory,
-            FileIO.FileSystem.GetParentPath(path))
-
-        Call FileIO.FileSystem.CreateDirectory(parentDIR)
-        Call FileIO.FileSystem.WriteAllBytes(path, buf.ToArray, False)
+        Using write As BinaryWriter = New BinaryWriter(path.Open)
+            For Each b As Byte In buf
+                Call write.Write(b)
+            Next
+        End Using
 
         Return True
     End Function
 
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, SavePath As String) As Boolean
+    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, savePath As String) As Boolean
         Dim rawStream As Byte() = stream.Serialize
         If rawStream Is Nothing Then
             rawStream = New Byte() {}
         End If
-        Return rawStream.FlushStream(SavePath)
+        Return rawStream.FlushStream(savePath)
     End Function
 End Module

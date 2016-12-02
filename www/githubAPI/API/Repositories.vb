@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12e56d4e675e834e1032eb79570efb4d, ..\visualbasic_App\www\githubAPI\API\Repositories.vb"
+﻿#Region "Microsoft.VisualBasic::12e56d4e675e834e1032eb79570efb4d, ..\sciBASIC#\www\githubAPI\API\Repositories.vb"
 
     ' Author:
     ' 

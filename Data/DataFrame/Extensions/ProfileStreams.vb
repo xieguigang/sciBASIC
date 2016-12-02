@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9b8b6f83934a5c6af0f10a66fde2316, ..\visualbasic_App\Data\DataFrame\Extensions\ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::9d696acc6f6a6080b68c1ced54c42180, ..\sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Public Module ProfileStreams
 

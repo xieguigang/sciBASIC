@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fad17f9aa7cd5a0a145c2d5903304c1d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::67beb42d4fc01a85d6cf36d6480f7ead, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Text
 
 Namespace Terminal
 

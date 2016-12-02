@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fbccc18cb412627e23da895f065ae00, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::8edfae2994cabba250f91e341061bdf1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,11 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 'Imports Microsoft.VisualBasic.Webservices
+'Imports System.Windows.Forms
 
-Module __DEBUG_MAIN
+Public Module __DEBUG_MAIN
 
-    <ParameterInfo("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
+    <Argument("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
     Private Sub TestExtensionProperty()
         Dim x As New ClassObject
         Dim n As Long = x.Uid  ' The init value is zero
@@ -78,7 +79,43 @@ Module __DEBUG_MAIN
 
     '  End Sub
 
-    Function Main(args As String()) As Integer
+
+    Public Class TestJSON
+        Public Property Name As String = "1234"
+        Public Property Data As Double() = {0, 1, 2, 3}
+        Public Property Extensions As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{"abcd", "999"}, {"gggg", "XXXXXXX"}}
+    End Class
+
+    Function Main() As Integer
+
+        Dim x = {New TestJSON}
+
+        ' Interaction.MsgBox(x.GetJson)
+        Dim JSON As String = x.GetJson
+
+        x = Nothing
+
+        x = JSON.LoadObject(Of TestJSON())
+
+
+
+        '   Call GetType(__DEBUG_MAIN).RunCLI(App.CommandLine)
+
+        Dim sasdasdasdas = Environment.GetCommandLineArgs
+        Dim fffdsfsdf = App.Command
+        Dim dsfdsfdsfsdffds = App.CommandLine
+
+        ' Dim cli = CommandLine.Parsers.GetTokens("/start /test 23 /@set ""var1=""aa"";var2=""b\""b"";99=""###  ## \""  ##"";123=2333""")
+
+        Dim xadaads = dsfdsfdsfsdffds.GetDictionary("/@set")
+
+        Call App.JoinVariables(xadaads)
+
+        Dim varssfdsfdsfs = App.GetAppVariables
+
+        Call printf(varssfdsfdsfs.GetJson)
+
+        Pause()
 
         Dim bitmap As Image = Image.FromFile("G:\GCModeller\src\runtime\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         Dim binbitmap = bitmap.GetBinaryBitmap

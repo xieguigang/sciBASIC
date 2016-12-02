@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9370832f12e9b54b9d553c825b31d3d6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Cite.vb"
+﻿#Region "Microsoft.VisualBasic::927f337d8704bbe7f784617966913ea6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Cite.vb"
 
     ' Author:
     ' 
@@ -170,7 +170,7 @@ Namespace Scripting.MetaData
             End If
 
             Dim Tokens As String() = Regex.Split(Abstract.Replace(vbCr, "").Replace(vbLf, " ").Replace("  ", " "), "<p>", RegexOptions.IgnoreCase Or RegexOptions.Singleline)
-            Tokens = (From s As String In Tokens Select Regex.Split(s, "<br/>", RegexOptions.Singleline Or RegexOptions.IgnoreCase)).ToArray.MatrixToVector
+            Tokens = (From s As String In Tokens Select Regex.Split(s, "<br/>", RegexOptions.Singleline Or RegexOptions.IgnoreCase)).ToArray.ToVector
             Dim sbr As StringBuilder = New StringBuilder(1024)
 
             For Each s As String In Tokens

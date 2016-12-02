@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd9b906c7eedbec1cfe3851f560b608d, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
+﻿#Region "Microsoft.VisualBasic::cd9b906c7eedbec1cfe3851f560b608d, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
 
     ' Author:
     ' 

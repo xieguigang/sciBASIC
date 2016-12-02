@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa436e8b579ec3538879cea44bc4e4c8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::c8161e6c530029ca74d59f0bc892cd41, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -27,9 +27,28 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="range"></param>
+    ''' <param name="sites"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function InsideAny(range As IntRange, sites As IEnumerable(Of Integer)) As Boolean
+        For Each x% In sites
+            If range.IsInside(x) Then
+                Return True
+            End If
+        Next
+
+        Return False
+    End Function
 
     ''' <summary>
     ''' 从后往前访问集合之中的元素，请注意请不要使用Linq查询表达式，尽量使用``list``或者``array``
@@ -120,9 +139,14 @@ Public Module VectorExtensions
         Return buf
     End Function
 
+    ''' <summary>
+    ''' Each line in the text file should be a <see cref="Double"/> type numeric value.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <Extension> Public Function LoadDblArray(path As String) As Double()
         Dim array As String() = IO.File.ReadAllLines(path)
-        Dim n As Double() = array.ToArray(Function(x) Val(x))
+        Dim n As Double() = array.ToArray(AddressOf Val)
         Return n
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70485a14c54d55ebbfd3271f73326427, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::634d166698d7f1065aadcf984bba262b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace Language
@@ -150,8 +151,8 @@ Namespace Language
         ''' <param name="rnd"></param>
         ''' <param name="max"></param>
         ''' <returns></returns>
-        <Extension> Public Function NextInteger(rnd As Random, max As Integer) As Int
-            Return New Int(rnd.Next(max))
+        <Extension> Public Function NextInteger(rnd As Random, max As Integer) As int
+            Return New int(rnd.Next(max))
         End Function
     End Module
 
@@ -246,6 +247,10 @@ Namespace Language
             Return x
         End Operator
 
+        Public Shared Operator /(x As int, b As Integer) As Double
+            Return x.value / b
+        End Operator
+
         ''' <summary>
         ''' 必须要overloads这个方法，否则会出现无法将Value(Of Integer)转换为int的错误
         ''' </summary>
@@ -337,6 +342,14 @@ Namespace Language
             Return n * x.value
         End Operator
 
+        Public Overloads Shared Operator +(x As float, y As float) As Double
+            Return x.value + y.value
+        End Operator
+
+        Public Overloads Shared Operator +(x#, y As float) As Double
+            Return x + y.value
+        End Operator
+
         Public Overloads Shared Widening Operator CType(x#) As float
             Return New float(x)
         End Operator
@@ -349,8 +362,28 @@ Namespace Language
             Return x.value >= n
         End Operator
 
+        Public Overloads Shared Operator /(x As float, n As Double) As Double
+            Return x.value / n
+        End Operator
+
         Public Shared Operator >(n As Double, x As float) As float
             Return x
+        End Operator
+
+        Public Shared Operator ^(x As float, power As Double) As Double
+            Return x.value ^ power
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(f As float) As Double
+            Return f.value
+        End Operator
+
+        Public Overloads Shared Operator -(a As float, b As float) As Double
+            Return a.value - b.value
+        End Operator
+
+        Public Overloads Shared Operator *(a As float, b As float) As Double
+            Return a.value * b.value
         End Operator
     End Class
 

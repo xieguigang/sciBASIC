@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c7b43266c229b3fe40c8fc957437af, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
+﻿#Region "Microsoft.VisualBasic::3ed6fd4f620dd7f07b05ca404d4e9d7c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel
 

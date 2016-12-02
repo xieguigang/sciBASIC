@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2f9b71ee6fd4e72b2abc8001bf45576, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::995912a5650d856e3066d2002af185eb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
     ' Author:
     ' 
@@ -29,15 +29,18 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Grouping
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
 
@@ -76,7 +79,7 @@ Namespace CommandLine.Reflection
             pages += LinqAPI.MakeList(Of String) <=
  _
                 From api As SeqValue(Of APIEntryPoint)
-                In CLI.Values.SeqIterator(offset:=1)
+                In CLI.APIList.SeqIterator(offset:=1)
                 Let index As String = api.i & ".   "
                 Select index & api.obj.HelpInformation
 
@@ -92,7 +95,7 @@ Namespace CommandLine.Reflection
         ''' 
         <Extension>
         Public Function MarkdownDoc(App As Interpreter) As String
-            Dim sb As New StringBuilder($"# {Application.ProductName} [version {Application.ProductVersion}]")
+            Dim sb As New StringBuilder($"# { VisualBasic.App.ProductName} [version { VisualBasic.App.Version}]")
             Dim type As Type = App.Type
             Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(App.Type)
 
@@ -101,37 +104,38 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine()
             Call sb.AppendLine("<!--more-->")
             Call sb.AppendLine()
-            Call sb.AppendLine($"**{assm.ProductTitle}**")
-            Call sb.AppendLine($"_{assm.ProductDescription}_")
+            Call sb.AppendLine($"**{assm.ProductTitle}**<br/>")
+            Call sb.AppendLine($"_{assm.ProductDescription}_<br/>")
             Call sb.AppendLine(assm.CopyRightsDetail)
             Call sb.AppendLine()
 
-            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}")
-            Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``")
+            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}<br/>")
+            Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``<br/>")
 
             Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
 
-            Call sb.AppendLine()
-            Call sb.AppendLine("------------------------------------------------------------")
-            Call sb.AppendLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems:")
-            Call sb.AppendLine("> " & helps.Documentation)
-            Call sb.AppendLine()
-            Call sb.AppendLine()
-            Call sb.AppendLine("The debugging facility Is helpful To figure out what's happening under the hood:")
-            Call sb.AppendLine("> " & helps.Debugging)
-            Call sb.AppendLine()
-            Call sb.AppendLine()
-            Call sb.AppendLine("If you're still stumped, you can try get help from author directly from E-mail:")
-            Call sb.AppendLine("> " & helps.EMailLink)
-            Call sb.AppendLine()
-
+            If Not helps Is Nothing Then
+                Call sb.AppendLine()
+                Call sb.AppendLine("------------------------------------------------------------")
+                Call sb.AppendLine("If you are having trouble debugging this Error, first read the best practices tutorial for helpful tips that address many common problems:")
+                Call sb.AppendLine("> " & helps.Documentation)
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call sb.AppendLine("The debugging facility Is helpful To figure out what's happening under the hood:")
+                Call sb.AppendLine("> " & helps.Debugging)
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call sb.AppendLine("If you're still stumped, you can try get help from author directly from E-mail:")
+                Call sb.AppendLine("> " & helps.EMailLink)
+                Call sb.AppendLine()
+            End If
 
             Call sb.AppendLine(vbCrLf & vbCrLf & App.HelpSummary(True))
             Call sb.AppendLine()
             Call sb.AppendLine("## CLI API list")
             Call sb.AppendLine("--------------------------")
 
-            For Each i As SeqValue(Of APIEntryPoint) In App.Values.SeqIterator
+            For Each i As SeqValue(Of APIEntryPoint) In App.APIList.SeqIterator
                 Dim api As APIEntryPoint = i.obj
 
                 Call sb.Append($"<h3 id=""{api.Name}""> {i.i + 1}. ")
@@ -140,16 +144,22 @@ Namespace CommandLine.Reflection
                     .Select(Function(s) s.Trim) _
                     .JoinBy(vbCrLf))
 
-                If api.ParameterInfo.Count > 0 Then
-                    Call sb.AppendLine("##### Accepted Types")
+                If api.Arguments.Count > 0 Then
+                    Dim prints = api.Arguments _
+                        .Where(Function(x) Not x.Value.AcceptTypes.IsNullOrEmpty) _
+                        .ToArray
 
-                    For Each param As NamedValue(Of ParameterInfo) In api.ParameterInfo
-                        Call sb.AppendLine("###### " & param.Name)
+                    If Not prints.Length = 0 Then
+                        Call sb.AppendLine("##### Accepted Types")
 
-                        For Each pType As Type In param.x.AcceptTypes.SafeQuery
-                            Call sb.AppendLine(Actives.DisplType(pType))
+                        For Each param As NamedValue(Of Argument) In prints
+                            Call sb.AppendLine("###### " & param.Name)
+
+                            For Each pType As Type In param.Value.AcceptTypes
+                                Call sb.AppendLine(Actives.DisplType(pType))
+                            Next
                         Next
-                    Next
+                    End If
                 End If
             Next
 
@@ -166,30 +176,109 @@ Namespace CommandLine.Reflection
         <Extension>
         Public Function HelpSummary(App As Interpreter, markdown As Boolean) As String
             Dim sb As New StringBuilder(1024)
-            Dim nameMaxLen As Integer =
-                App.Values.Select(Function(x) Len(x.Name)).Max
+            Dim nameMaxLen% = App.APIList _
+                .Select(Function(x) Len(x.Name)) _
+                .Max
+
+            If Not markdown Then
+                Dim descr = Microsoft.VisualBasic.App _
+                    .Info _
+                    .ProductDescription
+
+                descr = Trim(descr)
+
+                Call sb.AppendLine(New String("="c, descr.Length))
+                Call sb.AppendLine(descr)
+                Call sb.AppendLine(New String("="c, descr.Length))
+                Call sb.AppendLine()
+
+                For Each line$ In Paragraph.Split(App.Info.Description, 110)
+                    Call sb.AppendLine(line$)
+                Next
+
+                Call sb.AppendLine()
+            End If
 
             Call sb.AppendLine(ListAllCommandsPrompt)
             Call sb.AppendLine()
 
+            Dim gg As New Grouping(CLI:=App)
+            Dim print = Sub(list As IEnumerable(Of APIEntryPoint), left$)
+                            If markdown Then
+                                Call sb.AppendLine("|Function API|Info|")
+                                Call sb.AppendLine("|------------|----|")
+                            End If
+
+                            For Each API As APIEntryPoint In list
+                                If Not markdown Then
+                                    Dim indent% = 3 + nameMaxLen - Len(API.Name)
+                                    Dim blank$ = New String(c:=" "c, count:=indent)
+                                    Dim lines As String() = Paragraph _
+                                        .Split(API.Info, 90 - nameMaxLen) _
+                                        .ToArray
+                                    Dim line$ = $"{left}{API.Name}:  {blank}{lines.FirstOrDefault}"
+
+                                    Call sb.AppendLine(line)
+
+                                    If lines.Length > 1 Then
+                                        For Each line$ In lines.Skip(1)
+                                            Call sb.AppendLine(left & New String(" ", nameMaxLen + 6) & line$)
+                                        Next
+                                    End If
+                                Else
+                                    Call sb.AppendLine(
+                                        $"|[{API.Name}](#{API.Name})|{API.Info}|")
+                                End If
+                            Next
+
+                            Call sb.AppendLine()
+                            Call sb.AppendLine()
+                        End Sub
+
             If markdown Then
-                Call sb.AppendLine("|Function API|Info|")
-                Call sb.AppendLine("|------------|----|")
+                Call sb.AppendLine("##### Generic function API list")
             End If
 
-            For Each commandInfo As APIEntryPoint In App.Values
-                If Not markdown Then
-                    Dim blank As String =
-                        New String(c:=" "c, count:=nameMaxLen - Len(commandInfo.Name))
-                    Dim line As String = $" {commandInfo.Name}:  {blank}{commandInfo.Info}"
+            Dim undefines = gg.GroupData(undefined)
 
-                    Call sb.AppendLine(line)
+            Call print(undefines.Data, " ")
+
+            If gg.GroupData.Count > 1 AndAlso Not markdown Then
+                Call sb.AppendLine("API list that with functional grouping")
+                Call sb.AppendLine()
+            End If
+
+            For Each g As SeqValue(Of Groups) In gg _
+                .Where(Function(list) list.Name <> undefined) _
+                .SeqIterator(offset:=1)
+
+                If markdown Then
+                    Call sb.AppendLine($"##### {g.i}. {g.obj.Name}")
                 Else
-                    Call sb.AppendLine($"|[{commandInfo.Name}](#{commandInfo.Name})|{commandInfo.Info}|")
+                    Call sb.AppendLine($"{g.i}. {g.obj.Name}")
                 End If
+
+                Dim describ$ = Trim(g.obj.Description)
+                Dim indent As New String(" "c, (g.i & ". ").Length)
+
+                If Not String.IsNullOrEmpty(describ) Then
+                    Call sb.AppendLine()
+
+                    If markdown Then
+                        Call sb.AppendLine(describ)
+                    Else
+                        For Each line$ In Paragraph.Split(describ, 110)
+                            Call sb.AppendLine(indent & line)
+                        Next
+                    End If
+                End If
+
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call print(g.obj.Data, left:=indent)
             Next
 
-            Return sb.ToString
+            Return sb.ToString.Trim(ASCII.CR, ASCII.LF, " "c)
         End Function
 
         Public Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"

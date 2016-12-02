@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72343f554ecb817bdd5e7b9b49445317, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
+﻿#Region "Microsoft.VisualBasic::62c387fb0cbc1cc4bcb2a21a0222fa58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@ Namespace Scripting.TokenIcer
     ''' 预定义的一些脚本的解析程序
     ''' </summary>
     Public Module Prefix
+
+        Public Const undefined$ = NameOf(MathTokens.UNDEFINED)
 
         ' This is our token enumeration. It holds every token defined in the grammar
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25a35e309af027dcd0a62304f9566ffb, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ParallelLoading.vb"
+﻿#Region "Microsoft.VisualBasic::ec7b95de4e0a4a0d40a310edae1ff41e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ParallelLoading.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.CodeDOM_VBC
+Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
@@ -120,7 +120,7 @@ Namespace Parallel
             Public Function Load(url As String) As T()
                 Dim Socket As New Microsoft.VisualBasic.Net.TcpSynchronizationServicesSocket(AddressOf DataProcessor, Net.GetFirstAvailablePort)
                 Call New Threading.Thread(AddressOf Socket.Run).Start()
-                Call StartProcess($"{url.CliPath} { Socket.LocalPort}")
+                Call StartProcess($"{url.CLIPath} { Socket.LocalPort}")
                 Call WaitForTaskComplete()
                 Return resultBuffer
             End Function
@@ -205,7 +205,7 @@ Namespace Parallel
                           Where Not String.IsNullOrEmpty(ref.FullName)
                           Let entry = ref.FullName
                           Select refListValue = getReferences(url:=entry, i:=i + 1, refList:=Temp)).ToList
-            Dim resultBuffer = LQuery.MatrixToList
+            Dim resultBuffer = LQuery.Unlist
             Call resultBuffer.Add(assembly.Location)
             Call refList.AddRange(resultBuffer)
         End Sub

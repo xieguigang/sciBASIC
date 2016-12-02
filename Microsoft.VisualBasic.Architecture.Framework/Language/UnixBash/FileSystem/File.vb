@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91585d4dfc509ed114614f7a23214fe3, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\File.vb"
+﻿#Region "Microsoft.VisualBasic::51b161bc9cd9f1a7cd4acbbe6c3c8f67, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\File.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Language.UnixBash
 
@@ -135,18 +136,18 @@ Namespace Language.UnixBash
 
             SyncLock ___opendHandles
                 SyncLock __handle
-                    __handle.Value += 1
+                    __handle.value += 1
 
                     Dim handle As New FileHandle With {
                         .encoding = encoding.GetEncodings,
                         .FileName = file,
-                        .handle = __handle.Value
+                        .handle = __handle.value
                     }
 
-                    Call ___opendHandles.Add(__handle.Value, handle)
+                    Call ___opendHandles.Add(__handle.value, handle)
                     Call FileIO.FileSystem.CreateDirectory(file.ParentPath)
 
-                    Return __handle.Value
+                    Return __handle.value
                 End SyncLock
             End SyncLock
         End Function

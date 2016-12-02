@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bad3c894ce28a2cbe7c643498dca93c, ..\visualbasic_App\Data_science\Mathematical\ODE\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::8e1772cf541d1296fba919ef782abe74, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
-''' ODEs output
+''' ODEs output, this object can populates the <see cref="ODEsOut.y"/> 
+''' variables values through its enumerator interface.
 ''' </summary>
 Public Class ODEsOut
+    Implements IEnumerable(Of NamedValue(Of Double()))
 
     Public Property x As Double()
     Public Property y As Dictionary(Of NamedValue(Of Double()))
@@ -50,13 +52,22 @@ Public Class ODEsOut
     End Property
 
     ''' <summary>
+    ''' Using the first value of <see cref="y"/> as ``y0``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetY0() As Dictionary(Of String, Double)
+        Return y.ToDictionary(Function(x) x.Key,
+                              Function(x) x.Value.Value.First)
+    End Function
+
+    ''' <summary>
     ''' Is there NAN value in the function value <see cref="y"/> ???
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property HaveNaN As Boolean
         Get
             For Each val As NamedValue(Of Double()) In y.Values
-                For Each x As Double In val.x
+                For Each x As Double In val.Value
                     If Double.IsNaN(x) OrElse
                         Double.IsInfinity(x) OrElse
                         Double.IsNegativeInfinity(x) OrElse
@@ -84,22 +95,35 @@ Public Class ODEsOut
         Return Me.GetJson
     End Function
 
-    Public Function DataFrame(Optional xDisp As String = "X") As DocumentStream.File
+    ''' <summary>
+    ''' Generates datafram and then can makes the result save data into a csv file.
+    ''' </summary>
+    ''' <param name="xDisp"></param>
+    ''' <param name="fix%">Formats output by using <see cref="Math.Round"/></param>
+    ''' <returns></returns>
+    Public Function DataFrame(Optional xDisp As String = "X", Optional fix% = -1) As DocumentStream.File
         Dim ly = y.Values.ToArray
         Dim file As New DocumentStream.File
         Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
+        Dim round As Func(Of Double, String)
+
+        If fix <= 0 Then
+            round = Function(n) CStr(n)
+        Else
+            round = Function(n) CStr(Math.Round(n, fix))
+        End If
 
         file += head
 
         For Each x As SeqValue(Of Double) In Me.x.SeqIterator
-            file += (x.obj.ToString + ly.ToList(Function(n) n.x(x.i).ToString))
+            file += (round(x.obj) + ly.ToList(Function(n) round(n.Value(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2
 
-        For Each v In y0.SafeQuery.JoinAsIterator(params).SeqIterator
+        For Each v In y0.SafeQuery.JoinIterates(params).SeqIterator
             Dim row As RowObject = file(v.i)
-            Dim var = v.obj
+            Dim var As KeyValuePair(Of String, Double) = v.obj
 
             row(skips) = var.Key
             row(skips + 1) = var.Value
@@ -108,12 +132,24 @@ Public Class ODEsOut
         Return file
     End Function
 
-    Public Shared Function LoadFromDataFrame(csv$) As ODEsOut
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="csv$"></param>
+    ''' <param name="noVars">ODEs Parameter value is not exists in the data file?</param>
+    ''' <returns></returns>
+    Public Shared Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODEsOut
         Dim df As File = File.Load(csv)
         Dim cols = df.Columns().ToArray
         Dim X = cols(Scan0)
-        Dim y = cols.Skip(1).Take(cols.Length - 1 - 3).ToArray
-        Dim params = cols.Skip(cols.Length - 2).ToArray
+        Dim y$()() = If(noVars,
+            cols.Skip(1).ToArray,
+            cols.Skip(1).Take(cols.Length - 1 - 3).ToArray)
+        Dim params$()() = cols.Skip(cols.Length - 2).ToArray
+        Dim args As Dictionary(Of String, Double) = If(
+            noVars,
+            New Dictionary(Of String, Double),
+            __getArgs(params(Scan0), params(1))) ' 由于没有信息可以了解哪些变量是y0初始值，所以在这里都把这些数据放在变量参数列表里面
         Dim yData As NamedValue(Of Double())() =
             LinqAPI.Exec(Of NamedValue(Of Double())) <= From s As String()
                                                         In y
@@ -121,12 +157,12 @@ Public Class ODEsOut
                                                         Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
                                                         Select New NamedValue(Of Double()) With {
                                                             .Name = name,
-                                                            .x = values
+                                                            .Value = values
                                                         }
         Return New ODEsOut With {
+            .params = args,
             .x = X.Skip(1).ToArray(AddressOf Val),
-            .y = yData.ToDictionary,
-            .params = __getArgs(params(Scan0), params(1))  ' 由于没有信息可以了解哪些变量是y0初始值，所以在这里都把这些数据放在变量参数列表里面
+            .y = yData.ToDictionary
         }
     End Function
 
@@ -143,5 +179,14 @@ Public Class ODEsOut
 
         Return params
     End Function
-End Class
 
+    Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of Double())) Implements IEnumerable(Of NamedValue(Of Double())).GetEnumerator
+        For Each var As NamedValue(Of Double()) In y.Values
+            Yield var
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
+    End Function
+End Class

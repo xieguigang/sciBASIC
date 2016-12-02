@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fdc44e4ab3ecfb9697d2ea7af13d034, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::0fdc44e4ab3ecfb9697d2ea7af13d034, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d61644a48330c4857a7297a567d5dc1, ..\visualbasic_App\Data_science\Mathematical\Plots\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::065d4f382edb49b25a9f75dee9c8ca0e, ..\sciBASIC#\Data_science\Mathematical\Plots\Axis.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Module Axis
             Dim label As Single = dx * (i + 1)
             Dim sz As SizeF
 
-            If scaler.type <> GetType(Histogram) Then
+            If dx <> 0R Then
                 Dim x = sx(label + scaler.xmin)
                 Dim axisX As New PointF(x, o.Y)
 
@@ -87,18 +87,19 @@ Module Axis
 
             label = Math.Round(dy * (i + 1), 3)
 
-            Dim y = sy(label + scaler.ymin)
-            Dim axisY As New PointF(o.X, y)
+            If dy <> 0R Then
+                Dim y = sy(label + scaler.ymin)
+                Dim axisY As New PointF(o.X, y)
 
-            Call g.DrawLine(pen, axisY, New PointF(o.X - margin.Width * 0.1, y))
+                Call g.DrawLine(pen, axisY, New PointF(o.X - margin.Width * 0.1, y))
 
-            sz = g.MeasureString(label, fontSmall)
-            g.DrawString(label, fontSmall, Brushes.Black, New Point(o.X - margin.Width * 0.1 - sz.Width, y - sz.Height / 2))
+                sz = g.MeasureString(label, fontSmall)
+                g.DrawString(label, fontSmall, Brushes.Black, New Point(o.X - margin.Width * 0.1 - sz.Width, y - sz.Height / 2))
 
-            If showGrid Then
-                Call g.DrawLine(gridPenY, axisY, New PointF(size.Width - margin.Width, y))
+                If showGrid Then
+                    Call g.DrawLine(gridPenY, axisY, New PointF(size.Width - margin.Width, y))
+                End If
             End If
         Next
     End Sub
 End Module
-

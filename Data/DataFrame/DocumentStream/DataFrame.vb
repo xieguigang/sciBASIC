@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d7fffee3fb0df093e27fb4ce0281ed6, ..\visualbasic_App\Data\DataFrame\DocumentStream\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::cce482bca1e5242120244d16e42220ba, ..\sciBASIC#\Data\DataFrame\DocumentStream\DataFrame.vb"
 
     ' Author:
     ' 
@@ -143,6 +143,18 @@ Namespace DocumentStream
             Return LQuery
         End Function
 
+        Public Iterator Function EnumerateData() As IEnumerable(Of Dictionary(Of String, String))
+            For Each row In _innerTable
+                Dim out As New Dictionary(Of String, String)
+
+                For Each key In SchemaOridinal
+                    out.Add(key.Key, row(key.Value))
+                Next
+
+                Yield out
+            Next
+        End Function
+
         ''' <summary>
         ''' The column headers in the csv file first row.
         ''' </summary>
@@ -150,6 +162,16 @@ Namespace DocumentStream
         Public ReadOnly Property HeadTitles As String()
             Get
                 Return __columnList.ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The column headers in the csv file first row.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property Headers As RowObject
+            Get
+                Return New RowObject(__columnList)
             End Get
         End Property
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b15ef7816683e809e4141d73a6ade21f, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
+﻿#Region "Microsoft.VisualBasic::ad2e88f5950c1235e35f20d2a9ea6e07, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Text
 
 Namespace Drawing2D
 
@@ -63,7 +64,7 @@ Namespace Drawing2D
             Call Me.New(New Size(Width, Height))
         End Sub
 
-        Sub New(Width As Integer, AspectRatio As Double)
+        Sub New(Width As Integer, AspectRatio As Single)
             Call Me.New(New Size(Width, CInt(Width * AspectRatio)))
         End Sub
 
@@ -86,14 +87,14 @@ Namespace Drawing2D
         End Function
 
         Public Function AddCircle(FillColor As Color, TopLeft As Point, d As Integer) As Circle
-            Dim Circle As New Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._GDIDevice, FillColor:=FillColor)
+            Dim Circle As New Circle(topLeft:=TopLeft, d:=d, FillColor:=FillColor)
             Call Me._lstElements.Add(Circle)
             Return Circle
         End Function
 
         Public Function ToImage() As Image
             For Each Element As Shape In Me._lstElements
-                Call Element.InvokeDrawing()
+                Call Element.Draw(GDIDevice.Graphics)
             Next
 
             Return _GDIDevice.ImageResource

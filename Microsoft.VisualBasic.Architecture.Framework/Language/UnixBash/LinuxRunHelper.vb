@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f190444a8b4c56e4d6750e70293cdb57, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::83d00d88b5e61ade841447f4bb24cf6b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@ use File::Spec;
 my $cli = join "" "", @ARGV;
 
 print ""{App.AssemblyName} << $cli\n"";
-system(""mono {cmd.CliPath} $cli"");
+system(""mono {cmd.CLIPath} $cli"");
 "
             Return perl
         End Function
@@ -98,7 +98,7 @@ mono ""{cmd}"" $cli
         Public Function MonoRun(app As String, CLI As String) As ProcessEx
             Dim proc As New ProcessEx With {
                 .Bin = "mono",
-                .CLIArguments = app.GetFullPath.CliPath & " " & CLI
+                .CLIArguments = app.GetFullPath.CLIPath & " " & CLI
             }
             Return proc
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffde8e92c1b5203ce5d050710520132a, ..\visualbasic_App\www\githubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::ffde8e92c1b5203ce5d050710520132a, ..\sciBASIC#\www\githubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 
@@ -97,10 +97,9 @@ Public Module QueryBuilder
             Call x.Remove(Term.Key)
         End If
 
-        Dim s As String() =
-            LinqAPI.Exec(Of String) <= From key As String
-                                       In x.Keys
-                                       Select $"{key}:{HttpUtility.UrlEncode(x(key))}"
+        Dim s$() = LinqAPI.Exec(Of String) <= From key As String
+                                              In x.Keys
+                                              Select $"{key}:{HttpUtility.UrlEncode(x(key))}"
         If s.Length > 0 Then
             Call args.Append("+"c)
             Call args.Append(String.Join("+", s))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47b6b0f8a130ca22d6e6aaa3424e004b, ..\visualbasic_App\Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::cac6b5d490c0300ddcfafe4b798c510e, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Linq
+Imports Microsoft.VisualBasic.Text
 
 Namespace DocumentStream.Linq
 
@@ -131,6 +132,7 @@ Namespace DocumentStream.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
+            Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While True
                 Dim buffer As String() = BufferProvider()
@@ -168,6 +170,7 @@ Namespace DocumentStream.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
+            Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While True
                 Dim chunks As IEnumerable(Of String()) =
@@ -234,20 +237,28 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Iterator Function AsLinq(Of T As Class)() As IEnumerable(Of T)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False) As IEnumerable(Of T)
+            Dim schema As SchemaProvider = SchemaProvider _
+                .CreateObject(Of T)(False) _
+                .CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
             Call RowBuilder.Indexof(Me)
+            Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While Not EndRead
-                Dim LQuery As IEnumerable(Of T) = From line As String
-                                                  In BufferProvider()
-                                                  Let row As RowObject = RowObject.TryParse(line)
-                                                  Let obj As Object = Activator.CreateInstance(type)
-                                                  Let data As Object = RowBuilder.FillData(row, obj)
-                                                  Select DirectCast(data, T)
+
+                Dim LQuery As IEnumerable(Of T) =
+                    From line As String
+                    In If(parallel,
+                        DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)),
+                        DirectCast(BufferProvider(), IEnumerable(Of String)))
+                    Let row As RowObject = RowObject.TryParse(line)
+                    Let obj As Object = Activator.CreateInstance(type)
+                    Let data As Object = RowBuilder.FillData(row, obj)
+                    Select DirectCast(data, T)
+
                 For Each x As T In LQuery
                     Yield x
                 Next

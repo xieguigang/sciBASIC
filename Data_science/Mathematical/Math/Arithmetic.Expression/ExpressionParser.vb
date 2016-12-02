@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56ed366199a52433d0493b2b6815c4d8, ..\visualbasic_App\Data_science\Mathematical\Math\Arithmetic.Expression\ExpressionParser.vb"
+﻿#Region "Microsoft.VisualBasic::377d5e899c1d5c3c9821e45d06a75bcc, ..\sciBASIC#\Data_science\Mathematical\Math\Arithmetic.Expression\ExpressionParser.vb"
 
     ' Author:
     ' 
@@ -112,14 +112,14 @@ Public Module ExpressionParser
         Dim func As FuncCaller = Nothing
 
         Do While Not tokens.EndRead
-            Dim meta As Types.MetaExpression = Nothing
+            Dim meta As MetaExpression = Nothing
 
             e = +tokens
 
             Select Case e.Type
                 Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
                     If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
-                        meta = New Types.MetaExpression(TryParse(tokens, getValue, evaluate, False))
+                        meta = New MetaExpression(TryParse(tokens, getValue, evaluate, False))
                     Else
                         func = New FuncCaller(pre.Text, evaluate)  ' Get function name, and then removes the last of the expression
                         o = sep.RemoveLast().Operator

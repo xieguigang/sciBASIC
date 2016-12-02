@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ca0d0fc87bca58b73832d80aa6b92d6, ..\visualbasic_App\mime\Markups\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::7a7fa2d2bf8a83f2f625c678563f9e49, ..\sciBASIC#\mime\markups\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -142,7 +142,7 @@ Namespace HTML.CSS
                     .Where(Function(s) Not s.IsBlank) _
                     .Select(Function(s) s.GetTagValue(":", True)) _
                     .ToDictionary(Function(x) x.Name.Trim.ToLower,
-                                  Function(x) x.x)
+                                  Function(x) x.Value)
                 Dim font As New CSSFont
 
                 If styles.ContainsKey("font-style") Then font.style = GetStyle(styles("font-style"))

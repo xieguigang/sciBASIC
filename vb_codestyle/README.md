@@ -47,13 +47,16 @@ Partial Module CLI
         Dim inDIR As String = args - "/in"
         Dim out As String = args.GetValue("/out", inDIR.TrimDIR & ".contents.Csv")
         Dim files As IEnumerable(Of String) =
-            ls - l - r - wildcards(ext) <= inDIR
+            ls - l - r - ext <= inDIR
         Dim content As NamedValue(Of String)() =
             LinqAPI.Exec(Of NamedValue(Of String)) <= From file As String
                                                       In files
                                                       Let name As String = file.BaseName
                                                       Let genome As String = file.ParentDirName
-                                                      Select New NamedValue(Of String)(genome, name)
+                                                      Select New NamedValue(Of String) With {
+                                                          .Name = name,
+                                                          .x = genome
+                                                      }
         Return content.SaveTo(out).CLICode
     End Function
 End Module
@@ -72,8 +75,15 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+<Group("Function Group Name")>
+<Argument("/in", AcceptTypes:={GetType(String)}, Description:="The input directory path.")>
+<Argument("/out", True, AcceptTypes:={GetType(NamedValue(Of String))}, Description:="The output csv data.")>
 Public Function CLI_API(args As CommandLine) As Integer
 ```
+
++ ``ExportAPI`` attribute that flag this function will be exposed to your user as a CLI command.
++ ``Group`` attribute that can grouping this API into a function group
++ ``Argument`` attribute that records the help information of the parameter in the CLI.
 
 ### Using the VisualBasic CommandLine Parser
 For learn how to using the ``CommandLine`` Parser, we first lean the syntax of the VisualBasic commandline arguments.
@@ -156,7 +166,7 @@ Example CLI is:
 
 ## List(Of T) operation in VisualBasic
 
-For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
+For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic.Language** at first
 
 ```vb.net
 Dim source As IEnumerable(Of <Type>)
@@ -256,6 +266,76 @@ For Each file As String In ls - l - r - wildcards("*.csv") <= DIR
     ' blablabla
 Next
 ```
+In the newer version of this VB runtime, the wildcards can be simplify as a string or string array if you are not feeling confused with this syntax example:
+
+```vbnet
+Imports Microsoft.VisualBasic.Language.UnixBash
+
+' A more simple version of the syntax 
+Return (ls - l - r - "*.csv" <= DIR) _
+      .Select(AddressOf ODEsOut.LoadFromDataFrame) _
+      .Sampling(eigenvector, partN)
+      
+' Or used in For Loop
+For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
+    ' blablabla
+Next
+```
+
+## VB specific ``With`` anonymous variable
+
+When you are dealing the variable with an array, usually you are going to do in this style:
+
+```vbnet
+Dim array As <Class>()
+
+For i% = 0 To array.Length - 1
+    Dim o = array(i)
+    
+    If <blablabla(o)> Is True Then
+        Return i%
+    End If
+Next
+```
+
+But by using the ``With`` anonymous variable syntax, the code would be more brief and better:
+
+```vbnet
+Dim array As <Class>()
+
+For i% = 0 To array.Length - 1
+    With array(i)
+    
+        If <blablabla(.Property)> Is True Then
+            Return i%
+        End If
+    End With
+Next
+```
+
+###### Example
+
+```vbnet
+Public Function IndexOf(Id As Char) As Integer
+    For i As Integer = 0 To Catalogs.Length - 1
+        With Catalogs(i)
+            If .SubClasses.ContainsKey(Id) Then
+                Return i
+            End If
+        End With
+    Next
+
+    Return -1
+End Function
+```
+
+## Type char coding style
+
+###### Recommended
+It is recommended that using type char in the parameter declaring of a function or method
+
+###### Not Recommended
+Not recommended that using type char for Property, Field or local variable declaring.
 
 ## VisualBasic identifer names
 
@@ -394,7 +474,7 @@ For define a new object, a short format is recommended:
 Dim x As New <Type>
 ```
 
-If the type you want to create object instance can be initialize from its property, then the With keyword is recommended to used:
+If the type you want to create object instance can be initialize from its property, then the ``With`` keyword is recommended to used:
 
 ```vb.net
 Dim MyvaCog As MyvaCOG() = LinqAPI.Exec(Of MyvaCOG) <= 
@@ -406,6 +486,89 @@ _
             .QueryName = gene.LocusID,
             .QueryLength = gene.Length
         }
+```
+
+#### Extension Method And Linq
+With the extension method, then you can implementes a Fully Object-Oriented coding style, as you can add extend any method or function onto any type of object.
+
+For example:
+
+```vbnet
+''' <summary>
+''' Make directory
+''' </summary>
+''' <param name="DIR"></param>
+<Extension> Public Sub MkDIR(DIR As String)
+    Call FileIO.FileSystem.CreateDirectory(DIR)
+End Sub
+```
+
+This string object extension method will makes the string working as a directory object:
+
+```vbnet
+Call "D:\MyData\".MkDIR
+```
+
+If another Linq expression is internal inner your Linq expression, then these two staggered linq expression will messing up your coding style, and then using the Linq extension instead of the Linq expression for your internal linq expression that would be good.
+
+Example:
+
+```vbnet
+
+```
+
+Try avoid the style like ``(Linq Expression).Method``, you should folding the extension to the next line, and this would be more clear for the reading.
+
+```vbnet
+Call (From x In data Select x.Properties.Length Distinct) _
+    .ToArray _
+    .GetJson _
+    .__DEBUG_ECHO
+```
+
+###### Javascript like style
+The Javascript like coding style is recommended combined with the extension method style. If the extension calling is very long, then folding in the javascript style that would be great. For example:
+
+This is the **bad** style:
+
+```vbnet
+For Each line$ In lines
+
+    Yield New WordTokens With {
+        .name = line.Trim(" "c, ASCII.TAB),
+        .tokens = line.Trim.StripSymbol.Split.Distinct.Where(Function(s) Not String.IsNullOrEmpty(s.Trim(ASCII.TAB))).ToArray
+    }
+Next
+```
+
+This is great style:
+
+```vbnet
+For Each line$ In lines
+
+    Yield New WordTokens With {
+        .name = line.Trim(" "c, ASCII.TAB),
+        .tokens = line.Trim _
+            .StripSymbol _
+            .Split _
+            .Distinct _
+            .Where(Function(s) Not String.IsNullOrEmpty(s.Trim(ASCII.TAB))) _
+            .ToArray
+    }
+Next
+```
+
+Another great style example:
+
+```vbnet
+Dim exp As Expression = expression _
+    .Split(__dels) _
+    .Select(Function(s) s.Trim(" "c, ASCII.TAB)) _
+    .Where(Function(s) Not String.IsNullOrEmpty(s)) _
+    .JoinBy(" AND ") _
+    .Build()
+
+Return Function(text) If(exp.Match(text), 1.0R, 0R)
 ```
 
 ## Appendix
@@ -423,8 +586,7 @@ Here are tables of names that i used in my programming, and continues updated...
 	<tr><td>System.String</td>
     	<td>s, str, name, sId, id, x</td>
         <td>
-<pre>        
-Dim s As String
+<pre>Dim s As String
 Dim str As String
 Dim name As String
 Dim sId As String
@@ -483,8 +645,7 @@ Loop</pre>
 </td>
     </tr>
     <tr><td>Linq query expression</td><td>LQuery</td><td>
-<pre>
-Dim LQuery = From path As String
+<pre>Dim LQuery = From path As String
              In ls -l -r -wildcards("*.Xml") <= DIR
              Where InStr(path.BaseName, "xcb") = 1
              Select path.LoadXml(Of KEGG.DBGET.Module)</pre>
@@ -492,8 +653,7 @@ Dim LQuery = From path As String
 </tr>
     <tr>
     	<td>Query Result/Function Returns</td><td>result, rtvl</td><td>
-<pre>
-Dim result As [Module]() = LinqAPI.Exec(Of [Module]) <= 
+<pre>Dim result As [Module]() = LinqAPI.Exec(Of [Module]) <= 
 _
     From path As String
     In ls -l -r -wildcards("*.Xml") <= DIR
@@ -510,7 +670,7 @@ Return result</pre>
 </td>
 </tr>
     <tr><td>json</td><td>json, JSON</td><td>
-<pre>Dim JSON As String = (ls -l -r -wildcards("*.json") <= DIR).GetJson</pre>
+<pre>Dim JSON As String = (ls -l -r -"*.json" <= DIR).GetJson</pre>
 </td>
 </tr>
     <tr><td>data frame</td><td>df, ds, data</td><td>
@@ -530,5 +690,23 @@ net += New Edge With {
 Return net >> Open("./test.net/")
 </pre>
 </td>
+</tr>
+<tr>
+<td>A line of text in a text file</td>
+<td>line</td>
+<td><pre>Dim line$ = path.ReadFirstLine</pre></td>
+</tr>
+<tr>
+<td>Lambda expression parameter</td>
+<td><li>For generic object, using name: <pre>x, o;</pre></li>
+<li>For numeric object, using name: <pre>x, y, z, a, b, c, n, i;</pre></li>
+<li>For string and char, using name: <pre>s, c;</pre></li>
+<li>For System.Type, using name: <pre>t</pre></li></td>
+<td><pre>Dim result = array.Select(Function(x) x.Name)
+Dim value = array _
+    .Select(Function(x) x.value) _
+    .Select(Function(t) t.FullName) _
+    .JoinBy("+")
+</pre></td>
 </tr>
 </table>

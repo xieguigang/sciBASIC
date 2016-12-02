@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30673e9a69478d6fd3b82ac2f8a940e1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::2cb8c23933aa484124d4f23a40d65cba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.Collection
 
@@ -159,9 +160,10 @@ Namespace ComponentModel.Collection
             ''' <param name="x"></param>
             ''' <returns></returns>
             Public Overloads Function Equals(x As __groupHelper(Of T)) As Boolean
-                Dim edits As DistResult =
-                    ComputeDistance(keyASC, x.keyASC, Function(a, b) a = b,
-                                    AddressOf Chr)
+                Dim edits As DistResult = ComputeDistance(
+                    keyASC, x.keyASC,
+                    Function(a, b) a = b,
+                    AddressOf Chr)
 
                 If edits Is Nothing Then
                     Return False

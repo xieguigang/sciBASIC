@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44ba3a58a050d7ec9bd0f1cfb4865dfe, ..\visualbasic_App\Data_science\Mathematical\Math\Arithmetic.Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::9432a9dc0a3ac2b9049e58c030655b5c, ..\sciBASIC#\Data_science\Mathematical\Math\Arithmetic.Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -108,6 +108,10 @@ Public Class Expression
 
     Public Sub SetVariable(Name As String, expr As String)
         Call Variables.Set(Name, expr)
+    End Sub
+
+    Public Sub SetVariable(name$, value#)
+        Call Variables.Set(name, value)
     End Sub
 
     Public Sub AddConstant(Name As String, expr As String)

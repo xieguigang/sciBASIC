@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::798d8f467fbd7be1697f8b603f6460ba, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::ccd3b0b07c637888ba735a21ce9743bc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\Resources.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace SoftwareToolkits
 

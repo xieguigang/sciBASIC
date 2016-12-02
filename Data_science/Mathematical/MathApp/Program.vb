@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75bd26f5bd726f695d29ed8d2930d910, ..\visualbasic_App\Data_science\Mathematical\MathApp\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4e3fc200c6b80274d6a3e560408992bf, ..\sciBASIC#\Data_science\Mathematical\MathApp\Program.vb"
 
     ' Author:
     ' 
@@ -31,8 +31,11 @@ Imports Microsoft.VisualBasic.Mathematical
 Module Program
 
     Public Function Main() As Integer
+        '   Call CubicSplineTest.Test()
+        Call DEBUG.Main()
         Try
-            Call DEBUG.Main()
+            Call New Form1().ShowDialog()
+
         Catch ex As Exception
             Call App.LogException(ex)
             MsgBox(ex.ToString)

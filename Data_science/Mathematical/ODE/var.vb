@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c68d47207bdafe8af0007f90195153b8, ..\visualbasic_App\Data_science\Mathematical\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::0f56c7b0354af3265322504e367051b4, ..\sciBASIC#\Data_science\Mathematical\ODE\var.vb"
 
     ' Author:
     ' 
@@ -28,13 +28,14 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 ''' <summary>
 ''' Y variable in the ODE
 ''' </summary>
 Public Class var : Inherits float
     Implements Ivar
+    Implements ICloneable
 
     Public Property Index As Integer
     Public Property Name As String Implements sIdEnumerable.Identifier
@@ -45,8 +46,27 @@ Public Class var : Inherits float
     Sub New()
     End Sub
 
+    Sub New(name$, value#)
+        With Me
+            .Name = name
+            .value = value
+        End With
+    End Sub
+
     Sub New(name As String)
         Me.Name = name
+    End Sub
+
+    ''' <summary>
+    ''' Value copy
+    ''' </summary>
+    ''' <param name="var"></param>
+    Sub New(var As var)
+        With var
+            Index = .Index
+            Name = .Name
+            value = .value
+        End With
     End Sub
 
     Public Overrides Function ToString() As String
@@ -65,6 +85,10 @@ Public Class var : Inherits float
     Public Overloads Shared Operator <>(var As var, x As Double) As var
         Throw New NotSupportedException
     End Operator
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return New var(Me)
+    End Function
 End Class
 
 Public Interface Ivar : Inherits sIdEnumerable

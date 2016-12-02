@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d09eccd68c48f9ee715058d54757a8, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::5bd9f208b30759595aa030e375e4c20f, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -28,9 +28,10 @@
 
 Option Strict Off
 
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace StorageProvider.ComponentModels
 
@@ -46,10 +47,14 @@ Namespace StorageProvider.ComponentModels
         Sub New(SchemaProvider As SchemaProvider, metaBlank As String)
             Me.SchemaProvider = SchemaProvider
             Me.Columns =
-                SchemaProvider.Columns.ToList(Function(field) DirectCast(field, StorageProvider)) +
-                SchemaProvider.EnumColumns.ToArray(Function(field) DirectCast(field, StorageProvider)) +
-                SchemaProvider.KeyValuePairColumns.ToArray(Function(field) DirectCast(field, StorageProvider)) +
-                SchemaProvider.CollectionColumns.ToArray(Function(field) DirectCast(field, StorageProvider))
+                SchemaProvider.Columns _
+                    .ToList(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.EnumColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.KeyValuePairColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                SchemaProvider.CollectionColumns _
+                    .ToArray(Function(field) DirectCast(field, StorageProvider))
             Me.Columns =
                 LinqAPI.Exec(Of StorageProvider) <= From field As StorageProvider
                                                     In Me.Columns
@@ -94,20 +99,23 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Delegate Function IRowBuilder(obj As Object) As DocumentStream.RowObject
+        Private Delegate Function IRowBuilder(obj As Object) As RowObject
 
         ''' <summary>
         ''' 这里是没有动态属性的
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __buildRowNullMeta(obj As Object) As DocumentStream.RowObject
-            Dim row As List(Of String) = (From colum As StorageProvider
-                                          In Columns
-                                          Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
-                                          Let strData As String = colum.ToString(value)
-                                          Select strData).ToList
-            Return New DocumentStream.RowObject(row)
+        Private Function __buildRowNullMeta(obj As Object) As RowObject
+            Dim row As List(Of String) = LinqAPI.MakeList(Of String) <=
+ _
+                From colum As StorageProvider
+                In Columns
+                Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
+                Let strData As String = colum.ToString(value)
+                Select strData
+
+            Return New RowObject(row)
         End Function
 
         Friend __cachedIndex As String()
@@ -145,7 +153,7 @@ Namespace StorageProvider.ComponentModels
                                                     In hashMetas.AsParallel
                                                     Select From o As Object
                                                            In x.Keys
-                                                           Select Scripting.ToString(o)).MatrixAsIterator
+                                                           Select Scripting.ToString(o)).IteratesALL
             __cachedIndex = indexs.Distinct.ToArray
 
             Return Me

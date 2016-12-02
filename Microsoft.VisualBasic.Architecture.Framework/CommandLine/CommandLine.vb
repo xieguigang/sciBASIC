@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ce22cda509bdf4fdfd9472df3db4e50, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::79e7545a30a9f7f3a9534d71a4e72af7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -37,6 +38,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
 
@@ -84,6 +86,10 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Property Tokens As String()
 
+        ''' <summary>
+        ''' Listing all of the parameter value collection that parsed from the commandline string.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ParameterList As NamedValue(Of String)()
             Get
                 Return __lstParameter.ToArray
@@ -123,9 +129,9 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' 开关的名称是不区分大小写的
+        ''' The parameter name is not case sensitive.(开关的名称是不区分大小写的)
         ''' </summary>
-        ''' <param name="paramName"></param>
+        ''' <param name="paramName">The argument name in the commandline.</param>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -135,7 +141,7 @@ Namespace CommandLine
                     __lstParameter.Where(
                         Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault
 
-                Dim value As String = LQuery.x ' 是值类型，不会出现空引用的情况
+                Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
 
                 If value Is Nothing Then
                     value = ""
@@ -148,7 +154,8 @@ Namespace CommandLine
         Public Property SingleValue As String
 
         ''' <summary>
-        ''' 查看命令行之中是否存在某一个逻辑开关
+        ''' See if the target logical flag argument is exists in the commandline?
+        ''' (查看命令行之中是否存在某一个逻辑开关)
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
@@ -170,7 +177,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get specific argument value as full directory path.
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
@@ -179,16 +186,19 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get specific argument value as full file path.(这个函数还会同时修正file://协议的头部)
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
         Public Function GetFullFilePath(name As String) As String
-            Return FileIO.FileSystem.GetFileInfo(Me(name)).FullName
+            Dim path$ = Me(name)
+            path = FixPath(path)
+            Return FileIO.FileSystem.GetFileInfo(path).FullName
         End Function
 
         ''' <summary>
-        ''' Gets the brief summary information of current cli command line object.(获取当前的命令行对象的参数摘要信息)
+        ''' Gets the brief summary information of current cli command line object.
+        ''' (获取当前的命令行对象的参数摘要信息)
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -208,7 +218,7 @@ Namespace CommandLine
                                             In __lstParameter
                                             Select Len(item.Name)).Max
             For Each sw As NamedValue(Of String) In __lstParameter
-                Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.x}"";")
+                Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
             Next
 
             Return sBuilder.ToString
@@ -231,12 +241,18 @@ Namespace CommandLine
             Return LQuery
         End Function
 
-        Public Function CheckMissingRequiredParameters(ParamArray args As String()) As String()
+        ''' <summary>
+        ''' Gets a list of missing required argument name.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        Public Function CheckMissingRequiredArguments(ParamArray args As String()) As String()
             Return CheckMissingRequiredParameters(list:=args)
         End Function
 
         ''' <summary>
-        ''' Does this cli command line object contains any parameter argument information.(查看本命令行参数对象之中是否存在有参数信息)
+        ''' Does this cli command line object contains any parameter argument information.
+        ''' (查看本命令行参数对象之中是否存在有参数信息)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -258,7 +274,8 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' 大小写不敏感，
+        ''' Does the specific argument exists in this commandline? argument name is not case sensitity.
+        ''' (参数名称字符串大小写不敏感)
         ''' </summary>
         ''' <param name="parameterName"></param>
         ''' <returns></returns>
@@ -272,12 +289,17 @@ Namespace CommandLine
             Return LQuery > 50
         End Function
 
+        ''' <summary>
+        ''' Parsing the commandline string as object model
+        ''' </summary>
+        ''' <param name="CommandLine"></param>
+        ''' <returns></returns>
         Public Shared Widening Operator CType(CommandLine As String) As CommandLine
             Return TryParse(CommandLine)
         End Operator
 
-        Public Shared Widening Operator CType(CommandLine As System.Func(Of String)) As CommandLine
-            Return TryParse(CommandLine())
+        Public Shared Widening Operator CType(CLI As Func(Of String)) As CommandLine
+            Return TryParse(CLI())
         End Operator
 
         ''' <summary>
@@ -292,6 +314,22 @@ Namespace CommandLine
                 Return name
             Else
                 Return failure
+            End If
+        End Function
+
+        ''' <summary>
+        ''' If the target parameter is not presents in the CLI, then this function will returns nothing.
+        ''' (键值对之间使用分号分隔)
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <returns></returns>
+        Public Function GetDictionary(name$) As Dictionary(Of String, String)
+            Dim s$ = Me(name$)
+
+            If String.IsNullOrEmpty(s$) Then
+                Return Nothing
+            Else
+                Return DictionaryParser.TryParse(s$)
             End If
         End Function
 
@@ -391,14 +429,16 @@ Namespace CommandLine
             Dim Tokens As String() = Me(parameter).Split(","c)
             Return (From s As String In Tokens Select CByte(Val(s))).ToArray
         End Function
+
         ''' <summary>
         ''' Gets the character value Of the specified column.
         ''' </summary>
         ''' <returns></returns>
         Public Function GetChar(parameter As String) As Char
             Dim s As String = Me(parameter)
+
             If String.IsNullOrEmpty(s) Then
-                Return NIL
+                Return ASCII.NUL
             Else
                 Return s.First
             End If
@@ -687,7 +727,7 @@ Namespace CommandLine
             If Not Me.__lstParameter.IsNullOrEmpty Then
                 lst += From obj As NamedValue(Of String)
                        In __lstParameter
-                       Select New NamedValue(Of String)(obj.Name, obj.x)
+                       Select New NamedValue(Of String)(obj.Name, obj.Value)
             End If
 
             If Not Me.BoolFlags.IsNullOrEmpty Then

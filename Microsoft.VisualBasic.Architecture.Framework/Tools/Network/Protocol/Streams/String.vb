@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2621fd00e98a8aa1a909643797005457, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\String.vb"
+﻿#Region "Microsoft.VisualBasic::d592f57cc1ec4274b21b73edd15f608d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\String.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,9 @@
 
 #End Region
 
+Imports System.Text
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Text
 
 Namespace Net.Protocols.Streams
 
@@ -51,11 +53,11 @@ Namespace Net.Protocols.Streams
         Sub New()
         End Sub
 
-        Sub New(s As String, Optional encoding As TextEncodings.Encodings = Encodings.UTF8)
+        Sub New(s As String, Optional encoding As Encodings = Encodings.UTF8)
             Call Me.New(s, encoding.GetEncodings)
         End Sub
 
-        Sub New(s As String, Optional encoding As System.Text.Encoding = Nothing)
+        Sub New(s As String, Optional encoding As Encoding = Nothing)
             _value = s
             _encoding = encoding
 

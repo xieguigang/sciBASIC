@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::354156e7601d7f3f30f64c1c62c5c3da, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::ea516527a8a9d74493c41f3b613c6259, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of SeqValue(Of T))
-            If Not source.IsNullOrEmpty Then
+            If Not source Is Nothing Then
                 Dim idx% = offset
 
                 For Each x As T In source

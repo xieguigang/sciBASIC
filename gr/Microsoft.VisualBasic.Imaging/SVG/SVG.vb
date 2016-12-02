@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adcd7c601467ab1393b28fd3a12dc1ae, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\SVG\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::4007be0f26e99834f7bcd3ab3bbe41ec, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVG.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG

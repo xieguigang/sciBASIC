@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a3d8028c6f408cd2b1b959d3d0e43e8, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Shape.vb"
+﻿#Region "Microsoft.VisualBasic::5bd2b7d23d0f52c70b426d7ab2ace378, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Shape.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,6 @@ Namespace Drawing2D.Vector.Shapes
             End Get
         End Property
 
-        Protected _GDIDevice As GDIPlusDeviceHandle
-
         ''' <summary>
         ''' 默认是允许自动组织布局的
         ''' </summary>
@@ -57,12 +55,9 @@ Namespace Drawing2D.Vector.Shapes
         ''' <remarks></remarks>
         Public Property EnableAutoLayout As Boolean = True
 
-        Sub New(GDI As GDIPlusDeviceHandle, InitLoci As Point)
-            _GDIDevice = GDI
-            Location = InitLoci
+        Sub New(initLoci As Point)
+            Location = initLoci
         End Sub
-
-        Protected MustOverride Sub InvokeDrawing()
 
         Public Function MoveTo(pt As Point) As Shape
             Location = pt
@@ -80,15 +75,12 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="OverridesLoci">假若需要进行绘制到的时候复写当前的元素的位置，则请使用这个参数</param>
         ''' <returns>函数返回当前元素在绘制之后所占据的区域</returns>
         ''' <remarks></remarks>
-        Public Function InvokeDrawing(Optional OverridesLoci As Point = Nothing) As Rectangle
-
-            If Not OverridesLoci.IsEmpty Then
-                Me.Location = OverridesLoci
+        Public Overridable Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+            If Not overridesLoci.IsEmpty Then
+                Me.Location = overridesLoci
             End If
 
-            Call InvokeDrawing()
-
-            Return New Rectangle(Me.Location, Me.Size)
+            Return DrawingRegion
         End Function
 
         Public Overrides Function ToString() As String

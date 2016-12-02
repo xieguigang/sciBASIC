@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbc43804ed01ac954863e6aa748e7050, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::87f6613e65a80695f9016b4d91d3d161, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 
@@ -85,7 +85,7 @@ Namespace ComponentModel.Settings.Inf
 
             Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
                 .Name = name,
-                .x = binds
+                .Value = binds
             }
         End Function
 
@@ -107,7 +107,7 @@ Namespace ComponentModel.Settings.Inf
                 MapParser(type)
             Dim obj As Object = Activator.CreateInstance(type)
 
-            For Each map In maps.x
+            For Each map In maps.Value
                 Dim key As String = map.Field.Name
                 Dim value As String = ini.ReadValue(maps.Name, key)
                 Dim o As Object = Scripting.CTypeDynamic(value, map.Type)
@@ -126,7 +126,7 @@ Namespace ComponentModel.Settings.Inf
             Dim maps As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) =
                 MapParser(type)
 
-            For Each map In maps.x
+            For Each map In maps.Value
                 Dim key As String = map.Field.Name
                 Dim value As String = Scripting.ToString(map.GetValue(x))
                 Call ini.WriteValue(maps.Name, key, value)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58267389bbc3325e2f1477753a667e5e, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\EncodingServices.vb"
+﻿#Region "Microsoft.VisualBasic::579a2563f273c8c18fcdf0eb4b3b580a, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\EncodingServices.vb"
 
     ' Author:
     ' 
@@ -89,7 +89,7 @@ Namespace AprioriAlgorithm
             Dim ItemLevels = (From itemName As String In _originals
                               Select (From n As Integer
                                       In Levels.Distinct
-                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).MatrixToVector
+                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).ToVector
             Dim Codes = GenerateCodes(ItemLevels.Length)
             _CodeMappings = New ReadOnlyDictionary(Of Char, KeyValuePair(Of String, Integer))(
                 (From i As Integer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa95cdc9af804006fbf3aae2430b8cf2, ..\visualbasic_App\Data\DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::f9c2505dff0a10363d250e75d3d7d6e9, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 
@@ -121,7 +121,7 @@ Public Class [Class]
             If sp Is Nothing Then  ' 复杂类型，需要建立外部文件的连接
                 Dim pType As Type = prop.PropertyType
                 cls = GetSchema(pType, stack & "::" & prop.Name)
-                sp = New Column(New ColumnAttribute(prop.Name), prop)
+                sp = Column.CreateObject(New ColumnAttribute(prop.Name), prop)
             Else
                 ' 简单类型，不需要再做额外域的处理
             End If

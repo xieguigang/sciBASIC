@@ -97,9 +97,11 @@
     <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
@@ -144,7 +146,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\docs\</OutputPath>
+    <OutputPath>..\..\..\..\sdk\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -172,11 +174,24 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+    <OutputPath>bin\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+    <OutputPath>bin\x64\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+    <OutputPath>bin\x86\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Mathematical.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -201,33 +216,41 @@
     <Compile Include="Arithmetic.Expression\ExpressionParser.vb" />
     <Compile Include="Arithmetic.Expression\SimpleParser.vb" />
     <Compile Include="Arithmetic.Expression\Expression.vb" />
-    <Compile Include="BasicR\Helpers\MatrixMathArithmetic.vb" />
-    <Compile Include="BasicR\Helpers\Constants.vb" />
-    <Compile Include="BasicR\Helpers\Function.vb" />
-    <Compile Include="BasicR\Helpers\Variable.vb" />
-    <Compile Include="BasicR\Matrix\MATRIX.vb" />
-    <Compile Include="BasicR\Parser.vb" />
-    <Compile Include="BasicR\Matrix\Functions.vb" />
-    <Compile Include="BasicR\RSyntax\Math\Math.vb" />
-    <Compile Include="BasicR\RSyntax\Math\Poisson.vb" />
-    <Compile Include="BasicR\RSyntax\Math\Skellam.vb" />
-    <Compile Include="BasicR\RSyntax\PrimitiveAPI\Etc.vb" />
-    <Compile Include="BasicR\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
-    <Compile Include="BasicR\RSyntax\Vectors\BooleanVector.vb" />
-    <Compile Include="BasicR\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
-    <Compile Include="BasicR\Solvers\SOR.vb" />
-    <Compile Include="BasicR\Solvers\GaussianElimination.vb" />
-    <Compile Include="BasicR\Solvers\ISolver.vb" />
-    <Compile Include="BasicR\Helpers\MatrixArithmetic.vb" />
-    <Compile Include="BasicR\Vector.vb" />
+    <Compile Include="LinearAlgebra\Helpers\MatrixMathArithmetic.vb" />
+    <Compile Include="LinearAlgebra\Helpers\Constants.vb" />
+    <Compile Include="LinearAlgebra\Helpers\Function.vb" />
+    <Compile Include="LinearAlgebra\Helpers\Variable.vb" />
+    <Compile Include="LinearAlgebra\Matrix\Matrix.vb" />
+    <Compile Include="LinearAlgebra\Matrix\MatrixMath.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Math\Math.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Math\Poisson.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Math\Skellam.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\PrimitiveAPI\Etc.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Vectors\BooleanVector.vb" />
+    <Compile Include="LinearAlgebra\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
+    <Compile Include="LinearAlgebra\Solvers\SOR.vb" />
+    <Compile Include="LinearAlgebra\Solvers\GaussianElimination.vb" />
+    <Compile Include="LinearAlgebra\Solvers\ISolver.vb" />
+    <Compile Include="LinearAlgebra\Helpers\MatrixArithmetic.vb" />
+    <Compile Include="LinearAlgebra\Vector.vb" />
+    <Compile Include="Spline\BezierCurve.vb" />
+    <Compile Include="Spline\CatmullRomSpline.vb" />
+    <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />
+    <Compile Include="Spline\CubicSpline\CubicSplineVector.vb" />
+    <Compile Include="Spline\CubicSpline\CubicEval.vb" />
+    <Compile Include="Spline\CubicSpline\CubicSpline.vb" />
     <Compile Include="Bootstraping.vb" />
+    <Compile Include="Distributions\Beta.vb" />
+    <Compile Include="Distributions\DirichletDistribution.vb" />
+    <Compile Include="Distributions\Gamma.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Spline\B_Spline.vb" />
     <Compile Include="Helpers\MetaExpression.vb" />
     <Compile Include="Helpers\MemoryCollection.vb" />
     <Compile Include="Helpers\Logical.vb" />
     <Compile Include="Helpers\Variable.vb" />
     <Compile Include="Arithmetic.Expression\TokenIcer.vb" />
-    <Compile Include="LinearTrend.vb" />
     <Compile Include="Logical\LogicalEvaluate.vb" />
     <Compile Include="Logical\FuzzyLogic\FuzzyEngine.vb" />
     <Compile Include="Logical\FuzzyLogic\FuzzyRule.vb" />
@@ -239,6 +262,15 @@
     <Compile Include="Logical\FuzzyLogic\Models\LDM.vb" />
     <Compile Include="Logical\FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Logical\TokenIcer.vb" />
+    <Compile Include="LP\Data\Equation.vb" />
+    <Compile Include="LP\Data\Solver.vb" />
+    <Compile Include="LP\Data\ObjectiveFunction.vb" />
+    <Compile Include="LP\Exceptions.vb" />
+    <Compile Include="LP\Data\InputReader.vb" />
+    <Compile Include="LP\LinearSolver.vb" />
+    <Compile Include="LP\Objective.vb" />
+    <Compile Include="LP\OptimizationType.vb" />
+    <Compile Include="LP\Tableau.vb" />
     <Compile Include="Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Matrix.NET\EigenvalueDecomposition.vb" />
     <Compile Include="Matrix.NET\GeneralMatrix.vb" />
@@ -285,6 +317,7 @@
   <ItemGroup>
     <None Include="Expression_Evaluate.sequencediagram" />
     <None Include="Logical\FuzzyLogic\README.md" />
+    <None Include="LP\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -297,7 +330,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BasicR\RSyntax\README.txt" />
+    <Content Include="LinearAlgebra\RSyntax\README.txt" />
     <Content Include="Icon\Terminal.ico" />
   </ItemGroup>
   <ItemGroup>

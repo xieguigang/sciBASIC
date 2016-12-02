@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0869d3223bcd38b6d70b2d25ce8c2623, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\BarycentricMethod.vb"
+﻿#Region "Microsoft.VisualBasic::94f795c160f8bfd85d185d0b4db26526, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\BarycentricMethod.vb"
 
     ' Author:
     ' 
@@ -180,12 +180,14 @@ Namespace Layouts
                                             size As Size,
                                             Optional cutoff As Double = 100,
                                             Optional _DEBUG_EXPORT As String = "") As NetworkGraph
+            Dim rand As New Random
             Network.nodes =
                 LinqAPI.MakeList(Of Node) <= From node As Node
                                              In Network.nodes
-                                             Let randl As Point = New Point(
-                                                 size.Width * RandomDouble(),
-                                                 size.Height * RandomDouble())
+                                             Let randl As Point = New Point With {
+                                                 .X = size.Width * rand.NextDouble(),
+                                                 .Y = size.Height * rand.NextDouble()
+                                             }
                                              Select node.__setLoci(randl)
             Call doLayout(Network, 1, size)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b8c9bdeb60255a4c5812c844ef3f52, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
+﻿#Region "Microsoft.VisualBasic::ee70b0eefbf830b3826de93c5eb76440, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel
 

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::cef2cc6d63d25d3cdb8f29a0baaea17f, ..\visualbasic_App\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::5e53b805dccbabcc061415b119f71a5a, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -174,7 +174,7 @@ Public Module DataImports
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
         Dim array$() = column.ToArray, n% = array.Length
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Dbl As Double = Val(s)
@@ -185,7 +185,7 @@ Public Module DataImports
             Return GetType(Double)
         End If
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Int As Integer = CInt(Val(s))
@@ -196,7 +196,7 @@ Public Module DataImports
             Return GetType(Integer)
         End If
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Bol As Boolean = Boolean.Parse(s)
@@ -207,16 +207,16 @@ Public Module DataImports
             Return GetType(Boolean)
         End If
 
-        If IsEquals(Of Integer)() = From s As String
-                                    In column
-                                    Let Dat As Date = Date.Parse(s)
-                                    Where Dat.Year = 0 AndAlso
-                                        Dat.Month = 0 AndAlso
-                                        Dat.Day = 0 AndAlso
-                                        Dat.Hour = 0 AndAlso
-                                        Dat.Minute = 0 AndAlso
-                                        Dat.Second = 0
-                                    Select 1 Then
+        If LinqAPI.IsEquals(Of Integer)() = From s As String
+                                            In column
+                                            Let Dat As Date = Date.Parse(s)
+                                            Where Dat.Year = 0 AndAlso
+                                                Dat.Month = 0 AndAlso
+                                                Dat.Day = 0 AndAlso
+                                                Dat.Hour = 0 AndAlso
+                                                Dat.Minute = 0 AndAlso
+                                                Dat.Second = 0
+                                            Select 1 Then
             Return GetType(Date)
         End If
 

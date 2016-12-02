@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
-        Title="Microsoft VisualBasic Code License Manager" IsTitleVisible="True"       
-        ContentSource="/Pages/Home.xaml" Initialized="ModernWindow_Initialized" d:DesignWidth="1021.898" d:DesignHeight="567.871">
+        Title="sciBASIC# code licenses signing tool" IsTitleVisible="True"       
+        ContentSource="/Pages/Home.xaml" Initialized="ModernWindow_Initialized" d:DesignHeight="567.871" Width="1185.746">
 
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="home">
@@ -31,6 +31,6 @@
 
     <mui:ModernWindow.TitleLinks>
         <mui:Link DisplayName="settings" Source="/Pages/Settings.xaml" />
-        <mui:Link DisplayName="GitHub" Source="https://github.com/xieguigang/VisualBasic_AppFramework" />
+        <mui:Link DisplayName="GitHub" Source="https://github.com/xieguigang/sciBASIC#" />
     </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

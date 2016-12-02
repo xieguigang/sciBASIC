@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f3b3bf0b6384db3a2b955bad76271d, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Node.vb"
+﻿#Region "Microsoft.VisualBasic::8878e1d3ff76f87f0aab24721e6ec3e1, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Node.vb"
 
     ' Author:
     ' 
@@ -27,29 +27,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.Extensions
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Abstract
 
 Namespace FileStream
-
-    Public MustInherit Class INetComponent : Inherits DynamicPropertyBase(Of String)
-
-        <Meta(GetType(String))>
-        Public Overrides Property Properties As Dictionary(Of String, String)
-            Get
-                Return MyBase.Properties
-            End Get
-            Set(value As Dictionary(Of String, String))
-                MyBase.Properties = value
-            End Set
-        End Property
-
-        Public Sub Add(key As String, value As String)
-            Call Properties.Add(key, value)
-        End Sub
-    End Class
 
     ''' <summary>
     ''' An node entity in the target network.(这个对象里面包含了网络之中的节点的实体的最基本的定义：节点的标识符以及节点的类型)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4aa5f5591df30904d0077c161360ec7, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::22601ca438937984b1d68a0652ad164f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,10 @@ Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Net
 
@@ -114,7 +114,7 @@ Namespace Net
         ''' <returns></returns>
         Public Function GetFirstAvailablePort(Optional BEGIN_PORT As Integer = 100) As Integer
             If BEGIN_PORT <= 0 Then
-                BEGIN_PORT = RandomDouble() * (MAX_PORT - 1)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
+                BEGIN_PORT = Rnd() * (MAX_PORT - 1)  ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
             End If
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1
@@ -178,7 +178,7 @@ Namespace Net
                 New KeyValuePair(Of String, String)(hash, ca.PrivateKey),
                 New KeyValuePair(Of String, String)(uid, ca.uid)
             }
-            Dim oauth As String = WebServiceUtils.BuildArgvs(array)
+            Dim oauth As String = WebServiceUtils.BuildUrlData(array)
             Return oauth
         End Function
 
@@ -186,16 +186,14 @@ Namespace Net
 #If DEBUG Then
             Call $"{MethodBase.GetCurrentMethod.GetFullName} ==> {args}".__DEBUG_ECHO
 #End If
-            Dim dict = WebServiceUtils.requestParser(args, False)
+            Dim data = WebServiceUtils.RequestParser(args, False)
 #If DEBUG Then
-            Call String.Join("; ", dict.ToArray(Function(obj) obj.ToString)).__DEBUG_ECHO
+            Call data.AllKeys.ToArray(Function(k) data(k)).GetJson.__DEBUG_ECHO
 #End If
-            Dim privateKey As String = dict(hash)
-            Dim uid As Long = Scripting.CTypeDynamic(Of Long)(dict(TCPExtensions.uid))
+            Dim privateKey As String = data(hash)
+            Dim uid As Long = Scripting.CTypeDynamic(Of Long)(data(TCPExtensions.uid))
             Return Net.SSL.Certificate.Install(privateKey, uid)
         End Function
-
 #End Region
-
     End Module
 End Namespace

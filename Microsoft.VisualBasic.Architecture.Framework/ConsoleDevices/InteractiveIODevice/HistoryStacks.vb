@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d2ca62e024f6d5595a7e0488f5a583c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::39af66f7c97b0329f39a08cf036d2591, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace Terminal
 
         Public Sub StartInitialize()
             Call __init()
-            _historyList = (From his As History In _lsthistory Select his.Histories).MatrixToList
+            _historyList = (From his As History In _lsthistory Select his.Histories).Unlist
             p = _historyList.Count - 1
             If p < 0 Then p = 0
         End Sub

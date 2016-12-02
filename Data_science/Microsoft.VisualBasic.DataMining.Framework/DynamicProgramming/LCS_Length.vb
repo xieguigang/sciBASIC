@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d9dfed052186f147d69f5fa86da7aa, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
+﻿#Region "Microsoft.VisualBasic::ed2293c9efe3330f00e156313087489d, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,8 @@
 #End Region
 
 Imports System
+Imports Microsoft.VisualBasic.Text.LevenshteinDistance
+Imports Microsoft.VisualBasic.Language
 
 Namespace DynamicProgramming
 
@@ -35,6 +37,12 @@ Namespace DynamicProgramming
     ''' </summary>
     Public Module LCS_Length
 
+        ''' <summary>
+        ''' 比较两个字符串之间的最长的子串
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Function MaxLengthSubString(a As String, b As String) As String
             Return MaxSet(a.ToArray, b.ToArray, AddressOf __equals)
         End Function

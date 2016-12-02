@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e2cf93d81299346352017d962f1e61, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Perl\Tools.vb"
+﻿#Region "Microsoft.VisualBasic::e0e2cf93d81299346352017d962f1e61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Perl\Tools.vb"
 
     ' Author:
     ' 
@@ -228,7 +228,7 @@ Namespace Language.Perl
                 Dim x As NamedValue(Of String) = hash(key)
                 hash(key) = New NamedValue(Of String) With {
                     .Name = key,
-                    .x = x.x.chomp,
+                    .Value = x.Value.chomp,
                     .Description = x.Description
                 }
             Next

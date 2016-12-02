@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be5939591d3de9d6ddb9eb6660a81dc9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
+﻿#Region "Microsoft.VisualBasic::2bfc0afa27bfa0cda4bb2cf630bb56bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
 
     ' Author:
     ' 
@@ -108,6 +108,14 @@ Namespace Language.UnixBash
             Else
                 Return ls
             End If
+        End Operator
+
+        Public Shared Operator -(ls As Search, wildcards$()) As Search
+            Return ls - FileSystemAPI.wildcards(wildcards$)
+        End Operator
+
+        Public Shared Operator -(ls As Search, wildcards$) As Search
+            Return ls - wildcards.Split(","c)
         End Operator
 
         Public ReadOnly Property SearchType As FileIO.SearchOption

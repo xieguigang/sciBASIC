@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31f60493286fe63eac3a42afe014be63, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::eb8f6e5c5c500eddcd7eb00b3927cbcf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
     ' Author:
     ' 
@@ -241,6 +241,33 @@ Public Module VBDebugger
         End If
     End Sub
 
+    Public Function Assert(test As Boolean,
+                           failed$,
+                           Optional success$ = Nothing,
+                           Optional failedLevel As Logging.MSG_TYPES = Logging.MSG_TYPES.ERR,
+                           <CallerMemberName> Optional calls As String = "") As Boolean
+        If test Then
+            If Not String.IsNullOrEmpty(success) Then
+                Call success.__DEBUG_ECHO
+            End If
+
+            Return True
+        Else
+            Select Case failedLevel
+                Case Logging.MSG_TYPES.DEBUG
+                    Call failed.__DEBUG_ECHO
+                Case Logging.MSG_TYPES.ERR
+                    Call failed.PrintException(calls)
+                Case Logging.MSG_TYPES.WRN
+                    Call failed.Warning(calls)
+                Case Else
+                    Call failed.Echo(calls)
+            End Select
+
+            Return False
+        End If
+    End Function
+
     ''' <summary>
     ''' VisualBasic application exception wrapper
     ''' </summary>
@@ -294,9 +321,9 @@ Public Module VBDebugger
     ''' Alias for <see cref="Console.Write"/>
     ''' </summary>
     ''' <param name="s"></param>
-    <Extension> Public Sub Echo(s As String)
+    <Extension> Public Sub Echo(s As String, <CallerMemberName> Optional memberName As String = "")
         If Not Mute Then
-            Call Console.Write(s)
+            Call Console.Write($"[{memberName}] {s}")
         End If
     End Sub
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9896c44b472ea6ea8220629cc6784261, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::10a854194c79e6e0a93f21577272dedb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Threading
+Imports Microsoft.VisualBasic.Language
 
 Namespace Terminal
 

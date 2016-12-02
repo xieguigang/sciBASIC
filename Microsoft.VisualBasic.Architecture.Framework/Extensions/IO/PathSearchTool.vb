@@ -1,43 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::3a80674d094570ba60d297ee74e23f2e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::e62ea2c2ee0ab74864b0412618c4cb17, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports System.IO
-Imports System.Text.RegularExpressions
-Imports System.Text
-Imports System.Reflection
 Imports System.Collections.ObjectModel
-Imports Microsoft.VisualBasic.Language
+Imports System.IO
+Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
@@ -220,18 +222,58 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Check if the target file object is exists on your file system or not.(这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
+    ''' Safe file copy operation
+    ''' </summary>
+    ''' <param name="source$"></param>
+    ''' <param name="copyTo$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
+        Try
+            If copyTo.FileExists Then
+                Call FileIO.FileSystem.DeleteFile(copyTo)
+            Else
+                Call copyTo.ParentPath.MkDIR
+            End If
+
+            Call FileIO.FileSystem.CopyFile(source, copyTo)
+        Catch ex As Exception
+            ex = New Exception({source, copyTo}.GetJson, ex)
+            Call App.LogException(ex)
+            Return False
+        End Try
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' Check if the target file object is exists on your file system or not.
+    ''' (这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
     ''' </summary>
     ''' <param name="path"></param>
+    ''' <param name="ZERO_Nonexists">将0长度的文件也作为不存在</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
 #If FRAMEWORD_CORE Then
     <ExportAPI("File.Exists", Info:="Check if the target file object is exists on your file system or not.")>
-    <Extension> Public Function FileExists(path As String) As Boolean
+    <Extension> Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean
 #Else
     <Extension> Public Function FileExists(path As String) As Boolean
 #End If
-        Return Not String.IsNullOrEmpty(path) AndAlso FileIO.FileSystem.FileExists(path)
+        If path.IndexOf(ASCII.CR) > -1 OrElse path.IndexOf(ASCII.LF) > -1 Then
+            Return False ' 包含有回车符或者换行符，则肯定不是文件路径了
+        End If
+
+        If Not String.IsNullOrEmpty(path) AndAlso
+            FileIO.FileSystem.FileExists(path) Then  ' 文件存在
+
+            If ZERO_Nonexists Then
+                Return FileSystem.FileLen(path) > 0
+            Else
+                Return True
+            End If
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>
@@ -374,7 +416,7 @@ Public Module ProgramPathSearchTool
                    In matches
                    Where InStr(extType, path.ExtValue, CompareMethod.Text) > 0
                    Select path.Path
-        Return LQuery.MatrixAsIterator.Distinct.ToArray
+        Return LQuery.IteratesALL.Distinct.ToArray
     End Function
 
     ''' <summary>
@@ -657,7 +699,7 @@ Public Module ProgramPathSearchTool
             Call files.AddRange(BranchRule(ProgramFilesX86, keyword))
         End If
         Call files.AddRange(DriveRoot)
-        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).MatrixToList)
+        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).Unlist)
 
         Return files.ToArray
     End Function
@@ -727,50 +769,57 @@ Public Module ProgramPathSearchTool
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
 
-        If lcFrom.Length > 0 AndAlso lcTo.Length > 0 AndAlso IO.Path.GetPathRoot(lcFrom.ToUpper()).Equals(IO.Path.GetPathRoot(lcTo.ToUpper())) Then
-            Dim laDirSep As Char() = {"\"c}
-            Dim lcPathFrom As String = (If(IO.Path.GetDirectoryName(lcFrom) Is Nothing, IO.Path.GetPathRoot(lcFrom.ToUpper()), IO.Path.GetDirectoryName(lcFrom)))
-            Dim lcPathTo As String = (If(IO.Path.GetDirectoryName(lcTo) Is Nothing, IO.Path.GetPathRoot(lcTo.ToUpper()), IO.Path.GetDirectoryName(lcTo)))
-            Dim lcFileTo As String = (If(IO.Path.GetFileName(lcTo) Is Nothing, "", IO.Path.GetFileName(lcTo)))
-            Dim laFrom As String() = lcPathFrom.Split(laDirSep)
-            Dim laTo As String() = lcPathTo.Split(laDirSep)
-            Dim lnFromCnt As Integer = laFrom.Length
-            Dim lnToCnt As Integer = laTo.Length
-            Dim lnSame As Integer = 0
-            Dim lnCount As Integer = 0
+        If lcFrom.Length = 0 OrElse lcTo.Length = 0 Then
+            Throw New InvalidDataException("One of the path string value is null!")
+        End If
+        If Not IO.Path.GetPathRoot(lcFrom.ToUpper()) _
+            .Equals(IO.Path.GetPathRoot(lcTo.ToUpper())) Then
+            Return pcTo
+        End If
 
-            While lnToCnt > 0 AndAlso lnSame < lnToCnt
-                If lnCount < lnFromCnt Then
-                    If laFrom(lnCount).ToUpper().Equals(laTo(lnCount).ToUpper()) Then
-                        lnSame += 1
-                    Else
-                        Exit While
-                    End If
+        ' 两个路径都有值并且都在相同的驱动器下才会进行计算
+
+        Dim laDirSep As Char() = {"\"c}
+        Dim lcPathFrom As String = (If(IO.Path.GetDirectoryName(lcFrom) Is Nothing, IO.Path.GetPathRoot(lcFrom.ToUpper()), IO.Path.GetDirectoryName(lcFrom)))
+        Dim lcPathTo As String = (If(IO.Path.GetDirectoryName(lcTo) Is Nothing, IO.Path.GetPathRoot(lcTo.ToUpper()), IO.Path.GetDirectoryName(lcTo)))
+        Dim lcFileTo As String = (If(IO.Path.GetFileName(lcTo) Is Nothing, "", IO.Path.GetFileName(lcTo)))
+        Dim laFrom As String() = lcPathFrom.Split(laDirSep)
+        Dim laTo As String() = lcPathTo.Split(laDirSep)
+        Dim lnFromCnt As Integer = laFrom.Length
+        Dim lnToCnt As Integer = laTo.Length
+        Dim lnSame As Integer = 0
+        Dim lnCount As Integer = 0
+
+        While lnToCnt > 0 AndAlso lnSame < lnToCnt
+            If lnCount < lnFromCnt Then
+                If laFrom(lnCount).ToUpper().Equals(laTo(lnCount).ToUpper()) Then
+                    lnSame += 1
                 Else
                     Exit While
                 End If
-                lnCount += 1
-            End While
-
-            Dim lcEndPart As String = ""
-            For lnEnd As Integer = lnSame To lnToCnt - 1
-                If laTo(lnEnd).Length > 0 Then
-                    lcEndPart += laTo(lnEnd) & "\"
-                Else
-                    Exit For
-                End If
-            Next
-
-            Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
-            If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
-                While lnDiff > 0
-                    lnDiff -= 1
-                    lcEndPart = "..\" & lcEndPart
-                End While
+            Else
+                Exit While
             End If
-            lcRelativePath = lcEndPart & lcFileTo
-        End If
+            lnCount += 1
+        End While
 
+        Dim lcEndPart As String = ""
+        For lnEnd As Integer = lnSame To lnToCnt - 1
+            If laTo(lnEnd).Length > 0 Then
+                lcEndPart += laTo(lnEnd) & "\"
+            Else
+                Exit For
+            End If
+        Next
+
+        Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
+        If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
+            While lnDiff > 0
+                lnDiff -= 1
+                lcEndPart = "..\" & lcEndPart
+            End While
+        End If
+        lcRelativePath = lcEndPart & lcFileTo
         Return "..\" & lcRelativePath
     End Function
 
@@ -804,7 +853,8 @@ Public Module ProgramPathSearchTool
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimSuffix(file As String) As String
         Try
-            Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
+            Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
+            Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
             Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
             Return $"{fileInfo.Directory.FullName}/{Name}"
         Catch ex As Exception
@@ -825,14 +875,14 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 只有文件名称，没有拓展名
+    ''' 返回``文件名称.拓展名``
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <ExportAPI("File.BaseName")>
+    <ExportAPI("File.Name")>
     <Extension>
-    Public Function GetJustFileName(path As String) As String
-        Return IO.Path.GetFileNameWithoutExtension(path)
+    Public Function FileName(path As String) As String
+        Return FileIO.FileSystem.GetFileInfo(path).Name
     End Function
 
     ''' <summary>

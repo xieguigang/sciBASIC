@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::bbcc7f3d94c273c9f90b2982c3d24f59, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c3573377ac692d4c0fc6f0e9492cbf1e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIBuilder.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -151,7 +151,7 @@ Namespace CommandLine
 
                 Call sbr.Append(" ")
                 Call sbr.Append(x.Key & " ")
-                Call sbr.Append(x.Value.CliToken)
+                Call sbr.Append(x.Value.CLIToken)
             Next
 
             Return sbr.ToString
@@ -175,7 +175,7 @@ Namespace CommandLine
         Private Delegate Function __getCLIToken(value As Object, attr As [Optional], prop As PropertyInfo) As String
 
         ''' <summary>
-        ''' The different between the String and Path is that applying <see cref="CliToken"/> or <see cref="CliPath"/>.
+        ''' The different between the String and Path is that applying <see cref="CLIToken"/> or <see cref="CLIPath"/>.
         ''' </summary>
         ''' <param name="value">只能是<see cref="System.String"/>类型的</param>
         ''' <param name="attr"></param>
@@ -184,7 +184,7 @@ Namespace CommandLine
         Private Function __pathRule(value As Object, attr As [Optional], prop As PropertyInfo) As String
             Dim path As String = DirectCast(value, String)
             If Not String.IsNullOrEmpty(path) Then
-                path = $"{attr.Name} {path.CliPath}"
+                path = $"{attr.Name} {path.CLIPath}"
             End If
             Return path
         End Function
@@ -202,7 +202,7 @@ Namespace CommandLine
                 If String.IsNullOrEmpty(str) Then
                     Return ""
                 Else
-                    Return $"{attr.Name} {str.CliToken}"
+                    Return $"{attr.Name} {str.CLIToken}"
                 End If
             ElseIf prop.PropertyType.IsInheritsFrom(GetType([Enum])) Then
                 Return __stringEnumRule(value, attr, prop)
@@ -222,7 +222,7 @@ Namespace CommandLine
                            Select flag, x).FirstOrDefault
             If nullGet Is Nothing Then  '没有默认值
 rtvl:           Dim strValue As String = enumValue.Description
-                Return $"{attr.Name} {strValue.CliToken}"
+                Return $"{attr.Name} {strValue.CLIToken}"
             Else
                 If nullGet.x.GetValue(Nothing).Equals(value) Then
                     Dim str As String = nullGet.flag.value      ' 是默认值，则返回默认值

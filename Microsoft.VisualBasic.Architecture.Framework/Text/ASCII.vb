@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90c02c6c5aed4991c2dd907162ce6650, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::8395e817dc0e86fe9474821db810bf61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text
 
@@ -236,6 +238,8 @@ Namespace Text
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
 
+        Public Const Mark As Char = "'"c
+
         ''' <summary>
         ''' 分别替换英文双引号，中文双引号为指定的字符串
         ''' </summary>
@@ -253,7 +257,20 @@ Namespace Text
             Return sb.ToString
         End Function
 
+        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().ToArray(AddressOf Chr)
+
         Public Class [Byte]
+
+            Public Shared Function GetASCIISymbols() As Integer()
+                Dim code As New List(Of Integer)
+
+                code += {33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47}
+                code += {58, 59, 60, 61, 62, 63, 64}
+                code += {91, 92, 93, 94, 95, 96}
+                code += {123, 124, 125, 126}
+
+                Return code
+            End Function
 
             ''' <summary>
             ''' 0000 0000	0	00	NUL	空字符（Null）

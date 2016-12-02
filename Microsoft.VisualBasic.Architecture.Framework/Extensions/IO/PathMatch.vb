@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9f707b313c46a4902b90817f89331d5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathMatch.vb"
+﻿#Region "Microsoft.VisualBasic::b9f707b313c46a4902b90817f89331d5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathMatch.vb"
 
     ' Author:
     ' 
@@ -92,11 +92,11 @@ Public Module PathMatches
                       In paths.Skip(1)
                       Select path.Name,
                           pls = (From p As String
-                                 In path.x
+                                 In path.Value
                                  Select pName = p.BaseName,
                                      p).ToArray).ToArray
 
-        For Each path As String In primary.x
+        For Each path As String In primary.Value
             Dim q As String = path.BaseName
             Dim result As New Dictionary(Of String, String) From {{primary.Name, path}}
 

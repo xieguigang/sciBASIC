@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6112c520e78e61a95ef87dc2401b880c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::28550f06b09e2dfcc692aeb6cc5e43bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
     ' Author:
     ' 
@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace Mathematical
+Namespace Mathematical.Correlations
 
     <PackageNamespace("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations

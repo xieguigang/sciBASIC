@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaa77e2cb18c57d95a694e3f2c66bb8d, ..\visualbasic_App\Data\DataFrame\DocumentStream\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::7a697835b00e1dab2195f61f0344a5e6, ..\sciBASIC#\Data\DataFrame\DocumentStream\EntityObject.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace DocumentStream
 
+    ''' <summary>
+    ''' The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>
+    ''' </summary>
     Public Class EntityObject : Inherits DynamicPropertyBase(Of String)
         Implements sIdEnumerable
 
@@ -63,6 +66,10 @@ Namespace DocumentStream
         End Function
     End Class
 
+    ''' <summary>
+    ''' The numeric dataset, <see cref="DynamicPropertyBase(Of Double)"/>, <see cref="Double"/>.
+    ''' (数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)
+    ''' </summary>
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements sIdEnumerable
 

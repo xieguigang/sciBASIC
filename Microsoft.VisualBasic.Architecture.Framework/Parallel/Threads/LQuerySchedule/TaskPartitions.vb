@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d7d768ca4c7e7b156fce7a458f61b85, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
+﻿#Region "Microsoft.VisualBasic::e48eae1929b5a82f5517d42231b1e97b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
 
     ' Author:
     ' 
@@ -59,13 +59,13 @@ Namespace Parallel.Linq
         ''' <param name="source"></param>
         ''' <param name="parTokens"></param>
         ''' <returns></returns>
-        ''' <remarks>对于数量较少的序列，可以使用<see cref="Extensions.SplitIterator(Of T)(IEnumerable(Of T), Integer)"/>进行分区操作，
+        ''' <remarks>对于数量较少的序列，可以使用<see cref="Extensions.SplitIterator(Of T)(IEnumerable(Of T), Integer, Boolean)"/>进行分区操作，
         ''' 该函数使用数组的<see cref="Array.ConstrainedCopy(Array, Integer, Array, Integer, Integer)"/>方法进行分区复制，效率较高
         ''' 
         ''' 由于本函数需要处理大量的数据，使用Array的方法会内存占用较厉害，所以在这里更改为List操作以降低内存的占用
         ''' </remarks>
         <Extension>
-        Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
+        Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens%, Optional echo As Boolean = True) As IEnumerable(Of T())
             Dim buf As New List(Of T)
             Dim n As Integer = 0
             Dim parts As Integer
@@ -95,6 +95,7 @@ Namespace Parallel.Linq
         ''' 进行分区之后返回一个长时间的任务组合
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
+        ''' <param name="parts">函数参数是每一个分区里面的元素的数量</param>
         ''' <returns></returns>
         ''' 
         <Extension>

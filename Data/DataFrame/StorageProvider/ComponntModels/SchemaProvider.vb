@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9344f02b6d593e3bed4c68f0d880e44, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::08b8c7a8ae01ca3210b7fad8975847b3, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,14 @@ Namespace StorageProvider.ComponentModels
                 If value.IsNullOrEmpty Then
                     _dictColumns = New Dictionary(Of String, Column)
                 Else
-                    _dictColumns = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictColumns = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictColumns.ContainsKey(x.Name) Then
+                            Call _dictColumns.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -75,7 +82,14 @@ Namespace StorageProvider.ComponentModels
                 If _collectionColumns.IsNullOrEmpty Then
                     _dictCollectionColumns = New Dictionary(Of String, CollectionColumn)
                 Else
-                    _dictCollectionColumns = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictCollectionColumns = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictCollectionColumns.ContainsKey(x.Name) Then
+                            Call _dictCollectionColumns.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -88,7 +102,14 @@ Namespace StorageProvider.ComponentModels
                 If _enumColumns.IsNullOrEmpty Then
                     _dictEnumColumns = New Dictionary(Of String, [Enum])
                 Else
-                    _dictEnumColumns = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictEnumColumns = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictEnumColumns.ContainsKey(x.Name) Then
+                            Call _dictEnumColumns.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -101,7 +122,14 @@ Namespace StorageProvider.ComponentModels
                 If value.IsNullOrEmpty Then
                     _dictKeyMeta = New Dictionary(Of String, KeyValuePair)
                 Else
-                    _dictKeyMeta = value.ToDictionary(Function(x) x.BindProperty.Name)
+                    _dictKeyMeta = value _
+                        .ToDictionary(Function(x) x.BindProperty.Name)
+
+                    For Each x In value
+                        If Not _dictKeyMeta.ContainsKey(x.Name) Then
+                            Call _dictKeyMeta.Add(x.Name, x)
+                        End If
+                    Next
                 End If
             End Set
         End Property
@@ -111,6 +139,12 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <returns></returns>
         Public Property MetaAttributes As MetaAttribute
+
+        ''' <summary>
+        ''' 提供当前的schema数据的原始数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Raw As SchemaProvider
 
         Dim _columns As Column()
         Dim _collectionColumns As CollectionColumn()
@@ -135,7 +169,7 @@ Namespace StorageProvider.ComponentModels
 
         Public ReadOnly Iterator Property Properties As IEnumerable(Of StorageProvider)
             Get
-                For Each p As CollectionColumn In Me.CollectionColumns.SafeQuery
+                For Each p As CollectionColumn In CollectionColumns.SafeQuery
                     Yield p
                 Next
                 For Each p As Column In Me.Columns.SafeQuery
@@ -157,7 +191,12 @@ Namespace StorageProvider.ComponentModels
             Return DeclaringType.FullName
         End Function
 
-        Public Function GetField(Name As String) As ComponentModels.StorageProvider
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="Name">支持属性名称或者域名称</param>
+        ''' <returns></returns>
+        Public Function GetField(Name As String) As StorageProvider
             If _dictColumns.ContainsKey(Name) Then
                 Return _dictColumns(Name)
             End If
@@ -184,6 +223,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
+                ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanReadDataFromObject,
@@ -202,6 +242,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanWriteDataToObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanWriteDataToObject Select p).ToArray,
                 .KeyValuePairColumns = KeyValuePairColumns.Where(Function(p) p.CanWriteDataToObject).ToArray,
+                ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanWriteDataToObject,
@@ -289,20 +330,21 @@ Namespace StorageProvider.ComponentModels
         ''' Creates the data frame schema for the specific object type.
         ''' </summary>
         ''' <param name="type"></param>
-        ''' <param name="Explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
-        Public Shared Function CreateObject(type As Type, Optional Explicit As Boolean = False) As SchemaProvider
+        Public Shared Function CreateObject(type As Type, Optional strict As Boolean = False) As SchemaProvider
             Dim Properties As Dictionary(Of PropertyInfo, StorageProvider) =
-                TypeSchemaProvider.GetProperties(type, Explicit)
+                TypeSchemaProvider.GetProperties(type, strict)
 
             Dim Schema As New SchemaProvider With {
                 .Columns = GetColumns(Properties),
                 .CollectionColumns = GetCollectionColumns(Properties),
                 .EnumColumns = GetEnumColumns(Properties),
-                .MetaAttributes = GetMetaAttributeColumn(Properties),
+                .MetaAttributes = GetMetaAttributeColumn(Properties, strict),
                 .KeyValuePairColumns = GetKeyValuePairColumn(Properties),
                 ._DeclaringType = type
             }
+            Schema._Raw = Schema
 
             Return Schema
         End Function
@@ -345,7 +387,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="Properties"></param>
         ''' <returns></returns>
-        Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As MetaAttribute
+        Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider), strict As Boolean) As MetaAttribute
             Dim MetaAttributes As MetaAttribute =
                 __gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
 
@@ -353,18 +395,24 @@ Namespace StorageProvider.ComponentModels
                 Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
 
                 If prop Is Nothing Then
-                    Throw New Exception(DynamicsNotFound)
+                    If strict Then
+                        Throw New Exception(DynamicsNotFound)
+                    Else
+                        Return Nothing
+                    End If
                 End If
 
-                Dim type As Type = prop.DeclaringType
+                Dim type As New Value(Of Type)(prop.DeclaringType)
 
-                If type.IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
-                    type = type.BaseType
+                If (+type).IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
                     Dim metaProp As PropertyInfo =
-                        type.GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties),
-                                         BindingFlags.Public Or BindingFlags.Instance)
-                    type = type.GetGenericArguments.First
-                    MetaAttributes = New MetaAttribute(New Reflection.MetaAttribute(type), metaProp)
+                        (type = (+type).BaseType).GetProperty(
+                        NameOf(DynamicPropertyBase(Of Double).Properties),
+                        BindingFlags.Public Or BindingFlags.Instance)
+                    type = (+type).GetGenericArguments.First
+                    MetaAttributes = New MetaAttribute(
+                        New Reflection.MetaAttribute(+type),
+                        metaProp)
                 End If
             End If
 

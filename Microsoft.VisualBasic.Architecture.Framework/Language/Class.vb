@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::989943539e0f669c966d49a16cc68c20, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Class.vb"
+﻿#Region "Microsoft.VisualBasic::dc5a0276eac33308d6c29b42b1364688, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Class.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,8 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace Language
@@ -50,6 +52,7 @@ Namespace Language
     Public Class [Class](Of T) : Inherits ClassObject
 
         Public ReadOnly Property Type As Type
+        Public ReadOnly Property Schema As Dictionary(Of BindProperty(Of Field))
 
         ReadOnly __enumsHandler As Func(Of IEnumerable(Of T), T())
 
@@ -92,7 +95,7 @@ Namespace Language
         End Operator
 
         Public Shared Operator <=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()
-            Return source.MatrixToVector
+            Return source.ToVector
         End Operator
 
         Public Shared Operator >=(cls As [Class](Of T), source As IEnumerable(Of IEnumerable(Of T))) As T()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a11f7a856939a52b44ae59df669550e, ..\visualbasic_App\win32_api\Version.vb"
+﻿#Region "Microsoft.VisualBasic::3a11f7a856939a52b44ae59df669550e, ..\sciBASIC#\win32_api\Version.vb"
 
     ' Author:
     ' 

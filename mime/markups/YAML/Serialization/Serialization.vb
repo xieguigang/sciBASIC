@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1e39454d81e68aed168977988a28542, ..\visualbasic_App\mime\Markups\YAML\Serialization\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::24e0ea32de5bd8780b67f71a66f9cab4, ..\sciBASIC#\mime\markups\YAML\Serialization\Serialization.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.MIME.Markup.YAML.Grammar
 Imports Microsoft.VisualBasic.MIME.Markup.YAML.Syntax
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Text
 
 Namespace YAML
 

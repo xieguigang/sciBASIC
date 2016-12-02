@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bff54219538e2ffdbd10e9e07d33bd0, ..\visualbasic_App\www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
+﻿#Region "Microsoft.VisualBasic::fbf463ad48c432d82c73eeaed65e3eac, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic
 
 Public Module IPUtils
 
@@ -45,7 +47,7 @@ Public Module IPUtils
             Return False
         End If
 
-        If IPAddress.Matches(RegexIPAddress) Then
+        If Regex.Match(IPAddress, RegexIPAddress).Success Then
             Return True
         End If
 
@@ -115,4 +117,3 @@ Public Module IPUtils
         Return Dot2LongIP
     End Function
 End Module
-

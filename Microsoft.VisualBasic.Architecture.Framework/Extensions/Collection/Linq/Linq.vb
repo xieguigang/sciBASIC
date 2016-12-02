@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d9441fa320a7134b5344f3a3c976995, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::c46d57dea873e948c374f36cf9b5c878, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -137,16 +137,18 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Iterates all of the elements in a two dimension collection as the data source for the linq expression or ForEach statement.
-        ''' (适用于二维的集合做为linq的数据源，不像<see cref="MatrixToList"/>是进行转换，这个是返回迭代器的，推荐使用这个函数)
+        ''' Iterates all of the elements in a two dimension collection as the data source 
+        ''' for the linq expression or ForEach statement.
+        ''' (适用于二维的集合做为linq的数据源，不像<see cref="Unlist"/>是进行转换，
+        ''' 这个是返回迭代器的，推荐使用这个函数)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function MatrixAsIterator(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
-            For Each Line As IEnumerable(Of T) In source
-                If Not Line.IsNullOrEmpty Then
-                    For Each x As T In Line
+        <Extension> Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+            For Each line As IEnumerable(Of T) In source
+                If Not line.IsNullOrEmpty Then
+                    For Each x As T In line
                         Yield x
                     Next
                 End If
@@ -154,7 +156,7 @@ Namespace Linq
         End Function
 
         <Extension>
-        Public Iterator Function JoinAsIterator(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not a Is Nothing Then
                 For Each x As T In a
                     Yield x
@@ -165,6 +167,17 @@ Namespace Linq
                     Yield x
                 Next
             End If
+        End Function
+
+        <Extension>
+        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As T) As IEnumerable(Of T)
+            If Not a Is Nothing Then
+                For Each x As T In a
+                    Yield x
+                Next
+            End If
+
+            Yield b
         End Function
 
         ''' <summary>
@@ -237,21 +250,11 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
+        ''' ``0,1,2,3,...<paramref name="n"/>``
         ''' </summary>
-        ''' <param name="From">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
-        ''' <param name="To">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
-        ''' <param name="By">number: increment of the sequence</param>
+        ''' <param name="n"></param>
+        ''' <param name="offset"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Iterator Function seq([from] As Value(Of Double), [to] As Double, Optional by As Double = 1) As IEnumerable(Of Double)
-            Yield from
-
-            Do While (from = from.value + by) <= [to]
-                Yield from
-            Loop
-        End Function
-
         <Extension>
         Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
             If n < 0 Then
@@ -344,35 +347,35 @@ Namespace Linq
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
         ''' <returns>An array that contains the elements from the input sequence.</returns>
-        <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
-                                                        [ctype] As Func(Of T, TOut),
-                                                        Optional parallel As Boolean = False) As TOut()
+        <Extension> Public Function ToArray(Of T, TOut)(
+                                      source As IEnumerable(Of T),
+                                     [ctype] As Func(Of T, TOut),
+                           Optional parallel As Boolean = False) As TOut()
+
             If source Is Nothing Then  ' 假若这里使用IsNullOrEmpty的话，会导致Linq查询会被执行两次，所以在这里直接判断是否为空值就行了
                 Return New TOut() {}
             End If
 
-            Dim LQuery As TOut()
-
             If parallel Then
-                LQuery = (From obj As T In source.AsParallel Select [ctype](obj)).ToArray
+                Return LinqAPI.Exec(Of TOut) <= From obj As T
+                                                In source.AsParallel
+                                                Select [ctype](obj)
             Else
-                LQuery = (From obj As T In source Select [ctype](obj)).ToArray
+                Return source.Select([ctype]).ToArray
             End If
-
-            Return LQuery
         End Function
 
         ''' <summary>
-        ''' Creates an array from a System.Collections.Generic.IEnumerable`1.(默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
+        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.(默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
         ''' </summary>
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
         ''' <returns>An array that contains the elements from the input sequence.</returns>
         <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
-                                                    [CType] As Func(Of T, TOut),
-                                                    [where] As Func(Of T, Boolean),
-                                                    Optional Parallel As Boolean = False) As TOut()
+                                                        [CType] As Func(Of T, TOut),
+                                                        [where] As Func(Of T, Boolean),
+                                                        Optional Parallel As Boolean = False) As TOut()
             If source.IsNullOrEmpty Then
                 Return New TOut() {}
             End If
@@ -380,7 +383,8 @@ Namespace Linq
             Dim LQuery As TOut()
 
             If Parallel Then
-                LQuery = (From obj As T In source.AsParallel
+                LQuery = (From obj As T
+                          In source.AsParallel
                           Where where(obj)
                           Select [CType](obj)).ToArray
             Else
@@ -402,8 +406,8 @@ Namespace Linq
         ''' <param name="Parallel"></param>
         ''' <returns></returns>
         <Extension> Public Function ToArray(Of T, TOut)(
-                                    source As IEnumerable(Of T),
-                                    __ctype As Func(Of T, Integer, TOut),
+                                      source As IEnumerable(Of T),
+                                     __ctype As Func(Of T, Integer, TOut),
                            Optional Parallel As Boolean = False) As TOut()
 
             If source Is Nothing Then
@@ -429,12 +433,22 @@ Namespace Linq
             Return LQuery
         End Function
 
-        <Extension> Public Function ToArray(Of T)(len As Long, elementAt As Func(Of Long, T)) As T()
+        <Extension> Public Function ToArray(Of T)(len&, elementAt As Func(Of Long, T)) As T()
             Return len.Sequence.ToArray(elementAt)
         End Function
 
+        ''' <summary>
+        ''' Returns the first element of a sequence, or a default value if the sequence contains no elements.
+        ''' </summary>
+        ''' <typeparam name="TSource">The type of the elements of source.</typeparam>
+        ''' <param name="source">The System.Collections.Generic.IEnumerable`1 to return the first element of.</param>
+        ''' <param name="[default]">
+        ''' If the sequence is nothing or contains no elements, then this default value will be returned.
+        ''' </param>
+        ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function FirstOrDefault(Of TSource)(source As IEnumerable(Of TSource), [default] As TSource) As TSource
             Dim value As TSource = source.FirstOrDefault
+
             If value Is Nothing Then
                 Return [default]
             Else
@@ -442,6 +456,15 @@ Namespace Linq
             End If
         End Function
 
+        ''' <summary>
+        ''' Returns the first element of a sequence, or a default value if the sequence contains no elements.
+        ''' </summary>
+        ''' <typeparam name="T">The type of the elements of source.</typeparam>
+        ''' <param name="source">The System.Collections.Generic.IEnumerable`1 to return the first element of.</param>
+        ''' <param name="[default]">
+        ''' If the sequence is nothing or contains no elements, then this default value will be returned.
+        ''' </param>
+        ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
             If source.IsNullOrEmpty Then
                 Return [default]
@@ -469,18 +492,23 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Function ToArray(Of T)(source As IEnumerable) As T()
-            Return ToVector(source).ToArray(Function(x) If(x Is Nothing, Nothing, DirectCast(x, T)))
+            Return ToVector(source).ToArray(
+                Function(x) If(x Is Nothing, Nothing, DirectCast(x, T)))
         End Function
 
         <Extension>
-        Public Function ToArray(Of T, TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
-                                                    [CType] As Func(Of TKey, TValue, T),
-                                                    Optional Parallel As Boolean = False,
-                                                    Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
+        Public Function ToArray(Of T, TKey, TValue)(
+                          source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                         [CType] As Func(Of TKey, TValue, T),
+               Optional Parallel As Boolean = False,
+               Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
+
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.Key, x.Value), where:=Function(x) Where(x.Key, x.Value))
+                Return source.ToArray(Of T)(
+                    Function(x) [CType](x.Key, x.Value),
+                    Function(x) Where(x.Key, x.Value))
             End If
         End Function
 
@@ -496,6 +524,7 @@ Namespace Linq
                                                 [CType] As Func(Of TKey, TValue, T),
                                                 Optional Parallel As Boolean = False,
                                                 Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
+
             If Where Is Nothing Then
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else

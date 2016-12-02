@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67190439b7962222a3d4ea51a7992065, ..\visualbasic_App\Data_science\Mathematical\ODE\GenericODEs.vb"
+﻿#Region "Microsoft.VisualBasic::1df833bfbd04fb65589b8d62488ea51e, ..\sciBASIC#\Data_science\Mathematical\ODE\GenericODEs.vb"
 
     ' Author:
     ' 
@@ -26,9 +26,8 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.BasicR
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
 

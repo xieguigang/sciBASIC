@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c75f41b6893aa0813f5af6df1759dc87, ..\visualbasic_App\Data_science\Bootstrapping\boot\Program.vb"
+﻿#Region "Microsoft.VisualBasic::2862f69298aeaf2b5dd19f92ae6822b1, ..\sciBASIC#\Data_science\Bootstrapping\boot\Program.vb"
 
     ' Author:
     ' 
@@ -28,14 +28,18 @@
 
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.EigenvectorBootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Text
 
 Module Program
 
     Public Function Main() As Integer
+        Call Testing.Run()
+
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
@@ -77,7 +81,7 @@ Module Program
             [in].TrimDIR & $".partN={partN}-binaryTree/")
 
         For Each cluster In out
-            Dim Eigenvector As ODEsOut = cluster.Key.x.GetSample(vec, partN)
+            Dim Eigenvector As ODEsOut = cluster.Key.Value.GetSample(vec, partN)
             Dim DIR As String = EXPORT & "/" & cluster.Key.Name
 
             Call Eigenvector.DataFrame.Save(DIR & "/Eigenvector.Sample.csv", Encodings.ASCII)
@@ -88,4 +92,3 @@ Module Program
         Return 0
     End Function
 End Module
-

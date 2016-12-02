@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d96ff1e289319dfc80b07d8b859fcaf, ..\visualbasic_App\Data_science\Mathematical\Math\Logical\FuzzyLogic\LinguisticVariable.vb"
+﻿#Region "Microsoft.VisualBasic::6d96ff1e289319dfc80b07d8b859fcaf, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\FuzzyLogic\LinguisticVariable.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f875615b418d2bfb3d49870f9cd318a6, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
+﻿#Region "Microsoft.VisualBasic::89af23eca77446364c928645e49da674, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
 
     ' Author:
     ' 
@@ -76,10 +76,15 @@ Namespace StorageProvider.ComponentModels
 
         Public MustOverride ReadOnly Property ProviderId As Reflection.ProviderIds
 
+        ''' <summary>
+        ''' 解析字符串为.NET对象的方法
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LoadMethod As Func(Of String, Object)
 
         ''' <summary>
-        ''' By using this function that save the property value as a cell value string 
+        ''' By using this function that save the property value as a cell value string.
+        ''' (将.NET对象序列化为csv单元格之中的一个字符串值的方法) 
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
@@ -104,7 +109,8 @@ Namespace StorageProvider.ComponentModels
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[Dim {Name} As {BindProperty.PropertyType.FullName}] //{Me.GetType.Name} --> {BindProperty.Name}"
+            Dim vbDim$ = $"[Dim {Name} As {BindProperty.PropertyType.FullName}]"
+            Return vbDim & $" //{Me.GetType.Name} --> {BindProperty.Name}"
         End Function
     End Class
 End Namespace

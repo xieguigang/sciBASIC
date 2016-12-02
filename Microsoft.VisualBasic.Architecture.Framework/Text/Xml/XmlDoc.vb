@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33d02b4cf12dde1a571d7f82a040c6db, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9930a38797f8943375a65cdf63151818, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Namespace Text.Xml
             Dim root As NamedValue(Of Xmlns) =
             Xmlns.RootParser(__rootString(xml))
             rootNode = root.Name
-            xmlns = root.x
+            xmlns = root.Value
             Me.xml = xml
         End Sub
 

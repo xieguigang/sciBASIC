@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae56b3eeee24cb81ea1476012f86276d, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::5d104baac38d3a15ae013cb2931ebdc2, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Model.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Text
 
 Namespace QLearning.DataModel
 

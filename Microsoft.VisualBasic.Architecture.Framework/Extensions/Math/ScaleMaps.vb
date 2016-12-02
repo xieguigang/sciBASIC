@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b43894e4b80d8a20afb8a1c5a04c304e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::fbc2c09f8d6bbcac3ee203f94e74a1ac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -98,6 +98,11 @@ Namespace Mathematical
         <ExportAPI("Ranks.Mapping")>
         <Extension> Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10, Optional offset As Integer = 1) As Integer()
             Dim array As Double() = data.ToArray
+
+            If array.Length = 0 Then
+                Return {}
+            End If
+
             Dim MinValue As Double = array.Min
             Dim MaxValue As Double = array.Max
             Dim d As Double = MaxValue - MinValue
@@ -110,7 +115,7 @@ Namespace Mathematical
             Dim i As int = 0
 
             For Each x As Double In array
-                Dim lv As Integer = CInt(Level * (x - MinValue) / d)
+                Dim lv As Integer = Fix(Level * (x - MinValue) / d)
                 chunkBuf(++i) = lv + offset
             Next
 
@@ -151,8 +156,8 @@ Namespace Mathematical
         ''' <remarks>为了要保持顺序，不能够使用并行拓展</remarks>
         ''' 
         <ExportAPI("Ranks.Mapping")>
-        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Integer), Optional Level As Integer = 10) As Integer()
-            Return GenerateMapping((From n In data Select CDbl(n)).ToArray, Level)
+        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Integer), Optional Level As Integer = 10, Optional offset% = 1) As Integer()
+            Return GenerateMapping((From n In data Select CDbl(n)).ToArray, Level, offset)
         End Function
 
         <ExportAPI("Ranks.Mapping")>

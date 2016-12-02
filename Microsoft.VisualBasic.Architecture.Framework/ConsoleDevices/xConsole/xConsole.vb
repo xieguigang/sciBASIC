@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22fb20eee9ea5e5f5f4b3d02bb19415b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::5d6cf2000cad1a0e9acf9e6ce057d254, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\xConsole.vb"
 
     ' Author:
     ' 
@@ -32,7 +32,6 @@
 ' *		23/05/2014
 '
 
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Globalization
 Imports System.Linq

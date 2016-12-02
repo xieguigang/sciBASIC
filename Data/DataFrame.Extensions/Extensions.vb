@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc239151aa9b8e34a452f8bc96b2083b, ..\visualbasic_App\Data\DataFrame.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1cce6dcb2d405598edb42927dcdbccb8, ..\sciBASIC#\Data\DataFrame.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Public Module SchemasAPI
 

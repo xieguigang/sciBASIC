@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a22a4054a3ae98593e6f635d1260ae0, ..\visualbasic_App\Data_science\Mathematical\ODE\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::4a75bbf09c38e01b90d73f2f1976c638, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEs.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,8 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -74,7 +74,7 @@ Public MustInherit Class ODEs
     End Property
 
     Sub New()
-        Dim type As TypeInfo = Me.GetType
+        Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
         Dim fields = type.DeclaredFields _
             .Where(Function(x) x.FieldType.Equals(var.type)) _
             .ToArray
@@ -95,20 +95,22 @@ Public MustInherit Class ODEs
     End Sub
 
     ''' <summary>
-    ''' RK4
+    ''' RK4 ODEs solver
     ''' </summary>
-    ''' <param name="dxn">x初值</param>
-    ''' <param name="dyn">初值y(n)</param>
-    ''' <param name="dh">步长</param>
-    ''' <param name="dynext">下一步的值y(n+1)</param>
+    ''' <param name="dxn">The x initial value.(x初值)</param>
+    ''' <param name="dyn">The y initial value.(初值y(n))</param>
+    ''' <param name="dh">Steps delta.(步长)</param>
+    ''' <param name="dynext">
+    ''' Returns the y(n+1) result from this parameter.(下一步的值y(n+1))
+    ''' </param>
     Private Sub __rungeKutta(dxn As Double,
                              ByRef dyn As Vector,
                              dh As Double,
                              ByRef dynext As Vector)
-        ODEs(dxn, dyn, K1)                             ' 求解K1
-        ODEs(dxn + dh / 2, dyn + dh / 2 * K1, K2)      ' 求解K2
-        ODEs(dxn + dh / 2, dyn + dh / 2 * K2, K3)      ' 求解K3
-        ODEs(dxn + dh, dyn + dh * K3, K4)              ' 求解K4
+        Call ODEs(dxn, dyn, K1)                             ' 求解K1
+        Call ODEs(dxn + dh / 2, dyn + dh / 2 * K1, K2)      ' 求解K2
+        Call ODEs(dxn + dh / 2, dyn + dh / 2 * K2, K3)      ' 求解K3
+        Call ODEs(dxn + dh, dyn + dh * K3, K4)              ' 求解K4
 
         dynext = dyn + (K1 + K2 + K3 + K4) * dh / 6.0  ' 求解下一步的值y(n+1)
     End Sub
@@ -159,7 +161,7 @@ Public MustInherit Class ODEs
         Next
 
         For i As Integer = 0 To n
-            __rungeKutta(dx, darrayn, dh, darraynext)
+            Call __rungeKutta(dx, darrayn, dh, darraynext)
             x += dx
             dx += dh
             darrayn = darraynext
@@ -175,17 +177,17 @@ Public MustInherit Class ODEs
             In vars
             Select New NamedValue(Of Double()) With {
                 .Name = var.Name,
-                .x = y(var)
+                .Value = y(var)
             }
 
         ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏
-        GC.SuppressFinalize(K1)
-        GC.SuppressFinalize(K2)
-        GC.SuppressFinalize(K3)
-        GC.SuppressFinalize(K4)
-        GC.SuppressFinalize(darrayn)
-        GC.SuppressFinalize(darraynext)
-        GC.SuppressFinalize(vars)
+        'GC.SuppressFinalize(K1)
+        'GC.SuppressFinalize(K2)
+        'GC.SuppressFinalize(K3)
+        'GC.SuppressFinalize(K4)
+        'GC.SuppressFinalize(darrayn)
+        'GC.SuppressFinalize(darraynext)
+        'GC.SuppressFinalize(vars)
 
         Return New ODEsOut With {
             .x = x,
@@ -212,7 +214,7 @@ Public MustInherit Class ODEs
 
     Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
         Get
-            Dim type As TypeInfo = Me.GetType
+            Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
             Dim fields As IEnumerable(Of FieldInfo) =
                 type _
                 .DeclaredFields _
@@ -230,7 +232,7 @@ Public MustInherit Class ODEs
     Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
         Dim fields = CType(model, TypeInfo) _
             .DeclaredFields _
-            .Where(Function(f) f.FieldType.Equals(GetType(Double)))
+            .Where(Function(f) (Not f.IsLiteral) AndAlso f.FieldType.Equals(GetType(Double)))
         Return fields.Select(Function(f) f.Name)
     End Function
 
@@ -240,8 +242,8 @@ Public MustInherit Class ODEs
     ''' <returns></returns>
     Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)
         Dim fields = CType(model, TypeInfo) _
-          .DeclaredFields _
-          .Where(Function(f) f.FieldType.Equals(GetType(var)))
+            .DeclaredFields _
+            .Where(Function(f) f.FieldType.Equals(GetType(var)))
         Return fields.Select(Function(f) f.Name)
     End Function
 End Class

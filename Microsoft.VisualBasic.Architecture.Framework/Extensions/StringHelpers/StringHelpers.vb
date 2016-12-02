@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2468e18b526a722b5ea19db3cd0f3219, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::cfeca4160d461c7ed7a5feb21d6dee46, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -32,10 +32,12 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
@@ -270,13 +272,12 @@ Public Module StringHelpers
     <Extension> Public Function Count(str As String, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
+        Else
+            Dim n As Integer = str _
+                .Where(Function(c) c = ch) _
+                .Count
+            Return n%
         End If
-
-        Dim LQuery As Integer = (From chr As Char
-                                 In str
-                                 Where ch = chr
-                                 Select 1).Count
-        Return LQuery
     End Function
 
     ''' <summary>
@@ -301,21 +302,21 @@ Public Module StringHelpers
 
     <ExportAPI("Get.Stackvalue")>
     <Extension>
-    Public Function GetStackValue(s_Data As String, left As String, right As String) As String
-        If Len(s_Data) < 2 Then
+    Public Function GetStackValue(str$, left$, right$) As String
+        If Len(str) < 2 Then
             Return ""
         End If
 
-        Dim p As Integer = InStr(s_Data, left) + 1
-        Dim q As Integer = InStrRev(s_Data, right)
+        Dim p As Integer = InStr(str, left) + 1
+        Dim q As Integer = InStrRev(str, right)
 
         If p = 0 Or q = 0 Then
-            Return s_Data
+            Return str
         ElseIf p >= q Then
             Return ""
         Else
-            s_Data = Mid(s_Data, p, q - p)
-            Return s_Data
+            str = Mid(str, p, q - p)
+            Return str
         End If
     End Function
 
@@ -400,7 +401,7 @@ Public Module StringHelpers
     ''' <param name="regex"></param>
     ''' <returns></returns>
     <ExportAPI("Matched?")>
-    <Extension> Public Function Matches(str As String, regex As String) As Boolean
+    <Extension> Public Function Matched(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
         Return RegularExpressions.Regex.Match(str, regex).Success
     End Function
 
@@ -550,21 +551,38 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' String compares using <see cref="system.String.Equals"/>, if the target value could not be located, then -1 will be return from this function.
+    ''' String compares using <see cref="String.Equals"/>, if the target value could not be located, 
+    ''' then -1 will be return from this function.
     ''' </summary>
     ''' <param name="collection"></param>
-    ''' <param name="Text"></param>
+    ''' <param name="text"></param>
     ''' <param name="caseSensitive"></param>
+    ''' <param name="fuzzy">
+    ''' If fuzzy, then <see cref="InStr"/> will be used if ``String.Equals`` method have no result.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
-    <Extension> Public Function Located(collection As IEnumerable(Of String), Text As String, Optional caseSensitive As Boolean = True) As Integer
-        Dim Method = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim array As String() = collection.ToArray '为了保证性能的需要，这里的代码会比较复杂
-        Dim Len As Integer = array.Length - 1
+    <Extension> Public Function Located(collection As IEnumerable(Of String),
+                                        text As String,
+                                        Optional caseSensitive As Boolean = True,
+                                        Optional fuzzy As Boolean = False) As Integer
 
-        For i As Integer = 0 To Len
-            If String.Equals(array(i), Text, Method) Then
-                Return i
+        Dim method As StringComparison =
+            If(caseSensitive,
+            StringComparison.Ordinal,
+            StringComparison.OrdinalIgnoreCase)
+        Dim method2 As CompareMethod =
+            If(caseSensitive,
+            CompareMethod.Binary,
+            CompareMethod.Text)
+
+        For Each str As SeqValue(Of String) In collection.SeqIterator
+            If String.Equals(str.obj, text, method) Then
+                Return str.i
+            ElseIf fuzzy Then
+                If InStr(str.obj, text, method2) > 0 Then
+                    Return str.i
+                End If
             End If
         Next
 
@@ -572,7 +590,25 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Search the string by keyword in a string collection. Unlike search function <see cref="StringHelpers.Located(IEnumerable(Of String), String, Boolean)"/>
+    ''' 
+    ''' </summary>
+    ''' <param name="collection"></param>
+    ''' <param name="text">可以使用通配符</param>
+    ''' <param name="caseSensitive"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
+        For Each s As SeqValue(Of String) In collection.SeqIterator
+            If text.WildcardMatch(s.obj, Not caseSensitive) Then
+                Return s.i
+            End If
+        Next
+
+        Return -1
+    End Function
+
+    ''' <summary>
+    ''' Search the string by keyword in a string collection. Unlike search function <see cref="StringHelpers.Located(IEnumerable(Of String), String, Boolean, Boolean)"/>
     ''' using function <see cref="String.Equals"/> function to search string, this function using <see cref="Strings.InStr(String, String, CompareMethod)"/>
     ''' to search the keyword.
     ''' </summary>
@@ -634,7 +670,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Line tokens. ==> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>.
+    ''' Line tokens. **=> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>**.
     ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
     ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
     ''' 所以可以使用这个函数来进行统一的分行操作)
@@ -692,5 +728,12 @@ Public Module StringHelpers
         End If
 
         Return False
+    End Function
+
+    <Extension>
+    Public Function TextLast(s$, token$) As Boolean
+        Dim lastIndex% = s.Length - token.Length
+        Dim val% = InStrRev(s, token)
+        Return lastIndex = val
     End Function
 End Module

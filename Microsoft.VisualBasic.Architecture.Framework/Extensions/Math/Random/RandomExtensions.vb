@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2425a06301d877c5bd293931b67046f4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::31634f36d222ae1a7c729007865641e3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -32,20 +32,40 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language.C
 
 Namespace Mathematical
 
+    ''' <summary>
+    ''' Generates a random number
+    ''' </summary>
+    ''' <returns></returns>
     Public Delegate Function INextRandomNumber() As Double
 
     ''' <summary>
-    ''' Some extension methods for <see cref="Random"/> for creating a few more kinds of random stuff.
+    ''' Tells the function how to generates a new random seed?
+    ''' </summary>
+    ''' <returns></returns>
+    Public Delegate Function IRandomSeeds() As Random
+
+    ''' <summary>
+    ''' Some extension methods for <see cref="System.Random"/> for creating a few more kinds of random stuff.
     ''' </summary>
     ''' <remarks>Imports from https://github.com/rvs76/superbest-random.git </remarks>
     ''' 
     <PackageNamespace("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
     Public Module RandomExtensions
 
-        ReadOnly __randomSeeds As New Random(RandomDouble() * 10000)
+        Public Function randf(min As Double, max As Double) As Double
+            Dim minInteger As Integer = CInt(Math.Truncate(min * 10000))
+            Dim maxInteger As Integer = CInt(Math.Truncate(max * 10000))
+            Dim randInteger As Integer = RandomNumbers.rand() * RandomNumbers.rand()
+            Dim diffInteger As Integer = maxInteger - minInteger
+            Dim resultInteger As Integer = randInteger Mod diffInteger + minInteger
+            Return resultInteger / 10000.0
+        End Function
+
+        ReadOnly __randomSeeds As New Random(Rnd() * 10000)
 
         Public Function RandomSingle() As Single
             Dim result = __randomSeeds.NextDouble()
@@ -114,13 +134,17 @@ Namespace Mathematical
         End Function
 
         ''' <summary>
-        ''' Equally likely to return true or false. Uses <see cref="Random.Next()"/>.
+        ''' Equally likely to return true or false. Uses <see cref="Random.Next(Integer)"/>.
         ''' </summary>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' ```vbnet
+        ''' 1 > 0 OR 0 > 0
+        ''' ```
+        ''' </remarks>
         <ExportAPI("NextBoolean")>
         <Extension> Public Function NextBoolean(r As Random) As Boolean
-            Return r.[Next](2) > 0
+            Return r.[Next](2) > 0 ' 1 > 0 OR 0 > 0
         End Function
 
         ''' <summary>

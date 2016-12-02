@@ -322,7 +322,7 @@ Micosoft Word - Macro-Enabled Template	application/vnd.ms-word.template.macroena
 Micro CADAM Helix D&D	application/vnd.mcd	.mcd	IANA: Micro CADAM Helix D&D
 Micrografx	application/vnd.micrografx.flo	.flo	IANA: Micrografx
 Micrografx iGrafx Professional	application/vnd.micrografx.igx	.igx	IANA: Micrografx
-MICROSEC e-Szign¢	application/vnd.eszigno3+xml	.es3	IANA: MICROSEC e-Szign¢
+MICROSEC e-Szign?application/vnd.eszigno3+xml	.es3	IANA: MICROSEC e-Szign?
 Microsoft Access	application/x-msaccess	.mdb	Wikipedia: Microsoft Access
 Microsoft Advanced Systems Format (ASF)	video/x-ms-asf	.asf	Wikipedia: Advanced Systems Format (ASF)
 Microsoft Application	application/x-msdownload	.exe	Wikipedia: EXE

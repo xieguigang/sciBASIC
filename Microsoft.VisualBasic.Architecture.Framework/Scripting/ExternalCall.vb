@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d3570f19f426874a246e78420eefdb5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::a0355ba9f301ae8ae54825fe3ae9e282, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Scripting
 
@@ -78,7 +79,7 @@ Namespace Scripting
             Dim param As String =
                 If(args Is Nothing,
                    "",
-                   String.Join(" ", args.AllKeys.ToArray(Function(s) $"{s} {args.Get(s).CliToken}")))
+                   String.Join(" ", args.AllKeys.ToArray(Function(s) $"{s} {args.Get(s).CLIToken}")))
             Dim IO As New IORedirect(__host, path & " " & param)
             Dim code As Integer = IO.Start(WaitForExit:=True)
             Return New ShellValue(IO, code)

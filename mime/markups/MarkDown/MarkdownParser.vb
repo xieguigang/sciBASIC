@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2d8974210251e0fdc9beab846b05c58, ..\visualbasic_App\mime\Markups\MarkDown\MarkdownParser.vb"
+﻿#Region "Microsoft.VisualBasic::2feca8414382d82df439073a5db4c2eb, ..\sciBASIC#\mime\markups\MarkDown\MarkdownParser.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
 
 Namespace MarkDown
 

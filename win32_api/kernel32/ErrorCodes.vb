@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ddc71022ed663fcf0b920ab98ae60a2, ..\visualbasic_App\win32_api\kernel32\ErrorCodes.vb"
+﻿#Region "Microsoft.VisualBasic::7ddc71022ed663fcf0b920ab98ae60a2, ..\sciBASIC#\win32_api\kernel32\ErrorCodes.vb"
 
     ' Author:
     ' 

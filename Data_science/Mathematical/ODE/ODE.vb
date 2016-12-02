@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38123610a59dc41d14c2a0d541e9ebe7, ..\visualbasic_App\Data_science\Mathematical\ODE\ODE.vb"
+﻿#Region "Microsoft.VisualBasic::e24d6b3d1b6664fecb23038d562c7ff6, ..\sciBASIC#\Data_science\Mathematical\ODE\ODE.vb"
 
     ' Author:
     ' 
@@ -26,12 +26,15 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Ordinary differential equation(ODE).(常微分方程的模型)
 ''' </summary>
 Public Class ODE
+    Implements sIdEnumerable
 
 #Region "Output results"
 
@@ -56,6 +59,14 @@ Public Class ODE
             Return _df(xi, yi)
         End Get
     End Property
+
+    Public ReadOnly Property xrange As DoubleRange
+        Get
+            Return New DoubleRange(x.First, x.Last)
+        End Get
+    End Property
+
+    Public Property Id As String Implements sIdEnumerable.Identifier
 
     Public Overrides Function ToString() As String
         Return x.GetJson & " --> " & y.GetJson

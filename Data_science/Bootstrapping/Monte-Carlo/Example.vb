@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12eb654fef611c7bdc6f648e7d09e5cb, ..\visualbasic_App\Data_science\Bootstrapping\Monte-Carlo\Example.vb"
+﻿#Region "Microsoft.VisualBasic::61b992e6943a1b9e221f5ac90831e13a, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Example.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,8 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.diffEq
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace MonteCarlo.Example
 
@@ -50,16 +50,16 @@ Namespace MonteCarlo.Example
             dy(sin) = a * Math.Sin(dx) + f
         End Sub
 
-        Public Overrides Function params() As NamedValue(Of INextRandomNumber)()
+        Public Overrides Function params() As VariableModel()
             Return {
-                New NamedValue(Of INextRandomNumber)(NameOf(a), GetRandom(-1000, 1000)),
-                New NamedValue(Of INextRandomNumber)(NameOf(f), GetRandom(-1000, 1000))
+                New VariableModel(-1000, 1000) With {.Name = NameOf(a)},
+                New VariableModel(-1000, 1000) With {.Name = NameOf(f)}
             }
         End Function
 
-        Public Overrides Function yinit() As NamedValue(Of INextRandomNumber)()
+        Public Overrides Function yinit() As VariableModel()
             Return {
-                New NamedValue(Of INextRandomNumber)(NameOf(sin), GetRandom(-1000, 1000))
+                New VariableModel(-1000, 1000) With {.Name = NameOf(sin)}
             }
         End Function
 

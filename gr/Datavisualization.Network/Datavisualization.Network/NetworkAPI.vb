@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a4231c45d727e4ca045d3dc552c82ce, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::0fa0f8a2249a65fbc1e1c6aebbaadee0, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -28,12 +28,16 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Data.csv.Extensions
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports ______NETWORK__ =
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network(Of
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network(Of
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
 
 <[PackageNamespace]("DataVisualization.Network", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkAPI
@@ -75,8 +79,8 @@ Public Module NetworkAPI
     End Function
 
     <ExportAPI("Save")>
-    Public Function SaveNetwork(network As ______NETWORK__, <Parameter("DIR.Export")> Export As String) As Boolean
-        Return network.Save(Export, Encodings.UTF8)
+    Public Function SaveNetwork(network As ______NETWORK__, <Parameter("DIR.Export")> EXPORT As String) As Boolean
+        Return network.Save(EXPORT, Encodings.UTF8)
     End Function
 
     <ExportAPI("Write.Network")>
@@ -92,9 +96,13 @@ Public Module NetworkAPI
     ''' <returns></returns>
     <Extension, ExportAPI("GetConnections")>
     Public Function GetConnections(source As IEnumerable(Of FileStream.NetworkEdge), node As String) As FileStream.NetworkEdge()
-        Dim LQuery = (From x As FileStream.NetworkEdge In source.AsParallel
-                      Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
-                      Select x).ToArray
+        Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
+ _
+            From x As FileStream.NetworkEdge
+            In source.AsParallel
+            Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
+            Select x
+
         Return LQuery
     End Function
 
@@ -108,9 +116,82 @@ Public Module NetworkAPI
     <ExportAPI("Get.Connects.Next")>
     <Extension>
     Public Function GetNextConnects(source As IEnumerable(Of FileStream.NetworkEdge), from As String) As FileStream.NetworkEdge()
-        Dim LQuery = (From x As FileStream.NetworkEdge In source.AsParallel
-                      Where String.Equals(from, x.FromNode, StringComparison.OrdinalIgnoreCase)
-                      Select x).ToArray
+        Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
+ _
+            From x As FileStream.NetworkEdge
+            In source.AsParallel
+            Where from.TextEquals(x.FromNode)
+            Select x
+
         Return LQuery
+    End Function
+
+    ''' <summary>
+    ''' 变量的属性里面必须是包含有相关度的
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="cut"><see cref="Math.Abs(Double)"/></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FromCorrelations(data As IEnumerable(Of DataSet),
+                                     Optional nodeTypes As Dictionary(Of String, String) = Nothing,
+                                     Optional interacts As Dictionary(Of String, String) = Nothing,
+                                     Optional cut# = 0R) As FileStream.Network
+
+        Dim array As DataSet() = data.ToArray
+
+        If nodeTypes Is Nothing Then
+            nodeTypes = New Dictionary(Of String, String)
+        End If
+        If interacts Is Nothing Then
+            interacts = New Dictionary(Of String, String)
+        End If
+
+        Dim nodes As FileStream.Node() =
+ _
+            LinqAPI.Exec(Of FileStream.Node) <=
+ _
+            From v As DataSet
+            In array
+            Let type As String = nodeTypes.TryGetValue(v.Identifier, [default]:="variable")
+            Select New FileStream.Node With {
+                .Identifier = v.Identifier,
+                .NodeType = type,
+                .Properties = v.Properties _
+                    .ToDictionary(Function(k) k.Key,
+                                  Function(k) CStr(k.Value))
+            }
+        Dim edges As New List(Of FileStream.NetworkEdge)
+        Dim interact$
+        Dim c#
+
+        For Each var As DataSet In array
+            For Each k$ In var.Properties.Keys
+                c# = var.Properties(k$)
+
+                If Math.Abs(c) < cut Then
+                    Continue For
+                End If
+
+                interact = interacts.TryGetValue(
+                    $"{var.Identifier} --> {k}",
+                    [default]:="correlates")
+                edges += New FileStream.NetworkEdge With {
+                    .FromNode = var.Identifier,
+                    .ToNode = k,
+                    .Confidence = c,
+                    .InteractionType = interact,
+                    .Properties = New Dictionary(Of String, String) From {
+                        {"type", If(c# > 0, "positive", "negative")},
+                        {"abs", Math.Abs(c#)}
+                    }
+                }
+            Next
+        Next
+
+        Return New FileStream.Network With {
+            .Edges = edges,
+            .Nodes = nodes
+        }
     End Function
 End Module

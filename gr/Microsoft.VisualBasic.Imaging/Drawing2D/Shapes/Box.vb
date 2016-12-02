@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8937c1269465dfe1dbf8aebfced2e87c, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
+﻿#Region "Microsoft.VisualBasic::f69ab106471f7a10588272530acdfa65, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
 
     ' Author:
     ' 
@@ -36,19 +36,11 @@ Namespace Drawing2D.Vector.Shapes
 
     Public Class Box : Inherits Shape
 
-        Sub New(Location As Point, Size As Size, GDI As GDIPlusDeviceHandle, Color As Color)
-            Call MyBase.New(GDI, Location)
-        End Sub
-
-        Protected Overloads Overrides Sub InvokeDrawing()
-
+        Sub New(Location As Point, Size As Size, Color As Color)
+            Call MyBase.New(Location)
         End Sub
 
         Public Overrides ReadOnly Property Size As Size
-            Get
-
-            End Get
-        End Property
 
         Public Shared Sub DrawRectangle(ByRef g As Graphics,
                                         topLeft As Point,

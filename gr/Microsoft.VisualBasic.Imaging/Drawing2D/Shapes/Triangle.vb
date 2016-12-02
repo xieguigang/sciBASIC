@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83b0f54267ac09df37971b286f03757e, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::270a2a3ddb8251ab5ba9d98d66947b31, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@ Namespace Drawing2D.Vector.Shapes
         Public Property Vertex1 As Point
         Public Property Vertex2 As Point
         Public Property Vertex3 As Point
-        Public Property Angle As Double
+        Public Property Angle As Single
 
-        Sub New(Location As Point, GDI As GDIPlusDeviceHandle, Color As Color)
-            Call MyBase.New(GDI, Location)
+        Sub New(Location As Point, Color As Color)
+            Call MyBase.New(Location)
             Me.Color = Color
         End Sub
 
@@ -55,17 +55,13 @@ Namespace Drawing2D.Vector.Shapes
             Throw New NotImplementedException
         End Function
 
-        Protected Overloads Overrides Sub InvokeDrawing()
-
-        End Sub
-
         Public Overrides ReadOnly Property Size As Size
             Get
                 Throw New NotImplementedException
             End Get
         End Property
 
-        Public Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Border = Nothing)
+        Public Overloads Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Border = Nothing)
             Dim t As New GraphicsPath
             Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
             Dim rect As New Rectangle(topLeft, size)

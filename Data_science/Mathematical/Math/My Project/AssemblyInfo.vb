@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Math script")>
-<Assembly: AssemblyDescription("Math script engine")>
+<Assembly: AssemblyTitle("sciBASIC# scientific computing handouts")>
+<Assembly: AssemblyDescription("sciBASIC# scientific computing handouts")>
 <Assembly: AssemblyCompany("123456789*8+9")>
-<Assembly: AssemblyProduct("Math")>
+<Assembly: AssemblyProduct("vbMath")>
 <Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2013. All rights reserved.")>
 <Assembly: AssemblyTrademark("VisualBasic")>
 
