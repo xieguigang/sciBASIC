@@ -236,7 +236,9 @@ Namespace Darwinism.GAF
         ''' 用于实际分析的GAF工具
         ''' </summary>
         ''' <param name="observation">用于进行拟合的目标真实的实验数据，模型计算所使用的y0初值从这里面来，这个数据对象只要求y属性具有实验数据就行了</param>
-        ''' <param name="popSize%"></param>
+        ''' <param name="popSize%">
+        ''' 更小的种群规模能够产生更快的进化速度，更大的种群规模能够产生更多的解集
+        ''' </param>
         ''' <param name="evolIterations%"></param>
         ''' <param name="outPrint"></param>
         ''' <param name="threshold#"></param>
