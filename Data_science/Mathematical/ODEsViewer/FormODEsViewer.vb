@@ -153,6 +153,7 @@ Public Class FormODEsViewer
 
             Catch ex As Exception
                 Call App.LogException(ex)
+                TextBox1.AppendText(ex.ToString & vbCrLf)
             Finally
                 ToolStripProgressBar1.Value += delta
                 Application.DoEvents()
@@ -178,6 +179,7 @@ Public Class FormODEsViewer
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         ToolStripProgressBar1.Value = 0
+        TextBox1.AppendText($"a:={a}, b:={b}, n:={n}" & vbCrLf)
         Application.DoEvents()
         Call Draw(MonteCarlo.Model.RunTest(model, defines, defines, n, a, b))
     End Sub
@@ -202,12 +204,10 @@ Public Class FormODEsViewer
 
     Private Sub ToolStripTextBox1_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox1.TextChanged
         n = CInt(Val(ToolStripTextBox1.Text))
-        ToolStripLabel1.Text = "n:= " & n
     End Sub
 
     Private Sub ToolStripTextBox2_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox2.TextChanged
         a = CInt(Val(ToolStripTextBox2.Text))
-        ToolStripLabel2.Text = "a:= " & a
     End Sub
 
     Dim ref As Dictionary(Of NamedValue(Of PointF()))
@@ -249,6 +249,8 @@ Public Class FormODEsViewer
                             Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
                     }).ToDictionary
             End With
+
+            Call TextBox1.AppendText(ex.ToString)
         End Try
     End Sub
 
@@ -277,15 +279,26 @@ Public Class FormODEsViewer
 
     Private Sub ToolStripTextBox3_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox3.TextChanged
         b = CInt(Val(ToolStripTextBox3.Text))
-        ToolStripLabel3.Text = "b:= " & b
     End Sub
 
     Private Sub FormODEsViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
-        ToolStripTextBox1.Text = "10000"
+        ToolStripTextBox1.Text = "15000"
         ToolStripTextBox2.Text = "0"
-        ToolStripTextBox3.Text = "10"
+        ToolStripTextBox3.Text = "15"
 
-        Call LoadModelToolStripMenuItem.AddFilesHistory(config.models, AddressOf LoadModel)
-        Call AddReferenceToolStripMenuItem.AddFilesHistory(config.references, AddressOf AddReference)
+        Call LoadModelToolStripMenuItem.AddFilesHistory(
+            config.models,
+            Sub(path)
+                LoadModel(path)
+                config.models.AddFileHistory(path)
+                config.Save()
+            End Sub)
+        Call AddReferenceToolStripMenuItem.AddFilesHistory(
+            config.references,
+            Sub(path)
+                AddReference(path)
+                config.references.AddFileHistory(path)
+                config.Save()
+            End Sub)
     End Sub
 End Class

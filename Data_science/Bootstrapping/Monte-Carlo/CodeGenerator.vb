@@ -14,10 +14,22 @@ Namespace MonteCarlo
             Return v & "_beta#"
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="v$">当前的方程的微分变量</param>
+        ''' <param name="x$">当前的方程项</param>
+        ''' <returns></returns>
         <Extension> Public Function SPowerAlpha(v$, x$) As String
             Return v & "_" & x & "_alpha#"
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="v$">当前的方程的微分变量</param>
+        ''' <param name="x$">当前的方程项</param>
+        ''' <returns></returns>
         <Extension> Public Function SPowerBeta(v$, x$) As String
             Return v & "_" & x & "_beta#"
         End Function

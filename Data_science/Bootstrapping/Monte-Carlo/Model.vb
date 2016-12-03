@@ -43,6 +43,14 @@ Namespace MonteCarlo
     ''' </summary>
     Public MustInherit Class Model : Inherits ODEs
 
+        Sub New()
+            Call MyBase.New()
+        End Sub
+
+        Protected Sub New(vars As var())
+            Call MyBase.New(vars)
+        End Sub
+
         ''' <summary>
         ''' 系统的初始值列表(应用于系统状态随机聚类)
         ''' </summary>
@@ -60,7 +68,7 @@ Namespace MonteCarlo
         ''' <returns></returns>
         Public MustOverride Function eigenvector() As Dictionary(Of String, Eigenvector)
 
-        Protected NotOverridable Overrides Function y0() As var()
+        Protected Overrides Function y0() As var()
             Return {}
         End Function
 

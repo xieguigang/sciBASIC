@@ -63,7 +63,7 @@ Public MustInherit Class ODEs
     Dim K1, K2, K3, K4 As Vector
 
     ReadOnly __vars As Dictionary(Of var)
-    Friend vars As var()
+    Protected Friend vars As var()
 
     Public Const y0RefName As String = NameOf(__vars)
 
@@ -92,6 +92,11 @@ Public MustInherit Class ODEs
         Next
 
         __vars = New Dictionary(Of var)(vars)
+    End Sub
+
+    Protected Sub New(vars As var())
+        Me.vars = vars
+        Me.__vars = New Dictionary(Of var)(vars)
     End Sub
 
     ''' <summary>
