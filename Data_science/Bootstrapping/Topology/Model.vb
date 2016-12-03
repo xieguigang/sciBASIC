@@ -79,6 +79,9 @@ Namespace Topology
                     valAlpha += (New NamedValue(Of Double)(name = MonteCarlo.SPowerAlpha(v, x), alpha(name)), x)
                     valBeta += (New NamedValue(Of Double)(name = MonteCarlo.SPowerBeta(v, x), alpha(name)), x)
                 Next
+
+                Call _alpha.Add(v, valAlpha)
+                Call _beta.Add(v, valBeta)
             Next
         End Sub
 
