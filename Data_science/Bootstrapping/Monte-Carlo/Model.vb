@@ -68,7 +68,7 @@ Namespace MonteCarlo
         ''' <returns></returns>
         Public MustOverride Function eigenvector() As Dictionary(Of String, Eigenvector)
 
-        Protected NotOverridable Overrides Function y0() As var()
+        Protected Overrides Function y0() As var()
             Return {}
         End Function
 

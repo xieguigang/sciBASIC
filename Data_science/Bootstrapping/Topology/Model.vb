@@ -31,12 +31,35 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Language
 
 Namespace Topology
 
+    ''' <summary>
+    ''' 这个模型只适合于常微分线性方程
+    ''' ```
+    ''' dy = alpha - beta
+    ''' ```
+    ''' </summary>
     Public Class Model : Inherits GAF.Model
 
-        Sub New(vars As IEnumerable(Of NamedValue(Of Double)))
+        Dim _alpha As Dictionary(Of String, (parm As NamedValue(Of Double), v As var)())
+        Dim _beta As Dictionary(Of String, (parm As NamedValue(Of Double), v As var)())
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="vars"></param>
+        ''' <param name="alpha">
+        ''' <see cref="MonteCarlo.SPowerAlpha(String, String)"/>
+        ''' </param>
+        ''' <param name="beta">
+        ''' <see cref="MonteCarlo.SPowerBeta(String, String)"/>
+        ''' </param>
+        Sub New(vars As IEnumerable(Of NamedValue(Of Double)),
+                alpha As Dictionary(Of String, Double),
+                beta As Dictionary(Of String, Double))
+
             Call MyBase.New(
                 vars _
                 .SeqIterator _
@@ -45,11 +68,32 @@ Namespace Topology
                     .Name = v.obj.Name,
                     .value = v.obj.Value
             }))
+
+            Dim name As New Value(Of String)
+
+            For Each v As var In MyBase.vars
+                Dim valAlpha As New List(Of (parm As NamedValue(Of Double), v As var))
+                Dim valBeta As New List(Of (parm As NamedValue(Of Double), v As var))
+
+                For Each x As var In MyBase.vars
+                    valAlpha += (New NamedValue(Of Double)(name = MonteCarlo.SPowerAlpha(v, x), alpha(name)), x)
+                    valBeta += (New NamedValue(Of Double)(name = MonteCarlo.SPowerBeta(v, x), alpha(name)), x)
+                Next
+            Next
         End Sub
+
+        Protected Overrides Function y0() As var()
+            Return vars
+        End Function
 
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
             For Each v As var In vars
+                Dim alpha = _alpha(v.Name).Sum(
+                    Function(x) x.parm.Value * x.v)
+                Dim beta# = _beta(v.Name).Sum(
+                    Function(x) x.parm.Value * x.v)
 
+                dy(v) = alpha - beta
             Next
         End Sub
     End Class
