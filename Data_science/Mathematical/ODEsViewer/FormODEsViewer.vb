@@ -212,6 +212,15 @@ Public Class FormODEsViewer
 
     Dim ref As Dictionary(Of NamedValue(Of PointF()))
 
+    Public Sub New()
+
+        ' 此调用是设计器所必需的。
+        InitializeComponent()
+
+        ' 在 InitializeComponent() 调用之后添加任何初始化。
+
+    End Sub
+
     Private Sub OpenToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem1.Click
         Using file As New OpenFileDialog With {
             .Filter = "Excel(*.csv)|*.csv"
@@ -256,11 +265,14 @@ Public Class FormODEsViewer
 
     Private Sub SaveAsGAFInputsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsGAFInputsToolStripMenuItem.Click
         Using saveFile As New SaveFileDialog With {
-            .Filter = "Text file(*.txt)|*.txt"
+            .Filter = "Excel tsv file(*.tsv)|*.tsv",
+            .FileName = "estimates-parms.tsv"
         }
             If saveFile.ShowDialog = DialogResult.OK Then
-                Dim params As String() = inputs.Select(Function(x) x.Key & ":" & x.Value.Text)
-                Dim out As String = {"0", "0", params.JoinBy(";")}.JoinBy(vbTab)
+                Dim params As String() = inputs _
+                    .Select(Function(x) x.Key & "=" & x.Value.Text) _
+                    .ToArray
+                Dim out As String = {"0", "0", params.JoinBy(",")}.JoinBy(vbTab)
 
                 Call out.SaveTo(saveFile.FileName, Encodings.ASCII.GetEncodings)
             End If
