@@ -75,7 +75,8 @@ Namespace Language
         ''' but it will prevent your class from being treated as simpleContent. I know it's a 
         ''' dirty workaround, but I see no other easy way...
         ''' </remarks>
-        <XmlIgnore> <ScriptIgnore> Public Overridable Property Extension As ExtendedProps Implements IClassObject.Extension
+        <XmlIgnore> <ScriptIgnore>
+        Public Overridable Property Extension As ExtendedProps Implements IClassObject.Extension
 
         ''' <summary>
         ''' Get dynamics property value.

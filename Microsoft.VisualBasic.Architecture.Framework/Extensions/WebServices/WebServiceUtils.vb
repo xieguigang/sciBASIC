@@ -594,14 +594,14 @@ Public Module WebServiceUtils
     ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件，失败或者错误会返回空字符串)
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
-    ''' <param name="timeout">发生错误的时候的重试的次数</param>
+    ''' <param name="retry">发生错误的时候的重试的次数</param>
     ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request Or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
-                                      Optional timeout As UInteger = 20,
+                                      Optional retry As UInt16 = 10,
                                       <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
                                       Optional isFileUrl As Boolean = False,
                                       Optional headers As Dictionary(Of String, String) = Nothing,
@@ -636,7 +636,7 @@ Public Module WebServiceUtils
 #End If
             Return __downloadWebpage(
                 url,
-                timeout,
+                retry,
                 headers,
                 proxy,
                 doNotRetry404, UA)
