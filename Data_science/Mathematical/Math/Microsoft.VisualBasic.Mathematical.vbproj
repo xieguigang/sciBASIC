@@ -234,6 +234,7 @@
     <Compile Include="LinearAlgebra\Solvers\ISolver.vb" />
     <Compile Include="LinearAlgebra\Helpers\MatrixArithmetic.vb" />
     <Compile Include="LinearAlgebra\Vector.vb" />
+    <Compile Include="HashMap.vb" />
     <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
     <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />
