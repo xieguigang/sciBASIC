@@ -7,6 +7,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.160492.svg)](https://doi.org/10.5281/zenodo.160492)
 
 ###### [WARNING] This project is a work in progress and is not recommended for production use.
+> Probably some namespace and object name may changes frequently on each commit, and you are feel free to using the **Object Browser** in visual studio to adapted to the object not defined problem which was caused by these changes.....
+
+<hr>
 
 ![Microsoft VisualBasic logo](./logo.jpg)
 
