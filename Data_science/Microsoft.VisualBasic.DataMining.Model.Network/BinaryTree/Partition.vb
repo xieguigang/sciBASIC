@@ -40,9 +40,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
 
-    Public Class Partition : Implements sIdEnumerable
+    Public Class Partition : Implements INamedValue
 
-        Public Property Tag As String Implements sIdEnumerable.Identifier
+        Public Property Tag As String Implements INamedValue.Key
         Public ReadOnly Property NumOfEntity As Integer
             Get
                 If uids Is Nothing Then

@@ -81,7 +81,7 @@ Public Module KeyValuePairExtensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of T)
+    Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T)) As Dictionary(Of T)
         Dim hash As Dictionary(Of T) = New Dictionary(Of T)
         Dim i As Integer = 0
 
@@ -92,11 +92,11 @@ Public Module KeyValuePairExtensions
 
         Try
             For Each item As T In source
-                Call hash.Add(item.Identifier, item)
+                Call hash.Add(item.Key, item)
                 i += 1
             Next
         Catch ex As Exception
-            ex = New Exception("Identifier -> [ " & source(i).Identifier & " ]", ex)
+            ex = New Exception("Identifier -> [ " & source(i).Key & " ]", ex)
             Throw ex
         End Try
 

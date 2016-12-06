@@ -37,9 +37,9 @@ Namespace KMeans
     ''' 计算所使用的对象实例实体模型
     ''' </summary>
     Public Class Entity : Inherits EntityBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property uid As String Implements sIdEnumerable.Identifier
+        Public Property uid As String Implements INamedValue.Key
 
         Public Overrides Function ToString() As String
             Return $"{uid}  ({Length} Properties)"

@@ -71,9 +71,9 @@ Namespace QLearning.DataModel
     ''' 属性是时间
     ''' </summary>
     Public Class IndexCurve : Inherits DynamicPropertyBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property uid As String Implements sIdEnumerable.Identifier
+        Public Property uid As String Implements INamedValue.Key
 
         Sub New()
         End Sub

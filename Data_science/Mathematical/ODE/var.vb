@@ -38,7 +38,7 @@ Public Class var : Inherits float
     Implements ICloneable
 
     Public Property Index As Integer
-    Public Property Name As String Implements sIdEnumerable.Identifier
+    Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
 
     Public Shared ReadOnly type As Type = GetType(var)
@@ -91,7 +91,7 @@ Public Class var : Inherits float
     End Function
 End Class
 
-Public Interface Ivar : Inherits sIdEnumerable
+Public Interface Ivar : Inherits INamedValue
 
     Property value As Double
 End Interface

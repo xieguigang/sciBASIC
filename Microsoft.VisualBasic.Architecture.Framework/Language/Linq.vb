@@ -88,8 +88,8 @@ Namespace Language
             Return New BuildHashHelper(Of T, [In], [In])(keys, Function(x) x)
         End Function
 
-        Public Shared Function BuildHash(Of T As sIdEnumerable)() As BuildHashHelper(Of String, T, T)
-            Return New BuildHashHelper(Of String, T, T)(Function(x) x.Identifier, Function(x) x)
+        Public Shared Function BuildHash(Of T As INamedValue)() As BuildHashHelper(Of String, T, T)
+            Return New BuildHashHelper(Of String, T, T)(Function(x) x.Key, Function(x) x)
         End Function
 
         Public Shared Function Takes(Of T)(n As Integer) As TakeHelper(Of T)

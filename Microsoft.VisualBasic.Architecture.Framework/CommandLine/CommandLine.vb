@@ -51,7 +51,7 @@ Namespace CommandLine
     '''
     Public Class CommandLine : Inherits ClassObject
         Implements ICollection(Of NamedValue(Of String))
-        Implements sIdEnumerable
+        Implements INamedValue
 
         Friend __lstParameter As New List(Of NamedValue(Of String))
         ''' <summary>
@@ -68,7 +68,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
             Get
                 Return _name
             End Get

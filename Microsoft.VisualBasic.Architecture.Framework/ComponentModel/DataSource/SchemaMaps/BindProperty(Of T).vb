@@ -37,7 +37,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' <typeparam name="T"></typeparam>
     Public Structure BindProperty(Of T As Attribute)
         Implements IReadOnlyId
-        Implements sIdEnumerable
+        Implements INamedValue
         Implements IProperty
 
         ''' <summary>
@@ -63,7 +63,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' The map name or the <see cref="PropertyInfo.Name"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Property Identity As String Implements IReadOnlyId.Identity, sIdEnumerable.Identifier
+        Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
             Get
                 Return [Property].Name
             End Get

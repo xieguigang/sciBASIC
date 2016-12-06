@@ -71,9 +71,9 @@ Namespace Serialization.JSON
     End Class
 
     Public Class [Property] : Inherits SchemaProvider
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property name As String Implements sIdEnumerable.Identifier
+        Public Property name As String Implements INamedValue.Key
         Public Property minimum As Integer
         Public Property exclusiveMinimum As Boolean
         Public Property ref As String

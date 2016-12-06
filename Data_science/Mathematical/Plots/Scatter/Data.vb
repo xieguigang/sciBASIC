@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class SerialData : Implements sIdEnumerable
+Public Class SerialData : Implements INamedValue
     Implements IEnumerable(Of PointData)
 
     ''' <summary>
@@ -41,7 +41,7 @@ Public Class SerialData : Implements sIdEnumerable
     ''' </summary>
     Public pts As PointData()
     Public lineType As DashStyle = DashStyle.Solid
-    Public Property title As String Implements sIdEnumerable.Identifier
+    Public Property title As String Implements INamedValue.Key
 
     ''' <summary>
     ''' 点的半径大小

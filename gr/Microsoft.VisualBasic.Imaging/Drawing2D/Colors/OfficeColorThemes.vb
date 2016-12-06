@@ -74,10 +74,10 @@ Namespace Drawing2D.Colors
         End Function
     End Module
 
-    <XmlRoot("clrScheme")> Public Class Theme : Implements sIdEnumerable
+    <XmlRoot("clrScheme")> Public Class Theme : Implements INamedValue
 
         <XmlAttribute>
-        Public Property name As String Implements sIdEnumerable.Identifier
+        Public Property name As String Implements INamedValue.Key
         Public Property dk1 As ObjectColor
         Public Property lt1 As ObjectColor
         Public Property dk2 As Accent

@@ -57,7 +57,7 @@ Namespace Logical.FuzzyLogic
     ''' Represents a linguistic variable.
     ''' </summary>
     Public Class LinguisticVariable : Inherits ClassObject
-        Implements sIdEnumerable
+        Implements INamedValue
 
 #Region "Constructors"
 
@@ -88,7 +88,7 @@ Namespace Logical.FuzzyLogic
         ''' <summary>
         ''' The name that identificates the linguistic variable.
         ''' </summary>
-        Public Property Name() As String Implements sIdEnumerable.Identifier
+        Public Property Name() As String Implements INamedValue.Key
 
         ''' <summary>
         ''' A membership functions collection for the lingusitic variable.

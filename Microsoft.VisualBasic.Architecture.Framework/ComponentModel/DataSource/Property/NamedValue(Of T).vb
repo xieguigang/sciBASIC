@@ -37,14 +37,14 @@ Namespace ComponentModel.DataSourceModel
     ''' The value object have a name string.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure NamedValue(Of T) : Implements sIdEnumerable
+    Public Structure NamedValue(Of T) : Implements INamedValue
 
         ''' <summary>
         ''' Identifier tag data. you can using this property value as a dictionary key.
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute>
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
 
         ''' <summary>
         ''' Object value

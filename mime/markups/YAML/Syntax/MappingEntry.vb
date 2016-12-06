@@ -32,13 +32,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace YAML.Syntax
 
-    Public Class MappingEntry : Implements sIdEnumerable
+    Public Class MappingEntry : Implements INamedValue
 
         Public Key As DataItem
 
         Public Value As DataItem
 
-        Private Property Identifier As String Implements sIdEnumerable.Identifier
+        Private Property Identifier As String Implements INamedValue.Key
             Get
                 Return Scripting.ToString(Key)
             End Get

@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Language
 Namespace Graph
 
     Public Class Node : Inherits ClassObject
-        Implements sIdEnumerable
+        Implements INamedValue
 
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
@@ -97,7 +97,7 @@ Namespace Graph
         ''' The unique id of this node
         ''' </summary>
         ''' <returns></returns>
-        Public Property ID As String Implements sIdEnumerable.Identifier
+        Public Property ID As String Implements INamedValue.Key
         Public Property Data As NodeData
         Public Property Pinned As Boolean
 

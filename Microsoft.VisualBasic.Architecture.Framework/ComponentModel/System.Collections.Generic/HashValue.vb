@@ -30,9 +30,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Structure HashValue : Implements sIdEnumerable
+Public Structure HashValue : Implements INamedValue
 
-    Public Property Identifier As String Implements sIdEnumerable.Identifier
+    Public Property Identifier As String Implements INamedValue.Key
     Public Property value As String
 
     Sub New(name As String, value As String)

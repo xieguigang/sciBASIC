@@ -40,7 +40,7 @@ Namespace CommandLine.Reflection
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
     Public Class [Namespace] : Inherits Attribute
-        Implements sIdEnumerable
+        Implements INamedValue
 
         ''' <summary>
         ''' A brief description text about the function of this namespace.(关于本模块之中的描述性的摘要文本)
@@ -57,7 +57,7 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks></remarks>
         <XmlAttribute>
-        Public Property [Namespace] As String Implements sIdEnumerable.Identifier
+        Public Property [Namespace] As String Implements INamedValue.Key
 
         Dim _TypeAutoExtract As Boolean
 

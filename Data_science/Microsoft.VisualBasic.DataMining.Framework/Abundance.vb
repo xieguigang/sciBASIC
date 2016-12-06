@@ -66,7 +66,7 @@ Public Module Abundance
     End Function
 End Module
 
-Public Interface ISample : Inherits sIdEnumerable
+Public Interface ISample : Inherits INamedValue
 
     Property Samples As Dictionary(Of String, Double)
 End Interface

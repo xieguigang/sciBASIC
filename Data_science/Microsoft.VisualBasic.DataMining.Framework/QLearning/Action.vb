@@ -36,13 +36,13 @@ Namespace QLearning
     ''' One specific environment state have some possible actions,
     ''' but there is just one best action on the current environment state based on the accumulate q-values
     ''' </summary>
-    Public Class Action : Implements sIdEnumerable
+    Public Class Action : Implements INamedValue
 
         ''' <summary>
         ''' The environment variables state as inputs for the machine.
         ''' </summary>
         ''' <returns></returns>
-        Public Property EnvirState As String Implements sIdEnumerable.Identifier
+        Public Property EnvirState As String Implements INamedValue.Key
         ''' <summary>
         ''' Actions for the current state.
         ''' </summary>

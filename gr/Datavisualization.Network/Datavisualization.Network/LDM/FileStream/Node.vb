@@ -36,14 +36,14 @@ Namespace FileStream
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Node : Inherits INetComponent
-        Implements sIdEnumerable
+        Implements INamedValue
         Implements INode
 
         ''' <summary>
         ''' 这个节点的标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property Identifier As String Implements sIdEnumerable.Identifier, INode.Identifier
+        Public Overridable Property Identifier As String Implements INamedValue.Key, INode.Identifier
         ''' <summary>
         ''' Node data groups identifier.(这个节点的分组类型的定义)
         ''' </summary>

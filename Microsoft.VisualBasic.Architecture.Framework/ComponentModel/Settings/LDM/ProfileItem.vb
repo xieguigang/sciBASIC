@@ -67,9 +67,9 @@ Namespace ComponentModel.Settings
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class ProfileItem : Inherits Attribute
         Implements IKeyValuePairObject(Of String, String)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, sIdEnumerable.Identifier
+        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, INamedValue.Key
         <XmlAttribute> Public Overridable Property Description As String Implements IKeyValuePairObject(Of String, String).Value
 
         ''' <summary>

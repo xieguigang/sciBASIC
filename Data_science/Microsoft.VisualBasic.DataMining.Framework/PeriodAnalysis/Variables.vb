@@ -36,9 +36,9 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Namespace Serials.PeriodAnalysis
 
     Public Structure SerialsVarialble
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
         Dim SerialsData As Double()
 
         Public Overrides Function ToString() As String

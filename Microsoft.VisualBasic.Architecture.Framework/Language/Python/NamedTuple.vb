@@ -36,9 +36,9 @@ Namespace Language.Python
     ''' ``namedtuple()`` Factory Function for Tuples with Named Fields
     ''' </summary>
     Public Class NamedTuple : Inherits [Property](Of Object)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Type As String Implements sIdEnumerable.Identifier
+        Public Property Type As String Implements INamedValue.Key
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

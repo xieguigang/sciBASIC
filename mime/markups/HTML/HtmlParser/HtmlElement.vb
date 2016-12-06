@@ -37,9 +37,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace HTML
 
-    Public Structure ValueAttribute : Implements sIdEnumerable
+    Public Structure ValueAttribute : Implements INamedValue
 
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
         Public Property Value As String
 
         Sub New(strText As String)

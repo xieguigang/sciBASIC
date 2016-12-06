@@ -36,7 +36,7 @@ Namespace ComponentModel
     ''' </summary>
     ''' <remarks></remarks>
     <XmlType("href-text", Namespace:="Microsoft.VisualBasic/Href_Annotation-Text")>
-    Public Class Href : Implements sIdEnumerable
+    Public Class Href : Implements INamedValue
 
 #Region "Public Property"
 
@@ -45,7 +45,7 @@ Namespace ComponentModel
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute("Resource.Id", Namespace:="Microsoft.VisualBasic/Href_Annotation-ResourceId")>
-        Public Property ResourceId As String Implements sIdEnumerable.Identifier
+        Public Property ResourceId As String Implements INamedValue.Key
         ''' <summary>
         ''' The relative path of the target resource object in the file system.(资源对象在文件系统之中的相对路径)
         ''' </summary>

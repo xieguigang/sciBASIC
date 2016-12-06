@@ -37,9 +37,9 @@ Namespace KMeans
     ''' 存储在Csv文件里面的数据模型
     ''' </summary>
     Public Class EntityLDM : Inherits DynamicPropertyBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
 
         <Meta(GetType(Double))>
         Public Overrides Property Properties As Dictionary(Of String, Double)

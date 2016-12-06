@@ -35,10 +35,10 @@ Namespace ComponentModel
     ''' The key has 2 string value collection.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TripleKeyValuesPair : Implements sIdEnumerable
+    Public Class TripleKeyValuesPair : Implements INamedValue
         Implements ITripleKeyValuesPair(Of String, String, String)
 
-        <XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, ITripleKeyValuesPair(Of String, String, String).Identifier
+        <XmlAttribute> Public Property Key As String Implements INamedValue.Key, ITripleKeyValuesPair(Of String, String, String).Identifier
         <XmlAttribute> Public Property Value1 As String Implements ITripleKeyValuesPair(Of String, String, String).Value2
         <XmlAttribute> Public Property Value2 As String Implements ITripleKeyValuesPair(Of String, String, String).Address
 

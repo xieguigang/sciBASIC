@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' Ordinary differential equation(ODE).(常微分方程的模型)
 ''' </summary>
 Public Class ODE
-    Implements sIdEnumerable
+    Implements INamedValue
 
 #Region "Output results"
 
@@ -72,7 +72,7 @@ Public Class ODE
         End Get
     End Property
 
-    Public Property Id As String Implements sIdEnumerable.Identifier
+    Public Property Id As String Implements INamedValue.Key
 
     Public Overrides Function ToString() As String
         Return x.GetJson & " --> " & y.GetJson

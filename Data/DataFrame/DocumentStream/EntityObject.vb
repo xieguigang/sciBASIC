@@ -35,13 +35,13 @@ Namespace DocumentStream
     ''' The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>
     ''' </summary>
     Public Class EntityObject : Inherits DynamicPropertyBase(Of String)
-        Implements sIdEnumerable
+        Implements INamedValue
 
         ''' <summary>
         ''' This object identifier
         ''' </summary>
         ''' <returns></returns>
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
 
         ''' <summary>
         ''' Copy prop[erty value
@@ -71,9 +71,9 @@ Namespace DocumentStream
     ''' (数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)
     ''' </summary>
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
 
         ''' <summary>
         ''' Copy prop[erty value

@@ -29,9 +29,9 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class QueryArgument : Implements sIdEnumerable
+Public Class QueryArgument : Implements INamedValue
 
-    Public Property Name As String Implements sIdEnumerable.Identifier
+    Public Property Name As String Implements INamedValue.Key
     ''' <summary>
     ''' 
     ''' </summary>

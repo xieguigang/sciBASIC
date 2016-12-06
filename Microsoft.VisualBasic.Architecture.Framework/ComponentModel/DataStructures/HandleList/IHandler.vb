@@ -59,22 +59,22 @@ Namespace ComponentModel
         Property Address As T
     End Interface
 
-    Public Interface IHashHandle : Inherits IAddressHandle, sIdEnumerable
+    Public Interface IHashHandle : Inherits IAddressHandle, INamedValue
     End Interface
 
-    Public Class IHashValue(Of T As sIdEnumerable) : Inherits ClassObject
+    Public Class IHashValue(Of T As INamedValue) : Inherits ClassObject
         Implements IHashHandle
 
         Public Property obj As T
 
         Public Property Address As Integer Implements IAddressHandle.Address
 
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
             Get
-                Return obj.Identifier
+                Return obj.Key
             End Get
             Set(value As String)
-                obj.Identifier = value
+                obj.Key = value
             End Set
         End Property
 

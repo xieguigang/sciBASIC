@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Language
 ''' code for this type, see the Reference Source.
 ''' </summary>
 ''' <typeparam name="V"></typeparam>
-Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of String, V)
+Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of String, V)
     ' Implements IEnumerable(Of V)
 
     Sub New()

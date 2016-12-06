@@ -46,10 +46,10 @@ Namespace ComponentModel.Collection.Generic
     End Interface
 
     ''' <summary>
-    ''' This type of object have a <see cref="sIdEnumerable.Identifier"></see> property to unique identified itself in a collection.
+    ''' This type of object have a <see cref="INamedValue.Key"></see> property to unique identified itself in a collection.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface sIdEnumerable
+    Public Interface INamedValue
 
         ''' <summary>
         ''' The unique identifer in the object collection. Unique-Id of the target implements object
@@ -57,7 +57,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Property Identifier As String
+        Property Key As String
     End Interface
 
     Public Interface IReadOnlyId
