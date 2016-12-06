@@ -346,6 +346,10 @@ Namespace Language
             Return x.value + y.value
         End Operator
 
+        Public Overloads Shared Operator /(x As float, y As float) As Double
+            Return x.value / y.value
+        End Operator
+
         Public Overloads Shared Operator +(x#, y As float) As Double
             Return x + y.value
         End Operator

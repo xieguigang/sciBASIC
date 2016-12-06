@@ -197,6 +197,7 @@ Public Class FormODEsViewer
                     If inputs.ContainsKey(x.Key) Then
                         inputs(x.Key).Text = CStr(x.Value)
                     End If
+                    Call App.JoinVariable(x.Key, x.Value)
                 Next
             End If
         End Using

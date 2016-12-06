@@ -250,32 +250,53 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
 
-    Dim __joinedVariables As New List(Of NamedValue(Of String))
+#Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
+
+    Dim __joinedVariables As New Dictionary(Of NamedValue(Of String))
+
+    Public Sub JoinVariable(name$, value$)
+        __joinedVariables(name) =
+            New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value
+        }
+    End Sub
 
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
-        __joinedVariables.Add(vars)
+        For Each v As NamedValue(Of String) In vars
+            __joinedVariables(v.Name) = v
+        Next
     End Sub
 
     Public Sub JoinVariables(vars As Dictionary(Of String, String))
-        __joinedVariables.Add(
-            vars.Select(Function(x)
-                            Return New NamedValue(Of String) With {
-                                .Name = x.Key,
-                                .Value = x.Value
-                            }
-                        End Function).ToArray)
+        Call App.JoinVariables(vars.Select(
+            Function(x)
+                Return New NamedValue(Of String) With {
+                    .Name = x.Key,
+                    .Value = x.Value
+                }
+            End Function).ToArray)
     End Sub
 
     ''' <summary>
     ''' 这个函数只是会从设置的变量之中查找，本模块之中的变量请直接从属性进行引用
     ''' </summary>
-    ''' <param name="name$"></param>
-    ''' <returns></returns>
-    Public Function GetVariables(name$) As String()
-        Return LinqAPI.Exec(Of String) <= From x As NamedValue(Of String)
-                                          In __joinedVariables
-                                          Where String.Equals(name$, x.Name, StringComparison.OrdinalIgnoreCase)
-                                          Select x.Value
+    ''' <param name="name$">
+    ''' 因为由于是从命令行之中输入进来的，所以可能有些时候大小写会影响直接字典查找，在这里需要用字符串手工查找
+    ''' </param>
+    ''' <returns>当没有查找到相对应的环境变量的时候会返回空值</returns>
+    Public Function GetVariable(name$) As String
+        If __joinedVariables.ContainsKey(name) Then
+            Return __joinedVariables(name).Value
+        Else
+            For Each v As NamedValue(Of String) In __joinedVariables.Values
+                If v.Name.TextEquals(name) Then
+                    Return v.Value
+                End If
+            Next
+        End If
+
+        Return Nothing
     End Function
 
     ''' <summary>
@@ -285,7 +306,7 @@ Public Module App
     Public Function GetAppVariables() As NamedValue(Of String)()
         Dim type As Type = GetType(App)
         Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
-        Dim out As New List(Of NamedValue(Of String))(__joinedVariables)
+        Dim out As New List(Of NamedValue(Of String))(__joinedVariables.Values)
 
         For Each prop As PropertyInfo
             In pros.Values.Where(
@@ -302,6 +323,8 @@ Public Module App
         Return out.ToArray
     End Function
 
+#End Region
+
     ''' <summary>
     ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件
     ''' </summary>
@@ -309,7 +332,7 @@ Public Module App
     ''' <returns></returns>
     Public Function GetProductSharedDIR(type As Type) As String
         Dim assm As Assembly = type.Assembly
-        Dim productName As String = SoftwareToolkits.ApplicationDetails.GetProductName(assm)
+        Dim productName As String = ApplicationDetails.GetProductName(assm)
         If String.IsNullOrEmpty(productName) Then
             productName = IO.Path.GetFileNameWithoutExtension(assm.Location)
         End If

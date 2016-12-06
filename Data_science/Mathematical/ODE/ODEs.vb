@@ -217,6 +217,10 @@ Public MustInherit Class ODEs
         Call func(dx, dy:=k)
     End Sub
 
+    ''' <summary>
+    ''' 返回的值包括<see cref="Double"/>类型的Field或者<see cref="float"/>类型的field
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
         Get
             Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
@@ -224,9 +228,20 @@ Public MustInherit Class ODEs
                 type _
                 .DeclaredFields _
                 .Where(Function(f) f.FieldType.Equals(GetType(Double)))
-            Return fields.ToDictionary(
+            Dim out As Dictionary(Of String, Double) =
+                fields.ToDictionary(
                 Function(x) x.Name,
                 Function(x) DirectCast(x.GetValue(Me), Double))
+
+            fields = type _
+                .DeclaredFields _
+                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(float)))
+
+            For Each v As FieldInfo In fields
+                Call out.Add(v.Name, DirectCast(v.GetValue(Me), float).value)
+            Next
+
+            Return out
         End Get
     End Property
 
