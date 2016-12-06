@@ -54,10 +54,7 @@ Public Module ODESolver
     Public Sub Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double)
         Dim h As Double = (b - a) / n
 
-        df.x = New Double(n - 1) {}
-        df.y = New Double(n - 1) {}
-        df.x(Scan0) = a
-        df.y(Scan0) = df.y0
+        Call df.Allocate(n, a, b)
 
         Dim x = df.x, y = df.y
 
@@ -78,14 +75,11 @@ Public Module ODESolver
     <Extension>
     Public Sub RK2(ByRef df As ODE, n As Integer, a As Double, b As Double)
         Dim h As Double = (b - a) / n
+        Dim k1 As Double, k2 As Double
 
-        df.x = New Double(n - 1) {}
-        df.y = New Double(n - 1) {}
-        df.x(Scan0) = a
-        df.y(Scan0) = df.y0
+        Call df.Allocate(n, a, b)
 
         Dim x = df.x, y = df.y
-        Dim k1 As Double, k2 As Double
 
         For i As Integer = 1 To n - 1
             x(i) = a + h * i
@@ -93,6 +87,14 @@ Public Module ODESolver
             k2 = df(x(i - 1) + h, y(i - 1) + h * k1)
             y(i) = y(i - 1) + h / 2 * (k1 + k2)
         Next
+    End Sub
+
+    <Extension>
+    Public Sub Allocate(ByRef ode As ODE, n%, a#, b#)
+        ode.x = New Double(n - 1) {}
+        ode.y = New Double(n - 1) {}
+        ode.x(Scan0) = a
+        ode.y(Scan0) = ode.y0
     End Sub
 
     ''' <summary>
@@ -108,10 +110,7 @@ Public Module ODESolver
     Public Sub RK4(ByRef df As ODE, n As Integer, a As Double, b As Double)
         Dim h As Double = (b - a) / n
 
-        df.x = New Double(n - 1) {}
-        df.y = New Double(n - 1) {}
-        df.x(Scan0) = a
-        df.y(Scan0) = df.y0
+        Call df.Allocate(n, a, b)
 
         Dim x = df.x, y = df.y
         Dim k1, k2, k3, k4 As Double

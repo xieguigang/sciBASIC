@@ -54,6 +54,12 @@ Public Class ODE
     ''' <returns></returns>
     Public Property y0 As Double
 
+    ''' <summary>
+    ''' 计算函数值
+    ''' </summary>
+    ''' <param name="xi"></param>
+    ''' <param name="yi"></param>
+    ''' <returns></returns>
     Default Public ReadOnly Property GetValue(xi As Double, yi As Double) As Double
         Get
             Return _df(xi, yi)
