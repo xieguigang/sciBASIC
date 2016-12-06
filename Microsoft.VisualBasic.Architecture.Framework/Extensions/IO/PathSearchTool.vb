@@ -49,6 +49,26 @@ Imports Microsoft.VisualBasic.Text
                     Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 
+    ''' <summary>
+    ''' Combine directory path.(这个主要是用于生成文件夹名称)
+    ''' 
+    ''' ###### Example usage
+    ''' 
+    ''' ```vbnet
+    ''' Dim images As Dictionary(Of String, String) =
+    '''     (ls - l - {"*.png", "*.jpg", "*.gif"} &lt;= PlatformEngine.wwwroot.DIR("images")) _
+    '''     .ToDictionary(Function(file) file.StripAsId,
+    '''                   AddressOf FileName)
+    ''' ```
+    ''' </summary>
+    ''' <param name="d"></param>
+    ''' <param name="name"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function DIR(d As IO.DirectoryInfo, name As String) As String
+        Return $"{d.FullName}/{name}"
+    End Function
+
     <Extension>
     Public Function UnixPath(path As String) As String
         Return FileIO.FileSystem.GetFileInfo(path).FullName.Replace("\", "/")

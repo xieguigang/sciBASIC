@@ -289,10 +289,12 @@ Partial Class FormODEsViewer
         'TextBox1
         '
         Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox1.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox1.Location = New System.Drawing.Point(3, 3)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(622, 510)
+        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBox1.Size = New System.Drawing.Size(780, 510)
         Me.TextBox1.TabIndex = 2
         '
         'FlowLayoutPanel1
@@ -301,9 +303,9 @@ Partial Class FormODEsViewer
         Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(625, 3)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(783, 3)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(385, 510)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(227, 510)
         Me.FlowLayoutPanel1.TabIndex = 1
         Me.FlowLayoutPanel1.WrapContents = False
         '

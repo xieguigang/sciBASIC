@@ -46,7 +46,10 @@ Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Similarity
 
-#If FRAMEWORD_CORE Then
+#Const FRAMEWORD_CORE = 1
+#Const Yes = 1
+
+#If FRAMEWORD_CORE = Yes Then
 
 ''' <summary>
 ''' Common extension methods library for convenient the programming job.
@@ -57,7 +60,7 @@ Imports Microsoft.VisualBasic.Text.Similarity
                                  "Common extension methods library for convenient the programming job.",
                     Publisher:="xie.guigang@gmail.com",
                     Revision:=8655,
-                    Url:="http://gcmodeller.org")>
+                    Url:="http://github.com/xieguigang/sciBASIC#")>
 <Extension> Public Module Extensions
 #Else
 

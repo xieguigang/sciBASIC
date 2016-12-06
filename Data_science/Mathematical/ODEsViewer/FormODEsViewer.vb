@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Windows.Forms
 
@@ -180,6 +181,7 @@ Public Class FormODEsViewer
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         ToolStripProgressBar1.Value = 0
         TextBox1.AppendText($"a:={a}, b:={b}, n:={n}" & vbCrLf)
+        TextBox1.AppendText(defines.GetJson)
         Application.DoEvents()
         Call Draw(MonteCarlo.Model.RunTest(model, defines, defines, n, a, b))
     End Sub
@@ -195,6 +197,7 @@ Public Class FormODEsViewer
                     If inputs.ContainsKey(x.Key) Then
                         inputs(x.Key).Text = CStr(x.Value)
                     End If
+                    Call App.JoinVariable(x.Key, x.Value)
                 Next
             End If
         End Using
@@ -211,6 +214,15 @@ Public Class FormODEsViewer
     End Sub
 
     Dim ref As Dictionary(Of NamedValue(Of PointF()))
+
+    Public Sub New()
+
+        ' 此调用是设计器所必需的。
+        InitializeComponent()
+
+        ' 在 InitializeComponent() 调用之后添加任何初始化。
+
+    End Sub
 
     Private Sub OpenToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem1.Click
         Using file As New OpenFileDialog With {
@@ -256,11 +268,14 @@ Public Class FormODEsViewer
 
     Private Sub SaveAsGAFInputsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsGAFInputsToolStripMenuItem.Click
         Using saveFile As New SaveFileDialog With {
-            .Filter = "Text file(*.txt)|*.txt"
+            .Filter = "Excel tsv file(*.tsv)|*.tsv",
+            .FileName = "estimates-parms.tsv"
         }
             If saveFile.ShowDialog = DialogResult.OK Then
-                Dim params As String() = inputs.Select(Function(x) x.Key & ":" & x.Value.Text)
-                Dim out As String = {"0", "0", params.JoinBy(";")}.JoinBy(vbTab)
+                Dim params As String() = inputs _
+                    .Select(Function(x) x.Key & "=" & x.Value.Text) _
+                    .ToArray
+                Dim out As String = {"0", "0", params.JoinBy(",")}.JoinBy(vbTab)
 
                 Call out.SaveTo(saveFile.FileName, Encodings.ASCII.GetEncodings)
             End If

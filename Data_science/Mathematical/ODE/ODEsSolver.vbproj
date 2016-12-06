@@ -158,14 +158,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.vb" />
-    <Compile Include="RefODEs.vb" />
-    <Compile Include="ValueVector.vb" />
-    <Compile Include="GenericODEs.vb" />
-    <Compile Include="ODEsOut.vb" />
+    <Compile Include="ODESolvers\Gill.vb" />
+    <Compile Include="ODEsSolver\RefODEs.vb" />
+    <Compile Include="ODEsSolver\ValueVector.vb" />
+    <Compile Include="ODEsSolver\GenericODEs.vb" />
+    <Compile Include="ODEsSolver\ODEsOut.vb" />
     <Compile Include="var.vb" />
-    <Compile Include="ODEs.vb" />
-    <Compile Include="ODE.vb" />
-    <Compile Include="Solver.vb" />
+    <Compile Include="ODEsSolver\ODEs.vb" />
+    <Compile Include="ODESolvers\ODE.vb" />
+    <Compile Include="ODESolvers\Solver.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -215,6 +216,7 @@
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
