@@ -58,6 +58,8 @@ Public Class FormODEsViewer
                 If LoadModel(file.FileName) Then
                     Call config.models.AddFileHistory(file.FileName)
                     Call config.Save()
+
+                    Call TextBox1.AppendText("Load dynamics model: " & file.FileName & vbCrLf)
                 End If
             End If
         End Using
@@ -181,7 +183,7 @@ Public Class FormODEsViewer
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         ToolStripProgressBar1.Value = 0
         TextBox1.AppendText($"a:={a}, b:={b}, n:={n}" & vbCrLf)
-        TextBox1.AppendText(defines.GetJson)
+        TextBox1.AppendText(defines.GetJson & vbCrLf)
         Application.DoEvents()
         Call Draw(MonteCarlo.Model.RunTest(model, defines, defines, n, a, b))
     End Sub
@@ -199,6 +201,8 @@ Public Class FormODEsViewer
                     End If
                     Call App.JoinVariable(x.Key, x.Value)
                 Next
+
+                Call TextBox1.AppendText("Load parameter data from file: " & file.FileName & vbCrLf)
             End If
         End Using
     End Sub
@@ -237,6 +241,8 @@ Public Class FormODEsViewer
     End Sub
 
     Public Sub AddReference(path$)
+        Call TextBox1.AppendText($"Using {path} as reference" & vbCrLf)
+
         Try
             With ODEsOut.LoadFromDataFrame(path, noVars:=True)
                 Dim x#() = .x
