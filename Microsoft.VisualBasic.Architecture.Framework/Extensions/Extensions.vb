@@ -1133,7 +1133,7 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="INamedValue.Identifier"/> 
+    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="INamedValue.Key"/> 
     ''' is not exists in the dictionary, then will be insert, else the old value will be replaced with the parameter 
     ''' value <paramref name="item"/>.
     ''' (向字典对象之中更新或者插入新的数据，假若目标字典对象之中已经存在了一个数据的话，则会将原有的数据覆盖，并返回原来的数据)
