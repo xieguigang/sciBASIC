@@ -237,6 +237,11 @@ Namespace Language.UnixBash
         ''' <param name="path"></param>
         ''' <returns></returns>
         Public Function IsMatch(path As String) As Boolean
+            If regexp.IsNullOrEmpty Then
+                ' 匹配的规则是空的，则默认是允许所有的路径
+                Return True
+            End If
+
             Dim name As String = path.Replace("\", "/").Split("/"c).Last
 
             For Each r As String In regexp
