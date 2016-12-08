@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1a67002594e9176ab94118cf730706fe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\PingUtility.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports System.IO
 
 Namespace Net
 
@@ -72,9 +73,10 @@ Namespace Net
         ''' 返回与目标远程机器之间的平均通信时间长度
         ''' </summary>
         ''' <param name="IP"></param>
+        ''' <param name="out">Default is console.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Ping(IP As IPAddress, Optional TimeOut As UInteger = 3000) As Double
+        Public Function Ping(IP As IPAddress, Optional timeOut As UInteger = 3000, Optional out As StreamWriter = Nothing) As Double
             'set options ttl=128 and no fragmentation
             Dim options As New PingOptions(128, True)
 
@@ -87,12 +89,16 @@ Namespace Net
             Dim received As Integer = 0
             Dim responseTimes As New List(Of Long)()
 
+            If out Is Nothing Then
+                out = New StreamWriter(Console.OpenStandardOutput)
+            End If
+
             'ping 4 times
             For i As Integer = 0 To 3
                 Dim reply As PingReply
 
                 Try
-                    reply = pingTools.Send(IP, TimeOut, data, options)
+                    reply = pingTools.Send(IP, timeOut, data, options)
                 Catch ex As Exception
                     received += 1
                     responseTimes.Add(10 * 1000)
@@ -104,26 +110,29 @@ Namespace Net
                     Continue For
                 End If
 
+                Dim msg$
+
                 Select Case reply.Status
 
                     Case IPStatus.Success
-
                         If reply.Options Is Nothing Then
-                            Console.WriteLine("Reply from {0}: bytes={1} time={2}ms", reply.Address, reply.Buffer.Length, reply.RoundtripTime)
+                            msg = $"Reply from {reply.Address}: bytes={reply.Buffer.Length} time={reply.RoundtripTime}ms"
                         Else
-                            Console.WriteLine("Reply from {0}: bytes={1} time={2}ms TTL={3}", reply.Address, reply.Buffer.Length, reply.RoundtripTime, reply.Options.Ttl)
+                            msg = $"Reply from {reply.Address}: bytes={reply.Buffer.Length} time={reply.RoundtripTime}ms TTL={reply.Options.Ttl}"
                         End If
 
                         received += 1
                         responseTimes.Add(reply.RoundtripTime)
 
                     Case IPStatus.TimedOut
-                        Console.WriteLine("Request timed out.")
+                        msg = "Request timed out."
 
                     Case Else
-                        Console.WriteLine("Ping failed {0}", reply.Status.ToString())
+                        msg = $"Ping failed {reply.Status.ToString}"
 
                 End Select
+
+                Call out.WriteLine(msg$)
             Next
 
             'statistics calculations
@@ -159,9 +168,9 @@ Namespace Net
                 statistics.AppendFormat("    Minimum = {0}ms, Maximum = {1}ms, Average = {2}ms", minimumTime, maximumTime, CLng(averageTime \ received))
             End If
 
-            Console.WriteLine()
-            Console.WriteLine(statistics.ToString())
-            Console.WriteLine()
+            out.WriteLine()
+            out.WriteLine(statistics.ToString())
+            out.WriteLine()
 
             If received <= 0 Then  'Ping不通
                 Return Double.MaxValue

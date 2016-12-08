@@ -40,12 +40,26 @@ Namespace Net
 
 #Region "Public Property"
 
+        ''' <summary>
+        ''' Guid value of this portal information on the server registry.
+        ''' </summary>
+        ''' <returns></returns>
         <Browsable(True)>
         <Description("Guid value of this portal information on the server registry.")>
         <XmlAttribute> Public Property uid As String
+
+        ''' <summary>
+        ''' IPAddress of the services instance.
+        ''' </summary>
+        ''' <returns></returns>
         <Browsable(True)>
         <Description("IPAddress of the services instance.")>
         <XmlAttribute> Public Property IPAddress As String
+
+        ''' <summary>
+        ''' Data port of the services instance.
+        ''' </summary>
+        ''' <returns></returns>
         <Browsable(True)>
         <Description("Data port of the services instance.")>
         <XmlAttribute> Public Property Port As Integer
@@ -71,7 +85,7 @@ Namespace Net
         ''' <summary>
         '''
         ''' </summary>
-        ''' <param name="str">IPAddress:Port</param>
+        ''' <param name="str">Required format string: ``IPAddress:Port``</param>
         ''' <remarks></remarks>
         Sub New(str As String)
             Dim Tokens As String() = str.Split(":"c)

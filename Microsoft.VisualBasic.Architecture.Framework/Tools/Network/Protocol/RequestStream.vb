@@ -92,6 +92,11 @@ Namespace Net.Protocols
             Me.ChunkBuffer = buffer
         End Sub
 
+        ''' <summary>
+        ''' 构建一个无参数的网络协议对象
+        ''' </summary>
+        ''' <param name="ProtocolCategory"></param>
+        ''' <param name="Protocol"></param>
         Sub New(ProtocolCategory As Long, Protocol As Long)
             Call Me.New(ProtocolCategory, Protocol, New Byte() {})
         End Sub
