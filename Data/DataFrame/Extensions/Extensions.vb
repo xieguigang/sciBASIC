@@ -350,8 +350,9 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
         Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
 
-        Dim csv As IEnumerable(Of RowObject) = Reflector.Save(
+        Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source.Select(Function(o) DirectCast(o, Object)),
+            GetType(T),
             explicit,
             maps,
             Not nonParallel,

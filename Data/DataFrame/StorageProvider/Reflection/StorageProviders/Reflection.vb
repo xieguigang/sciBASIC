@@ -162,13 +162,11 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Iterator Function Save(source As IEnumerable(Of Object),
+        Public Iterator Function GetsRowData(source As IEnumerable(Of Object), type As Type,
                         Optional Explicit As Boolean = True,
                         Optional maps As Dictionary(Of String, String) = Nothing,
                         Optional parallel As Boolean = True,
                         Optional metaBlank As String = "") As IEnumerable(Of RowObject)
-
-            Dim type As Type = source.First.GetType
 
             For Each row As RowObject In __save(source, type, Explicit, Nothing, metaBlank, maps:=maps, parallel:=parallel)
                 Yield row
