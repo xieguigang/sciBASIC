@@ -1,42 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::468f2bbbf2b51a02ea11ca2a478f8133, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Fitness.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 
 Namespace Darwinism.GAF
 
@@ -122,6 +117,7 @@ Namespace Darwinism.GAF
                 .Ignores = {}
                 .modelVariables = MonteCarlo.Model _
                     .GetVariables(Model) _
+                    .Where(Function(v) Array.IndexOf(Ignores, v) = -1) _
                     .ToArray
 
                 Call .Model.FullName.Warning
@@ -168,64 +164,14 @@ Namespace Darwinism.GAF
         End Function
 
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector).Calculate
-            Dim vars As Dictionary(Of String, Double) =
-                chromosome _
-                    .vars _
-                    .ToDictionary(Function(var) var.Name,
-                                  Function(var) var.value)
-            Dim out As ODEsOut = ' y0使用实验观测值，而非突变的随机值
-                MonteCarlo.Model.RunTest(Model, y0, vars, n, a, b, ref)  ' 通过拟合的参数得到具体的计算数据
-            Dim fit As New List(Of Double)
-            Dim NaN%
-
-            ' 再计算出fitness
-            For Each y$ In modelVariables _
-                .Where(Function(v)
-                           Return Array.IndexOf(Ignores, v) = -1
-                       End Function)
-
-                ' Dim sample1#()() = observation.y(y).x.Split(samples, echo:=False)
-                ' Dim sample2#()() = out.y(y$).x.Split(samples, echo:=False)
-                Dim a#() = observation.y(y$).Value
-                Dim b#() = out.y(y$).Value
-
-                If log10Fitness Then
-                    a = a.ToArray(Function(x) log10(x))
-                    b = b.ToArray(Function(x) log10(x))
-                    'Else
-                    '    a = sample1.ToArray(Function(x) x.Max)
-                    '    b = sample2.ToArray(Function(x) x.Max)
-                End If
-
-                NaN% = b.Where(AddressOf IsNaNImaginary).Count
-                fit += Math.Sqrt(FitnessHelper.Calculate(a#, b#)) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
-            Next
-
-            ' Return fit.Average
-            Dim fitness# = fit.Average
-#Const DEBUG = False
-#If DEBUG Then
-            Call $"{fit.GetJson}  --->  {fitness}".__DEBUG_ECHO
-#End If
-
-            If fitness.IsNaNImaginary Then
-                fitness = Integer.MaxValue * 100.0R
-                fitness += NaN% * 10
-            End If
-
-            Return fitness
-        End Function
-
-        Public Shared Function log10(x#) As Double
-            If x = 0R Then
-                Return -1000
-            ElseIf x.IsNaNImaginary Then
-                Return Double.NaN
-            Else
-                ' 假若不乘以符号，则相同指数级别的正数和负数之间的差异就会为0，
-                ' 所以在这里需要乘以符号值
-                Return Math.Sign(x) * Math.Log10(Math.Abs(x))
-            End If
+            Return Model.GetFitness(
+                chromosome,
+                observation,
+                modelVariables,
+                y0,
+                n, a, b,
+                log10Fitness,
+                ref)
         End Function
     End Class
 End Namespace

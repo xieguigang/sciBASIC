@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
     <Compile Include="Darwinism\DESolver.vb" />
+    <Compile Include="Darwinism\GAF\DistributeSupports.vb" />
     <Compile Include="Darwinism\GAF\GAFModel.vb" />
     <Compile Include="Darwinism\GAF\Dump.vb" />
     <Compile Include="Darwinism\GAF\Fitness.vb" />
