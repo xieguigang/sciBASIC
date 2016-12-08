@@ -57,7 +57,7 @@ Namespace Parallel.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="parTokens"></param>
+        ''' <param name="parTokens">每一个分区之中的元素数量</param>
         ''' <returns></returns>
         ''' <remarks>对于数量较少的序列，可以使用<see cref="Extensions.SplitIterator(Of T)(IEnumerable(Of T), Integer, Boolean)"/>进行分区操作，
         ''' 该函数使用数组的<see cref="Array.ConstrainedCopy(Array, Integer, Array, Integer, Integer)"/>方法进行分区复制，效率较高
