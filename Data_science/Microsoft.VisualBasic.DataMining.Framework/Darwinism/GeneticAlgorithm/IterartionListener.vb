@@ -46,8 +46,8 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Interface IterartionListener(Of C As Chromosome(Of C), T As IComparable(Of T))
+    Public Interface IterartionListener(Of C As Chromosome(Of C))
 
-        Sub Update(environment As GeneticAlgorithm(Of C, T))
+        Sub Update(environment As GeneticAlgorithm(Of C))
     End Interface
 End Namespace

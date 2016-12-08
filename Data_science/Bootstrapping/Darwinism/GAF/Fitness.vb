@@ -49,7 +49,7 @@ Namespace Darwinism.GAF
     Public Delegate Function FitnessCompute(best As ParameterVector, fit As GAFFitness) As Double
 
     Public Class GAFFitness
-        Implements Fitness(Of ParameterVector, Double)
+        Implements Fitness(Of ParameterVector)
 
         ''' <summary>
         ''' 真实的实验观察数据
@@ -167,7 +167,7 @@ Namespace Darwinism.GAF
             Return out
         End Function
 
-        Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector, Double).Calculate
+        Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector).Calculate
             Dim vars As Dictionary(Of String, Double) =
                 chromosome _
                     .vars _

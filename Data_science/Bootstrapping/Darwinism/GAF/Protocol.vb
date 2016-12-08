@@ -203,7 +203,7 @@ Namespace Darwinism.GAF
 #If Not DEBUG Then
             population.Parallel = True
 #End If
-            Dim ga As New GeneticAlgorithm(Of ParameterVector, Double)(
+            Dim ga As New GeneticAlgorithm(Of ParameterVector)(
                 population,
                 fitness,
                 randomGenerator)

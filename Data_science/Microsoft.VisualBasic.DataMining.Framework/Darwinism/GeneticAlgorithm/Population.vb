@@ -112,13 +112,26 @@ Namespace Darwinism.GAF
             Call chromosomes.Sort(comparator)
         End Sub
 
+        Public Delegate Function ParallelComputing(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
+
+        Private Function GA_PLinq(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
+            Return From x As NamedValue(Of chr)
+                   In source.AsParallel
+                   Let fit As Double = GA._fitnessFunc.Calculate(x.Value)
+                   Select New NamedValue(Of Double) With {
+                       .Name = x.Name,
+                       .Value = fit
+                   }
+        End Function
+
+        Dim Pcompute As ParallelComputing = AddressOf GA_PLinq
+
         ''' <summary>
         ''' 这里是ODEs参数估计的限速步骤
         ''' </summary>
-        ''' <typeparam name="T"></typeparam>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(Of T As IComparable(Of T))(GA As GeneticAlgorithm(Of chr, T), comparator As ChromosomesComparator(Of chr, T))
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of chr), comparator As ChromosomesComparator(Of chr))
             Call Arrays.Shuffle(chromosomes)
 
             If Parallel Then
@@ -129,30 +142,8 @@ Namespace Darwinism.GAF
                     }) _
                     .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
                     .ToArray
-                Dim LQuery As IEnumerable(Of NamedValue(Of T))
 
-                If source.Length > 10000 Then ' not working on Linux, still high sys% load if partition larger than total cpu cores
-                    Dim n As Integer = source.Length / (App.CPUCoreNumbers - 1)
-
-                    Call $"Using large scale computing scheduler.... ({source.Length} --> {n}/cpu)".__DEBUG_ECHO
-
-                    LQuery = LQuerySchedule.LQuery(
-                        source,
-                        Function(x) New NamedValue(Of T) With {
-                            .Name = x.Name,
-                            .Value = GA._fitnessFunc.Calculate(x.Value)
-                        }, n)
-                Else
-                    LQuery = From x As NamedValue(Of chr)
-                             In source.AsParallel
-                             Let fit As T = GA._fitnessFunc.Calculate(x.Value)
-                             Select New NamedValue(Of T) With {
-                                 .Name = x.Name,
-                                 .Value = fit
-                             }
-                End If
-
-                For Each x As NamedValue(Of T) In LQuery
+                For Each x As NamedValue(Of Double) In Pcompute(GA, source)
                     If Not comparator.cache.ContainsKey(x.Name) Then
                         Call comparator.cache.Add(x.Name, x.Value)
                     End If

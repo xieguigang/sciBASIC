@@ -51,7 +51,7 @@ Namespace Darwinism.GAF.Helper
         ''' 
         <Extension>
         Public Sub AddDefaultListener(Of T As Chromosome(Of T))(
-                                  ByRef ga As GeneticAlgorithm(Of T, Double),
+                                  ByRef ga As GeneticAlgorithm(Of T),
                                Optional print As Action(Of outPrint) = Nothing,
                                Optional threshold# = DefaultThreshold)
 
@@ -74,12 +74,12 @@ Namespace Darwinism.GAF.Helper
         Const DefaultThreshold# = 0.00001
 
         Private Structure IterartionListenerAnonymousInnerClassHelper(Of T As Chromosome(Of T))
-            Implements IterartionListener(Of T, Double)
+            Implements IterartionListener(Of T)
 
             Public threshold As Double
             Public print As Action(Of outPrint)
 
-            Public Sub Update(ga As GeneticAlgorithm(Of T, Double)) Implements IterartionListener(Of T, Double).Update
+            Public Sub Update(ga As GeneticAlgorithm(Of T)) Implements IterartionListener(Of T).Update
                 Dim best As T = ga.Best
                 Dim bestFit As Double = ga.Fitness(best)
                 Dim iteration As Integer = ga.Iteration

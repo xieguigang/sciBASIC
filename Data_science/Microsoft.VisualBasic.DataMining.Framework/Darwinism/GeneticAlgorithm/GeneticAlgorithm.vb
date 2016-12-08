@@ -49,25 +49,25 @@ Imports Microsoft.VisualBasic.Mathematical
 
 Namespace Darwinism.GAF
 
-    Public Class GeneticAlgorithm(Of C As Chromosome(Of C), T As IComparable(Of T))
+    Public Class GeneticAlgorithm(Of C As Chromosome(Of C))
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly _chromosomesComparator As ChromosomesComparator(Of C, T)
-        Friend ReadOnly _fitnessFunc As Fitness(Of C, T)
+        ReadOnly _chromosomesComparator As ChromosomesComparator(Of C)
+        Friend ReadOnly _fitnessFunc As Fitness(Of C)
 
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
         ''' </summary>
-        ReadOnly iterationListeners As New List(Of IterartionListener(Of C, T))
+        ReadOnly iterationListeners As New List(Of IterartionListener(Of C))
         ReadOnly seeds As IRandomSeeds
 
         Dim _terminate As Boolean = False
 
-        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C, T), Optional seeds As IRandomSeeds = Nothing)
+        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
             Me._fitnessFunc = fitnessFunc
-            Me._chromosomesComparator = New ChromosomesComparator(Of C, T)(Me)
+            Me._chromosomesComparator = New ChromosomesComparator(Of C)(Me)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
             If population.Parallel Then
@@ -142,7 +142,7 @@ Namespace Darwinism.GAF
                 Call Evolve()
                 _Iteration = i
 
-                For Each l As IterartionListener(Of C, T) In iterationListeners
+                For Each l As IterartionListener(Of C) In iterationListeners
                     Call l.Update(Me)
                 Next
             Next
@@ -175,15 +175,15 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
-        Public Sub addIterationListener(listener As IterartionListener(Of C, T))
+        Public Sub addIterationListener(listener As IterartionListener(Of C))
             Me.iterationListeners.Add(listener)
         End Sub
 
-        Public Sub removeIterationListener(listener As IterartionListener(Of C, T))
+        Public Sub removeIterationListener(listener As IterartionListener(Of C))
             iterationListeners.Remove(listener)
         End Sub
 
-        Public Function Fitness(chromosome As C) As T
+        Public Function Fitness(chromosome As C) As Double
             Return _chromosomesComparator.Fitness(chromosome)
         End Function
 

@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Interface Fitness(Of C As Chromosome(Of C), T As IComparable(Of T))
+    Public Interface Fitness(Of C As Chromosome(Of C))
 
         ''' <summary>
         ''' Assume that chromosome1 is better than chromosome2 <br/>
@@ -57,6 +57,6 @@ Namespace Darwinism.GAF
         ''' fit1.compareTo(fit2) &lt;= 0 <br/>
         ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
         ''' </summary>
-        Function Calculate(chromosome As C) As T
+        Function Calculate(chromosome As C) As Double
     End Interface
 End Namespace
