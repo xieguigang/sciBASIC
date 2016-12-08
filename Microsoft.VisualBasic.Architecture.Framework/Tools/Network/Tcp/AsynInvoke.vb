@@ -179,21 +179,22 @@ Namespace Net
         ''' 所以调用前请确保参数<paramref name="Message"/>已经使用证书加密)
         ''' </summary>
         ''' <param name="Message"></param>
-        ''' <param name="OperationTimeOut">操作超时的时间长度，默认为30秒</param>
+        ''' <param name="timeOut">操作超时的时间长度，默认为30秒</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function SendMessage(Message As RequestStream,
-                                    Optional OperationTimeOut As Integer = 30 * 1000,
-                                    Optional OperationTimeoutHandler As Action = Nothing) As RequestStream
+                                    Optional timeout% = 30 * 1000,
+                                    Optional timeout_handler As Action = Nothing) As RequestStream
+
             Dim response As RequestStream = Nothing
             Dim bResult As Boolean = Parallel.OperationTimeOut(
                 AddressOf SendMessage,
                 [In]:=Message,
                 Out:=response,
-                TimeOut:=OperationTimeOut / 1000)
+                TimeOut:=timeout / 1000)
 
             If bResult Then
-                If Not OperationTimeoutHandler Is Nothing Then Call OperationTimeoutHandler() '操作超时了
+                If Not timeout_handler Is Nothing Then Call timeout_handler() '操作超时了
 
                 If Not connectDone Is Nothing Then Call connectDone.Set()  ' ManualResetEvent instances signal completion.
                 If Not sendDone Is Nothing Then Call sendDone.Set()
