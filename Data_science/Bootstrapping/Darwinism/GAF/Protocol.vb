@@ -108,7 +108,8 @@ Namespace Darwinism.GAF
                                 Optional randomGenerator As IRandomSeeds = Nothing,
                                 Optional mutateLevel As MutateLevels = MutateLevels.Low,
                                 Optional print As Action(Of outPrint, var()) = Nothing,
-                                Optional radicals# = 0.3) As var()
+                                Optional radicals# = 0.3,
+                                Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
 
             Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
 
@@ -134,7 +135,8 @@ Namespace Darwinism.GAF
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
                 print:=print,
-                radicals:=radicals)
+                radicals:=radicals,
+                parallel:=parallel)
         End Function
 
         ''' <summary>
@@ -156,7 +158,8 @@ Namespace Darwinism.GAF
                                        randomGenerator As IRandomSeeds,
                                        mutateLevel As MutateLevels,
                                        print As Action(Of outPrint, var()),
-                                       radicals#) As var()
+                                       radicals#,
+                                       parallel As ParallelComputing(Of ParameterVector)) As var()
             Dim estArgs As var()
 
             If randomGenerator Is Nothing Then
@@ -196,7 +199,7 @@ Namespace Darwinism.GAF
                     .vars = estArgs,
                     .MutationLevel = mutateLevel,
                     .radicals = radicals
-            }.InitialPopulation(popSize%)
+            }.InitialPopulation(popSize%, parallel)
 
             Call $"Fitness using log10(x) is {If(fitness.log10Fitness, "enabled", "disabled")}".Warning
 
@@ -264,7 +267,8 @@ Namespace Darwinism.GAF
                          Optional randomGenerator As IRandomSeeds = Nothing,
                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
                          Optional print As Action(Of outPrint, var()) = Nothing,
-                         Optional radicals# = 0.3) As var()
+                         Optional radicals# = 0.3,
+                         Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFFitness(GetType(T), observation, initOverrides, isRefModel) With {
@@ -285,7 +289,8 @@ Namespace Darwinism.GAF
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
                 print:=print,
-                radicals:=radicals)
+                radicals:=radicals,
+                parallel:=parallel)
         End Function
 
         <Extension>
@@ -331,7 +336,8 @@ Namespace Darwinism.GAF
                          Optional randomGenerator As IRandomSeeds = Nothing,
                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
                          Optional print As Action(Of outPrint, var()) = Nothing,
-                         Optional radicals# = 0.3) As var()
+                         Optional radicals# = 0.3,
+                         Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
 
             Return New ODEsOut With {
                 .y = observation.ToDictionary,
@@ -348,7 +354,8 @@ Namespace Darwinism.GAF
                             threshold:=threshold,
                             mutateLevel:=mutateLevel,
                             print:=print,
-                            radicals:=radicals)
+                            radicals:=radicals,
+                            parallel:=parallel)
         End Function
     End Module
 End Namespace

@@ -38,7 +38,7 @@ Namespace Darwinism.GAF.Helper
         Implements IComparer(Of C)
 
         Public Sub New(GA As GeneticAlgorithm(Of C))
-            caclFitness = AddressOf GA._fitnessFunc.Calculate
+            caclFitness = AddressOf GA.Fitness.Calculate
         End Sub
 
         Public Function compare(chr1 As C, chr2 As C) As Integer Implements IComparer(Of C).Compare

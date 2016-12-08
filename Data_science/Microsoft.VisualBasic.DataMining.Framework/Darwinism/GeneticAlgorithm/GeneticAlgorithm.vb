@@ -54,7 +54,8 @@ Namespace Darwinism.GAF
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
         ReadOnly _chromosomesComparator As ChromosomesComparator(Of C)
-        Friend ReadOnly _fitnessFunc As Fitness(Of C)
+
+        Public ReadOnly Property Fitness As Fitness(Of C)
 
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
@@ -66,7 +67,7 @@ Namespace Darwinism.GAF
 
         Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
-            Me._fitnessFunc = fitnessFunc
+            Me.Fitness = fitnessFunc
             Me._chromosomesComparator = New ChromosomesComparator(Of C)(Me)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
@@ -82,7 +83,7 @@ Namespace Darwinism.GAF
 
         Public Sub Evolve()
             Dim parentPopulationSize As Integer = Population.Size
-            Dim newPopulation As New Population(Of C)() With {
+            Dim newPopulation As New Population(Of C)(_Population.Pcompute) With {
                 .Parallel = Population.Parallel
             }
             Dim i As Integer = 0
@@ -183,7 +184,7 @@ Namespace Darwinism.GAF
             iterationListeners.Remove(listener)
         End Sub
 
-        Public Function Fitness(chromosome As C) As Double
+        Public Function GetFitness(chromosome As C) As Double
             Return _chromosomesComparator.Fitness(chromosome)
         End Function
 

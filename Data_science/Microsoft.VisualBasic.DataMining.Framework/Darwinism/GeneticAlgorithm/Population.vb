@@ -51,6 +51,8 @@ Imports Microsoft.VisualBasic.Parallel.Linq
 
 Namespace Darwinism.GAF
 
+    Public Delegate Function ParallelComputing(Of chr As Chromosome(Of chr))(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
+
     Public Class Population(Of chr As Chromosome(Of chr))
         Implements IEnumerable(Of chr)
 
@@ -112,27 +114,25 @@ Namespace Darwinism.GAF
             Call chromosomes.Sort(comparator)
         End Sub
 
-        Public Delegate Function ParallelComputing(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
-
         ''' <summary>
         ''' 使用PLinq进行并行计算
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Private Function GA_PLinq(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
+        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
             Return From x As NamedValue(Of chr)
                    In source.AsParallel
-                   Let fit As Double = GA._fitnessFunc.Calculate(x.Value)
+                   Let fit As Double = GA.Fitness.Calculate(x.Value)
                    Select New NamedValue(Of Double) With {
                        .Name = x.Name,
                        .Value = fit
                    }
         End Function
 
-        Dim Pcompute As ParallelComputing = AddressOf GA_PLinq
+        Friend ReadOnly Pcompute As ParallelComputing(Of chr) = AddressOf GA_PLinq
 
-        Public Sub New(Optional parallel As ParallelComputing = Nothing)
+        Public Sub New(Optional parallel As ParallelComputing(Of chr) = Nothing)
             If Not parallel Is Nothing Then
                 Pcompute = parallel
             End If

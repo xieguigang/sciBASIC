@@ -49,7 +49,7 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 真实的实验观察数据
         ''' </summary>
-        Dim observation As ODEsOut
+        Public ReadOnly Property observation As ODEsOut
         ''' <summary>
         ''' 具体的计算模型
         ''' </summary>
@@ -66,14 +66,14 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 模型之中所定义的y变量
         ''' </summary>
-        Dim modelVariables As String()
+        Public ReadOnly Property modelVariables As String()
 
 #Region "Friend visit for dump debug module and run test for fitness calc"
 
         ''' <summary>
         ''' ODEs y0
         ''' </summary>
-        Friend y0 As Dictionary(Of String, Double)
+        Public ReadOnly Property y0 As Dictionary(Of String, Double)
         ''' <summary>
         ''' RK4 parameters
         ''' </summary>
@@ -93,7 +93,7 @@ Namespace Darwinism.GAF
         ''' <param name="observation"></param>
         Sub New(observation As Dictionary(Of String, Double), model As MonteCarlo.Model, n%, a#, b#)
             With Me
-                .observation = model.RunTest(observation, n, a, b)
+                ._observation = model.RunTest(observation, n, a, b)
                 ._Model = model.GetType
                 .n = n
                 .a = a
@@ -109,13 +109,13 @@ Namespace Darwinism.GAF
         Private Sub __init()
             With Me
                 .samples = CInt(n / 100)
-                .y0 = observation _
+                ._y0 = observation _
                     .y _
                     .Values _
                     .ToDictionary(Function(v) v.Name,
                                   Function(y) y.Value(0))
                 .Ignores = {}
-                .modelVariables = MonteCarlo.Model _
+                ._modelVariables = MonteCarlo.Model _
                     .GetVariables(Model) _
                     .Where(Function(v) Array.IndexOf(Ignores, v) = -1) _
                     .ToArray
@@ -130,7 +130,7 @@ Namespace Darwinism.GAF
         ''' <param name="observation">只需要其中的<see cref="ODEsOut.y"/>有数据就行了</param>
         Sub New(model As Type, observation As ODEsOut, initOverrides As Dictionary(Of String, Double), isRef As Boolean)
             With Me
-                .observation = observation
+                ._observation = observation
                 ._Model = model
                 .n = observation.x.Length
                 .a = observation.x(0)

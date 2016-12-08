@@ -81,7 +81,7 @@ Namespace Darwinism.GAF.Helper
 
             Public Sub Update(ga As GeneticAlgorithm(Of T)) Implements IterartionListener(Of T).Update
                 Dim best As T = ga.Best
-                Dim bestFit As Double = ga.Fitness(best)
+                Dim bestFit As Double = ga.GetFitness(best)
                 Dim iteration As Integer = ga.Iteration
 
                 ' Listener prints best achieved solution

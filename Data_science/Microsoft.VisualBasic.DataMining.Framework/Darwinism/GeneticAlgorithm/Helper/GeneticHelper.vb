@@ -90,14 +90,16 @@ Namespace Darwinism.GAF.Helper
         ''' in real life it could be more complex
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize As Integer) As Population(Of T)
-            Dim population As New Population(Of T)()
+        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize As Integer, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
+            Dim population As New Population(Of T)(parallel) With {
+                .Parallel = True
+            }
 
             For i As Integer = 0 To populationSize - 1
                 ' each member of initial population
                 ' is mutated clone of base chromosome
                 Dim chr As T = base.Mutate()
-                population.Add(chr)
+                Call population.Add(chr)
             Next
             Return population
         End Function
