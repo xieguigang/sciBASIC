@@ -131,7 +131,7 @@ Module Program
         Dim estimates As var() = observations _
             .Fitting(Of Kinetics_of_influenza_A_virus_infection_in_humans_Model)(
             x#:=observations.First.Description.LoadObject(Of Double()),
-            popSize:=1000,
+            popSize:=500,
             outPrint:=prints)
 
         Call prints.SaveTo("./Kinetics_of_influenza_A_virus_infection_in_humans-iterations.csv")
