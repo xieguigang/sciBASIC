@@ -1,6 +1,5 @@
 {
   "ExpandedNodes": [
-    "",
     "\\Microsoft.VisualBasic.Architecture.Framework",
     "\\Microsoft.VisualBasic.Architecture.Framework\\Extensions",
     "\\Microsoft.VisualBasic.Architecture.Framework\\Extensions\\WebServices",
@@ -11,6 +10,5 @@
     "\\Microsoft.VisualBasic.Architecture.Framework\\Parallel\\Threads",
     "\\Microsoft.VisualBasic.Architecture.Framework\\Parallel\\Threads\\LQuerySchedule"
   ],
-  "SelectedNode": "\\Microsoft.VisualBasic.Architecture.Framework\\Parallel\\Threads\\LQuerySchedule\\TaskPartitions.vb",
   "PreviewInSolutionExplorer": false
 }

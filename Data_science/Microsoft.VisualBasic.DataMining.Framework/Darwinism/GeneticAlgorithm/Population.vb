@@ -114,6 +114,12 @@ Namespace Darwinism.GAF
 
         Public Delegate Function ParallelComputing(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
 
+        ''' <summary>
+        ''' 使用PLinq进行并行计算
+        ''' </summary>
+        ''' <param name="GA"></param>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         Private Function GA_PLinq(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
             Return From x As NamedValue(Of chr)
                    In source.AsParallel
@@ -125,6 +131,12 @@ Namespace Darwinism.GAF
         End Function
 
         Dim Pcompute As ParallelComputing = AddressOf GA_PLinq
+
+        Public Sub New(Optional parallel As ParallelComputing = Nothing)
+            If Not parallel Is Nothing Then
+                Pcompute = parallel
+            End If
+        End Sub
 
         ''' <summary>
         ''' 这里是ODEs参数估计的限速步骤
