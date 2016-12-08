@@ -526,6 +526,7 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
     <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
@@ -685,8 +686,8 @@
     <Compile Include="Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
     <Compile Include="Tools\Network\wGetTools.vb" />
     <Compile Include="Tools\Network\Tcp\StateObject.vb" />
-    <Compile Include="Tools\Network\Tcp\IPEndPoint.vb" />
-    <Compile Include="Tools\Network\Tcp\LAN.vb" />
+    <Compile Include="Tools\Network\Tcp\IPTools\IPEndPoint.vb" />
+    <Compile Include="Tools\Network\Tcp\IPTools\LAN.vb" />
     <Compile Include="Tools\Network\DomainParser.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb" />

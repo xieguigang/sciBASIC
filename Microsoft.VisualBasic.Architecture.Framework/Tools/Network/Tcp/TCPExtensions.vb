@@ -40,20 +40,6 @@ Namespace Net
 
     Public Module TCPExtensions
 
-        Public Iterator Function EnumerateAddress(a$, b$, c$) As IEnumerable(Of String)
-            For i As Integer = 0 To 255
-                Yield $"{a}.{b}.{c}.{i}"
-            Next
-        End Function
-
-        Public Iterator Function EnumerateAddress(a$, b$) As IEnumerable(Of String)
-            For i As Integer = 0 To 255
-                For Each ip$ In EnumerateAddress(a, b, i)
-                    Yield ip
-                Next
-            Next
-        End Function
-
         ''' <summary>
         ''' -1标识Ping不通
         ''' </summary>
