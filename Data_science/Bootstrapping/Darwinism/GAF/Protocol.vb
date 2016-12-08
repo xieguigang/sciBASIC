@@ -172,7 +172,7 @@ Namespace Darwinism.GAF
                 estArgs = vars.ToArray(
                     Function(x) New var With {
                         .Name = x,
-                        .value = (2 ^ x.Length) * (1000 * randomGenerator().NextDouble)
+                        .value = 0.5R
                     })
             Else
                 estArgs = LinqAPI.Exec(Of var) <= From x

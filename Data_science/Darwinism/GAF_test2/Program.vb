@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv.DocumentExtensions
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
@@ -38,7 +39,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.Interpolation
-Imports Microsoft.VisualBasic.Mathematical.Plots
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -61,9 +61,9 @@ Module Program
         Call result.DataFrame("#TIME") _
             .Save("./Kinetics_of_influenza_A_virus_infection_in_humans.csv", Encodings.ASCII)
 
-        Dim sT = result.y("T").x.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
-        Dim sI = result.y("I").x.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
-        Dim sV = result.y("V").x.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+        Dim sT = result.y("T").Value.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+        Dim sI = result.y("I").Value.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+        Dim sV = result.y("V").Value.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
 
         Call {
             Scatter.FromPoints(sT, "red", "Susceptible Cells"),
@@ -87,12 +87,12 @@ Module Program
  _
             From y As NamedValue(Of Double())
             In result.y.Values
-            Let sample As Double() = y.x _
+            Let sample As Double() = y.Value _
                 .Split(sampleSize) _
                 .ToArray(Function(block) block.Average)
             Select New NamedValue(Of Double()) With {
                 .Name = y.Name,
-                .x = sample
+                .Value = sample
             }
 
         Call samples.SaveTo(
@@ -102,7 +102,7 @@ Module Program
 
     Public Sub GAF_estimates()
         Dim samples = "./Kinetics_of_influenza_A_virus_infection_in_humans-fake-observation.csv".LoadData.ToDictionary
-        Dim x As Double() = samples("X").x
+        Dim x As Double() = samples("X").Value
 
         Call samples.Remove("X")
 
@@ -113,13 +113,13 @@ Module Program
             In samples.Values
             Let raw As PointF() = x _
                 .SeqIterator _
-                .ToArray(Function(xi) New PointF(+xi, y:=sample.x(xi)))
+                .ToArray(Function(xi) New PointF(+xi, y:=sample.Value(xi)))
             Let cubicInterplots = CubicSpline.RecalcSpline(raw, 50).ToArray
             Let newData As Double() = cubicInterplots _
                 .ToArray(Function(pt) CDbl(pt.Y))
             Select New NamedValue(Of Double()) With {
                 .Name = sample.Name,
-                .x = newData,
+                .Value = newData,
                 .Description = cubicInterplots _
                     .ToArray(Function(pt) pt.X) _
                     .GetJson  ' just needs the x value for the test

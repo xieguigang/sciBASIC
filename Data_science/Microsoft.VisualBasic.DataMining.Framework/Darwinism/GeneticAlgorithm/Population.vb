@@ -154,8 +154,11 @@ Namespace Darwinism.GAF
                     }) _
                     .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
                     .ToArray
+                Dim fitness As NamedValue(Of Double)() =
+                    Pcompute(GA, source) _
+                    .ToArray
 
-                For Each x As NamedValue(Of Double) In Pcompute(GA, source)
+                For Each x As NamedValue(Of Double) In fitness
                     If Not comparator.cache.ContainsKey(x.Name) Then
                         Call comparator.cache.Add(x.Name, x.Value)
                     End If
