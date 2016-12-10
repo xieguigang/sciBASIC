@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -138,29 +139,58 @@ Public Class FormODEsViewer
         Application.DoEvents()
 
         Dim delta = 80 / result.y.Count
+        Dim plots As (String, Image)() = LinqAPI.Exec(Of (String, Image)) <=
+ _
+            From y As NamedValue(Of Double())
+            In result.y.Values.AsParallel
+            Let pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.value, y.Value(i.i)))
+            Let hasRef = Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name)
+            Let img As Image = If(hasRef,
+                Function() As Image
+                    Try
+                        Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
+                        Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
 
-        For Each y As NamedValue(Of Double()) In result.y.Values
-            Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.value, y.Value(i.i)))
+                        Dim o = Scatter.Plot({refS, cal})
+                        Application.DoEvents()
 
-            Try
+                        Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
 
-                If Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name) Then
-                    Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
-                    Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
+                        Return o
+                    Catch ex As Exception
+                        ex = New Exception(y.Name, ex)
 
-                    vars(y.Name).BackgroundImage = Scatter.Plot({refS, cal})
-                Else
-                    vars(y.Name).BackgroundImage =
-                        Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
-                End If
 
-            Catch ex As Exception
-                Call App.LogException(ex)
-                TextBox1.AppendText(ex.ToString & vbCrLf)
-            Finally
-                ToolStripProgressBar1.Value += delta
-                Application.DoEvents()
-            End Try
+                        Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
+
+
+                        Throw ex
+                    End Try
+                End Function(),
+                Function() As Image
+                    Try
+                        Dim o = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
+                        Application.DoEvents()
+
+                        Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
+
+                        Return o
+                    Catch ex As Exception
+                        ex = New Exception(y.Name, ex)
+
+
+                        Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
+
+                        Throw ex
+                    End Try
+                End Function())
+            Select (y.Name, img)
+
+
+        For Each y As (String, Image) In plots
+            vars(y.Item1).BackgroundImage = y.Item2
+            ToolStripProgressBar1.Value += delta
+            Application.DoEvents()
         Next
 
         If Not currentSelect Is Nothing Then

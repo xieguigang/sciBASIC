@@ -54,5 +54,10 @@ Namespace Windows.Forms
                 Call files.Add(path)
             End If
         End Sub
+
+        <Extension>
+        Public Sub WriteLine(tb As TextBox, s$)
+            Call tb.AppendText(s & vbCrLf)
+        End Sub
     End Module
 End Namespace
