@@ -117,7 +117,6 @@ Namespace Darwinism.GAF
                 .Ignores = {}
                 ._modelVariables = MonteCarlo.Model _
                     .GetVariables(Model) _
-                    .Where(Function(v) Array.IndexOf(Ignores, v) = -1) _
                     .ToArray
 
                 Call .Model.FullName.Warning
@@ -164,10 +163,14 @@ Namespace Darwinism.GAF
         End Function
 
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector).Calculate
+            Dim varsToCompares As String() = modelVariables _
+                .Where(Function(v) Array.IndexOf(Ignores, v) = -1) _
+                .ToArray
+
             Return Model.GetFitness(
                 chromosome,
                 observation,
-                modelVariables,
+                varsToCompares,
                 y0,
                 n, a, b,
                 log10Fitness,

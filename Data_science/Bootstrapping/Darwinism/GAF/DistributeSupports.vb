@@ -11,6 +11,20 @@ Namespace Darwinism.GAF
     ''' </summary>
     Public Module DistributeSupports
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <param name="v"></param>
+        ''' <param name="observation"></param>
+        ''' <param name="ynames$">需要进行比较的变量的名称</param>
+        ''' <param name="y0"></param>
+        ''' <param name="n%"></param>
+        ''' <param name="t0#"></param>
+        ''' <param name="tt#"></param>
+        ''' <param name="log10Fitness"></param>
+        ''' <param name="ref"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetFitness(model As Type, v As ParameterVector, observation As ODEsOut, ynames$(), y0 As Dictionary(Of String, Double), n%, t0#, tt#, log10Fitness As Boolean, ref As ODEsOut) As Double
             Dim vars As Dictionary(Of String, Double) = v _
