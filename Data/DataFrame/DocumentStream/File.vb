@@ -590,7 +590,7 @@ B21,B22,B23,...
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
                 Dim Rows = (From line As SeqValue(Of String)
                             In cache.AsParallel
-                            Let __innerList As List(Of String) = line.obj.Split(","c).ToList
+                            Let __innerList As List(Of String) = line.value.Split(","c).ToList
                             Select i = line.i,
                                 data = New RowObject With {._innerColumns = __innerList}
                             Order By i Ascending)
@@ -655,8 +655,8 @@ B21,B22,B23,...
 
             Dim rows As List(Of RowObject) = (From s As SeqValue(Of String)
                                               In buf.Skip(1).SeqIterator.AsParallel
-                                              Where __test(s.obj)
-                                              Select row = New RowObject(s.obj),
+                                              Where __test(s.value)
+                                              Select row = New RowObject(s.value),
                                                   i = s.i
                                               Order By i Ascending) _
                                                    .ToList(Function(x) x.row)
@@ -755,7 +755,7 @@ B21,B22,B23,...
                 Dim LQuery As IEnumerable(Of RowObject) =
                     From row As RowObject
                     In innerTable.Skip(mrow.i + 1).AsParallel
-                    Where mrow.obj.Contains(row)
+                    Where mrow.value.Contains(row)
                     Select row '
 
                 For Each x In LQuery

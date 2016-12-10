@@ -301,7 +301,7 @@ Public Module Histogram
             From x As SeqValue(Of ODE)
             In odes.SeqIterator
             Select New NamedValue(Of Color) With {
-                .Name = x.obj.Id,
+                .Name = x.value.Id,
                 .Value = clData(x.i)
             }
 
@@ -322,14 +322,14 @@ Public Module Histogram
                 .data = LinqAPI.Exec(Of HistogramData) <=
  _
                     From i As SeqValue(Of Double)
-                    In out.obj.y.SeqIterator
+                    In out.value.y.SeqIterator
                     Let x1 As Double = left
                     Let x2 As Double = (left = left.value + delta)
-                    Where Not i.obj.IsNaNImaginary
+                    Where Not i.value.IsNaNImaginary
                     Select New HistogramData With {
                         .x1 = x1,
                         .x2 = x2,
-                        .y = i.obj
+                        .y = i.value
                     }
             }
 

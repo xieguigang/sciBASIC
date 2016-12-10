@@ -80,7 +80,7 @@ Namespace Net.Protocols.Streams.Array
             Dim LQuery = (From ind As SeqValue(Of T)
                           In Values.SeqIterator.AsParallel
                           Select ind.i,
-                              byts = __serialization(ind.obj)
+                              byts = __serialization(ind.value)
                           Order By i Ascending)
 
             For Each x In LQuery

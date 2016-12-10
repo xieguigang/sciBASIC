@@ -90,7 +90,7 @@ Namespace StorageProvider.Reflection
                     Call hash.Add(attrName.Key, o)
                 Next
 
-                Call MetaEntry.BindProperty.SetValue(x.obj, hash, Nothing)
+                Call MetaEntry.BindProperty.SetValue(x.value, hash, Nothing)
             Next
 
             Return buf

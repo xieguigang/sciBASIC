@@ -577,10 +577,10 @@ Public Module StringHelpers
             CompareMethod.Text)
 
         For Each str As SeqValue(Of String) In collection.SeqIterator
-            If String.Equals(str.obj, text, method) Then
+            If String.Equals(str.value, text, method) Then
                 Return str.i
             ElseIf fuzzy Then
-                If InStr(str.obj, text, method2) > 0 Then
+                If InStr(str.value, text, method2) > 0 Then
                     Return str.i
                 End If
             End If
@@ -599,7 +599,7 @@ Public Module StringHelpers
     <Extension>
     Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
         For Each s As SeqValue(Of String) In collection.SeqIterator
-            If text.WildcardMatch(s.obj, Not caseSensitive) Then
+            If text.WildcardMatch(s.value, Not caseSensitive) Then
                 Return s.i
             End If
         Next

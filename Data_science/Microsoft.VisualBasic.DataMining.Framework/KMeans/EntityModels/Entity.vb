@@ -65,7 +65,7 @@ Namespace KMeans
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
-                                  Function(x) x.obj)
+                                  Function(x) x.value)
             }
         End Function
 
@@ -75,7 +75,7 @@ Namespace KMeans
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),
-                                  Function(x) x.obj)
+                                  Function(x) x.value)
             }
         End Function
     End Class

@@ -140,7 +140,7 @@ Public Class FormODEsViewer
         Dim delta = 80 / result.y.Count
 
         For Each y As NamedValue(Of Double()) In result.y.Values
-            Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.Value(i.i)))
+            Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.value, y.Value(i.i)))
 
             Try
 
@@ -252,7 +252,7 @@ Public Class FormODEsViewer
                     Function(y) New NamedValue(Of PointF()) With {
                         .Name = y.Key,
                         .Value = x.SeqIterator.ToArray(
-                            Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                            Function(xi) New PointF(xi.value, y.Value.Value(xi)))
                     }).ToDictionary
             End With
         Catch ex As Exception
@@ -264,7 +264,7 @@ Public Class FormODEsViewer
                     Function(y) New NamedValue(Of PointF()) With {
                         .Name = y.Key,
                         .Value = x.SeqIterator.ToArray(
-                            Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                            Function(xi) New PointF(xi.value, y.Value.Value(xi)))
                     }).ToDictionary
             End With
 

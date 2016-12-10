@@ -65,8 +65,8 @@ Namespace Topology
                 .SeqIterator _
                 .ToArray(Function(v) New var With {
                     .Index = v.i,
-                    .Name = v.obj.Name,
-                    .value = v.obj.Value
+                    .Name = v.value.Name,
+                    .value = v.value.Value
             }))
 
             Dim name As New Value(Of String)

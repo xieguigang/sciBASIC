@@ -94,7 +94,7 @@ Namespace StorageProvider.Reflection
                       In csv._innerTable.SeqIterator.AsParallel
                       Select LineNumber = line.i,
                           FilledObject = Activator.CreateInstance(type),
-                          row = line.obj
+                          row = line.value
 
             Call rowBuilder.Indexof(csv)
             Call rowBuilder.SolveReadOnlyMetaConflicts()

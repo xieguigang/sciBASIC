@@ -39,7 +39,7 @@ Public Class GenericODEs : Inherits ODEs
         Me.vars = vars
 
         For Each x In vars.SeqIterator
-            x.obj.Index = x.i
+            x.value.Index = x.i
         Next
     End Sub
 

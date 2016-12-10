@@ -271,6 +271,23 @@ Namespace Language
             Return i
         End Operator
 
+        ''' <summary>
+        ''' 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
+        ''' ```vbnet
+        ''' x += n
+        ''' ```
+        ''' 
+        ''' 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
+        ''' 不会修改源变量的值，返回的是一个单纯的<see cref="Double"/>值类型
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(x As int, n%) As int
+            x.value += n
+            Return x
+        End Operator
+
         Public Shared Operator >(source As IEnumerable, handle As int) As Boolean
             Dim file As FileHandle = FileHandles.__getHandle(handle.value)
             Return CollectionIO.DefaultHandle()(source, file.FileName, file.encoding)

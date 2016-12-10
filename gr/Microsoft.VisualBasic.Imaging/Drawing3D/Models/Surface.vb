@@ -53,7 +53,7 @@ Namespace Drawing3D
                 Dim polygon As New GraphicsPath
 
                 For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
-                    path(pt.i) = pt.obj.PointXY(camera.screen)
+                    path(pt.i) = pt.value.PointXY(camera.screen)
                 Next
 
                 Dim a As Point = path(0)

@@ -382,7 +382,7 @@ Namespace Language
             Public Shared Operator <=(cls As ToArrayHelper(Of T, V), linq As Func(Of T, Integer, V)) As V()
                 Return (From x As SeqValue(Of T)
                     In cls.__source.SeqIterator
-                        Select linq(x.obj, x.i)).ToArray
+                        Select linq(x.value, x.i)).ToArray
             End Operator
 
             Public Shared Operator >=(cls As ToArrayHelper(Of T, V), linq As Func(Of T, Integer, V)) As V()

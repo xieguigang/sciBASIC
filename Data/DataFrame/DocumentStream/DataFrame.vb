@@ -108,7 +108,7 @@ Namespace DocumentStream
             Try
                 Return arrayCache _
                     .SeqIterator _
-                    .ToDictionary(Function(i) i.obj, Function(i) i.i)
+                    .ToDictionary(Function(i) i.value, Function(i) i.i)
 
             Catch ex As Exception
                 Dim sb As New StringBuilder(DuplicatedKeys)
@@ -418,12 +418,12 @@ Namespace DocumentStream
             Dim schema As Dictionary(Of String, Integer) =
                 __columnList _
                 .SeqIterator _
-                .ToDictionary(Function(x) x.obj,
+                .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
             For Each l As DynamicObjectLoader In From i As SeqValue(Of RowObject)
                                                  In Me._innerTable.SeqIterator
-                                                 Let line As RowObject = i.obj
+                                                 Let line As RowObject = i.value
                                                  Let loader = New DynamicObjectLoader With {
                                                      .LineNumber = i.i,
                                                      .RowData = line,

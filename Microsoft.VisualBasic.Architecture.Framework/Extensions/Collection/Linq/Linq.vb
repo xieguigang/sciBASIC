@@ -420,13 +420,13 @@ Namespace Linq
                 LQuery = LinqAPI.Exec(Of TOut) <=
                     From i As SeqValue(Of T)
                     In source.SeqIterator.AsParallel
-                    Let obj As T = i.obj
+                    Let obj As T = i.value
                     Select __ctype(obj, i.i)
             Else
                 LQuery = LinqAPI.Exec(Of TOut) <=
                     From i As SeqValue(Of T)
                     In source.SeqIterator
-                    Let obj As T = i.obj
+                    Let obj As T = i.value
                     Select __ctype(obj, i.i)
             End If
 

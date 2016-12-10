@@ -72,11 +72,11 @@ Namespace csv
 
                 Yield New ChartPlots.SerialData With {
                     .width = lineWidth,
-                    .title = g.obj.serial,
+                    .title = g.value.serial,
                     .color = colors(g.i),
                     .pts = LinqAPI.Exec(Of PointData) <=
                         From x As SerialData
-                        In g.obj.Group
+                        In g.value.Group
                         Select New PointData With {
                             .errMinus = x.errMinus,
                             .errPlus = x.errPlus,
@@ -115,7 +115,7 @@ Namespace csv
             For Each block In pts.SlideWindows(resolution, offset:=resolution).SeqIterator
                 Dim pt As SerialData = rawData(block)
 
-                For Each d As PointF In block.obj.Elements
+                For Each d As PointF In block.value.Elements
                     result += New SerialData With {
                         .errMinus = pt.errMinus,
                         .errPlus = pt.errPlus,

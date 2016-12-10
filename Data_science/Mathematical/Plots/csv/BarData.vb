@@ -100,7 +100,7 @@ Namespace csv
                 .Serials = names _
                     .SeqIterator _
                     .ToArray(Function(x) New NamedValue(Of Color) With {
-                        .Name = x.obj,
+                        .Name = x.value,
                         .Value = clData(x.i)
                     }),
                 .Samples = csv.Rows _

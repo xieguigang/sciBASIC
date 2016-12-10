@@ -83,12 +83,12 @@ Public MustInherit Class ODEs
 
         For Each f As SeqValue(Of FieldInfo) In fields.SeqIterator
             Dim x As New var() With {
-                .Name = f.obj.Name,
+                .Name = f.value.Name,
                 .Index = f.i
             }
             vars(f.i) = x
 
-            Call f.obj.SetValue(Me, x)
+            Call f.value.SetValue(Me, x)
         Next
 
         __vars = New Dictionary(Of var)(vars)

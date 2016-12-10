@@ -70,7 +70,7 @@ Namespace SyntaxAPI.Vectors
                 Dim LQuery As T() = LinqAPI.Exec(Of T) <=
                     From i As SeqValue(Of Boolean)
                     In conditions.SeqIterator
-                    Where i.obj = True
+                    Where i.value = True
                     Select MyBase.Item(i.i)
 
                 Return LQuery
@@ -123,7 +123,7 @@ Namespace SyntaxAPI.Vectors
         End Property
 
         Public Shared Operator <>(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
-            Dim LQuery = (From i In x.SeqIterator Select Not i.obj.Equals(y(i.i))).ToArray
+            Dim LQuery = (From i In x.SeqIterator Select Not i.value.Equals(y(i.i))).ToArray
             Return New BooleanVector(LQuery)
         End Operator
 

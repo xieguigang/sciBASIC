@@ -78,23 +78,23 @@ Namespace Linq
 
     Public Structure SeqValue(Of T1, T2) : Implements IAddressHandle
 
-        Public Property Pos As Integer
-        Public Property obj As T1
-        Public Property Follow As T2
+        Public Property i As Integer
+        Public Property value As T1
+        Public Property Follows As T2
 
         Private Property Address As Integer Implements IAddressHandle.Address
             Get
-                Return CLng(Pos)
+                Return CLng(i)
             End Get
             Set(value As Integer)
-                Pos = CInt(value)
+                i = CInt(value)
             End Set
         End Property
 
         Sub New(i%, x As T1, y As T2)
-            Pos = i
-            obj = x
-            Follow = y
+            Me.i = i
+            value = x
+            Follows = y
         End Sub
 
         Public Overrides Function ToString() As String
@@ -116,7 +116,7 @@ Namespace Linq
         ''' The Object data
         ''' </summary>
         ''' <returns></returns>
-        Public Property obj As T
+        Public Property value As T
 
         Private Property Address As Integer Implements IAddressHandle.Address
             Get
@@ -129,7 +129,7 @@ Namespace Linq
 
         Sub New(i%, x As T)
             Me.i = i
-            obj = x
+            value = x
         End Sub
 
         Public Overrides Function ToString() As String
@@ -137,7 +137,7 @@ Namespace Linq
         End Function
 
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As T
-            Return x.obj
+            Return x.value
         End Operator
 
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As Integer
@@ -145,12 +145,17 @@ Namespace Linq
         End Operator
 
         Public Shared Operator +(list As System.Collections.Generic.List(Of T), x As SeqValue(Of T)) As System.Collections.Generic.List(Of T)
-            Call list.Add(x.obj)
+            Call list.Add(x.value)
             Return list
         End Operator
 
+        ''' <summary>
+        ''' Get value from <see cref="value"/> property.
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         Public Shared Operator +(x As SeqValue(Of T)) As T
-            Return x.obj
+            Return x.value
         End Operator
 
         Public Sub Dispose() Implements IDisposable.Dispose

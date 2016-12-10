@@ -179,7 +179,7 @@ Namespace Interpolation
                         win.Elements, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.p,
-                        .obj = value
+                        .value = value
                     }
                     Order By x.i Ascending
             Else
@@ -191,7 +191,7 @@ Namespace Interpolation
                         win.Elements, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.p,
-                        .obj = value
+                        .value = value
                     }
                     Order By x.i Ascending
             End If

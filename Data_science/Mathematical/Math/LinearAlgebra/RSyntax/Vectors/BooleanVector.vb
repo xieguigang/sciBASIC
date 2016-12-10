@@ -82,7 +82,7 @@ Namespace SyntaxAPI.Vectors
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Shared Operator &(x As BooleanVector, y As BooleanVector) As BooleanVector
-            Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.obj AndAlso y(i))
+            Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.value AndAlso y(i))
         End Operator
 
         Public Shared Operator Not(x As BooleanVector) As BooleanVector
@@ -109,7 +109,7 @@ Namespace SyntaxAPI.Vectors
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Shared Operator Or(x As BooleanVector, y As Boolean()) As BooleanVector
-            Return New BooleanVector(From i In x.SeqIterator Select i.obj OrElse y(i))
+            Return New BooleanVector(From i In x.SeqIterator Select i.value OrElse y(i))
         End Operator
 
         ''' <summary>

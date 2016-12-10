@@ -174,7 +174,7 @@ Public Module Heatmap
                     .GenerateMapping(mapLevels, offset:=0) _
                     .SeqIterator _
                     .ToDictionary(Function(x) correl(x.i),
-                                  Function(x) x.obj)
+                                  Function(x) x.value)
 
                 If kmeans Then
                     array = array.KmeansReorder
@@ -299,7 +299,7 @@ Public Module Heatmap
                     .Name = entity.uid,
                     .Value = keysOrder _
                         .SeqIterator _
-                        .ToDictionary(Function(x) x.obj,
+                        .ToDictionary(Function(x) x.value,
                                       Function(x) entity.Properties(x.i))
                 }
             Next

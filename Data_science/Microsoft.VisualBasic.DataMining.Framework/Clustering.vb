@@ -131,7 +131,7 @@ Namespace Clustering
                                  End If
                              End Function
             Dim Offset = (From i In LQuery.SeqIterator
-                          Let kk = i.obj
+                          Let kk = i.value
                           Let p = kk.offset
                           Where p <> 0
                           Let merged_into = get_Merged(i.i - p)

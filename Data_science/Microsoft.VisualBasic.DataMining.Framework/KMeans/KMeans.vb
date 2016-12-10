@@ -250,7 +250,7 @@ Namespace KMeans
  _
                         From c As SeqValue(Of KMeansCluster(Of T))
                         In clusters.SeqIterator.AsParallel
-                        Let cluster As KMeansCluster(Of T) = c.obj
+                        Let cluster As KMeansCluster(Of T) = c.value
                         Let clusterMean As Double() = If(
                             cluster.NumOfEntity = 0,
                             New Double(x.Properties.Length - 1) {},
@@ -258,10 +258,10 @@ Namespace KMeans
                         Let distance As Double = EuclideanDistance(x.Properties, clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                         Select New SeqValue(Of Double) With {
                             .i = c.i,
-                            .obj = distance
+                            .value = distance
                         }
                     Dim index As Integer = min _
-                        .OrderBy(Function(distance) distance.obj) _
+                        .OrderBy(Function(distance) distance.value) _
                         .First.i ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
 
                     Call newClusters(index).Add(x)

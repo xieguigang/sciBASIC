@@ -202,9 +202,9 @@ Public Module Scatter
  _
                 From o As SeqValue(Of Double)
                 In y0.SeqIterator
-                Where Not o.obj.IsNaNImaginary
+                Where Not o.value.IsNaNImaginary
                 Select New PointData With {
-                    .pt = New PointF(array(o.i), CSng(o.obj))
+                    .pt = New PointF(array(o.i), CSng(o.value))
                 }
                     }
     End Function
@@ -224,7 +224,7 @@ Public Module Scatter
             .pts = LinqAPI.Exec(Of PointData) <=
                 From x As SeqValue(Of Double)
                 In ode.x.SeqIterator
-                Select New PointData(CSng(x.obj), CSng(ode.y(x.i)))
+                Select New PointData(CSng(x.value), CSng(ode.y(x.i)))
         }
     End Function
 
@@ -252,12 +252,12 @@ Public Module Scatter
             In odes.y.Values.SeqIterator
             Let pts As PointData() = odes.x _
                 .SeqIterator _
-                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.obj.Value(x))))
+                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.value.Value(x))))
             Select New SerialData With {
                 .color = c(y.i),
                 .lineType = DashStyle.Solid,
                 .PointSize = ptSize,
-                .title = y.obj.Name,
+                .title = y.value.Name,
                 .width = width,
                 .pts = pts
             }

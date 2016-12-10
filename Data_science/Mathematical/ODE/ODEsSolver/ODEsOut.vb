@@ -116,14 +116,14 @@ Public Class ODEsOut
         file += head
 
         For Each x As SeqValue(Of Double) In Me.x.SeqIterator
-            file += (round(x.obj) + ly.ToList(Function(n) round(n.Value(x.i))))
+            file += (round(x.value) + ly.ToList(Function(n) round(n.Value(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2
 
         For Each v In y0.SafeQuery.JoinIterates(params).SeqIterator
             Dim row As RowObject = file(v.i)
-            Dim var As KeyValuePair(Of String, Double) = v.obj
+            Dim var As KeyValuePair(Of String, Double) = v.value
 
             row(skips) = var.Key
             row(skips + 1) = var.Value

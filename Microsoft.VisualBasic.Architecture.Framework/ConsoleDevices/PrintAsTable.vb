@@ -63,7 +63,7 @@ Namespace Terminal
             Dim maxLens As Integer() =
                 LinqAPI.Exec(Of Integer) <= From i As SeqValue(Of String)
                                             In titles.SeqIterator
-                                            Select Math.Max(i.obj.Length,
+                                            Select Math.Max(i.value.Length,
                                                 (From x As Dictionary(Of String, String)
                                                  In table
                                                  Select Len(x.Values(i.i))).Max)

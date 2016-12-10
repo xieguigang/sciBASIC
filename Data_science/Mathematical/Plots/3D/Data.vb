@@ -142,7 +142,7 @@ Namespace Plot3D
                 .GenerateMapping(100) _
                 .SeqIterator _
                 .ToDictionary(Function(o) z(o.i),
-                              Function(o) o.obj)
+                              Function(o) o.value)
             Dim colors As Color() = New ColorMap(100 * 2, 250).ColorSequence(mapNameZ)
 
             For Each line As Line3D In array

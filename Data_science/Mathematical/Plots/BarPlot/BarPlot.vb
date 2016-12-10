@@ -132,16 +132,16 @@ Public Module BarPlot
 
             If stacked Then ' 改变Y
                 Dim right = x + dxStep
-                Dim top = sy(sample.obj.StackedSum)
+                Dim top = sy(sample.value.StackedSum)
                 Dim canvasHeight = grect.Size.Height - (grect.Margin.Height * 2)  ' 畫布的高度
                 Dim actualHeight = bottom - top ' 底部減去最高的就是實際的高度（縂的）
                 Dim barWidth = dxStep
 
                 Dim stack = If(stackReorder,
-                    sample.obj.data _
+                    sample.value.data _
                         .SeqIterator _
-                        .OrderBy(Function(o) o.obj),
-                    sample.obj.data.SeqIterator)
+                        .OrderBy(Function(o) o.value),
+                    sample.value.data.SeqIterator)
 
                 For Each val As SeqValue(Of Double) In stack
                     Dim topleft As New Point(x, top)
@@ -157,9 +157,9 @@ Public Module BarPlot
 
                 x += dxStep
             Else ' 改变X
-                For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                     Dim right = x + dxStep
-                    Dim top = sy(val.obj)
+                    Dim top = sy(val.value)
                     Dim rect As Rectangle = Rectangle(top, x, right, grect.Size.Height - grect.Margin.Height)
 
                     Call g.DrawRectangle(Pens.Black, rect)
@@ -252,7 +252,7 @@ Public Module BarPlot
                 From n
                 In data.SeqIterator
                 Select New BarDataSample With {
-                    .data = {n.obj},
+                    .data = {n.value},
                     .Tag = n.i
                 }
         }
@@ -270,7 +270,7 @@ Public Module BarPlot
             From x As SeqValue(Of ODE)
             In odes.SeqIterator
             Select New NamedValue(Of Color) With {
-                .Name = x.obj.df.ToString,
+                .Name = x.value.df.ToString,
                 .Value = colors(x.i)
             }
         Dim samples = LinqAPI.Exec(Of BarDataSample) <=

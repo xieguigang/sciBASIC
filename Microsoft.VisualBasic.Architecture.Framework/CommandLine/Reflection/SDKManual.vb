@@ -81,7 +81,7 @@ Namespace CommandLine.Reflection
                 From api As SeqValue(Of APIEntryPoint)
                 In CLI.APIList.SeqIterator(offset:=1)
                 Let index As String = api.i & ".   "
-                Select index & api.obj.HelpInformation
+                Select index & api.value.HelpInformation
 
             Call New IndexedManual(pages, title).ShowManual()
 
@@ -136,7 +136,7 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine("--------------------------")
 
             For Each i As SeqValue(Of APIEntryPoint) In App.APIList.SeqIterator
-                Dim api As APIEntryPoint = i.obj
+                Dim api As APIEntryPoint = i.value
 
                 Call sb.Append($"<h3 id=""{api.Name}""> {i.i + 1}. ")
                 Call sb.AppendLine(api.HelpInformation(md:=True) _
@@ -253,12 +253,12 @@ Namespace CommandLine.Reflection
                 .SeqIterator(offset:=1)
 
                 If markdown Then
-                    Call sb.AppendLine($"##### {g.i}. {g.obj.Name}")
+                    Call sb.AppendLine($"##### {g.i}. {g.value.Name}")
                 Else
-                    Call sb.AppendLine($"{g.i}. {g.obj.Name}")
+                    Call sb.AppendLine($"{g.i}. {g.value.Name}")
                 End If
 
-                Dim describ$ = Trim(g.obj.Description)
+                Dim describ$ = Trim(g.value.Description)
                 Dim indent As New String(" "c, (g.i & ". ").Length)
 
                 If Not String.IsNullOrEmpty(describ) Then
@@ -275,7 +275,7 @@ Namespace CommandLine.Reflection
 
                 Call sb.AppendLine()
                 Call sb.AppendLine()
-                Call print(g.obj.Data, left:=indent)
+                Call print(g.value.Data, left:=indent)
             Next
 
             Return sb.ToString.Trim(ASCII.CR, ASCII.LF, " "c)

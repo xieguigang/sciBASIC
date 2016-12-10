@@ -132,11 +132,11 @@ Namespace Drawing2D.Vector.Text
             Dim lx As Integer = loc.X
 
             For Each s As SeqValue(Of [String], SizeF) In texts.SeqIterator(Of SizeF)(szs)
-                Dim y As Integer = lowY - s.Follow.Height
-                Dim pos As New Point(lx.Move(s.Follow.Width), y)
-                Dim rect As New Rectangle(pos, New Size(s.Follow.ToSize))
+                Dim y As Integer = lowY - s.Follows.Height
+                Dim pos As New Point(lx.Move(s.Follows.Width), y)
+                Dim rect As New Rectangle(pos, New Size(s.Follows.ToSize))
 
-                Call New [String](s.obj, rect).Draw(gdi)
+                Call New [String](s.value, rect).Draw(gdi)
             Next
         End Sub
     End Module

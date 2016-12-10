@@ -86,22 +86,22 @@ Partial Module BarPlot
 
                     If stacked Then ' 改变Y
                         Dim bottom! = y + dy
-                        Dim right = sx(sample.obj.StackedSum)
+                        Dim right = sx(sample.value.StackedSum)
                         Dim canvasWidth = size.Height - (margin.Height * 2)
 
-                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                        For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                             Dim rect As Rectangle = Rectangle(y, lefts, right, bottom)
 
                             Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
 
-                            top += ((val.obj - mapper.xmin) / mapper.dx) * canvasWidth
+                            top += ((val.value - mapper.xmin) / mapper.dx) * canvasWidth
                         Next
 
                         top += dy
                     Else ' 改变X
-                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                        For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                             Dim bottom! = y
-                            Dim right = sx(val.obj)
+                            Dim right = sx(val.value)
                             Dim rect As Rectangle = Rectangle(bottom, lefts, right, bottom + dy)
 
                             Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
