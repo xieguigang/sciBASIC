@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2e05cbc20a13cd2a4a4f64c4b67199f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\TreeNode(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::df32a6989ed66f0fe6e94b247d65afb8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\TreeNode(Of T).vb"
 
     ' Author:
     ' 

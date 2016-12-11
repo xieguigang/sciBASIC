@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09e4f836e648aed2daba7f90976e558f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Tuple.vb"
+﻿#Region "Microsoft.VisualBasic::806f03bd07bd60bbf3c5616f2efb807d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Tuple.vb"
 
     ' Author:
     ' 

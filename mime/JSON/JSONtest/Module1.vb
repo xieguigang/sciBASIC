@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03b948c8c58eccb7ddefb32dbdae0034, ..\sciBASIC#\mime\JSON\JSONtest\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::f3f1f8070940db3654e575ff0effe1be, ..\sciBASIC#\mime\JSON\JSONtest\Module1.vb"
 
     ' Author:
     ' 
@@ -64,4 +64,3 @@ Module Module1
     End Sub
 
 End Module
-

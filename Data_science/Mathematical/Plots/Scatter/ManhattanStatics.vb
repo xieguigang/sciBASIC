@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fa9f3370ca58cca5decace1caf60740, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
+﻿#Region "Microsoft.VisualBasic::550196d0aee13507017ac1ba49c871fc, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Public Module ManhattanStatics
             End Sub)
     End Function
 End Module
-

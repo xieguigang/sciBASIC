@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb9986344915d69ccc1728eedf78df7a, ..\sciBASIC#\Data_science\Mathematical\Plots\Percents\PercentageData.vb"
+﻿#Region "Microsoft.VisualBasic::3b611dfcba85b04ff3ac3eca5d47f244, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Fractions.vb"
 
     ' Author:
     ' 

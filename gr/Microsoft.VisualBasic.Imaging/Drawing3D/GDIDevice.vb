@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edade2e96a1546a6dce4b4b30f278d21, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::002e20ff39ab0e9aa40dc1e71657b695, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
 
     ' Author:
     ' 

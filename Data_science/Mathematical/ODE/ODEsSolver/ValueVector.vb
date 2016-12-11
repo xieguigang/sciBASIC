@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40dd1af0863e6d3a8852830bfe7d6eb5, ..\sciBASIC#\Data_science\Mathematical\ODE\ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::7d9a5619afc08742c40090e55c16e388, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\ValueVector.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Public Class ValueVector : Inherits int
         Return v
     End Operator
 End Class
-

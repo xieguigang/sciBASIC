@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cb8c23933aa484124d4f23a40d65cba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::b751cc81fe0b8c6eb395329ebb199c1a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
 
     ' Author:
     ' 

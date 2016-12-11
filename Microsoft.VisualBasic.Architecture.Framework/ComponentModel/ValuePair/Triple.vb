@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20835f7ed4d3201e85201f73abff4f40, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Triple.vb"
+﻿#Region "Microsoft.VisualBasic::3d7478f857f0a754425edf762616e52d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Triple.vb"
 
     ' Author:
     ' 

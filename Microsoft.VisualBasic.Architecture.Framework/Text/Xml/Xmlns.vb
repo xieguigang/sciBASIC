@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1458c78d9bcfa5f7c4ce5ffcb7b305f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::14f8edeab724aeeb4f8375b396673411, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 

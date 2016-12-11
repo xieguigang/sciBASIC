@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1da982e699b8940719ef1d2bf51c276, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Parsers\DictionaryParser.vb"
+﻿#Region "Microsoft.VisualBasic::ea86ff9e843facd124b362478be0bb71, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Parsers\DictionaryParser.vb"
 
     ' Author:
     ' 

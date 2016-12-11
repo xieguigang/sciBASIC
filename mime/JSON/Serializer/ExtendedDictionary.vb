@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f286e20a9545441507b295749e75d4e, ..\sciBASIC#\mime\JSON\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::8e82f484f422d4dfa0b4e9e63500a553, ..\sciBASIC#\mime\JSON\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Public Module ExtendedDictionary
         Return json
     End Function
 End Module
-

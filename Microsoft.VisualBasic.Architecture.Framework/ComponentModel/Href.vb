@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e35b865935610332543a9fc6189dccf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Href.vb"
+﻿#Region "Microsoft.VisualBasic::ba6e5120037f73fdef4618370b4f2d3d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Href.vb"
 
     ' Author:
     ' 

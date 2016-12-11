@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9f707b313c46a4902b90817f89331d5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathMatch.vb"
+﻿#Region "Microsoft.VisualBasic::2cf672adab6cb3663fc2c361c3ea4a9e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathMatch.vb"
 
     ' Author:
     ' 

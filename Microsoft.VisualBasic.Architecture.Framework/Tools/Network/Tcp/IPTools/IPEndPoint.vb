@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::684bb3b8e6f149b6f7d04c30c0168b21, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::16c58fe742f5317146a857926ca2d4a8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPTools\IPEndPoint.vb"
 
     ' Author:
     ' 

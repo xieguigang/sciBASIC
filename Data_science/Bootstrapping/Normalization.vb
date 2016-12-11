@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dfeb8b6b2e5780510ee634d9a0628eb, ..\sciBASIC#\Data_science\Bootstrapping\Normalization.vb"
+﻿#Region "Microsoft.VisualBasic::5ca64511815ad9efb4d24d6eb7822501, ..\sciBASIC#\Data_science\Bootstrapping\Normalization.vb"
 
     ' Author:
     ' 
@@ -125,4 +125,3 @@ Public Module Normalization
         }
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d78d2b74a61c8ac680f576a8f6b7217a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::33aa1af9df7b547634a1abc61f8c786f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 

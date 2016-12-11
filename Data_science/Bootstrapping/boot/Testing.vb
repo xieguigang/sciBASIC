@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6555b5708e8c9d9805049a90760117f3, ..\sciBASIC#\Data_science\Bootstrapping\boot\Testing.vb"
+﻿#Region "Microsoft.VisualBasic::cd7c73c1be1d2e82ac07095ed90f8231, ..\sciBASIC#\Data_science\Bootstrapping\boot\Testing.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Module Testing
         End Function
     End Class
 End Module
-

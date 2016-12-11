@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::463521ad84421a8dd55806701c687448, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::dfed65f354dbdb070af0cf0fe10100e1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53506deffbef7dba6b0528ce9af8186d, ..\sciBASIC#\Data_science\Mathematical\DataFittings\LeastSquares.vb"
+﻿#Region "Microsoft.VisualBasic::9fbcf8d7ff75e110d975de9dd021eb86, ..\sciBASIC#\Data_science\Mathematical\DataFittings\LeastSquares.vb"
 
     ' Author:
     ' 
@@ -214,5 +214,3 @@ Public Module LeastSquares
         End While
     End Sub
 End Module
-
-

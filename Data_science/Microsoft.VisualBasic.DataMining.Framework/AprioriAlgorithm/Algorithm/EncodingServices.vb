@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::579a2563f273c8c18fcdf0eb4b3b580a, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\EncodingServices.vb"
+﻿#Region "Microsoft.VisualBasic::a620819f75a3bf0425bcd4e3431d1848, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\EncodingServices.vb"
 
     ' Author:
     ' 

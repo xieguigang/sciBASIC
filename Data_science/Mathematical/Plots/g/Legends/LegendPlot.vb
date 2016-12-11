@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cbcbe14bff65acd228cdac78fe02fe8, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::025753401c77f328eca4c31e917b35e7, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 

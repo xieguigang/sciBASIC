@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4de3874f88cd69200d3d55dbe765e56f, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\StatesCharacters.vb"
+﻿#Region "Microsoft.VisualBasic::23cdf6325d1a85a3abd5417d712a0759, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
 
     ' Author:
     ' 

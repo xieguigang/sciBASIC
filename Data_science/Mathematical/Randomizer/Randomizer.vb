@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e18410f63e04f3aef3642d4b34deec24, ..\sciBASIC#\Data_science\Mathematical\Randomizer\Randomizer.vb"
+﻿#Region "Microsoft.VisualBasic::d62ae946441fa096e1e0935f826d82a8, ..\sciBASIC#\Data_science\Mathematical\Randomizer\Randomizer.vb"
 
     ' Author:
     ' 
@@ -252,4 +252,3 @@ Public Class Randomizer : Inherits Random
         Return __getRandom(_deviates)
     End Function
 End Class
-

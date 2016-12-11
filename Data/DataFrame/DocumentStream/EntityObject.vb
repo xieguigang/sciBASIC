@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a697835b00e1dab2195f61f0344a5e6, ..\sciBASIC#\Data\DataFrame\DocumentStream\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::fe55a3fa82ff21e55f3049fd45982e7f, ..\sciBASIC#\Data\DataFrame\DocumentStream\EntityObject.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf3c19b2c3eb26b4ee89809e9fa0b909, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
+﻿#Region "Microsoft.VisualBasic::b6feb88e94b4a0dee2cc1e4f071df3e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
 
     ' Author:
     ' 

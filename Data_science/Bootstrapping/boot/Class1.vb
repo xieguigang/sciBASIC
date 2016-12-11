@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9aafe022406738092855dd39536a5659, ..\sciBASIC#\Data_science\Bootstrapping\boot\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::1d97b6376c7e278240bcc2f54c8ded16, ..\sciBASIC#\Data_science\Bootstrapping\boot\Class1.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Public Class Class1
         End Function
     End Class
 End Class
-

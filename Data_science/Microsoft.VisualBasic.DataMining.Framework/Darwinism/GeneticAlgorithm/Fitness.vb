@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b33d671c24738165e97ec0f0ffc9c72, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::358bcb02b52f52b281310552cb282a2f, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Fitness.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ' *****************************************************************************
 ' Copyright 2012 Yuriy Lagodiuk

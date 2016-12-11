@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd2a7ecc69bf94e0958ea235c7e9c2cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
+﻿#Region "Microsoft.VisualBasic::af5d62f461b5bca64b9fd1356a759d0c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61b992e6943a1b9e221f5ac90831e13a, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Example.vb"
+﻿#Region "Microsoft.VisualBasic::1791b9b2225adec796c60726e880baab, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Example.vb"
 
     ' Author:
     ' 

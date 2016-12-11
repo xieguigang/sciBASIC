@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dba279924f628a15492cb4af1f5a9cf7, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::af2f742cfe7b39e5bd0c6a2b005285a6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Surface.vb"
 
     ' Author:
     ' 

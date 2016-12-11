@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f877135bd7886ebc29a15d42021b6a0a, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::388403fd21478a94941e1b32c3907241, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
 
     ' Author:
     ' 
