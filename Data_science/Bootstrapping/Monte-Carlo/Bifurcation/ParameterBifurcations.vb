@@ -52,7 +52,7 @@ Namespace MonteCarlo
                                       Optional stop% = -1,
                                       Optional ncluster% = -1,
                                       Optional nsubCluster% = 3,
-                                      Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of NamedValue(Of ValueRange()))
+                                      Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of Cluster)
             Dim n% = data.x.Length
             Dim a# = data.x(0)
             Dim b# = data.x.Last
@@ -82,7 +82,7 @@ Namespace MonteCarlo
 
             Return results.__clusterInternal(
                 y0.Select(Function(x) x.Name).ToArray,
-                ncluster, nsubCluster,
+                ncluster,
                 [stop],
                 uidProvider:=uidProvider)
         End Function
