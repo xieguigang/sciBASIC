@@ -236,7 +236,7 @@ Namespace MonteCarlo
             ldelta = pow - ldelta
             udelta = pow + udelta
 
-            Dim out As New PreciseRandom(CInt(ldelta), CInt(udelta), rnd)
+            Dim out As New PreciseRandom(CSng(ldelta), CSng(udelta), rnd)
             Return out
         End Function
     End Module
