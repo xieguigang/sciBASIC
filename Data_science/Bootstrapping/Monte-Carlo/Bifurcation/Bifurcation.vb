@@ -40,6 +40,19 @@ Namespace MonteCarlo
     ''' <summary>
     ''' Search for all possible system status clusters
     ''' </summary>
+    ''' <remarks>
+    ''' ###### Figure 3: Bifurcation analysis.
+    ''' 
+    ''' > For Each important parameters, performing bifurcation analysis to (1) find out 
+    ''' > how many possible stable steady states in the system (model), for example, for 
+    ''' > example, V, may have more than two states such as very low amount (may Not 
+    ''' > enough to cause symptoms), very high amount (immediately cause symptoms), And 
+    ''' > mediate amount (may have long “latency” period in the cell); (2) find out how 
+    ''' > Virus (V, Or all the other five species) changes with its parameters' change 
+    ''' > (the parameter regions). For easy understanding, for example, in some parameter 
+    ''' > region, virus amount would decrease/increase significantly; whereas in another 
+    ''' > region, V would have interesting phenomenon such as oscillating. 
+    ''' </remarks>
     Public Module BifurcationAnalysis
 
         ''' <summary>
@@ -65,7 +78,7 @@ Namespace MonteCarlo
                 })
             Dim validResults As IEnumerable(Of ODEsOut) =
                 model.Bootstrapping(
-                    args, y0rand,
+                    y0, y0rand,
                     k, n, a, b,
                     trimNaN:=True,
                     parallel:=True)
