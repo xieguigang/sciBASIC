@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
 
@@ -16,14 +17,14 @@ Namespace MonteCarlo
         ''' <param name="args">参数值所限定的变化范围，``参数值，数位浮动下限，数位浮动的上限``</param>
         ''' <returns>可能的系统状态的KMeans聚类结果</returns>
         <Extension>
-        Public Iterator Function KMeansCluster(model As Type,
-                                               k&,
-                                               data As ODEsOut,
-                                               args As Dictionary(Of String, (ld#, ud#)),
-                                               Optional stop% = -1,
-                                               Optional ncluster% = -1,
-                                               Optional nsubCluster% = 3,
-                                               Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of NamedValue(Of VariableModel()))
+        Public Function KMeansCluster(model As Type,
+                                      k&,
+                                      data As ODEsOut,
+                                      args As Dictionary(Of String, (ld#, ud#)),
+                                      Optional stop% = -1,
+                                      Optional ncluster% = -1,
+                                      Optional nsubCluster% = 3,
+                                      Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of NamedValue(Of VariableModel()))
             Dim n% = data.x.Length
             Dim a# = data.x(0)
             Dim b# = data.x.Last
@@ -47,9 +48,15 @@ Namespace MonteCarlo
                     .Name = v,
                     .Value = AddressOf rndSeed.NextNumber
                 }
-            Dim result As IEnumerable(Of ODEsOut) =
+            Dim results As IEnumerable(Of ODEsOut) =
                 model.Bootstrapping(params, y0, k, n, a, b,, True)
+            Dim uidProvider As Func(Of ODEsOut, String) = Function(v) v.params.GetJson
 
+            Return results.__clusterInternal(
+                y0.Select(Function(x) x.Name).ToArray,
+                ncluster, nsubCluster,
+                [stop],
+                uidProvider:=uidProvider)
         End Function
     End Module
 End Namespace
