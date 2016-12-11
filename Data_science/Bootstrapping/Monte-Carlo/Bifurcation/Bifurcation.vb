@@ -62,12 +62,13 @@ Namespace MonteCarlo
         ''' <param name="model"></param>
         ''' <returns>可能的系统状态的KMeans聚类结果</returns>
         <Extension>
-        Public Iterator Function KMeansCluster(model As Type,
-                                               k&, n%, a#, b#,
-                                               args As Dictionary(Of String, Double),
-                                               Optional stop% = -1,
-                                               Optional ncluster% = -1,
-                                               Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))
+        Public Function KMeansCluster(model As Type,
+                                      k&,
+                                      n%, a#, b#,
+                                      args As Dictionary(Of String, Double),
+                                      Optional stop% = -1,
+                                      Optional ncluster% = -1,
+                                      Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))
 
             ' 整个系统使用随机初始值进行计算，从而可以使用蒙特卡洛的方法得到所有可能的系统状态
             Dim y0 = TryCast(Activator.CreateInstance(model), Model).yinit
@@ -82,12 +83,29 @@ Namespace MonteCarlo
                     k, n, a, b,
                     trimNaN:=True,
                     parallel:=True)
-            Dim inputs As New List(Of Entity)  ' Kmeans的输入数据
             Dim ys$() = MonteCarlo.Model.GetVariables(model).ToArray
+
+            ' 因为发生变化的是y0，参数没有变，所以只使用y0来标识Entity就行了
+            Dim uid As Func(Of ODEsOut, String) =
+                Function(v) v.y0.GetJson
+
+            Return validResults.__clusterInternal(
+                ys, ncluster, nsubCluster,
+                [stop],
+                uidProvider:=uid)
+        End Function
+
+        <Extension>
+        Private Iterator Function __clusterInternal(validResults As IEnumerable(Of ODEsOut),
+                                                    ys$(),
+                                                    ncluster%, nsubCluster%, stop%,
+                                                    uidProvider As Func(Of ODEsOut, String)) As IEnumerable(Of NamedValue(Of VariableModel()))
+
+            Dim inputs As New List(Of Entity)  ' Kmeans的输入数据
 
             For Each v As ODEsOut In validResults
                 inputs += New Entity With {
-                    .uid = v.y0.GetJson, ' 因为发生变化的是y0，参数没有变，所以只使用y0来标识Entity就行了
+                    .uid = uidProvider(v),
                     .Properties = ys.Select(Function(name$) v.y(name).Value).ToVector
                 }
             Next
