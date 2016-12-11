@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace MonteCarlo
@@ -20,7 +22,33 @@ Namespace MonteCarlo
                                                args As Dictionary(Of String, (ld#, ud#)),
                                                Optional stop% = -1,
                                                Optional ncluster% = -1,
-                                               Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))
+                                               Optional nsubCluster% = 3,
+                                               Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of NamedValue(Of VariableModel()))
+            Dim n% = data.x.Length
+            Dim a# = data.x(0)
+            Dim b# = data.x.Last
+            Dim y0 = LinqAPI.Exec(Of NamedValue(Of IValueProvider)) <=
+                From v As String
+                In MonteCarlo.Model.GetVariables(model)
+                Let value As Double = data.params(v)
+                Select New NamedValue(Of IValueProvider) With {
+                    .Name = v,
+                    .Value = Function() value
+                }
+            Dim params As NamedValue(Of IValueProvider)() =
+                LinqAPI.Exec(Of NamedValue(Of IValueProvider)) <=
+ _
+                From v As String
+                In MonteCarlo.Model.GetParameters(model)
+                Let value As Double = data.params(v)
+                Let range As (ld#, ud#) = args(v)
+                Let rndSeed As PreciseRandom = value.GetRandomRange(range.ld, range.ud, rnd)
+                Select New NamedValue(Of IValueProvider) With {
+                    .Name = v,
+                    .Value = AddressOf rndSeed.NextNumber
+                }
+            Dim result As IEnumerable(Of ODEsOut) =
+                model.Bootstrapping(params, y0, k, n, a, b,, True)
 
         End Function
     End Module

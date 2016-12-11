@@ -84,6 +84,10 @@ Namespace Mathematical
             End SyncLock
         End Function
 
+        ''' <summary>
+        ''' 获取一个在给定的小数位范围内的随机的数
+        ''' </summary>
+        ''' <returns></returns>
         Public Function NextNumber() As Double
             Dim d% = rand() * __digits.Length + __digits.Min      ' generates the digits
             Dim digits# = 10 ^ d
