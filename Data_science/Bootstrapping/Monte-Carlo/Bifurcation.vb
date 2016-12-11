@@ -40,11 +40,11 @@ Namespace MonteCarlo
     ''' <summary>
     ''' Search for all possible system status clusters
     ''' </summary>
-    Public Module StatesCharacters
+    Public Module BifurcationAnalysis
 
         ''' <summary>
         ''' Search for all possible system status clusters by using MonteCarlo method from random system inits.
-        ''' (使用蒙特卡洛的方法来搜索可能的系统状态空间)
+        ''' (在参数固定不变的情况下，使用不同的y变量初始值来计算，使用蒙特卡洛的方法来搜索可能的系统状态空间)
         ''' </summary>
         ''' <param name="model"></param>
         ''' <returns>可能的系统状态的KMeans聚类结果</returns>
@@ -144,6 +144,24 @@ Namespace MonteCarlo
                     }
                 Next
             Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x#">通过拟合所得到的一个具体的值</param>
+        ''' <param name="ldelta#">小数位往下浮动多少</param>
+        ''' <param name="udelta#">小数位往上浮动多少</param>
+        ''' <param name="rnd"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetRandomRange(x#, ldelta#, udelta#, Optional rnd As IRandomSeeds = Nothing) As PreciseRandom
+            Dim pow As Double = Math.Log10(x)
+            ldelta = pow - ldelta
+            udelta = pow + udelta
+
+            Dim out As New PreciseRandom(CInt(ldelta), CInt(udelta), rnd)
+            Return out
         End Function
     End Module
 End Namespace

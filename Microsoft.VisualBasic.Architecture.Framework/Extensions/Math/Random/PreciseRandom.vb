@@ -74,7 +74,7 @@ Namespace Mathematical
         End Sub
 
         Public Overrides Function ToString() As String
-            Return __digits.GetJson
+            Return __digits.GetJson & " --> " & NextNumber()
         End Function
 
         Private Function rand() As Double
