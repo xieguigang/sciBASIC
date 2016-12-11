@@ -73,6 +73,24 @@ Public Module DocumentExtensions
     End Class
 
     <Extension>
+    Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, String)), path$) As Boolean
+        Dim table As GenericTable() = d _
+            .Select(Function(x) New GenericTable With {.Data = x}) _
+            .ToArray
+        Return table.SaveTo(path)
+    End Function
+
+    <Extension>
+    Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, Double)), path$) As Boolean
+        Return d _
+            .Select(
+            Function(x) x.ToDictionary(
+            Function(k) k.Key,
+            Function(v) v.Value.ToString)) _
+            .SaveAsDataFrame(path)
+    End Function
+
+    <Extension>
     Public Function MergeTable(EXPORT$, files As IEnumerable(Of String)) As Boolean
         Dim data As New List(Of GenericTable)
 
