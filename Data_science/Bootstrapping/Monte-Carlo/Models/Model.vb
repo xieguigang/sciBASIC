@@ -1,39 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::43b9e69646ab7dc1ada0dc0b1213de97, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Model.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Emit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
 
@@ -126,7 +123,7 @@ Namespace MonteCarlo
                     x(var).value = y0(var)
                 Next
             Catch ex As Exception
-                Dim msg$ = $"Model required a parameter which is named ``{var}``, but '{var}' is not exists in list: {y0.Keys.ToArray.GetJson}"
+                Dim msg$ = $"Model required a parameter which is named ``{var}``, but '{var}' is not exists in list: {y0.KeysJson}"
                 ex = New Exception(msg, ex)
                 Throw ex
             End Try
@@ -138,7 +135,7 @@ Namespace MonteCarlo
                     Call [set](x, estimates(parm))
                 Next
             Catch ex As Exception
-                Dim msg$ = $"Model required a parameter which is named ``{parm}``, but '{parm}' is not exists in list: {estimates.Keys.ToArray.GetJson}"
+                Dim msg$ = $"Model required a parameter which is named ``{parm}``, but '{parm}' is not exists in list: {estimates.KeysJson}"
                 ex = New Exception(msg, ex)
                 Throw ex
             End Try
