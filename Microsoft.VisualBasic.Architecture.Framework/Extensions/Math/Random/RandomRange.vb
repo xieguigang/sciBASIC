@@ -66,7 +66,7 @@ Namespace Mathematical
         ''' True的时候会通过牺牲性能来强制重新实例化随机数发生器来获取足够的随机
         ''' </param>
         ''' <returns></returns>
-        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As INextRandomNumber
+        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As IValueProvider
             Dim pf! = Log(from, INF), pt! = Log([to], INF)
 
             If from > 0 Then
@@ -155,7 +155,7 @@ Namespace Mathematical
         End Function
 
         Public Function Testing(from#, to#) As Double()
-            Dim rnd As INextRandomNumber = GetRandom(from, [to])
+            Dim rnd As IValueProvider = GetRandom(from, [to])
             Dim bufs As New List(Of Double)
 
             For Each i% In 1000%.Sequence

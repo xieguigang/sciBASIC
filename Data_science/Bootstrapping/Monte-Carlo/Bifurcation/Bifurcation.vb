@@ -72,7 +72,7 @@ Namespace MonteCarlo
             ' 整个系统使用随机初始值进行计算，从而可以使用蒙特卡洛的方法得到所有可能的系统状态
             Dim y0 = TryCast(Activator.CreateInstance(model), Model).yinit
             Dim y0rand = y0.Select(
-                Function(v) New NamedValue(Of INextRandomNumber) With {
+                Function(v) New NamedValue(Of IValueProvider) With {
                     .Name = v.Name,
                     .Value = AddressOf v.GetValue
                 })

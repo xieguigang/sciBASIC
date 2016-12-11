@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace MonteCarlo
 
@@ -14,9 +15,9 @@ Namespace MonteCarlo
         ''' <returns>可能的系统状态的KMeans聚类结果</returns>
         <Extension>
         Public Iterator Function KMeansCluster(model As Type,
-                                               k&, n%, a#, b#,
-                                               y0 As Dictionary(Of String, Double),
-                                               args As Dictionary(Of String, (v#, ld#, ud#)),
+                                               k&,
+                                               data As ODEsOut,
+                                               args As Dictionary(Of String, (ld#, ud#)),
                                                Optional stop% = -1,
                                                Optional ncluster% = -1,
                                                Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))

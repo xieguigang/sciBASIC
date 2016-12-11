@@ -61,8 +61,8 @@ Namespace MonteCarlo
             }
         End Function
 
-        Public Function GetRandomModel() As NamedValue(Of INextRandomNumber)
-            Return New NamedValue(Of INextRandomNumber) With {
+        Public Function GetRandomModel() As NamedValue(Of IValueProvider)
+            Return New NamedValue(Of IValueProvider) With {
                 .Name = Name,
                 .Value = AddressOf GetValue
             }
