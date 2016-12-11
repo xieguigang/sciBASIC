@@ -139,13 +139,13 @@
     <Compile Include="Monte-Carlo\Bifurcation\ParameterBifurcations.vb" />
     <Compile Include="Monte-Carlo\CodeGenerator.vb" />
     <Compile Include="Monte-Carlo\Bifurcation\Bifurcation.vb" />
-    <Compile Include="Monte-Carlo\RefModel.vb" />
+    <Compile Include="Monte-Carlo\Models\RefModel.vb" />
     <Compile Include="Normalization.vb" />
-    <Compile Include="Monte-Carlo\VariableModel.vb" />
+    <Compile Include="Monte-Carlo\Models\ValueRange.vb" />
     <Compile Include="Obsolete\Analysis.vb" />
     <Compile Include="Monte-Carlo\EstimatesProtocol.vb" />
     <Compile Include="EigenvectorBootstrapping.vb" />
-    <Compile Include="Monte-Carlo\Model.vb" />
+    <Compile Include="Monte-Carlo\Models\Model.vb" />
     <Compile Include="Monte-Carlo\Example.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

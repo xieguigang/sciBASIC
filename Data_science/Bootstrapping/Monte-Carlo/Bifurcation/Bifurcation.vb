@@ -68,7 +68,7 @@ Namespace MonteCarlo
                                       args As Dictionary(Of String, Double),
                                       Optional stop% = -1,
                                       Optional ncluster% = -1,
-                                      Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of VariableModel()))
+                                      Optional nsubCluster% = 3) As IEnumerable(Of NamedValue(Of ValueRange()))
 
             ' 整个系统使用随机初始值进行计算，从而可以使用蒙特卡洛的方法得到所有可能的系统状态
             Dim y0 = TryCast(Activator.CreateInstance(model), Model).yinit
@@ -99,7 +99,7 @@ Namespace MonteCarlo
         Private Iterator Function __clusterInternal(validResults As IEnumerable(Of ODEsOut),
                                                     ys$(),
                                                     ncluster%, nsubCluster%, stop%,
-                                                    uidProvider As Func(Of ODEsOut, String)) As IEnumerable(Of NamedValue(Of VariableModel()))
+                                                    uidProvider As Func(Of ODEsOut, String)) As IEnumerable(Of NamedValue(Of ValueRange()))
 
             Dim inputs As New List(Of Entity)  ' Kmeans的输入数据
 
@@ -164,10 +164,10 @@ Namespace MonteCarlo
                         status.ToDictionary(Function(kk) kk.Key,
                                             Function(kk) kk.Value.Average)
 
-                    Yield New NamedValue(Of VariableModel()) With {
+                    Yield New NamedValue(Of ValueRange()) With {
                         .Name = cluster.i & "::" & means.GetJson,
                         .Value = status _
-                            .ToArray(Function(s) New VariableModel With {
+                            .ToArray(Function(s) New ValueRange With {
                                 .Name = s.Key,
                                 .Min = s.Value.Min,
                                 .Max = s.Value.Max

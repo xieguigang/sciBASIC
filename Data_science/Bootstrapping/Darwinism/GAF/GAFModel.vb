@@ -47,11 +47,11 @@ Namespace Darwinism.GAF
             Return Nothing
         End Function
 
-        Public NotOverridable Overrides Function params() As VariableModel()
+        Public NotOverridable Overrides Function params() As ValueRange()
             Return Nothing
         End Function
 
-        Public NotOverridable Overrides Function yinit() As VariableModel()
+        Public NotOverridable Overrides Function yinit() As ValueRange()
             Return Nothing
         End Function
 #End Region
@@ -65,11 +65,11 @@ Namespace Darwinism.GAF
             Return Nothing
         End Function
 
-        Public NotOverridable Overrides Function params() As VariableModel()
+        Public NotOverridable Overrides Function params() As ValueRange()
             Return Nothing
         End Function
 
-        Public NotOverridable Overrides Function yinit() As VariableModel()
+        Public NotOverridable Overrides Function yinit() As ValueRange()
             Return Nothing
         End Function
 #End Region

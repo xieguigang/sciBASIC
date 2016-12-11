@@ -62,14 +62,14 @@ Namespace MonteCarlo
         End Function
 
         <Extension>
-        Public Function Gety0(def As Type) As VariableModel()
+        Public Function Gety0(def As Type) As ValueRange()
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
             Return model.yinit
         End Function
 
         <Extension>
-        Public Function GetRandomParameters(def As Type) As VariableModel()
+        Public Function GetRandomParameters(def As Type) As ValueRange()
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
             Return model.params

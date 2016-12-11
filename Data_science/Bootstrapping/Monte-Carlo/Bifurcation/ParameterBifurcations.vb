@@ -24,7 +24,7 @@ Namespace MonteCarlo
                                       Optional stop% = -1,
                                       Optional ncluster% = -1,
                                       Optional nsubCluster% = 3,
-                                      Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of NamedValue(Of VariableModel()))
+                                      Optional rnd As IRandomSeeds = Nothing) As IEnumerable(Of NamedValue(Of ValueRange()))
             Dim n% = data.x.Length
             Dim a# = data.x(0)
             Dim b# = data.x.Last

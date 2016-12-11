@@ -55,12 +55,12 @@ Namespace MonteCarlo
         ''' 系统的初始值列表(应用于系统状态随机聚类)
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function yinit() As VariableModel()
+        Public MustOverride Function yinit() As ValueRange()
         ''' <summary>
         ''' 系统的状态列表，即方程里面的参数(应用于参数估计)
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function params() As VariableModel()
+        Public MustOverride Function params() As ValueRange()
 
         ''' <summary>
         ''' 在计算聚类的相似度的时候对y变量的特征提取
