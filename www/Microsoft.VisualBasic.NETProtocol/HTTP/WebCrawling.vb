@@ -46,7 +46,7 @@ Namespace HTTP
             Dim len As Integer
 
             For Each c As SeqValue(Of Char) In url.SeqIterator
-                If c.obj = "/"c Then
+                If c.value = "/"c Then
                     len = c.i
                 End If
             Next
