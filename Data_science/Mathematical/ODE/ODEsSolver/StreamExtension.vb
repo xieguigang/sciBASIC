@@ -29,6 +29,15 @@ Public Module StreamExtension
 
         file += head
 
+#If DEBUG Then
+        Call $"len(x) = {df.x.Length}".__DEBUG_ECHO
+        Call Console.WriteLine()
+
+        For Each y In df.y.Values
+            Call $"len(y={y.Name}) = {y.Value.Length}".__DEBUG_ECHO
+        Next
+#End If
+
         For Each x As SeqValue(Of Double) In df.x.SeqIterator
             file += (round(x.value) + ly.ToList(Function(n) round(n.Value(x.i))))
         Next
@@ -148,7 +157,7 @@ Public Module StreamExtension
         Return New ODEsOut With {
             .y = y,
             .params = params,
-            .x = seq(data(0).x(0), data(0).x.Last, 1 / minLen).ToArray,
+            .x = data(0).x,
             .y0 = y0
         }
     End Function
