@@ -50,9 +50,11 @@ Public Module ListExtensions
     ''' to accommodate the number of elements copied.
     ''' </summary>
     ''' <param name="source">The collection whose elements are copied to the new list.</param>
-    <Extension> Public Function ToList(Of T, TOut)(source As IEnumerable(Of T),
-                                                   [CType] As Func(Of T, TOut),
-                                                   Optional parallel As Boolean = False) As List(Of TOut)
+    <Extension> Public Function ToList(Of T, TOut)(
+                                  source As IEnumerable(Of T),
+                                 [CType] As Func(Of T, TOut),
+                       Optional parallel As Boolean = False) As List(Of TOut)
+
         If source Is Nothing Then
             Return New List(Of TOut)
         End If

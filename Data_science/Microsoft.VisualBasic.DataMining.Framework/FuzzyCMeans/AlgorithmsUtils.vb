@@ -4,9 +4,48 @@ Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace FuzzyCMeans
 
-    Public Class AlgorithmsUtils
+    Public Module AlgorithmsUtils
 
-        Public Shared Function CalculateDistancesToClusterCenters(points As List(Of Entity), clusterCenters As List(Of Entity)) As Dictionary(Of Entity, List(Of Double))
+        Public Function GetMaxElement(values As List(Of List(Of Double))) As Double
+            Dim max As Double = Double.MinValue
+            For i As Integer = 0 To values.Count - 1
+                For j As Integer = 0 To values(0).Count - 1
+                    If values(i)(j) > max Then
+                        max = values(i)(j)
+                    End If
+
+                Next
+            Next
+
+            Return max
+        End Function
+
+        Public Function CreateDifferencesMatrix(matrix1 As List(Of List(Of Double)), matrix2 As List(Of List(Of Double))) As List(Of List(Of Double))
+            Dim differences As New List(Of List(Of Double))()
+            For i As Integer = 0 To matrix1.Count - 1
+                Dim rowDifferences As New List(Of Double)()
+                For j As Integer = 0 To matrix1(0).Count - 1
+                    Dim result As Double = Math.Abs(matrix1(i)(j) - matrix2(i)(j))
+                    rowDifferences.Add(result)
+                Next
+
+                differences.Add(rowDifferences)
+            Next
+
+            Return differences
+        End Function
+
+        Public Function GetElementIndex(list As List(Of List(Of Double)), element As List(Of Double)) As Integer
+            For i As Integer = 0 To list.Count - 1
+                If VectorEqualityComparer.VectorEqualsToAnother(list(i), element) Then
+                    Return i
+                End If
+            Next
+
+            Return -1
+        End Function
+
+        Public Function CalculateDistancesToClusterCenters(points As List(Of Entity), clusterCenters As List(Of Entity)) As Dictionary(Of Entity, List(Of Double))
             Dim map As New Dictionary(Of Entity, List(Of Double))()
 
             For Each pointCoordinates As Entity In points
@@ -27,7 +66,7 @@ Namespace FuzzyCMeans
             Return map
         End Function
 
-        Public Shared Function GenerateDataPoints(dimension As Integer) As HashSet(Of Vector)
+        Public Function GenerateDataPoints(dimension As Integer) As HashSet(Of Vector)
             Dim coordinates As New HashSet(Of Vector)(New VectorEqualityComparer())
             Dim random As New Random()
 
@@ -50,7 +89,7 @@ Namespace FuzzyCMeans
             Return coordinates
         End Function
 
-        Public Shared Function MakeInitialSeeds(coordinates As List(Of Entity), numberOfClusters As Integer) As List(Of Entity)
+        Public Function MakeInitialSeeds(coordinates As List(Of Entity), numberOfClusters As Integer) As List(Of Entity)
             Dim random As New Random()
             Dim coordinatesCopy As List(Of Entity) = coordinates.ToList()
             Dim initialClusterCenters As New List(Of Entity)()
@@ -62,5 +101,5 @@ Namespace FuzzyCMeans
 
             Return initialClusterCenters
         End Function
-    End Class
+    End Module
 End Namespace

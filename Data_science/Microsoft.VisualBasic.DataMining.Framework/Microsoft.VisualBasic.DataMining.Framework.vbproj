@@ -216,9 +216,8 @@
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
-    <Compile Include="FuzzyCMeans\FuzzyCMeansAlgorithm.vb" />
-    <Compile Include="FuzzyCMeans\FuzzyCMeansUtils.vb" />
-    <Compile Include="FuzzyCMeans\ListUtils.vb" />
+    <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
+    <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
     <Compile Include="DFT.vb" />

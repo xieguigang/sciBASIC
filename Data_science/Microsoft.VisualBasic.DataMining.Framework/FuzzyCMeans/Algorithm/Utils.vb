@@ -34,7 +34,7 @@ Namespace FuzzyCMeans
             membershipMatrix = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
 
             For Each value As KeyValuePair(Of Entity, List(Of Double)) In membershipMatrix
-                Dim clusterNumber As Integer = ListUtils.GetMaxIndex(value.Value)
+                Dim clusterNumber As Integer = GetMaxIndex(value.Value)
                 clusters.Add(value.Key, clusterCenters(clusterNumber))
             Next
 

@@ -366,16 +366,21 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.(默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
+        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.
+        ''' (默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
         ''' </summary>
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
-        ''' <returns>An array that contains the elements from the input sequence.</returns>
-        <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
-                                                        [CType] As Func(Of T, TOut),
-                                                        [where] As Func(Of T, Boolean),
-                                                        Optional Parallel As Boolean = False) As TOut()
+        ''' <returns>
+        ''' An array that contains the elements from the input sequence.
+        ''' </returns>
+        <Extension> Public Function ToArray(Of T, TOut)(
+                                      source As IEnumerable(Of T),
+                                     [CType] As Func(Of T, TOut),
+                                     [where] As Func(Of T, Boolean),
+                           Optional Parallel As Boolean = False) As TOut()
+
             If source.IsNullOrEmpty Then
                 Return New TOut() {}
             End If
@@ -414,21 +419,17 @@ Namespace Linq
                 Return New TOut() {}
             End If
 
-            Dim LQuery As TOut()
+            Dim seqs As IEnumerable(Of SeqValue(Of T)) = If(
+                Parallel,
+                source.SeqIterator.AsParallel,
+                source.SeqIterator)
 
-            If Parallel Then
-                LQuery = LinqAPI.Exec(Of TOut) <=
-                    From i As SeqValue(Of T)
-                    In source.SeqIterator.AsParallel
-                    Let obj As T = i.value
-                    Select __ctype(obj, i.i)
-            Else
-                LQuery = LinqAPI.Exec(Of TOut) <=
-                    From i As SeqValue(Of T)
-                    In source.SeqIterator
-                    Let obj As T = i.value
-                    Select __ctype(obj, i.i)
-            End If
+            Dim LQuery As TOut() = LinqAPI.Exec(Of TOut) <=
+ _
+                From i As SeqValue(Of T)
+                In seqs
+                Let obj As T = i.value
+                Select __ctype(obj, i.i)
 
             Return LQuery
         End Function

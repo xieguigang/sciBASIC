@@ -32,6 +32,34 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
 
+    <Extension>
+    Public Function GetMinIndex(values As List(Of Double)) As Integer
+        Dim min As Double = Double.MaxValue
+        Dim minIndex As Integer = 0
+        For i As Integer = 0 To values.Count - 1
+            If values(i) < min Then
+                min = values(i)
+                minIndex = i
+            End If
+        Next
+
+        Return minIndex
+    End Function
+
+    <Extension>
+    Public Function GetMaxIndex(values As List(Of Double)) As Integer
+        Dim max As Double = Double.MinValue
+        Dim maxIndex As Integer = 0
+        For i As Integer = 0 To values.Count - 1
+            If values(i) > max Then
+                max = values(i)
+                maxIndex = i
+            End If
+        Next
+
+        Return maxIndex
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>

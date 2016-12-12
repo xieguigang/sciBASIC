@@ -66,11 +66,18 @@ Public Module KeyValuePairExtensions
     End Function
 
     <Extension>
-    Public Function Sort(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
-        Return From x As T
-               In source
-               Select x
-               Order By x Ascending
+    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional desc As Boolean = False) As IEnumerable(Of T)
+        If Not desc Then
+            Return From x As T
+                   In source
+                   Select x
+                   Order By x Ascending
+        Else
+            Return From x As T
+                   In source
+                   Select x
+                   Order By x Descending
+        End If
     End Function
 
     ''' <summary>
