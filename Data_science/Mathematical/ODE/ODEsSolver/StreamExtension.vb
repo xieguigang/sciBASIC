@@ -93,4 +93,63 @@ Public Module StreamExtension
 
         Return params
     End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="source">这些对象的X的尺度和范围必须都是一致的</param>
+    ''' <param name="method">默认是平均值</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Merge(source As IEnumerable(Of ODEsOut), Optional method As Func(Of IEnumerable(Of Double), Double) = Nothing) As ODEsOut
+        Dim data = source.ToArray
+        Dim minLen% = data.Min(Function(x) x.x.Length)
+        Dim vars = data.First.y.Keys
+        Dim y As New Dictionary(Of NamedValue(Of Double()))
+        Dim params As New Dictionary(Of String, Double)
+        Dim y0 As New Dictionary(Of String, Double)
+
+        If method Is Nothing Then
+            method = AddressOf Enumerable.Average
+        End If
+
+        Try
+            For Each k In data(0).params.Keys
+                params.Add(k, method(data.Select(Function(o) o.params(k))))
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            For Each k In data(0).y0.Keys
+                y0.Add(k, method(data.Select(Function(o) o.y0(k))))
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        For Each k In vars
+            y += New NamedValue(Of Double()) With {
+                .Name = k,
+                .Value = New Double(minLen) {}
+            }
+        Next
+
+        For i As Integer = 0 To minLen - 1
+            Dim index As Integer = i
+
+            For Each k As String In vars
+                y(k).Value(i) = method(
+                    data.Select(Function(v) v.y(k).Value(index)))
+            Next
+        Next
+
+        Return New ODEsOut With {
+            .y = y,
+            .params = params,
+            .x = seq(data(0).x(0), data(0).x.Last, 1 / minLen).ToArray,
+            .y0 = y0
+        }
+    End Function
 End Module
