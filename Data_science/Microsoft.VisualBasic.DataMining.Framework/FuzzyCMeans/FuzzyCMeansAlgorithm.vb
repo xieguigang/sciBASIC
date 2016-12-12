@@ -1,13 +1,43 @@
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace FuzzyCMeans
 
+    ''' <summary>
+    ''' **Fuzzy clustering** (also referred to as **soft clustering**) is a form of clustering in which 
+    ''' each data point can belong to more than one cluster.
+    '''
+    ''' Clustering Or cluster analysis involves assigning data points to clusters (also called buckets, 
+    ''' bins, Or classes), Or homogeneous classes, such that items in the same class Or cluster are as 
+    ''' similar as possible, while items belonging to different classes are as dissimilar as possible. 
+    ''' Clusters are identified via similarity measures. These similarity measures include distance, 
+    ''' connectivity, And intensity. Different similarity measures may be chosen based on the data Or 
+    ''' the application.
+    ''' 
+    ''' > https://en.wikipedia.org/wiki/Fuzzy_clustering
+    ''' </summary>
+    ''' <remarks>
+    ''' Clustering problems have applications in **biology**, medicine, psychology, economics, and many other disciplines.
+    '''
+    ''' ##### Bioinformatics
+    ''' 
+    ''' In the field of bioinformatics, clustering Is used for a number of applications. One use Is as 
+    ''' a pattern recognition technique to analyze gene expression data from microarrays Or other 
+    ''' technology. In this case, genes with similar expression patterns are grouped into the same cluster, 
+    ''' And different clusters display distinct, well-separated patterns of expression. Use of clustering 
+    ''' can provide insight into gene function And regulation. Because fuzzy clustering allows genes 
+    ''' to belong to more than one cluster, it allows for the identification of genes that are conditionally 
+    ''' co-regulated Or co-expressed. For example, one gene may be acted on by more than one Transcription 
+    ''' factor, And one gene may encode a protein that has more than one function. Thus, fuzzy clustering 
+    ''' Is more appropriate than hard clustering.
+    ''' </remarks>
     Public Module FuzzyCMeansAlgorithm
 
-        Public Sub DoClusteringByFuzzyCMeans(data As IEnumerable(Of Entity), numberOfClusters As Integer, fuzzificationParameter As Double, Optional maxIterates As Integer = Short.MaxValue)
+        <Extension>
+        Public Sub FuzzyCMeans(data As IEnumerable(Of Entity), numberOfClusters As Integer, fuzzificationParameter As Double, Optional maxIterates As Integer = Short.MaxValue)
             Dim coordinates As New List(Of Entity)(data)
             Dim random As New Random()
             Dim bgrColorComponents As Byte() = New Byte(2) {}
