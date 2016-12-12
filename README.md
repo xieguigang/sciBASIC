@@ -11,7 +11,8 @@
 
 <hr>
 
-![Microsoft VisualBasic logo](./logo.jpg)
++ ![Microsoft VisualBasic logo](./logo.jpg)
++ ![](./etc/README/nodes.gif)
 
 #### Directory Structure
 
