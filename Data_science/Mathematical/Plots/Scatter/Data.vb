@@ -54,7 +54,24 @@ Public Class SerialData : Implements INamedValue
     ''' 对一系列特定的数据点的注释数据
     ''' </summary>
     ''' <returns></returns>
-    Public Property annotations As Annotation()
+    Public Property DataAnnotations As Annotation()
+
+    Public Sub AddMarker(x!, title$, color$, Optional font$ = CSSFont.Win10Normal, Optional style As LegendStyles = LegendStyles.Circle)
+        If DataAnnotations Is Nothing Then
+            DataAnnotations = New Annotation(0) {}
+        Else
+            ReDim Preserve DataAnnotations(DataAnnotations.Length)
+        End If
+
+        DataAnnotations(DataAnnotations.Length - 1) =
+            New Annotation With {
+                .X = x,
+                .Text = title,
+                .color = color,
+                .Font = font,
+                .Legend = style
+        }
+    End Sub
 
     Public Function GetPointByX(x As Single) As PointData
         For Each pt As PointData In pts

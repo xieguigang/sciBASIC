@@ -68,13 +68,14 @@ Module Axis
         pen = New Pen(Color.Black, 3)
 
         For i As Integer = 0 To 9
-            Dim label As Single = dx * (i + 1) + scaler.xmin
+            Dim label As Single = dx * (i + 1)
             Dim sz As SizeF
 
             If dx <> 0R Then
                 Dim x = sx(label + scaler.xmin)
                 Dim axisX As New PointF(x, o.Y)
 
+                label = Math.Round(label + scaler.xmin, 2)
                 sz = g.MeasureString(label.ToString, fontLarge)
 
                 Call g.DrawLine(pen, axisX, New PointF(x, o.Y + margin.Height * 0.2))
@@ -85,7 +86,7 @@ Module Axis
                 End If
             End If
 
-            label = Math.Round(dy * (i + 1) + scaler.ymin, 2)
+            label = dy * (i + 1)
 
             If dy <> 0R Then
                 Dim y = sy(label + scaler.ymin)
@@ -93,6 +94,7 @@ Module Axis
 
                 Call g.DrawLine(pen, axisY, New PointF(o.X - margin.Width * 0.1, y))
 
+                label = Math.Round(label + scaler.ymin, 2)
                 sz = g.MeasureString(label, fontSmall)
                 g.DrawString(label, fontSmall, Brushes.Black, New Point(o.X - margin.Width * 0.1 - sz.Width, y - sz.Height / 2))
 

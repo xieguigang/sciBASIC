@@ -115,10 +115,10 @@ Public Module Scatter
                         End If
                     Next
 
-                    If Not line.annotations.IsNullOrEmpty Then
+                    If Not line.DataAnnotations.IsNullOrEmpty Then
                         Dim raw = array.Where(Function(s) s.title = line.title).First
 
-                        For Each annotation As Annotation In line.annotations
+                        For Each annotation As Annotation In line.DataAnnotations
                             Call annotation.Draw(g, mapper, raw, grect)
                         Next
                     End If

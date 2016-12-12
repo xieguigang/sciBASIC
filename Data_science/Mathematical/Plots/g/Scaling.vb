@@ -118,7 +118,7 @@ Public Class Scaling
                 .pts = pts,
                 .title = s.title,
                 .width = s.width,
-                .annotations = s.annotations
+                .DataAnnotations = s.DataAnnotations
             }
         Next
     End Function
