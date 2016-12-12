@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace FuzzyCMeans

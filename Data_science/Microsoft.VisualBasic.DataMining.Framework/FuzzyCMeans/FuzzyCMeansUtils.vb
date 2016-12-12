@@ -1,11 +1,29 @@
-Imports System.Collections.Generic
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Language
 
 Namespace FuzzyCMeans
 
-    Partial Public Class FuzzyCMeansAlgorithm
+    Partial Public Module FuzzyCMeansAlgorithm
 
-        Private Shared Function MakeFuzzyClusters(points As List(Of Entity),
+        ''' <summary>
+        ''' 方便应用于可视化
+        ''' </summary>
+        ''' <param name="clusterCenterPoint"></param>
+        ''' <param name="color"></param>
+        ''' 
+        <Extension>
+        Public Sub MarkClusterCenter(clusterCenterPoint As Entity, color As Color)
+            clusterCenterPoint.Extension.DynamicHash.Value(NameOf(MarkClusterCenter)) = color
+        End Sub
+
+        <Extension>
+        Public Function Fill(x As Entity) As Color
+            Return x.ReadProperty(Of Color)(NameOf(MarkClusterCenter))
+        End Function
+
+        Private Function MakeFuzzyClusters(points As List(Of Entity),
                                                   clusterCenters As List(Of Entity),
                                                   fuzzificationParameter As Double,
                                                   ByRef membershipMatrix As Dictionary(Of Entity, List(Of Double))) As Dictionary(Of Entity, Entity)
@@ -23,7 +41,7 @@ Namespace FuzzyCMeans
             Return clusters
         End Function
 
-        Private Shared Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)), fuzzificationParameter As Double) As Dictionary(Of Entity, List(Of Double))
+        Private Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)), fuzzificationParameter As Double) As Dictionary(Of Entity, List(Of Double))
             Dim map As New Dictionary(Of Entity, List(Of Double))()
 
             For Each pair As KeyValuePair(Of Entity, List(Of Double)) In distancesToClusterCenters
@@ -51,7 +69,7 @@ Namespace FuzzyCMeans
             Return map
         End Function
 
-        Private Shared Function RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters As List(Of Entity),
+        Private Function RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters As List(Of Entity),
                                                                            membershipMatrix As Dictionary(Of Entity, List(Of Double)),
                                                                            fuzzificationParameter As Double) As List(Of Entity)
             Dim clusterMembershipValuesSums As New List(Of Double)()
@@ -96,5 +114,5 @@ Namespace FuzzyCMeans
 
             Return newClusterCenters
         End Function
-    End Class
+    End Module
 End Namespace

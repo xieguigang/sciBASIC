@@ -19,6 +19,20 @@ Namespace LinearAlgebra
             Return True
         End Function
 
+        Public Shared Function VectorEqualsToAnother(v1#(), v2#()) As Boolean
+            If v1.Length <> v2.Length Then
+                Return False
+            End If
+
+            For i As Integer = 0 To v1.Length - 1
+                If v1(i) <> v2(i) Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
         Public Overloads Function Equals(x As Vector, y As Vector) As Boolean Implements IEqualityComparer(Of Vector).Equals
             Return VectorEqualsToAnother(x, y)
         End Function

@@ -88,7 +88,7 @@ Namespace ComponentModel
             }
         End Function
 
-        Default Public ReadOnly Property Item(Index As Integer) As Integer
+        Default Public Overloads ReadOnly Property Item(Index As Integer) As Integer
             Get
                 Return Properties(Index)
             End Get

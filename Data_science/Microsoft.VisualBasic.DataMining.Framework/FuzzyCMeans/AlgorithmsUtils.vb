@@ -1,5 +1,4 @@
-Imports System.Collections.Generic
-Imports System.Linq
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
