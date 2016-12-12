@@ -68,7 +68,7 @@ Module Axis
         pen = New Pen(Color.Black, 3)
 
         For i As Integer = 0 To 9
-            Dim label As Single = dx * (i + 1)
+            Dim label As Single = dx * (i + 1) + scaler.xmin
             Dim sz As SizeF
 
             If dx <> 0R Then
@@ -85,7 +85,7 @@ Module Axis
                 End If
             End If
 
-            label = Math.Round(dy * (i + 1), 3)
+            label = Math.Round(dy * (i + 1) + scaler.ymin, 2)
 
             If dy <> 0R Then
                 Dim y = sy(label + scaler.ymin)
