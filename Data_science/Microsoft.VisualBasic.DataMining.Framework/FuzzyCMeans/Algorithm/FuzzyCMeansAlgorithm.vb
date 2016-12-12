@@ -40,7 +40,7 @@ Namespace FuzzyCMeans
         Public Sub FuzzyCMeans(data As IEnumerable(Of Entity), numberOfClusters As Integer, fuzzificationParameter As Double, Optional maxIterates As Integer = Short.MaxValue)
             Dim coordinates As New List(Of Entity)(data)
             Dim random As New Random()
-            Dim bgrColorComponents As Byte() = New Byte(2) {}
+            Dim bgrColor As Byte() = New Byte(2) {}
             Dim clusterCenters As List(Of Entity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
             Dim [stop] As Boolean = False
             Dim clusters As Dictionary(Of Entity, Entity)
@@ -52,12 +52,12 @@ Namespace FuzzyCMeans
                 For Each annotation As Entity In coordinates
 
                     If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, clusterCenter.Properties) Then
-                        random.NextBytes(bgrColorComponents)
+                        random.NextBytes(bgrColor)
 
-                        MarkClusterCenter(annotation, Color.FromArgb(bgrColorComponents(0), bgrColorComponents(1), bgrColorComponents(2)))
+                        MarkClusterCenter(annotation, Color.FromArgb(bgrColor(0), bgrColor(1), bgrColor(2)))
                         clusterColors.Add(clusterCenter, annotation.Fill)
 
-                        Call $"Inital cluster center {annotation.uid }".__DEBUG_ECHO
+                        Call $"Inital cluster center {annotation.uid}".__DEBUG_ECHO
                     End If
                 Next
             Next
@@ -97,10 +97,10 @@ Namespace FuzzyCMeans
 
                 clusterCenters = RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters, membershipMatrix, fuzzificationParameter)
 
-                Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) = AlgorithmsUtils.CalculateDistancesToClusterCenters(coordinates, clusterCenters)
+                Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) = coordinates.DistanceToClusterCenters(clusterCenters)
                 Dim newMembershipMatrix As Dictionary(Of Entity, List(Of Double)) = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
 
-                Dim differences As List(Of List(Of Double)) = CreateDifferencesMatrix(newMembershipMatrix.Values.ToList(), membershipMatrix.Values.ToList())
+                Dim differences As List(Of List(Of Double)) = newMembershipMatrix.Values.DifferenceMatrix(membershipMatrix.Values.ToList())
                 Dim maxElement As Double = GetMaxElement(differences)
 
 #If DEBUG Then
@@ -118,15 +118,13 @@ Namespace FuzzyCMeans
 
                     For Each oldClusterCenter As Entity In oldClusterCenters
                         Dim isClusterCenterDataPoint As Boolean = False
+
                         For Each coordinate As Entity In coordinates
 
-                            If oldClusterCenter(0) = coordinate(0) AndAlso oldClusterCenter(1) = coordinate(1) Then
-                                '#Region "DEBUG"
+                            If VectorEqualityComparer.VectorEqualsToAnother(oldClusterCenter.Properties, coordinate.Properties) Then
 #If DEBUG Then
-                                Console.WriteLine("ex-center x = {0}, y = {1}", oldClusterCenter(0), oldClusterCenter(1))
+                                Call $"ex-center {oldClusterCenter.uid}".__DEBUG_ECHO
 #End If
-                                '#End Region
-
                                 isClusterCenterDataPoint = True
                                 Exit For
                             End If
@@ -136,12 +134,9 @@ Namespace FuzzyCMeans
                             For Each annotation As Entity In coordinates
 
                                 If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, oldClusterCenter.Properties) Then
-                                    '#Region "DEBUG"
 #If DEBUG Then
                                     Call $"remove center with coordinate {annotation.uid}".__DEBUG_ECHO
 #End If
-                                    '#End Region
-
                                     coordinates.Remove(annotation)
                                     Exit For
                                 End If
@@ -163,13 +158,14 @@ Namespace FuzzyCMeans
 
                         If Not isExists Then
                             Dim pointAnnotation As New Entity With {
-                            .Properties = clusterCenter.Properties.Clone,
-                            .uid = clusterCenter.uid
-                        }
+                                .Properties = clusterCenter.Properties.Clone,
+                                .uid = clusterCenter.uid
+                            }
+
                             MarkClusterCenter(pointAnnotation, colorValues(i))
                             coordinates.Add(pointAnnotation)
 
-                            Call $"add center with coordinate { pointAnnotation.uid }".__DEBUG_ECHO
+                            Call $"add center with coordinate {pointAnnotation.uid}".__DEBUG_ECHO
                         End If
                     Next
                 End If

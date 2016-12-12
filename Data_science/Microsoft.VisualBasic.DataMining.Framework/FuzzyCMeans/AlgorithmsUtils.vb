@@ -1,6 +1,8 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace FuzzyCMeans
 
@@ -20,19 +22,32 @@ Namespace FuzzyCMeans
             Return max
         End Function
 
-        Public Function CreateDifferencesMatrix(matrix1 As List(Of List(Of Double)), matrix2 As List(Of List(Of Double))) As List(Of List(Of Double))
-            Dim differences As New List(Of List(Of Double))()
-            For i As Integer = 0 To matrix1.Count - 1
+        ''' <summary>
+        ''' ≤Ó“Ïæÿ’Û
+        ''' </summary>
+        ''' <param name="matrix1"></param>
+        ''' <param name="matrix2"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function DifferenceMatrix(matrix1 As IEnumerable(Of List(Of Double)), matrix2 As List(Of List(Of Double))) As List(Of List(Of Double))
+            Dim d As New List(Of List(Of Double))()
+            Dim l% = matrix1.First.Count
+            Dim line As List(Of Double)
+
+            For Each row As SeqValue(Of List(Of Double)) In matrix1.SeqIterator
                 Dim rowDifferences As New List(Of Double)()
-                For j As Integer = 0 To matrix1(0).Count - 1
-                    Dim result As Double = Math.Abs(matrix1(i)(j) - matrix2(i)(j))
+
+                line = (+row)
+
+                For j As Integer = 0 To l - 1
+                    Dim result As Double = Math.Abs(line(j) - matrix2(row.i)(j))
                     rowDifferences.Add(result)
                 Next
 
-                differences.Add(rowDifferences)
+                d.Add(rowDifferences)
             Next
 
-            Return differences
+            Return d
         End Function
 
         Public Function GetElementIndex(list As List(Of List(Of Double)), element As List(Of Double)) As Integer
@@ -45,22 +60,25 @@ Namespace FuzzyCMeans
             Return -1
         End Function
 
-        Public Function CalculateDistancesToClusterCenters(points As List(Of Entity), clusterCenters As List(Of Entity)) As Dictionary(Of Entity, List(Of Double))
+        <Extension>
+        Public Function DistanceToClusterCenters(ls As List(Of Entity), clusterCenters As List(Of Entity)) As Dictionary(Of Entity, List(Of Double))
             Dim map As New Dictionary(Of Entity, List(Of Double))()
 
-            For Each pointCoordinates As Entity In points
+            For Each x As Entity In ls
                 Dim distancesToCenters As New List(Of Double)()
-                For Each clusterCenter As Entity In clusterCenters
 
-                    Dim distance As Double = 0
-                    For i As Integer = 0 To pointCoordinates.Length - 1
-                        distance += Math.Pow(pointCoordinates(i) - clusterCenter(i), 2)
+                For Each c As Entity In clusterCenters
+                    Dim distance As Double
+
+                    For i As Integer = 0 To x.Length - 1
+                        distance += Math.Pow(x(i) - c(i), 2)
                     Next
 
                     distance = Math.Sqrt(distance)
                     distancesToCenters.Add(distance)
                 Next
-                map.Add(pointCoordinates, distancesToCenters)
+
+                Call map.Add(x, distancesToCenters)
             Next
 
             Return map

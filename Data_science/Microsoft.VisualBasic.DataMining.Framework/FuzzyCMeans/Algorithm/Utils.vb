@@ -24,11 +24,12 @@ Namespace FuzzyCMeans
         End Function
 
         Private Function MakeFuzzyClusters(points As List(Of Entity),
-                                                  clusterCenters As List(Of Entity),
-                                                  fuzzificationParameter As Double,
-                                                  ByRef membershipMatrix As Dictionary(Of Entity, List(Of Double))) As Dictionary(Of Entity, Entity)
+                                   clusterCenters As List(Of Entity),
+                           fuzzificationParameter As Double,
+                           ByRef membershipMatrix As Dictionary(Of Entity, List(Of Double))) As Dictionary(Of Entity, Entity)
 
-            Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) = AlgorithmsUtils.CalculateDistancesToClusterCenters(points, clusterCenters)
+            Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) =
+                points.DistanceToClusterCenters(clusterCenters)
             Dim clusters As New Dictionary(Of Entity, Entity)()
 
             membershipMatrix = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
@@ -41,7 +42,9 @@ Namespace FuzzyCMeans
             Return clusters
         End Function
 
-        Private Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)), fuzzificationParameter As Double) As Dictionary(Of Entity, List(Of Double))
+        Private Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)),
+                                                   fuzzificationParameter As Double) As Dictionary(Of Entity, List(Of Double))
+
             Dim map As New Dictionary(Of Entity, List(Of Double))()
 
             For Each pair As KeyValuePair(Of Entity, List(Of Double)) In distancesToClusterCenters
@@ -70,14 +73,16 @@ Namespace FuzzyCMeans
         End Function
 
         Private Function RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters As List(Of Entity),
-                                                                           membershipMatrix As Dictionary(Of Entity, List(Of Double)),
-                                                                           fuzzificationParameter As Double) As List(Of Entity)
+                                                                  membershipMatrix As Dictionary(Of Entity, List(Of Double)),
+                                                            fuzzificationParameter As Double) As List(Of Entity)
+
             Dim clusterMembershipValuesSums As New List(Of Double)()
             For Each clusterCenter As Entity In clusterCenters
                 clusterMembershipValuesSums.Add(0)
             Next
 
             Dim weightedPointCoordinateSums As New List(Of List(Of Double))()
+
             For i As Integer = 0 To clusterCenters.Count - 1
                 Dim clusterCoordinatesSum As New List(Of Double)()
                 For Each coordinate As Double In clusterCenters(0).Properties
