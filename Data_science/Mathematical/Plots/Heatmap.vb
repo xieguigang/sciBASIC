@@ -140,6 +140,7 @@ Public Module Heatmap
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
                          Optional legendFont As Font = Nothing,
+                         Optional min# = -1, Optional max# = 1,
                          Optional angle! = 45.0F) As Bitmap
 
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
@@ -167,6 +168,7 @@ Public Module Heatmap
                 Dim correl#() = array _
                     .Select(Function(x) x.Value.Values) _
                     .IteratesALL _
+                    .Join(min, max) _
                     .Distinct _
                     .ToArray
                 Dim lvs As Dictionary(Of Double, Integer) =
