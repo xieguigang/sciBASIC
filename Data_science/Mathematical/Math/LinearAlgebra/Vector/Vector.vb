@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace LinearAlgebra
 
     ''' <summary>
-    ''' <see cref="List(Of Double)"/>
+    ''' Vector was inherits from type <see cref="List(Of Double)"/>
     ''' </summary>
     Public Class Vector : Inherits GenericVector(Of Double)
 

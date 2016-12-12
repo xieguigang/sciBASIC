@@ -233,7 +233,8 @@
     <Compile Include="LinearAlgebra\Solvers\GaussianElimination.vb" />
     <Compile Include="LinearAlgebra\Solvers\ISolver.vb" />
     <Compile Include="LinearAlgebra\Helpers\MatrixArithmetic.vb" />
-    <Compile Include="LinearAlgebra\Vector.vb" />
+    <Compile Include="LinearAlgebra\Vector\VectorEqualityComparer.vb" />
+    <Compile Include="LinearAlgebra\Vector\Vector.vb" />
     <Compile Include="HashMap.vb" />
     <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />

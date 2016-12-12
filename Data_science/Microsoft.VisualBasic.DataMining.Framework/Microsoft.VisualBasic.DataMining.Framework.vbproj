@@ -215,9 +215,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
-    <Compile Include="CMeans\AlgorithmsUtils.vb" />
-    <Compile Include="CMeans\ListOfDoubleEqualityComparer.vb" />
-    <Compile Include="CMeans\ListUtils.vb" />
+    <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
+    <Compile Include="FuzzyCMeans\FuzzyCMeansAlgorithm.vb" />
+    <Compile Include="FuzzyCMeans\FuzzyCMeansUtils.vb" />
+    <Compile Include="FuzzyCMeans\ListUtils.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
     <Compile Include="DFT.vb" />
