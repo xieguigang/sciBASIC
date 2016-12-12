@@ -1,20 +1,21 @@
 Imports System.Collections.Generic
 Imports System.Linq
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace FuzzyCMeans
 
     Public Class AlgorithmsUtils
 
-        Public Shared Function CalculateDistancesToClusterCenters(points As List(Of List(Of Double)), clusterCenters As List(Of List(Of Double))) As Dictionary(Of List(Of Double), List(Of Double))
-            Dim map As New Dictionary(Of List(Of Double), List(Of Double))()
+        Public Shared Function CalculateDistancesToClusterCenters(points As List(Of Entity), clusterCenters As List(Of Entity)) As Dictionary(Of Entity, List(Of Double))
+            Dim map As New Dictionary(Of Entity, List(Of Double))()
 
-            For Each pointCoordinates As List(Of Double) In points
+            For Each pointCoordinates As Entity In points
                 Dim distancesToCenters As New List(Of Double)()
-                For Each clusterCenter As List(Of Double) In clusterCenters
+                For Each clusterCenter As Entity In clusterCenters
 
                     Dim distance As Double = 0
-                    For i As Integer = 0 To pointCoordinates.Count - 1
+                    For i As Integer = 0 To pointCoordinates.Length - 1
                         distance += Math.Pow(pointCoordinates(i) - clusterCenter(i), 2)
                     Next
 
@@ -37,24 +38,23 @@ Namespace FuzzyCMeans
                     list.Add(random.[Next](0, 100))
                 Next
 
+                ' 不要将这个b的定义放进条件编译模块，因为最后一个list还没有被添加
                 Dim b As Boolean = coordinates.Add(list)
-
 #Region "DEBUG"
 #If DEBUG Then
-                If Not b Then
+                If Not b Then _
                     Call "Duplicate detected while generating data points".Warning
 #End If
 #End Region
-                End If
             End While
 
             Return coordinates
         End Function
 
-        Public Shared Function MakeInitialSeeds(coordinates As List(Of List(Of Double)), numberOfClusters As Integer) As List(Of List(Of Double))
+        Public Shared Function MakeInitialSeeds(coordinates As List(Of Entity), numberOfClusters As Integer) As List(Of Entity)
             Dim random As New Random()
-            Dim coordinatesCopy As List(Of List(Of Double)) = coordinates.ToList()
-            Dim initialClusterCenters As New List(Of List(Of Double))()
+            Dim coordinatesCopy As List(Of Entity) = coordinates.ToList()
+            Dim initialClusterCenters As New List(Of Entity)()
             For i As Integer = 0 To numberOfClusters - 1
                 Dim clusterCenterPointNumber As Integer = random.[Next](0, coordinatesCopy.Count)
                 initialClusterCenters.Add(coordinatesCopy(clusterCenterPointNumber))
