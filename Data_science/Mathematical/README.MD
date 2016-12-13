@@ -94,6 +94,12 @@ Call data.CorrelatesNormalized() _
 
 ##### Scatter & Histogram Plot
 
+###### Scatter plot of CMeans
+
+![](../algorithms/CMeans/CMeans.png)
+
+###### Scatter plots of ODEs result
+
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
