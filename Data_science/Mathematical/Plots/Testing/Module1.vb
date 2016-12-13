@@ -59,7 +59,7 @@ Module Module1
         Dim rnd As New Random(Now.Millisecond)
         Dim up% = 1200
 
-        For i As Integer = 0 To 20
+        For i As Integer = 0 To 10
             Call raw.AddPoints(rnd, 30, up)
             up -= 50
         Next
@@ -82,12 +82,12 @@ Module Module1
         Dim colors As Color() = Designer.GetColors("Paired:c10", n)
 
         For Each x In raw
-            Dim r = x.Memberships.Keys.Select(Function(i) colors(i).R * x.Memberships(i)).Average
-            Dim g = x.Memberships.Keys.Select(Function(i) colors(i).G * x.Memberships(i)).Average
-            Dim b = x.Memberships.Keys.Select(Function(i) colors(i).B * x.Memberships(i)).Average
+            Dim r = colors(x.Memberships.Keys.Select(Function(i) x.Memberships(i)).MaxIndex).R
+            Dim g = colors(x.Memberships.Keys.Select(Function(i) x.Memberships(i)).MaxIndex).G
+            Dim b = colors(x.Memberships.Keys.Select(Function(i) x.Memberships(i)).MaxIndex).B
             Dim c As Color = Color.FromArgb(CInt(r), CInt(g), CInt(b))
 
-            plotData += Scatter.FromPoints({New PointF(x(0), x(1))}, lineColor:=c.RGBExpression, ptSize:=30)
+            plotData += Scatter.FromPoints({New PointF(x(0), x(1))}, c.RGBExpression, ptSize:=30)
         Next
 
         Dim traceSerials As New List(Of List(Of Entity))
@@ -106,7 +106,7 @@ Module Module1
             Dim points As IEnumerable(Of PointF) =
                 traceSerials(i) _
                 .Select(Function(x) New PointF(x(0), x(1)))
-            plotData += Scatter.FromPoints(points, colors(i).RGBExpression)
+            plotData += Scatter.FromPoints(points, colors(i).RGBExpression, ptSize:=10)
         Next
 
         Call Scatter.Plot(plotData, fillPie:=True, showLegend:=False) _

@@ -67,7 +67,7 @@ Namespace Language
     Public Module Numeric
 
         ''' <summary>
-        ''' The max element its index in the source collection.
+        ''' *<see cref="Numeric.MaxIndex"/>* The max element its index in the source collection.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
