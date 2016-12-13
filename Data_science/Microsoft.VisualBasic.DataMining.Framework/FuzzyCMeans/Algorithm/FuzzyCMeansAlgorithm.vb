@@ -45,27 +45,28 @@ Namespace FuzzyCMeans
                                     Optional ByRef trace As Dictionary(Of Integer, List(Of Entity)) = Nothing) As List(Of Entity)
 
             Dim coordinates As New List(Of Entity)(data)
-            Dim random As New Random()
-            Dim bgrColor As Byte() = New Byte(2) {}
+            ' Dim random As New Random()
+            '  Dim bgrColor As Byte() = New Byte(2) {}
             Dim clusterCenters As List(Of Entity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
             Dim clusters As Dictionary(Of Entity, Entity)
             Dim membershipMatrix As Dictionary(Of Entity, List(Of Double)) = Nothing
             Dim iteration As int = 0
-            Dim clusterColors As New Dictionary(Of Entity, Color)()
+            Dim ptClone As New Value(Of Entity)
+            '  Dim clusterColors As New Dictionary(Of Entity, Color)()
 
-            For Each clusterCenter As Entity In clusterCenters
-                For Each annotation As Entity In coordinates
+            'For Each clusterCenter As Entity In clusterCenters
+            '    For Each annotation As Entity In coordinates
 
-                    If annotation = clusterCenter Then
-                        random.NextBytes(bgrColor)
+            '        If annotation = clusterCenter Then
+            '            random.NextBytes(bgrColor)
 
-                        MarkClusterCenter(annotation, Color.FromArgb(bgrColor(0), bgrColor(1), bgrColor(2)))
-                        clusterColors.Add(clusterCenter, annotation.Fill)
+            '            MarkClusterCenter(annotation, Color.FromArgb(bgrColor(0), bgrColor(1), bgrColor(2)))
+            '            clusterColors.Add(clusterCenter, annotation.Fill)
 
-                        Call $"Inital cluster center {annotation.uid}".__DEBUG_ECHO
-                    End If
-                Next
-            Next
+            '            Call $"Inital cluster center {annotation.uid}".__DEBUG_ECHO
+            '        End If
+            '    Next
+            'Next
 
             If Not trace Is Nothing Then
                 Call trace.Clear()
@@ -77,24 +78,24 @@ Namespace FuzzyCMeans
 #End If
                 clusters = MakeFuzzyClusters(coordinates, clusterCenters, fuzzificationParameter, membershipMatrix)
 
-                For Each pair As KeyValuePair(Of Entity, Entity) In clusters
-                    For Each annotation As Entity In coordinates
+                'For Each pair As KeyValuePair(Of Entity, Entity) In clusters
+                '    For Each annotation As Entity In coordinates
 
-                        If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, pair.Key.Properties) Then
-                            annotation.MarkClusterCenter(clusterColors(pair.Value))
-                        End If
-                    Next
-                Next
+                '        If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, pair.Key.Properties) Then
+                '            annotation.MarkClusterCenter(clusterColors(pair.Value))
+                '        End If
+                '    Next
+                'Next
 
                 For Each pair As KeyValuePair(Of Entity, List(Of Double)) In membershipMatrix
                     For Each annotation As Entity In coordinates
 
                         If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, pair.Key.Properties) Then
-                            Dim tooltip As New Dictionary(Of String, Double)
+                            Dim tooltip As New Dictionary(Of Integer, Double)
 
                             For i As Integer = 0 To pair.Value.Count - 1
                                 Dim value As Double = pair.Value(i)
-                                Call tooltip.Add($"Cluster {i} [{clusterCenters(i).uid}]", Math.Round(value, 2))
+                                Call tooltip.Add(i, Math.Round(value, 2))
                             Next
 
                             annotation.Memberships = tooltip
@@ -122,13 +123,13 @@ Namespace FuzzyCMeans
                     Exit While
                 End If
 
-                Dim colorValues As New List(Of Color)(clusterColors.Values)
+                'Dim colorValues As New List(Of Color)(clusterColors.Values)
 
-                Call clusterColors.Clear()
+                'Call clusterColors.Clear()
 
-                For i As Integer = 0 To clusterCenters.Count - 1
-                    clusterColors.Add(clusterCenters(i), colorValues(i))
-                Next
+                'For i As Integer = 0 To clusterCenters.Count - 1
+                '    clusterColors.Add(clusterCenters(i), colorValues(i))
+                'Next
 
                 For Each oldClusterCenter As Entity In oldClusterCenters
                     Dim isClusterCenterDataPoint As Boolean = False
@@ -165,22 +166,21 @@ Namespace FuzzyCMeans
                     For Each annotation As Entity In coordinates
 
                         If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, clusterCenter.Properties) Then
-                            MarkClusterCenter(annotation, colorValues(i))
+                            '  MarkClusterCenter(annotation, colorValues(i))
                             isExists = True
                             Exit For
                         End If
                     Next
 
                     If Not isExists Then
-                        Dim ptClone As New Entity With {
+
+                        '  Call MarkClusterCenter(ptClone, colorValues(i))
+                        coordinates += ptClone = New Entity With {
                             .Properties = clusterCenter.Properties.Clone,
                             .uid = clusterCenter.uid
                         }
 
-                        Call MarkClusterCenter(ptClone, colorValues(i))
-                        Call coordinates.Add(ptClone)
-
-                        Call $"add center with coordinate {ptClone.uid}".__DEBUG_ECHO
+                        Call $"add center with coordinate {(+ptClone).uid}".__DEBUG_ECHO
                     End If
                 Next
             End While

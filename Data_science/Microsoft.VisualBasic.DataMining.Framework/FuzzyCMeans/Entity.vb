@@ -4,7 +4,7 @@ Namespace FuzzyCMeans
 
     Public Class Entity : Inherits KMeans.Entity
 
-        Public Property Memberships As Dictionary(Of String, Double)
+        Public Property Memberships As Dictionary(Of Integer, Double)
 
         Public Overrides Function ToString() As String
             Return $"{uid} --> {Memberships.GetJson}"

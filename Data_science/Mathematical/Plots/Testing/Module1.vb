@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -41,63 +42,80 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Module1
 
     <Extension>
-    Private Sub AddPoints(raw As List(Of Entity), rnd As Random, n%, up%)
+    Private Sub AddPoints(ByRef raw As List(Of Entity), rnd As Random, n%, up%)
         For i As Integer = 0 To n
-            raw += New Entity With {.uid = i, .Properties = {rnd.Next(0, up), rnd.Next(0, up)}}
+            raw += New Entity With {
+                .uid = i,
+                .Properties = {
+                    rnd.Next(0, up),
+                    rnd.Next(0, up)
+                }
+            }
         Next
     End Sub
 
-    Private Sub cmeansVisualize()
+    Private Sub CMeansVisualize()
         Dim raw As New List(Of Entity)
         Dim rnd As New Random(Now.Millisecond)
-        Dim up% = 500
+        Dim up% = 1200
 
-        For i As Integer = 0 To 10
+        For i As Integer = 0 To 20
             Call raw.AddPoints(rnd, 30, up)
             up -= 50
         Next
 
-        Dim n = 10
+        Dim n% = 10
         Dim trace As New Dictionary(Of Integer, List(Of Entity))
-        Dim cccc = raw.FuzzyCMeans(n, 2, trace:=trace)
+        Dim centras = raw.FuzzyCMeans(n, 2, trace:=trace)
 
-        For Each x In cccc
+#Region "DEBUG INFO OUTPUTS"
+        For Each x In centras
             Call $"centra {x.uid} =>  {x.Properties.GetJson}".PrintException
         Next
 
         For Each x In raw
             Call ($"{x.uid}: {x.Properties.GetJson} => " & x.Memberships.GetJson).__DEBUG_ECHO
         Next
+#End Region
 
-        Dim s As New List(Of SerialData)
+        Dim plotData As New List(Of SerialData)
+        Dim colors As Color() = Designer.GetColors("Paired:c10", n)
 
         For Each x In raw
-            s += Scatter.FromPoints({New PointF(x.Properties(0), x.Properties(1))}, ptSize:=30)
+            Dim r = x.Memberships.Keys.Select(Function(i) colors(i).R * x.Memberships(i)).Average
+            Dim g = x.Memberships.Keys.Select(Function(i) colors(i).G * x.Memberships(i)).Average
+            Dim b = x.Memberships.Keys.Select(Function(i) colors(i).B * x.Memberships(i)).Average
+            Dim c As Color = Color.FromArgb(CInt(r), CInt(g), CInt(b))
+
+            plotData += Scatter.FromPoints({New PointF(x(0), x(1))}, lineColor:=c.RGBExpression, ptSize:=30)
         Next
 
-        Dim ssssTrace As New List(Of List(Of KMeans.Entity))
+        Dim traceSerials As New List(Of List(Of Entity))
 
         For i As Integer = 0 To n - 1
-            ssssTrace += New List(Of KMeans.Entity)
+            traceSerials += New List(Of Entity)
         Next
 
         For Each k In trace.Keys.OrderBy(Function(x) x)
             For i As Integer = 0 To n - 1
-                ssssTrace(i) += trace(k)(i)
+                traceSerials(i) += trace(k)(i)
             Next
         Next
 
         For i = 0 To n - 1
-            s += Scatter.FromPoints(ssssTrace(i).Select(Function(x) New PointF(x.Properties(0), x.Properties(1))))
+            Dim points As IEnumerable(Of PointF) =
+                traceSerials(i) _
+                .Select(Function(x) New PointF(x(0), x(1)))
+            plotData += Scatter.FromPoints(points, colors(i).RGBExpression)
         Next
 
-        Call Scatter.Plot(s, fillPie:=True, showLegend:=False).SaveAs("./cmeans.png")
-
+        Call Scatter.Plot(plotData, fillPie:=True, showLegend:=False) _
+            .SaveAs("./CMeans.png")
     End Sub
 
     Sub Main()
 
-        Call cmeansVisualize()
+        Call CMeansVisualize()
         Pause()
 
         Dim datahm = Heatmap.LoadDataSet("C:\Users\Admin\OneDrive\O'Connor\observation_correlates\spcc.csv")

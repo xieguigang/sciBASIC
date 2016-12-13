@@ -189,6 +189,8 @@ Namespace Drawing2D.Colors
         End Function
 
         ''' <summary>
+        ''' **<see cref="ColorCube.GetColorSequence"/>**
+        ''' 
         ''' Some useful color tables for images and tools to handle them.
         ''' Several color scales useful for image plots: a pleasing rainbow style color table patterned after 
         ''' that used in Matlab by Tim Hoar and also some simple color interpolation schemes between two or 
