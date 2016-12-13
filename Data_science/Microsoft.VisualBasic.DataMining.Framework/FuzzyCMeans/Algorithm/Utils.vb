@@ -107,11 +107,12 @@ Namespace FuzzyCMeans
             For i As Integer = 0 To clusterCenters.Count - 1
                 Dim coordinatesSums As List(Of Double) = weightedPointCoordinateSums(i)
                 Dim newCoordinates As New Entity() With {
-                    .Properties = New Double(coordinatesSums.Count - 1) {}
+                    .Properties = New Double(coordinatesSums.Count - 1) {},
+                    .uid = clusterCenters(i).uid
                 }
 
                 For j As Integer = 0 To coordinatesSums.Count - 1
-                    newCoordinates(i) = coordinatesSums(j) / clusterMembershipValuesSums(i)
+                    newCoordinates(j) = coordinatesSums(j) / clusterMembershipValuesSums(i)
                 Next
 
                 newClusterCenters.Add(newCoordinates)

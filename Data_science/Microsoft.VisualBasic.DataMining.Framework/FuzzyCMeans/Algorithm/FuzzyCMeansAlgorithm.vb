@@ -37,11 +37,11 @@ Namespace FuzzyCMeans
     Public Module FuzzyCMeansAlgorithm
 
         <Extension>
-        Public Sub FuzzyCMeans(data As IEnumerable(Of Entity),
-                               numberOfClusters%,
-                               fuzzificationParameter#,
-                               Optional maxIterates% = Short.MaxValue,
-                               Optional threshold# = 0.001)
+        Public Function FuzzyCMeans(data As IEnumerable(Of Entity),
+                                    numberOfClusters%,
+                                    fuzzificationParameter#,
+                                    Optional maxIterates% = Short.MaxValue,
+                                    Optional threshold# = 0.001) As List(Of Entity)
 
             Dim coordinates As New List(Of Entity)(data)
             Dim random As New Random()
@@ -85,14 +85,14 @@ Namespace FuzzyCMeans
                     For Each annotation As Entity In coordinates
 
                         If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, pair.Key.Properties) Then
-                            Dim tooltip As String = ""
+                            Dim tooltip As New Dictionary(Of String, Double)
 
                             For i As Integer = 0 To pair.Value.Count - 1
                                 Dim value As Double = pair.Value(i)
-                                tooltip &= "Cluster " & i & ": Value: " & Math.Round(value, 2) & vbLf
+                                Call tooltip.Add("Cluster " & i, Math.Round(value, 2))
                             Next
 
-                            annotation.Extension.DynamicHash.Value(NameOf(tooltip)) = tooltip
+                            annotation.ReadProperty(Of Dictionary(Of String, Double))(NameOf(tooltip)).value = tooltip
                         End If
                     Next
                 Next
@@ -176,6 +176,8 @@ Namespace FuzzyCMeans
                     End If
                 Next
             End While
-        End Sub
+
+            Return clusterCenters
+        End Function
     End Module
 End Namespace

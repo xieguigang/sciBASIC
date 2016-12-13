@@ -55,14 +55,30 @@ Module TestingMain
 
     Sub Main()
 
-        Dim ea As New KMeans.Entity With {.uid = NameOf(ea), .Properties = {1, 2, 3}}
-        Dim eb As New KMeans.Entity With {.uid = NameOf(eb), .Properties = {1, 2, 3}}
-        Dim ec As New KMeans.Entity With {.uid = NameOf(ec), .Properties = {4, 5, 6}}
-        Dim ed As New KMeans.Entity With {.uid = NameOf(ed), .Properties = {10, 200, 300}}
-        Dim ee As New KMeans.Entity With {.uid = NameOf(ee), .Properties = {10, 250, 310}}
+        Dim ea As New KMeans.Entity With {.uid = NameOf(ea), .Properties = {1, 2}}
+        Dim eb As New KMeans.Entity With {.uid = NameOf(eb), .Properties = {1, 2}}
+        Dim ec As New KMeans.Entity With {.uid = NameOf(ec), .Properties = {140, 5}}
+        Dim ed As New KMeans.Entity With {.uid = NameOf(ed), .Properties = {10, 260}}
+        Dim ee As New KMeans.Entity With {.uid = NameOf(ee), .Properties = {10, 250}}
+        Dim ef As New KMeans.Entity With {.uid = NameOf(ef), .Properties = {10, 240}}
+        Dim eg As New KMeans.Entity With {.uid = NameOf(eg), .Properties = {10, 250}}
+        Dim eh As New KMeans.Entity With {.uid = NameOf(eh), .Properties = {10, 250}}
+        Dim ei As New KMeans.Entity With {.uid = NameOf(ei), .Properties = {10, 255}}
+        Dim ej As New KMeans.Entity With {.uid = NameOf(ej), .Properties = {10, 250}}
 
-        Call {ea, eb, ec, ed, ee}.FuzzyCMeans(3, 0.5)
+        Dim cccc = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.FuzzyCMeans(3, 0.5)
 
+        Dim g = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.GroupBy(Function(n) n.Fill).ToArray
+
+        For Each x In cccc
+            Call $"centra {x.uid} =>  {x.Properties.GetJson}".PrintException
+        Next
+
+        For Each x In {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}
+            Call ($"{x.uid}: {x.Properties.GetJson} => " & x.ReadProperty(Of Dictionary(Of String, Double))("tooltip").value.GetJson).__DEBUG_ECHO
+        Next
+
+        Pause()
 
         Dim ann As New NeuralNetwork.Network(5, 50, 1, 0.01, , New IFuncs.SigmoidFunction)
         Dim learn As New NeuralNetwork.TrainingUtils(ann)
