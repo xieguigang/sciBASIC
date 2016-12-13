@@ -43,43 +43,43 @@ Module PDFTest
 
 
 
-        Dim xdata As New NamedValue(Of DoubleRange) With {.Name = "x", .Value = New DoubleRange(0, Math.PI)}
+        'Dim xdata As New NamedValue(Of DoubleRange) With {.Name = "x", .Value = New DoubleRange(0, Math.PI)}
 
-        Call xdata.Plot("sin(x)+cos(2*x)").SaveAs("x:\test.png")
-        Call xdata.Value.Plot(Function(a) Math.Sin(a) + Math.Cos(2 * a), title:="Value Of ""sin(x)+cos(2*x)""").SaveAs("x:\test_lambda.png")
+        'Call xdata.Plot("sin(x)+cos(2*x)").SaveAs("x:\test.png")
+        'Call xdata.Value.Plot(Function(a) Math.Sin(a) + Math.Cos(2 * a), title:="Value Of ""sin(x)+cos(2*x)""").SaveAs("x:\test_lambda.png")
 
 
         Dim x As New Vector(VBMathExtensions.seq(0.02, 0.98, 0.005))
 
 
-        Dim range As New DoubleRange(0, 1)
-        Dim f1 = Function(xx) Beta.beta(xx, 2, 5)
-        Dim f2 = Function(xx) Beta.beta(xx, 2, 2)
-        Dim a1 As New HistProfile(range, f1, 0.025) With {
-            .legend = New Legend With {
-                .color = "green",
-                .fontstyle = CSSFont.Win10Normal,
-                .style = LegendStyles.Triangle,
-                .title = "α = 2, β = 5"
-            }
-        }
-        Dim a2 As New HistProfile(range, f2, 0.05) With {
-            .legend = New Legend With {
-                .color = "yellow",
-                .fontstyle = CSSFont.Win7Normal,
-                .style = LegendStyles.Triangle,
-                .title = "α = β = 2"
-            }
-        }
-        Dim hist As New HistogramGroup({a2, a1})
+        'Dim range As New DoubleRange(0, 1)
+        'Dim f1 = Function(xx) Beta.beta(xx, 2, 5)
+        'Dim f2 = Function(xx) Beta.beta(xx, 2, 2)
+        'Dim a1 As New HistProfile(range, f1, 0.025) With {
+        '    .legend = New Legend With {
+        '        .color = "green",
+        '        .fontstyle = CSSFont.Win10Normal,
+        '        .style = LegendStyles.Triangle,
+        '        .title = "α = 2, β = 5"
+        '    }
+        '}
+        'Dim a2 As New HistProfile(range, f2, 0.05) With {
+        '    .legend = New Legend With {
+        '        .color = "yellow",
+        '        .fontstyle = CSSFont.Win7Normal,
+        '        .style = LegendStyles.Triangle,
+        '        .title = "α = β = 2"
+        '    }
+        '}
+        'Dim hist As New HistogramGroup({a2, a1})
 
-        Call Histogram.Plot(
-            hist,,
-            New Size(2000, 1300),
-            alpha:=230) _
-            .SaveAs("./beta_hist.png")
+        'Call Histogram.Plot(
+        '    hist,,
+        '    New Size(2000, 1300),
+        '    alpha:=230) _
+        '    .SaveAs("./beta_hist.png")
 
-        Pause()
+        '   Pause()
         Dim s1 = Scatter.FromVector(
             Beta.beta(x, 0.5, 0.5), "red",
             ptSize:=5,
@@ -116,7 +116,7 @@ Module PDFTest
             title:="α = 2, β = 5",
             alpha:=150)
 
-        Dim canvasSize As New Size(2000, 3000)
+        Dim canvasSize As New Size(1600, 1200)
         Dim png As Bitmap = Scatter.Plot({s1, s2, s3, s4, s5}, canvasSize)
 
         Call png.SaveAs("./beta_PDF.png")

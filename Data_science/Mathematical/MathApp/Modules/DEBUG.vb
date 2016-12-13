@@ -134,7 +134,7 @@ Module DEBUG
             .title = "223 - legend",
             .width = 3,
             .pts = {New PointData With {.pt = New PointF(-10.1, 32)}, New PointData With {.pt = New PointF(0.1, 2)}, New PointData With {.pt = New PointF(2, 20)}, New PointData With {.pt = New PointF(5, 12)}},
-            .annotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
+            .DataAnnotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
         }
 
         Call Scatter.Plot({s}).SaveAs("x:\ffff.png")

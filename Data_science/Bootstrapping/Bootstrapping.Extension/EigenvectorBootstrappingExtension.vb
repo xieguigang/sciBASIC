@@ -67,7 +67,7 @@ Public Module EigenvectorBootstrappingExtension
                 .Properties = x.Value.Tag _
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
-                                  Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
+                                  Function(o) o.value)   ' 在这里使用特征向量作为属性来进行聚类操作
         })
 
         Call "Creates dataset complete!".__DEBUG_ECHO

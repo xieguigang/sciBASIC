@@ -75,20 +75,20 @@ Module Testing
             Throw New NotImplementedException()
         End Function
 
-        Public Overrides Function params() As VariableModel()
+        Public Overrides Function params() As ValueRange()
             Return {
-                New VariableModel(-10000, 20000) With {
+                New ValueRange(-10000, 20000) With {
                     .Name = NameOf(a)
                 }
             }
         End Function
 
-        Public Overrides Function yinit() As VariableModel()
+        Public Overrides Function yinit() As ValueRange()
             Return {
-                New VariableModel(-10000, 3300) With {
+                New ValueRange(-10000, 3300) With {
                     .Name = NameOf(y)
                 },
-                New VariableModel(-10000, 3300) With {
+                New ValueRange(-10000, 3300) With {
                     .Name = NameOf(y2)
                 }
             }

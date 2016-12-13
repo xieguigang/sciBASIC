@@ -131,7 +131,7 @@ Public Module Scatter
                             Select New Legend With {
                                 .color = x.color.RGBExpression,
                                 .fontstyle = CSSFont.GetFontStyle(
-                                    FontFace.MicrosoftYaHei,
+                                    FontFace.SegoeUI,
                                     FontStyle.Regular,
                                     legendFontSize),
                                 .style = LegendStyles.Circle,

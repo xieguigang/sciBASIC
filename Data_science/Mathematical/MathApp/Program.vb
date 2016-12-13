@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Module Program
 
     Public Function Main() As Integer
+        betaTest()
         '   Call CubicSplineTest.Test()
         Call DEBUG.Main()
         Try
