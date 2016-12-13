@@ -1,0 +1,11 @@
+Refund,MaritialStatus,TaxableIncome,Cheat
+yes,single,1,no
+no,married,1,no
+no,single,0,no
+yes,married,1,no
+no,divorced,1,yes
+no,married,0,no
+yes,divorced,1,no
+no,single,1,yes
+no,married,0,no
+no,single,1,yes
