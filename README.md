@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Mathematical.Plots
 ```
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
+![](./Data_science/Mathematical/images/295022-plots-plots.png)
 ![](./Data_science/Mathematical/images/pie_chart_vars.png)
 
 ###### Stacked Barplot
