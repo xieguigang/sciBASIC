@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Public Module Scatter
 
     ''' <summary>
-    ''' Scatter plot function.(绘图函数)
+    ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>

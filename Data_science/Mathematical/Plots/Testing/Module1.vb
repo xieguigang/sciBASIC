@@ -41,6 +41,13 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
 
+    ''' <summary>
+    ''' Assign random points within given range
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="rnd"></param>
+    ''' <param name="n%"></param>
+    ''' <param name="up%"></param>
     <Extension>
     Private Sub AddPoints(ByRef raw As List(Of Entity), rnd As Random, n%, up%)
         For i As Integer = 0 To n
@@ -59,13 +66,16 @@ Module Module1
         Dim rnd As New Random(Now.Millisecond)
         Dim up% = 1200
 
-        For i As Integer = 0 To 10
+        ' initizlize of the points
+        For i As Integer = 0 To 20
             Call raw.AddPoints(rnd, 30, up)
             up -= 50
         Next
 
-        Dim n% = 10
+        Dim n% = 10  ' required of 10 clusters
         Dim trace As New Dictionary(Of Integer, List(Of Entity))
+
+        ' invoke cmeans cluster and gets the centra points
         Dim centras = raw.FuzzyCMeans(n, 2, trace:=trace)
 
 #Region "DEBUG INFO OUTPUTS"
@@ -78,13 +88,15 @@ Module Module1
         Next
 #End Region
 
+        ' data plots visualize
         Dim plotData As New List(Of SerialData)
         Dim colors As Color() = Designer.GetColors("Paired:c10", n)
 
-        For Each x In raw
-            Dim r = colors(x.Memberships.Keys.Select(Function(i) x.Memberships(i)).MaxIndex).R
-            Dim g = colors(x.Memberships.Keys.Select(Function(i) x.Memberships(i)).MaxIndex).G
-            Dim b = colors(x.Memberships.Keys.Select(Function(i) x.Memberships(i)).MaxIndex).B
+        ' generates serial data for each point in the raw inputs
+        For Each x As Entity In raw
+            Dim r = colors(x.ProbablyMembership).R
+            Dim g = colors(x.ProbablyMembership).G
+            Dim b = colors(x.ProbablyMembership).B
             Dim c As Color = Color.FromArgb(CInt(r), CInt(g), CInt(b))
 
             plotData += Scatter.FromPoints({New PointF(x(0), x(1))}, c.RGBExpression, ptSize:=30)
@@ -102,14 +114,20 @@ Module Module1
             Next
         Next
 
+        ' generates the serial data for each centra points
         For i = 0 To n - 1
             Dim points As IEnumerable(Of PointF) =
                 traceSerials(i) _
                 .Select(Function(x) New PointF(x(0), x(1)))
             plotData += Scatter.FromPoints(points, colors(i).RGBExpression, ptSize:=10)
+            plotData.Last.AddMarker(
+                centras(i).Properties(0),
+                "Cluster " & i,
+                "red",
+                style:=LegendStyles.Triangle)
         Next
 
-        Call Scatter.Plot(plotData, fillPie:=True, showLegend:=False) _
+        Call Scatter.Plot(plotData, New Size(3000, 3000), fillPie:=True, showLegend:=False) _
             .SaveAs("./CMeans.png")
     End Sub
 

@@ -36,10 +36,21 @@ Namespace FuzzyCMeans
     ''' </remarks>
     Public Module FuzzyCMeansAlgorithm
 
+        ''' <summary>
+        ''' **Fuzzy clustering** (also referred to as **soft clustering**) is a form of clustering in which 
+        ''' each data point can belong to more than one cluster.
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="numberOfClusters%"></param>
+        ''' <param name="fuzzificationParameter#">This parameter value should greater than **1.0**</param>
+        ''' <param name="maxIterates%"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="trace"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function FuzzyCMeans(data As IEnumerable(Of Entity),
                                     numberOfClusters%,
-                                    fuzzificationParameter#,
+                                    Optional fuzzificationParameter# = 2,
                                     Optional maxIterates% = Short.MaxValue,
                                     Optional threshold# = 0.001,
                                     Optional ByRef trace As Dictionary(Of Integer, List(Of Entity)) = Nothing) As List(Of Entity)
