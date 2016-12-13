@@ -26,12 +26,12 @@ To help you select an algorithm for use with a specific task, the following tabl
 
 <table>
 <tr>
-<td>Examples of tasks</td>
-<td>Microsoft algorithms to use</td>
+<td><b>Examples of tasks</b></td>
+<td width="350px"><b>Microsoft algorithms to use</b></td>
 </tr>
 <tr>
 <td>
-**Predicting a discrete attribute**:
+<b>Predicting a discrete attribute</b>:
 
 <li>Flag the customers in a prospective buyers list as good or poor prospects.
 <li>Calculate the probability that a server will fail within the next 6 months.
@@ -46,7 +46,7 @@ To help you select an algorithm for use with a specific task, the following tabl
 </tr>
 <tr>
 <td>
-**Predicting a continuous attribute**:
+<b>Predicting a continuous attribute</b>:
 
 <li>Forecast next year's sales.
 <li>Predict site visitors given past historical and seasonal trends.
@@ -60,19 +60,19 @@ To help you select an algorithm for use with a specific task, the following tabl
 </tr>
 <tr>
 <td>
-**Predicting a sequence**:
+<b>Predicting a sequence</b>:
 
 <li>Perform clickstream analysis of a company's Web site.
 <li>Analyze the factors leading to server failure.
 <li>Capture and analyze sequences of activities during outpatient visits, to formulate best practices around common activities.
 </td>
 <td>
-Microsoft Sequence Clustering Algorithm
+<li>Microsoft Sequence Clustering Algorithm
 </td>
 </tr>
 <tr>
 <td>
-**Finding groups of common items in transactions**:
+<b>Finding groups of common items in transactions</b>:
 
 <li>Use market basket analysis to determine product placement.
 <li>Suggest additional products to a customer for purchase.
@@ -86,7 +86,7 @@ Microsoft Sequence Clustering Algorithm
 </tr>
 <tr>
 <td>
-**Finding groups of similar items**:
+<b>Finding groups of similar items</b>:
 
 <li>Create patient risk profiles groups based on attributes such as demographics and behaviors.
 <li>Analyze users by browsing and buying patterns.
@@ -98,6 +98,8 @@ Microsoft Sequence Clustering Algorithm
 </td>
 </tr>
 </table>
+
+## Data Visualization Gallery
 
 ### The KMeans Binary Tree Clustering Visualization
 
