@@ -37,12 +37,16 @@ Namespace FuzzyCMeans
     Public Module FuzzyCMeansAlgorithm
 
         <Extension>
-        Public Sub FuzzyCMeans(data As IEnumerable(Of Entity), numberOfClusters As Integer, fuzzificationParameter As Double, Optional maxIterates As Integer = Short.MaxValue)
+        Public Sub FuzzyCMeans(data As IEnumerable(Of Entity),
+                               numberOfClusters%,
+                               fuzzificationParameter#,
+                               Optional maxIterates% = Short.MaxValue,
+                               Optional threshold# = 0.001)
+
             Dim coordinates As New List(Of Entity)(data)
             Dim random As New Random()
             Dim bgrColor As Byte() = New Byte(2) {}
             Dim clusterCenters As List(Of Entity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
-            Dim [stop] As Boolean = False
             Dim clusters As Dictionary(Of Entity, Entity)
             Dim membershipMatrix As Dictionary(Of Entity, List(Of Double)) = Nothing
             Dim iteration As int = 0
@@ -51,7 +55,7 @@ Namespace FuzzyCMeans
             For Each clusterCenter As Entity In clusterCenters
                 For Each annotation As Entity In coordinates
 
-                    If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, clusterCenter.Properties) Then
+                    If annotation = clusterCenter Then
                         random.NextBytes(bgrColor)
 
                         MarkClusterCenter(annotation, Color.FromArgb(bgrColor(0), bgrColor(1), bgrColor(2)))
@@ -62,7 +66,7 @@ Namespace FuzzyCMeans
                 Next
             Next
 
-            While ++iteration <= maxIterates AndAlso Not [stop]
+            While ++iteration <= maxIterates
 #If DEBUG Then
                 Call $"Iteration = {iteration}".__DEBUG_ECHO
 #End If
@@ -106,69 +110,71 @@ Namespace FuzzyCMeans
 #If DEBUG Then
                 Call $"Max element: {maxElement}".__DEBUG_ECHO
 #End If
+                If maxElement <= threshold Then
+                    Exit While
+                End If
 
-                If maxElement < 0.001 Then
-                    [stop] = True
-                Else
-                    Dim colorValues As List(Of Color) = clusterColors.Values.ToList()
-                    clusterColors.Clear()
-                    For i As Integer = 0 To clusterCenters.Count - 1
-                        clusterColors.Add(clusterCenters(i), colorValues(i))
-                    Next
+                Dim colorValues As New List(Of Color)(clusterColors.Values)
 
-                    For Each oldClusterCenter As Entity In oldClusterCenters
-                        Dim isClusterCenterDataPoint As Boolean = False
+                Call clusterColors.Clear()
 
-                        For Each coordinate As Entity In coordinates
+                For i As Integer = 0 To clusterCenters.Count - 1
+                    clusterColors.Add(clusterCenters(i), colorValues(i))
+                Next
 
-                            If VectorEqualityComparer.VectorEqualsToAnother(oldClusterCenter.Properties, coordinate.Properties) Then
+                For Each oldClusterCenter As Entity In oldClusterCenters
+                    Dim isClusterCenterDataPoint As Boolean = False
+
+                    For Each coordinate As Entity In coordinates
+
+                        If VectorEqualityComparer.VectorEqualsToAnother(oldClusterCenter.Properties, coordinate.Properties) Then
 #If DEBUG Then
-                                Call $"ex-center {oldClusterCenter.uid}".__DEBUG_ECHO
+                            Call $"ex-center {oldClusterCenter.uid}".__DEBUG_ECHO
 #End If
-                                isClusterCenterDataPoint = True
-                                Exit For
-                            End If
-                        Next
-
-                        If Not isClusterCenterDataPoint Then
-                            For Each annotation As Entity In coordinates
-
-                                If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, oldClusterCenter.Properties) Then
-#If DEBUG Then
-                                    Call $"remove center with coordinate {annotation.uid}".__DEBUG_ECHO
-#End If
-                                    coordinates.Remove(annotation)
-                                    Exit For
-                                End If
-                            Next
+                            isClusterCenterDataPoint = True
+                            Exit For
                         End If
                     Next
 
-                    For i As Integer = 0 To clusterCenters.Count - 1
-                        Dim clusterCenter As Entity = clusterCenters(i)
-                        Dim isExists As Boolean = False
+                    If Not isClusterCenterDataPoint Then
                         For Each annotation As Entity In coordinates
 
-                            If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, clusterCenter.Properties) Then
-                                MarkClusterCenter(annotation, colorValues(i))
-                                isExists = True
+                            If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, oldClusterCenter.Properties) Then
+#If DEBUG Then
+                                Call $"remove center with coordinate {annotation.uid}".__DEBUG_ECHO
+#End If
+                                coordinates.Remove(annotation)
                                 Exit For
                             End If
                         Next
+                    End If
+                Next
 
-                        If Not isExists Then
-                            Dim pointAnnotation As New Entity With {
-                                .Properties = clusterCenter.Properties.Clone,
-                                .uid = clusterCenter.uid
-                            }
+                For i As Integer = 0 To clusterCenters.Count - 1
+                    Dim clusterCenter As Entity = clusterCenters(i)
+                    Dim isExists As Boolean = False
 
-                            MarkClusterCenter(pointAnnotation, colorValues(i))
-                            coordinates.Add(pointAnnotation)
+                    For Each annotation As Entity In coordinates
 
-                            Call $"add center with coordinate {pointAnnotation.uid}".__DEBUG_ECHO
+                        If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, clusterCenter.Properties) Then
+                            MarkClusterCenter(annotation, colorValues(i))
+                            isExists = True
+                            Exit For
                         End If
                     Next
-                End If
+
+                    If Not isExists Then
+                        Dim ptClone As New Entity With {
+                            .Properties = clusterCenter.Properties.Clone,
+                            .uid = clusterCenter.uid
+                        }
+
+                        Call MarkClusterCenter(ptClone, colorValues(i))
+                        Call coordinates.Add(ptClone)
+
+                        Call $"add center with coordinate {ptClone.uid}".__DEBUG_ECHO
+                    End If
+                Next
             End While
         End Sub
     End Module

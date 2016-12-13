@@ -94,6 +94,16 @@ Namespace KMeans
 
         ''' <summary>
         ''' Calculates The Mean Of A Cluster OR The Cluster Center
+        ''' 
+        ''' ```vbnet
+        ''' Dim cluster#(,) = {
+        '''     {15, 32, 35.6},
+        '''     {19, 54, 65.1}
+        ''' }
+        ''' Dim centroid#() = Kmeans.ClusterMean(cluster)
+        '''
+        ''' Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
+        ''' ```
         ''' </summary>
         ''' <param name="cluster">
         ''' A two-dimensional array containing a dataset of numeric values

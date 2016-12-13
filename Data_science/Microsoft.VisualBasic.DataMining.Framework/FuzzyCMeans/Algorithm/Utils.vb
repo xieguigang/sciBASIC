@@ -15,7 +15,7 @@ Namespace FuzzyCMeans
         ''' 
         <Extension>
         Public Sub MarkClusterCenter(clusterCenterPoint As Entity, color As Color)
-            clusterCenterPoint.Extension.DynamicHash.Value(NameOf(MarkClusterCenter)) = color
+            clusterCenterPoint.ReadProperty(Of Color)(NameOf(MarkClusterCenter)).value = color
         End Sub
 
         <Extension>
