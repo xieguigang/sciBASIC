@@ -56,6 +56,14 @@ Public Class SerialData : Implements INamedValue
     ''' <returns></returns>
     Public Property DataAnnotations As Annotation()
 
+    ''' <summary>
+    ''' 由于在绘图的时候，需要按照标题查找原始数据，所以请确保绘图的曲线的系列数据之中的<see cref="SerialData.title"/>不会重复
+    ''' </summary>
+    ''' <param name="x!"></param>
+    ''' <param name="title$"></param>
+    ''' <param name="color$"></param>
+    ''' <param name="font$"></param>
+    ''' <param name="style"></param>
     Public Sub AddMarker(x!, title$, color$, Optional font$ = CSSFont.Win10Normal, Optional style As LegendStyles = LegendStyles.Circle)
         If DataAnnotations Is Nothing Then
             DataAnnotations = New Annotation(0) {}
