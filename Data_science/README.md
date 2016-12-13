@@ -3,7 +3,7 @@
 ![](./phenotypic-bTree-lightbox.png)
 
 ```vbnet
-Microsoft.VisualBasic.DataMining.KMeans.Tree
+Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 
 Public Shared Function TreeCluster(
                          _source_ As IEnumerable(Of KMeans.Entity),
