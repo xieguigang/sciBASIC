@@ -15,26 +15,3 @@ ipod,twitter,pc,no
 none,facebook,mac,yes
 none,twitter,mac,no
 none,twitter,mac,no
-
-
-SplitTable:
-Network,Laptop,Cool?
-facebook,mac,yes
-facebook,pc ,yes
-facebook,pc,yes
-facebook,pc,yes
-twitter,mac,yes
-twitter,mac,yes
-twitter,mac,yes
-twitter,pc,yes
-
-UnSplitTable:
-Device,Network,Laptop,Cool?
-ipod,twitter,mac,no
-ipod,twitter,mac,no
-ipod,twitter,mac,no
-ipod,twitter,pc,no
-none,twitter,mac,no
-none,twitter,mac,no
-ipod,facebook,mac,yes
-none,facebook,mac,yes
