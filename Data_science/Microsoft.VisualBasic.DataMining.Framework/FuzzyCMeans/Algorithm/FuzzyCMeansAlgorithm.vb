@@ -127,9 +127,8 @@ Namespace FuzzyCMeans
                 Dim differences As List(Of List(Of Double)) = newMembershipMatrix.Values.DifferenceMatrix(membershipMatrix.Values.ToList())
                 Dim maxElement As Double = GetMaxElement(differences)
 
-#If DEBUG Then
                 Call $"Max element: {maxElement}".__DEBUG_ECHO
-#End If
+
                 If maxElement <= threshold Then
                     Exit While
                 End If
@@ -190,8 +189,9 @@ Namespace FuzzyCMeans
                             .Properties = clusterCenter.Properties.Clone,
                             .uid = clusterCenter.uid
                         }
-
+#If DEBUG Then
                         Call $"add center with coordinate {(+ptClone).uid}".__DEBUG_ECHO
+#End If
                     End If
                 Next
             End While
