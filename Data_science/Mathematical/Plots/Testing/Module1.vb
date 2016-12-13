@@ -121,7 +121,7 @@ Module Module1
                 .Select(Function(x) New PointF(x(0), x(1)))
             plotData += Scatter.FromPoints(points, colors(i).RGBExpression, ptSize:=10)
             plotData.Last.AddMarker(
-                centras(i).Properties(0),
+                points.Last.X,
                 "Cluster " & i,
                 "red",
                 style:=LegendStyles.Triangle)
