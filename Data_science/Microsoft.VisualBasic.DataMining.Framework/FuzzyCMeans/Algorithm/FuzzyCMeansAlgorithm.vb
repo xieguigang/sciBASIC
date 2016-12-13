@@ -41,7 +41,8 @@ Namespace FuzzyCMeans
                                     numberOfClusters%,
                                     fuzzificationParameter#,
                                     Optional maxIterates% = Short.MaxValue,
-                                    Optional threshold# = 0.001) As List(Of Entity)
+                                    Optional threshold# = 0.001,
+                                    Optional ByRef trace As Dictionary(Of Integer, List(Of Entity)) = Nothing) As List(Of Entity)
 
             Dim coordinates As New List(Of Entity)(data)
             Dim random As New Random()
@@ -66,6 +67,10 @@ Namespace FuzzyCMeans
                 Next
             Next
 
+            If Not trace Is Nothing Then
+                Call trace.Clear()
+            End If
+
             While ++iteration <= maxIterates
 #If DEBUG Then
                 Call $"Iteration = {iteration}".__DEBUG_ECHO
@@ -89,10 +94,10 @@ Namespace FuzzyCMeans
 
                             For i As Integer = 0 To pair.Value.Count - 1
                                 Dim value As Double = pair.Value(i)
-                                Call tooltip.Add("Cluster " & i, Math.Round(value, 2))
+                                Call tooltip.Add($"Cluster {i} [{clusterCenters(i).uid}]", Math.Round(value, 2))
                             Next
 
-                            annotation.ReadProperty(Of Dictionary(Of String, Double))(NameOf(tooltip)).value = tooltip
+                            annotation.Memberships = tooltip
                         End If
                     Next
                 Next
@@ -100,6 +105,9 @@ Namespace FuzzyCMeans
                 Dim oldClusterCenters As List(Of Entity) = clusterCenters
 
                 clusterCenters = RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters, membershipMatrix, fuzzificationParameter)
+                If Not trace Is Nothing Then
+                    Call trace.Add(iteration, clusterCenters)
+                End If
 
                 Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) = coordinates.DistanceToClusterCenters(clusterCenters)
                 Dim newMembershipMatrix As Dictionary(Of Entity, List(Of Double)) = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)

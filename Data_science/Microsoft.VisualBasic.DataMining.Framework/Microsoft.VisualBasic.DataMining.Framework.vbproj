@@ -233,6 +233,7 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\IterartionListener.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
+    <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\EntityModels\csv.vb" />

@@ -66,7 +66,8 @@ Module TestingMain
         Dim ei As New KMeans.Entity With {.uid = NameOf(ei), .Properties = {10, 255}}
         Dim ej As New KMeans.Entity With {.uid = NameOf(ej), .Properties = {10, 250}}
 
-        Dim cccc = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.FuzzyCMeans(3, 0.5)
+        Dim trace As New Dictionary(Of Integer, List(Of KMeans.Entity))
+        Dim cccc = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.FuzzyCMeans(3, 0.5, trace:=trace)
 
         Dim g = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.GroupBy(Function(n) n.Fill).ToArray
 
