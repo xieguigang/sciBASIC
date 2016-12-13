@@ -99,6 +99,8 @@ To help you select an algorithm for use with a specific task, the following tabl
 </tr>
 </table>
 
+## Data Visualization Gallery
+
 ### The KMeans Binary Tree Clustering Visualization
 
 ![](./phenotypic-bTree-lightbox.png)
