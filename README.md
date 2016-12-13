@@ -96,9 +96,25 @@ Call BarPlot.Plot(
     .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
 ```
 
-###### Histogram Plot of beta-PDF
-<a href="./Data_science/Mathematical/data/beta-PDF/">![](./Data_science/Mathematical/data/beta-PDF/beta_hist.png)</a>
+###### beta-PDF
 
+```vbnet
+Public Function beta(x#, alpha#, _beta#) As Double
+    Return Pow(x, alpha - 1) * Pow((1 - x), _beta - 1) *
+        Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))
+End Function
+
+Public Function lgamma(x As Double) As Double
+    Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))
+    Dim xp3 As Double = 3.0F + x
+
+    Return -2.081061F - x + 0.0833333F / xp3 - 
+        logterm + (2.5F + x) * Math.Log(xp3)
+End Function
+```
+<img src="./Data_science/Mathematical/data/beta-PDF/beta_PDF.png" height="650px"></img>
+
+###### Heatmap
 ![](./Data_science/Mathematical/images/heatmap.png)
 
 ```vbnet
