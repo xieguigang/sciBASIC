@@ -73,7 +73,7 @@ PM> Install-Package sciBASIC -Pre
 Imports Microsoft.VisualBasic.Mathematical.Plots
 ```
 
-![](./Data_science/Mathematical/images/Bubble.png)
+![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/pie_chart_vars.png)
 
 ###### Stacked Barplot
