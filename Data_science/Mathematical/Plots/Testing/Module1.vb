@@ -152,9 +152,9 @@ Module Module1
 
 
     Public Sub scatterHeatmap()
-        Dim f As Func(Of Double, Double, Double) = Function(x, y) Math.Sin(x) + Math.Sin(y)
+        Dim f As Func(Of Double, Double, Double) = Function(x, y) x ^ 2 + y ^ 3
 
-        Call ChartPlots.ScatterHeatmap.Plot(f, "-1,1", "-1,1", legendTitle:="Math.Sin(x) + Math.Sin(y)").SaveAs("./scatter-heatmap.png")
+        Call ChartPlots.ScatterHeatmap.Plot(f, "-1,1", "-1,1", legendTitle:="z = x ^ 2 + y ^ 3").SaveAs("./scatter-heatmap.png")
 
         Pause()
     End Sub
