@@ -98,7 +98,7 @@ Namespace Plot3D
                     Yield out
                 End If
 
-                Call prog.SetProgress(tick.StepProgress, $" {xi} ({x.Min}, {x.Max}),  ETA={tick.ETA(prog.ElapsedMilliseconds).ToString}")
+                Call prog.SetProgress(tick.StepProgress, $" {xi} ({x.Min}, {x.Max}),  ETA={tick.ETA(prog.ElapsedMilliseconds).FormatTime}")
             Next
 
             Call prog.Dispose()

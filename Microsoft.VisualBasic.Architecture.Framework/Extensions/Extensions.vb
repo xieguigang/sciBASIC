@@ -72,6 +72,19 @@ Imports Microsoft.VisualBasic.Text.Similarity
 Public Module Extensions
 #End If
 
+    <Extension>
+    Public Function FormatTime(t As TimeSpan) As String
+        With t
+            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ .Milliseconds}"
+        End With
+    End Function
+
+    <Extension>
+    Public Function Average(data As IEnumerable(Of TimeSpan)) As TimeSpan
+        Dim avg# = data.Select(Function(x) x.TotalMilliseconds).Average
+        Return TimeSpan.FromMilliseconds(avg)
+    End Function
+
     ''' <summary>
     ''' Returns all of the keys in a dictionary in json format
     ''' </summary>
