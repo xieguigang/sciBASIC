@@ -179,6 +179,8 @@ New:
 ```vbnet
 Imports Microsoft.VisualBasic
 
+
+
 Dim l As New List(Of String)
 
 l += "123"
@@ -236,3 +238,8 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 |Normal|Binary|Gray|
 |------|------|----|
 |<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=250 height=250 />|<img src="./etc/lena/lena.gray.png" width=250 height=250 />|
+
+<hr>
+
+<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=42V9tWs"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="VB.net+SQL交流群" title="VB.net+SQL交流群"></a>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=b23553ea9bd09f751bbe8e3c5c678026fe914c4b1f2e57fd5df4b529f17d69af"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="VB.NET + d3js数据可视化" title="VB.NET + d3js数据可视化"></a>
