@@ -70,15 +70,31 @@ PM> Install-Package sciBASIC -Pre
 
 ##### sciBASIC# Chart Plots System
 ```vbnet
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
-![](./Data_science/Mathematical/images/pie_chart_vars.png)
+
+###### Scatter Heatmap
+
+You can using a lambda expression as the plot data source:
+
+```vbnet
+Dim f As Func(Of Double, Double, Double) =
+    Function(x, y) x ^ 2 + y ^ 3
+
+Call ScatterHeatmap _
+    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap.png")
+```
+
+![](./Data_science/Mathematical/images/scatter-heatmap.png)
+![](./Data_science/Mathematical/images/scatter-heatmap-exp.png)
 
 ###### Stacked Barplot
-![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
+
+The stacked barplot is a best choice for visualize the sample composition and compares to other samples data:
 
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -95,6 +111,8 @@ Call BarPlot.Plot(
     legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
     .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
 ```
+
+![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
 ###### beta-PDF
 
