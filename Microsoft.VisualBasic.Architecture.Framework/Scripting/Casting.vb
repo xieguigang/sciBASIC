@@ -55,24 +55,39 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' Will processing value NaN automatically and strip for the comma.
+        ''' Will processing value NaN automatically and strip for the comma, percentage expression.
         ''' </summary>
-        ''' <param name="s"></param>
+        ''' <param name="s">
+        ''' + numeric
+        ''' + NaN
+        ''' + p%
+        ''' + a/b
+        ''' </param>
         ''' <returns></returns>
         Public Function ParseNumeric(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) Then
                 Return Double.NaN
+            Else
+                s = s.Replace(",", "")
             End If
-            s = s.Replace(",", "")
+
             If s.Last = "%"c Then
                 Return Conversion.Val(Mid(s, 1, s.Length - 1)) / 100  ' 百分比
+            ElseIf InStr(s, "/") > 0 Then
+                Dim t$() = s.Split("/"c) ' 处理分数
+                Return Val(t(0)) / Val(t(1))
             Else
                 Return Conversion.Val(s)
             End If
         End Function
 
+        ''' <summary>
+        ''' 字符串是空值会返回空字符
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CastChar(obj As String) As Char
             Return If(String.IsNullOrEmpty(obj), ASCII.NUL, obj.First)
         End Function

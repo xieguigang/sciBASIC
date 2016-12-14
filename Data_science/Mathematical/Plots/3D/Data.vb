@@ -37,12 +37,15 @@ Imports Microsoft.VisualBasic.Mathematical
 
 Namespace Plot3D
 
+    ''' <summary>
+    ''' Data provider
+    ''' </summary>
     Public Module Data
 
         ''' <summary>
-        ''' 
+        ''' Data provider base on the two variable.(这个函数可以同时为3D绘图或者ScatterHeatmap提供绘图数据)
         ''' </summary>
-        ''' <param name="f"></param>
+        ''' <param name="f">``z = f(x,y)``</param>
         ''' <param name="x">x取值范围</param>
         ''' <param name="y">y取值范围</param>
         ''' <param name="xsteps!"></param>
