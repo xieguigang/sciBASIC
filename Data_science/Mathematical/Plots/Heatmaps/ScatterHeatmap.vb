@@ -141,6 +141,26 @@ Public Module ScatterHeatmap
            }.Plot)
     End Function
 
+    '<Extension>
+    'Public Function Plot(matrix As IEnumerable(Of DataSet),
+    '                     xrange As DoubleRange,
+    '                     yrange As DoubleRange,
+    '                     Optional colorMap$ = "Spectral:c10",
+    '                     Optional mapLevels% = 25,
+    '                     Optional bg$ = "white",
+    '                     Optional size As Size = Nothing,
+    '                     Optional unit% = 5,
+    '                     Optional legendTitle$ = "Scatter Heatmap",
+    '                     Optional legendFont As Font = Nothing,
+    '                     Optional xsteps! = Single.NaN,
+    '                     Optional ysteps! = Single.NaN,
+    '                     Optional parallel As Boolean = False,
+    '                     Optional ByRef matrix As List(Of DataSet) = Nothing,
+    '                     Optional xlabel$ = "X",
+    '                     Optional ylabel$ = "Y") As Bitmap
+
+    'End Function
+
     ''' <summary>
     ''' 因为ByRef参数不能够再lambda表达式之中进行使用，所以在这里必须要使用一个helper对象来读取原始的矩阵数据
     ''' </summary>
