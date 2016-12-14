@@ -189,23 +189,23 @@ Namespace Terminal
 
         Dim previous#
         Dim previousTime&
-        Dim history As New List(Of TimeSpan)
 
-        Public Function ETA(elapsed&, Optional avg As Boolean = False) As TimeSpan
-            Dim out As TimeSpan = ETA(
-                previous,
-                Current / Target,
-                elapsed - previousTime)
-
-            previousTime = elapsed
-            previous = Current / Target
+        Public Function ETA(elapsed&, Optional avg As Boolean = True) As TimeSpan
+            Dim out As TimeSpan
 
             If avg Then
-                history.Add(out)
-                Return history.Average
+                out = ETA(0R, Current / Target, elapsed)
             Else
-                Return out
+                out = ETA(
+                    previous,
+                    Current / Target,
+                    elapsed - previousTime)
+
+                previousTime = elapsed
+                previous = Current / Target
             End If
+
+            Return out
         End Function
 
         ''' <summary>

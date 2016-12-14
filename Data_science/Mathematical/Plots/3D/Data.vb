@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
@@ -51,6 +52,7 @@ Namespace Plot3D
         ''' <param name="y">y取值范围</param>
         ''' <param name="xsteps!"></param>
         ''' <param name="ysteps!"></param>
+        ''' <param name="matrix">假若想要获取得到原始的矩阵数据，这个列表对象还需要实例化之后再传递进来</param>
         ''' <returns>Populate data by x steps.(即每一次输出的一组数据的X都是相同的)</returns>
         <Extension>
         Public Iterator Function Evaluate(f As Func(Of Double, Double, Double),
@@ -58,10 +60,12 @@ Namespace Plot3D
                                           y As DoubleRange,
                                           Optional xsteps! = 0.01,
                                           Optional ysteps! = 0.01,
-                                          Optional parallel As Boolean = False) As IEnumerable(Of List(Of Point3D))
+                                          Optional parallel As Boolean = False,
+                                          Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of List(Of Point3D))
 
             Dim prog As New ProgressBar("Populates data points...", cls:=True)
             Dim tick As New ProgressProvider(x.Length / xsteps)
+            Dim out As New List(Of Point3D)
 
             Call $"Estimates size: {tick.Target * (y.Length / ysteps)}...".__DEBUG_ECHO
 
@@ -75,17 +79,19 @@ Namespace Plot3D
                         dy += yi
                     Next
 
-                    Yield LinqAPI.MakeList(Of Point3D) <= From yi As Double
-                                                          In dy.AsParallel
-                                                          Let z As Double = f(x0, yi)
-                                                          Select pt = New Point3D With {
-                                                              .X = x0,
-                                                              .Y = yi,
-                                                              .Z = z
-                                                          }
-                                                          Order By pt.Y Ascending
+                    out = LinqAPI.MakeList(Of Point3D) <=
+ _
+                        From yi As Double
+                        In dy.AsParallel
+                        Let z As Double = f(x0, yi)
+                        Select pt = New Point3D With {
+                            .X = x0,
+                            .Y = yi,
+                            .Z = z
+                        }
+                        Order By pt.Y Ascending
                 Else
-                    Dim out As New List(Of Point3D)
+                    Call out.Clear()
 
                     For yi# = y.Min To y.Max Step ysteps!
                         out += New Point3D With {
@@ -98,7 +104,23 @@ Namespace Plot3D
                     Yield out
                 End If
 
-                Call prog.SetProgress(tick.StepProgress, $" {xi} ({x.Min}, {x.Max}),  ETA={tick.ETA(prog.ElapsedMilliseconds).FormatTime}")
+                If Not matrix Is Nothing Then
+                    matrix += New DataSet With {
+                        .Identifier = xi,
+                        .Properties = out _
+                        .ToDictionary(
+                            Function(pt) CStr(pt.Y),
+                            Function(pt) CDbl(pt.Z))
+                    }
+                End If
+
+                Dim leftTime As String = tick _
+                    .ETA(prog.ElapsedMilliseconds) _
+                    .FormatTime
+
+                Call prog.SetProgress(
+                    tick.StepProgress,
+                    $" {xi} ({x.Min}, {x.Max}),  ETA={leftTime}")
             Next
 
             Call prog.Dispose()
