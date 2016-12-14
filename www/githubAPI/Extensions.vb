@@ -41,11 +41,11 @@ Public Module Extensions
 
     <Extension> Public Iterator Function WhoIsNotFollowMe(following As User(), followers As User()) As IEnumerable(Of User)
         Dim followersId$() = followers _
-            .Select(Function(u) DirectCast(u, sIdEnumerable).Identifier) _
+            .Select(Function(u) DirectCast(u, INamedValue).Key) _
             .ToArray
 
         For Each u As User In following
-            Dim uid$ = DirectCast(u, sIdEnumerable).Identifier
+            Dim uid$ = DirectCast(u, INamedValue).Key
 
             If Array.IndexOf(followersId, uid) = -1 Then
                 Yield u

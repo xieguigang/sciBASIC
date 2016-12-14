@@ -77,7 +77,7 @@ Public Module QueryBuilder
     <Extension>
     Public Function GetTerm(type As Type) As PropertyInfo
         Dim props As IEnumerable(Of PropertyInfo) =
-            type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+            type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
         Dim term As Type = GetType(Term)
         Dim LQuery As PropertyInfo =
             LinqAPI.DefaultFirst(Of PropertyInfo) <= From p As PropertyInfo

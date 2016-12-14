@@ -39,10 +39,10 @@ Namespace [Class]
     End Class
 
     Public Class User : Inherits ClassObject
-        Implements sIdEnumerable
+        Implements INamedValue
 
         Public Property score As Double
-        Public Property login As String Implements sIdEnumerable.Identifier
+        Public Property login As String Implements INamedValue.Key
         Public Property id As String
         Public Property avatar_url As String
         Public Property gravatar_id As String

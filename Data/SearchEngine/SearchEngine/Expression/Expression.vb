@@ -82,7 +82,7 @@ Public Class Expression
         ' NOT 0 OR NOT 0 -> {undefine, NOT}, {0, OR}, {undefine, NOT}, {0, undefine}
 
         For Each i As SeqValue(Of MetaExpression) In exp.SeqIterator
-            Dim m As MetaExpression = i.obj
+            Dim m As MetaExpression = i.value
 
             If m.Operator = SyntaxParser.Tokens.op_NOT Then
                 notPending = True
