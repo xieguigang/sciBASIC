@@ -57,6 +57,7 @@ Public Module ScatterHeatmap
     ''' <param name="colorMap$">
     ''' Default using colorbrewer ``Spectral:c10`` schema.
     ''' </param>
+    ''' <param name="size">3000, 2400</param>
     ''' <param name="xsteps!"></param>
     ''' <returns></returns>
     <Extension>

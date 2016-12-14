@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::2d386f88205c395bb954ff5407187643, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Data.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Terminal
 
 Namespace Plot3D
 
@@ -58,6 +59,10 @@ Namespace Plot3D
                                           Optional xsteps! = 0.01,
                                           Optional ysteps! = 0.01,
                                           Optional parallel As Boolean = False) As IEnumerable(Of List(Of Point3D))
+
+            Dim prog As New ProgressBar("Populates data points...")
+
+            Call $"Estimates size: {(x.Length / xsteps) * (y.Length / ysteps)}...".__DEBUG_ECHO
 
             For xi# = x.Min To x.Max Step xsteps!
 
@@ -92,7 +97,10 @@ Namespace Plot3D
                     Yield out
                 End If
 
+                Call prog.SetProgress(xi / x.Max * 100, xi)
             Next
+
+            Call prog.Dispose()
         End Function
 
         ''' <summary>

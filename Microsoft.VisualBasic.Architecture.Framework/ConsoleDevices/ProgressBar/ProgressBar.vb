@@ -47,7 +47,11 @@ Namespace Terminal
         Dim current As Integer
         Dim y As Integer
 
-        Sub New(title As String, Optional Y As Integer = 1)
+        Sub New(title As String, Optional Y As Integer = 1, Optional cls As Boolean = False)
+            If cls Then
+                Call Console.Clear()
+            End If
+
             Call Console.WriteLine(title)
 
             Me.y = Y
