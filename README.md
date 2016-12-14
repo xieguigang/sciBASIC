@@ -91,7 +91,7 @@ Call ScatterHeatmap _
 ```
 
 ![](./Data_science/Mathematical/images/scatter-heatmap.png)
-![](./Data_science/Mathematical/images/scatter-heatmap-exp.png)
+![](./Data_science/Mathematical/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
 
 ###### Stacked Barplot
 
