@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -159,17 +160,26 @@ Module Module1
         '    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
         '    .SaveAs("./scatter-heatmap.png")
 
+        Dim matrix As New List(Of DataSet)
+
         Call ScatterHeatmap _
-            .Plot("x ^ 2 + y ^ 3", "(-1,1)", "(-1,1)",
+            .Plot("(x ^ 2) / (y + 10)", "(-1,1)", "(-5,1)",
                   colorMap:="PRGn:c10",
-                  legendTitle:="z = x ^ 2 + y ^ 3") _
+                  legendTitle:="z = x / (y + 1)",
+                  unit:=1,
+                  matrix:=matrix) _
             .SaveAs("./scatter-heatmap-exp.png")
+        Call matrix.SaveTo("./scatter-heatmap.matrix.csv")
+
 
         Pause()
     End Sub
 
     Sub Main()
         Call scatterHeatmapTest()
+
+        Return
+
         Call CMeansVisualize()
         Pause()
 

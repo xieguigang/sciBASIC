@@ -55,6 +55,7 @@ Public Module ScatterHeatmap
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
+                         Optional unit% = 5,
                          Optional legendTitle$ = "",
                          Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
@@ -62,14 +63,21 @@ Public Module ScatterHeatmap
                          Optional ByRef matrix As List(Of DataSet) = Nothing) As Bitmap
 
         Dim fun As Func(Of Double, Double, Double) = Compile(exp)
-        Return fun.Plot(
-            xrange, yrange,
-            colorMap,
-            mapLevels,
-            bg, size,
-            legendTitle, legendFont,
-            xsteps, ysteps,
-            matrix:=matrix)
+
+        Try
+            Return fun.Plot(
+                xrange, yrange,
+                colorMap,
+                mapLevels,
+                bg, size,
+                unit,
+                legendTitle, legendFont,
+                xsteps, ysteps,
+                matrix:=matrix)
+        Catch ex As Exception
+            ex = New Exception(exp, ex)
+            Throw ex
+        End Try
     End Function
 
     ''' <summary>
@@ -95,6 +103,7 @@ Public Module ScatterHeatmap
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
+                         Optional unit% = 5,
                          Optional legendTitle$ = "",
                          Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
@@ -123,7 +132,8 @@ Public Module ScatterHeatmap
                 .legendFont = legendFont,
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = matrix
+                .matrix = matrix,
+                .unit = unit
            }.Plot)
     End Function
 
@@ -139,13 +149,15 @@ Public Module ScatterHeatmap
         Public legendFont As Font, legendTitle$
         Public mapLevels%, colorMap$
         Public matrix As List(Of DataSet)
+        Public unit%
 
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data As Point3D() = func _
                 .__getData(region.PlotRegion.Size,  ' 得到通过计算返回来的数据
                            xrange, yrange,
                            xsteps, ysteps,
-                           parallel, matrix)
+                           parallel, matrix,
+                           unit)
             Dim scaler As New Scaling(data)
             Dim xf = scaler.XScaler(region.Size, region.Margin)
             Dim yf = scaler.YScaler(region.Size, region.Margin)
@@ -163,7 +175,7 @@ Public Module ScatterHeatmap
                     If(lv(i) = 0, 0,
                     If(lv(i) >= colors.Length,
                     colors.Length - 1, lv(i))))
-                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.Y) + offset.Y, 1, 1)
+                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.Y) + offset.Y, unit, unit)
 
                 Call g.FillRectangle(c, fill)
                 Call g.DrawRectangle(New Pen(c),
@@ -208,7 +220,7 @@ Public Module ScatterHeatmap
                                ByRef xsteps!,
                                ByRef ysteps!,
                                parallel As Boolean,
-                               ByRef matrix As List(Of DataSet)) As Point3D()
+                               ByRef matrix As List(Of DataSet), unit%) As Point3D()
 
         If Single.IsNaN(xsteps) Then
             xsteps = xrange.Length / size.Width
@@ -216,6 +228,9 @@ Public Module ScatterHeatmap
         If Single.IsNaN(ysteps) Then
             ysteps = yrange.Length / size.Height
         End If
+
+        xsteps *= unit%
+        ysteps *= unit%
 
         ' x: a -> b
         ' 每一行数据都是y在发生变化

@@ -68,6 +68,7 @@ Namespace Plot3D
             Dim out As New List(Of Point3D)
 
             Call $"Estimates size: {tick.Target * (y.Length / ysteps)}...".__DEBUG_ECHO
+            Call tick.StepProgress()
 
             For xi# = x.Min To x.Max Step xsteps!
 
@@ -91,7 +92,9 @@ Namespace Plot3D
                         }
                         Order By pt.Y Ascending
                 Else
-                    Call out.Clear()
+                    ' 2016-12-15 
+                    ' 在迭代器这里不能够用Clear， 必须要新构建一个list对象， 否则得到的所有的数据都会是第一次迭代的结果
+                    out = New List(Of Point3D)
 
                     For yi# = y.Min To y.Max Step ysteps!
                         out += New Point3D With {
