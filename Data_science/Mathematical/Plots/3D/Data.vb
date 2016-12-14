@@ -61,8 +61,9 @@ Namespace Plot3D
                                           Optional parallel As Boolean = False) As IEnumerable(Of List(Of Point3D))
 
             Dim prog As New ProgressBar("Populates data points...", cls:=True)
+            Dim tick As New ProgressProvider(x.Length / xsteps)
 
-            Call $"Estimates size: {(x.Length / xsteps) * (y.Length / ysteps)}...".__DEBUG_ECHO
+            Call $"Estimates size: {tick.Target * (y.Length / ysteps)}...".__DEBUG_ECHO
 
             For xi# = x.Min To x.Max Step xsteps!
 
@@ -97,7 +98,7 @@ Namespace Plot3D
                     Yield out
                 End If
 
-                Call prog.SetProgress(xi / x.Max * 100, $" {xi} ({x.Min}, {x.Max})")
+                Call prog.SetProgress(tick.StepProgress, $" {xi} ({x.Min}, {x.Max}),  ETA={tick.ETA(prog.ElapsedMilliseconds).ToString}")
             Next
 
             Call prog.Dispose()
