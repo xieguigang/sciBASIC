@@ -40,7 +40,7 @@ Namespace Plot3D
     ''' <summary>
     ''' Data provider
     ''' </summary>
-    Public Module Data
+    Public Module DataProvider
 
         ''' <summary>
         ''' Data provider base on the two variable.(这个函数可以同时为3D绘图或者ScatterHeatmap提供绘图数据)
@@ -50,16 +50,17 @@ Namespace Plot3D
         ''' <param name="y">y取值范围</param>
         ''' <param name="xsteps!"></param>
         ''' <param name="ysteps!"></param>
-        ''' <returns></returns>
+        ''' <returns>Populate data by x steps.(即每一次输出的一组数据的X都是相同的)</returns>
         <Extension>
-        Public Function Evaluate(f As Func(Of Double, Double, Double),
-                                 x As DoubleRange,
-                                 y As DoubleRange,
-                                 Optional xsteps! = 0.01,
-                                 Optional ysteps! = 0.01) As Point3D()
-            Dim out As New List(Of Point3D)
+        Public Iterator Function Evaluate(f As Func(Of Double, Double, Double),
+                                          x As DoubleRange,
+                                          y As DoubleRange,
+                                          Optional xsteps! = 0.01,
+                                          Optional ysteps! = 0.01) As IEnumerable(Of List(Of Point3D))
 
             For xi# = x.Min To x.Max Step xsteps!
+                Dim out As New List(Of Point3D)
+
                 For yi# = y.Min To y.Max Step ysteps!
                     out += New Point3D With {
                         .X = xi#,
@@ -67,9 +68,9 @@ Namespace Plot3D
                         .Z = f(xi, yi)
                     }
                 Next
-            Next
 
-            Return out
+                Yield out
+            Next
         End Function
 
         ''' <summary>

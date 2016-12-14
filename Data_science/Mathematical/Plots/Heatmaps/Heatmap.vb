@@ -162,7 +162,8 @@ Public Module Heatmap
         size = If(size.IsEmpty, New Size(2000, 1600), size)
 
         Return GraphicsPlots(
-            size, margin, bg$,
+            size, margin,
+            bg$,
             Sub(ByRef g, region)
                 Dim dw!? = CSng((size.Height - 2 * margin.Width) / array.Length)
                 Dim correl#() = array _
