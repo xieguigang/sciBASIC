@@ -60,6 +60,9 @@ Public Class Expression
     ''' <returns></returns>
     Public Shared ReadOnly Property DefaultEngine As New Expression
 
+    ''' <summary>
+    ''' Creates a new mathematics expression evaluation engine
+    ''' </summary>
     Public Sub New()
         Variables = New Variable(Me)
         Functions = New [Function](Me)
@@ -88,6 +91,17 @@ Public Class Expression
     Public Function Evaluation(expr As String) As Double
         Dim sep As SimpleExpression = ExpressionParser.TryParse(expr, Me)
         Return sep.Evaluate
+    End Function
+
+    ''' <summary>
+    ''' 当需要进行重复大量计算的时候，反复解析表达式字符串会浪费大量的计算时间，
+    ''' 则可以使用这个解析出表达式，后面使用<see cref="SetVariable"/>更新变量
+    ''' 的值即可快速的进行重复计算
+    ''' </summary>
+    ''' <param name="expr$"></param>
+    ''' <returns></returns>
+    Public Function Compile(expr$) As SimpleExpression
+        Return ExpressionParser.TryParse(expr, Me)
     End Function
 
     ''' <summary>

@@ -108,9 +108,10 @@ Namespace Types
 
         ''' <summary>
         ''' Evaluate the specific simple expression class object.
-        ''' (计算一个特定的简单表达式对象的值，这个简单表达是对象可以被重复利用的，
+        ''' (计算一个特定的简单表达式对象的值，**这个<see cref="SimpleExpression"/>简单表达式对象可以被重复利用的**，
         ''' 因为引用了变量或者函数的话<see cref="MetaExpression"/>会使用lambda表达式进行求值，
-        ''' 所以只需要改变引擎之中的环境就行了) 
+        ''' 所以只需要使用方法<see cref="Expression.SetVariable(String, Double)"/>改变引擎之
+        ''' 中的环境变量就行了) 
         ''' </summary>
         ''' <returns>
         ''' Return the value of the specific simple expression object.

@@ -151,16 +151,23 @@ Module Module1
     End Sub
 
 
-    Public Sub scatterHeatmap()
-        Dim f As Func(Of Double, Double, Double) = Function(x, y) x ^ 2 + y ^ 3
+    Public Sub scatterHeatmapTest()
+        Dim f As Func(Of Double, Double, Double) =
+            Function(x, y) x ^ 2 + y ^ 3
 
-        Call ChartPlots.ScatterHeatmap.Plot(f, "-1,1", "-1,1", legendTitle:="z = x ^ 2 + y ^ 3").SaveAs("./scatter-heatmap.png")
+        Call ScatterHeatmap _
+            .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+            .SaveAs("./scatter-heatmap.png")
+
+        Call ScatterHeatmap _
+            .Plot("x ^ 2 + y ^ 3", "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+            .SaveAs("./scatter-heatmap-exp.png")
 
         Pause()
     End Sub
 
     Sub Main()
-        Call scatterHeatmap()
+        Call scatterHeatmapTest()
         Call CMeansVisualize()
         Pause()
 

@@ -6,8 +6,46 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.Types
 
 Public Module ScatterHeatmap
+
+    Public Function Compile(exp$) As Func(Of Double, Double, Double)
+        With New Expression
+
+            Call .SetVariable("x", 0)
+            Call .SetVariable("y", 0)
+
+            Dim func As SimpleExpression = .Compile(exp)
+
+            Return Function(x, y)
+                       Call .SetVariable("x", x)
+                       Call .SetVariable("y", y)
+                       Return func.Evaluate
+                   End Function
+        End With
+    End Function
+
+    <Extension>
+    Public Function Plot(exp$, xrange As DoubleRange, yrange As DoubleRange,
+                         Optional colorMap$ = "Spectral:c10",
+                         Optional mapLevels% = 25,
+                         Optional bg$ = "white",
+                         Optional size As Size = Nothing,
+                         Optional legendTitle$ = "",
+                         Optional legendFont As Font = Nothing,
+                         Optional xsteps! = Single.NaN,
+                         Optional ysteps! = Single.NaN) As Bitmap
+
+        Dim fun As Func(Of Double, Double, Double) = Compile(exp)
+        Return fun.Plot(
+            xrange, yrange,
+            colorMap,
+            mapLevels,
+            bg, size,
+            legendTitle, legendFont,
+            xsteps, ysteps)
+    End Function
 
     ''' <summary>
     ''' steps步长值默认值为长度平分到每一个像素点
