@@ -46,11 +46,13 @@ Module Axis
                         margin As Size,
                         scaler As Scaling,
                         showGrid As Boolean,
-                        Optional offset As Point = Nothing)
+                        Optional offset As Point = Nothing,
+                        Optional xlabel$ = "",
+                        Optional ylabel$ = "")
 
         Dim o As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
-        Dim right As New Point(size.Width - margin.Width + offset.X, o.Y + offset.Y)
-        Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)
+        Dim right As New Point(size.Width - margin.Width + offset.X, o.Y + offset.Y)  ' X轴
+        Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)       ' Y轴
         Dim pen As New Pen(Color.Black, 5)
 
         Call g.DrawLine(pen, o, right)
@@ -58,6 +60,9 @@ Module Axis
 
         Dim fontLarge As New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Regular)
         Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(o.X + 10, o.Y + 10))
+        Call g.DrawString(xlabel, fontLarge, Brushes.Black, New PointF(right.X + 10, right.Y - 5))
+        Call g.DrawString(ylabel, fontLarge, Brushes.Black, New PointF(top.X - 10, top.Y - 40))
+
         Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
 
         Dim dx As Single = scaler.dx / 10 '+ scaler.xmin

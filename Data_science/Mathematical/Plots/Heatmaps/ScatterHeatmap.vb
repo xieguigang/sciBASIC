@@ -104,12 +104,14 @@ Public Module ScatterHeatmap
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional unit% = 5,
-                         Optional legendTitle$ = "",
+                         Optional legendTitle$ = "Scatter Heatmap",
                          Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
                          Optional ysteps! = Single.NaN,
                          Optional parallel As Boolean = False,
-                         Optional ByRef matrix As List(Of DataSet) = Nothing) As Bitmap
+                         Optional ByRef matrix As List(Of DataSet) = Nothing,
+                         Optional xlabel$ = "X",
+                         Optional ylabel$ = "Y") As Bitmap
 
         If size.IsEmpty Then
             size = New Size(3000, 2400)
@@ -133,7 +135,9 @@ Public Module ScatterHeatmap
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
                 .matrix = matrix,
-                .unit = unit
+                .unit = unit,
+                .xlabel = xlabel,
+                .ylabel = ylabel
            }.Plot)
     End Function
 
@@ -150,6 +154,7 @@ Public Module ScatterHeatmap
         Public mapLevels%, colorMap$
         Public matrix As List(Of DataSet)
         Public unit%
+        Public xlabel$, ylabel$
 
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data As Point3D() = func _
@@ -167,7 +172,7 @@ Public Module ScatterHeatmap
                .GenerateMapping(mapLevels)
             Dim size As Size = region.Size
 
-            Call g.DrawAxis(Size, margin, scaler, False, offset)
+            Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 
             offset = New Point(offset.X, offset.Y - unit / 2)
 
