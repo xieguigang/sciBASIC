@@ -76,8 +76,8 @@ Namespace Topology
                 Dim valBeta As New List(Of (parm As NamedValue(Of Double), v As var))
 
                 For Each x As var In MyBase.vars
-                    valAlpha += (New NamedValue(Of Double)(name = MonteCarlo.SPowerAlpha(v, x), alpha(name)), x)
-                    valBeta += (New NamedValue(Of Double)(name = MonteCarlo.SPowerBeta(v, x), alpha(name)), x)
+                    valAlpha += (New NamedValue(Of Double)(name = MonteCarlo.SPowerAlpha(v, x), alpha(+name)), x)
+                    valBeta += (New NamedValue(Of Double)(name = MonteCarlo.SPowerBeta(v, x), alpha(+name)), x)
                 Next
 
                 Call _alpha.Add(v, valAlpha)

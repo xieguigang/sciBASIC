@@ -101,7 +101,7 @@ Public Module Normalization
         Dim preX As Value(Of Single) = intr.Value(++i).X
 
         Do While ++i < intr.Value.Length - 1
-            If preX > intr.Value(i).X Then ' 出现圈了
+            If +preX > intr.Value(i).X Then ' 出现圈了
 
             End If
         Loop

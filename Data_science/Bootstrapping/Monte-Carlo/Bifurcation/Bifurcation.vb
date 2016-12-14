@@ -77,9 +77,14 @@ Namespace MonteCarlo
                     .Name = v.Name,
                     .Value = AddressOf v.GetValue
                 })
+            Dim params = args.Select(
+                Function(m) New NamedValue(Of IValueProvider) With {
+                    .Name = m.Key,
+                    .Value = Function() m.Value
+                })
             Dim validResults As IEnumerable(Of ODEsOut) =
                 model.Bootstrapping(
-                    y0, y0rand,
+                    params, y0rand,
                     k, n, a, b,
                     trimNaN:=True,
                     parallel:=True)
