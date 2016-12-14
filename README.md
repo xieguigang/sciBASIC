@@ -160,11 +160,9 @@ write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/
 First of all, imports the language feature namespace of VisualBasic
 
 ```vbnet
-#Region "VisualBasic language"
-
+#Region "Microsoft VisualBasic.NET language"
 ' sciBASIC# general application runtime
 ' Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll
-
 #End Region
 
 Imports Microsoft.VisualBasic.Language
