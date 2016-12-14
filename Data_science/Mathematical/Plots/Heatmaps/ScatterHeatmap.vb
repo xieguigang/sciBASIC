@@ -169,6 +169,8 @@ Public Module ScatterHeatmap
 
             Call g.DrawAxis(Size, margin, scaler, False, offset)
 
+            offset = New Point(offset.X, offset.Y - unit / 2)
+
             For i As Integer = 0 To data.Length - 1
                 Dim p As Point3D = data(i)
                 Dim c As SolidBrush = colors(
@@ -192,7 +194,7 @@ Public Module ScatterHeatmap
                 title:=legendTitle,
                 titleFont:=legendFont)
             Dim lsize As Size = legend.Size
-            Dim left% = Size.Width - lsize.Width + 100
+            Dim left% = size.Width - lsize.Width + 150
             Dim top% = Size.Height / 3
 
             Call g.DrawImageUnscaled(legend, left, top)
