@@ -25,14 +25,20 @@ Public Module ScatterHeatmap
                          xrange As DoubleRange,
                          yrange As DoubleRange,
                          Optional colorMap$ = "Spectral:c10",
-                         Optional mapLevels% = 100,
+                         Optional mapLevels% = 25,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
                          Optional legendTitle$ = "",
                          Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
                          Optional ysteps! = Single.NaN) As Bitmap
+
+        If size.IsEmpty Then
+            size = New Size(3000, 2400)
+        End If
+
+        Dim margin As New Size(400, 100)
+        Dim offset As New Point(-300, 0)
 
         Return GraphicsPlots(
            size, margin,
@@ -52,16 +58,21 @@ Public Module ScatterHeatmap
                   .Select(Function(z) CDbl(z.Z)) _
                   .GenerateMapping(mapLevels)
 
-               Call g.DrawAxis(size, margin, scaler, False)
+               Call g.DrawAxis(size, margin, scaler, False, offset)
 
                For i As Integer = 0 To data.Length - 1
                    Dim p As Point3D = data(i)
-                   Dim c As SolidBrush = colors(lv(i) - 1)
+                   Dim c As SolidBrush = colors(
+                       If(lv(i) = 0, 0,
+                       If(lv(i) >= colors.Length,
+                       colors.Length - 1, lv(i))))
+                   Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.Y) + offset.Y, 1, 1)
 
-                   Call g.FillPie(
-                        c,
-                        xf(p.X), yf(p.Y), 1, 1,
-                        0, 360)
+                   Call g.FillRectangle(c, fill)
+                   Call g.DrawRectangle(New Pen(c),
+                                        fill.Left, fill.Top,
+                                        fill.Width,
+                                        fill.Height)
                Next
 
                ' Draw legends
@@ -72,15 +83,10 @@ Public Module ScatterHeatmap
                    title:=legendTitle,
                    titleFont:=legendFont)
                Dim lsize As Size = legend.Size
-               Dim lmargin As Integer = size.Width - size.Height + margin.Width
-
-               Dim left% = size.Width - lmargin
+               Dim left% = size.Width - lsize.Width + 100
                Dim top% = size.Height / 3
 
-               Dim scale# = lmargin / lsize.Width
-               Dim lh% = CInt(scale * (size.Height * 2 / 3))
-
-               Call g.DrawImage(legend, left, top, lmargin, lh)
+               Call g.DrawImageUnscaled(legend, left, top)
            End Sub)
     End Function
 

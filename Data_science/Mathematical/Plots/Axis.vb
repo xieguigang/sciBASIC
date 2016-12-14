@@ -41,10 +41,16 @@ Module Axis
     ''' <param name="scaler">Drawing Point data auto scaler</param>
     ''' <param name="showGrid">Show axis grid on the plot region?</param>
     <Extension>
-    Public Sub DrawAxis(ByRef g As Graphics, size As Size, margin As Size, scaler As Scaling, showGrid As Boolean)
-        Dim o As New Point(margin.Width, size.Height - margin.Height)
-        Dim right As New Point(size.Width - margin.Width, o.Y)
-        Dim top As New Point(margin.Width, margin.Height)
+    Public Sub DrawAxis(ByRef g As Graphics,
+                        size As Size,
+                        margin As Size,
+                        scaler As Scaling,
+                        showGrid As Boolean,
+                        Optional offset As Point = Nothing)
+
+        Dim o As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
+        Dim right As New Point(size.Width - margin.Width + offset.X, o.Y + offset.Y)
+        Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)
         Dim pen As New Pen(Color.Black, 5)
 
         Call g.DrawLine(pen, o, right)
@@ -72,7 +78,7 @@ Module Axis
             Dim sz As SizeF
 
             If dx <> 0R Then
-                Dim x = sx(label + scaler.xmin)
+                Dim x = sx(label + scaler.xmin) + offset.X
                 Dim axisX As New PointF(x, o.Y)
 
                 label = Math.Round(label + scaler.xmin, 2)
@@ -89,7 +95,7 @@ Module Axis
             label = dy * (i + 1)
 
             If dy <> 0R Then
-                Dim y = sy(label + scaler.ymin)
+                Dim y = sy(label + scaler.ymin) + offset.Y
                 Dim axisY As New PointF(o.X, y)
 
                 Call g.DrawLine(pen, axisY, New PointF(o.X - margin.Width * 0.1, y))

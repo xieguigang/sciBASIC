@@ -66,6 +66,19 @@ Namespace Drawing2D.Colors
                 titleFont)
         End Function
 
+        ''' <summary>
+        ''' 输出的图例的大小默认为：``{800, 1000}``
+        ''' </summary>
+        ''' <param name="designer"></param>
+        ''' <param name="title$"></param>
+        ''' <param name="min$"></param>
+        ''' <param name="max$"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="haveUnmapped"></param>
+        ''' <param name="lsize"></param>
+        ''' <param name="lmargin"></param>
+        ''' <param name="titleFont"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ColorMapLegend(designer As SolidBrush(),
                                        title$,
