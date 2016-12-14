@@ -134,5 +134,11 @@ Namespace ComponentModel.Ranges
         Public Function IsOverlapping(range As IRanges(Of Double)) As Boolean Implements IRanges(Of Double).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
+
+        Public Shared Widening Operator CType(exp$) As DoubleRange
+            Dim r As New DoubleRange
+            Call exp.Parser(r.Min, r.Max)
+            Return r
+        End Operator
     End Class
 End Namespace

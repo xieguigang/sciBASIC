@@ -148,5 +148,11 @@ Namespace ComponentModel.Ranges
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Public Shared Widening Operator CType(exp$) As IntRange
+            Dim r As New IntRange
+            Call exp.Parser(r.Min, r.Max)
+            Return r
+        End Operator
     End Class
 End Namespace
