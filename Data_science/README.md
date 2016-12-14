@@ -109,9 +109,9 @@ To help you select an algorithm for use with a specific task, the following tabl
 Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 
 Public Shared Function TreeCluster(
-                         _source_ As IEnumerable(Of KMeans.Entity),
-              Optional _parallel_ As Boolean = False, 
-              Optional _stop_ As Integer = -1) As KMeans.Entity()
+                         source As IEnumerable(Of KMeans.Entity),
+              Optional parallel As Boolean = False, 
+              Optional [stop] As Integer = -1) As KMeans.Entity()
 ```
 
 ###### Summary:
