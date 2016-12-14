@@ -72,11 +72,12 @@ Namespace Plot3D
                     Yield LinqAPI.MakeList(Of Point3D) <= From yi As Double
                                                           In dy.AsParallel
                                                           Let z As Double = f(x0, yi)
-                                                          Select New Point3D With {
+                                                          Select pt = New Point3D With {
                                                               .X = x0,
                                                               .Y = yi,
                                                               .Z = z
                                                           }
+                                                          Order By pt.Y Ascending
                 Else
                     Dim out As New List(Of Point3D)
 
