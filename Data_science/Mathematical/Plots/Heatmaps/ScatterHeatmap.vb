@@ -3,7 +3,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Mathematical
 
 Public Module ScatterHeatmap
 
@@ -27,6 +29,8 @@ Public Module ScatterHeatmap
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
+                         Optional legendTitle$ = "",
+                         Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
                          Optional ysteps! = Single.NaN) As Bitmap
 
@@ -35,11 +39,46 @@ Public Module ScatterHeatmap
            bg$,
            Sub(ByRef g, region)
 
+               ' 返回来的数据
                Dim data As Point3D() = fun _
                    .__getData(region.PlotRegion.Size,
                               xrange, yrange,
                               xsteps, ysteps)
+               Dim scaler As New Scaling(data)
+               Dim xf = scaler.XScaler(region.Size, region.Margin)
+               Dim yf = scaler.YScaler(region.Size, region.Margin)
+               Dim colors As SolidBrush() = Designer.GetBrushes(colorMap, mapLevels)
+               Dim lv = data.Select(Function(z) CDbl(z.Z)).GenerateMapping(mapLevels)
 
+               Call g.DrawAxis(size, margin, scaler, False)
+
+               For i As Integer = 0 To data.Length - 1
+                   Dim p As Point3D = data(i)
+                   Dim c As SolidBrush = colors(lv(i) - 1)
+
+                   Call g.FillPie(
+                        c,
+                        xf(p.X), yf(p.Y), 1, 1,
+                        0, 360)
+               Next
+
+               ' Draw legends
+               Dim legend As Bitmap = colors.ColorMapLegend(
+                   haveUnmapped:=False,
+                   min:=Math.Round(data.Min(Function(z) z.Z), 1),
+                   max:=Math.Round(data.Max(Function(z) z.Z), 1),
+                   title:=legendTitle,
+                   titleFont:=legendFont)
+               Dim lsize As Size = legend.Size
+               Dim lmargin As Integer = size.Width - size.Height + margin.Width
+
+               Dim left% = size.Width - lmargin
+               Dim top% = size.Height / 3
+
+               Dim scale# = lmargin / lsize.Width
+               Dim lh% = CInt(scale * (size.Height * 2 / 3))
+
+               Call g.DrawImage(legend, left, top, lmargin, lh)
            End Sub)
     End Function
 
@@ -62,7 +101,19 @@ Public Module ScatterHeatmap
             ysteps = yrange.Length / size.Height
         End If
 
-        Dim data = DataProvider.Evaluate(fun, xrange, yrange, xsteps, ysteps)
+        ' x: a -> b
+        ' 每一行数据都是y在发生变化
+        Dim data = DataProvider.Evaluate(fun, xrange, yrange, xsteps, ysteps).ToArray
 
+        If data.Length > size.Width + 10 Then
+            Dim stepDelta = data.Length / size.Width
+            Dim splt = data.Split(stepDelta)
+
+        Else ' 数据不足
+
+
+        End If
+
+        Return data.ToVector
     End Function
 End Module

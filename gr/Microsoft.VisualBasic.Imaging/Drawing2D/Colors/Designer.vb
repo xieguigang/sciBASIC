@@ -156,6 +156,17 @@ Namespace Drawing2D.Colors
         End Function
 
         ''' <summary>
+        ''' ``New <see cref="SolidBrush"/>(<see cref="GetColors(String, Integer, Integer)"/>)``
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <param name="n%"></param>
+        ''' <param name="alpha%"></param>
+        ''' <returns></returns>
+        Public Function GetBrushes(term$, Optional n% = 256, Optional alpha% = 255) As SolidBrush()
+            Return GetColors(term, n, alpha).ToArray(Function(c) New SolidBrush(c))
+        End Function
+
+        ''' <summary>
         ''' 相对于<see cref="GetColors"/>函数而言，这个函数是返回非连续的颜色谱，假若数量不足，会重新使用开头的起始颜色连续填充
         ''' </summary>
         ''' <param name="colors$"></param>
