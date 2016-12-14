@@ -103,8 +103,6 @@ Namespace Plot3D
                             .Z = f(xi, yi)
                         }
                     Next
-
-                    Yield out
                 End If
 
                 If Not matrix Is Nothing Then
@@ -116,6 +114,8 @@ Namespace Plot3D
                             Function(pt) CDbl(pt.Z))
                     }
                 End If
+
+                Yield out
 
                 Dim leftTime As String = tick _
                     .ETA(prog.ElapsedMilliseconds) _
