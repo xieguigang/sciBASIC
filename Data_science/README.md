@@ -109,9 +109,9 @@ To help you select an algorithm for use with a specific task, the following tabl
 Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 
 Public Shared Function TreeCluster(
-                         _source_ As IEnumerable(Of KMeans.Entity),
-              Optional _parallel_ As Boolean = False, 
-              Optional _stop_ As Integer = -1) As KMeans.Entity()
+                         source As IEnumerable(Of KMeans.Entity),
+              Optional parallel As Boolean = False, 
+              Optional [stop] As Integer = -1) As KMeans.Entity()
 ```
 
 ###### Summary:
@@ -164,3 +164,6 @@ Returns:
 
 ### GeneticAlgorithm
 
+Model parameter spaces analysis of the virus infection dynamics model, using the VisualBasic internal RK4 ODEs dynamics system solver, from the result of Genetic Algorithm estimates:
+
+![](./Mathematical/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
