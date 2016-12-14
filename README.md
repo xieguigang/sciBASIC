@@ -62,7 +62,8 @@ PM> Install-Package sciBASIC -Pre
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
-+ **[Darwinism computing module](./Data_science/Darwinism)**
++ **[Darwinism computing module](./Data_science/Darwinism/)**
++ **[Data Mining &amp; Machine Learning](./Data_science/)**
 + **[sciBASIC# DataFrame System](./Data/DataFrame/)**
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 
