@@ -94,6 +94,33 @@ Call data.CorrelatesNormalized() _
 
 ##### Scatter & Histogram Plot
 
+###### Scatter Heatmap
+
+You can using a lambda expression as the plot data source:
+
+```vbnet
+Dim f As Func(Of Double, Double, Double) =
+    Function(x, y) x ^ 2 + y ^ 3
+
+Call ScatterHeatmap _
+    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap.png")
+```
+
+![](./images/scatter-heatmap.png)
+
+Or directly evaluate a math expression string and using another colorbrewer schema:
+
+```vbnet
+Call ScatterHeatmap _
+    .Plot("x ^ 2 + y ^ 3", "(-1,1)", "(-1,1)",
+          colorMap:="PRGn:c10",
+          legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap-exp.png")
+```
+
+![](./images/scatter-heatmap-exp.png)
+
 ###### Scatter plot of CMeans
 
 ![](../algorithms/CMeans/CMeans.png)
