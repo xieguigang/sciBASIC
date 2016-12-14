@@ -60,7 +60,7 @@ Namespace Plot3D
                                           Optional ysteps! = 0.01,
                                           Optional parallel As Boolean = False) As IEnumerable(Of List(Of Point3D))
 
-            Dim prog As New ProgressBar("Populates data points...")
+            Dim prog As New ProgressBar("Populates data points...", cls:=True)
 
             Call $"Estimates size: {(x.Length / xsteps) * (y.Length / ysteps)}...".__DEBUG_ECHO
 
@@ -97,7 +97,7 @@ Namespace Plot3D
                     Yield out
                 End If
 
-                Call prog.SetProgress(xi / x.Max * 100, xi)
+                Call prog.SetProgress(xi / x.Max * 100, $" {xi} ({x.Min}, {x.Max})")
             Next
 
             Call prog.Dispose()
