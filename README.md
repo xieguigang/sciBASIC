@@ -93,7 +93,8 @@ Call ScatterHeatmap _
 ![](./Data_science/Mathematical/images/scatter-heatmap-exp.png)
 
 ###### Stacked Barplot
-![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
+
+The stacked barplot is a best choice for visualize the sample composition and compares to other samples data:
 
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -110,6 +111,8 @@ Call BarPlot.Plot(
     legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
     .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
 ```
+
+![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
 ###### beta-PDF
 
