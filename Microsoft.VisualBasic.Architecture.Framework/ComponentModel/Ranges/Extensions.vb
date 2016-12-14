@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.Ranges
@@ -23,7 +24,7 @@ Namespace ComponentModel.Ranges
             If InStr(exp, "->") > 0 Then
                 t = Strings.Split(exp, "->")
             Else
-                exp = Regex.Match(exp, "\d+\s*,\s*\d+").Value
+                exp = Regex.Match(exp, regexpFloat & "\s*,\s*" & regexpFloat).Value
 
                 If String.IsNullOrEmpty(exp) Then
                     exp = $"'{raw}' is not a valid expression format!"
@@ -33,7 +34,7 @@ Namespace ComponentModel.Ranges
                 End If
             End If
 
-            t = t.Select(AddressOf Trim)
+            t = t.ToArray(AddressOf Trim)
 
             min = Casting.ParseNumeric(t(Scan0))
             max = Casting.ParseNumeric(t(1))

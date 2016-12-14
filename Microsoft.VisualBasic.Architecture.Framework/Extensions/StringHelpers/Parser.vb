@@ -60,7 +60,7 @@ Public Module PrimitiveParser
     ''' <returns></returns>
     <Extension>
     Public Function ParseDouble(s As String) As Double
-        Return Val(Trim(s))
+        Return Scripting.ParseNumeric(s)
     End Function
 
     ''' <summary>

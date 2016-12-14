@@ -48,7 +48,9 @@ Public Module ScatterHeatmap
                Dim xf = scaler.XScaler(region.Size, region.Margin)
                Dim yf = scaler.YScaler(region.Size, region.Margin)
                Dim colors As SolidBrush() = Designer.GetBrushes(colorMap, mapLevels)
-               Dim lv = data.Select(Function(z) CDbl(z.Z)).GenerateMapping(mapLevels)
+               Dim lv%() = data _
+                  .Select(Function(z) CDbl(z.Z)) _
+                  .GenerateMapping(mapLevels)
 
                Call g.DrawAxis(size, margin, scaler, False)
 

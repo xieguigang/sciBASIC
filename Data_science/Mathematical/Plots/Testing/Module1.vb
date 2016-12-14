@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
@@ -149,8 +150,17 @@ Module Module1
             .SaveAs("./CMeans.png")
     End Sub
 
-    Sub Main()
 
+    Public Sub scatterHeatmap()
+        Dim f As Func(Of Double, Double, Double) = Function(x, y) Math.Sin(x) + Math.Sin(y)
+
+        Call ChartPlots.ScatterHeatmap.Plot(f, "-1,1", "-1,1",,,,,, "Math.Sin(x) + Math.Sin(y)",,,).SaveAs("./scatter-heatmap.png")
+
+        Pause()
+    End Sub
+
+    Sub Main()
+        Call scatterHeatmap()
         Call CMeansVisualize()
         Pause()
 
