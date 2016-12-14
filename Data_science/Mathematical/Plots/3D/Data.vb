@@ -56,20 +56,41 @@ Namespace Plot3D
                                           x As DoubleRange,
                                           y As DoubleRange,
                                           Optional xsteps! = 0.01,
-                                          Optional ysteps! = 0.01) As IEnumerable(Of List(Of Point3D))
+                                          Optional ysteps! = 0.01,
+                                          Optional parallel As Boolean = False) As IEnumerable(Of List(Of Point3D))
 
             For xi# = x.Min To x.Max Step xsteps!
-                Dim out As New List(Of Point3D)
 
-                For yi# = y.Min To y.Max Step ysteps!
-                    out += New Point3D With {
-                        .X = xi#,
-                        .Y = yi#,
-                        .Z = f(xi, yi)
-                    }
-                Next
+                If parallel Then
+                    Dim dy As New List(Of Double)
+                    Dim x0# = xi
 
-                Yield out
+                    For yi# = y.Min To y.Max Step ysteps!
+                        dy += yi
+                    Next
+
+                    Yield LinqAPI.MakeList(Of Point3D) <= From yi As Double
+                                                          In dy.AsParallel
+                                                          Let z As Double = f(x0, yi)
+                                                          Select New Point3D With {
+                                                              .X = x0,
+                                                              .Y = yi,
+                                                              .Z = z
+                                                          }
+                Else
+                    Dim out As New List(Of Point3D)
+
+                    For yi# = y.Min To y.Max Step ysteps!
+                        out += New Point3D With {
+                            .X = xi#,
+                            .Y = yi#,
+                            .Z = f(xi, yi)
+                        }
+                    Next
+
+                    Yield out
+                End If
+
             Next
         End Function
 

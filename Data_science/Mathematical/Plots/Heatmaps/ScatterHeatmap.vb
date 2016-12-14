@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Types
 
@@ -69,7 +70,8 @@ Public Module ScatterHeatmap
                          Optional legendTitle$ = "",
                          Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
-                         Optional ysteps! = Single.NaN) As Bitmap
+                         Optional ysteps! = Single.NaN,
+                         Optional parallel As Boolean = False) As Bitmap
 
         If size.IsEmpty Then
             size = New Size(3000, 2400)
@@ -87,7 +89,8 @@ Public Module ScatterHeatmap
                Dim data As Point3D() = fun _
                    .__getData(region.PlotRegion.Size,
                               xrange, yrange,
-                              xsteps, ysteps)
+                              xsteps, ysteps,
+                              parallel)
                Dim scaler As New Scaling(data)
                Dim xf = scaler.XScaler(region.Size, region.Margin)
                Dim yf = scaler.YScaler(region.Size, region.Margin)
@@ -137,9 +140,19 @@ Public Module ScatterHeatmap
     ''' <param name="yrange"></param>
     ''' <param name="xsteps!"></param>
     ''' <param name="ysteps!"></param>
+    ''' <param name="parallel">
+    ''' 对于例如ODEs计算这类比较重度的计算，可以考虑在这里使用并行
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Private Function __getData(fun As Func(Of Double, Double, Double), size As Size, xrange As DoubleRange, yrange As DoubleRange, ByRef xsteps!, ByRef ysteps!) As Point3D()
+    Private Function __getData(fun As Func(Of Double, Double, Double),
+                               size As Size,
+                               xrange As DoubleRange,
+                               yrange As DoubleRange,
+                               ByRef xsteps!,
+                               ByRef ysteps!,
+                               parallel As Boolean) As Point3D()
+
         If Single.IsNaN(xsteps) Then
             xsteps = xrange.Length / size.Width
         End If
@@ -149,7 +162,11 @@ Public Module ScatterHeatmap
 
         ' x: a -> b
         ' 每一行数据都是y在发生变化
-        Dim data = DataProvider.Evaluate(fun, xrange, yrange, xsteps, ysteps).ToArray
+        Dim data As List(Of Point3D)() =
+            DataProvider.Evaluate(
+                fun, xrange, yrange,
+                xsteps, ysteps,
+                parallel).ToArray
 
         If data.Length > size.Width + 10 Then
             Dim stepDelta = data.Length / size.Width
