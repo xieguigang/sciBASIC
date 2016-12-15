@@ -19,8 +19,8 @@ Namespace Plot3D
                              xrange As DoubleRange,
                              yrange As DoubleRange,
                              camera As Camera,
-                             Optional xn% = 50,
-                             Optional yn% = 50,
+                             Optional xn% = 1000,
+                             Optional yn% = 1000,
                              Optional legendTitle$ = "3D scatter heatmap",
                              Optional mapName$ = "Spectral:c10",
                              Optional mapLevels% = 25,
@@ -28,7 +28,8 @@ Namespace Plot3D
                              Optional parallel As Boolean = False,
                              Optional matrix As List(Of EntityObject) = Nothing,
                              Optional axisFont$ = CSSFont.Win10Normal,
-                             Optional legendFont As Font = Nothing) As Bitmap
+                             Optional legendFont As Font = Nothing,
+                             Optional ptSize% = 5) As Bitmap
 
             Dim data As (pt As Point3D, c#)() = f.Evaluate(
                 xrange, yrange,
@@ -60,6 +61,7 @@ Namespace Plot3D
                             .SeqIterator _
                             .Select(Function(ip) (idx:=ip.i, p3D:=ip.value)) _
                             .OrderBy(Function(z) z.p3D.Z)
+                        Dim ptSz As New Size(ptSize, ptSize)
 
                         For Each pt As (idx%, p3D As Point3D) In pts
 
@@ -74,7 +76,11 @@ Namespace Plot3D
 
                             Dim color As SolidBrush = colors(lv)
 
-                            Call g.FillPie(color, New Rectangle(p2D, New Size(2, 2)), 0, 360)
+                            Try
+                                Call g.FillPie(color, New Rectangle(p2D, ptSz), 0, 360)
+                            Catch ex As Exception
+
+                            End Try
                         Next
                     End With
 
