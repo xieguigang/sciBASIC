@@ -19,12 +19,12 @@
 ###### 1. source projects
 
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
-+ **[/Data](./Data/)** : VisualBasic data framework system for data science, includes data frame, data I/O and data object search framework.
-+ **[/Data_science](./Data_science/)** : VisualBasic mathmatica system, data graphics plot system & Data Mining library
-+ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
-+ **[/mime](./mime/)** : VisualBasic various mime-types doc parsers
++ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O and data object search framework.
++ **[/Data_science](./Data_science/)** : *sciBASIC#* Mathmatica system, data graphics plot system & Data Mining library
++ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic General App Runtime core
++ **[/mime](./mime/)** : various mime-type doc parsers in VisualBasic
 + **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET data graphics system
-+ **[/win32_api](./win32_api/)** : Win32 API collection(Obsolete)
++ **[/win32_api](./win32_api/)** : Win32 API collection (**Obsolete**)
 + **[/www](./www/)** : Web related utilities code
 
 ###### 2. docs for User

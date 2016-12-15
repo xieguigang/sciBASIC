@@ -44,6 +44,18 @@ Namespace Plot3D
     ''' </summary>
     Public Module DataProvider
 
+        <Extension>
+        Public Function Evaluate(f As Func(Of Double, Double, (Z#, c#)),
+                                 x As DoubleRange,
+                                 y As DoubleRange,
+                                 Optional xsteps! = 0.01,
+                                 Optional ysteps! = 0.01,
+                                 Optional parallel As Boolean = False,
+                                 Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of (pt As Point3D, c#))
+
+
+        End Function
+
         ''' <summary>
         ''' Data provider base on the two variable.(这个函数可以同时为3D绘图或者ScatterHeatmap提供绘图数据)
         ''' </summary>
