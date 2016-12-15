@@ -238,7 +238,7 @@ Namespace Terminal
         ''' <returns></returns>
         Public Shared Function ETA(previous#, cur#, Elapsed&) As TimeSpan
             Dim d = cur - previous
-            Dim lefts = (100 - cur) / d
+            Dim lefts = (1 - cur) / d   ' lefts = 100% - currents
             Dim time = lefts * Elapsed
             Dim estimates = TimeSpan.FromMilliseconds(time)
             Return estimates
