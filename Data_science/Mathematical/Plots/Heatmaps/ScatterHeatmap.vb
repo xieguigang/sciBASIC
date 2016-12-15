@@ -261,7 +261,7 @@ Public Module ScatterHeatmap
 
         ' x: a -> b
         ' 每一行数据都是y在发生变化
-        Dim data As List(Of Point3D)() =
+        Dim data As Point3D()() =
             DataProvider.Evaluate(
                 fun, xrange, yrange,
                 xsteps, ysteps,

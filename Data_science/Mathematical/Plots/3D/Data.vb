@@ -45,15 +45,87 @@ Namespace Plot3D
     Public Module DataProvider
 
         <Extension>
-        Public Function Evaluate(f As Func(Of Double, Double, (Z#, c#)),
-                                 x As DoubleRange,
-                                 y As DoubleRange,
-                                 Optional xsteps! = 0.01,
-                                 Optional ysteps! = 0.01,
-                                 Optional parallel As Boolean = False,
-                                 Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of (pt As Point3D, c#))
+        Public Iterator Function Evaluate(f As Func(Of Double, Double, (Z#, c#)),
+                                          x As DoubleRange,
+                                          y As DoubleRange,
+                                          Optional xsteps! = 0.01,
+                                          Optional ysteps! = 0.01,
+                                          Optional parallel As Boolean = False,
+                                          Optional matrix As List(Of EntityObject) = Nothing) As IEnumerable(Of (pt As Point3D, c#)())
 
+            For Each row In f.__2DIterates(x, y, xsteps, ysteps, parallel)
+                Dim out = LinqAPI.Exec(Of (pt As Point3D, C#)) <= From o
+                                                                  In row
+                                                                  Let pt As Point3D = New Point3D With {
+                                                                      .X = o.x,
+                                                                      .Y = o.y,
+                                                                      .Z = o.z.Z
+                                                                  }
+                                                                  Select (pt, o.z.c)
+                If Not matrix Is Nothing Then
+                    matrix += New EntityObject With {
+                        .Identifier = out(Scan0).pt.X,
+                        .Properties = out.ToDictionary(
+                            Function(yk) CStr(yk.pt.Y),
+                            Function(z) z.pt.Z & ":" & z.C)
+                    }
+                End If
 
+                Yield out
+            Next
+        End Function
+
+        <Extension>
+        Private Iterator Function __2DIterates(Of Tout)([in] As Func(Of Double, Double, Tout),
+                                                        x As DoubleRange,
+                                                        y As DoubleRange,
+                                                        xsteps!, ysteps!,
+                                                        parallel As Boolean) As IEnumerable(Of List(Of (x#, y#, z As Tout)))
+
+            Dim tick As New ProgressProvider(x.Length / xsteps)
+            Dim prog As New ProgressBar($"Populates data points...(Estimates size: {tick.Target * (y.Length / ysteps)}...)", cls:=True)
+
+            Call tick.StepProgress()
+
+            For xi# = x.Min To x.Max Step xsteps!
+
+                If parallel Then
+                    Dim dy As New List(Of Double)
+                    Dim x0# = xi
+
+                    For yi# = y.Min To y.Max Step ysteps!
+                        dy += yi
+                    Next
+
+                    Yield LinqAPI.MakeList(Of (x#, y#, Z As Tout)) <=
+ _
+                        From yi As Double
+                        In dy.AsParallel
+                        Let z As Tout = [in](x0, yi)
+                        Select pt = (x:=x0, y:=yi, z:=z)
+                        Order By pt.y Ascending
+                Else
+                    ' 2016-12-15 
+                    ' 在迭代器这里不能够用Clear， 必须要新构建一个list对象， 否则得到的所有的数据都会是第一次迭代的结果
+                    Dim out As New List(Of (x#, y#, Z As Tout))
+
+                    For yi# = y.Min To y.Max Step ysteps!
+                        out += (X:=xi#, Y:=yi#, Z:=[in](xi, yi))
+                    Next
+
+                    Yield out
+                End If
+
+                Dim leftTime As String = tick _
+                    .ETA(prog.ElapsedMilliseconds) _
+                    .FormatTime
+
+                Call prog.SetProgress(
+                    tick.StepProgress,
+                    $" {xi} ({x.Min}, {x.Max}),  ETA={leftTime}")
+            Next
+
+            Call prog.Dispose()
         End Function
 
         ''' <summary>
@@ -73,72 +145,27 @@ Namespace Plot3D
                                           Optional xsteps! = 0.01,
                                           Optional ysteps! = 0.01,
                                           Optional parallel As Boolean = False,
-                                          Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of List(Of Point3D))
+                                          Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of Point3D())
 
-            Dim prog As New ProgressBar("Populates data points...", cls:=True)
-            Dim tick As New ProgressProvider(x.Length / xsteps)
-            Dim out As New List(Of Point3D)
-
-            Call $"Estimates size: {tick.Target * (y.Length / ysteps)}...".__DEBUG_ECHO
-            Call tick.StepProgress()
-
-            For xi# = x.Min To x.Max Step xsteps!
-
-                If parallel Then
-                    Dim dy As New List(Of Double)
-                    Dim x0# = xi
-
-                    For yi# = y.Min To y.Max Step ysteps!
-                        dy += yi
-                    Next
-
-                    out = LinqAPI.MakeList(Of Point3D) <=
- _
-                        From yi As Double
-                        In dy.AsParallel
-                        Let z As Double = f(x0, yi)
-                        Select pt = New Point3D With {
-                            .X = x0,
-                            .Y = yi,
-                            .Z = z
-                        }
-                        Order By pt.Y Ascending
-                Else
-                    ' 2016-12-15 
-                    ' 在迭代器这里不能够用Clear， 必须要新构建一个list对象， 否则得到的所有的数据都会是第一次迭代的结果
-                    out = New List(Of Point3D)
-
-                    For yi# = y.Min To y.Max Step ysteps!
-                        out += New Point3D With {
-                            .X = xi#,
-                            .Y = yi#,
-                            .Z = f(xi, yi)
-                        }
-                    Next
-                End If
-
+            For Each row In f.__2DIterates(x, y, xsteps, ysteps, parallel)
                 If Not matrix Is Nothing Then
                     matrix += New DataSet With {
-                        .Identifier = xi,
-                        .Properties = out _
+                        .Identifier = row(Scan0).x,
+                        .Properties = row _
                         .ToDictionary(
-                            Function(pt) CStr(pt.Y),
-                            Function(pt) CDbl(pt.Z))
+                            Function(pt) CStr(pt.y),
+                            Function(pt) pt.z)
                     }
                 End If
 
-                Yield out
-
-                Dim leftTime As String = tick _
-                    .ETA(prog.ElapsedMilliseconds) _
-                    .FormatTime
-
-                Call prog.SetProgress(
-                    tick.StepProgress,
-                    $" {xi} ({x.Min}, {x.Max}),  ETA={leftTime}")
+                Yield LinqAPI.Exec(Of Point3D) <= From o As (x#, y#, Z#)
+                                                  In row
+                                                  Select New Point3D With {
+                                                      .X = o.x,
+                                                      .Y = o.y,
+                                                      .Z = o.z
+                                                  }
             Next
-
-            Call prog.Dispose()
         End Function
 
         ''' <summary>
