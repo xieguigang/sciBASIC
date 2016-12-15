@@ -77,6 +77,28 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
 
+###### 3D heatmap
+
+```vbnet
+Dim func As Func(Of Double, Double, (Z#, Color#)) =
+_
+    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+
+Call Plot3D.ScatterHeatmap.Plot(
+    func, "-3,3", "-3,3",
+    New Camera With {
+        .screen = New Size(3600, 2500),
+        .ViewDistance = -3.3,
+        .angleZ = 30,
+        .angleX = 30,
+        .angleY = -30,
+        .offset = New Point(-100, -100)
+    }) _
+    .SaveAs("./3d-heatmap.png")
+```
+
+![](./Data_science/Mathematical/images/3d-heatmap.png)
+
 ###### Scatter Heatmap
 
 You can using a lambda expression as the plot data source:
