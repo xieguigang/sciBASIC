@@ -168,6 +168,7 @@
     <Compile Include="3D\Canvas.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="3D\ScatterHeatmap.vb" />
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
     <Compile Include="Axis.vb" />

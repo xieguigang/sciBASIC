@@ -37,6 +37,19 @@ Namespace Plot3D
 
     Public Module Scatter
 
+        ''' <summary>
+        ''' 绘制三维散点图
+        ''' </summary>
+        ''' <param name="func"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="camera"></param>
+        ''' <param name="xsteps!"></param>
+        ''' <param name="ysteps!"></param>
+        ''' <param name="lineColor$"></param>
+        ''' <param name="font"></param>
+        ''' <param name="bg$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Plot(func As Func(Of Double, Double, Double),
                              x As DoubleRange,

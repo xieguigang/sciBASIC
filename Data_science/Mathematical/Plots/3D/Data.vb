@@ -122,7 +122,7 @@ Namespace Plot3D
 
                 Call prog.SetProgress(
                     tick.StepProgress,
-                    $" {xi} ({x.Min}, {x.Max}),  ETA={leftTime}")
+                    $" {xi} ({x.Min}, {x.Max}),  ETA {leftTime}")
             Next
 
             Call prog.Dispose()
