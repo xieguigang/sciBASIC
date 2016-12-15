@@ -130,15 +130,13 @@ Namespace Drawing3D
         ''' <param name="fov">256默认值</param>
         ''' <param name="viewDistance"></param>
         ''' <returns></returns>
-        Public Function Project(viewWidth As Integer,
-                                viewHeight As Integer,
-                                fov As Integer,
-                                viewDistance As Single) As Point3D
-
+        Public Function Project(viewWidth%, viewHeight%, fov%, viewDistance!, Optional offset As PointF = Nothing) As Point3D
             Dim factor As Single, Xn As Single, Yn As Single
+
             factor = fov / (viewDistance + Me.Z)
-            Xn = Me.X * factor + viewWidth / 2
-            Yn = Me.Y * factor + viewHeight / 2
+            Xn = Me.X * factor + viewWidth / 2 + offset.X
+            Yn = Me.Y * factor + viewHeight / 2 + offset.Y
+
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
 

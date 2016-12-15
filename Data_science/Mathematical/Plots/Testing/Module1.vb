@@ -177,23 +177,23 @@ Module Module1
     End Sub
 
     Sub d3heatmap()
-        Dim f As Func(Of Double, Double, (Z#, Color#)) =
-            Function(x, y)
-                Return (x ^ 2 + y ^ 2.5, x * y)
-            End Function
+        Dim func As Func(Of Double, Double, (Z#, Color#)) =
+ _
+            Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
 
-        Call Plot3D.ScatterHeatmap.Plot(f,
-                                        "-2,2",
-                                        "-2,2",
-                                        New Camera With {
-                                        .screen = New Size(3000, 2400),
-                                        .ViewDistance = -2,
-                                        .angleZ = 50,
-                                        .angleX = -90,
-                                        .angleY = -90
-                                        },
-                                        ptSize:=10
-                                        ).SaveAs("x:/3dheatmap.png")
+        Call Plot3D.ScatterHeatmap.Plot(
+            func, "-3,3", "-3,3",
+            New Camera With {
+                .screen = New Size(3600, 2500),
+                .ViewDistance = -3.3,
+                .angleZ = 30,
+                .angleX = 30,
+                .angleY = -30,
+                .offset = New Point(-100, -100)
+            },
+            bg:="skyblue",
+            mapLevels:=15) _
+            .SaveAs("./3d-heatmap.png")
     End Sub
 
     Sub Main()

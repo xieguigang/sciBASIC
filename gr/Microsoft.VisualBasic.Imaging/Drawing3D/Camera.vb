@@ -36,13 +36,15 @@ Namespace Drawing3D
         Public ViewDistance!, angleX!, angleY!, angleZ!
         Public fov! = 256.0!
         Public screen As Size
+        ''' <summary>
+        ''' Using for the project result 
+        ''' </summary>
+        Public offset As Point
+
+#Region "Rotation"
 
         Public Function Rotate(pt As Point3D) As Point3D
             Return pt.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
-        End Function
-
-        Public Function Project(pt As Point3D) As Point3D
-            Return pt.Project(screen.Width, screen.Height, fov, ViewDistance)
         End Function
 
         Public Function RotateX(pt As Point3D) As Point3D
@@ -66,12 +68,6 @@ Namespace Drawing3D
             Next
         End Function
 
-        Public Iterator Function Project(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
-            For Each pt As Point3D In pts
-                Yield pt.Project(screen.Width, screen.Height, fov, ViewDistance)
-            Next
-        End Function
-
         Public Iterator Function RotateX(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
                 Yield pt.RotateX(angleX)
@@ -89,6 +85,21 @@ Namespace Drawing3D
                 Yield pt.RotateZ(angleZ)
             Next
         End Function
+#End Region
+
+#Region "3D -> 2D Project"
+
+        Public Function Project(pt As Point3D) As Point3D
+            Return pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
+        End Function
+
+        Public Iterator Function Project(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
+            For Each pt As Point3D In pts
+                Yield pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
+            Next
+        End Function
+
+#End Region
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

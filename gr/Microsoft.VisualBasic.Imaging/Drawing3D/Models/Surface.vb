@@ -67,10 +67,17 @@ Namespace Drawing3D
 
                 Call polygon.AddLine(a, path(0))
                 Call polygon.CloseFigure()
+
+                Try
 #If DEBUG Then
-                Call canvas.DrawPath(Pens.Black, polygon)
+                    Call canvas.DrawPath(Pens.Black, polygon)
 #End If
-                Call canvas.FillPath(brush, polygon)
+                    Call canvas.FillPath(brush, polygon)
+                Catch ex As Exception
+#If DEBUG Then
+                    Call ex.PrintException
+#End If
+                End Try
             End SyncLock
         End Sub
 
