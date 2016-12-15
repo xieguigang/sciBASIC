@@ -29,21 +29,18 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Scatter
 
@@ -148,21 +145,6 @@ Public Module Scatter
             End Sub)
     End Function
 
-    <Extension>
-    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
-        Return {ode.FromODE("cyan")}.Plot(size, margin, bg)
-    End Function
-
-    <Extension>
-    Public Function Plot(ode As ODEsOut,
-                         Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
-                         Optional bg As String = "white",
-                         Optional ptSize As Single = 30,
-                         Optional width As Single = 5) As Bitmap
-        Return ode.FromODEs(, ptSize, width).Plot(size, margin, bg)
-    End Function
-
     Public Function Plot(x As Vector,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
@@ -207,60 +189,6 @@ Public Module Scatter
                     .pt = New PointF(array(o.i), CSng(o.value))
                 }
                     }
-    End Function
-
-    <Extension>
-    Public Function FromODE(ode As ODE, color As String,
-                            Optional dash As DashStyle = DashStyle.Dash,
-                            Optional ptSize As Integer = 30,
-                            Optional width As Single = 5) As SerialData
-
-        Return New SerialData With {
-            .title = ode.Id,
-            .color = color.ToColor,
-            .lineType = dash,
-            .PointSize = ptSize,
-            .width = width,
-            .pts = LinqAPI.Exec(Of PointData) <=
-                From x As SeqValue(Of Double)
-                In ode.x.SeqIterator
-                Select New PointData(CSng(x.value), CSng(ode.y(x.i)))
-        }
-    End Function
-
-    ''' <summary>
-    ''' Convert ODEs result as scatter plot serial model.
-    ''' </summary>
-    ''' <param name="odes"></param>
-    ''' <param name="colors"></param>
-    ''' <param name="ptSize!"></param>
-    ''' <param name="width"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function FromODEs(odes As ODEsOut,
-                             Optional colors As IEnumerable(Of String) = Nothing,
-                             Optional ptSize! = 30,
-                             Optional width As Single = 5) As SerialData()
-        Dim c As Color() = If(
-            colors.IsNullOrEmpty,
-            ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor))
-
-        Return LinqAPI.Exec(Of SerialData) <=
- _
-            From y As SeqValue(Of NamedValue(Of Double()))
-            In odes.y.Values.SeqIterator
-            Let pts As PointData() = odes.x _
-                .SeqIterator _
-                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.value.Value(x))))
-            Select New SerialData With {
-                .color = c(y.i),
-                .lineType = DashStyle.Solid,
-                .PointSize = ptSize,
-                .title = y.value.Name,
-                .width = width,
-                .pts = pts
-            }
     End Function
 
     <Extension>

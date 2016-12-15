@@ -30,7 +30,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -116,6 +115,8 @@ Public Module Heatmap
         End If
     End Function
 
+    Public Delegate Function ReorderProvider(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -133,7 +134,7 @@ Public Module Heatmap
                          Optional colors As Color() = Nothing,
                          Optional mapLevels% = 100,
                          Optional mapName$ = ColorMap.PatternJet,
-                         Optional kmeans As Boolean = True,
+                         Optional kmeans As ReorderProvider = Nothing,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
                          Optional bg$ = "white",
@@ -179,8 +180,8 @@ Public Module Heatmap
                     .ToDictionary(Function(x) correl(x.i),
                                   Function(x) x.value)
 
-                If kmeans Then
-                    array = array.KmeansReorder
+                If Not kmeans Is Nothing Then
+                    array = kmeans(array)
                 End If
 
                 Dim left! = margin.Width, top! = margin.Height
@@ -268,46 +269,4 @@ Public Module Heatmap
         g.DrawString(text, font, brush, New PointF)
         g.ResetTransform()
     End Sub
-
-    <Extension>
-    Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
-        Dim keys$() = data(Scan0%).Value.Keys.ToArray
-        Dim entityList As Entity() = LinqAPI.Exec(Of Entity) <=
-            From x As NamedValue(Of Dictionary(Of String, Double))
-            In data
-            Select New Entity With {
-                .uid = x.Name,
-                .Properties = keys.ToArray(Function(k) x.Value(k))
-            }
-        Dim clusters = ClusterDataSet(entityList.Length / 5, entityList)
-        Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
-
-        ' 通过kmeans计算出keys的顺序
-        Dim keysEntity = keys.ToArray(
-            Function(k) New Entity With {
-                .uid = k,
-                .Properties = data.ToArray(Function(x) x.Value(k))
-            })
-        Dim keysOrder As New List(Of String)
-
-        For Each cluster In ClusterDataSet(CInt(keys.Length / 5), keysEntity)
-            For Each k In cluster
-                keysOrder += k.uid
-            Next
-        Next
-
-        For Each cluster In clusters
-            For Each entity As Entity In cluster
-                out += New NamedValue(Of Dictionary(Of String, Double)) With {
-                    .Name = entity.uid,
-                    .Value = keysOrder _
-                        .SeqIterator _
-                        .ToDictionary(Function(x) x.value,
-                                      Function(x) entity.Properties(x.i))
-                }
-            Next
-        Next
-
-        Return out
-    End Function
 End Module

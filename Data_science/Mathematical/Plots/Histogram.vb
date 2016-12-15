@@ -36,7 +36,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -290,52 +289,4 @@ Public Module Histogram
                 }
         End Sub
     End Structure
-
-    Public Function FromODE(odes As IEnumerable(Of ODE), Optional colors$() = Nothing) As HistogramGroup
-        Dim clData As Color() = If(
-            colors.IsNullOrEmpty,
-            ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor))
-        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
- _
-            From x As SeqValue(Of ODE)
-            In odes.SeqIterator
-            Select New NamedValue(Of Color) With {
-                .Name = x.value.Id,
-                .Value = clData(x.i)
-            }
-
-        Dim range As DoubleRange = odes.First.xrange
-        Dim delta# = range.Length / odes.First.y.Length
-        Dim samples = LinqAPI.Exec(Of HistProfile) <=
- _
-            From out As SeqValue(Of ODE)
-            In odes.SeqIterator
-            Let left = New Value(Of Double)(range.Min)
-            Select New HistProfile With {
-                .legend = New Legend With {
-                    .color = serials(out.i).Value.RGBExpression,
-                    .fontstyle = CSSFont.Win10Normal,
-                    .style = LegendStyles.Rectangle,
-                    .title = serials(out.i).Name
-                },
-                .data = LinqAPI.Exec(Of HistogramData) <=
- _
-                    From i As SeqValue(Of Double)
-                    In out.value.y.SeqIterator
-                    Let x1 As Double = left
-                    Let x2 As Double = (left = left.value + delta)
-                    Where Not i.value.IsNaNImaginary
-                    Select New HistogramData With {
-                        .x1 = x1,
-                        .x2 = x2,
-                        .y = i.value
-                    }
-            }
-
-        Return New HistogramGroup With {
-            .Samples = samples,
-            .Serials = serials
-        }
-    End Function
 End Module

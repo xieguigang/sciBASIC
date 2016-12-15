@@ -34,9 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 这个不像<see cref="Histogram"/>用于描述若干组连续的数据，这个是将数据按照标签分组来表述出来的
@@ -258,33 +256,33 @@ Public Module BarPlot
         }
     End Function
 
-    ''' <summary>
-    ''' Plot ODEs result using bar plot
-    ''' </summary>
-    ''' <param name="odes"></param>
-    ''' <returns></returns>
-    Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
-        Dim colors = Imaging.ChartColors.Shuffles
-        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
- _
-            From x As SeqValue(Of ODE)
-            In odes.SeqIterator
-            Select New NamedValue(Of Color) With {
-                .Name = x.value.df.ToString,
-                .Value = colors(x.i)
-            }
-        Dim samples = LinqAPI.Exec(Of BarDataSample) <=
- _
-            From i As Integer
-            In odes.First.y.Sequence
-            Select New BarDataSample With {
-                .Tag = i,
-                .data = odes.ToArray(Function(x) x.y(i))
-            }
+    '   ''' <summary>
+    '   ''' Plot ODEs result using bar plot
+    '   ''' </summary>
+    '   ''' <param name="odes"></param>
+    '   ''' <returns></returns>
+    '   Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
+    '       Dim colors = Imaging.ChartColors.Shuffles
+    '       Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
+    '_
+    '           From x As SeqValue(Of ODE)
+    '           In odes.SeqIterator
+    '           Select New NamedValue(Of Color) With {
+    '               .Name = x.value.df.ToString,
+    '               .Value = colors(x.i)
+    '           }
+    '       Dim samples = LinqAPI.Exec(Of BarDataSample) <=
+    '_
+    '           From i As Integer
+    '           In odes.First.y.Sequence
+    '           Select New BarDataSample With {
+    '               .Tag = i,
+    '               .data = odes.ToArray(Function(x) x.y(i))
+    '           }
 
-        Return New BarDataGroup With {
-            .Samples = samples,
-            .Serials = serials
-        }
-    End Function
+    '       Return New BarDataGroup With {
+    '           .Samples = samples,
+    '           .Serials = serials
+    '       }
+    '   End Function
 End Module
