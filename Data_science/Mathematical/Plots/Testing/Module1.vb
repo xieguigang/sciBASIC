@@ -184,12 +184,12 @@ Module Module1
         Call Plot3D.ScatterHeatmap.Plot(
             func, "-3,3", "-3,3",
             New Camera With {
-                .screen = New Size(3600, 2500),
+                .screen = New Size(3200, 2500),
                 .ViewDistance = -3.3,
                 .angleZ = 30,
                 .angleX = 30,
                 .angleY = -30,
-                .offset = New Point(-100, -100)
+                .offset = New Point(-300, -100)
             }) _
             .SaveAs("./3d-heatmap.png")
     End Sub
