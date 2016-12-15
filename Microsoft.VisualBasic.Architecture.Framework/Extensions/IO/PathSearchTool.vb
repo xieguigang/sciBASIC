@@ -233,9 +233,9 @@ Public Module ProgramPathSearchTool
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FileLength(path As String) As Integer
+    Public Function FileLength(path As String) As Long
         If Not path.FileExists Then
-            Return -1
+            Return -1&
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length
         End If

@@ -59,10 +59,10 @@ Namespace Plot3D
             'Call DirectCast(models.Last, Surface).Allocation()
             'Call DirectCast(models.First, Surface).Allocation()
 
-            Dim x As New DoubleRange(-5, 5)
-            Dim y As New DoubleRange(-5, 5)
+            '   Dim x As New DoubleRange(-5, 5)
+            '  Dim y As New DoubleRange(-5, 5)
 
-            models += Grid(Function(xx, yy) Math.Sin(xx ^ 2) * Math.Cos(yy ^ 2), x, y, ColorMap.PatternJet, 0.05, 0.05).Select(Function(l) DirectCast(l, I3DModel))
+            '  models += Grid(Function(xx, yy) Math.Sin(xx ^ 2) * Math.Cos(yy ^ 2), x, y, ColorMap.PatternJet, 0.05, 0.05).Select(Function(l) DirectCast(l, I3DModel))
             '  models += Grid(Function(xx, yy) xx * yy, x, y, 0.05, 0.05, Pens.Green).Select(Function(l) DirectCast(l, I3DModel))
 
             'models += New Line3D With {.a = New Point3D(30, 0, 0), .b = New Point3D(-30, 0, 0), .pen = Pens.Red}
@@ -70,9 +70,9 @@ Namespace Plot3D
             'models += New Line3D With {.a = New Point3D(0, 0, 30), .b = New Point3D(0, 0, -30), .pen = Pens.DarkViolet}
             'models += New Cube(25)
 
-            Call Run()
+            '  Call Run()
 
-            Call SetAutoRotate(New Point3D(1, 0, 0))
+            '  Call SetAutoRotate(New Point3D(1, 0, 0))
         End Sub
 
         Protected Overrides Sub ___animationLoop()
