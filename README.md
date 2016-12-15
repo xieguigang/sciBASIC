@@ -62,7 +62,8 @@ PM> Install-Package sciBASIC -Pre
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
-+ **[Darwinism computing module](./Data_science/Darwinism)**
++ **[Darwinism computing module](./Data_science/Darwinism/)**
++ **[Data Mining &amp; Machine Learning](./Data_science/)**
 + **[sciBASIC# DataFrame System](./Data/DataFrame/)**
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 
@@ -90,7 +91,7 @@ Call ScatterHeatmap _
 ```
 
 ![](./Data_science/Mathematical/images/scatter-heatmap.png)
-![](./Data_science/Mathematical/images/scatter-heatmap-exp.png)
+![](./Data_science/Mathematical/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
 
 ###### Stacked Barplot
 
@@ -131,6 +132,7 @@ Public Function lgamma(x As Double) As Double
 End Function
 ```
 <img src="./Data_science/Mathematical/data/beta-PDF/beta_PDF.png" height="650px"></img>
+> https://en.wikipedia.org/wiki/Beta_distribution
 
 ###### Heatmap
 ![](./Data_science/Mathematical/images/heatmap.png)
@@ -155,6 +157,17 @@ write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/
 
 ## What's new of VisualBasic language Syntax from this runtime library?
 
+First of all, imports the language feature namespace of VisualBasic
+
+```vbnet
+#Region "Microsoft VisualBasic.NET language"
+' sciBASIC# general application runtime
+' Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll
+#End Region
+
+Imports Microsoft.VisualBasic.Language
+```
+
 ###### 1. Inline value assign
 
 Old:
@@ -172,8 +185,6 @@ Loop
 New:
 
 ```vbnet
-Imports Microsoft.VisualBasic.Language
-
 Dim s As New Value(Of String)
 
 Do While Not (s = blablabla) Is Nothing
@@ -195,10 +206,6 @@ Call l.AddRange(From x In 100.Sequence Select CStr(x))
 New:
 
 ```vbnet
-Imports Microsoft.VisualBasic
-
-
-
 Dim l As New List(Of String)
 
 l += "123"
@@ -210,8 +217,6 @@ l += From x As Integer
 ###### int Type
 
 ```vbnet
-Imports Microsoft.VisualBasic.Language
-
 Dim min As int = 1
 Dim max As int = 200
 Dim x As Integer = 199
