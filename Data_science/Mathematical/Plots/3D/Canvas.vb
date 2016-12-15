@@ -26,13 +26,13 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 Namespace Plot3D
 
     Public Class Canvas : Inherits GDIDevice
+
+        Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
 
         Protected Overrides Sub __init()
 
@@ -77,6 +77,38 @@ Namespace Plot3D
 
         Protected Overrides Sub ___animationLoop()
 
+        End Sub
+
+        Private Sub InitializeComponent()
+            Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+            CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.SuspendLayout()
+            '
+            'TrackBar1
+            '
+            Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.TrackBar1.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+            Me.TrackBar1.Location = New System.Drawing.Point(486, 470)
+            Me.TrackBar1.Maximum = 100
+            Me.TrackBar1.Minimum = -100
+            Me.TrackBar1.Name = "TrackBar1"
+            Me.TrackBar1.Size = New System.Drawing.Size(259, 45)
+            Me.TrackBar1.TabIndex = 0
+            '
+            'Canvas
+            '
+            Me.Controls.Add(Me.TrackBar1)
+            Me.DoubleBuffered = True
+            Me.Name = "Canvas"
+            Me.Size = New System.Drawing.Size(765, 529)
+            CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.ResumeLayout(False)
+            Me.PerformLayout()
+
+        End Sub
+
+        Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
+            Call MyBase.GDIDevice_Load(Nothing, Nothing)
         End Sub
     End Class
 End Namespace

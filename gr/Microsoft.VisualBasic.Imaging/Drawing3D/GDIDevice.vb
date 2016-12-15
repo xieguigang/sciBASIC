@@ -77,7 +77,7 @@ Namespace Drawing3D
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub GDIDevice_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Protected Sub GDIDevice_Load(sender As Object, e As EventArgs) Handles Me.Load
             camera = New Camera With {
                 .angleX = 0,
                 .angleY = 0,
@@ -111,7 +111,11 @@ Namespace Drawing3D
         End Sub
 
         Protected Overridable Sub __init()
-            Throw New Exception("Please Implements the initialize code at here.")
+            Try
+                Throw New Exception("Please Implements the initialize code at here.")
+            Catch ex As Exception
+                Call ex.__DEBUG_ECHO
+            End Try
         End Sub
 
         ''' <summary>
@@ -125,7 +129,11 @@ Namespace Drawing3D
         End Sub
 
         Protected Overridable Sub ___animationLoop()
-            Throw New Exception("Please Implements the control code at here.")
+            Try
+                Throw New Exception("Please Implements the control code at here.")
+            Catch ex As Exception
+                Call ex.__DEBUG_ECHO
+            End Try
         End Sub
 
         Protected Overridable Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
@@ -195,7 +203,11 @@ Namespace Drawing3D
         End Sub
 
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-            camera.screen = Size
+            If camera Is Nothing Then
+                Call "Camera object not initialized!".__DEBUG_ECHO
+            Else
+                camera.screen = Size
+            End If
         End Sub
 
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
