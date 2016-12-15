@@ -76,6 +76,32 @@ Call Bubble _
 
 ##### Heatmap
 
+###### 3D surface heatmap
+
+```vbnet
+Dim func As Func(Of Double, Double, (Z#, Color#)) =
+_
+    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+
+Call Plot3D.ScatterHeatmap.Plot(
+    func, "-3,3", "-3,3",
+    New Camera With {
+        .screen = New Size(3600, 2500),
+        .ViewDistance = -3.3,
+        .angleZ = 30,
+        .angleX = 30,
+        .angleY = -30,
+        .offset = New Point(-100, -100)
+    },
+    bg:="skyblue",
+    mapLevels:=15) _
+    .SaveAs("./3d-heatmap.png")
+```
+
+![](./images/3d-heatmap.png)
+
+###### Normal heatmap
+
 ![](./images/heatmap.png)
 
 Using colorbrewer theme:
