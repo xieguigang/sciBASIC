@@ -77,7 +77,11 @@ Namespace Scripting
                 {GetType(Process), AddressOf Casting.CastProcess},
                 {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
                 {GetType(Single), AddressOf Casting.CastSingle},
-                {GetType(Decimal), Function(x) CDec(x)}
+                {GetType(Decimal), Function(x) CDec(x)},
+                {GetType(Point), AddressOf PointParser},
+                {GetType(PointF), AddressOf FloatPointParser},
+                {GetType(Size), AddressOf SizeParser},
+                {GetType(SizeF), AddressOf FloatSizeParser}
         }
 
         ''' <summary>

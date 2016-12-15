@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::0d7c81914058c11a083844a1e62c3dd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 
@@ -40,6 +41,30 @@ Namespace Scripting
     ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        Public Function PointParser(pt$) As Point
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New Point(x, y)
+        End Function
+
+        Public Function FloatPointParser(pt$) As PointF
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New PointF(x, y)
+        End Function
+
+        Public Function SizeParser(pt$) As Size
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New Size(x, y)
+        End Function
+
+        Public Function FloatSizeParser(pt$) As SizeF
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New SizeF(x, y)
+        End Function
 
         ''' <summary>
         ''' DirectCast(obj, T)
