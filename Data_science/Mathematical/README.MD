@@ -92,9 +92,7 @@ Call Plot3D.ScatterHeatmap.Plot(
         .angleX = 30,
         .angleY = -30,
         .offset = New Point(-100, -100)
-    },
-    bg:="skyblue",
-    mapLevels:=15) _
+    }) _
     .SaveAs("./3d-heatmap.png")
 ```
 
