@@ -36,6 +36,24 @@ Namespace Plot3D
                 xrange.Length / xn,
                 yrange.Length / yn,
                 parallel, matrix).ToArray
+
+            Return data.Plot(
+                camera, legendTitle,
+                mapName, mapLevels,
+                bg,
+                axisFont, legendFont)
+        End Function
+
+        <Extension>
+        Public Function Plot(data As (sf As Surface, c As Double())(),
+                             camera As Camera,
+                             Optional legendTitle$ = "3D scatter heatmap",
+                             Optional mapName$ = "Spectral:c10",
+                             Optional mapLevels% = 25,
+                             Optional bg$ = "white",
+                             Optional axisFont$ = CSSFont.Win10Normal,
+                             Optional legendFont As Font = Nothing) As Bitmap
+
             Dim averages As Double() = data _
                 .ToArray(Function(c) c.c.Average)
             Dim levels As Integer() = averages _
@@ -94,6 +112,36 @@ Namespace Plot3D
 
                     Call g.DrawImageUnscaled(legend, left, top)
                 End Sub)
+        End Function
+
+        ''' <summary>
+        ''' 3D heatmap plot from matrix data
+        ''' </summary>
+        ''' <param name="matrix"></param>
+        ''' <param name="Camera"></param>
+        ''' <param name="legendTitle$"></param>
+        ''' <param name="mapName$"></param>
+        ''' <param name="mapLevels%"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="axisFont$"></param>
+        ''' <param name="legendFont"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Plot(matrix As IEnumerable(Of EntityObject),
+                             Camera As Camera,
+                             Optional legendTitle$ = "3D scatter heatmap",
+                             Optional mapName$ = "Spectral:c10",
+                             Optional mapLevels% = 25,
+                             Optional bg$ = "white",
+                             Optional axisFont$ = CSSFont.Win10Normal,
+                             Optional legendFont As Font = Nothing) As Bitmap
+
+            Return matrix.Surface.ToArray _
+                .Plot(
+                Camera, legendTitle,
+                mapName, mapLevels,
+                bg,
+                axisFont, legendFont)
         End Function
     End Module
 End Namespace
