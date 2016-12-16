@@ -230,7 +230,7 @@ Namespace Plot3D
                                           Optional xsteps! = 0.01,
                                           Optional ysteps! = 0.01,
                                           Optional parallel As Boolean = False,
-                                          Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of Point3D())
+                                          Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of (X#, y#, z#)())
 
             For Each row In f.__2DIterates(x, y, xsteps, ysteps, parallel)
                 If Not matrix Is Nothing Then
@@ -243,13 +243,7 @@ Namespace Plot3D
                     }
                 End If
 
-                Yield LinqAPI.Exec(Of Point3D) <= From o As (x#, y#, Z#)
-                                                  In row
-                                                  Select New Point3D With {
-                                                      .X = o.x,
-                                                      .Y = o.y,
-                                                      .Z = o.z
-                                                  }
+                Yield row.ToArray
             Next
         End Function
 

@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Types
 
@@ -141,25 +142,36 @@ Public Module ScatterHeatmap
            }.Plot)
     End Function
 
-    '<Extension>
-    'Public Function Plot(matrix As IEnumerable(Of DataSet),
-    '                     xrange As DoubleRange,
-    '                     yrange As DoubleRange,
-    '                     Optional colorMap$ = "Spectral:c10",
-    '                     Optional mapLevels% = 25,
-    '                     Optional bg$ = "white",
-    '                     Optional size As Size = Nothing,
-    '                     Optional unit% = 5,
-    '                     Optional legendTitle$ = "Scatter Heatmap",
-    '                     Optional legendFont As Font = Nothing,
-    '                     Optional xsteps! = Single.NaN,
-    '                     Optional ysteps! = Single.NaN,
-    '                     Optional parallel As Boolean = False,
-    '                     Optional ByRef matrix As List(Of DataSet) = Nothing,
-    '                     Optional xlabel$ = "X",
-    '                     Optional ylabel$ = "Y") As Bitmap
+    <Extension>
+    Public Function Plot(matrix As IEnumerable(Of DataSet),
+                         Optional colorMap$ = "Spectral:c10",
+                         Optional mapLevels% = 25,
+                         Optional bg$ = "white",
+                         Optional size As Size = Nothing,
+                         Optional legendTitle$ = "Scatter Heatmap",
+                         Optional legendFont As Font = Nothing,
+                         Optional xlabel$ = "X",
+                         Optional ylabel$ = "Y") As Bitmap
+        If size.IsEmpty Then
+            size = New Size(3000, 2400)
+        End If
 
-    'End Function
+        Dim margin As New Size(400, 100)
+
+        Return GraphicsPlots(
+           size, margin,
+           bg$, AddressOf New __plotHelper With {
+                .margin = margin,
+                .offset = New Point(-300, 0),
+                .colorMap = colorMap,
+                .legendFont = legendFont,
+                .legendTitle = legendTitle,
+                .mapLevels = mapLevels,
+                .matrix = matrix,
+                .xlabel = xlabel,
+                .ylabel = ylabel
+           }.Plot)
+    End Function
 
     ''' <summary>
     ''' 因为ByRef参数不能够再lambda表达式之中进行使用，所以在这里必须要使用一个helper对象来读取原始的矩阵数据
@@ -176,38 +188,66 @@ Public Module ScatterHeatmap
         Public unit%
         Public xlabel$, ylabel$
 
+        Public Function GetData(plotSize As Size) As (x#, y#, z#)()
+            If func Is Nothing Then
+                ' 直接返回矩阵数据
+                Return LinqAPI .Exec(Of (x#,y#,z#)) <= From line  As DataSet 
+                                                       In matrix
+                                                       Let xi =Val ( line .Identifier )
+                                                       Let data =   line .Properties .Select(Function (o) (x:=xi ,y:=val(o.Key ), z:=o.Value ) )
+                                                       Select data 
+            Else
+                Return func _
+                    .__getData(plotSize,  ' 得到通过计算返回来的数据
+                          xrange, yrange,
+                          xsteps, ysteps,
+                          parallel, matrix,
+                          unit)
+            End If
+        End Function
+
+        Public Function GetColor(data As Double(), ByRef colorReturns As SolidBrush()) As Func(Of String, SolidBrush)
+            Dim reals = data.SeqIterator.Where(Function(x) Not (+x).IsNaNImaginary).ToArray
+            Dim indexLevels = reals.Select(Function(x) +x).Log2Ranks
+            Dim realIndexs = reals.SeqIterator.ToDictionary(Function(index) index.value.i.ToString, Function(level) indexLevels(level.i))
+            Dim colors = Designer.GetBrushes(colorMap, mapLevels)
+
+            colorReturns = colors
+
+            Return Function(index$)
+                       If realIndexs.ContainsKey(index) Then
+                           Dim level = realIndexs(index) - 1
+
+                           If level < 0 Then
+                               level = 0
+                           ElseIf level >= colors.Length Then
+                               level = colors.Length - 1
+                           End If
+
+                           Return colors(level)
+                       Else
+                           Return Brushes.Gray
+                       End If
+                   End Function
+        End Function
+
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
-            Dim data As Point3D() = func _
-                .__getData(region.PlotRegion.Size,  ' 得到通过计算返回来的数据
-                           xrange, yrange,
-                           xsteps, ysteps,
-                           parallel, matrix,
-                           unit)
-            Dim scaler As New Scaling(data)
+            Dim data = GetData(region.PlotRegion.Size)
+            Dim scaler As New Scaling(Data)
             Dim xf = scaler.XScaler(region.Size, region.Margin)
             Dim yf = scaler.YScaler(region.Size, region.Margin)
-            Dim colors As SolidBrush() = Designer.GetBrushes(colorMap, mapLevels)
-            Dim lv%() = data _
-               .Select(Function(z) CDbl(z.Z)) _
-               .GenerateMapping(mapLevels)
+            Dim colorDatas As SolidBrush() = Nothing
+            Dim getColors = GetColor(Data.ToArray(Function(o) o.Z), colorDatas)
             Dim size As Size = region.Size
 
             Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 
             offset = New Point(offset.X, offset.Y - unit / 2)
 
-            For i As Integer = 0 To data.Length - 1
-                Dim p As Point3D = data(i)
-                Dim level = lv(i) - 1
-
-                If level < 0 Then
-                    level = 0
-                ElseIf level >= colors.Length Then
-                    level = colors.Length - 1
-                End If
-
-                Dim c As SolidBrush = colors(level)
-                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.Y) + offset.Y, unit, unit)
+            For i As Integer = 0 To Data.Length - 1
+                Dim p As (X#, y#, Z#) = Data(i)
+                Dim c As SolidBrush = getColors(i)
+                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.y) + offset.Y, unit, unit)
 
                 Call g.FillRectangle(c, fill)
                 Call g.DrawRectangle(New Pen(c),
@@ -217,15 +257,16 @@ Public Module ScatterHeatmap
             Next
 
             ' Draw legends
-            Dim legend As Bitmap = colors.ColorMapLegend(
+            Dim realData = Data.Where(Function(o) Not o.Z.IsNaNImaginary).Select(Function(o) o.Z).ToArray
+            Dim legend As Bitmap = colorDatas.ColorMapLegend(
                 haveUnmapped:=False,
-                min:=Math.Round(data.Min(Function(z) z.Z), 1),
-                max:=Math.Round(data.Max(Function(z) z.Z), 1),
+                min:=Math.Round(realData.Min, 1),
+                max:=Math.Round(realData.Max, 1),
                 title:=legendTitle,
                 titleFont:=legendFont)
             Dim lsize As Size = legend.Size
             Dim left% = size.Width - lsize.Width + 150
-            Dim top% = Size.Height / 3
+            Dim top% = size.Height / 3
 
             Call g.DrawImageUnscaled(legend, left, top)
         End Sub
@@ -252,7 +293,7 @@ Public Module ScatterHeatmap
                                ByRef xsteps!,
                                ByRef ysteps!,
                                parallel As Boolean,
-                               ByRef matrix As List(Of DataSet), unit%) As Point3D()
+                               ByRef matrix As List(Of DataSet), unit%) As (X#, y#, z#)()
 
         If Single.IsNaN(xsteps) Then
             xsteps = xrange.Length / size.Width
@@ -266,7 +307,7 @@ Public Module ScatterHeatmap
 
         ' x: a -> b
         ' 每一行数据都是y在发生变化
-        Dim data As Point3D()() =
+        Dim data As (X#, y#, Z#)()() =
             DataProvider.Evaluate(
                 fun, xrange, yrange,
                 xsteps, ysteps,

@@ -53,9 +53,9 @@ Public Class Scaling
         type = GetType(Scatter)
     End Sub
 
-    Sub New(data As Point3D())
-        dx = Scaling(data, Function(p) p.X, True, xmin)
-        dy = Scaling(data, Function(p) p.Y, True, ymin)
+    Sub New(data As (X#, y#, z#)())
+        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
         type = GetType(ScatterHeatmap)
     End Sub
 
@@ -235,6 +235,11 @@ Public Class Scaling
     ''' <returns></returns>
     Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), absoluteScaling As Boolean, ByRef min!) As Single
         Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
+        Return __scaling(array!, min!, absoluteScaling)
+    End Function
+
+    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#, z#)), [get] As Func(Of (X#, y#, z#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+        Dim array!() = data.ToArray([get])
         Return __scaling(array!, min!, absoluteScaling)
     End Function
 

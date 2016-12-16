@@ -123,28 +123,18 @@ Namespace Mathematical
         End Function
 
         <ExportAPI("Ranks.Log2")>
-        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Double), Optional Level As Integer = 100) As Long()
-            Dim priMaps As Double() = data.GenerateMapping(Level).ToArray(Function(d) d / Level)
-            Dim log2Data As Double() = Level.ToArray(Function(n) Math.Log(n + 1, 2))
-            ' 将等级映射到log2的y轴上面
-            Dim lgMax As Double = log2Data.Max
-            priMaps = priMaps.ToArray(Function(d) lgMax * d) ' lgMax * %
-            '  Dim Maps As Long() = priMaps.ToArray(Function(d) CLng(2 ^ d))  ' 找到x坐标的位置 0-100
-            Return priMaps.ToArray(Function(x) CLng(x))
+        <Extension> Public Function Log2Ranks(data As IEnumerable(Of Double), Optional Level As Integer = 100) As Integer()
+            Dim log2Value = data.ToArray(Function(x) Math.Log(x, 2))
+            Return log2Value.GenerateMapping(Level)
         End Function
 
-        'Public Function SquareMaps(data As Generic.IEnumerable(Of Double), Optional level As Integer = 100) As Integer()
-        '    Dim priMaps As Double() = data.GenerateMapping(level)  ' 得到y轴的数据
-
-        'End Function
-
         <ExportAPI("Ranks.Log2")>
-        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Integer), Optional Level As Integer = 10) As Long()
+        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Integer), Optional Level As Integer = 10) As Integer()
             Return data.Select(Function(d) CDbl(d)).Log2Ranks
         End Function
 
         <ExportAPI("Ranks.Log2")>
-        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Long), Optional Level As Integer = 10) As Long()
+        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Long), Optional Level As Integer = 10) As Integer()
             Return data.Select(Function(d) CDbl(d)).Log2Ranks
         End Function
 

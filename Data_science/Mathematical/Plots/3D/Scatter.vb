@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Plot3D
 
@@ -63,7 +64,8 @@ Namespace Plot3D
 
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
-                .ToVector
+                .IteratesALL _
+                .ToArray(Function(o) New Point3D(o.X, o.y, o.z))
             Dim rect As Rectangle
             Dim previous As Point
             Dim cur As Point
