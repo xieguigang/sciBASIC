@@ -198,10 +198,15 @@ Public Module ScatterHeatmap
 
             For i As Integer = 0 To data.Length - 1
                 Dim p As Point3D = data(i)
-                Dim c As SolidBrush = colors(
-                    If(lv(i) = 0, 0,
-                    If(lv(i) >= colors.Length,
-                    colors.Length - 1, lv(i))))
+                Dim level = lv(i) - 1
+
+                If level < 0 Then
+                    level = 0
+                ElseIf level >= colors.Length Then
+                    level = colors.Length - 1
+                End If
+
+                Dim c As SolidBrush = colors(level)
                 Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.Y) + offset.Y, unit, unit)
 
                 Call g.FillRectangle(c, fill)

@@ -752,7 +752,19 @@ Public Module StringHelpers
             t(0) = Math.Round(Val(t(0)), [decimal])
             s = t(0) & "E" & t(1)
         Else
-            s = Math.Round(n, [decimal]).ToString
+            Dim dZERO = Regex.Match(s, "\.[0]+").Value.Trim("."c)
+
+            If dZERO.Length >= [decimal] Then
+                s = Mid(s.Split("."c).Last, dZERO.Length + 1)
+                s = Mid(s, 1, 1) & "." & Mid(s, 2) & 0
+                s = Math.Round(Val(s), [decimal])
+                If InStr(s, ".") = 0 Then
+                    s &= ".0"
+                End If
+                s = s & "E-" & FormatZero(dZERO.Length + 1)
+            Else
+                s = Math.Round(n, [decimal]).ToString
+            End If
         End If
         Return s
     End Function
