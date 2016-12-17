@@ -88,6 +88,16 @@ Namespace MonteCarlo
                 uidProvider:=uidProvider)
         End Function
 
+        ''' <summary>
+        ''' 返回来的结果是按照突变的参数进行从小到大排序了的
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <param name="base"></param>
+        ''' <param name="param$"></param>
+        ''' <param name="range"></param>
+        ''' <param name="n%"></param>
+        ''' <param name="parallel"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function Run(model As Type,
                                      base As ODEsOut,
