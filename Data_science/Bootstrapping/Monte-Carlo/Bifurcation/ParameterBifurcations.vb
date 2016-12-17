@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::7133d03cae929af0a6170122329b6c93, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Bifurcation\ParameterBifurcations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -85,6 +86,43 @@ Namespace MonteCarlo
                 ncluster,
                 [stop],
                 uidProvider:=uidProvider)
+        End Function
+
+        <Extension>
+        Public Iterator Function Run(model As Type,
+                                     base As ODEsOut,
+                                     param$,
+                                     range As DoubleRange,
+                                     Optional n% = 10,
+                                     Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
+
+            Dim l = base.x.Length
+            Dim a = base.x(Scan0)
+            Dim b = base.x.Last
+
+            Dim __run As Func(Of Double, ODEsOut) =
+                Function(x#)
+                    Dim params As New Dictionary(Of String, Double)(base.params)
+                    Dim out As ODEsOut = MonteCarlo.Model _
+                        .RunTest(model, params, params, l, a, b)
+                    Return out
+                End Function
+
+            If Not parallel Then
+                For Each x# In range.Enumerate(n)
+                    Yield __run(x)
+                Next
+            Else
+                Dim LQuery = From x As Double
+                             In range.Enumerate(n)
+                             Select x,
+                                 out = __run(x)
+                             Order By x Ascending
+
+                For Each x In LQuery
+                    Yield x.out
+                Next
+            End If
         End Function
     End Module
 End Namespace

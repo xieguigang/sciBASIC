@@ -293,8 +293,8 @@ Public Module ScatterHeatmap
             Dim realData = Data.Where(Function(o) Not o.Z.IsNaNImaginary).Select(Function(o) o.Z).ToArray
             Dim legend As Bitmap = colorDatas.ColorMapLegend(
                 haveUnmapped:=False,
-                min:=Math.Round(realData.Min, 1),
-                max:=Math.Round(realData.Max, 1),
+                min:=realData.Min.FormatNumeric(1),
+                max:=realData.Max.FormatNumeric(1),
                 title:=legendTitle,
                 titleFont:=legendFont)
             Dim lsize As Size = legend.Size

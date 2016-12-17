@@ -33,7 +33,7 @@
 '
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
@@ -140,5 +140,16 @@ Namespace ComponentModel.Ranges
             Call exp.Parser(r.Min, r.Max)
             Return r
         End Operator
+
+        Public Function Enumerate(n%) As Double()
+            Dim delta# = Length / n
+            Dim out As New List(Of Double)
+
+            For x As Double = Min To Max Step delta
+                out += x
+            Next
+
+            Return out
+        End Function
     End Class
 End Namespace
