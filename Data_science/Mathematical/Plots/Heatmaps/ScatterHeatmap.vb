@@ -112,7 +112,8 @@ Public Module ScatterHeatmap
                          Optional parallel As Boolean = False,
                          Optional ByRef matrix As List(Of DataSet) = Nothing,
                          Optional xlabel$ = "X",
-                         Optional ylabel$ = "Y") As Bitmap
+                         Optional ylabel$ = "Y",
+                         Optional logbase# = -1.0R) As Bitmap
 
         If size.IsEmpty Then
             size = New Size(3000, 2400)
@@ -138,7 +139,8 @@ Public Module ScatterHeatmap
                 .matrix = matrix,
                 .unit = unit,
                 .xlabel = xlabel,
-                .ylabel = ylabel
+                .ylabel = ylabel,
+                .logBase = logbase
            }.Plot)
     End Function
 
@@ -187,15 +189,17 @@ Public Module ScatterHeatmap
         Public matrix As List(Of DataSet)
         Public unit%
         Public xlabel$, ylabel$
+        Public logBase#
 
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
                 ' 直接返回矩阵数据
-                Return LinqAPI .Exec(Of (x#,y#,z#)) <= From line  As DataSet 
-                                                       In matrix
-                                                       Let xi =Val ( line .Identifier )
-                                                       Let data =   line .Properties .Select(Function (o) (x:=xi ,y:=val(o.Key ), z:=o.Value ) )
-                                                       Select data 
+                Return LinqAPI.Exec(Of (x#,y#,z#)) <= 
+                    From line As DataSet 
+                    In matrix
+                    Let xi = Val(line.Identifier)
+                    Let data = line.Properties.Select(Function(o) (x:=xi, y:=val(o.Key), z:=o.Value))
+                    Select data 
             Else
                 Return func _
                     .__getData(plotSize,  ' 得到通过计算返回来的数据
@@ -206,11 +210,40 @@ Public Module ScatterHeatmap
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="colorReturns">从这里返回绘制legend所需要的数据</param>
+        ''' <returns></returns>
         Public Function GetColor(data As Double(), ByRef colorReturns As SolidBrush()) As Func(Of String, SolidBrush)
-            Dim reals = data.SeqIterator.Where(Function(x) Not (+x).IsNaNImaginary).ToArray
-            Dim indexLevels = reals.Select(Function(x) +x).Log2Ranks
-            Dim realIndexs = reals.SeqIterator.ToDictionary(Function(index) index.value.i.ToString, Function(level) indexLevels(level.i))
-            Dim colors = Designer.GetBrushes(colorMap, mapLevels)
+            Dim reals As SeqValue(Of Double)()
+            Dim indexLevels%()
+
+            If logBase > 0 Then
+                reals = data _
+                    .SeqIterator _
+                    .Where(Function(x) Not (+x).IsNaNImaginary AndAlso (+x) <> 0R) _
+                    .ToArray
+                indexLevels = reals _
+                    .Select(Function(x) Math.Abs(+x)) _
+                    .Log2Ranks(mapLevels)
+            Else
+                reals = data _
+                    .SeqIterator _
+                    .Where(Function(x) Not (+x).IsNaNImaginary) _
+                    .ToArray
+                indexLevels = reals _
+                    .Select(Function(x) x.value) _
+                    .GenerateMapping(mapLevels)
+            End If
+
+            Dim realIndexs As Dictionary(Of String, Integer) = reals _
+                .SeqIterator _
+                .ToDictionary(Function(index) index.value.i.ToString,
+                              Function(level) indexLevels(level.i))
+            Dim colors As SolidBrush() =
+                Designer.GetBrushes(colorMap, mapLevels)
 
             colorReturns = colors
 
