@@ -33,6 +33,12 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module KeyValuePairExtensions
 
+    <Extension>
+    Public Function Join(Of T, V)(d As Dictionary(Of T, V), name As T, value As V) As Dictionary(Of T, V)
+        d(name) = value
+        Return d
+    End Function
+
     ''' <summary>
     ''' 请注意，这里的类型约束只允许枚举类型
     ''' </summary>

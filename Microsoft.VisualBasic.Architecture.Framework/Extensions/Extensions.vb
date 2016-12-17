@@ -859,24 +859,6 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' 用于解析出任意实数的正则表达式
-    ''' </summary>
-    Public Const regexpFloat As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
-
-    ''' <summary>
-    ''' Parsing a real number from the expression text by using the regex expression <see cref="regexpFloat"/>.
-    ''' (使用正则表达式解析目标字符串对象之中的一个实数)
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Double.Match")>
-    <Extension> Public Function RegexParseDouble(s As String) As Double
-        Return Val(s.Match(regexpFloat))
-    End Function
-
-    ''' <summary>
     ''' All of the number value in the target array offset a integer value.
     ''' </summary>
     ''' <param name="array"></param>

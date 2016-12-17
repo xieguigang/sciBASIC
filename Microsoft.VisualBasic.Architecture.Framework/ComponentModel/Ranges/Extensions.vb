@@ -24,7 +24,7 @@ Namespace ComponentModel.Ranges
             If InStr(exp, "->") > 0 Then
                 t = Strings.Split(exp, "->")
             Else
-                exp = Regex.Match(exp, regexpFloat & "\s*,\s*" & regexpFloat).Value
+                exp = Regex.Match(exp, RegexpFloat & "\s*,\s*" & RegexpFloat).Value
 
                 If String.IsNullOrEmpty(exp) Then
                     exp = $"'{raw}' is not a valid expression format!"

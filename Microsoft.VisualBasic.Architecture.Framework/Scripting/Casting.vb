@@ -31,6 +31,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
@@ -77,6 +78,26 @@ Namespace Scripting
                 Return Nothing
             End If
             Return DirectCast(obj, T)
+        End Function
+
+        ''' <summary>
+        ''' 用于解析出任意实数的正则表达式
+        ''' </summary>
+        Public Const RegexpDouble As String = "-?\d+(\.\d+)?"
+        Public Const ScientificNotation$ = RegexpDouble & "[Ee][+-]\d+"
+        Public Const RegexpFloat$ = RegexpDouble & "([Ee][+-]\d+)?"
+
+        ''' <summary>
+        ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexpFloat"/>.
+        ''' (使用正则表达式解析目标字符串对象之中的一个实数)
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        '''
+        <ExportAPI("Double.Match")>
+        <Extension> Public Function RegexParseDouble(s As String) As Double
+            Return Val(s.Match(RegexpFloat))
         End Function
 
         ''' <summary>

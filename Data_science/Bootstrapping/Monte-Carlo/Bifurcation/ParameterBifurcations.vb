@@ -100,23 +100,33 @@ Namespace MonteCarlo
             Dim a = base.x(Scan0)
             Dim b = base.x.Last
 
-            Dim __run As Func(Of Double, ODEsOut) =
-                Function(x#)
-                    Dim params As New Dictionary(Of String, Double)(base.params)
-                    Dim out As ODEsOut = MonteCarlo.Model _
-                        .RunTest(model, params, params, l, a, b)
-                    Return out
-                End Function
+            For Each x In base.params
+                Call App.JoinVariable(x.Key, x.Value)
+            Next
+
+            Dim ranges#() = range.Enumerate(n)
 
             If Not parallel Then
-                For Each x# In range.Enumerate(n)
+                Dim __run As Func(Of Double, ODEsOut) =
+                    Function(x#)
+                        Dim params As New Dictionary(Of String, Double)(base.params)
+                        params(param) = x
+                        Dim out As ODEsOut = MonteCarlo.Model _
+                            .RunTest(model, params, params, l, a, b)
+                        Return out
+                    End Function
+
+                For Each x# In ranges
                     Yield __run(x)
                 Next
             Else
                 Dim LQuery = From x As Double
-                             In range.Enumerate(n)
+                             In ranges.AsParallel
+                             Let params = New Dictionary(Of String, Double)(base.params) _
+                                 .Join(param, x)
                              Select x,
-                                 out = __run(x)
+                                 out = MonteCarlo.Model _
+                                    .RunTest(model, params, params, l, a, b)
                              Order By x Ascending
 
                 For Each x In LQuery
