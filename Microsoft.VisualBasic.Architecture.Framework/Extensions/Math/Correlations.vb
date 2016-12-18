@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::28550f06b09e2dfcc692aeb6cc5e43bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports System.Runtime.CompilerServices
 
 Namespace Mathematical.Correlations
 
@@ -69,6 +70,153 @@ Namespace Mathematical.Correlations
             Dim value As Double = Xa * Math.Log(Xa / Ya)  ' 0 * n = 0
             Return value
         End Function
+
+#Region "https://en.wikipedia.org/wiki/Kendall_tau_distance"
+
+        ''' <summary>
+        ''' Provides rank correlation coefficient metrics Kendall tau
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/felipebravom/RankCorrelation
+        ''' </remarks>
+        Public Function rankKendallTauBeta(ByVal x As Double(), ByVal y As Double()) As Double
+            Debug.Assert(x.Length = y.Length)
+            Dim x_n As Integer = x.Length
+            Dim y_n As Integer = y.Length
+            Dim x_rank As Double() = New Double(x_n - 1) {}
+            Dim y_rank As Double() = New Double(y_n - 1) {}
+            Dim sorted As New SortedDictionary(Of Double?, HashSet(Of Integer?))()
+
+            For i As Integer = 0 To x_n - 1
+                Dim v As Double = x(i)
+                If sorted.ContainsKey(v) = False Then
+                    sorted(v) = New HashSet(Of Integer?)()
+                End If
+                sorted(v).Add(i)
+            Next
+
+            Dim c As Integer = 1
+            For Each v As Double In sorted.Keys.OrderByDescending(Function(k) k)
+                Dim r As Double = 0
+                For Each i As Integer In sorted(v)
+                    r += c
+                    c += 1
+                Next
+
+                r /= sorted(v).Count
+
+                For Each i As Integer In sorted(v)
+                    x_rank(i) = r
+                Next
+            Next
+
+            sorted.Clear()
+            For i As Integer = 0 To y_n - 1
+                Dim v As Double = y(i)
+                If sorted.ContainsKey(v) = False Then
+                    sorted(v) = New HashSet(Of Integer?)()
+                End If
+                sorted(v).Add(i)
+            Next
+
+            c = 1
+            For Each v As Double In sorted.Keys.OrderByDescending(Function(k) k)
+                Dim r As Double = 0
+                For Each i As Integer In sorted(v)
+                    r += c
+                    c += 1
+                Next
+
+                r /= (sorted(v).Count)
+
+                For Each i As Integer In sorted(v)
+                    y_rank(i) = r
+                Next
+            Next
+
+            Return kendallTauBeta(x_rank, y_rank)
+        End Function
+
+        ''' <summary>
+        ''' Provides rank correlation coefficient metrics Kendall tau
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/felipebravom/RankCorrelation
+        ''' </remarks>
+        Public Function kendallTauBeta(ByVal x As Double(), ByVal y As Double()) As Double
+            Debug.Assert(x.Length = y.Length)
+
+            Dim c As Integer = 0
+            Dim d As Integer = 0
+            Dim xTies As New Dictionary(Of Double?, HashSet(Of Integer?))()
+            Dim yTies As New Dictionary(Of Double?, HashSet(Of Integer?))()
+
+            For i As Integer = 0 To x.Length - 2
+                For j As Integer = i + 1 To x.Length - 1
+                    If x(i) > x(j) AndAlso y(i) > y(j) Then
+                        c += 1
+                    ElseIf x(i) < x(j) AndAlso y(i) < y(j) Then
+                        c += 1
+                    ElseIf x(i) > x(j) AndAlso y(i) < y(j) Then
+                        d += 1
+                    ElseIf x(i) < x(j) AndAlso y(i) > y(j) Then
+                        d += 1
+                    Else
+                        If x(i) = x(j) Then
+                            If xTies.ContainsKey(x(i)) = False Then
+                                xTies(x(i)) = New HashSet(Of Integer?)()
+                            End If
+                            xTies(x(i)).Add(i)
+                            xTies(x(i)).Add(j)
+                        End If
+
+                        If y(i) = y(j) Then
+                            If yTies.ContainsKey(y(i)) = False Then
+                                yTies(y(i)) = New HashSet(Of Integer?)()
+                            End If
+                            yTies(y(i)).Add(i)
+                            yTies(y(i)).Add(j)
+                        End If
+                    End If
+                Next
+            Next
+
+            Dim diff As Integer = c - d
+            Dim denom As Double = 0
+
+            Dim n0 As Double = (x.Length * (x.Length - 1)) / 2.0
+            Dim n1 As Double = 0
+            Dim n2 As Double = 0
+
+            For Each t As Double In xTies.Keys
+                Dim s As Double = xTies(t).Count
+                n1 += (s * (s - 1)) / 2
+            Next
+
+            For Each t As Double In yTies.Keys
+                Dim s As Double = yTies(t).Count
+                n2 += (s * (s - 1)) / 2
+            Next
+
+            denom = Math.Sqrt((n0 - n1) * (n0 - n2))
+
+            If denom = 0 Then
+                denom += 0.000000001
+            End If
+
+            Dim td As Double = diff / (denom) ' 0.000..1 added on 11/02/2013 fixing NaN error
+
+            Debug.Assert(td >= -1 AndAlso td <= 1, td)
+
+            Return td
+        End Function
+#End Region
 
         ''' <summary>
         ''' will regularize the unusual case of complete correlation
