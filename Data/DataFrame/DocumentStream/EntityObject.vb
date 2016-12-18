@@ -87,7 +87,7 @@ Namespace DocumentStream
         End Function
 
         ''' <summary>
-        ''' 
+        ''' <paramref name="uidMap"/>一般情况下会自动进行判断，不需要具体的设置
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="uidMap">
