@@ -100,7 +100,7 @@ Namespace Drawing3D
                     },
                     .brush = brushes(i)
                 }
-                faces(i).Allocation()
+                '   faces(i).Allocation()
             Next
         End Sub
 

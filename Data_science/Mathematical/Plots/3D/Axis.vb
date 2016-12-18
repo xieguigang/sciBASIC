@@ -58,16 +58,17 @@ Namespace Plot3D
                             y As DoubleRange,
                             z As DoubleRange)
 
+            Dim pen As New Pen(Color.Black, 5)
             Dim axis As New Axis With {
-                .x1 = New Point3D With {.X = x.Min},
-                .x2 = New Point3D With {.X = x.Max},
-                .y1 = New Point3D With {.Y = y.Min},
-                .y2 = New Point3D With {.Y = y.Max},
-                .z1 = New Point3D With {.Z = z.Min},
-                .z2 = New Point3D With {.Z = z.Max},
-                .penX = Pens.Black,
-                .penY = Pens.Black,
-                .penZ = Pens.Black
+                .x1 = x.Min,
+                .x2 = x.Max,
+                .y1 = y.Min,
+                .y2 = y.Max,
+                .z1 = z.Min,
+                .z2 = z.Max,
+                .penX = pen,
+                .penY = pen,
+                .penZ = pen
             }
 
             Call g.DrawAxis(camera, font, axis)
@@ -76,18 +77,38 @@ Namespace Plot3D
         <Extension>
         Public Sub DrawAxis(ByRef g As Graphics, camera As Camera, font As Font, axis As Axis)
             With camera
-                Call g.DrawLine(axis.penX, .Project(.Rotate(axis.x1)).PointXY(camera.screen), .Project(.Rotate(axis.x2)).PointXY(camera.screen))
-                Call g.DrawLine(axis.penY, .Project(.Rotate(axis.y1)).PointXY(camera.screen), .Project(.Rotate(axis.y2)).PointXY(camera.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(axis.z1)).PointXY(camera.screen), .Project(.Rotate(axis.z2)).PointXY(camera.screen))
+                Dim a As New Point3D(axis.x1, axis.y1, axis.z1)
+                Dim b As New Point3D(axis.x1, axis.y2, axis.z1)
+                Dim c As New Point3D(axis.x2, axis.y1, axis.z1)
+                Dim d As New Point3D(axis.x2, axis.y2, axis.z1)
+                Dim a1 As New Point3D(axis.x1, axis.y1, axis.z2)
+                Dim b1 As New Point3D(axis.x1, axis.y2, axis.z2)
+                Dim c1 As New Point3D(axis.x2, axis.y1, axis.z2)
+                Dim d1 As New Point3D(axis.x2, axis.y2, axis.z2)
+
+                Call g.DrawLine(axis.penX, .Project(.Rotate(a)).PointXY(.screen), .Project(.Rotate(b)).PointXY(.screen))
+                Call g.DrawLine(axis.penY, .Project(.Rotate(a)).PointXY(.screen), .Project(.Rotate(c)).PointXY(.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(b)).PointXY(.screen), .Project(.Rotate(d)).PointXY(.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(c)).PointXY(.screen), .Project(.Rotate(d)).PointXY(.screen))
+
+                Call g.DrawLine(axis.penX, .Project(.Rotate(a1)).PointXY(.screen), .Project(.Rotate(b1)).PointXY(.screen))
+                Call g.DrawLine(axis.penY, .Project(.Rotate(a1)).PointXY(.screen), .Project(.Rotate(c1)).PointXY(.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(b1)).PointXY(.screen), .Project(.Rotate(d1)).PointXY(.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(c1)).PointXY(.screen), .Project(.Rotate(d1)).PointXY(.screen))
+
+                Call g.DrawLine(axis.penX, .Project(.Rotate(a)).PointXY(.screen), .Project(.Rotate(a1)).PointXY(.screen))
+                Call g.DrawLine(axis.penY, .Project(.Rotate(b)).PointXY(.screen), .Project(.Rotate(b1)).PointXY(.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(c)).PointXY(.screen), .Project(.Rotate(c1)).PointXY(.screen))
+                Call g.DrawLine(axis.penZ, .Project(.Rotate(d)).PointXY(.screen), .Project(.Rotate(d1)).PointXY(.screen))
             End With
         End Sub
     End Module
 
     Public Structure Axis
 
-        Dim x1, x2 As Point3D
-        Dim y1, y2 As Point3D
-        Dim z1, z2 As Point3D
+        Dim x1, x2 As Single
+        Dim y1, y2 As Single
+        Dim z1, z2 As Single
 
         Dim penX, penY, penZ As Pen
 

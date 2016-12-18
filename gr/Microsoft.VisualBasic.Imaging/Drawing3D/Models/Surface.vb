@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing3D
 
-    Public Class Surface
+    Public Structure Surface
         Implements IEnumerable(Of Point3D)
         Implements I3DModel
 
@@ -42,43 +42,36 @@ Namespace Drawing3D
         Public vertices() As Point3D
         Public brush As Brush
 
-        Dim path As Point()
-
-        Public Sub Allocation()
-            path = New Point(vertices.Length - 1) {}
-        End Sub
-
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            SyncLock path
-                Dim polygon As New GraphicsPath
+            Dim path = New Point(vertices.Length - 1) {}
+            Dim polygon As New GraphicsPath
 
-                For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
-                    path(pt.i) = pt.value.PointXY(camera.screen)
-                Next
+            For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
+                path(pt.i) = pt.value.PointXY(camera.screen)
+            Next
 
-                Dim a As Point = path(0)
-                Dim b As Point
+            Dim a As Point = path(0)
+            Dim b As Point
 
-                For i As Integer = 1 To path.Length - 1
-                    b = path(i)
-                    Call polygon.AddLine(a, b)
-                    a = b
-                Next
+            For i As Integer = 1 To path.Length - 1
+                b = path(i)
+                Call polygon.AddLine(a, b)
+                a = b
+            Next
 
-                Call polygon.AddLine(a, path(0))
-                Call polygon.CloseFigure()
+            Call polygon.AddLine(a, path(0))
+            Call polygon.CloseFigure()
 
-                Try
+            Try
 #If DEBUG Then
                     Call canvas.DrawPath(Pens.Black, polygon)
 #End If
-                    Call canvas.FillPath(brush, polygon)
-                Catch ex As Exception
+                Call canvas.FillPath(brush, polygon)
+            Catch ex As Exception
 #If DEBUG Then
                     Call ex.PrintException
 #End If
-                End Try
-            End SyncLock
+            End Try
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
@@ -96,9 +89,8 @@ Namespace Drawing3D
                 .brush = brush,
                 .vertices = data.ToArray
             }
-            Call model.Allocation()
 
             Return model
         End Function
-    End Class
+    End Structure
 End Namespace

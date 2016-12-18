@@ -44,33 +44,34 @@ Namespace Drawing3D
         Protected camera As Camera
         Protected models As New List(Of I3DModel)
 
-        Dim _rotationThread As New UpdateThread(
-            200, Sub()
-                     SyncLock camera
-                         If keyRotate.X <> 0R OrElse keyRotate.Y <> 0R OrElse keyRotate.Z <> 0R Then
-                             camera.angleX += keyRotate.X
-                             camera.angleY += keyRotate.Y
-                             camera.angleZ += keyRotate.Z
-                         Else
-                             camera.angleX += 0.01
-                             camera.angleY += 0.01
-                             camera.angleZ += 0.01
-                         End If
-                     End SyncLock
-                 End Sub)
+        '  Dim _rotationThread As New UpdateThread(100, AddressOf RunRotate)
 
-        Public Property AutoRotation As Boolean
-            Get
-                Return _rotationThread.Running
-            End Get
-            Set(value As Boolean)
-                If value Then
-                    _rotationThread.Start()
+        Private Sub RunRotate()
+            SyncLock camera
+                If keyRotate.X <> 0R OrElse keyRotate.Y <> 0R OrElse keyRotate.Z <> 0R Then
+                    camera.angleX += keyRotate.X
+                    camera.angleY += keyRotate.Y
+                    camera.angleZ += keyRotate.Z
                 Else
-                    _rotationThread.Stop()
+                    camera.angleX += 0.01
+                    camera.angleY += 0.01
+                    camera.angleZ += 0.01
                 End If
-            End Set
-        End Property
+            End SyncLock
+        End Sub
+
+        'Public Property AutoRotation As Boolean
+        '    Get
+        '        Return _rotationThread.Running
+        '    End Get
+        '    Set(value As Boolean)
+        '        If value Then
+        '            _rotationThread.Start()
+        '        Else
+        '            _rotationThread.Stop()
+        '        End If
+        '    End Set
+        'End Property
 
         ''' <summary>
         ''' Enable Single-buffering to eliminate flickering.
@@ -157,7 +158,7 @@ Namespace Drawing3D
             'GDIDevice
             '
             Me.Name = "GDIDevice"
-            Me.Size = New System.Drawing.Size(438, 355)
+            Me.Size = New Size(438, 355)
             Me.ResumeLayout(False)
 
         End Sub
@@ -217,14 +218,12 @@ Namespace Drawing3D
 
         Dim keyRotate As Point3D
 
-        Public Sub SetAutoRotate(angle As Point3D)
-            keyRotate = angle
-            AutoRotation = True
-        End Sub
+        'Public Sub SetAutoRotate(angle As Point3D)
+        '    keyRotate = angle
+        '    ' AutoRotation = True
+        'End Sub
 
         Private Sub GDIDevice_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-            AutoRotation = True
-
             Select Case e.KeyCode
                 Case System.Windows.Forms.Keys.Up
                     keyRotate = New Point3D(0, 1, 0)
@@ -236,13 +235,13 @@ Namespace Drawing3D
                     keyRotate = New Point3D(-1, 0, 0)
                 Case Else
                     ' Do Nothing
-                    AutoRotation = False
             End Select
+
+            Call RunRotate()
         End Sub
 
         Private Sub GDIDevice_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
             keyRotate = Nothing
-            AutoRotation = False
         End Sub
     End Class
 End Namespace

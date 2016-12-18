@@ -26,13 +26,19 @@
 
 #End Region
 
+Imports System.Drawing
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
-Namespace Plot3D
+Namespace Plot3D.Device
+
+    Public Delegate Sub IGraphics(g As Graphics, camera As Camera)
 
     Public Class Canvas : Inherits GDIDevice
 
-        Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
+        Friend WithEvents TrackBar1 As TrackBar
+
+        Public Property Plot As IGraphics
 
         Protected Overrides Sub __init()
 
@@ -79,6 +85,10 @@ Namespace Plot3D
 
         End Sub
 
+        Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
+            Call _Plot(g, camera)
+        End Sub
+
         Private Sub InitializeComponent()
             Me.TrackBar1 = New System.Windows.Forms.TrackBar()
             CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -109,6 +119,7 @@ Namespace Plot3D
 
         Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
             Call MyBase.GDIDevice_Load(Nothing, Nothing)
+            Call MyBase.Run()
         End Sub
     End Class
 End Namespace

@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
@@ -154,23 +155,23 @@ Module Module1
 
 
     Public Sub scatterHeatmapTest()
-        'Dim f As Func(Of Double, Double, Double) =
-        '    Function(x, y) x ^ 2 + y ^ 3
-
-        'Call ScatterHeatmap _
-        '    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
-        '    .SaveAs("./scatter-heatmap.png")
-
-        Dim matrix As New List(Of DataSet)
+        Dim f As Func(Of Double, Double, Double) =
+            Function(x, y) Math.Sqrt(x * x + y * y)
 
         Call ScatterHeatmap _
-            .Plot("(x ^ 2) / (y + 10)", "(-1,1)", "(-5,1)",
-                  colorMap:="PRGn:c10",
-                  legendTitle:="z = x / (y + 1)",
-                  unit:=1,
-                  matrix:=matrix) _
-            .SaveAs("./scatter-heatmap-exp.png")
-        Call matrix.SaveTo("./scatter-heatmap.matrix.csv")
+            .Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
+            .SaveAs("./scatter-heatmap.png")
+
+        'Dim matrix As New List(Of DataSet)
+
+        'Call ScatterHeatmap _
+        '    .Plot("(x ^ 2) / (y + 10)", "(-1,1)", "(-5,1)",
+        '          colorMap:="PRGn:c10",
+        '          legendTitle:="z = x / (y + 1)",
+        '          unit:=1,
+        '          matrix:=matrix) _
+        '    .SaveAs("./scatter-heatmap-exp.png")
+        'Call matrix.SaveTo("./scatter-heatmap.matrix.csv")
 
 
         Pause()
@@ -185,12 +186,12 @@ Module Module1
             func, "-3,3", "-3,3",
             New Camera With {
                 .screen = New Size(3200, 2500),
-                .ViewDistance = -3.3,
+                .ViewDistance = -10,
                 .angleZ = 30,
-                .angleX = 30,
-                .angleY = -30,
-                .offset = New Point(-300, -100)
-            }) _
+                .angleX = 100,
+                .angleY = 0,
+                .offset = New Point(0, -500)
+            }, dev:=Display.NewWindow) _
             .SaveAs("./3d-heatmap.png")
     End Sub
 
