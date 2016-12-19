@@ -35,6 +35,6 @@ Public Class ParallelLoadingTest
     <Microsoft.VisualBasic.Parallel.ParallelLoading.LoadEntry>
     Public Shared Function Load(path As String) As ParallelLoadingTest()
         Call Threading.Thread.Sleep(10 * 1000)
-        Return {New ParallelLoadingTest With {.ddddd = RandomDouble(), .fffd = Now}}
+        Return {New ParallelLoadingTest With {.ddddd = Rnd(), .fffd = Now}}
     End Function
 End Class

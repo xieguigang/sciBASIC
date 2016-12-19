@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::8edfae2994cabba250f91e341061bdf1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -44,6 +44,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Text
 'Imports Microsoft.VisualBasic.Webservices
 'Imports System.Windows.Forms
 
@@ -57,7 +58,7 @@ Public Module __DEBUG_MAIN
         Call n.__DEBUG_ECHO
 
         ' Assign value to this extension property
-        x.Uid.value = RandomDouble() * 1000000000000L
+        x.Uid.value = Rnd() * 1000000000000L
 
         ' display the extension property value
         Call x.Uid.__DEBUG_ECHO
@@ -210,7 +211,7 @@ Public Module __DEBUG_MAIN
                                                            Select path
 
 
-        Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = RandomDouble(), .xdddd = 345}.WriteClass("~/test.ini")
+        Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = Rnd(), .xdddd = 345}.WriteClass("~/test.ini")
 
         Dim nnndasdasd As dddddFile = IOProvider.LoadProfile(Of dddddFile)
 
@@ -219,7 +220,7 @@ Public Module __DEBUG_MAIN
 
         Do While True
             n.Step()
-            n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(RandomDouble))
+            n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(Rnd))
             Threading.Thread.Sleep(1000)
         Loop
 
@@ -323,7 +324,7 @@ Public Module __DEBUG_MAIN
 
         Dim ss As String = IO.File.ReadAllText("0.823528468608856_blast_out_parse_error")
 
-        ss = ss.Replace(NIL, " ")
+        ss = ss.Replace(ASCII.NUL, " ")
 
         Dim Console As InteractiveDevice = New InteractiveDevice With {.PromptText = "#"}
 
