@@ -441,7 +441,7 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
-    <Compile Include="Extensions\Math\TokenConnections.vb" />
+    <Compile Include="Extensions\Trinity\NLP\TextTokens.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
@@ -858,9 +858,7 @@
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\Trinity\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

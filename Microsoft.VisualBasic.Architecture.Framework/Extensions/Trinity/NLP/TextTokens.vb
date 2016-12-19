@@ -29,7 +29,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Mathematical.Analysis
+Namespace Data.Trinity.NLP
 
     Public Interface ITokenCount
         Property Token As String
@@ -46,7 +46,7 @@ Namespace Mathematical.Analysis
     ''' <summary>
     ''' 应用于字符串分析的，自然语言处理
     ''' </summary>
-    Public Module TokenConnections
+    Public Module TextTokens
 
         Public Sub Analysis(Of T, Tnode As ITokenCount)(
                                    data As IEnumerable(Of T),
