@@ -1,32 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::869374ba53eb6ac58769929a18878373, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace SoftwareToolkits
 
@@ -36,7 +38,7 @@ Namespace SoftwareToolkits
     ''' Tools for generate the program change log document.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ChangeLog : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
+    Public Class ChangeLog : Inherits ITextFile
 
         ''' <summary>
         ''' 
@@ -46,7 +48,7 @@ Namespace SoftwareToolkits
         ''' <remarks></remarks>
         Sub New(Path As String, ApplyOn As String)
             Me.FilePath = Path
-            Dim Assembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(FileIO.FileSystem.GetFileInfo(ApplyOn).FullName)
+            Dim Assembly As Assembly = Assembly.LoadFrom(FileIO.FileSystem.GetFileInfo(ApplyOn).FullName)
             Dim Properties = Assembly.CustomAttributes.ToArray
 
         End Sub
@@ -110,8 +112,12 @@ Namespace SoftwareToolkits
         ''' <param name="Changes"></param>
         ''' <param name="version">假若为空的话，会自动的根据上一次版本的号码叠加1</param>
         ''' <remarks></remarks>
-        Public Sub AppendChangeInformation(Changes As Generic.IEnumerable(Of String), Optional version As Version = Nothing, Optional Status As String = "")
-            Dim UpdateRecord As UpdateInformation = New UpdateInformation With {.UpdateTime = Now.ToString, .Changes = Changes.ToArray, .VerStatus = Status}
+        Public Sub AppendChangeInformation(Changes As IEnumerable(Of String), Optional version As Version = Nothing, Optional Status As String = "")
+            Dim UpdateRecord As New UpdateInformation With {
+                .UpdateTime = Now.ToString,
+                .Changes = Changes.ToArray,
+                .VerStatus = Status
+            }
             If version Is Nothing Then
                 If _UpdateList.IsNullOrEmpty Then
                     version = New Version
