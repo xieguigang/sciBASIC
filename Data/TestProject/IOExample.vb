@@ -47,7 +47,7 @@ Public Module IOExample
 
         Public Function TryParse(cell As String) As Object Implements IParser.TryParse
             Dim tagValue = cell.GetTagValue(":")
-            Return New KeyValuePair(Of String, Integer)(tagValue.Name.GetString, CInt(Val(tagValue.x.Trim)))
+            Return New KeyValuePair(Of String, Integer)(tagValue.Name.GetString, CInt(Val(tagValue.Value.Trim)))
         End Function
     End Structure
 
