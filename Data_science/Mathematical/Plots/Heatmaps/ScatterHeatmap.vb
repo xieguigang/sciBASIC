@@ -111,6 +111,8 @@ Public Module ScatterHeatmap
                          Optional ysteps! = Single.NaN,
                          Optional parallel As Boolean = False,
                          Optional ByRef matrix As List(Of DataSet) = Nothing,
+                         Optional minZ# = Double.MinValue,
+                         Optional maxZ# = Double.MaxValue,
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
                          Optional logbase# = -1.0R) As Bitmap
@@ -140,7 +142,9 @@ Public Module ScatterHeatmap
                 .unit = unit,
                 .xlabel = xlabel,
                 .ylabel = ylabel,
-                .logBase = logbase
+                .logBase = logbase,
+                .maxZ = maxZ,
+                .minZ = minZ
            }.Plot)
     End Function
 
@@ -153,7 +157,9 @@ Public Module ScatterHeatmap
                          Optional legendTitle$ = "Scatter Heatmap",
                          Optional legendFont As Font = Nothing,
                          Optional xlabel$ = "X",
-                         Optional ylabel$ = "Y") As Bitmap
+                         Optional ylabel$ = "Y",
+                         Optional minZ# = Double.MinValue,
+                         Optional maxZ# = Double.MaxValue) As Bitmap
         If size.IsEmpty Then
             size = New Size(3000, 2400)
         End If
@@ -171,7 +177,9 @@ Public Module ScatterHeatmap
                 .mapLevels = mapLevels,
                 .matrix = matrix,
                 .xlabel = xlabel,
-                .ylabel = ylabel
+                .ylabel = ylabel,
+                .minZ = minZ,
+                .maxZ = maxZ
            }.Plot)
     End Function
 
@@ -190,6 +198,7 @@ Public Module ScatterHeatmap
         Public unit%
         Public xlabel$, ylabel$
         Public logBase#
+        Public minZ, maxZ As Double
 
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
@@ -231,7 +240,7 @@ Public Module ScatterHeatmap
             Else
                 reals = data _
                     .SeqIterator _
-                    .Where(Function(x) Not (+x).IsNaNImaginary) _
+                    .Where(Function(x) (Not (+x).IsNaNImaginary) AndAlso x.value >= minZ AndAlso x.value <= maxZ) _
                     .ToArray
                 indexLevels = reals _
                     .Select(Function(x) x.value) _
@@ -290,7 +299,12 @@ Public Module ScatterHeatmap
             Next
 
             ' Draw legends
-            Dim realData = Data.Where(Function(o) Not o.Z.IsNaNImaginary).Select(Function(o) o.Z).ToArray
+            Dim realData#() = data _
+                .Select(Function(o) o.z) _
+                .Where(Function(z) (Not z.IsNaNImaginary) AndAlso
+                    z >= minZ AndAlso
+                    z <= maxZ) _
+                .ToArray
             Dim legend As Bitmap = colorDatas.ColorMapLegend(
                 haveUnmapped:=False,
                 min:=realData.Min.FormatNumeric(1),
