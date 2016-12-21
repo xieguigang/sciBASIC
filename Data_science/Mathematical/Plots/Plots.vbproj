@@ -192,6 +192,7 @@
     <Compile Include="g\Legends\LegendStyles.vb" />
     <Compile Include="Heatmaps\Heatmap.vb" />
     <Compile Include="BarPlot\Data.vb" />
+    <Compile Include="Heatmaps\HeatmapTable.vb" />
     <Compile Include="Heatmaps\ScatterHeatmap.vb" />
     <Compile Include="Histogram.vb" />
     <Compile Include="QQPlot.vb" />

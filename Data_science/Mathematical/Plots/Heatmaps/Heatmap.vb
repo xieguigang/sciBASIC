@@ -118,7 +118,7 @@ Public Module Heatmap
     Public Delegate Function ReorderProvider(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
 
     ''' <summary>
-    ''' 
+    ''' 可以用来表示任意变量之间的相关度
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="colors"></param>
