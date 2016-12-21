@@ -121,9 +121,11 @@ Public Module Heatmap
     ''' 可以用来表示任意变量之间的相关度
     ''' </summary>
     ''' <param name="data"></param>
-    ''' <param name="colors"></param>
+    ''' <param name="colors">
+    ''' 可以使用这一组颜色来手动自定义heatmap的颜色，也可以使用<paramref name="mapName"/>来获取内置的颜色谱
+    ''' </param>
     ''' <param name="mapLevels%"></param>
-    ''' <param name="mapName$"></param>
+    ''' <param name="mapName$">The color map name. <see cref="Designer"/></param>
     ''' <param name="kmeans">Reorder datasets by using kmeans clustering</param>
     ''' <param name="size"></param>
     ''' <param name="margin"></param>
