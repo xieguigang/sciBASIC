@@ -283,6 +283,11 @@ Public Module Heatmap
             End Sub)
     End Function
 
+    <Extension>
+    Friend Sub __plotInterval(g As Graphics, array As NamedValue(Of Dictionary(Of String, Double))())
+
+    End Sub
+
     ''' <summary>
     ''' 绘制按照任意角度旋转的文本
     ''' </summary>
