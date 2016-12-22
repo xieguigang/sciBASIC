@@ -33,6 +33,18 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' Determines whether the <see cref="NameValueCollection"/> contains the specified key.
+    ''' </summary>
+    ''' <param name="d"></param>
+    ''' <param name="key$">The key to locate in the <see cref="NameValueCollection"/></param>
+    ''' <returns>true if the System.Collections.Generic.Dictionary`2 contains an element with
+    ''' the specified key; otherwise, false.</returns>
+    <Extension>
+    Public Function ContainsKey(d As NameValueCollection, key$) As Boolean
+        Return Not String.IsNullOrEmpty(d(key))
+    End Function
+
     <Extension>
     Public Function Join(Of T, V)(d As Dictionary(Of T, V), name As T, value As V) As Dictionary(Of T, V)
         d(name) = value
