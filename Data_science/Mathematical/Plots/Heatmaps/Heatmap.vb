@@ -121,7 +121,7 @@ Public Module Heatmap
     ''' 可以用来表示任意变量之间的相关度
     ''' </summary>
     ''' <param name="data"></param>
-    ''' <param name="colors">
+    ''' <param name="customColors">
     ''' 可以使用这一组颜色来手动自定义heatmap的颜色，也可以使用<paramref name="mapName"/>来获取内置的颜色谱
     ''' </param>
     ''' <param name="mapLevels%"></param>
@@ -133,7 +133,7 @@ Public Module Heatmap
     ''' <returns></returns>
     <Extension>
     Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
-                         Optional colors As Color() = Nothing,
+                         Optional customColors As Color() = Nothing,
                          Optional mapLevels% = 100,
                          Optional mapName$ = ColorMap.PatternJet,
                          Optional kmeans As ReorderProvider = Nothing,
@@ -156,7 +156,8 @@ Public Module Heatmap
         End If
 
         Return __plotInterval(
-            Sub(g, region, array, left, font, dw, levels, top)
+            Sub(g, region, array, left, font, dw, levels, top, colors)
+
                 If Not kmeans Is Nothing Then
                     array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
                 End If
@@ -200,14 +201,14 @@ Public Module Heatmap
 
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
-            End Sub, data.ToArray, colors, mapLevels, mapName, size, margin, bg, fontStyle, legendTitle, legendFont, min, max, mainTitle, titleFont)
+            End Sub, data.ToArray, customColors, mapLevels, mapName, size, margin, bg, fontStyle, legendTitle, legendFont, min, max, mainTitle, titleFont)
     End Function
 
     ''' <summary>
     ''' 一些共同的绘图元素过程
     ''' </summary>
     <Extension>
-    Friend Function __plotInterval(plot As Action(Of Graphics, GraphicsRegion, NamedValue(Of Dictionary(Of String, Double))(), Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single)),
+    Friend Function __plotInterval(plot As Action(Of Graphics, GraphicsRegion, NamedValue(Of Dictionary(Of String, Double))(), Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
                                    Optional colors As Color() = Nothing,
                                    Optional mapLevels% = 100,
@@ -240,6 +241,10 @@ Public Module Heatmap
 
         size = If(size.IsEmpty, New Size(2000, 1600), size)
 
+        If colors.IsNullOrEmpty Then
+            colors = Designer.GetColors(mapName, mapLevels)
+        End If
+
         Return GraphicsPlots(
             size, margin,
             bg$,
@@ -260,15 +265,10 @@ Public Module Heatmap
 
                 Dim left! = margin.Width, top! = margin.Height
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
-
-                If colors.IsNullOrEmpty Then
-                    colors = Designer.GetColors(mapName, mapLevels)
-                End If
-
                 Dim getLeft As New Value(Of Single)(left)
                 Dim getTop As New Value(Of Single)(top)
 
-                Call plot(g, region, array, getLeft, font, dw, lvs, getTop)
+                Call plot(g, region, array, getLeft, font, dw, lvs, getTop, colors)
 
                 left = getLeft
                 top = getTop
