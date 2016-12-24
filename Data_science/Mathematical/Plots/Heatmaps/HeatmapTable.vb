@@ -19,7 +19,7 @@ Public Module HeatmapTable
     ''' </param>
     ''' <returns></returns>
     Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
-                         Optional mapLevels% = 100,
+                         Optional mapLevels% = 20,
                          Optional mapName$ = ColorMap.PatternJet,
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
@@ -46,7 +46,10 @@ Public Module HeatmapTable
                     valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
                 End If
 
+                margin = region.Margin
+
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array   ' 在这里绘制具体的矩阵
+
                     For Each key$ In keys
                         Dim c# = x.Value(key)
                         Dim level% = levels(c#)  '  得到等级
@@ -58,6 +61,8 @@ Public Module HeatmapTable
                         Dim b As New SolidBrush(color)
                         Dim r As Single = Math.Abs(c) * dw / 2 ' 计算出半径的大小
                         Dim d = dw / 2 - r
+
+                        r *= 2
 
                         Call g.FillPie(b, rect.Left + d, rect.Top + d, r, r, 0, 360)
 

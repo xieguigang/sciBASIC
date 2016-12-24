@@ -198,6 +198,7 @@ Module Module1
         Dim data = LoadData("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.csv", True)
         Dim spcc = data.CorrelationMatrix(AddressOf Spearman)
         Call HeatmapTable.Plot(spcc,).SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
+        Call Heatmap.Plot(spcc, mapLevels:=25).SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.heatmap.png")
     End Sub
 
     Sub Main()
