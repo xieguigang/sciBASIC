@@ -177,6 +177,17 @@ data(mtcars)
 write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
 ```
 
+Another heatmap style
+
+```vbnet
+Dim data = LoadData("./Sample.csv", True)
+Dim spcc = data.CorrelationMatrix(AddressOf Spearman)
+
+Call HeatmapTable.Plot(spcc,) _
+    .SaveAs("./Sample.SPCC.png")
+```
+![](./Data_science/Mathematical/images/heatmap/Sample.SPCC.png)
+
 ## What's new of VisualBasic language Syntax from this runtime library?
 
 First of all, imports the language feature namespace of VisualBasic
