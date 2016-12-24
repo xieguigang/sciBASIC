@@ -29,7 +29,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
@@ -62,14 +61,14 @@ Public Module DataImports
     <ExportAPI("--Imports", Info:="Imports the data in a well formatted text file using a specific delimiter, default delimiter is comma character.")>
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
-                              Optional encoding As Encoding = Nothing) As DocumentStream.File
+                              Optional encoding As Encoding = Nothing) As File
         If encoding Is Nothing Then
             encoding = System.Text.Encoding.Default
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim Csv As DocumentStream.File = New DocumentStream.File(ImportsData(Lines, delimiter), txtPath)
-        Return Csv
+        Dim csv As New File(ImportsData(Lines, delimiter), txtPath)
+        Return csv
     End Function
 
     ''' <summary>
@@ -141,18 +140,25 @@ Public Module DataImports
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim LQuery As RowObject() = (From line As String In Lines Select RowParsing(line, length:=length)).ToArray
-        Dim Csv As New DocumentStream.File(LQuery, txtPath)
-        Return Csv
+        Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
+ _
+            From line As String
+            In Lines
+            Select RowParsing(line, length:=length)
+
+        Dim csv As New File(LQuery, txtPath)
+        Return csv
     End Function
 
     <ExportAPI("Row.Parsing")>
     Public Function RowParsing(line$, length%) As RowObject
         Dim n As Integer = CInt(Len(line) / length) + 1
-        Dim cols As String() = New String(n - 1) {}
+        Dim cols$() = New String(n - 1) {}
+
         For i As Integer = 0 To n - 1 Step length
             cols(i) = Mid(line, i, length)
         Next
+
         Return New RowObject With {
             ._innerColumns = cols.ToList
         }

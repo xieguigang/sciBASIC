@@ -193,7 +193,12 @@ Module Module1
     .SaveAs("./3d-heatmap.png")
     End Sub
 
+    Public Sub heatmap2()
+
+    End Sub
+
     Sub Main()
+        Call heatmap2()
         Call d3heatmap()
         Pause()
         Call scatterHeatmapTest()

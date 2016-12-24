@@ -128,15 +128,28 @@ Public Module DocumentExtensions
         Return ls.JoinBy(ASCII.TAB)
     End Function
 
+    ''' <summary>
+    ''' 文件之中的每一列都是数据
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="skipFirstColumn">假若第一列是固定的时间序列的话，是否需要跳过这第一列？？</param>
+    ''' <returns></returns>
     <Extension>
-    Public Function LoadData(path$) As NamedValue(Of Double())()
+    Public Function LoadData(path$, Optional skipFirstColumn As Boolean = False) As NamedValue(Of Double())()
         Dim data As DocumentStream.File =
             DocumentStream.File.Load(path)
-        Dim out As NamedValue(Of Double())() =
-            LinqAPI.Exec(Of NamedValue(Of Double())) <=
+        Dim source As IEnumerable(Of String())
+
+        If skipFirstColumn Then
+            source = data.Columns.Skip(1)
+        Else
+            source = data.Columns
+        End If
+
+        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) <=
  _
             From column As String()
-            In data.Columns
+            In source
             Let name As String = column(Scan0)
             Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
             Select New NamedValue(Of Double()) With {
