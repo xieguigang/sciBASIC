@@ -42,6 +42,10 @@ Public Module HeatmapTable
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
 
+                If valuelabelFont Is Nothing Then
+                    valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
+                End If
+
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array   ' 在这里绘制具体的矩阵
                     For Each key$ In keys
                         Dim c# = x.Value(key)
