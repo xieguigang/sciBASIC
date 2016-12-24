@@ -26,12 +26,12 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Web
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Mathematical.Correlations
 
@@ -389,6 +389,31 @@ Namespace Mathematical.Correlations
                 Public val As Double
             End Structure
         End Structure
+
+        <Extension>
+        Public Function CorrelationMatrix(data As IEnumerable(Of NamedValue(Of Double())), Optional compute As ICorrelation = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
+            If compute Is Nothing Then
+                compute = AddressOf GetPearson
+            End If
+
+            Dim array = data.ToArray
+            Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
+
+            For Each a In array
+                Dim ca As New Dictionary(Of String, Double)
+
+                For Each b In array
+                    ca(b.Name) = compute(a.Value, b.Value)
+                Next
+
+                out += New NamedValue(Of Dictionary(Of String, Double)) With {
+                    .Name = a.Name,
+                    .Value = ca
+                }
+            Next
+
+            Return out
+        End Function
     End Module
 
     Public Module Beta
