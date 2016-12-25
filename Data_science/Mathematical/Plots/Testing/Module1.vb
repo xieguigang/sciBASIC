@@ -185,12 +185,12 @@ Module Module1
     func, "-3,3", "-3,3",
     New Camera With {
         .screen = New Size(3600, 2500),
-        .ViewDistance = -3.3,
+        .ViewDistance = -3.4,
         .angleZ = 30,
         .angleX = 30,
         .angleY = -30,
-        .offset = New Point(-100, -100)
-    }, dev:=Display.NewWindow) _
+        .offset = New Point(0, -100)
+    }, bg:="transparent", showLegend:=False) _
     .SaveAs("./3d-heatmap.png")
     End Sub
 
@@ -207,9 +207,9 @@ Module Module1
     End Sub
 
     Sub Main()
-        Call heatmap2()
+        '        Call heatmap2()
 
-        Pause()
+        'Pause()
 
         Call d3heatmap()
         Pause()

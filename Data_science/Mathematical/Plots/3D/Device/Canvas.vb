@@ -86,7 +86,9 @@ Namespace Plot3D.Device
         End Sub
 
         Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
-            Call _Plot(g, camera)
+            If Not _Plot Is Nothing Then
+                Call _Plot(g, camera)
+            End If
         End Sub
 
         Private Sub InitializeComponent()

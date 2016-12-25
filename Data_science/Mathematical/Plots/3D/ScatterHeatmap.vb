@@ -32,6 +32,7 @@ Namespace Plot3D
                              Optional matrix As List(Of EntityObject) = Nothing,
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
+                             Optional showLegend As Boolean = True,
                              Optional dev As FormDevice = Nothing) As Bitmap
 
             Dim data As (sf As Surface, c As Double())() =
@@ -45,8 +46,8 @@ Namespace Plot3D
                 camera, legendTitle,
                 mapName, mapLevels,
                 bg,
-                axisFont, legendFont,
-                dev)
+                axisFont, legendFont, showLegend,
+                dev:=dev)
         End Function
 
         <Extension>
@@ -58,6 +59,7 @@ Namespace Plot3D
                              Optional bg$ = "white",
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
+                             Optional showLegend As Boolean = True,
                              Optional dev As FormDevice = Nothing) As Bitmap
 
             Dim averages As Double() = data _
@@ -79,7 +81,8 @@ Namespace Plot3D
                 .legendFont = legendFont,
                 .legendTitle = legendTitle,
                 .levels = levels,
-                .rawPoints = rawPoints
+                .rawPoints = rawPoints,
+                .showLegend = showLegend
             }
 
             If Not dev Is Nothing Then
@@ -110,6 +113,7 @@ Namespace Plot3D
             Dim data As (sf As Surface, c As Double())()
             Dim legendTitle$
             Dim legendFont As Font
+            Dim showLegend As Boolean
 
             Public Sub Plot(g As Graphics, camera As Camera)
 
@@ -144,22 +148,23 @@ Namespace Plot3D
                     Next
                 End With
 
-                ' Draw legends
-                Dim drawSize As New Size With {
-                    .Width = camera.screen.Width * 0.15,
-                    .Height = 5 / 4 * .Width
-                }
-                Dim legend As Bitmap = colors.ColorMapLegend(
-                    haveUnmapped:=False,
-                    min:=Math.Round(averages.Min, 1),
-                    max:=Math.Round(averages.Max, 1),
-                    title:=legendTitle,
-                    titleFont:=legendFont)
-                Dim lsize As Size = legend.Size
-                Dim left% = camera.screen.Width - lsize.Width + 150
-                Dim top% = camera.screen.Height / 3
+                If showLegend Then ' Draw legends
+                    Dim drawSize As New Size With {
+                        .Width = camera.screen.Width * 0.15,
+                        .Height = 5 / 4 * .Width
+                    }
+                    Dim legend As Bitmap = colors.ColorMapLegend(
+                        haveUnmapped:=False,
+                        min:=Math.Round(averages.Min, 1),
+                        max:=Math.Round(averages.Max, 1),
+                        title:=legendTitle,
+                        titleFont:=legendFont)
+                    Dim lsize As Size = legend.Size
+                    Dim left% = camera.screen.Width - lsize.Width + 150
+                    Dim top% = camera.screen.Height / 3
 
-                Call g.DrawImageUnscaled(legend, left, top)
+                    Call g.DrawImageUnscaled(legend, left, top)
+                End If
             End Sub
         End Structure
 
