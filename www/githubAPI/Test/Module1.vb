@@ -34,15 +34,20 @@ Imports Microsoft.VisualBasic.Webservices.Github
 Module Module1
 
     Sub Main()
-        Dim followers As User() = "J:\GCModeller\src\runtime\sciBASIC#\www\data\github\followers.json".ReadAllText.LoadObject(Of User()) '"xieguigang".Followers
-        '   Call followers.GetJson.SaveTo("./followers.json")
 
-        Dim following As User() = "J:\GCModeller\src\runtime\sciBASIC#\www\data\github\following.json".ReadAllText.LoadObject(Of User()) '"xieguigang".Following
-        ' Call following.GetJson.SaveTo("./following.json")
+        WebAPI.Proxy = "http://127.0.0.1:8087"
+
+
+        Dim followers As User() = WebAPI.Users.Followers("xieguigang") '= "J:\GCModeller\src\runtime\sciBASIC#\www\data\github\followers.json".ReadAllText.LoadObject(Of User()) '"xieguigang".Followers
+        Call followers.GetJson.SaveTo("./followers.json")
+
+        Dim following As User() = WebAPI.Users.Following("xieguigang")  '"xieguigang".Following
+        Call following.GetJson.SaveTo("./following.json")
 
         Dim notFollings = following.WhoIsNotFollowMe(followers).ToArray
         Call notFollings.GetJson.SaveTo("./notfollowing.json")
 
+        Pause()
     End Sub
 End Module
 

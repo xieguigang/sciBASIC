@@ -38,6 +38,9 @@ Namespace [Class]
         Public Property items As T()
     End Class
 
+    ''' <summary>
+    ''' <see cref="login"/>是主键<see cref="INamedValue.Key"/>
+    ''' </summary>
     Public Class User : Inherits ClassObject
         Implements INamedValue
 
