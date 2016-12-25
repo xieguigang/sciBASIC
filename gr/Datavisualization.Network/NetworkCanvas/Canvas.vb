@@ -27,12 +27,11 @@
 #End Region
 
 Imports System.ComponentModel
-Imports System.Timers
-Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Controls for view the network model.
@@ -42,19 +41,23 @@ Public Class Canvas
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="space">Is 3D network viewer canvas</param>
+    ''' <param name="space3D">Is 3D network viewer canvas</param>
     ''' <returns></returns>
-    Public Property Graph(Optional space As Boolean = False) As NetworkGraph
+    Public Property Graph(Optional space3D As Boolean = False) As NetworkGraph
         Get
             If net Is Nothing Then
-                Call __invokeSet(New NetworkGraph, space3D)
+                Call __invokeSet(New NetworkGraph, Me.space3D)
             End If
 
             Return net
         End Get
         Set(value As NetworkGraph)
-            space3D = space
-            Call __invokeSet(value, space3D)
+            Me.space3D = space3D
+
+            __invokeSet(value, Me.space3D)
+#If DEBUG Then
+            ' Call value.GetJson(True).__DEBUG_ECHO
+#End If
         End Set
     End Property
 
@@ -167,6 +170,8 @@ Public Class Canvas
     End Property
 
     Private Sub __invokePaint()
+        On Error Resume Next
+
         Call Me.Invoke(Sub() Call Invalidate())
 
         If _AutoRotate Then
@@ -195,7 +200,10 @@ Public Class Canvas
     Dim inputs As InputDevice
 
     Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Graph = New NetworkGraph
+        If Graph Is Nothing Then  ' 假若在load之间已经加载graph数据则在这里会清除掉先前的数据，所以需要判断一下
+            Graph = New NetworkGraph
+        End If
+
         timer.ErrHandle = AddressOf App.LogException
         timer.Start()
         physicsEngine.ErrHandle = AddressOf App.LogException

@@ -63,9 +63,10 @@ Namespace FileStream
                                                In net.Nodes
                                                Let id = n.Identifier
                                                Let data As NodeData = New NodeData With {
-                                                   .Color = Brushes.Red
+                                                   .Color = Brushes.Red,
+                                                   .radius = 20
                                                }
-                                               Select New Graph.Node(id, New NodeData)
+                                               Select New Graph.Node(id, data)
 
             Dim nodehash As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =

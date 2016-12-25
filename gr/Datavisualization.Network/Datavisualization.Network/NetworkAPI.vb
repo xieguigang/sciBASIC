@@ -149,6 +149,8 @@ Public Module NetworkAPI
             interacts = New Dictionary(Of String, String)
         End If
 
+        VBDebugger.Mute = True
+
         Dim nodes As FileStream.Node() =
  _
             LinqAPI.Exec(Of FileStream.Node) <=
@@ -191,14 +193,16 @@ Public Module NetworkAPI
             Next
         Next
 
+        VBDebugger.Mute = False
+
         Dim out As New FileStream.Network With {
             .Edges = edges,
             .Nodes = nodes
         }
 
         If trim Then
-            Call out.RemoveDuplicated()
             Call out.RemoveSelfLoop()
+            Call out.RemoveDuplicated()
         End If
 
         Return out
