@@ -34,6 +34,19 @@ Namespace Windows.Forms
     Public Module Extensions
 
         <Extension>
+        Public Sub AddRowData(view As DataGridView, name$, ParamArray values As Object())
+            Call view.Rows.Add(values)
+            Dim count = view.RowCount
+            view.Rows(count - 1).HeaderCell.Value = name
+        End Sub
+
+        <Extension>
+        Public Sub Clear(view As DataGridView)
+            Call view.Columns.Clear()
+            Call view.Rows.Clear()
+        End Sub
+
+        <Extension>
         Public Function AddFilesHistory(ByRef menu As ToolStripMenuItem, files As IEnumerable(Of String), invoke As Action(Of String), Optional formats As Func(Of String, String) = Nothing) As Boolean
             If formats Is Nothing Then
                 formats = Function(path$) path$.FileName & $" ({Mid(path, 1, 30)}...)"
