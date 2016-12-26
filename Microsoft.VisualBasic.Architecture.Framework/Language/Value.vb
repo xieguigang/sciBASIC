@@ -162,5 +162,9 @@ Namespace Language
         Public Shared Operator >=(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
+
+        'Public Shared Operator &(o As Value(Of T)) As T
+        '    Return o.value
+        'End Operator
     End Class
 End Namespace
