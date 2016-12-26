@@ -40,7 +40,7 @@ Namespace Scripting.TokenIcer
         ''' <param name="prefix$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetCodeComment(line$, ParamArray prefix$()) As Boolean
+        Public Function GetCodeComment(line$, ParamArray prefix$()) As String
             Dim code As String = Trim(line)
 
             For Each s As String In prefix
