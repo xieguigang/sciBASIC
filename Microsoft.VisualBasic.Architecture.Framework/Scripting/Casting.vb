@@ -110,6 +110,8 @@ Namespace Scripting
         ''' + a/b
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function ParseNumeric(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
