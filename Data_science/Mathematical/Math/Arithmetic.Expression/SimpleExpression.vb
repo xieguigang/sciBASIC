@@ -60,6 +60,16 @@ Namespace Types
             End Get
         End Property
 
+        ''' <summary>
+        ''' 通过比较引用深度来决定在系统初始化的时候表达式对象的计算的先后顺序，深度越小的约优先计算
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ReferenceDepth As Integer
+            Get
+                Return Me.Sum(Function(x) x.ReferenceDepth)
+            End Get
+        End Property
+
         Public ReadOnly Property IsNullOrEmpty As Boolean
             Get
                 If MetaList.Count = 0 Then

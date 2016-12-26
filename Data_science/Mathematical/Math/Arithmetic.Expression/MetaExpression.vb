@@ -57,6 +57,7 @@ Namespace Types
             Set(value As Double)
                 _left = value
                 __left = Nothing
+                _ReferenceDepth = 0
             End Set
         End Property
 
@@ -89,6 +90,12 @@ Namespace Types
         ''' </summary>
         Dim __left As Func(Of Double)
 
+        ''' <summary>
+        ''' 默认是0的引用深度
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ReferenceDepth As Integer
+
         Sub New()
         End Sub
 
@@ -103,10 +110,12 @@ Namespace Types
 
         Sub New(handle As Func(Of Double))
             __left = handle
+            ReferenceDepth = 1
         End Sub
 
         Sub New(simple As SimpleExpression)
             Call Me.New(AddressOf simple.Evaluate)
+            ReferenceDepth = simple.ReferenceDepth
         End Sub
 
         Public Overrides Function ToString() As String
