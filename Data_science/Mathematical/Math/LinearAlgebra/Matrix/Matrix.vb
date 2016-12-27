@@ -29,7 +29,7 @@
 Namespace LinearAlgebra
 
     ''' <summary>
-    ''' 
+    ''' Matrix in VisualBasic language
     ''' </summary>
     ''' <remarks>
     ''' Matlab里常用的矩阵运算函数  
