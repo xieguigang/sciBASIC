@@ -47,13 +47,16 @@ Partial Module CLI
         Dim inDIR As String = args - "/in"
         Dim out As String = args.GetValue("/out", inDIR.TrimDIR & ".contents.Csv")
         Dim files As IEnumerable(Of String) =
-            ls - l - r - wildcards(ext) <= inDIR
+            ls - l - r - ext <= inDIR
         Dim content As NamedValue(Of String)() =
             LinqAPI.Exec(Of NamedValue(Of String)) <= From file As String
                                                       In files
                                                       Let name As String = file.BaseName
                                                       Let genome As String = file.ParentDirName
-                                                      Select New NamedValue(Of String)(genome, name)
+                                                      Select New NamedValue(Of String) With {
+                                                          .Name = name,
+                                                          .x = genome
+                                                      }
         Return content.SaveTo(out).CLICode
     End Function
 End Module
@@ -72,8 +75,15 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+<Group("Function Group Name")>
+<Argument("/in", AcceptTypes:={GetType(String)}, Description:="The input directory path.")>
+<Argument("/out", True, AcceptTypes:={GetType(NamedValue(Of String))}, Description:="The output csv data.")>
 Public Function CLI_API(args As CommandLine) As Integer
 ```
+
++ ``ExportAPI`` attribute that flag this function will be exposed to your user as a CLI command.
++ ``Group`` attribute that can grouping this API into a function group
++ ``Argument`` attribute that records the help information of the parameter in the CLI.
 
 ### Using the VisualBasic CommandLine Parser
 For learn how to using the ``CommandLine`` Parser, we first lean the syntax of the VisualBasic commandline arguments.
@@ -156,7 +166,7 @@ Example CLI is:
 
 ## List(Of T) operation in VisualBasic
 
-For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic** at first
+For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic.Language** at first
 
 ```vb.net
 Dim source As IEnumerable(Of <Type>)
@@ -270,6 +280,53 @@ Return (ls - l - r - "*.csv" <= DIR) _
 For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
     ' blablabla
 Next
+```
+
+## VB specific ``With`` anonymous variable
+
+When you are dealing the variable with an array, usually you are going to do in this style:
+
+```vbnet
+Dim array As <Class>()
+
+For i% = 0 To array.Length - 1
+    Dim o = array(i)
+    
+    If <blablabla(o)> Is True Then
+        Return i%
+    End If
+Next
+```
+
+But by using the ``With`` anonymous variable syntax, the code would be more brief and better:
+
+```vbnet
+Dim array As <Class>()
+
+For i% = 0 To array.Length - 1
+    With array(i)
+    
+        If <blablabla(.Property)> Is True Then
+            Return i%
+        End If
+    End With
+Next
+```
+
+###### Example
+
+```vbnet
+Public Function IndexOf(Id As Char) As Integer
+    For i As Integer = 0 To Catalogs.Length - 1
+        With Catalogs(i)
+            If .SubClasses.ContainsKey(Id) Then
+                Return i
+            End If
+        End With
+    Next
+
+    Return -1
+End Function
 ```
 
 ## Type char coding style
@@ -613,7 +670,7 @@ Return result</pre>
 </td>
 </tr>
     <tr><td>json</td><td>json, JSON</td><td>
-<pre>Dim JSON As String = (ls -l -r -wildcards("*.json") <= DIR).GetJson</pre>
+<pre>Dim JSON As String = (ls -l -r -"*.json" <= DIR).GetJson</pre>
 </td>
 </tr>
     <tr><td>data frame</td><td>df, ds, data</td><td>
@@ -638,5 +695,18 @@ Return net >> Open("./test.net/")
 <td>A line of text in a text file</td>
 <td>line</td>
 <td><pre>Dim line$ = path.ReadFirstLine</pre></td>
+</tr>
+<tr>
+<td>Lambda expression parameter</td>
+<td><li>For generic object, using name: <pre>x, o;</pre></li>
+<li>For numeric object, using name: <pre>x, y, z, a, b, c, n, i;</pre></li>
+<li>For string and char, using name: <pre>s, c;</pre></li>
+<li>For System.Type, using name: <pre>t</pre></li></td>
+<td><pre>Dim result = array.Select(Function(x) x.Name)
+Dim value = array _
+    .Select(Function(x) x.value) _
+    .Select(Function(t) t.FullName) _
+    .JoinBy("+")
+</pre></td>
 </tr>
 </table>

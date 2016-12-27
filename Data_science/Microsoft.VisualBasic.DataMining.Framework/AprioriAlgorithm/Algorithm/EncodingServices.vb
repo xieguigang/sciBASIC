@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58267389bbc3325e2f1477753a667e5e, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\EncodingServices.vb"
+﻿#Region "Microsoft.VisualBasic::a620819f75a3bf0425bcd4e3431d1848, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\EncodingServices.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@ Namespace AprioriAlgorithm
             Dim CodesChr = EncodingServices.GenerateCodes(Codes.Count)
             _codesMappings =
                 IteratorExtensions.SeqIterator(Of Char, String)(CodesChr, Codes) _
-                    .ToDictionary(Function(obj) obj.obj,
-                                  Function(obj) obj.Follow)
+                    .ToDictionary(Function(obj) obj.value,
+                                  Function(obj) obj.Follows)
             _mappingCodes = _codesMappings.ToDictionary(Function(obj) obj.Value,
                                                         Function(obj) obj.Key)
         End Sub
@@ -89,7 +89,7 @@ Namespace AprioriAlgorithm
             Dim ItemLevels = (From itemName As String In _originals
                               Select (From n As Integer
                                       In Levels.Distinct
-                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).MatrixToVector
+                                      Select New KeyValuePair(Of String, Integer)(itemName, n)).ToArray).ToVector
             Dim Codes = GenerateCodes(ItemLevels.Length)
             _CodeMappings = New ReadOnlyDictionary(Of Char, KeyValuePair(Of String, Integer))(
                 (From i As Integer

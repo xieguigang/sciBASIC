@@ -1,4 +1,32 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::d6d5e6f8578503000bca2fb70f978556, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Emit.Marshal
@@ -6,7 +34,15 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
+''' <summary>
+''' 只是构建出对单个对象的查询计算的表达式，进行整个数据集查询的LIMIT和TOP关键词将不会在这里被处理
+''' </summary>
 Public Module ExpressionBuilder
+
+    <Extension>
+    Public Function Debug(expression As IEnumerable(Of MetaExpression)) As String
+        Return String.Join(" ", expression.ToArray(Function(x) $"<{x.Operator}>"))
+    End Function
 
     ''' <summary>
     ''' 构建查询表达式的对象模型
@@ -18,13 +54,19 @@ Public Module ExpressionBuilder
     ''' <see cref="Tokens.op_AND"/> for all should match or <see cref="Tokens.op_OR"/> for any match?
     ''' (请注意，这个参数值只允许<see cref="Tokens.op_AND"/>或者<see cref="Tokens.op_OR"/>)
     ''' </param>
+    ''' <param name="caseSensitive">计算字符串值的时候是否大小写敏感？</param>
+    ''' <param name="allowInStr">是否允许只匹配上部分字符串</param>
     ''' <returns></returns>
     <Extension>
-    Public Function Build(query$, Optional anyDefault As Tokens = Tokens.op_OR, Optional allowInStr As Boolean = True) As Expression
+    Public Function Build(query$,
+                          Optional anyDefault As Tokens = Tokens.op_OR,
+                          Optional allowInStr As Boolean = True,
+                          Optional caseSensitive As Boolean = False) As Expression
+
         Dim tks As IEnumerable(Of Token(Of Tokens)) =
             SyntaxParser.Parser(query$)
 
-        If IsEquals(Of Token(Of Tokens))(tks.Count) <=
+        If LinqAPI.IsEquals(Of Token(Of Tokens))(tks.Count) <=
             From x As Token(Of Tokens)
             In tks
             Where x.TokenName = Tokens.AnyTerm
@@ -63,7 +105,7 @@ Public Module ExpressionBuilder
         End If
 
         Try
-            Return New Pointer(Of Token(Of Tokens))(tks).Build(allowInStr)
+            Return New Pointer(Of Token(Of Tokens))(tks).Build(allowInStr, caseSensitive)
         Catch ex As Exception
             ex = New Exception("$query_expression:= " & query, ex)
             Throw ex
@@ -71,7 +113,10 @@ Public Module ExpressionBuilder
     End Function
 
     <Extension>
-    Public Function Build(tks As Pointer(Of Token(Of Tokens)), Optional allowInStr As Boolean = True) As Expression
+    Public Function Build(tks As Pointer(Of Token(Of Tokens)),
+                          Optional allowInStr As Boolean = True,
+                          Optional caseSensitive As Boolean = False) As Expression
+
         Dim metas As New List(Of MetaExpression)
         Dim meta As MetaExpression
 
@@ -82,11 +127,11 @@ Public Module ExpressionBuilder
 
             Select Case t.Type
                 Case SyntaxParser.Tokens.AnyTerm
-                    meta.Expression = AssertionProvider.ContainsAny(t, allowInStr)
+                    meta.Expression = AssertionProvider.ContainsAny(t, allowInStr, caseSensitive)
                 Case SyntaxParser.Tokens.MustTerm
-                    meta.Expression = AssertionProvider.MustContains(t)
+                    meta.Expression = AssertionProvider.MustContains(t, caseSensitive)
                 Case SyntaxParser.Tokens.stackOpen
-                    meta.Expression = AddressOf Build(tks, allowInStr).Evaluate
+                    meta.Expression = AddressOf Build(tks, allowInStr, caseSensitive).Evaluate
                 Case SyntaxParser.Tokens.stackClose
                     Return New Expression With {
                         .Tokens = metas

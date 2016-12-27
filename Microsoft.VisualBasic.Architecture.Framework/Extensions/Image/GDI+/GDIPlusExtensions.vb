@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c551bda99698f4bb2bc7e6c4a07cf778, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::95da9a38f37f35a52328b2338a0b25f3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,16 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
+
+        ''' <summary>
+        ''' 这个方形区域的面积
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Area(rect As Rectangle) As Double
+            Return rect.Width * rect.Height
+        End Function
 
         ''' <summary>
         ''' 返回整个图像的区域

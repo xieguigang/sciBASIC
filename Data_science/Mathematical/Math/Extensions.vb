@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94b8a0dae23d7b9403e1f7f6b811f1f1, ..\visualbasic_App\Data_science\Mathematical\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::95f5d1ceaf58aaac850bedae57c1cf95, ..\sciBASIC#\Data_science\Mathematical\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Public Module Extensions
 
@@ -43,13 +44,13 @@ Public Module Extensions
         Dim pr As Double = 1000000
 
         For Each x In data.SeqIterator
-            Dim d = (pre - x.obj)
+            Dim d = (pre - x.value)
 
             If d / pr > ratio Then
                 Return x.i
             Else
                 pr = d
-                pre = x.obj
+                pre = x.value
             End If
         Next
 
@@ -68,7 +69,7 @@ Public Module Extensions
         Dim pr As Double = 1000000
 
         For Each x In data.Skip(1).SeqIterator(offset:=1)
-            Dim dy = (x.obj - pre) ' 对边
+            Dim dy = (x.value - pre) ' 对边
             Dim tanX As Double = dy / dx
             Dim a As Double = Atn(tanX)
 
@@ -90,12 +91,56 @@ Public Module Extensions
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
         For Each x In data.SeqIterator
-            If Math.Abs(x.obj - n) <= offset Then
+            If Math.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
         Next
 
         Return -1
     End Function
-End Module
 
+    ''' <summary>
+    ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
+    ''' </summary>
+    ''' <param name="From">
+    ''' the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.
+    ''' </param>
+    ''' <param name="To">
+    ''' the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.
+    ''' </param>
+    ''' <param name="By">number: increment of the sequence</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function seq2(from#, to#, Optional by# = 0.1) As Vector
+        Return New Vector(seq(from, [to], by))
+    End Function
+
+    ''' <summary>
+    ''' 余弦相似度
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Sim(x As Vector, y As Vector) As Double
+        Return (x * y).Sum / (x.Mod * y.Mod)
+    End Function
+
+    ''' <summary>
+    ''' 这是x和y所共有的属性个数与x或y所具有的属性个数之间的比率。这个函数被称为Tanimoto系数或Tanimoto距离，
+    ''' 它经常用在信息检索和生物学分类中。(余弦度量的一个简单的变种)
+    ''' 当属性是二值属性时，余弦相似性函数可以用共享特征或属性解释。假设如果xi=1，则对象x具有第i个属性。于是，
+    ''' x·y是x和y共同具有的属性数，而xy是x具有的属性数与y具有的属性数的几何均值。于是，sim(x,y)是公共属性相
+    ''' 对拥有的一种度量。
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' http://xiao5461.blog.163.com/blog/static/22754562201211237567238/
+    ''' </remarks>
+    <Extension>
+    Public Function Tanimoto(x As Vector, y As Vector) As Double
+        Return (x * y).Sum / ((x * x).Sum + (y * y).Sum - (x * y).Sum)
+    End Function
+End Module

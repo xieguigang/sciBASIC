@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9390d210add93121a7350d5f7778b24, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::363ea9457db668c3961cc6752eac3165, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Vector.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Namespace ComponentModel
             Dim LQuery As Double() = LinqAPI.Exec(Of Double) <=
                 From irun As Integer
                 In Length.Sequence
-                Select RandomDouble() * Upper + Lower '
+                Select Rnd() * Upper + Lower '
 
             Return New Vector With {
                 .Properties = LQuery.ToArray

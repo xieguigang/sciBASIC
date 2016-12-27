@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5067af64f55043ebe0c8afd9ae9872b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::81cb30366d34b2fe1bf9cc3be51b891d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Namespace Scripting
                 {GetType(String), Function(s$) s},
                 {GetType(Char), AddressOf Casting.CastChar},
                 {GetType(Integer), AddressOf Casting.CastInteger},
-                {GetType(Double), AddressOf Val},
+                {GetType(Double), AddressOf Casting.ParseNumeric},
                 {GetType(Long), AddressOf Casting.CastLong},
                 {GetType(Boolean), AddressOf getBoolean},
                 {GetType(Char()), AddressOf Casting.CastCharArray},
@@ -77,7 +77,11 @@ Namespace Scripting
                 {GetType(Process), AddressOf Casting.CastProcess},
                 {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
                 {GetType(Single), AddressOf Casting.CastSingle},
-                {GetType(Decimal), Function(x) CDec(x)}
+                {GetType(Decimal), Function(x) CDec(x)},
+                {GetType(Point), AddressOf PointParser},
+                {GetType(PointF), AddressOf FloatPointParser},
+                {GetType(Size), AddressOf SizeParser},
+                {GetType(SizeF), AddressOf FloatSizeParser}
         }
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d51b997cdbb2ff608ee0c953a851e53e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\ActivityInst.vb"
+﻿#Region "Microsoft.VisualBasic::86259a4665c36814b7cff1e63824e46a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\ActivityInst.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine
 

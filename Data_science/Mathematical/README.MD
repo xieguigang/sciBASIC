@@ -1,4 +1,4 @@
-### VisualBasic Mathematics expression evaluation
+## Mathematics Expression Evaluate Engine
 ![](./images/2016-05-15.png)
 
 If you are running on Linux/macOS platform, try start by mono:
@@ -39,10 +39,12 @@ Imports Microsoft.VisualBasic.Mathematical
 
 Dim engine As New Expression
 
-' Add variable
+' Add variable, name is not case sensitive 
 Call engine.Variables.Set(Name, expr)
 ' Add Constant
-' But please notices that, unlike the variable its value can be updated, the constant value can not be updated after it was assigned the initial value.
+' But please notices that, unlike the variable its value can be updated in the runtime, 
+' the constant value can not be updated once it was assigned the initial value.
+' Constant name is case sensitive.
 Call engine.Constant.Add(Name, expr)
 ' Add user define function
 Call engine.Functions.Add(Name, def)
@@ -59,21 +61,95 @@ value = engine.Evaluation("sin(PI)")
 value = engine.Evaluation("cos(PI)+sin(PI/5)+6%3")
 ```
 
-### VisualBasic Data Science plot system
+## Data Plot System
 
 ##### Bubble Plot
 
 ```vbnet
-Call Bubble.Plot(csv.SerialData.GetData("./images/BubbleTest.csv"), legend:=False).SaveAs("./images/Bubble.png")
+Dim data = csv.SerialData.GetData("./images/BubbleTest.csv")
+Call Bubble _
+     .Plot(data, legend:=False) _
+     .SaveAs("./images/Bubble.png")
 ```
 
 ![](./images/Bubble.png)
 
 ##### Heatmap
 
+###### 3D surface heatmap
+
+```vbnet
+Dim func As Func(Of Double, Double, (Z#, Color#)) =
+_
+    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+
+Call Plot3D.ScatterHeatmap.Plot(
+    func, "-3,3", "-3,3",
+    New Camera With {
+        .screen = New Size(3600, 2500),
+        .ViewDistance = -3.3,
+        .angleZ = 30,
+        .angleX = 30,
+        .angleY = -30,
+        .offset = New Point(-100, -100)
+    }) _
+    .SaveAs("./3d-heatmap.png")
+```
+
+![](./images/3d-heatmap.png)
+
+###### Normal heatmap
+
 ![](./images/heatmap.png)
 
+Using colorbrewer theme:
+
+```vbnet
+Dim data = DataSet.LoadDataSet("./Quick_correlation_matrix_heatmap/mtcars.csv")
+
+Call data.CorrelatesNormalized() _
+    .Plot(mapName:="PRGn:c6",  ' Using colorbrewer theme
+          mapLevels:=20,
+          legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _
+    .SaveAs("./images/heatmap-colorbrewer-PRGn-c6.png")
+```
+
+![](./images/heatmap-colorbrewer-PRGn-c6.png)
+
 ##### Scatter & Histogram Plot
+
+###### Scatter Heatmap
+
+You can using a lambda expression as the plot data source:
+
+```vbnet
+Dim f As Func(Of Double, Double, Double) =
+    Function(x, y) x ^ 2 + y ^ 3
+
+Call ScatterHeatmap _
+    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap.png")
+```
+
+![](./images/scatter-heatmap.png)
+
+Or directly evaluate a math expression string and using another colorbrewer schema:
+
+```vbnet
+Call ScatterHeatmap _
+    .Plot("x ^ 2 + y ^ 3", "(-1,1)", "(-1,1)",
+          colorMap:="PRGn:c10",
+          legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap-exp.png")
+```
+
+![](./images/scatter-heatmap-exp.png)
+
+###### Scatter plot of CMeans
+
+![](../algorithms/CMeans/CMeans.png)
+
+###### Scatter plots of ODEs result
 
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging
@@ -83,23 +159,27 @@ Imports Microsoft.VisualBasic.Mathematical.diffEq
 Imports Microsoft.VisualBasic.Mathematical.Plots
 
 Dim ode As New ODE With {
-    .df = Function(x, y) Math.Cos(x),
-    .y0 = 0.540302
+    .df = Function(x, y) 0.1 * Math.Cos(x),
+    .y0 = 0.340302,
+    .Id = "0.1 * Cos(x)"
 }
 Dim ode2 As New ODE With {
-    .df = Function(x, y) Math.Sin(x),
-    .y0 = Math.Sin(0)
+    .df = Function(x, y) Math.Sin(x) / x - 0.005,
+    .y0 = 0,
+    .Id = "Sin(x) / x - 0.005"
 }
-Call ode.RK4(50, 1, 10)
-Call ode2.RK4(50, 1, 10)
+Call ode.RK4(150, 1, 50)
+Call ode2.RK4(150, 1, 50)
 
 Dim serials = {
-    ode.FromODE("red"),
+    ode.FromODE("red"), 
     ode2.FromODE("lime", DashStyle.Solid)
 }
 
 Call Scatter.Plot(serials).SaveAs("./cos.png")
-Call Histogram.Plot(Histogram.FromODE(ode, ode2)).SaveAs("./cos.hist.png")
+Call Histogram.Plot(
+     Histogram.FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
+     .SaveAs("./cos.hist.png")
 ```
 
 ![](./images/cos.png)
@@ -113,12 +193,57 @@ Call {
     New NamedValue(Of Integer)("s2", 235),
     New NamedValue(Of Integer)("s3", 99),
     New NamedValue(Of Integer)("s4", 499),
-    New NamedValue(Of Integer)("s5", 499)
-}.FromData().Plot().SaveAs("./pie_chart.png")
+    New NamedValue(Of Integer)("s5", 123),
+    New NamedValue(Of Integer)("s6", 235),
+    New NamedValue(Of Integer)("s7", 99),
+    New NamedValue(Of Integer)("s8", 499)
+}.FromData() _
+ .Plot(reorder:=1, size:=New Size(1500, 1000)) _
+ .SaveAs("./pie_chart.png")
 ```
 
 ![](./images/pie_chart.png)
 ![](./images/pie_chart_vars.png)
+
+##### Pyramid plot
+
+```vbnet
+Call Pyramid.Plot(
+    {
+        New NamedValue(Of Integer)("Eaten", 55),
+        New NamedValue(Of Integer)("Tinned", 70),
+        New NamedValue(Of Integer)("Killed", 187),
+        New NamedValue(Of Integer)("Engaged", 235),
+        New NamedValue(Of Integer)("Monster Met", 340)
+    }.FromData()) _
+     .SaveAs("./Pyramid.png")
+```
+
+![](./images/Pyramid.png)
+
+##### Simple bar plot
+PLOT DATA: [Fruit_consumption.csv](./images/Fruit_consumption.csv)
+
+```vbnet
+Dim data = csv.LoadBarData(
+    "./images/Fruit_consumption.csv",
+    {
+        "rgb(124,181,236)",
+        "rgb(67,67,72)"
+    })
+
+Call BarPlot.Plot(data) _
+    .SaveAs("./images/Fruit_consumption-bar.png")
+Call BarPlot.Plot2(data) _
+    .SaveAs("./images/Fruit_consumption-bar2.png")
+```
+
+![](./images/Fruit_consumption-bar.png)
+![](./images/Fruit_consumption-bar2.png)
+
+###### Stacked bar plot
+
+![](./images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
 ##### Solving ODEs
 
@@ -182,7 +307,10 @@ End Class
 
 Solving:
 ```vbnet
-Call New ODEsTest().Solve(300, 0, 500).Plot.SaveAs("./ODEs.png")
+Call New ODEsTest() _
+    .Solve(300, 0, 500) _
+    .Plot _
+    .SaveAs("./ODEs.png")
 ```
 
 ![](./images/ODEs.png)
@@ -198,7 +326,9 @@ Call New GenericODEs(P = 2, C = 1) With {
                dy(P) = 0.1 * P - 0.1 * C * P
                dy(C) = 0.1 * P * C - 0.1 * C
            End Sub
-}.Solve(300, 0, 500).Plot().SaveAs("./ODEs_test2.png")
+}.Solve(300, 0, 500) _
+ .Plot() _
+ .SaveAs("./ODEs_test2.png")
 ```
 
 ![](./images/ODEs_test2.png)
@@ -212,14 +342,38 @@ Set value ``n=100000`` or larger value will makes the calculated result more pre
 ```vbnet
 Dim type As New Value(Of LegendStyles)
 Dim legends As Legend() = {
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "red", .style = type = LegendStyles.Hexagon, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "blue", .style = type = LegendStyles.Rectangle, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "lime", .style = type = LegendStyles.Diamond, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.Triangle, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.Circle, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "skyblue", .style = type = LegendStyles.DashLine, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "black", .style = type = LegendStyles.SolidLine, .title = type.ToString},
-    New Legend With {.fontstyle = CSSFont.Win7Normal, .color = "yellow", .style = type = LegendStyles.Pentacle, .title = type.ToString}
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "red",
+        .style = type = LegendStyles.Hexagon, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "blue", 
+        .style = type = LegendStyles.Rectangle, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "lime", 
+        .style = type = LegendStyles.Diamond, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "skyblue", 
+        .style = type = LegendStyles.Triangle, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "black", 
+        .style = type = LegendStyles.Circle, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "skyblue", 
+        .style = type = LegendStyles.DashLine, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "black", 
+        .style = type = LegendStyles.SolidLine, 
+        .title = type.ToString},
+    New Legend With {
+        .fontstyle = CSSFont.Win7Normal, .color = "yellow", 
+        .style = type = LegendStyles.Pentacle, 
+        .title = type.ToString}
 }
 
 Call g.GraphicsPlots(

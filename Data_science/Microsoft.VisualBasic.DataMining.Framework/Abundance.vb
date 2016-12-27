@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e14974a71372d12cefdc85929aabcbe7, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Abundance.vb"
+﻿#Region "Microsoft.VisualBasic::850f05baadcea20dacbadf73ddf1f79b, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Abundance.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@ Public Module Abundance
         Dim array As T() = source.ToArray
         Dim allTags As String() = array _
             .Select(Function(x) x.Samples.Keys) _
-            .MatrixAsIterator _
+            .IteratesALL _
             .Distinct _
             .ToArray
         Dim max As Dictionary(Of String, Double) = (
@@ -66,7 +66,7 @@ Public Module Abundance
     End Function
 End Module
 
-Public Interface ISample : Inherits sIdEnumerable
+Public Interface ISample : Inherits INamedValue
 
     Property Samples As Dictionary(Of String, Double)
 End Interface

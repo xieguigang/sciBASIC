@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::57b8f33d34fa5e56df626822b4936899, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::38322294e7a51ff6e0e5061b89a1cc36, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -304,9 +304,9 @@ Namespace CommandLine
         ''' <remarks></remarks>
         <ExportAPI("?", Usage:="? [CommandName]", Info:="Show Application help", Example:="? example_commandName")>
         Public Function Help(CommandName As String) As Integer
-            If String.IsNullOrEmpty(CommandName) Then 'List all commands.
+            If String.IsNullOrEmpty(CommandName) Then     ' List all commands when command name is empty.
                 Call Console.WriteLine(HelpSummary(False))
-            Else
+            Else ' listing the help for specific command name
                 Dim name As New Value(Of String)
 
                 If __API_InfoHash.ContainsKey(name = CommandName.ToLower) Then
@@ -346,6 +346,7 @@ Namespace CommandLine
         End Property
 
         Public ReadOnly Property Stack As String
+        Public ReadOnly Property Info As [Namespace]
 
         ''' <summary>
         '''
@@ -366,6 +367,7 @@ Namespace CommandLine
             Me._nsRoot = type.Namespace
             Me._Stack = caller
             Me._Type = type
+            Me._Info = type.NamespaceEntry
         End Sub
 
         ''' <summary>

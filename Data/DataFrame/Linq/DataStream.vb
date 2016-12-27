@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::47b6b0f8a130ca22d6e6aaa3424e004b, ..\visualbasic_App\Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::aaf30633a908dd03a4189cd9fd292120, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -237,8 +237,10 @@ Namespace DocumentStream.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Iterator Function AsLinq(Of T As Class)() As IEnumerable(Of T)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False) As IEnumerable(Of T)
+            Dim schema As SchemaProvider = SchemaProvider _
+                .CreateObject(Of T)(False) _
+                .CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
@@ -246,12 +248,17 @@ Namespace DocumentStream.Linq
             Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While Not EndRead
-                Dim LQuery As IEnumerable(Of T) = From line As String
-                                                  In BufferProvider()
-                                                  Let row As RowObject = RowObject.TryParse(line)
-                                                  Let obj As Object = Activator.CreateInstance(type)
-                                                  Let data As Object = RowBuilder.FillData(row, obj)
-                                                  Select DirectCast(data, T)
+
+                Dim LQuery As IEnumerable(Of T) =
+                    From line As String
+                    In If(parallel,
+                        DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)),
+                        DirectCast(BufferProvider(), IEnumerable(Of String)))
+                    Let row As RowObject = RowObject.TryParse(line)
+                    Let obj As Object = Activator.CreateInstance(type)
+                    Let data As Object = RowBuilder.FillData(row, obj)
+                    Select DirectCast(data, T)
+
                 For Each x As T In LQuery
                     Yield x
                 Next

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4c58d3bc03e883bb89a853356f2cac4, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\SVD.vb"
+﻿#Region "Microsoft.VisualBasic::f4c58d3bc03e883bb89a853356f2cac4, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\SVD.vb"
 
     ' Author:
     ' 

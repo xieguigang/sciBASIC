@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58121e73a5058f2ddbd5185a674d3c6c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\SingleInstanceFormEntry.vb"
+﻿#Region "Microsoft.VisualBasic::4e83cbcb6c757991f46eb5759cd104d0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\SingleInstanceFormEntry.vb"
 
     ' Author:
     ' 
@@ -115,7 +115,7 @@ Namespace Windows.Forms
                 Dim setValue As New SetValue(Of TForm)()
 
                 For Each arg As NamedValue(Of Object) In __invokeSets
-                    Call setValue.InvokeSetValue(Form, arg.Name, arg.x)
+                    Call setValue.InvokeSetValue(Form, arg.Name, arg.Value)
                 Next
             End If
 

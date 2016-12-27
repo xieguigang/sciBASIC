@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2df3761281bba55032bc57907ba371f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::91c714529db8609680eed9b473cd1da3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Ranks.vb"
 
     ' Author:
     ' 
@@ -74,13 +74,13 @@ Namespace Mathematical
         End Function
 
         Public Function Sort(Of T)(source As IEnumerable(Of T), Evaluate As IEnumerable(Of Ranking(Of T))) As IEnumerable(Of T)
-            Dim LQuery = (From method As Ranking(Of T) In Evaluate.AsParallel Select method.Sort(source)).MatrixAsIterator
-            Dim Groups = (From x In LQuery Select x Group x By x.obj Into Group).ToArray
+            Dim LQuery = (From method As Ranking(Of T) In Evaluate.AsParallel Select method.Sort(source)).IteratesALL
+            Dim Groups = (From x In LQuery Select x Group x By x.value Into Group).ToArray
             Dim Ranks = (From x In Groups.AsParallel
-                         Select x.obj,
-                         rank = x.Group.Sum(Function(o) o.Pos * o.Follow)  ' 加权重计算
+                         Select x.value,
+                         rank = x.Group.Sum(Function(o) o.i * o.Follows)  ' 加权重计算
                          Order By rank Descending).ToArray
-            Return Ranks.Select(Function(x) x.obj)
+            Return Ranks.Select(Function(x) x.value)
         End Function
 
     End Module

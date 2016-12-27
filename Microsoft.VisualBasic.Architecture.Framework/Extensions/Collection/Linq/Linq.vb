@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d9441fa320a7134b5344f3a3c976995, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::c681486848045a9abd369f66bdd0fed8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -137,16 +137,18 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Iterates all of the elements in a two dimension collection as the data source for the linq expression or ForEach statement.
-        ''' (适用于二维的集合做为linq的数据源，不像<see cref="MatrixToList"/>是进行转换，这个是返回迭代器的，推荐使用这个函数)
+        ''' Iterates all of the elements in a two dimension collection as the data source 
+        ''' for the linq expression or ForEach statement.
+        ''' (适用于二维的集合做为linq的数据源，不像<see cref="Unlist"/>是进行转换，
+        ''' 这个是返回迭代器的，推荐使用这个函数)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function MatrixAsIterator(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
-            For Each Line As IEnumerable(Of T) In source
-                If Not Line.IsNullOrEmpty Then
-                    For Each x As T In Line
+        <Extension> Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+            For Each line As IEnumerable(Of T) In source
+                If Not line.IsNullOrEmpty Then
+                    For Each x As T In line
                         Yield x
                     Next
                 End If
@@ -154,7 +156,7 @@ Namespace Linq
         End Function
 
         <Extension>
-        Public Iterator Function JoinAsIterator(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not a Is Nothing Then
                 For Each x As T In a
                     Yield x
@@ -165,6 +167,17 @@ Namespace Linq
                     Yield x
                 Next
             End If
+        End Function
+
+        <Extension>
+        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As T) As IEnumerable(Of T)
+            If Not a Is Nothing Then
+                For Each x As T In a
+                    Yield x
+                Next
+            End If
+
+            Yield b
         End Function
 
         ''' <summary>
@@ -237,21 +250,11 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
+        ''' ``0,1,2,3,...<paramref name="n"/>``
         ''' </summary>
-        ''' <param name="From">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
-        ''' <param name="To">the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.</param>
-        ''' <param name="By">number: increment of the sequence</param>
+        ''' <param name="n"></param>
+        ''' <param name="offset"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Iterator Function seq([from] As Value(Of Double), [to] As Double, Optional by As Double = 1) As IEnumerable(Of Double)
-            Yield from
-
-            Do While (from = from.value + by) <= [to]
-                Yield from
-            Loop
-        End Function
-
         <Extension>
         Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
             If n < 0 Then
@@ -363,16 +366,21 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.(默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
+        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.
+        ''' (默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
         ''' </summary>
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
-        ''' <returns>An array that contains the elements from the input sequence.</returns>
-        <Extension> Public Function ToArray(Of T, TOut)(source As IEnumerable(Of T),
-                                                        [CType] As Func(Of T, TOut),
-                                                        [where] As Func(Of T, Boolean),
-                                                        Optional Parallel As Boolean = False) As TOut()
+        ''' <returns>
+        ''' An array that contains the elements from the input sequence.
+        ''' </returns>
+        <Extension> Public Function ToArray(Of T, TOut)(
+                                      source As IEnumerable(Of T),
+                                     [CType] As Func(Of T, TOut),
+                                     [where] As Func(Of T, Boolean),
+                           Optional Parallel As Boolean = False) As TOut()
+
             If source.IsNullOrEmpty Then
                 Return New TOut() {}
             End If
@@ -411,21 +419,17 @@ Namespace Linq
                 Return New TOut() {}
             End If
 
-            Dim LQuery As TOut()
+            Dim seqs As IEnumerable(Of SeqValue(Of T)) = If(
+                Parallel,
+                source.SeqIterator.AsParallel,
+                source.SeqIterator)
 
-            If Parallel Then
-                LQuery = LinqAPI.Exec(Of TOut) <=
-                    From i As SeqValue(Of T)
-                    In source.SeqIterator.AsParallel
-                    Let obj As T = i.obj
-                    Select __ctype(obj, i.i)
-            Else
-                LQuery = LinqAPI.Exec(Of TOut) <=
-                    From i As SeqValue(Of T)
-                    In source.SeqIterator
-                    Let obj As T = i.obj
-                    Select __ctype(obj, i.i)
-            End If
+            Dim LQuery As TOut() = LinqAPI.Exec(Of TOut) <=
+ _
+                From i As SeqValue(Of T)
+                In seqs
+                Let obj As T = i.value
+                Select __ctype(obj, i.i)
 
             Return LQuery
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::201bb930269c2d37704974c4698387cc, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::3e184c8815d3b8021510b4e74745a779, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
 
     ' Author:
     ' 
@@ -64,10 +64,10 @@
 '
 '
 
-Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Interfaces
 

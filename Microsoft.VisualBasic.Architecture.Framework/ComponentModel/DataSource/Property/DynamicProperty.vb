@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::655fddd44ee6aeb6c6b1075e665850bb, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::5ea030c011d797daf6d7f98a1956f414, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -252,12 +252,12 @@ Namespace ComponentModel.DataSourceModel
                 For Each x In Properties
                     Yield New NamedValue(Of T) With {
                         .Name = x.Key,
-                        .x = x.Value
+                        .Value = x.Value
                     }
                 Next
             End Get
             Set(value As IEnumerable(Of NamedValue(Of T)))
-                Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.x)
+                Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set
         End Property
     End Class

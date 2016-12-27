@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1780c4a541e52d3b326e6ab7f38756e0, ..\visualbasic_App\www\WWW.Google\News\RSS.vb"
+﻿#Region "Microsoft.VisualBasic::804653abe51af70d67dcb9a36d1a4d3a, ..\sciBASIC#\www\WWW.Google\News\RSS.vb"
 
     ' Author:
     ' 
@@ -70,7 +70,7 @@ Namespace News
         ''' <returns></returns>
         Public Shared Function Fetch(url As String, Optional proxy As String = Nothing) As RSS
             Dim xml As String = url.GET(proxy:=proxy)
-            Dim value As RSS = xml.CreateObjectFromXml(Of RSS)
+            Dim value As RSS = xml.LoadFromXml(Of RSS)
             Return value
         End Function
 

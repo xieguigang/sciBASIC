@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2823789c34ac5d5be1dc933dfc244d8a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::72e00d37ccb0e1edaca5f9ed765480b8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
@@ -46,10 +46,10 @@ Namespace ComponentModel.Collection.Generic
     End Interface
 
     ''' <summary>
-    ''' This type of object have a <see cref="sIdEnumerable.Identifier"></see> property to unique identified itself in a collection.
+    ''' This type of object have a <see cref="INamedValue.Key"></see> property to unique identified itself in a collection.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface sIdEnumerable
+    Public Interface INamedValue
 
         ''' <summary>
         ''' The unique identifer in the object collection. Unique-Id of the target implements object
@@ -57,7 +57,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Property Identifier As String
+        Property Key As String
     End Interface
 
     Public Interface IReadOnlyId

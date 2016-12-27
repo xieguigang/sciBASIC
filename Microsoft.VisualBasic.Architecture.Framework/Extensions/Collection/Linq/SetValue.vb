@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13f8c2c85ffbfa04c6be5f11cec8e4e8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::518a5f2efaa8f05b13bf4102d0526fdc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 
@@ -129,7 +129,7 @@ Namespace Linq
         End Function
 
         Public Function InvokeSetValue(x As T, value As NamedValue(Of Object)) As T
-            Return InvokeSetValue(x, value.Name, value.x)
+            Return InvokeSetValue(x, value.Name, value.Value)
         End Function
 
         ''' <summary>

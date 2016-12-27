@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d328d8a4b1d7e23ac8d99c1d43a920a9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Namespace Parallel
             Dim FirstGroups = (From Partition In Partitions.AsParallel
                                Select (From obj In (From Token In Partition
                                                     Select Token.guid
-                                                    Group guid By guid Into Group).ToArray Select obj.guid).ToArray).ToArray.MatrixToList
+                                                    Group guid By guid Into Group).ToArray Select obj.guid).ToArray).ToArray.Unlist
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Unique group...")
             Dim UniqueGroup = (From TAG As T_TAG
                                In FirstGroups.AsParallel

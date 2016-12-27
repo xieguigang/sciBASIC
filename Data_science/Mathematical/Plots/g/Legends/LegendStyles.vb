@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358ad157e0d8c9a3b786e49bc187c667, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
+﻿#Region "Microsoft.VisualBasic::7ef47a9641388cf67b8e226a538a1858, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Vector shapes that drawing of this legend.
@@ -63,4 +62,8 @@ Public Enum LegendStyles
     ''' 五角星
     ''' </summary>
     Pentacle
+    ''' <summary>
+    ''' 正方形
+    ''' </summary>
+    Square
 End Enum

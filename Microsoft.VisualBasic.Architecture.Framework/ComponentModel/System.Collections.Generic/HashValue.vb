@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5170ee876e433f9c0a8511334ee641f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\HashValue.vb"
+﻿#Region "Microsoft.VisualBasic::ace7c9653cf0bb72972d825d1a348632, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\HashValue.vb"
 
     ' Author:
     ' 
@@ -30,9 +30,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Structure HashValue : Implements sIdEnumerable
+Public Structure HashValue : Implements INamedValue
 
-    Public Property Identifier As String Implements sIdEnumerable.Identifier
+    Public Property Identifier As String Implements INamedValue.Key
     Public Property value As String
 
     Sub New(name As String, value As String)

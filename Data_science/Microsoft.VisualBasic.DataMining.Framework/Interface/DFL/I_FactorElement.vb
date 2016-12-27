@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc0949094b9f3ec8920d2c7187e626ae, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::da2c6ecb8a208c7baa35299785b5ffc0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace DFL_Driver
         ''' <remarks></remarks>
         Public ReadOnly Property FunctionalState As Double
             Get
-                Dim n As Double = RandomDouble()
+                Dim n As Double = Rnd()
                 Dim p As Double = Internal_getEventProbabilities()
 
                 If n >= p Then

@@ -101,11 +101,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -189,7 +189,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\docs\</OutputPath>
+    <OutputPath>..\..\sdk\bin\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
@@ -233,14 +233,61 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
     <OutputPath>bin\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
     <OutputPath>bin\x64\Release2\</OutputPath>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
     <OutputPath>bin\x86\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\DEMO\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\DEMO\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\DEMO\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
@@ -261,6 +308,10 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\System.ValueTuple.4.3.0-preview1-24530-04\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
@@ -294,12 +345,17 @@
     <Compile Include="CommandLine\CLITools.vb" />
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Interpreters\Abstract.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\Argument.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\ActiveViews.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\Grouping.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\Flags.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\[Namespace].vb" />
     <Compile Include="CommandLine\Reflection\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\CLITypes.vb" />
     <Compile Include="CommandLine\Reflection\ExceptionHandler.vb" />
     <Compile Include="CommandLine\Reflection\SDKManual.vb" />
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
-    <Compile Include="CommandLine\Reflection\ExportAPI.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
@@ -319,6 +375,7 @@
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\DataSource\DataSample.vb" />
+    <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
     <Compile Include="ComponentModel\Ranges\IRanges.vb" />
     <Compile Include="ComponentModel\Ranges\Range.vb" />
@@ -331,7 +388,11 @@
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\List%28Of T%29.vb" />
+    <Compile Include="Extensions\Image\PointF3D.vb" />
+    <Compile Include="Extensions\Math\Matrix.vb" />
+    <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
+    <Compile Include="Language\C\Vector.vb" />
+    <Compile Include="Language\List%28Of T%29.vb" />
     <Compile Include="ComponentModel\Coords.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
@@ -356,20 +417,20 @@
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
-    <Compile Include="ConsoleDevices\InteractiveIODevice\Shell.vb" />
-    <Compile Include="ConsoleDevices\PipelineCLI.vb" />
-    <Compile Include="ConsoleDevices\InnerQueue.vb" />
-    <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
-    <Compile Include="ConsoleDevices\PrintAsTable.vb" />
-    <Compile Include="ConsoleDevices\ProgressBar\AbstractBar.vb" />
-    <Compile Include="ConsoleDevices\ProgressBar\AnimatedBar.vb" />
-    <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
-    <Compile Include="ConsoleDevices\ProgressBar\Program.vb" />
-    <Compile Include="ConsoleDevices\ProgressBar\SwayBar.vb" />
-    <Compile Include="ConsoleDevices\Utility\EventProc.vb" />
-    <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
+    <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
+    <Compile Include="Terminal\PipelineCLI.vb" />
+    <Compile Include="Terminal\InnerQueue.vb" />
+    <Compile Include="Terminal\InteractiveIODevice\TerminalExtensions.vb" />
+    <Compile Include="Terminal\PrintAsTable.vb" />
+    <Compile Include="Terminal\ProgressBar\AbstractBar.vb" />
+    <Compile Include="Terminal\ProgressBar\AnimatedBar.vb" />
+    <Compile Include="Terminal\ProgressBar\ProgressBar.vb" />
+    <Compile Include="Terminal\ProgressBar\Program.vb" />
+    <Compile Include="Terminal\ProgressBar\SwayBar.vb" />
+    <Compile Include="Terminal\Utility\EventProc.vb" />
+    <Compile Include="Terminal\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
-    <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
+    <Compile Include="Terminal\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
@@ -380,13 +441,13 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
-    <Compile Include="Extensions\Math\TokenConnections.vb" />
+    <Compile Include="Extensions\Trinity\NLP\TextTokens.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
     <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
-    <Compile Include="Extensions\StringHelpers\DateParser.vb" />
+    <Compile Include="Extensions\ValueTypes\DateTimeHelper.vb" />
     <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
@@ -442,6 +503,7 @@
     <Compile Include="Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb" />
     <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
     <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
+    <Compile Include="Text\Paragraph.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
@@ -465,22 +527,26 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
     <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\URLBuilder.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Libraries.vb" />
     <Compile Include="Tools\Win32\HardwareInfo.vb" />
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
+    <Compile Include="Tools\WinForm\Extensions.vb" />
     <Compile Include="Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />
     <Compile Include="Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
-    <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
-    <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
+    <None Include="Terminal\xConsole\TestProgram.txt" />
+    <Compile Include="Terminal\xConsole\xConsole.vb" />
     <Compile Include="Language\UnixBash\Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
@@ -528,7 +594,7 @@
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Numeric.vb" />
     <Compile Include="Language\UnixBash\Text\Grep.vb" />
-    <Compile Include="MMFProtocol\WorkFlow.vb" />
+    <Compile Include="Tools\MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="Parallel\Threads\Groups\DataGroup.vb" />
@@ -556,10 +622,10 @@
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb" />
-    <Compile Include="MMFProtocol\Pipeline\API.vb" />
-    <Compile Include="MMFProtocol\Pipeline\PipeBuffer.vb" />
-    <Compile Include="MMFProtocol\Pipeline\PipeStream.vb" />
-    <Compile Include="MMFProtocol\Pipeline\Pipeline.vb" />
+    <Compile Include="Tools\MMFProtocol\Pipeline\API.vb" />
+    <Compile Include="Tools\MMFProtocol\Pipeline\PipeBuffer.vb" />
+    <Compile Include="Tools\MMFProtocol\Pipeline\PipeStream.vb" />
+    <Compile Include="Tools\MMFProtocol\Pipeline\Pipeline.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserAPI.vb" />
@@ -571,8 +637,8 @@
     <Compile Include="Scripting\TokenIcer\TokenParser.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />
-    <Compile Include="MMFProtocol\MapStream\MSWriter.vb" />
-    <Compile Include="MMFProtocol\MapStream\MSReader.vb" />
+    <Compile Include="Tools\MMFProtocol\MapStream\MSWriter.vb" />
+    <Compile Include="Tools\MMFProtocol\MapStream\MSReader.vb" />
     <Compile Include="Parallel\Tasks\AsyncHandle.vb" />
     <Compile Include="Parallel\Threads\ServicesFolk.vb" />
     <Compile Include="Parallel\Tasks\UpdateThread.vb" />
@@ -621,8 +687,8 @@
     <Compile Include="Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
     <Compile Include="Tools\Network\wGetTools.vb" />
     <Compile Include="Tools\Network\Tcp\StateObject.vb" />
-    <Compile Include="Tools\Network\Tcp\IPEndPoint.vb" />
-    <Compile Include="Tools\Network\Tcp\LAN.vb" />
+    <Compile Include="Tools\Network\Tcp\IPTools\IPEndPoint.vb" />
+    <Compile Include="Tools\Network\Tcp\IPTools\LAN.vb" />
     <Compile Include="Tools\Network\DomainParser.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb" />
     <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb" />
@@ -653,10 +719,10 @@
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GDIPlusExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
-    <Compile Include="ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb" />
-    <Compile Include="ConsoleDevices\InteractiveIODevice\HistoryStacks.vb" />
-    <Compile Include="ConsoleDevices\InteractiveIODevice\Terminal.vb" />
-    <Compile Include="ConsoleDevices\Utility\ManualPages.vb" />
+    <Compile Include="Terminal\InteractiveIODevice\InteractiveDevice.vb" />
+    <Compile Include="Terminal\InteractiveIODevice\HistoryStacks.vb" />
+    <Compile Include="Terminal\InteractiveIODevice\Terminal.vb" />
+    <Compile Include="Terminal\Utility\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStats.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb" />
@@ -680,7 +746,7 @@
     <Compile Include="Tools\ZipLib.vb" />
     <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
-    <Compile Include="ConsoleDevices\Utility\CBusyIndicator.vb" />
+    <Compile Include="Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
     <Compile Include="Tools\SoftwareToolkits\ToolkitAPI.vb" />
     <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">
@@ -705,7 +771,7 @@
     <Compile Include="ComponentModel\Settings\Settings.vb" />
     <Compile Include="ComponentModel\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
-    <Compile Include="CommandLine\Reflection\Attribute.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\Attribute.vb" />
     <Compile Include="CommandLine\Reflection\ArgumentCollection.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
@@ -716,12 +782,12 @@
     <Compile Include="Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb" />
     <Compile Include="Tools\Logging\LogFile\LogFile.vb" />
     <Compile Include="Extensions\Extensions.vb" />
-    <Compile Include="MMFProtocol\MMFSocket.vb" />
-    <Compile Include="MMFProtocol\ProcessLock.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\Shell.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\CFormatProvider.vb" />
-    <Compile Include="ConsoleDevices\STDIO__\STDIO.vb" />
+    <Compile Include="Tools\MMFProtocol\MMFSocket.vb" />
+    <Compile Include="Tools\MMFProtocol\ProcessLock.vb" />
+    <Compile Include="Terminal\STDIO__\Shell.vb" />
+    <Compile Include="Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
+    <Compile Include="Terminal\STDIO__\CFormatProvider.vb" />
+    <Compile Include="Terminal\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -792,7 +858,9 @@
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Tools\Utility\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

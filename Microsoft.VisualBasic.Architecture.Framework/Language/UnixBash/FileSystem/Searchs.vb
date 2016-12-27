@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be5939591d3de9d6ddb9eb6660a81dc9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
+﻿#Region "Microsoft.VisualBasic::378997baf16e14e0a874fa6a635bf928, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
 
     ' Author:
     ' 
@@ -237,6 +237,11 @@ Namespace Language.UnixBash
         ''' <param name="path"></param>
         ''' <returns></returns>
         Public Function IsMatch(path As String) As Boolean
+            If regexp.IsNullOrEmpty Then
+                ' 匹配的规则是空的，则默认是允许所有的路径
+                Return True
+            End If
+
             Dim name As String = path.Replace("\", "/").Split("/"c).Last
 
             For Each r As String In regexp

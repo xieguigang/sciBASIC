@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::365e46f91f50033d62fd38d207ef0907, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Value.vb"
+﻿#Region "Microsoft.VisualBasic::65bd7ace16daa65dead48ac366c87993, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value.vb"
 
     ' Author:
     ' 
@@ -162,5 +162,9 @@ Namespace Language
         Public Shared Operator >=(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
+
+        'Public Shared Operator &(o As Value(Of T)) As T
+        '    Return o.value
+        'End Operator
     End Class
 End Namespace

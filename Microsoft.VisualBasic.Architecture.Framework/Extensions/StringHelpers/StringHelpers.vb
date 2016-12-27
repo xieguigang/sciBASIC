@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::2468e18b526a722b5ea19db3cd0f3219, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1b7e616d7417df7792ff350c41f7745c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
@@ -271,13 +272,12 @@ Public Module StringHelpers
     <Extension> Public Function Count(str As String, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
+        Else
+            Dim n As Integer = str _
+                .Where(Function(c) c = ch) _
+                .Count
+            Return n%
         End If
-
-        Dim LQuery As Integer = (From chr As Char
-                                 In str
-                                 Where ch = chr
-                                 Select 1).Count
-        Return LQuery
     End Function
 
     ''' <summary>
@@ -577,10 +577,10 @@ Public Module StringHelpers
             CompareMethod.Text)
 
         For Each str As SeqValue(Of String) In collection.SeqIterator
-            If String.Equals(str.obj, text, method) Then
+            If String.Equals(str.value, text, method) Then
                 Return str.i
             ElseIf fuzzy Then
-                If InStr(str.obj, text, method2) > 0 Then
+                If InStr(str.value, text, method2) > 0 Then
                     Return str.i
                 End If
             End If
@@ -599,7 +599,7 @@ Public Module StringHelpers
     <Extension>
     Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
         For Each s As SeqValue(Of String) In collection.SeqIterator
-            If text.WildcardMatch(s.obj, Not caseSensitive) Then
+            If text.WildcardMatch(s.value, Not caseSensitive) Then
                 Return s.i
             End If
         Next
@@ -670,7 +670,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Line tokens. ==> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>.
+    ''' Line tokens. **=> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>**.
     ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
     ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
     ''' 所以可以使用这个函数来进行统一的分行操作)
@@ -728,5 +728,44 @@ Public Module StringHelpers
         End If
 
         Return False
+    End Function
+
+    <Extension>
+    Public Function TextLast(s$, token$) As Boolean
+        Dim lastIndex% = s.Length - token.Length
+        Dim val% = InStrRev(s, token)
+        Return lastIndex = val
+    End Function
+
+    ''' <summary>
+    ''' 分别处理正常的小数或者科学记数法的小数
+    ''' </summary>
+    ''' <param name="n#"></param>
+    ''' <param name="decimal%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FormatNumeric(n#, decimal%) As String
+        Dim s$ = n.ToString
+        If InStr(s, "E", CompareMethod.Text) > 0 Then
+            ' 科学记数法
+            Dim t$() = s.Split("e"c, "E"c)
+            t(0) = Math.Round(Val(t(0)), [decimal])
+            s = t(0) & "E" & t(1)
+        Else
+            Dim dZERO = Regex.Match(s, "\.[0]+").Value.Trim("."c)
+
+            If dZERO.Length >= [decimal] Then
+                s = Mid(s.Split("."c).Last, dZERO.Length + 1)
+                s = Mid(s, 1, 1) & "." & Mid(s, 2) & 0
+                s = Math.Round(Val(s), [decimal])
+                If InStr(s, ".") = 0 Then
+                    s &= ".0"
+                End If
+                s = s & "E-" & FormatZero(dZERO.Length + 1)
+            Else
+                s = Math.Round(n, [decimal]).ToString
+            End If
+        End If
+        Return s
     End Function
 End Module

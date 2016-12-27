@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4858748e122530d07290290a6f0aabd5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "Microsoft.VisualBasic::3144f30c8ad520a692365e18434d485a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,11 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
 '                   _ooOoo_
@@ -78,6 +80,25 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
                   Publisher:="amethyst.asuka@gcmodeller.org",
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
+
+    ''' <summary>
+    ''' Gets the number of ticks that represent the date and time of this instance.
+    ''' 
+    ''' The number of ticks that represent the date and time of this instance. The value
+    ''' is between DateTime.MinValue.Ticks and DateTime.MaxValue.Ticks.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property NanoTime As Long
+        Get
+            Return Now.Ticks
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Numbers of the CPU kernels on the current machine.(获取当前的系统主机的CPU核心数)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
 
     Sub New()
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
@@ -125,7 +146,7 @@ Public Module App
         Dim tokens As String() = ' 第一个参数为应用程序的文件路径，不需要
             Environment.GetCommandLineArgs.Skip(1).ToArray
         Dim CLI As String = String _
-            .Join(" ", tokens.ToArray(Function(s) s.CliToken)) _
+            .Join(" ", tokens.ToArray(Function(s) s.CLIToken)) _
             .Replace(gitBash, "")
         Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
     End Function
@@ -146,6 +167,8 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property ExecutablePath As String =
         FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    '(Process.GetCurrentProcess.StartInfo.FileName).FullName
+    Public ReadOnly Property Info As ApplicationDetails =
+        ApplicationDetails.CurrentExe()
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.
@@ -227,32 +250,53 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
 
-    Dim __joinedVariables As New List(Of NamedValue(Of String))
+#Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
+
+    Dim __joinedVariables As New Dictionary(Of NamedValue(Of String))
+
+    Public Sub JoinVariable(name$, value$)
+        __joinedVariables(name) =
+            New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value
+        }
+    End Sub
 
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
-        __joinedVariables.Add(vars)
+        For Each v As NamedValue(Of String) In vars
+            __joinedVariables(v.Name) = v
+        Next
     End Sub
 
     Public Sub JoinVariables(vars As Dictionary(Of String, String))
-        __joinedVariables.Add(
-            vars.Select(Function(x)
-                            Return New NamedValue(Of String) With {
-                                .Name = x.Key,
-                                .x = x.Value
-                            }
-                        End Function).ToArray)
+        Call App.JoinVariables(vars.Select(
+            Function(x)
+                Return New NamedValue(Of String) With {
+                    .Name = x.Key,
+                    .Value = x.Value
+                }
+            End Function).ToArray)
     End Sub
 
     ''' <summary>
     ''' 这个函数只是会从设置的变量之中查找，本模块之中的变量请直接从属性进行引用
     ''' </summary>
-    ''' <param name="name$"></param>
-    ''' <returns></returns>
-    Public Function GetVariables(name$) As String()
-        Return LinqAPI.Exec(Of String) <= From x As NamedValue(Of String)
-                                          In __joinedVariables
-                                          Where String.Equals(name$, x.Name, StringComparison.OrdinalIgnoreCase)
-                                          Select x.x
+    ''' <param name="name$">
+    ''' 因为由于是从命令行之中输入进来的，所以可能有些时候大小写会影响直接字典查找，在这里需要用字符串手工查找
+    ''' </param>
+    ''' <returns>当没有查找到相对应的环境变量的时候会返回空值</returns>
+    Public Function GetVariable(name$) As String
+        If __joinedVariables.ContainsKey(name) Then
+            Return __joinedVariables(name).Value
+        Else
+            For Each v As NamedValue(Of String) In __joinedVariables.Values
+                If v.Name.TextEquals(name) Then
+                    Return v.Value
+                End If
+            Next
+        End If
+
+        Return Nothing
     End Function
 
     ''' <summary>
@@ -262,7 +306,7 @@ Public Module App
     Public Function GetAppVariables() As NamedValue(Of String)()
         Dim type As Type = GetType(App)
         Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
-        Dim out As New List(Of NamedValue(Of String))(__joinedVariables)
+        Dim out As New List(Of NamedValue(Of String))(__joinedVariables.Values)
 
         For Each prop As PropertyInfo
             In pros.Values.Where(
@@ -272,12 +316,14 @@ Public Module App
 
             out += New NamedValue(Of String) With {
                 .Name = prop.Name,
-                .x = prop.GetValue(Nothing, Nothing)
+                .Value = prop.GetValue(Nothing, Nothing)
             }
         Next
 
         Return out.ToArray
     End Function
+
+#End Region
 
     ''' <summary>
     ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件
@@ -286,7 +332,7 @@ Public Module App
     ''' <returns></returns>
     Public Function GetProductSharedDIR(type As Type) As String
         Dim assm As Assembly = type.Assembly
-        Dim productName As String = SoftwareToolkits.ApplicationDetails.GetProductName(assm)
+        Dim productName As String = ApplicationDetails.GetProductName(assm)
         If String.IsNullOrEmpty(productName) Then
             productName = IO.Path.GetFileNameWithoutExtension(assm.Location)
         End If
@@ -373,7 +419,7 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property Version As String
         Get
-            Return Application.ProductVersion
+            Return Trim(Application.ProductVersion)
         End Get
     End Property
 
@@ -795,6 +841,9 @@ Public Module App
         Return tmp
     End Function
 
+    Public ReadOnly Property CurrentProcessTemp As String =
+        GenerateTemp(App.SysTemp & "/tmp.io", App.PID)
+
     ''' <summary>
     '''
     ''' </summary>
@@ -846,11 +895,14 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' 请注意，这个函数只能够运行.NET程序, 假若是在Linux系统之上，还需要安装mono运行时环境
+    ''' Folk helper for running the other .NET application.
+    ''' (请注意，这个函数只能够运行.NET程序, 假若是在Linux系统之上，还需要安装mono运行时环境)
     ''' </summary>
-    ''' <param name="app"></param>
-    ''' <param name="CLI"></param>
-    ''' <param name="CLR">是否为.NET程序?</param>
+    ''' <param name="app">External application file full path</param>
+    ''' <param name="CLI">Commandline string that running the application <paramref name="app$"/></param>
+    ''' <param name="CLR">Is the calling external application is a .NET application?
+    ''' (是否为.NET程序?)
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
     Public Function Shell(app$, CLI$, Optional CLR As Boolean = False) As IIORedirectAbstract
@@ -875,12 +927,23 @@ Public Module App
     ''' <summary>
     ''' Folk this program itself for the large amount data batch processing.
     ''' </summary>
-    ''' <param name="CLI"></param>
-    ''' <param name="parallel">小于等于零表示非并行化，单线程任务</param>
-    ''' <returns>返回任务的执行的总时长</returns>
-    '''
+    ''' <param name="CLI">Self folk processing commandline collection.</param>
+    ''' <param name="parallel">If this parameter value less than 1, then will be a single 
+    ''' thread task. Any positive value that greater than 1 will be parallel task.
+    ''' (小于等于零表示非并行化，单线程任务)
+    ''' </param>
+    ''' <param name="smart">Smart mode CPU load threshold, if the <paramref name="parallel"/> 
+    ''' parameter value is less than or equals to 1, then this parameter will be disabled.
+    ''' </param>
+    ''' <returns>
+    ''' Returns the total executation time for running this task collection.
+    ''' (返回任务的执行的总时长)
+    ''' </returns>
     <ExportAPI("Folk.Self")>
-    Public Function SelfFolks&(CLI As IEnumerable(Of String), Optional parallel% = 0)
+    Public Function SelfFolks&(CLI As IEnumerable(Of String),
+                               Optional parallel% = 0,
+                               Optional smart# = 0)
+
         Dim sw As Stopwatch = Stopwatch.StartNew
 
         If parallel <= 0 Then

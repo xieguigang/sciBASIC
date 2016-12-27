@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d2665e9aea61e1fbbf367421c72c678, ..\visualbasic_App\Data_science\Mathematical\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::025753401c77f328eca4c31e917b35e7, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -96,6 +96,14 @@ Public Module LegendPlotExtensions
                              graphicsSize.Height - dh * 2),
                     New SolidBrush(l.color.ToColor), border)
 
+            Case LegendStyles.Square
+                Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width)
+
+                Call Box.DrawRectangle(g,
+                    New Point(pos.X + graphicsSize.Width - r, pos.Y + graphicsSize.Height - r),
+                    New Size(r, r),
+                    New SolidBrush(l.color.ToColor), border)
+
             Case LegendStyles.SolidLine
 
                 Dim d As Integer = graphicsSize.Width * 0.2
@@ -139,7 +147,7 @@ Public Module LegendPlotExtensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' <paramref name="graphicSize"/>的默认值是(120,45)
     ''' </summary>
     ''' <param name="g"></param>
     ''' <param name="topLeft"></param>

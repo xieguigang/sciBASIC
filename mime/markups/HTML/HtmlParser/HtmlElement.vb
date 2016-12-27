@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3538ec54d825a99dc6051cd4cf3bee71, ..\visualbasic_App\mime\Markups\HTML\HtmlParser\HtmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::f9b8fafa948efa90d8f007ae80b49c65, ..\sciBASIC#\mime\markups\HTML\HtmlParser\HtmlElement.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace HTML
 
-    Public Structure ValueAttribute : Implements sIdEnumerable
+    Public Structure ValueAttribute : Implements INamedValue
 
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
         Public Property Value As String
 
         Sub New(strText As String)

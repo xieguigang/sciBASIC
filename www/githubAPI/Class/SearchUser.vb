@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aed9bd31aa3f725d14d835ef38d7e4ad, ..\visualbasic_App\www\githubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::de6fb4c325d9f42690fa87908b477ee9, ..\sciBASIC#\www\githubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,9 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace [Class]
 
@@ -36,9 +38,14 @@ Namespace [Class]
         Public Property items As T()
     End Class
 
+    ''' <summary>
+    ''' <see cref="login"/>是主键<see cref="INamedValue.Key"/>
+    ''' </summary>
     Public Class User : Inherits ClassObject
+        Implements INamedValue
+
         Public Property score As Double
-        Public Property login As String
+        Public Property login As String Implements INamedValue.Key
         Public Property id As String
         Public Property avatar_url As String
         Public Property gravatar_id As String
@@ -68,5 +75,9 @@ Namespace [Class]
         Public Property following As String
         Public Property created_at As String
         Public Property updated_at As String
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1025b45b078483f9cb4e2d6daf3c84d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::e7d1ece2a2777584206b8c85768ebf08, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -460,7 +460,7 @@ Namespace CommandLine
 
             For Each arg As NamedValue(Of String) In args1.__lstParameter
                 Dim value2 As String = args2(arg.Name)
-                If Not String.Equals(value2, arg.x, StringComparison.OrdinalIgnoreCase) Then
+                If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
                     Return False
                 End If
             Next

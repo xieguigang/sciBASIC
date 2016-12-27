@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efb0769e85a04040181768bbb323f9a6, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\ParserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e583f5afec455d868707bbeeaeea62cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\ParserAPI.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,25 @@ Imports Microsoft.VisualBasic.Language
 Namespace Scripting.TokenIcer
 
     Public Module ParserAPI
+
+        ''' <summary>
+        ''' 假若返回来的是空字符串，则说明不是注释行
+        ''' </summary>
+        ''' <param name="line$"></param>
+        ''' <param name="prefix$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetCodeComment(line$, ParamArray prefix$()) As String
+            Dim code As String = Trim(line)
+
+            For Each s As String In prefix
+                If InStr(code, s, CompareMethod.Text) = 1 Then
+                    Return Mid(code, s.Length)
+                End If
+            Next
+
+            Return Nothing
+        End Function
 
         <Extension>
         Public Function GetTokens(Of Tokens)(parser As TokenParser(Of Tokens), expr As String) As Token(Of Tokens)()

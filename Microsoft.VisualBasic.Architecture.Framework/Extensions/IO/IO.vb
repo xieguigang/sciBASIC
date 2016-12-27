@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::40cfbe0715822d2f4bba0e25353ba3bf, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::e970052e232c8e363b6f5cdf3de1ba44, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -40,6 +40,26 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 <PackageNamespace("IO")>
 Public Module IOExtensions
+
+    ''' <summary>
+    ''' 为了方便在linux上面使用，这里会处理一下file://这种情况，请注意参数是ByRef引用的
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension> Public Function FixPath(ByRef path$) As String
+        If InStr(path, "file://", CompareMethod.Text) = 1 Then
+            If App.IsMicrosoftPlatform AndAlso InStr(path, "file:///", CompareMethod.Text) = 1 Then
+                path = Mid(path, 9)
+            Else
+                path = Mid(path, 8)
+            End If
+        Else
+            path = FileIO.FileSystem.GetFileInfo(path).FullName
+        End If
+
+        Return path$
+    End Function
 
     <Extension>
     Public Function ReadVector(path As String) As Double()
@@ -101,12 +121,11 @@ Public Module IOExtensions
     '''
     <ExportAPI("FlushStream")>
     <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path As String) As Boolean
-        Dim parentDIR As String = If(String.IsNullOrEmpty(path),
-            FileIO.FileSystem.CurrentDirectory,
-            FileIO.FileSystem.GetParentPath(path))
-
-        Call FileIO.FileSystem.CreateDirectory(parentDIR)
-        Call FileIO.FileSystem.WriteAllBytes(path, buf.ToArray, False)
+        Using write As BinaryWriter = New BinaryWriter(path.Open)
+            For Each b As Byte In buf
+                Call write.Write(b)
+            Next
+        End Using
 
         Return True
     End Function

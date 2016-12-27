@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8677ecbef30dfb21d8372248803c2735, ..\visualbasic_App\mime\Markups\YAML\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::52ffacb91aa6a4319c4b01e184558036, ..\sciBASIC#\mime\markups\YAML\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 
@@ -32,13 +32,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace YAML.Syntax
 
-    Public Class MappingEntry : Implements sIdEnumerable
+    Public Class MappingEntry : Implements INamedValue
 
         Public Key As DataItem
 
         Public Value As DataItem
 
-        Private Property Identifier As String Implements sIdEnumerable.Identifier
+        Private Property Identifier As String Implements INamedValue.Key
             Get
                 Return Scripting.ToString(Key)
             End Get

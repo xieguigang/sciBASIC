@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adef3810f6b30717c2cf9c84896a3b65, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::6fc60166566e0f2c309d81c6da30716f, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\TrainingUtils.vb"
 
     ' Author:
     ' 
@@ -25,6 +25,8 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports Microsoft.VisualBasic.Language
 
 Namespace NeuralNetwork
 

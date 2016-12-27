@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd9cd5c9bad8434945e09f46392fdac4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetAPI.vb"
+﻿#Region "Microsoft.VisualBasic::c92289b30433561e401859c754ecd390, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetAPI.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Public Module SetAPI
 
@@ -57,7 +58,7 @@ Public Module SetAPI
         Dim result As T() = (From x In GetIntersects.AsParallel
                              Select (From o In x
                                      Where String.Equals(tag, o.st)
-                                     Select o).ToArray(Function(o) o.x)).MatrixToVector
+                                     Select o).ToArray(Function(o) o.x)).ToVector
         Return result
     End Function
 

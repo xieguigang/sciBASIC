@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e35de68a88a7a324448305ba64a66c3f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::1d577bdf7311fed6ad44d92f280844cb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.IO
 Imports System.Xml
+Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -43,10 +44,11 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
     ''' A type within a project namespace.
     ''' </summary>
     Public Class ProjectType
-        Private projectNamespace As ProjectNamespace
-        Private fields As Dictionary(Of String, ProjectMember)
-        Private properties As Dictionary(Of String, ProjectMember)
-        Private methods As Dictionary(Of String, ProjectMember)
+
+        Dim projectNamespace As ProjectNamespace
+        Dim fields As Dictionary(Of String, ProjectMember)
+        Dim properties As Dictionary(Of String, ProjectMember)
+        Dim methods As Dictionary(Of String, ProjectMember)
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             Get
@@ -54,9 +56,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             End Get
         End Property
 
-        Public Property Name() As String
-        Public Property Summary() As String
-        Public Property remarks As String
+        Public Property Name As String
+        Public Property Summary As String
+        Public Property Remarks As String
 
         Public Sub New(projectNamespace As ProjectNamespace)
             Me.projectNamespace = projectNamespace
@@ -78,8 +80,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pm As ProjectMember = Me.GetMethod(methodName)
 
             If pm Is Nothing Then
-                pm = New ProjectMember(Me)
-                pm.Name = methodName
+                pm = New ProjectMember(Me) With {
+                    .Name = methodName
+                }
 
                 Me.methods.Add(methodName.ToLower(), pm)
             End If
@@ -99,8 +102,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pm As ProjectMember = Me.GetProperty(propertyName)
 
             If pm Is Nothing Then
-                pm = New ProjectMember(Me)
-                pm.Name = propertyName
+                pm = New ProjectMember(Me) With {
+                    .Name = propertyName
+                }
 
                 Me.properties.Add(propertyName.ToLower(), pm)
             End If
@@ -120,8 +124,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
             Dim pm As ProjectMember = Me.GetField(fieldName)
 
             If pm Is Nothing Then
-                pm = New ProjectMember(Me)
-                pm.Name = fieldName
+                pm = New ProjectMember(Me) With {
+                    .Name = fieldName
+                }
 
                 Me.fields.Add(fieldName.ToLower(), pm)
             End If
@@ -130,19 +135,19 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Exports for the specific type in a namespace
         ''' </summary>
         ''' <param name="folderPath"></param>
         ''' <param name="pageTemplate"></param>
-        ''' <param name="hexoPublish"></param>
+        ''' <param name="url"></param>
         ''' <remarks>这里还应该包括完整的函数的参数注释的输出</remarks>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
+        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, url As URLBuilder)
             Dim methodList As New StringBuilder()
 
             If Me.methods.Values.Count > 0 Then
                 methodList.AppendLine("### Methods" & vbCr & vbLf)
 
-                Dim sortedMembers As SortedList(Of String, ProjectMember) = New SortedList(Of String, ProjectMember)()
+                Dim sortedMembers As New SortedList(Of String, ProjectMember)()
 
                 For Each pm As ProjectMember In Me.methods.Values
                     sortedMembers.Add(pm.Name, pm)
@@ -157,12 +162,12 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     End If
                     methodList.AppendLine(CleanText(pm.Summary))
 
-                    If Not pm.param.IsNullOrEmpty Then
+                    If Not pm.Params.IsNullOrEmpty Then
                         Call methodList.AppendLine()
                         Call methodList.AppendLine("|Parameter Name|Remarks|")
                         Call methodList.AppendLine("|--------------|-------|")
 
-                        For Each arg In pm.param
+                        For Each arg In pm.Params
                             Call methodList.AppendLine($"|{arg.name}|{arg.text}|")
                         Next
 
@@ -170,7 +175,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     End If
 
                     If Not pm.Returns.IsBlank Then
-                        If Not hexoPublish Then
+                        If Not url.[lib] = Libraries.Hexo Then
                             methodList.AppendLine()
                         End If
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
@@ -205,7 +210,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
             Dim rmk As String = ""
 
-            For Each l As String In remarks.lTokens
+            For Each l As String In Remarks.lTokens
                 rmk &= "> " & l & vbCrLf
             Next
 
@@ -213,9 +218,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 rmk = ""
             End If
 
-            Dim ext As String = If(hexoPublish, ".html", ".md")
+            Dim link$ = url.GetTypeNamespaceLink(Me)
             Dim text As String = String.Format("# {0}" & vbCr & vbLf &
-                                               "_namespace: [{1}](N-{1}" & $"{ext})_" & vbCr & vbLf &
+                                               $"_namespace: {link}_" & vbCr & vbLf &
                                                vbCr & vbLf &
                                                "{2}" & vbCr & vbLf &
                                                vbCr & vbLf &
@@ -224,7 +229,9 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                                                "{4}" & vbCr & vbLf &
                                                "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
 
-            If hexoPublish Then
+            Dim path$ = url.GetTypeSave(folderPath, Me) ' *.md save path
+
+            If url.[lib] = Libraries.Hexo Then
                 text = $"---
 title: {Me.Name}
 ---
@@ -236,7 +243,7 @@ title: {Me.Name}
                 End If
             End If
 
-            Call text.SaveTo(folderPath & "/T-" & Me.[Namespace].Path & "." & Me.Name & ".md", Encoding.UTF8)
+            Call text.SaveTo(path, Encoding.UTF8)
         End Sub
 
         Public Sub LoadFromNode(xn As XmlNode)
@@ -248,7 +255,7 @@ title: {Me.Name}
 
             summaryNode = xn.SelectSingleNode("remarks")
             If Not summaryNode Is Nothing Then
-                remarks = summaryNode.InnerText
+                Remarks = summaryNode.InnerText
             End If
         End Sub
 

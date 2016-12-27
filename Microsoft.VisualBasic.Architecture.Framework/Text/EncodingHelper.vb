@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::426282c6900d9308b6143b828bf3b68b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Text\EncodingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::426282c6900d9308b6143b828bf3b68b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\EncodingHelper.vb"
 
     ' Author:
     ' 

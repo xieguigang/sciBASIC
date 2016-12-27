@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d00ddaddb4f7d44f0950e1cb58437012, ..\visualbasic_App\Data\DataFrame\StorageProvider\Reflection\StorageProviders\MetaAttributes.vb"
+﻿#Region "Microsoft.VisualBasic::b207e17eb53c9605b49dd1705bbfdba0, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\MetaAttributes.vb"
 
     ' Author:
     ' 
@@ -90,7 +90,7 @@ Namespace StorageProvider.Reflection
                     Call hash.Add(attrName.Key, o)
                 Next
 
-                Call MetaEntry.BindProperty.SetValue(x.obj, hash, Nothing)
+                Call MetaEntry.BindProperty.SetValue(x.value, hash, Nothing)
             Next
 
             Return buf

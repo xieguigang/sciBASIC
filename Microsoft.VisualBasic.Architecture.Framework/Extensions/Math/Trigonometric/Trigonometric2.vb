@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19c2ca3f553b6ebfd29a0be99a20ba0c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Trigonometric\Trigonometric2.vb"
+﻿#Region "Microsoft.VisualBasic::19c2ca3f553b6ebfd29a0be99a20ba0c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Trigonometric\Trigonometric2.vb"
 
     ' Author:
     ' 

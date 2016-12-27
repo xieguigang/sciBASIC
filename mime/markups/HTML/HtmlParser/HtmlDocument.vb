@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b84ade4b6e7c6855832a9b674367517, ..\visualbasic_App\mime\Markups\HTML\HtmlParser\HtmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::b55c6e14690ff006ade8c2ae5bc0bcd1, ..\sciBASIC#\mime\markups\HTML\HtmlParser\HtmlDocument.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Net
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace HTML
 

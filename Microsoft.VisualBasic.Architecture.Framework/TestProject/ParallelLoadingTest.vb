@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a464b129e7eaf4962acfb515d1e1e1a9, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::9c2b124f90ca8f3a4f13b63df799d373, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\ParallelLoadingTest.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,6 @@ Public Class ParallelLoadingTest
     <Microsoft.VisualBasic.Parallel.ParallelLoading.LoadEntry>
     Public Shared Function Load(path As String) As ParallelLoadingTest()
         Call Threading.Thread.Sleep(10 * 1000)
-        Return {New ParallelLoadingTest With {.ddddd = RandomDouble(), .fffd = Now}}
+        Return {New ParallelLoadingTest With {.ddddd = Rnd(), .fffd = Now}}
     End Function
 End Class

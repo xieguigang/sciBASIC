@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72492c3b364260059092db5da8857243, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::5866b0563a6297e715c6205f0c57b93e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BucketDictionary.vb"
 
     ' Author:
     ' 
@@ -94,13 +94,13 @@ Namespace ComponentModel.Collection
 
         Public ReadOnly Property Keys As IEnumerable(Of K) Implements IReadOnlyDictionary(Of K, V).Keys
             Get
-                Return __buckets.Select(Function(x) x.Keys).MatrixAsIterator
+                Return __buckets.Select(Function(x) x.Keys).IteratesALL
             End Get
         End Property
 
         Public ReadOnly Property Values As IEnumerable(Of V) Implements IReadOnlyDictionary(Of K, V).Values
             Get
-                Return __buckets.Select(Function(x) x.Values).MatrixAsIterator
+                Return __buckets.Select(Function(x) x.Values).IteratesALL
             End Get
         End Property
 

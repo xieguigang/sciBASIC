@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ea72ff8c042712ae86cc614a42c26dc, ..\visualbasic_App\mime\Markups\HTML\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::4af52c025303783ea6cd80e92c2ec0e7, ..\sciBASIC#\mime\markups\HTML\TextString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Emit.Marshal
+Imports Microsoft.VisualBasic.Language
 
 Namespace HTML
 

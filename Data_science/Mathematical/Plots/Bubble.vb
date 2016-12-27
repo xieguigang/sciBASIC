@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6990c65fc3b72b1ec28fc55467458806, ..\visualbasic_App\Data_science\Mathematical\Plots\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::a7748d95cdf60597fed66d5a81920bbf, ..\sciBASIC#\Data_science\Mathematical\Plots\Bubble.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Public Module Bubble
             size, margin, bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = data.ToArray
-                Dim mapper As New Scaling(array)
+                Dim mapper As New Scaling(array, False)  ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
                 Dim scale As Func(Of Double, Double) =
                      [If](Of Func(Of Double, Double))(
                      logR, Function(r) Math.Log(r + 1) + 1,
@@ -97,4 +97,3 @@ Public Module Bubble
             End Sub)
     End Function
 End Module
-

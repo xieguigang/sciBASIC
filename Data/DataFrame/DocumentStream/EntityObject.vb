@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaa77e2cb18c57d95a694e3f2c66bb8d, ..\visualbasic_App\Data\DataFrame\DocumentStream\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::fe55a3fa82ff21e55f3049fd45982e7f, ..\sciBASIC#\Data\DataFrame\DocumentStream\EntityObject.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,17 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace DocumentStream
 
+    ''' <summary>
+    ''' The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>
+    ''' </summary>
     Public Class EntityObject : Inherits DynamicPropertyBase(Of String)
-        Implements sIdEnumerable
+        Implements INamedValue
 
         ''' <summary>
         ''' This object identifier
         ''' </summary>
         ''' <returns></returns>
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
 
         ''' <summary>
         ''' Copy prop[erty value
@@ -63,10 +66,14 @@ Namespace DocumentStream
         End Function
     End Class
 
+    ''' <summary>
+    ''' The numeric dataset, <see cref="DynamicPropertyBase(Of Double)"/>, <see cref="Double"/>.
+    ''' (数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)
+    ''' </summary>
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
 
         ''' <summary>
         ''' Copy prop[erty value
@@ -80,7 +87,7 @@ Namespace DocumentStream
         End Function
 
         ''' <summary>
-        ''' 
+        ''' <paramref name="uidMap"/>一般情况下会自动进行判断，不需要具体的设置
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="uidMap">

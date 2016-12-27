@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d7fffee3fb0df093e27fb4ce0281ed6, ..\visualbasic_App\Data\DataFrame\DocumentStream\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::212422125c5985428d6a82ba4a69c46f, ..\sciBASIC#\Data\DataFrame\DocumentStream\DataFrame.vb"
 
     ' Author:
     ' 
@@ -108,7 +108,7 @@ Namespace DocumentStream
             Try
                 Return arrayCache _
                     .SeqIterator _
-                    .ToDictionary(Function(i) i.obj, Function(i) i.i)
+                    .ToDictionary(Function(i) i.value, Function(i) i.i)
 
             Catch ex As Exception
                 Dim sb As New StringBuilder(DuplicatedKeys)
@@ -162,6 +162,16 @@ Namespace DocumentStream
         Public ReadOnly Property HeadTitles As String()
             Get
                 Return __columnList.ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The column headers in the csv file first row.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property Headers As RowObject
+            Get
+                Return New RowObject(__columnList)
             End Get
         End Property
 
@@ -408,12 +418,12 @@ Namespace DocumentStream
             Dim schema As Dictionary(Of String, Integer) =
                 __columnList _
                 .SeqIterator _
-                .ToDictionary(Function(x) x.obj,
+                .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
             For Each l As DynamicObjectLoader In From i As SeqValue(Of RowObject)
                                                  In Me._innerTable.SeqIterator
-                                                 Let line As RowObject = i.obj
+                                                 Let line As RowObject = i.value
                                                  Let loader = New DynamicObjectLoader With {
                                                      .LineNumber = i.i,
                                                      .RowData = line,

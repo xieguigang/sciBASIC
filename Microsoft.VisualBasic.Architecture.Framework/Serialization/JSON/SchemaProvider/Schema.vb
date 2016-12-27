@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14f4da231a3fbb301198a34efd033a85, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\SchemaProvider\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::504cc8e85c148320989d6277677d2251, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\SchemaProvider\Schema.vb"
 
     ' Author:
     ' 
@@ -71,9 +71,9 @@ Namespace Serialization.JSON
     End Class
 
     Public Class [Property] : Inherits SchemaProvider
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property name As String Implements sIdEnumerable.Identifier
+        Public Property name As String Implements INamedValue.Key
         Public Property minimum As Integer
         Public Property exclusiveMinimum As Boolean
         Public Property ref As String

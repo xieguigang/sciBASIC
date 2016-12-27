@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93825fc0b73ccf42e9974cb89d0baa8c, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\PreciseRandom.vb"
+﻿#Region "Microsoft.VisualBasic::3d6b851f5b1f997e29d826d29a4244a7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\PreciseRandom.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@ Namespace Mathematical
     ''' </summary>
     Public Class PreciseRandom
 
-        ReadOnly __rnd As New Random(Now.Millisecond)
+        ReadOnly __rnd As Random
         ReadOnly __digits As DoubleRange
 
         ''' <summary>
@@ -49,8 +49,16 @@ Namespace Mathematical
         ''' </summary>
         ''' <param name="digitMin">``10^?``</param>
         ''' <param name="digitMax">``10^?``</param>
-        Sub New(digitMin!, digitMax!)
-            __digits = New DoubleRange(digitMin, digitMax + 1)  ' 假若max是1e10的话，则最高的位数是10，这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
+        Sub New(digitMin!, digitMax!, Optional seeds As IRandomSeeds = Nothing)
+            ' 假若max是1e10的话，则最高的位数是10，
+            ' 这时候由于计算公式的原因最多只能够到9所以在这里需要手动添加一来避免这个问题
+            __digits = New DoubleRange(digitMin, digitMax + 1)
+
+            If seeds Is Nothing Then
+                __rnd = New Random
+            Else
+                __rnd = seeds()
+            End If
         End Sub
 
         ''' <summary>
@@ -58,20 +66,32 @@ Namespace Mathematical
         ''' </summary>
         ''' <param name="from">最小的精度为<see cref="System.Double.Epsilon"/></param>
         ''' <param name="[to]"></param>
-        Sub New(from#, to#)
+        Sub New(from#, to#, Optional seeds As IRandomSeeds = Nothing)
             Call Me.New(
                 CSng(If(from = 0R, 0F, Math.Log10(from))), ' 避免出现log(0)的情况
-                CSng(If([to] = 0R, 0F, Math.Log10([to]))))
+                CSng(If([to] = 0R, 0F, Math.Log10([to]))),
+                seeds)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return __digits.GetJson
+            Return __digits.GetJson & " --> " & NextNumber()
         End Function
 
+        Private Function rand() As Double
+            SyncLock __rnd  ' 线程不安全，所以需要加锁，不然无法得到随机数
+                ' 因为多线程的时候不加锁在不同的线程之间同时调用会得到相同的数
+                Return __rnd.NextDouble
+            End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' 获取一个在给定的小数位范围内的随机的数
+        ''' </summary>
+        ''' <returns></returns>
         Public Function NextNumber() As Double
-            Dim d As Integer = __rnd.NextDouble * __digits.Length + __digits.Min      ' generates the digits
+            Dim d% = rand() * __digits.Length + __digits.Min      ' generates the digits
             Dim digits# = 10 ^ d
-            Dim r# = __rnd.NextDouble
+            Dim r# = rand()
             Return r * digits
         End Function
 

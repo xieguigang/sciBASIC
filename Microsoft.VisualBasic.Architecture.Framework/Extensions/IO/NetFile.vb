@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdf26f8c70dbbd9c7462ddc702d48142, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::4302ce2d0724b089016fefd7d87a18d5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
 
     ' Author:
     ' 
@@ -26,9 +26,12 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Net
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 Namespace FileIO
 
@@ -53,6 +56,24 @@ Namespace FileIO
             End If
         End Function
 
+        <Extension>
+        Public Function OpenNetStream(url$, Optional encoding As Encodings = Encodings.Default) As StreamReader
+            Dim path$ = url.GetMapPath
+            Dim stream As Stream
+
+            If path.FileExists Then
+                Dim file As New FileStream(path, FileMode.Open)
+                stream = file
+            Else ' 网络文件
+                Dim WebRequest As HttpWebRequest = HttpWebRequest.Create(url)
+                Dim WebResponse As WebResponse = WebRequest.GetResponse
+                stream = WebResponse.GetResponseStream
+            End If
+
+            Dim out As New StreamReader(stream, encoding.GetEncodings)
+            Return out
+        End Function
+
         <ExportAPI("NetFile.FileExists")>
         <Extension>
         Public Function NetFileExists(url As String) As Boolean
@@ -72,11 +93,18 @@ Namespace FileIO
                 InStr(url, "https://", CompareMethod.Text) > 0 Then
 
                 url = Strings.Split(url, "//").Last
-                url = App.AppSystemTemp & "/" & url.NormalizePathString
 
-                Dim folders As String = FileSystem.GetParentPath(url)
-                Call FileSystem.CreateDirectory(folders)
+                Dim tokens$() = url.Split("/"c)
+                Dim folders As String = tokens.Take(tokens.Length - 1).JoinBy("/")
 
+                url = tokens.Last.NormalizePathString
+                url = App.AppSystemTemp & "/" & folders & "/" & url
+
+                Call folders.MkDIR
+
+                Return url
+            ElseIf InStr(url, "file://", CompareMethod.Text) = 1 Then
+                url = Mid(url, 8)
                 Return url
             Else
                 If url.FileExists Then

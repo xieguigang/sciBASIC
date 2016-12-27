@@ -1,5 +1,34 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
+﻿#Region "Microsoft.VisualBasic::4c52df538defec778698942092412193, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomRange.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace Mathematical
 
@@ -37,7 +66,7 @@ Namespace Mathematical
         ''' True的时候会通过牺牲性能来强制重新实例化随机数发生器来获取足够的随机
         ''' </param>
         ''' <returns></returns>
-        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As INextRandomNumber
+        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As IValueProvider
             Dim pf! = Log(from, INF), pt! = Log([to], INF)
 
             If from > 0 Then
@@ -52,7 +81,7 @@ Namespace Mathematical
                             Dim range As New DoubleRange(from, [to])
 
                             If forceInit Then
-                                Return Function() New Random(Now.Millisecond).NextDouble(range)  ' 想要通过牺牲性能来强制获取足够的随机
+                                Return Function() New Random().NextDouble(range)  ' 想要通过牺牲性能来强制获取足够的随机
                             Else
                                 Dim rnd As New Random
                                 Return Function() rnd.NextDouble(range)  ' 假若二者都是常数，则返回常数随机区间
@@ -78,7 +107,7 @@ Namespace Mathematical
 
                         If forceInit Then
                             Return Function()
-                                       If New Random(Now.Millisecond).NextDouble < ppf Then
+                                       If New Random().NextDouble < ppf Then
                                            Return -1 * rf.NextNumber
                                        Else
                                            Return rt.NextNumber
@@ -97,7 +126,7 @@ Namespace Mathematical
                     Else
                         Dim range As New DoubleRange(from, [to])
                         If forceInit Then
-                            Return Function() New Random(Now.Millisecond).NextDouble(range)
+                            Return Function() New Random().NextDouble(range)
                         Else
                             Dim rnd As New Random
                             Return Function() rnd.NextDouble(range)
@@ -115,7 +144,7 @@ Namespace Mathematical
                     Else  ' from 和 to 都是负实数
                         Dim range As New DoubleRange(from, [to])
                         If forceInit Then
-                            Return Function() New Random(Now.Millisecond).NextDouble(range)
+                            Return Function() New Random().NextDouble(range)
                         Else
                             Dim rnd As New Random
                             Return Function() rnd.NextDouble(range)
@@ -126,7 +155,7 @@ Namespace Mathematical
         End Function
 
         Public Function Testing(from#, to#) As Double()
-            Dim rnd As INextRandomNumber = GetRandom(from, [to])
+            Dim rnd As IValueProvider = GetRandom(from, [to])
             Dim bufs As New List(Of Double)
 
             For Each i% In 1000%.Sequence

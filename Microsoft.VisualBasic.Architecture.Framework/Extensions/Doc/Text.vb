@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::51c614a4391e385e53096d81dcdebfe8, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::c92711cc80b5875b0bacbef756313b53, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -65,7 +65,7 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenWriter(path As String, Optional encoding As Encodings = Encodings.UTF8, Optional newLine As String = vbLf) As StreamWriter
+    Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
         Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
     End Function
 
@@ -276,6 +276,13 @@ Public Module TextDoc
         Return True
     End Function
 
+    ''' <summary>
+    ''' Save the text content in the <see cref="StringBuilder"/> object into a text file.
+    ''' </summary>
+    ''' <param name="sBuilder"></param>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         Return sBuilder.ToString.SaveTo(path, encoding)

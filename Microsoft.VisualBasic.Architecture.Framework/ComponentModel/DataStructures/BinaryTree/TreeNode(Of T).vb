@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2e05cbc20a13cd2a4a4f64c4b67199f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\TreeNode(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::df32a6989ed66f0fe6e94b247d65afb8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\TreeNode(Of T).vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@ Namespace ComponentModel.DataStructures.BinaryTree
     ''' Define tree nodes
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TreeNode(Of T) : Implements sIdEnumerable
+    Public Class TreeNode(Of T) : Implements INamedValue
 
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
         Public Property Value As T
         Public Property Left As TreeNode(Of T)
         Public Property Right As TreeNode(Of T)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b779bea25262ce6e0cc10dcd253c986, ..\visualbasic_App\CLI_tools\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::6d4ffaf7082d14411759627fba6b8fdd, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Linq

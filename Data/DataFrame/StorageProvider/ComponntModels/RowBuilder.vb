@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f33b2078a581f00fd73e342f9ad5cc, ..\visualbasic_App\Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::be07339341e5d7de86a94298272bb970, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace StorageProvider.ComponentModels
             }
 
             Me.SchemaProvider = SchemaProvider
-            Me.Columns = M.MatrixAsIterator _
+            Me.Columns = M.IteratesALL _
                 .Join(DirectCast(SchemaProvider.MetaAttributes, StorageProvider)) _
                 .ToArray
             Me.Columns = LinqAPI.Exec(Of StorageProvider) <=

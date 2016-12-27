@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64b25128e7f2394c3de06eec7c6c121a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6913f3a67e83a2e24c16bb80b9f9f5ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -28,32 +28,29 @@
 
 Imports System.ComponentModel
 Imports System.Drawing
-Imports System.IO
-Imports System.Net
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports System.Runtime.Serialization
-Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Text
-Imports System.Text.RegularExpressions
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Similarity
 
-#If FRAMEWORD_CORE Then
+#Const FRAMEWORD_CORE = 1
+#Const Yes = 1
+
+#If FRAMEWORD_CORE = Yes Then
 
 ''' <summary>
 ''' Common extension methods library for convenient the programming job.
@@ -64,7 +61,7 @@ Imports Microsoft.VisualBasic.Text.Similarity
                                  "Common extension methods library for convenient the programming job.",
                     Publisher:="xie.guigang@gmail.com",
                     Revision:=8655,
-                    Url:="http://gcmodeller.org")>
+                    Url:="http://github.com/xieguigang/sciBASIC#")>
 <Extension> Public Module Extensions
 #Else
 
@@ -75,7 +72,39 @@ Imports Microsoft.VisualBasic.Text.Similarity
 Public Module Extensions
 #End If
 
-    Public Function NotNull(Of T)(ParamArray args As T()) As T
+    <Extension>
+    Public Function FormatTime(t As TimeSpan) As String
+        With t
+            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ .Milliseconds}"
+        End With
+    End Function
+
+    <Extension>
+    Public Function Average(data As IEnumerable(Of TimeSpan)) As TimeSpan
+        Dim avg# = data.Select(Function(x) x.TotalMilliseconds).Average
+        Return TimeSpan.FromMilliseconds(avg)
+    End Function
+
+    ''' <summary>
+    ''' Returns all of the keys in a dictionary in json format
+    ''' </summary>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="d"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
+        Return d.Keys.ToArray.GetJson
+    End Function
+
+    ''' <summary>
+    ''' Returns the first not nothing object.
+    ''' </summary>
+    ''' <typeparam name="T">
+    ''' Due to the reason of value type is always not nothing, so that this generic type constrain as Class reference type.
+    ''' </typeparam>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    Public Function NotNull(Of T As Class)(ParamArray args As T()) As T
         If args.IsNullOrEmpty Then
             Return Nothing
         Else
@@ -89,7 +118,16 @@ Public Module Extensions
         Return Nothing
     End Function
 
-    Public Function NotEmpty(ParamArray args As String()) As String
+    <Extension> Public Function MD5(s$) As String
+        Return s.GetMd5Hash
+    End Function
+
+    ''' <summary>
+    ''' Returns the first not null or empty string.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    Public Function FirstNotEmpty(ParamArray args As String()) As String
         If args.IsNullOrEmpty Then
             Return ""
         Else
@@ -103,23 +141,38 @@ Public Module Extensions
         Return ""
     End Function
 
+    ''' <summary>
+    ''' Returns the second element in the source collection, if the collection 
+    ''' is nothing or elements count not enough, then will returns nothing.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Second(Of T)(source As IEnumerable(Of T)) As T
-        If source.Count > 1 Then
-            Return source(1)
-        Else
+    Public Function SecondOrNull(Of T)(source As IEnumerable(Of T)) As T
+        Dim i As Integer = 0
+
+        If source Is Nothing Then
             Return Nothing
         End If
+
+        For Each x As T In source
+            If i = 1 Then
+                Return x
+            End If
+        Next
+
+        Return Nothing
     End Function
 
-    <Extension> Public Function Add(Of T As sIdEnumerable)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
+    <Extension> Public Function Add(Of T As INamedValue)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
         If hash Is Nothing Then
             hash = New Dictionary(Of String, T)
         End If
-        If hash.ContainsKey(obj.Identifier) Then
-            Throw New Exception($"[{obj.Identifier}] was duplicated in the dictionary!")
+        If hash.ContainsKey(obj.Key) Then
+            Throw New Exception($"[{obj.Key}] was duplicated in the dictionary!")
         Else
-            Call hash.Add(obj.Identifier, obj)
+            Call hash.Add(obj.Key, obj)
         End If
 
         Return hash
@@ -134,15 +187,25 @@ Public Module Extensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Gets all keys value from the target <see cref="KeyValuePair"/> collection.
+    ''' </summary>
+    ''' <typeparam name="T1"></typeparam>
+    ''' <typeparam name="T2"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
         Return source.ToArray(Function(x) x.Key)
     End Function
 
     ''' <summary>
-    ''' 性能测试工具，函数之中会自动输出整个任务所经历的处理时长
+    ''' Returns the total executation time of the target <paramref name="work"/>.
+    ''' (性能测试工具，函数之中会自动输出整个任务所经历的处理时长)
     ''' </summary>
-    ''' <param name="work">需要测试性能的工作对象</param>
-    ''' <returns></returns>
+    ''' <param name="work">
+    ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
+    ''' </param>
+    ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
     Public Function Time(work As Action) As Long
         Dim sw As Stopwatch = Stopwatch.StartNew
         Call work()
@@ -208,7 +271,7 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' 会自动跳过空集合，这个方法是安全的
+    ''' Add given elements into an array object.(会自动跳过空集合，这个方法是安全的)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
@@ -227,7 +290,14 @@ Public Module Extensions
         array = chunkBuffer
     End Sub
 
-    <Extension> Public Function Append(Of T)(buffer As T(), value As Generic.IEnumerable(Of T)) As T()
+    ''' <summary>
+    ''' Add given elements into an array object and then returns the target array object <paramref name="buffer"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="buffer"></param>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
         If buffer Is Nothing Then
             Return value.ToArray
         End If
@@ -236,6 +306,12 @@ Public Module Extensions
         Return buffer
     End Function
 
+    ''' <summary>
+    ''' Add given elements into an array object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="value"></param>
     <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
         Call Add(Of T)(array, value.ToArray)
     End Sub
@@ -256,14 +332,15 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' 假若下标越界的话会返回默认值
+    ''' Safe get the specific index element from the target collection, is the index value invalid, then default value will be return.
+    ''' (假若下标越界的话会返回默认值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="index"></param>
-    ''' <param name="[default]"></param>
+    ''' <param name="[default]">Default value for invalid index is nothing.</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As Generic.IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension> Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If
@@ -474,7 +551,7 @@ Public Module Extensions
             Return ""
         Else
             Path = Path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
-            Return Path.CliToken
+            Return Path.CLIToken
         End If
     End Function
 
@@ -483,7 +560,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="Token"></param>
     ''' <returns></returns>
-    <Extension> Public Function CliToken(Token As String) As String
+    <Extension> Public Function CLIToken(Token As String) As String
         If String.IsNullOrEmpty(Token) OrElse Not Len(Token) > 2 Then
             Return Token
         End If
@@ -535,23 +612,6 @@ Public Module Extensions
 #Enable Warning
 
     ''' <summary>
-    ''' Removes VbCr and VbLf
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TrimVBCrLf(s As String) As String
-        s = s.Replace(vbCrLf, "")
-        s = s.Replace(vbCr, "").Replace(vbLf, "")
-        Return s
-    End Function
-
-    ''' <summary>
-    ''' Chr(0): NULL char
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Const NIL As Char = Chr(0)
-
-    ''' <summary>
     ''' Format the datetime value in the format of yy/mm/dd hh:min
     ''' </summary>
     ''' <param name="dat"></param>
@@ -589,8 +649,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer) As T()()
-        Return source.SplitIterator(parTokens).ToArray
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As T()()
+        Return source.SplitIterator(parTokens, echo).ToArray
     End Function
 
     ''' <summary>
@@ -602,12 +662,12 @@ Public Module Extensions
     ''' <param name="parTokens"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer) As IEnumerable(Of T())
+    Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
         Dim buf As T() = source.ToArray
         Dim n As Integer = buf.Length
         Dim count As Integer
 
-        If n >= 50000 Then
+        If echo AndAlso n >= 50000 Then
             Call $"Start large data set(size:={n}) partitioning...".__DEBUG_ECHO
         End If
 
@@ -626,7 +686,7 @@ Public Module Extensions
             count += 1
         Next
 
-        If n >= 50000 Then
+        If echo AndAlso n >= 50000 Then
             Call $"Large data set data partitioning(partitions:={count}) jobs done!".__DEBUG_ECHO
         End If
     End Function
@@ -681,6 +741,13 @@ Public Module Extensions
         Return source.Join({data})
     End Function
 
+    ''' <summary>
+    ''' X, ....
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="obj"></param>
+    ''' <param name="collection"></param>
+    ''' <returns></returns>
     <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
         Dim list As New List(Of T) From {obj}
         Call list.AddRange(collection)
@@ -713,21 +780,6 @@ Public Module Extensions
         Call Process.Start()
         Call Process.WaitForExit()
         Return Process.ExitCode
-    End Function
-
-    ''' <summary>
-    ''' Gets a random number in the region of [0,1]. (获取一个[0,1]区间之中的随机数，请注意：因为为了尽量做到随机化，这个函数会不断的初始化随机种子，
-    ''' 故而性能较低，不可以在大量重复调用，或者在批量调用的时候请使用并行化拓展的LINQ)
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Rand", Info:="Returns a random floating-point number between 0.0 and 1.0.")>
-    Public Function RandomDouble() As Double
-        Dim rand As New Random(SecurityString.MD5Hash.ToLong(SecurityString.MD5Hash.GetMd5Hash(Now.ToString)) / Integer.MaxValue)
-        Dim n As Double = rand.Next(0, 100)
-        n = n / 100
-        Return n
     End Function
 
 #If FRAMEWORD_CORE Then
@@ -805,21 +857,6 @@ Public Module Extensions
         Call Console.WriteLine(Prompted)
         Call Console.Read()
     End Sub
-
-    Public Const RegexFloat As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
-
-    ''' <summary>
-    ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexFloat"/>.
-    ''' (使用正则表达式解析目标字符串对象之中的一个实数)
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Double.Match")>
-    <Extension> Public Function RegexParseDouble(s As String) As Double
-        Return Val(s.Match(RegexFloat))
-    End Function
 
     ''' <summary>
     ''' All of the number value in the target array offset a integer value.
@@ -1106,7 +1143,7 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="sIdEnumerable.Identifier"/> 
+    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="INamedValue.Key"/> 
     ''' is not exists in the dictionary, then will be insert, else the old value will be replaced with the parameter 
     ''' value <paramref name="item"/>.
     ''' (向字典对象之中更新或者插入新的数据，假若目标字典对象之中已经存在了一个数据的话，则会将原有的数据覆盖，并返回原来的数据)
@@ -1116,19 +1153,19 @@ Public Module Extensions
     ''' <param name="item"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function InsertOrUpdate(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), item As T) As T
+    <Extension> Public Function InsertOrUpdate(Of T As INamedValue)(ByRef dict As Dictionary(Of String, T), item As T) As T
         Dim pre As T
 
-        If dict.ContainsKey(item.Identifier) Then
-            pre = dict(item.Identifier)
+        If dict.ContainsKey(item.Key) Then
+            pre = dict(item.Key)
 
-            Call dict.Remove(item.Identifier)
-            Call $"data was updated: {Scripting.ToString(pre)} -> {item.Identifier}".__DEBUG_ECHO
+            Call dict.Remove(item.Key)
+            Call $"data was updated: {Scripting.ToString(pre)} -> {item.Key}".__DEBUG_ECHO
         Else
             pre = item
         End If
 
-        Call dict.Add(item.Identifier, item)
+        Call dict.Add(item.Key, item)
 
         Return pre
     End Function
@@ -1140,12 +1177,12 @@ Public Module Extensions
     ''' <param name="dict"></param>
     ''' <param name="item"></param>
     ''' <returns></returns>
-    <Extension> Public Function Remove(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), item As T) As T
-        Call dict.Remove(item.Identifier)
+    <Extension> Public Function Remove(Of T As INamedValue)(ByRef dict As Dictionary(Of String, T), item As T) As T
+        Call dict.Remove(item.Key)
         Return item
     End Function
 
-    <Extension> Public Function AddRange(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), data As IEnumerable(Of T)) As Dictionary(Of String, T)
+    <Extension> Public Function AddRange(Of T As INamedValue)(ByRef dict As Dictionary(Of String, T), data As IEnumerable(Of T)) As Dictionary(Of String, T)
         For Each x As T In data
             Call InsertOrUpdate(dict, x)
         Next
@@ -1170,17 +1207,18 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixToVector(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T()
-        Return MatrixToList(source).ToArray
+    <Extension> Public Function ToVector(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T()
+        Return Unlist(source).ToArray
     End Function
 
     ''' <summary>
-    ''' Empty list will be skip and ignored.(这是一个安全的方法，空集合会被自动跳过，并且这个函数总是返回一个集合不会返回空值)
+    ''' Empty list will be skip and ignored.
+    ''' (这是一个安全的方法，空集合会被自动跳过，并且这个函数总是返回一个集合不会返回空值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
-    <Extension> Public Function MatrixToList(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
+    <Extension> Public Function Unlist(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
         Dim list As New List(Of T)
 
         For Each line As IEnumerable(Of T) In source
@@ -1308,7 +1346,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     <ExportAPI("Double.Is.NA",
                Info:="Is this double type of the number is an NA type infinity number. this is major comes from the devided by ZERO.")>
-    <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
+    <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
     <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
 #End If
@@ -1394,7 +1432,7 @@ Public Module Extensions
     End Function
 
     <Extension> <ExportAPI("Get.Boolean")> Public Function getBoolean(ch As Char) As Boolean
-        If ch = NIL Then
+        If ch = ASCII.NUL Then
             Return False
         End If
 
@@ -1644,7 +1682,7 @@ Public Module Extensions
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="sIdEnumerable">
+    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
     ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="uid">
     ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
     ''' </summary>
@@ -1655,7 +1693,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("Get.Item")>
-    <Extension> Public Function GetById(Of T As sIdEnumerable)(
+    <Extension> Public Function GetById(Of T As INamedValue)(
                                       source As IEnumerable(Of T),
                                          uid As String,
                          Optional IgnoreCase As StringComparison = StringComparison.Ordinal) _
@@ -1664,7 +1702,7 @@ Public Module Extensions
         Dim find As T = LinqAPI.DefaultFirst(Of T) <=
             From x As T
             In source
-            Where String.Equals(uid, x.Identifier, IgnoreCase)
+            Where String.Equals(uid, x.Key, IgnoreCase)
             Select x
 
         Return find
@@ -1748,23 +1786,27 @@ Public Module Extensions
     ''' 随机的在目标集合中选取指定数目的子集合
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
-    ''' <param name="Counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
+    ''' <param name="source"></param>
+    ''' <param name="counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function TakeRandomly(Of T)(Collection As Generic.IEnumerable(Of T), Counts As Integer) As T()
-        If Counts >= Collection.Count Then
-            Return Collection
+    <Extension> Public Function TakeRandomly(Of T)(source As IEnumerable(Of T), counts%) As T()
+        Dim array As T() = source.ToArray
+
+        If counts >= array.Length Then
+            Return source
         Else
-            Dim chunkBuffer As T() = New T(Counts - 1) {}
-            Dim OriginalList = Collection.ToList
-            For i As Integer = 0 To Counts - 1
-                Dim Index = RandomDouble() * (OriginalList.Count - 1)
-                chunkBuffer(i) = OriginalList(Index)
-                Call OriginalList.RemoveAt(Index)
+            Dim out As T() = New T(counts - 1) {}
+            Dim input As New List(Of T)(array)
+            Dim random As New Random
+
+            For i As Integer = 0 To counts - 1
+                Dim ind As Integer = random.Next(input.Count)
+                out(i) = input(ind)
+                Call input.RemoveAt(ind)
             Next
 
-            Return chunkBuffer
+            Return out
         End If
     End Function
 
@@ -1803,6 +1845,12 @@ Public Module Extensions
         Dim objTemp As T = obj1
         obj1 = obj2
         obj2 = objTemp
+    End Sub
+
+    <Extension> Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
+        Dim tmp As T = array(a)
+        array(a) = array(b)
+        array(b) = tmp
     End Sub
 
     ''' <summary>
@@ -1847,7 +1895,7 @@ Public Module Extensions
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Trim")>
-    <Extension> Public Function TrimA(strText As String, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace As String = " ") As String
+    <Extension> Public Function TrimNewLine(strText As String, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace As String = " ") As String
 #Else
     <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
 #End If
@@ -1921,7 +1969,7 @@ Public Module Extensions
         If source Is Nothing Then
             Return
         Else
-            Dim i As Integer = offset
+            Dim i As Integer = offSet
 
             For Each x As T In source
                 Yield i
@@ -1988,10 +2036,10 @@ Public Module Extensions
 
         Dim result As T()
 
-        If OffSet = 0 Then
+        If offSet = 0 Then
             result = (From idx As Integer In indexs Select source(idx)).ToArray
         Else
-            result = (From idx As Integer In indexs Select source(idx + OffSet)).ToArray
+            result = (From idx As Integer In indexs Select source(idx + offSet)).ToArray
         End If
         Return result
     End Function

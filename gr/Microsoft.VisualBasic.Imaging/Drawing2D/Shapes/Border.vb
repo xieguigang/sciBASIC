@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b3ab60738735bed129a6ef32bde33d6, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Border.vb"
+﻿#Region "Microsoft.VisualBasic::2b3ab60738735bed129a6ef32bde33d6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Border.vb"
 
     ' Author:
     ' 

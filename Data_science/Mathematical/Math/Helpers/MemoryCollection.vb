@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae378f455623b62f84049fbc4cbe63c8, ..\visualbasic_App\Data_science\Mathematical\Math\Helpers\MemoryCollection.vb"
+﻿#Region "Microsoft.VisualBasic::ae378f455623b62f84049fbc4cbe63c8, ..\sciBASIC#\Data_science\Mathematical\Math\Helpers\MemoryCollection.vb"
 
     ' Author:
     ' 

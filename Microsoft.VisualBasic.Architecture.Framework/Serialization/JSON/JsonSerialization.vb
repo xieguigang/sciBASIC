@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65baf06f9d7ecd4801f497380db7f63b, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::f109d7f42b69a4758cf63a54ebb13d54, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -108,6 +108,9 @@ Namespace Serialization.JSON
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 2016-11-9 对字典进行序列化的时候，假若对象类型是从字典类型继承而来的，则新的附加属性并不会被序列化，只会序列化字典本身
+        ''' </remarks>
         <Extension> Public Function GetJson(Of T)(obj As T, Optional indent As Boolean = False, Optional simpleDict As Boolean = True) As String
             Return GetObjectJson(obj, GetType(T), indent, simpleDict)
         End Function
@@ -178,7 +181,7 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <Extension>
         Public Function NamedProperty(Of T)(x As NamedValue(Of T)) As String
-            Return x.Name.NamedProperty(Of T)(x.x)
+            Return x.Name.NamedProperty(Of T)(x.Value)
         End Function
     End Module
 End Namespace

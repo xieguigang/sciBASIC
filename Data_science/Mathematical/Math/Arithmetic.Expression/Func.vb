@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1951b08c19127a971df8237ce22a97f, ..\visualbasic_App\Data_science\Mathematical\Math\Arithmetic.Expression\Func.vb"
+﻿#Region "Microsoft.VisualBasic::641142e264a6effca0ada6e358561139, ..\sciBASIC#\Data_science\Mathematical\Math\Arithmetic.Expression\Func.vb"
 
     ' Author:
     ' 
@@ -98,7 +98,7 @@ Public Class Func
 
         Public Function Evaluate(args As Double()) As Double
             For Each x As SeqValue(Of Double) In args.SeqIterator  ' 对lambda表达式设置环境变量
-                __args(__names(x.i)).value = x.obj
+                __args(__names(x.i)).value = x.value
             Next
 
             Return __expr.Evaluate

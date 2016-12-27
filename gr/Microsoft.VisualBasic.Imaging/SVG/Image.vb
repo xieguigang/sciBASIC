@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31f221dbca51dba82cd99beaf7b36f61, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\SVG\Image.vb"
+﻿#Region "Microsoft.VisualBasic::0dd93b231b14ab3fafa580e501945ccb, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\Image.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@ Namespace SVG
     ''' </summary>
     Public Class Image
 
-        <XmlAttribute> Public Property x As Double
-        <XmlAttribute> Public Property y As Double
+        <XmlAttribute> Public Property x As Single
+        <XmlAttribute> Public Property y As Single
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute("image.data")> Public Property data As String

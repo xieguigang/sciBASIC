@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bdbaf794ba8e7c3c87be46ac34f1596, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::0aa9da80a0746d2a39f9465f5587167d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Graph.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,6 @@
 '
 '
 
-Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts

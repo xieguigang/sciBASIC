@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b58b061c9580fd0a87cf5acd649694e1, ..\visualbasic_App\Data_science\Mathematical\Math\Logical\FuzzyLogic\MembershipFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b58b061c9580fd0a87cf5acd649694e1, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\FuzzyLogic\MembershipFunction.vb"
 
     ' Author:
     ' 

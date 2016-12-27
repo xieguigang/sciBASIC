@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d787e05a184bec1f0352eee112f23e, ..\visualbasic_App\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::e331df5f634aa778d41c7a66391cf65e, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -185,7 +185,7 @@ Public Class Renderer : Inherits AbstractRenderer
             Call canvas.FillPie(n.Data.Color, rect, 0, 360)
 
             If ShowLabels Then
-                Dim center As Point = rect.Center
+                Dim center As Point = rect.Centre
                 Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
                 center = New Point(
                     CInt(center.X - sz.Width / 2),

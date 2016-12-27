@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb97b00a8cb88377a748ee0bf50eedcd, ..\visualbasic_App\www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::31571a6066533bb692a1f0d2263afd9f, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
 
     ' Author:
     ' 
@@ -30,7 +30,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.HtmlParser
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
 ''' <summary>
 ''' VisualBasic interface wrapper of Microsoft bing.com search engine.

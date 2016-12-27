@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ffc5d1bef09415b092ccba2f001da0d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::7786d89c04d8fc5b4ee286407c590471, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 
@@ -30,7 +30,6 @@
 '    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. 
 
 
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
 Imports System.Text
@@ -39,6 +38,7 @@ Imports System.Xml
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -129,39 +129,66 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="folderPath"></param>
-        ''' <param name="pageTemplate">a markdown page template. This token: [content] will be replaced with generated content.</param>
-        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, Optional hexoPublish As Boolean = False)
+        ''' <param name="folderPath">The root directory folder path for the generated markdown document that saved.</param>
+        ''' <param name="pageTemplate">
+        ''' a markdown page template. This token: [content] will be replaced with generated content.
+        ''' </param>
+        Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, url As URLBuilder)
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
-                    pn.ExportMarkdownFile(folderPath, pageTemplate, hexoPublish)
+                    pn.ExportMarkdownFile(folderPath, pageTemplate, url)
 
                     For Each pt As ProjectType In pn.Types
-                        pt.ExportMarkdownFile(folderPath, pageTemplate, hexoPublish)
+                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, url)
                     Next
                 Next
             Next
         End Sub
 
+        ''' <summary>
+        ''' Default page content template
+        ''' </summary>
         Public Const TemplateToken As String = "[content]"
 
-        Public Function ExportMarkdownFiles(folderPath As String, Optional hexoPublish As Boolean = False) As Boolean
-            ExportMarkdownFiles(folderPath, TemplateToken, hexoPublish)
-            Return BuildIndex(folderPath, hexoPublish)
+        ''' <summary>
+        ''' Using this method for the xml docs export as markdown documents
+        ''' </summary>
+        ''' <param name="folderPath">
+        ''' The root directory folder path for the generated markdown document that saved.
+        ''' </param>
+        ''' <param name="url">Generates the hexo page source file?</param>
+        ''' <returns></returns>
+        Public Function ExportMarkdownFiles(folderPath As String, Optional url As URLBuilder = Nothing) As Boolean
+            Dim [lib] As URLBuilder = If(url Is Nothing, New URLBuilder, url)
+
+            Call ExportMarkdownFiles(folderPath, TemplateToken, [lib])
+            Call "Build library index...".__DEBUG_ECHO
+
+            Return BuildIndex(folderPath, [lib].lib)
         End Function
 
-        Public Function BuildIndex(out As String, Optional hexoPublish As Boolean = False) As Boolean
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="out"></param>
+        ''' <param name="lib">Generates the hexo page source?</param>
+        ''' <returns></returns>
+        Public Function BuildIndex(out As String, Optional [lib] As Libraries = Libraries.Github) As Boolean
             Dim path As String = out & "/index.md"
             Dim allns As String() =
                 LinqAPI.Exec(Of String) <= From x As Project
                                            In projects
                                            Select x.Namespaces.Select(Function(ns) ns.Path)
 
-            Dim ext As String = If(hexoPublish, ".html", ".md")
-            Dim links As String() = allns.OrderBy(Function(ns) ns).ToArray(Function(ns) $"+ [{ns}](N-{ns}{ext})")
-            Dim sb As String = "Browser by namespace:" & vbCrLf & vbCrLf & links.JoinBy(vbCrLf)
+            Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md")
+            Dim links As String() = allns _
+                .OrderBy(Function(ns) ns) _
+                .ToArray(Function(ns) __getIndexLink(ns, ext, [lib]))
+            Dim sb As String = "Browser by namespace:" & vbCrLf &
+                vbCrLf &
+                links.JoinBy(vbCrLf)
 
-            If hexoPublish Then
+            If [lib] = Libraries.Hexo Then
                 sb = $"---
 title: API index
 date: {Now.ToString}
@@ -171,6 +198,14 @@ date: {Now.ToString}
             End If
 
             Return sb.SaveTo(path)
+        End Function
+
+        Private Shared Function __getIndexLink(ns$, ext$, [lib] As Libraries) As String
+            If [lib] <> Libraries.xDoc Then
+                Return $"+ [{ns}]({If([lib] = Libraries.Hexo, $"N-{ns}{ext}", $"./{ns}/index.md")})"
+            Else
+                Return $"+ <a href=""#"" onClick=""load('/docs/{ns}/index.md')"">{ns}</a>"
+            End If
         End Function
     End Class
 End Namespace

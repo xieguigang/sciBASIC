@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7483fc5cb3bb343fe2dde727d6b927d0, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::62068313aedd93a8660ff696de63e012, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,6 @@ Namespace Drawing2D.Vector.Shapes
 
     Public Class Circle : Inherits Shape
 
-        Dim _Size As Size
         Dim Brush As SolidBrush
 
         Public Property FillColor As Color
@@ -49,24 +48,32 @@ Namespace Drawing2D.Vector.Shapes
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="LeftTop">左上角</param>
-        ''' <param name="D">圆的直径</param>
+        ''' <param name="topLeft">左上角</param>
+        ''' <param name="d">圆的直径</param>
         ''' <remarks></remarks>
-        Friend Sub New(LeftTop As Point, D As Integer, GDI As GDIPlusDeviceHandle, FillColor As Color)
-            Call MyBase.New(GDI, LeftTop)
-            _Size = New Size(D, D)
+        Public Sub New(topLeft As Point, d As Integer, FillColor As Color)
+            Call MyBase.New(topLeft)
+            _Size = New Size(d, d)
             Me.FillColor = FillColor
         End Sub
 
-        Protected Overloads Overrides Sub InvokeDrawing()
-            Call Me._GDIDevice.Graphics.FillPie(Me.Brush, Me.DrawingRegion, 0, 360)
+        Public Sub New(d%, fill As Color)
+            Me.New(Nothing, d, fill)
         End Sub
 
         Public Overrides ReadOnly Property Size As Size
+
+        Public ReadOnly Property Radius As Single
             Get
-                Return _Size
+                Return Math.Min(Size.Width, Size.Height) / 2
             End Get
         End Property
+
+        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+            Dim rect = MyBase.Draw(g, overridesLoci)
+            Call Draw(g, Location, Radius, Brush)
+            Return rect
+        End Function
 
         ''' <summary>
         ''' 绘制圆
@@ -75,12 +82,11 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="center"></param>
         ''' <param name="radius"></param>
         ''' <param name="br"></param>
-        Public Shared Sub Draw(ByRef g As Graphics,
-                               center As Point,
-                               radius As Single,
-                               Optional br As Brush = Nothing,
-                               Optional border As Border = Nothing)
-
+        Public Overloads Shared Sub Draw(ByRef g As Graphics,
+                                         center As Point,
+                                         radius As Single,
+                                         Optional br As Brush = Nothing,
+                                         Optional border As Border = Nothing)
             Dim rect As New Rectangle(
                 New Point(center.X - radius, center.Y - radius),
                 New Size(radius * 2, radius * 2))

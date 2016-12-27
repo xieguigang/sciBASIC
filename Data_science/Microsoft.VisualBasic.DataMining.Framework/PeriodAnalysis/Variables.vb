@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a90653a045c329ccbef05e84a193586, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\Variables.vb"
+﻿#Region "Microsoft.VisualBasic::d73085cc87122ecd13f1e011c5a46700, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\Variables.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Namespace Serials.PeriodAnalysis
 
     Public Structure SerialsVarialble
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property Identifier As String Implements INamedValue.Key
         Dim SerialsData As Double()
 
         Public Overrides Function ToString() As String

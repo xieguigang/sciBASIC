@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::bc42966153de0c16e2271ba22118387f, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::0d7c81914058c11a083844a1e62c3dd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,7 +31,10 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Text
 
 Namespace Scripting
 
@@ -39,6 +42,30 @@ Namespace Scripting
     ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        Public Function PointParser(pt$) As Point
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New Point(x, y)
+        End Function
+
+        Public Function FloatPointParser(pt$) As PointF
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New PointF(x, y)
+        End Function
+
+        Public Function SizeParser(pt$) As Size
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New Size(x, y)
+        End Function
+
+        Public Function FloatSizeParser(pt$) As SizeF
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New SizeF(x, y)
+        End Function
 
         ''' <summary>
         ''' DirectCast(obj, T)
@@ -54,22 +81,63 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' Will processing value NaN automatically and strip for the comma.
+        ''' 用于解析出任意实数的正则表达式
+        ''' </summary>
+        Public Const RegexpDouble As String = "-?\d+(\.\d+)?"
+        Public Const ScientificNotation$ = RegexpDouble & "[Ee][+-]\d+"
+        Public Const RegexpFloat$ = RegexpDouble & "([Ee][+-]\d+)?"
+
+        ''' <summary>
+        ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexpFloat"/>.
+        ''' (使用正则表达式解析目标字符串对象之中的一个实数)
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        Private Function val(s As String) As Double
+        ''' <remarks></remarks>
+        '''
+        <ExportAPI("Double.Match")>
+        <Extension> Public Function RegexParseDouble(s As String) As Double
+            Return Val(s.Match(RegexpFloat))
+        End Function
+
+        ''' <summary>
+        ''' Will processing value NaN automatically and strip for the comma, percentage expression.
+        ''' </summary>
+        ''' <param name="s">
+        ''' + numeric
+        ''' + NaN
+        ''' + p%
+        ''' + a/b
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function ParseNumeric(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) Then
                 Return Double.NaN
+            Else
+                s = s.Replace(",", "")
             End If
-            s = s.Replace(",", "")
-            Return Conversion.Val(s)
+
+            If s.Last = "%"c Then
+                Return Conversion.Val(Mid(s, 1, s.Length - 1)) / 100  ' 百分比
+            ElseIf InStr(s, "/") > 0 Then
+                Dim t$() = s.Split("/"c) ' 处理分数
+                Return Val(t(0)) / Val(t(1))
+            Else
+                Return Conversion.Val(s)
+            End If
         End Function
 
+        ''' <summary>
+        ''' 字符串是空值会返回空字符
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CastChar(obj As String) As Char
-            Return If(String.IsNullOrEmpty(obj), NIL, obj.First)
+            Return If(String.IsNullOrEmpty(obj), ASCII.NUL, obj.First)
         End Function
 
         ''' <summary>
@@ -78,11 +146,11 @@ Namespace Scripting
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public Function CastInteger(obj As String) As Integer
-            Return CInt(val(obj))
+            Return CInt(ParseNumeric(obj))
         End Function
 
         Public Function CastLong(obj As String) As Long
-            Return CLng(val(obj))
+            Return CLng(ParseNumeric(obj))
         End Function
 
         Public Function CastCharArray(obj As String) As Char()
@@ -140,7 +208,7 @@ Namespace Scripting
         End Function
 
         Public Function CastSingle(n As String) As Single
-            Return CSng(val(n))
+            Return CSng(ParseNumeric(n))
         End Function
 
         Public Function CastRegexOptions(name As String) As RegexOptions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d5960f86bbe566247a2e6b7fb182f6a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\RequestBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::3112c1a546f0f61f40ce49c58f192baa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\RequestBuilder.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute
+Imports Microsoft.VisualBasic.Language
 
 Namespace Net.Http
 
@@ -58,14 +59,14 @@ Namespace Net.Http
                         value.ToString)
 
                     args += New NamedValue(Of String) With {
-                        .x = s,
+                        .Value = s,
                         .Name = p.Field.Name
                     }
                 End If
             Next
 
             Dim param As String = args _
-                .ToArray(Function(o) $"{o.Name}={o.x.UrlEncode}") _
+                .ToArray(Function(o) $"{o.Name}={o.Value.UrlEncode}") _
                 .JoinBy("&")
             Return param
         End Function

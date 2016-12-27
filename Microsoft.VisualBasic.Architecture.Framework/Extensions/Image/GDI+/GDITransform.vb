@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b452bf570939a80ad233bd1de11d77a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
+﻿#Region "Microsoft.VisualBasic::b6feb88e94b4a0dee2cc1e4f071df3e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,24 @@ Namespace Imaging
     <PackageNamespace("GDI.Transform")>
     Public Module GDITransform
 
+        ''' <summary>
+        ''' Gets the center location of the region rectangle.
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
         <ExportAPI("Center")>
-        <Extension> Public Function Center(rect As Rectangle) As Point
+        <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        ''' <summary>
+        ''' Gets the center location of the region rectangle.
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        <ExportAPI("Center")>
+        <Extension> Public Function Centre(rect As RectangleF) As PointF
+            Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
         <Extension>

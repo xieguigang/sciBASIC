@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e16966c6b248d1c3950328283685f840, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a95416e10a685c214e7cd7d091681d60, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace NeuralNetwork.Models
 
@@ -40,17 +41,18 @@ Namespace NeuralNetwork.Models
 
         <Extension> Public Function VisualizeModel(net As NeuralNetwork.Network) As FileStream.Network
             Dim network As New FileStream.Network
-            Dim hash = (New List(Of Neuron) + net.HiddenLayer.ToArray + net.InputLayer.ToArray + net.OutputLayer.ToArray).SeqIterator _
-                .ToDictionary(Function(x) x.obj,
+            Dim hash = (New List(Of Neuron) + net.HiddenLayer + net.InputLayer + net.OutputLayer) _
+                .SeqIterator _
+                .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
             network += net.HiddenLayer.ToArray(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
             network += net.InputLayer.ToArray(Function(x) x.__node(NameOf(net.InputLayer), hash))
             network += net.OutputLayer.ToArray(Function(x) x.__node(NameOf(net.OutputLayer), hash))
 
-            network += net.HiddenLayer.ToArray(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).MatrixAsIterator
-            network += net.InputLayer.ToArray(Function(x) x.__edges(NameOf(net.InputLayer), hash)).MatrixAsIterator
-            network += net.OutputLayer.ToArray(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).MatrixAsIterator
+            network += net.HiddenLayer.ToArray(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
+            network += net.InputLayer.ToArray(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
+            network += net.OutputLayer.ToArray(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
 
             Return network
         End Function
@@ -70,10 +72,12 @@ Namespace NeuralNetwork.Models
                           In neuron.InputSynapses
                           Where c.Weight <> 0R  ' 忽略掉没有链接强度的神经元链接
                           Let itName As String = $"{type}-{NameOf(neuron.InputSynapses)}"
-                          Select c.__synapse(itName, uidHash)).ToList + (From c As Synapse
-                                                                         In neuron.OutputSynapses
-                                                                         Where c.Weight <> 0R
-                                                                         Select c.__synapse(type & "-" & NameOf(neuron.OutputSynapses), uidHash))
+                          Select c.__synapse(itName, uidHash)).ToList +
+                          (From c As Synapse
+                           In neuron.OutputSynapses
+                           Where c.Weight <> 0R
+                           Select c.__synapse(type & "-" & NameOf(neuron.OutputSynapses), uidHash))
+
             Return LQuery.ToArray
         End Function
 

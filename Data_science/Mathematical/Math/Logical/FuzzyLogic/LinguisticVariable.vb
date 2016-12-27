@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d96ff1e289319dfc80b07d8b859fcaf, ..\visualbasic_App\Data_science\Mathematical\Math\Logical\FuzzyLogic\LinguisticVariable.vb"
+﻿#Region "Microsoft.VisualBasic::a5c7daa97c41b2829d80608255415021, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\FuzzyLogic\LinguisticVariable.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Namespace Logical.FuzzyLogic
     ''' Represents a linguistic variable.
     ''' </summary>
     Public Class LinguisticVariable : Inherits ClassObject
-        Implements sIdEnumerable
+        Implements INamedValue
 
 #Region "Constructors"
 
@@ -88,7 +88,7 @@ Namespace Logical.FuzzyLogic
         ''' <summary>
         ''' The name that identificates the linguistic variable.
         ''' </summary>
-        Public Property Name() As String Implements sIdEnumerable.Identifier
+        Public Property Name() As String Implements INamedValue.Key
 
         ''' <summary>
         ''' A membership functions collection for the lingusitic variable.

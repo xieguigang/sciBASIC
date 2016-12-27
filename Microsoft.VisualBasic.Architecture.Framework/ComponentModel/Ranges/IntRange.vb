@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150bd0a4c2bfbecb423759b35b84c4f5, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::c6f35abab040e3f1883ae589cfbcef21, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -40,7 +41,9 @@ Namespace ComponentModel.Ranges
     ''' <summary>
     ''' Represents an integer range with minimum and maximum values
     ''' </summary>
-    Public Class IntRange : Implements IRanges(Of Integer)
+    Public Class IntRange : Inherits ClassObject
+        Implements IRanges(Of Integer)
+        Implements IEnumerable(Of Integer)
 
         ''' <summary>
         ''' Minimum value
@@ -131,5 +134,25 @@ Namespace ComponentModel.Ranges
         Public Function IsOverlapping(range As IRanges(Of Integer)) As Boolean Implements IRanges(Of Integer).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
+
+        ''' <summary>
+        ''' 枚举出这个数值范围内的所有整数值，步长为1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Integer) Implements IEnumerable(Of Integer).GetEnumerator
+            For i As Integer = Min To Max
+                Yield i
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+
+        Public Shared Widening Operator CType(exp$) As IntRange
+            Dim r As New IntRange
+            Call exp.Parser(r.Min, r.Max)
+            Return r
+        End Operator
     End Class
 End Namespace

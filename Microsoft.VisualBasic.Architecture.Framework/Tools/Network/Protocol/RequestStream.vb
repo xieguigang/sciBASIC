@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25332db09199b94346850f8283ca5971, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::9ff5fadd703129b9e57e3bdda2b41f24, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\RequestStream.vb"
 
     ' Author:
     ' 
@@ -92,6 +92,11 @@ Namespace Net.Protocols
             Me.ChunkBuffer = buffer
         End Sub
 
+        ''' <summary>
+        ''' 构建一个无参数的网络协议对象
+        ''' </summary>
+        ''' <param name="ProtocolCategory"></param>
+        ''' <param name="Protocol"></param>
         Sub New(ProtocolCategory As Long, Protocol As Long)
             Call Me.New(ProtocolCategory, Protocol, New Byte() {})
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a259d1ab2a3e2502d7ed21f7b61fbb1, ..\visualbasic_App\Data\DataFrame\DocumentStream\MetaData\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::e6dcb69a162d52cb1e7bee85da5cb602, ..\sciBASIC#\Data\DataFrame\DocumentStream\MetaData\Meta.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace DocumentStream
                 name = row.Name
                 name = Regex.Replace(name, "^#+", "", RegexOptions.Multiline)
 
-                Call out.Add(name, row.x)
+                Call out.Add(name, row.Value)
             Loop
 
             i = p.Pointer
@@ -108,7 +108,7 @@ Namespace DocumentStream
             Dim s As String
 
             For Each x As NamedValue(Of T) In source
-                s = Scripting.ToString(x.x)
+                s = Scripting.ToString(x.Value)
                 Yield New RowObject({$"##{x.Name}={s}"})
             Next
         End Function

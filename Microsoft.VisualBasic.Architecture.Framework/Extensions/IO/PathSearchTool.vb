@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a80674d094570ba60d297ee74e23f2e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::8773b35c47b0086cc594ec46d6914525, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -26,18 +26,20 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports System.IO
-Imports System.Text.RegularExpressions
-Imports System.Text
-Imports System.Reflection
 Imports System.Collections.ObjectModel
-Imports Microsoft.VisualBasic.Language
+Imports System.IO
+Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
@@ -46,6 +48,26 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 <[PackageNamespace]("Program.Path.Search",
                     Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
+
+    ''' <summary>
+    ''' Combine directory path.(这个主要是用于生成文件夹名称)
+    ''' 
+    ''' ###### Example usage
+    ''' 
+    ''' ```vbnet
+    ''' Dim images As Dictionary(Of String, String) =
+    '''     (ls - l - {"*.png", "*.jpg", "*.gif"} &lt;= PlatformEngine.wwwroot.DIR("images")) _
+    '''     .ToDictionary(Function(file) file.StripAsId,
+    '''                   AddressOf FileName)
+    ''' ```
+    ''' </summary>
+    ''' <param name="d"></param>
+    ''' <param name="name"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function DIR(d As IO.DirectoryInfo, name As String) As String
+        Return $"{d.FullName}/{name}"
+    End Function
 
     <Extension>
     Public Function UnixPath(path As String) As String
@@ -211,27 +233,67 @@ Public Module ProgramPathSearchTool
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FileLength(path As String) As Integer
+    Public Function FileLength(path As String) As Long
         If Not path.FileExists Then
-            Return -1
+            Return -1&
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length
         End If
     End Function
 
     ''' <summary>
-    ''' Check if the target file object is exists on your file system or not.(这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
+    ''' Safe file copy operation
+    ''' </summary>
+    ''' <param name="source$"></param>
+    ''' <param name="copyTo$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
+        Try
+            If copyTo.FileExists Then
+                Call FileIO.FileSystem.DeleteFile(copyTo)
+            Else
+                Call copyTo.ParentPath.MkDIR
+            End If
+
+            Call FileIO.FileSystem.CopyFile(source, copyTo)
+        Catch ex As Exception
+            ex = New Exception({source, copyTo}.GetJson, ex)
+            Call App.LogException(ex)
+            Return False
+        End Try
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' Check if the target file object is exists on your file system or not.
+    ''' (这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
     ''' </summary>
     ''' <param name="path"></param>
+    ''' <param name="ZERO_Nonexists">将0长度的文件也作为不存在</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
 #If FRAMEWORD_CORE Then
     <ExportAPI("File.Exists", Info:="Check if the target file object is exists on your file system or not.")>
-    <Extension> Public Function FileExists(path As String) As Boolean
+    <Extension> Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean
 #Else
     <Extension> Public Function FileExists(path As String) As Boolean
 #End If
-        Return Not String.IsNullOrEmpty(path) AndAlso FileIO.FileSystem.FileExists(path)
+        If path.IndexOf(ASCII.CR) > -1 OrElse path.IndexOf(ASCII.LF) > -1 Then
+            Return False ' 包含有回车符或者换行符，则肯定不是文件路径了
+        End If
+
+        If Not String.IsNullOrEmpty(path) AndAlso
+            FileIO.FileSystem.FileExists(path) Then  ' 文件存在
+
+            If ZERO_Nonexists Then
+                Return FileSystem.FileLen(path) > 0
+            Else
+                Return True
+            End If
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>
@@ -374,7 +436,7 @@ Public Module ProgramPathSearchTool
                    In matches
                    Where InStr(extType, path.ExtValue, CompareMethod.Text) > 0
                    Select path.Path
-        Return LQuery.MatrixAsIterator.Distinct.ToArray
+        Return LQuery.IteratesALL.Distinct.ToArray
     End Function
 
     ''' <summary>
@@ -657,7 +719,7 @@ Public Module ProgramPathSearchTool
             Call files.AddRange(BranchRule(ProgramFilesX86, keyword))
         End If
         Call files.AddRange(DriveRoot)
-        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).MatrixToList)
+        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).Unlist)
 
         Return files.ToArray
     End Function
@@ -811,7 +873,8 @@ Public Module ProgramPathSearchTool
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimSuffix(file As String) As String
         Try
-            Dim fileInfo = FileIO.FileSystem.GetFileInfo(file.TrimEnd("/"c, "\"c))
+            Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
+            Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
             Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
             Return $"{fileInfo.Directory.FullName}/{Name}"
         Catch ex As Exception
@@ -832,14 +895,14 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 只有文件名称，没有拓展名
+    ''' 返回``文件名称.拓展名``
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <ExportAPI("File.BaseName")>
+    <ExportAPI("File.Name")>
     <Extension>
-    Public Function GetJustFileName(path As String) As String
-        Return IO.Path.GetFileNameWithoutExtension(path)
+    Public Function FileName(path As String) As String
+        Return FileIO.FileSystem.GetFileInfo(path).Name
     End Function
 
     ''' <summary>

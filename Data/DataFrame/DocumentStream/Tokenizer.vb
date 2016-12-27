@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9927ea36df29293af657e6552a42fce, ..\visualbasic_App\Data\DataFrame\DocumentStream\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::1314176a0f202ead0db25a32c9874713, ..\sciBASIC#\Data\DataFrame\DocumentStream\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.Language
 
 Namespace DocumentStream
 
@@ -81,7 +82,7 @@ Namespace DocumentStream
             Dim preToken As Boolean = False
             Dim deliExit As Boolean = False
 
-            For Each c As Char In s.Replace("""""", """")
+            For Each c As Char In s.Replace("""""", "\""")
                 If c = ","c Then
                     If Not stack Then
                         Call tokens.Add(New String(temp.ToArray))
@@ -132,6 +133,10 @@ Namespace DocumentStream
                     Call tokens.Add("")
                 End If
             End If
+
+            For i As Integer = 0 To tokens.Count - 1
+                tokens(i) = tokens(i).Replace("\""", """")
+            Next
 
             Return tokens
         End Function

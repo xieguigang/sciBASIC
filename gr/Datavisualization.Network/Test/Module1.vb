@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef1392b85e8e63e4d1a8d81359233372, ..\visualbasic_App\gr\Datavisualization.Network\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::0265e2b773e151927ce449634601b672, ..\sciBASIC#\gr\Datavisualization.Network\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -26,8 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic
-
+Imports Microsoft.VisualBasic.Language
 
 Module Module1
 

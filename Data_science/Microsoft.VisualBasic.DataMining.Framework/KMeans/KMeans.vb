@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::b1c2b7816f4470e8c11263a8a4d3fc28, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::77361b57e771a0cd56666ca1df897cbd, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -94,6 +94,16 @@ Namespace KMeans
 
         ''' <summary>
         ''' Calculates The Mean Of A Cluster OR The Cluster Center
+        ''' 
+        ''' ```vbnet
+        ''' Dim cluster#(,) = {
+        '''     {15, 32, 35.6},
+        '''     {19, 54, 65.1}
+        ''' }
+        ''' Dim centroid#() = Kmeans.ClusterMean(cluster)
+        '''
+        ''' Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
+        ''' ```
         ''' </summary>
         ''' <param name="cluster">
         ''' A two-dimensional array containing a dataset of numeric values
@@ -128,7 +138,10 @@ Namespace KMeans
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
         ''' <param name="clusterCount">The number of clusters or groups to form</param>
-        ''' <param name="source">An array containing data that will be clustered</param>
+        ''' <param name="source">
+        ''' An array containing data that will be clustered, the elements number must greater than 2, at least 3 elements.
+        ''' (里面的元素至少需要三个)
+        ''' </param>
         ''' <returns>A collection of clusters of data</returns>
         ''' <param name="parallel">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
@@ -247,7 +260,7 @@ Namespace KMeans
  _
                         From c As SeqValue(Of KMeansCluster(Of T))
                         In clusters.SeqIterator.AsParallel
-                        Let cluster As KMeansCluster(Of T) = c.obj
+                        Let cluster As KMeansCluster(Of T) = c.value
                         Let clusterMean As Double() = If(
                             cluster.NumOfEntity = 0,
                             New Double(x.Properties.Length - 1) {},
@@ -255,10 +268,10 @@ Namespace KMeans
                         Let distance As Double = EuclideanDistance(x.Properties, clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                         Select New SeqValue(Of Double) With {
                             .i = c.i,
-                            .obj = distance
+                            .value = distance
                         }
                     Dim index As Integer = min _
-                        .OrderBy(Function(distance) distance.obj) _
+                        .OrderBy(Function(distance) distance.value) _
                         .First.i ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
 
                     Call newClusters(index).Add(x)

@@ -1,9 +1,38 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::d923c82f023d9b80d35f44f5c2ad4ee8, ..\sciBASIC#\Data_science\Mathematical\Plots\QQPlot.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
 
 ''' <summary>
@@ -54,14 +83,14 @@ Public Module QQPlot
                          Optional ycol$ = "black",
                          Optional ptSize! = 35,
                          Optional lv% = 100000,
-                         Optional epsilon# = Quantile.epsilon,
+                         Optional epsilon# = epsilon,
                          Optional compact_size% = 1000) As Bitmap
 
         Dim data As Double() = x.Join(y).Distinct.ToArray
         Dim maps As Integer() = data.GenerateMapping(lv)
         Dim lvs = data.SeqIterator _
             .ToDictionary(Function(n) maps(n.i),
-                          Function(n) n.obj)
+                          Function(n) n.value)
         Dim q#() = {
             0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5,
             0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1

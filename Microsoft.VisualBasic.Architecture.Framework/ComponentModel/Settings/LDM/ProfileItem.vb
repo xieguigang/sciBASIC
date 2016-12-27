@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f99338944ce50f409175324b8334740, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::4d493d88dee4d7c4a7fdbfc53b03c14d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ProfileItem.vb"
 
     ' Author:
     ' 
@@ -67,9 +67,9 @@ Namespace ComponentModel.Settings
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class ProfileItem : Inherits Attribute
         Implements IKeyValuePairObject(Of String, String)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, sIdEnumerable.Identifier
+        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, INamedValue.Key
         <XmlAttribute> Public Overridable Property Description As String Implements IKeyValuePairObject(Of String, String).Value
 
         ''' <summary>

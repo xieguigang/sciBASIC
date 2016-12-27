@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19134ca0e48de197b3e744db29f06405, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::19134ca0e48de197b3e744db29f06405, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 

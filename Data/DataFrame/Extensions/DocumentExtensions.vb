@@ -1,46 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::3156855c09508a58c8fc083ecb8b150d, ..\visualbasic_App\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e1db82a10d7cb992911eeb7a9a0aae3c, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Public Module DocumentExtensions
 
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="cols"><see cref="File.Columns"/> filtering results.</param>
+    ''' <param name="cols"><see cref="DocumentStream.File.Columns"/> filtering results.</param>
     ''' <returns></returns>
     <Extension>
     Public Function JoinColumns(cols As IEnumerable(Of String())) As DocumentStream.File
         Dim array$()() = cols.ToArray
-        Dim out As New File
+        Dim out As New DocumentStream.File
 
         For i As Integer = 0 To array.First.Length - 1
             Dim ind As Integer = i
@@ -68,6 +73,24 @@ Public Module DocumentExtensions
     End Class
 
     <Extension>
+    Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, String)), path$) As Boolean
+        Dim table As GenericTable() = d _
+            .Select(Function(x) New GenericTable With {.Data = x}) _
+            .ToArray
+        Return table.SaveTo(path)
+    End Function
+
+    <Extension>
+    Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, Double)), path$) As Boolean
+        Return d _
+            .Select(
+            Function(x) x.ToDictionary(
+            Function(k) k.Key,
+            Function(v) v.Value.ToString)) _
+            .SaveAsDataFrame(path)
+    End Function
+
+    <Extension>
     Public Function MergeTable(EXPORT$, files As IEnumerable(Of String)) As Boolean
         Dim data As New List(Of GenericTable)
 
@@ -77,5 +100,68 @@ Public Module DocumentExtensions
         Next
 
         Return data.SaveTo(EXPORT)
+    End Function
+
+    <Extension>
+    Public Function SaveTsv(csv As DocumentStream.File, path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Using file As StreamWriter = path.OpenWriter(encoding)
+            For Each line In csv
+                Call file.WriteLine(line.TsvLine)
+            Next
+
+            Return True
+        End Using
+    End Function
+
+    <Extension>
+    Public Function TsvLine(row As RowObject) As String
+        Dim ls As New List(Of String)
+
+        For Each c As String In row
+            If c.Contains(ASCII.TAB) Then
+                c = $"""{c}"""
+            End If
+
+            ls.Add(c)
+        Next
+
+        Return ls.JoinBy(ASCII.TAB)
+    End Function
+
+    ''' <summary>
+    ''' 文件之中的每一列都是数据
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="skipFirstColumn">假若第一列是固定的时间序列的话，是否需要跳过这第一列？？</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LoadData(path$, Optional skipFirstColumn As Boolean = False) As NamedValue(Of Double())()
+        Dim data As DocumentStream.File =
+            DocumentStream.File.Load(path)
+        Dim source As IEnumerable(Of String())
+
+        If skipFirstColumn Then
+            source = data.Columns.Skip(1)
+        Else
+            source = data.Columns
+        End If
+
+        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) <=
+ _
+            From column As String()
+            In source
+            Let name As String = column(Scan0)
+            Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
+            Select New NamedValue(Of Double()) With {
+                .Name = name,
+                .Value = values
+            }
+
+        Return out
+    End Function
+
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path$, Optional encoding As Encodings = Encodings.Default) As T()
+        Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.GetEncodings)
     End Function
 End Module

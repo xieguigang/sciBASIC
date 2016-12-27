@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5809880ed9b39b24770a7bb12f8ef44, ..\visualbasic_App\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::1d23d955fa81856aa6479e368ab4ad2e, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -29,24 +29,23 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.diffEq
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Scatter
 
     ''' <summary>
-    ''' 绘图函数
+    ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>
@@ -64,13 +63,15 @@ Public Module Scatter
                          Optional drawLine As Boolean = True,
                          Optional legendBorder As Border = Nothing,
                          Optional fill As Boolean = False,
-                         Optional fillPie As Boolean = True) As Bitmap
+                         Optional fillPie As Boolean = True,
+                         Optional legendFontSize! = 24,
+                         Optional absoluteScaling As Boolean = True) As Bitmap
 
         Return GraphicsPlots(
             size, margin, bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
-                Dim mapper As New Scaling(array)
+                Dim mapper As New Scaling(array, absoluteScaling)
 
                 Call g.DrawAxis(size, margin, mapper, showGrid)
 
@@ -111,10 +112,10 @@ Public Module Scatter
                         End If
                     Next
 
-                    If Not line.annotations.IsNullOrEmpty Then
+                    If Not line.DataAnnotations.IsNullOrEmpty Then
                         Dim raw = array.Where(Function(s) s.title = line.title).First
 
-                        For Each annotation As Annotation In line.annotations
+                        For Each annotation As Annotation In line.DataAnnotations
                             Call annotation.Draw(g, mapper, raw, grect)
                         Next
                     End If
@@ -127,36 +128,21 @@ Public Module Scatter
                             Select New Legend With {
                                 .color = x.color.RGBExpression,
                                 .fontstyle = CSSFont.GetFontStyle(
-                                    FontFace.MicrosoftYaHei,
+                                    FontFace.SegoeUI,
                                     FontStyle.Regular,
-                                    30),
+                                    legendFontSize),
                                 .style = LegendStyles.Circle,
                                 .title = x.title
                             }
 
                         If legendPosition.IsEmpty Then
-                            legendPosition = New Point(CInt(size.Width * 0.8), margin.Height)
+                            legendPosition = New Point(CInt(size.Width * 0.7), margin.Height)
                         End If
 
                         Call g.DrawLegends(legendPosition, legends,,, legendBorder)
                     End If
                 Next
             End Sub)
-    End Function
-
-    <Extension>
-    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
-        Return {ode.FromODE("cyan")}.Plot(size, margin, bg)
-    End Function
-
-    <Extension>
-    Public Function Plot(ode As ODEsOut,
-                         Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
-                         Optional bg As String = "white",
-                         Optional ptSize As Single = 30,
-                         Optional width As Single = 5) As Bitmap
-        Return ode.FromODEs(, ptSize, width).Plot(size, margin, bg)
     End Function
 
     Public Function Plot(x As Vector,
@@ -166,67 +152,161 @@ Public Module Scatter
                          Optional ptSize As Single = 15,
                          Optional width As Single = 5,
                          Optional drawLine As Boolean = False) As Bitmap
-        Return {FromVector(x,,, ptSize, width)}.Plot(size, margin, bg, True, False, , drawLine)
+        Return {
+            FromVector(x,,, ptSize, width)
+        }.Plot(size, margin, bg, True, False, , drawLine)
     End Function
 
-    Public Function FromVector(x As Vector,
+    Public Function FromVector(y As IEnumerable(Of Double),
                                Optional color As String = "black",
                                Optional dash As DashStyle = DashStyle.Dash,
                                Optional ptSize! = 30,
-                               Optional width As Single = 5) As SerialData
+                               Optional width As Single = 5,
+                               Optional xrange As IEnumerable(Of Double) = Nothing,
+                               Optional title$ = "Vector Plot",
+                               Optional alpha% = 255) As SerialData
+        Dim array#()
+        Dim y0#() = y.ToArray
+
+        If xrange Is Nothing Then
+            array = VBMathExtensions.seq(0, y0.Length, 1)
+        Else
+            array = xrange.ToArray
+        End If
+
         Return New SerialData With {
-            .color = color.ToColor,
+            .color = Drawing.Color.FromArgb(alpha, color.ToColor),
             .lineType = dash,
             .PointSize = ptSize,
-            .title = "Vector Plot",
+            .title = title,
             .width = width,
             .pts = LinqAPI.Exec(Of PointData) <=
+ _
                 From o As SeqValue(Of Double)
-                In x.SeqIterator
+                In y0.SeqIterator
+                Where Not o.value.IsNaNImaginary
                 Select New PointData With {
-                    .pt = New PointF(o.i, CSng(o.obj))
+                    .pt = New PointF(array(o.i), CSng(o.value))
                 }
                     }
     End Function
 
     <Extension>
-    Public Function FromODE(ode As ODE, color As String,
-                            Optional dash As DashStyle = DashStyle.Dash,
-                            Optional ptSize As Integer = 30,
-                            Optional width As Single = 5) As SerialData
+    Public Function Plot(range As NamedValue(Of DoubleRange),
+                         expression$,
+                         Optional steps# = 0.01,
+                         Optional lineColor$ = "black",
+                         Optional lineWidth! = 10,
+                         Optional bg$ = "white") As Bitmap
 
-        Return New SerialData With {
-            .title = ode.df.ToString,
-            .color = color.ToColor,
-            .lineType = dash,
-            .PointSize = ptSize,
-            .width = width,
-            .pts = LinqAPI.Exec(Of PointData) <=
-                From x As SeqValue(Of Double)
-                In ode.x.SeqIterator
-                Select New PointData(CSng(x.obj), CSng(ode.y(x.i)))
-        }
+        Dim engine As New Expression
+        Dim ranges As Double() = range.Value.seq(steps).ToArray
+        Dim y As New List(Of Double)
+
+        For Each x# In ranges
+            Call engine _
+                .SetVariable(range.Name, x)
+            y += engine.Evaluation(expression)
+        Next
+
+        Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, expression,)
+        Return Plot({serial}, ,, bg)
     End Function
 
     <Extension>
-    Public Function FromODEs(odes As ODEsOut,
-                             Optional colors As IEnumerable(Of String) = Nothing,
-                             Optional ptSize! = 30,
-                             Optional width As Single = 5) As SerialData()
-        Dim c As Color() = If(
-            colors.IsNullOrEmpty,
-            ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor))
-        Return LinqAPI.Exec(Of SerialData) <=
-            From y As SeqValue(Of NamedValue(Of Double()))
-            In odes.y.Values.SeqIterator
-            Select New SerialData With {
-                .color = c(y.i),
-                .lineType = DashStyle.Solid,
-                .PointSize = ptSize,
-                .title = y.obj.Name,
-                .width = width,
-                .pts = odes.x.SeqIterator.ToArray(Function(x) New PointData(CSng(x.obj), CSng(y.obj.x(x.i))))
-            }
+    Public Function Plot(range As DoubleRange,
+                         expression As Func(Of Double, Double),
+                         Optional steps# = 0.01,
+                         Optional lineColor$ = "black",
+                         Optional lineWidth! = 10,
+                         Optional bg$ = "white",
+                         Optional title$ = "Function Plot") As Bitmap
+
+        Dim ranges As Double() = range.seq(steps).ToArray
+        Dim y As New List(Of Double)
+
+        For Each x# In ranges
+            y += expression(x#)
+        Next
+
+        Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, title,)
+        Return Plot({serial}, ,, bg)
+    End Function
+
+    Public Function Plot(points As IEnumerable(Of Point),
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional lineColor$ = "black",
+                         Optional bg$ = "white",
+                         Optional title$ = "Plot Of Points",
+                         Optional lineWidth! = 5.0!,
+                         Optional ptSize! = 15.0!,
+                         Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+        Dim s As SerialData = points _
+            .FromPoints(lineColor$,
+                        title$,
+                        lineWidth!,
+                        ptSize!,
+                        lineType)
+        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+    End Function
+
+    Public Function Plot(points As IEnumerable(Of PointF),
+                         Optional size As Size = Nothing,
+                         Optional margin As Size = Nothing,
+                         Optional lineColor$ = "black",
+                         Optional bg$ = "white",
+                         Optional title$ = "Plot Of Points",
+                         Optional lineWidth! = 5.0!,
+                         Optional ptSize! = 15.0!,
+                         Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+        Dim s As SerialData = points _
+            .FromPoints(lineColor$,
+                        title$,
+                        lineWidth!,
+                        ptSize!,
+                        lineType)
+        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+    End Function
+
+    <Extension>
+    Public Function FromPoints(points As IEnumerable(Of Point),
+                               Optional lineColor$ = "black",
+                               Optional title$ = "Plot Of Points",
+                               Optional lineWidth! = 5.0!,
+                               Optional ptSize! = 15.0!,
+                               Optional lineType As DashStyle = DashStyle.Solid) As SerialData
+        Return FromPoints(
+            points.Select(
+            Function(pt) New PointF With {
+                .X = pt.X,
+                .Y = pt.Y
+            }),
+            lineColor,
+            title,
+            lineWidth,
+            ptSize,
+            lineType)
+    End Function
+
+    <Extension>
+    Public Function FromPoints(points As IEnumerable(Of PointF),
+                               Optional lineColor$ = "black",
+                               Optional title$ = "Plot Of Points",
+                               Optional lineWidth! = 5.0!,
+                               Optional ptSize! = 15.0!,
+                               Optional lineType As DashStyle = DashStyle.Solid) As SerialData
+
+        Return New SerialData With {
+            .color = lineColor.ToColor,
+            .lineType = lineType,
+            .PointSize = ptSize,
+            .width = lineWidth,
+            .pts = points.ToArray(
+                Function(pt) New PointData With {
+                    .pt = pt
+            }),
+            .title = title
+        }
     End Function
 End Module

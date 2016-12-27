@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8176055a03f66d33eb2ded1b938866c2, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::847bfbb5fb4c8a85db3584cb0402b2c4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -134,19 +134,30 @@ Namespace CommandLine.Reflection.EntryPoints
             Dim sb As New StringBuilder(MyBase.HelpInformation(md))
 
             If Not Arguments.IsNullOrEmpty Then
-                Call sb.AppendLine(vbCrLf & vbCrLf)
-                Call sb.AppendLine("#### Parameters information:")
+                Call sb.AppendLine(vbCrLf)
+                Call sb.AppendLine("  #### Arguments")
 
                 If Not md Then
-                    Call sb.AppendLine(vbCrLf & "   ---------------------------------------")
+                    Call sb.AppendLine("  ---------------------------------------")
+                    Call sb.AppendLine()
                     Call sb.AppendLine("    " & Arguments.ToString)
                 Else
                     For Each param In Arguments
-                        Call sb.AppendLine("##### " & If(param.x.Optional, $"[{param.Name}]", param.Name))
-                        Call sb.AppendLine(param.x.Description)
+                        Call sb.AppendLine("##### " & If(param.Value.Optional, $"[{param.Name}]", param.Name))
+                        Call sb.AppendLine(param.Value.Description)
                         Call sb.AppendLine("###### Example")
                         Call sb.AppendLine("```bash")
-                        Call sb.AppendLine(param.x.Example)
+
+                        If param.Value.TokenType = CLITypes.Boolean Then
+                            Call sb.AppendLine(param.Name)
+                            Call sb.AppendLine("#" & ManualBuilder.boolFlag)
+                        Else
+                            Call sb.AppendLine(param.Name & " " & param.Value.ExampleValue)
+                            If param.Value.Pipeline <> PipelineTypes.undefined Then
+                                Call sb.AppendLine("# " & param.Value.Pipeline.Description)
+                            End If
+                        End If
+
                         Call sb.AppendLine("```")
                     Next
                 End If

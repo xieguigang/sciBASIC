@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::30673e9a69478d6fd3b82ac2f8a940e1, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::b751cc81fe0b8c6eb395329ebb199c1a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -45,19 +45,19 @@ Namespace ComponentModel.Collection
     Public Module FuzzyGroup
 
         ''' <summary>
-        ''' Grouping objects in a collection based on their <see cref="sIdEnumerable.Identifier"/> string Fuzzy equals to others'.
+        ''' Grouping objects in a collection based on their <see cref="INamedValue.Key"/> string Fuzzy equals to others'.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="cut">字符串相似度的阈值</param>
         ''' <returns></returns>
         <Extension>
-        Public Function FuzzyGroups(Of T As sIdEnumerable)(
+        Public Function FuzzyGroups(Of T As INamedValue)(
                         source As IEnumerable(Of T),
                Optional cut As Double = 0.6,
                Optional parallel As Boolean = False) As GroupResult(Of T, String)()
 
-            Return source.FuzzyGroups(Function(x) x.Identifier, cut, parallel).ToArray
+            Return source.FuzzyGroups(Function(x) x.Key, cut, parallel).ToArray
         End Function
 
         ''' <summary>

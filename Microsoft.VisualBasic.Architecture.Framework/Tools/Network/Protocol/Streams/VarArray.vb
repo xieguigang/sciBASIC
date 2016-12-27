@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::612f6b761c3f37f508e72bfa77e66571, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\VarArray.vb"
+﻿#Region "Microsoft.VisualBasic::885936b6fbb4d57df56eda9751cb7f64, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Protocol\Streams\VarArray.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace Net.Protocols.Streams.Array
             Dim LQuery = (From ind As SeqValue(Of T)
                           In Values.SeqIterator.AsParallel
                           Select ind.i,
-                              byts = __serialization(ind.obj)
+                              byts = __serialization(ind.value)
                           Order By i Ascending)
 
             For Each x In LQuery

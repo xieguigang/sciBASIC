@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::899f5ac86810c1921bf097aee139d171, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::7ada6d232728889a5e4930fb0d3ebd95, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -29,8 +29,27 @@
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' Determines whether the <see cref="NameValueCollection"/> contains the specified key.
+    ''' </summary>
+    ''' <param name="d"></param>
+    ''' <param name="key$">The key to locate in the <see cref="NameValueCollection"/></param>
+    ''' <returns>true if the System.Collections.Generic.Dictionary`2 contains an element with
+    ''' the specified key; otherwise, false.</returns>
+    <Extension>
+    Public Function ContainsKey(d As NameValueCollection, key$) As Boolean
+        Return Not String.IsNullOrEmpty(d(key))
+    End Function
+
+    <Extension>
+    Public Function Join(Of T, V)(d As Dictionary(Of T, V), name As T, value As V) As Dictionary(Of T, V)
+        d(name) = value
+        Return d
+    End Function
 
     ''' <summary>
     ''' 请注意，这里的类型约束只允许枚举类型
@@ -65,11 +84,18 @@ Public Module KeyValuePairExtensions
     End Function
 
     <Extension>
-    Public Function Sort(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
-        Return From x As T
-               In source
-               Select x
-               Order By x Ascending
+    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional desc As Boolean = False) As IEnumerable(Of T)
+        If Not desc Then
+            Return From x As T
+                   In source
+                   Select x
+                   Order By x Ascending
+        Else
+            Return From x As T
+                   In source
+                   Select x
+                   Order By x Descending
+        End If
     End Function
 
     ''' <summary>
@@ -80,7 +106,7 @@ Public Module KeyValuePairExtensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ToDictionary(Of T As sIdEnumerable)(source As IEnumerable(Of T)) As Dictionary(Of T)
+    Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T)) As Dictionary(Of T)
         Dim hash As Dictionary(Of T) = New Dictionary(Of T)
         Dim i As Integer = 0
 
@@ -91,11 +117,11 @@ Public Module KeyValuePairExtensions
 
         Try
             For Each item As T In source
-                Call hash.Add(item.Identifier, item)
+                Call hash.Add(item.Key, item)
                 i += 1
             Next
         Catch ex As Exception
-            ex = New Exception("Identifier -> [ " & source(i).Identifier & " ]", ex)
+            ex = New Exception("Identifier -> [ " & source(i).Key & " ]", ex)
             Throw ex
         End Try
 

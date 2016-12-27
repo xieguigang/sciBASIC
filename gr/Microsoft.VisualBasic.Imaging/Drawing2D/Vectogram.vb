@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::b15ef7816683e809e4141d73a6ade21f, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
+﻿#Region "Microsoft.VisualBasic::c9db34a107380d97488e81d03ebc92fc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -64,7 +64,7 @@ Namespace Drawing2D
             Call Me.New(New Size(Width, Height))
         End Sub
 
-        Sub New(Width As Integer, AspectRatio As Double)
+        Sub New(Width As Integer, AspectRatio As Single)
             Call Me.New(New Size(Width, CInt(Width * AspectRatio)))
         End Sub
 
@@ -87,14 +87,14 @@ Namespace Drawing2D
         End Function
 
         Public Function AddCircle(FillColor As Color, TopLeft As Point, d As Integer) As Circle
-            Dim Circle As New Circle(LeftTop:=TopLeft, D:=d, GDI:=Me._GDIDevice, FillColor:=FillColor)
+            Dim Circle As New Circle(topLeft:=TopLeft, d:=d, FillColor:=FillColor)
             Call Me._lstElements.Add(Circle)
             Return Circle
         End Function
 
         Public Function ToImage() As Image
             For Each Element As Shape In Me._lstElements
-                Call Element.InvokeDrawing()
+                Call Element.Draw(GDIDevice.Graphics)
             Next
 
             Return _GDIDevice.ImageResource

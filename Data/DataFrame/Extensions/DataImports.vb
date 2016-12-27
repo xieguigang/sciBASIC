@@ -1,35 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::cef2cc6d63d25d3cdb8f29a0baaea17f, ..\visualbasic_App\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::5e53b805dccbabcc061415b119f71a5a, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
@@ -62,14 +61,14 @@ Public Module DataImports
     <ExportAPI("--Imports", Info:="Imports the data in a well formatted text file using a specific delimiter, default delimiter is comma character.")>
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
-                              Optional encoding As Encoding = Nothing) As DocumentStream.File
+                              Optional encoding As Encoding = Nothing) As File
         If encoding Is Nothing Then
             encoding = System.Text.Encoding.Default
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim Csv As DocumentStream.File = New DocumentStream.File(ImportsData(Lines, delimiter), txtPath)
-        Return Csv
+        Dim csv As New File(ImportsData(Lines, delimiter), txtPath)
+        Return csv
     End Function
 
     ''' <summary>
@@ -141,18 +140,25 @@ Public Module DataImports
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim LQuery As RowObject() = (From line As String In Lines Select RowParsing(line, length:=length)).ToArray
-        Dim Csv As New DocumentStream.File(LQuery, txtPath)
-        Return Csv
+        Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
+ _
+            From line As String
+            In Lines
+            Select RowParsing(line, length:=length)
+
+        Dim csv As New File(LQuery, txtPath)
+        Return csv
     End Function
 
     <ExportAPI("Row.Parsing")>
     Public Function RowParsing(line$, length%) As RowObject
         Dim n As Integer = CInt(Len(line) / length) + 1
-        Dim cols As String() = New String(n - 1) {}
+        Dim cols$() = New String(n - 1) {}
+
         For i As Integer = 0 To n - 1 Step length
             cols(i) = Mid(line, i, length)
         Next
+
         Return New RowObject With {
             ._innerColumns = cols.ToList
         }
@@ -174,7 +180,7 @@ Public Module DataImports
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
         Dim array$() = column.ToArray, n% = array.Length
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Dbl As Double = Val(s)
@@ -185,7 +191,7 @@ Public Module DataImports
             Return GetType(Double)
         End If
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Int As Integer = CInt(Val(s))
@@ -196,7 +202,7 @@ Public Module DataImports
             Return GetType(Integer)
         End If
 
-        If IsEquals(Of Integer)(n) =
+        If LinqAPI.IsEquals(Of Integer)(n) =
             From s As String
             In column
             Let Bol As Boolean = Boolean.Parse(s)
@@ -207,16 +213,16 @@ Public Module DataImports
             Return GetType(Boolean)
         End If
 
-        If IsEquals(Of Integer)() = From s As String
-                                    In column
-                                    Let Dat As Date = Date.Parse(s)
-                                    Where Dat.Year = 0 AndAlso
-                                        Dat.Month = 0 AndAlso
-                                        Dat.Day = 0 AndAlso
-                                        Dat.Hour = 0 AndAlso
-                                        Dat.Minute = 0 AndAlso
-                                        Dat.Second = 0
-                                    Select 1 Then
+        If LinqAPI.IsEquals(Of Integer)() = From s As String
+                                            In column
+                                            Let Dat As Date = Date.Parse(s)
+                                            Where Dat.Year = 0 AndAlso
+                                                Dat.Month = 0 AndAlso
+                                                Dat.Day = 0 AndAlso
+                                                Dat.Hour = 0 AndAlso
+                                                Dat.Minute = 0 AndAlso
+                                                Dat.Second = 0
+                                            Select 1 Then
             Return GetType(Date)
         End If
 

@@ -47,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>D:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin/</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -91,9 +91,11 @@
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
@@ -117,7 +119,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\docs\</OutputPath>
+    <OutputPath>..\..\..\sdk\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -147,12 +149,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
     <OutputPath>bin\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
     <OutputPath>bin\x64\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
     <OutputPath>bin\x86\Release2\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -180,6 +185,7 @@
   <ItemGroup>
     <Compile Include="d3js\color\rgb.vb" />
     <Compile Include="d3js\interpolate\rgb.vb" />
+    <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
     <Compile Include="Drawing2D\Colors\Designer.vb" />
     <Compile Include="Drawing2D\Colors\Legend.vb" />
@@ -202,8 +208,11 @@
     <Compile Include="Drawing2D\Text\String.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
-    <Compile Include="Drawing3D\Surface.vb" />
-    <Compile Include="Drawing3D\Models\Model.vb" />
+    <Compile Include="Drawing3D\Models\2DShape.vb" />
+    <Compile Include="Drawing3D\Models\I3DModel.vb" />
+    <Compile Include="Drawing3D\Models\Line.vb" />
+    <Compile Include="Drawing3D\Models\Surface.vb" />
+    <Compile Include="Drawing3D\Models\Cube.vb" />
     <Compile Include="Drawing3D\GDIDevice.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -257,13 +266,17 @@
     <None Include="Resources\DefaultTexture.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>Microsoft.VisualBasic.Mathematical</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mime\Markups\Markups.vbproj">
+    <ProjectReference Include="..\..\mime\markups\markups.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>Markups</Name>
+      <Name>markups</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +284,75 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\colorbrewer.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Office.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Office2007-2010.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Slipstream.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Median.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Violet2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Violet.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_RedViolet.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Red.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_RedOrange.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_OrangeRed.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Paper.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Aspect.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Marquee.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Orange.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_YellowOrange.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Yellow.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_GreenYellow.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Green.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_BlueGreen.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Blue2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_Blue.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_BlueWarm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

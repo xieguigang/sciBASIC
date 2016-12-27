@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::342d66436b0c8a56632fe3f2c809f477, ..\visualbasic_App\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Node.vb"
+﻿#Region "Microsoft.VisualBasic::a99b93f67a09a79d4f3b0947eef048c3, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Node.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Language
 Namespace Graph
 
     Public Class Node : Inherits ClassObject
-        Implements sIdEnumerable
+        Implements INamedValue
 
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
@@ -97,7 +97,7 @@ Namespace Graph
         ''' The unique id of this node
         ''' </summary>
         ''' <returns></returns>
-        Public Property ID As String Implements sIdEnumerable.Identifier
+        Public Property ID As String Implements INamedValue.Key
         Public Property Data As NodeData
         Public Property Pinned As Boolean
 
@@ -123,7 +123,7 @@ Namespace Graph
 
         Public Overloads Function Equals(p As Node) As Boolean
             ' If parameter is null return false:
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -132,14 +132,14 @@ Namespace Graph
         End Function
 
         Public Shared Operator =(a As Node, b As Node) As Boolean
+            ' If one is null, but not both, return false.
+            If a Is Nothing OrElse b Is Nothing Then
+                Return False
+            End If
+
             ' If both are null, or both are same instance, return true.
             If System.[Object].ReferenceEquals(a, b) Then
                 Return True
-            End If
-
-            ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
-                Return False
             End If
 
             ' Return true if the fields match:

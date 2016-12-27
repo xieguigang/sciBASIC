@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::70485a14c54d55ebbfd3271f73326427, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::f6761debaca433ed4351ad9ceb7350f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -67,7 +67,7 @@ Namespace Language
     Public Module Numeric
 
         ''' <summary>
-        ''' The max element its index in the source collection.
+        ''' *<see cref="Numeric.MaxIndex"/>* The max element its index in the source collection.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
@@ -247,6 +247,10 @@ Namespace Language
             Return x
         End Operator
 
+        Public Shared Operator /(x As int, b As Integer) As Double
+            Return x.value / b
+        End Operator
+
         ''' <summary>
         ''' 必须要overloads这个方法，否则会出现无法将Value(Of Integer)转换为int的错误
         ''' </summary>
@@ -265,6 +269,23 @@ Namespace Language
             Dim i As Integer = x.value
             x.value += 1
             Return i
+        End Operator
+
+        ''' <summary>
+        ''' 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
+        ''' ```vbnet
+        ''' x += n
+        ''' ```
+        ''' 
+        ''' 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
+        ''' 不会修改源变量的值，返回的是一个单纯的<see cref="Double"/>值类型
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(x As int, n%) As int
+            x.value += n
+            Return x
         End Operator
 
         Public Shared Operator >(source As IEnumerable, handle As int) As Boolean
@@ -338,6 +359,18 @@ Namespace Language
             Return n * x.value
         End Operator
 
+        Public Overloads Shared Operator +(x As float, y As float) As Double
+            Return x.value + y.value
+        End Operator
+
+        Public Overloads Shared Operator /(x As float, y As float) As Double
+            Return x.value / y.value
+        End Operator
+
+        Public Overloads Shared Operator +(x#, y As float) As Double
+            Return x + y.value
+        End Operator
+
         Public Overloads Shared Widening Operator CType(x#) As float
             Return New float(x)
         End Operator
@@ -350,8 +383,28 @@ Namespace Language
             Return x.value >= n
         End Operator
 
+        Public Overloads Shared Operator /(x As float, n As Double) As Double
+            Return x.value / n
+        End Operator
+
         Public Shared Operator >(n As Double, x As float) As float
             Return x
+        End Operator
+
+        Public Shared Operator ^(x As float, power As Double) As Double
+            Return x.value ^ power
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(f As float) As Double
+            Return f.value
+        End Operator
+
+        Public Overloads Shared Operator -(a As float, b As float) As Double
+            Return a.value - b.value
+        End Operator
+
+        Public Overloads Shared Operator *(a As float, b As float) As Double
+            Return a.value * b.value
         End Operator
     End Class
 

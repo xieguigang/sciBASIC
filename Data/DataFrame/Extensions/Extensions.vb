@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::7a96886d66b1875c83860049383773f2, ..\visualbasic_App\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5505ac6c9c7cd99935b92e062025eed5, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,10 +39,12 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.InputHandler
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -59,8 +61,54 @@ Imports Microsoft.VisualBasic.Text
 Public Module Extensions
 
     Sub New()
-        Call InitHandle()
+        Call __initStreamIO_pointer()
     End Sub
+
+    ''' <summary>
+    ''' Save variable value vector as data frame
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="xlabels#"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveTo(samples As IEnumerable(Of NamedValue(Of Double())),
+                           path$,
+                           Optional encoding As Encodings = Encodings.ASCII,
+                           Optional xlabels#() = Nothing) As Boolean
+        Dim out As New DocumentStream.File
+        Dim data As NamedValue(Of Double())() = samples.ToArray
+
+        If xlabels.IsNullOrEmpty Then
+            out += New RowObject(data.Select(Function(s) s.Name))
+
+            For i As Integer = 0 To data(Scan0).Value.Length - 1
+                Dim row As New RowObject
+
+                For Each sample In data
+                    row.Add(CStr(sample.Value(i)))
+                Next
+
+                out += row
+            Next
+        Else
+            out += New RowObject("X".Join(data.Select(Function(s) s.Name)))
+
+            For i As Integer = 0 To data(Scan0).Value.Length - 1
+                Dim row As New RowObject From {
+                    CStr(xlabels(i))
+                }
+                For Each sample As NamedValue(Of Double()) In data
+                    Call row.Add(CStr(sample.Value(i)))
+                Next
+
+                out += row
+            Next
+        End If
+
+        Return out.Save(path, encoding)
+    End Function
 
     ''' <summary>
     '''
@@ -92,8 +140,8 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function AsLinq(Of T As Class)(path$) As IEnumerable(Of T)
-        Return DataStream.OpenHandle(path).AsLinq(Of T)
+    <Extension> Public Function AsLinq(Of T As Class)(path$, Optional parallel As Boolean = False) As IEnumerable(Of T)
+        Return DataStream.OpenHandle(path).AsLinq(Of T)(parallel)
     End Function
 
     ''' <summary>
@@ -125,19 +173,24 @@ Public Module Extensions
 
     <ExportAPI("Write.Csv")>
     <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Return Save(data, False).Save(path, False, encoding)
+        Return Reflector.Save(data, False).SaveDataFrame(path, encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), Path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
-        Dim Headers = data.First.Schema
-        Dim LQuery = (From item In data Select CType((From p In Headers Select item.GetValue(p.Value)).ToList, RowObject)).ToArray
-        Dim File As New DocumentStream.File
+    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path As String, Optional encoding As Encoding = Nothing) As Boolean
+        Dim headers As Dictionary(Of String, Integer) = data.First.Schema
+        Dim LQuery = LinqAPI.Exec(Of RowObject) <=
+ _
+            From x As DynamicObjectLoader
+            In data
+            Select New RowObject(From p In headers Select x.GetValue(p.Value))
 
-        Call File.AppendLine((From p In Headers Select p.Key).ToList)
-        Call File.AppendRange(LQuery)
+        Dim csv As New DocumentStream.File
 
-        Return File.Save(Path, False, encoding)
+        Call csv.AppendLine((From p In headers Select p.Key).ToList)
+        Call csv.AppendRange(LQuery)
+
+        Return csv.Save(path, encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
@@ -273,21 +326,21 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="path"></param>
-    ''' <param name="explicit">If true then all of the simple data type property its value will be save to the data file,
-    ''' if not then only save the property with the <see cref="Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.ColumnAttribute"></see>
+    ''' <param name="explicit">
+    ''' If true then all of the simple data type property its value will be save to the data file,
+    ''' if not then only save the property with the <see cref="ColumnAttribute"></see>
     ''' </param>
     ''' <param name="encoding"></param>
-    ''' <param name="maps">{meta_define -> custom}</param>
+    ''' <param name="maps">``{meta_define -> custom}``</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
-                                             path As String,
+                                             path$,
                                              Optional explicit As Boolean = False,
                                              Optional encoding As Encoding = Nothing,
                                              Optional metaBlank As String = "",
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing) As Boolean
-
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -297,20 +350,19 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
         Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
 
-        Dim df As DocumentStream.File =
-            Reflector.Save(source,
-                           explicit,
-                           metaBlank,
-                           maps,
-                           Not nonParallel)
-        Dim lazy As Boolean = df.RowNumbers > 20000
+        Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
+            source.Select(Function(o) DirectCast(o, Object)),
+            GetType(T),
+            explicit,
+            maps,
+            Not nonParallel,
+            metaBlank)
 
-        If nonParallel Then
-            lazy = False
-        End If
+        Dim success As Boolean = StreamIO.SaveDataFrame(
+            csv,
+            path:=path,
+            encoding:=encoding)
 
-        Dim success As Boolean =
-            df.Save(path, LazySaved:=lazy, encoding:=encoding)
         If success Then
             Call "CSV saved!".__DEBUG_ECHO
         End If
@@ -349,13 +401,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path As String) As Boolean
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path As String, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
                                             Select s =
                                                 n.ToString
         Dim buf As New DocumentStream.File({New RowObject(row)})
-        Return buf.Save(path, LazySaved:=False)
+        Return buf.Save(path, encoding.GetEncodings)
     End Function
 
     ''' <summary>

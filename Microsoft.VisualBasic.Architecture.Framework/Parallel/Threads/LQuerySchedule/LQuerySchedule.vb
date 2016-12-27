@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ba94aa64dea60269e0dd3608fa3d49e, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::dd2a1c6dc0e77a9edba124a64d5e838b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 
@@ -96,6 +96,7 @@ Namespace Parallel.Linq
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="inputs"></param>
         ''' <param name="task"></param>
+        ''' <param name="parTokens">函数参数是每一个分区里面的元素的数量</param>
         ''' <returns></returns>
         Public Iterator Function LQuery(Of T, TOut)(inputs As IEnumerable(Of T),
                                                     task As Func(Of T, TOut),

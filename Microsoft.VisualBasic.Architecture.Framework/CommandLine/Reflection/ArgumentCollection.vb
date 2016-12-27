@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::463d00435e7fb6d8189aa41ae89a264d, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ParameterInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3f85af5995c68cfd72b54cdd3cff8dea, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
 
     ' Author:
     ' 
@@ -146,7 +146,7 @@ Namespace CommandLine.Reflection
             For Each parameter As Argument In _params.Values
                 Call sb.AppendLine(parameter.ToString)
             Next
-            Return sb.ToString
+            Return Trim(sb.ToString)
         End Function
 
         ReadOnly __flag As Type = GetType(Argument)
@@ -170,7 +170,7 @@ Namespace CommandLine.Reflection
             For Each obj In _params
                 Yield New NamedValue(Of Argument) With {
                     .Name = obj.Key,
-                    .x = obj.Value
+                    .Value = obj.Value
                 }
             Next
         End Function

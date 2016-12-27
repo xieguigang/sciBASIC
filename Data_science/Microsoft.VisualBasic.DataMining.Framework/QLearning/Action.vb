@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d79ea429d940b6f87c3f0d45f72f1d06, ..\visualbasic_App\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Action.vb"
+﻿#Region "Microsoft.VisualBasic::829909cab65a07b601e1db92d6273cd2, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Action.vb"
 
     ' Author:
     ' 
@@ -36,13 +36,13 @@ Namespace QLearning
     ''' One specific environment state have some possible actions,
     ''' but there is just one best action on the current environment state based on the accumulate q-values
     ''' </summary>
-    Public Class Action : Implements sIdEnumerable
+    Public Class Action : Implements INamedValue
 
         ''' <summary>
         ''' The environment variables state as inputs for the machine.
         ''' </summary>
         ''' <returns></returns>
-        Public Property EnvirState As String Implements sIdEnumerable.Identifier
+        Public Property EnvirState As String Implements INamedValue.Key
         ''' <summary>
         ''' Actions for the current state.
         ''' </summary>

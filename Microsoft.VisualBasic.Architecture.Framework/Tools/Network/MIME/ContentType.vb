@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b229d5e2161664afee7f832ebe4e4ebd, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::ebe4f0725b5fc3e8dffc8ee2f25f1093, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\ContentType.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
+Imports Microsoft.VisualBasic.Text
 
 Namespace Net.Protocols.ContentTypes
 
@@ -64,14 +65,20 @@ Namespace Net.Protocols.ContentTypes
         End Function
 
         Friend Shared Function __createObject(line As String) As ContentType
-            Dim tokens As String() = Strings.Split(line, vbTab)
-            Dim mime As New ContentType With {
-                .Name = tokens(Scan0),
-                .MIMEType = tokens(1),
-                .FileExt = tokens(2),
-                .Details = tokens(3)
-            }
-            Return mime
+            Dim tokens As String() = line.Split(ASCII.TAB)
+
+            If tokens.IsNullOrEmpty OrElse tokens.Length < 3 Then
+                Call line.Warning
+                Return Nothing
+            Else
+                Dim mime As New ContentType With {
+                    .Name = tokens(Scan0),
+                    .MIMEType = tokens(1),
+                    .FileExt = tokens(2),
+                    .Details = tokens(3)
+                }
+                Return mime
+            End If
         End Function
     End Class
 End Namespace

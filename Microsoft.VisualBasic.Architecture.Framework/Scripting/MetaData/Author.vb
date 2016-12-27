@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37f11a21943863c7212365f664ff2c9a, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
+﻿#Region "Microsoft.VisualBasic::af5d62f461b5bca64b9fd1356a759d0c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@ Namespace Scripting.MetaData
         End Sub
 
         Public Sub EMail()
-            Call Diagnostics.Process.Start($"mailto://{value.x}")
+            Call Diagnostics.Process.Start($"mailto://{value.Value}")
         End Sub
 
         Public Overrides Function ToString() As String

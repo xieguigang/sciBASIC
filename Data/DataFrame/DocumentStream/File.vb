@@ -1,33 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::3d7928e6c2096c455a2dcbb44201819b, ..\visualbasic_App\Data\DataFrame\DocumentStream\File.vb"
+﻿#Region "Microsoft.VisualBasic::edb59b2425b281b97726c4a27d4d8d34, ..\sciBASIC#\Data\DataFrame\DocumentStream\File.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Text
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -43,15 +44,39 @@ Namespace DocumentStream
     ''' A comma character seperate table file that can be read and write in the EXCEL.(一个能够被Excel程序所读取的表格文件)
     ''' </summary>
     ''' <remarks></remarks>
+    ''' 
+    <ActiveViews(File.ActiveViews)>
     Public Class File : Inherits ITextFile
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
+
+        Friend Const ActiveViews =
+"header1,header2,header3,...
+A11,A12,A13,...
+B21,B22,B23,...
+......"
+
+        ''' <summary>
+        ''' The first row in the table was using as the headers
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable ReadOnly Property Headers As RowObject
+            Get
+                Return _innerTable?.FirstOrDefault
+            End Get
+        End Property
+
+        Public ReadOnly Property Rows As RowObject()
+            Get
+                Return _innerTable.ToArray
+            End Get
+        End Property
 
         ''' <summary>
         ''' First line in the table is the column name definition line.
         ''' </summary>
         ''' <remarks></remarks>
-        Protected Friend _innerTable As List(Of RowObject) = New List(Of RowObject)
+        Protected Friend _innerTable As New List(Of RowObject)
 
         ''' <summary>
         ''' Creates an empty csv docs object.
@@ -422,7 +447,7 @@ Namespace DocumentStream
                     In counts
                     Select New NamedValue(Of Integer) With {
                         .Name = x.Group.First.str,
-                        .x = x.Group.Count
+                        .Value = x.Group.Count
                     }
             Else
                 Dim counts = From x In gData
@@ -433,7 +458,7 @@ Namespace DocumentStream
                     In counts
                     Select New NamedValue(Of Integer) With {
                         .Name = x.str,
-                        .x = x.Group.Count
+                        .Value = x.Group.Count
                     }
             End If
 
@@ -441,7 +466,7 @@ Namespace DocumentStream
             stats += New RowObject({If(FirstLineTitle, $"Item values for '{First.Column(ColumnIndex)}'", "Item values"), "Counts"})
             stats += From token As NamedValue(Of Integer)
                      In tokensGroup
-                     Select New RowObject({token.Name, CStr(token.x)})
+                     Select New RowObject({token.Name, CStr(token.Value)})
             Return stats
         End Function
 
@@ -470,25 +495,13 @@ Namespace DocumentStream
         End Operator
 #End Region
 
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Save(FilePath, False, Encoding)
-        End Function
-
         ''' <summary>
         ''' Save this csv document into a specific file location <paramref name="path"/>.
         ''' </summary>
         ''' <param name="Path"></param>
-        ''' <param name="LazySaved">Optional, this is for the consideration of performance and memory consumption.
-        ''' When a data file is very large, then you may encounter a out of memory exception on a 32 bit platform,
-        ''' then you should set this parameter to True to avoid this problem. Defualt is False for have a better
-        ''' performance.
-        ''' (当估计到文件的数据量很大的时候，请使用本参数，以避免内存溢出致使应用程序崩溃，默认为False，不开启缓存)
-        ''' </param>
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
-        Public Overridable Overloads Function Save(Optional Path As String = "",
-                                                   Optional LazySaved As Boolean = False,
-                                                   Optional encoding As Encoding = Nothing) As Boolean
-            Return StreamIO.SaveDataFrame(Me, getPath(Path), LazySaved, encoding)
+        Public Overrides Function Save(Optional path$ = "", Optional Encoding As Encoding = Nothing) As Boolean
+            Return StreamIO.SaveDataFrame(Me, getPath(path), Encoding)
         End Function
 
         ''' <summary>
@@ -577,7 +590,7 @@ Namespace DocumentStream
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
                 Dim Rows = (From line As SeqValue(Of String)
                             In cache.AsParallel
-                            Let __innerList As List(Of String) = line.obj.Split(","c).ToList
+                            Let __innerList As List(Of String) = line.value.Split(","c).ToList
                             Select i = line.i,
                                 data = New RowObject With {._innerColumns = __innerList}
                             Order By i Ascending)
@@ -642,8 +655,8 @@ Namespace DocumentStream
 
             Dim rows As List(Of RowObject) = (From s As SeqValue(Of String)
                                               In buf.Skip(1).SeqIterator.AsParallel
-                                              Where __test(s.obj)
-                                              Select row = New RowObject(s.obj),
+                                              Where __test(s.value)
+                                              Select row = New RowObject(s.value),
                                                   i = s.i
                                               Order By i Ascending) _
                                                    .ToList(Function(x) x.row)
@@ -742,7 +755,7 @@ Namespace DocumentStream
                 Dim LQuery As IEnumerable(Of RowObject) =
                     From row As RowObject
                     In innerTable.Skip(mrow.i + 1).AsParallel
-                    Where mrow.obj.Contains(row)
+                    Where mrow.value.Contains(row)
                     Select row '
 
                 For Each x In LQuery

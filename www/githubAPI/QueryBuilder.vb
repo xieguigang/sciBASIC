@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffde8e92c1b5203ce5d050710520132a, ..\visualbasic_App\www\githubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::941422a7731b07d96805840e5f27ac87, ..\sciBASIC#\www\githubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Module QueryBuilder
     <Extension>
     Public Function GetTerm(type As Type) As PropertyInfo
         Dim props As IEnumerable(Of PropertyInfo) =
-            type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+            type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
         Dim term As Type = GetType(Term)
         Dim LQuery As PropertyInfo =
             LinqAPI.DefaultFirst(Of PropertyInfo) <= From p As PropertyInfo
@@ -97,10 +97,9 @@ Public Module QueryBuilder
             Call x.Remove(Term.Key)
         End If
 
-        Dim s As String() =
-            LinqAPI.Exec(Of String) <= From key As String
-                                       In x.Keys
-                                       Select $"{key}:{HttpUtility.UrlEncode(x(key))}"
+        Dim s$() = LinqAPI.Exec(Of String) <= From key As String
+                                              In x.Keys
+                                              Select $"{key}:{HttpUtility.UrlEncode(x(key))}"
         If s.Length > 0 Then
             Call args.Append("+"c)
             Call args.Append(String.Join("+", s))

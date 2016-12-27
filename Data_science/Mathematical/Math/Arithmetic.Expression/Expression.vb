@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44ba3a58a050d7ec9bd0f1cfb4865dfe, ..\visualbasic_App\Data_science\Mathematical\Math\Arithmetic.Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::9432a9dc0a3ac2b9049e58c030655b5c, ..\sciBASIC#\Data_science\Mathematical\Math\Arithmetic.Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,9 @@ Public Class Expression
     ''' <returns></returns>
     Public Shared ReadOnly Property DefaultEngine As New Expression
 
+    ''' <summary>
+    ''' Creates a new mathematics expression evaluation engine
+    ''' </summary>
     Public Sub New()
         Variables = New Variable(Me)
         Functions = New [Function](Me)
@@ -91,6 +94,17 @@ Public Class Expression
     End Function
 
     ''' <summary>
+    ''' 当需要进行重复大量计算的时候，反复解析表达式字符串会浪费大量的计算时间，
+    ''' 则可以使用这个解析出表达式，后面使用<see cref="SetVariable"/>更新变量
+    ''' 的值即可快速的进行重复计算
+    ''' </summary>
+    ''' <param name="expr$"></param>
+    ''' <returns></returns>
+    Public Function Compile(expr$) As SimpleExpression
+        Return ExpressionParser.TryParse(expr, Me)
+    End Function
+
+    ''' <summary>
     ''' 先常量，后变量
     ''' </summary>
     ''' <param name="x"></param>
@@ -108,6 +122,10 @@ Public Class Expression
 
     Public Sub SetVariable(Name As String, expr As String)
         Call Variables.Set(Name, expr)
+    End Sub
+
+    Public Sub SetVariable(name$, value#)
+        Call Variables.Set(name, value)
     End Sub
 
     Public Sub AddConstant(Name As String, expr As String)

@@ -1,4 +1,31 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::8fbe5e27bcc6f3a9d04425788a7e6e33, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Extensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -51,7 +78,7 @@ Namespace FileIO
         ''' <summary>
         ''' Open text file writer, this function will auto handle all things.
         ''' </summary>
-        ''' <param name="path"></param>
+        ''' <param name="path">假若路径是指向一个已经存在的文件，则原有的文件数据将会被清空</param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         <Extension>

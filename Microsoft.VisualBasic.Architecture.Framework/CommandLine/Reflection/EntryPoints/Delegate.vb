@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcee18b402645aa8fc7342c25dfdae22, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::5b31f11a967012086914a85ca48d7d39, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection.EntryPoints
 
@@ -97,21 +98,35 @@ Namespace CommandLine.Reflection.EntryPoints
             Call sb.AppendLine()
 
             If md Then
+                Dim prototype$ = APIPrototype(_metaData.Target.GetFullName)
+
                 Call sb.AppendLine(Info)
-                Call sb.AppendLine($"**Prototype**: ``{_metaData.Target.GetFullName}``")
+                Call sb.AppendLine($"**Prototype**: ``{prototype}``")
                 Call sb.AppendLine()
                 Call sb.AppendLine("###### Usage")
                 Call sb.AppendLine("```bash")
                 Call sb.AppendLine($"{App.AssemblyName} {Usage}")
                 Call sb.AppendLine("```")
-                Call sb.AppendLine("###### Example")
-                Call sb.AppendLine("```bash")
-                Call sb.AppendLine($"{App.AssemblyName} {Example}")
-                Call sb.AppendLine("```")
+
+                If Not String.IsNullOrEmpty(Example) Then
+                    Call sb.AppendLine("###### Example")
+                    Call sb.AppendLine("```bash")
+                    Call sb.AppendLine($"{App.AssemblyName} {Example}")
+                    Call sb.AppendLine("```")
+                End If
             Else
-                sb.AppendLine(String.Format("  Information:  {0}", Info))
+                Dim infoLines$() = Paragraph.Split(Info, 90).ToArray
+
+                sb.AppendLine(String.Format("  Information:  {0}", infoLines.FirstOrDefault))
+
+                If infoLines.Length > 1 Then
+                    For Each line$ In infoLines.Skip(1)
+                        Call sb.AppendLine($"                {line}")
+                    Next
+                End If
+
                 sb.AppendLine(String.Format("  Usage:        {0} {1}", Application.ExecutablePath, Usage))
-                sb.AppendLine(String.Format("  Example:      {0} {1}", IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath), Example))
+                sb.AppendLine(String.Format("  Example:      {0} {1}", App.AssemblyName, Example))
             End If
 
             Return sb.ToString

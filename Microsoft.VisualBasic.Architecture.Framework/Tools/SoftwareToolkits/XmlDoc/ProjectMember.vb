@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::281a2352846a615cd534beb13c6851ba, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb"
+﻿#Region "Microsoft.VisualBasic::4a510a3041b749066e48512df1e105a2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb"
 
     ' Author:
     ' 
@@ -29,13 +29,9 @@
 ' Copyright (c) Bendyline LLC. All rights reserved. Licensed under the Apache License, Version 2.0.
 '    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. 
 
-
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
 Imports System.Xml
 Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
+Imports Microsoft.VisualBasic.Language
 
 Namespace SoftwareToolkits.XmlDoc.Assembly
 
@@ -50,7 +46,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
         Public Property Summary() As String
         Public Property Returns() As String
         Public Property Remarks As String
-        Public Property param As param()
+        Public Property Params As param()
 
         ''' <summary>
         ''' 申明的原型
@@ -102,7 +98,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                     }
                 Next
 
-                Me.param = args
+                Me.Params = args
             End If
         End Sub
     End Class

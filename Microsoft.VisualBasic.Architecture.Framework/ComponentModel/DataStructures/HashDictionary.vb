@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashDictionary.vb"
 
     ' Author:
     ' 

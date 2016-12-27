@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec2dfb5e927829be061fe6eb905120e2, ..\visualbasic_App\gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
+﻿#Region "Microsoft.VisualBasic::2129c9ed25d42ead296432c805cc3873, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
     ' Author:
     ' 
@@ -36,10 +36,20 @@ Namespace Drawing2D
     ''' </summary>
     Public Structure GraphicsRegion
 
+        ''' <summary>
+        ''' 整张画布的大小
+        ''' </summary>
         Public Size As Size
+        ''' <summary>
+        ''' 画布的边留白
+        ''' </summary>
         Public Margin As Size
 
-        Public ReadOnly Property GraphicsRegion As Rectangle
+        ''' <summary>
+        ''' 整张画布出去margin部分剩余的可供绘图的区域
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property PlotRegion As Rectangle
             Get
                 Dim topLeft As New Point(Margin.Width, Margin.Height)
                 Dim size As New Size(
@@ -50,6 +60,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' 整张画布的大小区域
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property EntireArea As Rectangle
             Get
                 Return New Rectangle(New Point, Size)

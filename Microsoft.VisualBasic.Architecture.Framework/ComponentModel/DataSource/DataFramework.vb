@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9edd81689aee5b94067a3054c5b46cd4, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::ac3edf2a6866b611648a9f285887eed9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -75,20 +75,51 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="flag"></param>
+        ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
-        Public Function Schema(Of T)(flag As PropertyAccess) As Dictionary(Of String, PropertyInfo)
-            Return GetType(T).Schema(flag)
+        Public Function Schema(Of T)(flag As PropertyAccess, Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
+            Return GetType(T).Schema(flag,, nonIndex)
         End Function
 
+        ''' <summary>
+        ''' (instance) ``Public Property xxxxx As xxxxx``
+        ''' </summary>
+        Public Const PublicProperty As BindingFlags = BindingFlags.Public Or BindingFlags.Instance
+        ''' <summary>
+        ''' (statics) ``Public Shared Property xxxx As xxxx``
+        ''' </summary>
+        Public Const PublicShared As BindingFlags = BindingFlags.Public Or BindingFlags.Static
+
+        ''' <summary>
+        ''' 请注意：对于VisualBasic的My.Resources.Resources类型而言，里面的属性都是Friend Shared访问类型的，
+        ''' 所以在解析内部资源管理器对象的时候应该要特别注意<paramref name="binds"/>参数值的设置，
+        ''' 因为这个参数默认是<see cref="PublicProperty"/>
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="flag"></param>
+        ''' <param name="binds"></param>
+        ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
+        ''' <returns></returns>
         <Extension>
         Public Function Schema(type As Type,
                                flag As PropertyAccess,
-                               Optional binds As BindingFlags =
-                               BindingFlags.Public Or BindingFlags.Instance) As Dictionary(Of String, PropertyInfo)
-            Dim props As PropertyInfo() =
-                type.GetProperties(binds)
-            Return props.Where(Flags(flag)) _
-                .ToDictionary(Function(x) x.Name)
+                               Optional binds As BindingFlags = PublicProperty,
+                               Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
+
+            Dim props As IEnumerable(Of PropertyInfo) =
+                type _
+                .GetProperties(binds) _
+                .ToArray
+
+            props = props.Where(Flags(flag)) _
+                .ToArray
+
+            If nonIndex Then
+                props = props _
+                    .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty)
+            End If
+
+            Return props.ToDictionary(Function(x) x.Name)
         End Function
 
 #If NET_40 = 0 Then

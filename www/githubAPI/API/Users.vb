@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aab90eff4a63d4afa6ec6fd6ed42fad7, ..\visualbasic_App\www\githubAPI\API\Users.vb"
+﻿#Region "Microsoft.VisualBasic::795d0c7ea919d61f2f5610d542497df6, ..\sciBASIC#\www\githubAPI\API\Users.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Webservices.Github.Class
@@ -46,14 +47,14 @@ Namespace API
             Return user
         End Function
 
-        Public Function Followers(username As String) As User()
+        <Extension> Public Function Followers(username As String) As User()
             Dim url As String = GithubAPI & $"/users/{username}/followers"
             Dim json As String = url.GetRequest(https:=True)
             Dim users As User() = json.LoadObject(Of User())
             Return users
         End Function
 
-        Public Function Following(username As String) As User()
+        <Extension> Public Function Following(username As String) As User()
             Dim url As String = GithubAPI & $"/users/{username}/following"
             Dim json As String = url.GetRequest(https:=True)
             Dim users As User() = json.LoadObject(Of User())

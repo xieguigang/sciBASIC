@@ -1,5 +1,34 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿#Region "Microsoft.VisualBasic::7e64af5e8310ff6083f8b0330648c1fc, ..\sciBASIC#\Data\TestProject\Module1.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.SearchEngine
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
 
@@ -15,18 +44,22 @@ Module Module1
 
     Sub Main()
 
-        Dim query = "#\d+".Build(anyDefault:=Tokens.op_OR, allowInStr:=False)
+        Dim query = "#\d+ AND (X AND obj)".Build(anyDefault:=Tokens.op_OR, allowInStr:=True)
 
         Dim result As Boolean = query.Match(text:="23333")
 
         Dim obj As New NamedValue(Of String) With {
-            .Name = "Hello world!",
-            .x = "23333",
+            .Name = "Hello world! xieguigang",
+            .Value = "23333",
             .Description = "Test Object"
         }
         Dim def As New IObject(GetType(NamedValue(Of String)))
 
-        result = query.Evaluate(def, obj)
+        Dim match As Match = query.Evaluate(def, obj)
+
+        Call match.GetJson.__DEBUG_ECHO.SaveTo("x:\ffff.json")
+
+        Pause()
 
         Dim source As IEnumerable(Of NamedValue(Of String))
 

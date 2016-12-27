@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3436a7a701b35c62e05744d231145a88, ..\visualbasic_App\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
+﻿#Region "Microsoft.VisualBasic::9beb3d2f85159a7b17b4cd43648af627, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
 
     ' Author:
     ' 
@@ -30,12 +30,31 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace SoftwareToolkits.XmlDoc.Serialization
 
     <PackageNamespace("Assembly.Doc.API")>
     Public Module DocAPI
+
+        Dim libraries As Dictionary(Of String, Libraries) =
+            Enums(Of Libraries) _
+            .ToDictionary(Function(x) x.ToString.ToLower)
+
+        ''' <summary>
+        ''' 类型名称的大小写不敏感
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns>查找失败的时候默认是返回<see cref="Serialization.Libraries.Github"/></returns>
+        <Extension>
+        Public Function GetLibraryType(type As Value(Of String)) As Libraries
+            If libraries.ContainsKey(type = LCase(+type)) Then
+                Return libraries(+type)
+            Else
+                Return Serialization.Libraries.Github
+            End If
+        End Function
 
         Public ReadOnly Property Types As Dictionary(Of Char, memberTypes) =
             New Dictionary(Of Char, memberTypes) From {
@@ -116,9 +135,9 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
 
             For Each m As String In ms
                 Dim bold As String = m.__trans
-                Dim name As String = Regex.Match(bold, """[^""]*""").Value
-                bold = bold.Replace(name, (Mid(name, 2, name.Length - 2)))
-                bold = $"**{bold}**"
+                Dim name As String = Regex.Match(bold, "``[^`]*``").Value
+                ' bold = bold.Replace(name, (Mid(name, 2, name.Length - 2)))
+                ' bold = $"**{bold}**"
                 Call sb.Replace(m, bold)
             Next
 
@@ -137,6 +156,11 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
             Return sb.ToString
         End Function
 
+        ''' <summary>
+        ''' 这里会将双引号替换成为markdown里面的inline code形式
+        ''' </summary>
+        ''' <param name="cref"></param>
+        ''' <returns></returns>
         <Extension> Private Function __trans(cref As String) As String
             Dim m As String = Regex.Match(cref, "="".+?""").Value
             Dim alt As String = cref.GetValue
@@ -147,6 +171,8 @@ Namespace SoftwareToolkits.XmlDoc.Serialization
             Else
                 m &= $"[{alt}]"
             End If
+
+            m = m.Replace("""", "``")
 
             Return m
         End Function
