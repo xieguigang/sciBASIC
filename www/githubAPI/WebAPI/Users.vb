@@ -9,6 +9,11 @@ Namespace WebAPI
 
         Public Const Github$ = "https://github.com"
 
+        ''' <summary>
+        ''' Get user's github followers
+        ''' </summary>
+        ''' <param name="username"></param>
+        ''' <returns></returns>
         <Extension> Public Function Followers(username As String) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=followers"
             Return ParserIterator(url, username)
@@ -57,6 +62,11 @@ Namespace WebAPI
             Return out
         End Function
 
+        ''' <summary>
+        ''' Get user's github following
+        ''' </summary>
+        ''' <param name="username"></param>
+        ''' <returns></returns>
         <Extension> Public Function Following(username As String) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=following"
             Return ParserIterator(url, username)
