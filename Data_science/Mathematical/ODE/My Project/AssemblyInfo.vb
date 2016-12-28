@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("ODEs Solver System")>
+<Assembly: AssemblyTitle("VisualBasic ODEs dynamics system solver system")>
 <Assembly: AssemblyDescription("The type of mathematics that deals with rates of change, for example in the slope of a curve or the speed of a falling object")>
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("ODE")>
 <Assembly: AssemblyCopyright("Copyright © GPL3 2016")>
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTrademark("sciBASICsharp")>
 
 <Assembly: ComVisible(False)>
 

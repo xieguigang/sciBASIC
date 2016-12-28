@@ -1,4 +1,4 @@
-# sciBASIC#: Microsoft VisualBasic for Scientific
+# sciBASIC#: Microsoft VisualBasic for Scientific Computing
 
 ![(๑•̀ㅂ•́)و✧](./etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)

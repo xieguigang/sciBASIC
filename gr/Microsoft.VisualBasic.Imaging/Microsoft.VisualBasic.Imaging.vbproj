@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F5D87483-5B1F-4107-B0C0-FF838E0B0581}</ProjectGuid>
+    <ProjectGuid>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Imaging</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Imaging</AssemblyName>
@@ -274,9 +274,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mime\markups\markups.vbproj">
-      <Project>{e62dbac0-023e-41e6-a8e1-17e6d05a1b5d}</Project>
-      <Name>markups</Name>
+    <ProjectReference Include="..\..\mime\Markups\Markups.vbproj">
+      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
+      <Name>Markups</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
