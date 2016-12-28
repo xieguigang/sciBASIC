@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::0ce5bebe43e13bd02a587cc8db9a7054, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
 ''' <summary>
@@ -619,45 +620,34 @@ Public Module WebServiceUtils
     '''
     <Extension> Public Function Get_PageContent(url As String, Optional RequestTimeOut As UInteger = 20, Optional FileSystemUrl As Boolean = False) As String
 #End If
-        Call $"Request data from: {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        ' Call $"Request data from: {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
 
         If FileIO.FileSystem.FileExists(url) Then
             Call "[Job DONE!]".__DEBUG_ECHO
             Return FileIO.FileSystem.ReadAllText(url)
         Else
             If isFileUrl Then
-                Call $"url {url.ToFileURL} can Not be solved on your filesystem!".__DEBUG_ECHO
+                Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
                 Return ""
             End If
         End If
 
-#If FRAMEWORD_CORE Then
-        Using Process As New CBusyIndicator(_start:=True)
-#End If
-            Return __downloadWebpage(
-                url,
-                retry,
-                headers,
-                proxy,
-                doNotRetry404, UA)
-
-#If FRAMEWORD_CORE Then
-        End Using
-#End If
-        Return ""
+        Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
     End Function
 
-    Private Function __downloadWebpage(url$,
-                                       RequestTimeOut%,
-                                       headers As Dictionary(Of String, String),
-                                       proxy As String,
-                                       DoNotRetry404 As Boolean,
-                                       UA$) As String
+    <Extension>
+    Private Function __httpRequest(url$,
+                                   retries%,
+                                   headers As Dictionary(Of String, String),
+                                   proxy As String,
+                                   DoNotRetry404 As Boolean,
+                                   UA$) As String
 
         Dim retryTime As Integer = 0
 
         Try
-RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
+RETRY:      Return __get(url, headers, proxy, UA)
         Catch ex As Exception
             Dim is404 As Boolean =
                 InStr(ex.Message, "(404) Not Found") > 0
@@ -665,13 +655,13 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
             ex = New Exception(url, ex)
             ex.PrintException
 
-            If retryTime < RequestTimeOut Then
+            If retryTime < retries Then
                 If is404 AndAlso DoNotRetry404 Then
                     Return LogException(url, ex)
                 End If
 
                 retryTime += 1
-                Call "Data downloading error, retry connect to the server!".__DEBUG_ECHO
+                Call "Data download error, retry connect to the server!".PrintException
                 GoTo RETRY
             Else
                 Return LogException(url, ex)
@@ -705,36 +695,34 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
         }
     End Function
 
-    Private Function __downloadWebpage(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
-        Call "Waiting for the server reply..".__DEBUG_ECHO
+    Private Function __get(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
+        Dim timer As Stopwatch = Stopwatch.StartNew
+        Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
-        Dim Timer As Stopwatch = Stopwatch.StartNew
-        Dim WebRequest As HttpWebRequest = HttpWebRequest.Create(url)
-
-        WebRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        WebRequest.UserAgent = UserAgent.GoogleChrome
+        webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
+        webRequest.UserAgent = UserAgent.GoogleChrome
 
         If Not headers.IsNullOrEmpty Then
             For Each x In headers
-                WebRequest.Headers(x.Key) = x.Value
+                webRequest.Headers(x.Key) = x.Value
             Next
         End If
         If Not String.IsNullOrEmpty(proxy) Then
-            Call WebRequest.SetProxy(proxy)
+            Call webRequest.SetProxy(proxy)
         End If
 
-        Dim WebResponse As WebResponse = WebRequest.GetResponse
+        Using respStream As Stream = webRequest.GetResponse.GetResponseStream,
+            reader As New StreamReader(respStream)
 
-        Using respStream As Stream = WebResponse.GetResponseStream, ioStream As New StreamReader(respStream)
-            Dim html As String = ioStream.ReadToEnd
+            Dim html As String = reader.ReadToEnd
             Dim title As String = html.HTMLtitle
 
             If InStr(html, "http://www.doctorcom.com") > 0 Then
                 Return ""
             End If
 
-            Call $"[{title}  {url}] -->  Package Size:= {Len(html)}bytes; Response time:= {Timer.ElapsedMilliseconds}ms".__DEBUG_ECHO
-            Call html.SaveTo($"{App.AppSystemTemp}/{url.NormalizePathString}.tmp")
+            Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
+            Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
 
             Return html
         End Using
