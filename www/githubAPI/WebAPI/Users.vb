@@ -60,9 +60,15 @@ Namespace WebAPI
                     .Value _
                     .href _
                     .Replace("/", "")
+                Dim avatar As String = Regex.Match(u, "<img .+? />").Value.ImageSource
+                Dim display As String = Regex.Match(u, "<span class=""f4 link-gray-dark"">.*?</span>").Value.GetValue
+                Dim bio As String = Regex.Match(u, "<p class=""text-gray text-small"">.*?</p>").Value.GetValue
 
                 out += New User With {
-                    .login = userName
+                    .login = userName,
+                    .avatar_url = avatar,
+                    .name = display,
+                    .bio = bio
                 }
             Next
 
