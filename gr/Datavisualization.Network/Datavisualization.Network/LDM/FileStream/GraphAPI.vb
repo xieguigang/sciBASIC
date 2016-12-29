@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -195,12 +196,12 @@ Namespace FileStream
             removeIDs = removes
 
             Dim edges As New List(Of NetworkEdge)
-            Dim removesHash = removes.ToDictionary(
-                Function(k) k,
-                Function(null) Nothing)
+            Dim index As New IndexOf(Of String)(removes)
 
             For Each edge As NetworkEdge In net.Edges
-                If removesHash.ContainsKey(edge.FromNode) OrElse removesHash.ContainsKey(edge.ToNode) Then
+
+                ' 如果边之中的任意一个节点被包含在index里面，即有小于cutoff值的节点，则不会被添加
+                If index(edge.FromNode) > -1 OrElse index(edge.ToNode) > -1 Then
                 Else
                     edges += edge
                 End If
