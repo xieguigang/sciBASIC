@@ -142,7 +142,7 @@ Namespace Darwinism.GAF
 
         <Extension>
         Public Function Balance(vars$(), weights As Dictionary(Of String, Double)) As Dictionary(Of String, Double)
-            Dim gaps As New List(Of var)
+            Dim gaps As New List(Of String)
 
             For Each var In vars
                 If Not weights.ContainsKey(var) Then
