@@ -43,6 +43,19 @@ Namespace FileStream
             End Set
         End Property
 
+        Default Public Overloads Property Value(name$) As String
+            Get
+                If Properties.ContainsKey(name) Then
+                    Return Properties(name)
+                Else
+                    Return Nothing
+                End If
+            End Get
+            Set(value As String)
+                Properties(name) = value
+            End Set
+        End Property
+
         Public Sub Add(key As String, value As String)
             Call Properties.Add(key, value)
         End Sub

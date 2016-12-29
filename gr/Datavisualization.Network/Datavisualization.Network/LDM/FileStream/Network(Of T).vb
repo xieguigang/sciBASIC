@@ -30,8 +30,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.Extensions
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.Data.visualize.Network.Abstract
 Imports Microsoft.VisualBasic.Language
 
 Namespace FileStream
@@ -90,16 +88,13 @@ Namespace FileStream
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub RemoveDuplicated()
-            Dim LQuery = (From edge As T_Edge
-                          In Edges
-                          Let uu As String() = {edge.FromNode, edge.ToNode}.OrderBy(Function(s) s).ToArray
-                          Select id = String.Join(";", uu),
-                              edge = edge
-                          Group By id Into Group).ToArray
+            Dim LQuery As T_Edge() =
+                Edges _
+                .GroupBy(Function(ed) ed.GetNullDirectedGuid(True)) _
+                .Select(Function(g) g.First) _
+                .ToArray
 
-            Edges = LinqAPI.Exec(Of T_Edge) <= From gpEdge
-                                               In LQuery
-                                               Select gpEdge.Group.First.edge
+            Edges = LQuery
         End Sub
 
         ''' <summary>

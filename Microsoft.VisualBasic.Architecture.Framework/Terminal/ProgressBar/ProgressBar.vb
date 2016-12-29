@@ -237,7 +237,12 @@ Namespace Terminal
         ''' <param name="Elapsed#">当前的这个百分比差所经历过的时间</param>
         ''' <returns></returns>
         Public Shared Function ETA(previous#, cur#, Elapsed&) As TimeSpan
-            Dim d = cur - previous
+            Dim d# = cur - previous
+
+            If d# = 0R Then
+                d = 0.000000001
+            End If
+
             Dim lefts = (1 - cur) / d   ' lefts = 100% - currents
             Dim time = lefts * Elapsed
             Dim estimates = TimeSpan.FromMilliseconds(time)

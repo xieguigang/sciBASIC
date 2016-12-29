@@ -101,6 +101,11 @@ Namespace Graph
         Public Property initialPostion() As AbstractVector
         Public Property origID() As String
         Public Property Force As Point
+
+        ''' <summary>
+        ''' 颜色<see cref="SolidBrush"/>或者绘图<see cref="TextureBrush"/>
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         Public Property Color As Brush
         <DumpNode> Public Property Weights As Double()

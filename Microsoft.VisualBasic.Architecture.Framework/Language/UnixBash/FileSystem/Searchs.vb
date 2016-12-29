@@ -36,7 +36,7 @@ Namespace Language.UnixBash
     Public Module FileSystemAPI
 
         ''' <summary>
-        ''' ls -l -ext("*.xml") &lt;= DIR,  The filesystem search proxy
+        ''' ``ls -l -ext("*.xml") &lt;= DIR``,  The filesystem search proxy
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ls As New Search
