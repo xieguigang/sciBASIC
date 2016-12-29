@@ -86,6 +86,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <returns></returns>
         Public Property Ignores As String()
+        Public Property weights As Dictionary(Of String, Double)
 
         ''' <summary>
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
@@ -174,7 +175,7 @@ Namespace Darwinism.GAF
                 y0,
                 n, a, b,
                 log10Fitness,
-                ref)
+                ref, weights)
         End Function
     End Class
 End Namespace
