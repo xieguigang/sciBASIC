@@ -9,7 +9,7 @@ Namespace ComponentModel.Collection
     ''' <typeparam name="T"></typeparam>
     Public Class IndexOf(Of T)
 
-        Dim maps As Dictionary(Of T, Integer)
+        Dim maps As New Dictionary(Of T, Integer)
 
         ''' <summary>
         ''' 请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
