@@ -139,53 +139,17 @@ Public Class FormODEsViewer
         Application.DoEvents()
 
         Dim delta = 80 / result.y.Count
-        Dim plots As (String, Image)() = LinqAPI.Exec(Of (String, Image)) <=
- _
-            From y As NamedValue(Of Double())
-            In result.y.Values.AsParallel
-            Let pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.value, y.Value(i.i)))
-            Let hasRef = Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name)
-            Let img As Image = If(hasRef,
-                Function() As Image
-                    Try
-                        Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
-                        Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
+        Dim plots As New List(Of (String, Image))
+        Dim x = result.x.SeqIterator.ToArray
 
-                        Dim o = Scatter.Plot({refS, cal})
-                        Application.DoEvents()
-
-                        Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
-
-                        Return o
-                    Catch ex As Exception
-                        ex = New Exception(y.Name, ex)
-
-
-                        Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
-
-
-                        Throw ex
-                    End Try
-                End Function(),
-                Function() As Image
-                    Try
-                        Dim o = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
-                        Application.DoEvents()
-
-                        Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
-
-                        Return o
-                    Catch ex As Exception
-                        ex = New Exception(y.Name, ex)
-
-
-                        Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
-
-                        Throw ex
-                    End Try
-                End Function())
-            Select (y.Name, img)
-
+        For Each y As NamedValue(Of Double()) In result.y.Values
+            Try
+                Call plots.Add(__plot(x, y))
+            Catch ex As Exception
+                ex = New Exception(y.Name, ex)
+                Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
+            End Try
+        Next
 
         For Each y As (String, Image) In plots
             vars(y.Item1).BackgroundImage = y.Item2
@@ -199,6 +163,29 @@ Public Class FormODEsViewer
 
         ToolStripProgressBar1.Value = 100
     End Sub
+
+    Private Function __plot(x As SeqValue(Of Double)(), y As NamedValue(Of Double())) As (String, Image)
+        Dim pts = x.ToArray(Function(i) New PointF(i.value, y.Value(i.i)))
+        Dim hasRef = Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name)
+        Dim img As Image
+
+        If hasRef Then
+            Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
+            Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
+
+            img = Scatter.Plot({refS, cal})
+            Application.DoEvents()
+
+            Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
+        Else
+            img = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
+            Application.DoEvents()
+
+            Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
+        End If
+
+        Return (y.Name, img)
+    End Function
 
     Private Sub SaveResultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveResultToolStripMenuItem.Click
         Using saveFile As New SaveFileDialog With {

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E62DBAC0-023E-41E6-A8E1-17E6D05A1B5D}</ProjectGuid>
+    <ProjectGuid>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.MIME.Markup</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.MIME.Markup</AssemblyName>
