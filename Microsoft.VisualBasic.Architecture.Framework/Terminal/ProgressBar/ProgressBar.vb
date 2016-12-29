@@ -48,7 +48,7 @@ Namespace Terminal
         Dim y As Integer
 
         Sub New(title As String, Optional Y As Integer = 1, Optional cls As Boolean = False)
-            If cls Then
+            If cls AndAlso App.IsConsoleApp Then
                 Call Console.Clear()
             End If
 

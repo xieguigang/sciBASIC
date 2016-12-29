@@ -99,6 +99,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
+    Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
 
     Sub New()
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)

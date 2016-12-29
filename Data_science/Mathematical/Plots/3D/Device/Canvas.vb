@@ -51,6 +51,12 @@ Namespace Plot3D.Device
         ''' <returns></returns>
         Public Property Plot As IGraphics
 
+        Public ReadOnly Property Camera As Camera
+            Get
+                Return MyBase._camera
+            End Get
+        End Property
+
         Protected Overrides Sub __init()
 
             'Dim a As New Point3D(0, 0, 0)

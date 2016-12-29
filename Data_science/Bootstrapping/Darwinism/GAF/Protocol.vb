@@ -198,7 +198,7 @@ Namespace Darwinism.GAF
             Dim estArgs As var()
 
             If Not weights Is Nothing Then
-                fitness.weights = vars.Balance(weights)
+                fitness.weights = fitness.modelVariables.Balance(weights)
                 Call $"Weights fitness average is {fitness.weights.GetJson}".__DEBUG_ECHO
             Else
                 Call "Using normal fitness average calculation...".__DEBUG_ECHO
