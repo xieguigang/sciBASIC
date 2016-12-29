@@ -29,7 +29,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
@@ -109,7 +108,8 @@ Namespace Darwinism.GAF
                                 Optional mutateLevel As MutateLevels = MutateLevels.Low,
                                 Optional print As Action(Of outPrint, var()) = Nothing,
                                 Optional radicals# = 0.3,
-                                Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
+                                Optional parallel As ParallelComputing(Of ParameterVector) = Nothing,
+                                Optional weights As Dictionary(Of String, Double) = Nothing) As var()
 
             Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
 
@@ -136,7 +136,40 @@ Namespace Darwinism.GAF
                 mutateLevel:=mutateLevel,
                 print:=print,
                 radicals:=radicals,
-                parallel:=parallel)
+                parallel:=parallel,
+                weights:=weights)
+        End Function
+
+        <Extension>
+        Public Function Balance(vars$(), weights As Dictionary(Of String, Double)) As Dictionary(Of String, Double)
+            Dim gaps As New List(Of var)
+
+            For Each var In vars
+                If Not weights.ContainsKey(var) Then
+                    gaps.Add(var)
+                End If
+            Next
+
+            If gaps.Count = 0 Then
+                Return weights
+            End If
+
+            Dim splits = 1 - weights.Values.Sum
+
+            If splits <= 0 Then
+                ' 已经超过或者等于1了，则其他的都设置为零
+                For Each var In gaps
+                    Call weights.Add(var, 0R)
+                Next
+            Else
+                splits /= gaps.Count
+
+                For Each var In gaps
+                    Call weights.Add(var, splits)
+                Next
+            End If
+
+            Return weights
         End Function
 
         ''' <summary>
@@ -149,6 +182,7 @@ Namespace Darwinism.GAF
         ''' <param name="fitness"></param>
         ''' <param name="outPrint"></param>
         ''' <param name="argsInit"></param>
+        ''' <param name="weights">Weights for variable fitness calcaulation</param>
         ''' <returns></returns>
         <Extension>
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
@@ -159,8 +193,16 @@ Namespace Darwinism.GAF
                                        mutateLevel As MutateLevels,
                                        print As Action(Of outPrint, var()),
                                        radicals#,
-                                       parallel As ParallelComputing(Of ParameterVector)) As var()
+                                       parallel As ParallelComputing(Of ParameterVector),
+                                       weights As Dictionary(Of String, Double)) As var()
             Dim estArgs As var()
+
+            If Not weights Is Nothing Then
+                fitness.weights = vars.Balance(weights)
+                Call $"Weights fitness average is {fitness.weights.GetJson}".__DEBUG_ECHO
+            Else
+                Call "Using normal fitness average calculation...".__DEBUG_ECHO
+            End If
 
             If randomGenerator Is Nothing Then
                 randomGenerator = Function() New Random
@@ -268,7 +310,8 @@ Namespace Darwinism.GAF
                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
                          Optional print As Action(Of outPrint, var()) = Nothing,
                          Optional radicals# = 0.3,
-                         Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
+                         Optional parallel As ParallelComputing(Of ParameterVector) = Nothing,
+                         Optional weights As Dictionary(Of String, Double) = Nothing) As var()
 
             Dim vars$() = Model.GetParameters(GetType(T)).ToArray  ' 对于参数估算而言，y0初始值不需要变化了，使用实验观测值
             Dim fitness As New GAFFitness(GetType(T), observation, initOverrides, isRefModel) With {
@@ -290,7 +333,8 @@ Namespace Darwinism.GAF
                 mutateLevel:=mutateLevel,
                 print:=print,
                 radicals:=radicals,
-                parallel:=parallel)
+                parallel:=parallel,
+                weights:=weights)
         End Function
 
         <Extension>
@@ -337,7 +381,8 @@ Namespace Darwinism.GAF
                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
                          Optional print As Action(Of outPrint, var()) = Nothing,
                          Optional radicals# = 0.3,
-                         Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
+                         Optional parallel As ParallelComputing(Of ParameterVector) = Nothing,
+                         Optional weights As Dictionary(Of String, Double) = Nothing) As var()
 
             Return New ODEsOut With {
                 .y = observation.ToDictionary,
@@ -355,7 +400,8 @@ Namespace Darwinism.GAF
                             mutateLevel:=mutateLevel,
                             print:=print,
                             radicals:=radicals,
-                            parallel:=parallel)
+                            parallel:=parallel,
+                            weights:=weights)
         End Function
     End Module
 End Namespace

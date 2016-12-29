@@ -65,6 +65,14 @@ Namespace Darwinism.GAF
 
         Dim _terminate As Boolean = False
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="population"></param>
+        ''' <param name="fitnessFunc">
+        ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
+        ''' </param>
+        ''' <param name="seeds"></param>
         Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
             Me.Fitness = fitnessFunc
