@@ -195,9 +195,13 @@ Namespace FileStream
             removeIDs = removes
 
             Dim edges As New List(Of NetworkEdge)
+            Dim removesHash = removes.ToDictionary(
+                Function(k) k,
+                Function(null) Nothing)
 
             For Each edge As NetworkEdge In net.Edges
-                If removes.IndexOf(edge.FromNode) = -1 AndAlso removes.IndexOf(edge.ToNode) = -1 Then
+                If removesHash.ContainsKey(edge.FromNode) OrElse removesHash.ContainsKey(edge.ToNode) Then
+                Else
                     edges += edge
                 End If
             Next
