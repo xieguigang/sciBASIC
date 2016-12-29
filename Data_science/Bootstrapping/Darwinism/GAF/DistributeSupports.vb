@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::7788cb1833836df074b71ff723eda337, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\DistributeSupports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace Darwinism.GAF
@@ -54,7 +55,16 @@ Namespace Darwinism.GAF
         ''' <param name="ref"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetFitness(model As Type, v As ParameterVector, observation As ODEsOut, ynames$(), y0 As Dictionary(Of String, Double), n%, t0#, tt#, log10Fitness As Boolean, ref As ODEsOut) As Double
+        Public Function GetFitness(model As Type,
+                                   v As ParameterVector,
+                                   observation As ODEsOut,
+                                   ynames$(),
+                                   y0 As Dictionary(Of String, Double),
+                                   n%, t0#, tt#,
+                                   log10Fitness As Boolean,
+                                   ref As ODEsOut,
+                                   weights As Dictionary(Of String, Double)) As Double
+
             Dim vars As Dictionary(Of String, Double) = v _
                 .vars _
                 .ToDictionary(Function(var) var.Name,
@@ -81,7 +91,10 @@ Namespace Darwinism.GAF
                 fit += Math.Sqrt(FitnessHelper.Calculate(a#, b#)) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
-            Dim fitness As Double = fit.Average
+            Dim fitness As Double = If(
+                weights Is Nothing,
+                fit.Average,
+                fit.WeighedAverage(ynames.ToArray(Function(var) weights(var))))
 
             If fitness.IsNaNImaginary Then
                 fitness = Integer.MaxValue * 100.0R
