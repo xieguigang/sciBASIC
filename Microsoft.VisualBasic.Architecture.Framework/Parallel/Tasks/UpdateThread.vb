@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::78adedadccb7546ed6f65ae2ec6f250f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\UpdateThread.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Triggers
@@ -60,15 +61,22 @@ Namespace Parallel.Tasks
         Public ReadOnly Property Running As Boolean
 
         ''' <summary>
+        ''' The caller stack name
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Caller As String
+
+        ''' <summary>
         ''' Running a specific action in the background periodically. The time unit of the parameter <paramref name="Periods"/> is ms or Ticks.
         ''' </summary>
         ''' <param name="Periods">ms for update thread sleeps</param>
         ''' <param name="updates"></param>
-        Sub New(Periods As Integer, updates As Action)
+        Sub New(Periods As Integer, updates As Action, <CallerMemberName> Optional caller$ = Nothing)
             Call MyBase.New(updates)
 
             Me.Running = False
             Me.Periods = Periods
+            Me.Caller = caller
         End Sub
 
         Private Sub __updates()
@@ -104,7 +112,7 @@ Namespace Parallel.Tasks
 #If DEBUG Then
             Call _execute()
 #Else
-  Try
+            Try
                 Call _execute()
             Catch ex As Exception
                 If Not ErrHandle Is Nothing Then
@@ -120,7 +128,7 @@ Namespace Parallel.Tasks
 
         Public Overrides Function ToString() As String
             Dim state As String = If(Running, NameOf(Running), NameOf([Stop]))
-            Return $"[{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
+            Return $"[{Caller}::{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
         End Function
 
         Public Shared Function GetTicks(hh As Integer, mm As Integer) As Integer

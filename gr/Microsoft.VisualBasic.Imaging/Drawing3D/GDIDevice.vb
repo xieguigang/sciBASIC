@@ -67,6 +67,13 @@ Namespace Drawing3D
             End SyncLock
         End Sub
 
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            Call _rotationThread.Dispose()
+            Call Pause()
+
+            MyBase.Dispose(disposing)
+        End Sub
+
         Public Property AutoRotation As Boolean
             Get
                 Return _rotationThread.Running
