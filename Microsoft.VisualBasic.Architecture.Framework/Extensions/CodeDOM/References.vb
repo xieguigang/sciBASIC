@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace Emit.CodeDOM_VBC
 
@@ -9,6 +10,10 @@ Namespace Emit.CodeDOM_VBC
     ''' </summary>
     Public Module ReferenceSolver
 
+        ''' <summary>
+        ''' 获取当前所执行的应用程序的所有引用dll模块的文件路径列表
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ExecutingReferences As String()
 
         Sub New()
@@ -38,13 +43,20 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="assembly"></param>
         ''' <param name="i"></param>
         ''' <param name="refList"></param>
-        Private Sub getReferences(assembly As System.Reflection.Assembly, i As Integer, ByRef refList As List(Of String))
-            Dim refListBuffer = assembly.GetReferencedAssemblies
-            Dim Temp = refList
-            Dim LQuery = (From ref In refListBuffer
-                          Where Not String.IsNullOrEmpty(ref.FullName)
-                          Let entry = ref.FullName
-                          Select refListValue = getReferences(url:=entry, i:=i + 1, refList:=Temp)).ToList
+        ''' 
+        <Extension>
+        Private Sub __getReferences(assembly As Assembly, i As Integer, ByRef refList As List(Of String))
+            Dim myRefs = assembly.GetReferencedAssemblies
+            Dim tmp As List(Of String) = refList
+            Dim LQuery = LinqAPI.MakeList(Of String) <=
+ _
+                From ref As AssemblyName
+                In myRefs
+                Where Not String.IsNullOrEmpty(ref.FullName)
+                Let entry = ref.FullName
+                Select refListValue =
+                    getReferences(url:=entry, i:=i + 1, refList:=tmp)
+
             Dim resultBuffer = LQuery.Unlist
             Call resultBuffer.Add(assembly.Location)
             Call refList.AddRange(resultBuffer)
@@ -56,22 +68,25 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="assembly"></param>
         ''' <param name="removeSystem">是否移除系统引用</param>
         ''' <returns></returns>
-        Public Function GetReferences(assembly As System.Reflection.Assembly, removeSystem As Boolean, Optional strict As Boolean = True) As String()
-            Dim refList As List(Of String) = New List(Of String)
+        Public Function GetReferences(assembly As Assembly, removeSystem As Boolean, Optional strict As Boolean = True) As String()
+            Dim refList As New List(Of String)
 
-            Call getReferences(assembly, 0, refList)
-
-            '添加VB_Framework的引用
-            Call refList.AddRange((From ref In GetType(Parallel.ParallelLoading).Assembly.GetReferencedAssemblies
-                                   Let ass = System.Reflection.Assembly.Load(ref.FullName)
-                                   Select ass.Location).ToArray)
+            assembly.__getReferences(0, refList)
+            refList += From ref As AssemblyName
+                       In GetType(App).Assembly.GetReferencedAssemblies   ' 添加VB_Framework的引用
+                       Let ass As Assembly =
+                           Assembly.Load(ref.FullName)
+                       Select ass.Location
             refList = refList.Distinct.ToList
 
             If removeSystem Then
-                refList = (From path As String
-                           In refList.AsParallel
-                           Where Not IsSystemAssembly(path, strict)
-                           Select path).ToList
+                refList = LinqAPI.MakeList(Of String) <=
+ _
+                    From path As String
+                    In refList
+                    Where Not IsSystemAssembly(path, strict)
+                    Select path
+
             End If
 
             Return refList.ToArray
@@ -126,7 +141,8 @@ Namespace Emit.CodeDOM_VBC
                 Call refList.Add(assembly.Location)
             End If
 
-            Call getReferences(assembly, i:=i + 1, refList:=refList)
+            Call __getReferences(assembly, i:=i + 1, refList:=refList)
+
             Return refList.ToArray
         End Function
 

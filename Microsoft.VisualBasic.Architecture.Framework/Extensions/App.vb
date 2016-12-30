@@ -99,7 +99,17 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
+    ''' <summary>
+    ''' 判断当前运行的程序是否为Console类型的应用和程序，由于在执行初始化的时候，
+    ''' 最先被初始化的是这个模块，所以没有任何代码能够先执行<see cref="Console.IsErrorRedirected"/>了，
+    ''' 在这里使用<see cref="Console.IsErrorRedirected"/>这个来进行判断是可靠的
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
+    ''' <summary>
+    ''' 获取得到当前的这个所运行的应用程序所引用的dll文件列表
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
 
     Sub New()
