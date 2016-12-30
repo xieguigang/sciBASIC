@@ -113,6 +113,8 @@ Public Module App
     Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
 
     Sub New()
+        On Error Resume Next
+
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 
