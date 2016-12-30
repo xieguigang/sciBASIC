@@ -1,12 +1,15 @@
-﻿Imports Microsoft.VisualBasic.Mathematical.Calculus
+﻿Imports System.Windows.Forms.DataVisualization.Charting
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports System.Windows.Forms.DataVisualization.Charting
+Imports Microsoft.VisualBasic.Logging
+Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Public Class ScatterPlot
 
     Dim vars As New List(Of CheckBox)
     Dim points As ODEsOut
+
+    Public Property Logger As Action(Of String, MSG_TYPES)
 
     Public Sub SetVariables(vars$())
         With Me
@@ -45,7 +48,9 @@ Public Class ScatterPlot
                         Call s.Points.AddXY(x.value, y.Value(x))
                     Next
                 Catch ex As Exception
-
+                    If Not Logger Is Nothing Then
+                        Call Logger()(ex.ToString, MSG_TYPES.ERR)
+                    End If
                 End Try
             End If
         Next
