@@ -7,16 +7,17 @@ Namespace Emit.CodeDOM_VBC
     ''' <summary>
     ''' Assembly references solver
     ''' </summary>
-    Public Module References
+    Public Module ReferenceSolver
 
-        Public ReadOnly Property AppReferences As String()
+        Public ReadOnly Property ExecutingReferences As String()
 
         Sub New()
-            AppReferences = Assembly _
-                .GetExecutingAssembly _
-                .EntryPoint _
-                .DeclaringType _
-                .GetReferences
+            Dim assm As Assembly = Assembly.GetEntryAssembly
+            Dim main As MethodInfo = assm.EntryPoint
+            Dim [module] As Type = main.DeclaringType
+
+            ReferenceSolver.ExecutingReferences =
+                [module].GetReferences
         End Sub
 
         ''' <summary>

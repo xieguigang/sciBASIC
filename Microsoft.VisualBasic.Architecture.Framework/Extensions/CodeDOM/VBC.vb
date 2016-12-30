@@ -66,6 +66,16 @@ Namespace Emit.CodeDOM_VBC
         End Function
 
         ''' <summary>
+        ''' <see cref="App.References"/>
+        ''' </summary>
+        ''' <param name="SDK$"></param>
+        ''' <param name="dll"></param>
+        ''' <returns></returns>
+        Public Function CreateParameters(references As String(), Optional SDK$ = net46Default, Optional dll As Boolean = True) As CompilerParameters
+            Return CreateParameters(ref:=references, dll:=dll, SDK:=SDK)
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="code">VisualBasic源代码</param>
