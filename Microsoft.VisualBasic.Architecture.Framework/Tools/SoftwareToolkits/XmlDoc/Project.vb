@@ -85,7 +85,6 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
             For Each memberNode As XmlNode In memberNodes
                 Dim memberDescription As String = memberNode.Attributes.GetNamedItem("name").InnerText
-
                 Dim firstSemicolon As Integer = memberDescription.IndexOf(":")
 
                 If firstSemicolon = 1 Then
