@@ -30,4 +30,29 @@ Load cytoscape exports as network graph model.
 |nodesDf|``nodes.csv``|
 
 
+#### RemovesByDegree
+```csharp
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.GraphAPI.RemovesByDegree(Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network,System.Int32,System.String[]@)
+```
+直接按照节点的``Degree``来筛选
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|net|-|
+|degree%|``@``T:Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node`` -> "Degree"``|
+|removeIDs$|-|
+
+
+#### RemovesByDegreeQuantile
+```csharp
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.GraphAPI.RemovesByDegreeQuantile(Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network,System.Double,System.String[]@)
+```
+默认移除degree少于10% quantile的节点
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|net|-|
+|quantile#|-|
+
+
 

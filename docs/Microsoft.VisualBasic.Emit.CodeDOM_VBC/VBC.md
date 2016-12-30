@@ -22,14 +22,13 @@ _returns: @``T:System.Reflection.Assembly`` from the source **`code`**_
 
 #### CreateParameters
 ```csharp
-Microsoft.VisualBasic.Emit.CodeDOM_VBC.VBC.CreateParameters(System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)
+Microsoft.VisualBasic.Emit.CodeDOM_VBC.VBC.CreateParameters(System.String[],System.String,System.Boolean)
 ```
-Construct of the ``vbc.exe`` compiler parameters @``T:System.CodeDom.Compiler.CompilerParameters``.
+@``P:Microsoft.VisualBasic.App.References``
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|ref|-|
-|SDK|-|
+|SDK$|-|
 |dll|-|
 
 

@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF](./index.md)
 
 #### __runInternal
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.__runInternal(System.String[],System.Int32,System.Double,System.Int32,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.GAFFitness,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint}@,System.Collections.Generic.Dictionary{System.String,System.Double},Microsoft.VisualBasic.Mathematical.IRandomSeeds,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.MutateLevels,System.Action{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint,Microsoft.VisualBasic.Mathematical.Calculus.var[]},System.Double,Microsoft.VisualBasic.DataMining.Darwinism.GAF.ParallelComputing{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ParameterVector})
+Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.__runInternal(System.String[],System.Int32,System.Double,System.Int32,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.GAFFitness,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint}@,System.Collections.Generic.Dictionary{System.String,System.Double},Microsoft.VisualBasic.Mathematical.IRandomSeeds,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.MutateLevels,System.Action{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint,Microsoft.VisualBasic.Mathematical.Calculus.var[]},System.Double,Microsoft.VisualBasic.DataMining.Darwinism.GAF.ParallelComputing{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ParameterVector},System.Collections.Generic.Dictionary{System.String,System.Double})
 ```
 
 
@@ -22,11 +22,12 @@ Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.__runInternal(Sy
 |fitness|-|
 |outPrint|-|
 |argsInit|-|
+|weights|Weights for variable fitness calcaulation|
 
 
 #### Fitting
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.Fitting(Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Model,System.Int32,System.Double,System.Double,System.Int32,System.Int32,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint}@,System.Double,System.Collections.Generic.Dictionary{System.String,System.Double},System.Boolean,Microsoft.VisualBasic.Mathematical.IRandomSeeds,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.MutateLevels,System.Action{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint,Microsoft.VisualBasic.Mathematical.Calculus.var[]},System.Double,Microsoft.VisualBasic.DataMining.Darwinism.GAF.ParallelComputing{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ParameterVector})
+Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.Fitting(Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Model,System.Int32,System.Double,System.Double,System.Int32,System.Int32,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint}@,System.Double,System.Collections.Generic.Dictionary{System.String,System.Double},System.Boolean,Microsoft.VisualBasic.Mathematical.IRandomSeeds,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.MutateLevels,System.Action{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint,Microsoft.VisualBasic.Mathematical.Calculus.var[]},System.Double,Microsoft.VisualBasic.DataMining.Darwinism.GAF.ParallelComputing{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ParameterVector},System.Collections.Generic.Dictionary{System.String,System.Double})
 ```
 Using for model testing debug.(测试用)
 
@@ -43,7 +44,7 @@ Using for model testing debug.(测试用)
 
 #### Fitting``1
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.Fitting``1(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Double[]}},System.Double[],System.Int32,System.Int32,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint}@,System.Double,System.Boolean,System.String[],System.Collections.Generic.Dictionary{System.String,System.Double},System.Collections.Generic.Dictionary{System.String,System.Double},System.Boolean,Microsoft.VisualBasic.Mathematical.IRandomSeeds,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.MutateLevels,System.Action{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint,Microsoft.VisualBasic.Mathematical.Calculus.var[]},System.Double,Microsoft.VisualBasic.DataMining.Darwinism.GAF.ParallelComputing{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ParameterVector})
+Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol.Fitting``1(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Double[]}},System.Double[],System.Int32,System.Int32,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint}@,System.Double,System.Boolean,System.String[],System.Collections.Generic.Dictionary{System.String,System.Double},System.Collections.Generic.Dictionary{System.String,System.Double},System.Boolean,Microsoft.VisualBasic.Mathematical.IRandomSeeds,Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.MutateLevels,System.Action{Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper.outPrint,Microsoft.VisualBasic.Mathematical.Calculus.var[]},System.Double,Microsoft.VisualBasic.DataMining.Darwinism.GAF.ParallelComputing{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ParameterVector},System.Collections.Generic.Dictionary{System.String,System.Double})
 ```
 用于实际分析的GAF工具
 

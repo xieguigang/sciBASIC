@@ -1,7 +1,7 @@
 ﻿# Matrix
 _namespace: [Microsoft.VisualBasic.Mathematical.LinearAlgebra](./index.md)_
 
-
+Matrix in VisualBasic language
 
 > 
 >  Matlab里常用的矩阵运算函数  
