@@ -57,9 +57,8 @@ Namespace Emit.CodeDOM_VBC
                 Select refListValue =
                     getReferences(url:=entry, i:=i + 1, refList:=tmp)
 
-            Dim resultBuffer = LQuery.Unlist
-            Call resultBuffer.Add(assembly.Location)
-            Call refList.AddRange(resultBuffer)
+            Call LQuery.Add(assembly.Location)
+            Call refList.AddRange(LQuery.AsEnumerable)
         End Sub
 
         ''' <summary>
