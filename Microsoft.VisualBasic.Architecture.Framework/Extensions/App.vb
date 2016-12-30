@@ -33,15 +33,14 @@ Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
@@ -100,6 +99,7 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
     Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
+    Public ReadOnly Property References As New Lazy(Of String())(Function() Emit.CodeDOM_VBC.References.AppReferences)
 
     Sub New()
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)

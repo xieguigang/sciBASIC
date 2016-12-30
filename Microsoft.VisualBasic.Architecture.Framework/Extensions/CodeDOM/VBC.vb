@@ -45,7 +45,7 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="SDK"></param>
         ''' <param name="dll"></param>
         ''' <returns></returns>
-        Public Function CreateParameters(ref As IEnumerable(Of String), SDK As String, Optional dll As Boolean = True) As CompilerParameters
+        Public Function CreateParameters(ref As IEnumerable(Of String), Optional SDK$ = net46Default, Optional dll As Boolean = True) As CompilerParameters
             Dim args As CompilerParameters = If(dll, DllProfile, ExecutableProfile)
             Dim libs As New List(Of String)
 
