@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::8666c9cff344569a6554bda7a3b9afc9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOMExpressions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.CodeDom
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
@@ -72,8 +73,11 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="returns"></param>
         ''' <param name="control"></param>
         ''' <returns></returns>
-        Public Function DeclareFunc(name As String, args As Dictionary(Of String, Type), returns As Type,
+        Public Function DeclareFunc(name As String,
+                                    args As Dictionary(Of String, Type),
+                                    returns As Type,
                                     Optional control As CodeDom.MemberAttributes = PublicShared) As CodeDom.CodeMemberMethod
+
             Dim Func As New CodeDom.CodeMemberMethod With {
                 .Name = name,
                 .ReturnType = returns.TypeRef,
@@ -154,6 +158,12 @@ Namespace Emit.CodeDOM_VBC
             End If
         End Function
 
+        ''' <summary>
+        ''' New object
+        ''' </summary>
+        ''' <param name="typeRef"></param>
+        ''' <param name="parameters"></param>
+        ''' <returns></returns>
         Public Function [New](typeRef As String, parameters As CodeDom.CodeExpression()) As CodeDom.CodeObjectCreateExpression
             Dim objectType As New CodeDom.CodeTypeReference(typeRef)
             If parameters Is Nothing Then
@@ -202,16 +212,39 @@ Namespace Emit.CodeDOM_VBC
             End If
         End Function
 
-        Public Function Cast(obj As CodeDom.CodeExpression, type As Type) As CodeDom.CodeCastExpression
+        ''' <summary>
+        ''' Ctype
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function [CType](obj As CodeDom.CodeExpression, type As Type) As CodeDom.CodeCastExpression
             Return New CodeDom.CodeCastExpression(New CodeDom.CodeTypeReference(type), obj)
         End Function
 
-        Public Function [Call](Method As System.Reflection.MethodInfo,
+        ''' <summary>
+        ''' Call method
+        ''' </summary>
+        ''' <param name="Method"></param>
+        ''' <param name="Parameters"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function [Call](Method As MethodInfo,
                                Parameters As CodeDom.CodeExpression(),
                                Optional obj As CodeDom.CodeExpression = Nothing) As CodeDom.CodeMethodInvokeExpression
             Return [Call](If(obj Is Nothing, New CodeDom.CodeTypeReferenceExpression(Method.DeclaringType), obj), Method.Name, Parameters)
         End Function
 
+        ''' <summary>
+        ''' Call object by method name
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <param name="Name"></param>
+        ''' <param name="Parameters"></param>
+        ''' <returns></returns>
         Public Function [Call](obj As CodeDom.CodeExpression, Name As String, Parameters As CodeDom.CodeExpression()) As CodeDom.CodeMethodInvokeExpression
             Dim MethodRef As New CodeDom.CodeMethodReferenceExpression(obj, Name)
             Dim Expression As New CodeDom.CodeMethodInvokeExpression(MethodRef, Parameters)
@@ -237,6 +270,11 @@ Namespace Emit.CodeDOM_VBC
             End If
         End Function
 
+        ''' <summary>
+        ''' Function returns
+        ''' </summary>
+        ''' <param name="variable"></param>
+        ''' <returns></returns>
         Public Function [Return](variable As String) As CodeDom.CodeMethodReturnStatement
             Return New CodeDom.CodeMethodReturnStatement(New CodeDom.CodeVariableReferenceExpression(variable))
         End Function
@@ -270,6 +308,12 @@ Namespace Emit.CodeDOM_VBC
             Return New CodeDom.CodeFieldReferenceExpression(obj, Name)
         End Function
 
+        ''' <summary>
+        ''' ``left = value``
+        ''' </summary>
+        ''' <param name="LeftAssigned"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Public Function ValueAssign(LeftAssigned As CodeDom.CodeExpression, value As CodeDom.CodeExpression) As CodeDom.CodeAssignStatement
             Return New CodeDom.CodeAssignStatement(LeftAssigned, value)
         End Function

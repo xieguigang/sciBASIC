@@ -347,7 +347,7 @@ Namespace Parallel
 
             Dim PortValue As CodeDom.CodeExpression = CodeDOMExpressions.GetValue(New CodeDom.CodeArgumentReferenceExpression(SubMainArgv), 1)
             PortValue = [Call](GetType(Conversion), NameOf(Conversion.Val), {PortValue})
-            PortValue = Cast(PortValue, GetType(Integer))
+            PortValue = [CType](PortValue, GetType(Integer))
 
             ' Dim Port As Integer = CInt(Val(argv(1)))
             Call invoke.Statements.Add(LocalsInit(Port, GetType(Integer), PortValue))
