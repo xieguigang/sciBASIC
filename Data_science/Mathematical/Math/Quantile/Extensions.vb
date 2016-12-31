@@ -107,6 +107,7 @@ Namespace Quantile
             Dim index As New OrderSelector(Of Double)(cuts)
 
             For i As Integer = 0 To array.Length - 1
+                ' 在这里将实际的数据转换为quantile水平
                 array(i) = levels(index.FirstGreaterThan(array(i)))
             Next
 
