@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::4446baa26672e39cfe117c0b0f71df95, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\GraphAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -35,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.Quantile
 
 Namespace FileStream
 
@@ -126,6 +128,88 @@ Namespace FileStream
             Return New NetworkGraph With {
                 .edges = gEdges,
                 .nodes = gNodes
+            }
+        End Function
+
+        <Extension>
+        Public Function GetDegrees(net As Network) As Dictionary(Of String, Integer)
+            Dim degree As New Dictionary(Of String, Integer)
+            Dim counts As Action(Of String) =
+ _
+                Sub(node$) _
+ _
+                    If degree.ContainsKey(node) Then _
+                        degree(node) += 1 _
+                    Else _
+                        Call degree.Add(node, 1)
+
+            For Each edge As NetworkEdge In net.Edges
+                Call counts(edge.FromNode)
+                Call counts(edge.ToNode)
+            Next
+
+            Return degree
+        End Function
+
+        ''' <summary>
+        ''' 默认移除degree少于10% quantile的节点
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="quantile#"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RemovesByDegreeQuantile(net As Network, Optional quantile# = 0.1, Optional ByRef removeIDs$() = Nothing) As Network
+            Dim qCut& = net _
+                .Nodes _
+                .Select(Function(n) n("Degree")) _
+                .Select(Function(d) CLng(Val(d))) _
+                .GKQuantile() _
+                .Query(quantile)
+
+            Return net.RemovesByDegree(
+                degree:=qCut,
+                removeIDs:=removeIDs)
+        End Function
+
+        ''' <summary>
+        ''' 直接按照节点的``Degree``来筛选
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="degree%">``<see cref="Node"/> -> "Degree"``</param>
+        ''' <param name="removeIDs$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RemovesByDegree(net As Network, Optional degree% = 0, Optional ByRef removeIDs$() = Nothing) As Network
+            Dim nodes As New List(Of Node)
+            Dim removes As New List(Of String)
+
+            For Each node As Node In net.Nodes
+                Dim ndg As Integer = CInt(Val(node("Degree")))
+
+                If ndg > degree Then
+                    nodes += node
+                Else
+                    removes += node.Identifier
+                End If
+            Next
+
+            removeIDs = removes
+
+            Dim edges As New List(Of NetworkEdge)
+            Dim index As New IndexOf(Of String)(removes)
+
+            For Each edge As NetworkEdge In net.Edges
+
+                ' 如果边之中的任意一个节点被包含在index里面，即有小于cutoff值的节点，则不会被添加
+                If index(edge.FromNode) > -1 OrElse index(edge.ToNode) > -1 Then
+                Else
+                    edges += edge
+                End If
+            Next
+
+            Return New Network With {
+                .Edges = edges,
+                .Nodes = nodes
             }
         End Function
     End Module

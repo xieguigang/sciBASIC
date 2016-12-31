@@ -41,37 +41,51 @@ Namespace Drawing3D
     Public Class GDIDevice : Inherits UserControl
 
         Protected WithEvents _animationLoop As Timer
-        Protected camera As Camera
+        Protected _camera As New Camera With {
+            .angleX = 0,
+            .angleY = 0,
+            .angleZ = 0,
+            .fov = 256,
+            .screen = Size,
+            .ViewDistance = -40
+        }
         Protected models As New List(Of I3DModel)
 
-        '  Dim _rotationThread As New UpdateThread(100, AddressOf RunRotate)
+        Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
 
         Private Sub RunRotate()
-            SyncLock camera
+            SyncLock _camera
                 If keyRotate.X <> 0R OrElse keyRotate.Y <> 0R OrElse keyRotate.Z <> 0R Then
-                    camera.angleX += keyRotate.X
-                    camera.angleY += keyRotate.Y
-                    camera.angleZ += keyRotate.Z
+                    _camera.angleX += keyRotate.X
+                    _camera.angleY += keyRotate.Y
+                    _camera.angleZ += keyRotate.Z
                 Else
-                    camera.angleX += 0.01
-                    camera.angleY += 0.01
-                    camera.angleZ += 0.01
+                    _camera.angleX += 0.1
+                    _camera.angleY += 0.1
+                    _camera.angleZ += 0.1
                 End If
             End SyncLock
         End Sub
 
-        'Public Property AutoRotation As Boolean
-        '    Get
-        '        Return _rotationThread.Running
-        '    End Get
-        '    Set(value As Boolean)
-        '        If value Then
-        '            _rotationThread.Start()
-        '        Else
-        '            _rotationThread.Stop()
-        '        End If
-        '    End Set
-        'End Property
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            Call _rotationThread.Dispose()
+            Call Pause()
+
+            MyBase.Dispose(disposing)
+        End Sub
+
+        Public Property AutoRotation As Boolean
+            Get
+                Return _rotationThread.Running
+            End Get
+            Set(value As Boolean)
+                If value Then
+                    _rotationThread.Start()
+                Else
+                    _rotationThread.Stop()
+                End If
+            End Set
+        End Property
 
         ''' <summary>
         ''' Enable Single-buffering to eliminate flickering.
@@ -79,15 +93,6 @@ Namespace Drawing3D
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Protected Sub GDIDevice_Load(sender As Object, e As EventArgs) Handles Me.Load
-            camera = New Camera With {
-                .angleX = 0,
-                .angleY = 0,
-                .angleZ = 0,
-                .fov = 256,
-                .screen = Size,
-                .ViewDistance = -40
-            }
-
             Call Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
             Call Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
             Call Me.__initDevice()
@@ -96,7 +101,7 @@ Namespace Drawing3D
 
         Private Sub __initDevice()
             _animationLoop = New Timer With {
-                .Interval = 25,
+                .Interval = 20,
                 .Enabled = False
             }
         End Sub
@@ -141,7 +146,7 @@ Namespace Drawing3D
             Call g.Clear(Color.LightBlue)
 
             For Each model As I3DModel In models
-                Call model.Copy(camera.Rotate(model)).Draw(g, camera)
+                Call model.Copy(_camera.Rotate(model)).Draw(g, _camera)
             Next
         End Sub
 
@@ -173,30 +178,30 @@ Namespace Drawing3D
 
         Private Sub GDIDevice_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
             If _rotate Then
-                camera.angleX += 1
-                camera.angleY += 1
-                camera.angleZ += 1
+                _camera.angleX += 1
+                _camera.angleY += 1
+                _camera.angleZ += 1
             End If
 
-            RaiseEvent RotateCamera(camera.angleX, camera.angleY, camera.angleZ)
+            RaiseEvent RotateCamera(_camera.angleX, _camera.angleY, _camera.angleZ)
         End Sub
 
         Public Sub RotateX(angle!)
-            camera.angleX = angle
+            _camera.angleX = angle
         End Sub
 
         Public Sub RotateY(angle!)
-            camera.angleY = angle
+            _camera.angleY = angle
         End Sub
 
         Public Sub RotateZ(angle!)
-            camera.angleZ = angle
+            _camera.angleZ = angle
         End Sub
 
         Public Sub Rotate(angle As Point3D)
-            camera.angleX = angle.X
-            camera.angleY = angle.Y
-            camera.angleZ = angle.Z
+            _camera.angleX = angle.X
+            _camera.angleY = angle.Y
+            _camera.angleZ = angle.Z
         End Sub
 
         Private Sub GDIDevice_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
@@ -204,16 +209,16 @@ Namespace Drawing3D
         End Sub
 
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-            If camera Is Nothing Then
+            If _camera Is Nothing Then
                 Call "Camera object not initialized!".__DEBUG_ECHO
             Else
-                camera.screen = Size
+                _camera.screen = Size
             End If
         End Sub
 
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Dim d% = Math.Sign(e.Delta)
-            camera.ViewDistance += d
+            _camera.ViewDistance += d
         End Sub
 
         Dim keyRotate As Point3D

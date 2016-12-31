@@ -66,7 +66,13 @@ Namespace SoftwareToolkits
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function CurrentExe() As ApplicationDetails
-            Return New ApplicationDetails(Assembly.LoadFile(App.ExecutablePath))
+            Try
+                Return New ApplicationDetails(Assembly.LoadFile(App.ExecutablePath))
+            Catch ex As Exception
+                ex = New Exception(App.ExecutablePath, ex)
+                Call App.LogException(ex)
+                Return Nothing
+            End Try
         End Function
 
         Public Shared Function FromTypeModule(type As Type) As ApplicationDetails

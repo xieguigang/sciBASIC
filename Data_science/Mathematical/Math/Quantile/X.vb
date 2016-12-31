@@ -49,11 +49,11 @@ Namespace Quantile
     ''' </summary>
     Public Class X
 
-        Public ReadOnly Property value As Long
+        Public ReadOnly Property value As Double
         Public Property g As Integer
         Public ReadOnly Property delta As Integer
 
-        Public Sub New(value&, lower_delta%, delta%)
+        Public Sub New(value#, lower_delta%, delta%)
             Me.value = value
             Me.g = lower_delta
             Me.delta = delta

@@ -214,6 +214,17 @@ Microsoft.VisualBasic.Extensions.FlushMemory
 ```
 Rabbish collection to free the junk memory.(垃圾回收)
 
+#### FormatTime
+```csharp
+Microsoft.VisualBasic.Extensions.FormatTime(System.TimeSpan)
+```
+``days, hh:mm:ss.ms``
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|t|-|
+
+
 #### Free``1
 ```csharp
 Microsoft.VisualBasic.Extensions.Free``1(``0@)

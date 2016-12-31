@@ -146,6 +146,10 @@ Public Module VBDebugger
         Return False
     End Function
 
+    Public Sub WaitOutput()
+        Call Terminal.WaitQueue()
+    End Sub
+
     <Extension>
     Public Sub WriteLine(msg As String, color As ConsoleColor)
         If Mute Then

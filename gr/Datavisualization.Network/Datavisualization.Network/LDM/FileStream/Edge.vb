@@ -55,6 +55,20 @@ Namespace FileStream
             Me.Confidence = confi
         End Sub
 
+        ''' <summary>
+        ''' Copy value
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As NetworkEdge)
+            With Me
+                .Confidence = clone.Confidence
+                .FromNode = clone.FromNode
+                .InteractionType = clone.InteractionType
+                .Properties = New Dictionary(Of String, String)(clone.Properties)
+                .ToNode = clone.ToNode
+            End With
+        End Sub
+
         <Column("fromNode")> <XmlAttribute("source")>
         Public Overridable Property FromNode As String Implements IInteraction.source
         <Column("toNode")> <XmlAttribute("target")>
@@ -73,9 +87,17 @@ Namespace FileStream
         ''' 返回没有方向性的统一标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetNullDirectedGuid() As String
-            Dim array = {FromNode, ToNode}.OrderBy(Function(s) s)
-            Return String.Format("[{0}] {1};{2}", InteractionType, array.First, array.Last)
+        Public Function GetNullDirectedGuid(Optional ignoreTypes As Boolean = False) As String
+            Dim array$() = {
+                FromNode, ToNode
+            }.OrderBy(Function(s) s) _
+             .ToArray
+
+            If ignoreTypes Then
+                Return array(0) & " + " & array(1)
+            Else
+                Return String.Format("[{0}] {1};{2}", InteractionType, array(0), array(1))
+            End If
         End Function
 
         Public Function GetDirectedGuid() As String

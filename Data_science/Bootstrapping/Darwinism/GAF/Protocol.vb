@@ -142,7 +142,7 @@ Namespace Darwinism.GAF
 
         <Extension>
         Public Function Balance(vars$(), weights As Dictionary(Of String, Double)) As Dictionary(Of String, Double)
-            Dim gaps As New List(Of var)
+            Dim gaps As New List(Of String)
 
             For Each var In vars
                 If Not weights.ContainsKey(var) Then
@@ -198,7 +198,7 @@ Namespace Darwinism.GAF
             Dim estArgs As var()
 
             If Not weights Is Nothing Then
-                fitness.weights = vars.Balance(weights)
+                fitness.weights = fitness.modelVariables.Balance(weights)
                 Call $"Weights fitness average is {fitness.weights.GetJson}".__DEBUG_ECHO
             Else
                 Call "Using normal fitness average calculation...".__DEBUG_ECHO

@@ -130,11 +130,11 @@ Namespace ComponentModel
         ''' <summary>
         ''' the data source handler.
         ''' </summary>
-        Protected _dataTask As Func(Of TOut)
+        Protected __factory As Func(Of TOut)
         ''' <summary>
         ''' The output result cache data.
         ''' </summary>
-        Protected _outCache As TOut
+        Protected _cache As TOut
 
         ''' <summary>
         ''' Get cache data if it exists, or the data will be loaded first.
@@ -142,32 +142,38 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public ReadOnly Property Value As TOut
             Get
-                If _outCache Is Nothing Then
-                    _outCache = _dataTask()
+                If _cache Is Nothing Then
+                    _cache = __factory()
                 End If
 
-                Return _outCache
+                Return _cache
             End Get
         End Property
 
         Sub New(value As TOut)
-            Me._outCache = value
+            _cache = value
         End Sub
 
         ''' <summary>
         ''' Init this lazy loader with the data source handler.
         ''' </summary>
-        ''' <param name="Source">the data source handler.</param>
-        Sub New(Source As Func(Of TOut))
-            _dataTask = Source
+        ''' <param name="valueFactory">
+        ''' The data source provider handler.
+        ''' </param>
+        Sub New(valueFactory As Func(Of TOut))
+            __factory = valueFactory
         End Sub
 
         Public Overrides Function ToString() As String
-            If _outCache Is Nothing Then
+            If _cache Is Nothing Then
                 Return GetType(TOut).FullName
             Else
-                Return _outCache.GetJson
+                Return _cache.GetJson
             End If
         End Function
+
+        Public Shared Narrowing Operator CType(lazy As Lazy(Of TOut)) As TOut
+            Return lazy.Value
+        End Operator
     End Class
 End Namespace

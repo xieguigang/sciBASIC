@@ -39,6 +39,13 @@ Namespace Emit.CodeDOM_VBC
     <Extension> Public Module CodeDOMExtension
 
         ''' <summary>
+        ''' ```
+        ''' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\
+        ''' ```
+        ''' </summary>
+        Public Const net46Default As String = "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\"
+
+        ''' <summary>
         ''' 设置所编译的应用程序的图标
         ''' </summary>
         ''' <param name="iconPath"></param>

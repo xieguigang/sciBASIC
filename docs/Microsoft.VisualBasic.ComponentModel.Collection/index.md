@@ -7,5 +7,6 @@
 |[CapacityQueue`1](./CapacityQueue`1.md)||
 |[FuzzyGroup](./FuzzyGroup.md)|对数据进行分组，通过标签数据的相似度|
 |[ILocalSearchHandle](./ILocalSearchHandle.md)||
+|[IndexOf`1](./IndexOf`1.md)|Mappings of ``key -> index``|
 |[PriorityQueue`1](./PriorityQueue`1.md)|An Interface for the PriorityQueue Class.|
 

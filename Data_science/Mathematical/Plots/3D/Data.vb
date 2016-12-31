@@ -160,6 +160,30 @@ Namespace Plot3D
             Next
         End Function
 
+        Private Function __progressProvider(total%, yLen%, ysteps#, x As DoubleRange) As Action(Of Double)
+            If App.IsConsoleApp Then
+                Dim tick As New ProgressProvider(total)
+                Dim msg$ = $"Populates data points...(Estimates size: {tick.Target * (yLen / ysteps)}...)"
+                Dim prog As New ProgressBar(msg, cls:=True)
+
+                Call tick.StepProgress()
+
+                Return Sub(xi#)
+                           Dim leftTime As String = tick _
+                               .ETA(prog.ElapsedMilliseconds) _
+                               .FormatTime
+
+                           Call prog.SetProgress(
+                                tick.StepProgress,
+                                $" {xi} ({x.Min}, {x.Max}),  ETA {leftTime}")
+                       End Sub
+            Else
+                Return Sub()
+                           ' DO_NOTHING
+                       End Sub
+            End If
+        End Function
+
         <Extension>
         Private Iterator Function __2DIterates(Of Tout)([in] As Func(Of Double, Double, Tout),
                                                         x As DoubleRange,
@@ -167,10 +191,8 @@ Namespace Plot3D
                                                         xsteps!, ysteps!,
                                                         parallel As Boolean) As IEnumerable(Of List(Of (x#, y#, z As Tout)))
 
-            Dim tick As New ProgressProvider(x.Length / xsteps)
-            Dim prog As New ProgressBar($"Populates data points...(Estimates size: {tick.Target * (y.Length / ysteps)}...)", cls:=True)
-
-            Call tick.StepProgress()
+            Dim tick As Action(Of Double) =
+                __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
 
             For xi# = x.Min To x.Max Step xsteps!
 
@@ -201,16 +223,8 @@ Namespace Plot3D
                     Yield out
                 End If
 
-                Dim leftTime As String = tick _
-                    .ETA(prog.ElapsedMilliseconds) _
-                    .FormatTime
-
-                Call prog.SetProgress(
-                    tick.StepProgress,
-                    $" {xi} ({x.Min}, {x.Max}),  ETA {leftTime}")
+                Call tick(xi)
             Next
-
-            Call prog.Dispose()
         End Function
 
         ''' <summary>

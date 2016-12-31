@@ -72,6 +72,11 @@ Imports Microsoft.VisualBasic.Text.Similarity
 Public Module Extensions
 #End If
 
+    ''' <summary>
+    ''' ``days, hh:mm:ss.ms``
+    ''' </summary>
+    ''' <param name="t"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t

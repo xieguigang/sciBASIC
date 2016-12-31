@@ -385,9 +385,11 @@
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\LDM\ProfileTable.vb" />
     <Compile Include="ComponentModel\SingletonHolder.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
+    <Compile Include="Extensions\CodeDOM\References.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
@@ -540,6 +542,7 @@
     <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="Tools\Win32\TaskManager.vb" />
     <Compile Include="Tools\Win32\PriorityClass.vb" />
+    <Compile Include="Tools\WinForm\ChromeUIRender.vb" />
     <Compile Include="Tools\WinForm\Extensions.vb" />
     <Compile Include="Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="Tools\Win32\Win32API.vb" />

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3144f30c8ad520a692365e18434d485a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,15 +33,15 @@ Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
@@ -99,8 +99,22 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
+    ''' <summary>
+    ''' 判断当前运行的程序是否为Console类型的应用和程序，由于在执行初始化的时候，
+    ''' 最先被初始化的是这个模块，所以没有任何代码能够先执行<see cref="Console.IsErrorRedirected"/>了，
+    ''' 在这里使用<see cref="Console.IsErrorRedirected"/>这个来进行判断是可靠的
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
+    ''' <summary>
+    ''' 获取得到当前的这个所运行的应用程序所引用的dll文件列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
 
     Sub New()
+        On Error Resume Next
+
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 

@@ -258,6 +258,7 @@ Browser by namespace:
 + [Microsoft.VisualBasic.Webservices.Github.Class](./Microsoft.VisualBasic.Webservices.Github.Class/index.md)
 + [Microsoft.VisualBasic.Webservices.Github.My.Resources](./Microsoft.VisualBasic.Webservices.Github.My.Resources/index.md)
 + [Microsoft.VisualBasic.Webservices.Github.QueryBuilder](./Microsoft.VisualBasic.Webservices.Github.QueryBuilder/index.md)
++ [Microsoft.VisualBasic.Webservices.Github.WebAPI](./Microsoft.VisualBasic.Webservices.Github.WebAPI/index.md)
 + [Microsoft.VisualBasic.Win32](./Microsoft.VisualBasic.Win32/index.md)
 + [Microsoft.VisualBasic.Win32.GetLastErrorAPI](./Microsoft.VisualBasic.Win32.GetLastErrorAPI/index.md)
 + [Microsoft.VisualBasic.Windows.Forms](./Microsoft.VisualBasic.Windows.Forms/index.md)

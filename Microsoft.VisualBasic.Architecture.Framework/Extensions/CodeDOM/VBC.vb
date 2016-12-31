@@ -45,13 +45,13 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="SDK"></param>
         ''' <param name="dll"></param>
         ''' <returns></returns>
-        Public Function CreateParameters(ref As IEnumerable(Of String), SDK As String, Optional dll As Boolean = True) As CompilerParameters
+        Public Function CreateParameters(ref As IEnumerable(Of String), Optional SDK$ = net46Default, Optional dll As Boolean = True) As CompilerParameters
             Dim args As CompilerParameters = If(dll, DllProfile, ExecutableProfile)
             Dim libs As New List(Of String)
 
             libs += From path As String
                     In ref
-                    Where Array.IndexOf(DotNETFramework, IO.Path.GetFileNameWithoutExtension(path)) = -1
+                    Where Array.IndexOf(DotNETFramework, path.BaseName) = -1
                     Select path '
             libs += {
                 SDK & "\System.dll",
@@ -66,17 +66,27 @@ Namespace Emit.CodeDOM_VBC
         End Function
 
         ''' <summary>
+        ''' <see cref="App.References"/>
+        ''' </summary>
+        ''' <param name="SDK$"></param>
+        ''' <param name="dll"></param>
+        ''' <returns></returns>
+        Public Function CreateParameters(references As String(), Optional SDK$ = net46Default, Optional dll As Boolean = True) As CompilerParameters
+            Return CreateParameters(ref:=references, dll:=dll, SDK:=SDK)
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="code">VisualBasic源代码</param>
         ''' <param name="output">The output ``*.exe`` file.</param>
         ''' <returns></returns>
         Public Function CompileCode(code As String, output As String, Optional ByRef errInfo As String = "") As Assembly
-            Dim params As New CompilerParameters()
+            Dim params As New CompilerParameters() With { ' Make sure we generate an EXE, not a DLL
+                .GenerateExecutable = True,
+                .OutputAssembly = output
+            }
 
-            'Make sure we generate an EXE, not a DLL
-            params.GenerateExecutable = True
-            params.OutputAssembly = output
             Return VBC.CompileCode(code, params, errInfo)
         End Function
 
@@ -99,8 +109,9 @@ Namespace Emit.CodeDOM_VBC
 
                 For Each CompErr As CompilerError In results.Errors
                     Dim errDetail As String = "Line number " & CompErr.Line &
-                ", Error Number: " & CompErr.ErrorNumber &
-                ", '" & CompErr.ErrorText & ";"
+                        ", Error Number: " & CompErr.ErrorNumber &
+                        ", '" & CompErr.ErrorText & ";"
+
                     Call err.AppendLine(errDetail)
                     Call err.AppendLine()
                 Next

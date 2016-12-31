@@ -218,6 +218,10 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Return hash.ContainsKey(null)
     End Operator
 
+    Public Shared Narrowing Operator CType(map As Dictionary(Of V)) As V()
+        Return map.Values.ToArray
+    End Operator
+
     ' 实现这个集合接口会和字典的集合接口出现冲突
     'Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator(Of V) Implements IEnumerable(Of V).GetEnumerator
     '    For Each x In MyBase.Values

@@ -77,12 +77,18 @@ Namespace Quantile
         ''' </summary>
         ''' <param name="epsilon">Acceptable % error in percentile estimate</param>
         ''' <param name="compact_size">Threshold to trigger a compaction</param>
-        Public Sub New(epsilon#, compact_size%)
+        Public Sub New(epsilon#, compact_size%, Optional data As IEnumerable(Of Double) = Nothing)
             Me.compact_size = compact_size
             Me.epsilon = epsilon
+
+            If Not data Is Nothing Then
+                For Each x As Double In data
+                    Call Insert(x)
+                Next
+            End If
         End Sub
 
-        Dim sample As List(Of X) = New List(Of X)
+        Dim sample As New List(Of X)
 
         Private Sub printList()
             Dim buf As New StringBuilder
@@ -95,6 +101,10 @@ Namespace Quantile
         End Sub
 
         Public Sub Insert(v&)
+            Call Insert(CDbl(v))
+        End Sub
+
+        Public Sub Insert(v#)
             Dim idx As Integer = 0
 
             For Each i As X In sample
@@ -110,9 +120,7 @@ Namespace Quantile
                 delta = CInt(Fix(Math.Floor(2 * epsilon * count)))
             End If
 
-            Dim newItem As New X(v, 1, delta)
-
-            sample.Insert(idx, newItem)
+            Call sample.Insert(idx, New X(v, 1, delta))
 
             If sample.Count > compact_size Then
                 ' printList()
@@ -144,7 +152,7 @@ Namespace Quantile
             Next
         End Sub
 
-        Public Function Query&(quantile#)
+        Public Function Query(quantile#) As Double
             Dim rankMin As Integer = 0
             Dim desired As Integer = CInt(Fix(quantile * count))
 

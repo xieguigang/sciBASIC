@@ -549,7 +549,13 @@ Namespace Emit.Delegates
             Dim propertyInfo = GetPropertyInfo(source, propertyName)
             If propertyInfo.GetMethod Is Nothing Then
                 Return Nothing
+            Else
+                Return source.PropertyGet(propertyInfo)
             End If
+        End Function
+
+        <Extension>
+        Public Function PropertyGet(source As Type, [propertyInfo] As PropertyInfo) As Func(Of Object, Object)
             Dim sourceObjectParam = Expression.Parameter(GetType(Object))
             Dim returnExpression As Expression = Expression.[Call](Expression.Convert(sourceObjectParam, source), propertyInfo.GetMethod)
             If Not propertyInfo.PropertyType.IsClass Then

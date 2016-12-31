@@ -68,7 +68,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon\Terminal.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -209,13 +210,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arithmetic.Expression\FuncParser.vb" />
-    <Compile Include="Arithmetic.Expression\Func.vb" />
-    <Compile Include="Arithmetic.Expression\FuncCaller.vb" />
-    <Compile Include="Arithmetic.Expression\MetaExpression.vb" />
-    <Compile Include="Arithmetic.Expression\ExpressionParser.vb" />
-    <Compile Include="Arithmetic.Expression\SimpleParser.vb" />
-    <Compile Include="Arithmetic.Expression\Expression.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\Func.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\FuncCaller.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\MetaExpression.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\ExpressionParser.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\SimpleParser.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\Expression.vb" />
     <Compile Include="LinearAlgebra\Helpers\MatrixMathArithmetic.vb" />
     <Compile Include="LinearAlgebra\Helpers\Constants.vb" />
     <Compile Include="LinearAlgebra\Helpers\Function.vb" />
@@ -248,22 +249,22 @@
     <Compile Include="Distributions\Gamma.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Spline\B_Spline.vb" />
-    <Compile Include="Helpers\MetaExpression.vb" />
-    <Compile Include="Helpers\MemoryCollection.vb" />
-    <Compile Include="Helpers\Logical.vb" />
-    <Compile Include="Helpers\Variable.vb" />
-    <Compile Include="Arithmetic.Expression\TokenIcer.vb" />
-    <Compile Include="Logical\LogicalEvaluate.vb" />
-    <Compile Include="Logical\FuzzyLogic\FuzzyEngine.vb" />
-    <Compile Include="Logical\FuzzyLogic\FuzzyRule.vb" />
-    <Compile Include="Logical\FuzzyLogic\FuzzyRuleCollection.vb" />
-    <Compile Include="Logical\FuzzyLogic\LinguisticVariable.vb" />
-    <Compile Include="Logical\FuzzyLogic\LinguisticVariableCollection.vb" />
-    <Compile Include="Logical\FuzzyLogic\MembershipFunction.vb" />
-    <Compile Include="Logical\FuzzyLogic\MembershipFunctionCollection.vb" />
-    <Compile Include="Logical\FuzzyLogic\Models\LDM.vb" />
-    <Compile Include="Logical\FuzzyLogic\Models\ModelAPI.vb" />
-    <Compile Include="Logical\TokenIcer.vb" />
+    <Compile Include="Scripting\Helpers\MetaExpression.vb" />
+    <Compile Include="Scripting\Helpers\MemoryCollection.vb" />
+    <Compile Include="Scripting\Helpers\Logical.vb" />
+    <Compile Include="Scripting\Helpers\Variable.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\TokenIcer.vb" />
+    <Compile Include="Scripting\Logical\LogicalEvaluate.vb" />
+    <Compile Include="FuzzyLogic\FuzzyEngine.vb" />
+    <Compile Include="FuzzyLogic\FuzzyRule.vb" />
+    <Compile Include="FuzzyLogic\FuzzyRuleCollection.vb" />
+    <Compile Include="FuzzyLogic\LinguisticVariable.vb" />
+    <Compile Include="FuzzyLogic\LinguisticVariableCollection.vb" />
+    <Compile Include="FuzzyLogic\MembershipFunction.vb" />
+    <Compile Include="FuzzyLogic\MembershipFunctionCollection.vb" />
+    <Compile Include="FuzzyLogic\Models\LDM.vb" />
+    <Compile Include="FuzzyLogic\Models\ModelAPI.vb" />
+    <Compile Include="Scripting\Logical\TokenIcer.vb" />
     <Compile Include="LP\Data\Equation.vb" />
     <Compile Include="LP\Data\Solver.vb" />
     <Compile Include="LP\Data\ObjectiveFunction.vb" />
@@ -283,12 +284,12 @@
     <Compile Include="Quantile\X.vb" />
     <Compile Include="Quantile\Quantile.vb" />
     <Compile Include="Quantile\QuantileEstimationGK.vb" />
-    <Compile Include="ScriptEngine.vb" />
-    <Compile Include="Helpers\Arithmetic.vb" />
-    <Compile Include="Arithmetic.Expression\SimpleExpression.vb" />
-    <Compile Include="Helpers\Constants.vb" />
-    <Compile Include="Helpers\Function.vb" />
-    <Compile Include="Arithmetic.Expression\UnitExpression.vb" />
+    <Compile Include="Scripting\ScriptEngine.vb" />
+    <Compile Include="Scripting\Helpers\Arithmetic.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\SimpleExpression.vb" />
+    <Compile Include="Scripting\Helpers\Constants.vb" />
+    <Compile Include="Scripting\Helpers\Function.vb" />
+    <Compile Include="Scripting\Arithmetic.Expression\UnitExpression.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -318,7 +319,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Expression_Evaluate.sequencediagram" />
-    <None Include="Logical\FuzzyLogic\README.md" />
+    <None Include="FuzzyLogic\README.md" />
     <None Include="LP\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -333,7 +334,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LinearAlgebra\RSyntax\README.txt" />
-    <Content Include="Icon\Terminal.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

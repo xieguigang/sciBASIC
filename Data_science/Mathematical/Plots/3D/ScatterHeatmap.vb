@@ -50,17 +50,62 @@ Namespace Plot3D
                 dev:=dev)
         End Function
 
+        ''' <summary>
+        ''' DEBUG模式之下会将网格给绘制出来，这个在Release模式之下是不会出现的。
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <param name="xrange"></param>
+        ''' <param name="yrange"></param>
+        ''' <param name="xn%"></param>
+        ''' <param name="yn%"></param>
+        ''' <param name="legendTitle$"></param>
+        ''' <param name="mapName$"></param>
+        ''' <param name="mapLevels%"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="matrix"></param>
+        ''' <param name="axisFont$"></param>
+        ''' <param name="legendFont"></param>
+        ''' <param name="showLegend"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Plot(data As (sf As Surface, c As Double())(),
-                             camera As Camera,
+        Public Function GetPlotFunction(f As Func(Of Double, Double, (Z#, color#)),
+                                        xrange As DoubleRange,
+                                        yrange As DoubleRange,
+                                        Optional xn% = 100,
+                                        Optional yn% = 100,
+                                        Optional legendTitle$ = "3D scatter heatmap",
+                                        Optional mapName$ = "Spectral:c10",
+                                        Optional mapLevels% = 25,
+                                        Optional bg$ = "white",
+                                        Optional parallel As Boolean = False,
+                                        Optional matrix As List(Of EntityObject) = Nothing,
+                                        Optional axisFont$ = CSSFont.Win10Normal,
+                                        Optional legendFont As Font = Nothing,
+                                        Optional showLegend As Boolean = True) As Device.IGraphics
+            Dim data As (sf As Surface, c As Double())() =
+             f.Surface(
+             xrange, yrange,
+             xrange.Length / xn,
+             yrange.Length / yn,
+             parallel, matrix).ToArray
+
+            Return data.GetPlotFunction(
+                legendTitle,
+                mapName, mapLevels,
+                bg,
+                axisFont, legendFont, showLegend)
+        End Function
+
+        <Extension>
+        Public Function GetPlotFunction(data As (sf As Surface, c As Double())(),
                              Optional legendTitle$ = "3D scatter heatmap",
                              Optional mapName$ = "Spectral:c10",
                              Optional mapLevels% = 25,
                              Optional bg$ = "white",
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
-                             Optional showLegend As Boolean = True,
-                             Optional dev As FormDevice = Nothing) As Bitmap
+                             Optional showLegend As Boolean = True) As Device.IGraphics
 
             Dim averages As Double() = data _
                 .ToArray(Function(c) c.c.Average)
@@ -85,13 +130,38 @@ Namespace Plot3D
                 .showLegend = showLegend
             }
 
+            Return Sub(g, camera)
+                       Call g.Clear(bg.ToColor)
+                       Call internal.Plot(g, camera)
+                   End Sub
+        End Function
+
+        <Extension>
+        Public Function Plot(data As (sf As Surface, c As Double())(),
+                             camera As Camera,
+                             Optional legendTitle$ = "3D scatter heatmap",
+                             Optional mapName$ = "Spectral:c10",
+                             Optional mapLevels% = 25,
+                             Optional bg$ = "white",
+                             Optional axisFont$ = CSSFont.Win10Normal,
+                             Optional legendFont As Font = Nothing,
+                             Optional showLegend As Boolean = True,
+                             Optional dev As FormDevice = Nothing) As Bitmap
+
+            Dim modelPlot As Device.IGraphics =
+                data _
+                .GetPlotFunction(legendFont:=legendFont,
+                                 axisFont:=axisFont,
+                                 bg:=bg,
+                                 legendTitle:=legendTitle,
+                                 mapLevels:=mapLevels,
+                                 mapName:=mapName,
+                                 showLegend:=showLegend)
+
             If Not dev Is Nothing Then
                 dev.canvas = New Canvas With {
                     .Dock = DockStyle.Fill,
-                    .Plot = Sub(g, cm)
-                                Call g.Clear(bg.ToColor)
-                                Call internal.Plot(g, cm)
-                            End Sub
+                    .Plot = modelPlot
                 }
                 Call dev.ShowDialog()
             End If
@@ -100,7 +170,7 @@ Namespace Plot3D
                 camera.screen, New Size,
                 bg$,
                 Sub(ByRef g, region)
-                    Call internal.Plot(g, camera)
+                    Call modelPlot(g, camera)
                 End Sub)
         End Function
 

@@ -7,6 +7,17 @@ The edge between the two nodes in the network.(节点与节点之间的相互关
 
 ### Methods
 
+#### #ctor
+```csharp
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.#ctor(Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
+```
+Copy value
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|clone|-|
+
+
 #### GetConnectedNode
 ```csharp
 Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetConnectedNode(System.String)
@@ -20,7 +31,7 @@ Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetConnected
 
 #### GetNullDirectedGuid
 ```csharp
-Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetNullDirectedGuid
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetNullDirectedGuid(System.Boolean)
 ```
 返回没有方向性的统一标识符
 

@@ -18,30 +18,6 @@ Microsoft.VisualBasic.Parallel.ParallelLoading.DynamicsVBCTask(Microsoft.VisualB
 |LoadEntry|-|
 
 
-#### GetReferences
-```csharp
-Microsoft.VisualBasic.Parallel.ParallelLoading.GetReferences(System.String,System.Int32,Microsoft.VisualBasic.Language.List{System.String}@)
-```
-
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|url|+特殊符号存在于这个字符串之中的话，函数会出错|
-|i|-|
-
-
-#### IsSystemAssembly
-```csharp
-Microsoft.VisualBasic.Parallel.ParallelLoading.IsSystemAssembly(System.String,System.Boolean)
-```
-放在C:\WINDOWS\Microsoft.Net\这个文件夹下面的所有的引用都是本地编译的，哈希值已经不对了
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|url|-|
-|strict|-|
-
-
 #### Load``1
 ```csharp
 Microsoft.VisualBasic.Parallel.ParallelLoading.Load``1(System.String,System.String)

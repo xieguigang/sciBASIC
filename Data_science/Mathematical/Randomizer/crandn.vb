@@ -216,4 +216,37 @@ Public Module crandn
 
         Return goal
     End Function
+
+    ''' <summary>
+    ''' 混合同余法生成[0，1]均匀分布随机矩阵
+    ''' 与随机向量函数同名重载
+    ''' </summary>
+    ''' <param name="m__1">矩阵维数</param>
+    ''' <param name="n">矩阵维数</param>
+    ''' <param name="seed">种子</param>
+    ''' <returns></returns>
+    Public Function rand(m__1 As Integer, n As Integer, seed As Integer) As MAT
+
+        Const M__2 As Long = 2147483648UI
+        Const namda As Long = 314159269
+        Const C As Long = 453806245
+
+        Dim goal As New MAT(m__1, n)
+
+        Dim x0 As Long = seed
+        Dim x1 As Long
+
+        For i As Integer = 0 To m__1 - 1
+            For j As Integer = 0 To n - 1
+                x1 = (x0 * namda + C) Mod M__2
+                '得到余数
+
+                goal(i, j) = x1 * 1.0 / M__2
+
+
+                x0 = x1
+            Next
+        Next
+        Return goal
+    End Function
 End Module

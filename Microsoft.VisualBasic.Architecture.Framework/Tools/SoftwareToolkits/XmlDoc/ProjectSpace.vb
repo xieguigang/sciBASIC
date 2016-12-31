@@ -54,7 +54,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
         Public Function GetProject(name As String) As Project
             For Each p As Project In Me.projects
-                If p.Name.Equals(name) Then
+                If p.Name.Equals(name, StringComparison.OrdinalIgnoreCase) Then
                     Return p
                 End If
             Next

@@ -61,7 +61,7 @@ Namespace Matrix
     ''' Solve a linear system A x = b and compute the residual norm, ||b - A x||.
     ''' 
     ''' ```csharp
-    ''' double[][] vals = {{1.,2.,3},{4.,5.,6.},{7.,8.,10.}};
+    ''' double[][] vals;
     ''' GeneralMatrix A = new GeneralMatrix(vals);
     ''' GeneralMatrix b = GeneralMatrix.Random(3,1);
     ''' GeneralMatrix x = A.Solve(b);
