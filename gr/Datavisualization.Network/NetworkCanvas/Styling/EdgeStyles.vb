@@ -1,0 +1,3 @@
+﻿Module EdgeStyles
+
+End Module

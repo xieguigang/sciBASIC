@@ -220,6 +220,46 @@ Namespace ComponentModel.DataSourceModel
             End Set
         End Property
 
+        ''' <summary>
+        ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
+        ''' key.
+        ''' </summary>
+        ''' <param name="name$">The key to locate in the System.Collections.Generic.Dictionary`2.</param>
+        ''' <returns>
+        ''' true if the System.Collections.Generic.Dictionary`2 contains an element with
+        ''' the specified key; otherwise, false.
+        ''' </returns>
+        Public Function HasProperty(name$) As Boolean
+            If _propHash Is Nothing Then
+                Return False
+            Else
+                Return _propHash.ContainsKey(name)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 枚举这个动态字典类型之中的所有的键名
+        ''' </summary>
+        ''' <param name="joinProperties">是否包括属性名称</param>
+        ''' <returns></returns>
+        Public Function EnumerateKeys(Optional joinProperties As Boolean = False) As String()
+            Dim out As New List(Of String)
+
+            If joinProperties Then
+                out += MyClass.GetType _
+                    .GetProperties(PublicProperty) _
+                    .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty) _
+                    .Select(Function(p) p.Name) _
+                    .ToArray
+            End If
+
+            If Not _propHash Is Nothing Then
+                out += _propHash.Keys
+            End If
+
+            Return out.Distinct.ToArray
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{Properties.Count} Property(s)."
         End Function

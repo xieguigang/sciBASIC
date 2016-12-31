@@ -47,4 +47,9 @@ Namespace ComponentModel
             End If
         End Function
     End Structure
+
+    Public Structure Map(Of T1, V)
+        Dim key As T1
+        Dim Maps As V
+    End Structure
 End Namespace

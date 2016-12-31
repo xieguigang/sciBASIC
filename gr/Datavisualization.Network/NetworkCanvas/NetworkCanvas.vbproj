@@ -185,6 +185,9 @@
     <Compile Include="IGraphicsEngine.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="InputDevice.vb" />
+    <Compile Include="Styling\NodeStyles.vb" />
+    <Compile Include="Styling\EdgeStyles.vb" />
+    <Compile Include="Styling\StyleMapper.vb" />
     <Compile Include="SVG.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
