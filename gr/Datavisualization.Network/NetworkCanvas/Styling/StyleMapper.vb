@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
 
 Public Module StyleMapper
 
@@ -26,7 +29,25 @@ Public Module StyleMapper
     End Function
 
     <Extension>
-    Public Function NumericMapping(Of T As INetComponent)(source As IEnumerable(Of T), key$, range As DoubleRange) As Map(Of T, Double)
+    Public Function NumericMapping(Of T As INetComponent)(source As IEnumerable(Of T), key$, range As DoubleRange) As Map(Of T, Double)()
+        Dim properties = GetProperty(Of T)()
+        Dim array As T() = source.ToArray
+        Dim flag As T = array(Scan0)
+        Dim [get] As Func(Of T, Double)
 
+        If flag.HasProperty(key) Then
+            [get] = Function(x) x(key).ParseNumeric
+        ElseIf properties.ContainsKey(key) Then
+            Dim getValue = properties(key)
+            [get] = Function(x) CType(getValue(x), Double)
+        Else
+            [get] = Function(null) range.Min
+        End If
+
+        Dim out As New List(Of Map(Of T, Double))
+
+
+
+        Return out
     End Function
 End Module
