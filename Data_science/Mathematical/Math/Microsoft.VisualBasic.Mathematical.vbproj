@@ -211,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HashMaps\JenkinsHash.vb" />
+    <Compile Include="Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\Func.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncCaller.vb" />
