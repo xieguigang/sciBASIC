@@ -1,3 +1,6 @@
-﻿Module NodeStyles
+﻿Namespace Styling
 
-End Module
+    Public Module NodeStyles
+
+    End Module
+End Namespace

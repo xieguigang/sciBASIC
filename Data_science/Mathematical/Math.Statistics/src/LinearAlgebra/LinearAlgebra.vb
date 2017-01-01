@@ -13,9 +13,9 @@ Namespace LinearAlgebra
 		Private Sub New()
 		End Sub
 		Public Shared Function addition(ByVal A As Double()(), ByVal B As Double ()()) As Double()()
-			'int row1 = A.
-			Return New Double(){}
-		End Function
+            'int row1 = A.
+            Return New Double()() {}
+        End Function
 	End Class
 
 End Namespace

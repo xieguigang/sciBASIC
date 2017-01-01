@@ -486,9 +486,10 @@ Namespace SpecialFunctions
 			If lq > 33.0 Then
 				If x<0 Then
 					lp = Math.Floor(lq)
-					If lp=lq Then 'gammaoverflow Return Double.NaN
-					lz = lq-lp
-					If lz>0.5 Then
+                    If lp = lq Then Return Double.NaN 'gammaoverflow 
+                    lz = lq - lp
+                    End If
+                    If lz>0.5 Then
 						lp+=1
 						lz = lq-lp
 					End If
@@ -507,14 +508,14 @@ Namespace SpecialFunctions
 				lz *= x
 			Loop
 			Do While x<0.0
-				If x=0.0 Then 'gamma singular. Return Double.NaN
-				If x>-0.000000001 Then Return lz/((1.0 + 0.57721566490153287*x)*x)
+                If x = 0.0 Then Return Double.NaN 'gamma singular. 
+                If x>-0.000000001 Then Return lz/((1.0 + 0.57721566490153287*x)*x)
 				lz /=x
 				x+=1.0
 			Loop
 			Do While x<2.0
-				If x=0 Then 'gamma singular Return Double.NaN
-				If x<0.000000001 Then Return lz / ((1.0 + 0.57721566490153287 * x) * x)
+                If x = 0 Then Return Double.NaN 'gamma singular 
+                If x<0.000000001 Then Return lz / ((1.0 + 0.57721566490153287 * x) * x)
 				lz/=x
 				x+=1.0
 			Loop

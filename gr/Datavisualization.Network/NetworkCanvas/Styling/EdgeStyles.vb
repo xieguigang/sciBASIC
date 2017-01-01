@@ -1,3 +1,6 @@
-﻿Module EdgeStyles
+﻿Namespace Styling
 
-End Module
+    Public Module EdgeStyles
+
+    End Module
+End Namespace

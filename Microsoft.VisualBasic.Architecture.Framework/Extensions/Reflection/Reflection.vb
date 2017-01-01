@@ -112,6 +112,16 @@ Public Module EmitReflection
     End Function
 #End Region
 
+    <Extension>
+    Public Function GetDouble(field As FieldInfo, Optional obj As Object = Nothing) As Double
+        Return CType(field.GetValue(obj), Double)
+    End Function
+
+    <Extension>
+    Public Function GetInt(field As FieldInfo, Optional obj As Object = Nothing) As Integer
+        Return CType(field.GetValue(obj), Integer)
+    End Function
+
     ''' <summary>
     '''
     ''' </summary>

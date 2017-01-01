@@ -38,6 +38,13 @@ Imports Microsoft.VisualBasic.Linq
 Public Module ListExtensions
 
     <Extension>
+    Public Sub Swap(Of T)(ByRef l As System.Collections.Generic.List(Of T), i%, j%)
+        Dim tmp = l(i)
+        l(i) = l(j)
+        l(j) = tmp
+    End Sub
+
+    <Extension>
     Public Sub ForEach(Of T)(source As IEnumerable(Of T), action As Action(Of T, Integer))
         For Each x As SeqValue(Of T) In source.SeqIterator
             Call action(x.value, x.i)

@@ -39,6 +39,10 @@ Imports Microsoft.VisualBasic.Debugging
 ''' </summary>
 Public Module VBDebugger
 
+    Public Function Fail(msg$)
+        Throw New Exception(msg)
+    End Function
+
     ''' <summary>
     ''' 当在执行大型的数据集合的时候怀疑linq里面的某一个任务进入了死循环状态，可以使用这个方法来检查是否如此
     ''' </summary>

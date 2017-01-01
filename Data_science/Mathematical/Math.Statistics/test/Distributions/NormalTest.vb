@@ -60,9 +60,9 @@ Namespace Distributions
 			Dim instance As Distributions.MethodOfMoments.Normal = Nothing
 			Dim expResult As Double = 0.0
 			Dim result As Double = instance.GetCDF(value)
-			assertEquals(expResult, result, 0.0)
-			' TODO review the generated test code and remove the default call to fail.
-			fail("The test case is a prototype.")
+            ' assertEquals(expResult, result, 0.0)
+            ' TODO review the generated test code and remove the default call to fail.
+            Fail("The test case is a prototype.")
 		End Sub
 
 		''' <summary>
@@ -75,9 +75,9 @@ Namespace Distributions
 			Dim instance As Distributions.MethodOfMoments.Normal = Nothing
 			Dim expResult As Double = 0.0
 			Dim result As Double = instance.GetPDF(value)
-			assertEquals(expResult, result, 0.0)
-			' TODO review the generated test code and remove the default call to fail.
-			fail("The test case is a prototype.")
+            ' assertEquals(expResult, result, 0.0)
+            ' TODO review the generated test code and remove the default call to fail.
+            Fail("The test case is a prototype.")
 		End Sub
 
 	End Class

@@ -188,6 +188,12 @@
     <Compile Include="Styling\NodeStyles.vb" />
     <Compile Include="Styling\EdgeStyles.vb" />
     <Compile Include="Styling\StyleMapper.vb" />
+    <Compile Include="Styling\UI\ColorMaps.Designer.vb">
+      <DependentUpon>ColorMaps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Styling\UI\ColorMaps.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SVG.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -221,6 +227,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Styling\UI\ColorMaps.resx">
+      <DependentUpon>ColorMaps.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +271,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
