@@ -335,6 +335,13 @@ Public Module VBDebugger
         End If
     End Sub
 
+    <Extension>
+    Public Sub EchoLine(s$)
+        If Not Mute Then
+            Call Console.WriteLine(s)
+        End If
+    End Sub
+
     ''' <summary>
     ''' Alias for <see cref="Console.Write"/>
     ''' </summary>

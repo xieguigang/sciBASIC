@@ -83,6 +83,10 @@ Namespace FileStream
         Dim __nodes As Dictionary(Of T_Node)
         Dim __edges As List(Of T_Edge)
 
+        Public Function HaveNode(id$) As Boolean
+            Return __nodes.ContainsKey(id)
+        End Function
+
         ''' <summary>
         ''' 移除的重复的边
         ''' </summary>

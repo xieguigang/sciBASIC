@@ -498,5 +498,9 @@ Namespace LinearAlgebra
         Public Shared Widening Operator CType(v As Double()) As Vector
             Return New Vector(v)
         End Operator
+
+        Public Overloads Shared Narrowing Operator CType(v As Vector) As Double()
+            Return v.ToArray
+        End Operator
     End Class
 End Namespace

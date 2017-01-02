@@ -1,4 +1,4 @@
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+﻿Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 ''' <summary>
 ''' https://github.com/jeffersonhwang/pagerank
@@ -15,6 +15,13 @@ Public Class PageRank
 
 #Region "Constructor"
 
+    ''' <summary>
+    ''' ``outGoingLinks(i)`` contains the indices of the pages pointed to by page i.(每一行都是指向第i行的页面的index值的集合)
+    ''' </summary>
+    ''' <param name="linkMatrix"></param>
+    ''' <param name="alpha"></param>
+    ''' <param name="convergence"></param>
+    ''' <param name="checkSteps"></param>
     Public Sub New(linkMatrix As List(Of Integer)(), Optional alpha As Double = 0.85, Optional convergence As Double = 0.0001, Optional checkSteps As Integer = 10)
         With TransposeLinkMatrix(linkMatrix)
             _incomingLinks = .incomingLinks
@@ -33,15 +40,16 @@ Public Class PageRank
 
     ''' <summary>
     ''' Convenience wrap for the link matrix transpose and the generator.
-    ''' See PageRankGenerator method for parameter descriptions
+    ''' See <see cref="PageRankGenerator"/> method for parameter descriptions
     ''' </summary>
-    Public Function ComputePageRank() As Double()
+    Public Function ComputePageRank() As Vector
         Dim final As Vector = Nothing
+
         For Each generator As Vector In PageRankGenerator(_incomingLinks, _numLinks, _leafNodes, _alpha, _convergence, _checkSteps)
             final = generator
         Next
 
-        Return final.ToArray()
+        Return final
     End Function
 
     ''' <summary>
@@ -52,7 +60,7 @@ Public Class PageRank
     ''' 3) which pages contain no links at all. 
     ''' We want to know is which pages
     ''' </summary>
-    ''' <param name="outGoingLinks">outGoingLinks[i] contains the indices of the pages pointed to by page i</param>
+    ''' <param name="outGoingLinks">``outGoingLinks(i)`` contains the indices of the pages pointed to by page i</param>
     ''' <returns>A tuple of (incomingLinks, numOutGoingLinks, leafNodes)</returns>
     Protected Function TransposeLinkMatrix(outGoingLinks As List(Of Integer)()) As (incomingLinks As List(Of Integer)(), numLinks As Vector, leafNodes As List(Of Integer))
         Dim nPages As Integer = outGoingLinks.Length

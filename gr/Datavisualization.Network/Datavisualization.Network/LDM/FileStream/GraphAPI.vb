@@ -46,6 +46,56 @@ Namespace FileStream
     Public Module GraphAPI
 
         <Extension>
+        Public Sub AddEdges(net As Network, from$, targets$())
+            If Not net.HaveNode(from) Then
+                net += New Node With {
+                    .Identifier = from
+                }
+            End If
+
+            For Each [to] As String In targets
+                If Not net.HaveNode([to]) Then
+                    net += New Node With {
+                        .Identifier = [to]
+                    }
+                End If
+
+                net += New NetworkEdge With {
+                    .FromNode = from,
+                    .ToNode = [to]
+                }
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Tabular(g As NetworkGraph) As Network
+            Dim nodes As New List(Of Node)
+            Dim edges As New List(Of NetworkEdge)
+
+            For Each n In g.nodes
+                nodes += New Node With {
+                    .Identifier = n.ID
+                }
+            Next
+
+            For Each l As Edge In g.edges
+                edges += New NetworkEdge With {
+                    .FromNode = l.Source.ID,
+                    .ToNode = l.Target.ID
+                }
+            Next
+
+            Return New Network With {
+                .Edges = edges,
+                .Nodes = nodes
+            }
+        End Function
+
+        <Extension>
         Public Function CreateGraph(net As Network) As NetworkGraph
             Return CreateGraph(Of Node, NetworkEdge)(net)
         End Function
