@@ -59,6 +59,16 @@ PM> Install-Package sciBASIC
 PM> Install-Package sciBASIC -Pre
 ```
 
+## Microsoft VisualBasic Trinity Natural Language Processor
+
+###### TextRank
+
+PageRank analysis on the text paragraph for find out the keyword, here is the pagerank result of the this example paragraph:
+
+> "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
+
+![](./Data/TextRank/visualize.png)
+
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
