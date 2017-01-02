@@ -27,17 +27,32 @@ Public Class GraphMatrix
             Call indices(edge.FromNode) _
                 .Add(index(edge.ToNode))
         Next
+
+        For Each k In indices.Keys.ToArray
+            indices(k) = indices(k).Distinct.ToList
+        Next
     End Sub
 
     Sub New(g As NetworkGraph)
         Call Me.New(g.Tabular)
     End Sub
 
-    Public Function TranslateVector(v#()) As Dictionary(Of String, Double)
-        Return nodes _
-            .SeqIterator _
-            .ToDictionary(Function(n) (+n).Identifier,
-                          Function(i) v(i))
+    Public Function TranslateVector(v#(), Optional reorder As Boolean = False) As Dictionary(Of String, Double)
+        If Not reorder Then
+            Return nodes _
+                .SeqIterator _
+                .ToDictionary(Function(n) (+n).Identifier,
+                              Function(i) v(i))
+        Else
+            Dim orders As SeqValue(Of Double)() = v _
+                .SeqIterator _
+                .OrderByDescending(Function(x) x.value) _
+                .ToArray
+
+            Return orders.ToDictionary(
+                Function(i) nodes(i).Identifier,
+                Function(value) +value)
+        End If
     End Function
 
     Public Overrides Function ToString() As String

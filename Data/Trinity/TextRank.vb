@@ -20,6 +20,7 @@ Imports Microsoft.VisualBasic.Text
 Public Module TextRank
 
     ReadOnly sdeli As Char() = {"."c, "?"c, "!"c, ";"c}
+    ReadOnly allSymbols As Char() = ASCII.Symbols.Join({" "c, ASCII.TAB})
 
     <Extension>
     Public Function Sentences(text$) As String()
@@ -28,17 +29,29 @@ Public Module TextRank
 
     <Extension>
     Public Function Words(text$) As String()
-        Return text.Split(ASCII.Symbols)
+        Return text _
+            .Split(allSymbols) _
+            .Where(Function(s) Not String.IsNullOrEmpty(s)) _
+            .ToArray
     End Function
 
     <Extension>
     Public Function TextGraph(sentences As IEnumerable(Of String)) As GraphMatrix
         Dim net As New Network
+        Dim source As String() = sentences _
+            .Select(AddressOf Trim) _
+            .Where(Function(s) Not String.IsNullOrEmpty(s)) _
+            .ToArray
 
-        For Each text As String In sentences
+        For Each text As String In source
 
             ' 假设每一句话之中的单词之间的顺序就是网络连接的方向
-            For Each t In text.Words.SlideWindows(2)
+            Dim words = text _
+                .ToLower _
+                .Words _
+                .SlideWindows(2).ToArray
+
+            For Each t In words
                 Call net.AddEdges(t.First, {t.Last})
             Next
         Next
