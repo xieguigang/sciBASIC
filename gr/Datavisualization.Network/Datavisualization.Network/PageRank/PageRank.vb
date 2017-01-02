@@ -4,12 +4,13 @@
 ''' https://github.com/jeffersonhwang/pagerank
 ''' </summary>
 Public Class PageRank
+
 #Region "Private Fields"
 
-    Private _incomingLinks As List(Of Integer)(), _leafNodes As List(Of Integer)
-    Private _numLinks As Vector
-    Private _alpha As Double, _convergence As Double
-    Private _checkSteps As Integer
+    Dim _incomingLinks As List(Of Integer)(), _leafNodes As List(Of Integer)
+    Dim _numLinks As Vector
+    Dim _alpha As Double, _convergence As Double
+    Dim _checkSteps As Integer
 
 #End Region
 
@@ -68,17 +69,19 @@ Public Class PageRank
         ' incomingLinks[i] will contain the indices jj of the pages
         ' linking to page i
         Dim incomingLinks As New List(Of List(Of Integer))(nPages)
+
         For i As Integer = 0 To nPages - 1
             incomingLinks.Add(New List(Of Integer)())
         Next
 
         ' the number of links in each page
         Dim numLinks As Vector = New Vector(nPages)
-
         ' the indices of the leaf nodes
         Dim leafNodes As New List(Of Integer)
+
         For i As Integer = 0 To nPages - 1
             Dim values As List(Of Integer) = outGoingLinks(i)
+
             If values.Count = 0 Then
                 leafNodes.Add(i)
             Else
@@ -119,9 +122,7 @@ Public Class PageRank
 
             For i As Integer = 0 To checkSteps - 1
                 ' swap arrays
-                Dim temp As Vector = iOld
-                iOld = iNew
-                iNew = temp
+                Call iOld.SwapWith(iNew)
 
                 ' an element in the 1 x I vector. 
                 ' all elements are identical.

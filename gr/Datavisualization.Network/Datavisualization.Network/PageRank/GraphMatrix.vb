@@ -14,14 +14,18 @@ Public Class GraphMatrix
         nodes = net.Nodes
         edges = net.Edges
 
-        Dim index As New IndexOf(Of String)(nodes.Select(Function(x) x.Identifier))
+        Dim index As New IndexOf(Of String)(
+            nodes.Select(Function(x) x.Identifier))
 
         For Each node As FileStream.Node In nodes
-            indices.Add(node.Identifier, New List(Of Integer))
+            Call indices.Add(
+                node.Identifier,
+                New List(Of Integer))
         Next
 
         For Each edge As NetworkEdge In edges
-            indices(edge.FromNode).Add(index(edge.ToNode))
+            Call indices(edge.FromNode) _
+                .Add(index(edge.ToNode))
         Next
     End Sub
 
