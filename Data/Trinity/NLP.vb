@@ -10,6 +10,6 @@
 ''' + 自动文摘系统
 ''' 
 ''' </summary>
-Public Class Class1
+Public Class NLP
 
 End Class
