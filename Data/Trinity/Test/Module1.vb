@@ -16,14 +16,22 @@ The original research paper proposing this algorithm Is
 available here"
 
 
-        s = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
+        s$ = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
 
         Dim ps = TextRank.Sentences(s.TrimNewLine)
-        Dim g = ps.TextGraph
+        Dim g As GraphMatrix = ps.TextGraph
         Dim pr As New PageRank(g)
         Dim result = g.TranslateVector(pr.ComputePageRank, True)
 
         Call result.GetJson(True).EchoLine
+
+        Dim net = g.GetNetwork
+
+        For Each node In net.Nodes
+            node.Properties.Add("PageRank", result(node.Identifier))
+        Next
+
+        Call net.Save("G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\")
 
         Pause()
     End Sub

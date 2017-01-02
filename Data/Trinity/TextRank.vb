@@ -56,6 +56,6 @@ Public Module TextRank
             Next
         Next
 
-        Return New GraphMatrix(net)
+        Return New GraphMatrix(net, skipCount:=False)
     End Function
 End Module

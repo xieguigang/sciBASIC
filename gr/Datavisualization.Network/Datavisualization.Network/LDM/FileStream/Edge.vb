@@ -100,6 +100,10 @@ Namespace FileStream
             End If
         End Function
 
+        ''' <summary>
+        ''' 带有方向的互作关系字符串
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetDirectedGuid() As String
             Return $"{FromNode} {InteractionType} {ToNode}"
         End Function
