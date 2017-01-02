@@ -30,3 +30,7 @@ Call result.GetJson(True)
     "the": 0.033788093578283718
 }
 ```
+
+###### Network Visualize
+
+![](./visualize.png)
