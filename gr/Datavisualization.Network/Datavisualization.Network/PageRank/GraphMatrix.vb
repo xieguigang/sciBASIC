@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' 可以用来构建<see cref="PageRank"/>计算所需要的index矩阵
+''' </summary>
 Public Class GraphMatrix
 
     Dim indices As New Dictionary(Of String, List(Of Integer))

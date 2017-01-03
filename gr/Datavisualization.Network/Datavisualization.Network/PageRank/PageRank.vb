@@ -17,13 +17,14 @@ Public Class PageRank
 #Region "Constructor"
 
     ''' <summary>
-    ''' ``outGoingLinks(i)`` contains the indices of the pages pointed to by page i.(每一行都是指向第i行的页面的index值的集合)
+    ''' ``outGoingLinks(i)`` contains the indices of the pages pointed to by page i.
+    ''' (每一行都是指向第i行的页面的index值的集合)
     ''' </summary>
-    ''' <param name="linkMatrix"></param>
+    ''' <param name="linkMatrix"><see cref="GraphMatrix"/></param>
     ''' <param name="alpha"></param>
     ''' <param name="convergence"></param>
     ''' <param name="checkSteps"></param>
-    Public Sub New(linkMatrix As List(Of Integer)(), Optional alpha As Double = 0.85, Optional convergence As Double = 0.0001, Optional checkSteps As Integer = 10)
+    Public Sub New(linkMatrix As List(Of Integer)(), Optional alpha# = 0.85, Optional convergence# = 0.0001, Optional checkSteps% = 10)
         With TransposeLinkMatrix(linkMatrix)
             _incomingLinks = .incomingLinks
             _numLinks = .numLinks
@@ -46,7 +47,14 @@ Public Class PageRank
     Public Function ComputePageRank() As Vector
         Dim final As Vector = Nothing
 
-        For Each generator As Vector In PageRankGenerator(_incomingLinks, _numLinks, _leafNodes, _alpha, _convergence, _checkSteps)
+        For Each generator As Vector In PageRankGenerator(
+            _incomingLinks,
+            _numLinks,
+            _leafNodes,
+            _alpha,
+            _convergence,
+            _checkSteps)
+
             final = generator
         Next
 
@@ -56,9 +64,11 @@ Public Class PageRank
     ''' <summary>
     ''' Transposes the link matrix which contains the links from each page. 
     ''' Returns a Tuple of:  
-    ''' 1) pages pointing to a given page, 
-    ''' 2) how many links each page contains, and
-    ''' 3) which pages contain no links at all. 
+    ''' 
+    ''' + 1) pages pointing to a given page, 
+    ''' + 2) how many links each page contains, and
+    ''' + 3) which pages contain no links at all. 
+    ''' 
     ''' We want to know is which pages
     ''' </summary>
     ''' <param name="outGoingLinks">``outGoingLinks(i)`` contains the indices of the pages pointed to by page i</param>
@@ -107,7 +117,7 @@ Public Class PageRank
     ''' <param name="alpha">a value between 0 and 1. Determines the relative importance of "stochastic" links.</param>
     ''' <param name="convergence">a relative convergence criterion. Smaller means better, but more expensive.</param>
     ''' <param name="checkSteps">check for convergence after so many steps</param>
-    Protected Iterator Function PageRankGenerator(at As List(Of Integer)(), numLinks As Vector, leafNodes As List(Of Integer), alpha As Double, convergence As Double, checkSteps As Integer) As IEnumerable(Of Vector)
+    Protected Iterator Function PageRankGenerator(at As List(Of Integer)(), numLinks As Vector, leafNodes As List(Of Integer), alpha#, convergence#, checkSteps%) As IEnumerable(Of Vector)
         Dim N As Integer = at.Length
         Dim M As Integer = leafNodes.Count
 
@@ -132,7 +142,7 @@ Public Class PageRank
                 ' all elements are identical.
                 Dim oneAv As Double = 0.0
                 If M > 0 Then
-                    oneAv = alpha * Take(iOld, leafNodes).Sum / N
+                    oneAv = alpha * iOld.Take(leafNodes).Sum / N
                 End If
 
                 ' the elements of the H x I multiplication
@@ -142,7 +152,7 @@ Public Class PageRank
 
                     If page.Count > 0 Then
                         ' .DotProduct
-                        h = alpha * Take(iOld, page).DotProduct(1.0 / Take(numLinks, page))
+                        h = alpha * iOld.Take(page).DotProduct(1.0 / numLinks.Take(page))
                     End If
 
                     iNew(j) = h + oneAv + oneIv
@@ -155,21 +165,6 @@ Public Class PageRank
 
             done = diff.SumMagnitude < convergence
         End While
-    End Function
-
-    ''' <summary>
-    ''' Simplified (numPy) take method: 1) axis is always 0, 2) first argument is always a vector
-    ''' </summary>
-    ''' <param name="vector1">List of values</param>
-    ''' <param name="vector2">List of indices</param>
-    ''' <returns>Vector containing elements from vector 1 at the indicies in vector 2</returns>
-    Private Function Take(vector1 As Vector, vector2 As List(Of Integer)) As Vector
-        Dim result As Vector = New Vector(vector2.Count)
-        For i As Integer = 0 To vector2.Count - 1
-            result(i) = vector1(vector2(i))
-        Next
-
-        Return result
     End Function
 #End Region
 End Class
