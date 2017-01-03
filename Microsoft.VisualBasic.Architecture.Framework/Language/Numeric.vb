@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6761debaca433ed4351ad9ceb7350f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::5a72eeeb8aa4028b9b2b1b7b1d7f2296, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Numeric.vb"
 
     ' Author:
     ' 

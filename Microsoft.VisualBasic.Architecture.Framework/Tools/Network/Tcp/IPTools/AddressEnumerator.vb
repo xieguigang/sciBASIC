@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71e9bf0d658ecee17a7cef722c6399c5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPTools\AddressEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPTools\AddressEnumerator.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions

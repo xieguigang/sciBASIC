@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc4b0f9ffda3a52c60978dc475bf2c3e, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\TreeMap.vb"
+﻿#Region "Microsoft.VisualBasic::7e98971f497cf0fc00588c3fd749254c, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\TreeMap.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Public Module TreeMap
         Return f.Percentage / all.Sum(Function(x) x.Percentage)
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aafaf67594e2d6fe940605ec8869d3a8, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\LogicalEvaluate.vb"
+﻿#Region "Microsoft.VisualBasic::aafaf67594e2d6fe940605ec8869d3a8, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Logical\LogicalEvaluate.vb"
 
     ' Author:
     ' 

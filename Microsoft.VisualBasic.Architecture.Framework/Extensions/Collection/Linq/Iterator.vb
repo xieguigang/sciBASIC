@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08f26a5b965a608c37abd5250c857823, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::b4ef3fa60f545ebdaea74fdff9037268, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 

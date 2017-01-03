@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2a6554c6876e51dcc0e1b0baea2475e, ..\sciBASIC#\Data_science\Mathematical\ODE\ODESolvers\Gill.vb"
+﻿#Region "Microsoft.VisualBasic::870a3f9475cd1dd8bc184e3eabf7d2e8, ..\sciBASIC#\Data_science\Mathematical\ODE\ODESolvers\Gill.vb"
 
     ' Author:
     ' 
@@ -61,5 +61,3 @@ Partial Module ODESolver
         Next
     End Sub
 End Module
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::941422a7731b07d96805840e5f27ac87, ..\sciBASIC#\www\githubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::a059539724ad9ef2a724864844f56d5d, ..\sciBASIC#\www\githubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 

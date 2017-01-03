@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2b5de1ce4729977459c97a5383ef2cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::b2b5de1ce4729977459c97a5383ef2cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11941d4c89e0f28297ad9fcb53eda46e, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::e5941d23b816a074c25d7fb160ee746c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 

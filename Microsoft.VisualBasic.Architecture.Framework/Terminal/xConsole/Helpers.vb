@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4efecaebf76db9799527811db18dd578, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::4efecaebf76db9799527811db18dd578, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\xConsole\Helpers.vb"
 
     ' Author:
     ' 

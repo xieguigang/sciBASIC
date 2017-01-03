@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ada6d232728889a5e4930fb0d3ebd95, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::bad657e97013c08349fca44d341762b3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 

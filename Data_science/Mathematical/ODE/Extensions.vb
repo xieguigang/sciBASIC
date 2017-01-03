@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79202a1363691cfc23128ab567d12a0f, ..\sciBASIC#\Data_science\Mathematical\ODE\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2f89230cdb7fbf2fc0f684a49b97c167, ..\sciBASIC#\Data_science\Mathematical\ODE\Extensions.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Module Extensions
         Return out
     End Function
 End Module
-

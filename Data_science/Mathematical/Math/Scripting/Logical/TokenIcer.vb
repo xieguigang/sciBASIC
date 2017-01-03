@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51d0f93646660706d8f4f44ae2d42a08, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::51d0f93646660706d8f4f44ae2d42a08, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Logical\TokenIcer.vb"
 
     ' Author:
     ' 
