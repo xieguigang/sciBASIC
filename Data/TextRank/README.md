@@ -33,4 +33,11 @@ Call result.GetJson(True)
 
 ###### Network Visualize
 
+PageRank analysis was applied on the this example text paragraph for finding out the keyword:
+
+> "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
+
+From this example paragraph that we can known that almost all of the words are point to the word **pagerank**, so that word **pagerank** probably is the keyword of this paragraph, and its network degree is also high. From the network analysis we can find out that the word **algorithm** didn't have the enough link that point to it, so that its network degree is low, but the word **pagerank** point to it, so that it also have the high PageRank value result, almost the same as word **pagerank** it does.  
+
 ![](./visualize.png)
+> Network visualize of the example text paragraph, the node size is mapping by the word's PageRank result value, and the label font size is mapping by the word's network degree value.
