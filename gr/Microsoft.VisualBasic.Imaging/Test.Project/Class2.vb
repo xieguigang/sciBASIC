@@ -45,11 +45,11 @@ Public Class CubeTest : Inherits GDIDevice
 
     End Sub
 
-    Protected Overrides Sub __updateGraphics(sender As Object, Gr As PaintEventArgs)
-        ' Clear the window
-        Gr.Graphics.Clear(Color.LightBlue)
+    Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
+        '' Clear the window
+        'g.Clear(Color.LightBlue)
 
-        Dim view As ModelView = cubeModel.Rotate(m_angle, ClientSize, Aixs.All)
-        Call view.UpdateGraphics(Gr.Graphics)
+        'Dim view As ModelView = cubeModel.Rotate(m_angle, ClientSize, Aixs.All)
+        'Call view.UpdateGraphics(g)
     End Sub
 End Class
