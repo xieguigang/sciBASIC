@@ -55,4 +55,15 @@ Microsoft.VisualBasic.Data.visualize.Network.FileStream.GraphAPI.RemovesByDegree
 |quantile#|-|
 
 
+#### Tabular
+```csharp
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.GraphAPI.Tabular(Microsoft.VisualBasic.Data.visualize.Network.Graph.NetworkGraph)
+```
+将@``T:Microsoft.VisualBasic.Data.visualize.Network.Graph.NetworkGraph``保存到csv文件之中
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|g|-|
+
+
 

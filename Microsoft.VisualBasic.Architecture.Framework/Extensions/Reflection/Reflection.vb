@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e6ac955a41d7e30a7d61112a7ee5abe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::e8f41233d8c5bb3adba1d11725a47994, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -111,6 +111,16 @@ Public Module EmitReflection
             TypeOf o Is Decimal)
     End Function
 #End Region
+
+    <Extension>
+    Public Function GetDouble(field As FieldInfo, Optional obj As Object = Nothing) As Double
+        Return CType(field.GetValue(obj), Double)
+    End Function
+
+    <Extension>
+    Public Function GetInt(field As FieldInfo, Optional obj As Object = Nothing) As Integer
+        Return CType(field.GetValue(obj), Integer)
+    End Function
 
     ''' <summary>
     '''

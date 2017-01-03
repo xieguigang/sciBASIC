@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e27161f326504875425f40e21fd59a17, ..\sciBASIC#\Data_science\Mathematical\Math\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::6805d27026b5a0762371e12af4c45b93, ..\sciBASIC#\Data_science\Mathematical\Math\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -318,9 +318,11 @@ Namespace Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Public Overridable Function GetElement(i As Integer, j As Integer) As Double
-            Return A(i)(j)
-        End Function
+        Default Public ReadOnly Property GetElement(i As Integer, j As Integer) As Double
+            Get
+                Return A(i)(j)
+            End Get
+        End Property
 
         ''' <summary>Get a submatrix.</summary>
         ''' <param name="i0">  Initial row index
@@ -462,7 +464,7 @@ Namespace Matrix
             Try
                 For i As Integer = i0 To i1
                     For j As Integer = j0 To j1
-                        A(i)(j) = X.GetElement(i - i0, j - j0)
+                        A(i)(j) = X(i - i0, j - j0)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -484,7 +486,7 @@ Namespace Matrix
             Try
                 For i As Integer = 0 To r.Length - 1
                     For j As Integer = 0 To c.Length - 1
-                        A(r(i))(c(j)) = X.GetElement(i, j)
+                        A(r(i))(c(j)) = X(i, j)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -508,7 +510,7 @@ Namespace Matrix
             Try
                 For i As Integer = 0 To r.Length - 1
                     For j As Integer = j0 To j1
-                        A(r(i))(j) = X.GetElement(i, j - j0)
+                        A(r(i))(j) = X(i, j - j0)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -532,7 +534,7 @@ Namespace Matrix
             Try
                 For i As Integer = i0 To i1
                     For j As Integer = 0 To c.Length - 1
-                        A(i)(c(j)) = X.GetElement(i - i0, j)
+                        A(i)(c(j)) = X(i - i0, j)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -623,6 +625,13 @@ Namespace Matrix
             Next
             Return X
         End Function
+
+        ''' <summary>Unary minus</summary>
+        ''' <returns>    -A
+        ''' </returns>
+        Public Shared Operator -(m As GeneralMatrix) As GeneralMatrix
+            Return m.UnaryMinus
+        End Operator
 
         ''' <summary>C = A + B</summary>
         ''' <param name="B">   another matrix
@@ -1003,27 +1012,6 @@ Namespace Matrix
                 t += A(i)(i)
             Next
             Return t
-        End Function
-
-        ''' <summary>Generate matrix with random elements</summary>
-        ''' <param name="m">   Number of rows.
-        ''' </param>
-        ''' <param name="n">   Number of colums.
-        ''' </param>
-        ''' <returns>     An m-by-n matrix with uniformly distributed random elements.
-        ''' </returns>
-
-        Public Shared Function Random(m As Integer, n As Integer) As GeneralMatrix
-            Dim random__1 As New System.Random()
-
-            Dim A As New GeneralMatrix(m, n)
-            Dim X As Double()() = A.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    X(i)(j) = random__1.NextDouble()
-                Next
-            Next
-            Return A
         End Function
 
         ''' <summary>Generate identity matrix</summary>

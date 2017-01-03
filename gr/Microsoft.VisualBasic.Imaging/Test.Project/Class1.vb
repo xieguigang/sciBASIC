@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13860f061e39bba1a422ecb3f85e6136, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::be1ae788050dd09ee2c6b733a57f89ce, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Class1.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Public Class Class1 : Inherits GDIDevice
         Next
     End Sub
 
-    Protected Overrides Sub __updateGraphics(sender As Object, Gr As PaintEventArgs)
+    Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
         Dim t(8) As Point3D
         Dim f(4) As Integer
         Dim v As Point3D
@@ -78,7 +78,7 @@ Public Class Class1 : Inherits GDIDevice
         Dim iMax As Integer
 
         ' Clear the window
-        Gr.Graphics.Clear(Color.LightBlue)
+        g.Clear(Color.LightBlue)
 
         ' Transform all the points and store them on the "t" array.
         For i = 0 To 7
@@ -126,7 +126,7 @@ Public Class Class1 : Inherits GDIDevice
                 New Point(CInt(t(m_faces(index, 2)).X), CInt(t(m_faces(index, 2)).Y)),
                 New Point(CInt(t(m_faces(index, 3)).X), CInt(t(m_faces(index, 3)).Y))
             }
-            Gr.Graphics.FillPolygon(m_brushes(index), points)
+            g.FillPolygon(m_brushes(index), points)
         Next
     End Sub
 

@@ -210,6 +210,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HashMaps\JenkinsHash.vb" />
+    <Compile Include="LinearAlgebra\Vector\Extensions.vb" />
+    <Compile Include="Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\Func.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncCaller.vb" />
@@ -236,7 +239,7 @@
     <Compile Include="LinearAlgebra\Helpers\MatrixArithmetic.vb" />
     <Compile Include="LinearAlgebra\Vector\VectorEqualityComparer.vb" />
     <Compile Include="LinearAlgebra\Vector\Vector.vb" />
-    <Compile Include="HashMap.vb" />
+    <Compile Include="HashMaps\HashMap.vb" />
     <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
     <Compile Include="Spline\CentripetalCatmullRomSpline.vb" />

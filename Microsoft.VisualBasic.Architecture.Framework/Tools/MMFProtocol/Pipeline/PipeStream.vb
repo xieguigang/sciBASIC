@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8bf054dd382f954882972dd83a9e63a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\MMFProtocol\Pipeline\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::a8bf054dd382f954882972dd83a9e63a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\MMFProtocol\Pipeline\PipeStream.vb"
 
     ' Author:
     ' 

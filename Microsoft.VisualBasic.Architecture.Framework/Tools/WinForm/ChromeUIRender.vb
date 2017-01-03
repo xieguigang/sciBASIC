@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eaa6a3cf9bbe39402b261b7503be3834, ..\R.Bioconductor\Bioconductor\Bioconductor\Web\Installer\ChromeUIRender.vb"
+﻿#Region "Microsoft.VisualBasic::5f884d4f1a561c41b04e0a950897904e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\WinForm\ChromeUIRender.vb"
 
     ' Author:
     ' 

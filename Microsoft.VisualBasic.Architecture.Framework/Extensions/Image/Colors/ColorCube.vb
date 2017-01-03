@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8b4532125af05fca53bd24f1167f09a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::57bbb33b74b3cf0598acf1ce3c697d9c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorCube.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Language
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
@@ -76,6 +77,7 @@ While any number of complex code solutions could be created to attempt to addres
         ''' </remarks>
         ''' 
         <ExportAPI("Brightness")>
+        <Extension>
         Public Function GetBrightness(target As Color) As Integer
             Return CInt(Math.Sqrt(0.241 * target.R ^ 2 + 0.691 * target.G ^ 2 + 0.068 * target.B ^ 2))
         End Function

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::4446baa26672e39cfe117c0b0f71df95, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\GraphAPI.vb"
+﻿#Region "Microsoft.VisualBasic::4cf9ec59bbc2bbd054e3a9535e838836, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\GraphAPI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -44,6 +44,56 @@ Namespace FileStream
     ''' Data Model Extensions
     ''' </summary>
     Public Module GraphAPI
+
+        <Extension>
+        Public Sub AddEdges(net As Network, from$, targets$())
+            If Not net.HaveNode(from) Then
+                net += New Node With {
+                    .Identifier = from
+                }
+            End If
+
+            For Each [to] As String In targets
+                If Not net.HaveNode([to]) Then
+                    net += New Node With {
+                        .Identifier = [to]
+                    }
+                End If
+
+                net += New NetworkEdge With {
+                    .FromNode = from,
+                    .ToNode = [to]
+                }
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Tabular(g As NetworkGraph) As Network
+            Dim nodes As New List(Of Node)
+            Dim edges As New List(Of NetworkEdge)
+
+            For Each n In g.nodes
+                nodes += New Node With {
+                    .Identifier = n.ID
+                }
+            Next
+
+            For Each l As Edge In g.edges
+                edges += New NetworkEdge With {
+                    .FromNode = l.Source.ID,
+                    .ToNode = l.Target.ID
+                }
+            Next
+
+            Return New Network With {
+                .Edges = edges,
+                .Nodes = nodes
+            }
+        End Function
 
         <Extension>
         Public Function CreateGraph(net As Network) As NetworkGraph

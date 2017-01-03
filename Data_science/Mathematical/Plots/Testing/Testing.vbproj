@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.Module1</StartupObject>
+    <StartupObject>Testing.ImageDataPlots</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="Module2.vb" />
+    <Compile Include="ImageDataPlots.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

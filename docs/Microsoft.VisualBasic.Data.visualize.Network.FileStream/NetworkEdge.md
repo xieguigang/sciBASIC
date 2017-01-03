@@ -29,6 +29,12 @@ Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetConnected
 |Node|-|
 
 
+#### GetDirectedGuid
+```csharp
+Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetDirectedGuid
+```
+带有方向的互作关系字符串
+
 #### GetNullDirectedGuid
 ```csharp
 Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.GetNullDirectedGuid(System.Boolean)

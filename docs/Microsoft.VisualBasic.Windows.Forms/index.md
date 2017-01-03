@@ -3,6 +3,7 @@
 
 |Type|Summary|
 |----|-------|
+|[ChromeUIRender](./ChromeUIRender.md)||
 |[Extensions](./Extensions.md)||
 |[MockForm](./MockForm.md)||
 |[MockTerminal](./MockTerminal.md)||

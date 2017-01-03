@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3167d7c9153e606ed7033186873e28d0, ..\sciBASIC#\Data_science\Mathematical\Math\Helpers\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::3167d7c9153e606ed7033186873e28d0, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Constants.vb"
 
     ' Author:
     ' 

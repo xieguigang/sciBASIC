@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69e81427a41de70e8633cd1d0adac9f0, ..\sciBASIC#\Data_science\Mathematical\ODEsViewer\config.vb"
+﻿#Region "Microsoft.VisualBasic::0b028dda780d08ac268c2cbf6d8636cf, ..\sciBASIC#\Data_science\Mathematical\ODEsViewer\config.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ NEW_CONFIG:
         Call GetJson.SaveTo(DefaultFile)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3534e3080d35ba04404117556395994a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
+﻿#Region "Microsoft.VisualBasic::e8f2faed5b4982fa106f0e8695cd54e8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8858b00ec8f8e8f922c233d96f99410, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::9831235236a11c0484c4dca3f3f2443f, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -82,6 +82,10 @@ Namespace FileStream
 
         Dim __nodes As Dictionary(Of T_Node)
         Dim __edges As List(Of T_Edge)
+
+        Public Function HaveNode(id$) As Boolean
+            Return __nodes.ContainsKey(id)
+        End Function
 
         ''' <summary>
         ''' 移除的重复的边

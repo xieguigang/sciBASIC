@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb8f6e5c5c500eddcd7eb00b3927cbcf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::f2a87a8ff6cc83f5bf647137a0f98157, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,10 @@ Imports Microsoft.VisualBasic.Debugging
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>
 Public Module VBDebugger
+
+    Public Function Fail(msg$)
+        Throw New Exception(msg)
+    End Function
 
     ''' <summary>
     ''' 当在执行大型的数据集合的时候怀疑linq里面的某一个任务进入了死循环状态，可以使用这个方法来检查是否如此
@@ -328,6 +332,13 @@ Public Module VBDebugger
     <Extension> Public Sub Echo(s As String, <CallerMemberName> Optional memberName As String = "")
         If Not Mute Then
             Call Console.Write($"[{memberName}] {s}")
+        End If
+    End Sub
+
+    <Extension>
+    Public Sub EchoLine(s$)
+        If Not Mute Then
+            Call Console.WriteLine(s)
         End If
     End Sub
 

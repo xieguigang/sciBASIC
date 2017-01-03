@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6913f3a67e83a2e24c16bb80b9f9f5ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0fae52b789d1203c64edd15bdf3f09b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -2004,68 +2004,10 @@ Public Module Extensions
         Return array
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="indexs">所要获取的目标对象的下表的集合</param>
-    ''' <param name="reversedSelect">是否为反向选择</param>
-    ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("takes")>
-    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
-                                            indexs%(),
-                                            Optional offSet% = 0,
-                                            Optional reversedSelect As Boolean = False) As T()
-#Else
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
-    ''' <param name="IndexCollection">所要获取的目标对象的下表的集合</param>
-    ''' <param name="reversedSelect">是否为反向选择</param>
-    ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T), indexs As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
-#End If
-        If reversedSelect Then
-            Return __reversedTakeSelected(source, indexs)
-        End If
-
-        Dim result As T()
-
-        If offSet = 0 Then
-            result = (From idx As Integer In indexs Select source(idx)).ToArray
-        Else
-            result = (From idx As Integer In indexs Select source(idx + offSet)).ToArray
-        End If
-        Return result
-    End Function
-
     <Extension> Public Function Takes(Of T)(source As T(), count As Integer) As T()
         Dim bufs As T() = New T(count - 1) {}
         Call Array.ConstrainedCopy(source, Scan0, bufs, Scan0, count)
         Return bufs
-    End Function
-
-    ''' <summary>
-    ''' 反选，即将所有不出现在<paramref name="indexs"></paramref>之中的元素都选取出来
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="coll"></param>
-    ''' <param name="indexs"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Private Function __reversedTakeSelected(Of T)(coll As IEnumerable(Of T), indexs As Integer()) As T()
-        Dim result As T() = (From i As Integer In coll.Sequence Where Array.IndexOf(indexs, i) = -1 Select coll(i)).ToArray
-        Return result
     End Function
 
     ''' <summary>

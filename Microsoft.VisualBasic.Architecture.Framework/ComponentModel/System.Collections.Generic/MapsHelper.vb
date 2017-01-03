@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f4deb4100b7cd06d0da557eafe041de, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::734241644b73c5962077099ba5ecdb0d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 

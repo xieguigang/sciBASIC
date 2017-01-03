@@ -7,18 +7,6 @@ Common extension methods library for convenient the programming job.
 
 ### Methods
 
-#### __reversedTakeSelected``1
-```csharp
-Microsoft.VisualBasic.Extensions.__reversedTakeSelected``1(System.Collections.Generic.IEnumerable{``0},System.Int32[])
-```
-反选，即将所有不出现在**`indexs`**之中的元素都选取出来
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|coll|-|
-|indexs|-|
-
-
 #### Add``1
 ```csharp
 Microsoft.VisualBasic.Extensions.Add``1(Microsoft.VisualBasic.Language.List{``0}@,``0[])
@@ -811,20 +799,6 @@ Microsoft.VisualBasic.Extensions.TakeRandomly``1(System.Collections.Generic.IEnu
 |--------------|-------|
 |source|-|
 |counts|当目标数目大于或者等于目标集合的数目的时候，则返回目标集合|
-
-
-#### Takes``1
-```csharp
-Microsoft.VisualBasic.Extensions.Takes``1(System.Collections.Generic.IEnumerable{``0},System.Int32[],System.Int32,System.Boolean)
-```
-
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|source|-|
-|indexs|所要获取的目标对象的下表的集合|
-|reversedSelect|是否为反向选择|
-|OffSet|当进行反选的时候，本参数将不会起作用|
 
 
 #### Time

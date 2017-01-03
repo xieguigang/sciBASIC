@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc28f2b28db481134141cf112f073cf2, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::7e5dff244fa52c0d13436387ec744486, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Vector.vb"
 
     ' Author:
     ' 
@@ -262,6 +262,16 @@ Namespace LinearAlgebra
             Return v2
         End Operator
 
+        Public Shared Operator /(x As Double, v As Vector) As Vector
+            Dim N0 As Integer = v.[Dim]         '获取变量维数
+            Dim v2 As New Vector(N0)
+
+            For j = 0 To N0 - 1
+                v2(j) = x / v(j)
+            Next
+            Return v2
+        End Operator
+
         ''' <summary>
         ''' 实数加向量
         ''' </summary>
@@ -370,7 +380,7 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 向量模的平方，||x||是向量x=(x1，x2，…，xp)的欧几里得范数
+        ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -385,6 +395,32 @@ Namespace LinearAlgebra
                 Return sum
             End Get
         End Property
+
+        ''' <summary>
+        ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property SumMagnitude As Double
+            Get
+                Return Math.Sqrt(Me.Mod)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' + http://mathworld.wolfram.com/DotProduct.html
+        ''' + http://www.mathsisfun.com/algebra/vectors-dot-product.html
+        ''' </summary>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
+        Public Function DotProduct(v2 As Vector) As Double
+            Dim sum#
+
+            For i As Integer = 0 To Me.Count - 1
+                sum += Me(i) * v2(i)
+            Next
+
+            Return sum
+        End Function
 
         ''' <summary>
         ''' 负向量 
@@ -409,6 +445,26 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Me.ToArray.GetJson
+        End Function
+
+        ''' <summary>
+        ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
+        ''' </summary>
+        ''' <param name="x1"></param>
+        ''' <param name="x2"></param>
+        ''' <returns></returns>
+        Public Shared Function SumMagnitudes(x1 As Vector, x2 As Vector) As Double
+            Return (x1 + x2).Mod
+        End Function
+
+        Public Shared Function Ones(n As Integer) As Vector
+            Dim result As New Vector(n)
+
+            For i As Integer = 0 To result.Count - 1
+                result(i) = 1.0
+            Next
+
+            Return result
         End Function
 
         Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector
@@ -441,6 +497,10 @@ Namespace LinearAlgebra
 
         Public Shared Widening Operator CType(v As Double()) As Vector
             Return New Vector(v)
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(v As Vector) As Double()
+            Return v.ToArray
         End Operator
     End Class
 End Namespace

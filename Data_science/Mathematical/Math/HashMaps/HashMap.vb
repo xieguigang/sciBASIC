@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e165e28360f0b42630a47b78cbf020b, ..\sciBASIC#\Data_science\Mathematical\Math\HashMap.vb"
+﻿#Region "Microsoft.VisualBasic::41d6e95d658e1a6e09e7d3d3940a63ef, ..\sciBASIC#\Data_science\Mathematical\Math\HashMaps\HashMap.vb"
 
     ' Author:
     ' 
@@ -543,4 +543,3 @@ Public Module HashMap
     End Function
 #End Region
 End Module
-

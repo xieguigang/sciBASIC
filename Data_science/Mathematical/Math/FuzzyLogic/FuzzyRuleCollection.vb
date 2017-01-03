@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, ..\sciBASIC#\Data_science\Mathematical\Math\Logical\FuzzyLogic\FuzzyRuleCollection.vb"
+﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\FuzzyRuleCollection.vb"
 
     ' Author:
     ' 
