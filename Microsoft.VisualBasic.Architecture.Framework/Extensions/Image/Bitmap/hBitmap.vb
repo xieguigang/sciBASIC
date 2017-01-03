@@ -43,9 +43,10 @@ Namespace Imaging
         ReadOnly __handle As BitmapData
 
         Protected Sub New(ptr As IntPtr,
-                      byts As Integer,
-                      raw As Bitmap,
-                      handle As BitmapData)
+                          byts%,
+                          raw As Bitmap,
+                          handle As BitmapData)
+
             Call MyBase.New(ptr, byts)
 
             __source = raw

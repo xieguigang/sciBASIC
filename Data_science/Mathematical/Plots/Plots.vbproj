@@ -195,6 +195,7 @@
     <Compile Include="Heatmaps\HeatmapTable.vb" />
     <Compile Include="Heatmaps\ScatterHeatmap.vb" />
     <Compile Include="Histogram.vb" />
+    <Compile Include="ImageData.vb" />
     <Compile Include="QQPlot.vb" />
     <Compile Include="Fractions\PieChart.vb" />
     <Compile Include="PlotTypes.vb" />
