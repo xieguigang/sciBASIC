@@ -270,23 +270,6 @@ This destructor will run only if the Dispose method
  It gives your base class the opportunity to finalize.
  Do not provide destructors in types derived from this class.
 
-#### GetElement
-```csharp
-Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix.GetElement(System.Int32,System.Int32)
-```
-Get a single element.
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|i|   Row index.
- |
-|j|   Column index.
- |
-
-
-_returns:      A(i,j)
- _
-
 #### GetMatrix
 ```csharp
 Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix.GetMatrix(System.Int32[],System.Int32,System.Int32)
@@ -455,6 +438,15 @@ Subtraction of matrices
 |m2|-|
 
 
+#### op_UnaryNegation
+```csharp
+Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix.op_UnaryNegation(Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix)
+```
+Unary minus
+
+_returns:     -A
+ _
+
 #### QRD
 ```csharp
 Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix.QRD
@@ -462,23 +454,6 @@ Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix.QRD
 QR Decomposition
 
 _returns:      QRDecomposition
- _
-
-#### Random
-```csharp
-Microsoft.VisualBasic.Mathematical.Matrix.GeneralMatrix.Random(System.Int32,System.Int32)
-```
-Generate matrix with random elements
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|m|   Number of rows.
- |
-|n|   Number of colums.
- |
-
-
-_returns:      An m-by-n matrix with uniformly distributed random elements.
  _
 
 #### Rank
@@ -634,6 +609,8 @@ Copy the internal two-dimensional array.
 Get column dimension.
 #### ColumnPackedCopy
 Make a one-dimensional column packed copy of the internal array.
+#### GetElement
+Get a single element.
 #### m
 Row and column dimensions.
  @serial row dimension.

@@ -19,6 +19,18 @@ Creates vector with m element and init value specific by init parameter.
 |m|-|
 
 
+#### DotProduct
+```csharp
+Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector.DotProduct(Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector)
+```
++ http://mathworld.wolfram.com/DotProduct.html
+ + http://www.mathsisfun.com/algebra/vectors-dot-product.html
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|v2|-|
+
+
 #### op_Addition
 ```csharp
 Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector.op_Addition(System.Double,Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector)
@@ -102,6 +114,18 @@ Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector.op_UnaryNegation(Microso
 |v1|-|
 
 
+#### SumMagnitudes
+```csharp
+Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector.SumMagnitudes(Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector,Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector)
+```
+http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|x1|-|
+|x2|-|
+
+
 #### ToString
 ```csharp
 Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector.ToString
@@ -116,8 +140,10 @@ Display member's data as json array
 #### IsNumeric
 @``P:Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors.GenericVector`1.Dim``为1?即当前的向量对象是否是只包含有一个数字？
 #### Mod
-向量模的平方，||x||是向量x=(x1，x2，…，xp)的欧几里得范数
+向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
 #### NAN
 @``F:System.Double.NaN``
+#### SumMagnitude
+http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
 #### Zero
 Only one number in the vector and its value is ZERO

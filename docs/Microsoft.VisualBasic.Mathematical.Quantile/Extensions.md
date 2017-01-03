@@ -41,6 +41,20 @@ Example Usage:
 |compact_size|-|
 
 
+#### QuantileLevels
+```csharp
+Microsoft.VisualBasic.Mathematical.Quantile.Extensions.QuantileLevels(System.Collections.Generic.IEnumerable{System.Double},System.Double,System.Double,System.Int32)
+```
+将数值转化为相对应的quantile水平等级
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|source|-|
+|steps#|-|
+|epsilon#|-|
+|compact_size%|-|
+
+
 #### SelectByQuantile``1
 ```csharp
 Microsoft.VisualBasic.Mathematical.Quantile.Extensions.SelectByQuantile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64},System.Double[],System.Double,System.Int32)
