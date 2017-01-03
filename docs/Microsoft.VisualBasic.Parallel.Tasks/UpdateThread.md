@@ -10,7 +10,7 @@ Running a specific @``T:System.Action`` in the background periodically.
 
 #### #ctor
 ```csharp
-Microsoft.VisualBasic.Parallel.Tasks.UpdateThread.#ctor(System.Int32,System.Action)
+Microsoft.VisualBasic.Parallel.Tasks.UpdateThread.#ctor(System.Int32,System.Action,System.String)
 ```
 Running a specific action in the background periodically. The time unit of the parameter **`Periods`** is ms or Ticks.
 
@@ -35,6 +35,8 @@ Microsoft.VisualBasic.Parallel.Tasks.UpdateThread.Stop
 
 ### Properties
 
+#### Caller
+The caller stack name
 #### ErrHandle
 If this exception handler is null, then when the unhandled exception occurring,
  this thread object will throw the exception and then stop working.

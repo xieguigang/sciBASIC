@@ -9,13 +9,15 @@ _namespace: [Microsoft.VisualBasic.Mathematical](./index.md)_
 
 #### rand
 ```csharp
-Microsoft.VisualBasic.Mathematical.crandn.rand(System.Int32,System.Int32)
+Microsoft.VisualBasic.Mathematical.crandn.rand(System.Int32,System.Int32,System.Int32)
 ```
-混合同余法产生[0，1]均匀分布随机数向量
+混合同余法生成[0，1]均匀分布随机矩阵
+ 与随机向量函数同名重载
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|m|向量维数|
+|m__1|矩阵维数|
+|n|矩阵维数|
 |seed|种子|
 
 

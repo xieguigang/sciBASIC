@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f2b29b674dac877aa0510dccf958d1, ..\sciBASIC#\Data_science\Mathematical\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8fbb3c2bc3c35d0af74de28299c1c60d, ..\sciBASIC#\Data_science\Mathematical\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -26,10 +26,10 @@
 
 #End Region
 
-Imports System
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Quantile
@@ -78,6 +78,40 @@ Namespace Quantile
             Next
 
             Return estimator
+        End Function
+
+        ''' <summary>
+        ''' 将数值转化为相对应的quantile水平等级
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="steps#"></param>
+        ''' <param name="epsilon#"></param>
+        ''' <param name="compact_size%"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function QuantileLevels(source As IEnumerable(Of Double),
+                                       Optional steps# = 0.005,
+                                       Optional epsilon# = Extensions.epsilon,
+                                       Optional compact_size% = 1000) As Double()
+
+            Dim array#() = source.ToArray
+            Dim estimator As New QuantileEstimationGK(epsilon, compact_size, array)
+            Dim cuts As New List(Of Double)
+            Dim levels As New List(Of Double)  ' 需要返回的是这个相对应的quantile水平
+
+            For q As Double = 0 To 1 Step steps
+                cuts += estimator.Query(q)
+                levels += q
+            Next
+
+            Dim index As New OrderSelector(Of Double)(cuts)
+
+            For i As Integer = 0 To array.Length - 1
+                ' 在这里将实际的数据转换为quantile水平
+                array(i) = levels(index.FirstGreaterThan(array(i)))
+            Next
+
+            Return array
         End Function
 
         Const window_size As Integer = 10000

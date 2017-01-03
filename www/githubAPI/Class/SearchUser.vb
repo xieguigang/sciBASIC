@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de6fb4c325d9f42690fa87908b477ee9, ..\sciBASIC#\www\githubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::2ca5f1efd0365cc3b6ea8b6ddba59570, ..\sciBASIC#\www\githubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -80,4 +81,21 @@ Namespace [Class]
             Return Me.GetJson
         End Function
     End Class
+
+    Public Structure UserModel
+
+        Public Property User As User
+        Public Property Followers As String()
+        Public Property Followings As String()
+        Public Property Repositories As String()
+        ''' <summary>
+        ''' username/repository
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stars As NamedValue(Of String)()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Structure
 End Namespace

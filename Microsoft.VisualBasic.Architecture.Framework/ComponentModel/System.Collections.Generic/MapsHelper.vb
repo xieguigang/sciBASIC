@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f4deb4100b7cd06d0da557eafe041de, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::734241644b73c5962077099ba5ecdb0d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -46,5 +46,10 @@ Namespace ComponentModel
                 Return __default
             End If
         End Function
+    End Structure
+
+    Public Structure Map(Of T1, V)
+        Dim key As T1
+        Dim Maps As V
     End Structure
 End Namespace

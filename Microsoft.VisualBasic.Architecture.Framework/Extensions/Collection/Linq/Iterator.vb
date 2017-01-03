@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08f26a5b965a608c37abd5250c857823, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::b4ef3fa60f545ebdaea74fdff9037268, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -66,6 +66,12 @@ Namespace Linq
             Next
         End Function
 
+        ''' <summary>
+        ''' Move the enumerator pointer to next and get next value, if the pointer is reach the end, then will returns nothing
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function [Next](Of T)(source As IEnumerator(Of T)) As T
             If source.MoveNext() Then
@@ -73,6 +79,11 @@ Namespace Linq
             Else
                 Return Nothing
             End If
+        End Function
+
+        <Extension>
+        Public Function Previous(Of T)(source As IEnumerator(Of T)) As T
+            Throw New NotImplementedException
         End Function
     End Module
 

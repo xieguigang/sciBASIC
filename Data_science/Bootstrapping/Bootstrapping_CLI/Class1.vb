@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d97b6376c7e278240bcc2f54c8ded16, ..\sciBASIC#\Data_science\Bootstrapping\boot\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::1d97b6376c7e278240bcc2f54c8ded16, ..\sciBASIC#\Data_science\Bootstrapping\Bootstrapping_CLI\Class1.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f79a5c37add7cbed3775f3a373e0d7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::a32ae8c0021ded70c151d20d34690584, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Globalization
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
@@ -88,5 +89,42 @@ Namespace Imaging
             c = "&H" & c
             ColorTranslator.FromOle(c)
         End Function
+
+#Region "How can I convert an Red, Green, Blue value to a Long and back to Red, Green, Blue correctly"
+
+        ''' <summary>
+        ''' ###### How can I convert an Red, Green, Blue value to a Long and back to Red, Green, Blue correctly 
+        ''' 
+        ''' http://stackoverflow.com/questions/32032776/rgb-to-long-to-rgb
+        ''' </summary>
+        Public Enum ColorFormat
+            RGB
+            RGBA
+            ARGB
+        End Enum
+
+        <Extension>
+        Public Function ColorToDecimal(color As Color, Optional format As ColorFormat = ColorFormat.RGB) As Integer
+            Select Case format
+                Case ColorFormat.RGBA
+                    Return color.R << 24 Or color.G << 16 Or color.B << 8 Or color.A
+                Case ColorFormat.ARGB
+                    Return color.A << 24 Or color.R << 16 Or color.G << 8 Or color.B
+                Case Else
+                    Return color.R << 16 Or color.G << 8 Or color.B
+            End Select
+        End Function
+
+        Public Function DecimalToColor(dec As Integer, Optional format As ColorFormat = ColorFormat.RGB) As Color
+            Select Case format
+                Case ColorFormat.RGBA
+                    Return Color.FromArgb(dec And &HFF, (dec >> 24) And &HFF, (dec >> 16) And &HFF, (dec >> 8) And &HFF)
+                Case ColorFormat.ARGB
+                    Return Color.FromArgb((dec >> 24) And &HFF, (dec >> 16) And &HFF, (dec >> 8) And &HFF, dec And &HFF)
+                Case Else
+                    Return Color.FromArgb((dec >> 16) And &HFF, (dec >> 8) And &HFF, dec And &HFF)
+            End Select
+        End Function
+#End Region
     End Module
 End Namespace

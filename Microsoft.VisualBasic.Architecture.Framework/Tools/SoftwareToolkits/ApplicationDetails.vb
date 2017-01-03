@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8dfeafc11493e2868825f87c5fc4467, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ApplicationDetails.vb"
+﻿#Region "Microsoft.VisualBasic::efa6e992d3f92b9844f23c57ce003b6c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ApplicationDetails.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,13 @@ Namespace SoftwareToolkits
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function CurrentExe() As ApplicationDetails
-            Return New ApplicationDetails(Assembly.LoadFile(App.ExecutablePath))
+            Try
+                Return New ApplicationDetails(Assembly.LoadFile(App.ExecutablePath))
+            Catch ex As Exception
+                ex = New Exception(App.ExecutablePath, ex)
+                Call App.LogException(ex)
+                Return Nothing
+            End Try
         End Function
 
         Public Shared Function FromTypeModule(type As Type) As ApplicationDetails

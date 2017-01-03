@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::378997baf16e14e0a874fa6a635bf928, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
+﻿#Region "Microsoft.VisualBasic::595cd08f3ce3b2bba5443c8ab4c4a79e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@ Namespace Language.UnixBash
     Public Module FileSystemAPI
 
         ''' <summary>
-        ''' ls -l -ext("*.xml") &lt;= DIR,  The filesystem search proxy
+        ''' ``ls -l -ext("*.xml") &lt;= DIR``,  The filesystem search proxy
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ls As New Search

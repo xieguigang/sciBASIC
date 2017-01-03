@@ -24,7 +24,7 @@ Microsoft.VisualBasic.Language.UnixBash.FileSystemAPI.wildcards(System.String[])
 #### l
 Long name(DIR+fiename), if not only file name.
 #### ls
-ls -l -ext("*.xml") <= DIR, The filesystem search proxy
+``ls -l -ext("*.xml") <= DIR``, The filesystem search proxy
 #### lsDIR
 Searching the directory, if this parameter is not presents, then returns search file.
 #### r

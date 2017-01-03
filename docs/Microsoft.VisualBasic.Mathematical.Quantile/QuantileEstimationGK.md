@@ -14,7 +14,7 @@ Implementation of the Greenwald and Khanna algorithm for streaming
 
 #### #ctor
 ```csharp
-Microsoft.VisualBasic.Mathematical.Quantile.QuantileEstimationGK.#ctor(System.Double,System.Int32)
+Microsoft.VisualBasic.Mathematical.Quantile.QuantileEstimationGK.#ctor(System.Double,System.Int32,System.Collections.Generic.IEnumerable{System.Double})
 ```
 Implementation of the Greenwald and Khanna algorithm for streaming
  calculation of epsilon-approximate quantiles.

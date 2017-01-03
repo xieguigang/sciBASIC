@@ -293,6 +293,10 @@ Gets a path name pointing to the Desktop directory.
 The file path of the current running program executable file.(本应用程序的可执行文件的文件路径)
 #### HOME
 The program directory of the current running program.
+#### IsConsoleApp
+判断当前运行的程序是否为Console类型的应用和程序，由于在执行初始化的时候，
+ 最先被初始化的是这个模块，所以没有任何代码能够先执行@``P:System.Console.IsErrorRedirected``了，
+ 在这里使用@``P:System.Console.IsErrorRedirected``这个来进行判断是可靠的
 #### IsMicrosoftPlatform
 Is this application running on a Microsoft OS platform.(是否是运行于微软的操作系统平台？)
 #### LocalData
@@ -320,6 +324,8 @@ The repository root of the product application program data.
 #### ProductSharedDIR
 The shared program data directory for a group of app which have the same product series name.
  (同一產品程序集所共享的數據文件夾)
+#### References
+获取得到当前的这个所运行的应用程序所引用的dll文件列表
 #### StartTime
 The time tag of the application started.(应用程序的启动的时间)
 #### StartupDirectory

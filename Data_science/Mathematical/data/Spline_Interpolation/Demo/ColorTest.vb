@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39e63812f66e75440d7dcd7d1839bd23, ..\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\Demo\ColorTest.vb"
+﻿#Region "Microsoft.VisualBasic::90322157d701e46fed00efb2bad271d4, ..\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\Demo\ColorTest.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Module ColorTest
         Next
     End Sub
 End Module
-

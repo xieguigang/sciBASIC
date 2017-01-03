@@ -146,6 +146,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="WebAPI\Extensions.vb" />
+    <Compile Include="WebAPI\Repositories.vb" />
     <Compile Include="WebAPI\Users.vb" />
   </ItemGroup>
   <ItemGroup>

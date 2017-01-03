@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ceaa52c496c76bf974802e313db66f1, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::1eb81213bf1765c2ee80c5852e5d803a, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Protocol.vb"
 
     ' Author:
     ' 
@@ -142,7 +142,7 @@ Namespace Darwinism.GAF
 
         <Extension>
         Public Function Balance(vars$(), weights As Dictionary(Of String, Double)) As Dictionary(Of String, Double)
-            Dim gaps As New List(Of var)
+            Dim gaps As New List(Of String)
 
             For Each var In vars
                 If Not weights.ContainsKey(var) Then
@@ -198,7 +198,7 @@ Namespace Darwinism.GAF
             Dim estArgs As var()
 
             If Not weights Is Nothing Then
-                fitness.weights = vars.Balance(weights)
+                fitness.weights = fitness.modelVariables.Balance(weights)
                 Call $"Weights fitness average is {fitness.weights.GetJson}".__DEBUG_ECHO
             Else
                 Call "Using normal fitness average calculation...".__DEBUG_ECHO

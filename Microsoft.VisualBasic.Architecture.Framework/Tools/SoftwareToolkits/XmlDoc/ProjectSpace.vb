@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7786d89c04d8fc5b4ee286407c590471, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::7ef236bcbd78ee164861e97b3509ab71, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
         Public Function GetProject(name As String) As Project
             For Each p As Project In Me.projects
-                If p.Name.Equals(name) Then
+                If p.Name.Equals(name, StringComparison.OrdinalIgnoreCase) Then
                     Return p
                 End If
             Next

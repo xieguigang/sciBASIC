@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23bc9efd58f3079b2c154d9ca081e0a2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::ef45d70a5e3dadee42806271263f1908, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 
@@ -549,7 +549,13 @@ Namespace Emit.Delegates
             Dim propertyInfo = GetPropertyInfo(source, propertyName)
             If propertyInfo.GetMethod Is Nothing Then
                 Return Nothing
+            Else
+                Return source.PropertyGet(propertyInfo)
             End If
+        End Function
+
+        <Extension>
+        Public Function PropertyGet(source As Type, [propertyInfo] As PropertyInfo) As Func(Of Object, Object)
             Dim sourceObjectParam = Expression.Parameter(GetType(Object))
             Dim returnExpression As Expression = Expression.[Call](Expression.Convert(sourceObjectParam, source), propertyInfo.GetMethod)
             If Not propertyInfo.PropertyType.IsClass Then

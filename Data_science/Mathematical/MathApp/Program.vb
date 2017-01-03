@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0c7b8c64a0bb2f9a7b4a0adfee5f353, ..\sciBASIC#\Data_science\Mathematical\MathApp\Program.vb"
+﻿#Region "Microsoft.VisualBasic::9a252c6c6ce3406c5c8c08498accf4c6, ..\sciBASIC#\Data_science\Mathematical\MathApp\Program.vb"
 
     ' Author:
     ' 

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::2d386f88205c395bb954ff5407187643, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::636bcdc0f563799fa6f4a85aa315c42e, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Data.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -160,6 +160,30 @@ Namespace Plot3D
             Next
         End Function
 
+        Private Function __progressProvider(total%, yLen%, ysteps#, x As DoubleRange) As Action(Of Double)
+            If App.IsConsoleApp Then
+                Dim tick As New ProgressProvider(total)
+                Dim msg$ = $"Populates data points...(Estimates size: {tick.Target * (yLen / ysteps)}...)"
+                Dim prog As New ProgressBar(msg, cls:=True)
+
+                Call tick.StepProgress()
+
+                Return Sub(xi#)
+                           Dim leftTime As String = tick _
+                               .ETA(prog.ElapsedMilliseconds) _
+                               .FormatTime
+
+                           Call prog.SetProgress(
+                                tick.StepProgress,
+                                $" {xi} ({x.Min}, {x.Max}),  ETA {leftTime}")
+                       End Sub
+            Else
+                Return Sub()
+                           ' DO_NOTHING
+                       End Sub
+            End If
+        End Function
+
         <Extension>
         Private Iterator Function __2DIterates(Of Tout)([in] As Func(Of Double, Double, Tout),
                                                         x As DoubleRange,
@@ -167,10 +191,8 @@ Namespace Plot3D
                                                         xsteps!, ysteps!,
                                                         parallel As Boolean) As IEnumerable(Of List(Of (x#, y#, z As Tout)))
 
-            Dim tick As New ProgressProvider(x.Length / xsteps)
-            Dim prog As New ProgressBar($"Populates data points...(Estimates size: {tick.Target * (y.Length / ysteps)}...)", cls:=True)
-
-            Call tick.StepProgress()
+            Dim tick As Action(Of Double) =
+                __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
 
             For xi# = x.Min To x.Max Step xsteps!
 
@@ -201,16 +223,8 @@ Namespace Plot3D
                     Yield out
                 End If
 
-                Dim leftTime As String = tick _
-                    .ETA(prog.ElapsedMilliseconds) _
-                    .FormatTime
-
-                Call prog.SetProgress(
-                    tick.StepProgress,
-                    $" {xi} ({x.Min}, {x.Max}),  ETA {leftTime}")
+                Call tick(xi)
             Next
-
-            Call prog.Dispose()
         End Function
 
         ''' <summary>

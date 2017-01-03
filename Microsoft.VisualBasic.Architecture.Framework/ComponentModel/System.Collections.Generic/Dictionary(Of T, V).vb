@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33aa1af9df7b547634a1abc61f8c786f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::2b41282d2a47cc9aee9d12be6defe465, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -216,6 +216,10 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
 
     Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
         Return hash.ContainsKey(null)
+    End Operator
+
+    Public Shared Narrowing Operator CType(map As Dictionary(Of V)) As V()
+        Return map.Values.ToArray
     End Operator
 
     ' 实现这个集合接口会和字典的集合接口出现冲突

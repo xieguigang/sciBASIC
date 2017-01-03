@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db66238f559e02b989b633822d70c1e6, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Matrix\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::dddd0d751e8397051824050162c78942, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Matrix\Matrix.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Namespace LinearAlgebra
 
     ''' <summary>
-    ''' 
+    ''' Matrix in VisualBasic language
     ''' </summary>
     ''' <remarks>
     ''' Matlab里常用的矩阵运算函数  

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3534e3080d35ba04404117556395994a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
+﻿#Region "Microsoft.VisualBasic::e8f2faed5b4982fa106f0e8695cd54e8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
@@ -96,13 +95,25 @@ Namespace ComponentModel.Ranges
         ReadOnly _source As T()
         ReadOnly _direct As String
 
+        ''' <summary>
+        ''' 是否为降序排序?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Desc As Boolean
+
+        Default Public ReadOnly Property value(index%) As T
+            Get
+                Return _source(index)
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="asc">当这个参数为真的时候</param>
+        ''' <param name="asc">
+        ''' 当这个参数为真的时候为升序排序
+        ''' </param>
         Sub New(source As IEnumerable(Of T), Optional asc As Boolean = True)
             If asc Then
                 _source = source.OrderBy(Function(x) x).ToArray
@@ -147,6 +158,23 @@ Namespace ComponentModel.Ranges
                     Exit For
                 End If
             Next
+        End Function
+
+        ''' <summary>
+        ''' 遍历整个列表直到找到第一个大于<paramref name="o"/>的元素，然后函数会返回这第一个元素的index
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <returns>
+        ''' 返回-1表示这个列表之中没有任何元素是大于输入的参数<paramref name="o"/>的
+        ''' </returns>
+        Public Function FirstGreaterThan(o As T) As Integer
+            For i As Integer = 0 To _source.Length - 1
+                If Not Language.GreaterThan(o, _source(i)) Then
+                    Return i
+                End If
+            Next
+
+            Return -1
         End Function
     End Class
 

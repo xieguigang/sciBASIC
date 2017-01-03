@@ -15,15 +15,17 @@ Init this lazy loader with the data source handler.
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|Source|the data source handler.|
+|valueFactory|
+ The data source provider handler.
+ |
 
 
 
 ### Properties
 
-#### _dataTask
+#### __factory
 the data source handler.
-#### _outCache
+#### _cache
 The output result cache data.
 #### Value
 Get cache data if it exists, or the data will be loaded first.

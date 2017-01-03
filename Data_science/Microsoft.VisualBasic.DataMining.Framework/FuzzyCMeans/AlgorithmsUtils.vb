@@ -1,3 +1,31 @@
+ï»¿#Region "Microsoft.VisualBasic::57ffabfd25246befa6e32002cd47fbf7, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\FuzzyCMeans\AlgorithmsUtils.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
@@ -23,7 +51,7 @@ Namespace FuzzyCMeans
         End Function
 
         ''' <summary>
-        ''' ²îÒì¾ØÕó
+        ''' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ''' </summary>
         ''' <param name="matrix1"></param>
         ''' <param name="matrix2"></param>
@@ -94,7 +122,7 @@ Namespace FuzzyCMeans
                     list.Add(random.[Next](0, 100))
                 Next
 
-                ' ²»Òª½«Õâ¸öbµÄ¶¨Òå·Å½øÌõ¼þ±àÒëÄ£¿é£¬ÒòÎª×îºóÒ»¸ölist»¹Ã»ÓÐ±»Ìí¼Ó
+                ' ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½bï¿½Ä¶ï¿½ï¿½ï¿½Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½é£¬ï¿½ï¿½Îªï¿½ï¿½ï¿½Ò»ï¿½ï¿½listï¿½ï¿½Ã»ï¿½Ð±ï¿½ï¿½ï¿½ï¿½
                 Dim b As Boolean = coordinates.Add(list)
 #Region "DEBUG"
 #If DEBUG Then

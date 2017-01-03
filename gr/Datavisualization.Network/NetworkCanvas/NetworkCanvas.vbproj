@@ -185,6 +185,15 @@
     <Compile Include="IGraphicsEngine.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="InputDevice.vb" />
+    <Compile Include="Styling\NodeStyles.vb" />
+    <Compile Include="Styling\EdgeStyles.vb" />
+    <Compile Include="Styling\StyleMapper.vb" />
+    <Compile Include="Styling\UI\ColorMaps.Designer.vb">
+      <DependentUpon>ColorMaps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Styling\UI\ColorMaps.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SVG.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -219,6 +228,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Styling\UI\ColorMaps.resx">
+      <DependentUpon>ColorMaps.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
@@ -237,13 +249,17 @@
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+      <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
+      <Name>Microsoft.VisualBasic.Mathematical</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\markups\markups.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>markups</Name>
+    <ProjectReference Include="..\..\..\mime\Markups\Markups.vbproj">
+      <Project>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</Project>
+      <Name>Markups</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
@@ -255,6 +271,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

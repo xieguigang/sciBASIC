@@ -58,3 +58,7 @@ Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeDOMExtension.Icon(System.String)
 基本的引用集合
 #### ExecutableProfile
 .exe的编译配置文件
+#### net46Default
+```
+ C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\
+ ```

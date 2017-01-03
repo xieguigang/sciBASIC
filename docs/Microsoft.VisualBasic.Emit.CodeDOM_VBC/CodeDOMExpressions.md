@@ -20,6 +20,18 @@ Call a statics function from a specific type with a known function name
 |parametersValue|-|
 
 
+#### CType
+```csharp
+Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeDOMExpressions.CType(System.CodeDom.CodeExpression,System.Type)
+```
+Ctype
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|obj|-|
+|type|-|
+
+
 #### DeclareFunc
 ```csharp
 Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeDOMExpressions.DeclareFunc(System.String,System.Collections.Generic.Dictionary{System.String,System.Type},System.Type,System.CodeDom.MemberAttributes)
@@ -110,13 +122,13 @@ Reference to a local variable in a function body.(引用局部变量)
 
 #### New
 ```csharp
-Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeDOMExpressions.New(System.Type,System.CodeDom.CodeExpression[])
+Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeDOMExpressions.New(System.String,System.CodeDom.CodeExpression[])
 ```
-Class object instance constructor
+New object
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|Type|-|
+|typeRef|-|
 |parameters|-|
 
 
@@ -163,6 +175,18 @@ Variable value initializer
 |Parameter Name|Remarks|
 |--------------|-------|
 |obj|-|
+
+
+#### ValueAssign
+```csharp
+Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeDOMExpressions.ValueAssign(System.CodeDom.CodeExpression,System.CodeDom.CodeExpression)
+```
+``left = value``
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|LeftAssigned|-|
+|value|-|
 
 
 

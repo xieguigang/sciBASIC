@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8315f5c99600ff21dd807ddacf4ad74e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ConsoleDevices\Utility\EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::8315f5c99600ff21dd807ddacf4ad74e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\Utility\EventProc.vb"
 
     ' Author:
     ' 
