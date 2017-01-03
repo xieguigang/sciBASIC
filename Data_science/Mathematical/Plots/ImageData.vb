@@ -11,7 +11,7 @@ Public Module ImageDataExtensions
         Dim bitmap As hBitmap = hBitmap.FromImage(img)
 
         If convert Is Nothing Then
-            convert = AddressOf ColorToDecimal
+            convert = AddressOf GetBrightness
         End If
 
         Return Function(x, y)
@@ -31,7 +31,7 @@ Public Module ImageDataExtensions
                    If Not bitmap.OutOfRange(x, y) Then
                        Dim c As Color = bitmap.GetPixel(x, y)
                        Dim b# = c.GetBrightness
-                       Dim h# = c.ColorToDecimal
+                       Dim h# = c.GetBrightness
 
                        Return (Z:=b, Color:=h)
                    Else
@@ -41,7 +41,7 @@ Public Module ImageDataExtensions
     End Function
 
     <Extension>
-    Public Function Image2DMap(img As Image, Optional steps% = 5) As Bitmap
+    Public Function Image2DMap(img As Image, Optional steps% = 1) As Bitmap
         Dim color = img.PointZProvider
         Dim xrange As DoubleRange = $"0 -> {img.Width}"
         Dim yrange As DoubleRange = $"0 -> {img.Height}"
@@ -52,7 +52,7 @@ Public Module ImageDataExtensions
     End Function
 
     <Extension>
-    Public Function Image3DMap(img As Image, camera As Camera, Optional steps% = 5) As Bitmap
+    Public Function Image3DMap(img As Image, camera As Camera, Optional steps% = 1) As Bitmap
         Dim Z = img.SurfaceProvider
         Dim xrange As DoubleRange = $"0 -> {img.Width}"
         Dim yrange As DoubleRange = $"0 -> {img.Height}"
