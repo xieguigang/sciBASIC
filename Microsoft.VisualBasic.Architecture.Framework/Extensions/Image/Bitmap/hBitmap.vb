@@ -81,6 +81,10 @@ Namespace Imaging
             Return x + y
         End Function
 
+        Public Function OutOfRange(x%, y%) As Boolean
+            Return x < 0 OrElse x > Width OrElse y < 0 OrElse y > Height
+        End Function
+
         ''' <summary>
         ''' Gets the color of the specified pixel in this System.Drawing.Bitmap.
         ''' </summary>

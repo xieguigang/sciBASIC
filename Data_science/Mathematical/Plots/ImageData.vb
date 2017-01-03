@@ -15,7 +15,11 @@ Public Module ImageDataExtensions
         End If
 
         Return Function(x, y)
-                   Return convert(bitmap.GetPixel(x, y))
+                   If Not bitmap.OutOfRange(x, y) Then
+                       Return convert(bitmap.GetPixel(x, y))
+                   Else
+                       Return -1
+                   End If
                End Function
     End Function
 
@@ -24,11 +28,15 @@ Public Module ImageDataExtensions
         Dim bitmap As hBitmap = hBitmap.FromImage(img)
 
         Return Function(x, y) As (Z#, Color As Double)
-                   Dim c As Color = bitmap.GetPixel(x, y)
-                   Dim b# = c.GetBrightness
-                   Dim h# = c.ColorToDecimal
+                   If Not bitmap.OutOfRange(x, y) Then
+                       Dim c As Color = bitmap.GetPixel(x, y)
+                       Dim b# = c.GetBrightness
+                       Dim h# = c.ColorToDecimal
 
-                   Return (Z:=b, Color:=h)
+                       Return (Z:=b, Color:=h)
+                   Else
+                       Return (0#, 0#)
+                   End If
                End Function
     End Function
 
