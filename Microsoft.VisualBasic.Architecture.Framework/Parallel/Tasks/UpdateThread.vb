@@ -42,7 +42,7 @@ Namespace Parallel.Tasks
         Implements ITimer
 
         ''' <summary>
-        ''' ms
+        ''' Sleeps n **ms** interval
         ''' </summary>
         ''' <returns></returns>
         Public Property Periods As Integer Implements ITimer.Interval
@@ -104,7 +104,7 @@ Namespace Parallel.Tasks
 #If DEBUG Then
             Call _execute()
 #Else
-  Try
+            Try
                 Call _execute()
             Catch ex As Exception
                 If Not ErrHandle Is Nothing Then
@@ -123,10 +123,17 @@ Namespace Parallel.Tasks
             Return $"[{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
         End Function
 
-        Public Shared Function GetTicks(hh As Integer, mm As Integer) As Integer
+        ''' <summary>
+        ''' 获取得到总的毫秒数
+        ''' </summary>
+        ''' <param name="hh"></param>
+        ''' <param name="mm"></param>
+        ''' <param name="ss%"></param>
+        ''' <returns></returns>
+        Public Shared Function GetTicks(hh As Integer, mm As Integer, Optional ss% = 0) As Integer
             Dim hhss As Integer = hh * 60 * 60 ' 小时的秒数
             Dim mmss As Integer = mm * 60
-            Dim ticks As Integer = (hhss + mmss) * 1000
+            Dim ticks As Integer = (hhss + mmss + ss) * 1000
             Return ticks
         End Function
 
