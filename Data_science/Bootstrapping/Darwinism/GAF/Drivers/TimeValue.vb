@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Darwinism.GAF.Driver
@@ -13,6 +14,12 @@ Namespace Darwinism.GAF.Driver
         ''' ``(y) = f(x)``
         ''' </summary>
         Dim Y#
+
+        Public ReadOnly Property Point As PointF
+            Get
+                Return New PointF(Time, Y)
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             Return $"[{Time}] {Y}"
