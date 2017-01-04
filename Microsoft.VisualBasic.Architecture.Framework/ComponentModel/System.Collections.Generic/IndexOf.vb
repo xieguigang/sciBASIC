@@ -86,5 +86,15 @@ Namespace ComponentModel.Collection
                 .ToArray _
                 .GetJson
         End Function
+
+        Public ReadOnly Property Map As Dictionary(Of T, Integer)
+            Get
+                Return Me
+            End Get
+        End Property
+
+        Public Shared Narrowing Operator CType(index As IndexOf(Of T)) As Dictionary(Of T, Integer)
+            Return New Dictionary(Of T, Integer)(index.maps)
+        End Operator
     End Class
 End Namespace

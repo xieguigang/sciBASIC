@@ -72,7 +72,7 @@ Namespace Darwinism.GAF
             Dim out As ODEsOut = ' y0使用实验观测值，而非突变的随机值
                 MonteCarlo.Model.RunTest(model, y0, vars, n, t0, tt, ref)  ' 通过拟合的参数得到具体的计算数据
             Dim fit As New List(Of Double)
-            Dim NaN%
+            Dim NaN As New List(Of Integer)
 
             ' 再计算出fitness
             For Each y As String In ynames
@@ -87,7 +87,7 @@ Namespace Darwinism.GAF
                     '    b = sample2.ToArray(Function(x) x.Max)
                 End If
 
-                NaN% = b.Where(AddressOf IsNaNImaginary).Count
+                NaN += b.Where(AddressOf IsNaNImaginary).Count
                 fit += Math.Sqrt(FitnessHelper.Calculate(a#, b#)) ' FitnessHelper.Calculate(y.x, out.y(y.Name).x)   
             Next
 
@@ -98,7 +98,7 @@ Namespace Darwinism.GAF
 
             If fitness.IsNaNImaginary Then
                 fitness = Integer.MaxValue * 100.0R
-                fitness += NaN% * 10
+                fitness += NaN.Max * 10
             End If
 
             Return fitness

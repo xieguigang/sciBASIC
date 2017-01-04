@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::abdb36fc4f054847be9d8b64c602096d, ..\sciBASIC#\Data_science\Bootstrapping\Normalization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -38,21 +39,6 @@ Imports Microsoft.VisualBasic.Mathematical.Interpolation
 ''' Methods for raw data processing
 ''' </summary>
 Public Module Normalization
-
-    Public Structure TimeValue
-
-        Public Time#, value#
-
-        Public ReadOnly Property Point As PointF
-            Get
-                Return New PointF(Time, value)
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return $"[{Time}]  {value}"
-        End Function
-    End Structure
 
     ''' <summary>
     ''' 
@@ -96,7 +82,7 @@ Public Module Normalization
         Dim times As Dictionary(Of Single, PointF) =
             raw.Value.ToDictionary(
             Function(x) CSng(x.Time),
-            Function(p) New PointF(CSng(p.Time), CSng(p.value)))
+            Function(p) New PointF(CSng(p.Time), CSng(p.Y)))
         Dim i As int = Scan0
         Dim preX As Value(Of Single) = intr.Value(++i).X
 
@@ -120,7 +106,7 @@ Public Module Normalization
                 .Select(Function(x) New NamedValue(Of Double()) With {
                     .Name = x.Name,
                     .Value = x.Value _
-                        .ToArray(Function(o) o.value)
+                        .ToArray(Function(o) o.Y)
                 }).ToDictionary
         }
     End Function

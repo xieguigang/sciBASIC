@@ -36,7 +36,7 @@ Namespace Matrix
             ElseIf d = 2 Then
                 Return M.ColumnDimension
             Else
-
+                Throw New NotImplementedException
             End If
         End Function
 

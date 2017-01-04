@@ -1,5 +1,7 @@
 # VisualBasic Data Graphics System
 
+![](../etc/lena/grayscale-heatmap.png)
+
 ### Internal Build in ColorMaps
 
 + **[Microsoft.VisualBasic.Imaging.ColorMap](../Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/ColorMap.vb)**

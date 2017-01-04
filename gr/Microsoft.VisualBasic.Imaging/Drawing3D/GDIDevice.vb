@@ -219,6 +219,10 @@ Namespace Drawing3D
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Dim d% = Math.Sign(e.Delta)
             _camera.ViewDistance += d
+
+#If DEBUG Then
+            Call _camera.GetJson.__DEBUG_ECHO
+#End If
         End Sub
 
         Dim keyRotate As Point3D

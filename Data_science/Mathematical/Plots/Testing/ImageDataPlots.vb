@@ -34,24 +34,33 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Module ImageDataPlots
 
     Sub Main()
-        ' Call Plot2DMap()
-        Call Plot3DMap()
+        Call Plot2DMap()
+        'Call Plot3DMap()
 
         Pause()
     End Sub
 
     Sub Plot2DMap()
-        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
+        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         Dim out As Image = Image2DMap(img)
 
         Call out.SaveAs("./testmap.png")
     End Sub
 
     Sub Plot3DMap()
-        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
-        Dim out As Image = Image3DMap(img, New Camera With {.ViewDistance = -10})
+        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+        Dim out As Image = Image3DMap(
+            img, New Camera With {
+                .ViewDistance = -100,
+                .screen = New Size(img.Width * 8, img.Height * 5),
+                .angleX = 0,
+                .angleY = 60,
+                .angleZ = 120,
+                .offset = New Point(-1000, 0)
+            },
+            steps:=15)
 
-        Call out.SaveAs("./testmap.png")
+        Call out.SaveAs("./testmap3.png")
     End Sub
 End Module
 
