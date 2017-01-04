@@ -89,6 +89,11 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
+        Dim testBBBmp As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+        testBBBmp = testBBBmp.Grayscale
+
+        Call testBBBmp.SaveAs("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\lena.grayscale.png")
+        Pause()
         Dim x = {New TestJSON}
 
         ' Interaction.MsgBox(x.GetJson)
