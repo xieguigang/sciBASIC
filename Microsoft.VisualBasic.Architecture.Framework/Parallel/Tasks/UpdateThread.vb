@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::92f4565644d7fc4f5a3fa49bab353bff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\UpdateThread.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,7 +43,7 @@ Namespace Parallel.Tasks
         Implements ITimer
 
         ''' <summary>
-        ''' ms
+        ''' Sleeps n **ms** interval
         ''' </summary>
         ''' <returns></returns>
         Public Property Periods As Integer Implements ITimer.Interval
@@ -131,10 +131,17 @@ Namespace Parallel.Tasks
             Return $"[{Caller}::{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
         End Function
 
-        Public Shared Function GetTicks(hh As Integer, mm As Integer) As Integer
+        ''' <summary>
+        ''' 获取得到总的毫秒数
+        ''' </summary>
+        ''' <param name="hh"></param>
+        ''' <param name="mm"></param>
+        ''' <param name="ss%"></param>
+        ''' <returns></returns>
+        Public Shared Function GetTicks(hh As Integer, mm As Integer, Optional ss% = 0) As Integer
             Dim hhss As Integer = hh * 60 * 60 ' 小时的秒数
             Dim mmss As Integer = mm * 60
-            Dim ticks As Integer = (hhss + mmss) * 1000
+            Dim ticks As Integer = (hhss + mmss + ss) * 1000
             Return ticks
         End Function
 
