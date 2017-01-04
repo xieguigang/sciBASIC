@@ -51,6 +51,7 @@ Namespace Darwinism.GAF.Driver
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector).Calculate
             Dim result As ODEsOut = MonteCarlo.Model.RunTest(model, y0, chromosome.vars, n, a, b)
             Dim fitness As New List(Of Double)
+            Dim NaN As New List(Of Integer)
 
             For Each var As NamedValue(Of TimeValue()) In observation
                 Dim y = result.y(var.Name)
@@ -62,6 +63,7 @@ Namespace Darwinism.GAF.Driver
                     .Select(Function(i) y.Value(i)) _
                     .ToArray
 
+                NaN += cData.Where(AddressOf IsNaNImaginary).Count
                 fitness += Math.Sqrt(
                     FitnessHelper.Calculate(
                     var.Value.Select(Function(t) t.Y).ToArray,
@@ -69,6 +71,12 @@ Namespace Darwinism.GAF.Driver
             Next
 
             Dim out# = fitness.Average
+
+            If out.IsNaNImaginary Then
+                out = Integer.MaxValue * 100.0R
+                out += NaN.Max * 10
+            End If
+
             Return out
         End Function
     End Class
