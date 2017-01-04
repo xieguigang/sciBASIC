@@ -34,8 +34,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Module ImageDataPlots
 
     Sub Main()
-        ' Call Plot2DMap()
-        Call Plot3DMap()
+        Call Plot2DMap()
+        'Call Plot3DMap()
 
         Pause()
     End Sub

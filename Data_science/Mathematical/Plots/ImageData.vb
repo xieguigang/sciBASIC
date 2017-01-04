@@ -76,7 +76,9 @@ Public Module ImageDataExtensions
 
         Return ScatterHeatmap.Plot(
             color, xrange, yrange,
-            xsteps:=steps, ysteps:=steps, unit:=1, scale:=3)
+            xsteps:=steps, ysteps:=steps, unit:=1, scale:=3,
+            colorMap:="Jet",
+            legendTitle:="GrayScale Heatmap")
     End Function
 
     <Extension>
