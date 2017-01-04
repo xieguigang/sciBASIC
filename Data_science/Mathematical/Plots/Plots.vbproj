@@ -225,6 +225,9 @@
     <EmbeddedResource Include="3D\Device\Canvas.resx">
       <DependentUpon>Canvas.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="3D\Device\FormDevice.resx">
+      <DependentUpon>FormDevice.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

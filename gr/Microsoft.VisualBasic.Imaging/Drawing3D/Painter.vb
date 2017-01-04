@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing3D
@@ -8,6 +9,13 @@ Namespace Drawing3D
     ''' </summary>
     Public Module Painter
 
+        ''' <summary>
+        ''' 请注意，这个并没有rotate，只会利用camera进行project
+        ''' </summary>
+        ''' <param name="canvas"></param>
+        ''' <param name="camera"></param>
+        ''' <param name="surfaces"></param>
+        <Extension>
         Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface))
             Dim sv As New List(Of Surface), order As New List(Of Integer)
 
@@ -27,7 +35,7 @@ Namespace Drawing3D
 
             For i As Integer = 0 To sv.Count - 1
                 avgZ(i) = sv(i).vertices.Average(Function(z) z.Z)
-                order(i) = i
+                order.Add(i)
             Next
 
             Dim iMax%

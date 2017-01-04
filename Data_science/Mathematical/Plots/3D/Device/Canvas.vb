@@ -103,9 +103,15 @@ Namespace Plot3D.Device
         End Sub
 
         Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
-            If Not _Plot Is Nothing Then
-                Call _Plot(g, camera)
-            End If
+            Dim bmp As New Bitmap(Camera.screen.Width, Camera.screen.Height)
+
+            Using gdi As Graphics = Graphics.FromImage(bmp)
+                If Not _Plot Is Nothing Then
+                    Call _Plot(g, Camera)
+                End If
+            End Using
+
+            BackgroundImage = bmp
         End Sub
 
         Private Sub InitializeComponent()
@@ -139,6 +145,9 @@ Namespace Plot3D.Device
         Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
             Call MyBase.GDIDevice_Load(Nothing, Nothing)
             Call MyBase.Run()
+
+            DisableScreenResize = True
+            BackgroundImageLayout = ImageLayout.Zoom
         End Sub
     End Class
 End Namespace

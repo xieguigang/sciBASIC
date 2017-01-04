@@ -34,8 +34,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Module ImageDataPlots
 
     Sub Main()
-        Call Plot2DMap()
-        'Call Plot3DMap()
+        ' Call Plot2DMap()
+        Call Plot3DMap()
 
         Pause()
     End Sub
@@ -51,14 +51,14 @@ Module ImageDataPlots
         Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         Dim out As Image = Image3DMap(
             img, New Camera With {
-                .ViewDistance = -100,
+                .ViewDistance = -50,
                 .screen = New Size(img.Width * 8, img.Height * 5),
-                .angleX = 0,
-                .angleY = 60,
-                .angleZ = 120,
-                .offset = New Point(-1000, 0)
+                .angleX = 90,
+                .angleY = 90,
+                .angleZ = 10,
+                .offset = New Point(-0, 0)
             },
-            steps:=15)
+            steps:=10)
 
         Call out.SaveAs("./testmap3.png")
     End Sub

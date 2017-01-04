@@ -208,11 +208,15 @@ Namespace Drawing3D
             _rotate = False
         End Sub
 
+        Public Property DisableScreenResize As Boolean = False
+
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
             If _camera Is Nothing Then
                 Call "Camera object not initialized!".__DEBUG_ECHO
             Else
-                _camera.screen = Size
+                If Not DisableScreenResize Then
+                    _camera.screen = Size
+                End If
             End If
         End Sub
 
