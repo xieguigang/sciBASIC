@@ -139,6 +139,23 @@ Public MustInherit Class ODEs
     End Function
 
     ''' <summary>
+    ''' Populates the data of <see cref="ODEsOut.x"/>
+    ''' </summary>
+    ''' <param name="n%"></param>
+    ''' <param name="a#"></param>
+    ''' <param name="b#"></param>
+    ''' <returns></returns>
+    Public Shared Iterator Function TimePopulator(n%, a#, b#) As IEnumerable(Of Double)
+        Dim dh As Double = (b - a) / n  ' 步长
+        Dim dx As Double = a
+
+        For i As Integer = 0 To n
+            Yield dx
+            dx += dh
+        Next
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="n">A larger value of this parameter, will makes your result more precise.</param>
