@@ -154,6 +154,17 @@ Namespace Imaging
             Return curBitmap
         End Function
 
+        ''' <summary>
+        ''' Color gray scale
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GrayScale(c As Color) As Integer
+            Dim luma% = CInt(Math.Truncate(c.R * 0.3 + c.G * 0.59 + c.B * 0.11))
+            Return luma
+        End Function
+
         <Extension>
         Public Function ByteLength(rect As Rectangle) As Integer
             Dim width As Integer = rect.Width * 4  ' ARGB -> 4

@@ -39,7 +39,7 @@ Public Module ImageDataExtensions
         Dim bitmap As hBitmap = hBitmap.FromImage(img)
 
         If convert Is Nothing Then
-            convert = AddressOf GetBrightness
+            convert = AddressOf GrayScale
         End If
 
         Return Function(x, y)
@@ -58,8 +58,8 @@ Public Module ImageDataExtensions
         Return Function(x, y) As (Z#, Color As Double)
                    If Not bitmap.OutOfRange(x, y) Then
                        Dim c As Color = bitmap.GetPixel(x, y)
-                       Dim b# = c.GetBrightness
-                       Dim h# = c.GetBrightness
+                       Dim b# = c.GrayScale
+                       Dim h# = c.ToArgb
 
                        Return (Z:=b, Color:=h)
                    Else
@@ -76,7 +76,7 @@ Public Module ImageDataExtensions
 
         Return ScatterHeatmap.Plot(
             color, xrange, yrange,
-            xsteps:=steps, ysteps:=steps)
+            xsteps:=steps, ysteps:=steps, unit:=1, scale:=3)
     End Function
 
     <Extension>
@@ -89,7 +89,7 @@ Public Module ImageDataExtensions
             Z, xrange, yrange,
             camera,
             xn:=img.Width / steps,
-            yn:=img.Height / steps)
+            yn:=img.Height / steps) ', dev:=Plot3D.Device.NewWindow)
     End Function
 End Module
 
