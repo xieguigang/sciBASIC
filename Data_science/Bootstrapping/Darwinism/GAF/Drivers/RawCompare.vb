@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.Driver
 
     ''' <summary>
     ''' 不像<see cref="GAFFitness"/>接受的是经过插值处理的原始数据，

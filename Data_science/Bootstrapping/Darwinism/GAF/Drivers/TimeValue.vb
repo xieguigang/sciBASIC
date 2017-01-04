@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.Driver
 
     Public Structure TimeValue
 

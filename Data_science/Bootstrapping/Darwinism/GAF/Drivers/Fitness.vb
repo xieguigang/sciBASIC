@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.Driver
 
     ''' <summary>
     ''' 计算当前的最好的参数的fitness
