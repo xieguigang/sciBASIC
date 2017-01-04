@@ -69,6 +69,25 @@ PageRank analysis on the text paragraph for find out the keyword, here is the pa
 
 ![](./Data/TextRank/visualize.png)
 
+## Image fast binarization using VisualBasic image extension API
+[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
+
+```vbnet
+Imports Microsoft.VisualBasic.Imaging
+
+Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+
+Call bitmap.Grayscale().SaveAs("./etc/lena/lena.grayscale.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap
+     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
+     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
+```
+
+|Normal|Binary|SparseGray|Grayscale|
+|------|------|----|---------|
+|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|<img src="./etc/lena/lena.grayscale.png" width=160 height=160 />|
+
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
@@ -275,21 +294,3 @@ Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic
 > 3. Various linq extensions for the data science programming on large amount data processing
 > 4. VisualBasic language Feature: Unix bash command supports in under development which parts of the API is available at namespace ``Microsoft.VisualBasic.Language``
 > 5. Image graphics system in namespace ``Microsoft.VisualBasic.Imaging``
-
-###### Image fast binarization using VisualBasic extension API
-[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
-
-```vbnet
-Imports Microsoft.VisualBasic.Imaging
-
-Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
-
-Call bitmap.GetBinaryBitmap
-     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
-Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
-     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
-```
-
-|Normal|Binary|Gray|
-|------|------|----|
-|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=250 height=250 />|<img src="./etc/lena/lena.gray.png" width=250 height=250 />|
