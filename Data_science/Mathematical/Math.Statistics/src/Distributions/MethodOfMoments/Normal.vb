@@ -64,20 +64,20 @@ Namespace Distributions.MethodOfMoments
 		''' Creates a normal distribution based on the user defined mean and standard deviation </summary>
 		''' <param name="m"> the mean of the distribution </param>
 		''' <param name="sd"> the standard deviation of the distribution </param>
-		Public Sub New(ByVal m As Double, ByVal sd As Double)
+		Public Sub New( m As Double,  sd As Double)
 			_Mean = m
 			_StDev = sd
 		End Sub
 		''' <summary>
 		''' Creates a normal distribution based on input data using the standard method of moments. </summary>
 		''' <param name="data"> an array of double data. </param>
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim bpm As New MomentFunctions.BasicProductMoments(data)
 			_Mean = bpm.GetMean()
 			_StDev = bpm.GetStDev()
 			SetPeriodOfRecord(bpm.GetSampleSize())
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim i As Integer
 			Dim x As Double
 			Dim c0 As Double = 2.515517
@@ -102,7 +102,7 @@ Namespace Distributions.MethodOfMoments
 			x = i*x
 			Return (x*_StDev)+_Mean
 		End Function
-		Private Function TrapazoidalIntegration(ByVal y1 As Double, ByVal y2 As Double, ByVal deltax As Double) As Double
+		Private Function TrapazoidalIntegration( y1 As Double,  y2 As Double,  deltax As Double) As Double
 			Dim deltay As Double = 0
 			Dim rect As Double = 0
 			If y1>y2 Then
@@ -115,7 +115,7 @@ Namespace Distributions.MethodOfMoments
 			Dim tri As Double = (1\2)*(deltax*deltay)
 			Return rect + Math.Abs(tri)
 		End Function
-		Private Function FindArea(ByVal a As Double, ByVal inc As Double, ByVal x As Double) As Double
+		Private Function FindArea( a As Double,  inc As Double,  x As Double) As Double
 			Dim x1 As Double = GetInvCDF(a)
 			Dim x2 As Double = GetInvCDF(a+inc)
 			Do While x2>=x
@@ -131,7 +131,7 @@ Namespace Distributions.MethodOfMoments
 			a+=area*interpvalue
 			Return a
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			'decide which method i want to use.  errfunction, the method i came up with in vb, or something else.
 			If value = _Mean Then Return.5
 			Dim dist As Double = value - _Mean
@@ -199,7 +199,7 @@ Namespace Distributions.MethodOfMoments
 					End If
 			End Select
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Return (1/Math.Sqrt(2*Math.PI)*Math.Pow(_StDev,2.0))*Math.Exp((-(Math.Pow(value-_Mean, 2)/(2*Math.Pow(_StDev, 2)))))
 		End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)

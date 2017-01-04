@@ -53,14 +53,14 @@ Namespace TabularFunctions
         Public Function GetYDistributions() As List(Of Distributions.ContinuousDistribution) Implements ISampleWithUncertainty.GetYDistributions
             Return _Y
         End Function
-        Public Sub New(ByVal Xvalues As List(Of Double?), ByVal Yvalues As List(Of Distributions.ContinuousDistribution))
+        Public Sub New( Xvalues As List(Of Double?),  Yvalues As List(Of Distributions.ContinuousDistribution))
 			_X = Xvalues
 			_Y = Yvalues
 		End Sub
-        'Public Sub New(ByVal ele As org.w3c.dom.Element)
+        'Public Sub New( ele As org.w3c.dom.Element)
         '	ReadFromXMLElement(ele)
         'End Sub
-        Public Function GetYFromX(ByVal x As Double, ByVal probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
+        Public Function GetYFromX( x As Double,  probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
             'determine how to implement a binary search.
             Dim index As Integer = java.util.Collections.binarySearch(_X, x)
             'if index is negative, it should be (-(index)-1);
@@ -79,7 +79,7 @@ Namespace TabularFunctions
                 Return _Y(index - 1).GetInvCDF(probability) + ydelta * distance
             End If
         End Function
-        Public Function GetYValues(ByVal probability As Double) As List(Of Double?) Implements ISampleWithUncertainty.GetYValues
+        Public Function GetYValues( probability As Double) As List(Of Double?) Implements ISampleWithUncertainty.GetYValues
             Dim result As New List(Of Double?)
             For i As Integer = 0 To _Y.Count - 1
                 result.Add(_Y(i).GetInvCDF(probability))
@@ -114,14 +114,14 @@ Namespace TabularFunctions
 			Return output
 		End Function
 
-        Public Function CurveSample(ByVal probability As Double) As ISampleDeterministically Implements ISampleWithUncertainty.CurveSample
+        Public Function CurveSample( probability As Double) As ISampleDeterministically Implements ISampleWithUncertainty.CurveSample
             Dim samples As New List(Of Double?)
             For i As Integer = 0 To _Y.Count - 1
                 samples.Add(_Y(i).GetInvCDF(probability))
             Next i
             Return New MonotonicallyIncreasingCurve(_X, samples)
         End Function
-        '		Public Overrides Sub ReadFromXMLElement(ByVal ele As org.w3c.dom.Element) Implements IWriteToXML.ReadFromXMLElement
+        '		Public Overrides Sub ReadFromXMLElement( ele As org.w3c.dom.Element) Implements IWriteToXML.ReadFromXMLElement
         '			_X = New List(Of )
         '			_Y = New List(Of )
         '			Dim Dist As Distributions.ContinuousDistribution

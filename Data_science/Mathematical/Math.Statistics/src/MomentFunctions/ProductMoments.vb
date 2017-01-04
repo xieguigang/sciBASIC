@@ -48,7 +48,7 @@ Namespace MomentFunctions
 		Private _Skew As Double
 		Private _Kurtosis As Double
 		Private _Count As Integer
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			_Count = data.Length
 			Dim BPM As New BasicProductMoments(data)
 			_Min = BPM.GetMin()

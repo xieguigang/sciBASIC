@@ -43,7 +43,7 @@ Namespace TabularFunctions
 	Public Interface ISampleDeterministically
 		Inherits IWriteToXML
 
-		Function GetYFromX(ByVal x As Double) As Double
+		Function GetYFromX( x As Double) As Double
 		Function GetYValues() As List(Of Double?)
 	End Interface
 

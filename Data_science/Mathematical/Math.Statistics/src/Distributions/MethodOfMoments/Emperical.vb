@@ -46,18 +46,18 @@ Namespace Distributions.MethodOfMoments
 
 		Private _CumulativeProbabilities As Double()
 		Private _ExceedanceValues As Double()
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim index As Integer = Array.BinarySearch(_CumulativeProbabilities, probability)
 			'interpolate or step?
 			'check for array out of bounds...
 			Return _ExceedanceValues(index)
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Dim index As Integer = Array.BinarySearch(_ExceedanceValues, value)
 			'interpolate or step?
 			Return _CumulativeProbabilities(index)
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
 		End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)

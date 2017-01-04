@@ -47,22 +47,22 @@ Namespace Distributions
         ''' This function produces a value for a given probability, this value will represent the Non-Exceedance value for that probability. </summary>
         ''' <param name="probability"> a number between 0 and 1. </param>
         ''' <returns> a value distributed by the distribution defined in the concrete implementation of this abstract class. </returns>
-        Public MustOverride Function GetInvCDF(ByVal probability As Double) As Double
+        Public MustOverride Function GetInvCDF( probability As Double) As Double
         ''' <summary>
         ''' This function is the Cumulative Distribution Function. It returns a Non Exceedance probability for any value.  It will be implemented by all concrete implementations of this abstract class. </summary>
         ''' <param name="value"> the value that a probability will be produced for. </param>
         ''' <returns> a probability that this value will be exceeded by any other value from the sample set. </returns>
-        Public MustOverride Function GetCDF(ByVal value As Double) As Double
+        Public MustOverride Function GetCDF( value As Double) As Double
         ''' <summary>
         ''' This is the Probability Density Function. It describes the likelihood any given value will occur within a dataset. </summary>
         ''' <param name="value"> the value that a likelihood will be returned for. </param>
         ''' <returns> the likelihood (defined by the concrete distribution) the specified value will occur in any given sample dataset (assuming the value is from the underlying distribution). </returns>
-        Public MustOverride Function GetPDF(ByVal value As Double) As Double
+        Public MustOverride Function GetPDF( value As Double) As Double
         Public Overridable Function GetPeriodOfRecord() As Integer
             Return _PeriodOfRecord
         End Function
         Public MustOverride Function Validate() As List(Of ContinuousDistributionError)
-        Public Sub SetPeriodOfRecord(ByVal POR As Integer)
+        Public Sub SetPeriodOfRecord( POR As Integer)
             _PeriodOfRecord = POR
         End Sub
         ' <editor-fold defaultstate="collapsed" desc="Goodness of fit tests">
@@ -139,7 +139,7 @@ Namespace Distributions
             End Try
             Return Dist
         End Function
-        Public Overrides Function Equals(ByVal dist As Object) As Boolean
+        Public Overrides Function Equals( dist As Object) As Boolean
             If dist.GetType().Name.Equals(Me.GetType().Name) Then
                 Dim thisParamValues As Object() = Me.GetParamValues()
                 Dim those As ContinuousDistribution = CType(dist, ContinuousDistribution)
@@ -164,7 +164,7 @@ Namespace Distributions
             Next val
             Return hash
         End Function
-        'Public Shared Function ReadFromXML(ByVal ele As Element) As ContinuousDistribution
+        'Public Shared Function ReadFromXML( ele As Element) As ContinuousDistribution
         '		Dim Dist As ContinuousDistribution = Nothing
         '		Dim c As Type
         '          Try
@@ -237,7 +237,7 @@ Namespace Distributions
             Next i
             Return result
         End Function
-        Public Overridable Function BootStrap(ByVal seed As Long) As Double()
+        Public Overridable Function BootStrap( seed As Long) As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
             Dim Random As New Random(seed)
             For i As Integer = 0 To _PeriodOfRecord - 1

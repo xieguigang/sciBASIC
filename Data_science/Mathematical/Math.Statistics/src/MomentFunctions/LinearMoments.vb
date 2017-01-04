@@ -48,7 +48,7 @@ Namespace MomentFunctions
 		Private _Count As Integer
 		Private _Max As Double
 		Private _Min As Double
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Array.Sort(data) 'sorts ascending based on javadocs
 			_Count = data.Length
 			_Min = data(0)

@@ -50,23 +50,23 @@ Namespace Distributions.MethodOfMoments
 			_Mu = 0
 			_Beta = 0
 		End Sub
-		Public Sub New(ByVal mu As Double, ByVal beta As Double)
+		Public Sub New( mu As Double,  beta As Double)
 			_Mu = mu
 			_Beta = beta
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
 			_Beta = Math.PI/(BPM.GetStDev()*Math.Sqrt(6))
 			_Mu = BPM.GetMean()-_Beta*0.57721566490153287
 			SetPeriodOfRecord(BPM.GetSampleSize())
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Return (_Mu-(_Beta*(Math.Log(Math.Log(probability)))))
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Return Math.Exp(-Math.Exp(-(value-_Mu)/_Beta))
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Dim z As Double = (value-_Mu)/_Beta
 			Return (1/_Beta)*Math.Exp(-(z+Math.Exp(-z)))
 		End Function

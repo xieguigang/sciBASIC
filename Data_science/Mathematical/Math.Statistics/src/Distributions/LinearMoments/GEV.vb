@@ -53,7 +53,7 @@ Namespace Distributions.LinearMoments
 			_Alpha = 0
 			_Xi = 0
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim LM As New MomentFunctions.LinearMoments(data)
 			SetPeriodOfRecord(LM.GetSampleSize())
 			'different formulae finding _k for positive and negative t3 - for very low t3 _k is refined through newton-raphson iteration
@@ -93,25 +93,25 @@ Namespace Distributions.LinearMoments
 				_Xi = LM.GetL1() - _Alpha * (1 - gam) / _K
 			End If
 		End Sub
-		Public Sub New(ByVal K As Double, ByVal Alpha As Double, ByVal Xi As Double)
+		Public Sub New( K As Double,  Alpha As Double,  Xi As Double)
 			_K = K
 			_Alpha = Alpha
 			_Xi = Xi
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			If _K <> 0 Then
 				Return _Xi + (_Alpha / _K) * ((1 - Math.Pow((-Math.Log(probability)),_K)))
 			Else
 				Return _Xi - _Alpha * Math.Log(-Math.Log(probability))
 			End If
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Return Math.Exp(-Math.Exp(-Y(value)))
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Return (1/_Alpha) * Math.Exp(-(1 - _K) * (Y(value) - Math.Exp(-Y(value))))
 		End Function
-		Private Function Y(ByVal value As Double) As Double
+		Private Function Y( value As Double) As Double
 			If _K <> 0 Then
 				Return (-1/_K) * Math.Log(1 - _K * (value - _Xi) / _Alpha)
 			Else

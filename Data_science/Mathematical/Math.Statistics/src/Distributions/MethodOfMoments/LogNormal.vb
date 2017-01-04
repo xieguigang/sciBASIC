@@ -51,7 +51,7 @@ Namespace Distributions.MethodOfMoments
 			_Mean = 0
 			_StDev = 1
 		End Sub
-		Public Sub New(ByVal mean As Double, ByVal stdev As Double, ByVal samplesize As Integer)
+		Public Sub New( mean As Double,  stdev As Double,  samplesize As Integer)
 			_Mean = mean
 			_StDev = stdev
 			SetPeriodOfRecord(samplesize)
@@ -59,7 +59,7 @@ Namespace Distributions.MethodOfMoments
 		''' <summary>
 		''' This takes an input array of sample data, calculates the log base 10 of the data, then calculates the mean and standard deviation of the log data. </summary>
 		''' <param name="data"> the sampled data (in linear space) </param>
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			For i As Integer = 0 To data.Length - 1
 				data(i) = Math.Log10(data(i))
 			Next i
@@ -68,19 +68,19 @@ Namespace Distributions.MethodOfMoments
 			_StDev = BPM.GetStDev()
 			SetPeriodOfRecord(BPM.GetSampleSize())
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim z As New Normal(_Mean,_StDev)
 			Return Math.Pow(10,z.GetInvCDF(probability))
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Dim n As New Distributions.MethodOfMoments.Normal(_Mean,_StDev)
 			Return n.GetCDF(Math.Log10(value))
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Dim n As New Distributions.MethodOfMoments.Normal(_Mean,_StDev)
 			Return n.GetPDF(Math.Log10(value))
 		End Function
-		Public Overridable Function Bullentin17BConfidenceLimit(ByVal probability As Double, ByVal alphaValue As Double) As Double
+		Public Overridable Function Bullentin17BConfidenceLimit( probability As Double,  alphaValue As Double) As Double
 			Dim sn As New Normal(0,1)
 			Dim k As Double = sn.GetInvCDF(probability)
 			Dim z As Double = sn.GetInvCDF(alphaValue)

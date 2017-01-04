@@ -42,7 +42,7 @@ Namespace Distributions
 		Public Overridable Function ErrorMessage() As String
 			Return _ErrorMessage
 		End Function
-		Public Sub New(ByVal Message As String)
+		Public Sub New( Message As String)
 			_ErrorMessage = Message
 		End Sub
 	End Class

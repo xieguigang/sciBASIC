@@ -39,7 +39,7 @@
 '	''' @author Will_and_Sara
 '	''' </summary>
 '	Public Class XMLReadableFactory
-'		Public Shared Function ReadXMLElement(ByVal ele As org.w3c.dom.Element) As ISampleWithUncertainty
+'		Public Shared Function ReadXMLElement( ele As org.w3c.dom.Element) As ISampleWithUncertainty
 '			Select Case ele.TagName
 '				Case "MonotonicallyIncreasingCurveUncertain"
 '					Return New MonotonicallyIncreasingCurveUncertain(ele)

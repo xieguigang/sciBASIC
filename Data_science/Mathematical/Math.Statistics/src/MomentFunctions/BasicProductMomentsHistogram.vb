@@ -49,7 +49,7 @@ Namespace MomentFunctions
 		Public Overridable Function Bins() As Integer()
 			Return _Bins
 		End Function
-		Public Sub New(ByVal NumBins As Integer, ByVal Min As Double, ByVal Max As Double)
+		Public Sub New( NumBins As Integer,  Min As Double,  Max As Double)
 			MyBase.New()
 			_Bins = New Integer(NumBins - 1){}
 			_ExpectedMin = Min
@@ -60,7 +60,7 @@ Namespace MomentFunctions
 	'        _Bins = new int[0];
 	'        
 	'    }
-		Public Overrides Sub AddObservation(ByVal observation As Double)
+		Public Overrides Sub AddObservation( observation As Double)
 			MyBase.AddObservation(observation)
 			'histogram logic. Currently this is not designed to be as efficent as possible.  needs work (buffer block copy for instance)
 			If observation < _ExpectedMin Then

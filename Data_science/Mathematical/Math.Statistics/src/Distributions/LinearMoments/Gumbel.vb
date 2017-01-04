@@ -51,23 +51,23 @@ Namespace Distributions.LinearMoments
 			_Alpha = 0
 			_Xi = 0
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim LM As New MomentFunctions.LinearMoments(data)
 			_Alpha = LM.GetL2() / Math.Log(2)
 			_Xi = LM.GetL1() - 0.57721566490153287 * _Alpha
 			SetPeriodOfRecord(LM.GetSampleSize())
 		End Sub
-		Public Sub New(ByVal Alpha As Double, ByVal Xi As Double)
+		Public Sub New( Alpha As Double,  Xi As Double)
 			_Alpha = Alpha
 			_Xi = Xi
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Return _Xi - _Alpha * Math.Log(-Math.Log(probability))
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Return Math.Exp(-Math.Exp(-(value - _Xi) / _Alpha))
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Return (1/_Alpha) * Math.Exp(-(value - _Xi) / _Alpha) * Math.Exp(-Math.Exp(-(value - _Xi) / _Alpha))
 		End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)

@@ -52,21 +52,21 @@ Namespace Distributions.MethodOfMoments
 			'for reflection
 			_Sigma = 1
 		End Sub
-		Public Sub New(ByVal sigma As Double)
+		Public Sub New( sigma As Double)
 			_Sigma = sigma
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
 			_Sigma = BPM.GetStDev()
 			SetPeriodOfRecord(BPM.GetSampleSize())
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Return _Sigma * Math.Sqrt(-2*Math.Log(probability))
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Return 1-(Math.Exp(-(Math.Pow(value, 2))/(2*(Math.Pow(_Sigma,2)))))
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Return (value/(Math.Pow(_Sigma, 2)))* Math.Exp(-(Math.Pow(value, 2))/(2*(Math.Pow(_Sigma,2))))
 		End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)

@@ -45,7 +45,7 @@ Namespace TabularFunctions
 		Private ReadOnly _Row As Integer
 		Private ReadOnly _ParameterName As String
 		Private ReadOnly _DistributionType As String
-		Public Sub New(ByVal message As String, ByVal row As Integer, ByVal ParameterName As String, ByVal DistributionType As String)
+		Public Sub New( message As String,  row As Integer,  ParameterName As String,  DistributionType As String)
 			_ErrorMessage = message
 			_Row = row
 			_ParameterName = ParameterName

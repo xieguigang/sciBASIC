@@ -53,17 +53,17 @@ Namespace TabularFunctions
         Public Function GetYValues() As List(Of Double?) Implements ISampleDeterministically.GetYValues
             Return _Y
         End Function
-        Public Sub New(ByVal Xvalues As List(Of Double?), ByVal Yvalues As List(Of Double?))
+        Public Sub New( Xvalues As List(Of Double?),  Yvalues As List(Of Double?))
 			_X = Xvalues
 			_Y = Yvalues
 		End Sub
-        'Public Sub New(ByVal ele As org.w3c.dom.Element)
+        'Public Sub New( ele As org.w3c.dom.Element)
         '	ReadFromXMLElement(ele)
         'End Sub
         Public Overrides Function FunctionType() As FunctionTypeEnum
 			Return FunctionTypeEnum.MonotonicallyIncreasing
 		End Function
-        Public Function GetYFromX(ByVal x As Double) As Double Implements ISampleDeterministically.GetYFromX
+        Public Function GetYFromX( x As Double) As Double Implements ISampleDeterministically.GetYFromX
             'determine how to implement a binary search.
             Dim index As Integer = java.util.Collections.binarySearch(_X, x)
             'if index is negative, it should be (-(index)-1);
@@ -88,11 +88,11 @@ Namespace TabularFunctions
 			Next i
 			Return output
 		End Function
-        Public Function GetYFromX(ByVal x As Double, ByVal probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
+        Public Function GetYFromX( x As Double,  probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
             'Basic functionality will return GetYFromX(double x).  MonotonicallyIncreasingCurveUncertain will override this method.
             Return GetYFromX(x)
         End Function
-        Public Function GetYValues(ByVal probability As Double) As List(Of Double?) Implements ISampleWithUncertainty.GetYValues
+        Public Function GetYValues( probability As Double) As List(Of Double?) Implements ISampleWithUncertainty.GetYValues
             'Basic functionality will return _Y.  MonotonicallyIncreasingCurveUncertain will override this method.
             Return _Y
         End Function
@@ -103,10 +103,10 @@ Namespace TabularFunctions
             Next i
             Return output
         End Function
-        Public Function CurveSample(ByVal probability As Double) As ISampleDeterministically Implements ISampleWithUncertainty.CurveSample
+        Public Function CurveSample( probability As Double) As ISampleDeterministically Implements ISampleWithUncertainty.CurveSample
             Return Me 'should implement a clone function
         End Function
-        'Public Overrides Sub ReadFromXMLElement(ByVal ele As org.w3c.dom.Element) Implements IWriteToXML.ReadFromXMLElement
+        'Public Overrides Sub ReadFromXMLElement( ele As org.w3c.dom.Element) Implements IWriteToXML.ReadFromXMLElement
         '	_X = New List(Of )
         '	_Y = New List(Of )
         '	For i As Integer = 0 To ele.ChildNodes.Length - 1

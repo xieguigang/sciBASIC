@@ -53,13 +53,13 @@ Namespace Distributions.MethodOfMoments
 			_StDev = 1
 			_Skew = 0
 		End Sub
-		Public Sub New(ByVal mean As Double, ByVal stdev As Double, ByVal skew As Double, ByVal sampleSize As Integer)
+		Public Sub New( mean As Double,  stdev As Double,  skew As Double,  sampleSize As Integer)
 			_Mean = mean
 			_StDev = stdev
 			_Skew = skew
 			SetPeriodOfRecord(sampleSize)
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			For i As Integer = 0 To data.Length - 1
 				data(i)= Math.Log10(data(i))
 			Next i
@@ -69,7 +69,7 @@ Namespace Distributions.MethodOfMoments
 			_Skew = PM.GetSkew()
 			SetPeriodOfRecord(PM.GetSampleSize())
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			If _Skew = 0 Then
 				Dim zeroSkewNorm As New Normal(_Mean,_StDev)
 				Dim logflow As Double = zeroSkewNorm.GetInvCDF(probability)
@@ -82,13 +82,13 @@ Namespace Distributions.MethodOfMoments
 				Return Math.Pow(10, logflow)
 			End If
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
 		End Function
-		Public Overridable Function Bullentin17BConfidenceLimit(ByVal probability As Double, ByVal alphaValue As Double) As Double
+		Public Overridable Function Bullentin17BConfidenceLimit( probability As Double,  alphaValue As Double) As Double
 			Dim sn As New Normal(0,1)
 			Dim z1 As Double =sn.GetInvCDF(probability)
 			Dim k As Double = 0

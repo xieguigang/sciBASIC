@@ -51,7 +51,7 @@ Namespace Distributions.MethodOfMoments
 			_Alpha = 0
 			_Beta = 0
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
 			Dim x As Double = BPM.GetMean()
 			Dim v As Double = BPM.GetStDev()
@@ -62,11 +62,11 @@ Namespace Distributions.MethodOfMoments
 				'Beta Fitting Error: variance is greater than mean*(1-mean), this data is not factorable to a beta distribution
 			End If
 		End Sub
-		Public Sub New(ByVal Alpha As Double, ByVal Beta As Double)
+		Public Sub New( Alpha As Double,  Beta As Double)
 			_Alpha = Alpha
 			_Beta = Beta
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			'use bisection since the shape can be bimodal.
 			Dim value As Double = 0.5 'midpoint of the beta output range
 			Dim testvalue As Double = GetCDF(value)
@@ -88,10 +88,10 @@ Namespace Distributions.MethodOfMoments
 			Loop While Math.Abs(testvalue - probability) > 0.000000000000001 Or n <> 100
 			Return value
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double 'not sure this is right, technically it is the regularized incomplete beta.
+		Public Overrides Function GetCDF( value As Double) As Double 'not sure this is right, technically it is the regularized incomplete beta.
 			Return SpecialFunctions.SpecialFunctions.RegularizedIncompleteBetaFunction(_Alpha, _Beta, value)
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			Return (Math.Pow(value,(_Alpha - 1)) * (Math.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.SpecialFunctions.BetaFunction(_Alpha, _Beta)
 		End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)

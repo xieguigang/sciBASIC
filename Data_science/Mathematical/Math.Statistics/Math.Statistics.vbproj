@@ -104,7 +104,7 @@
     <Compile Include="src\MomentFunctions\BasicProductMomentsHistogram.vb" />
     <Compile Include="src\MomentFunctions\LinearMoments.vb" />
     <Compile Include="src\MomentFunctions\ProductMoments.vb" />
-    <Compile Include="src\SpecialFunctions\SpecialFunctions.vb" />
+    <Compile Include="SpecialFunctions.vb" />
     <Compile Include="src\TabularFunctions\FunctionTypeEnum.vb" />
     <Compile Include="src\TabularFunctions\ISampleDeterministically.vb" />
     <Compile Include="src\TabularFunctions\ISampleWithUncertainty.vb" />
@@ -144,6 +144,8 @@
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\SpecialFunctions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

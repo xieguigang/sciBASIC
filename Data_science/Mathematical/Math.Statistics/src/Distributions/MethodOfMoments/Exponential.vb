@@ -49,21 +49,21 @@ Namespace Distributions.MethodOfMoments
 			'for reflection
 			_Lambda = 1
 		End Sub
-		Public Sub New(ByVal lambda As Double)
+		Public Sub New( lambda As Double)
 			_Lambda = lambda
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
 			_Lambda = 1/BPM.GetMean()
 			SetPeriodOfRecord(BPM.GetSampleSize())
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Return Math.Log(probability)/_Lambda
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			Return 1- Math.Exp(-_Lambda*value)
 		End Function
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			If value<0 Then
 				Return 0
 			Else

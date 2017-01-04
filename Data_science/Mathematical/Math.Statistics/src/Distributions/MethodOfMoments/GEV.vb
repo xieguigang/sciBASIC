@@ -47,15 +47,15 @@ Namespace Distributions.MethodOfMoments
 		Private _Mu As Double 'https://en.wikipedia.org/wiki/Generalized_extreme_value_distribution
 		Private _Sigma As Double
 		Private _Xi As Double
-		Public Sub New(ByVal mu As Double, ByVal sigma As Double, ByVal xi As Double)
+		Public Sub New( mu As Double,  sigma As Double,  xi As Double)
 			_Mu = mu
 			_Sigma = sigma
 			_Xi = xi
 		End Sub
-		Public Sub New(ByVal data As Double())
+		Public Sub New( data As Double())
 			'not implemented
 		End Sub
-		Public Overrides Function GetInvCDF(ByVal probability As Double) As Double
+		Public Overrides Function GetInvCDF( probability As Double) As Double
 			If probability<=0 Then
 				If _Xi>0 Then
 					Return _Mu-_Sigma/_Xi
@@ -71,26 +71,26 @@ Namespace Distributions.MethodOfMoments
 			End If
 			Return Tinv(probability)
 		End Function
-		Public Overrides Function GetCDF(ByVal value As Double) As Double
+		Public Overrides Function GetCDF( value As Double) As Double
 			If _Xi>0 AndAlso value <= _Mu-_Sigma/_Xi Then Return 0
 			If _Xi<0 AndAlso value >= _Mu-_Sigma/_Xi Then Return 1
 			Return Math.Exp(-T(value))
 		End Function
 
-		Public Overrides Function GetPDF(ByVal value As Double) As Double
+		Public Overrides Function GetPDF( value As Double) As Double
 			If _Xi>0 AndAlso value <= _Mu-_Sigma/_Xi Then Return 0
 			If _Xi<0 AndAlso value >= _Mu-_Sigma/_Xi Then Return 0
 			Dim tx As Double = T(value)
 			Return (1/_Sigma)*Math.Pow(tx, _Xi+1)*Math.Exp(-tx)
 		End Function
-		Private Function T(ByVal x As Double) As Double
+		Private Function T( x As Double) As Double
 			If _Xi<>0 Then
 				Return Math.Pow((1+((x-_Mu)/_Sigma)*_Xi),-1/_Xi)
 			Else
 				Return Math.Exp(-(x-_Mu)/_Sigma)
 			End If
 		End Function
-		Private Function Tinv(ByVal probability As Double) As Double
+		Private Function Tinv( probability As Double) As Double
 			If _Xi<>0 Then
 				Return _Mu-_Sigma*(Math.Pow(Math.Log(1/probability), _Xi)-1)/_Xi
 			Else

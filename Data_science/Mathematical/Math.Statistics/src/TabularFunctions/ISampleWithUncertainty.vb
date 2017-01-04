@@ -42,10 +42,10 @@ Namespace TabularFunctions
 	Public Interface ISampleWithUncertainty
 		Inherits IWriteToXML
 
-		Function GetYFromX(ByVal x As Double, ByVal probability As Double) As Double
-		Function GetYValues(ByVal probability As Double) As List(Of Double?)
+		Function GetYFromX( x As Double,  probability As Double) As Double
+		Function GetYValues( probability As Double) As List(Of Double?)
 		Function GetYDistributions() As List(Of Distributions.ContinuousDistribution)
-		Function CurveSample(ByVal probability As Double) As ISampleDeterministically
+		Function CurveSample( probability As Double) As ISampleDeterministically
 	End Interface
 
 End Namespace
