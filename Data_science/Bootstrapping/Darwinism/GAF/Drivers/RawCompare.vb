@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
+Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 Namespace Darwinism.GAF
@@ -47,7 +49,26 @@ Namespace Darwinism.GAF
 
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector).Calculate
             Dim result As ODEsOut = MonteCarlo.Model.RunTest(model, y0, chromosome.vars, n, a, b)
+            Dim fitness As New List(Of Double)
 
+            For Each var As NamedValue(Of TimeValue()) In observation
+                Dim y = result.y(var.Name)
+                Dim index As IndexOf(Of Double) = time(var.Name).Value
+                Dim indices%() = var.Value _
+                    .Select(Function(t) index(t.Time)) _
+                    .ToArray
+                Dim cData#() = indices _
+                    .Select(Function(i) y.Value(i)) _
+                    .ToArray
+
+                fitness += Math.Sqrt(
+                    FitnessHelper.Calculate(
+                    var.Value.Select(Function(t) t.Y).ToArray,
+                    cData))
+            Next
+
+            Dim out# = fitness.Average
+            Return out
         End Function
     End Class
 End Namespace
