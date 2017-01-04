@@ -20,7 +20,7 @@ Namespace Darwinism.GAF.Driver
         Dim X#()
         Dim n%
         Dim a, b As Double
-        Dim time As New Dictionary(Of NamedValue(Of IndexOf(Of Double)))
+        Dim time As New Dictionary(Of NamedValue(Of Dictionary(Of Double, Integer)))
         Dim observation As NamedValue(Of TimeValue())()
 
         ''' <summary>
@@ -29,7 +29,7 @@ Namespace Darwinism.GAF.Driver
         Dim model As Type
         Dim y0 As Dictionary(Of String, Double)
 
-        Sub New(observation As NamedValue(Of TimeValue())(), n%, a#, b#, y0 As Dictionary(Of String, Double))
+        Sub New(model As Type, observation As NamedValue(Of TimeValue())(), n%, a#, b#, y0 As Dictionary(Of String, Double))
             With Me
                 .n = n
                 .a = a
@@ -37,10 +37,11 @@ Namespace Darwinism.GAF.Driver
                 .X = ODEs.TimePopulator(n, a, b).ToArray
                 .observation = observation
                 .y0 = y0
+                .model = model
             End With
 
             For Each var As NamedValue(Of TimeValue()) In observation
-                time += New NamedValue(Of IndexOf(Of Double)) With {
+                time += New NamedValue(Of Dictionary(Of Double, Integer)) With {
                     .Name = var.Name,
                     .Value = TimeValue.BuildIndex(X, var.Value)
                 }
@@ -53,7 +54,7 @@ Namespace Darwinism.GAF.Driver
 
             For Each var As NamedValue(Of TimeValue()) In observation
                 Dim y = result.y(var.Name)
-                Dim index As IndexOf(Of Double) = time(var.Name).Value
+                Dim index As Dictionary(Of Double, Integer) = time(var.Name).Value
                 Dim indices%() = var.Value _
                     .Select(Function(t) index(t.Time)) _
                     .ToArray

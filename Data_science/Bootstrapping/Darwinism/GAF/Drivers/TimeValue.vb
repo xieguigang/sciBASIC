@@ -31,28 +31,28 @@ Namespace Darwinism.GAF.Driver
         ''' <param name="X#">假设X是从小到大排序的</param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Public Shared Function BuildIndex(X#(), y As TimeValue()) As IndexOf(Of Double)
-            Dim xTime As New List(Of Double)
+        Public Shared Function BuildIndex(X#(), y As TimeValue()) As Dictionary(Of Double, Integer)
+            Dim index As New Dictionary(Of Double, Integer)
 
             ' 在这个函数里面不需要任何排序操作，否则会打乱原有的一一对应关系
-
             For Each time As TimeValue In y
                 Dim minD# = Integer.MaxValue
                 Dim yx#
 
-                For Each xi As Double In X
+                For i As Integer = 0 To X.Length - 1
+                    Dim xi = X(i)
                     Dim d = Math.Abs(xi - time.Time)
 
                     If d <= minD Then
                         minD = d
-                        yx = xi
+                        yx = i
                     End If
                 Next
 
-                xTime += yx#
+                Call index.Add(time.Time, yx)
             Next
 
-            Return New IndexOf(Of Double)(xTime)
+            Return index
         End Function
     End Structure
 End Namespace
