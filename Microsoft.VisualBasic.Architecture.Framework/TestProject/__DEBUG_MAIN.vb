@@ -87,7 +87,22 @@ Public Module __DEBUG_MAIN
         Public Property Extensions As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{"abcd", "999"}, {"gggg", "XXXXXXX"}}
     End Class
 
+
+    Private Sub testColors()
+        Dim c1 = Color.Blue.ColorToDecimal
+        Dim c2 = Color.Red.ColorToDecimal
+
+        Console.WriteLine(Color.Blue.ToArgb)
+        Console.WriteLine(Color.Red.ToArgb)
+
+        Pause()
+    End Sub
+
     Function Main() As Integer
+
+
+        Call testColors()
+
 
         Dim testBBBmp As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         testBBBmp = testBBBmp.Grayscale
