@@ -429,19 +429,57 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension>
-        Public Function Fitting(Of T As MonteCarlo.Model)(driver As Fitness(Of ParameterVector),
-                                                          Optional popSize% = 200%,
-                                                          Optional evolIterations% = Integer.MaxValue%,
-                                                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
-                                                          Optional threshold# = 0.5,
-                                                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
-                                                          Optional randomGenerator As IRandomSeeds = Nothing,
-                                                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
-                                                          Optional print As Action(Of outPrint, var()) = Nothing,
-                                                          Optional radicals# = 0.3,
-                                                          Optional parallel As ParallelComputing(Of ParameterVector) = Nothing,
-                                                          Optional weights As Dictionary(Of String, Double) = Nothing) As var()
+        Public Function Fitting(Of T As MonteCarlo.Model)(
+                              driver As Fitness(Of ParameterVector),
+                              Optional popSize% = 200%,
+                              Optional evolIterations% = Integer.MaxValue%,
+                              Optional ByRef outPrint As List(Of outPrint) = Nothing,
+                              Optional threshold# = 0.5,
+                              Optional base As Dictionary(Of String, Double) = Nothing,
+                              Optional randomGenerator As IRandomSeeds = Nothing,
+                              Optional mutateLevel As MutateLevels = MutateLevels.Low,
+                              Optional print As Action(Of outPrint, var()) = Nothing,
+                              Optional radicals# = 0.3,
+                              Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
 
+            Dim model As Type = GetType(T)
+            Dim vars$() = MonteCarlo.Model.GetParameters(model).ToArray
+
+            If randomGenerator Is Nothing Then
+                randomGenerator = Function() New Random
+            End If
+            If print Is Nothing Then
+                print = Sub(x, v) Call x.ToString.__DEBUG_ECHO
+            End If
+
+            Dim population As Population(Of ParameterVector) =
+                New ParameterVector(seeds:=randomGenerator) With {
+                    .vars = vars.CreateVector(randomGenerator, base),
+                    .MutationLevel = mutateLevel,
+                    .radicals = radicals
+            }.InitialPopulation(popSize%, parallel)
+
+#If Not DEBUG Then
+            population.Parallel = True
+#End If
+            Dim ga As New GeneticAlgorithm(Of ParameterVector)(
+                population,
+                driver,
+                randomGenerator)
+            Dim out As New List(Of outPrint)
+
+            Call ga.AddDefaultListener(Sub(x)
+                                           Call out.Add(x)
+                                           Call print(x, ga.Best.vars.ToArray(Function(v) New var(v)))
+                                       End Sub, threshold)
+            Call ga.Evolve(evolIterations%)
+
+            outPrint = out
+#If DEBUG Then
+            Call Console.WriteLine("GAF fitting:")
+            Call Console.WriteLine(ga.Best.vars.GetJson)
+#End If
+            Return ga.Best.vars
         End Function
     End Module
 End Namespace
