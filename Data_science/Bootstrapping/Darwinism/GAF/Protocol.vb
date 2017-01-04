@@ -131,7 +131,7 @@ Namespace Darwinism.GAF
                 fitness:=fitness,
                 outPrint:=outPrint,
                 threshold:=threshold,
-                argsInit:=Nothing,
+                base:=Nothing,
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
                 print:=print,
@@ -181,21 +181,20 @@ Namespace Darwinism.GAF
         ''' <param name="evolIterations%"></param>
         ''' <param name="fitness"></param>
         ''' <param name="outPrint"></param>
-        ''' <param name="argsInit"></param>
+        ''' <param name="base"></param>
         ''' <param name="weights">Weights for variable fitness calcaulation</param>
         ''' <returns></returns>
         <Extension>
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
                                        fitness As GAFFitness,
                                        ByRef outPrint As List(Of outPrint),
-                                       argsInit As Dictionary(Of String, Double),
+                                       base As Dictionary(Of String, Double),
                                        randomGenerator As IRandomSeeds,
                                        mutateLevel As MutateLevels,
                                        print As Action(Of outPrint, var()),
                                        radicals#,
                                        parallel As ParallelComputing(Of ParameterVector),
                                        weights As Dictionary(Of String, Double)) As var()
-            Dim estArgs As var()
 
             If Not weights Is Nothing Then
                 fitness.weights = fitness.modelVariables.Balance(weights)
@@ -210,35 +209,10 @@ Namespace Darwinism.GAF
             If print Is Nothing Then
                 print = Sub(x, v) Call x.ToString.__DEBUG_ECHO
             End If
-            If argsInit.IsNullOrEmpty Then
-                estArgs = vars.ToArray(
-                    Function(x) New var With {
-                        .Name = x,
-                        .value = 0.5R
-                    })
-            Else
-                estArgs = LinqAPI.Exec(Of var) <= From x
-                                                  In argsInit
-                                                  Where Array.IndexOf(vars, x.Key) > -1
-                                                  Select New var With {
-                                                      .Name = x.Key,
-                                                      .value = x.Value
-                                                  }
-                Dim varsData As Dictionary(Of var) =
-                    estArgs.ToDictionary
-                For Each name$ In vars
-                    If Not varsData.ContainsKey(name$) Then
-                        varsData += New var With {
-                            .Name = name,
-                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
-                        }
-                    End If
-                Next
-            End If
 
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector(seeds:=randomGenerator) With {
-                    .vars = estArgs,
+                    .vars = vars.CreateVector(randomGenerator, base),
                     .MutationLevel = mutateLevel,
                     .radicals = radicals
             }.InitialPopulation(popSize%, parallel)
@@ -275,6 +249,44 @@ Namespace Darwinism.GAF
             Call Console.WriteLine(ga.Best.vars.GetJson)
 #End If
             Return ga.Best.vars
+        End Function
+
+        <Extension>
+        Public Function CreateVector(vars$(), randomGenerator As IRandomSeeds, Optional base As Dictionary(Of String, Double) = Nothing) As var()
+            Dim vector As var()
+
+            If base.IsNullOrEmpty Then
+                vector = vars.ToArray(
+                    Function(x) New var With {
+                        .Name = x,
+                        .value = 0.5R
+                    })
+            Else
+                vector = LinqAPI.Exec(Of var) <=
+ _
+                    From x
+                    In base
+                    Where Array.IndexOf(vars, x.Key) > -1
+                    Select New var With {
+                        .Name = x.Key,
+                        .value = x.Value
+                    }
+
+                Dim vData As Dictionary(Of var) = vector.ToDictionary
+
+                For Each name$ In vars
+                    If Not vData.ContainsKey(name$) Then
+                        vData += New var With {
+                            .Name = name,
+                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
+                        }
+                    End If
+                Next
+
+                Return vData.Values.ToArray
+            End If
+
+            Return vector
         End Function
 
         ''' <summary>
@@ -328,7 +340,7 @@ Namespace Darwinism.GAF
                 fitness:=fitness,
                 outPrint:=outPrint,
                 threshold:=threshold,
-                argsInit:=estArgsBase,
+                base:=estArgsBase,
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
                 print:=print,
@@ -402,6 +414,34 @@ Namespace Darwinism.GAF
                             radicals:=radicals,
                             parallel:=parallel,
                             weights:=weights)
+        End Function
+
+        ''' <summary>
+        ''' 用于实际分析的GAF工具
+        ''' </summary>
+        ''' <param name="popSize%">
+        ''' 更小的种群规模能够产生更快的进化速度，更大的种群规模能够产生更多的解集
+        ''' </param>
+        ''' <param name="evolIterations%"></param>
+        ''' <param name="outPrint"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="radicals">参数值介于[0-1]之间</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension>
+        Public Function Fitting(Of T As MonteCarlo.Model)(driver As Fitness(Of ParameterVector),
+                                                          Optional popSize% = 200%,
+                                                          Optional evolIterations% = Integer.MaxValue%,
+                                                          Optional ByRef outPrint As List(Of outPrint) = Nothing,
+                                                          Optional threshold# = 0.5,
+                                                          Optional estArgsBase As Dictionary(Of String, Double) = Nothing,
+                                                          Optional randomGenerator As IRandomSeeds = Nothing,
+                                                          Optional mutateLevel As MutateLevels = MutateLevels.Low,
+                                                          Optional print As Action(Of outPrint, var()) = Nothing,
+                                                          Optional radicals# = 0.3,
+                                                          Optional parallel As ParallelComputing(Of ParameterVector) = Nothing,
+                                                          Optional weights As Dictionary(Of String, Double) = Nothing) As var()
+
         End Function
     End Module
 End Namespace
