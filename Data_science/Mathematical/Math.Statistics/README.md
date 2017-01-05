@@ -84,11 +84,11 @@ with the following:
 ```vbnet
 Dim SN As New Distributions.MethodOfMoments.Normal(5,3)
 ```
-will create a normal distribution with a mean of 5 and a standard deviation of 3.  The result will be seen in the output to the debug window.
+will create a normal distribution with a mean of 5 and a standard deviation of 3. The result will be seen in the output to the debug window.
 
 As you can see in the previous example, we used the normal distribution from the MethodofMoments package. The major difference between the MethodOfMoments package and the LinearMoments package is in the way that the distributions are fitted to data.
 
-To fit a distribution to data use the constructor that accepts an argument of double[].
+To fit a distribution to data use the constructor that accepts an argument of ``Double()`` or ``Vector`` type in VisualBasic.
 ```vbnet
 Dim data#() = {1.0, 3.2, 4.9, 7.4, 2.4, 2.2}
 Dim Norm As New Distributions.MethodOfMoments.Normal(data)
