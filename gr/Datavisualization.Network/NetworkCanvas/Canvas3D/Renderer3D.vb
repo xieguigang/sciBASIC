@@ -31,7 +31,6 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Transformation
 
 Public Class Renderer3D : Inherits Renderer
     Implements IGraphicsEngine
@@ -57,6 +56,79 @@ Public Class Renderer3D : Inherits Renderer
 
     Public Property rotate As Double = Math.PI / 3
 
+    ''' <summary>
+    ''' Apply the painter algorithm at here
+    ''' </summary>
+    Public Overrides Sub DirectDraw()
+        Dim nodes As New List(Of layoutNode)
+        Dim view As Rectangle = __regionProvider()  ' projection and painter algorithm order
+
+        Call forceDirected.EachNode(
+            Sub(node, point)
+                Dim r! = If(dynamicsRadius, node.Data.radius, radiushash(node))
+
+                If r < 0.6 OrElse Single.IsNaN(r) OrElse r > 500 Then
+                    Return
+                End If
+
+                Dim iPosition = point.position
+                Dim location As Point3D = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
+                    .RotateX(rotate) _
+                    .RotateY(rotate) _
+                    .RotateZ(rotate) _
+                    .Project(view.Width, view.Height, 256, ViewDistance)
+
+                Call nodes.Add(
+                    New layoutNode With {
+                        .location = location,
+                        .node = node,
+                        .r = r
+                    })
+            End Sub)
+
+        Dim canvas As Graphics = __graphicsProvider()
+        Dim orders As IEnumerable(Of Integer) =
+            nodes.OrderProvider(Function(n) n.location.Z)
+
+        SyncLock canvas
+
+            Call forceDirected.EachEdge(AddressOf __invokeEdgeDraw)
+
+            For Each index As Integer In orders
+                Dim node As layoutNode = nodes(index)
+                Dim pos As Point = node.location.PointXY(view.Size)
+                Dim r! = node.r
+                Dim pt As New PointF(pos.X - r / 2, pos.Y - r / 2)
+                Dim rect As New RectangleF(pt, New SizeF(r, r))
+                Dim n As Node = node.node
+
+                Call canvas.FillPie(
+                    n.Data.Color,
+                    rect.X, rect.Y, rect.Width, rect.Height,
+                    0!, 360.0!)
+
+                If ShowLabels Then
+                    Dim center As PointF = rect.Centre
+                    Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
+
+                    center = New PointF(
+                        center.X - sz.Width / 2,
+                        center.Y - sz.Height / 2)
+
+                    Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
+                End If
+            Next
+        End SyncLock
+
+        ' forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
+    End Sub
+
+    Private Structure layoutNode
+        Dim node As Node
+        Dim location As Point3D
+        Dim r!
+    End Structure
+
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = __regionProvider()
         Dim pos1 As Point = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
@@ -73,53 +145,18 @@ Public Class Renderer3D : Inherits Renderer
         '   pos2 = GraphToScreen(pos2, rect)
         Dim canvas As Graphics = __graphicsProvider()
 
-        SyncLock canvas
-            Dim w As Single = widthHash(iEdge)
-            Dim LineColor As New Pen(Color.Gray, w)
+        Dim w As Single = widthHash(iEdge)
+        Dim LineColor As New Pen(Color.Gray, w)
 
-            Call canvas.DrawLine(
-                LineColor,
-                pos1.X,
-                pos1.Y,
-                pos2.X,
-                pos2.Y)
-        End SyncLock
+        Call canvas.DrawLine(
+            LineColor,
+            pos1.X,
+            pos1.Y,
+            pos2.X,
+            pos2.Y)
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim r As Single = If(dynamicsRadius, n.Data.radius, radiushash(n))
 
-        If r < 0.6 OrElse Single.IsNaN(r) OrElse r > 500 Then
-            Return
-        End If
-
-        Dim client As Rectangle = __regionProvider()
-        Dim pos As Point = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
-            .RotateX(rotate) _
-            .RotateY(rotate) _
-            .RotateZ(rotate) _
-            .Project(client.Width, client.Height, 256, ViewDistance).PointXY
-        Dim canvas As Graphics = __graphicsProvider()
-
-        '   pos = GraphToScreen(pos, __regionProvider())
-
-        SyncLock canvas
-            Dim pt As New PointF(pos.X - r / 2, pos.Y - r / 2)
-            Dim rect As New RectangleF(pt, New SizeF(r, r))
-
-            Call canvas.FillPie(
-                n.Data.Color,
-                rect.X, rect.Y, rect.Width, rect.Height,
-                0!, 360.0!)
-
-            If ShowLabels Then
-                Dim center As PointF = rect.Centre
-                Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
-                center = New PointF(
-                    center.X - sz.Width / 2,
-                    center.Y - sz.Height / 2)
-                Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
-            End If
-        End SyncLock
     End Sub
 End Class
