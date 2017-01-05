@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::269b5aed828d8fff949517ff00b88ec1, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::7bc566e5b880a296ac3349efc0366a57, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Class2.vb"
 
     ' Author:
     ' 
@@ -26,13 +26,26 @@
 
 #End Region
 
-Public Class Form1
+Imports System.Drawing
+Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
-    Dim WithEvents ccc As New CubeTest
+Public Class CubeModel : Inherits GDIDevice
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Call Me.Controls.Add(ccc)
-        ccc.Dock = Windows.Forms.DockStyle.Fill
-        Call ccc.Run()
+    Dim cubeModel As New Cube(10)
+
+    Protected Overrides Sub ___animationLoop()
+        ' Update the variable after each frame.
+        _camera.angleX += 1
+        _camera.angleY += 1
+        _camera.angleZ += 1
+    End Sub
+
+    Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
+        ' Clear the window
+        g.Clear(Color.LightBlue)
+
+        'Dim view As ModelView = cubeModel.Rotate(m_angle, ClientSize, Aixs.All)
+        Call cubeModel.Draw(g, _camera)
     End Sub
 End Class
