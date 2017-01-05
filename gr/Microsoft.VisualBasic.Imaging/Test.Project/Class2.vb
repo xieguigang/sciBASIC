@@ -34,11 +34,13 @@ Public Class CubeTest : Inherits GDIDevice
 
     Protected m_angle As Integer
 
-    Dim cubeModel As New Cube
+    Dim cubeModel As New Cube(10)
 
     Protected Overrides Sub ___animationLoop()
         ' Update the variable after each frame.
-        m_angle += 1
+        _camera.angleX += 1
+        _camera.angleY += 1
+        _camera.angleZ += 1
     End Sub
 
     Protected Overrides Sub __init()
@@ -46,10 +48,10 @@ Public Class CubeTest : Inherits GDIDevice
     End Sub
 
     Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
-        '' Clear the window
-        'g.Clear(Color.LightBlue)
+        ' Clear the window
+        g.Clear(Color.LightBlue)
 
         'Dim view As ModelView = cubeModel.Rotate(m_angle, ClientSize, Aixs.All)
-        'Call view.UpdateGraphics(g)
+        Call cubeModel.Draw(g, _camera)
     End Sub
 End Class

@@ -65,6 +65,8 @@ Namespace Drawing3D
                 End If
             Next
 
+            Call order.Reverse()
+
             ' Draw the faces using the PAINTERS ALGORITHM (distant faces first, closer faces last).
             For i As Integer = 0 To sv.Count - 1
                 Dim index As Integer = order(i)
