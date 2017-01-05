@@ -1,33 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::d7caac9df0e90adad150d01b0fadbbb9, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\src\TabularFunctions\MonotonicallyIncreasingCurveUncertain.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Language.Java.Collections
+Imports Microsoft.VisualBasic.Language
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -45,24 +45,24 @@ Namespace TabularFunctions
 		Inherits TabularFunction
 		Implements ISampleWithUncertainty
 
-		Private _X As List(Of Double?)
-		Private _Y As List(Of Distributions.ContinuousDistribution)
-		Public Overrides Function GetXValues() As List(Of Double?)
-			Return _X
-		End Function
+        Private _X As List(Of Double)
+        Private _Y As List(Of Distributions.ContinuousDistribution)
+        Public Overrides Function GetXValues() As List(Of Double)
+            Return _X
+        End Function
         Public Function GetYDistributions() As List(Of Distributions.ContinuousDistribution) Implements ISampleWithUncertainty.GetYDistributions
             Return _Y
         End Function
-        Public Sub New( Xvalues As List(Of Double?),  Yvalues As List(Of Distributions.ContinuousDistribution))
-			_X = Xvalues
-			_Y = Yvalues
-		End Sub
+        Public Sub New(Xvalues As List(Of Double), Yvalues As List(Of Distributions.ContinuousDistribution))
+            _X = Xvalues
+            _Y = Yvalues
+        End Sub
         'Public Sub New( ele As org.w3c.dom.Element)
         '	ReadFromXMLElement(ele)
         'End Sub
-        Public Function GetYFromX( x As Double,  probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
+        Public Function GetYFromX(x As Double, probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
             'determine how to implement a binary search.
-            Dim index As Integer = java.util.Collections.binarySearch(_X, x)
+            Dim index As Integer = binarySearch(_X, x)
             'if index is negative, it should be (-(index)-1);
             If index > 0 Then
                 Return _Y(index).GetInvCDF(probability)
@@ -79,43 +79,43 @@ Namespace TabularFunctions
                 Return _Y(index - 1).GetInvCDF(probability) + ydelta * distance
             End If
         End Function
-        Public Function GetYValues( probability As Double) As List(Of Double?) Implements ISampleWithUncertainty.GetYValues
-            Dim result As New List(Of Double?)
+        Public Function GetYValues(probability As Double) As List(Of Double) Implements ISampleWithUncertainty.GetYValues
+            Dim result As New List(Of Double)
             For i As Integer = 0 To _Y.Count - 1
                 result.Add(_Y(i).GetInvCDF(probability))
             Next i
             Return result
         End Function
         Public Overrides Function FunctionType() As FunctionTypeEnum
-			Return FunctionTypeEnum.MonotonicallyIncreasingUncertain
-		End Function
-		Public Overrides Function Validate() As List(Of TabularFunctionError)
-			Dim output As New List(Of TabularFunctionError)
-			If _Y.Count >= 1 Then Return output
-			Dim DistributionType As String = _Y(0).GetType().Name
-			Dim upper As Double
-			Dim prevupper As Double = _Y(0).GetInvCDF(.9999999999999)
-			Dim lower As Double
-			Dim prevlower As Double = _Y(0).GetInvCDF(.0000000000001)
-			Dim fifty As Double
-			Dim prevfifty As Double = _Y(0).GetInvCDF(.5)
-			For i As Integer = 1 To _Y.Count - 1
-				lower = _Y(i).GetInvCDF(.0000000000001)
-				upper = _Y(i).GetInvCDF(.9999999999999)
-				fifty = _Y(i).GetInvCDF(.5)
-				If prevlower>lower Then output.Add(New TabularFunctionError("Y is not monotonically increasing for the lower confidence limit.",i,"Y Value lower",DistributionType))
-				If prevupper>upper Then output.Add(New TabularFunctionError("Y is not monotonically increasing for the upper confidence limit.",i,"Y Value upper",DistributionType))
-				If prevfifty>fifty Then output.Add(New TabularFunctionError("Y is not monotonically increasing for the 50% value.",i,"Y Value",DistributionType))
-				prevlower = lower
-				prevupper = upper
-				prevfifty = fifty
-				If _X(i-1)>_X(i) Then output.Add(New TabularFunctionError("X is not monotonically increasing.",i,"X Value",DistributionType))
-			Next i
-			Return output
-		End Function
+            Return FunctionTypeEnum.MonotonicallyIncreasingUncertain
+        End Function
+        Public Overrides Function Validate() As List(Of TabularFunctionError)
+            Dim output As New List(Of TabularFunctionError)
+            If _Y.Count >= 1 Then Return output
+            Dim DistributionType As String = _Y(0).GetType().Name
+            Dim upper As Double
+            Dim prevupper As Double = _Y(0).GetInvCDF(0.9999999999999)
+            Dim lower As Double
+            Dim prevlower As Double = _Y(0).GetInvCDF(0.0000000000001)
+            Dim fifty As Double
+            Dim prevfifty As Double = _Y(0).GetInvCDF(0.5)
+            For i As Integer = 1 To _Y.Count - 1
+                lower = _Y(i).GetInvCDF(0.0000000000001)
+                upper = _Y(i).GetInvCDF(0.9999999999999)
+                fifty = _Y(i).GetInvCDF(0.5)
+                If prevlower > lower Then output.Add(New TabularFunctionError("Y is not monotonically increasing for the lower confidence limit.", i, "Y Value lower", DistributionType))
+                If prevupper > upper Then output.Add(New TabularFunctionError("Y is not monotonically increasing for the upper confidence limit.", i, "Y Value upper", DistributionType))
+                If prevfifty > fifty Then output.Add(New TabularFunctionError("Y is not monotonically increasing for the 50% value.", i, "Y Value", DistributionType))
+                prevlower = lower
+                prevupper = upper
+                prevfifty = fifty
+                If _X(i - 1) > _X(i) Then output.Add(New TabularFunctionError("X is not monotonically increasing.", i, "X Value", DistributionType))
+            Next i
+            Return output
+        End Function
 
-        Public Function CurveSample( probability As Double) As ISampleDeterministically Implements ISampleWithUncertainty.CurveSample
-            Dim samples As New List(Of Double?)
+        Public Function CurveSample(probability As Double) As ISampleDeterministically Implements ISampleWithUncertainty.CurveSample
+            Dim samples As New List(Of Double)
             For i As Integer = 0 To _Y.Count - 1
                 samples.Add(_Y(i).GetInvCDF(probability))
             Next i

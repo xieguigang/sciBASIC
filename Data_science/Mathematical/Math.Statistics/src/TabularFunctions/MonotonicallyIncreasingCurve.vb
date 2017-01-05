@@ -27,7 +27,8 @@
 #End Region
 
 Imports System
-Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Language.Java.Collections
+Imports Microsoft.VisualBasic.Language
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -45,27 +46,27 @@ Namespace TabularFunctions
 		Inherits TabularFunction
 		Implements ISampleWithUncertainty, ISampleDeterministically
 
-		Private _X As List(Of Double?)
-		Private _Y As List(Of Double?)
-		Public Overrides Function GetXValues() As List(Of Double?)
-			Return _X
-		End Function
-        Public Function GetYValues() As List(Of Double?) Implements ISampleDeterministically.GetYValues
+        Private _X As List(Of Double)
+        Private _Y As List(Of Double)
+        Public Overrides Function GetXValues() As List(Of Double)
+            Return _X
+        End Function
+        Public Function GetYValues() As List(Of Double) Implements ISampleDeterministically.GetYValues
             Return _Y
         End Function
-        Public Sub New( Xvalues As List(Of Double?),  Yvalues As List(Of Double?))
-			_X = Xvalues
-			_Y = Yvalues
-		End Sub
+        Public Sub New(Xvalues As List(Of Double), Yvalues As List(Of Double))
+            _X = Xvalues
+            _Y = Yvalues
+        End Sub
         'Public Sub New( ele As org.w3c.dom.Element)
         '	ReadFromXMLElement(ele)
         'End Sub
         Public Overrides Function FunctionType() As FunctionTypeEnum
-			Return FunctionTypeEnum.MonotonicallyIncreasing
-		End Function
-        Public Function GetYFromX( x As Double) As Double Implements ISampleDeterministically.GetYFromX
+            Return FunctionTypeEnum.MonotonicallyIncreasing
+        End Function
+        Public Function GetYFromX(x As Double) As Double Implements ISampleDeterministically.GetYFromX
             'determine how to implement a binary search.
-            Dim index As Integer = java.util.Collections.binarySearch(_X, x)
+            Dim index As Integer = binarySearch(_X, x)
             'if index is negative, it should be (-(index)-1);
             If index > 0 Then
                 Return _Y(index)
@@ -80,19 +81,19 @@ Namespace TabularFunctions
             End If
         End Function
         Public Overrides Function Validate() As List(Of TabularFunctionError)
-			Dim output As New List(Of TabularFunctionError)
-			If _Y.Count >= 1 Then Return output
-			For i As Integer = 1 To _Y.Count - 1
-				If _Y(i-1)>_Y(i) Then output.Add(New TabularFunctionError("Y is not monotonically increasing.",i,"Y Value","None"))
-				If _X(i-1)>_X(i) Then output.Add(New TabularFunctionError("X is not monotonically increasing.",i,"X Value","None"))
-			Next i
-			Return output
-		End Function
-        Public Function GetYFromX( x As Double,  probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
+            Dim output As New List(Of TabularFunctionError)
+            If _Y.Count >= 1 Then Return output
+            For i As Integer = 1 To _Y.Count - 1
+                If _Y(i - 1) > _Y(i) Then output.Add(New TabularFunctionError("Y is not monotonically increasing.", i, "Y Value", "None"))
+                If _X(i - 1) > _X(i) Then output.Add(New TabularFunctionError("X is not monotonically increasing.", i, "X Value", "None"))
+            Next i
+            Return output
+        End Function
+        Public Function GetYFromX(x As Double, probability As Double) As Double Implements ISampleWithUncertainty.GetYFromX
             'Basic functionality will return GetYFromX(double x).  MonotonicallyIncreasingCurveUncertain will override this method.
             Return GetYFromX(x)
         End Function
-        Public Function GetYValues( probability As Double) As List(Of Double?) Implements ISampleWithUncertainty.GetYValues
+        Public Function GetYValues(probability As Double) As List(Of Double) Implements ISampleWithUncertainty.GetYValues
             'Basic functionality will return _Y.  MonotonicallyIncreasingCurveUncertain will override this method.
             Return _Y
         End Function

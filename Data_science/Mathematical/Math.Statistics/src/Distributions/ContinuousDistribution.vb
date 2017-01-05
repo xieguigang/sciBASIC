@@ -96,11 +96,11 @@ Namespace Distributions
             Dim ParamVals As Object() = New Object(flds.Length - 1) {}
             For i As Integer = 0 To flds.Length - 1
                 Try
-                    Select Case flds(i).Type.Name
+                    Select Case flds(i).FieldType.Name
                         Case "double"
-                            ParamVals(i) = flds(i).getDouble(Me)
+                            ParamVals(i) = flds(i).GetDouble(Me)
                         Case "int"
-                            ParamVals(i) = flds(i).getInt(Me)
+                            ParamVals(i) = flds(i).GetInt(Me)
                             'JAVA TO VB CONVERTER TODO TASK: VB does not allow fall-through from a non-empty 'case':
                         Case Else
                     End Select
@@ -123,11 +123,11 @@ Namespace Distributions
                 Dist = CType(c.GetConstructor().NewInstance(), ContinuousDistribution)
                 Dim flds As FieldInfo() = CType(c, TypeInfo).DeclaredFields
                 For Each f As FieldInfo In flds
-                    Select Case f.Type.Name
+                    Select Case f.FieldType.Name
                         Case "double"
-                            f.set(Dist, f.getDouble(Me))
+                            f.SetValue(Dist, f.GetDouble(Me))
                         Case "int"
-                            f.set(Dist, f.getInt(Me))
+                            f.SetValue(Dist, f.GetInt(Me))
                         Case Else
                     End Select
                 Next f
