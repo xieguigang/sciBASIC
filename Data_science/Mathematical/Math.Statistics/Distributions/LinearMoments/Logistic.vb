@@ -58,7 +58,7 @@ Namespace Distributions.LinearMoments
 			_K = -LM.GetT3()
 			_Alpha = LM.GetL2() * Math.Sin(_K*Math.PI)/(_K*Math.PI)
 			_Xi = LM.GetL1() - _Alpha * ((1/_K)-(Math.PI/Math.Sin(_K * Math.PI)))
-			SetPeriodOfRecord(LM.GetSampleSize())
+			PeriodOfRecord = (LM.GetSampleSize())
 		End Sub
 		Public Sub New( K As Double,  Alpha As Double,  Xi As Double)
 			_K = K

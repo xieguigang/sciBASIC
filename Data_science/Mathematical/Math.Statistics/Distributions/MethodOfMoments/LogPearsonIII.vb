@@ -57,17 +57,17 @@ Namespace Distributions.MethodOfMoments
 			_Mean = mean
 			_StDev = stdev
 			_Skew = skew
-			SetPeriodOfRecord(sampleSize)
-		End Sub
-		Public Sub New( data As Double())
-			For i As Integer = 0 To data.Length - 1
-				data(i)= Math.Log10(data(i))
-			Next i
-			Dim PM As New MomentFunctions.ProductMoments(data)
+            PeriodOfRecord = (sampleSize)
+        End Sub
+        Public Sub New(data As Double())
+            For i As Integer = 0 To data.Length - 1
+                data(i) = Math.Log10(data(i))
+            Next i
+            Dim PM As New MomentFunctions.ProductMoments(data)
             _Mean = PM.Mean()
             _StDev = PM.StandardDeviation
             _Skew = PM.Skew()
-            SetPeriodOfRecord(PM.SampleSize())
+            PeriodOfRecord = (PM.SampleSize())
         End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			If _Skew = 0 Then
@@ -100,9 +100,9 @@ Namespace Distributions.MethodOfMoments
 			Dim z As Double = sn.GetInvCDF(alphaValue)
 			Dim zSquared As Double = Math.Pow(z, 2)
 			Dim kSquared As Double = Math.Pow(k, 2)
-			Dim Avalue As Double = (1-(zSquared)/2\(GetPeriodOfRecord()-1))
-			Dim Bvalue As Double = (kSquared) - ((zSquared)/GetPeriodOfRecord())
-			Dim RootValue As Double = Math.Sqrt(kSquared-(Avalue*Bvalue))
+            Dim Avalue As Double = (1 - (zSquared) / 2 \ (PeriodOfRecord() - 1))
+            Dim Bvalue As Double = (kSquared) - ((zSquared) / PeriodOfRecord())
+            Dim RootValue As Double = Math.Sqrt(kSquared-(Avalue*Bvalue))
 			If alphaValue>.5 Then
 				Return Math.Pow(10,_Mean + _StDev*(k + RootValue)/Avalue)
 			Else

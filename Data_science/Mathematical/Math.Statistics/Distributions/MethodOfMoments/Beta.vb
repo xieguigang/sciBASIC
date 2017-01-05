@@ -53,8 +53,8 @@ Namespace Distributions.MethodOfMoments
 		End Sub
 		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
-			Dim x As Double = BPM.GetMean()
-			Dim v As Double = BPM.GetStDev()
+			Dim x As Double = BPM.Mean()
+			Dim v As Double = BPM.StDev()
 			If v < (x * (1 - x)) Then
 				_Alpha = x * (((x * (1 - x)) / v) - 1)
 				_Beta = (1 - x) * (((x * (1 - x)) / v) - 1)

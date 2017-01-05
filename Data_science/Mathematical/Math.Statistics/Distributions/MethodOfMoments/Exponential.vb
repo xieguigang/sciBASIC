@@ -54,9 +54,9 @@ Namespace Distributions.MethodOfMoments
 		End Sub
 		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
-			_Lambda = 1/BPM.GetMean()
-			SetPeriodOfRecord(BPM.GetSampleSize())
-		End Sub
+			_Lambda = 1/BPM.Mean()
+            PeriodOfRecord = (BPM.SampleSize())
+        End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Return Math.Log(probability)/_Lambda
 		End Function

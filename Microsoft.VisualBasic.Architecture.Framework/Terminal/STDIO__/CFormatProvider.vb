@@ -39,7 +39,7 @@ Namespace Terminal.STDIO__
     ''' Provides C like format print
     ''' </summary>
     ''' <remarks>https://github.com/mlnlover11/SharpLua</remarks>
-    Public Module CFormatProvider
+    Public Module CLangStringFormatProvider
 #Region "Public Methods"
 
 #Region "IsPositive"

@@ -46,10 +46,10 @@ Namespace MomentFunctions
             Dim count = data.Length
             Dim BPM As New BasicProductMoments(data)
 
-            _Min = BPM.GetMin()
-            _Max = BPM.GetMax()
-            _Mean = BPM.GetMean()
-            _StandardDeviation = BPM.GetStDev()
+            _Min = BPM.Min()
+            _Max = BPM.Max()
+            _Mean = BPM.Mean()
+            _StandardDeviation = BPM.StDev()
             _SampleSize = count
 
             Dim skewsums As Double = 0

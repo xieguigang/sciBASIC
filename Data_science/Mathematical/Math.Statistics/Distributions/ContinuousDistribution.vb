@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::248ae215d5466516f342d26d3f26bf20, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\src\Distributions\ContinuousDistribution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -42,29 +43,70 @@ Namespace Distributions
     ''' @author Will_and_Sara
     ''' </summary>
     Public MustInherit Class ContinuousDistribution
-        Private _PeriodOfRecord As Integer = 0
+
+        Public Property PeriodOfRecord As Integer
+
         ''' <summary>
         ''' This function produces a value for a given probability, this value will represent the Non-Exceedance value for that probability. </summary>
         ''' <param name="probability"> a number between 0 and 1. </param>
         ''' <returns> a value distributed by the distribution defined in the concrete implementation of this abstract class. </returns>
-        Public MustOverride Function GetInvCDF( probability As Double) As Double
+        Public MustOverride Function GetInvCDF(probability As Double) As Double
         ''' <summary>
         ''' This function is the Cumulative Distribution Function. It returns a Non Exceedance probability for any value.  It will be implemented by all concrete implementations of this abstract class. </summary>
         ''' <param name="value"> the value that a probability will be produced for. </param>
         ''' <returns> a probability that this value will be exceeded by any other value from the sample set. </returns>
-        Public MustOverride Function GetCDF( value As Double) As Double
+        Public MustOverride Function GetCDF(value As Double) As Double
         ''' <summary>
         ''' This is the Probability Density Function. It describes the likelihood any given value will occur within a dataset. </summary>
         ''' <param name="value"> the value that a likelihood will be returned for. </param>
         ''' <returns> the likelihood (defined by the concrete distribution) the specified value will occur in any given sample dataset (assuming the value is from the underlying distribution). </returns>
-        Public MustOverride Function GetPDF( value As Double) As Double
-        Public Overridable Function GetPeriodOfRecord() As Integer
-            Return _PeriodOfRecord
+        Public MustOverride Function GetPDF(value As Double) As Double
+
+
+        ''' <summary>
+        ''' This function produces a value for a given probability, this value will represent the Non-Exceedance value for that probability. </summary>
+        ''' <param name="probability"> a number between 0 and 1. </param>
+        ''' <returns> a value distributed by the distribution defined in the concrete implementation of this abstract class. </returns>
+        Public Function GetInvCDF(probability As Vector) As Vector
+            Dim v As New List(Of Double)
+
+            For Each x As Double In probability
+                Call v.Add(GetInvCDF(x))
+            Next
+
+            Return New Vector(v)
         End Function
+
+        ''' <summary>
+        ''' This function is the Cumulative Distribution Function. It returns a Non Exceedance probability for any value.  It will be implemented by all concrete implementations of this abstract class. </summary>
+        ''' <param name="value"> the value that a probability will be produced for. </param>
+        ''' <returns> a probability that this value will be exceeded by any other value from the sample set. </returns>
+        Public Function GetCDF(value As Vector) As Vector
+            Dim v As New List(Of Double)
+
+            For Each x As Double In value
+                Call v.Add(GetCDF(x))
+            Next
+
+            Return New Vector(v)
+        End Function
+
+        ''' <summary>
+        ''' This is the Probability Density Function. It describes the likelihood any given value will occur within a dataset. </summary>
+        ''' <param name="value"> the value that a likelihood will be returned for. </param>
+        ''' <returns> the likelihood (defined by the concrete distribution) the specified value will occur in any given sample dataset (assuming the value is from the underlying distribution). </returns>
+        Public Function GetPDF(value As Vector) As Vector
+            Dim v As New List(Of Double)
+
+            For Each x As Double In value
+                Call v.Add(GetPDF(x))
+            Next
+
+            Return New Vector(v)
+        End Function
+
         Public MustOverride Function Validate() As List(Of ContinuousDistributionError)
-        Public Sub SetPeriodOfRecord( POR As Integer)
-            _PeriodOfRecord = POR
-        End Sub
+
         ' <editor-fold defaultstate="collapsed" desc="Goodness of fit tests">
         Public Overridable Function Kolmogorov_SmirnovTest() As Double
             ' need to create a good empirical distribution.
@@ -139,7 +181,7 @@ Namespace Distributions
             End Try
             Return Dist
         End Function
-        Public Overrides Function Equals( dist As Object) As Boolean
+        Public Overrides Function Equals(dist As Object) As Boolean
             If dist.GetType().Name.Equals(Me.GetType().Name) Then
                 Dim thisParamValues As Object() = Me.GetParamValues()
                 Dim those As ContinuousDistribution = CType(dist, ContinuousDistribution)
@@ -237,7 +279,7 @@ Namespace Distributions
             Next i
             Return result
         End Function
-        Public Overridable Function BootStrap( seed As Long) As Double()
+        Public Overridable Function BootStrap(seed As Long) As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
             Dim Random As New Random(seed)
             For i As Integer = 0 To _PeriodOfRecord - 1

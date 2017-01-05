@@ -467,6 +467,10 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        Public Shared Function rand(size%) As Vector
+            Return Extensions.rand(size)
+        End Function
+
         Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d = n)
         End Operator

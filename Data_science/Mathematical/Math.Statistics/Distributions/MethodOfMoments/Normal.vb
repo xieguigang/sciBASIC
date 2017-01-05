@@ -73,9 +73,9 @@ Namespace Distributions.MethodOfMoments
 		''' <param name="data"> an array of double data. </param>
 		Public Sub New( data As Double())
 			Dim bpm As New MomentFunctions.BasicProductMoments(data)
-			_Mean = bpm.GetMean()
-			_StDev = bpm.GetStDev()
-			SetPeriodOfRecord(bpm.GetSampleSize())
+			_Mean = bpm.Mean()
+			_StDev = bpm.StDev()
+			PeriodOfRecord = (bpm.SampleSize())
 		End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim i As Integer

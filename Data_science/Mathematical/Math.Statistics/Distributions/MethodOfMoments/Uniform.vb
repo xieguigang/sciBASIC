@@ -62,9 +62,9 @@ Namespace Distributions.MethodOfMoments
 		End Sub
 		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
-			_Min = BPM.GetMin()
-			_Max = BPM.GetMax()
-			SetPeriodOfRecord(BPM.GetSampleSize())
+			_Min = BPM.Min()
+			_Max = BPM.Max()
+			PeriodOfRecord = (BPM.SampleSize())
 			'alternative method
 			'double dist = java.lang.Math.sqrt(3*BPM.GetSampleVariance());
 			'_Min = BPM.GetMean() - dist;

@@ -54,10 +54,10 @@ Namespace Distributions.MethodOfMoments
 		Public Sub New( data As Double())
 			'http://www.itl.nist.gov/div898/handbook/eda/section3/eda366b.htm
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
-			_Alpha = Math.Pow((BPM.GetMean() / BPM.GetStDev()),2)
-			_Beta = 1 / (BPM.GetStDev() / BPM.GetMean())
-			SetPeriodOfRecord(BPM.GetSampleSize())
-		End Sub
+			_Alpha = Math.Pow((BPM.Mean() / BPM.StDev()),2)
+			_Beta = 1 / (BPM.StDev() / BPM.Mean())
+            PeriodOfRecord = (BPM.SampleSize())
+        End Sub
 		Public Sub New( Alpha As Double,  Beta As Double)
 			_Alpha = Alpha
 			_Beta = Beta

@@ -56,9 +56,9 @@ Namespace Distributions.MethodOfMoments
 		End Sub
 		Public Sub New( data As Double())
 			Dim BPM As New MomentFunctions.BasicProductMoments(data)
-			_Beta = Math.PI/(BPM.GetStDev()*Math.Sqrt(6))
-			_Mu = BPM.GetMean()-_Beta*0.57721566490153287
-			SetPeriodOfRecord(BPM.GetSampleSize())
+			_Beta = Math.PI/(BPM.StDev()*Math.Sqrt(6))
+			_Mu = BPM.Mean()-_Beta*0.57721566490153287
+			PeriodOfRecord = (BPM.SampleSize())
 		End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Return (_Mu-(_Beta*(Math.Log(Math.Log(probability)))))

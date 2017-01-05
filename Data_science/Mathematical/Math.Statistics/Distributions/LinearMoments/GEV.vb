@@ -55,7 +55,7 @@ Namespace Distributions.LinearMoments
 		End Sub
 		Public Sub New( data As Double())
 			Dim LM As New MomentFunctions.LinearMoments(data)
-			SetPeriodOfRecord(LM.GetSampleSize())
+			PeriodOfRecord = (LM.GetSampleSize())
 			'different formulae finding _k for positive and negative t3 - for very low t3 _k is refined through newton-raphson iteration
 			If LM.GetT3() <= 0 Then 'following works for -0.8 to 0
 				_K = (0.2837753 + LM.GetT3() * (-1.21096399 + LM.GetT3() * (-2.50728214 + LM.GetT3() * (-1.13455566 + LM.GetT3() * -0.07138022)))) / (1 + LM.GetT3() * (2.06189696 + LM.GetT3() * (1.31912239 + LM.GetT3() * 0.25077104)))

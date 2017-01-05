@@ -55,7 +55,7 @@ Namespace Distributions.LinearMoments
 		End Sub
 		Public Sub New( data As Double())
 			Dim LM As New MomentFunctions.LinearMoments(data)
-			SetPeriodOfRecord(LM.GetSampleSize())
+			PeriodOfRecord = (LM.GetSampleSize())
 			Dim z As Double = 0
 			Dim a As Double = 0
 			Dim abst3 As Double = Math.Abs(LM.GetT3())

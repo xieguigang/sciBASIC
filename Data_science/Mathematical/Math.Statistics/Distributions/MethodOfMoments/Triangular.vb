@@ -95,7 +95,7 @@ Namespace Distributions.MethodOfMoments
             _Min = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa - sqrt3 * bb))
             _MostLikely = (PM.Mean() - 2 * sqrt2 * PM.StandardDeviation() * aa)
             _Max = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa + sqrt3 * bb))
-            SetPeriodOfRecord(PM.SampleSize())
+            PeriodOfRecord = (PM.SampleSize())
         End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim a As Double = _MostLikely - _Min

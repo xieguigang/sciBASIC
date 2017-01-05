@@ -73,6 +73,16 @@ Public Module Extensions
 #End If
 
     ''' <summary>
+    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="args"></param>
+    Public Sub println(s$, ParamArray args As Object())
+        Dim out As String = STDIO__.CLangStringFormatProvider.sprintf(s, args)
+        Call Console.WriteLine(out)
+    End Sub
+
+    ''' <summary>
     ''' ``days, hh:mm:ss.ms``
     ''' </summary>
     ''' <param name="t"></param>

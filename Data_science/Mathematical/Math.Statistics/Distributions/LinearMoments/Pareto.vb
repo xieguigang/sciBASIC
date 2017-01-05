@@ -59,7 +59,7 @@ Namespace Distributions.LinearMoments
                 _K = (1 - 3 * LM.GetT3()) / (1 + LM.GetT3())
                 _Alpha = (1 + _K) * (2 + _K) * LM.GetL2()
                 _Xi = LM.GetL1() - (2 + _K) * LM.GetL2()
-                SetPeriodOfRecord(LM.GetSampleSize())
+                PeriodOfRecord = (LM.GetSampleSize())
             Else
                 'coefficient of variation cannot be zero.
             End If
