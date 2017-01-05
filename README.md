@@ -59,6 +59,8 @@ PM> Install-Package sciBASIC
 PM> Install-Package sciBASIC -Pre
 ```
 
+===================================================================
+
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
 ###### TextRank
@@ -206,7 +208,9 @@ data(mtcars)
 write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
 ```
 
-## What's new of VisualBasic language Syntax from this runtime library?
+===================================================================
+
+## New VisualBasic Language Syntax in this runtime
 
 First of all, imports the language feature namespace of VisualBasic
 
@@ -243,7 +247,7 @@ Do While Not (s = blablabla) Is Nothing
 Loop
 ```
 
-###### 2. List(Of )
+###### 2. List(Of ) Add
 
 Old:
 
@@ -265,7 +269,7 @@ l += From x As Integer
      Select CStr(x)
 ```
 
-###### int Type
+###### VB int Type
 
 ```vbnet
 Dim min As int = 1
@@ -281,14 +285,4 @@ Console.WriteLine(min <= x < max) ' False
 
 ===================================================================
 
-###### Modules that Includes in this Framework:
-
-> 1. A data frame system for read/write csv data more easily.
-> 2. ODEs solver system and data plots system
-> 3. Various linq extensions for the data science programming on large amount data processing
-> 4. VisualBasic language Feature: Unix bash command supports in under development which parts of the API is available at namespace ``Microsoft.VisualBasic.Language``
-> 5. Image graphics system in namespace ``Microsoft.VisualBasic.Imaging``
-
-===================================================================
-
-> Copyleft I@xieguigang.me 2017 
+> Copyleft ! 2017, I@xieguigang.me
