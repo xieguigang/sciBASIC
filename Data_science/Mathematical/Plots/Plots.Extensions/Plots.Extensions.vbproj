@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{75E2E109-2A1C-4D6A-862E-820A3C5E9100}</ProjectGuid>
+    <ProjectGuid>{EAF7195E-8612-4AF2-B919-94381997696D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.ChartPlots</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.ChartPlots.Extensions</AssemblyName>

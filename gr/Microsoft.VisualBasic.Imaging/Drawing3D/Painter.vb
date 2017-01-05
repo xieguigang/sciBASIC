@@ -78,7 +78,7 @@ Namespace Drawing3D
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' ``PAINTERS ALGORITHM`` kernel
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
