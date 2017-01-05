@@ -78,8 +78,8 @@ Namespace Distributions.MethodOfMoments
 			'Alternate Method from Ben Chaon
 			Dim sqrt2 As Double = Math.Sqrt(2)
 			Dim sqrt3 As Double = Math.Sqrt(3)
-			Dim a3 As Double = PM.GetSkew()
-			Dim b3 As Double
+            Dim a3 As Double = PM.Skew()
+            Dim b3 As Double
 			Dim angle As Double
 			Dim aa As Double
 			Dim bb As Double
@@ -92,11 +92,11 @@ Namespace Distributions.MethodOfMoments
 			angle = Math.Atan2(b3, a3)
 			aa = Math.Cos(angle/3.0)
 			bb = Math.Sin(angle/3.0)
-			_Min = (PM.GetMean()+sqrt2*PM.GetStDev()*(aa-sqrt3*bb))
-			_MostLikely = (PM.GetMean()-2*sqrt2*PM.GetStDev()*aa)
-			_Max = (PM.GetMean()+sqrt2*PM.GetStDev()*(aa+sqrt3*bb))
-			SetPeriodOfRecord(PM.GetSampleSize())
-		End Sub
+            _Min = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa - sqrt3 * bb))
+            _MostLikely = (PM.Mean() - 2 * sqrt2 * PM.StandardDeviation() * aa)
+            _Max = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa + sqrt3 * bb))
+            SetPeriodOfRecord(PM.SampleSize())
+        End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim a As Double = _MostLikely - _Min
 			Dim b As Double = _Max - _MostLikely

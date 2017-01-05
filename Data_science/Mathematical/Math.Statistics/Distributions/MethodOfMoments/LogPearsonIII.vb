@@ -64,11 +64,11 @@ Namespace Distributions.MethodOfMoments
 				data(i)= Math.Log10(data(i))
 			Next i
 			Dim PM As New MomentFunctions.ProductMoments(data)
-			_Mean = PM.GetMean()
-			_StDev = PM.GetStDev()
-			_Skew = PM.GetSkew()
-			SetPeriodOfRecord(PM.GetSampleSize())
-		End Sub
+            _Mean = PM.Mean()
+            _StDev = PM.StandardDeviation
+            _Skew = PM.Skew()
+            SetPeriodOfRecord(PM.SampleSize())
+        End Sub
 		Public Overrides Function GetInvCDF( probability As Double) As Double
 			If _Skew = 0 Then
 				Dim zeroSkewNorm As New Normal(_Mean,_StDev)

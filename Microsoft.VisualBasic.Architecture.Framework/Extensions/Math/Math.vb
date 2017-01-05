@@ -278,16 +278,6 @@ Namespace Mathematical
             Return value
         End Function
 
-        <ExportAPI("Median")>
-        <Extension> Public Function Median(data As IEnumerable(Of Double)) As Double
-            Dim ordered = (From n As Double
-                       In data
-                           Select n
-                           Order By n Ascending).ToArray
-            Dim m As Integer = CInt(ordered.Length / 2)
-            Return ordered(m)
-        End Function
-
         ''' <summary>
         ''' Standard Deviation
         ''' </summary>
