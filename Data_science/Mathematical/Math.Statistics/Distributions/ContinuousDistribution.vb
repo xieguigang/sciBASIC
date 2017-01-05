@@ -85,7 +85,7 @@ Namespace Distributions
             Dim ParamNames As String() = New String(flds.Length - 1) {}
             For i As Integer = 0 To flds.Length - 1
                 ParamNames(i) = flds(i).Name
-            Next i
+            Next
             Return ParamNames
         End Function
         ''' <summary>
@@ -108,7 +108,7 @@ Namespace Distributions
                 Catch ex As Exception 'System.ArgumentException Or IllegalAccessException ex
                     ' java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
                 End Try
-            Next i
+            Next
             Return ParamVals
         End Function
         ''' <summary>
