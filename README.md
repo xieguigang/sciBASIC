@@ -279,12 +279,6 @@ x = -1
 Console.WriteLine(min <= x < max) ' False
 ```
 
-## Framework Gallery
-Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic.Imaging) 3D engine.
-
-![](./gr/d3.png)
-![](./etc/ColorDesigner-screenshot.png)
-
 ===================================================================
 
 ###### Modules that Includes in this Framework:
@@ -294,3 +288,7 @@ Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic
 > 3. Various linq extensions for the data science programming on large amount data processing
 > 4. VisualBasic language Feature: Unix bash command supports in under development which parts of the API is available at namespace ``Microsoft.VisualBasic.Language``
 > 5. Image graphics system in namespace ``Microsoft.VisualBasic.Imaging``
+
+===================================================================
+
+> Copyleft I@xieguigang.me 2017 
