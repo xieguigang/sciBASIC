@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70cb5946c803ca2a1d418464d1eba818, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\src\SpecialFunctions\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::911188e067f01ec07757864008df8f31, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 

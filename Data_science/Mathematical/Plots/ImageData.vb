@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ac36cbe838ad790137954388d2735b, ..\sciBASIC#\Data_science\Mathematical\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::c005779e33df658014a97926999a6900, ..\sciBASIC#\Data_science\Mathematical\Plots\ImageData.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Module ImageDataExtensions
             yn:=img.Height / steps) ', dev:=Plot3D.Device.NewWindow)
     End Function
 End Module
-

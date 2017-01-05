@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e3047c731abd48428755b8bf3959034, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::18dc918737a15028e5a6ed73c0328c95, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices

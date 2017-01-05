@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60d336695ef82aefcb22111873381ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::0d73d5db20c9ee35644c24831edd155c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 

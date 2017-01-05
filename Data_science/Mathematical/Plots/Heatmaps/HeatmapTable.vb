@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b77ec35952569cf46c935c16e549ca68, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\HeatmapTable.vb"
+﻿#Region "Microsoft.VisualBasic::9505687b93f3e598cb5f2eaae07f0b42, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\HeatmapTable.vb"
 
     ' Author:
     ' 
@@ -134,4 +134,3 @@ Public Module HeatmapTable
             mapLevels, mapName, size, margin, bg, fontStyle, legendTitle, legendFont, min, max, mainTitle, titleFont)
     End Function
 End Module
-

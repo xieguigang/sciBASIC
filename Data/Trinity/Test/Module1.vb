@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::badc33b8716dcd2a2c00d6bcff64f2d0, ..\sciBASIC#\Data\Trinity\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::4d1ac3c601843875be9084bed59d9569, ..\sciBASIC#\Data\Trinity\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -64,4 +64,3 @@ available here"
         Pause()
     End Sub
 End Module
-

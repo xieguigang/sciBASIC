@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1403884eb55b846f7184577859f7dd38, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\PageRank\GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::52fe1c887fa6878736dd03f6938539b6, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 
@@ -140,4 +140,3 @@ Public Class GraphMatrix
         Return gm.nodes.ToArray(Function(k) gm.indices(k.Identifier))
     End Operator
 End Class
-

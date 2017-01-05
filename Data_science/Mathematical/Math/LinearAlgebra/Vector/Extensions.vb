@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f875f94b227257046679d9b71985c1f, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::107dbed31e5e4c9fc55749adcd22afbb, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Extensions.vb"
 
     ' Author:
     ' 

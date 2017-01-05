@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe88f2fe68b4d2fc8c21ac362c7d7938, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\src\Distributions\MethodOfMoments\Uniform.vb"
+﻿#Region "Microsoft.VisualBasic::057ea4832a3b351161dcc769c4fa3e96, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Distributions\MethodOfMoments\Uniform.vb"
 
     ' Author:
     ' 

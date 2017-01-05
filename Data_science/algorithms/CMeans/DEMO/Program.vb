@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d37a4a2fda00d625e11c7d1b0fde028a, ..\sciBASIC#\Data_science\algorithms\CMeans\DEMO\Program.vb"
+﻿#Region "Microsoft.VisualBasic::20576803c8aac243342ddac7618cd23f, ..\sciBASIC#\Data_science\algorithms\CMeans\DEMO\Program.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Module Program
             .SaveAs("./CMeans.png")
     End Sub
 End Module
-
