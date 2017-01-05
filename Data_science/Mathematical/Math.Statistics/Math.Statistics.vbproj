@@ -104,15 +104,6 @@
     <Compile Include="MomentFunctions\LinearMoments.vb" />
     <Compile Include="MomentFunctions\ProductMoments.vb" />
     <Compile Include="SpecialFunctions.vb" />
-    <Compile Include="TabularFunctions\FunctionTypeEnum.vb" />
-    <Compile Include="TabularFunctions\ISampleDeterministically.vb" />
-    <Compile Include="TabularFunctions\ISampleWithUncertainty.vb" />
-    <Compile Include="TabularFunctions\IWriteToXML.vb" />
-    <Compile Include="TabularFunctions\MonotonicallyIncreasingCurve.vb" />
-    <Compile Include="TabularFunctions\MonotonicallyIncreasingCurveUncertain.vb" />
-    <Compile Include="TabularFunctions\TabularFunction.vb" />
-    <Compile Include="TabularFunctions\TabularFunctionError.vb" />
-    <Compile Include="TabularFunctions\XMLReadableFactory.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -147,6 +138,8 @@
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HypothesisTesting\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
