@@ -198,7 +198,11 @@ Namespace Darwinism.GAF
                                        weights As Dictionary(Of String, Double)) As var()
 
             If Not weights Is Nothing Then
-                fitness.weights = fitness.modelVariables.Balance(weights)
+                fitness.weights = fitness _
+                    .modelVariables _
+                    .Where(Function(v) Array.IndexOf(fitness.Ignores, v) = -1) _
+                    .ToArray _
+                    .Balance(weights)
                 Call $"Weights fitness average is {fitness.weights.GetJson}".__DEBUG_ECHO
             Else
                 Call "Using normal fitness average calculation...".__DEBUG_ECHO
