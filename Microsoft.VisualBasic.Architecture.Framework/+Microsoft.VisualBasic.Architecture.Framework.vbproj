@@ -508,6 +508,7 @@
     <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
     <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
     <Compile Include="Text\Paragraph.vb" />
+    <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</ProjectGuid>
+    <ProjectGuid>{1D8910C2-ADA2-4306-96DC-A61B494522ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.csv</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.Csv</AssemblyName>
