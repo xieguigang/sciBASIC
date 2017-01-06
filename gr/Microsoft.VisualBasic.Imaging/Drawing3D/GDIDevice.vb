@@ -116,6 +116,16 @@ Namespace Drawing3D
             _animationLoop.Stop()
         End Sub
 
+        Public Property RefreshInterval As Integer
+            Get
+                Return _animationLoop.Interval
+            End Get
+            Set(value As Integer)
+                _animationLoop.Interval = value
+                _animationLoop.Start()
+            End Set
+        End Property
+
         Protected Overridable Sub __init()
             Try
                 Throw New Exception("Please Implements the initialize code at here.")

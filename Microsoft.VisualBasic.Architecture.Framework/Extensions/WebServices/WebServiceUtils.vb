@@ -636,6 +636,16 @@ Public Module WebServiceUtils
         Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
     End Function
 
+    ''' <summary>
+    ''' Example for xx-net tool:
+    ''' 
+    ''' ```
+    ''' http://127.0.0.1:8087/
+    ''' ```
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Proxy As String
+
     <Extension>
     Private Function __httpRequest(url$,
                                    retries%,
@@ -645,6 +655,10 @@ Public Module WebServiceUtils
                                    UA$) As String
 
         Dim retryTime As Integer = 0
+
+        If String.IsNullOrEmpty(proxy) Then
+            proxy = WebServiceUtils.Proxy
+        End If
 
         Try
 RETRY:      Return __get(url, headers, proxy, UA)
