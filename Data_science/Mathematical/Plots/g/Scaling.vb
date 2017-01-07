@@ -129,6 +129,10 @@ Public Class Scaling
         type = GetType(BarPlot)
     End Sub
 
+    Public Function ScallingWidth(x As Double, width%) As Single
+        Return width * (x - xmin) / dx
+    End Function
+
     ''' <summary>
     ''' 返回的系列是已经被转换过的，直接使用来进行画图
     ''' </summary>
