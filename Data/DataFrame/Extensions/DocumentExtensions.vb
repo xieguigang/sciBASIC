@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::9f836bba510fda2f9d065fe6c6ae455d, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
@@ -163,5 +164,33 @@ Public Module DocumentExtensions
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$, Optional encoding As Encodings = Encodings.Default) As T()
         Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.GetEncodings)
+    End Function
+
+    <Extension>
+    Public Iterator Function LoadMappings(path$, key$, mapTo$) As IEnumerable(Of Map(Of String, String))
+        Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine)
+        Dim keyIndex% = header.IndexOf(key)
+        Dim mapIndex% = header.IndexOf(mapTo)
+
+        If keyIndex = -1 OrElse mapIndex = -1 Then
+            Dim msg$ =
+                $"Mapping: {key} --> {mapTo} is missing in the target csv file! ({header.ToArray.GetJson})"
+            Throw New KeyNotFoundException(msg)
+        End If
+
+        Dim skip1 As Boolean = True
+
+        For Each line$ In path.IterateAllLines
+            If Not skip1 Then
+                Dim row As RowObject = RowObject.TryParse(line)
+
+                Yield New Map(Of String, String) With {
+                    .key = row(keyIndex),
+                    .Maps = row(mapIndex)
+                }
+            Else
+                skip1 = False
+            End If
+        Next
     End Function
 End Module
