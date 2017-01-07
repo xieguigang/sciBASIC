@@ -52,11 +52,11 @@ Namespace ComponentModel.Collection
         End Sub
 
         ''' <summary>
-        ''' 不存在则返回-1
+        ''' 获取目标对象在本索引之中的位置编号，不存在则返回-1
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property Index(x As T) As Integer
+        Default Public ReadOnly Property IndexOf(x As T) As Integer
             Get
                 If maps.ContainsKey(x) Then
                     Return maps(x)
