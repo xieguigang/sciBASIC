@@ -185,6 +185,7 @@
     <Compile Include="Fractions\TreeMap.vb" />
     <Compile Include="Fractions\Fractions.vb" />
     <Compile Include="Fractions\Pyramid.vb" />
+    <Compile Include="g\AxisScalling.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
     <Compile Include="g\Legends\Legend.vb" />
