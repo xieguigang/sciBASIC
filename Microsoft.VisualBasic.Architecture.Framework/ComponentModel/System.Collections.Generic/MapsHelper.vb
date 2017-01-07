@@ -49,8 +49,10 @@ Namespace ComponentModel
     End Structure
 
     Public Structure Map(Of T1, V)
-        Dim key As T1
-        Dim Maps As V
+        Implements IMap
+
+        Public Property Key As T1 Implements IMap.Key
+        Public Property Maps As V Implements IMap.Maps
 
         ''' <summary>
         ''' 与<see cref="IKeyValuePairObject(Of TKey, TValue)"/>相比，这个类型更加倾向于特定化的描述两个对象之间的一一对应关系
