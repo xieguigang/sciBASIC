@@ -98,6 +98,13 @@ Public Class Scaling
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="horizontal">
+    ''' 所进行绘制的条形图是否是水平的？
+    ''' </param>
     Sub New(data As IEnumerable(Of Double), horizontal As Boolean)
         Dim h#() = data.ToArray
 
