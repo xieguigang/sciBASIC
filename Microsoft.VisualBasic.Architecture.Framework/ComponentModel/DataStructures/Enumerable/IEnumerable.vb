@@ -53,15 +53,6 @@ Namespace ComponentModel.Collection.Generic
     ''' </summary>
     ''' <remarks></remarks>
     Public Interface INamedValue : Inherits IKeyedEntity(Of String)
-
-        ''' <summary>
-        ''' The unique identifer in the object collection. Unique-Id of the target implements object
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Overloads Property Key As String
-
     End Interface
 
     Public Interface IReadOnlyId
