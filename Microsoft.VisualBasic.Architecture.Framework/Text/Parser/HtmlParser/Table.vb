@@ -58,7 +58,13 @@ Namespace Text.HtmlParser
         ''' 
         <Extension>
         Public Function GetRowsHTML(table As String) As String()
-            Dim rows As String() = Regex.Matches(table, "<tr.+?</tr>", RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
+            If table Is Nothing Then
+                Return {}
+            End If
+            Dim rows As String() = Regex.Matches(
+                table,
+                "<tr.+?</tr>",
+                RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
             Return rows
         End Function
 

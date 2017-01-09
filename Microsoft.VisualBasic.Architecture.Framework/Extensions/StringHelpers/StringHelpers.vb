@@ -159,12 +159,12 @@ Public Module StringHelpers
     ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
     ''' </summary>
-    Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
+    Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Singleline
 
     ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Multiline"/> 
     ''' </summary>
-    Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Multiline
+    Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Multiline
 
     ''' <summary>
     ''' <paramref name="s"/> Is Nothing, <see cref="System.String.IsNullOrEmpty"/>, <see cref="System.String.IsNullOrWhiteSpace"/>
