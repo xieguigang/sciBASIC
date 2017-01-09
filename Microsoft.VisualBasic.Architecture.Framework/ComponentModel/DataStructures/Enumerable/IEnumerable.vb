@@ -1,30 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::72e00d37ccb0e1edaca5f9ed765480b8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace ComponentModel.Collection.Generic
 
@@ -47,9 +49,10 @@ Namespace ComponentModel.Collection.Generic
 
     ''' <summary>
     ''' This type of object have a <see cref="INamedValue.Key"></see> property to unique identified itself in a collection.
+    ''' This interface was inherits from type <see cref="IKeyedEntity(Of String)"/>
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface INamedValue
+    Public Interface INamedValue : Inherits IKeyedEntity(Of String)
 
         ''' <summary>
         ''' The unique identifer in the object collection. Unique-Id of the target implements object
@@ -57,7 +60,8 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Property Key As String
+        Overloads Property Key As String
+
     End Interface
 
     Public Interface IReadOnlyId
