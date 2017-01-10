@@ -9,8 +9,12 @@ Namespace Text.HtmlParser
 
         Public Const PAGE_CONTENT_TITLE As String = "<title>.+</title>"
 
-        <Extension>
-        Public Function HTMLtitle(html As String) As String
+        ''' <summary>
+        ''' Parsing the title text from the html inputs.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
+        <Extension> Public Function HTMLTitle(html As String) As String
             Dim title As String =
                 Regex.Match(html, PAGE_CONTENT_TITLE, RegexOptions.IgnoreCase).Value
 

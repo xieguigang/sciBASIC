@@ -639,15 +639,16 @@ RETRY:      Return __get(url, headers, proxy, UA)
             reader As New StreamReader(respStream)
 
             Dim html As String = reader.ReadToEnd
-            Dim title As String = html.HTMLtitle
+            Dim title As String = html.HTMLTitle
 
             If InStr(html, "http://www.doctorcom.com") > 0 Then
                 Return ""
             End If
 
             Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
+#If DEBUG Then
             Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
-
+#End If
             Return html
         End Using
     End Function
