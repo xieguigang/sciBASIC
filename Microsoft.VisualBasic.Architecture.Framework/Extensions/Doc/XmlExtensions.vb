@@ -256,7 +256,7 @@ Public Module XmlExtensions
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadFromXml(Of T As Class)(Xml As String, Optional throwEx As Boolean = True) As T
+    <Extension> Public Function LoadFromXml(Of T)(Xml As String, Optional throwEx As Boolean = True) As T
         Using Stream As New StringReader(s:=Xml)
             Try
                 Dim type As Type = GetType(T)

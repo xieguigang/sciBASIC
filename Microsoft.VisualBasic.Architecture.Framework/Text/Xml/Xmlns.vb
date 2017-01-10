@@ -39,6 +39,11 @@ Namespace Text.Xml
     ''' </summary>
     Public Class Xmlns
 
+        ''' <summary>
+        ''' ``xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"``
+        ''' </summary>
+        Public Const DefaultXmlns As String = "xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
+
         Public Property xmlns As String
         Public Property [namespace] As Dictionary(Of NamedValue(Of String))
 
