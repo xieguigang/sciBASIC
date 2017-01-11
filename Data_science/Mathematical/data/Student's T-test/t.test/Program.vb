@@ -14,7 +14,7 @@ Module Program
 
         Dim x#() = {0, 1, 1, 1}
 
-        With t.Test(x)
+        With t.Test(x, mu:=1)
             Call $"alternative hypothesis: { .Valid}".__DEBUG_ECHO
             Call .GetJson(True).__DEBUG_ECHO
         End With
