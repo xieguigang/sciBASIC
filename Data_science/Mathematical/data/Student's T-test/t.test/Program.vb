@@ -19,6 +19,13 @@ Module Program
             Call .GetJson(True).__DEBUG_ECHO
         End With
 
+        a = {1846523.253, 6840877.665, 2806323.704}
+        b = {3056565.388, 1831431.105, 2933659.497}
+
+        Call t.Test(a, b).GetJson.__DEBUG_ECHO
+        Call t.Test(a, b, varEqual:=False).GetJson.__DEBUG_ECHO
+
+
         Pause()
     End Sub
 End Module

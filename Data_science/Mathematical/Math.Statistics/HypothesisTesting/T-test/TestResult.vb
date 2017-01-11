@@ -8,7 +8,8 @@ Namespace Hypothesis
         ''' the degrees of freedom for the t-statistic.
         ''' </summary>
         ''' <returns></returns>
-        Public Property DegreeFreedom As Integer
+        ''' <remarks>Welch–Satterthwaite equation 的计算结果为小数</remarks>
+        Public Property DegreeFreedom As Double
         ''' <summary>
         ''' the p-value For the test.
         ''' </summary>

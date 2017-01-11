@@ -44,6 +44,7 @@ Namespace Hypothesis
         ''' <param name="mu#">a number indicating the True value Of the mean (Or difference In means If you are performing a two sample test).</param>
         ''' <param name="alpha#"></param>
         ''' <param name="alternative">specifying the alternative hypothesis</param>
+        ''' <param name="varEqual">Default using **student's t-test**, set this parameter to False using **Welch's t-test**</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' ``ttest({0,1,1,1}, {1,2,2,2}, mu:= -1).valid() = True``
@@ -52,25 +53,46 @@ Namespace Hypothesis
                              b As IEnumerable(Of Double),
                              Optional alternative As Hypothesis = Hypothesis.TwoSided,
                              Optional mu# = 0,
-                             Optional alpha# = 0.05) As TwoSampleResult
+                             Optional alpha# = 0.05,
+                             Optional varEqual As Boolean = True) As TwoSampleResult
 
             Dim va#() = a.ToArray, vb = b.ToArray
             Dim left As New BasicProductMoments(a)
             Dim right As New BasicProductMoments(b)
-            Dim df As Integer = left.SampleSize + right.SampleSize - 2
-            Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / df
+            Dim v# = If(varequal,
+                left.SampleSize + right.SampleSize - 2,
+                __welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize))
+            Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / v
 
             Return New TwoSampleResult With {
                 .alpha = alpha,
-                .DegreeFreedom = df,
+                .DegreeFreedom = v,
                 .Mean = left.Mean - right.Mean,
                 .StdErr = Math.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize)),
-                .TestValue = (.Mean - mu) / .StdErr,
-                .Pvalue = Pvalue(.TestValue, df, alternative),
+                .TestValue = If(varEqual,
+                    (.Mean - mu) / .StdErr,
+                    __welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)),
+                .Pvalue = Pvalue(.TestValue, v, alternative),
                 .Alternative = alternative,
                 .MeanX = left.Mean,
                 .MeanY = right.Mean
             }
+        End Function
+
+        Private Function __welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
+            Dim a = m1 - m2
+            Dim b = Math.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
+            Dim t = a / b
+            Return t
+        End Function
+
+        Private Function __welch2df(s1#, s2#, N1#, N2#) As Double
+            Dim v1 = N1 - 1
+            Dim v2 = N2 - 1
+            Dim a = (s1 ^ 2 / N1 + s2 ^ 2 / N2) ^ 2
+            Dim b = (s1 ^ 4) / ((N1 ^ 2) * v1) + (s2 ^ 4) / ((N2 ^ 2) * v2)
+            Dim v = a / b
+            Return v
         End Function
 
         ''' <summary>
