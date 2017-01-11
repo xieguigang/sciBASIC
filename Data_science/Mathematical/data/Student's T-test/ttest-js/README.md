@@ -1,6 +1,7 @@
 #ttest
 
 > Perform the Student t hypothesis test
+> https://github.com/distributions-io/t-cdf
 
 ## Installation
 

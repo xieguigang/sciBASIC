@@ -46,6 +46,14 @@ t.test(a,b, var.equal=TRUE, paired=FALSE)
 
 ## Implements the Student's T-test step by step
 
+#### CDF
+
+The cumulative distribution function for a Student ``t`` random variable is
+
+> F(t) = 1 - 0.5 * I<sub>x(t)</sub>(v/2, 0.5); (t > 0)
+> https://en.wikipedia.org/wiki/Student%27s_t-distribution
+
+where **x(t) = v / (t<sup>2</sup> + v)** and I<sub>x(t)</sub> is the regularized incomplete beta function.
 
 ## Demo
 
