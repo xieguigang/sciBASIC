@@ -9,7 +9,7 @@ Methods for raw data processing
 
 #### Normalize
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Normalization.Normalize(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{Microsoft.VisualBasic.Data.Bootstrapping.Normalization.TimeValue[]}},System.Int32)
+Microsoft.VisualBasic.Data.Bootstrapping.Normalization.Normalize(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver.TimeValue[]}},System.Int32)
 ```
 
 
@@ -21,7 +21,7 @@ Microsoft.VisualBasic.Data.Bootstrapping.Normalization.Normalize(System.Collecti
 
 #### Trim
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Normalization.Trim(Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Drawing.PointF[]},Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{Microsoft.VisualBasic.Data.Bootstrapping.Normalization.TimeValue[]})
+Microsoft.VisualBasic.Data.Bootstrapping.Normalization.Trim(Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Drawing.PointF[]},Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver.TimeValue[]})
 ```
 默认假设raw数据里面的时间点都是不重复的
 

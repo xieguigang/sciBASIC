@@ -1,5 +1,5 @@
 ﻿# GAFFitness
-_namespace: [Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver](./index.md)_
 
 
 
@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF](./index.md)
 
 #### #ctor
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.GAFFitness.#ctor(System.Type,Microsoft.VisualBasic.Mathematical.Calculus.ODEsOut,System.Collections.Generic.Dictionary{System.String,System.Double},System.Boolean)
+Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver.GAFFitness.#ctor(System.Type,Microsoft.VisualBasic.Mathematical.Calculus.ODEsOut,System.Collections.Generic.Dictionary{System.String,System.Double},System.Boolean)
 ```
 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)
 
@@ -20,13 +20,13 @@ Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.GAFFitness.#ctor(System.T
 
 #### __init
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.GAFFitness.__init
+Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver.GAFFitness.__init
 ```
 初始化一些共同的数据
 
 #### RunTest
 ```csharp
-Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.GAFFitness.RunTest(System.Collections.Generic.Dictionary{System.String,System.Double})
+Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver.GAFFitness.RunTest(System.Collections.Generic.Dictionary{System.String,System.Double})
 ```
 使用指定的参数测试计算模型的输出
 

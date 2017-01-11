@@ -1,4 +1,4 @@
-﻿# CFormatProvider
+﻿# CLangStringFormatProvider
 _namespace: [Microsoft.VisualBasic.Terminal.STDIO__](./index.md)_
 
 Provides C like format print
@@ -10,7 +10,7 @@ Provides C like format print
 
 #### IsPositive
 ```csharp
-Microsoft.VisualBasic.Terminal.STDIO__.CFormatProvider.IsPositive(System.Object,System.Boolean)
+Microsoft.VisualBasic.Terminal.STDIO__.CLangStringFormatProvider.IsPositive(System.Object,System.Boolean)
 ```
 Determines whether the specified value is positive.
 
@@ -26,7 +26,7 @@ _returns:
 
 #### ReplaceMetaChars
 ```csharp
-Microsoft.VisualBasic.Terminal.STDIO__.CFormatProvider.ReplaceMetaChars(System.String)
+Microsoft.VisualBasic.Terminal.STDIO__.CLangStringFormatProvider.ReplaceMetaChars(System.String)
 ```
 Replaces the string representations of meta chars with their corresponding
  character values.
@@ -40,7 +40,7 @@ _returns: A string with all string meta chars are replaced_
 
 #### sprintf
 ```csharp
-Microsoft.VisualBasic.Terminal.STDIO__.CFormatProvider.sprintf(System.String,System.Object[])
+Microsoft.VisualBasic.Terminal.STDIO__.CLangStringFormatProvider.sprintf(System.String,System.Object[])
 ```
 Format string like C
 
@@ -52,7 +52,7 @@ Format string like C
 
 #### ToInteger
 ```csharp
-Microsoft.VisualBasic.Terminal.STDIO__.CFormatProvider.ToInteger(System.Object,System.Boolean)
+Microsoft.VisualBasic.Terminal.STDIO__.CLangStringFormatProvider.ToInteger(System.Object,System.Boolean)
 ```
 Converts the specified values boxed type to its correpsonding integer
  type.
@@ -66,7 +66,7 @@ _returns: A boxed numeric object whos type is an integer type._
 
 #### ToUnsigned
 ```csharp
-Microsoft.VisualBasic.Terminal.STDIO__.CFormatProvider.ToUnsigned(System.Object)
+Microsoft.VisualBasic.Terminal.STDIO__.CLangStringFormatProvider.ToUnsigned(System.Object)
 ```
 Converts the specified values boxed type to its correpsonding unsigned
  type.

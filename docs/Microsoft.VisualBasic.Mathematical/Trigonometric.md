@@ -280,6 +280,19 @@ _returns:   the measurement of the angle {@code angrad}
           in degrees.
  @since   1.2 _
 
+#### ToPoint
+```csharp
+Microsoft.VisualBasic.Mathematical.Trigonometric.ToPoint(System.Double,System.Single,System.Boolean)
+```
+
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|r#|-|
+|alpha!|-|
+|fromDegree|**`alpha`**角度参数是否是度为单位，默认是真，即函数会在这里自动转换为弧度|
+
+
 #### toRadians
 ```csharp
 Microsoft.VisualBasic.Mathematical.Trigonometric.toRadians(System.Double)

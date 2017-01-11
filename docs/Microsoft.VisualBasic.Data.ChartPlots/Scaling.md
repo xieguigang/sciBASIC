@@ -7,6 +7,20 @@ _namespace: [Microsoft.VisualBasic.Data.ChartPlots](./index.md)_
 
 ### Methods
 
+#### #ctor
+```csharp
+Microsoft.VisualBasic.Data.ChartPlots.Scaling.#ctor(System.Collections.Generic.IEnumerable{System.Double},System.Boolean)
+```
+
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|data|-|
+|horizontal|
+ 所进行绘制的条形图是否是水平的？
+ |
+
+
 #### ForEach
 ```csharp
 Microsoft.VisualBasic.Data.ChartPlots.Scaling.ForEach(System.Drawing.Size,System.Drawing.Size)

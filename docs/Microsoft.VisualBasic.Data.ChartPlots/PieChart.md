@@ -33,7 +33,7 @@ Microsoft.VisualBasic.Data.ChartPlots.PieChart.FromPercentages(System.Collection
 
 #### Plot
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.PieChart.Plot(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.ChartPlots.Fractions},System.Drawing.Size,System.Drawing.Size,System.String,System.Boolean,Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes.Border,System.Single,System.Int32)
+Microsoft.VisualBasic.Data.ChartPlots.PieChart.Plot(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.ChartPlots.Fractions},System.Drawing.Size,System.Drawing.Size,System.String,Microsoft.VisualBasic.Data.ChartPlots.Fractions.ValueLabels,System.String,System.Boolean,System.String,Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes.Border,System.Single,System.Int32)
 ```
 
 
