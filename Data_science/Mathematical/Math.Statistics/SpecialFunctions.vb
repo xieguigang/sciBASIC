@@ -141,6 +141,14 @@ Namespace SpecialFunctions
             Return Math.Exp(gammaln(a) + gammaln(b) - gammaln(a - b))
         End Function
 
+        ''' <summary>
+        ''' ######  The regularized incomplete beta function
+        ''' https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function
+        ''' </summary>
+        ''' <param name="aa"></param>
+        ''' <param name="bb"></param>
+        ''' <param name="xx"></param>
+        ''' <returns></returns>
         Public Function RegularizedIncompleteBetaFunction(aa As Double, bb As Double, xx As Double) As Double
             Dim a, b, t, x, xc, w, y As Double
             Dim flag As Boolean

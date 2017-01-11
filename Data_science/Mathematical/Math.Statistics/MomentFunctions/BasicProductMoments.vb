@@ -40,7 +40,7 @@ Namespace MomentFunctions
     ''' </summary>
     Public Class BasicProductMoments
 
-        Private _SampleVariance As Double
+        Public ReadOnly Property SampleVariance As Double
 
         Protected Friend _Count As Integer
 
@@ -111,7 +111,7 @@ Namespace MomentFunctions
         ''' <summary>
         ''' This constructor allows one to create an instance with some initial data, observations can be added after the constructor through the "AddObservations(double observation) call. </summary>
         ''' <param name="data"> the dataset to calculate mean and standard deviation for. </param>
-        Public Sub New(data As Double())
+        Public Sub New(data As IEnumerable(Of Double))
             _Mean = 0
             _SampleVariance = 0
             _Min = 0

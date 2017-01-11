@@ -68,16 +68,16 @@ Namespace Distributions.MethodOfMoments
 			_Mean = m
 			_StDev = sd
 		End Sub
-		''' <summary>
-		''' Creates a normal distribution based on input data using the standard method of moments. </summary>
-		''' <param name="data"> an array of double data. </param>
-		Public Sub New( data As Double())
-			Dim bpm As New MomentFunctions.BasicProductMoments(data)
-			_Mean = bpm.Mean()
-			_StDev = bpm.StDev()
-			PeriodOfRecord = (bpm.SampleSize())
-		End Sub
-		Public Overrides Function GetInvCDF( probability As Double) As Double
+        ''' <summary>
+        ''' Creates a normal distribution based on input data using the standard method of moments. </summary>
+        ''' <param name="data"> an array of double data. </param>
+        Public Sub New(data As Double())
+            Dim bpm As New MomentFunctions.BasicProductMoments(data)
+            _Mean = bpm.Mean()
+            _StDev = bpm.StDev()
+            PeriodOfRecord = (bpm.SampleSize())
+        End Sub
+        Public Overrides Function GetInvCDF( probability As Double) As Double
 			Dim i As Integer
 			Dim x As Double
 			Dim c0 As Double = 2.515517
@@ -131,75 +131,75 @@ Namespace Distributions.MethodOfMoments
 			a+=area*interpvalue
 			Return a
 		End Function
-		Public Overrides Function GetCDF( value As Double) As Double
-			'decide which method i want to use.  errfunction, the method i came up with in vb, or something else.
-			If value = _Mean Then Return.5
-			Dim dist As Double = value - _Mean
-			Dim stdevs As Integer = CInt(Fix(Math.Floor(Math.Abs(dist/_StDev))))
-			Dim inc As Double = 1\250
-			Dim a As Double = 0.5
-			Dim a1 As Double = 0.682689492137/2
-			Dim a2 As Double = 0.954499736104/2
-			Dim a3 As Double = 0.997300203937/2
-			Dim a4 As Double = 0.999936657516/2
-			Dim a5 As Double = 0.999999426687/2
-			Dim a6 As Double = 0.999999998027/2
-			Dim a7 As Double = (a-a6)/2
-			Select Case stdevs
-				Case 0
-					If dist<0 Then a+=-a1
-					Return FindArea(a,inc,value)
-				Case 1
-					If dist<0 Then
-						a-=a2
-					Else
-						a+=a1
-					End If
-					Return FindArea(a,inc,value)
-				Case 2
-					If dist<0 Then
-						a-=a3
-					Else
-						a+=a2
-					End If
-					Return FindArea(a,inc,value)
-				Case 3
-					If dist<0 Then
-						a-=a4
-					Else
-						a+=a3
-					End If
-					Return FindArea(a,inc,value)
-				Case 4
-					If dist<0 Then
-						a-=a5
-					Else
-						a+=a4
-					End If
-					Return FindArea(a,inc,value)
-				Case 5
-					If dist<0 Then
-						a-=a6
-					Else
-						a+=a5
-					End If
-					Return FindArea(a,inc,value)
-				Case 6
-					If dist<0 Then
-						a-=a7
-					Else
-						a+=a6
-					End If
-					Return FindArea(a,inc,value)
-				Case Else
-					If dist<0 Then
-						Return 0
-					Else
-						Return 1
-					End If
-			End Select
-		End Function
-		Public Overrides Function GetPDF( value As Double) As Double
+        Public Overrides Function GetCDF(value As Double) As Double
+            'decide which method i want to use.  errfunction, the method i came up with in vb, or something else.
+            If value = _Mean Then Return 0.5
+            Dim dist As Double = value - _Mean
+            Dim stdevs As Integer = CInt(Fix(Math.Floor(Math.Abs(dist / _StDev))))
+            Dim inc As Double = 1 \ 250
+            Dim a As Double = 0.5
+            Dim a1 As Double = 0.682689492137 / 2
+            Dim a2 As Double = 0.954499736104 / 2
+            Dim a3 As Double = 0.997300203937 / 2
+            Dim a4 As Double = 0.999936657516 / 2
+            Dim a5 As Double = 0.999999426687 / 2
+            Dim a6 As Double = 0.999999998027 / 2
+            Dim a7 As Double = (a - a6) / 2
+            Select Case stdevs
+                Case 0
+                    If dist < 0 Then a += -a1
+                    Return FindArea(a, inc, value)
+                Case 1
+                    If dist < 0 Then
+                        a -= a2
+                    Else
+                        a += a1
+                    End If
+                    Return FindArea(a, inc, value)
+                Case 2
+                    If dist < 0 Then
+                        a -= a3
+                    Else
+                        a += a2
+                    End If
+                    Return FindArea(a, inc, value)
+                Case 3
+                    If dist < 0 Then
+                        a -= a4
+                    Else
+                        a += a3
+                    End If
+                    Return FindArea(a, inc, value)
+                Case 4
+                    If dist < 0 Then
+                        a -= a5
+                    Else
+                        a += a4
+                    End If
+                    Return FindArea(a, inc, value)
+                Case 5
+                    If dist < 0 Then
+                        a -= a6
+                    Else
+                        a += a5
+                    End If
+                    Return FindArea(a, inc, value)
+                Case 6
+                    If dist < 0 Then
+                        a -= a7
+                    Else
+                        a += a6
+                    End If
+                    Return FindArea(a, inc, value)
+                Case Else
+                    If dist < 0 Then
+                        Return 0
+                    Else
+                        Return 1
+                    End If
+            End Select
+        End Function
+        Public Overrides Function GetPDF( value As Double) As Double
 			Return (1/Math.Sqrt(2*Math.PI)*Math.Pow(_StDev,2.0))*Math.Exp((-(Math.Pow(value-_Mean, 2)/(2*Math.Pow(_StDev, 2)))))
 		End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
