@@ -42,6 +42,8 @@ t.test(a,b, var.equal=TRUE, paired=FALSE)
 #     174.8     178.2
 ```
 
+![](./R-t.test.png)
+
 ## Implements the Student's T-test step by step
 
 
