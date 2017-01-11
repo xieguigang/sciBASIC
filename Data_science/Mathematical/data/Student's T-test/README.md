@@ -43,3 +43,8 @@ t.test(a,b, var.equal=TRUE, paired=FALSE)
 ```
 
 ## Implements the Student's T-test step by step
+
+
+## Demo
+
+![](./T-test.png)

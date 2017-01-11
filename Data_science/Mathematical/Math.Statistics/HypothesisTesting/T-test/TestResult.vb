@@ -32,6 +32,10 @@ Namespace Hypothesis
         Public Property Mean As Double
         Public Property StdErr As Double
 
+        ''' <summary>
+        ''' Alternative hypothesis result
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Valid() As Boolean
             Return Pvalue >= alpha
         End Function
