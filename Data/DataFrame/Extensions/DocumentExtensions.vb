@@ -193,4 +193,28 @@ Public Module DocumentExtensions
             End If
         Next
     End Function
+
+    <Extension>
+    Public Function GetColumnValues(csv As DocumentStream.File, column$) As IEnumerable(Of String)
+        Dim index As Integer = csv.Headers.IndexOf(column)
+        Dim out As New List(Of String)
+
+        For Each r As RowObject In csv.Skip(1)
+            Call out.Add(r(index))
+        Next
+
+        Return out
+    End Function
+
+    <Extension>
+    Public Iterator Function GetColumnObjects(Of T)(csv As DocumentStream.File, column$, [ctype] As Func(Of String, T)) As IEnumerable(Of T)
+        For Each row As String In csv.GetColumnValues(column)
+            Yield [ctype](row)
+        Next
+    End Function
+
+    <Extension>
+    Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As DocumentStream.File
+        Return DocumentStream.File.Load(path, encoding.GetEncodings)
+    End Function
 End Module

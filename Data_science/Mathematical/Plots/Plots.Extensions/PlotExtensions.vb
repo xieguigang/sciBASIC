@@ -46,7 +46,7 @@ Public Module PlotExtensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
+    Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))(), Optional n% = 5) As NamedValue(Of Dictionary(Of String, Double))()
         Dim keys$() = data(Scan0%).Value.Keys.ToArray
         Dim entityList As Entity() = LinqAPI.Exec(Of Entity) <=
             From x As NamedValue(Of Dictionary(Of String, Double))
@@ -55,7 +55,23 @@ Public Module PlotExtensions
                 .uid = x.Name,
                 .Properties = keys.ToArray(Function(k) x.Value(k))
             }
-        Dim clusters = ClusterDataSet(entityList.Length / 5, entityList)
+        Dim clusters As ClusterCollection(Of Entity)
+
+        n = entityList.Length / n
+
+        If n = 0 OrElse entityList.Length <= 2 Then
+            clusters = New ClusterCollection(Of Entity)
+
+            For Each x As Entity In entityList
+                Dim c As New KMeansCluster(Of Entity)
+
+                Call c.Add(x)
+                Call clusters.Add(c)
+            Next
+        Else
+            clusters = ClusterDataSet(n, entityList)
+        End If
+
         Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
 
         ' 通过kmeans计算出keys的顺序
