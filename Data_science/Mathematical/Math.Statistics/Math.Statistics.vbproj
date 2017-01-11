@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3E195DF1-9FEB-44D5-904B-15626BBE74D7}</ProjectGuid>
+    <ProjectGuid>{FE321BE1-A0E5-4BAB-8B37-4F54A8E2187E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Mathematical.Statistics</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Mathematical.Statistics</AssemblyName>
@@ -171,10 +171,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>+VB_DataFrame</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>

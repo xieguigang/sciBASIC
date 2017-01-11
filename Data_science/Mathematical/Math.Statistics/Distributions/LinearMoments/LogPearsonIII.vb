@@ -69,8 +69,8 @@ Namespace Distributions.LinearMoments
 				'no solution because t3 is greater than or equal to 1.
 			End If
 			Dim gamma As Double = (2/Math.Sqrt(a)) * Math.Sign(LM.GetT3())
-			Dim sigma As Double = (12*Math.Sqrt(Math.PI) * Math.Sqrt(a) * Math.Exp(SpecialFunctions.SpecialFunctions.gammaln(a)))/Math.Exp(SpecialFunctions.SpecialFunctions.gammaln(a+0.5)) 'need gammaln
-			If gamma<>0 Then
+            Dim sigma As Double = (12 * Math.Sqrt(Math.PI) * Math.Sqrt(a) * Math.Exp(SpecialFunctions.gammaln(a))) / Math.Exp(SpecialFunctions.gammaln(a + 0.5)) 'need gammaln
+            If gamma<>0 Then
 				_Alpha = 4/(gamma*gamma)
 				_Xi = LM.GetL1() - ((2* sigma)/gamma)
 				_Beta = 0.5*sigma*Math.Abs(gamma)
@@ -87,13 +87,13 @@ Namespace Distributions.LinearMoments
 			Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
 		End Function
 		Public Overrides Function GetCDF( value As Double) As Double
-			Return 1 - (SpecialFunctions.SpecialFunctions.IncompleteGamma(_Alpha, ((_Xi - value) / _Beta)) / Math.Exp(SpecialFunctions.SpecialFunctions.gammaln(_Alpha)))
-	'        If _gamma < 0 Then
-	'            Return 1 - (incompletegammalower(_alpha, ((_xi - value) / _beta)) / Math.Exp(gammaln(_alpha)))
-	'        Else
-	'            Return (incompletegammalower(_alpha, ((value - _xi) / _beta)) / Math.Exp(gammaln(_alpha)))
-	'        End If
-		End Function
+            Return 1 - (SpecialFunctions.IncompleteGamma(_Alpha, ((_Xi - value) / _Beta)) / Math.Exp(SpecialFunctions.gammaln(_Alpha)))
+            '        If _gamma < 0 Then
+            '            Return 1 - (incompletegammalower(_alpha, ((_xi - value) / _beta)) / Math.Exp(gammaln(_alpha)))
+            '        Else
+            '            Return (incompletegammalower(_alpha, ((value - _xi) / _beta)) / Math.Exp(gammaln(_alpha)))
+            '        End If
+        End Function
 		Public Overrides Function GetPDF( value As Double) As Double
 			Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
 		End Function

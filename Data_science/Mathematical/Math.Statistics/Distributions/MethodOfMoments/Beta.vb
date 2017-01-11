@@ -89,11 +89,11 @@ Namespace Distributions.MethodOfMoments
 			Return value
 		End Function
 		Public Overrides Function GetCDF( value As Double) As Double 'not sure this is right, technically it is the regularized incomplete beta.
-			Return SpecialFunctions.SpecialFunctions.RegularizedIncompleteBetaFunction(_Alpha, _Beta, value)
-		End Function
+            Return SpecialFunctions.RegularizedIncompleteBetaFunction(_Alpha, _Beta, value)
+        End Function
 		Public Overrides Function GetPDF( value As Double) As Double
-			Return (Math.Pow(value,(_Alpha - 1)) * (Math.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.SpecialFunctions.BetaFunction(_Alpha, _Beta)
-		End Function
+            Return (Math.Pow(value, (_Alpha - 1)) * (Math.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.BetaFunction(_Alpha, _Beta)
+        End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
 			Dim errors As New List(Of Distributions.ContinuousDistributionError)
 			If _Alpha<=0 Then errors.Add(New Distributions.ContinuousDistributionError("Alpha must be greater than 0"))

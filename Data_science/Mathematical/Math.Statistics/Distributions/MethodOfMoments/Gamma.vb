@@ -74,11 +74,11 @@ Namespace Distributions.MethodOfMoments
 			Return xn
 		End Function
 		Public Overrides Function GetCDF( value As Double) As Double
-			Return SpecialFunctions.SpecialFunctions.IncompleteGamma(_Alpha, _Beta*value)/Math.Exp(SpecialFunctions.SpecialFunctions.gammaln(_Alpha))
-		End Function
+            Return SpecialFunctions.IncompleteGamma(_Alpha, _Beta * value) / Math.Exp(SpecialFunctions.gammaln(_Alpha))
+        End Function
 		Public Overrides Function GetPDF( value As Double) As Double
-			Return (((Math.Pow(_Beta, _Alpha))*((Math.Pow(value,_Alpha-1))*Math.Exp(-_Beta*value))/Math.Exp(SpecialFunctions.SpecialFunctions.gammaln(_Alpha))))
-		End Function
+            Return (((Math.Pow(_Beta, _Alpha)) * ((Math.Pow(value, _Alpha - 1)) * Math.Exp(-_Beta * value)) / Math.Exp(SpecialFunctions.gammaln(_Alpha))))
+        End Function
 		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
 			Dim errors As New List(Of Distributions.ContinuousDistributionError)
 			If _Beta<=0 Then errors.Add(New Distributions.ContinuousDistributionError("Beta must be greater than 0"))

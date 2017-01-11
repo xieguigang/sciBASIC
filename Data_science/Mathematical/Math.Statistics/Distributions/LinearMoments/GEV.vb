@@ -88,8 +88,8 @@ Namespace Distributions.LinearMoments
 				_Alpha = LM.GetL2() / Math.Log(2)
 				_Xi = LM.GetL1() - _Alpha * 0.57721566 'euler's constant
 			Else
-				Dim gam As Double = Math.Exp(SpecialFunctions.SpecialFunctions.gammaln(1 + _K))
-				_Alpha = LM.GetL2() * _K / (gam * (1 - Math.Pow(2,-_K)))
+                Dim gam As Double = Math.Exp(SpecialFunctions.gammaln(1 + _K))
+                _Alpha = LM.GetL2() * _K / (gam * (1 - Math.Pow(2,-_K)))
 				_Xi = LM.GetL1() - _Alpha * (1 - gam) / _K
 			End If
 		End Sub
