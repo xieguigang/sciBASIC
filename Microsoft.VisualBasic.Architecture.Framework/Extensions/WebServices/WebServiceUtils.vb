@@ -454,10 +454,10 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, data As Dictionary(Of String, String()),
-                                            Optional Referer$ = "",
-                                            Optional proxy$ = Nothing,
-                                            Optional ua As String = UserAgent.GoogleChrome) As String
+    <Extension> Public Function POST(url$, data As Dictionary(Of String, String()),
+                                     Optional Referer$ = "",
+                                     Optional proxy$ = Nothing,
+                                     Optional ua As String = UserAgent.GoogleChrome) As String
 
         Dim postString As New List(Of String)
 
