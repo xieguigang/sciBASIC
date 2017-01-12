@@ -690,6 +690,7 @@ RE0:
 
                 Call dwl.Headers.Add(UserAgent.UAheader, ua)
                 Call save.ParentPath.MkDIR
+                Call $"{strUrl} --> {save}".__DEBUG_ECHO
                 Call dwl.DownloadFile(strUrl, save)
             End Using
             Return True
