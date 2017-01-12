@@ -75,13 +75,21 @@ Namespace Text.HtmlParser
         ''' <summary>
         ''' Parsing image source url from the img html tag.
         ''' </summary>
-        ''' <param name="str"></param>
+        ''' <param name="img"></param>
         ''' <returns></returns>
-        <Extension> Public Function ImageSource(str As String) As String
-            str = Regex.Match(str, "src="".+?""", RegexOptions.IgnoreCase).Value
-            str = Mid(str, 5)
-            str = Mid(str, 2, Len(str) - 2)
-            Return str
+        <Extension> Public Function ImageSource(img As String) As String
+            If String.IsNullOrEmpty(img) Then
+                Return ""
+            Else
+                img = Regex.Match(img, "src="".+?""", RegexOptions.IgnoreCase).Value
+            End If
+            If String.IsNullOrEmpty(img) Then
+                Return ""
+            Else
+                img = Mid(img, 5)
+                img = Mid(img, 2, Len(img) - 2)
+                Return img
+            End If
         End Function
 
         ''' <summary>
