@@ -428,6 +428,9 @@ Public Module WebServiceUtils
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
+            If String.IsNullOrEmpty(proxy) Then
+                proxy = WebServiceUtils.Proxy
+            End If
             If Not String.IsNullOrEmpty(proxy) Then
                 Call request.SetProxy(proxy)
             End If
