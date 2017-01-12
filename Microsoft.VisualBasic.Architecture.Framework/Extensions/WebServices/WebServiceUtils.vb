@@ -666,7 +666,8 @@ RETRY:      Return __get(url, headers, proxy, UA)
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
                                              save As String,
                                              Optional proxy As String = Nothing,
-                                             Optional ua As String = UserAgent.FireFox) As Boolean
+                                             Optional ua As String = UserAgent.FireFox,
+                                             Optional retry As Integer = 10) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -677,6 +678,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
     ''' <remarks></remarks>
     <Extension> Public Function DownloadFile(strUrl As String, SavedPath As String) As Boolean
 #End If
+RE0:
         Try
             Using dwl As New WebClient()
                 If Not String.IsNullOrEmpty(proxy) Then
@@ -695,6 +697,13 @@ RETRY:      Return __get(url, headers, proxy, UA)
                 New Exception(strUrl, ex),
                 trace)
             Call ex.PrintException
+
+            If retry > 0 Then
+                retry -= 1
+                GoTo RE0
+            Else
+
+            End If
 
             Return False
         Finally
