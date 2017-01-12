@@ -398,7 +398,7 @@ Public Module WebServiceUtils
 
     <ExportAPI("POST", Info:="POST http request")>
     Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
-        Return url.PostRequest(params.BuildReqparm)
+        Return url.POST(params.BuildReqparm)
     End Function
 
     <ExportAPI("POST", Info:="POST http request")>
@@ -422,7 +422,7 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
+    <Extension> Public Function POST(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
