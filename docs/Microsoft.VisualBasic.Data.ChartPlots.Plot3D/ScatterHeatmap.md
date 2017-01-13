@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.ChartPlots.Plot3D](./index.md)_
 
 #### GetPlotFunction
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.Plot3D.ScatterHeatmap.GetPlotFunction(System.Func{System.Double,System.Double,System.},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Int32,System.Int32,System.String,System.String,System.Int32,System.String,System.Boolean,System.Collections.Generic.List{Microsoft.VisualBasic.Data.csv.DocumentStream.EntityObject},System.String,System.Drawing.Font,System.Boolean)
+Microsoft.VisualBasic.Data.ChartPlots.Plot3D.ScatterHeatmap.GetPlotFunction(System.Func{System.Double,System.Double,System.},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Int32,System.Int32,System.String,System.String,System.Int32,System.String,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.DocumentStream.EntityObject},System.String,System.Drawing.Font,System.Boolean)
 ```
 DEBUG模式之下会将网格给绘制出来，这个在Release模式之下是不会出现的。
 

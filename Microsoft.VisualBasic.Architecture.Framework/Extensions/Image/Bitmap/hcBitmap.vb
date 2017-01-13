@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c44e49fe1ebc579ed13d85849d3ab7df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hcBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::c0172c33af991fa46f14b594e5bff677, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hcBitmap.vb"
 
     ' Author:
     ' 
@@ -105,6 +105,65 @@ Namespace Imaging
             ' Unlock the bits.
             Call curBitmap.UnlockBits(bmpData)
         End Sub
+
+        ''' <summary>
+        ''' convert color bitmaps to grayscale.(灰度图)
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Grayscale(source As Image) As Bitmap
+            Dim curBitmap As New Bitmap(source)
+
+            Dim iR As Integer = 0 ' Red
+            Dim iG As Integer = 0 ' Green
+            Dim iB As Integer = 0 ' Blue
+
+            ' Lock the bitmap's bits.  
+            Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
+            Dim bmpData As BitmapData = curBitmap.LockBits(
+                rect, ImageLockMode.ReadWrite, curBitmap.PixelFormat)
+            ' Get the address of the first line.
+            Dim ptr As IntPtr = bmpData.Scan0
+            ' Declare an array to hold the bytes of the bitmap.
+            Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
+
+            Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
+                Dim byts As Marshal.Byte = rgbValues
+
+                ' Set every third value to 255. A 24bpp bitmap will binarization.  
+                Do While Not rgbValues.NullEnd(3)
+                    ' Get the red channel
+                    iR = rgbValues(2)
+                    ' Get the green channel
+                    iG = rgbValues(1)
+                    ' Get the blue channel
+                    iB = rgbValues(0)
+
+                    Dim luma = CInt(Math.Truncate(iR * 0.3 + iG * 0.59 + iB * 0.11))
+                    ' gray pixel
+                    byts(2) = luma
+                    byts(1) = luma
+                    byts(0) = luma
+                    byts += BinarizationStyles.Binary
+                Loop
+            End Using
+
+            ' Unlock the bits.
+            Call curBitmap.UnlockBits(bmpData)
+
+            Return curBitmap
+        End Function
+
+        ''' <summary>
+        ''' Color gray scale
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GrayScale(c As Color) As Integer
+            Dim luma% = CInt(Math.Truncate(c.R * 0.3 + c.G * 0.59 + c.B * 0.11))
+            Return luma
+        End Function
 
         <Extension>
         Public Function ByteLength(rect As Rectangle) As Integer

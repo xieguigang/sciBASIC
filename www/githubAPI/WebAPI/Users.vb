@@ -31,6 +31,7 @@ Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Webservices.Github.Class
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace WebAPI
 

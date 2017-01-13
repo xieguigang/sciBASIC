@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12d92f2eef9a9c91e97bbc1af444d503, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::a045e6dd9b817d34b988b4748652116c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
 
     ' Author:
     ' 
@@ -116,6 +116,16 @@ Namespace Drawing3D
             _animationLoop.Stop()
         End Sub
 
+        Public Property RefreshInterval As Integer
+            Get
+                Return _animationLoop.Interval
+            End Get
+            Set(value As Integer)
+                _animationLoop.Interval = value
+                _animationLoop.Start()
+            End Set
+        End Property
+
         Protected Overridable Sub __init()
             Try
                 Throw New Exception("Please Implements the initialize code at here.")
@@ -208,17 +218,25 @@ Namespace Drawing3D
             _rotate = False
         End Sub
 
+        Public Property DisableScreenResize As Boolean = False
+
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
             If _camera Is Nothing Then
                 Call "Camera object not initialized!".__DEBUG_ECHO
             Else
-                _camera.screen = Size
+                If Not DisableScreenResize Then
+                    _camera.screen = Size
+                End If
             End If
         End Sub
 
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Dim d% = Math.Sign(e.Delta)
             _camera.ViewDistance += d
+
+#If DEBUG Then
+            Call _camera.GetJson.__DEBUG_ECHO
+#End If
         End Sub
 
         Dim keyRotate As Point3D

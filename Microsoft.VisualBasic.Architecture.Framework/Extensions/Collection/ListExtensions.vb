@@ -88,7 +88,7 @@ Public Module ListExtensions
         Dim out As New List(Of T)
 
         For Each x As SeqValue(Of T) In collection.SeqIterator
-            If indices.Index(x.i) = -1 Then  ' 不存在于顶点的列表之中，即符合反选的条件，则添加进入结果之中
+            If indices.IndexOf(x.i) = -1 Then  ' 不存在于顶点的列表之中，即符合反选的条件，则添加进入结果之中
                 out += x.value
             End If
         Next

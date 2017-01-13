@@ -346,7 +346,7 @@ Function test the Boolean expression and then decided returns which part of the 
 ```csharp
 Microsoft.VisualBasic.Extensions.InsertOrUpdate``1(System.Collections.Generic.Dictionary{System.String,``0}@,``0)
 ```
-Insert data or update the exists data in the dictionary, if the target object with @``P:Microsoft.VisualBasic.ComponentModel.Collection.Generic.INamedValue.Key`` 
+Insert data or update the exists data in the dictionary, if the target object with @``P:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository.IKeyedEntity`1.Key`` 
  is not exists in the dictionary, then will be insert, else the old value will be replaced with the parameter 
  value **`item`**.
  (向字典对象之中更新或者插入新的数据，假若目标字典对象之中已经存在了一个数据的话，则会将原有的数据覆盖，并返回原来的数据)
@@ -594,6 +594,18 @@ Pause the console program.
 |Parameter Name|Remarks|
 |--------------|-------|
 |Prompted|-|
+
+
+#### println
+```csharp
+Microsoft.VisualBasic.Extensions.println(System.String,System.Object[])
+```
+@``M:Microsoft.VisualBasic.Terminal.STDIO.printf(System.String,System.Object[])`` + @``M:System.Console.WriteLine(System.String)``
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|s$|-|
+|args|-|
 
 
 #### Remove``1

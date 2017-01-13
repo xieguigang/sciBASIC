@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e945e85a35b24de3e2624cdad4d1039, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\DESolver.vb"
+﻿#Region "Microsoft.VisualBasic::d65d8499495f337cc240911918e2d88f, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\DESolver.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
 Imports Microsoft.VisualBasic.DataMining.Darwinism
 Imports Microsoft.VisualBasic.DataMining.Darwinism.DifferentialEvolution
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper

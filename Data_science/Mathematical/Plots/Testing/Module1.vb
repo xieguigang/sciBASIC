@@ -209,19 +209,20 @@ Module Module1
     Sub Main()
         '        Call heatmap2()
 
+        ''Pause()
+
+        'Call d3heatmap()
+        'Pause()
+        'Call scatterHeatmapTest()
+
+        'Return
+
+        'Call CMeansVisualize()
         'Pause()
 
-        Call d3heatmap()
-        Pause()
-        Call scatterHeatmapTest()
-
-        Return
-
-        Call CMeansVisualize()
-        Pause()
-
-        Dim datahm = Heatmap.LoadDataSet("C:\Users\Admin\OneDrive\O'Connor\observation_correlates\spcc.csv")
+        Dim datahm = Heatmap.LoadDataSet("C:\Users\xieguigang\OneDrive\1.5\hh.csv")
         Call Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
+                          kmeans:=AddressOf KmeansReorder,
                           mapLevels:=20,
                           margin:=New Size(300, 300),
                           legendTitle:="Spearman correlations",

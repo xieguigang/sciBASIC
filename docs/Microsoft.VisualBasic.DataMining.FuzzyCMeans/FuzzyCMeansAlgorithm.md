@@ -53,7 +53,7 @@ Microsoft.VisualBasic.DataMining.FuzzyCMeans.FuzzyCMeansAlgorithm.FuzzyCMeans(Sy
 ```csharp
 Microsoft.VisualBasic.DataMining.FuzzyCMeans.FuzzyCMeansAlgorithm.MarkClusterCenter(Microsoft.VisualBasic.DataMining.FuzzyCMeans.Entity,System.Drawing.Color)
 ```
-·½±ãÓ¦ÓÃÓÚ¿ÉÊÓ»¯
+����Ӧ���ڿ��ӻ�
 
 |Parameter Name|Remarks|
 |--------------|-------|

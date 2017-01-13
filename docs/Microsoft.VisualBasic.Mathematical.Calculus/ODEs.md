@@ -90,6 +90,19 @@ Microsoft.VisualBasic.Mathematical.Calculus.ODEs.Solve(System.Int32,System.Doubl
 |b|-|
 
 
+#### TimePopulator
+```csharp
+Microsoft.VisualBasic.Mathematical.Calculus.ODEs.TimePopulator(System.Int32,System.Double,System.Double)
+```
+Populates the data of @``P:Microsoft.VisualBasic.Mathematical.Calculus.ODEsOut.x``
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|n%|-|
+|a#|-|
+|b#|-|
+
+
 #### y0
 ```csharp
 Microsoft.VisualBasic.Mathematical.Calculus.ODEs.y0

@@ -59,6 +59,8 @@ PM> Install-Package sciBASIC
 PM> Install-Package sciBASIC -Pre
 ```
 
+===================================================================
+
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
 ###### TextRank
@@ -68,6 +70,25 @@ PageRank analysis on the text paragraph for find out the keyword, here is the pa
 > "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
 
 ![](./Data/TextRank/visualize.png)
+
+## Image fast binarization using VisualBasic image extension API
+[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
+
+```vbnet
+Imports Microsoft.VisualBasic.Imaging
+
+Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+
+Call bitmap.Grayscale().SaveAs("./etc/lena/lena.grayscale.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap
+     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
+     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
+```
+
+|Normal|Binary|SparseGray|Grayscale|
+|------|------|----|---------|
+|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|<img src="./etc/lena/lena.grayscale.png" width=160 height=160 />|
 
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 
@@ -187,7 +208,9 @@ data(mtcars)
 write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
 ```
 
-## What's new of VisualBasic language Syntax from this runtime library?
+===================================================================
+
+## New VisualBasic Language Syntax in this runtime
 
 First of all, imports the language feature namespace of VisualBasic
 
@@ -224,7 +247,7 @@ Do While Not (s = blablabla) Is Nothing
 Loop
 ```
 
-###### 2. List(Of )
+###### 2. List(Of ) Add
 
 Old:
 
@@ -246,7 +269,7 @@ l += From x As Integer
      Select CStr(x)
 ```
 
-###### int Type
+###### VB int Type
 
 ```vbnet
 Dim min As int = 1
@@ -260,36 +283,6 @@ x = -1
 Console.WriteLine(min <= x < max) ' False
 ```
 
-## Framework Gallery
-Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic.Imaging) 3D engine.
-
-![](./gr/d3.png)
-![](./etc/ColorDesigner-screenshot.png)
-
 ===================================================================
 
-###### Modules that Includes in this Framework:
-
-> 1. A data frame system for read/write csv data more easily.
-> 2. ODEs solver system and data plots system
-> 3. Various linq extensions for the data science programming on large amount data processing
-> 4. VisualBasic language Feature: Unix bash command supports in under development which parts of the API is available at namespace ``Microsoft.VisualBasic.Language``
-> 5. Image graphics system in namespace ``Microsoft.VisualBasic.Imaging``
-
-###### Image fast binarization using VisualBasic extension API
-[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
-
-```vbnet
-Imports Microsoft.VisualBasic.Imaging
-
-Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
-
-Call bitmap.GetBinaryBitmap
-     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
-Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
-     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
-```
-
-|Normal|Binary|Gray|
-|------|------|----|
-|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=250 height=250 />|<img src="./etc/lena/lena.gray.png" width=250 height=250 />|
+> Copyleft ! 2017, I@xieguigang.me

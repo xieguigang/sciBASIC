@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94fb59caf40b01a5aba6d805b6c3e54d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::bff4cd00ec2e0e1c318667af2e060f2c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -52,11 +52,11 @@ Namespace ComponentModel.Collection
         End Sub
 
         ''' <summary>
-        ''' 不存在则返回-1
+        ''' 获取目标对象在本索引之中的位置编号，不存在则返回-1
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property Index(x As T) As Integer
+        Default Public ReadOnly Property IndexOf(x As T) As Integer
             Get
                 If maps.ContainsKey(x) Then
                     Return maps(x)
@@ -86,5 +86,15 @@ Namespace ComponentModel.Collection
                 .ToArray _
                 .GetJson
         End Function
+
+        Public ReadOnly Property Map As Dictionary(Of T, Integer)
+            Get
+                Return Me
+            End Get
+        End Property
+
+        Public Shared Narrowing Operator CType(index As IndexOf(Of T)) As Dictionary(Of T, Integer)
+            Return New Dictionary(Of T, Integer)(index.maps)
+        End Operator
     End Class
 End Namespace

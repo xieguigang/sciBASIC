@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e9c5508b2066b81a57939e75224230c, ..\sciBASIC#\Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::95c76db2cefe341ba66b482aae48607c, ..\sciBASIC#\Data\Trinity\NLP.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' 从现有的理论和技术现状看，通用的、高质量的自然语言处理系统，仍然是较长期的努力目标，
 ''' 但是针对一定应用，具有相当自然语言处理能力的实用系统已经出现，有些已商品化，甚至
@@ -41,4 +40,3 @@
 Public Class NLP
 
 End Class
-

@@ -126,6 +126,9 @@ Namespace Scripting
             ElseIf InStr(s, "/") > 0 Then
                 Dim t$() = s.Split("/"c) ' 处理分数
                 Return Val(t(0)) / Val(t(1))
+            ElseIf InStr(s, "e", CompareMethod.Text) > 0 Then
+                Dim t = s.ToLower.Split("e"c)
+                Return Val(t(0)) * (10 ^ Val(t(1)))
             Else
                 Return Conversion.Val(s)
             End If

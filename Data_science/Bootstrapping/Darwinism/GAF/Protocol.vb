@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1eb81213bf1765c2ee80c5852e5d803a, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::63f9045bcd621eab72f61abc28293ad1, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Protocol.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
@@ -131,7 +132,7 @@ Namespace Darwinism.GAF
                 fitness:=fitness,
                 outPrint:=outPrint,
                 threshold:=threshold,
-                argsInit:=Nothing,
+                base:=Nothing,
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
                 print:=print,
@@ -181,24 +182,27 @@ Namespace Darwinism.GAF
         ''' <param name="evolIterations%"></param>
         ''' <param name="fitness"></param>
         ''' <param name="outPrint"></param>
-        ''' <param name="argsInit"></param>
+        ''' <param name="base"></param>
         ''' <param name="weights">Weights for variable fitness calcaulation</param>
         ''' <returns></returns>
         <Extension>
         Private Function __runInternal(vars$(), popSize%, threshold#, evolIterations%,
                                        fitness As GAFFitness,
                                        ByRef outPrint As List(Of outPrint),
-                                       argsInit As Dictionary(Of String, Double),
+                                       base As Dictionary(Of String, Double),
                                        randomGenerator As IRandomSeeds,
                                        mutateLevel As MutateLevels,
                                        print As Action(Of outPrint, var()),
                                        radicals#,
                                        parallel As ParallelComputing(Of ParameterVector),
                                        weights As Dictionary(Of String, Double)) As var()
-            Dim estArgs As var()
 
             If Not weights Is Nothing Then
-                fitness.weights = fitness.modelVariables.Balance(weights)
+                fitness.weights = fitness _
+                    .modelVariables _
+                    .Where(Function(v) Array.IndexOf(fitness.Ignores, v) = -1) _
+                    .ToArray _
+                    .Balance(weights)
                 Call $"Weights fitness average is {fitness.weights.GetJson}".__DEBUG_ECHO
             Else
                 Call "Using normal fitness average calculation...".__DEBUG_ECHO
@@ -210,35 +214,10 @@ Namespace Darwinism.GAF
             If print Is Nothing Then
                 print = Sub(x, v) Call x.ToString.__DEBUG_ECHO
             End If
-            If argsInit.IsNullOrEmpty Then
-                estArgs = vars.ToArray(
-                    Function(x) New var With {
-                        .Name = x,
-                        .value = 0.5R
-                    })
-            Else
-                estArgs = LinqAPI.Exec(Of var) <= From x
-                                                  In argsInit
-                                                  Where Array.IndexOf(vars, x.Key) > -1
-                                                  Select New var With {
-                                                      .Name = x.Key,
-                                                      .value = x.Value
-                                                  }
-                Dim varsData As Dictionary(Of var) =
-                    estArgs.ToDictionary
-                For Each name$ In vars
-                    If Not varsData.ContainsKey(name$) Then
-                        varsData += New var With {
-                            .Name = name,
-                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
-                        }
-                    End If
-                Next
-            End If
 
             Dim population As Population(Of ParameterVector) =
                 New ParameterVector(seeds:=randomGenerator) With {
-                    .vars = estArgs,
+                    .vars = vars.CreateVector(randomGenerator, base),
                     .MutationLevel = mutateLevel,
                     .radicals = radicals
             }.InitialPopulation(popSize%, parallel)
@@ -275,6 +254,44 @@ Namespace Darwinism.GAF
             Call Console.WriteLine(ga.Best.vars.GetJson)
 #End If
             Return ga.Best.vars
+        End Function
+
+        <Extension>
+        Public Function CreateVector(vars$(), randomGenerator As IRandomSeeds, Optional base As Dictionary(Of String, Double) = Nothing) As var()
+            Dim vector As var()
+
+            If base.IsNullOrEmpty Then
+                vector = vars.ToArray(
+                    Function(x) New var With {
+                        .Name = x,
+                        .value = 0.5R
+                    })
+            Else
+                vector = LinqAPI.Exec(Of var) <=
+ _
+                    From x
+                    In base
+                    Where Array.IndexOf(vars, x.Key) > -1
+                    Select New var With {
+                        .Name = x.Key,
+                        .value = x.Value
+                    }
+
+                Dim vData As Dictionary(Of var) = vector.ToDictionary
+
+                For Each name$ In vars
+                    If Not vData.ContainsKey(name$) Then
+                        vData += New var With {
+                            .Name = name,
+                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
+                        }
+                    End If
+                Next
+
+                Return vData.Values.ToArray
+            End If
+
+            Return vector
         End Function
 
         ''' <summary>
@@ -328,7 +345,7 @@ Namespace Darwinism.GAF
                 fitness:=fitness,
                 outPrint:=outPrint,
                 threshold:=threshold,
-                argsInit:=estArgsBase,
+                base:=estArgsBase,
                 randomGenerator:=randomGenerator,
                 mutateLevel:=mutateLevel,
                 print:=print,
@@ -402,6 +419,72 @@ Namespace Darwinism.GAF
                             radicals:=radicals,
                             parallel:=parallel,
                             weights:=weights)
+        End Function
+
+        ''' <summary>
+        ''' 用于实际分析的GAF工具
+        ''' </summary>
+        ''' <param name="popSize%">
+        ''' 更小的种群规模能够产生更快的进化速度，更大的种群规模能够产生更多的解集
+        ''' </param>
+        ''' <param name="evolIterations%"></param>
+        ''' <param name="outPrint"></param>
+        ''' <param name="threshold#"></param>
+        ''' <param name="radicals">参数值介于[0-1]之间</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension>
+        Public Function Fitting(Of T As MonteCarlo.Model)(
+                              driver As Fitness(Of ParameterVector),
+                              Optional popSize% = 200%,
+                              Optional evolIterations% = Integer.MaxValue%,
+                              Optional ByRef outPrint As List(Of outPrint) = Nothing,
+                              Optional threshold# = 0.5,
+                              Optional base As Dictionary(Of String, Double) = Nothing,
+                              Optional randomGenerator As IRandomSeeds = Nothing,
+                              Optional mutateLevel As MutateLevels = MutateLevels.Low,
+                              Optional print As Action(Of outPrint, var()) = Nothing,
+                              Optional radicals# = 0.3,
+                              Optional parallel As ParallelComputing(Of ParameterVector) = Nothing) As var()
+
+            Dim model As Type = GetType(T)
+            Dim vars$() = MonteCarlo.Model.GetParameters(model).ToArray
+
+            If randomGenerator Is Nothing Then
+                randomGenerator = Function() New Random
+            End If
+            If print Is Nothing Then
+                print = Sub(x, v) Call x.ToString.__DEBUG_ECHO
+            End If
+
+            Dim population As Population(Of ParameterVector) =
+                New ParameterVector(seeds:=randomGenerator) With {
+                    .vars = vars.CreateVector(randomGenerator, base),
+                    .MutationLevel = mutateLevel,
+                    .radicals = radicals
+            }.InitialPopulation(popSize%, parallel)
+
+#If Not DEBUG Then
+            population.Parallel = True
+#End If
+            Dim ga As New GeneticAlgorithm(Of ParameterVector)(
+                population,
+                driver,
+                randomGenerator)
+            Dim out As New List(Of outPrint)
+
+            Call ga.AddDefaultListener(Sub(x)
+                                           Call out.Add(x)
+                                           Call print(x, ga.Best.vars.ToArray(Function(v) New var(v)))
+                                       End Sub, threshold)
+            Call ga.Evolve(evolIterations%)
+
+            outPrint = out
+#If DEBUG Then
+            Call Console.WriteLine("GAF fitting:")
+            Call Console.WriteLine(ga.Best.vars.GetJson)
+#End If
+            Return ga.Best.vars
         End Function
     End Module
 End Namespace

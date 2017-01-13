@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bb0bc0392523cdc3ac6034e073d8eef, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::a4a170021e2cd83596edb0a9411d0ffb, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\ODEs.vb"
 
     ' Author:
     ' 
@@ -136,6 +136,23 @@ Public MustInherit Class ODEs
             .OrderBy(Function(o) o.Index) _
             .Select(Function(o) o.value) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Populates the data of <see cref="ODEsOut.x"/>
+    ''' </summary>
+    ''' <param name="n%"></param>
+    ''' <param name="a#"></param>
+    ''' <param name="b#"></param>
+    ''' <returns></returns>
+    Public Shared Iterator Function TimePopulator(n%, a#, b#) As IEnumerable(Of Double)
+        Dim dh As Double = (b - a) / n  ' 步长
+        Dim dx As Double = a
+
+        For i As Integer = 0 To n
+            Yield dx
+            dx += dh
+        Next
     End Function
 
     ''' <summary>

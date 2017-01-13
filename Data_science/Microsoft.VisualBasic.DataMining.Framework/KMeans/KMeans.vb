@@ -137,7 +137,9 @@ Namespace KMeans
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
-        ''' <param name="clusterCount">The number of clusters or groups to form</param>
+        ''' <param name="clusterCount">
+        ''' The number of clusters or groups to form.(当这个参数值为0的时候，函数也会返回一个空集合)
+        ''' </param>
         ''' <param name="source">
         ''' An array containing data that will be clustered, the elements number must greater than 2, at least 3 elements.
         ''' (里面的元素至少需要三个)

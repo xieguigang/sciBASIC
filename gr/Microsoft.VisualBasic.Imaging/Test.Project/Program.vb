@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07442a9c5d2542075f000760c5888e93, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
+﻿#Region "Microsoft.VisualBasic::ff9a6a1d248d54da7cbebc6be076e859, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
 
     ' Author:
     ' 
@@ -36,14 +36,14 @@ Module Program
 
     Sub Main()
 
-        Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong>text</strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> "
+        'Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong>text</strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> "
 
-        Dim strings = TextAPI.GetStrings(html)
+        'Dim strings = TextAPI.GetStrings(html)
 
-        Using gdi As GDIPlusDeviceHandle = New Size(500, 200).CreateGDIDevice
-            Call strings.DrawStrng(New Point(100, 100), gdi)
-            Call gdi.Save("./test_text.png", ImageFormats.Png)
-        End Using
+        'Using gdi As GDIPlusDeviceHandle = New Size(500, 200).CreateGDIDevice
+        '    Call strings.DrawStrng(New Point(100, 100), gdi)
+        '    Call gdi.Save("./test_text.png", ImageFormats.Png)
+        'End Using
 
         Call New Form1().ShowDialog()
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e32fc72239cf1e4281c8034fdc63dc, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::dad10ebe711a62bb978fc2e24a2b1912, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -143,7 +143,8 @@ Public Module ScatterHeatmap
                          Optional maxZ# = Double.MaxValue,
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
-                         Optional logbase# = -1.0R) As Bitmap
+                         Optional logbase# = -1.0R,
+                         Optional scale# = 1.0#) As Bitmap
 
         If size.IsEmpty Then
             size = New Size(3000, 2400)
@@ -172,7 +173,8 @@ Public Module ScatterHeatmap
                 .ylabel = ylabel,
                 .logBase = logbase,
                 .maxZ = maxZ,
-                .minZ = minZ
+                .minZ = minZ,
+                .scale = scale
            }.Plot)
     End Function
 
@@ -227,6 +229,7 @@ Public Module ScatterHeatmap
         Public xlabel$, ylabel$
         Public logBase#
         Public minZ, maxZ As Double
+        Public scale# = 1
 
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
@@ -314,10 +317,12 @@ Public Module ScatterHeatmap
 
             offset = New Point(offset.X, offset.Y - unit / 2)
 
+            Dim us% = unit * scale
+
             For i As Integer = 0 To Data.Length - 1
                 Dim p As (X#, y#, Z#) = Data(i)
                 Dim c As SolidBrush = getColors(i)
-                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.y) + offset.Y, unit, unit)
+                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.y) + offset.Y, us, us)
 
                 Call g.FillRectangle(c, fill)
                 Call g.DrawRectangle(New Pen(c),
@@ -400,4 +405,3 @@ Public Module ScatterHeatmap
         Return data.ToVector
     End Function
 End Module
-

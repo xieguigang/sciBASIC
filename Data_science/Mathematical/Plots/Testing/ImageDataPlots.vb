@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7958563f4201083031ba6e499147243a, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\ImageDataPlots.vb"
+﻿#Region "Microsoft.VisualBasic::f30181cbe315f779d0087c4468dc1503, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\ImageDataPlots.vb"
 
     ' Author:
     ' 
@@ -41,17 +41,25 @@ Module ImageDataPlots
     End Sub
 
     Sub Plot2DMap()
-        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
+        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
         Dim out As Image = Image2DMap(img)
 
         Call out.SaveAs("./testmap.png")
     End Sub
 
     Sub Plot3DMap()
-        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
-        Dim out As Image = Image3DMap(img, New Camera With {.ViewDistance = -10})
+        Dim img As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+        Dim out As Image = Image3DMap(
+            img, New Camera With {
+                .ViewDistance = -50,
+                .screen = New Size(img.Width * 8, img.Height * 5),
+                .angleX = 90,
+                .angleY = 90,
+                .angleZ = 10,
+                .offset = New Point(-0, 0)
+            },
+            steps:=10)
 
-        Call out.SaveAs("./testmap.png")
+        Call out.SaveAs("./testmap3.png")
     End Sub
 End Module
-

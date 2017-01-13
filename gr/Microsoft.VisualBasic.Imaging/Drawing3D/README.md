@@ -1,4 +1,4 @@
-> source: https://www.siggraph.org/education/materials/HyperGraph/modeling/mod_tran/3drota.htm#3D Rotation
+> https://www.siggraph.org/education/materials/HyperGraph/modeling/mod_tran/3drota.htm
 
 ![](images/feature.jpg)
 
@@ -31,9 +31,9 @@ Rz (q) = |-sin q  cos q  0  0|
 
 X-axis rotation looks like Z-axis rotation if replace:
 
->X axis with Y axis
-Y axis with Z axis
-Z axis with X axis
+> X axis with Y axis
+> Y axis with Z axis
+> Z axis with X axis
 
 ![](images/3drotx.gif)
 
@@ -119,6 +119,7 @@ Now we can perform the first translation (of the rotation axis to pass through t
 
 For rotation about X axis we need to find **cos(A), sin(A) where A = angle** between projection of U (in YZ plane) and Z axis.
 Note: **U'** is no longer a unit vector, i.e.
+
 > |U'| =/ 1
 > Uz = unit vector along z axis = (0,0,1)
 
@@ -139,32 +140,34 @@ so
 ```
 (U') X (Uz) = Ux|U'| * |Uz|sin(A) = Ux d * sin(A)
 
-	       |0   0    0    0|
+           |0   0    0    0|
 So Rx(a) = |0   c/d  b/a  0|
            |0  -b/a  c/a  0|
            |0   0    0    1|
 ```
-Rx(a) --> Rotates U into XZ plane
-Now compute Ry(B) for rotation to z-axis.
-After rotation about x-axis the vector is as below:
-> Uy" = 0 since in XZ plane
-> Uz" = d = |U'| since just rotated U' into XZ plane
+**Rx(a) --> Rotates U into XZ plane**
 
+Now compute ``Ry(B)`` for rotation to z-axis.
+
+After rotation about x-axis the vector is as below:
+
+> ``Uy" = 0`` since in XZ plane
+> ``Uz" = d = |U'|`` since just rotated U' into XZ plane
 
 again from dot product:
+
 ```
 cos(B) = U" * (Uz) / |U"|
-  |Uz| = 0 * a + 0 * 0 + 1 * d = d
+|Uz|   = 0 * a + 0 * 0 + 1 * d = d
 ```
-Note: **|U"|\*|Uz| = 1** since both are unit vectors
-from the cross product **U" x Uz = Uz|U"||Uz|sin B**
-(from matrix) = Uy x (-a)
+
+Note: **|U"|\*|Uz| = 1** since both are unit vectors from the cross product **U" x Uz = Uz|U"||Uz|sin B(from matrix) = Uy x (-a)**
 therefore **sin(B) = - a**
 ```
-	    | d  0  a  0|
+        | d  0  a  0|
 Ry(B) = | 0  1  0  0|
-	    |-a  0  d  0|
-	    | 0  0  0  1|
+        |-a  0  d  0|
+        | 0  0  0  1|
 ```
 The result of this transformation is that V (= Rotation axis) is coincident with z axis.
 
@@ -175,7 +178,9 @@ Rz(q) = |-sin(q) cos(q)  0  0|
         |     0      0   1  0|
         |     0      0   0  1|
 ```
+
 Then we must apply inverse transformations to get R.A. back to original position. Therefore, the complete composite transformation matrix is as follows:
+
 ```
 R(q) = T * Rx(A) * Ry(B) * Rz(q) * RY-1(B) * Rx-1(A) * T-1
 n1 = a(x)

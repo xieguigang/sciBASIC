@@ -46,6 +46,11 @@ Public Class Scaling
 
     Public ReadOnly type As Type
 
+    ''' <summary>
+    ''' 线条
+    ''' </summary>
+    ''' <param name="array"></param>
+    ''' <param name="absoluteScaling"></param>
     Sub New(array As SerialData(), absoluteScaling As Boolean)
         dx = Scaling(array, Function(p) p.pt.X, absoluteScaling, xmin)
         dy = Scaling(array, Function(p) p.pt.Y, absoluteScaling, ymin)
@@ -59,6 +64,11 @@ Public Class Scaling
         type = GetType(ScatterHeatmap)
     End Sub
 
+    ''' <summary>
+    ''' 连续的条型数据
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="absoluteScaling"></param>
     Sub New(data As HistogramGroup, absoluteScaling As Boolean)
         dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin, absoluteScaling)
         dy = Scaling(data, Function(x) {x.y}, ymin, absoluteScaling)
@@ -66,11 +76,37 @@ Public Class Scaling
         type = GetType(Histogram)
     End Sub
 
+    ''' <summary>
+    ''' 分类的条型数据
+    ''' </summary>
+    ''' <param name="hist"></param>
+    ''' <param name="stacked"></param>
+    ''' <param name="horizontal"></param>
     Sub New(hist As BarDataGroup, stacked As Boolean, horizontal As Boolean)
-        Dim h As List(Of Double) = If(
-            stacked,
-            New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
-            hist.Samples.Select(Function(s) s.data).Unlist)
+        Call Me.New(__barDataProvider(hist, stacked), horizontal)
+    End Sub
+
+    Private Shared Function __barDataProvider(hist As BarDataGroup, stacked As Boolean) As IEnumerable(Of Double)
+        If stacked Then
+            Return hist _
+                .Samples _
+                .Select(Function(s) s.StackedSum)
+        Else
+            Return hist _
+                .Samples _
+                .Select(Function(s) s.data).Unlist
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="horizontal">
+    ''' 所进行绘制的条形图是否是水平的？
+    ''' </param>
+    Sub New(data As IEnumerable(Of Double), horizontal As Boolean)
+        Dim h#() = data.ToArray
 
         If Not horizontal Then
             ymin! = h.Min
@@ -92,6 +128,10 @@ Public Class Scaling
 
         type = GetType(BarPlot)
     End Sub
+
+    Public Function ScallingWidth(x As Double, width%) As Single
+        Return width * (x - xmin) / dx
+    End Function
 
     ''' <summary>
     ''' 返回的系列是已经被转换过的，直接使用来进行画图

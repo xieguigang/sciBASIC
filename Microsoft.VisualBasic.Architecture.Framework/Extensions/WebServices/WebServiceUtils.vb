@@ -102,63 +102,6 @@ Public Module WebServiceUtils
         Return reqparm
     End Function
 
-    ''' <summary>
-    ''' Gets the link text in the html fragement text.
-    ''' </summary>
-    ''' <param name="html">A string that contains the url string pattern like: href="url_text"</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Html.Href")>
-    <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")>
-                                     html As String) As String
-
-        If String.IsNullOrEmpty(html) Then
-            Return ""
-        End If
-
-        Dim url As String = Regex.Match(html, "href="".+?""", RegexOptions.IgnoreCase).Value
-
-        If String.IsNullOrEmpty(url) Then
-            Return ""
-        Else
-            url = Mid(url, 6)
-            url = Mid(url, 2, Len(url) - 2)
-            Return url
-        End If
-    End Function
-
-    Public Const IMAGE_SOURCE As String = "<img.+?src=.+?>"
-
-    ''' <summary>
-    ''' Parsing image source url from the img html tag.
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    <Extension> Public Function ImageSource(str As String) As String
-        str = Regex.Match(str, "src="".+?""", RegexOptions.IgnoreCase).Value
-        str = Mid(str, 5)
-        str = Mid(str, 2, Len(str) - 2)
-        Return str
-    End Function
-
-    Const HTML_TAG As String = "</?.+?(\s+.+?="".+?"")*>"
-
-    ''' <summary>
-    ''' Removes the html tags from the text string.
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    <ExportAPI("Html.Tag.Trim")>
-    <Extension> Public Function TrimHTMLTag(str As String) As String
-        If String.IsNullOrEmpty(str) Then
-            Return ""
-        End If
-
-        str = Regex.Replace(str, HTML_TAG, "")
-        Return str
-    End Function
-
     Const PortOccupied As String = "Only one usage of each socket address (protocol/network address/port) Is normally permitted"
 
     ''' <summary>
@@ -455,7 +398,7 @@ Public Module WebServiceUtils
 
     <ExportAPI("POST", Info:="POST http request")>
     Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
-        Return url.PostRequest(params.BuildReqparm)
+        Return url.POST(params.BuildReqparm)
     End Function
 
     <ExportAPI("POST", Info:="POST http request")>
@@ -479,12 +422,15 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
+    <Extension> Public Function POST(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
+            If String.IsNullOrEmpty(proxy) Then
+                proxy = WebServiceUtils.Proxy
+            End If
             If Not String.IsNullOrEmpty(proxy) Then
                 Call request.SetProxy(proxy)
             End If
@@ -508,10 +454,10 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, data As Dictionary(Of String, String()),
-                                            Optional Referer$ = "",
-                                            Optional proxy$ = Nothing,
-                                            Optional ua As String = UserAgent.GoogleChrome) As String
+    <Extension> Public Function POST(url$, data As Dictionary(Of String, String()),
+                                     Optional Referer$ = "",
+                                     Optional proxy$ = Nothing,
+                                     Optional ua As String = UserAgent.GoogleChrome) As String
 
         Dim postString As New List(Of String)
 
@@ -555,39 +501,6 @@ Public Module WebServiceUtils
 
             Return html.ToString
         End Using
-    End Function
-
-    ''' <summary>
-    ''' 有些时候后面可能会存在多余的vbCrLf，则使用这个函数去除
-    ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TrimResponseTail(value As String) As String
-        If String.IsNullOrEmpty(value) Then
-            Return ""
-        End If
-
-        Dim l As Integer = Len(value)
-        Dim i As Integer = value.LastIndexOf(vbCrLf)
-        If i = l - 2 Then
-            Return Mid(value, 1, l - 2)
-        Else
-            Return value
-        End If
-    End Function
-
-    Private ReadOnly vbCrLfLen As Integer = Len(vbCrLf)
-
-    ''' <summary>
-    ''' 获取两个尖括号之间的内容
-    ''' </summary>
-    ''' <param name="html"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
-    <Extension> Public Function GetValue(html As String) As String
-        Return html.GetStackValue(">", "<")
     End Function
 
 #If FRAMEWORD_CORE Then
@@ -636,6 +549,16 @@ Public Module WebServiceUtils
         Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
     End Function
 
+    ''' <summary>
+    ''' Example for xx-net tool:
+    ''' 
+    ''' ```
+    ''' http://127.0.0.1:8087/
+    ''' ```
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Proxy As String
+
     <Extension>
     Private Function __httpRequest(url$,
                                    retries%,
@@ -645,6 +568,10 @@ Public Module WebServiceUtils
                                    UA$) As String
 
         Dim retryTime As Integer = 0
+
+        If String.IsNullOrEmpty(proxy) Then
+            proxy = WebServiceUtils.Proxy
+        End If
 
         Try
 RETRY:      Return __get(url, headers, proxy, UA)
@@ -715,15 +642,16 @@ RETRY:      Return __get(url, headers, proxy, UA)
             reader As New StreamReader(respStream)
 
             Dim html As String = reader.ReadToEnd
-            Dim title As String = html.HTMLtitle
+            Dim title As String = html.HTMLTitle
 
             If InStr(html, "http://www.doctorcom.com") > 0 Then
                 Return ""
             End If
 
             Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
+#If DEBUG Then
             Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
-
+#End If
             Return html
         End Using
     End Function
@@ -741,7 +669,8 @@ RETRY:      Return __get(url, headers, proxy, UA)
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
                                              save As String,
                                              Optional proxy As String = Nothing,
-                                             Optional ua As String = UserAgent.FireFox) As Boolean
+                                             Optional ua As String = UserAgent.FireFox,
+                                             Optional retry As Integer = 10) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -752,6 +681,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
     ''' <remarks></remarks>
     <Extension> Public Function DownloadFile(strUrl As String, SavedPath As String) As Boolean
 #End If
+RE0:
         Try
             Using dwl As New WebClient()
                 If Not String.IsNullOrEmpty(proxy) Then
@@ -760,6 +690,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
 
                 Call dwl.Headers.Add(UserAgent.UAheader, ua)
                 Call save.ParentPath.MkDIR
+                Call $"{strUrl} --> {save}".__DEBUG_ECHO
                 Call dwl.DownloadFile(strUrl, save)
             End Using
             Return True
@@ -770,6 +701,13 @@ RETRY:      Return __get(url, headers, proxy, UA)
                 New Exception(strUrl, ex),
                 trace)
             Call ex.PrintException
+
+            If retry > 0 Then
+                retry -= 1
+                GoTo RE0
+            Else
+
+            End If
 
             Return False
         Finally

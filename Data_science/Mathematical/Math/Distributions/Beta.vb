@@ -57,6 +57,18 @@ Namespace Distributions
                 Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))
         End Function
 
+        '''' <summary>
+        '''' ###### beta function
+        '''' 
+        '''' https://en.wikipedia.org/wiki/Beta_function
+        '''' </summary>
+        '''' <param name="x#"></param>
+        '''' <param name="y#"></param>
+        '''' <returns></returns>
+        'Public Function beta(x#, y#) As Double
+        '    Return gamma(x) * gamma(y) / gamma(x + y)
+        'End Function
+
         <Extension>
         Public Function beta(x As IEnumerable(Of Double), alpha#, _beta#) As Vector
             Return New Vector(x.Select(Function(a) beta(a, alpha, _beta)))

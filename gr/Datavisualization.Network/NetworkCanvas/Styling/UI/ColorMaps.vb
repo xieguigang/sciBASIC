@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e364e767e68415a7294ec740b6d675cb, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Styling\UI\ColorMaps.vb"
+﻿#Region "Microsoft.VisualBasic::557647e80219f28baaafa8160252ef5b, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Styling\UI\ColorMaps.vb"
 
     ' Author:
     ' 
@@ -29,4 +29,3 @@
 Public Class ColorMaps
 
 End Class
-

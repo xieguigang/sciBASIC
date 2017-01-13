@@ -97,7 +97,7 @@ Public Class Renderer : Inherits AbstractRenderer
         forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
     End Sub
 
-    Private Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
+    Protected Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
         If ZeroFilter Then
             If (edge.Source.Data.radius < 0.6 OrElse edge.Target.Data.radius < 0.6) Then
                 Return

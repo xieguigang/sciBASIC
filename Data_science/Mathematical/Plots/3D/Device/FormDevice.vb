@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9662ed47fc9ab4aba8020cea707a1eb4, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Device\FormDevice.vb"
+﻿#Region "Microsoft.VisualBasic::e7dbe11251c9a071d384a0aed9c611e4, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Device\FormDevice.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,9 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Plot3D.Device
 
@@ -42,6 +44,17 @@ Namespace Plot3D.Device
             End If
 
             Call Controls.Add(canvas)
+        End Sub
+
+        Private Sub SavePlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SavePlotToolStripMenuItem.Click
+            Using file As New SaveFileDialog With {
+                .Filter = "PNG image(*.png)|*.png"
+            }
+                If file.ShowDialog = DialogResult.OK Then
+                    Call canvas.BackgroundImage _
+                        .SaveAs(file.FileName)
+                End If
+            End Using
         End Sub
     End Class
 End Namespace

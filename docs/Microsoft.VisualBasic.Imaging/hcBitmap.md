@@ -27,4 +27,15 @@ Microsoft.VisualBasic.Imaging.hcBitmap.Binarization(System.Drawing.Bitmap@,Micro
 >  The author should read about @``M:System.Drawing.Bitmap.LockBits(System.Drawing.Rectangle,System.Drawing.Imaging.ImageLockMode,System.Drawing.Imaging.PixelFormat)`` first.
 >  
 
+#### Grayscale
+```csharp
+Microsoft.VisualBasic.Imaging.hcBitmap.Grayscale(System.Drawing.Color)
+```
+Color gray scale
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|c|-|
+
+
 

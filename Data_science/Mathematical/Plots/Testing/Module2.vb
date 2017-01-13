@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1857d8bb7c46d490748367d4b0e27cd, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::c67a9047986995e8710d7be030b3930a, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\Module2.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Module Module2
 
     End Function
 End Module
-

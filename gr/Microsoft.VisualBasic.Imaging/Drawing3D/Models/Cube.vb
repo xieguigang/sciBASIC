@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4179191fa1f67bd64b9253b213dac2cf, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
+﻿#Region "Microsoft.VisualBasic::424a2fc8db81a48da3fbbd1cf8fb72eb, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
 
     ' Author:
     ' 
@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing3D
 
-    Public Structure Cube : Implements I3DModel
+    Public Class Cube : Implements I3DModel
 
         ''' <summary>
         ''' Create an array representing the 6 faces of a cube. Each face is composed by indices to the vertex array
@@ -47,7 +47,7 @@ Namespace Drawing3D
             {3, 2, 6, 7}
         }.ToVectorList
 
-        Dim faces As Surface()
+        Public faces As Surface()
 
         ''' <summary>
         ''' 
@@ -105,44 +105,16 @@ Namespace Drawing3D
         End Sub
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            Dim avgZ(6) As Single
-            Dim order(6) As Integer
-            Dim tmp As Single
-            Dim iMax As Integer
+            Dim faces As New List(Of Surface)
 
-            ' Compute the average Z value of each face.
-            For i% = 0 To 5
-                Dim face As Surface = faces(i)
-                avgZ(i) = face.Average(Function(pt) pt.Z)
-                order(i) = i
+            For Each f As Surface In Me.faces
+                faces += New Surface With {
+                    .brush = f.brush,
+                    .vertices = camera.Rotate(f.vertices).ToArray
+                }
             Next
 
-            ' Next we sort the faces in descending order based on the Z value.
-            ' The objective is to draw distant faces first. This is called
-            ' the PAINTERS ALGORITHM. So, the visible faces will hide the invisible ones.
-            ' The sorting algorithm used is the SELECTION SORT.
-            For i = 0 To 4
-                iMax = i
-                For j = i + 1 To 5
-                    If avgZ(j) > avgZ(iMax) Then
-                        iMax = j
-                    End If
-                Next
-                If iMax <> i Then
-                    tmp = avgZ(i)
-                    avgZ(i) = avgZ(iMax)
-                    avgZ(iMax) = tmp
-
-                    tmp = order(i)
-                    order(i) = order(iMax)
-                    order(iMax) = tmp
-                End If
-            Next
-
-            ' Draw the faces using the PAINTERS ALGORITHM (distant faces first, closer faces last).
-            For i = 0 To 5
-                Call faces(order(i)).Draw(canvas, camera)
-            Next
+            Call canvas.SurfacePainter(camera, faces)
         End Sub
 
         Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
@@ -190,5 +162,5 @@ Namespace Drawing3D
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
-    End Structure
+    End Class
 End Namespace

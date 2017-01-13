@@ -43,3 +43,7 @@ Microsoft.VisualBasic.Text.Xml.Xmlns.WriteNamespace(System.Text.StringBuilder)
 > 当前的这个对象是新值，需要替换掉文档里面的旧值
 
 
+### Properties
+
+#### DefaultXmlns
+``xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"``

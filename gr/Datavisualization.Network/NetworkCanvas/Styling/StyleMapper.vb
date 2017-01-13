@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::453df196d57ef661a9f751a53af59a6b, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Styling\StyleMapper.vb"
+﻿#Region "Microsoft.VisualBasic::f9c15fb13d735dc3fbf1d7cd2ca53bd0, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Styling\StyleMapper.vb"
 
     ' Author:
     ' 
@@ -25,8 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
-
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
