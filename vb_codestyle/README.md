@@ -329,6 +329,14 @@ Public Function IndexOf(Id As Char) As Integer
 End Function
 ```
 
+And also you can combine ``With`` with function returns value
+
+```vbnet
+With function_calls()
+    ' blablabla
+End With
+```
+
 ## Type char coding style
 
 ###### Recommended
@@ -392,6 +400,19 @@ Public Function DensityCis(Of T As I_GeneBrief)(
 
 + Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
 + Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
+
+#### Using underline in namming
+
+When the identifier name require of the underline symbol ``_``, then it is recommended that first word should be an all **UPCASE** brief code and the next word is an all **lowcase** word. For example,
+
+```vbnet
+Dim GO_term$
+
+' this would be better and more balance than
+' Dim go_term$
+' or
+' Dim Go_term$
+```
 
 At last, for improves of the code readable, try _**Make your identifier name short enough as possible**_
 
