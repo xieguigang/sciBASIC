@@ -38,5 +38,5 @@ Display the input source sequence.
 
 ### Properties
 
-#### Index
-不存在则返回-1
+#### IndexOf
+获取目标对象在本索引之中的位置编号，不存在则返回-1

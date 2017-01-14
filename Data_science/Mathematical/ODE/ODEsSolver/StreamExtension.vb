@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a06d6dc13094cfe405c7d41e73a64e8, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\StreamExtension.vb"
+﻿#Region "Microsoft.VisualBasic::9ddb71a870cac3e519a61e84ed889581, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\StreamExtension.vb"
 
     ' Author:
     ' 
@@ -190,4 +190,3 @@ Public Module StreamExtension
         }
     End Function
 End Module
-

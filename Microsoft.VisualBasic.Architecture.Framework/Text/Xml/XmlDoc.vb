@@ -96,6 +96,10 @@ Namespace Text.Xml
             Return doc.ToString
         End Function
 
+        Public Function CreateObject(Of T)() As T
+            Return ToString.LoadFromXml(Of T)
+        End Function
+
         Public Shared Function FromObject(Of T As Class)(x As T) As XmlDoc
             Return New XmlDoc(x.GetXml)
         End Function

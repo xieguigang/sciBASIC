@@ -139,39 +139,6 @@ Microsoft.VisualBasic.WebServiceUtils.GetRequestRaw(System.String,System.Boolean
  |
 
 
-#### GetValue
-```csharp
-Microsoft.VisualBasic.WebServiceUtils.GetValue(System.String)
-```
-获取两个尖括号之间的内容
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|html|-|
-
-
-#### href
-```csharp
-Microsoft.VisualBasic.WebServiceUtils.href(System.String)
-```
-Gets the link text in the html fragement text.
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|html|A string that contains the url string pattern like: href="url_text"|
-
-
-#### ImageSource
-```csharp
-Microsoft.VisualBasic.WebServiceUtils.ImageSource(System.String)
-```
-Parsing image source url from the img html tag.
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|str|-|
-
-
 #### IsSocketPortOccupied
 ```csharp
 Microsoft.VisualBasic.WebServiceUtils.IsSocketPortOccupied(System.Exception)
@@ -230,28 +197,6 @@ Microsoft.VisualBasic.WebServiceUtils.RequestParser(System.String,System.Boolean
 |argsData|URL parameters|
 
 
-#### TrimHTMLTag
-```csharp
-Microsoft.VisualBasic.WebServiceUtils.TrimHTMLTag(System.String)
-```
-Removes the html tags from the text string.
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|str|-|
-
-
-#### TrimResponseTail
-```csharp
-Microsoft.VisualBasic.WebServiceUtils.TrimResponseTail(System.String)
-```
-有些时候后面可能会存在多余的vbCrLf，则使用这个函数去除
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|value|-|
-
-
 #### UrlDecode
 ```csharp
 Microsoft.VisualBasic.WebServiceUtils.UrlDecode(System.String,System.Text.Encoding)
@@ -294,3 +239,9 @@ Microsoft.VisualBasic.WebServiceUtils.UrlPathEncode(System.String)
 Microsoft DNS Server
 #### Protocols
 Web protocols enumeration
+#### Proxy
+Example for xx-net tool:
+ 
+ ```
+ http://127.0.0.1:8087/
+ ```

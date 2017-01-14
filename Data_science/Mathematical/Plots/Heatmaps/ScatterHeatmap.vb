@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e32fc72239cf1e4281c8034fdc63dc, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::dad10ebe711a62bb978fc2e24a2b1912, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -405,4 +405,3 @@ Public Module ScatterHeatmap
         Return data.ToVector
     End Function
 End Module
-

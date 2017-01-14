@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60d336695ef82aefcb22111873381ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::0d73d5db20c9ee35644c24831edd155c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -88,20 +88,20 @@ Public Module __DEBUG_MAIN
     End Class
 
 
-    Private Sub testColors()
-        Dim c1 = Color.Blue.ColorToDecimal
-        Dim c2 = Color.Red.ColorToDecimal
+    'Private Sub testColors()
+    '    Dim c1 = Color.Blue.ColorToDecimal
+    '    Dim c2 = Color.Red.ColorToDecimal
 
-        Console.WriteLine(Color.Blue.ToArgb)
-        Console.WriteLine(Color.Red.ToArgb)
+    '    Console.WriteLine(Color.Blue.ToArgb)
+    '    Console.WriteLine(Color.Red.ToArgb)
 
-        Pause()
-    End Sub
+    '    Pause()
+    'End Sub
 
     Function Main() As Integer
 
 
-        Call testColors()
+        '  Call testColors()
 
 
         Dim testBBBmp As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")

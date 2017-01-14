@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3ff9d4e99f59bf9bac8c82d3a6b3845, ..\sciBASIC#\Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::02d92a935a9fdf339c2455b649c34e6e, ..\sciBASIC#\Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Module TextRank
         Return New GraphMatrix(net, skipCount:=False)
     End Function
 End Module
-

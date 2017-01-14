@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e5dff244fa52c0d13436387ec744486, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::21f8036f140f2ec29747f1ebf59b7979, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Vector.vb"
 
     ' Author:
     ' 
@@ -465,6 +465,10 @@ Namespace LinearAlgebra
             Next
 
             Return result
+        End Function
+
+        Public Shared Function rand(size%) As Vector
+            Return Extensions.rand(size)
         End Function
 
         Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0c082948da68254a3641f37cbddc21b, ..\sciBASIC#\www\githubAPI\WebAPI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::26085bc85693eeb4074de3abc69f5520, ..\sciBASIC#\www\githubAPI\WebAPI\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,3 @@ Namespace WebAPI
         Public Property Proxy As String = Nothing
     End Module
 End Namespace
-
-
-

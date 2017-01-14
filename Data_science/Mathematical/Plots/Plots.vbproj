@@ -185,6 +185,7 @@
     <Compile Include="Fractions\TreeMap.vb" />
     <Compile Include="Fractions\Fractions.vb" />
     <Compile Include="Fractions\Pyramid.vb" />
+    <Compile Include="g\AxisScalling.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
     <Compile Include="g\Legends\Legend.vb" />
@@ -224,6 +225,9 @@
   <ItemGroup>
     <EmbeddedResource Include="3D\Device\Canvas.resx">
       <DependentUpon>Canvas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3D\Device\FormDevice.resx">
+      <DependentUpon>FormDevice.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

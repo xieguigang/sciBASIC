@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fae52b789d1203c64edd15bdf3f09b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1d6dfa377e0e5d07a72020d7553a0f17, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -71,6 +71,16 @@ Imports Microsoft.VisualBasic.Text.Similarity
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    ''' <summary>
+    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="args"></param>
+    Public Sub println(s$, ParamArray args As Object())
+        Dim out As String = STDIO__.CLangStringFormatProvider.sprintf(s, args)
+        Call Console.WriteLine(out)
+    End Sub
 
     ''' <summary>
     ''' ``days, hh:mm:ss.ms``

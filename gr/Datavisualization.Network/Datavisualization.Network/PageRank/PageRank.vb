@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c46c852787d3d699dcc1eb7cd9ea8318, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\PageRank\PageRank.vb"
+﻿#Region "Microsoft.VisualBasic::d0cd687bcda327f22eef70ca35f6f132, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\PageRank\PageRank.vb"
 
     ' Author:
     ' 
@@ -196,4 +196,3 @@ Public Class PageRank
     End Function
 #End Region
 End Class
-

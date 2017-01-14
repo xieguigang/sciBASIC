@@ -50,7 +50,7 @@ Convert ODEs result as scatter plot serial model.
 
 #### KmeansReorder
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.PlotExtensions.KmeansReorder(Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}[])
+Microsoft.VisualBasic.Data.ChartPlots.PlotExtensions.KmeansReorder(Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}[],System.Int32)
 ```
 @``T:Microsoft.VisualBasic.Data.ChartPlots.Heatmap.ReorderProvider``
 

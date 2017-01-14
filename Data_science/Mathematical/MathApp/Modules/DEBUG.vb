@@ -179,8 +179,26 @@ Module DEBUG
         Return llll
     End Function
 
-    Public Function Main() As Integer
 
+    Sub pieChartTest()
+        Call {
+            New NamedValue(Of Integer)("s1", 123),
+            New NamedValue(Of Integer)("s2", 235),
+            New NamedValue(Of Integer)("s3", 99),
+            New NamedValue(Of Integer)("s4", 499),
+            New NamedValue(Of Integer)("s5", 123),
+            New NamedValue(Of Integer)("s6", 235),
+            New NamedValue(Of Integer)("s7", 99),
+            New NamedValue(Of Integer)("s8", 499)
+        }.FromData(schema:="Set1:c8") _
+         .Plot(reorder:=0, size:=New Size(1500, 1000)) _
+         .SaveAs("./pie_chart.png")
+
+        Pause()
+    End Sub
+
+    Public Function Main() As Integer
+        Call pieChartTest()
 
         Dim bdata As BarDataGroup = csv.LoadBarData(
             "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Excels\FigurePlot-Reference-Unigenes.absolute.level1.csv",
@@ -231,19 +249,7 @@ Module DEBUG
             }.FromData(schema:="office2010")) _
              .SaveAs("./treemap.png")
 
-        Call {
-            New NamedValue(Of Integer)("s1", 123),
-            New NamedValue(Of Integer)("s2", 235),
-            New NamedValue(Of Integer)("s3", 99),
-            New NamedValue(Of Integer)("s4", 499),
-            New NamedValue(Of Integer)("s5", 123),
-            New NamedValue(Of Integer)("s6", 235),
-            New NamedValue(Of Integer)("s7", 99),
-            New NamedValue(Of Integer)("s8", 499)
-        }.FromData(schema:="marquee") _
-         .Plot(reorder:=1,
-               size:=New Size(1500, 1000)) _
-         .SaveAs("./pie_chart.png")
+
 
 
 
@@ -263,11 +269,11 @@ Module DEBUG
         Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
 
         Call Scatter.Plot(serials).SaveAs("./cos.png")
-        Call Histogram.Plot(
-            Histogram.FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
-            .SaveAs("./cos.hist.png")
+        'Call Histogram.Plot(
+        '    FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
+        '    .SaveAs("./cos.hist.png")
 
-        Pause()
+        'Pause()
         '    Call PDFTest.betaTest()
 
 

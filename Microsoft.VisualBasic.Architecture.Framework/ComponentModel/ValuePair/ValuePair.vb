@@ -1,59 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::4fb496a59e8f896ad64fe0ea169f08a5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel
-
-    Public Structure TagValue(Of T)
-        Implements IKeyValuePairObject(Of String, T)
-
-        Public Property tag As String Implements IKeyValuePairObject(Of String, T).Identifier
-        Public Property Value As T Implements IKeyValuePairObject(Of String, T).Value
-
-        Sub New(tag As String, x As T)
-            Me.tag = tag
-            Me.Value = x
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"[{tag}] --> {Value.GetJson}"
-        End Function
-    End Structure
 
     ''' <summary>
     ''' An object for the text file format xml data storage.(用于存储与XML文件之中的字符串键值对对象)
     ''' </summary>
     ''' <remarks>
-    ''' 20160524 为了更好的构建GCModeller项目的数据文档的格式，本类型对象不再继承自<see cref="KeyValuePairObject(Of String, String)"/>类型
+    ''' + 2016-05-24 为了更好的构建GCModeller项目的数据文档的格式，本类型对象不再继承自<see cref="KeyValuePairObject(Of String, String)"/>类型
     ''' </remarks>
     ''' 
     <XmlType("hashEntry")> Public Class KeyValuePair
@@ -94,11 +78,17 @@ Namespace ComponentModel
 #End Region
 
         Public Overloads Shared Widening Operator CType(obj As KeyValuePair(Of String, String)) As KeyValuePair
-            Return New KeyValuePair With {.Key = obj.Key, .Value = obj.Value}
+            Return New KeyValuePair With {
+                .Key = obj.Key,
+                .Value = obj.Value
+            }
         End Operator
 
         Public Overloads Shared Widening Operator CType(obj As String()) As KeyValuePair
-            Return New KeyValuePair With {.Key = obj.First, .Value = obj.Get(1)}
+            Return New KeyValuePair With {
+                .Key = obj.First,
+                .Value = obj.Get(1)
+            }
         End Operator
 
         Public Overrides Function ToString() As String
@@ -112,9 +102,11 @@ Namespace ComponentModel
             }
         End Function
 
-        Public Shared Function ToDictionary(ListData As IEnumerable(Of KeyValuePair)) As Dictionary(Of String, String)
+        Public Shared Function ToDictionary(list As IEnumerable(Of KeyValuePair)) As Dictionary(Of String, String)
             Dim Dictionary As Dictionary(Of String, String) =
-                ListData.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+                list.ToDictionary(
+                    Function(obj) obj.Key,
+                    Function(obj) obj.Value)
             Return Dictionary
         End Function
 
@@ -147,6 +139,7 @@ Namespace ComponentModel
 
         Public Shared Function Distinct(source As KeyValuePair()) As KeyValuePair()
             Dim List = (From obj In source Select obj Order By obj.Key Ascending).ToList
+
             For i As Integer = 0 To List.Count - 1
                 If i >= List.Count Then
                     Exit For
@@ -169,9 +162,12 @@ Namespace ComponentModel
     End Class
 
     ''' <summary>
-    ''' {Key, strArray()} The value of this data type object is a string collection.(本类型对象的值属性类型为一个字符串集合)
+    ''' ``{Key, strArray()}`` The value of this data type object is a string collection.
+    ''' (本类型对象的值属性类型为一个字符串集合)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' 实际上这个类型完全可以由<see cref="NamedValue(Of String())"/>来替代，但是由于<see cref="NamedValue(Of String())"/>是通用化的，而本类型是特化为文本字符串的，所以使用本类型可以进行更加优雅的XML格式的文档生成
+    ''' </remarks>
     Public Class Key_strArrayValuePair : Inherits KeyValuePairObject(Of String, String())
         Implements INamedValue
 

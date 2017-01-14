@@ -13,18 +13,19 @@ Defines the Point3D class that represents points in 3D space.
 
 #### Project
 ```csharp
-Microsoft.VisualBasic.Imaging.Drawing3D.Point3D.Project(System.Int32,System.Int32,System.Int32,System.Single,System.Drawing.PointF)
+Microsoft.VisualBasic.Imaging.Drawing3D.Point3D.Project(System.Single@,System.Single@,System.Single,System.Int32,System.Int32,System.Int32,System.Int32)
 ```
-Project the 3D point to the 2D screen. By using the projection result, 
- just read the property @``P:Microsoft.VisualBasic.Imaging.Drawing3D.Point3D.PointXY(System.Drawing.Size)``.
- (将3D投影为2D，所以只需要取结果之中的@``P:Microsoft.VisualBasic.Imaging.Drawing3D.Point3D.X``和@``P:Microsoft.VisualBasic.Imaging.Drawing3D.Point3D.Y``就行了)
+Project the 3D point to the 2D screen.
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|viewWidth|-|
-|viewHeight|-|
-|fov|256默认值|
-|viewDistance|-|
+|x!|-|
+|y!|-|
+|z!|Using for the painter algorithm.|
+|viewWidth%|-|
+|viewHeight%|-|
+|fov%|-|
+|viewDistance%|View distance to the model from the view window.|
 
 
 #### RotateX
@@ -39,3 +40,7 @@ Microsoft.VisualBasic.Imaging.Drawing3D.Point3D.RotateX(System.Single)
 
 
 
+### Properties
+
+#### PointXY
+Gets the projection 2D point result from this readonly property

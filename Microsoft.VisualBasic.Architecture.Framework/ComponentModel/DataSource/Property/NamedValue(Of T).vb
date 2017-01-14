@@ -38,19 +38,20 @@ Namespace ComponentModel.DataSourceModel
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure NamedValue(Of T) : Implements INamedValue
+        Implements IKeyValuePairObject(Of String, T)
 
         ''' <summary>
         ''' Identifier tag data. you can using this property value as a dictionary key.
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute>
-        Public Property Name As String Implements INamedValue.Key
+        Public Property Name As String Implements INamedValue.Key, IKeyValuePairObject(Of String, T).Identifier
 
         ''' <summary>
         ''' Object value
         ''' </summary>
         ''' <returns></returns>
-        <XmlElement> Public Property Value As T
+        <XmlElement> Public Property Value As T Implements IKeyValuePairObject(Of String, T).Value
 
         <XmlAttribute>
         Public Property Description As String

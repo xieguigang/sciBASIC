@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58f055b9364eab9d538facb1678d3592, ..\sciBASIC#\Data_science\Mathematical\Plots.Charting\ScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::59ad513582b232a2c34e59ba863b4d7e, ..\sciBASIC#\Data_science\Mathematical\Plots.Charting\ScatterPlot.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Public Class ScatterPlot
         Call Plot()
     End Sub
 End Class
-
