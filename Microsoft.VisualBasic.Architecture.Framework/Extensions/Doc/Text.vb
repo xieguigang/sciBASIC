@@ -258,12 +258,13 @@ Public Module TextDoc
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(array As IEnumerable(Of String),
-                                       path As String,
-                                       Optional encoding As Encoding = Nothing) As Boolean
-
-        If String.IsNullOrEmpty(path) Then Return False
-        If encoding Is Nothing Then encoding = Encoding.Default
+    <Extension> Public Function SaveTo(array As IEnumerable(Of String), path$, Optional encoding As Encoding = Nothing) As Boolean
+        If String.IsNullOrEmpty(path) Then
+            Return False
+        End If
+        If encoding Is Nothing Then
+            encoding = Encoding.Default
+        End If
 
         Call "".SaveTo(path)
 

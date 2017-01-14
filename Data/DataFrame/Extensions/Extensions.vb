@@ -375,7 +375,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Dim modify As Dictionary(Of String, String) = Nothing
         If Not KeyMap Is Nothing Then
             modify = New Dictionary(Of String, String) From {
-                {NameOf(EntityObject.Identifier), KeyMap}
+                {NameOf(EntityObject.ID), KeyMap}
             }
         End If
         Return source.SaveTo(path, , encoding.GetEncodings,,, modify)
