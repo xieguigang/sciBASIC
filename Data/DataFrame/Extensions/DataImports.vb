@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c524dc21020d99a9308b3454f0ba6735, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Module provides the csv data imports operation of the csv document creates from a text file.
@@ -63,7 +64,7 @@ Public Module DataImports
                               Optional delimiter$ = ",",
                               Optional encoding As Encoding = Nothing) As File
         If encoding Is Nothing Then
-            encoding = System.Text.Encoding.Default
+            encoding = Encoding.Default
         End If
 
         Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
@@ -89,18 +90,23 @@ Public Module DataImports
     End Function
 
     <ExportAPI("Data.Imports")>
-    Public Function ImportsData(<Parameter("str.Data")> s_Data As IEnumerable(Of String),
+    Public Function ImportsData(<Parameter("str.Data")> lines As IEnumerable(Of String),
                                 Optional delimiter As String = ",") As DocumentStream.File
         Dim Expression As String = String.Format(SplitRegxExpression, delimiter)
-        Dim LQuery = (From line As String In s_Data Select RowParsing(line, Expression)).ToArray
+        Dim LQuery = (From line As String In lines Select RowParsing(line, Expression)).ToArray
         Return New DocumentStream.File(LQuery)
     End Function
 
     <Extension>
-    Public Function ImportsData(Of T As Class)(sData As String,
-                                               Optional delimiter As String = ",",
-                                               Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        Return ImportsData(sData.lTokens, delimiter).AsDataSource(Of T)(maps:=maps)
+    Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(text.lTokens, delimiter) _
+            .AsDataSource(Of T)(maps:=maps)
+    End Function
+
+    <Extension>
+    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(lines, ASCII.TAB) _
+            .AsDataSource(Of T)(maps:=maps)
     End Function
 
     ''' <summary>

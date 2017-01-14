@@ -535,12 +535,14 @@ Public Module StringHelpers
     ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String, Optional regex As Boolean = False) As IEnumerable(Of String())
+    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter$,
+                                               Optional regex As Boolean = False,
+                                               Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
         Dim list As New List(Of String)
         Dim delimiterTest As Func(Of String, Boolean)
 
         If regex Then
-            Dim regexp As New Regex(delimiter, RegexOptions.Singleline)
+            Dim regexp As New Regex(delimiter, opt)
             delimiterTest = Function(line) regexp.Match(line).Value = line
         Else
             delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
