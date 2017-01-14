@@ -54,7 +54,8 @@ Namespace Drawing2D.Colors
                                        Optional haveUnmapped As Boolean = True,
                                        Optional lsize As Size = Nothing,
                                        Optional lmargin As Size = Nothing,
-                                       Optional titleFont As Font = Nothing) As Bitmap
+                                       Optional titleFont As Font = Nothing,
+                                       Optional legendWidth! = -1) As Bitmap
             Dim br As SolidBrush() =
                 designer.ToArray(Function(c) New SolidBrush(c))
             Return br.ColorMapLegend(
@@ -63,7 +64,8 @@ Namespace Drawing2D.Colors
                 bg,
                 haveUnmapped,
                 lsize, lmargin,
-                titleFont)
+                titleFont,
+                legendWidth)
         End Function
 
         ''' <summary>
@@ -87,7 +89,8 @@ Namespace Drawing2D.Colors
                                        Optional haveUnmapped As Boolean = True,
                                        Optional lsize As Size = Nothing,
                                        Optional lmargin As Size = Nothing,
-                                       Optional titleFont As Font = Nothing) As Bitmap
+                                       Optional titleFont As Font = Nothing,
+                                       Optional legendWidth! = -1) As Bitmap
             If lsize.IsEmpty Then
                 lsize = New Size(800, 1000)
             End If
@@ -109,7 +112,7 @@ Namespace Drawing2D.Colors
                         titleFont)
                     Dim fSize As SizeF
                     Dim pt As Point
-                    Dim rectWidth As Integer = 150
+                    Dim rectWidth As Integer = If(legendWidth <= 0, 150, legendWidth)
                     Dim legendsHeight As Integer = size.Height - (margin.Height * 3) - grayHeight * 3
                     Dim d As Single = legendsHeight / designer.Length
                     Dim left As Integer = margin.Width + 30 + rectWidth
@@ -135,15 +138,15 @@ Namespace Drawing2D.Colors
                     Brushes.Black,
                     New Point(left, If(designer.Length > 100, d, 0) + y - fSize.Height))
 
-                    y = size.Height - margin.Height - grayHeight
-                    fSize = g.MeasureString("Unknown", font)
-                    pt = New Point(
-                    left,
-                    y - (grayHeight - fSize.Height) / 2)
-                    Call g.FillRectangle(Brushes.LightGray,
-                                         New Rectangle(New Point(margin.Width, y),
-                                                       New Size(rectWidth, grayHeight)))
-                    Call g.DrawString("Unknown", font, Brushes.Black, pt)
+                    If haveUnmapped Then
+                        y = size.Height - margin.Height - grayHeight
+                        fSize = g.MeasureString("Unknown", font)
+                        pt = New Point(left, y - (grayHeight - fSize.Height) / 2)
+                        graphicsRegion = New Rectangle(New Point(margin.Width, y), New Size(rectWidth, grayHeight))
+
+                        Call g.DrawString("Unknown", font, Brushes.Black, pt)
+                        Call g.FillRectangle(Brushes.LightGray, graphicsRegion)
+                    End If
                 End Sub)
         End Function
     End Module

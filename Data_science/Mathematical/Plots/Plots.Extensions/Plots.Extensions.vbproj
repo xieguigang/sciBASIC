@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EAF7195E-8612-4AF2-B919-94381997696D}</ProjectGuid>
+    <ProjectGuid>{A7819BB0-EA16-4526-A7D8-E6533F30E914}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.ChartPlots</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.ChartPlots.Extensions</AssemblyName>
@@ -157,9 +157,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mime\Markups\Markups.vbproj">
+    <ProjectReference Include="..\..\..\..\mime\markups\markups.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>Markups</Name>
+      <Name>markups</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
