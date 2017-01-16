@@ -390,6 +390,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
+    <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
@@ -459,7 +460,6 @@
     <Compile Include="Language\Java\Arrays.vb" />
     <Compile Include="Language\LanguageExtensions.vb" />
     <Compile Include="Language\Python\Array.vb" />
-    <Compile Include="Language\Tuple.vb" />
     <Compile Include="Language\Python\Regexp.vb" />
     <Compile Include="Language\Value.vb" />
     <Compile Include="Language\Python\Collection.vb" />

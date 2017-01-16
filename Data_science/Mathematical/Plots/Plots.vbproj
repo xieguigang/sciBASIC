@@ -182,6 +182,8 @@
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="Bubble.vb" />
     <Compile Include="csv\BarData.vb" />
+    <Compile Include="Dendrogram\Dendrogram.vb" />
+    <Compile Include="Dendrogram\Layouts.vb" />
     <Compile Include="Fractions\TreeMap.vb" />
     <Compile Include="Fractions\Fractions.vb" />
     <Compile Include="Fractions\Pyramid.vb" />
