@@ -63,6 +63,10 @@ Namespace Text
                     Dim part As NamedValue(Of String) =
                         nextLine.GetTagValue
 
+                    If String.IsNullOrEmpty(nextLine) Then
+                        Exit Do
+                    End If
+
                     If Not String.IsNullOrEmpty(part.Name) Then ' 有空格
                         s.value = Trim((+s) & part.Name)
                         left += part.Name.Length + 1
