@@ -31,6 +31,10 @@ Namespace Dendrogram
                 maxTotalHeight = .maxTotal
             End With
 
+            ' 计算出比例尺
+            Dim scale# = screen.Height / maxTotalHeight
+
+
         End Function
 
         <Extension>
