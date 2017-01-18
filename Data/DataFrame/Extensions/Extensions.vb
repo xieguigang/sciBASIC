@@ -371,14 +371,14 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     End Function
 
     <Extension>
-    Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T), path$, Optional encoding As Encodings = Encodings.ASCII, Optional KeyMap$ = Nothing) As Boolean
+    Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T), path$, Optional encoding As Encodings = Encodings.ASCII, Optional KeyMap$ = Nothing, Optional blank$ = "") As Boolean
         Dim modify As Dictionary(Of String, String) = Nothing
         If Not KeyMap Is Nothing Then
             modify = New Dictionary(Of String, String) From {
                 {NameOf(EntityObject.ID), KeyMap}
             }
         End If
-        Return source.SaveTo(path, , encoding.GetEncodings,,, modify)
+        Return source.SaveTo(path, , encoding.GetEncodings, blank,, modify)
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),

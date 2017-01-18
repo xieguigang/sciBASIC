@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BCF02DAE-6BAA-4678-BE8A-8B8C32418216}</ProjectGuid>
+    <ProjectGuid>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Imaging</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Imaging</AssemblyName>
