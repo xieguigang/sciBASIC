@@ -159,7 +159,7 @@ Public Module NetworkAPI
             In array
             Let type As String = nodeTypes.TryGetValue(v.Identifier, [default]:="variable")
             Select New FileStream.Node With {
-                .Identifier = v.Identifier,
+                .ID = v.Identifier,
                 .NodeType = type,
                 .Properties = v.Properties _
                     .ToDictionary(Function(k) k.Key,

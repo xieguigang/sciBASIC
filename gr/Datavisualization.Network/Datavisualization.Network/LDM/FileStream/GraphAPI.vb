@@ -49,14 +49,14 @@ Namespace FileStream
         Public Sub AddEdges(net As Network, from$, targets$())
             If Not net.HaveNode(from) Then
                 net += New Node With {
-                    .Identifier = from
+                    .ID = from
                 }
             End If
 
             For Each [to] As String In targets
                 If Not net.HaveNode([to]) Then
                     net += New Node With {
-                        .Identifier = [to]
+                        .ID = [to]
                     }
                 End If
 
@@ -78,7 +78,7 @@ Namespace FileStream
 
             For Each n In g.nodes
                 nodes += New Node With {
-                    .Identifier = n.ID
+                    .ID = n.ID
                 }
             Next
 
@@ -113,7 +113,7 @@ Namespace FileStream
  _
                 LinqAPI.Exec(Of Graph.Node) <= From n As Node
                                                In net.Nodes
-                                               Let id = n.Identifier
+                                               Let id = n.ID
                                                Let data As NodeData = New NodeData With {
                                                    .Color = Brushes.Red,
                                                    .radius = 20
@@ -239,7 +239,7 @@ Namespace FileStream
                 If ndg > degree Then
                     nodes += node
                 Else
-                    removes += node.Identifier
+                    removes += node.ID
                 End If
             Next
 

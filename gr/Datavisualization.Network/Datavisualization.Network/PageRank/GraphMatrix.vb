@@ -53,12 +53,11 @@ Public Class GraphMatrix
         nodes = net.Nodes
         edges = net.Edges
 
-        Dim index As New IndexOf(Of String)(
-            nodes.Select(Function(x) x.Identifier))
+        Dim index As New IndexOf(Of String)(nodes.Select(Function(x) x.ID))
 
         For Each node As FileStream.Node In nodes
             Call indices.Add(
-                node.Identifier,
+                node.ID,
                 New List(Of Integer))
         Next
 
@@ -118,7 +117,7 @@ Public Class GraphMatrix
         If Not reorder Then
             Return nodes _
                 .SeqIterator _
-                .ToDictionary(Function(n) (+n).Identifier,
+                .ToDictionary(Function(n) (+n).ID,
                               Function(i) v(i))
         Else
             Dim orders As SeqValue(Of Double)() = v _
@@ -127,7 +126,7 @@ Public Class GraphMatrix
                 .ToArray
 
             Return orders.ToDictionary(
-                Function(i) nodes(i).Identifier,
+                Function(i) nodes(i).ID,
                 Function(value) +value)
         End If
     End Function
@@ -137,6 +136,6 @@ Public Class GraphMatrix
     End Function
 
     Public Shared Narrowing Operator CType(gm As GraphMatrix) As List(Of Integer)()
-        Return gm.nodes.ToArray(Function(k) gm.indices(k.Identifier))
+        Return gm.nodes.ToArray(Function(k) gm.indices(k.ID))
     End Operator
 End Class

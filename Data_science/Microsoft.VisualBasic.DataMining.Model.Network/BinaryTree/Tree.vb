@@ -296,14 +296,14 @@ EXIT_:          Dim array = source.ToArray
                              .node = x,
                              .path = path}).ToArray
             Dim nodes = array.ToArray(Function(x) New FileStream.Node With {
-                                          .Identifier = x.node.Name,
+                                          .ID = x.node.Name,
                                           .NodeType = "Entity",
                                           .Properties = x.node.Properties _
                                                 .ToDictionary(Function(xx) xx.Key,
                                                               Function(xx) Math.Round(xx.Value, 4).ToString)
                                           }).ToList
             nodes += New FileStream.Node With {
-                .Identifier = "ROOT",
+                .ID = "ROOT",
                 .NodeType = "ROOT"
             }
 
@@ -332,7 +332,7 @@ EXIT_:          Dim array = source.ToArray
             If depth = array(Scan0).path.Length AndAlso
                 array(Scan0).path.Last = "X"c Then
                 Return array.ToArray(Function(x) New NetworkEdge With {
-                                         .FromNode = parent.Identifier,
+                                         .FromNode = parent.ID,
                                          .ToNode = x.node.Name,
                                          .InteractionType = "Leaf-X"})
             End If
@@ -345,15 +345,15 @@ EXIT_:          Dim array = source.ToArray
 
                 If parts.Length = 1 Then ' 叶节点
                     Dim leaf = parts.First
-                    Call edges.Add(New NetworkEdge With {.FromNode = parent.Identifier, .ToNode = leaf.node.Name, .InteractionType = "Leaf"})
+                    Call edges.Add(New NetworkEdge With {.FromNode = parent.ID, .ToNode = leaf.node.Name, .InteractionType = "Leaf"})
                 Else                    ' 继续递归
                     Dim uid As String = $"[{part.cur}]" & parts.First.path.Take(depth).JoinBy(".")
                     Dim virtual As New FileStream.Node With {
-                        .Identifier = uid,
+                        .ID = uid,
                         .NodeType = "Virtual"
                     }
                     Call nodes.Add(virtual)
-                    Call edges.Add(New NetworkEdge With {.FromNode = parent.Identifier, .ToNode = uid, .InteractionType = "Path"})
+                    Call edges.Add(New NetworkEdge With {.FromNode = parent.ID, .ToNode = uid, .InteractionType = "Path"})
                     Call edges.Add(__buildNET(parts, virtual, [next], nodes))
                 End If
             Next
