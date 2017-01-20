@@ -1,6 +1,7 @@
 ﻿
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -12,6 +13,7 @@ Namespace Drawing2D.Colors
 
         Dim colors As Color()
         Dim levels As ColorRange()
+        Dim upbound As NamedValue(Of Color)
 
         Sub New(path$(), levels%)
             Call Me.New(
@@ -42,6 +44,10 @@ Namespace Drawing2D.Colors
                 Next
 
                 .levels = levelMappings
+                .upbound = New NamedValue(Of Color) With {
+                    .Name = maps(path.Last),
+                    .Value = path.Last.TranslateColor
+                }
             End With
         End Sub
 
@@ -74,8 +80,14 @@ Namespace Drawing2D.Colors
                               Select d = x.GetMinDistance(value),
                                   x
                               Order By d Ascending
-            Dim level As ColorRange = mind_orders.First.x
-            Return level.Level
+            Dim level = mind_orders.First
+            Dim up# = EuclideanDistance(upbound.Value, value)
+
+            If level.d >= up Then
+                Return upbound.Name
+            Else
+                Return level.x.Level
+            End If
         End Function
     End Class
 
