@@ -366,7 +366,7 @@ Namespace Mathematical
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return Math.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return Math.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
             End If
         End Function
 
