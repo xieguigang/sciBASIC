@@ -235,13 +235,17 @@ Namespace CommandLine.Reflection
                             Call sb.AppendLine()
                         End Sub
 
-            If markdown Then
-                Call sb.AppendLine("##### Generic function API list")
+            If gg.GroupData.ContainsKey(undefined) Then
+                If markdown Then
+                    Call sb.AppendLine("##### Generic function API list")
+                End If
+
+                Dim undefines = gg.GroupData(undefined)
+                Call print(undefines.Data, " ")
+            Else
+                ' 2017-1-20
+                ' 命令行解释器之中已经定义完了所有的API，所以这里已经没有未定义分组的API了
             End If
-
-            Dim undefines = gg.GroupData(undefined)
-
-            Call print(undefines.Data, " ")
 
             If gg.GroupData.Count > 1 AndAlso Not markdown Then
                 Call sb.AppendLine("API list that with functional grouping")
