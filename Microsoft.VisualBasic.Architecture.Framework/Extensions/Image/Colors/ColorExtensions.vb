@@ -175,6 +175,25 @@ Namespace Imaging
         End Function
 
         ''' <summary>
+        ''' 这个函数会尝试用不同的模式来解析颜色表达式
+        ''' </summary>
+        ''' <param name="exp$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function TranslateColor(exp$) As Color
+            If exp.IsBlank Then
+                Return Color.Black
+            End If
+            If exp.First = "#"c Then
+                Return ColorTranslator.FromHtml(exp)
+            End If
+            If Regex.Match(exp, "\d+").Value = exp Then
+                Return ColorTranslator.FromOle(CInt(exp))
+            End If
+
+            Return exp.ToColor
+        End Function
+
+        ''' <summary>
         ''' Determine that the target color value is a empty variable.(判断目标颜色值是否为空值)
         ''' </summary>
         ''' <returns></returns>
