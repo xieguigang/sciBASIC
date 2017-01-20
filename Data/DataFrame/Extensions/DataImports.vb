@@ -104,6 +104,11 @@ Public Module DataImports
     End Function
 
     <Extension>
+    Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(text, delimiter).AsDataSource(Of T)(maps:=maps)
+    End Function
+
+    <Extension>
     Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Return ImportsData(lines, ASCII.TAB) _
             .AsDataSource(Of T)(maps:=maps)
