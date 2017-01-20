@@ -340,7 +340,8 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                              Optional encoding As Encoding = Nothing,
                                              Optional metaBlank As String = "",
                                              Optional nonParallel As Boolean = False,
-                                             Optional maps As Dictionary(Of String, String) = Nothing) As Boolean
+                                             Optional maps As Dictionary(Of String, String) = Nothing,
+                                             Optional reorderKeys As Integer = 0) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -356,7 +357,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             explicit,
             maps,
             Not nonParallel,
-            metaBlank)
+            metaBlank, reorderKeys)
 
         Dim success As Boolean = StreamIO.SaveDataFrame(
             csv,
@@ -371,14 +372,20 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     End Function
 
     <Extension>
-    Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T), path$, Optional encoding As Encodings = Encodings.ASCII, Optional KeyMap$ = Nothing, Optional blank$ = "") As Boolean
+    Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
+                                                      path$,
+                                                      Optional encoding As Encodings = Encodings.ASCII,
+                                                      Optional KeyMap$ = Nothing,
+                                                      Optional blank$ = "",
+                                                      Optional reorderKeys As Integer = 0) As Boolean
+
         Dim modify As Dictionary(Of String, String) = Nothing
         If Not KeyMap Is Nothing Then
             modify = New Dictionary(Of String, String) From {
                 {NameOf(EntityObject.ID), KeyMap}
             }
         End If
-        Return source.SaveTo(path, , encoding.GetEncodings, blank,, modify)
+        Return source.SaveTo(path, , encoding.GetEncodings, blank,, modify, reorderKeys)
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
