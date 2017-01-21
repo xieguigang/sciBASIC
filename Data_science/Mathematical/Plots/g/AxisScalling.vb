@@ -19,8 +19,12 @@
     Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R) As Double()
         Dim d = max - min
         Dim steps = d / parts
-        Dim pow% = Fix(Math.Log10(steps)) - 1
+        Dim pow% = Fix(Math.Log10(steps))
         Dim tick# = 10 ^ pow
+
+        If parts * tick + min > max Then
+            tick = 5 * 10 ^ (pow - 1)
+        End If
 
         Return GetAxisByTick(max, tick, min)
     End Function

@@ -440,5 +440,10 @@ Namespace Mathematical
             End While
             Return result
         End Function
+
+        <Extension>
+        Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
+            Return v.ToArray(Function(x) x.FormatNumeric(digitals))
+        End Function
     End Module
 End Namespace
