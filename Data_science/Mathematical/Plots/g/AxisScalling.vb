@@ -1,8 +1,28 @@
 ﻿Public Module AxisScalling
 
-    Public Function GetAxisValues(max#, Optional min# = 0R) As Double()
-        Dim p10% = Fix(Math.Log10(max))
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="max#"></param>
+    ''' <param name="parts%"></param>
+    ''' <param name="min#"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' + 0-10
+    ''' + 0-100
+    ''' + 0-1000
+    ''' + 0-1E30
+    ''' + 0-1E-30
+    ''' + 0-1
+    ''' + 0-0.1
+    ''' </remarks>
+    Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R) As Double()
+        Dim d = max - min
+        Dim steps = d / parts
+        Dim pow% = Fix(Math.Log10(steps)) - 1
+        Dim tick# = 10 ^ pow
 
+        Return GetAxisByTick(max, tick, min)
     End Function
 
     Public Function GetAxisByTick(max#, tick#, Optional min# = 0R) As Double()
