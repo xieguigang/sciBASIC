@@ -82,82 +82,84 @@ Public Module PieChart
             End If
         End If
 
-        Return GraphicsPlots(size, margin, bg,
-                 Sub(g)
-                     Dim r# = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2  ' 最大的半径值
-                     Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
-                     Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
+        Dim __plot As Action(Of Graphics) =
+            Sub(g As Graphics)
+                Dim r# = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2  ' 最大的半径值
+                Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
+                Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
 
-                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
-                         Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
-                         Dim start As New Value(Of Single)
-                         Dim sweep As New Value(Of Single)
-                         Dim alpha As Double, pt As PointF
-                         Dim centra As Point = rect.Centre
-                         Dim labelSize As SizeF
-                         Dim label$
+                If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
+                    Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
+                    Dim start As New Value(Of Single)
+                    Dim sweep As New Value(Of Single)
+                    Dim alpha As Double, pt As PointF
+                    Dim centra As Point = rect.Centre
+                    Dim labelSize As SizeF
+                    Dim label$
 
-                         Call g.FillPie(Brushes.LightGray, rect, 0, 360)
+                    Call g.FillPie(Brushes.LightGray, rect, 0, 360)
 
-                         For Each x As Fractions In data
-                             Call g.FillPie(New SolidBrush(x.Color), rect, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
+                    For Each x As Fractions In data
+                        Call g.FillPie(New SolidBrush(x.Color), rect, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
 
-                             alpha = (+start) - (+sweep / 2)
-                             pt = (r / 1.5).ToPoint(alpha)
-                             pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
-                             label = x.GetValueLabel(valueLabel)
-                             labelSize = g.MeasureString(label, valueLabelFont)
+                        alpha = (+start) - (+sweep / 2)
+                        pt = (r / 1.5).ToPoint(alpha)
+                        pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
+                        label = x.GetValueLabel(valueLabel)
+                        labelSize = g.MeasureString(label, valueLabelFont)
 
-                             '   If alpha > 90 AndAlso alpha < 270 Then
-                             pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
-                             '  End If
+                        '   If alpha > 90 AndAlso alpha < 270 Then
+                        pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
+                        '  End If
 
-                             Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
-                         Next
-                     Else  ' 半径也会有变化
-                         Dim a As New Value(Of Single)
-                         Dim sweep! = 360 / data.Count
-                         Dim maxp# = data.Max(Function(x) x.Percentage)
+                        Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
+                    Next
+                Else  ' 半径也会有变化
+                    Dim a As New Value(Of Single)
+                    Dim sweep! = 360 / data.Count
+                    Dim maxp# = data.Max(Function(x) x.Percentage)
 #If DEBUG Then
                          Dim list As New List(Of Rectangle)
 #End If
-                         For Each x As Fractions In data
-                             Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
-                             Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
-                             Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
-                             Dim br As New SolidBrush(x.Color)
+                    For Each x As Fractions In data
+                        Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
+                        Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
+                        Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
+                        Dim br As New SolidBrush(x.Color)
 
-                             Call g.FillPie(br, rect, (a = (a.value + sweep)), sweep)
+                        Call g.FillPie(br, rect, (a = (a.value + sweep)), sweep)
 #If DEBUG Then
                              list += rect
 #End If
-                         Next
+                    Next
 #If DEBUG Then
                          For Each rect In list
                              Call g.DrawRectangle(Pens.Red, rect)
                          Next
 #End If
-                     End If
+                End If
 
-                     If legend Then
-                         Dim font As Font = CSSFont.TryParse(legendFont)
-                         Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
-                         Dim left = size.Width - (margin.Width * 2) - maxL
-                         Dim top = margin.Height
-                         Dim legends As New List(Of Legend)
+                If legend Then
+                    Dim font As Font = CSSFont.TryParse(legendFont)
+                    Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
+                    Dim left = size.Width - (margin.Width * 2) - maxL
+                    Dim top = margin.Height
+                    Dim legends As New List(Of Legend)
 
-                         For Each x As Fractions In data
-                             legends += New Legend With {
+                    For Each x As Fractions In data
+                        legends += New Legend With {
                                 .color = x.Color.RGBExpression,
                                 .style = LegendStyles.Square,
                                 .title = x.Name,
                                 .fontstyle = legendFont
                              }
-                         Next
+                    Next
 
-                         Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
-                     End If
-                 End Sub)
+                    Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
+                End If
+            End Sub
+
+        Return __plot.GraphicsPlots(size, margin, bg)
     End Function
 
     ''' <summary>
