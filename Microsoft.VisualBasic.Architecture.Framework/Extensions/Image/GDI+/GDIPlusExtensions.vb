@@ -1,42 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::95da9a38f37f35a52328b2338a0b25f3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Drawing
-Imports System.Text.RegularExpressions
-Imports System.Text
-Imports System
-Imports System.Reflection
-Imports System.IO
 Imports System.Drawing.Imaging
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
 
@@ -49,6 +44,28 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
+
+        <Extension>
+        Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As SolidBrush)
+            Dim d = r * 2
+
+            With centra
+                Call g.FillPie(color, .X - r, .Y - r, d, d, 0, 360)
+            End With
+        End Sub
+
+        <Extension>
+        Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As Color, Optional fill As Boolean = True)
+            Dim d = r * 2
+
+            With centra
+                If fill Then
+                    Call g.FillPie(New SolidBrush(color), .X - r, .Y - r, d, d, 0, 360)
+                Else
+                    Call g.DrawPie(New Pen(color), .X - r, .Y - r, d, d, 0, 360)
+                End If
+            End With
+        End Sub
 
         ''' <summary>
         ''' 这个方形区域的面积

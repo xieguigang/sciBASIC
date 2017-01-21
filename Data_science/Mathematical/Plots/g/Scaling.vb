@@ -219,6 +219,15 @@ Public Class Scaling
                End Function
     End Function
 
+    Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
+        Return PointScaler(rect.Size, rect.Margin)
+    End Function
+
+    Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
+        Dim point = PointScaler(rect.Size, rect.Margin)
+        Return Function(pt) point(New PointF(pt.x, pt.y))
+    End Function
+
     Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
         Dim bottom As Integer = r.Size.Height - r.Margin.Height
         Dim width As Integer = r.Size.Width - r.Margin.Width * 2
