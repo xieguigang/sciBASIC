@@ -1,4 +1,7 @@
-﻿Public Module AxisScalling
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+
+Public Module AxisScalling
 
     ''' <summary>
     ''' 
@@ -27,6 +30,16 @@
         End If
 
         Return GetAxisByTick(max, tick, min)
+    End Function
+
+    <Extension>
+    Public Function GetAxisValues(range As DoubleRange, Optional parts% = 10) As Double()
+        Return GetAxisValues(range.Max, parts, range.Min)
+    End Function
+
+    <Extension>
+    Public Function GetAxisByTick(range As DoubleRange, tick#) As Double()
+        Return GetAxisByTick(range.Max, tick, range.Min)
     End Function
 
     Public Function GetAxisByTick(max#, tick#, Optional min# = 0R) As Double()

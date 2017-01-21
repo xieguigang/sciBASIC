@@ -81,8 +81,8 @@ Public Module Axis
 
         Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
 
-        Dim dx As Single = scaler.dx / 10 '+ scaler.xmin
-        Dim dy As Single = scaler.dy / 10 '+ scaler.ymin
+        Dim dx As Double() = AxisScalling.GetAxisValues(scaler.xrange) '+ scaler.xmin
+        Dim dy As Double() = AxisScalling.GetAxisValues(scaler.yrange) '+ scaler.ymin
         Dim sx = scaler.XScaler(size, margin)
         Dim sy = scaler.YScaler(size, margin)
         Dim gridPenX As New Pen(Color.LightGray, 1) With {
@@ -96,14 +96,14 @@ Public Module Axis
         fontLarge = New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Regular)
 
         For i As Integer = 0 To 9
-            Dim label# = dx * (i + 1)
+            Dim label# = dx(i)
             Dim sz As SizeF
 
-            If dx <> 0R Then
-                Dim x = sx(label + scaler.xmin) + offset.X
+            If scaler.dx <> 0R Then
+                Dim x = sx(label) + offset.X
                 Dim axisX As New PointF(x, ZERO.Y)
 
-                Dim labelText = (label + scaler.xmin).FormatNumeric(2)
+                Dim labelText = (label).FormatNumeric(2)
                 sz = g.MeasureString(labelText, fontLarge)
 
                 Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + margin.Height * 0.2))
@@ -114,16 +114,16 @@ Public Module Axis
                 End If
             End If
 
-            label = dy * (i + 1)
+            label = dy(i)
 
-            If dy <> 0R Then
-                Dim y = sy(label + scaler.ymin) + offset.Y
+            If scaler.dy <> 0R Then
+                Dim y = sy(label) + offset.Y
                 Dim axisY As New PointF(ZERO.X, y)
                 Dim ddd = 10
 
                 Call g.DrawLine(pen, axisY, New PointF(ZERO.X - ddd, y))
 
-                Dim labelText = (label + scaler.ymin).FormatNumeric(2)
+                Dim labelText = (label).FormatNumeric(2)
                 sz = g.MeasureString(labelText, fontSmall)
                 g.DrawString(labelText, fontSmall, Brushes.Black, New Point(ZERO.X - ddd - sz.Width, y - sz.Height / 2))
 
