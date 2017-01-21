@@ -58,6 +58,12 @@ Public Class Scaling
         type = GetType(Scatter)
     End Sub
 
+    Sub New(data As (Double, Double)())
+        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
+        type = GetType(ScatterHeatmap)
+    End Sub
+
     Sub New(data As (X#, y#, z#)())
         dx = ScalingTuple(data, Function(p) p.X, False, xmin)
         dy = ScalingTuple(data, Function(p) p.y, False, ymin)
@@ -279,6 +285,11 @@ Public Class Scaling
     End Function
 
     Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#, z#)), [get] As Func(Of (X#, y#, z#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+        Dim array!() = data.ToArray([get])
+        Return __scaling(array!, min!, absoluteScaling)
+    End Function
+
+    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#)), [get] As Func(Of (X#, y#), Single), absoluteScaling As Boolean, ByRef min!) As Single
         Dim array!() = data.ToArray([get])
         Return __scaling(array!, min!, absoluteScaling)
     End Function
