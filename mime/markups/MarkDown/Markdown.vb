@@ -770,32 +770,49 @@ Namespace MarkDown
             ' Trim trailing blank lines:
             list = Regex.Replace(list, "\n{2,}\z", vbLf)
 
-            Dim pattern As String = String.Format("(^[ ]*)                    # leading whitespace = $1" & vbCr & vbLf & "                ({0}) [ ]+                 # list marker = $2" & vbCr & vbLf & "                ((?s:.+?)                  # list item text = $3" & vbCr & vbLf & "                (\n+))      " & vbCr & vbLf & "                (?= (\z | \1 ({0}) [ ]+))", marker)
+            Dim pattern As String = String.Format("
+
+(^[ ]*)                    # leading whitespace = $1
+({0}) [ ]+                 # list marker = $2
+((?s:.+?)                  # list item text = $3
+(\n+))      
+(?= (\z | \1 ({0}) [ ]+))", marker)
 
             Dim lastItemHadADoubleNewline As Boolean = False
 
             ' has to be a closure, so subsequent invocations can share the bool
-            Dim ListItemEvaluator As MatchEvaluator = Function(match As Match)
-                                                          Dim item As String = match.Groups(3).Value
+            Dim ListItemEvaluator As MatchEvaluator =
+                Function(match As Match)
+                    Dim item As String = match.Groups(3).Value
 
-                                                          Dim endsWithDoubleNewline As Boolean = item.EndsWith(vbLf & vbLf)
-                                                          Dim containsDoubleNewline As Boolean = endsWithDoubleNewline OrElse item.Contains(vbLf & vbLf)
+                    Dim endsWithDoubleNewline As Boolean = item.EndsWith(vbLf & vbLf)
+                    Dim containsDoubleNewline As Boolean = endsWithDoubleNewline OrElse item.Contains(vbLf & vbLf)
 
-                                                          Dim loose = containsDoubleNewline OrElse lastItemHadADoubleNewline
-                                                          ' we could correct any bad indentation here..
-                                                          item = RunBlockGamut(Outdent(item) & vbLf, unhash:=False, createParagraphs:=loose)
+                    Dim loose = containsDoubleNewline OrElse lastItemHadADoubleNewline
+                    ' we could correct any bad indentation here..
+                    item = RunBlockGamut(Outdent(item) & vbLf, unhash:=False, createParagraphs:=loose)
 
-                                                          lastItemHadADoubleNewline = endsWithDoubleNewline
-                                                          Return String.Format("<li>{0}</li>" & vbLf, item)
-
-                                                      End Function
+                    lastItemHadADoubleNewline = endsWithDoubleNewline
+                    Return String.Format("<li>{0}</li>" & vbLf, item)
+                End Function
 
             list = Regex.Replace(list, pattern, ListItemEvaluator, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline)
             _listLevel -= 1
             Return list
         End Function
 
-        Private Shared _codeBlock As New Regex(String.Format(vbCr & vbLf & "                    (?:\n\n|\A\n?)" & vbCr & vbLf & "                    (                        # $1 = the code block -- one or more lines, starting with a space" & vbCr & vbLf & "                    (?:" & vbCr & vbLf & "                        (?:[ ]{{{0}}})       # Lines must start with a tab-width of spaces" & vbCr & vbLf & "                        .*\n+" & vbCr & vbLf & "                    )+" & vbCr & vbLf & "                    )" & vbCr & vbLf & "                    ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc", _tabWidth), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Const codeBlockRegexp$ = "
+
+            (?:\n\n|\A\n?)
+            (                        # $1 = the code block -- one or more lines, starting with a space
+                (?:
+                (?:[ ]{{{0}}})       # Lines must start with a tab-width of spaces
+                .*\n+
+                )+
+            )
+            ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc"
+
+        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' /// Turn Markdown 4-space indented code into HTML pre code blocks
@@ -814,7 +831,17 @@ Namespace MarkDown
             Return String.Concat(vbLf & vbLf & "<pre><code>", codeBlock, vbLf & "</code></pre>" & vbLf & vbLf)
         End Function
 
-        Private Shared _codeSpan As New Regex(vbCr & vbLf & "                    (?<![\\`])   # Character before opening ` can't be a backslash or backtick" & vbCr & vbLf & "                    (`+)      # $1 = Opening run of `" & vbCr & vbLf & "                    (?!`)     # and no more backticks -- match the full run" & vbCr & vbLf & "                    (.+?)     # $2 = The code block" & vbCr & vbLf & "                    (?<!`)" & vbCr & vbLf & "                    \1" & vbCr & vbLf & "                    (?!`)", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Singleline Or RegexOptions.Compiled)
+        Const codeSpanRegexp$ = " 
+        
+            (?<![\\`])   # Character before opening ` can't be a backslash or backtick
+               (`+)      # $1 = Opening run of `
+               (?!`)     # and no more backticks -- match the full run
+               (.+?)     # $2 = The code block
+               (?<!`)
+               \1
+               (?!`)"
+
+        Private Shared _codeSpan As New Regex(codeSpanRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Singleline Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown `code spans` into HTML code tags
@@ -902,9 +929,27 @@ Namespace MarkDown
             Return text
         End Function
 
-        Private Shared _blockquote As New Regex(vbCr & vbLf & "            (                           # Wrap whole match in $1" & vbCr & vbLf & "                (" & vbCr & vbLf & "                ^[ ]*>[ ]?              # '>' at the start of a line" & vbCr & vbLf & "                    .+\n                # rest of the first line" & vbCr & vbLf & "                (.+\n)*                 # subsequent consecutive lines" & vbCr & vbLf & "                \n*                     # blanks" & vbCr & vbLf & "                )+" & vbCr & vbLf & "            )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        Const blockQuoteRegexp$ = "
 
-        Private Shared _blockquoteSingleLine As New Regex(vbCr & vbLf & "            (                           # Wrap whole match in $1" & vbCr & vbLf & "                (" & vbCr & vbLf & "                ^[ ]*>[ ]?              # '>' at the start of a line" & vbCr & vbLf & "                    .+                # rest of the first line" & vbCr & vbLf & "                )+" & vbCr & vbLf & "            )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        (                           # Wrap whole match in $1
+            (
+            ^[ ]*>[ ]?              # '>' at the start of a line
+                .+\n                # rest of the first line
+            (.+\n)*                 # subsequent consecutive lines
+            \n*                     # blanks
+            )+
+        )"
+        Const blockQuoteSingleLineRegexp$ = "
+
+        (                           # Wrap whole match in $1
+            (
+            ^[ ]*>[ ]?              # '>' at the start of a line
+                .+                  # rest of the first line
+            )+
+        )"
+
+        Private Shared _blockquote As New Regex(blockQuoteRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        Private Shared _blockquoteSingleLine As New Regex(blockQuoteSingleLineRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown > quoted blocks into HTML blockquote blocks
@@ -944,6 +989,17 @@ Namespace MarkDown
         Private Shared _autolinkBare As New Regex("(<|="")?\b(https?|ftp)(://" & _charInsideUrl & "*" & _charEndingUrl & ")(?=$|\W)", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
         ''' <summary>
+        ''' Email addresses: address@domain.foo
+        ''' </summary>
+        Const EMailAddress$ = "
+        
+            (?:mailto:)?(
+                [-.\w]+
+                \@
+                [-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+
+            )"
+
+        ''' <summary>
         ''' Turn angle-delimited URLs into HTML anchor tags
         ''' </summary>
         ''' <remarks>
@@ -962,9 +1018,8 @@ Namespace MarkDown
             text = Regex.Replace(text, "<((https?|ftp):[^'"">\s]+)>", New MatchEvaluator(AddressOf HyperlinkEvaluator))
 
             If _LinkEmails Then
-                ' Email addresses: address@domain.foo
-                Dim pattern As String = "(?:mailto:)?" & vbCr & vbLf & "                      (" & vbCr & vbLf & "                        [-.\w]+" & vbCr & vbLf & "                        \@" & vbCr & vbLf & "                        [-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+" & vbCr & vbLf & "                      )"
-                text = Regex.Replace(text, pattern, New MatchEvaluator(AddressOf EmailEvaluator), RegexOptions.IgnoreCase Or RegexOptions.IgnorePatternWhitespace)
+
+                text = Regex.Replace(text, EMailAddress, New MatchEvaluator(AddressOf EmailEvaluator), RegexOptions.IgnoreCase Or RegexOptions.IgnorePatternWhitespace)
             End If
 
             Return text

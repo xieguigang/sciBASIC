@@ -28,8 +28,8 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace MarkDown
 
@@ -40,7 +40,14 @@ Namespace MarkDown
         ''' </summary>
         Public Const _nestDepth As Integer = 6
 
-        Dim _htmlTokens As New Regex(vbCr & vbLf & "            (<!--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)-->)|        # match <!-- foo -->" & vbCr & vbLf & "            (<\?.*?\?>)|                 # match <?foo?> " & RepeatString(" " & vbCr & vbLf & "            (<[A-Za-z\/!$](?:[^<>]|", _nestDepth) & RepeatString(")*>)", _nestDepth) & " # match <tag> and </tag>", RegexOptions.Multiline Or RegexOptions.Singleline Or RegexOptions.ExplicitCapture Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        ReadOnly internalRepeats$ = RepeatString($" {vbCrLf}            (<[A-Za-z\/!$](?:[^<>]|", _nestDepth) & RepeatString(")*>)", _nestDepth)
+        ReadOnly htmlTokensRegexp As String = "
+
+                (<!--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)-->)|        # match <!-- foo -->
+                (<\?.*?\?>)|                                         # match <?foo?> " & vbCrLf &
+                internalRepeats & "                                  # match <tag> and </tag>"
+
+        Dim _htmlTokens As New Regex(htmlTokensRegexp, RegexOptions.Multiline Or RegexOptions.Singleline Or RegexOptions.ExplicitCapture Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         Public Enum TokenType
             Text
