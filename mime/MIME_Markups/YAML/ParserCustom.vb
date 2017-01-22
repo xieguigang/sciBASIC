@@ -148,7 +148,7 @@ Namespace YAML.Grammar
         Private Function Chomp(linebreaks As String) As String
             Select Case CurrentChompingMethod
                 Case ChompingMethod.Strip
-                    Return [String].Empty
+                    Return String.Empty
                 Case ChompingMethod.Keep
                     Return linebreaks
                 Case Else

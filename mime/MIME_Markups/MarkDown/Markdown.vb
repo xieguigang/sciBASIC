@@ -48,7 +48,7 @@ Namespace MarkDown
         ''' Create a new Markdown instance and set the options from the MarkdownOptions object.
         ''' </summary>
         Public Sub New(options As MarkdownOptions)
-            If Not [String].IsNullOrEmpty(options.EmptyElementSuffix) Then
+            If Not String.IsNullOrEmpty(options.EmptyElementSuffix) Then
                 _EmptyElementSuffix = options.EmptyElementSuffix
             End If
             _AllowEmptyLinkText = options.AllowEmptyLinkText
@@ -61,6 +61,17 @@ Namespace MarkDown
             _LinkEmails = options.LinkEmails
             _StrictBoldItalic = options.StrictBoldItalic
             _AsteriskIntraWordEmphasis = options.AsteriskIntraWordEmphasis
+        End Sub
+
+        Sub New()
+            Call Me.New(New MarkdownOptions With {
+                .AllowEmptyLinkText = True,
+                .AutoHyperlink = True,
+                .DisableHr = False,
+                .AutoNewlines = True,
+                .StrictBoldItalic = True,
+                .DisableImages = False
+            })
         End Sub
 
         Public Property AllowEmptyLinkText() As Boolean
@@ -144,7 +155,7 @@ Namespace MarkDown
         ''' and img tags get encoded.
         ''' </remarks>
         Public Function Transform(text As String) As String
-            If [String].IsNullOrEmpty(text) Then
+            If String.IsNullOrEmpty(text) Then
                 Return ""
             End If
 
@@ -206,7 +217,6 @@ Namespace MarkDown
             _inlineExtensions.Add(ext)
         End Sub
 
-
         ''' <summary>
         ''' Perform transformations that occur *within* block-level tags like paragraphs, headers, and list items.
         ''' </summary>
@@ -232,8 +242,84 @@ Namespace MarkDown
             text = DoItalicsAndBold(text)
             text = DoHardBreaks(text)
 
+            ' 怎样处理table??
+            text = __MarkdownTable(text)
+
             Return text
         End Function
+
+        Const tableThread$ = "^|(-+[|]?)+|(<br\s*/>)?$"
+
+        ''' <summary>
+        ''' 处理markdown table
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <returns></returns>
+        Private Shared Function __MarkdownTable(text$) As String
+            Dim lines$() = text.lTokens
+
+            For Each line In lines
+                If line.First <> "|"c Then
+                    Return text  ' 不是table格式的，则直接返回原始文本
+                End If
+            Next
+
+            If Not Regex.Match(lines(1), tableThread, RegexOptions.Multiline).Success Then
+                Return text
+            End If
+
+            Dim sb As New StringBuilder("<table>" & vbCrLf)
+
+            ' 表头
+            ' 假设在表头之中是没有任何特殊字符的，在这里直接分割转换
+            Dim t As New List(Of String)(lines(0).Split("|"c))
+
+            If br.Match(t.Last).Success Then
+                Call t.RemoveAt(t.Count - 1)
+            End If
+
+            Call t.RemoveAt(Scan0) ' 第一个|是不需要的
+            Call sb.Append("<thead>")
+            Call sb.Append("<tr><th>")
+            Call sb.Append(t.JoinBy("</th><th>"))
+            Call sb.Append("</th></tr>")
+            Call sb.Append("</thead>")
+            Call sb.AppendLine()
+
+            ' 处理表中的每一行
+            Dim r As New Dictionary(Of String, String)
+
+            For Each line In lines.Skip(2)
+                Dim code = Regex.Matches(line, "<code>.+?</code>", RegexICSng).ToArray
+
+                Call r.Clear()
+
+                For Each c In code
+                    r(c) = c.Replace("|", "&line;")
+                    line = line.Replace(c, r(c))
+                Next
+
+                line = "<tr><td>" & Mid(line, 2)                           ' 处理第一个标记
+                If line.Last <> "|"c AndAlso line.Last = ">"c Then  ' 假设这个是br标记，如果是其他的标记，那么我也没有办法了
+                    Dim brTag = br.Matches(line).ToArray.Last
+                    line = Mid(line, 1, line.Length - brTag.Length)
+                End If
+                line = Mid(line, 1, line.Length - 1) & "</td></tr>"        ' 处理最后一个标记
+                line = line.Replace("|", "</td><td>")                      ' 处理每一个标记
+
+                For Each c In r
+                    line = line.Replace(c.Value, c.Key)
+                Next
+
+                Call sb.AppendLine(line)
+            Next
+
+            Call sb.Append("</table>")
+
+            Return sb.ToString
+        End Function
+
+        Shared ReadOnly br As New Regex("<br\s*/>", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
         Private Shared _newlinesLeadingTrailing As New Regex("^\n+|\n+\z", RegexOptions.Compiled)
         Private Shared _newlinesMultiple As New Regex("\n{2,}", RegexOptions.Compiled)
@@ -324,7 +410,20 @@ Namespace MarkDown
             ' in other words (this) and (this(also)) and (this(also(too)))
             ' up to _nestDepth
             If _nestedParensPattern Is Nothing Then
-                _nestedParensPattern = RepeatString(vbCr & vbLf & "                    (?>              # Atomic matching" & vbCr & vbLf & "                       [^()\s]+      # Anything other than parens or whitespace" & vbCr & vbLf & "                     |" & vbCr & vbLf & "                       \(" & vbCr & vbLf & "                           ", _nestDepth) & RepeatString(" \)" & vbCr & vbLf & "                    )*", _nestDepth)
+
+                ' 2017-1-23
+                ' 这里的原始表达式为：
+                ' [^()\s]+     # Anything other than parens or whitespace
+                ' 这个表达式不能够匹配含有空格的路径，现在将\s去除掉之后经过测试也没有发现太多问题
+                _nestedParensPattern = RepeatString("
+
+    (?>              # Atomic matching
+       [^()]+        # Anything other than parens or whitespace
+       |
+       \(
+        ", _nestDepth) & RepeatString(" \)
+      )*", _nestDepth)
+
             End If
             Return _nestedParensPattern
         End Function
@@ -486,7 +585,7 @@ Namespace MarkDown
                     result += " title=""" & title & """"
                 End If
 
-                If [String].IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
+                If String.IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
                     linkText = url
                 End If
 
@@ -518,7 +617,7 @@ Namespace MarkDown
                     result += " title=""" & title & """"
                 End If
 
-                If [String].IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
+                If String.IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
                     linkText = url
                 End If
 
@@ -545,13 +644,13 @@ Namespace MarkDown
 
             result = String.Format("<a href=""{0}""", url)
 
-            If Not [String].IsNullOrEmpty(title) Then
+            If Not String.IsNullOrEmpty(title) Then
                 title = AttributeEncode(title)
                 title = EscapeBoldItalic(title)
                 result += String.Format(" title=""{0}""", title)
             End If
 
-            If [String].IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
+            If String.IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
                 linkText = url
             End If
 
@@ -560,9 +659,44 @@ Namespace MarkDown
             Return result
         End Function
 
-        Private Shared _imagesRef As New Regex(vbCr & vbLf & "                    (               # wrap whole match in $1" & vbCr & vbLf & "                    !\[" & vbCr & vbLf & "                        (.*?)       # alt text = $2" & vbCr & vbLf & "                    \]" & vbCr & vbLf & vbCr & vbLf & "                    [ ]?            # one optional space" & vbCr & vbLf & "                    (?:\n[ ]*)?     # one optional newline followed by spaces" & vbCr & vbLf & vbCr & vbLf & "                    \[" & vbCr & vbLf & "                        (.*?)       # id = $3" & vbCr & vbLf & "                    \]" & vbCr & vbLf & vbCr & vbLf & "                    )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Const imageRefRegexp$ = "
 
-        Private Shared _imagesInline As New Regex([String].Format(vbCr & vbLf & "              (                     # wrap whole match in $1" & vbCr & vbLf & "                !\[" & vbCr & vbLf & "                    (.*?)           # alt text = $2" & vbCr & vbLf & "                \]" & vbCr & vbLf & "                \s?                 # one optional whitespace character" & vbCr & vbLf & "                \(                  # literal paren" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    ({0})           # href = $3" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    (               # $4" & vbCr & vbLf & "                    (['""])       # quote char = $5" & vbCr & vbLf & "                    (.*?)           # title = $6" & vbCr & vbLf & "                    \5              # matching quote" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    )?              # title is optional" & vbCr & vbLf & "                \)" & vbCr & vbLf & "              )", GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        (               # wrap whole match in $1
+            !\[
+            (.*?)       # alt text = $2
+            \]
+
+        [ ]?            # one optional space
+        (?:\n[ ]*)?     # one optional newline followed by spaces
+
+        \[
+            (.*?)       # id = $3
+        \]
+
+        )"
+
+        Const imageInlineRegexp$ = "
+
+        (                     # wrap whole match in $1
+            !\[
+              (.*?)           # alt text = $2
+            \]
+          \s?                 # one optional whitespace character
+          \(                  # literal paren
+          [ ]*
+              ({0})           # href = $3
+          [ ]*
+              (               # $4
+                (['""])       # quote char = $5
+              (.*?)           # title = $6
+              \5              # matching quote
+          [ ]*
+              )?              # title is optional
+          \)
+        )"
+
+        Private Shared _imagesRef As New Regex(imageRefRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Private Shared _imagesInline As New Regex(String.Format(imageInlineRegexp, GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown image shortcuts into HTML img tags. 
@@ -625,6 +759,9 @@ Namespace MarkDown
             Dim url As String = match.Groups(3).Value
             Dim title As String = match.Groups(6).Value
 
+#If DEBUG Then
+            Call match.Value.__DEBUG_ECHO
+#End If
             If url.StartsWith("<") AndAlso url.EndsWith(">") Then
                 url = url.Substring(1, url.Length - 2)
             End If
@@ -636,7 +773,7 @@ Namespace MarkDown
             altText = EscapeImageAltText(AttributeEncode(altText))
             url = AttributeSafeUrl(url)
             Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
-            If Not [String].IsNullOrEmpty(title) Then
+            If Not String.IsNullOrEmpty(title) Then
                 title = AttributeEncode(EscapeBoldItalic(title))
                 result += String.Format(" title=""{0}""", title)
             End If
@@ -770,32 +907,49 @@ Namespace MarkDown
             ' Trim trailing blank lines:
             list = Regex.Replace(list, "\n{2,}\z", vbLf)
 
-            Dim pattern As String = String.Format("(^[ ]*)                    # leading whitespace = $1" & vbCr & vbLf & "                ({0}) [ ]+                 # list marker = $2" & vbCr & vbLf & "                ((?s:.+?)                  # list item text = $3" & vbCr & vbLf & "                (\n+))      " & vbCr & vbLf & "                (?= (\z | \1 ({0}) [ ]+))", marker)
+            Dim pattern As String = String.Format("
+
+(^[ ]*)                    # leading whitespace = $1
+({0}) [ ]+                 # list marker = $2
+((?s:.+?)                  # list item text = $3
+(\n+))      
+(?= (\z | \1 ({0}) [ ]+))", marker)
 
             Dim lastItemHadADoubleNewline As Boolean = False
 
             ' has to be a closure, so subsequent invocations can share the bool
-            Dim ListItemEvaluator As MatchEvaluator = Function(match As Match)
-                                                          Dim item As String = match.Groups(3).Value
+            Dim ListItemEvaluator As MatchEvaluator =
+                Function(match As Match)
+                    Dim item As String = match.Groups(3).Value
 
-                                                          Dim endsWithDoubleNewline As Boolean = item.EndsWith(vbLf & vbLf)
-                                                          Dim containsDoubleNewline As Boolean = endsWithDoubleNewline OrElse item.Contains(vbLf & vbLf)
+                    Dim endsWithDoubleNewline As Boolean = item.EndsWith(vbLf & vbLf)
+                    Dim containsDoubleNewline As Boolean = endsWithDoubleNewline OrElse item.Contains(vbLf & vbLf)
 
-                                                          Dim loose = containsDoubleNewline OrElse lastItemHadADoubleNewline
-                                                          ' we could correct any bad indentation here..
-                                                          item = RunBlockGamut(Outdent(item) & vbLf, unhash:=False, createParagraphs:=loose)
+                    Dim loose = containsDoubleNewline OrElse lastItemHadADoubleNewline
+                    ' we could correct any bad indentation here..
+                    item = RunBlockGamut(Outdent(item) & vbLf, unhash:=False, createParagraphs:=loose)
 
-                                                          lastItemHadADoubleNewline = endsWithDoubleNewline
-                                                          Return String.Format("<li>{0}</li>" & vbLf, item)
-
-                                                      End Function
+                    lastItemHadADoubleNewline = endsWithDoubleNewline
+                    Return String.Format("<li>{0}</li>" & vbLf, item)
+                End Function
 
             list = Regex.Replace(list, pattern, ListItemEvaluator, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline)
             _listLevel -= 1
             Return list
         End Function
 
-        Private Shared _codeBlock As New Regex(String.Format(vbCr & vbLf & "                    (?:\n\n|\A\n?)" & vbCr & vbLf & "                    (                        # $1 = the code block -- one or more lines, starting with a space" & vbCr & vbLf & "                    (?:" & vbCr & vbLf & "                        (?:[ ]{{{0}}})       # Lines must start with a tab-width of spaces" & vbCr & vbLf & "                        .*\n+" & vbCr & vbLf & "                    )+" & vbCr & vbLf & "                    )" & vbCr & vbLf & "                    ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc", _tabWidth), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Const codeBlockRegexp$ = "
+
+            (?:\n\n|\A\n?)
+            (                        # $1 = the code block -- one or more lines, starting with a space
+                (?:
+                (?:[ ]{{{0}}})       # Lines must start with a tab-width of spaces
+                .*\n+
+                )+
+            )
+            ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc"
+
+        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' /// Turn Markdown 4-space indented code into HTML pre code blocks
@@ -814,7 +968,17 @@ Namespace MarkDown
             Return String.Concat(vbLf & vbLf & "<pre><code>", codeBlock, vbLf & "</code></pre>" & vbLf & vbLf)
         End Function
 
-        Private Shared _codeSpan As New Regex(vbCr & vbLf & "                    (?<![\\`])   # Character before opening ` can't be a backslash or backtick" & vbCr & vbLf & "                    (`+)      # $1 = Opening run of `" & vbCr & vbLf & "                    (?!`)     # and no more backticks -- match the full run" & vbCr & vbLf & "                    (.+?)     # $2 = The code block" & vbCr & vbLf & "                    (?<!`)" & vbCr & vbLf & "                    \1" & vbCr & vbLf & "                    (?!`)", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Singleline Or RegexOptions.Compiled)
+        Const codeSpanRegexp$ = " 
+        
+            (?<![\\`])   # Character before opening ` can't be a backslash or backtick
+               (`+)      # $1 = Opening run of `
+               (?!`)     # and no more backticks -- match the full run
+               (.+?)     # $2 = The code block
+               (?<!`)
+               \1
+               (?!`)"
+
+        Private Shared _codeSpan As New Regex(codeSpanRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Singleline Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown `code spans` into HTML code tags
@@ -902,9 +1066,27 @@ Namespace MarkDown
             Return text
         End Function
 
-        Private Shared _blockquote As New Regex(vbCr & vbLf & "            (                           # Wrap whole match in $1" & vbCr & vbLf & "                (" & vbCr & vbLf & "                ^[ ]*>[ ]?              # '>' at the start of a line" & vbCr & vbLf & "                    .+\n                # rest of the first line" & vbCr & vbLf & "                (.+\n)*                 # subsequent consecutive lines" & vbCr & vbLf & "                \n*                     # blanks" & vbCr & vbLf & "                )+" & vbCr & vbLf & "            )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        Const blockQuoteRegexp$ = "
 
-        Private Shared _blockquoteSingleLine As New Regex(vbCr & vbLf & "            (                           # Wrap whole match in $1" & vbCr & vbLf & "                (" & vbCr & vbLf & "                ^[ ]*>[ ]?              # '>' at the start of a line" & vbCr & vbLf & "                    .+                # rest of the first line" & vbCr & vbLf & "                )+" & vbCr & vbLf & "            )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        (                           # Wrap whole match in $1
+            (
+            ^[ ]*>[ ]?              # '>' at the start of a line
+                .+\n                # rest of the first line
+            (.+\n)*                 # subsequent consecutive lines
+            \n*                     # blanks
+            )+
+        )"
+        Const blockQuoteSingleLineRegexp$ = "
+
+        (                           # Wrap whole match in $1
+            (
+            ^[ ]*>[ ]?              # '>' at the start of a line
+                .+                  # rest of the first line
+            )+
+        )"
+
+        Private Shared _blockquote As New Regex(blockQuoteRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        Private Shared _blockquoteSingleLine As New Regex(blockQuoteSingleLineRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown > quoted blocks into HTML blockquote blocks
@@ -944,6 +1126,17 @@ Namespace MarkDown
         Private Shared _autolinkBare As New Regex("(<|="")?\b(https?|ftp)(://" & _charInsideUrl & "*" & _charEndingUrl & ")(?=$|\W)", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
         ''' <summary>
+        ''' Email addresses: address@domain.foo
+        ''' </summary>
+        Const EMailAddress$ = "
+        
+            (?:mailto:)?(
+                [-.\w]+
+                \@
+                [-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+
+            )"
+
+        ''' <summary>
         ''' Turn angle-delimited URLs into HTML anchor tags
         ''' </summary>
         ''' <remarks>
@@ -962,9 +1155,8 @@ Namespace MarkDown
             text = Regex.Replace(text, "<((https?|ftp):[^'"">\s]+)>", New MatchEvaluator(AddressOf HyperlinkEvaluator))
 
             If _LinkEmails Then
-                ' Email addresses: address@domain.foo
-                Dim pattern As String = "(?:mailto:)?" & vbCr & vbLf & "                      (" & vbCr & vbLf & "                        [-.\w]+" & vbCr & vbLf & "                        \@" & vbCr & vbLf & "                        [-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+" & vbCr & vbLf & "                      )"
-                text = Regex.Replace(text, pattern, New MatchEvaluator(AddressOf EmailEvaluator), RegexOptions.IgnoreCase Or RegexOptions.IgnorePatternWhitespace)
+
+                text = Regex.Replace(text, EMailAddress, New MatchEvaluator(AddressOf EmailEvaluator), RegexOptions.IgnoreCase Or RegexOptions.IgnorePatternWhitespace)
             End If
 
             Return text

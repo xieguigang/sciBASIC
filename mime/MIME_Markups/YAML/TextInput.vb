@@ -75,7 +75,7 @@ Namespace YAML.Grammar
             Dim col As Integer
             GetLineColumnNumber(position, line, col)
             Dim ch As String = If(HasInput(position), "'" & GetInputSymbol(position) & "'", Nothing)
-            Return [String].Format("Line {0}, Col {1} {2}: {3}", line, col, ch, message)
+            Return String.Format("Line {0}, Col {1} {2}: {3}", line, col, ch, message)
         End Function
 
 #End Region

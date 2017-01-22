@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37410089dca5d2be542a45e76110f179, ..\sciBASIC#\mime\markups\YAML\Syntax\Scalar.vb"
+﻿#Region "Microsoft.VisualBasic::52ffacb91aa6a4319c4b01e184558036, ..\sciBASIC#\mime\markups\YAML\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 
@@ -28,19 +28,27 @@
 
 Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace YAML.Syntax
-    Public Class Scalar
-        Inherits DataItem
-        Public Text As String
 
+    Public Class MappingEntry : Implements INamedValue
 
-        Public Sub New()
-            Me.Text = [String].Empty
-        End Sub
+        Public Key As DataItem
+
+        Public Value As DataItem
+
+        Private Property Identifier As String Implements INamedValue.Key
+            Get
+                Return Scripting.ToString(Key)
+            End Get
+            Set(value As String)
+                Throw New ReadOnlyException
+            End Set
+        End Property
 
         Public Overrides Function ToString() As String
-            Return Text
+            Return String.Format("{{Key:{0}, Value:{1}}}", Key, Value)
         End Function
     End Class
 End Namespace

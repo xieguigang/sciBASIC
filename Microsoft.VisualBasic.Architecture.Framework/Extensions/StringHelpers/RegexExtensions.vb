@@ -175,4 +175,13 @@ Public Module RegexExtensions
     Public Function IsPattern(s As String, pattern As String, Optional opt As RegexOptions = RegexICSng) As Boolean
         Return Regex.Match(s, pattern, opt).Value = s
     End Function
+
+    ''' <summary>
+    ''' 模拟python语言之中的从raw string构建正则表达式
+    ''' </summary>
+    ''' <param name="raw$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function RawRegexp(raw$) As Regex
+        Return New Regex(raw, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
+    End Function
 End Module

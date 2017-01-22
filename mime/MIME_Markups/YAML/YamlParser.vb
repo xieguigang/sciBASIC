@@ -4755,7 +4755,7 @@ Namespace YAML.Grammar
 
                 Dim char2 As Char = ParseHexDigit(success)
                 If success Then
-                    ch = Convert.ToChar(Integer.Parse([String].Format("{0}{1}", char1, char2), System.Globalization.NumberStyles.HexNumber))
+                    ch = Convert.ToChar(Integer.Parse(String.Format("{0}{1}", char1, char2), System.Globalization.NumberStyles.HexNumber))
                 Else
                     [Error]("Failed to parse char2 of UriChar.")
                     Position = seq_start_position1
@@ -4803,7 +4803,7 @@ Namespace YAML.Grammar
 
                 Dim char2 As Char = ParseHexDigit(success)
                 If success Then
-                    ch = Convert.ToChar(Integer.Parse([String].Format("{0}{1}", char1, char2), System.Globalization.NumberStyles.HexNumber))
+                    ch = Convert.ToChar(Integer.Parse(String.Format("{0}{1}", char1, char2), System.Globalization.NumberStyles.HexNumber))
                 Else
                     [Error]("Failed to parse char2 of TagChar.")
                     Position = seq_start_position1
@@ -5324,7 +5324,7 @@ Namespace YAML.Grammar
 
                 Dim char2 As Char = ParseHexDigit(success)
                 If success Then
-                    Return Convert.ToChar(Integer.Parse([String].Format("{0}{1}", char1, char2), System.Globalization.NumberStyles.HexNumber))
+                    Return Convert.ToChar(Integer.Parse(String.Format("{0}{1}", char1, char2), System.Globalization.NumberStyles.HexNumber))
                 Else
                     [Error]("Failed to parse char2 of EscapeSequence.")
                     Position = seq_start_position1
@@ -5367,7 +5367,7 @@ Namespace YAML.Grammar
 
                 Dim char4 As Char = ParseHexDigit(success)
                 If success Then
-                    Return Convert.ToChar(Integer.Parse([String].Format("{0}{1}{2}{3}", char1, char2, char3, char4), System.Globalization.NumberStyles.HexNumber))
+                    Return Convert.ToChar(Integer.Parse(String.Format("{0}{1}{2}{3}", char1, char2, char3, char4), System.Globalization.NumberStyles.HexNumber))
                 Else
                     [Error]("Failed to parse char4 of EscapeSequence.")
                     Position = seq_start_position2

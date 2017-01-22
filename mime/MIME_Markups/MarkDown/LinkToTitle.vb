@@ -107,7 +107,7 @@ Namespace MarkDown
 
                 ' Load titles
                 Dim res As String = RequestToGoogleApi(ids)
-                If Not [String].IsNullOrEmpty(res) Then
+                If Not String.IsNullOrEmpty(res) Then
                     ParseApiResponse(res)
                 End If
             End If
@@ -136,7 +136,7 @@ Namespace MarkDown
             Try
                 Using client As New WebClient()
                     client.Encoding = Encoding.UTF8
-                    Return client.DownloadString([String].Format("https://www.googleapis.com/youtube/v3/videos?id={0}&key={1}" & "&part=snippet&fields=items(id,snippet(title))", ids, _apiKey))
+                    Return client.DownloadString(String.Format("https://www.googleapis.com/youtube/v3/videos?id={0}&key={1}" & "&part=snippet&fields=items(id,snippet(title))", ids, _apiKey))
                 End Using
             Catch
             End Try
@@ -167,7 +167,7 @@ Namespace MarkDown
         Private Function LinkEvaluator(match As Match) As String
             For x As Integer = 0 To _maxLinks - 1
                 If match.Groups(1).Value = _links(x, 0) AndAlso _links(x, 1) IsNot Nothing Then
-                    Return [String].Format("[YouTube: {0}](https://youtube.com/watch?v={1})", _links(x, 1), _links(x, 0))
+                    Return String.Format("[YouTube: {0}](https://youtube.com/watch?v={1})", _links(x, 1), _links(x, 0))
                 End If
             Next
             Return match.Groups(0).Value

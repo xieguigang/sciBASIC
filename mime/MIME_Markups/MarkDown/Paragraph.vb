@@ -54,9 +54,11 @@ Namespace MarkDown
         Const BoldFormat2 As String = "_{2}.+?_{2}"
 
         Public Iterator Function BoldFormats(s As String) As IEnumerable(Of ParserValue(Of Bold))
-            Dim values =
-                New List(Of String)(Regex.Matches(s, BoldFormat).ToArray) +
-                                    Regex.Matches(s, BoldFormat2).ToArray
+            Dim text = New List(Of String)(Regex.Matches(s, BoldFormat).ToArray) + Regex.Matches(s, BoldFormat2).ToArray
+
+            For Each s$ In text
+
+            Next
         End Function
     End Module
 End Namespace
