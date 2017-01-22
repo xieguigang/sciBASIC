@@ -217,7 +217,6 @@ Namespace MarkDown
             _inlineExtensions.Add(ext)
         End Sub
 
-
         ''' <summary>
         ''' Perform transformations that occur *within* block-level tags like paragraphs, headers, and list items.
         ''' </summary>
@@ -243,8 +242,83 @@ Namespace MarkDown
             text = DoItalicsAndBold(text)
             text = DoHardBreaks(text)
 
+            ' 怎样处理table??
+            text = __MarkdownTable(text)
+
             Return text
         End Function
+
+        Const tableThread$ = "^|(-+[|]?)+|(<br\s*/>)?$"
+
+        ''' <summary>
+        ''' 处理markdown table
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <returns></returns>
+        Private Shared Function __MarkdownTable(text$) As String
+            Dim lines$() = text.lTokens
+
+            For Each line In lines
+                If line.First <> "|"c Then
+                    Return text  ' 不是table格式的，则直接返回原始文本
+                End If
+            Next
+
+            If Not Regex.Match(lines(1), tableThread, RegexOptions.Multiline).Success Then
+                Return text
+            End If
+
+            Dim sb As New StringBuilder("<table>")
+
+            ' 表头
+            ' 假设在表头之中是没有任何特殊字符的，在这里直接分割转换
+            Dim t As New List(Of String)(lines(0).Split("|"c))
+
+            If br.Match(t.Last).Success Then
+                Call t.RemoveAt(t.Count - 1)
+            End If
+
+            Call t.RemoveAt(Scan0) ' 第一个|是不需要的
+            Call sb.Append("<thead>")
+            Call sb.Append("<tr><th>")
+            Call sb.Append(t.JoinBy("</th><th>"))
+            Call sb.Append("</th></tr>")
+            Call sb.Append("</thead>")
+
+            ' 处理表中的每一行
+            Dim r As New Dictionary(Of String, String)
+
+            For Each line In lines.Skip(2)
+                Dim code = Regex.Matches(line, "<code>.+?</code>", RegexICSng).ToArray
+
+                Call r.Clear()
+
+                For Each c In code
+                    r(c) = c.Replace("|", "&line;")
+                    line = line.Replace(c, r(c))
+                Next
+
+                line = "<tr><td>" & Mid(line, 2)                           ' 处理第一个标记
+                If line.Last <> "|"c AndAlso line.Last = ">"c Then  ' 假设这个是br标记，如果是其他的标记，那么我也没有办法了
+                    Dim brTag = br.Matches(line).ToArray.Last
+                    line = Mid(line, 1, line.Length - brTag.Length)
+                End If
+                line = Mid(line, 1, line.Length - 1) & "</td></tr>"        ' 处理最后一个标记
+                line = line.Replace("|", "</td><td>")                      ' 处理每一个标记
+
+                For Each c In r
+                    line = line.Replace(c.Value, c.Key)
+                Next
+
+                Call sb.AppendLine(line)
+            Next
+
+            Call sb.Append("</table>")
+
+            Return sb.ToString
+        End Function
+
+        Shared ReadOnly br As New Regex("<br\s*/>", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
         Private Shared _newlinesLeadingTrailing As New Regex("^\n+|\n+\z", RegexOptions.Compiled)
         Private Shared _newlinesMultiple As New Regex("\n{2,}", RegexOptions.Compiled)
