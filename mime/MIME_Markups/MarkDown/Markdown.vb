@@ -571,9 +571,44 @@ Namespace MarkDown
             Return result
         End Function
 
-        Private Shared _imagesRef As New Regex(vbCr & vbLf & "                    (               # wrap whole match in $1" & vbCr & vbLf & "                    !\[" & vbCr & vbLf & "                        (.*?)       # alt text = $2" & vbCr & vbLf & "                    \]" & vbCr & vbLf & vbCr & vbLf & "                    [ ]?            # one optional space" & vbCr & vbLf & "                    (?:\n[ ]*)?     # one optional newline followed by spaces" & vbCr & vbLf & vbCr & vbLf & "                    \[" & vbCr & vbLf & "                        (.*?)       # id = $3" & vbCr & vbLf & "                    \]" & vbCr & vbLf & vbCr & vbLf & "                    )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Const imageRefRegexp$ = "
 
-        Private Shared _imagesInline As New Regex(String.Format(vbCr & vbLf & "              (                     # wrap whole match in $1" & vbCr & vbLf & "                !\[" & vbCr & vbLf & "                    (.*?)           # alt text = $2" & vbCr & vbLf & "                \]" & vbCr & vbLf & "                \s?                 # one optional whitespace character" & vbCr & vbLf & "                \(                  # literal paren" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    ({0})           # href = $3" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    (               # $4" & vbCr & vbLf & "                    (['""])       # quote char = $5" & vbCr & vbLf & "                    (.*?)           # title = $6" & vbCr & vbLf & "                    \5              # matching quote" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    )?              # title is optional" & vbCr & vbLf & "                \)" & vbCr & vbLf & "              )", GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        (               # wrap whole match in $1
+            !\[
+            (.*?)       # alt text = $2
+            \]
+
+        [ ]?            # one optional space
+        (?:\n[ ]*)?     # one optional newline followed by spaces
+
+        \[
+            (.*?)       # id = $3
+        \]
+
+        )"
+
+        Const imageInlineRegexp$ = "
+
+        (                     # wrap whole match in $1
+            !\[
+              (.*?)           # alt text = $2
+            \]
+          \s?                 # one optional whitespace character
+          \(                  # literal paren
+          [ ]*
+              ({0})           # href = $3
+          [ ]*
+              (               # $4
+                (['""])       # quote char = $5
+              (.*?)           # title = $6
+              \5              # matching quote
+          [ ]*
+              )?              # title is optional
+          \)
+        )"
+
+        Private Shared _imagesRef As New Regex(imageRefRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Private Shared _imagesInline As New Regex(String.Format(imageInlineRegexp, GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown image shortcuts into HTML img tags. 
