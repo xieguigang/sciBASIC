@@ -268,7 +268,7 @@ Namespace MarkDown
                 Return text
             End If
 
-            Dim sb As New StringBuilder("<table>")
+            Dim sb As New StringBuilder("<table>" & vbCrLf)
 
             ' 表头
             ' 假设在表头之中是没有任何特殊字符的，在这里直接分割转换
@@ -284,6 +284,7 @@ Namespace MarkDown
             Call sb.Append(t.JoinBy("</th><th>"))
             Call sb.Append("</th></tr>")
             Call sb.Append("</thead>")
+            Call sb.AppendLine()
 
             ' 处理表中的每一行
             Dim r As New Dictionary(Of String, String)
