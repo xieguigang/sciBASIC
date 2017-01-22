@@ -99,7 +99,7 @@ Namespace MarkDown
                         output.Append(ControlChars.Lf)
                         line.Length = 0
                         valid = False
-                        Exit Select
+
                     Case ControlChars.Cr
                         If (i < text.Length - 1) AndAlso (text(i + 1) <> ControlChars.Lf) Then
                             If valid Then
@@ -109,21 +109,21 @@ Namespace MarkDown
                             line.Length = 0
                             valid = False
                         End If
-                        Exit Select
+
                     Case ControlChars.Tab
                         Dim width As Integer = (_tabWidth - line.Length Mod _tabWidth)
                         For k As Integer = 0 To width - 1
                             line.Append(" "c)
                         Next
-                        Exit Select
+
                     Case ChrW(26)
-                        Exit Select
+
                     Case Else
                         If Not valid AndAlso text(i) <> " "c Then
                             valid = True
                         End If
                         line.Append(text(i))
-                        Exit Select
+
                 End Select
             Next
 

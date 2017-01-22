@@ -44,10 +44,15 @@ Namespace MarkDown
     ''' </summary>
     Public Module WikiArticles
 
-        Const RegexWikiArticles As String =
-            vbCr & vbLf & "                    (?:https?\:\/\/)" & vbCr & vbLf & "                    (?:www\.)?" & vbCr & vbLf & "                    ([a-z]+)" & vbCr & vbLf & "                    \.wikipedia\.org\/wiki\/" & vbCr & vbLf & "                    ([^\^\s\(\)\[\]\<\>]+)"
+        Const RegexWikiArticles As String = "
 
-        Dim _wikiArticles As New Regex(RegexWikiArticles, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
+                (?:https?\:\/\/)
+                (?:www\.)?
+                ([a-z]+)
+                \.wikipedia\.org\/wiki\/
+                ([^\^\s\(\)\[\]\<\>]+)"
+
+        ReadOnly _wikiArticles As Regex = RegexWikiArticles.RawRegexp
 
         ''' <summary>
         ''' <see cref="ExtensionTransform"/>
