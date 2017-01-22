@@ -393,6 +393,7 @@
     <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
+    <Compile Include="Extensions\Math\ScientificNotation.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
     <Compile Include="Language\C\Vector.vb" />
     <Compile Include="Language\Java\Collections.vb" />

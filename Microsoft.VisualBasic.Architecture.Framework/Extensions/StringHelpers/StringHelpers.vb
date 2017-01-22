@@ -748,36 +748,4 @@ Public Module StringHelpers
         Dim val% = InStrRev(s, token)
         Return lastIndex = val
     End Function
-
-    ''' <summary>
-    ''' 分别处理正常的小数或者科学记数法的小数
-    ''' </summary>
-    ''' <param name="n#"></param>
-    ''' <param name="decimal%"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function FormatNumeric(n#, decimal%) As String
-        Dim s$ = n.ToString
-        If InStr(s, "E", CompareMethod.Text) > 0 Then
-            ' 科学记数法
-            Dim t$() = s.Split("e"c, "E"c)
-            t(0) = Math.Round(Val(t(0)), [decimal])
-            s = t(0) & "E" & t(1)
-        Else
-            Dim dZERO = Regex.Match(s, "\.[0]+").Value.Trim("."c)
-
-            If dZERO.Length >= [decimal] Then
-                s = Mid(s.Split("."c).Last, dZERO.Length + 1)
-                s = Mid(s, 1, 1) & "." & Mid(s, 2) & 0
-                s = Math.Round(Val(s), [decimal])
-                If InStr(s, ".") = 0 Then
-                    s &= ".0"
-                End If
-                s = s & "E-" & FormatZero(dZERO.Length + 1)
-            Else
-                s = Math.Round(n, [decimal]).ToString
-            End If
-        End If
-        Return s
-    End Function
 End Module

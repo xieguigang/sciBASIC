@@ -25,7 +25,7 @@ Public Module AxisScalling
         Dim pow% = Fix(Math.Log10(steps))
         Dim tick# = 10 ^ pow
 
-        If parts * tick + min > max Then
+        If parts * tick + min > max + tick Then
             tick = 5 * 10 ^ (pow - 1)
         End If
 
