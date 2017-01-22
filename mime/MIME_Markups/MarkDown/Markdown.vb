@@ -335,7 +335,20 @@ Namespace MarkDown
             ' in other words (this) and (this(also)) and (this(also(too)))
             ' up to _nestDepth
             If _nestedParensPattern Is Nothing Then
-                _nestedParensPattern = RepeatString(vbCr & vbLf & "                    (?>              # Atomic matching" & vbCr & vbLf & "                       [^()\s]+      # Anything other than parens or whitespace" & vbCr & vbLf & "                     |" & vbCr & vbLf & "                       \(" & vbCr & vbLf & "                           ", _nestDepth) & RepeatString(" \)" & vbCr & vbLf & "                    )*", _nestDepth)
+
+                ' 2017-1-23
+                ' 这里的原始表达式为：
+                ' [^()\s]+     # Anything other than parens or whitespace
+                ' 这个表达式不能够匹配含有空格的路径，现在将\s去除掉之后经过测试也没有发现太多问题
+                _nestedParensPattern = RepeatString("
+
+    (?>              # Atomic matching
+       [^()]+        # Anything other than parens or whitespace
+       |
+       \(
+        ", _nestDepth) & RepeatString(" \)
+      )*", _nestDepth)
+
             End If
             Return _nestedParensPattern
         End Function
@@ -671,6 +684,9 @@ Namespace MarkDown
             Dim url As String = match.Groups(3).Value
             Dim title As String = match.Groups(6).Value
 
+#If DEBUG Then
+            Call match.Value.__DEBUG_ECHO
+#End If
             If url.StartsWith("<") AndAlso url.EndsWith(">") Then
                 url = url.Substring(1, url.Length - 2)
             End If

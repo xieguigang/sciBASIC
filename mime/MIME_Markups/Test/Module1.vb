@@ -3,11 +3,7 @@
 Module Module1
 
     Sub Main()
-        Dim md = "
-
-###### header6
-![](./images/test.png)
-"
+        Dim md = "![](./images/test.png) and ![](./2. annotations/GO/plot.png)"
 
         md = "G:\temp\reports.md".ReadAllText
 
