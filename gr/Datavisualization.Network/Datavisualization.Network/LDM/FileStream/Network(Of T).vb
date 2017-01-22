@@ -217,7 +217,7 @@ Namespace FileStream
         ''' <param name="node"></param>
         ''' <returns></returns>
         Public Shared Operator ^(net As Network(Of T_Node, T_Edge), node As T_Node) As Boolean
-            Return net ^ node.Identifier
+            Return net ^ node.ID
         End Operator
 
         ''' <summary>

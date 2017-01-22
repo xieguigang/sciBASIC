@@ -176,4 +176,23 @@ Public Module LegendPlotExtensions
                 border).Height + d + topLeft.Y)
         Next
     End Sub
+
+    <Extension>
+    Public Function MaxLegendSize(legends As IEnumerable(Of Legend), g As Graphics) As SizeF
+        Dim maxW! = Single.MinValue, maxH! = Single.MinValue
+
+        For Each l As Legend In legends
+            Dim font As Font = CSSFont.TryParse(l.fontstyle)
+            Dim size As SizeF = g.MeasureString(l.title, font)
+
+            If maxW < size.Width Then
+                maxW = size.Width
+            End If
+            If maxH < size.Height Then
+                maxH = size.Height
+            End If
+        Next
+
+        Return New SizeF(maxW, maxH)
+    End Function
 End Module

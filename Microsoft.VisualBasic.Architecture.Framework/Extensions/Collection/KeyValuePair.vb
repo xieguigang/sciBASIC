@@ -152,4 +152,25 @@ Public Module KeyValuePairExtensions
         list += New KeyValuePairObject(Of TKey, TValue)(key, value)
         Return list
     End Function
+
+    ''' <summary>
+    ''' 使用这个函数应该要确保value是没有重复的
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="d"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ReverseMaps(Of T, V)(d As Dictionary(Of T, V), Optional removeDuplicated As Boolean = False) As Dictionary(Of V, T)
+        If removeDuplicated Then
+            Dim groupsData = From x In d Select x Group x By x.Value Into Group
+            Return groupsData.ToDictionary(
+                Function(g) g.Value,
+                Function(g) g.Group.First.Key)
+        Else
+            Return d.ToDictionary(
+                Function(x) x.Value,
+                Function(x) x.Key)
+        End If
+    End Function
 End Module

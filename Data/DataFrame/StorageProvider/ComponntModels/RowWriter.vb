@@ -136,7 +136,17 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
-        Public Function CacheIndex(source As IEnumerable(Of Object)) As RowWriter
+        ''' <summary>
+        ''' 在这个函数之中生成字典动态属性的表头
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="reorderKeys">
+        ''' + 0: 不排序
+        ''' + 1: 升序排序
+        ''' +-1: 降序排序
+        ''' </param>
+        ''' <returns></returns>
+        Public Function CacheIndex(source As IEnumerable(Of Object), reorderKeys As Integer) As RowWriter
             If MetaRow Is Nothing Then
                 Return Me
             End If
@@ -147,14 +157,26 @@ Namespace StorageProvider.ComponentModels
                                                 Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
                                                 Where Not x Is Nothing
                                                 Let hash As IDictionary = DirectCast(x, IDictionary)
-                                                Select hash
-
+                                                Select hash  ' 获取每一个实体对象的字典属性的值
+            ' 得到所有的键名Keys
             Dim indexs As IEnumerable(Of String) = (From x As IDictionary
                                                     In hashMetas.AsParallel
                                                     Select From o As Object
                                                            In x.Keys
                                                            Select Scripting.ToString(o)).IteratesALL
-            __cachedIndex = indexs.Distinct.ToArray
+            If reorderKeys > 0 Then
+                __cachedIndex = indexs _
+                    .Distinct _
+                    .OrderBy(Function(name) name) _
+                    .ToArray
+            ElseIf reorderKeys < 0 Then
+                __cachedIndex = indexs _
+                    .Distinct _
+                    .OrderByDescending(Function(name) name) _
+                    .ToArray
+            Else
+                __cachedIndex = indexs.Distinct.ToArray
+            End If
 
             Return Me
         End Function

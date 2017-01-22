@@ -31,6 +31,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Drawing2D
@@ -103,10 +104,10 @@ Namespace Drawing2D
             Else
                 Dim res As Image
 
-                If Not bg.FileExists Then
-                    res = Base64Codec.GetImage(bg$)
-                Else
+                If bg.FileExists Then
                     res = LoadImage(path:=bg$)
+                Else
+                    res = Base64Codec.GetImage(bg$)
                 End If
 
                 Call g.DrawImage(res, rect)
@@ -121,8 +122,73 @@ Namespace Drawing2D
         ''' <param name="bg"></param>
         ''' <param name="plot"></param>
         ''' <returns></returns>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg$, plot As Action(Of Graphics)) As Bitmap
+        ''' 
+        <Extension>
+        Public Function GraphicsPlots(plot As Action(Of Graphics), ByRef size As Size, ByRef margin As Size, bg$) As Bitmap
             Return GraphicsPlots(size, margin, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
+
+        Public Function Allocate(Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg$ = "white") As InternalCanvas
+            Return New InternalCanvas With {
+                .size = size,
+                .bg = bg,
+                .margin = margin
+            }
+        End Function
+
+        ''' <summary>
+        ''' 可以借助这个画布对象创建多图层的绘图操作
+        ''' </summary>
+        Public Class InternalCanvas
+
+            Dim plots As New List(Of IPlot)
+
+            Public Property size As Size
+            Public Property margin As Size
+            Public Property bg As String
+
+            Public Function InvokePlot() As Bitmap
+                Return GraphicsPlots(
+                    size, margin, bg,
+                    Sub(ByRef g, rect)
+
+                        For Each plot As IPlot In plots
+                            Call plot(g, rect)
+                        Next
+                    End Sub)
+            End Function
+
+            Public Shared Operator +(g As InternalCanvas, plot As IPlot) As InternalCanvas
+                g.plots += plot
+                Return g
+            End Operator
+
+            Public Shared Operator +(g As InternalCanvas, plot As IPlot()) As InternalCanvas
+                g.plots += plot
+                Return g
+            End Operator
+
+            Public Shared Narrowing Operator CType(g As InternalCanvas) As Bitmap
+                Return g.InvokePlot
+            End Operator
+
+            ''' <summary>
+            ''' canvas invoke this plot.
+            ''' </summary>
+            ''' <param name="g"></param>
+            ''' <param name="plot"></param>
+            ''' <returns></returns>
+            Public Shared Operator <=(g As InternalCanvas, plot As IPlot) As Bitmap
+                Dim size As Size = g.size
+                Dim margin = g.margin
+                Dim bg As String = g.bg
+
+                Return GraphicsPlots(size, margin, bg, plot)
+            End Operator
+
+            Public Shared Operator >=(g As InternalCanvas, plot As IPlot) As Bitmap
+                Throw New NotSupportedException
+            End Operator
+        End Class
     End Module
 End Namespace

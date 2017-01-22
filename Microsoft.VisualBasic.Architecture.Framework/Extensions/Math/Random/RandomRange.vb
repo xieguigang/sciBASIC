@@ -38,25 +38,6 @@ Namespace Mathematical
     Public Module RandomRange
 
         ''' <summary>
-        ''' 返回零表示比较小的常数
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="INF"></param>
-        ''' <returns></returns>
-        Public Function Log(x#, Optional INF% = 5) As Single
-            Dim p As Double = Math.Log10(Math.Abs(x))
-
-            If p < -4 Then
-                Return p
-            End If
-            If p > 5 Then
-                Return p
-            End If
-
-            Return 0
-        End Function
-
-        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="from"></param>
@@ -67,7 +48,7 @@ Namespace Mathematical
         ''' </param>
         ''' <returns></returns>
         Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As IValueProvider
-            Dim pf! = Log(from, INF), pt! = Log([to], INF)
+            Dim pf! = ScientificNotation.PowerLog10(from, INF), pt! = ScientificNotation.PowerLog10([to], INF)
 
             If from > 0 Then
                 If [to] > 0 Then ' from 是正数，则to也必须是正数

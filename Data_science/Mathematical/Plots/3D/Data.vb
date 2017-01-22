@@ -49,8 +49,7 @@ Namespace Plot3D
             Dim xData As New List(Of (pt As Point3D, C#)())
 
             For Each line As EntityObject In matrix
-                Dim xi As Double =
-                    Val(line.Identifier)
+                Dim xi As Double = Val(line.ID)
 
                 xData += LinqAPI.Exec(Of (pt As Point3D, C#)) <=
  _
@@ -149,7 +148,7 @@ Namespace Plot3D
                                                                   Select (pt, o.z.c)
                 If Not matrix Is Nothing Then
                     matrix += New EntityObject With {
-                        .Identifier = out(Scan0).pt.X,
+                        .ID = out(Scan0).pt.X,
                         .Properties = out.ToDictionary(
                             Function(yk) CStr(yk.pt.Y),
                             Function(z) z.pt.Z & ":" & z.C)

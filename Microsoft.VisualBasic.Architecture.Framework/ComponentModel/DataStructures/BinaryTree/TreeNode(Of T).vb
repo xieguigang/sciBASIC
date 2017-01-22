@@ -28,7 +28,7 @@
 
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataStructures.BinaryTree
 
@@ -37,9 +37,10 @@ Namespace ComponentModel.DataStructures.BinaryTree
     ''' </summary>
     ''' <remarks></remarks>
     Public Class TreeNode(Of T) : Implements INamedValue
+        Implements Value(Of T).IValueOf
 
         Public Property Name As String Implements INamedValue.Key
-        Public Property Value As T
+        Public Property Value As T Implements Value(Of T).IValueOf.value
         Public Property Left As TreeNode(Of T)
         Public Property Right As TreeNode(Of T)
 
@@ -47,10 +48,12 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' Constructor  to create a single node 
         ''' </summary>
         ''' <param name="name"></param>
-        ''' <param name="d"></param>
-        Public Sub New(name As String, d As T)
-            Me.Name = name
-            Me.Value = d
+        ''' <param name="obj"></param>
+        Public Sub New(name As String, obj As T)
+            With Me
+                .Name = name
+                .Value = obj
+            End With
         End Sub
 
         Sub New()

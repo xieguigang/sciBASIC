@@ -61,7 +61,7 @@ Namespace NeuralNetwork.Models
         Private Function __node(neuron As Neuron, type As String, uidhash As Dictionary(Of Neuron, Integer)) As FileStream.Node
             Dim uid As String = uidhash(neuron).ToString
             Return New FileStream.Node With {
-                .Identifier = uid,
+                .ID = uid,
                 .NodeType = type
             }
         End Function

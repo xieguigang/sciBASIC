@@ -51,7 +51,7 @@ Namespace FileStream
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
 
         ''' <summary>
-        ''' <see cref="Node.Identifier"/>
+        ''' <see cref="Node.ID"/>
         ''' </summary>
         Public Const REFLECTION_ID_MAPPING_IDENTIFIER As String = "Identifier"
         ''' <summary>

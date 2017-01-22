@@ -142,18 +142,23 @@ Public Module Heatmap
                          Optional bg$ = "white",
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
-                         Optional legendFont As Font = Nothing,
+                         Optional legendFontStyle$ = CSSFont.PlotSubTitle,
                          Optional min# = -1,
                          Optional max# = 1,
                          Optional mainTitle$ = "heatmap",
                          Optional titleFont As Font = Nothing,
                          Optional drawGrid As Boolean = True,
                          Optional drawValueLabel As Boolean = True,
-                         Optional valuelabelFont As Font = Nothing) As Bitmap
+                         Optional valuelabelFont As Font = Nothing,
+                         Optional legendWidth! = -1,
+                         Optional legendHasUnmapped As Boolean = True,
+                         Optional legendLayout As Rectangle = Nothing) As Bitmap
 
         If valuelabelFont Is Nothing Then
             valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
         End If
+
+        Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
 
         Return __plotInterval(
             Sub(g, region, array, left, font, dw, levels, top, colors)
@@ -198,12 +203,18 @@ Public Module Heatmap
 
                     Dim sz As SizeF = g.MeasureString(x.Name, font)
                     Dim y As Single = top.value - dw - (sz.Height - dw) / 2
-                    Dim lx As Single =
-                                          margin.Width - sz.Width - margin.Width * 0.1
+                    Dim lx As Single = margin.Width - sz.Width - margin.Width * 0.1
 
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
-            End Sub, data.ToArray, customColors, mapLevels, mapName, size, margin, bg, fontStyle, legendTitle, legendFont, min, max, mainTitle, titleFont)
+            End Sub,
+            data.ToArray,
+            customColors, mapLevels, mapName,
+            size, margin, bg,
+            fontStyle, legendTitle, legendFont,
+            min, max,
+            mainTitle, titleFont,
+            legendWidth, legendHasUnmapped, legendLayout)
     End Function
 
     ''' <summary>
@@ -224,7 +235,10 @@ Public Module Heatmap
                                    Optional min# = -1,
                                    Optional max# = 1,
                                    Optional mainTitle$ = "heatmap",
-                                   Optional titleFont As Font = Nothing) As Bitmap
+                                   Optional titleFont As Font = Nothing,
+                                   Optional legendWidth! = -1,
+                                   Optional legendHasUnmapped As Boolean = True,
+                                   Optional legendLayout As Rectangle = Nothing) As Bitmap
 
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim angle! = 45.0F
@@ -287,21 +301,28 @@ Public Module Heatmap
 
                 ' Draw legends
                 Dim legend As Bitmap = colors.ColorMapLegend(
-                    haveUnmapped:=False,
+                    haveUnmapped:=legendHasUnmapped,
                     min:=Math.Round(correl.Min, 1),
                     max:=Math.Round(correl.Max, 1),
                     title:=legendTitle,
-                    titleFont:=legendFont)
+                    titleFont:=legendFont,
+                    legendWidth:=legendWidth,
+                    lsize:=legendLayout.Size)
                 Dim lsize As Size = legend.Size
                 Dim lmargin As Integer = size.Width - size.Height + margin.Width
 
-                left = size.Width - lmargin
-                top = size.Height / 3
+                If Not legendLayout.Location.IsEmpty Then
+                    left = legendLayout.Left
+                    top = legendLayout.Top
+                Else
+                    left = size.Width - lmargin
+                    top = size.Height / 3
+                End If
 
                 Dim scale# = lmargin / lsize.Width
                 Dim lh% = CInt(scale * (size.Height * 2 / 3))
 
-                Call g.DrawImage(
+                Call g.DrawImageUnscaled(
                     legend, CInt(left), CInt(top), lmargin, lh)
 
                 If titleFont Is Nothing Then
@@ -312,7 +333,6 @@ Public Module Heatmap
                 Dim titlePosi As New PointF((left - titleSize.Width) / 2, (margin.Height - titleSize.Height) / 2)
 
                 Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)
-
             End Sub)
     End Function
 

@@ -166,9 +166,13 @@ Namespace StorageProvider.Reflection
                         Optional Explicit As Boolean = True,
                         Optional maps As Dictionary(Of String, String) = Nothing,
                         Optional parallel As Boolean = True,
-                        Optional metaBlank As String = "") As IEnumerable(Of RowObject)
+                        Optional metaBlank As String = "",
+                        Optional reorderKeys As Integer = 0) As IEnumerable(Of RowObject)
 
-            For Each row As RowObject In __save(source, type, Explicit, Nothing, metaBlank, maps:=maps, parallel:=parallel)
+            For Each row As RowObject In __save(source, type, Explicit, Nothing, metaBlank,
+                                                maps:=maps,
+                                                parallel:=parallel,
+                                                reorderKeys:=reorderKeys)
                 Yield row
             Next
         End Function
@@ -187,12 +191,14 @@ Namespace StorageProvider.Reflection
                                         schemaOut As Dictionary(Of String, Type),
                                Optional metaBlank As String = "",
                                Optional maps As Dictionary(Of String, String) = Nothing,
-                               Optional parallel As Boolean = True) As IEnumerable(Of RowObject)
+                               Optional parallel As Boolean = True,
+                               Optional reorderKeys As Integer = 0) As IEnumerable(Of RowObject)
 
-            Dim source As Object() = ___source.ToVector
+            Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
             Dim Schema As SchemaProvider =
                 SchemaProvider.CreateObject(typeDef, explicit).CopyReadDataFromObject
-            Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank).CacheIndex(source)
+            Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank) _
+                .CacheIndex(source, reorderKeys)
 
             schemaOut = rowWriter.Columns.ToDictionary(
                 Function(x) x.Name,

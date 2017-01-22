@@ -535,12 +535,14 @@ Public Module StringHelpers
     ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String, Optional regex As Boolean = False) As IEnumerable(Of String())
+    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter$,
+                                               Optional regex As Boolean = False,
+                                               Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
         Dim list As New List(Of String)
         Dim delimiterTest As Func(Of String, Boolean)
 
         If regex Then
-            Dim regexp As New Regex(delimiter, RegexOptions.Singleline)
+            Dim regexp As New Regex(delimiter, opt)
             delimiterTest = Function(line) regexp.Match(line).Value = line
         Else
             delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
@@ -745,37 +747,5 @@ Public Module StringHelpers
         Dim lastIndex% = s.Length - token.Length
         Dim val% = InStrRev(s, token)
         Return lastIndex = val
-    End Function
-
-    ''' <summary>
-    ''' 分别处理正常的小数或者科学记数法的小数
-    ''' </summary>
-    ''' <param name="n#"></param>
-    ''' <param name="decimal%"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function FormatNumeric(n#, decimal%) As String
-        Dim s$ = n.ToString
-        If InStr(s, "E", CompareMethod.Text) > 0 Then
-            ' 科学记数法
-            Dim t$() = s.Split("e"c, "E"c)
-            t(0) = Math.Round(Val(t(0)), [decimal])
-            s = t(0) & "E" & t(1)
-        Else
-            Dim dZERO = Regex.Match(s, "\.[0]+").Value.Trim("."c)
-
-            If dZERO.Length >= [decimal] Then
-                s = Mid(s.Split("."c).Last, dZERO.Length + 1)
-                s = Mid(s, 1, 1) & "." & Mid(s, 2) & 0
-                s = Math.Round(Val(s), [decimal])
-                If InStr(s, ".") = 0 Then
-                    s &= ".0"
-                End If
-                s = s & "E-" & FormatZero(dZERO.Length + 1)
-            Else
-                s = Math.Round(n, [decimal]).ToString
-            End If
-        End If
-        Return s
     End Function
 End Module

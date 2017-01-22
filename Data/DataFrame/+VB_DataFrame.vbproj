@@ -248,6 +248,7 @@
     <Compile Include="Linq\DataStream.vb" />
     <Compile Include="Linq\LinqWhere.vb" />
     <Compile Include="Linq\WriteStream.vb" />
+    <Compile Include="Mappings.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

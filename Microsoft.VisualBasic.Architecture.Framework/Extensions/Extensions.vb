@@ -72,6 +72,11 @@ Imports Microsoft.VisualBasic.Text.Similarity
 Public Module Extensions
 #End If
 
+    <Extension>
+    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.GetEncodings)
+    End Function
+
     ''' <summary>
     ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
     ''' </summary>

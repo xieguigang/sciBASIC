@@ -69,20 +69,24 @@ Namespace ComponentModel.DataStructures.BinaryTree
     ''' <remarks></remarks>
     Public Class BinaryTree(Of T)
 
-        Dim Root As TreeNode(Of T)
+        ''' <summary>
+        ''' The root of the tree.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Root As TreeNode(Of T)
 
         ''' <summary>
         ''' Points to the root of the tree
         ''' </summary>
         ''' <remarks></remarks>
-        Dim _Count As Integer = 0
+        Dim _counts As Integer = 0
 
         Public Sub New()
         End Sub
 
         Sub New(root As TreeNode(Of T))
             Me.Root = root
-            Me._Count = root.Count
+            Me._counts = root.Count
         End Sub
 
         ''' <summary>
@@ -118,7 +122,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' </summary>
         Public Sub clear()
             Call KillTree(Root)
-            _Count = 0
+            _counts = 0
         End Sub
 
         ''' <summary>
@@ -152,7 +156,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <returns>Number of nodes in the tree</returns>
         Public ReadOnly Property Length As Integer
             Get
-                Return _Count
+                Return _counts
             End Get
         End Property
 
@@ -258,11 +262,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
 
             Try
                 If Root Is Nothing Then
-                    Root = node
+                    _Root = node
                 Else
                     add(node, Root, If(left, -1, 1))
                 End If
-                _Count += 1
+                _counts += 1
                 Return node
             Catch generatedExceptionName As Exception
                 Dim ex = New Exception(node.ToString, generatedExceptionName)
@@ -282,11 +286,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
             Dim node As New TreeNode(Of T)(name, d)
             Try
                 If Root Is Nothing Then
-                    Root = node
+                    _Root = node
                 Else
                     add(node, Root, 0)
                 End If
-                _Count += 1
+                _counts += 1
                 Return node
             Catch generatedExceptionName As Exception
                 Dim ex = New Exception(node.ToString, generatedExceptionName)
@@ -363,7 +367,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             ' If it is a simple leaf then just null what the parent is pointing to
             If (nodeToDelete.Left Is Nothing) AndAlso (nodeToDelete.Right Is Nothing) Then
                 If parent Is Nothing Then
-                    Root = Nothing
+                    _Root = Nothing
                     Return
                 End If
 
@@ -374,7 +378,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Else
                     parent.Right = Nothing
                 End If
-                _Count -= 1
+                _counts -= 1
                 Return
             End If
 
@@ -383,7 +387,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             If nodeToDelete.Left Is Nothing Then
                 ' Special case if we're at the root
                 If parent Is Nothing Then
-                    Root = nodeToDelete.Right
+                    _Root = nodeToDelete.Right
                     Return
                 End If
 
@@ -395,7 +399,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 End If
                 nodeToDelete = Nothing
                 ' Clean up the deleted node
-                _Count -= 1
+                _counts -= 1
                 Return
             End If
 
@@ -404,7 +408,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             If nodeToDelete.Right Is Nothing Then
                 ' Special case if we're at the root			
                 If parent Is Nothing Then
-                    Root = nodeToDelete.Left
+                    _Root = nodeToDelete.Left
                     Return
                 End If
 
@@ -416,7 +420,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 End If
                 nodeToDelete = Nothing
                 ' Clean up the deleted node
-                _Count -= 1
+                _counts -= 1
                 Return
             End If
 
@@ -437,7 +441,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             ' Copy over the successor values to the deleted node position
             nodeToDelete.Name = tmp.Name
             nodeToDelete.Value = tmp.Value
-            _Count -= 1
+            _counts -= 1
         End Sub
 
         ' Simple 'drawing' routines
