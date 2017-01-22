@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
 
 Module Module1
 
@@ -11,9 +12,9 @@ Module Module1
 |x|y|z and ``| test``|
 "
 
-        ' md = "G:\temp\reports.md".ReadAllText
+        md = "G:\temp\reports.md".ReadAllText
 
-        Call New MarkdownHTML().Transform(md).__DEBUG_ECHO
+        Call New MarkdownHTML().Transform(md).SaveTo("x:\test.html", Encoding.UTF8)
 
         Pause()
     End Sub
