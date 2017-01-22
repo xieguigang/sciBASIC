@@ -72,8 +72,8 @@ Namespace Dijkstra
 
         Public Function ContainsNode(Id As String) As Boolean
             Dim LQuery = (From conn In _Connections.AsParallel
-                          Where String.Equals(conn.A.Identifier, Id, StringComparison.OrdinalIgnoreCase) OrElse
-                              String.Equals(conn.B.Identifier, Id, StringComparison.OrdinalIgnoreCase)
+                          Where String.Equals(conn.A.ID, Id, StringComparison.OrdinalIgnoreCase) OrElse
+                              String.Equals(conn.B.ID, Id, StringComparison.OrdinalIgnoreCase)
                           Select conn).ToArray
             Return Not LQuery.IsNullOrEmpty
         End Function

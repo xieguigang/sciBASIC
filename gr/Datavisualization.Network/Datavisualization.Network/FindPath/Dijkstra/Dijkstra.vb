@@ -71,7 +71,7 @@ Namespace Dijkstra
 
             'Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As FileStream.Node In _Locations
-                _shortestPaths.Add(location, New Route(location.Identifier))
+                _shortestPaths.Add(location, New Route(location.ID))
             Next
 
             'The startPosition has a weight 0. 
@@ -116,7 +116,7 @@ Namespace Dijkstra
         Public Function CalculateMinCost(starts As String) As Route()
             Dim LQuery = (From node As FileStream.Node
                           In _Locations.AsParallel
-                          Where String.Equals(starts, node.Identifier, StringComparison.OrdinalIgnoreCase)
+                          Where String.Equals(starts, node.ID, StringComparison.OrdinalIgnoreCase)
                           Select node).FirstOrDefault
             If LQuery Is Nothing Then
                 Return Nothing

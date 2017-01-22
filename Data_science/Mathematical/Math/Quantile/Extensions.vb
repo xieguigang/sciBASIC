@@ -80,6 +80,19 @@ Namespace Quantile
             Return estimator
         End Function
 
+        <Extension>
+        Public Function GKQuantile(source As IEnumerable(Of Double),
+                                   Optional epsilon# = Extensions.epsilon,
+                                   Optional compact_size% = 1000) As QuantileEstimationGK
+            Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
+
+            For Each x As Long In source
+                Call estimator.Insert(x)
+            Next
+
+            Return estimator
+        End Function
+
         ''' <summary>
         ''' 将数值转化为相对应的quantile水平等级
         ''' </summary>

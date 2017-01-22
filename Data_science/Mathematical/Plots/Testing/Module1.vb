@@ -41,6 +41,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.Correlations
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Mathematical
 
 Module Module1
 
@@ -206,7 +207,24 @@ Module Module1
 
     End Sub
 
+
+    Sub axisScallingTest()
+        Call AxisScalling.GetAxisByTick(1, 0.1,).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.__DEBUG_ECHO
+        Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
     Sub Main()
+        Call axisScallingTest()
+
         '        Call heatmap2()
 
         ''Pause()

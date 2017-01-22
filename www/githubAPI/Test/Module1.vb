@@ -39,13 +39,13 @@ Module Module1
 
 
         Dim followers As User() = WebAPI.Users.Followers("xieguigang") '= "J:\GCModeller\src\runtime\sciBASIC#\www\data\github\followers.json".ReadAllText.LoadObject(Of User()) '"xieguigang".Followers
-        Call followers.GetJson.SaveTo("./followers.json")
+        Call followers.GetJson(True).SaveTo("./followers.json")
 
         Dim following As User() = WebAPI.Users.Following("xieguigang")  '"xieguigang".Following
-        Call following.GetJson.SaveTo("./following.json")
+        Call following.GetJson(True).SaveTo("./following.json")
 
         Dim notFollings = following.WhoIsNotFollowMe(followers).ToArray
-        Call notFollings.GetJson.SaveTo("./notfollowing.json")
+        Call notFollings.GetJson(True).SaveTo("./notfollowing.json")
 
         Pause()
     End Sub

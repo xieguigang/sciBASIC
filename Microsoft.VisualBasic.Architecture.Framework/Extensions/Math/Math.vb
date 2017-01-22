@@ -366,7 +366,7 @@ Namespace Mathematical
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return Math.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return Math.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
             End If
         End Function
 
@@ -439,6 +439,11 @@ Namespace Mathematical
                 k -= 1
             End While
             Return result
+        End Function
+
+        <Extension>
+        Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
+            Return v.ToArray(Function(x) x.FormatNumeric(digitals))
         End Function
     End Module
 End Namespace

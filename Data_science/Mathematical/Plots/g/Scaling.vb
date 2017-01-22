@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::2b9c59540b503ac01ed990f7c531a6ca, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Scaling.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
@@ -38,13 +39,28 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class Scaling
 
-    Public ReadOnly dx!, dy!
+    ''' <summary>
+    ''' x,y轴分别的最大值和最小值的差值
+    ''' </summary>
+    Public ReadOnly dx#, dy#
     Public ReadOnly xmin, ymin As Single
 
     ReadOnly serials As SerialData()
     ReadOnly hist As HistogramGroup
 
     Public ReadOnly type As Type
+
+    Public ReadOnly Property xrange As DoubleRange
+        Get
+            Return New DoubleRange(xmin, xmin + dx)
+        End Get
+    End Property
+
+    Public ReadOnly Property yrange As DoubleRange
+        Get
+            Return New DoubleRange(ymin, ymin + dy)
+        End Get
+    End Property
 
     ''' <summary>
     ''' 线条
@@ -56,6 +72,12 @@ Public Class Scaling
         dy = Scaling(array, Function(p) p.pt.Y, absoluteScaling, ymin)
         serials = array
         type = GetType(Scatter)
+    End Sub
+
+    Sub New(data As (Double, Double)())
+        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
+        type = GetType(ScatterHeatmap)
     End Sub
 
     Sub New(data As (X#, y#, z#)())
@@ -213,6 +235,15 @@ Public Class Scaling
                End Function
     End Function
 
+    Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
+        Return PointScaler(rect.Size, rect.Margin)
+    End Function
+
+    Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
+        Dim point = PointScaler(rect.Size, rect.Margin)
+        Return Function(pt) point(New PointF(pt.x, pt.y))
+    End Function
+
     Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
         Dim bottom As Integer = r.Size.Height - r.Margin.Height
         Dim width As Integer = r.Size.Width - r.Margin.Width * 2
@@ -283,11 +314,23 @@ Public Class Scaling
         Return __scaling(array!, min!, absoluteScaling)
     End Function
 
+    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#)), [get] As Func(Of (X#, y#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+        Dim array!() = data.ToArray([get])
+        Return __scaling(array!, min!, absoluteScaling)
+    End Function
+
     Public Shared Function Scaling(data As IEnumerable(Of Point3D), [get] As Func(Of Point3D, Single), absoluteScaling As Boolean, ByRef min!) As Single
         Dim array!() = data.ToArray([get])
         Return __scaling(array!, min!, absoluteScaling)
     End Function
 
+    ''' <summary>
+    ''' 返回``max-min``
+    ''' </summary>
+    ''' <param name="array!"></param>
+    ''' <param name="min!"></param>
+    ''' <param name="absoluteScaling"></param>
+    ''' <returns></returns>
     Private Shared Function __scaling(array!(), ByRef min!, absoluteScaling As Boolean) As Single
         Dim max! = array.Max : min! = array.Min
 

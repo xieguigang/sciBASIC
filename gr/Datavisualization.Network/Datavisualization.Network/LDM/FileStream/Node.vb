@@ -43,7 +43,7 @@ Namespace FileStream
         ''' 这个节点的标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property Identifier As String Implements INamedValue.Key, INode.Identifier
+        Public Overridable Property ID As String Implements INamedValue.Key, INode.Identifier
         ''' <summary>
         ''' Node data groups identifier.(这个节点的分组类型的定义)
         ''' </summary>
@@ -51,14 +51,14 @@ Namespace FileStream
         Public Overridable Property NodeType As String Implements INode.NodeType
 
         Public Overrides Function ToString() As String
-            Return Identifier
+            Return ID
         End Function
 
         Sub New()
         End Sub
 
         Sub New(sId As String)
-            Identifier = sId
+            ID = sId
         End Sub
 
         Sub New(sid As String, type As String)
@@ -67,11 +67,12 @@ Namespace FileStream
         End Sub
 
         Public Function CopyTo(Of T As Node)() As T
-            Dim NewNode As T = Activator.CreateInstance(Of T)()
-            NewNode.Identifier = Identifier
-            NewNode.NodeType = NodeType
+            Dim newNode As T = Activator.CreateInstance(Of T)()
+            newNode.ID = ID
+            newNode.NodeType = NodeType
+            newNode.Properties = New Dictionary(Of String, String)(Properties)
 
-            Return NewNode
+            Return newNode
         End Function
     End Class
 End Namespace

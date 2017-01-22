@@ -58,7 +58,7 @@ Namespace HTML.CSS
         Public Const Win7LargeBold As String = "font-style: strong; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
 
         Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
-
+        Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
 
         ''' <summary>
         ''' The System.Drawing.FontStyle of the new font.

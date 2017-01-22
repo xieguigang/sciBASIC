@@ -59,7 +59,7 @@ Namespace Text.HtmlParser
                 Return ""
             End If
 
-            Dim url As String = Regex.Match(html, "href="".+?""", RegexOptions.IgnoreCase).Value
+            Dim url As String = Regex.Match(html, "href=[""'].+?[""']", RegexOptions.IgnoreCase).Value
 
             If String.IsNullOrEmpty(url) Then
                 Return ""

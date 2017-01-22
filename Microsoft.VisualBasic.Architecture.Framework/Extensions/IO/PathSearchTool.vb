@@ -207,8 +207,24 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <ExportAPI("Path.Illegal?")>
     <Extension> Public Function PathIllegal(path As String) As Boolean
-        Dim Tokens As String() = path.Replace("\", "/").Split("/"c)
-        Dim fileName As String = Tokens.Last
+        Dim tokens As String() = Strings.Split(path.Replace("\", "/"), ":/")
+
+        If tokens.Length > 2 Then  ' 有多余一个的驱动器符，则肯定是非法的路径格式
+            Return False
+        ElseIf tokens.Length = 2 Then
+            ' 完整路径
+            ' 当有很多个驱动器的时候，这里会不止一个字母
+            If Regex.Match(tokens(0), "[a-Z0-9]+", RegexICSng).Value <> tokens(0) Then
+                ' 开头的驱动器的符号不正确
+                Return False
+            Else
+                ' 驱动器的符号也正确
+            End If
+        Else
+            ' 只有一个，则是相对路径
+        End If
+
+        Dim fileName As String = tokens.Last
 
         For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
             If fileName.IndexOf(ch) > -1 Then
@@ -216,13 +232,13 @@ Public Module ProgramPathSearchTool
             End If
         Next
 
-        For Each DIRBase As String In Tokens.Takes(Tokens.Length - 1)
-            For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
-                If fileName.IndexOf(ch) > -1 Then
-                    Return True
-                End If
-            Next
-        Next
+        'For Each DIRBase As String In tokens.Takes(tokens.Length - 1)
+        '    For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
+        '        If fileName.IndexOf(ch) > -1 Then
+        '            Return True
+        '        End If
+        '    Next
+        'Next
 
         Return False
     End Function

@@ -69,13 +69,17 @@ Namespace Language
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Value(Of T)
+    Public Class Value(Of T) : Implements IValueOf
+
+        Public Interface IValueOf
+            Property value As T
+        End Interface
 
         ''' <summary>
         ''' The object value with a specific type define.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property value As T
+        Public Overridable Property value As T Implements IValueOf.value
 
         ''' <summary>
         ''' Creates an reference value object with the specific object value
