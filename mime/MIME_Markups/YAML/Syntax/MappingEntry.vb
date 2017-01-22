@@ -48,7 +48,7 @@ Namespace YAML.Syntax
         End Property
 
         Public Overrides Function ToString() As String
-            Return [String].Format("{{Key:{0}, Value:{1}}}", Key, Value)
+            Return String.Format("{{Key:{0}, Value:{1}}}", Key, Value)
         End Function
     End Class
 End Namespace

@@ -36,7 +36,7 @@ Namespace YAML.Syntax
 
 
         Public Sub New()
-            Me.Text = [String].Empty
+            Me.Text = String.Empty
         End Sub
 
         Public Overrides Function ToString() As String

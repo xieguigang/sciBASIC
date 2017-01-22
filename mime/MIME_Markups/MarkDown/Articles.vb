@@ -67,7 +67,7 @@ Namespace MarkDown
             Dim lang As String = match.Groups(1).Value
             Dim title As String = WebUtility.UrlDecode(match.Groups(2).Value)
 
-            Return [String].Format("[{0}_wiki://{1}](https://{0}.wikipedia.org/wiki/{1})", lang, title)
+            Return String.Format("[{0}_wiki://{1}](https://{0}.wikipedia.org/wiki/{1})", lang, title)
         End Function
     End Module
 End Namespace

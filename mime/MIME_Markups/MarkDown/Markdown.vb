@@ -48,7 +48,7 @@ Namespace MarkDown
         ''' Create a new Markdown instance and set the options from the MarkdownOptions object.
         ''' </summary>
         Public Sub New(options As MarkdownOptions)
-            If Not [String].IsNullOrEmpty(options.EmptyElementSuffix) Then
+            If Not String.IsNullOrEmpty(options.EmptyElementSuffix) Then
                 _EmptyElementSuffix = options.EmptyElementSuffix
             End If
             _AllowEmptyLinkText = options.AllowEmptyLinkText
@@ -61,6 +61,17 @@ Namespace MarkDown
             _LinkEmails = options.LinkEmails
             _StrictBoldItalic = options.StrictBoldItalic
             _AsteriskIntraWordEmphasis = options.AsteriskIntraWordEmphasis
+        End Sub
+
+        Sub New()
+            Call Me.New(New MarkdownOptions With {
+                .AllowEmptyLinkText = True,
+                .AutoHyperlink = True,
+                .DisableHr = False,
+                .AutoNewlines = True,
+                .StrictBoldItalic = True,
+                .DisableImages = False
+            })
         End Sub
 
         Public Property AllowEmptyLinkText() As Boolean
@@ -144,7 +155,7 @@ Namespace MarkDown
         ''' and img tags get encoded.
         ''' </remarks>
         Public Function Transform(text As String) As String
-            If [String].IsNullOrEmpty(text) Then
+            If String.IsNullOrEmpty(text) Then
                 Return ""
             End If
 
@@ -486,7 +497,7 @@ Namespace MarkDown
                     result += " title=""" & title & """"
                 End If
 
-                If [String].IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
+                If String.IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
                     linkText = url
                 End If
 
@@ -518,7 +529,7 @@ Namespace MarkDown
                     result += " title=""" & title & """"
                 End If
 
-                If [String].IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
+                If String.IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
                     linkText = url
                 End If
 
@@ -545,13 +556,13 @@ Namespace MarkDown
 
             result = String.Format("<a href=""{0}""", url)
 
-            If Not [String].IsNullOrEmpty(title) Then
+            If Not String.IsNullOrEmpty(title) Then
                 title = AttributeEncode(title)
                 title = EscapeBoldItalic(title)
                 result += String.Format(" title=""{0}""", title)
             End If
 
-            If [String].IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
+            If String.IsNullOrEmpty(linkText) AndAlso Not _AllowEmptyLinkText Then
                 linkText = url
             End If
 
@@ -562,7 +573,7 @@ Namespace MarkDown
 
         Private Shared _imagesRef As New Regex(vbCr & vbLf & "                    (               # wrap whole match in $1" & vbCr & vbLf & "                    !\[" & vbCr & vbLf & "                        (.*?)       # alt text = $2" & vbCr & vbLf & "                    \]" & vbCr & vbLf & vbCr & vbLf & "                    [ ]?            # one optional space" & vbCr & vbLf & "                    (?:\n[ ]*)?     # one optional newline followed by spaces" & vbCr & vbLf & vbCr & vbLf & "                    \[" & vbCr & vbLf & "                        (.*?)       # id = $3" & vbCr & vbLf & "                    \]" & vbCr & vbLf & vbCr & vbLf & "                    )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
-        Private Shared _imagesInline As New Regex([String].Format(vbCr & vbLf & "              (                     # wrap whole match in $1" & vbCr & vbLf & "                !\[" & vbCr & vbLf & "                    (.*?)           # alt text = $2" & vbCr & vbLf & "                \]" & vbCr & vbLf & "                \s?                 # one optional whitespace character" & vbCr & vbLf & "                \(                  # literal paren" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    ({0})           # href = $3" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    (               # $4" & vbCr & vbLf & "                    (['""])       # quote char = $5" & vbCr & vbLf & "                    (.*?)           # title = $6" & vbCr & vbLf & "                    \5              # matching quote" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    )?              # title is optional" & vbCr & vbLf & "                \)" & vbCr & vbLf & "              )", GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Private Shared _imagesInline As New Regex(String.Format(vbCr & vbLf & "              (                     # wrap whole match in $1" & vbCr & vbLf & "                !\[" & vbCr & vbLf & "                    (.*?)           # alt text = $2" & vbCr & vbLf & "                \]" & vbCr & vbLf & "                \s?                 # one optional whitespace character" & vbCr & vbLf & "                \(                  # literal paren" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    ({0})           # href = $3" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    (               # $4" & vbCr & vbLf & "                    (['""])       # quote char = $5" & vbCr & vbLf & "                    (.*?)           # title = $6" & vbCr & vbLf & "                    \5              # matching quote" & vbCr & vbLf & "                    [ ]*" & vbCr & vbLf & "                    )?              # title is optional" & vbCr & vbLf & "                \)" & vbCr & vbLf & "              )", GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown image shortcuts into HTML img tags. 
@@ -636,7 +647,7 @@ Namespace MarkDown
             altText = EscapeImageAltText(AttributeEncode(altText))
             url = AttributeSafeUrl(url)
             Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
-            If Not [String].IsNullOrEmpty(title) Then
+            If Not String.IsNullOrEmpty(title) Then
                 title = AttributeEncode(EscapeBoldItalic(title))
                 result += String.Format(" title=""{0}""", title)
             End If
